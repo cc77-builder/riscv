@@ -1,0 +1,49 @@
+# 三人团队：环境与阶段一复现入口
+
+本目录保存本队在 2026-10-09 完成的环境搭建、hello/vadd 源码和阶段一证据，并提供按当前仓库位置运行的脚本。香山硬件基线为 `16ae9ddcda54fc9a2fddffad73174cf793ac7814`，尚未实现 vdot。
+
+| 内容 | 入口 |
+| --- | --- |
+| WSL、工具版本、安装方法、配套依赖 | [环境说明](docs/environment.md) |
+| 构建和运行命令、启动问题、通过标准 | [阶段一说明](docs/stage1.md) |
+| hello/vadd 测试源码 | [workloads/hello-vadd](workloads/hello-vadd/) |
+| 路径可配置的执行脚本 | [scripts](scripts/) |
+| 昨天的通过日志、配置、反汇编和事件 CSV | [历史证据](evidence/stage1-20261009/) |
+| 今天用仓库内脚本重新运行的验证结果 | [脚本验证记录](evidence/script-check-20261010/README.md) |
+| 源码锁定版本 | [versions.env](versions.env) |
+
+## 新成员操作顺序
+
+先接受私有仓库邀请。在 Ubuntu 22.04 / WSL2 的 Linux 文件系统中：
+
+```bash
+git clone --recurse-submodules https://github.com/cc77-builder/riscv.git
+cd riscv
+bash team/scripts/prepare-dependencies.sh
+# 按 docs/environment.md 安装匹配的工具，已有环境可跳过安装
+bash team/scripts/check-environment.sh
+export TEAM_EVIDENCE_DIR="$PWD/team/out/my-stage1"
+bash team/scripts/stage1.sh nemu
+bash team/scripts/stage1.sh emu
+bash team/scripts/stage1.sh workload
+bash team/scripts/stage1.sh run
+```
+
+配套 xs-env 默认位于 `$HOME/riscv-lab/xs-env`。需要放在其他位置时，先 `export TEAM_XS_ENV_ROOT=/你的目录/xs-env`。脚本把当前团队仓库作为 `NOOP_HOME`，配套环境只提供 NEMU、nexus-am、DRAMsim3 及安装工具入口。
+
+已有本机环境仍使用原来的 `/home/riscv/riscv-lab/xs-env/XiangShan`，不用重新克隆或重新编译已有且配置相同的仿真器；直接从该目录运行上面的环境检查、workload 和 run 即可。
+
+默认采用 MinimalConfig、单核、单仿真线程、JVM 12G、构建并行度 2。`BUILD_JOBS`、`JVM_HEAP` 可显式调整；普通运行不生成波形，使用 `DUMP_WAVE=1 bash team/scripts/stage1.sh run` 可生成 FST。各步骤输出保存到 `team/out/`，不会自动进入 Git。
+
+## Git 协作
+
+每个任务从 `main` 建分支并通过 Pull Request 合并。新成员克隆目录的团队远程是 `origin`；现有本机仿真目录的团队远程是 `team`。
+
+```bash
+git switch -c feat/自己的任务名
+git add 具体文件
+git commit -m "feat: describe the change"
+git push -u origin feat/自己的任务名
+```
+
+在现有本机仿真目录，将最后一行的 `origin` 换为 `team`。NEMU 源码仍是外部配套仓库；后续修改 NEMU 或香山子模块时，需把其提交推送到团队可访问的对应仓库并更新版本引用。

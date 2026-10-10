@@ -1,3 +1,9 @@
+# 本队参赛与阶段一材料
+
+团队环境说明、配套脚本、hello/vadd 源码和精简验证日志见 [team/README.md](team/README.md)。香山原始项目说明保留在下方。
+
+---
+
 # XiangShan
 
 XiangShan (香山) is an open-source high-performance RISC-V processor project.
