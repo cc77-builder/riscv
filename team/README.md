@@ -8,7 +8,10 @@
 | --- | --- |
 | 项目计划：阶段目标、执行步骤与验收标准 | [香山 vdot 赛题：执行计划](香山vdot赛题_执行计划.md) |
 | 项目计划：A/B/C 分工、评审与 Git 协作 | [香山 vdot 赛题：三人分工与 Git 协作](香山vdot赛题_三人分工与Git协作.md) |
+| 当前进度与 James_Hotten 分支的 T03 初步评审 | [进度与评审记录](progress.md) |
 | vdot 指令语义、候选编码、测试与待确认问题（第一版草案） | [vdot.vv 规格](spec/vdot.md) |
+| 配置依赖、完整写回路径与分层控制验收（草案） | [RTL 接入接口](spec/rtl-interface.md) |
+| 精确非法异常、陷阱处理与状态观察（方案，待实现） | [异常测试方案](spec/exception-tests.md) |
 | WSL、工具版本、安装方法、配套依赖 | [环境说明](docs/environment.md) |
 | 构建和运行命令、启动问题、通过标准 | [阶段一说明](docs/stage1.md) |
 | hello/vadd 测试源码 | [workloads/hello-vadd](workloads/hello-vadd/) |
