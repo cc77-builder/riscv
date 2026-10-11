@@ -8,6 +8,7 @@
 | --- | --- |
 | 项目计划：阶段目标、执行步骤与验收标准 | [香山 vdot 赛题：执行计划](香山vdot赛题_执行计划.md) |
 | 项目计划：A/B/C 分工、评审与 Git 协作 | [香山 vdot 赛题：三人分工与 Git 协作](香山vdot赛题_三人分工与Git协作.md) |
+| vdot 指令语义、候选编码、测试与待确认问题（第一版草案） | [vdot.vv 规格](spec/vdot.md) |
 | WSL、工具版本、安装方法、配套依赖 | [环境说明](docs/environment.md) |
 | 构建和运行命令、启动问题、通过标准 | [阶段一说明](docs/stage1.md) |
 | hello/vadd 测试源码 | [workloads/hello-vadd](workloads/hello-vadd/) |
