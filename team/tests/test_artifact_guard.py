@@ -16,12 +16,15 @@ class ArtifactTests(unittest.TestCase):
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
-        self.repo=Path(self.temp.name)/'repo'
+        self.repo=(Path(self.temp.name)/'repo').resolve()
         self.repo.mkdir()
         (self.repo/'src').mkdir()
-        (self.repo/'src/main.c').write_text('void f(void) {}\n')
-        (self.repo/'.gitignore').write_text('build/\n.idea/\n.config\n')
+        (self.repo/'src/main.c').write_bytes(b'void f(void) {}\n')
+        (self.repo/'.gitignore').write_bytes(b'build/\n.idea/\n.config\n')
         subprocess.run(['git','init','-q',str(self.repo)],check=True)
+        # The guard compares physical bytes, so fixture Git must not inherit a
+        # host's newline conversion. Resolve Windows short/case aliases too.
+        subprocess.run(['git','-C',str(self.repo),'config','core.autocrlf','false'],check=True)
         subprocess.run(['git','-C',str(self.repo),'add','.'],check=True)
         subprocess.run(['git','-C',str(self.repo),'-c','user.name=Source guard test',
                         '-c','user.email=guard@example.invalid','commit','-qm','fixture'],check=True)
@@ -59,7 +62,7 @@ class ArtifactTests(unittest.TestCase):
         source.write_text('void changed(void) {}\n')
         with self.assertRaisesRegex(ValueError,'digest mismatch'):
             guard.verify_build(evidence,image,data,'vdot','full')
-        source.write_text('void f(void) {}\n')
+        source.write_bytes(b'void f(void) {}\n')
         image.write_bytes(b'changed')
         with self.assertRaisesRegex(ValueError,'digest mismatch'):
             guard.verify_build(evidence,image,data,'vdot','full')

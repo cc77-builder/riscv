@@ -2,7 +2,7 @@
 
 本队以《香山 vdot 赛题：执行计划》和《香山 vdot 赛题：三人分工与 Git 协作》作为项目计划文档，分别安排里程碑、验收标准和三人职责。成员先阅读两份计划，再按认领的任务推进开发。
 
-本目录同时保存本队在 2026-10-09 完成的环境搭建、hello/vadd 源码和阶段一证据，并提供按当前仓库位置运行的脚本。香山硬件基线为 `16ae9ddcda54fc9a2fddffad73174cf793ac7814`。已有 T05 模型/数据、T05-E 异常程序、T08 NEMU 和 T09 RVV baseline 实现及本地验收；vdot RTL 和全核 DiffTest 尚未完成。计划中的后续任务按实际验收结果更新进度。
+本目录同时保存本队在 2026-10-09 完成的环境搭建、hello/vadd 源码和阶段一证据，并提供按当前仓库位置运行的脚本。香山硬件基线为 `16ae9ddcda54fc9a2fddffad73174cf793ac7814`。已有 T05 模型/数据、T05-E 异常程序、T08 NEMU 和 T09 RVV baseline 实现及本地验收；独立vdot硬件执行模块已通过单元仿真；全核RTL接入和DiffTest尚未完成。计划中的后续任务按实际验收结果更新进度。
 
 | 内容 | 入口 |
 | --- | --- |
@@ -21,6 +21,8 @@
 | T09 普通 RVV 序列、模型/CSR/scratch 验收 | [baseline 实现](docs/t09-baseline.md) |
 | 已交付任务的实现、覆盖与来源漏洞及完成度评估 | [综合审查](docs/completed-tasks-audit.md) |
 | 综合审查问题的源码修复、负控与复审 | [修复与复审](docs/audit-fixes.md) |
+| 独立vdot硬件模块、握手/异常/取消与单元仿真 | [VdotExec模块](hardware/vdot/README.md) |
+| 硬件模块两轴审查、修复及10000随机复验 | [模块审查](docs/vdot-hardware-review.md) |
 | baseline 状态比较、scratch 与 T13 计时事件 | [测量合同](spec/measurement.md) |
 | WSL、工具版本、安装方法、配套依赖 | [环境说明](docs/environment.md) |
 | 构建和运行命令、启动问题、通过标准 | [阶段一说明](docs/stage1.md) |

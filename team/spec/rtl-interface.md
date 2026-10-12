@@ -1,8 +1,8 @@
 # vdot RTL 接入与验证接口草案
 
-版本：`0.1.0-draft`，2026-10-11。适用合同：`vdot-s8x8-r32-v0.1`。
+版本：`0.1.1-draft`，2026-10-12。适用合同：`vdot-s8x8-r32-v0.1`。
 
-状态：已依据当前源码起草，尚无 vdot RTL 接入或仿真证据；本文件是 T06 的评审输入，不代表 T06 已验收。A 确定最终单元、端口和时序，B/C 复核配置、异常和测试；成员尚未签字。
+状态：已有独立VdotExec运算/局部控制及单元仿真，见 [模块与接口](../hardware/vdot/README.md)；尚未接入香山全核。本文件是T06的评审输入，不代表T06已验收。A 确定最终单元、端口和时序，B/C 复核配置、异常和测试；成员尚未签字。
 
 关联：[指令合同](vdot.md)、[异常测试](exception-tests.md)、[进度](../progress.md)。阅读基线为团队提交 `c1ef31d81d50c209bf0e102af8ad7713c2da6dab`，硬件内容基于 `16ae9ddcda54fc9a2fddffad73174cf793ac7814`。下文区分已存在的通路与拟新增的 vdot 行为。
 
@@ -130,3 +130,9 @@ VL/vtype 依赖压力测试在目标配置与 vdot 之间不插入 CSR 读回或
 - [ ] 核对完整提交/回滚、VS 置脏和 DiffTest 的 128 位观察范围，保存配套 SHA、配置及日志。
 
 T05 模型及 T05-E harness 已交付；T08 NEMU 通过 standalone，T09 baseline 通过 QEMU/NEMU 模型验收，详见 [T09 记录](../docs/t09-baseline.md)。下一步 A 按本接口评审及接入，B/C 复核 T08/T09 和 measurement 合同，C 推进真实全核差分验收；本接口的 RTL 实现检查项仍未完成。
+
+## 7. 独立模块阶段记录（2026-10-12）
+
+[VdotExec.scala](../../src/main/scala/xiangshan/backend/fu/vector/VdotExec.scala) 为无香山参数依赖的可综合Chisel模块；请求包含128位源、实际VL、vtype/vstart/VS快照、32位编码与opaque tag。单个注册响应槽，无反压延迟一周期、可每周期接受一条；非法配置返回有身份cause2响应并禁用数据/VS副作用。反压保持所有字段，本地flush优先并禁止同周期两种握手。
+
+初次Verilator单元层3022模型向量及四项接口测试通过；本轮复审扩大至12022项，含原计划10000固定随机。4000周期scoreboard按真实握手核对接受/返回/取消身份，失败重跑旧PASS失效及错误高位期望负控见 [模块审查](../docs/vdot-hardware-review.md)。算术与局部C01a/C01b/C01c有初步证据，但局部flush不含ROB年龄选择，不能关闭全核C01c/C01d或V/W/E矩阵。真实v0/别名读源、配置依赖、完整写回和退休/回滚仍需适配层与全核验证，见 [单元证据](../evidence/vdot-hardware-20261012/README.md)。

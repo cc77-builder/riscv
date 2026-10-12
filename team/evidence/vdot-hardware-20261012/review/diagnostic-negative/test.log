@@ -1,0 +1,22 @@
+[info] welcome to sbt 1.10.2 (Ubuntu Java 21.0.12.1)
+[info] loading project definition from /mnt/c/Code/RVInno/riscv/team/hardware/vdot/project
+[info] loading settings for project vdot from build.sbt ...
+[info] set current project to vdot (in build file:/mnt/c/Code/RVInno/riscv/team/hardware/vdot/)
+[info] compiling 1 Scala source to /mnt/c/Code/RVInno/riscv/team/hardware/vdot/target/scala-2.13/test-classes ...
+[info] done compiling
+VDOT_HW_DIAGNOSTIC contract=vdot-s8x8-r32-v0.1 id=D00 tag=0 instruction=0x294050b vd=10 vs1=8 vs2=9 src1_128=0xa5a5a5a5a5a5a5a50000000000000000 src2_128=0xa5a5a5a5a5a5a5a57f7f7f7f7f7f7f7f vl=8 vtype=0x0 vstart=0x0 vs=1 expected128=0x1000000000000000000000000000000 actual128=0x0
+[info] VdotExecSpec:
+[info] VdotExec
+[info] - should match the independent model and complete an illegal request without writes *** FAILED ***
+[info]   In step 3: io_out_bits_data=0 (0x0) did not equal expected=1329227995784915872903807060280344576 (0x1000000000000000000000000000000) at (VdotExecSpec.scala:53) (VdotExecSpec.scala:53)
+[info] Run completed in 9 seconds, 466 milliseconds.
+[info] Total number of tests run: 1
+[info] Suites: completed 1, aborted 0
+[info] Tests: succeeded 0, failed 1, canceled 0, ignored 0, pending 0
+[info] *** 1 TEST FAILED ***
+[error] Failed tests:
+[error] 	VdotExecSpec
+[error] (Test / testOnly) sbt.TestsFailedException: Tests unsuccessful
+[error] Total time: 14 s, completed Oct 12, 2026, 9:18:24 PM
+make: Warning: File 'VVdotExec__ver.d' has modification time 0.18 s in the future
+make: warning:  Clock skew detected.  Your build may be incomplete.

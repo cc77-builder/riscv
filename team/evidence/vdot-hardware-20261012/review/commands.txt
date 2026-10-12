@@ -1,0 +1,3 @@
+sbt -batch -J-XX:ActiveProcessorCount=2 -J-Xmx2g runMain\ EmitVdot\ \"/mnt/c/Code/RVInno/riscv/team/out/vdot-hardware\ reviewed/rtl\" 
+verilator --lint-only --top-module VdotExec /mnt/c/Code/RVInno/riscv/team/out/vdot-hardware\ reviewed/rtl/VdotExec.sv 
+VDOT_HW_VECTORS=/mnt/c/Code/RVInno/riscv/team/out/vdot-hardware\ reviewed/vectors.tsv sbt -batch -J-XX:ActiveProcessorCount=2 -J-Xmx2g test 
