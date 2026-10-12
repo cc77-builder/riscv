@@ -90,8 +90,8 @@ class ModelTests(unittest.TestCase):
 
     def test_exception_corpus_does_not_confuse_encoding_and_state(self):
         cases=exception_cases()
-        self.assertEqual(len(cases),35)
-        self.assertEqual(len({c['id'] for c in cases}),35)
+        self.assertEqual(len(cases),37)
+        self.assertEqual(len({c['id'] for c in cases}),37)
         for c in cases:
             if c['model_class']=='not-vdot':
                 self.assertEqual(c['word'] & 0x7F,0x0B)
@@ -99,7 +99,7 @@ class ModelTests(unittest.TestCase):
             else:
                 type_value=1<<63 if c['vtype']==0x100 else c['vtype']
                 state=VectorState(vtype=type_value,vl=0 if type_value>>63 else c['vl'],
-                                  vstart=c['vstart'],vs=0 if c['vs_off'] else 1,
+                                  vstart=c['vstart'],vs=0 if c['vs_off'] else c['vs'],
                                   vxrm=c['vxrm'],vxsat=c['vxsat'])
                 self.assertEqual(execute(c['word'],state).cause,2)
 
@@ -107,7 +107,7 @@ class ModelTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             m=generate(Path(d),1000,0x20261011,1000)
             self.assertEqual(m['smoke_count'],1048)
-            self.assertEqual(m['exception_count'],35)
+            self.assertEqual(m['exception_count'],37)
             header=(Path(d)/'cases.h').read_text()
             self.assertIn('R00999',header)
             self.assertNotIn('R01000',header)

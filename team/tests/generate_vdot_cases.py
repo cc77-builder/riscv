@@ -7,7 +7,7 @@ from pathlib import Path
 
 from vdot_model import CONTRACT_ID, MODEL_VERSION, VectorState, dot_s8, encode, execute
 
-GENERATOR_VERSION = "1.1.0"
+GENERATOR_VERSION = "1.2.0"
 SEED = 0x20261011
 DIRECTED = [
     ("D00", [0]*8, [127]*8, 0),
@@ -30,7 +30,7 @@ def packed(lanes, tail=bytes([0xA5]*8)):
     return int.from_bytes(bytes(x & 255 for x in lanes) + tail, "little")
 
 
-def case(test_id, a, b, *, vd=10, vs1=8, vs2=9, vtype=0, vxrm=0, vxsat=0,
+def case(test_id, a, b, *, vd=10, vs1=8, vs2=9, vtype=0, vxrm=0, vxsat=0, vs=1,
          old=int.from_bytes(bytes([255]*16), "little"), tags=()):
     # Overlapping source registers must refer to one actual pre-instruction value.
     if vs1 == vs2:
@@ -38,7 +38,7 @@ def case(test_id, a, b, *, vd=10, vs1=8, vs2=9, vtype=0, vxrm=0, vxsat=0,
     regs = [int.from_bytes(bytes([0x55,0xAA]*8), "little")] * 32
     regs[vd] = old
     regs[vs1], regs[vs2] = a, b
-    before = VectorState(regs=tuple(regs), vtype=vtype, vxrm=vxrm, vxsat=vxsat)
+    before = VectorState(regs=tuple(regs), vtype=vtype, vxrm=vxrm, vxsat=vxsat, vs=vs)
     outcome = execute(encode(vd, vs1, vs2), before)
     if outcome.cause is not None:
         raise ValueError("legal data generator received illegal state")
@@ -53,7 +53,7 @@ def case(test_id, a, b, *, vd=10, vs1=8, vs2=9, vtype=0, vxrm=0, vxsat=0,
                 expected_signed=dot_s8(*[[int.from_bytes(bytes([x]),'little',signed=True)
                                         for x in s.to_bytes(16,'little')[:8]]
                                        for s in (src1,src2)]),
-                config=dict(vl=8,vtype=vtype,vstart=0,vs=1,vxrm=vxrm,vxsat=vxsat))
+                config=dict(vl=8,vtype=vtype,vstart=0,vs=vs,vxrm=vxrm,vxsat=vxsat))
 
 
 def directed_cases():
@@ -85,7 +85,7 @@ def directed_cases():
     return cases
 
 
-def random_cases(count, seed=SEED):
+def random_cases(count, seed=SEED, random_registers=False):
     if not 0 < seed < 1 << 32 or count < 0:
         raise ValueError("nonzero uint32 seed and nonnegative count required")
     state = seed
@@ -98,7 +98,26 @@ def random_cases(count, seed=SEED):
         return state & 255
     for i in range(count):
         a, b, old = [int.from_bytes(bytes(byte() for _ in range(16)),"little") for _ in range(3)]
-        yield case(f"R{i:05d}",a,b,old=old,vtype=(i%4)<<6,vxrm=i%4,vxsat=i%2,tags=("random",))
+        registers = dict(vd=byte()&31,vs1=byte()&31,vs2=byte()&31,vs=i%3+1) if random_registers else {}
+        yield case(f"R{i:05d}",a,b,old=old,vtype=(i%4)<<6,vxrm=i%4,vxsat=i%2,tags=("random",),**registers)
+
+
+def expanded_cases():
+    rows=[]
+    a,b=packed([-128,127,-1,1,2,-2,63,-64]),packed([127,-128,1,-1,-2,2,-64,63])
+    for reg in range(32):
+        other,third=(reg+1)%32,(reg+2)%32
+        for index,regs in enumerate(((reg,other,third),(reg,reg,other),(reg,other,reg),
+                                     (other,reg,reg),(reg,reg,reg))):
+            rows.append(case(f'G{reg:02d}-{index}',a,b,vd=regs[0],vs1=regs[1],vs2=regs[2],
+                             tags=('register-layout',),vs=index%3+1))
+    for policy in range(4):
+        for vxrm in range(4):
+            for vxsat in range(2):
+                for vs in (1,2,3):
+                    rows.append(case(f'C{policy}-{vxrm}-{vxsat}-{vs}',a,b,vtype=policy<<6,
+                                     vxrm=vxrm,vxsat=vxsat,vs=vs,tags=('csr-cross','vs-transition')))
+    return rows
 
 
 def jsonl(cases):
@@ -112,10 +131,10 @@ def c_bytes(value):
 def exception_cases():
     rows = []
     def add(name, *, vtype=0, vl=8, vstart=0, vxrm=0, vxsat=0, vs_off=0,
-            vd=10, vs1=8, vs2=9, flip=0, alternating=0):
+            vd=10, vs1=8, vs2=9, flip=0, alternating=0, vs=3):
         rows.append(dict(id=name,vtype=vtype,vl=vl,vstart=vstart,vxrm=vxrm,vxsat=vxsat,
                          vs_off=vs_off,vd=vd,vs1=vs1,vs2=vs2,word=encode(vd,vs1,vs2)^flip,
-                         alternating=alternating,expected_cause=2,
+                         alternating=alternating,vs=vs,expected_cause=2,
                          model_class='not-vdot' if flip else 'illegal-config'))
     add('X01-e16',vtype=8)
     add('X02-m2',vtype=1)
@@ -132,6 +151,7 @@ def exception_cases():
     for vxrm in range(4):
         for vxsat in range(2):
             add(f'X10-{vxrm}-{vxsat}',vl=7,vxrm=vxrm,vxsat=vxsat,alternating=1)
+    for vs in (1,2): add(f'X11-VS-{vs}',vl=7,vs=vs)
     return rows
 
 
@@ -139,23 +159,23 @@ def emit_header(cases):
     rows = []
     for c in cases:
         cfg = c['config']
-        rows.append('  {"%s", %sU, %d, %d, %d, %d, %d, %d, %s, %s, %s, %s}' %
-                    (c['id'],c['instruction'],c['vd'],c['vs1'],c['vs2'],cfg['vtype'],cfg['vxrm'],cfg['vxsat'],
+        rows.append('  {"%s", %sU, %d, %d, %d, %d, %d, %d, %d, %s, %s, %s, %s}' %
+                    (c['id'],c['instruction'],c['vd'],c['vs1'],c['vs2'],cfg['vtype'],cfg['vxrm'],cfg['vxsat'],cfg['vs'],
                      *(c_bytes(c[k]) for k in ('src1_128','src2_128','old_vd_128','expected_128'))))
     exceptions = exception_cases()
     erows = []
     for c in exceptions:
         erows.append('  {"%s", %s}' % (c['id'],', '.join(str(c[k])+('U' if k=='word' else '')
-            for k in ('vtype','vl','vstart','vxrm','vxsat','vs_off','word','vd','vs1','vs2','alternating'))))
+            for k in ('vtype','vl','vstart','vxrm','vxsat','vs_off','word','vd','vs1','vs2','alternating','vs'))))
     return ('/* Generated by generate_vdot_cases.py; do not edit. */\n'
             '#ifndef VDOT_CASES_H\n#define VDOT_CASES_H\n'
             f'#define VDOT_CONTRACT "{CONTRACT_ID}"\n'
-            'struct arithmetic_case { const char *id; unsigned word, vd, vs1, vs2, vtype, vxrm, vxsat; '
+            'struct arithmetic_case { const char *id; unsigned word, vd, vs1, vs2, vtype, vxrm, vxsat, vs; '
             'unsigned char a[16], b[16], old[16], expected[16]; };\n'
             'static const struct arithmetic_case arithmetic_cases[] = {\n'+',\n'.join(rows)+'\n};\n'
             '#define ARITHMETIC_COUNT (sizeof(arithmetic_cases)/sizeof(arithmetic_cases[0]))\n'
             'struct exception_case { const char *id; unsigned vtype, vl, vstart, vxrm, vxsat, vs_off, '
-            'word, vd, vs1, vs2, alternating; };\n'
+            'word, vd, vs1, vs2, alternating, vs; };\n'
             'static const struct exception_case exception_cases_data[] = {\n'+',\n'.join(erows)+'\n};\n'
             '#define EXCEPTION_COUNT (sizeof(exception_cases_data)/sizeof(exception_cases_data[0]))\n#endif\n')
 
@@ -188,11 +208,13 @@ def write_text(path, data):
     path.write_bytes(data.encode('utf-8') if isinstance(data,str) else data)
 
 
-def generate(output, count, seed, smoke_random_count=32):
+def generate(output, count, seed, smoke_random_count=32, coverage_profile='legacy'):
     if smoke_random_count < 0:
         raise ValueError('nonnegative smoke random count required')
-    directed = directed_cases()
-    random = list(random_cases(count, seed))
+    if coverage_profile not in ('legacy','expanded'):
+        raise ValueError('unsupported coverage profile')
+    directed = directed_cases() + (expanded_cases() if coverage_profile=='expanded' else [])
+    random = list(random_cases(count, seed,random_registers=coverage_profile=='expanded'))
     data = jsonl(directed + random)
     write_text(output/'cases.jsonl',data)
     smoke = directed+random[:smoke_random_count]
@@ -208,6 +230,11 @@ def generate(output, count, seed, smoke_random_count=32):
                     directed_count=len(directed),total=len(directed)+count,smoke_count=len(smoke),
                     byte_order='little',register_hex_order='most-significant-byte-first',source_sha256=sources,
                     cases_sha256=hashlib.sha256(data).hexdigest(),exception_count=len(exception_cases()))
+    manifest['coverage_profile']=coverage_profile
+    manifest['coverage'] = dict(operand_registers=sorted({c[k] for c in smoke for k in ('vd','vs1','vs2')}),
+        operand_tuple_count=len({(c['vd'],c['vs1'],c['vs2']) for c in smoke}),
+        policy_vxrm_vxsat_vs_count=len({(c['config']['vtype'],c['config']['vxrm'],c['config']['vxsat'],c['config']['vs']) for c in smoke}),
+        initial_vs=sorted({c['config']['vs'] for c in smoke}))
     manifest['artifacts_sha256'] = {name:hashlib.sha256((output/name).read_bytes()).hexdigest()
                                   for name in ('cases.jsonl','cases.h','word-sites.S','stubs.h','exceptions.json')}
     write_text(output/'manifest.json',json.dumps(manifest,sort_keys=True,indent=2)+'\n')
@@ -220,5 +247,6 @@ if __name__ == '__main__':
     parser.add_argument('--random-count',type=int,default=10000)
     parser.add_argument('--seed',type=lambda s:int(s,0),default=SEED)
     parser.add_argument('--smoke-random-count',type=int,default=32)
+    parser.add_argument('--coverage-profile',choices=('legacy','expanded'),default='legacy')
     args = parser.parse_args()
-    print(json.dumps(generate(args.output,args.random_count,args.seed,args.smoke_random_count),sort_keys=True))
+    print(json.dumps(generate(args.output,args.random_count,args.seed,args.smoke_random_count,args.coverage_profile),sort_keys=True))

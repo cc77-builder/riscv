@@ -11,7 +11,7 @@ static void require(enum verdict actual_value, enum verdict wanted, const char *
 }
 int main(void) {
   struct trap_record good={0};
-  struct expectation e={{0,8,0,3,1,0,0},2,expected};
+  struct expectation e={{0,8,0,3,1,0,0,3},2,expected,0};
   good.pre=(struct vector_csrs){0,8,0,3,1,7}; good.post=good.pre;
   good.expected_pc=good.epc=0x80000100; good.cause=2; good.trap_count=1;
   good.pre_status=good.raw_status=0x600; good.phase=1;
@@ -39,6 +39,20 @@ int main(void) {
   e.config.vtype=0; e.cause=0; bad=good; bad.trap_count=0;
   require(judge(&bad,&e,actual,1),PASS,"successful instruction");
   bad.trap_count=1; require(judge(&bad,&e,actual,1),TRAP_COUNT,"legal vdot rejected by unextended platform");
-  puts("EXCEPTION_JUDGE_PASS checks=18");
+  e.cause=2;
+  bad=good; bad.raw_status=0x200; require(judge(&bad,&e,actual,1),VS_CHANGED,"illegal Dirty to Initial");
+  bad=good; bad.raw_status=0x400; require(judge(&bad,&e,actual,1),VS_CHANGED,"illegal Dirty to Clean");
+  e.config.vs=1; bad=good; bad.pre_status=0x200;
+  require(judge(&bad,&e,actual,1),PASS,"imprecise Initial to Dirty allowed on exception");
+  e.config.vs=2; bad=good; bad.pre_status=0x400; bad.raw_status=0x200;
+  require(judge(&bad,&e,actual,1),VS_CHANGED,"exception Clean to Initial rejected");
+  e.config.vs=1; e.cause=0; bad=good; bad.pre_status=0x200; bad.trap_count=0; bad.raw_status=0x200;
+  require(judge(&bad,&e,actual,1),VS_CHANGED,"successful Initial without dirtying rejected");
+  bad.raw_status=0x600; e.before=expected;
+  require(judge(&bad,&e,actual,1),PRE_VECTOR_CHANGED,"bad loaded input rejected");
+  for (unsigned r=0; r<32; ++r) for (unsigned b=0; b<16; ++b) bad.pre_regs[r][b]=expected[r][b];
+  bad.pre_valid=1;
+  require(judge(&bad,&e,actual,1),PASS,"actual pre-register capture compared");
+  puts("EXCEPTION_JUDGE_PASS checks=25");
   return 0;
 }

@@ -1,5 +1,5 @@
 NAME = vdot-exceptions
-SRCS = main.c judge.c harness.S fixed-sites.S
+SRCS = main.c judge.c diagnostics.c harness.S fixed-sites.S
 VDOT_DATA ?= $(abspath ../../out/t05)
 MODE ?= full
 INC_DIR += $(VDOT_DATA)

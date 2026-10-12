@@ -1,4 +1,5 @@
 #include "harness.h"
+#include "diagnostics.h"
 #include "cases.h"
 #include "stubs.h"
 
@@ -68,8 +69,9 @@ static enum verdict run(const char *id, unsigned word, unsigned vd, const struct
   if (!stub) { text("FAIL missing_fixed_instruction_stub\n"); platform_halt(90); }
   record.expected_cause=cause;
   vdot_run(&record,cfg,before.regs,after.regs,stub);
-  if (negative_destination) expected_regs[vd][15]^=1;
-  struct expectation e={*cfg,cause,expected_regs};
+  if (negative_destination==1) expected_regs[vd][15]^=1;
+  if (negative_destination==2) record.raw_status=(record.raw_status & ~UINT64_C(0x600))|0x200;
+  struct expectation e={*cfg,cause,expected_regs,before.regs};
   enum verdict result=judge(&record,&e,after.regs,guards_ok());
   text(report ? "VDOT_CASE id=" : "HARNESS_NEGATIVE id="); text(id);
   text(" result="); text(verdict_name(result)); text(" instruction="); hex64(word);
@@ -80,12 +82,18 @@ static enum verdict run(const char *id, unsigned word, unsigned vd, const struct
   text(" pre_mstatus="); hex64(record.pre_status); text(" raw_mstatus="); hex64(record.raw_status);
   text(" capture_phase="); decimal((unsigned)record.phase);
   text(" protocol_errors="); hex64(record.errors);
+  text(" requested_vs="); decimal(cfg->vs_off ? 0 : (unsigned)cfg->vs);
   csr_log(" pre_csr=",&record.pre); csr_log(" post_csr=",&record.post);
   text(" pre_vd128="); vector_hex(before.regs[vd]);
   text(" expected_vd128="); vector_hex(expected_regs[vd]);
   text(" post_vd128="); vector_hex(after.regs[vd]);
   text(" all32_checked="); decimal(result==PASS || result==GUARD_CHANGED);
+  text(" pre32_checked="); decimal(result==PASS || result==GUARD_CHANGED);
   text(" guards_ok="); decimal((unsigned)guards_ok()); _putc('\n');
+  if (result!=PASS) {
+    struct diagnostic_context context={id,word,0,record.expected_pc,record.resume_pc,&record,after.regs,expected_regs};
+    report_diagnostic(&context);
+  }
   if (report) {
     ++executed;
     if (result==PASS) ++passed;
@@ -96,29 +104,33 @@ static enum verdict run(const char *id, unsigned word, unsigned vd, const struct
 }
 
 static int selftests(void) {
-  struct run_config cfg={0,8,0,3,1,0,0};
-  for (unsigned i=0; i<5; ++i) {
+  struct run_config cfg={0,8,0,3,1,0,0,3};
+  for (unsigned i=0; i<7; ++i) {
     reset(); setup_sources(10,8,9); copy_expected();
     cfg.vtype=i==4 ? 0x100 : 0; cfg.vstart=i==3 ? 7 : 0; cfg.vs_off=i==2;
-    unsigned word=i==0 ? 0x02940557 : 0x00100073;
-    if (i==0) for (unsigned b=0; b<8; ++b) expected_regs[10][b]=0;
-    const char *names[]={"H00-vadd-control","H01-ebreak","H02-VS-off","H03-vstart7","H04-vill"};
-    if (run(names[i],word,10,&cfg,i==0 ? 0 : 3,0,1)!=PASS) return 0;
+    cfg.vs=i==5 ? 1 : i==6 ? 2 : 3;
+    int legal=i==0 || i>=5;
+    unsigned word=legal ? 0x02940557 : 0x00100073;
+    if (legal) for (unsigned b=0; b<8; ++b) expected_regs[10][b]=0;
+    const char *names[]={"H00-vadd-control","H01-ebreak","H02-VS-off","H03-vstart7","H04-vill","H05-vadd-initial","H06-vadd-clean"};
+    if (run(names[i],word,10,&cfg,legal ? 0 : 3,0,1)!=PASS) return 0;
   }
-  cfg=(struct run_config){0,8,0,0,0,0,4};
+  cfg=(struct run_config){0,8,0,0,0,0,4,3};
   reset(); setup_sources(10,8,9); copy_expected();
   if (run("N01-wrong-pc",0x00100073,10,&cfg,3,0,0)!=TRAP_PROTOCOL || record.errors!=ERR_PC) return 0;
   cfg.pc_bias=0;
   reset(); setup_sources(10,8,9); copy_expected();
   if (run("N02-wrong-high-byte",0x00100073,10,&cfg,3,1,0)!=VECTOR_CHANGED) return 0;
-  text("HARNESS_SELFTEST_PASS cases=5 negative_controls=2\n");
+  reset(); setup_sources(10,8,9); copy_expected();
+  if (run("N03-wrong-vs",0x00100073,10,&cfg,3,2,0)!=VS_CHANGED) return 0;
+  text("HARNESS_SELFTEST_PASS cases=7 negative_controls=3\n");
   return 1;
 }
 
 static void exception_cases(void) {
   for (unsigned i=0; i<EXCEPTION_COUNT; ++i) {
     const struct exception_case *e=&exception_cases_data[i];
-    struct run_config c={e->vtype,e->vl,e->vstart,e->vxrm,e->vxsat,e->vs_off,0};
+    struct run_config c={e->vtype,e->vl,e->vstart,e->vxrm,e->vxsat,e->vs_off,0,e->vs};
     reset(); setup_sources(e->vd,e->vs1,e->vs2);
     if (e->alternating)
       for (unsigned b=0; b<16; ++b) before.regs[e->vd][b]=b%2 ? 0xAA : 0x55;
@@ -139,8 +151,8 @@ int main(void) {
   text("VDOT_BEGIN contract="); text(VDOT_CONTRACT); text(" mode=");
   text(VDOT_MODE_SELFTEST ? "selftest\n" : "full\n");
   if (bytes!=16) { text("FAIL VLEN must equal128\n"); return 1; }
-  if (!selftests()) { summary("selftest",5); return 2; }
-  if (VDOT_MODE_SELFTEST) { summary("selftest",5); return 0; }
+  if (!selftests()) { summary("selftest",7); return 2; }
+  if (VDOT_MODE_SELFTEST) { summary("selftest",7); return 0; }
   passed=failed=unreachable=executed=0;
   text("VDOT_EXTENSION_BEGIN\n");
   for (unsigned i=0; i<ARITHMETIC_COUNT; ++i) {
@@ -150,7 +162,7 @@ int main(void) {
     for (unsigned b=0; b<16; ++b) before.regs[a->vs1][b]=a->a[b];
     for (unsigned b=0; b<16; ++b) before.regs[a->vs2][b]=a->b[b];
     copy_expected(); for (unsigned b=0; b<16; ++b) expected_regs[a->vd][b]=a->expected[b];
-    struct run_config cfg={a->vtype,8,0,a->vxrm,a->vxsat,0,0};
+    struct run_config cfg={a->vtype,8,0,a->vxrm,a->vxsat,0,0,a->vs};
     enum verdict result=run(a->id,a->word,a->vd,&cfg,0,0,1);
     /* A failing legal control invalidates subsequent extension exception claims. */
     if (result!=PASS) { summary("full",ARITHMETIC_COUNT+EXCEPTION_COUNT); return 3; }

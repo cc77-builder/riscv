@@ -19,7 +19,7 @@ bash team/scripts/prepare-nemu-vdot.sh reference
 
 默认检出到 `$HOME/riscv-lab/vdot-nemu/{base,standalone,reference}`。两种构建使用独立目录与配置；`TEAM_NEMU_VDOT_ROOT` 可调整根目录，`TEAM_NEMU_BASE_ROOT` 可复用已有固定提交的 Git 对象。脚本只从提交克隆，不复制其他检出的未提交源码；不会丢弃已有源码修改。
 
-脚本先核对补丁及应用后源码摘要，再固定配套依赖，选择 riscv64-xs 或 riscv64-xs-ref 配置并显式启用 CUSTOM_VDOT。构建产物附带 `build/vdot-provenance.json`，包含基线、补丁、配置和二进制摘要。重复运行复核实际文件，部分应用或源码漂移会失败。
+脚本先核对补丁及应用后源码摘要，再固定配套依赖，选择 riscv64-xs 或 riscv64-xs-ref 配置并显式启用 CUSTOM_VDOT。共享来源检查核对固定提交的实际跟踪文件字节、manifest 允许的补丁文件、源码目录中包括 Git 忽略文件在内的未知输入，以及编译依赖文件实际消费的头文件；固定依赖执行相同检查。明确生成的配置头允许构建，但实际字节仍进入快照。关键校验不受 PYTHONOPTIMIZE 影响。构建产物附带 schema 2 的 `build/vdot-provenance.json`，绑定基线、补丁、角色、实际源码/头文件快照、配置和二进制摘要；运行入口强制校验这些记录。旧 schema 1 产物须重新构建。重复运行复核实际文件，部分应用或源码漂移会失败。早期检查见 [T08 复核](../../docs/t08-review.md)；当前完整来源门禁、优化模式负控与重新构建见 [审查修复](../../docs/audit-fixes.md)。
 
 构建要求包括原有 C/C++ 编译工具、bison/flex、readline、SDL2、zlib/zstd 开发库和 RISC-V GNU 工具链；本次还准备了 Python protobuf。所有依赖的实际提交由锁定脚本记录。原 NEMU makefile 的 `__NOT_DEFINED` 变量非空时会启用自动 Git 快照宏，团队脚本显式置空，避免继承该开关。
 

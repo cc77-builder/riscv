@@ -16,9 +16,10 @@ import hashlib,json,sys
 from pathlib import Path
 patch,manifest,revision=sys.argv[1:]
 m=json.loads(Path(manifest).read_text())
-assert m['base_rev']==revision
-assert m['contract_id']=='vdot-s8x8-r32-v0.1'
-assert hashlib.sha256(Path(patch).read_bytes()).hexdigest()==m['patch_sha256']
+if m['base_rev']!=revision or m['contract_id']!='vdot-s8x8-r32-v0.1':
+    raise RuntimeError('NEMU patch baseline/contract mismatch')
+if hashlib.sha256(Path(patch).read_bytes()).hexdigest()!=m['patch_sha256']:
+    raise RuntimeError('NEMU patch digest mismatch')
 PY
 if ! test -e "$base/.git"; then
   if test -d "$base" && test -n "$(ls -A "$base")"; then echo "Nonempty base directory: $base" >&2; exit 2; fi
@@ -39,15 +40,7 @@ if git -C "$target" apply --check "$patch" 2>/dev/null; then
   git -C "$target" apply "$patch"
 fi
 # Exact source verification makes a repeated invocation safe and rejects partial/drifted patches.
-python3 - "$target" "$manifest" <<'PY'
-import hashlib,json,subprocess,sys
-from pathlib import Path
-target=Path(sys.argv[1]);m=json.loads(Path(sys.argv[2]).read_text())
-for name,digest in m['patched_source_sha256'].items():
-    assert hashlib.sha256((target/name).read_bytes()).hexdigest()==digest,name
-changed=subprocess.check_output(['git','-C',str(target),'diff','HEAD','--name-only']).decode().splitlines()
-assert set(changed)<=set(m['patched_source_sha256']),changed
-PY
+python3 "$root/team/scripts/artifact_guard.py" repo --repo "$target" --revision "$NEMU_REV" --manifest "$manifest" > "$evidence/checked-source.json"
 bash "$root/team/scripts/lock-nemu-extra-deps.sh" "$base" > "$evidence/dependencies.txt" 2>&1
 for rel in nanopb LibCheckpoint gcpt_restore softfloat/repo; do
   if ! test -e "$target/resource/$rel/.git"; then
@@ -66,7 +59,8 @@ make "$config" > "$evidence/configure.txt" 2>&1
 python3 - <<'PY'
 from pathlib import Path
 p=Path('.config');s=p.read_text();old='# CONFIG_CUSTOM_VDOT is not set'
-assert s.count(old)==1
+if s.count(old)!=1:
+    raise RuntimeError('CUSTOM_VDOT configuration entry missing or duplicated')
 p.write_text(s.replace(old,'CONFIG_CUSTOM_VDOT=y'))
 PY
 tools/kconfig/build/conf --syncconfig Kconfig >> "$evidence/configure.txt" 2>&1
@@ -81,13 +75,15 @@ sha256sum "$binary" > "$evidence/binary.sha256"
 git rev-parse HEAD > "$evidence/base.sha"
 git status --short > "$evidence/working-tree.txt"
 cp "$manifest" "$evidence/patch-manifest.json"
-python3 - "$mode" "$manifest" "$binary" <<'PY'
+python3 "$root/team/scripts/artifact_guard.py" nemu-snapshot --repo "$target" > "$evidence/source-snapshot.json"
+python3 - "$mode" "$manifest" "$binary" "$evidence/source-snapshot.json" <<'PY'
 import hashlib,json,sys
 from pathlib import Path
-mode,manifest,binary=sys.argv[1:]
+mode,manifest,binary,snapshot=sys.argv[1:]
 result=json.loads(Path(manifest).read_text())
-result.update(build_mode=mode,config_sha256=hashlib.sha256(Path('.config').read_bytes()).hexdigest(),
-              binary_sha256=hashlib.sha256(Path(binary).read_bytes()).hexdigest())
+result.update(schema_version=2,build_mode=mode,config_sha256=hashlib.sha256(Path('.config').read_bytes()).hexdigest(),
+              binary_sha256=hashlib.sha256(Path(binary).read_bytes()).hexdigest(),
+              source_sha256=json.loads(Path(snapshot).read_text()))
 Path('build/vdot-provenance.json').write_text(json.dumps(result,sort_keys=True,indent=2)+'\n')
 PY
 cp build/vdot-provenance.json "$evidence/provenance.json"

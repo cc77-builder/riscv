@@ -9,16 +9,20 @@ case "$action" in virt-selftest) mode=selftest;; virt-full-negative) mode=full;;
 data=${VDOT_DATA:-"$root/team/out/t05"}
 evidence=${TEAM_EVIDENCE_DIR:-"$root/team/out/t05e-$action-$mode"}
 mkdir -p "$evidence"
-python3 team/tests/generate_vdot_cases.py --output "$data" \
-  --random-count="${VDOT_RANDOM_COUNT:-10000}" --smoke-random-count="${VDOT_SMOKE_RANDOM_COUNT:-32}" > "$evidence/data-manifest.json"
+case "$action" in run-nemu|run-rtl) ;; *)
+  python3 team/tests/generate_vdot_cases.py --output "$data" --coverage-profile="${VDOT_COVERAGE_PROFILE:-expanded}" \
+    --random-count="${VDOT_RANDOM_COUNT:-1000}" --smoke-random-count="${VDOT_SMOKE_RANDOM_COUNT:-1000}" > "$evidence/data-manifest.json";;
+esac
 workload="$root/team/workloads/vdot-exceptions"
 
 metadata() {
   git rev-parse HEAD > "$evidence/team.sha"
   git status --short > "$evidence/working-tree.txt"
-  sha256sum "$data/cases.jsonl" "$data/cases.h" "$data/word-sites.S" "$data/stubs.h" > "$evidence/inputs.sha256"
+  cp "$data/manifest.json" "$evidence/data-manifest.json"
+  sha256sum "$data"/{cases.jsonl,cases.h,word-sites.S,stubs.h,manifest.json,exceptions.json} > "$evidence/inputs.sha256"
   sha256sum "$workload"/*.[chS] "$workload/Makefile" "$workload/virt.ld" \
-    "$root/team/scripts/vdot-tests.sh" "$root/team/scripts/check-vdot-run.py" > "$evidence/source.sha256"
+    "$root/team/scripts/vdot-tests.sh" "$root/team/scripts/check-vdot-run.py" "$root/team/scripts/artifact_guard.py" \
+    "$root/team/tests/generate_vdot_cases.py" "$root/team/tests/vdot_model.py" > "$evidence/source.sha256"
   riscv64-linux-gnu-gcc --version > "$evidence/compiler.txt"
 }
 build_virt() {
@@ -29,13 +33,15 @@ build_virt() {
     -DVDOT_VIRT=1 -DVDOT_MODE_SELFTEST="$selftest" -I"$workload" -I"$data" \
     -Wl,-T,"$workload/virt.ld",--build-id=none \
     "$workload/virt-start.S" "$workload/virt-platform.c" "$workload/main.c" \
-    "$workload/judge.c" "$workload/harness.S" "$workload/fixed-sites.S" -o "$evidence/workload.elf"
+    "$workload/judge.c" "$workload/diagnostics.c" "$workload/harness.S" "$workload/fixed-sites.S" -o "$evidence/workload.elf"
   riscv64-linux-gnu-objdump -d "$evidence/workload.elf" > "$evidence/disassembly.txt"
   sha256sum "$evidence/workload.elf" > "$evidence/workload.sha256"
   metadata
+  python3 team/scripts/artifact_guard.py capture-build --kind vdot --arch qemu-virt --mode "$mode" --data "$data" --evidence "$evidence"
 }
 run_virt() {
   qemu-system-riscv64 --version > "$evidence/qemu-version.txt"
+  printf 'platform=qemu-virt\nmode=%s\nimage=%s\ntimeout=30s\ncpu=rv64,v=true,vlen=128,elen=64,vext_spec=v1.0\nram=128M\nsmp=1\nbios=none\n' "$mode" "$evidence/workload.elf" > "$evidence/runtime-parameters.txt"
   set +e
   timeout 30s qemu-system-riscv64 -machine virt -cpu rv64,v=true,vlen=128,elen=64,vext_spec=v1.0 \
     -m 128M -smp 1 -nographic -bios none -kernel "$evidence/workload.elf" \
@@ -70,14 +76,16 @@ case "$action" in
       VDOT_OBJ_ROOT="$evidence/objects" BINARY="$evidence/vdot-exceptions" -j"${BUILD_JOBS:-2}"
     metadata
     sha256sum "$evidence/vdot-exceptions.elf" "$evidence/vdot-exceptions.bin" > "$evidence/workload.sha256"
+    python3 team/scripts/artifact_guard.py capture-build --kind vdot --arch riscv64-xs --mode "$mode" --data "$data" --evidence "$evidence" --am "$AM_HOME"
     ;;
   run-nemu|run-rtl)
     image=${VDOT_IMAGE:-"$root/team/out/t05e-build-xs-$mode/vdot-exceptions.bin"}
     build_evidence=$(dirname "$image")
     test -s "$image"
+    python3 team/scripts/artifact_guard.py verify-build --kind vdot --mode "$mode" --data "$data" --image "$image" --evidence "$build_evidence" > "$evidence/build-verification.json"
     sha256sum -c "$build_evidence/inputs.sha256" > "$evidence/input-verification.txt"
     sha256sum -c "$build_evidence/workload.sha256" > "$evidence/image-verification.txt"
-    export NEMU_HOME=${NEMU_HOME:-"${TEAM_XS_ENV_ROOT:-$HOME/riscv-lab/xs-env}/NEMU"}
+    export NEMU_HOME=${NEMU_HOME:?set NEMU_HOME to the actual verified candidate checkout}
     git -C "$NEMU_HOME" rev-parse HEAD > "$evidence/nemu.sha"
     git -C "$NEMU_HOME" status --short > "$evidence/nemu-working-tree.txt"
     if test -f "$NEMU_HOME/.config"; then cp "$NEMU_HOME/.config" "$evidence/nemu.config"; fi
@@ -85,9 +93,11 @@ case "$action" in
     if test "$action" = run-nemu; then
       nemu_bin=${VDOT_NEMU_BIN:?set VDOT_NEMU_BIN to a standalone NEMU executable, not the shared reference library}
       test -x "$nemu_bin"
+      python3 team/scripts/artifact_guard.py nemu-runtime --repo "$NEMU_HOME" --binary "$nemu_bin" --mode standalone > "$evidence/nemu-verification.json"
       sha256sum "$nemu_bin" > "$evidence/nemu-binary.sha256"
+      printf 'platform=nemu\nmode=%s\nbinary=%s\nimage=%s\ndata=%s\ntimeout=%s\nbatch=true\n' "$mode" "$nemu_bin" "$image" "$data" "${VDOT_RUN_TIMEOUT:-600s}" > "$evidence/runtime-parameters.txt"
       set +e
-      timeout "${VDOT_RUN_TIMEOUT:-120s}" "$nemu_bin" -b "$image" > "$evidence/run.log" 2>&1
+      timeout "${VDOT_RUN_TIMEOUT:-600s}" "$nemu_bin" -b "$image" > "$evidence/run.log" 2>&1
       run_rc=$?
       set -e
       printf '%s\n' "$run_rc" > "$evidence/exit-code.txt"
@@ -95,10 +105,12 @@ case "$action" in
     else
       emu_bin=${VDOT_EMU_BIN:-"$root/build/emu"}
       reference=${VDOT_NEMU_REF:-"$NEMU_HOME/build/riscv64-nemu-interpreter-so"}
+      python3 team/scripts/artifact_guard.py nemu-runtime --repo "$NEMU_HOME" --binary "$reference" --mode reference > "$evidence/nemu-verification.json"
       test -x "$emu_bin"; test -s "$reference"
       riscv64-linux-gnu-gcc -c -march=rv64gc -mabi=lp64d team/workloads/hello-vadd/boot-flash.S -o "$evidence/boot-flash.o"
       riscv64-linux-gnu-objcopy -O binary -j .text "$evidence/boot-flash.o" "$evidence/boot-flash.bin"
       sha256sum "$emu_bin" "$reference" "$evidence/boot-flash.bin" > "$evidence/runtime.sha256"
+      printf 'platform=rtl\nmode=%s\nbinary=%s\nimage=%s\ndata=%s\ntimeout=%s\nflash=%s\nreference=%s\nram=128MB\nmax_cycles=%s\n' "$mode" "$emu_bin" "$image" "$data" "${VDOT_RUN_TIMEOUT:-20m}" "$evidence/boot-flash.bin" "$reference" "${VDOT_MAX_CYCLES:-5000000}" > "$evidence/runtime-parameters.txt"
       set +e
       timeout "${VDOT_RUN_TIMEOUT:-20m}" "$emu_bin" -i "$image" --flash="$evidence/boot-flash.bin" \
         --ram-size=128MB --diff="$reference" --max-cycles="${VDOT_MAX_CYCLES:-5000000}" > "$evidence/run.log" 2>&1

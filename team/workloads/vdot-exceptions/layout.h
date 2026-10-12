@@ -17,6 +17,8 @@
 #define REC_PRE_CSR 104
 #define REC_POST_CSR 152
 #define REC_PRE_STATUS 200
+#define REC_PRE_REGS 208
+#define REC_PRE_VALID 720
 #define CFG_VTYPE 0
 #define CFG_VL 8
 #define CFG_VSTART 16
@@ -24,6 +26,7 @@
 #define CFG_VXSAT 32
 #define CFG_VS_OFF 40
 #define CFG_PC_BIAS 48
+#define CFG_VS 56
 #define ERR_UNARMED 1
 #define ERR_PC 2
 #define ERR_CAUSE 4

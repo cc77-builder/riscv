@@ -7,7 +7,9 @@ import re
 
 CONTRACT = 'vdot-s8x8-r32-v0.1'
 SELFTEST = {'H00-vadd-control':0x02940557,'H01-ebreak':0x00100073,
-            'H02-VS-off':0x00100073,'H03-vstart7':0x00100073,'H04-vill':0x00100073}
+            'H02-VS-off':0x00100073,'H03-vstart7':0x00100073,'H04-vill':0x00100073,
+            'H05-vadd-initial':0x02940557,'H06-vadd-clean':0x02940557}
+LEGAL_CONTROLS={'H00-vadd-control','H05-vadd-initial','H06-vadd-clean'}
 
 
 def fields(line):
@@ -18,15 +20,16 @@ def validate(content, mode, exit_code, data, *, expect_unextended=False, require
     content = re.sub(r'\x1b\[[0-?]*[ -/]*[@-~]','',content)
     if f'VDOT_BEGIN contract={CONTRACT} mode={mode}' not in content:
         raise ValueError('missing matching mode/contract begin marker')
-    if 'HARNESS_SELFTEST_PASS cases=5 negative_controls=2' not in content:
+    if 'HARNESS_SELFTEST_PASS cases=7 negative_controls=3' not in content:
         raise ValueError('harness selftest did not complete')
     negative = [fields(line) for line in content.splitlines() if line.startswith('HARNESS_NEGATIVE ')]
-    if len(negative)!=2 or {n.get('id') for n in negative}!={'N01-wrong-pc','N02-wrong-high-byte'}:
+    if len(negative)!=3 or {n.get('id') for n in negative}!={'N01-wrong-pc','N02-wrong-high-byte','N03-wrong-vs'}:
         raise ValueError('missing or duplicate negative controls')
     by_id={n['id']:n for n in negative}
     if (by_id['N01-wrong-pc'].get('result')!='TRAP_PROTOCOL' or
         int(by_id['N01-wrong-pc'].get('protocol_errors','0'),0)!=2 or
-        by_id['N02-wrong-high-byte'].get('result')!='VECTOR_CHANGED'):
+        by_id['N02-wrong-high-byte'].get('result')!='VECTOR_CHANGED' or
+        by_id['N03-wrong-vs'].get('result')!='VS_CHANGED'):
         raise ValueError('negative controls failed to detect errors')
     manifest = json.loads((data/'manifest.json').read_text())
     raw_cases = (data/'cases.jsonl').read_bytes()
@@ -83,7 +86,7 @@ def validate(content, mode, exit_code, data, *, expect_unextended=False, require
                     'pre_vd128','expected_vd128','post_vd128','pre_csr','post_csr'):
             if key not in r: raise ValueError(f'{name}: missing {key}')
         cause=int(r.get('expected_cause','-1'),0)
-        wanted_cause=(0 if name in legal_by_id else 2) if mode=='full' else (0 if name=='H00-vadd-control' else 3)
+        wanted_cause=(0 if name in legal_by_id else 2) if mode=='full' else (0 if name in LEGAL_CONTROLS else 3)
         if cause!=wanted_cause:
             raise ValueError(f'{name}: wrong expected cause')
         if int(r.get('trap_count','-1'))!=(1 if cause else 0):
@@ -95,7 +98,7 @@ def validate(content, mode, exit_code, data, *, expect_unextended=False, require
         if cause and r['expected_vd128']!=r['pre_vd128']:
             raise ValueError(f'{name}: exception must preserve the pre-instruction destination')
         if mode=='selftest':
-            wanted_vector=0xFFFFFFFFFFFFFFFF0000000000000000 if name=='H00-vadd-control' else (1<<128)-1
+            wanted_vector=0xFFFFFFFFFFFFFFFF0000000000000000 if name in LEGAL_CONTROLS else (1<<128)-1
             if int(r['post_vd128'],0)!=wanted_vector:
                 raise ValueError(f'{name}: selftest destination disagrees with known expectation')
         if int(r['resume_pc'],0)!=int(r['fault_pc'],0)+4:
@@ -105,19 +108,22 @@ def validate(content, mode, exit_code, data, *, expect_unextended=False, require
         else:
             cfg=dict(vtype=0x100 if name=='H04-vill' else 0,vl=8,
                      vstart=7 if name=='H03-vstart7' else 0,vxrm=3,vxsat=1,
-                     vs_off=int(name=='H02-VS-off'))
+                     vs_off=int(name=='H02-VS-off'),vs=1 if name=='H05-vadd-initial' else 2 if name=='H06-vadd-clean' else 3)
         csr_type=(1<<63) if cfg['vtype']&0x100 else cfg['vtype']
         csr_vl=0 if cfg['vtype']&0x100 else cfg['vl']
         wanted_csrs=(csr_type,csr_vl,cfg['vstart'],cfg['vxrm'],cfg['vxsat'],(cfg['vxrm']<<1)|cfg['vxsat'])
         if tuple(int(x,0) for x in r['pre_csr'].split('/'))!=wanted_csrs:
             raise ValueError(f'{name}: initial vector state not reached')
         off=cfg.get('vs_off',0)
-        if int(r.get('capture_phase','-1'))!=(2 if off else 1) or \
-           (((int(r['pre_mstatus'],0)>>9)&3)==0)!=bool(off):
+        before_vs=(int(r['pre_mstatus'],0)>>9)&3
+        after_vs=(int(r['raw_mstatus'],0)>>9)&3
+        if int(r.get('capture_phase','-1'))!=(2 if off else 1) or before_vs!=(0 if off else cfg['vs']):
             raise ValueError(f'{name}: VS/capture phase mismatch')
-        if (off and ((int(r['raw_mstatus'],0)>>9)&3)!=0) or \
-           (cause==0 and ((int(r['raw_mstatus'],0)>>9)&3)!=3):
+        if (off and after_vs!=0) or (cause==0 and after_vs!=3) or \
+           (cause!=0 and not off and after_vs not in (before_vs,3)):
             raise ValueError(f'{name}: wrong vector status')
+        if int(r.get('requested_vs','-1'))!=(0 if off else cfg['vs']) or int(r.get('pre32_checked','0'))!=1:
+            raise ValueError(f'{name}: missing exact initial state observation')
         if int(r.get('all32_checked','0'))!=1 or int(r.get('guards_ok','0'))!=1 or \
            int(r.get('protocol_errors','-1'),0)!=0:
             raise ValueError(f'{name}: incomplete state check')

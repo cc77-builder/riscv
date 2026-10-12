@@ -75,7 +75,17 @@ vdot_run:
     .set reg, reg+1
   .endr
   .noaltmacro
+  addi t0, s0, REC_PRE_REGS
+  .altmacro
+  .set reg, 0
+  .rept 32
+    store_reg %reg
+    .set reg, reg+1
+  .endr
+  .noaltmacro
   ld t0, CFG_VXRM(s1)
+  li t1, 1
+  sd t1, REC_PRE_VALID(s0)
   csrw vxrm, t0
   ld t0, CFG_VXSAT(s1)
   csrw vxsat, t0
@@ -85,6 +95,11 @@ vdot_run:
   ld t0, CFG_VSTART(s1)
   csrw vstart, t0
   capture_csrs REC_PRE_CSR
+  li t0, 0x600
+  csrc mstatus, t0
+  ld t0, CFG_VS(s1)
+  slli t0, t0, 9
+  csrs mstatus, t0
   ld t0, CFG_VS_OFF(s1)
   beqz t0, 1f
   li t0, 0x600
