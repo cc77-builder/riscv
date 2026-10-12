@@ -1,8 +1,8 @@
 # vdot 异常测试方案
 
-版本：`0.1.0-draft`，2026-10-11。适用合同：`vdot-s8x8-r32-v0.1`。
+版本：`0.1.1-draft`，2026-10-12。适用合同：`vdot-s8x8-r32-v0.1`。
 
-状态：方案已起草，异常 workload、陷阱处理程序和运行脚本尚未实现，尚未执行测试。B 负责指令与异常用例，C 负责采集和判定，A 复核 RTL 异常路径；这些沿用计划角色，不代替成员认领或签字。
+状态：异常 workload、陷阱处理程序、判定器与运行脚本已实现；QEMU harness 自测和负控通过，固定 nexus-am 的香山目标编译通过。真实 vdot 的 standalone NEMU / 全核 DiffTest 尚未运行通过。实现入口见 [异常 workload](../workloads/vdot-exceptions/README.md)，范围与证据见 [T05/T05-E 初评](../docs/t05-t05e-review.md)。B/C 复核程序与采集判定，A 复核 RTL 异常路径；这些沿用计划角色，不代替成员认领或签字。
 
 关联：[vdot 规格](vdot.md) §4.3、E01/E02；[RTL 接口](rtl-interface.md)；[进度](../progress.md) R02/R03。算术合法用例先按 T05/T07/T08 推进，异常方案落实为 T05-E，完整执行验收进入 T08/T11/T12。
 
@@ -25,7 +25,7 @@
 
 ## 2. workload 与陷阱处理流程
 
-拟实现目录：`team/workloads/vdot-exceptions/`，包含裸机 C 调度、独立 `.S` 用例和陷阱入口。先查清固定 nexus-am 的 mtvec/异常入口，选择兼容的安装方式；不在尚未审查启动库时直接覆盖入口。测试执行于 M 模式，固定 direct mtvec 和处理程序栈，设置中断条件以排除非预期中断。
+实现目录：[team/workloads/vdot-exceptions](../workloads/vdot-exceptions/)，包含裸机 C 调度、生成的固定 `.S` 用例和陷阱入口。已查清固定 nexus-am 的默认 M 模式启动路径，保存/恢复 mtvec/mscratch/mie/mstatus，临时安装 direct mtvec 和独立处理程序栈，并屏蔽中断。该路径在 QEMU 验证，香山/NEMU 的实际运行仍待验收。
 
 每个用例按以下顺序执行：
 
@@ -101,11 +101,11 @@ csr_capture_phase,pre_vd128,post_vd128,source_check,guard_check,result
 
 ## 6. 实现交付清单
 
-- [ ] B/C 完成 T05-E：入口、GPR 保存、用例 arm/resume、日志和失败汇总。
-- [ ] 完成 harness 自测与两种负控；确认不会破坏被测向量数据。
+- [x] 已实现入口、GPR 保存、用例 arm/resume、日志和失败汇总；B/C 人工复核待完成。
+- [x] QEMU harness 自测与两种负控通过，完成全部 32 个完整向量寄存器的观察比较；目标平台复验待完成。
 - [ ] A 复核 late illegal 与早期非法的路径；不产生故障指令架构写回。
 - [ ] X00～X10 的实际状态、用例子集和不可达状态均有记录。
 - [ ] standalone NEMU 与全核 DiffTest 分别运行通过，包含合法 vdot 对照。
 - [ ] 原有 hello/vadd 仍通过；本方案和运行产物使用相同合同及配套 SHA。
 
-本文只完成方案交付；所有实现与运行检查项仍待执行。
+当前交付为方案、基础设施代码与本地自测/编译证据。X00 对应 D00/D03 等合法对照；已生成 X01～X10 的 35 个异常子例。真实 vdot 的异常运行、A/B/C 人工评审以及 T08/T11/T12 验收项仍待完成，不能将自测通过标作全核通过。
