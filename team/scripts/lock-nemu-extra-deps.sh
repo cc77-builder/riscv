@@ -2,6 +2,7 @@
 set -euo pipefail
 source "$(dirname "${BASH_SOURCE[0]}")/activate.sh"
 source "$TEAM_PROJECT_ROOT/team/versions.env"
+if test -n "${1:-}"; then export NEMU_HOME=$1; fi
 test "$(git -C "$NEMU_HOME" rev-parse HEAD)" = "$NEMU_REV"
 restore() {
   local rel=$1 url=$2 sha=$3 target="$NEMU_HOME/$1"

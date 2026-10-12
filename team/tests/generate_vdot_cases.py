@@ -7,7 +7,7 @@ from pathlib import Path
 
 from vdot_model import CONTRACT_ID, MODEL_VERSION, VectorState, dot_s8, encode, execute
 
-GENERATOR_VERSION = "1.0.0"
+GENERATOR_VERSION = "1.1.0"
 SEED = 0x20261011
 DIRECTED = [
     ("D00", [0]*8, [127]*8, 0),
@@ -188,13 +188,16 @@ def write_text(path, data):
     path.write_bytes(data.encode('utf-8') if isinstance(data,str) else data)
 
 
-def generate(output, count, seed):
+def generate(output, count, seed, smoke_random_count=32):
+    if smoke_random_count < 0:
+        raise ValueError('nonnegative smoke random count required')
     directed = directed_cases()
     random = list(random_cases(count, seed))
     data = jsonl(directed + random)
     write_text(output/'cases.jsonl',data)
-    write_text(output/'cases.h',emit_header(directed+random[:32]))
-    asm,header = emit_stubs(directed+random[:32])
+    smoke = directed+random[:smoke_random_count]
+    write_text(output/'cases.h',emit_header(smoke))
+    asm,header = emit_stubs(smoke)
     write_text(output/'word-sites.S',asm)
     write_text(output/'stubs.h',header)
     write_text(output/'exceptions.json',json.dumps(exception_cases(),sort_keys=True,indent=2)+'\n')
@@ -202,7 +205,7 @@ def generate(output, count, seed):
                for p in (Path(__file__),Path(__file__).with_name('vdot_model.py'))}
     manifest = dict(contract_id=CONTRACT_ID,model_version=MODEL_VERSION,generator_version=GENERATOR_VERSION,
                     prng='xorshift32-v1-low-byte',seed=f'0x{seed:08x}',random_count=count,
-                    directed_count=len(directed),total=len(directed)+count,smoke_count=len(directed)+min(32,count),
+                    directed_count=len(directed),total=len(directed)+count,smoke_count=len(smoke),
                     byte_order='little',register_hex_order='most-significant-byte-first',source_sha256=sources,
                     cases_sha256=hashlib.sha256(data).hexdigest(),exception_count=len(exception_cases()))
     manifest['artifacts_sha256'] = {name:hashlib.sha256((output/name).read_bytes()).hexdigest()
@@ -216,5 +219,6 @@ if __name__ == '__main__':
     parser.add_argument('--output',type=Path,default=Path(__file__).resolve().parents[1]/'out/t05')
     parser.add_argument('--random-count',type=int,default=10000)
     parser.add_argument('--seed',type=lambda s:int(s,0),default=SEED)
+    parser.add_argument('--smoke-random-count',type=int,default=32)
     args = parser.parse_args()
-    print(json.dumps(generate(args.output,args.random_count,args.seed),sort_keys=True))
+    print(json.dumps(generate(args.output,args.random_count,args.seed,args.smoke_random_count),sort_keys=True))

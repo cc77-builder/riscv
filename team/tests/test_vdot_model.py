@@ -103,6 +103,16 @@ class ModelTests(unittest.TestCase):
                                   vxrm=c['vxrm'],vxsat=c['vxsat'])
                 self.assertEqual(execute(c['word'],state).cause,2)
 
+    def test_extended_workload_count_and_manifest(self):
+        with tempfile.TemporaryDirectory() as d:
+            m=generate(Path(d),1000,0x20261011,1000)
+            self.assertEqual(m['smoke_count'],1048)
+            self.assertEqual(m['exception_count'],35)
+            header=(Path(d)/'cases.h').read_text()
+            self.assertIn('R00999',header)
+            self.assertNotIn('R01000',header)
+        with self.assertRaises(ValueError): generate(Path('.'),1,0x20261011,-1)
+
 
 if __name__ == '__main__':
     unittest.main()

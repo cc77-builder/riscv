@@ -1,8 +1,10 @@
 # T05-E 异常 workload
 
-本程序已实现准备、独立陷阱入口、现场记录、完整向量读回、严格判定及汇总。已在 QEMU 通过 harness 自测，已编译固定 nexus-am 的香山 ELF/bin；实际 vdot 的 NEMU/RTL 路径仍待 T08/T11 验收。
+本程序已实现准备、独立陷阱入口、现场记录、完整向量读回、严格判定及汇总。QEMU harness 自测、固定 nexus-am 香山目标编译和 T08 standalone NEMU 的真实 vdot 验收已通过；RTL/NEMU 全核路径仍待 T11，见 [T08 记录](../../docs/t08-nemu.md)。
 
 程序关联 [异常方案](../../spec/exception-tests.md)、[T05 数据](../../tests/README.md) 与 [本次评审](../../docs/t05-t05e-review.md)。默认 `full` 模式包括 80 个算术/合法状态用例和 35 个异常子例，先完成处理程序自测，再运行扩展用例。任一合法对照失败立即停止扩展验收；不可达初态算覆盖缺口，整体非零退出。
+
+T08 已交付 [NEMU 补丁与构建入口](../../patches/nemu/README.md)，可先构建 standalone/reference，再执行以下目标命令。默认规模保持 80+35；扩大随机规模及独立目录的配置方法见 T08 记录。
 
 Linux/WSL 命令从仓库根执行；使用安装了 RISC-V GCC/binutils 和 QEMU system 的环境：
 

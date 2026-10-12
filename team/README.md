@@ -2,7 +2,7 @@
 
 本队以《香山 vdot 赛题：执行计划》和《香山 vdot 赛题：三人分工与 Git 协作》作为项目计划文档，分别安排里程碑、验收标准和三人职责。成员先阅读两份计划，再按认领的任务推进开发。
 
-本目录同时保存本队在 2026-10-09 完成的环境搭建、hello/vadd 源码和阶段一证据，并提供按当前仓库位置运行的脚本。香山硬件基线为 `16ae9ddcda54fc9a2fddffad73174cf793ac7814`。已有 T05 独立模型、数据与 T05-E 异常程序和自测；vdot RTL/NEMU 尚未实现。计划中的后续任务按实际验收结果更新进度。
+本目录同时保存本队在 2026-10-09 完成的环境搭建、hello/vadd 源码和阶段一证据，并提供按当前仓库位置运行的脚本。香山硬件基线为 `16ae9ddcda54fc9a2fddffad73174cf793ac7814`。已有 T05 模型/数据、T05-E 异常程序与 T08 NEMU 候选实现及本地验收；vdot RTL 和全核 DiffTest 尚未完成。计划中的后续任务按实际验收结果更新进度。
 
 | 内容 | 入口 |
 | --- | --- |
@@ -15,6 +15,8 @@
 | T05 独立数学模型、定向/随机数据与检查入口 | [模型与测试数据](tests/README.md) |
 | T05-E 异常程序、运行自测与香山目标构建 | [异常 workload](workloads/vdot-exceptions/README.md) |
 | T05/T05-E 实现检查、证据及剩余边界 | [实现与合理性初评](docs/t05-t05e-review.md) |
+| T08 NEMU 实现、补丁复现、standalone 验收与参考库 | [NEMU 实现与验收](docs/t08-nemu.md) |
+| 固定 NEMU 基线加 vdot 补丁、源码/配置/二进制版本记录 | [NEMU 补丁交付](patches/nemu/README.md) |
 | WSL、工具版本、安装方法、配套依赖 | [环境说明](docs/environment.md) |
 | 构建和运行命令、启动问题、通过标准 | [阶段一说明](docs/stage1.md) |
 | hello/vadd 测试源码 | [workloads/hello-vadd](workloads/hello-vadd/) |

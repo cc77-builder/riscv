@@ -6,10 +6,11 @@ action=${1:-host}
 mode=${2:-full}
 case "$mode" in full|selftest) ;; *) echo 'mode must be full or selftest' >&2; exit 2;; esac
 case "$action" in virt-selftest) mode=selftest;; virt-full-negative) mode=full;; esac
-data="$root/team/out/t05"
+data=${VDOT_DATA:-"$root/team/out/t05"}
 evidence=${TEAM_EVIDENCE_DIR:-"$root/team/out/t05e-$action-$mode"}
 mkdir -p "$evidence"
-python3 team/tests/generate_vdot_cases.py --output "$data" > "$evidence/data-manifest.json"
+python3 team/tests/generate_vdot_cases.py --output "$data" \
+  --random-count="${VDOT_RANDOM_COUNT:-10000}" --smoke-random-count="${VDOT_SMOKE_RANDOM_COUNT:-32}" > "$evidence/data-manifest.json"
 workload="$root/team/workloads/vdot-exceptions"
 
 metadata() {
