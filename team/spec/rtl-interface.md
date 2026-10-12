@@ -6,10 +6,12 @@
 | 指令合同 | [`vdot-s8x8-r32-v0.1`](vdot.md)，本设计不改变语义或候选编码 |
 | 硬件基线 | XiangShan `16ae9ddcda54fc9a2fddffad73174cf793ac7814` |
 | 起草前团队提交 | `720dd3d668929123b8ab35e947c67f68ef595c65`，分支 `zjhwork` |
-| 状态 | 已完成固定源码阅读和第一版接入设计；RTL、RTL 测试、NEMU 扩展和全核验证尚未实现 |
+| 状态 | 已完成第一版接入设计；T07-A 组合算术已实现并通过 10,022 组 RTL 比较；FU 接口、NEMU 扩展和全核验证待实现 |
 | 责任 | A 负责接口和 RTL；B 复核合同、译码和 NEMU 对齐；C 复核时序、异常与验收；B/C 人工确认待记录 |
 
 本文中的“源码事实”指已阅读锁定版本得到的结论，“拟实现”指下一步要写的代码，“验收要求”指尚未执行的检查。不得把拟实现的周期数、测试数量或预期信号写成实测结果。项目安排见[执行计划](../香山vdot赛题_执行计划.md)和[三人分工](../香山vdot赛题_三人分工与Git协作.md)。
+
+2026-10-12 T07-A 更新：第 2 节的乘积/归约模块及组合连接顶层已经实现，见[算术单元说明](../rtl/vdot/README.md)和[通过证据](../evidence/rtl-datapath-20261012/README.md)。第 3～6 节的 FU 接口、状态机、译码和全核接入仍为设计；组合仿真不验证第 4 节的周期目标。
 
 ## 1. 首版方案及边界
 
@@ -19,7 +21,7 @@
 
 选择此处可沿用不定延迟的反压与 busy 协议，但会和向量除法竞争资源，且首版不是每拍接收一条指令。已有向量乘加 FU 使用通用 mask/tail 合并，本指令需要完整覆盖 128 位目的，因此首版新增小型算术通路，暂不复用其内部乘法器。是否共享乘法器应另做面积与时序实验，不能仅凭复用名称认定成本更低。
 
-本次交付设计文档；后续先做 T07 单元及单元测试，再按 T10 接入全核。T08 NEMU 可由 B 按相同合同推进。接口草案形成不等于 T06 全部验收完成，编码包装的一致性和人工评审仍须完成。
+T06 首次交付设计文档；T07-A 组合算术现已通过，接下来完成 T07-B 包装层，再按 T10 接入全核。T08 NEMU 可由 B 按相同合同推进。接口草案形成不等于 T06 全部验收完成，编码包装的一致性和人工评审仍须完成。
 
 ```mermaid
 flowchart LR
@@ -48,9 +50,9 @@ flowchart LR
 
 负数示例：和为 `-8` 时，完整结果必须为 `0x000000000000000000000000fffffff8`。不能直接把 19 位和符号扩展到 128 位，也不能按 SEW=8 截断。
 
-拟在 `VDotDatapath.scala` 定义两个纯组合子模块：`VDotProducts` 接受两个 128 位源、输出 8 个 16 位乘积；`VDotReduce` 接受这 8 个乘积、输出完整 128 位结果。算术测试连接两者；包装层 `VDot` 在两者之间插入乘积寄存器，输入和输出也按第 4 节寄存。这样测试与实际包装层使用同一份算术模块，避免各维护一套算法。
+已在 `VDotDatapath.scala` 定义两个纯组合子模块：`VDotProducts` 接受两个 128 位源、输出 8 个 16 位乘积；`VDotReduce` 接受这 8 个乘积、输出完整 128 位结果。`VDotDatapath` 顶层连接两者并用于本轮算术测试。后续包装层 `VDot` 在两者之间插入乘积寄存器，输入和输出也按第 4 节寄存。这样测试与实际包装层使用同一份算术模块，避免各维护一套算法。
 
-建议新增位置：`src/main/scala/xiangshan/backend/fu/vector/VDotDatapath.scala` 与 `src/main/scala/xiangshan/backend/fu/wrapper/VDot.scala`。这是拟新增文件名，当前不存在，不要求改外部 yunsuan 子模块。
+位置：`src/main/scala/xiangshan/backend/fu/vector/VDotDatapath.scala` 已新增；`src/main/scala/xiangshan/backend/fu/wrapper/VDot.scala` 尚待实现。本轮无需修改外部 yunsuan 子模块。
 
 ## 3. 功能单元接口
 
@@ -197,7 +199,7 @@ flowchart LR
 | 9 | `backend/decode/DecodeStage.scala`、`backend/rename/`、`backend/issue/`、`backend/datapath/` | 核查 v0、旧 vd、VL 唤醒、OG2 阻塞重试和写回；只有证据显示通用路径不适用时才改 |
 | 10 | `backend/exu/ExeUnit.scala`、`backend/rob/Rob.scala` | 核查 busy、one-hot、异常完成、取消和提交；预期复用现有机制 |
 
-实际配置仍用现有 MinimalConfig，完整依赖见 [versions.env](../versions.env)。不新增大配置构建、不修改子模块引用、不将构建产物/波形加入日常提交。独立模块测试入口和最小 elaboration 命令由 T07 根据当前 Mill/Chisel 工程写好并保存；本文不提供尚不存在的一键 RTL 测试命令。
+后续全核配置仍用现有 MinimalConfig，完整依赖见 [versions.env](../versions.env)。不新增大配置构建、不修改子模块引用、不将构建产物/波形加入日常提交。T07-A 已提供独立算术入口 `bash team/scripts/check-vdot-datapath.sh`，其 Mill 目标不构建 CPU；FU 包装层测试入口仍待 T07-B 实现。
 
 ## 6. 配置检查和异常完成
 
@@ -222,7 +224,7 @@ ROB 的向量置脏/vstart 清零与 commit 相关，`Rob.scala:691–715` 另�
 
 ## 7. 验证矩阵和断言
 
-下面全部是 T07/T10/T11 的待执行项；目前仅 T05 Python 参考模型有[通过记录](../evidence/model-20261012/README.md)。不重新生成测试数据，不改变 manifest 或期望值来迁就 RTL。
+下表算术单元一行已在 T07-A 通过，另完成 bit 0/127 读回比较器自检，见[RTL 证据](../evidence/rtl-datapath-20261012/README.md)；其余接口/接入项仍待 T07-B/T10/T11 执行。T05 Python 参考模型的[通过记录](../evidence/model-20261012/README.md)单独保留。不重新生成测试数据，不改变 manifest 或期望值来迁就 RTL。
 
 | 层次 | 用例/刺激 | 必须比较或观察 |
 | --- | --- | --- |
@@ -276,7 +278,8 @@ ROB 的向量置脏/vstart 清零与 commit 相关，`Rob.scala:691–715` 另�
 | 固定版本源码、输入/输出字段、状态依赖和接入位置已核对 | 已完成源码静态阅读 |
 | 数据宽度、单请求时序、反压、取消、异常和测试矩阵已给出 | 已形成第一版设计 |
 | 官方对 v0.1 歧义的回复、团队接口人工签字 | 待记录，参见 [vdot.md 第 9～10 节](vdot.md#9-歧义清单与变更流程) |
-| RTL 编译、单元仿真、全核 vdot 和 NEMU DiffTest | 尚未开展，不能据本文标记通过 |
+| 组合算术编译和 RTL 仿真 | T07-A 已通过 22+10,000 组完整结果及低/高位读回比较器自检 |
+| FU 包装层仿真、全核 vdot 和 NEMU DiffTest | 尚未开展，不能据组合算术通过标记完成 |
 
 ## 9. 源码依据与复核方法
 
@@ -308,6 +311,6 @@ rg -n 'busyReg|fuOutValidOH' src/main/scala/xiangshan/backend/exu/ExeUnit.scala
 rg -n 'notWrite|input.fire' src/main/scala/xiangshan/backend/datapath/WbArbiter.scala
 ```
 
-起草时上述硬件差异为空，HEAD 如文首所列。本次只增加/更新文档，不重建 NEMU 或 emu；既有 hello/vadd 证据只能证明原基线，不代表 vdot 已接入。
+原 T06 起草时上述硬件差异为空，HEAD 如文首所列；当次只更新文档。T07-A 后该差异包含新增组合算术文件和独立构建入口。两次均未重建 NEMU 或 emu；既有 hello/vadd 证据只能证明原基线，不代表 vdot 已接入。
 
-本次文档自检包括：新增表中的 13 处固定源码链接及行号与本机基线对应；本地 Markdown 目标和章节锚点存在；三份改动文档为 UTF-8/LF；本设计没有修改模型、测试向量或硬件源码。上述是静态文档检查，不是 Chisel 编译或 RTL 仿真。
+原 T06 文档自检包括：表中的 13 处固定源码链接及行号与本机基线对应；本地 Markdown 目标和章节锚点存在；三份改动文档为 UTF-8/LF；当次未修改模型、测试向量或硬件源码。上述静态检查与 T07-A 新增的 RTL 仿真证据分别记录。
