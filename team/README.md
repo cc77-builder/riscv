@@ -2,13 +2,15 @@
 
 本队以《香山 vdot 赛题：执行计划》和《香山 vdot 赛题：三人分工与 Git 协作》作为项目计划文档，分别安排里程碑、验收标准和三人职责。成员先阅读两份计划，再按认领的任务推进开发。
 
-本目录同时保存本队在 2026-10-09 完成的环境搭建、hello/vadd 源码和阶段一证据，并提供按当前仓库位置运行的脚本。香山硬件基线为 `16ae9ddcda54fc9a2fddffad73174cf793ac7814`，尚未实现 vdot。计划中的后续任务按实际验收结果更新进度。
+本目录同时保存本队在 2026-10-09 完成的环境搭建、hello/vadd 源码和阶段一证据，并提供按当前仓库位置运行的脚本。香山硬件基线为 `16ae9ddcda54fc9a2fddffad73174cf793ac7814`。`zjhwork` 已提供 vdot 独立数学模型与测试数据，vdot 硬件及 NEMU 扩展尚未实现。计划中的后续任务按实际验收结果更新进度。
 
 | 内容 | 入口 |
 | --- | --- |
 | 项目计划：阶段目标、执行步骤与验收标准 | [香山 vdot 赛题：执行计划](香山vdot赛题_执行计划.md) |
 | 项目计划：A/B/C 分工、评审与 Git 协作 | [香山 vdot 赛题：三人分工与 Git 协作](香山vdot赛题_三人分工与Git协作.md) |
 | vdot 指令语义、候选编码、测试与待确认问题（第一版草案） | [vdot.vv 规格](spec/vdot.md) |
+| 独立数学模型、定向/随机测试数据及一键检查（T05） | [vdot 模型与数据](models/vdot/README.md) |
+| T05 主机检查结果、数据来源与已知边界 | [模型验证记录](evidence/model-20261012/README.md) |
 | WSL、工具版本、安装方法、配套依赖 | [环境说明](docs/environment.md) |
 | 构建和运行命令、启动问题、通过标准 | [阶段一说明](docs/stage1.md) |
 | hello/vadd 测试源码 | [workloads/hello-vadd](workloads/hello-vadd/) |
@@ -42,7 +44,9 @@ bash team/scripts/stage1.sh run
 
 ## Git 协作
 
-每个任务从 `main` 建分支并通过 Pull Request 合并。新成员克隆目录的团队远程是 `origin`；现有本机仿真目录的团队远程是 `team`。
+当前按项目负责人的约定，从数学模型这一步开始，开发内容先提交和推送到 `zjhwork` 分支，暂不合并或推送到 `main`。现有本机仓库使用 `git push team zjhwork`；新克隆仓库使用 `git push origin zjhwork`。其他成员取得本轮内容后，运行 `bash team/scripts/check-vdot-model.sh` 复核。
+
+团队常规协作使用任务分支并通过 Pull Request 合并；当前这一轮以 `zjhwork` 约定为准。需要另开任务分支时，先约定基准分支和合并目标。新成员克隆目录的团队远程是 `origin`；现有本机仿真目录的团队远程是 `team`。
 
 ```bash
 git switch -c feat/自己的任务名
