@@ -1,5 +1,7 @@
 # vdot FU 包装层与控制验证（T07-B）
 
+> 2026-10-13 本机续验收：固定候选 C 的组合及真实 FU 重新生成/编译/测试 PASS；见 [最新报告](../../merge/2026-10-13-zjhwork-into-zufan.codex-review.md)。尚未 Push，真实交接待完成。以下旧日期/证据仍为历史记录。
+
 2026-10-13 已实现真实香山功能单元 [VDot.scala](../../../src/main/scala/xiangshan/backend/fu/wrapper/VDot.scala)，继承 `VecNonPipedFuncUnit`，使用真实 `FuncUnitIO`、`FuConfig` 和 `RobPtr.needFlush`。**带 RTL 断言的 Verilator 验证通过 6 类场景、71,258 个周期。** [归档证据](../../evidence/rtl-fu-20261013/README.md)保存实际命令、版本、摘要、结果和预期拒错日志。
 
 本轮完成独立 FU，不代表指令已经能在 CPU 中执行。尚未新增译码或把 `VDotCfg` 加入 `VFEX4`，NEMU、真实写回仲裁、ROB 异常提交和全核 DiffTest 均待后续集成。
@@ -34,7 +36,8 @@ RTL 内部断言检查目的类型、合法响应的高位零、异常禁写以�
 在完整、已初始化子模块并安装配套工具的香山仓库中运行：
 
 ```bash
-git switch zjhwork
+# 发布前在报告指定的固定候选检出中测试；发布并接收后使用共享 zufan
+# 已有开发目录先检查未提交工作，再按真实接收 SHA 切换，勿盲目 pull
 bash team/scripts/check-vdot-fu.sh
 ```
 
@@ -77,4 +80,4 @@ FU 单元测试允许直接注入 VM/vill/vstart 等控制，有些状态在真�
 
 以下仍需集成验证：准确 custom-0 译码和单 uop、源/目的重命名及 v0 物理路径、VL 唤醒依赖、OG2 重试、VFEX4 busy/时钟门控和其他 FU 竞争、写回仲裁、ROB 精确异常、CSR 副作用，以及 NEMU 协同验证。当前 `v0Wen` 单元通过只证明响应控制位，不能替代 v0 寄存器通路测试。
 
-下一步按计划推进 NEMU 独立扩展与 T10 译码/VFEX4 接入，并先回归 hello/vadd，再执行真实 vdot 程序及 DiffTest。全部开发保持 `zjhwork`；核心接口合并前仍需另外两名成员人工复核。
+下一步按计划推进 NEMU 独立扩展与 T10 译码/VFEX4 接入，并先回归 hello/vadd，再执行真实 vdot 程序及 DiffTest。原“全部开发保持 zjhwork”是合并前历史用法；发布并接收后改为共享 `zufan` 独立工作区错峰推进；核心接口合并前仍需另外两名成员人工复核。

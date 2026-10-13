@@ -1,6 +1,6 @@
 # 三人团队：项目计划与开发入口
 
-> **2026-10-13 合并候选状态：** 当前独立检出已包含 `zjhwork@ffec67e3` 的模型、组合 RTL 和 FU，以及 `zufan@4a916689` 的研究和协作规则。Git 内容保全与主机回归通过；新 RTL 复跑被本机工具链缺失阻塞，独立复核/双方交接待完成，**尚未发布到团队 zufan**。参见 [执行报告](merge/2026-10-13-zjhwork-into-zufan.result.md)。以下分支迁移指引在真正发布并接收后再更新生效，不能根据本地候选直接停用旧分支。
+> **2026-10-13 最新状态：待交接发布。** 固定候选 C 已重新通过 Git/主机/组合 RTL/真实 FU 验收及独立代码复核；组合 22+10000 组、FU 6 类/71258 周期。尚缺真实成员交接，未向团队或 Fork Push。见 [最新独立验收报告](merge/2026-10-13-zjhwork-into-zufan.codex-review.md)。发布并接收后，两人共享 zufan；此前不能假定远端已含候选或自动停用 zjhwork。
 
 本队以《香山 vdot 赛题：执行计划》和《香山 vdot 赛题：三人分工与 Git 协作》作为项目计划文档，分别安排里程碑、验收标准和三人职责。成员先阅读两份计划，再按认领的任务推进开发。
 
@@ -36,7 +36,8 @@ T05 数学模型、T07-A 组合算术和 T07-B 独立 FU 均已有通过证据�
 先接受私有仓库邀请。在 Ubuntu 22.04 / WSL2 的 Linux 文件系统中：
 
 ```bash
-git clone --recurse-submodules https://github.com/cc77-builder/riscv.git
+# 仅在候选已发布到 zufan 且完成接收后使用；否则按验收报告检出固定候选
+git clone --branch zufan --recurse-submodules https://github.com/cc77-builder/riscv.git
 cd riscv
 bash team/scripts/prepare-dependencies.sh
 # 按 docs/environment.md 安装匹配的工具，已有环境可跳过安装
@@ -50,13 +51,13 @@ bash team/scripts/stage1.sh run
 
 配套 xs-env 默认位于 `$HOME/riscv-lab/xs-env`。需要放在其他位置时，先 `export TEAM_XS_ENV_ROOT=/你的目录/xs-env`。脚本把当前团队仓库作为 `NOOP_HOME`，配套环境只提供 NEMU、nexus-am、DRAMsim3 及安装工具入口。
 
-已有本机环境仍使用原来的 `/home/riscv/riscv-lab/xs-env/XiangShan`，不用重新克隆或重新编译已有且配置相同的仿真器；直接从该目录运行上面的环境检查、workload 和 run 即可。
+历史成员环境路径为 `/home/riscv/riscv-lab/xs-env/XiangShan`，不能假定其他电脑存在同一路径。本次独立本机检出位于 `/home/lizufan/xiangshan-validation-20261013/repo`，只做组合/FU验证，未建立完整 NEMU/全核环境。已有仿真器仅在源码/配置完全对应时复用。
 
 默认采用 MinimalConfig、单核、单仿真线程、JVM 12G、构建并行度 2。`BUILD_JOBS`、`JVM_HEAP` 可显式调整；普通运行不生成波形，使用 `DUMP_WAVE=1 bash team/scripts/stage1.sh run` 可生成 FST。各步骤输出保存到 `team/out/`，不会自动进入 Git。
 
 ## Git 协作（2026-10-13 当前约定）
 
-请先阅读 [三人两线协作机制](docs/collaboration-current.md) 和根目录 [AGENTS.md](../AGENTS.md)。目标为 `zufan` 两人共享开发线、`James_Hotten` 另一开发线，`main` 保持稳定；`zjhwork → zufan` 仍待按合并任务单执行，不自动删旧分支。
+请先阅读 [三人两线协作机制](docs/collaboration-current.md) 和根目录 [AGENTS.md](../AGENTS.md)。目标为 `zufan` 两人共享开发线、`James_Hotten` 另一开发线，`main` 保持稳定；`zjhwork → zufan` 本地合并和局部验收已完成，仍待真实交接发布，不自动删旧分支。
 
 两人**独立工作区并行开发/验证**，仅团队共享远端 `zufan` 的 Push 在 START → RELEASE → ACK 协议下错峰进行；所有验收绑定实际 SHA，不强推、不让后续代码静默改变已评审 PR。交接主记录位于团队仓库的一个统一位置，Issue/Discussion 或 Markdown 均可，不强制 Issue。
 
@@ -64,9 +65,9 @@ bash team/scripts/stage1.sh run
 
 ### 历史说明：旧版单任务功能分支流程（不是当前共享线的默认操作）
 
-当前按项目负责人的约定，从数学模型这一步开始，开发内容先提交和推送到 `zjhwork` 分支，暂不合并或推送到 `main`。现有本机仓库使用 `git push team zjhwork`；新克隆仓库使用 `git push origin zjhwork`。其他成员取得本轮内容后，运行 `bash team/scripts/check-vdot-model.sh` 复核。
+**历史用法（合并前记录，不是当前推送指令）：** 从数学模型这一步开始，开发内容曾先提交和推送到 `zjhwork` 分支，暂不合并或推送到 `main`。现有本机仓库使用 `git push team zjhwork`；新克隆仓库使用 `git push origin zjhwork`。其他成员取得本轮内容后，运行 `bash team/scripts/check-vdot-model.sh` 复核。
 
-团队常规协作使用任务分支并通过 Pull Request 合并；当前这一轮以 `zjhwork` 约定为准。需要另开任务分支时，先约定基准分支和合并目标。新成员克隆目录的团队远程是 `origin`；现有本机仿真目录的团队远程是 `team`。
+团队常规协作使用任务分支并通过 Pull Request 合并；该历史阶段以 `zjhwork` 约定为准。需要另开任务分支时，先约定基准分支和合并目标。新成员克隆目录的团队远程是 `origin`；现有本机仿真目录的团队远程是 `team`。
 
 ```bash
 git switch -c feat/自己的任务名

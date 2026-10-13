@@ -1,5 +1,7 @@
 # vdot 组合算术单元与 RTL 验证（T07-A）
 
+> 2026-10-13 本机续验收：固定候选 C 的组合及真实 FU 重新生成/编译/测试 PASS；见 [最新报告](../../merge/2026-10-13-zjhwork-into-zufan.codex-review.md)。尚未 Push，真实交接待完成。以下旧日期/证据仍为历史记录。
+
 2026-10-12 已实现并验证合同 `vdot-s8x8-r32-v0.1` 的组合算术：每源低 8 个 signed int8 相乘求和，结果符号扩展到低 32 位，高 96 位清零。**22 组定向和 10,000 组随机数据均通过完整 128 位比较。** [验证证据](../../evidence/rtl-datapath-20261012/README.md)保存命令、工具版本、源文件摘要与结果。
 
 这是 T07 的算术部分。模块没有时钟、ready/valid、ROB/目的寄存器、flush 或配置检查，尚未接入香山执行单元或 NEMU；其组合正确性不能代表指令已在 CPU 上运行，也不能推导指令周期或频率。
@@ -9,7 +11,8 @@
 在已有依赖和工具的完整香山仓库中运行：
 
 ```bash
-git switch zjhwork
+# 发布前在报告指定的固定候选检出中测试；发布并接收后使用共享 zufan
+# 已有开发目录先检查未提交工作，再按真实接收 SHA 切换，勿盲目 pull
 bash team/scripts/check-vdot-datapath.sh
 ```
 
@@ -75,4 +78,4 @@ VDOT_DATAPATH_CHECK_PASS (combinational RTL only; no FU protocol/CPU/NEMU valida
 
 2026-10-13 已按照 [RTL 接口设计](../../spec/rtl-interface.md) 实现并验证 T07-B 的 `VDot` 包装层：快照源和身份，放置乘积/结果寄存器，实现单请求状态机、反压、`RobPtr.needFlush` 取消和异常响应。见 [FU 包装层说明](FU.md)及[独立验证证据](../../evidence/rtl-fu-20261013/README.md)。后续进行译码、VFEX4 接入和全核验证；本页的组合算术记录仍只证明 T07-A 范围。
 
-工作保存在 `zjhwork`；核心接口人工评审仍须由团队其他两位成员完成，自动检查与代码审查不代替人工签字。
+原始工作保存在 `zjhwork`（历史），现已纳入本地候选；发布并接收后开发使用共享 `zufan`；核心接口人工评审仍须由团队其他两位成员完成，自动检查与代码审查不代替人工签字。
