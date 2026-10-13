@@ -71,8 +71,8 @@ VDOT_DATAPATH_CHECK_PASS (combinational RTL only; no FU protocol/CPU/NEMU valida
 
 组合输出本身没有“非法配置”概念：SEW/LMUL/VL/vstart/vill、寄存器别名的重命名行为、v0 物理路径和精确异常属于后续包装/接入层。当前不消费 `state.jsonl` 去假装这些性质已通过。
 
-## 4. 下一步
+## 4. 后续进展
 
-按照 [RTL 接口设计](../../spec/rtl-interface.md) 实现 T07-B 的 `VDot` 包装层：快照源和身份，放置乘积/结果寄存器，实现单请求状态机、反压、`RobPtr.needFlush` 取消和异常响应。T07-B 单元通过后再做译码、VFEX4 接入及全核验证；本轮不提前改变 FU 配置或指令译码。
+2026-10-13 已按照 [RTL 接口设计](../../spec/rtl-interface.md) 实现并验证 T07-B 的 `VDot` 包装层：快照源和身份，放置乘积/结果寄存器，实现单请求状态机、反压、`RobPtr.needFlush` 取消和异常响应。见 [FU 包装层说明](FU.md)及[独立验证证据](../../evidence/rtl-fu-20261013/README.md)。后续进行译码、VFEX4 接入和全核验证；本页的组合算术记录仍只证明 T07-A 范围。
 
 工作保存在 `zjhwork`；核心接口人工评审仍须由团队其他两位成员完成，自动检查与代码审查不代替人工签字。

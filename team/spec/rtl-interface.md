@@ -6,22 +6,22 @@
 | 指令合同 | [`vdot-s8x8-r32-v0.1`](vdot.md)，本设计不改变语义或候选编码 |
 | 硬件基线 | XiangShan `16ae9ddcda54fc9a2fddffad73174cf793ac7814` |
 | 起草前团队提交 | `720dd3d668929123b8ab35e947c67f68ef595c65`，分支 `zjhwork` |
-| 状态 | 已完成第一版接入设计；T07-A 组合算术已实现并通过 10,022 组 RTL 比较；FU 接口、NEMU 扩展和全核验证待实现 |
+| 状态 | T07-A 算术与 T07-B 真实 FU 控制验证已通过；人工评审、译码/VFEX4 接入、NEMU 和全核验证待完成 |
 | 责任 | A 负责接口和 RTL；B 复核合同、译码和 NEMU 对齐；C 复核时序、异常与验收；B/C 人工确认待记录 |
 
 本文中的“源码事实”指已阅读锁定版本得到的结论，“拟实现”指下一步要写的代码，“验收要求”指尚未执行的检查。不得把拟实现的周期数、测试数量或预期信号写成实测结果。项目安排见[执行计划](../香山vdot赛题_执行计划.md)和[三人分工](../香山vdot赛题_三人分工与Git协作.md)。
 
-2026-10-12 T07-A 更新：第 2 节的乘积/归约模块及组合连接顶层已经实现，见[算术单元说明](../rtl/vdot/README.md)和[通过证据](../evidence/rtl-datapath-20261012/README.md)。第 3～6 节的 FU 接口、状态机、译码和全核接入仍为设计；组合仿真不验证第 4 节的周期目标。
+2026-10-12 T07-A 更新：乘积/归约模块及组合连接顶层已经实现，见[算术单元说明](../rtl/vdot/README.md)和[通过证据](../evidence/rtl-datapath-20261012/README.md)。2026-10-13 T07-B 更新：第 3～4 节的真实 FU 接口/状态机及第 6 节的执行端配置检查已实现，通过 71,258 周期控制测试，见 [FU 说明](../rtl/vdot/FU.md)和[证据](../evidence/rtl-fu-20261013/README.md)。第 5 节的译码/资源接入与第 6 节的上游、ROB/CSR 集成仍待实现或验证。
 
 ## 1. 首版方案及边界
 
-**拟实现：增加独立 `VDot` 功能单元，接入现有 `VFEX4`，先采用单请求在途、可反压、可取消的非流水接口。** 内部按输入寄存、乘法、加法树、响应保持推进；复用香山的向量重命名、发射、读寄存器、写回和 ROB 异常通路。后续测量证明瓶颈后，再做可重叠流水或资源复用优化。
+**已实现独立 `VDot` 功能单元，采用单请求在途、可反压、可取消的非流水接口；拟在 T10 接入现有 `VFEX4`。** 内部按输入寄存、乘法、加法树、响应保持推进；接入后复用香山的向量重命名、发射、读寄存器、写回和 ROB 异常通路。后续测量证明瓶颈后，再做可重叠流水或资源复用优化。
 
 源码事实：`Parameters.scala:456` 的 `VFEX4` 已含 `VfdivCfg/VidivCfg`，有三路向量读、一路 V0 读、一路 VL 读以及向量/V0 写回资源。`ExeUnit.scala:127` 对不定延迟执行单元维护 busy，输出是 `Mux1H` 选择并断言最多一个 FU 有效，不能把它当成自动仲裁多结果的队列。
 
 选择此处可沿用不定延迟的反压与 busy 协议，但会和向量除法竞争资源，且首版不是每拍接收一条指令。已有向量乘加 FU 使用通用 mask/tail 合并，本指令需要完整覆盖 128 位目的，因此首版新增小型算术通路，暂不复用其内部乘法器。是否共享乘法器应另做面积与时序实验，不能仅凭复用名称认定成本更低。
 
-T06 首次交付设计文档；T07-A 组合算术现已通过，接下来完成 T07-B 包装层，再按 T10 接入全核。T08 NEMU 可由 B 按相同合同推进。接口草案形成不等于 T06 全部验收完成，编码包装的一致性和人工评审仍须完成。
+T06 首次交付设计文档；T07-A 算术和 T07-B 包装层独立测试现已通过，接下来按 T10 接入全核。T08 NEMU 由 B 按相同合同推进。接口草案形成不等于 T06 全部验收完成，编码包装的一致性和人工评审仍须完成。
 
 ```mermaid
 flowchart LR
@@ -50,15 +50,15 @@ flowchart LR
 
 负数示例：和为 `-8` 时，完整结果必须为 `0x000000000000000000000000fffffff8`。不能直接把 19 位和符号扩展到 128 位，也不能按 SEW=8 截断。
 
-已在 `VDotDatapath.scala` 定义两个纯组合子模块：`VDotProducts` 接受两个 128 位源、输出 8 个 16 位乘积；`VDotReduce` 接受这 8 个乘积、输出完整 128 位结果。`VDotDatapath` 顶层连接两者并用于本轮算术测试。后续包装层 `VDot` 在两者之间插入乘积寄存器，输入和输出也按第 4 节寄存。这样测试与实际包装层使用同一份算术模块，避免各维护一套算法。
+已在 `VDotDatapath.scala` 定义两个纯组合子模块：`VDotProducts` 接受两个 128 位源、输出 8 个 16 位乘积；`VDotReduce` 接受这 8 个乘积、输出完整 128 位结果。`VDotDatapath` 顶层连接两者并用于算术测试。包装层 `VDot` 已在两者之间插入乘积寄存器，输入和输出也按第 4 节寄存。这样测试与实际包装层使用同一份算术模块，避免各维护一套算法。
 
-位置：`src/main/scala/xiangshan/backend/fu/vector/VDotDatapath.scala` 已新增；`src/main/scala/xiangshan/backend/fu/wrapper/VDot.scala` 尚待实现。本轮无需修改外部 yunsuan 子模块。
+位置：`src/main/scala/xiangshan/backend/fu/vector/VDotDatapath.scala` 与 `src/main/scala/xiangshan/backend/fu/wrapper/VDot.scala` 均已新增。未修改外部 yunsuan 子模块。
 
 ## 3. 功能单元接口
 
 ### 3.1 复用现有 Bundle
 
-包装层拟继承 `VecNonPipedFuncUnit`，对外保持 `FuncUnitIO`；不另造与后端脱节的顶层请求协议。下表字段路径以 `io.in.bits` / `io.out.bits` 为基准，实际可选字段由 `FuConfig` 决定。
+包装层已继承 `VecNonPipedFuncUnit`，对外保持 `FuncUnitIO`；不另造与后端脱节的顶层请求协议。下表字段路径以 `io.in.bits` / `io.out.bits` 为基准，实际可选字段由 `FuConfig` 决定。
 
 | 接口 | 类型/宽度 | 数据来源与处理 |
 | --- | --- | --- |
@@ -82,7 +82,7 @@ flowchart LR
 
 `VecNonPipedFuncUnit` 已调用 `connectNonPipedCtrlSingal`（源码即此拼写），用 `in.fire` 保存 ROB/目的/写使能等控制。新增 FSM 仍须显式保存算术输入、乘积、结果和非法标志，不能认为继承后自动获得 ready/valid 状态机。基类给出的 vstart 非法判定应包含在完整非法条件内，避免后面的 Chisel 赋值将它覆盖丢失。
 
-### 3.2 拟新增 `VDotCfg`
+### 3.2 已新增 `VDotCfg`
 
 | 配置项 | 初版值及原因 |
 | --- | --- |
@@ -108,7 +108,7 @@ flowchart LR
 
 ### 4.1 状态机和周期定义
 
-拟实现四态 `IDLE → MUL → REDUCE → RESP → IDLE`，最多一个请求在途。不做 RESP 同拍接收下一条请求的旁路优化。
+已实现四态 `IDLE → MUL → REDUCE → RESP → IDLE`，最多一个请求在途。不做 RESP 同拍接收下一条请求的旁路优化。实现额外在 reset 期间同时关闭 in.ready/out.valid。
 
 | 当前状态 | 本拍动作及下一状态 |
 | --- | --- |
@@ -127,7 +127,7 @@ flowchart LR
 | E3 | 最早的输出握手；沿后回到 IDLE |
 | E4 | 最早的下一条输入握手 |
 
-因此本方案的**设计目标**是：E0 到结果 valid 为 2 个完整周期，E0 到最早输出握手为 3 个周期，单元请求启动间隔最小 4 周期。这里明确采用“上升沿接受、沿后输出”的计数口径。它们不是 CPU 指令依赖延迟或实测吞吐；OG2、调度、读数、旁路和写回竞争还会增加全核时间。
+因此本方案的时序为：E0 到结果 valid 为 2 个完整周期，E0 到最早输出握手为 3 个周期，单元请求启动间隔最小 4 周期。T07-B 的逐拍测试已验证该接口时序及反压下的延后，采用“上升沿接受、沿后输出”的计数口径。它们不是 CPU 指令依赖延迟或全核吞吐；OG2、调度、读数、旁路和写回竞争还会增加全核时间。
 
 非法配置也走一次有身份的响应，可把无用乘积和结果置零；不为异常设计第二套延迟承诺。有限时间内完成的活性要求以“未被取消且下游最终 ready”为前提；永久反压时不能承诺固定完成周期。
 
@@ -199,7 +199,7 @@ flowchart LR
 | 9 | `backend/decode/DecodeStage.scala`、`backend/rename/`、`backend/issue/`、`backend/datapath/` | 核查 v0、旧 vd、VL 唤醒、OG2 阻塞重试和写回；只有证据显示通用路径不适用时才改 |
 | 10 | `backend/exu/ExeUnit.scala`、`backend/rob/Rob.scala` | 核查 busy、one-hot、异常完成、取消和提交；预期复用现有机制 |
 
-后续全核配置仍用现有 MinimalConfig，完整依赖见 [versions.env](../versions.env)。不新增大配置构建、不修改子模块引用、不将构建产物/波形加入日常提交。T07-A 已提供独立算术入口 `bash team/scripts/check-vdot-datapath.sh`，其 Mill 目标不构建 CPU；FU 包装层测试入口仍待 T07-B 实现。
+后续全核配置仍用现有 MinimalConfig，完整依赖见 [versions.env](../versions.env)。不新增大配置构建、不修改子模块引用、不将构建产物/波形加入日常提交。T07-A 算术入口为 `bash team/scripts/check-vdot-datapath.sh`；T07-B FU 入口为 `bash team/scripts/check-vdot-fu.sh`，编译真实香山 Scala 依赖但只发射 FU 测试顶层，不构建 CPU。
 
 ## 6. 配置检查和异常完成
 
@@ -214,7 +214,7 @@ flowchart LR
 
 执行端不具备独立 mstatus.VS 输入，VS Off 属于既有译码/特权检查职责，不能伪造 FU 端对 VS 的检查。所有 vta/vma 组合均合法；它们不参与拒绝条件或输出合并。
 
-**拟实现的异常响应：** 保留原 robIdx/pdest 和有效响应，设置 illegalInstr，清零实际 `vecWen/v0Wen`（其余写使能原本为零），结果数据置零。源码支持的依据是 `WbArbiter.scala:177` 存在所有写使能为零的 `notWrite` 路径，不定延迟端可据此 ready；`347–379` 将 EXU 的 `input.fire` 送往控制块，而非要求发生寄存器写入；`Rob.scala:1183` 从有效 writeback 记录异常。接入仿真仍须证明异常响应恰好完成一次且没有 ROB/忙表死锁。
+**已实现并单元验证的异常响应：** 保留原 robIdx/pdest 和有效响应，设置 illegalInstr，清零实际 `vecWen/v0Wen`（其余写使能原本为零），结果数据置零。另对不支持的内部 `fuOpType` 做相同的防御性拒绝，不改变 ISA 编码。源码支持的依据是 `WbArbiter.scala:177` 存在所有写使能为零的 `notWrite` 路径，不定延迟端可据此 ready；`347–379` 将 EXU 的 `input.fire` 送往控制块，而非要求发生寄存器写入；`Rob.scala:1183` 从有效 writeback 记录异常。单元已验证一次响应，接入仿真仍须证明后续 ROB/忙表没有死锁。
 
 前端已发现的非法状态可能直接进入已有异常处理路径，未必真正发射到 FU；单元测试可以直接注入对应控制以覆盖防御性检查。不要要求“每个非法全核用例都必须经过 VDot FU”来证明正确性。
 
@@ -224,7 +224,7 @@ ROB 的向量置脏/vstart 清零与 commit 相关，`Rob.scala:691–715` 另�
 
 ## 7. 验证矩阵和断言
 
-下表算术单元一行已在 T07-A 通过，另完成 bit 0/127 读回比较器自检，见[RTL 证据](../evidence/rtl-datapath-20261012/README.md)；其余接口/接入项仍待 T07-B/T10/T11 执行。T05 Python 参考模型的[通过记录](../evidence/model-20261012/README.md)单独保留。不重新生成测试数据，不改变 manifest 或期望值来迁就 RTL。
+下表算术单元已在 T07-A 通过，见[算术证据](../evidence/rtl-datapath-20261012/README.md)；包装层配置、握手、反压、身份、取消/环绕及复位的独立 FU 场景已在 T07-B 通过，实际覆盖范围见 [FU 证据](../evidence/rtl-fu-20261013/README.md)。译码、真实寄存器依赖、共享 EXU/门控、全核/异常及回归项仍待 T10/T11。T05 Python 参考模型的[通过记录](../evidence/model-20261012/README.md)单独保留。不重新生成测试数据，不改变 manifest 或期望值来迁就 RTL。
 
 | 层次 | 用例/刺激 | 必须比较或观察 |
 | --- | --- | --- |
@@ -279,7 +279,8 @@ ROB 的向量置脏/vstart 清零与 commit 相关，`Rob.scala:691–715` 另�
 | 数据宽度、单请求时序、反压、取消、异常和测试矩阵已给出 | 已形成第一版设计 |
 | 官方对 v0.1 歧义的回复、团队接口人工签字 | 待记录，参见 [vdot.md 第 9～10 节](vdot.md#9-歧义清单与变更流程) |
 | 组合算术编译和 RTL 仿真 | T07-A 已通过 22+10,000 组完整结果及低/高位读回比较器自检 |
-| FU 包装层仿真、全核 vdot 和 NEMU DiffTest | 尚未开展，不能据组合算术通过标记完成 |
+| FU 包装层独立仿真 | T07-B 已通过 6 类场景、71,258 周期及身份/取消读回故障自检 |
+| 共享 EXU/门控、全核 vdot 和 NEMU DiffTest | 尚未开展，不能据单元通过标记完成 |
 
 ## 9. 源码依据与复核方法
 

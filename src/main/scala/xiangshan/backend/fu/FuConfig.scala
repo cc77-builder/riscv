@@ -161,7 +161,7 @@ case class FuConfig (
 
   def needVecCtrl: Boolean = {
     import FuType._
-    Seq(vipu, vialuF, vimac, vidiv, vfpu, vppu, vfalu, vfma, vfdiv, vfcvt, vldu, vstu).contains(fuType)
+    Seq(vipu, vialuF, vimac, vidiv, vdot, vfpu, vppu, vfalu, vfma, vfdiv, vfcvt, vldu, vstu).contains(fuType)
   }
 
   def needCriticalErrors: Boolean = Seq(FuType.csr).contains(fuType)
@@ -182,7 +182,7 @@ case class FuConfig (
                             fuType == FuType.vppu || fuType == FuType.vipu ||
                             fuType == FuType.vfalu || fuType == FuType.vfma ||
                             fuType == FuType.vfdiv || fuType == FuType.vfcvt ||
-                            fuType == FuType.vidiv
+                            fuType == FuType.vidiv || fuType == FuType.vdot
 
   def isVecMem: Boolean = fuType == FuType.vldu || fuType == FuType.vstu ||
                           fuType == FuType.vsegldu || fuType == FuType.vsegstu
@@ -580,6 +580,21 @@ object FuConfig {
     exceptionOut = Seq(illegalInstr),
   )
 
+  val VDotCfg = FuConfig (
+    name = "vdot",
+    fuType = FuType.vdot,
+    fuGen = (p: Parameters, cfg: FuConfig) => Module(new VDot(cfg)(p).suggestName("Vdot")),
+    srcData = Seq(Seq(VecData(), VecData(), VecData(), V0Data(), VlData())),
+    piped = false,
+    writeVecRf = true,
+    writeV0Rf = true,
+    latency = UncertainLatency(),
+    vconfigWakeUp = true,
+    maskWakeUp = true,
+    destDataBits = 128,
+    exceptionOut = Seq(illegalInstr),
+  )
+
   val VppuCfg = FuConfig (
     name = "vppu",
     fuType = FuType.vppu,
@@ -840,7 +855,7 @@ object FuConfig {
     JmpCfg, BrhCfg, I2fCfg, I2vCfg, F2vCfg, CsrCfg, AluCfg, MulCfg, DivCfg, FenceCfg, BkuCfg, VSetRvfWvfCfg, VSetRiWvfCfg, VSetRiWiCfg,
     LduCfg, StaCfg, StdCfg, MouCfg, MoudCfg, VialuCfg, VipuCfg, VlduCfg, VstuCfg, VseglduSeg, VsegstuCfg,
     FaluCfg, FmacCfg, FcvtCfg, FdivCfg,
-    VfaluCfg, VfmaCfg, VfcvtCfg, HyldaCfg, HystaCfg
+    VfaluCfg, VfmaCfg, VfcvtCfg, HyldaCfg, HystaCfg, VDotCfg
   )
 
   def VecArithFuConfigs = Seq(
