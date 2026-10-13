@@ -24,6 +24,7 @@ def emit(output):
         start = [r[:] for r in regs]
         snapshots = []
         operations = []
+        checkpoint_offsets = []
         asm += [f'.globl t12_group{g}', f't12_group{g}:', 'mv t4, a0',
                 'vsetivli zero,16,e8,m1,tu,mu']
         for reg in range(32):
@@ -81,12 +82,13 @@ def emit(output):
             for reg in range(32):
                 asm += [f'vs1r.v v{reg},(a1)', 'addi a1,a1,16']
             snapshots.append([r[:] for r in regs])
+            checkpoint_offsets.append(len(operations))
         asm += ['ret']
         header += [f'extern void t12_group{g}(const void *,void *,void *);',
                    f'static const uint8_t input{g}[32][16] = '+json.dumps(start).replace('[','{').replace(']','}')+';',
                    f'static const uint8_t expected{g}[32][32][16] = '+json.dumps(snapshots).replace('[','{').replace(']','}')+';']
         manifest['groups'].append({'id':g,'name':name,'checkpoints':32,'vdot_count':512,
-                                   'operations':operations})
+                                   'operations':operations,'checkpoints_after_operations':checkpoint_offsets})
     # A delayed scalar branch overlaps younger vector operations. Every iteration
     # has a complete 128-bit architectural observation; the RTL observer must
     # establish that an accepted younger instruction was really cancelled.
