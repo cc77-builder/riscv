@@ -1,8 +1,8 @@
 diff --git a/src/isa/riscv64/Kconfig b/src/isa/riscv64/Kconfig
-index dfbacda..9afd7da 100644
+index dfbacda..4f0e696 100644
 --- a/src/isa/riscv64/Kconfig
 +++ b/src/isa/riscv64/Kconfig
-@@ -117,6 +117,15 @@ config RVV
+@@ -117,6 +117,25 @@ config RVV
    bool "RISC-V Vector Extension v1.0"
    default y
  
@@ -14,6 +14,16 @@ index dfbacda..9afd7da 100644
 +    Eight signed int8 products from the low source bytes, a zero-extended
 +    32-bit result in one 128-bit vector register, and precise illegal
 +    exceptions outside e8/m1/vl8/vstart0. Internal team prototype contract.
++
++config CUSTOM_VDOT_XS_TVAL
++  bool "Pinned XiangShan vdot runtime-illegal trap-value policy"
++  depends on RVV
++  default n
++  help
++    Platform profile for the pinned XiangShan TrapInstMod: decode-known
++    illegal instructions retain the instruction bits, while a precise
++    vdot illegal VL discovered only in its FU reports zero in xTVAL.
++    Effective only with CUSTOM_VDOT; all xTVAL comparisons stay enabled.
 +
  config CUSTOM_XVEXP2
    bool "RISC-V Xvexp2 Custom Vector Extension"
@@ -101,3 +111,88 @@ index 0000000..0f7bff4
 +  /* vl/vtype/vstart/vxrm/vxsat/vcsr are unchanged. */
 +}
 +#endif
+diff --git a/src/isa/riscv64/local-include/vdot_tval.h b/src/isa/riscv64/local-include/vdot_tval.h
+new file mode 100644
+index 0000000..27f53b0
+--- /dev/null
++++ b/src/isa/riscv64/local-include/vdot_tval.h
+@@ -0,0 +1,17 @@
++/* Team platform adapter; Mulan PSL v2, like the surrounding NEMU code.
++ * RISC-V Privileged 1.13 permits zero or instruction bits for illegal xTVAL.
++ * This profile matches pinned XS DecodeStage -> TrapInstMod -> TrapEntry:
++ * only VL is unavailable at decode for an otherwise valid vdot request.
++ * It does not inspect a DUT result, PC, test ID, or expected output.
++ */
++#ifndef XS_VDOT_TVAL_POLICY_H
++#define XS_VDOT_TVAL_POLICY_H
++#include <stdbool.h>
++#include <stdint.h>
++static inline bool xs_vdot_tval_is_zero(uint32_t instruction, bool vector_enabled,
++                                        uint64_t type, uint64_t length, uint64_t start) {
++  return (instruction & UINT32_C(0xfe00707f)) == UINT32_C(0x0200000b) &&
++         vector_enabled && (type & ~UINT64_C(0xc0)) == 0 &&
++         start == 0 && length != 8;
++}
++#endif
+diff --git a/src/isa/riscv64/system/intr.c b/src/isa/riscv64/system/intr.c
+index e662cb1..25530fe 100644
+--- a/src/isa/riscv64/system/intr.c
++++ b/src/isa/riscv64/system/intr.c
+@@ -22,6 +22,21 @@
+ 
+ void update_mmu_state();
+ 
++#if defined(CONFIG_CUSTOM_VDOT) && defined(CONFIG_CUSTOM_VDOT_XS_TVAL)
++#include "../local-include/vdot_tval.h"
++extern bool vp_enable(void);
++#endif
++
++static inline word_t platform_illegal_instruction_tval(word_t exception) {
++#if defined(CONFIG_CUSTOM_VDOT) && defined(CONFIG_CUSTOM_VDOT_XS_TVAL)
++  if (exception == EX_II && xs_vdot_tval_is_zero(cpu.instr, vp_enable(),
++                                               vtype->val, vl->val, vstart->val)) {
++    return 0;
++  }
++#endif
++  return MUXDEF(CONFIG_TVAL_EX_II, cpu.instr, 0);
++}
++
+ 
+ #ifdef CONFIG_RVH
+ word_t gen_gva(word_t NO, bool is_hls, bool is_mem_access_virtual) {
+@@ -71,6 +86,8 @@ static word_t get_trap_pc(word_t xtvec, word_t xcause) {
+ }
+ 
+ word_t raise_intr(word_t NO, vaddr_t epc) {
++  /* Capture before trap entry changes virtual/privilege context. */
++  const word_t instruction_tval = platform_illegal_instruction_tval(NO);
+   Logti("raise intr cause NO: %ld, epc: %lx\n", NO, epc);
+ #ifdef CONFIG_DIFFTEST_REF_SPIKE
+   switch (NO) {
+@@ -191,7 +208,7 @@ word_t raise_intr(word_t NO, vaddr_t epc) {
+ #endif // CONFIG_RV_SDTRIG
+         break;
+       case EX_II:
+-        vstval->val = MUXDEF(CONFIG_TVAL_EX_II, cpu.instr, 0);
++        vstval->val = instruction_tval;
+         break;
+       default: vstval->val = 0;
+     }
+@@ -230,7 +247,7 @@ word_t raise_intr(word_t NO, vaddr_t epc) {
+       case EX_IGPF: case EX_LGPF: case EX_SGPF:
+         break;
+       case EX_II: case EX_VI:
+-        stval->val = MUXDEF(CONFIG_TVAL_EX_II, cpu.instr, 0);
++        stval->val = instruction_tval;
+         IFDEF(CONFIG_RVH, htval->val = 0);
+         IFDEF(CONFIG_RVH, htinst->val = 0);
+         break;
+@@ -286,7 +303,7 @@ word_t raise_intr(word_t NO, vaddr_t epc) {
+       case EX_IGPF: case EX_LGPF: case EX_SGPF:
+         break;
+       case EX_II: case EX_VI:
+-        mtval->val = MUXDEF(CONFIG_TVAL_EX_II, cpu.instr, 0);
++        mtval->val = instruction_tval;
+         IFDEF(CONFIG_RVH, mtval2->val = 0);
+         IFDEF(CONFIG_RVH, mtinst->val = 0);
+         break;

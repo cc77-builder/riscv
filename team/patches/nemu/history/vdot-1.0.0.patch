@@ -1,0 +1,103 @@
+diff --git a/src/isa/riscv64/Kconfig b/src/isa/riscv64/Kconfig
+index dfbacda..9afd7da 100644
+--- a/src/isa/riscv64/Kconfig
++++ b/src/isa/riscv64/Kconfig
+@@ -117,6 +117,15 @@ config RVV
+   bool "RISC-V Vector Extension v1.0"
+   default y
+ 
++config CUSTOM_VDOT
++  bool "Custom vdot-s8x8-r32-v0.1 candidate extension"
++  depends on RVV
++  default n
++  help
++    Eight signed int8 products from the low source bytes, a zero-extended
++    32-bit result in one 128-bit vector register, and precise illegal
++    exceptions outside e8/m1/vl8/vstart0. Internal team prototype contract.
++
+ config CUSTOM_XVEXP2
+   bool "RISC-V Xvexp2 Custom Vector Extension"
+   depends on RVV
+diff --git a/src/isa/riscv64/include/isa-all-instr.h b/src/isa/riscv64/include/isa-all-instr.h
+index 2f18ca1..224fee6 100644
+--- a/src/isa/riscv64/include/isa-all-instr.h
++++ b/src/isa/riscv64/include/isa-all-instr.h
+@@ -154,7 +154,13 @@
+ 
+ 
+ #ifdef CONFIG_RVV
++#ifdef CONFIG_CUSTOM_VDOT
++#define VDOT_INSTR_TERNARY(f) f(vdot)
++#else
++#define VDOT_INSTR_TERNARY(f)
++#endif
+ #define VECTOR_INSTR_TERNARY(f) \
++  VDOT_INSTR_TERNARY(f) \
+   f(vadd) f(vsub) f(vrsub) f(vminu) f(vmin) \
+   f(vmaxu) f(vmax) f(vand) f(vor) f(vxor) \
+   f(vrgather) f(vrgatherei16) \
+diff --git a/src/isa/riscv64/instr/decode.c b/src/isa/riscv64/instr/decode.c
+index 11290c8..56156bf 100644
+--- a/src/isa/riscv64/instr/decode.c
++++ b/src/isa/riscv64/instr/decode.c
+@@ -98,6 +98,10 @@ def_THelper(main) {
+ #endif // CONFIG_FPU_NONE
+ #ifdef CONFIG_RVV
+   def_INSTR_IDTAB("??????? ????? ????? ??? ????? 10101 ??", OP_V  , OP_V);
++#ifdef CONFIG_CUSTOM_VDOT
++  /* Exact custom-0 match; do not enter the ordinary OP-V subdecoder. */
++  def_INSTR_IDTAB("0000001 ????? ????? 000 ????? 00010 11", R, vdot);
++#endif
+ #endif // CONFIG_RVV
+ #ifdef CONFIG_RV_AME
+   def_INSTR_TAB  ("??????? ????? ????? ??? ????? 01010 ??",         OP_M);
+diff --git a/src/isa/riscv64/instr/rvv/exec.h b/src/isa/riscv64/instr/rvv/exec.h
+index 6b828d2..92630d1 100644
+--- a/src/isa/riscv64/instr/rvv/exec.h
++++ b/src/isa/riscv64/instr/rvv/exec.h
+@@ -16,3 +16,4 @@
+ #include "vcfg.h"
+ #include "vcompute.h"
+ #include "vldst.h"
++#include "vdot.h"
+diff --git a/src/isa/riscv64/instr/rvv/vdot.h b/src/isa/riscv64/instr/rvv/vdot.h
+new file mode 100644
+index 0000000..0f7bff4
+--- /dev/null
++++ b/src/isa/riscv64/instr/rvv/vdot.h
+@@ -0,0 +1,35 @@
++/* Team candidate contract: vdot-s8x8-r32-v0.1. */
++#ifdef CONFIG_CUSTOM_VDOT
++_Static_assert(VLEN == 128, "vdot-s8x8-r32-v0.1 requires VLEN=128");
++bool vp_enable();
++void vp_set_dirty();
++
++def_EHelper(vdot) {
++  /* Validate before reading sources, writing the destination or dirtying VS. */
++  if (!vp_enable() || vtype->vill || vtype->pad || vtype->vsew != 0 ||
++      vtype->vlmul != 0 || vl->val != 8 || vstart->val != 0) {
++    longjmp_exception(EX_II);
++  }
++
++  const uint32_t word = s->isa.instr.val;
++  const unsigned vs1 = (word >> 15) & 31;
++  const unsigned vs2 = (word >> 20) & 31;
++  const unsigned vd = (word >> 7) & 31;
++  /* Snapshot both sources: all source/destination aliases, including v0. */
++  const uint64_t a = cpu.vr[vs1]._64[0];
++  const uint64_t b = cpu.vr[vs2]._64[0];
++  int32_t sum = 0;
++  for (unsigned i = 0; i < 8; ++i) {
++    const uint8_t byte_a = a >> (8 * i);
++    const uint8_t byte_b = b >> (8 * i);
++    const int32_t x = byte_a < 128 ? byte_a : (int32_t)byte_a - 256;
++    const int32_t y = byte_b < 128 ? byte_b : (int32_t)byte_b - 256;
++    sum += x * y;
++  }
++  /* Zero-extend the 32-bit two's-complement field; bypass tail/mask merge. */
++  cpu.vr[vd]._64[0] = (uint32_t)sum;
++  cpu.vr[vd]._64[1] = 0;
++  vp_set_dirty();
++  /* vl/vtype/vstart/vxrm/vxsat/vcsr are unchanged. */
++}
++#endif

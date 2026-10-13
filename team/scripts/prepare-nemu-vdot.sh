@@ -63,7 +63,7 @@ p=Path('.config');s=p.read_text()
 # Match the pinned XiangShan CSR reset implementation: NMIE=1, MDT=0.
 # MachineLevel.scala MnstatusBundle and NewCSR.scala mdtInit are the authority;
 # do not disable exception checking to accommodate an incompatible reference.
-for key, enabled in {'CUSTOM_VDOT': True, 'NMIE_INIT': True, 'MDT_INIT': False}.items():
+for key, enabled in {'CUSTOM_VDOT': True, 'CUSTOM_VDOT_XS_TVAL': True, 'TVAL_EX_II': True, 'NMIE_INIT': True, 'MDT_INIT': False}.items():
     pattern = rf'^(?:CONFIG_{key}=.*|# CONFIG_{key} is not set)$'
     if len(re.findall(pattern, s, re.MULTILINE)) != 1:
         raise RuntimeError(f'{key} configuration entry missing or duplicated')
@@ -74,6 +74,8 @@ PY
 tools/kconfig/build/conf --syncconfig Kconfig >> "$evidence/configure.txt" 2>&1
 grep -qx 'CONFIG_CUSTOM_VDOT=y' .config
 grep -qx 'CONFIG_RVV=y' .config
+grep -qx 'CONFIG_CUSTOM_VDOT_XS_TVAL=y' .config
+grep -qx 'CONFIG_TVAL_EX_II=y' .config
 grep -qx 'CONFIG_NMIE_INIT=y' .config
 grep -qx '# CONFIG_MDT_INIT is not set' .config
 # An empty value also overrides an inherited flag that would enable auto-commit.
