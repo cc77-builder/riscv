@@ -105,6 +105,8 @@ object GenerateVDotDecode {
     val base = new MinimalConfig(1)
     implicit val p: Parameters = base.alterPartial {
       case XSCoreParamsKey => base(XSTileKey).head
+      case utility.LogUtilsOptionsKey => utility.LogUtilsOptions(
+        enableDebug = false, enablePerf = false, fpgaPlatform = false)
     }
     ChiselStage.emitSystemVerilogFile(new VDotDecodeTestTop,
       args = Array("--target-dir", args(0)),
