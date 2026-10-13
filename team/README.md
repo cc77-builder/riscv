@@ -8,7 +8,8 @@
 | --- | --- |
 | 项目计划：阶段目标、执行步骤与验收标准 | [香山 vdot 赛题：执行计划](香山vdot赛题_执行计划.md) |
 | 项目计划：A/B/C 分工、评审与 Git 协作 | [香山 vdot 赛题：三人分工与 Git 协作](香山vdot赛题_三人分工与Git协作.md) |
-| 当前进度与 James_Hotten 分支的 T03 初步评审 | [进度与评审记录](progress.md) |
+| 当前dev进度与James_Hotten来源的T03初步评审 | [进度与评审记录](progress.md) |
+| dev与James_Hotten对比、按进度集成及继承验收 | [dev集成记录](docs/dev-integration-20261013.md) |
 | vdot 指令语义、候选编码、测试与待确认问题（第一版草案） | [vdot.vv 规格](spec/vdot.md) |
 | 配置依赖、完整写回路径与分层控制验收（草案） | [RTL 接入接口](spec/rtl-interface.md) |
 | 精确非法异常、陷阱处理与状态观察（基础设施已实现，扩展验收待完成） | [异常测试方案](spec/exception-tests.md) |
