@@ -1,5 +1,7 @@
 """Check actual workload logs; selftest evidence cannot certify the extension."""
 import argparse
+import base64
+import binascii
 import hashlib
 import json
 from pathlib import Path
@@ -16,8 +18,67 @@ def fields(line):
     return dict(re.findall(r'([a-zA-Z0-9_]+)=([^\s]+)',line))
 
 
+def expand_packed_records(content):
+    """Losslessly expand packed-u64-v1 into original verbose records.
+
+    No successful record is inferred: all 34 original numeric fields must be
+    present in the payload, and the existing independent checks still run.
+    """
+    lines=content.splitlines()
+    packed=[line for line in lines if line.startswith(('VDOT_PACKED','HARNESS_PACKED'))]
+    markers=[line for line in lines if line.startswith('VDOT_LOG_FORMAT')]
+    if not markers and not packed:
+        return content
+    if markers!=['VDOT_LOG_FORMAT packed-u64-v1'] or not packed:
+        raise ValueError('missing, duplicate or unsupported packed log format')
+    if any(line.startswith(('VDOT_CASE ','HARNESS_NEGATIVE ')) for line in lines):
+        raise ValueError('mixed packed and verbose records')
+    expanded=[]
+    names=('instruction','trap_count','expected_cause','actual_cause','fault_pc','actual_epc',
+           'resume_pc','mtval','pre_mstatus','raw_mstatus','capture_phase','protocol_errors','requested_vs')
+    decimal={'trap_count','capture_phase','requested_vs','all32_checked','pre32_checked','guards_ok'}
+    for line in lines:
+        if not line.startswith(('VDOT_PACKED','HARNESS_PACKED')):
+            expanded.append(line);continue
+        m=re.fullmatch(r'(VDOT_PACKED|HARNESS_PACKED) id=([^\s=]+) result=([A-Z_]+) payload=([A-Za-z0-9+/=]+)',line)
+        if not m:raise ValueError('malformed packed record')
+        try:payload=base64.b64decode(m[4],validate=True)
+        except binascii.Error as e:raise ValueError('invalid packed base64') from e
+        if base64.b64encode(payload).decode()!=m[4]:raise ValueError('noncanonical packed base64')
+        values=[]; pos=0
+        while pos<len(payload) and len(values)<34:
+            tag=payload[pos];pos+=1
+            if tag<34:
+                if tag>=len(values):raise ValueError('invalid packed back-reference')
+                values.append(values[tag]);continue
+            if tag!=128:raise ValueError('invalid packed literal tag')
+            value=0
+            for byte_index in range(10):
+                if pos>=len(payload):raise ValueError('truncated packed integer')
+                byte=payload[pos];pos+=1
+                if byte_index==9 and byte>1:raise ValueError('packed integer overflows uint64')
+                value|=(byte&127)<<(7*byte_index)
+                if byte<128:
+                    if byte_index and byte==0:raise ValueError('noncanonical packed integer')
+                    break
+            else:raise ValueError('unterminated packed integer')
+            values.append(value)
+        if len(values)!=34 or pos!=len(payload):raise ValueError('wrong packed field count or trailing bytes')
+        record={'id':m[2],'result':m[3]}
+        record.update({key:(str(v) if key in decimal else hex(v)) for key,v in zip(names,values[:13])})
+        record['pre_csr']='/'.join(hex(v) for v in values[13:19])
+        record['post_csr']='/'.join(hex(v) for v in values[19:25])
+        for key,i in (('pre_vd128',25),('expected_vd128',27),('post_vd128',29)):
+            record[key]='0x'+format(values[i]|(values[i+1]<<64),'032x')
+        record.update({key:str(values[i]) for key,i in (('all32_checked',31),('pre32_checked',32),('guards_ok',33))})
+        prefix='VDOT_CASE' if m[1]=='VDOT_PACKED' else 'HARNESS_NEGATIVE'
+        expanded.append(prefix+' '+' '.join(f'{k}={v}' for k,v in record.items()))
+    return '\n'.join(expanded)
+
+
 def validate(content, mode, exit_code, data, *, expect_unextended=False, require_diff=False):
     content = re.sub(r'\x1b\[[0-?]*[ -/]*[@-~]','',content)
+    content = expand_packed_records(content)
     if f'VDOT_BEGIN contract={CONTRACT} mode={mode}' not in content:
         raise ValueError('missing matching mode/contract begin marker')
     if 'HARNESS_SELFTEST_PASS cases=7 negative_controls=3' not in content:

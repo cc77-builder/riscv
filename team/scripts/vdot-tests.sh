@@ -4,6 +4,8 @@ root=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
 cd "$root"
 action=${1:-host}
 mode=${2:-full}
+compact=${VDOT_LOG_COMPACT:-0}
+case "$compact" in 0|1) ;; *) echo "VDOT_LOG_COMPACT must be 0 or 1" >&2; exit 2;; esac
 case "$mode" in full|selftest) ;; *) echo 'mode must be full or selftest' >&2; exit 2;; esac
 case "$action" in virt-selftest) mode=selftest;; virt-full-negative) mode=full;; esac
 data=${VDOT_DATA:-"$root/team/out/t05"}
@@ -30,7 +32,7 @@ build_virt() {
   riscv64-linux-gnu-gcc -std=gnu11 -O2 -g -Wall -Wextra -Werror -ffreestanding -fno-builtin \
     -fno-stack-protector -fno-tree-vectorize -fno-tree-slp-vectorize -fno-tree-loop-distribute-patterns \
     -march=rv64gcv -mabi=lp64d -mcmodel=medany -nostdlib -static \
-    -DVDOT_VIRT=1 -DVDOT_MODE_SELFTEST="$selftest" -I"$workload" -I"$data" \
+    -DVDOT_VIRT=1 -DVDOT_MODE_SELFTEST="$selftest" -DVDOT_LOG_COMPACT="$compact" -I"$workload" -I"$data" \
     -Wl,-T,"$workload/virt.ld",--build-id=none \
     "$workload/virt-start.S" "$workload/virt-platform.c" "$workload/main.c" \
     "$workload/judge.c" "$workload/diagnostics.c" "$workload/harness.S" "$workload/fixed-sites.S" -o "$evidence/workload.elf"
@@ -72,7 +74,7 @@ case "$action" in
     export LINUX_GNU_TOOLCHAIN=1
     test "$(git -C "$AM_HOME" rev-parse HEAD)" = 086a238062fdfb3281b745a537b361983d0154b5
     if ! git -C "$AM_HOME" diff --quiet HEAD --; then echo 'nexus-am tracked files differ from pinned version' >&2; exit 2; fi
-    make -C "$workload" ARCH=riscv64-xs MARCH=rv64gcv MODE="$mode" VDOT_DATA="$data" \
+    make -C "$workload" ARCH=riscv64-xs MARCH=rv64gcv MODE="$mode" VDOT_DATA="$data" VDOT_LOG_COMPACT="$compact" \
       VDOT_OBJ_ROOT="$evidence/objects" BINARY="$evidence/vdot-exceptions" -j"${BUILD_JOBS:-2}"
     metadata
     sha256sum "$evidence/vdot-exceptions.elf" "$evidence/vdot-exceptions.bin" > "$evidence/workload.sha256"

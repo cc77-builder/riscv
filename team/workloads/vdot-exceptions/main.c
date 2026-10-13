@@ -6,6 +6,9 @@
 #ifndef VDOT_MODE_SELFTEST
 #define VDOT_MODE_SELFTEST 0
 #endif
+#ifndef VDOT_LOG_COMPACT
+#define VDOT_LOG_COMPACT 0
+#endif
 extern void _putc(char);
 #ifndef VDOT_VIRT
 extern void _halt(int);
@@ -22,15 +25,18 @@ static unsigned passed, failed, unreachable, executed;
 static const uint64_t canary = UINT64_C(0xD15EA5E5CAFEBABE);
 
 static void text(const char *s) { while (*s) _putc(*s++); }
+#if !VDOT_LOG_COMPACT
 static void hex64(uint64_t v) {
   text("0x");
   for (int shift=60; shift>=0; shift-=4) _putc("0123456789abcdef"[(v>>shift)&15]);
 }
+#endif
 static void decimal(unsigned v) {
   char buffer[11]; unsigned n=0;
   do { buffer[n++]='0'+v%10; v/=10; } while (v);
   while (n) _putc(buffer[--n]);
 }
+#if !VDOT_LOG_COMPACT
 static void vector_hex(const unsigned char *v) {
   text("0x");
   for (int i=15; i>=0; --i) {
@@ -41,6 +47,7 @@ static void csr_log(const char *prefix, const struct vector_csrs *c) {
   text(prefix); hex64(c->vtype); _putc('/'); hex64(c->vl); _putc('/'); hex64(c->vstart);
   _putc('/'); hex64(c->vxrm); _putc('/'); hex64(c->vxsat); _putc('/'); hex64(c->vcsr);
 }
+#endif
 static void reset(void) {
   unsigned char *p=(unsigned char *)&record;
   for (unsigned i=0; i<sizeof(record); ++i) p[i]=0;
@@ -63,6 +70,50 @@ static void setup_sources(unsigned vd, unsigned vs1, unsigned vs2) {
   for (unsigned b=0; b<16; ++b) before.regs[vs1][b]=b<8 ? 255 : 0xA5;
   if (vs1!=vs2) for (unsigned b=0; b<16; ++b) before.regs[vs2][b]=b<8 ? 1 : 0x5A;
 }
+/* Lossless encoding of the exact verbose fields, not a replacement judge.
+ * Each value is either an earlier value index (0..33), or 0x80 plus unsigned
+ * LEB128. Base64 is only the transport encoding. The host reconstructs all
+ * fields and executes the unchanged semantic checker. */
+#if VDOT_LOG_COMPACT
+static uint64_t read_le64(const unsigned char *p) {
+  uint64_t v=0; for (unsigned i=0;i<8;++i) v|=(uint64_t)p[i]<<(8*i); return v;
+}
+static void packed_case(const char *id, unsigned word, unsigned vd,
+                        const struct run_config *cfg, uint64_t cause,
+                        enum verdict result, int report) {
+  const uint64_t values[34]={word,record.trap_count,cause,record.cause,
+    record.expected_pc,record.epc,record.resume_pc,record.tval,
+    record.pre_status,record.raw_status,record.phase,record.errors,
+    cfg->vs_off ? 0 : cfg->vs,
+    record.pre.vtype,record.pre.vl,record.pre.vstart,record.pre.vxrm,record.pre.vxsat,record.pre.vcsr,
+    record.post.vtype,record.post.vl,record.post.vstart,record.post.vxrm,record.post.vxsat,record.post.vcsr,
+    read_le64(before.regs[vd]),read_le64(before.regs[vd]+8),
+    read_le64(expected_regs[vd]),read_le64(expected_regs[vd]+8),
+    read_le64(after.regs[vd]),read_le64(after.regs[vd]+8),
+    result==PASS || result==GUARD_CHANGED,result==PASS || result==GUARD_CHANGED,(unsigned)guards_ok()};
+  unsigned char bytes[34*11]; unsigned count=0;
+  for (unsigned i=0;i<34;++i) {
+    unsigned ref=0; while(ref<i && values[ref]!=values[i])++ref;
+    if(ref<i){bytes[count++]=(unsigned char)ref;continue;}
+    bytes[count++]=0x80;
+    uint64_t v=values[i];
+    do { unsigned char part=v&127; v>>=7; bytes[count++]=part|(v ? 128 : 0); } while(v);
+  }
+  static const char alphabet[]="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+  text(report ? "VDOT_PACKED id=" : "HARNESS_PACKED id=");text(id);
+  text(" result=");text(verdict_name(result));text(" payload=");
+  for(unsigned i=0;i<count;i+=3){
+    unsigned rem=count-i;
+    uint32_t x=(uint32_t)bytes[i]<<16;
+    if(rem>1)x|=(uint32_t)bytes[i+1]<<8;
+    if(rem>2)x|=bytes[i+2];
+    _putc(alphabet[(x>>18)&63]);_putc(alphabet[(x>>12)&63]);
+    _putc(rem>1 ? alphabet[(x>>6)&63] : '=');_putc(rem>2 ? alphabet[x&63] : '=');
+  }
+  _putc('\n');
+}
+#endif
+
 static enum verdict run(const char *id, unsigned word, unsigned vd, const struct run_config *cfg,
                         uint64_t cause, int negative_destination, int report) {
   void (*stub)(void)=find_stub(word);
@@ -73,6 +124,9 @@ static enum verdict run(const char *id, unsigned word, unsigned vd, const struct
   if (negative_destination==2) record.raw_status=(record.raw_status & ~UINT64_C(0x600))|0x200;
   struct expectation e={*cfg,cause,expected_regs,before.regs};
   enum verdict result=judge(&record,&e,after.regs,guards_ok());
+#if VDOT_LOG_COMPACT
+  packed_case(id,word,vd,cfg,cause,result,report);
+#else
   text(report ? "VDOT_CASE id=" : "HARNESS_NEGATIVE id="); text(id);
   text(" result="); text(verdict_name(result)); text(" instruction="); hex64(word);
   text(" trap_count="); decimal((unsigned)record.trap_count);
@@ -90,7 +144,8 @@ static enum verdict run(const char *id, unsigned word, unsigned vd, const struct
   text(" all32_checked="); decimal(result==PASS || result==GUARD_CHANGED);
   text(" pre32_checked="); decimal(result==PASS || result==GUARD_CHANGED);
   text(" guards_ok="); decimal((unsigned)guards_ok()); _putc('\n');
-  if (result!=PASS) {
+#endif
+  if (result!=PASS && (!VDOT_LOG_COMPACT || report)) {
     struct diagnostic_context context={id,word,0,record.expected_pc,record.resume_pc,&record,after.regs,expected_regs};
     report_diagnostic(&context);
   }
@@ -150,6 +205,7 @@ int main(void) {
   __asm__ volatile("li t0, 0x200; csrs mstatus, t0; csrr %0, vlenb" : "=r"(bytes) : : "t0","memory");
   text("VDOT_BEGIN contract="); text(VDOT_CONTRACT); text(" mode=");
   text(VDOT_MODE_SELFTEST ? "selftest\n" : "full\n");
+  if (VDOT_LOG_COMPACT) text("VDOT_LOG_FORMAT packed-u64-v1\n");
   if (bytes!=16) { text("FAIL VLEN must equal128\n"); return 1; }
   if (!selftests()) { summary("selftest",7); return 2; }
   if (VDOT_MODE_SELFTEST) { summary("selftest",7); return 0; }
