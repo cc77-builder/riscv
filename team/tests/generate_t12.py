@@ -108,6 +108,7 @@ def corpus():
               '  la t5, t12_recovery_csrs']
         for i, csr in enumerate(('vtype','vl','vstart','vxrm','vxsat','vcsr')):
             body += [f'  csrr t0, {csr}',f'  sd t0, {i*8}(t5)']
+        body += ['  la t5, t12_recovery_status', '  csrr t0, mstatus', '  sd t0, 0(t5)']
         add(name,body,[('dot',10,8,9)],fault_vl=vl)
     boundary=[([0]*8,[127]*8),([1]*8,[1]*8),([-1]*8,[1]*8),([-1]*8,[-1]*8),
               ([127]*8,[127]*8),([-128]*8,[127]*8),([-128]*8,[-128]*8),
@@ -122,7 +123,7 @@ def corpus():
     for scenario,n,unroll in (('complete',16,1),('known-config',16,1),('independent-batch',16,4)):
         for method in ('empty','vdot','rvv'):
             if method=='empty':
-                body=[]; ops=[]; scratch=()
+                body=loop([],n,scenario.replace('-','_')+'_empty'); ops=[]; scratch=()
             elif method=='vdot':
                 body=loop([custom(10+i) for i in range(unroll)],n,scenario.replace('-','_')+'_vdot')
                 ops=[('dot',10+i,8,9) for _ in range(n) for i in range(unroll)]; scratch=()

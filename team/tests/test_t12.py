@@ -1,4 +1,4 @@
-﻿"""T12 host checks and deliberately synthetic checker counterexamples."""
+"""T12 host checks and deliberately synthetic checker counterexamples."""
 import copy
 import hashlib
 import importlib.util
@@ -23,7 +23,7 @@ def fixture(data):
                 pre32_checked=1,vectors_checked=1,csr_checked=1,guards=1,traps=int(fault),cause=2 if fault else 0,
                 epc='0x80001000' if fault else '0x0',expected_pc='0x80001000' if fault else '0x0',tval='0x0',
                 pre_csr=cs([0,8,0,3,1,7]),post_csr=cs([0,r['fault_vl'] if fault else 8,0,3,1,7]),
-                recovered_csr=cs([0,8,0,3,1,7] if fault else [0]*6),dests=dest,
+                recovered_csr=cs([0,8,0,3,1,7] if fault else [0]*6),recovered_status='0x600' if fault else '0x0',dests=dest,
                 cycle_begin=100 if perf else 0,cycle_end=(200 if r['method']=='vdot' else 300) if perf else 0,
                 instret_begin=100 if perf else 0,instret_end=120 if perf else 0)
         lines += ['T12_CASE '+' '.join(f'{k}={v}' for k,v in kv.items())]

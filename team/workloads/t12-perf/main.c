@@ -9,6 +9,7 @@ void platform_halt(int code) { _halt(code); for (;;) {} }
 struct trap_record *vdot_active_record;
 uint64_t t12_counts[4];
 struct vector_csrs t12_recovery_csrs;
+uint64_t t12_recovery_status;
 unsigned char t12_sink[4][16] __attribute__((aligned(16)));
 static struct trap_record record;
 static const uint64_t canary = UINT64_C(0xd15ea5e5cafebabe);
@@ -48,7 +49,7 @@ static int verify(const struct t12_case *c) {
     struct vector_csrs fault={0,(uint64_t)c->fault_vl,0,3,1,7};
     struct vector_csrs recovered={0,8,0,3,1,7};
     if (!eq(&record.post,&fault,sizeof(fault)) || !eq(&t12_recovery_csrs,&recovered,sizeof(recovered)) ||
-        record.epc!=(uint64_t)c->fault || record.expected_pc!=(uint64_t)c->fault || record.tval!=0) return 20;
+        ((t12_recovery_status>>9)&3)!=3 || record.epc!=(uint64_t)c->fault || record.expected_pc!=(uint64_t)c->fault || record.tval!=0) return 20;
     /* The inherited judge checks pre-state/protocol/full vectors. Independently
        checked fault CSRs above; recovery deliberately makes final vectors differ. */
     view.post=record.pre;
@@ -66,11 +67,36 @@ static void csrlog(const struct vector_csrs *c) {
   const uint64_t values[]={c->vtype,c->vl,c->vstart,c->vxrm,c->vxsat,c->vcsr};
   for (unsigned i=0;i<6;++i) { if (i) _putc('/'); hex(values[i]); }
 }
-static unsigned done;
+#ifndef T12_START
+#define T12_START 0
+#endif
+#ifndef T12_COUNT
+#define T12_COUNT 65535
+#endif
+static unsigned done, seen;
+static uint64_t transcript = UINT64_C(0xcbf29ce484222325);
+static void mix_bytes(const void *p, size_t n) {
+  const unsigned char *b=p;
+  while(n--) { transcript ^= *b++; transcript *= UINT64_C(0x100000001b3); }
+}
+static void mix_u64(uint64_t value) { mix_bytes(&value,8); }
+static void record_digest(const struct t12_case *c,unsigned repeat,unsigned seq) {
+  mix_u64(seq); mix_u64(repeat);
+  const char *id=c->id; do { mix_bytes(id,1); } while(*id++);
+  const unsigned char cleared[16]={0};
+  for(unsigned r=0;r<32;++r)
+    mix_bytes(c->scratch & (1U<<r) ? cleared : after.regs[r],16);
+  mix_bytes(&record.post,sizeof(record.post));
+  mix_u64(record.trap_count); mix_u64(record.cause);
+  mix_bytes(&t12_recovery_csrs,sizeof(t12_recovery_csrs));
+}
+
 static int controls_done;
 static int run(const struct t12_case *c,unsigned repeat) {
+  unsigned seq=seen++;
+  if (seq<T12_START || seq-T12_START>=T12_COUNT) return 0;
   zero(&record,sizeof(record));zero(t12_counts,sizeof(t12_counts));
-  zero(&t12_recovery_csrs,sizeof(t12_recovery_csrs));zero(t12_sink,sizeof(t12_sink));
+  zero(&t12_recovery_csrs,sizeof(t12_recovery_csrs));t12_recovery_status=0;zero(t12_sink,sizeof(t12_sink));
   zero(&after,sizeof(after));after.head[0]=after.head[1]=after.tail[0]=after.tail[1]=canary;
   vdot_run(&record,&config,c->before,after.regs,c->entry);
   int rc=verify(c);
@@ -82,13 +108,22 @@ static int run(const struct t12_case *c,unsigned repeat) {
     if (!(high && preserved && csr)) return 23;
     controls_done=1;
   }
+  if (!rc) {
+    record_digest(c,repeat,seq);
+    if(c->kind==2) {
+      text("T12C_PERF seq="); decimal(seq);
+      text(" cy="); decimal(t12_counts[0]); _putc(','); decimal(t12_counts[1]);
+      text(" ir="); decimal(t12_counts[2]); _putc(','); decimal(t12_counts[3]); _putc('\n');
+    }
+    ++done; return 0;
+  }
   text("T12_CASE id=");text(c->id);text(" repeat=");decimal(repeat);text(" result=");text(rc ? "FAIL" : "PASS");
   text(" verdict=");decimal((unsigned)rc);text(" scratch=");hex(c->scratch);
   text(" pre32_checked=");decimal(!rc);text(" vectors_checked=");decimal(!rc);text(" csr_checked=");decimal(!rc);
   text(" guards=");decimal(guards());text(" traps=");decimal(record.trap_count);text(" cause=");decimal(record.cause);
   text(" epc=");hex(record.epc);text(" expected_pc=");hex((uint64_t)c->fault);text(" tval=");hex(record.tval);
   text(" pre_csr=");csrlog(&record.pre);text(" post_csr=");csrlog(&record.post);
-  text(" recovered_csr=");csrlog(&t12_recovery_csrs);text(" dests=");
+  text(" recovered_csr=");csrlog(&t12_recovery_csrs);text(" recovered_status=");hex(t12_recovery_status);text(" dests=");
   for (unsigned i=10;i<14;++i) { if (i!=10) _putc('/');vector(after.regs[i]); }
   text(" cycle_begin=");decimal(t12_counts[0]);text(" cycle_end=");decimal(t12_counts[1]);
   text(" instret_begin=");decimal(t12_counts[2]);text(" instret_end=");decimal(t12_counts[3]);_putc('\n');
@@ -102,7 +137,7 @@ static const struct t12_case *find(const char *scenario,const char *method) {
 int main(void) {
   uint64_t bytes;
   __asm__ volatile("li t0, 0x200; csrs mstatus, t0; csrr %0, vlenb" : "=r"(bytes) : : "t0","memory");
-  text("T12_BEGIN contract=vdot-s8x8-r32-v0.1\n");
+  text("T12C_BEGIN start="); decimal(T12_START); text(" limit="); decimal(T12_COUNT); _putc('\n');
   if (bytes!=16) { text("FAIL VLEN\n");return 1; }
   for (unsigned i=0;i<sizeof(t12_cases)/sizeof(t12_cases[0]);++i)
     if (t12_cases[i].kind!=2 && run(&t12_cases[i],0)) return 2;
@@ -115,5 +150,5 @@ int main(void) {
       if (run(repeat&1 ? rvv : vdot,repeat) || run(repeat&1 ? vdot : rvv,repeat)) return 5;
     }
   }
-  text("T12_SUMMARY executed=");decimal(done);text(" failed=0\n");return 0;
+  text("T12C_END executed="); decimal(done); text(" hash="); hex(transcript); _putc('\n'); return 0;
 }

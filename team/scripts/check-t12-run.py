@@ -49,7 +49,7 @@ def validate_binding(source,build,runtime):
     for k in ('started_at','finished_at'):
         t=datetime.datetime.fromisoformat(runtime.get(k,''));require(t.tzinfo is not None,'timestamp lacks timezone')
     require(datetime.datetime.fromisoformat(runtime['finished_at'])>=datetime.datetime.fromisoformat(runtime['started_at']),'end before start')
-    require(runtime.get('exit_code')==0,'runtime failure')
+    require(type(runtime.get('exit_code')) is int and runtime['exit_code']==0,'runtime failure')
 
 def validate(content,exit_code,data,require_diff=True):
     require(exit_code==0,'failed exit')
@@ -92,6 +92,7 @@ def validate(content,exit_code,data,require_diff=True):
             require(number(r['tval'])==0,'wrong runtime VL tval')
             require(csr(r['post_csr'])==[0,plan['fault_vl'],0,3,1,7],'wrong fault CSRs')
             require(csr(r['recovered_csr'])==[0,8,0,3,1,7],'missing legal recovery')
+            require((number(r['recovered_status'])>>9)&3==3,'recovery did not dirty VS')
         else:
             require(number(r['traps'])==0 and number(r['cause'])==0,'unexpected trap')
             require(csr(r['post_csr'])==[0,8,0,3,1,7],'wrong final CSR')
