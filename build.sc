@@ -243,6 +243,26 @@ trait XiangShanModule extends ScalaModule {
   override def forkEnv = Map("PATH" -> envPATH)
 }
 
+// Compile the production vdot arithmetic in isolation, with the same Chisel versions.
+// This target deliberately has no XiangShan/SoC module dependencies.
+object vdotDatapath extends HasChisel {
+  override def sources = T.sources {
+    Seq(
+      PathRef(pwd / "src/main/scala/xiangshan/backend/fu/vector/VDotDatapath.scala"),
+      PathRef(pwd / "team/rtl/vdot/GenerateVDot.scala"),
+    )
+  }
+
+  override def forkArgs = Seq("-Xmx2G", "-Xss8m")
+}
+
+// The wrapper test uses real XiangShan Bundle/RobPtr/FuConfig implementations.
+object vdotFu extends HasChisel {
+  override def sources = T.sources { Seq(PathRef(pwd / "team/rtl/vdot/GenerateVDotFu.scala")) }
+  override def moduleDeps = Seq(xiangshan)
+  override def forkArgs = Seq("-Xmx4G", "-Xss8m")
+}
+
 object xiangshan extends XiangShanModule with HasChisel with ScalafmtModule {
 
   override def millSourcePath = pwd

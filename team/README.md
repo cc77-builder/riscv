@@ -2,7 +2,7 @@
 
 本队以《香山 vdot 赛题：执行计划》和《香山 vdot 赛题：三人分工与 Git 协作》作为项目计划文档，分别安排里程碑、验收标准和三人职责。成员先阅读两份计划，再按认领的任务推进开发。
 
-本目录同时保存本队在 2026-10-09 完成的环境搭建、hello/vadd 源码和阶段一证据，并提供按当前仓库位置运行的脚本。香山硬件基线为 `16ae9ddcda54fc9a2fddffad73174cf793ac7814`，尚未实现 vdot。计划中的后续任务按实际验收结果更新进度。
+本目录同时保存本队在 2026-10-09 完成的环境搭建、hello/vadd 源码和阶段一证据，并提供按当前仓库位置运行的脚本。香山硬件基线为 `16ae9ddcda54fc9a2fddffad73174cf793ac7814`。`zjhwork` 已提供 vdot 数学模型、RTL 接口设计、组合算术和已通过控制测试的 FU 包装层；香山全核接入和 NEMU 扩展尚未实现。计划中的后续任务按实际验收结果更新进度。
 
 | 内容 | 入口 |
 | --- | --- |
@@ -10,6 +10,13 @@
 | 项目计划：阶段目标、执行步骤与验收标准 | [香山 vdot 赛题：执行计划](香山vdot赛题_执行计划.md) |
 | 项目计划：A/B/C 分工、评审与 Git 协作 | [香山 vdot 赛题：三人分工与 Git 协作](香山vdot赛题_三人分工与Git协作.md) |
 | vdot 指令语义、候选编码、测试与待确认问题（第一版草案） | [vdot.vv 规格](spec/vdot.md) |
+| 独立数学模型、定向/随机测试数据及一键检查（T05） | [vdot 模型与数据](models/vdot/README.md) |
+| T05 主机检查结果、数据来源与已知边界 | [模型验证记录](evidence/model-20261012/README.md) |
+| T06 接口草案：VFEX4 接入、逐拍时序、异常与验证矩阵 | [RTL 接口与接入设计](spec/rtl-interface.md) |
+| T07-A 组合算术 RTL、独立构建和一键验证 | [点积算术单元](rtl/vdot/README.md) |
+| 22 组定向 + 10,000 组随机完整 128 位比较结果 | [RTL 算术验证证据](evidence/rtl-datapath-20261012/README.md) |
+| T07-B 真实 FU：反压、取消、身份、异常及一键测试 | [FU 包装层](rtl/vdot/FU.md) |
+| 6 类场景、71,258 周期、事务守恒和预期拒错 | [FU 验证证据](evidence/rtl-fu-20261013/README.md) |
 | WSL、工具版本、安装方法、配套依赖 | [环境说明](docs/environment.md) |
 | 构建和运行命令、启动问题、通过标准 | [阶段一说明](docs/stage1.md) |
 | hello/vadd 测试源码 | [workloads/hello-vadd](workloads/hello-vadd/) |
@@ -17,6 +24,10 @@
 | 昨天的通过日志、配置、反汇编和事件 CSV | [历史证据](evidence/stage1-20261009/) |
 | 今天用仓库内脚本重新运行的验证结果 | [脚本验证记录](evidence/script-check-20261010/README.md) |
 | 源码锁定版本 | [versions.env](versions.env) |
+
+## 当前开发进度
+
+T05 数学模型、T07-A 组合算术和 T07-B 独立 FU 均已有通过证据；T06 人工评审及接入验证仍待完成。FU 在真实香山 Bundle/RobPtr 下通过 10,022 组算术输入、反压、非法配置、取消、复位和随机控制测试。复现运行 `bash team/scripts/check-vdot-fu.sh`；纯算术入口 `bash team/scripts/check-vdot-datapath.sh` 继续保留。下一步按计划推进 NEMU 扩展与 T10 译码/VFEX4 接入，再做全核 DiffTest，见 [RTL 设计第 8 节](spec/rtl-interface.md#8-实施顺序三人交接与完成标准)。
 
 ## 新成员操作顺序
 
@@ -51,7 +62,9 @@ bash team/scripts/stage1.sh run
 
 ### 历史说明：旧版单任务功能分支流程（不是当前共享线的默认操作）
 
-每个任务从 `main` 建分支并通过 Pull Request 合并。新成员克隆目录的团队远程是 `origin`；现有本机仿真目录的团队远程是 `team`。
+当前按项目负责人的约定，从数学模型这一步开始，开发内容先提交和推送到 `zjhwork` 分支，暂不合并或推送到 `main`。现有本机仓库使用 `git push team zjhwork`；新克隆仓库使用 `git push origin zjhwork`。其他成员取得本轮内容后，运行 `bash team/scripts/check-vdot-model.sh` 复核。
+
+团队常规协作使用任务分支并通过 Pull Request 合并；当前这一轮以 `zjhwork` 约定为准。需要另开任务分支时，先约定基准分支和合并目标。新成员克隆目录的团队远程是 `origin`；现有本机仿真目录的团队远程是 `team`。
 
 ```bash
 git switch -c feat/自己的任务名
