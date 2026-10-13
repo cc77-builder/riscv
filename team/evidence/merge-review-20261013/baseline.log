@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "scope": "host_RVV_step_model_and_optional_assembly_only",
+  "utc": "2026-10-13T07:15:00.609750+00:00",
+  "seed": "0x20261012",
+  "python_version": "3.10.12",
+  "random_generator": "Python random.Random.getrandbits; compare corpus hash across runtimes",
+  "random_register_corpus_sha256": "9eb4b25bb9e221374ff6fc51eab8b72e2dedf37f22cd7da4999f26d6f71503c7",
+  "script_sha256": "a46e06218705e1e1147118e0898b0cd23b614c4ab2885b597f7ce8b1f4cd1c05",
+  "register_triples": 32768,
+  "policies": 4,
+  "tail_modes": 2,
+  "modeled_cases_per_variant": {
+    "B6": 262144,
+    "B7": 262144
+  },
+  "extra_extremes_per_variant": 4,
+  "negative_counterexamples": {
+    "16bit_accumulator_overflows": true,
+    "sign_extending_to128_is_wrong": true,
+    "restoring_constant_policy_loses_ta_ma": true,
+    "e8_scalar_extract_truncates_131072": true
+  },
+  "assembly": {
+    "status": "NOT_RUN"
+  },
+  "not_verified": [
+    "actual_CPU_execution",
+    "VS_or_trap_behavior",
+    "NEMU",
+    "XiangShan_RTL",
+    "DiffTest",
+    "cycles",
+    "PPA"
+  ]
+}
