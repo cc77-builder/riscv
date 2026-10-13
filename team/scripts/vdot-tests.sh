@@ -13,7 +13,8 @@ evidence=${TEAM_EVIDENCE_DIR:-"$root/team/out/t05e-$action-$mode"}
 mkdir -p "$evidence"
 case "$action" in run-nemu|run-rtl) ;; *)
   python3 team/tests/generate_vdot_cases.py --output "$data" --coverage-profile="${VDOT_COVERAGE_PROFILE:-expanded}" \
-    --random-count="${VDOT_RANDOM_COUNT:-1000}" --smoke-random-count="${VDOT_SMOKE_RANDOM_COUNT:-1000}" > "$evidence/data-manifest.json";;
+    --random-count="${VDOT_RANDOM_COUNT:-1000}" --smoke-random-count="${VDOT_SMOKE_RANDOM_COUNT:-1000}" \
+    --shard-index="${VDOT_SHARD_INDEX:-0}" --shard-count="${VDOT_SHARD_COUNT:-1}" > "$evidence/data-manifest.json";;
 esac
 workload="$root/team/workloads/vdot-exceptions"
 
