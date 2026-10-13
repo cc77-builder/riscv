@@ -1,5 +1,9 @@
 # 团队 Agent 入口
 
+## T10/T11 本地 WIP（2026-10-13 本轮）
+
+用户授权本机 Codex 作为唯一生产实现者联合推进 T10/T11，暂不 Push。本轮在发布基线 `5ff189b8a44e58ee6a37d824e74c801c466c25d3` 上写入精确译码/单 uop/VFEX4 接入，按固定 James 提交选择复用 NEMU 补丁与软件验证闭包。状态及边界见 [本轮记录](team/docs/t10-t11-20261013.md)。当前变更尚未提交；本会话 WSL 被拒绝、Git index 写入被拒绝，RTL/EMU/NEMU/DiffTest 未验收。不得把本地 WIP 当作已发布候选，或丢弃这些未提交内容。没有认领共享推送锁，没有成员 ACK；历史发布报告继续保留。
+
 ## 当前状态：合并候选已发布，局部验收通过
 
 2026-10-13 已复用双亲合并 `a3a7fd7e53924be08ac9a1dabcebb1573caae13c` 和候选 `45bea984445e6f07d0d9c0ee8e42302e225ba0b3`。本机 Codex 独立完成 Git 内容/版本锁审计、主机检查、新组合 RTL 及真实 FU 仿真和代码复核。G-M1/G-M2/G-M3 PASS。用户已明确确认双方无人开发并授权发布，候选 `734353d01e963610ac864fdddd81e01e91f521fe` 已普通快进发布到团队和 Fork 的 `zufan`，两端回读一致。见 [发布记录](team/merge/2026-10-13-zjhwork-into-zufan.publication.md)。下一班仍需针对实际最终 SHA 记录 ACK/START。
