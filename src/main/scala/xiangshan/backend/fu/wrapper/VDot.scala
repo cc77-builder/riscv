@@ -99,4 +99,22 @@ class VDot(cfg: FuConfig)(implicit p: Parameters) extends VecNonPipedFuncUnit(cf
     assert(io.out.valid, "VDot lost a stalled response")
     assert(io.out.bits.asUInt === heldResponse, "VDot changed a stalled response")
   }
+
+  // Opt-in simulation observation only: no signal feeds back into the datapath.
+  // Build in a fresh output directory with VDOT_T12_TRACE=1; archive that setting.
+  if (sys.env.get("VDOT_T12_TRACE").contains("1")) {
+    when(io.in.fire) {
+      printf(p"T12_ACCEPT cycle=${utility.GTimer()} rob=${inCtrl.robIdx.flag}:${inCtrl.robIdx.value} pdest=${inCtrl.pdest} vl=${vl} illegal=${illegalInput}\n")
+    }
+    when(killed && !reset.asBool) {
+      printf(p"T12_KILL cycle=${utility.GTimer()} rob=${outCtrl.robIdx.flag}:${outCtrl.robIdx.value} redirect=${io.flush.bits.robIdx.flag}:${io.flush.bits.robIdx.value} state=${state}\n")
+    }
+    when(io.out.valid && !io.out.ready) {
+      printf(p"T12_STALL cycle=${utility.GTimer()} rob=${outCtrl.robIdx.flag}:${outCtrl.robIdx.value}\n")
+    }
+    when(io.out.fire) {
+      printf(p"T12_RESPONSE cycle=${utility.GTimer()} rob=${outCtrl.robIdx.flag}:${outCtrl.robIdx.value} pdest=${outCtrl.pdest} illegal=${illegalReg} data=0x${Hexadecimal(resultReg)}\n")
+    }
+  }
+
 }

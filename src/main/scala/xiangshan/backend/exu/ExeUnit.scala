@@ -225,6 +225,15 @@ class ExeUnitImp(
   in1ToN.io.in.bits := io.in.bits
   io.in.ready := !busy && in1ToN.io.in.ready
 
+  if (sys.env.get("VDOT_T12_TRACE").contains("1") && fuCfgs.contains(xiangshan.backend.fu.FuConfig.VDotCfg)) {
+    when(io.in.fire) {
+      printf(p"T12_VFEX4_ACCEPT cycle=${GTimer()} rob=${io.in.bits.robIdx.flag}:${io.in.bits.robIdx.value} fu=0x${Hexadecimal(io.in.bits.fuType)}\n")
+    }
+    when(io.in.valid && !io.in.ready) {
+      printf(p"T12_VFEX4_WAIT cycle=${GTimer()} rob=${io.in.bits.robIdx.flag}:${io.in.bits.robIdx.value} fu=0x${Hexadecimal(io.in.bits.fuType)} busy=${busy}\n")
+    }
+  }
+
   def pipelineReg(init: ExuInput, valid: Bool, latency: Int, flush: ValidIO[Redirect]): (Seq[ExuInput], Seq[Bool]) = {
     val validVec = valid +: Seq.fill(latency)(RegInit(false.B))
     val inVec = init +: Seq.fill(latency)(Reg(new ExuInput(exuParams)))
