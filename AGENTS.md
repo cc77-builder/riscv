@@ -1,28 +1,21 @@
 # 团队 Agent 入口
 
-## T10/T11 本地 WIP（2026-10-13 本轮）
+## 当前阶段：T10 最小全核接入、T11 固定功能矩阵已验收
 
-用户授权本机 Codex 作为唯一生产实现者联合推进 T10/T11，暂不 Push。本轮在发布基线 `5ff189b8a44e58ee6a37d824e74c801c466c25d3` 上写入精确译码/单 uop/VFEX4 接入，按固定 James 提交选择复用 NEMU 补丁与软件验证闭包。状态及边界见 [本轮记录](team/docs/t10-t11-20261013.md)。当前变更尚未提交；本会话 WSL 被拒绝、Git index 写入被拒绝，RTL/EMU/NEMU/DiffTest 未验收。不得把本地 WIP 当作已发布候选，或丢弃这些未提交内容。没有认领共享推送锁，没有成员 ACK；历史发布报告继续保留。
+先读 [本轮验收与边界](team/docs/t10-t11-acceptance-20261013.md)、[可独立复算的实际证据](team/evidence/t10-t11-fullcore-20261013/README.md) 和 [两线协作约定](team/docs/collaboration-current.md)。固定被测源码 `1bd6f1d9c9485695876ff37a77fbb175a5125983`，其生产 RTL / build.sc 与实际 EMU 来源 `fcb16a8764d342339670df0bbf1bc67ef2028b86` 相同。后续发布提交只增加验收器修复、来源记录与文档。
 
-## 当前状态：合并候选已发布，局部验收通过
+本轮真实 MinimalConfig 全核 DiffTest 通过 117 个唯一用例（48 定向、32 固定随机、37 精确异常）；8 片仅 D00 重复，124 条 extension 记录，另有56个自检和24个harness预期拒错。vdot 的 bit100真实差分注入在对应 PC/目的寄存器报错；同一镜像换回正常参考库后 shard-0 完整通过。不能把这批功能矩阵当成所有乱序/虚拟化/性能验收。
 
-2026-10-13 已复用双亲合并 `a3a7fd7e53924be08ac9a1dabcebb1573caae13c` 和候选 `45bea984445e6f07d0d9c0ee8e42302e225ba0b3`。本机 Codex 独立完成 Git 内容/版本锁审计、主机检查、新组合 RTL 及真实 FU 仿真和代码复核。G-M1/G-M2/G-M3 PASS。用户已明确确认双方无人开发并授权发布，候选 `734353d01e963610ac864fdddd81e01e91f521fe` 已普通快进发布到团队和 Fork 的 `zufan`，两端回读一致。见 [发布记录](team/merge/2026-10-13-zjhwork-into-zufan.publication.md)。下一班仍需针对实际最终 SHA 记录 ACK/START。
+## 已授权开发与交接
 
-先读 [最新独立验收报告](team/merge/2026-10-13-zjhwork-into-zufan.codex-review.md)、[历史执行报告](team/merge/2026-10-13-zjhwork-into-zufan.result.md) 和 [当前协作约定](team/docs/collaboration-current.md)。原 [合并任务单](team/merge/2026-10-13-zjhwork-into-zufan.md) 是编制时方案，其“尚无 FU”等判断以最新固定候选报告为准，不改写历史。
+团队唯一上游为 `cc77-builder/riscv`，共享开发目标为 `zufan`；个人 `LiZufan001/riscv` 只是按需快进同步。用户本轮要求完成剩余任务，本轮发布仍须先核对实时远端和无冲突的快进关系。本文不伪造两位成员的 ACK，不创建锁，不授权读到文件即自动开工。最终完整提交 SHA、Push 与双远端回读以实际任务回执为准，不在包含自身的提交中预填。
 
-## 两人共享 zufan 的当前规则
+两人使用独立工作树和输出目录；仅共享远端 Push 按 START → RELEASE → ACK 有序交接。保留既有未提交和未发布成果，不 reset/clean/stash 掩盖他人工作；不强推、不改写历史、不删除 zjhwork，不向 main/James_Hotten/zjhwork 写入。GitHub Actions 完全不依赖，原 workflow 未改。
 
-- 目标团队仓库为 `cc77-builder/riscv`；zufan 已包含本次合并，后续供两人共享，James_Hotten 为另一活跃线，main 为稳定线。
-- 各自独立工作区/输出目录并行开发和验证；共享远端 zufan 只允许真实约定的当班推送者，按 START→RELEASE→ACK 交接。
-- 发布前核对当前远端、dirty/untracked、未发布提交和在途任务。普通快进 Push；不强推、不改写历史、不删除 zjhwork、不自动丢弃成员工作。
-- 协调记录在团队唯一位置；Fork `LiZufan001/riscv` 仅在团队成功后按需安全快进同步，不是另一套认领状态。
-- 不新增、不调用 GitHub Actions。既有上游 workflow 保留，本次没有修改或禁用它们。
-- 本次发布窗口依据用户明确确认双方无人开发；没有伪造个人 ACK。读到文档不产生占用锁或自动接管权限。下一位先核对实际 SHA、记录接收和 START；zjhwork 保留用于追溯。
+## 下一批工作
 
-## 复现与后续边界
+优先 T12：需要真实触发与观察的 VL/CSR 紧邻依赖、RAW/WAW、共享 VFEX4 与写回竞争、年轻 vdot 发射后被取消、ROB/FTQ 绕回；随后做公平 RVV 配对周期测量。M/HS/VS 委托与虚拟化尚未验证；综合/STA/功耗、官方规格确认、人工接口签字仍未完成。现有 FU 的 E0/E2/E3/II4 仅是局部握手时序，不是全核指令周期或频率。
 
-原脚本为 `check-vdot-model.sh`、`check-vdot-datapath.sh`、`check-vdot-fu.sh`，均在 team/scripts 下；每次使用新的 VDOT_OUT_DIR。新日志见 `team/evidence/merge-review-20261013/`，保留旧 evidence 的日期/SHA/摘要。
+原模型、datapath、FU、decode 入口在 `team/scripts/`；每次真实运行用新输出目录。当前 NEMU 补丁为1.1.0及显式平台配置；禁止混用旧参考库、跳过vdot差分或修改黄金结果来消除错误。原Windows WIP目录保留；本轮Linux发布工作区见验收报告，不直接覆盖原开发目录。
 
-当前包含数学模型、组合算术、非流水 FU、研究与协作成果；没有纳入 James_Hotten 第三线。译码/VFEX4、NEMU、全核 DiffTest、CPU 周期性能和 PPA 尚未完成。比赛规格仍是候选合同，局部通过不替代人工接口签字或赛事确认。
-
-本机 Codex 直接使用本机文件和 Git，不依赖 ChatPC。原工作区在 zjhwork 时，用 `git fetch` 加 `git show <已核实团队远程>/zufan:AGENTS.md` 查阅入口，不用 pull 查看文档。按实际任务授权执行，不因读取入口自动启动其他 Agent、创建 Issue 或 Push。
+旧入口见 [历史快照](team/docs/history/AGENTS-before-t10-closure-20261013.md)，旧阶段报告、测试日志、补丁1.0.0原字节均保留。
