@@ -161,6 +161,18 @@ def verify_build(evidence, image, data, kind, mode):
     return record
 
 
+def check_xiangshan_reset_config(config):
+    """Reject references whose trap reset policy differs from pinned XS RTL."""
+    for key, expected in {
+        'NMIE_INIT': 'CONFIG_NMIE_INIT=y',
+        'MDT_INIT': '# CONFIG_MDT_INIT is not set',
+    }.items():
+        entries = [line for line in config
+                   if line.startswith(f'CONFIG_{key}=') or line == f'# CONFIG_{key} is not set']
+        require(entries == [expected],
+                f'XiangShan reference requires exactly {expected}; rebuild against the target reset policy')
+
+
 def verify_nemu(repo, binary, mode):
     repo = Path(repo).resolve()
     binary = Path(binary).resolve()
@@ -176,6 +188,7 @@ def verify_nemu(repo, binary, mode):
     config=(repo/'.config').read_text().splitlines()
     require('CONFIG_RVV=y' in config and 'CONFIG_CUSTOM_VDOT=y' in config,'Candidate extension is not enabled')
     require(('CONFIG_SHARE=y' in config)==(mode=='reference'),'NEMU configuration does not match binary role')
+    check_xiangshan_reset_config(config)
     require(nemu_snapshot(repo)==provenance['source_sha256'],'NEMU source/generated inputs changed after build')
     return provenance
 
