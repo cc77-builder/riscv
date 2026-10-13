@@ -1,5 +1,11 @@
 # 团队 Agent 入口
 
+## 合并执行进展：仅本地候选，尚未发布
+
+2026-10-13 已按本次用户授权在独立工作区创建双亲合并 `a3a7fd7e53924be08ac9a1dabcebb1573caae13c`，吸收 `zjhwork@ffec67e3` 的数学模型、组合算术和新 FU。内容保全与主机回归已通过；本机 RTL 工具链缺失，独立复核和双方 ACK 尚未完成。**没有 Push，不得将本地候选当作团队分支已合并，也不得自动停用 zjhwork。**
+
+恢复执行先读 [本次实际执行报告](team/merge/2026-10-13-zjhwork-into-zufan.result.md)，核对候选及最新远端，补足原任务单 G-M3/G-M4；不要重复创建同一合并或用旧 RTL PASS 顶替本次复跑。
+
 ## 2026-10-13 当前协作约定
 
 - [三人两线协作机制：当前执行约定](team/docs/collaboration-current.md)：独立工作区并行开发，共享远端 `zufan` 同时只允许一名当班推送者，按 START → RELEASE → ACK 交接；普通快进 Push、固定 SHA 验收。
