@@ -2,11 +2,11 @@
 
 本目录实现 [vdot 第一版规格](../../spec/vdot.md) 中的内部原型 `vdot-s8x8-r32-v0.1`：两个源各取低 8 个 signed int8，精确相乘求和，写目的低 32 位补码，高 96 位清零。模型使用 Python 精确整数，不依赖 RTL 的加法树、NEMU 或第三方数值库。
 
-T05 最初在 `zjhwork` 开发（历史）。2026-10-13 本地合并候选已通过模型、组合 RTL 和真实 FU 复验，见 [最新报告](../../merge/2026-10-13-zjhwork-into-zufan.codex-review.md)。**尚未远端发布，成员交接待完成；发布并接收后在共享 `zufan` 独立工作区错峰推进**，暂不合入 `main`。规格中的未确认事项继续有效；模型通过不等于命题方认可原型选择，也不代表 vdot 已在香山/NEMU 上实现。
+T05 最初在 `zjhwork` 开发（历史）。2026-10-13 本地合并候选已通过模型、组合 RTL 和真实 FU 复验，见 [最新报告](../../merge/2026-10-13-zjhwork-into-zufan.codex-review.md)。**现已发布到团队及 Fork zufan**（[发布记录](../../merge/2026-10-13-zjhwork-into-zufan.publication.md)）；下一位核对最终 SHA 并接收后，在共享 `zufan` 独立工作区错峰推进，暂不合入 `main`。规格中的未确认事项继续有效；模型通过不等于命题方认可原型选择，也不代表 vdot 已在香山/NEMU 上实现。
 
 ## 1. 取得代码并检查
 
-以下为候选已发布到团队 zufan 且完成接收后的用法。发布前按最新报告从候选 bundle 检出固定 C，不能假定远端 zufan 已有本目录：
+本次候选已发布到团队 zufan。新成员可按以下方式取得代码，随后核对最终完整 SHA 并记录接收：
 
 ```bash
 git clone --branch zufan https://github.com/cc77-builder/riscv.git

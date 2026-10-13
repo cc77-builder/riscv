@@ -1,6 +1,6 @@
 # 三人团队：项目计划与开发入口
 
-> **2026-10-13 最新状态：待交接发布。** 固定候选 C 已重新通过 Git/主机/组合 RTL/真实 FU 验收及独立代码复核；组合 22+10000 组、FU 6 类/71258 周期。尚缺真实成员交接，未向团队或 Fork Push。见 [最新独立验收报告](merge/2026-10-13-zjhwork-into-zufan.codex-review.md)。发布并接收后，两人共享 zufan；此前不能假定远端已含候选或自动停用 zjhwork。
+> **2026-10-13 最新状态：已完成合并发布。** 用户确认双方无人开发后，已将验收候选 `734353d01e963610ac864fdddd81e01e91f521fe` 普通快进发布到团队及 Fork 的 zufan，两端 SHA 回读一致。见 [发布记录](merge/2026-10-13-zjhwork-into-zufan.publication.md)；[完整局部验收](merge/2026-10-13-zjhwork-into-zufan.codex-review.md)通过组合 22+10000 组、FU 6 类/71258 周期。后续两人共享 zufan，下一班须核对最终 SHA 并记录 ACK/START。
 
 本队以《香山 vdot 赛题：执行计划》和《香山 vdot 赛题：三人分工与 Git 协作》作为项目计划文档，分别安排里程碑、验收标准和三人职责。成员先阅读两份计划，再按认领的任务推进开发。
 
@@ -36,7 +36,7 @@ T05 数学模型、T07-A 组合算术和 T07-B 独立 FU 均已有通过证据�
 先接受私有仓库邀请。在 Ubuntu 22.04 / WSL2 的 Linux 文件系统中：
 
 ```bash
-# 仅在候选已发布到 zufan 且完成接收后使用；否则按验收报告检出固定候选
+# 取得团队代码后核对最终 SHA，记录接收，再开始开发
 git clone --branch zufan --recurse-submodules https://github.com/cc77-builder/riscv.git
 cd riscv
 bash team/scripts/prepare-dependencies.sh
@@ -57,7 +57,7 @@ bash team/scripts/stage1.sh run
 
 ## Git 协作（2026-10-13 当前约定）
 
-请先阅读 [三人两线协作机制](docs/collaboration-current.md) 和根目录 [AGENTS.md](../AGENTS.md)。目标为 `zufan` 两人共享开发线、`James_Hotten` 另一开发线，`main` 保持稳定；`zjhwork → zufan` 本地合并和局部验收已完成，仍待真实交接发布，不自动删旧分支。
+请先阅读 [三人两线协作机制](docs/collaboration-current.md) 和根目录 [AGENTS.md](../AGENTS.md)。目标为 `zufan` 两人共享开发线、`James_Hotten` 另一开发线，`main` 保持稳定；`zjhwork → zufan` 已完成合并发布与局部验收，不自动删旧分支。
 
 两人**独立工作区并行开发/验证**，仅团队共享远端 `zufan` 的 Push 在 START → RELEASE → ACK 协议下错峰进行；所有验收绑定实际 SHA，不强推、不让后续代码静默改变已评审 PR。交接主记录位于团队仓库的一个统一位置，Issue/Discussion 或 Markdown 均可，不强制 Issue。
 

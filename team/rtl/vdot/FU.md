@@ -1,6 +1,6 @@
 # vdot FU 包装层与控制验证（T07-B）
 
-> 2026-10-13 本机续验收：固定候选 C 的组合及真实 FU 重新生成/编译/测试 PASS；见 [最新报告](../../merge/2026-10-13-zjhwork-into-zufan.codex-review.md)。尚未 Push，真实交接待完成。以下旧日期/证据仍为历史记录。
+> 2026-10-13 本机续验收：固定候选 C 的组合及真实 FU 重新生成/编译/测试 PASS；见 [最新报告](../../merge/2026-10-13-zjhwork-into-zufan.codex-review.md)。现已发布到团队及 Fork zufan，见 [发布记录](../../merge/2026-10-13-zjhwork-into-zufan.publication.md)。下一班核对最终 SHA 并记录接收；以下旧日期/证据仍为历史记录。
 
 2026-10-13 已实现真实香山功能单元 [VDot.scala](../../../src/main/scala/xiangshan/backend/fu/wrapper/VDot.scala)，继承 `VecNonPipedFuncUnit`，使用真实 `FuncUnitIO`、`FuConfig` 和 `RobPtr.needFlush`。**带 RTL 断言的 Verilator 验证通过 6 类场景、71,258 个周期。** [归档证据](../../evidence/rtl-fu-20261013/README.md)保存实际命令、版本、摘要、结果和预期拒错日志。
 
@@ -36,7 +36,7 @@ RTL 内部断言检查目的类型、合法响应的高位零、异常禁写以�
 在完整、已初始化子模块并安装配套工具的香山仓库中运行：
 
 ```bash
-# 发布前在报告指定的固定候选检出中测试；发布并接收后使用共享 zufan
+# 当前代码已发布在共享 zufan；测试绑定自己已核对的完整 SHA
 # 已有开发目录先检查未提交工作，再按真实接收 SHA 切换，勿盲目 pull
 bash team/scripts/check-vdot-fu.sh
 ```
