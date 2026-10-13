@@ -6,6 +6,7 @@
 
 | 内容 | 入口 |
 | --- | --- |
+| 当前协作机制：无 Actions、共享分支交接、Fork 按需同步 | [三人两线协作机制](docs/collaboration-current.md) |
 | 项目计划：阶段目标、执行步骤与验收标准 | [香山 vdot 赛题：执行计划](香山vdot赛题_执行计划.md) |
 | 项目计划：A/B/C 分工、评审与 Git 协作 | [香山 vdot 赛题：三人分工与 Git 协作](香山vdot赛题_三人分工与Git协作.md) |
 | vdot 指令语义、候选编码、测试与待确认问题（第一版草案） | [vdot.vv 规格](spec/vdot.md) |
@@ -40,7 +41,15 @@ bash team/scripts/stage1.sh run
 
 默认采用 MinimalConfig、单核、单仿真线程、JVM 12G、构建并行度 2。`BUILD_JOBS`、`JVM_HEAP` 可显式调整；普通运行不生成波形，使用 `DUMP_WAVE=1 bash team/scripts/stage1.sh run` 可生成 FST。各步骤输出保存到 `team/out/`，不会自动进入 Git。
 
-## Git 协作
+## Git 协作（2026-10-13 当前约定）
+
+请先阅读 [三人两线协作机制](docs/collaboration-current.md) 和根目录 [AGENTS.md](../AGENTS.md)。目标为 `zufan` 两人共享开发线、`James_Hotten` 另一开发线，`main` 保持稳定；`zjhwork → zufan` 仍待按合并任务单执行，不自动删旧分支。
+
+两人**独立工作区并行开发/验证**，仅团队共享远端 `zufan` 的 Push 在 START → RELEASE → ACK 协议下错峰进行；所有验收绑定实际 SHA，不强推、不让后续代码静默改变已评审 PR。交接主记录位于团队仓库的一个统一位置，Issue/Discussion 或 Markdown 均可，不强制 Issue。
+
+协作、回归与 Fork 按需同步**均不依赖 GitHub Actions**；源仓库现有 workflow 文件保留作参考。Fork `LiZufan001/riscv` 并非实时自动镜像，正常快进同步前必须比较源/目标分支，不覆盖独有提交。
+
+### 历史说明：旧版单任务功能分支流程（不是当前共享线的默认操作）
 
 每个任务从 `main` 建分支并通过 Pull Request 合并。新成员克隆目录的团队远程是 `origin`；现有本机仿真目录的团队远程是 `team`。
 
