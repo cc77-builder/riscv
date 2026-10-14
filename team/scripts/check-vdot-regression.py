@@ -62,7 +62,11 @@ def check(text, manifest, exit_code):
     summaries=list(re.finditer(r'^T12_SUMMARY groups=4 checkpoints=128 speculative_attempts=256 failures=0$',uart,re.MULTILINE))
     require(len(summaries)==1 and uart.count('T12_SUMMARY')==1,'missing or duplicate successful workload summary')
     require('HIT GOOD TRAP' in uart[summaries[0].end():], 'no GOOD TRAP after complete summary')
-    require(re.findall(r'^T12_GROUP_PASS id=(\d+) checkpoints=32 bytes=16384$',uart,re.MULTILINE)==['0','1','2','3'], 'missing/reordered group result')
+    groups=list(re.finditer(r'^T12_GROUP_PASS id=(\d+) checkpoints=32 bytes=16384$',uart,re.MULTILINE))
+    require([m[1] for m in groups]==['0','1','2','3'], 'missing/reordered group result')
+    begins=list(re.finditer(r'^T12_BEGIN seed=0x20261014 contract=vdot-s8x8-r32-v0.1$',uart,re.MULTILINE))
+    require(len(begins)==1 and uart.count('T12_BEGIN')==1 and begins[0].start()<groups[0].start()
+            and groups[-1].end()<summaries[0].start(), 'invalid begin/group/summary order')
     require(events,'missing RTL observer events')
     # Verilog printf order across modules is not a hardware ordering. Stable cycle
     # order with retire/redirect before re-allocation models the queue boundaries.
@@ -94,7 +98,7 @@ def check(text, manifest, exit_code):
             entries[key]['responded']=True;pending=None
         elif kind=='KILL':
             require(pending==key,'kill without matching accepted request')
-            require(ptr(f['redirect'])!=key,'self-flush does not prove younger cancellation')
+            require(0<(key-ptr(f['redirect']))%(2*ROB_SIZE)<ROB_SIZE,'kill does not prove younger cancellation')
             entries[key]['cancelled']=True;pending=None
         elif kind=='STALL':
             require(pending==key,'stall without matching accepted request')

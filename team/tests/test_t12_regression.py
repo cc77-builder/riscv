@@ -25,6 +25,7 @@ def fixture():
                   f'T12_STALL cycle={cycle+3} rob={ptr}',
                   f'T12_RESPONSE cycle={cycle+4} rob={ptr} pdest=7 illegal=0 data=0x00000000fffffff8',
                   f'T12_COMMIT cycle={cycle+5} rob={ptr} pc={pc} ftq={ftq}']
+    lines += ['T12_BEGIN seed=0x20261014 contract=vdot-s8x8-r32-v0.1']
     lines += [f'T12_GROUP_PASS id={i} checkpoints=32 bytes=16384' for i in range(4)]
     lines += ['T12_SUMMARY groups=4 checkpoints=128 speculative_attempts=256 failures=0','HIT GOOD TRAP']
     return '\n'.join(lines)+'\n'
@@ -89,5 +90,16 @@ class T12AcceptanceTests(unittest.TestCase):
     def test_extra_malformed_summary_is_rejected(self):
         with self.assertRaisesRegex(ValueError, 'summary'):
             self.run_check(fixture()+'T12_SUMMARY incomplete\n')
+
+    def test_missing_program_begin_is_rejected(self):
+        with self.assertRaisesRegex(ValueError, 'begin/group/summary'):
+            self.run_check(fixture().replace('T12_BEGIN', 'MISSING_BEGIN'))
+    def test_group_after_summary_is_rejected(self):
+        line='T12_GROUP_PASS id=3 checkpoints=32 bytes=16384\n'
+        text=fixture().replace(line,'')+line
+        with self.assertRaisesRegex(ValueError, 'begin/group/summary'): self.run_check(text)
+    def test_older_killed_instruction_is_rejected(self):
+        with self.assertRaisesRegex(ValueError, 'younger'):
+            self.run_check(fixture().replace('redirect=0:4 state=2','redirect=0:6 state=2'))
 
 if __name__=='__main__': unittest.main()
