@@ -1,0 +1,23 @@
+================= xiangshan.test.testOnly xiangshan.backend.fu.vector.VdotFuSpec =================
+==================================================================================================
+[773/773] =============== xiangshan.test.testOnly x...end.fu.vector.VdotFuSpec =============== 61s
+[773] xiangshan.test.testOnly 5s
+==================================================================================================
+[773/773] xiangshan.test.testOnly
+[773] [32mVdotFuSpec:[0m
+[773] [32mVdotFu[0m
+[773] make: Warning: File 'VVdotFuHarness__ver.d' has modification time 0.14 s in the future
+[773] make: warning:  Clock skew detected.  Your build may be incomplete.
+[773] VDOT_FU_CONFIG_PASS requests=36 legal=8 illegal=28 full128=true metadata_stalls=true
+[773] [32m- should preserve real metadata, route whole vector/v0 results and complete every configuration rejection[0m
+[773] VDOT_FU_AGE_PASS pending=18432 incoming=18432 rob_entries=48 wrap=true flush_itself=true
+[773] [32m- should select pending and incoming cancellation by actual ROB age, wrap and redirect level[0m
+[773] VDOT_FU_SCOREBOARD_PASS cycles=4000 accepted=2079 returned=1959 cancelled=120 stalled=1236 replaced=1424 resets=3
+[773] [32m- should conserve request identity under randomized stalls, simultaneous replacement, selective cancellation and reset[0m
+[773] [36mRun completed in 36 seconds, 173 milliseconds.[0m
+[773] [36mTotal number of tests run: 3[0m
+[773] [36mSuites: completed 1, aborted 0[0m
+[773] [36mTests: succeeded 3, failed 0, canceled 0, ignored 0, pending 0[0m
+[773] [32mAll tests passed.[0m
+[773/773] =============== xiangshan.test.testOnly x...end.fu.vector.VdotFuSpec =============== 93s
+==================================================================================================

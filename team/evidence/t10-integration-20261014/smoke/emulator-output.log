@@ -1,0 +1,59 @@
+emu compiled at Oct 14 2026, 11:43:38
+Using simulated 32768B flash
+use /mnt/c/Code/RVInno/riscv/team/out/t10-smoke-final-20261014/boot-flash.bin as flash bin
+Using simulated 128MB RAM
+The image is /mnt/c/Code/RVInno/riscv/team/out/t10-smoke-final-20261014/vdot-integration.bin
+The reference model is /home/amesotten/.cache/codex-rvinno/t10/nemu-compatible/reference/build/riscv64-nemu-interpreter-so
+The first instruction of core 0 has commited. Difftest enabled. 
+[1;34m[src/monitor/image_loader.c:205,load_img] Loading flash image: /mnt/c/Code/RVInno/riscv/team/out/t10-smoke-final-20261014/boot-flash.bin
+[0m
+[1;34m[src/monitor/image_loader.c:250,load_img] Read 12 bytes from file /mnt/c/Code/RVInno/riscv/team/out/t10-smoke-final-20261014/boot-flash.bin to 0x0xf0000000[0m
+T10_BEGIN contract=vdot-s8x8-r32-v0.1 full_width=128
+T10_CASE id=D03 result=PASS cause=0 all32=1 pre32=1
+T10_CASE id=clean-vs result=PASS cause=0 all32=1 pre32=1
+T10_CASE id=D05 result=PASS cause=0 all32=1 pre32=1
+T10_CASE id=D07 result=PASS cause=0 all32=1 pre32=1
+T10_CASE id=L04-0-8-9 result=PASS cause=0 all32=1 pre32=1
+T10_CASE id=L04-10-0-9 result=PASS cause=0 all32=1 pre32=1
+T10_CASE id=L04-10-8-0 result=PASS cause=0 all32=1 pre32=1
+T10_CASE id=L04-0-0-9 result=PASS cause=0 all32=1 pre32=1
+T10_CASE id=L04-31-31-31 result=PASS cause=0 all32=1 pre32=1
+T10_CASE id=L05-3-ff result=PASS cause=0 all32=1 pre32=1
+T10_CASE id=X02-m2 result=PASS cause=2 all32=1 pre32=1
+T10_CASE id=X02-mf2 result=PASS cause=2 all32=1 pre32=1
+T10_CASE id=X03-vl0 result=PASS cause=2 all32=1 pre32=1
+T10_CASE id=X03-vl7 result=PASS cause=2 all32=1 pre32=1
+T10_CASE id=X04-vstart1 result=PASS cause=2 all32=1 pre32=1
+T10_CASE id=X05-vill result=PASS cause=2 all32=1 pre32=1
+T10_CASE id=X06-VS-off result=PASS cause=2 all32=1 pre32=1
+T10_CASE id=X07-vm0 result=PASS cause=2 all32=1 pre32=1
+T10_CASE id=X09-v0 result=PASS cause=2 all32=1 pre32=1
+T10_CASE id=X11-VS-1 result=PASS cause=2 all32=1 pre32=1
+T10_CORE_SMOKE_PASS legal=10 illegal=10 all32=20 pre32=20
+Core 0: [32mHIT GOOD TRAP at pc = 0x80001d5e
+[0m[35mCore-0 instrCnt = 320644, cycleCnt = 311458, IPC = 1.029494
+[0m[34mSeed=0 Guest cycle spent: 311462 (this will be different from cycleCnt if emu loads a snapshot)
+[0m[34mHost time spent: 595896ms
+[0m	Command being timed: "timeout 30m ./build/emu -i /mnt/c/Code/RVInno/riscv/team/out/t10-smoke-final-20261014/vdot-integration.bin --flash=/mnt/c/Code/RVInno/riscv/team/out/t10-smoke-final-20261014/boot-flash.bin --ram-size=128MB --diff=/home/amesotten/.cache/codex-rvinno/t10/nemu-compatible/reference/build/riscv64-nemu-interpreter-so --max-cycles=2000000 --dump-wave --wave-path=/mnt/c/Code/RVInno/riscv/team/out/t10-smoke-final-20261014/vdot-integration.fst -b 140000 -e 190000"
+	User time (seconds): 579.68
+	System time (seconds): 1.65
+	Percent of CPU this job got: 97%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 9:55.92
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 386808
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 419
+	Minor (reclaiming a frame) page faults: 80901
+	Voluntary context switches: 92735
+	Involuntary context switches: 541
+	Swaps: 0
+	File system inputs: 50056
+	File system outputs: 302392
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

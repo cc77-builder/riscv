@@ -1,0 +1,77 @@
+{"modules": 126, "root_inputs": 436, "source_pack_sha256": "e8bd8d763650fc4fe8b8a389f643032db4f582aa2388915750635250bacc05d6", "status": "CORE_SOURCE_BINDING_PASS"}
+build/rtl/SimTop.fir: OK
+build/rtl/SimTop.fir: OK
+CORE_SPLIT_RTL_PREPARED
+Picked up JAVA_TOOL_OPTIONS: -XX:ActiveProcessorCount=2
+Picked up JAVA_TOOL_OPTIONS: -XX:ActiveProcessorCount=2
+Mill Build Tool version 0.12.3
+Java version: 21.0.12.1, vendor: Ubuntu, runtime: /usr/lib/jvm/java-21-openjdk-amd64
+Default locale: en, platform encoding: UTF-8
+OS name: "Linux", version: 6.6.87.2-microsoft-standard-WSL2, arch: amd64
+Verilator 5.020 2024-01-01 rev (Debian 5.020-1)
+make -C ./difftest emu SIM_TOP=SimTop DESIGN_DIR=/home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f NUM_CORES=1 RTL_SUFFIX=sv
+make[1]: Entering directory '/home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest'
+Tue, 13 Oct 2026 21:44:23 +0800
+time -avp -o /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/build/time.log verilator --exe -O3 --cc --top-module SimTop +define+VERILATOR=1 +define+PRINTF_COND=1 +define+RANDOMIZE_REG_INIT +define+RANDOMIZE_MEM_INIT +define+RANDOMIZE_GARBAGE_ASSIGN +define+RANDOMIZE_DELAY=0 -Wno-STMTDLY -Wno-WIDTH --max-num-width 150000 --assert --x-assign unique --output-split 30000 --output-split-cfuncs 30000 -I/home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/build/rtl -I/home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/build/generated-src -CFLAGS "-I/home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/common -I/home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/config -DNOOP_HOME=\\\"/home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f\\\" -I/home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/build/generated-src -I/home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/plugin/include -I/home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/difftest -DREF_PROXY=NemuProxy -DREF_HOME=\\\"/home/amesotten/.cache/codex-rvinno/t08/delivered/reference\\\" -I/home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/plugin/spikedasm -I/home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/verilator -DVERILATOR -DNUM_CORES=1 --std=c++17 -DVERILATOR_4_210 -DENABLE_FST -DEMU_THREAD=1" -LDFLAGS "-lz -lzstd -ldl" -CFLAGS "\$(PGO_CFLAGS)" -LDFLAGS "\$(PGO_LDFLAGS)" -o /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/build/emu +define+DIFFTEST --instr-count-dpi 1 --no-timing +define+VERILATOR_5 --trace-fst --threads 1 --threads-dpi all -Mdir /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/build/emu-compile /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/build/rtl/SimTop.sv /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/vsrc/common/ref.v /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/vsrc/common/assert.v /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/vsrc/common/SimJTAG.v /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/common/device.cpp /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/common/query.cpp /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/common/uart.cpp /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/common/ram.cpp /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/common/dut.cpp /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/common/golden.cpp /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/common/elfloader.cpp /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/common/keyboard.cpp /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/common/remote_bitbang.cpp /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/common/flash.cpp /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/common/sdcard.cpp /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/common/compress.cpp /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/common/lightsss.cpp /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/common/common.cpp /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/common/vga.cpp /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/common/perf.cpp /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/common/mpool.cpp /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/common/coverage.cpp /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/common/main.cpp /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/common/SimJTAG.cpp /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/build/generated-src/difftest-dpic.cpp /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/difftest/goldenmem.cpp /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/difftest/difftrace.cpp /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/difftest/refproxy.cpp /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/difftest/difftest.cpp /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/plugin/spikedasm/spikedasm.cpp /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/verilator/emu.cpp /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/verilator/snapshot.cpp
+Tue, 13 Oct 2026 21:49:24 +0800
+Building emu...
+make[2]: Entering directory '/home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest'
+time -avp -o /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/build/time.log make -s VM_PARALLEL_BUILDS=1 OPT_SLOW="-O0" \
+					OPT_FAST=-O3 \
+					PGO_CFLAGS= \
+					PGO_LDFLAGS= \
+					-C /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/build/emu-compile -f /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/build/emu-compile/VSimTop.mk 
+make[3]: Entering directory '/home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/build/emu-compile'
+/home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/difftest/difftrace.cpp: In member function ‘void DiffTrace<T>::next_file_name(char*) [with T = DiffTestState]’:
+/home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/difftest/difftrace.cpp:61:32: warning: ‘%lu’ directive output may be truncated writing between 1 and 20 bytes into a region of size between 0 and 127 [-Wformat-truncation=]
+   61 |   snprintf(file_name, 128, "%s/%lu.%s", dirname, trace_index, prefix);
+      |                                ^~~
+In file included from /usr/include/stdio.h:980,
+                 from /usr/include/c++/13/cstdio:42,
+                 from /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/common/common.h:26,
+                 from /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/difftest/difftrace.h:4,
+                 from /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/difftest/difftrace.cpp:1:
+In function ‘int snprintf(char*, size_t, const char*, ...)’,
+    inlined from ‘void DiffTrace<T>::next_file_name(char*) [with T = DiffTestState]’ at /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/difftest/difftrace.cpp:61:11:
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:54:35: note: ‘__builtin___snprintf_chk’ output between 7 and 153 bytes into a destination of size 128
+   54 |   return __builtin___snprintf_chk (__s, __n, __USE_FORTIFY_LEVEL - 1,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   55 |                                    __glibc_objsize (__s), __fmt,
+      |                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   56 |                                    __va_arg_pack ());
+      |                                    ~~~~~~~~~~~~~~~~~
+/home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/plugin/spikedasm/spikedasm.cpp: In function ‘void execute_dasm_cmd()’:
+/home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/plugin/spikedasm/spikedasm.cpp:45:10: warning: ignoring return value of ‘char* fgets(char*, int, FILE*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+   45 |     fgets(dasm_result, sizeof(dasm_result), ptr);
+      |     ~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/verilator/emu.cpp: In constructor ‘Emulator::Emulator(int, const char**)’:
+/home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/difftest/src/test/csrc/verilator/emu.cpp:416:12: warning: ignoring return value of ‘size_t fread(void*, size_t, size_t, FILE*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  416 |       fread(&args.overwrite_nbytes, sizeof(uint32_t), 1, fp);
+      |       ~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+make[2]: *** [verilator.mk:152: build_emu] Terminated
+make[1]: *** [verilator.mk:171: /home/amesotten/.cache/codex-rvinno/t04/source-e8bd8d763650fc4f/build/emu] Terminated
+make: *** [Makefile:277: emu] Terminated
+Command terminated by signal 15
+	Command being timed: "make emu CONFIG=MinimalConfig NUM_CORES=1 EMU_THREADS=1 EMU_TRACE=fst JVM_XMX=6G JVM_XSS=16m WITH_CHISELDB=0 WITH_CONSTANTIN=0 WITH_ROLLINGDB=0 -j1"
+	User time (seconds): 289.11
+	System time (seconds): 11.95
+	Percent of CPU this job got: 40%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 12:23.62
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 9584644
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 106
+	Minor (reclaiming a frame) page faults: 2555742
+	Voluntary context switches: 2637
+	Involuntary context switches: 414
+	Swaps: 0
+	File system inputs: 12520
+	File system outputs: 3070496
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

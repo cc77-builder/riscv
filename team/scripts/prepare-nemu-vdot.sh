@@ -56,16 +56,29 @@ export NEMU_HOME="$target"
 if test "$mode" = standalone; then config=riscv64-xs_defconfig; else config=riscv64-xs-ref_defconfig; fi
 cd "$target"
 make "$config" > "$evidence/configure.txt" 2>&1
-python3 - <<'PY'
+python3 - "$mode" <<'PY'
 from pathlib import Path
+import sys
 p=Path('.config');s=p.read_text();old='# CONFIG_CUSTOM_VDOT is not set'
 if s.count(old)!=1:
     raise RuntimeError('CUSTOM_VDOT configuration entry missing or duplicated')
-p.write_text(s.replace(old,'CONFIG_CUSTOM_VDOT=y'))
+s=s.replace(old,'CONFIG_CUSTOM_VDOT=y')
+# XiangShan's Mnstatus.NMIE resets to 1. The pinned ref defconfig explicitly
+# disables NMIE_INIT; with Smrnmi enabled this suppresses ordinary traps and
+# returns PC=0. Keep the standalone profile and ISA patch unchanged.
+if sys.argv[1]=='reference' and 'CONFIG_RV_SMRNMI=y' in s.splitlines():
+    old='# CONFIG_NMIE_INIT is not set'
+    if s.count(old)!=1:
+        raise RuntimeError('Expected fixed reference NMIE_INIT entry')
+    s=s.replace(old,'CONFIG_NMIE_INIT=y')
+p.write_bytes(s.encode())
 PY
 tools/kconfig/build/conf --syncconfig Kconfig >> "$evidence/configure.txt" 2>&1
 grep -qx 'CONFIG_CUSTOM_VDOT=y' .config
 grep -qx 'CONFIG_RVV=y' .config
+if test "$mode" = reference && grep -qx 'CONFIG_RV_SMRNMI=y' .config; then
+  grep -qx 'CONFIG_NMIE_INIT=y' .config
+fi
 # An empty value also overrides an inherited flag that would enable auto-commit.
 make -j"${BUILD_JOBS:-2}" __NOT_DEFINED= CPT_CROSS_COMPILE=riscv64-linux-gnu- > "$evidence/build.txt" 2>&1
 if test "$mode" = standalone; then binary=build/riscv64-nemu-interpreter; else binary=build/riscv64-nemu-interpreter-so; fi

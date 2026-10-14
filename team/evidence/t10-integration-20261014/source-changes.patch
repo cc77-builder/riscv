@@ -1,0 +1,346 @@
+diff --git a/.gitattributes b/.gitattributes
+index 697659d35..a26c39350 100644
+--- a/.gitattributes
++++ b/.gitattributes
+@@ -1,5 +1,20 @@
+ # Team scripts and sources must retain LF when copied between Windows and WSL.
++/.gitattributes text eol=lf
+ team/** text eol=lf
+ team/**/*.log -text -whitespace
+ # Preserve the standalone executor's hashed source bytes on Windows and Linux.
+ src/main/scala/xiangshan/backend/fu/vector/VdotExec.scala text eol=lf
++# T06 delivery hashes the adapter, configuration and actual-core test sources.
++src/main/scala/xiangshan/backend/fu/wrapper/VdotFu.scala text eol=lf
++src/main/scala/xiangshan/backend/fu/FuConfig.scala text eol=lf
++src/main/scala/xiangshan/backend/fu/FuType.scala text eol=lf
++src/test/scala/xiangshan/backend/fu/vector/VdotFuSpec.scala text eol=lf
++# T10 exact decode and integration tests share canonical Linux/Windows bytes.
++src/main/scala/xiangshan/Parameters.scala text eol=lf
++src/main/scala/xiangshan/backend/decode/DecodeUnit.scala text eol=lf
++src/main/scala/xiangshan/backend/decode/VdotInstructions.scala text eol=lf
++src/main/scala/xiangshan/backend/decode/isa/bitfield/RiscvInst.scala text eol=lf
++src/test/scala/xiangshan/backend/decode/VdotDecodeSpec.scala text eol=lf
++src/main/scala/xiangshan/backend/fu/wrapper/CSR.scala text eol=lf
++src/main/scala/xiangshan/backend/fu/wrapper/VdotTrapInstruction.scala text eol=lf
++src/test/scala/xiangshan/backend/fu/vector/VdotTrapInstructionSpec.scala text eol=lf
+diff --git a/src/main/scala/xiangshan/Parameters.scala b/src/main/scala/xiangshan/Parameters.scala
+index 40b33dfce..2d95cf4c5 100644
+--- a/src/main/scala/xiangshan/Parameters.scala
++++ b/src/main/scala/xiangshan/Parameters.scala
+@@ -446,7 +446,7 @@ case class XSCoreParameters
+     SchdBlockParams(Seq(
+       IssueBlockParams(Seq(
+         ExeUnitParams("VFEX0", Seq(VfmaCfg, VialuCfg, VimacCfg, VppuCfg), Seq(VfWB(port = 0, 0), V0WB(port = 0, 0)), Seq(Seq(VfRD(0, 0)), Seq(VfRD(1, 0)), Seq(VfRD(2, 0)), Seq(V0RD(0, 0)), Seq(VlRD(0, 0)))),
+-        ExeUnitParams("VFEX1", Seq(VfaluCfg, VfcvtCfg, VipuCfg, VSetRvfWvfCfg), Seq(VfWB(port = 0, 1), V0WB(port = 0, 1), VlWB(port = vfSchdVlWbPort, 0), IntWB(port = 1, 1), FpWB(port = 0, 1)), Seq(Seq(VfRD(0, 1)), Seq(VfRD(1, 1)), Seq(VfRD(2, 1)), Seq(V0RD(0, 1)), Seq(VlRD(0, 1)))),
++        ExeUnitParams("VFEX1", Seq(VfaluCfg, VfcvtCfg, VipuCfg, VSetRvfWvfCfg, VdotCfg), Seq(VfWB(port = 0, 1), V0WB(port = 0, 1), VlWB(port = vfSchdVlWbPort, 0), IntWB(port = 1, 1), FpWB(port = 0, 1)), Seq(Seq(VfRD(0, 1)), Seq(VfRD(1, 1)), Seq(VfRD(2, 1)), Seq(V0RD(0, 1)), Seq(VlRD(0, 1)))),
+       ), numEntries = 16, numEnq = 2, numComp = 12),
+       IssueBlockParams(Seq(
+         ExeUnitParams("VFEX2", Seq(VfmaCfg, VialuCfg), Seq(VfWB(port = 1, 0), V0WB(port = 1, 0)), Seq(Seq(VfRD(3, 0)), Seq(VfRD(4, 0)), Seq(VfRD(5, 0)), Seq(V0RD(1, 0)), Seq(VlRD(1, 0)))),
+diff --git a/src/main/scala/xiangshan/backend/decode/DecodeUnit.scala b/src/main/scala/xiangshan/backend/decode/DecodeUnit.scala
+index 5b1419eaa..30ca158c7 100644
+--- a/src/main/scala/xiangshan/backend/decode/DecodeUnit.scala
++++ b/src/main/scala/xiangshan/backend/decode/DecodeUnit.scala
+@@ -811,6 +811,8 @@ class DecodeUnit(implicit p: Parameters) extends XSModule with DecodeUnitConstan
+     CBODecode.table ++
+     SvinvalDecode.table ++
+     HypervisorDecode.table ++
++    Array(VdotInstructions.VDOT -> XSDecode(SrcType.vp, SrcType.vp, SrcType.no,
++      FuType.vdot, FuOpType.X, SelImm.X, uopSplitType = UopSplitType.dummy, vWen = true).generate()) ++
+     VecDecoder.table ++
+     ZicondDecode.table ++
+     ZimopDecode.table ++
+@@ -1055,7 +1057,7 @@ class DecodeUnit(implicit p: Parameters) extends XSModule with DecodeUnitConstan
+   decodedInst.vpu.isNarrow := isNarrow
+   decodedInst.vpu.isDstMask := isDstMask
+   decodedInst.vpu.isOpMask := isOpMask
+-  decodedInst.vpu.isDependOldVd := isVppu || isVecOPF || isVStore || (isDstMask && !isOpMask) || isNarrow || isVlx || isVma || isFof || vstartIsNotZero
++  decodedInst.vpu.isDependOldVd := !inst.isVdot && (isVppu || isVecOPF || isVStore || (isDstMask && !isOpMask) || isNarrow || isVlx || isVma || isFof || vstartIsNotZero)
+   decodedInst.vpu.isWritePartVd := isWritePartVd || isVlm || isVle && emulIsFrac
+   decodedInst.vpu.vstart := io.enq.vstart
+   decodedInst.vpu.isVleff := isFof && inst.NF === 0.U
+diff --git a/src/main/scala/xiangshan/backend/decode/isa/bitfield/RiscvInst.scala b/src/main/scala/xiangshan/backend/decode/isa/bitfield/RiscvInst.scala
+index c553020a4..84af43600 100644
+--- a/src/main/scala/xiangshan/backend/decode/isa/bitfield/RiscvInst.scala
++++ b/src/main/scala/xiangshan/backend/decode/isa/bitfield/RiscvInst.scala
+@@ -90,8 +90,10 @@ trait BitFieldsVec { this: Riscv32BitInst =>
+       (this.WIDTH === 0.U || this.WIDTH(2) === 1.B)
+   }
+ 
++  def isVdot = xiangshan.backend.decode.VdotInstructions.VDOT === inst
++
+   def isVecArith = {
+-    this.OPCODE5Bit === xiangshan.backend.decode.isa.bitfield.OPCODE5Bit.OP_V
++    this.OPCODE5Bit === xiangshan.backend.decode.isa.bitfield.OPCODE5Bit.OP_V || isVdot
+   }
+ 
+   def isOPIVV = {
+diff --git a/src/main/scala/xiangshan/backend/fu/FuConfig.scala b/src/main/scala/xiangshan/backend/fu/FuConfig.scala
+index 235ca4f4a..a0292405e 100644
+--- a/src/main/scala/xiangshan/backend/fu/FuConfig.scala
++++ b/src/main/scala/xiangshan/backend/fu/FuConfig.scala
+@@ -161,7 +161,7 @@ case class FuConfig (
+ 
+   def needVecCtrl: Boolean = {
+     import FuType._
+-    Seq(vipu, vialuF, vimac, vidiv, vfpu, vppu, vfalu, vfma, vfdiv, vfcvt, vldu, vstu).contains(fuType)
++    Seq(vipu, vialuF, vimac, vidiv, vdot, vfpu, vppu, vfalu, vfma, vfdiv, vfcvt, vldu, vstu).contains(fuType)
+   }
+ 
+   def needCriticalErrors: Boolean = Seq(FuType.csr).contains(fuType)
+@@ -182,7 +182,7 @@ case class FuConfig (
+                             fuType == FuType.vppu || fuType == FuType.vipu ||
+                             fuType == FuType.vfalu || fuType == FuType.vfma ||
+                             fuType == FuType.vfdiv || fuType == FuType.vfcvt ||
+-                            fuType == FuType.vidiv
++                            fuType == FuType.vidiv || fuType == FuType.vdot
+ 
+   def isVecMem: Boolean = fuType == FuType.vldu || fuType == FuType.vstu ||
+                           fuType == FuType.vsegldu || fuType == FuType.vsegstu
+@@ -563,6 +563,22 @@ object FuConfig {
+     exceptionOut = Seq(illegalInstr),
+   )
+ 
++  // Candidate VDOT is dispatched to VFEX1 with fixed-latency writeback reservation.
++  val VdotCfg = FuConfig (
++    name = "vdot",
++    fuType = FuType.vdot,
++    fuGen = (p: Parameters, cfg: FuConfig) => Module(new VdotFu(cfg)(p)),
++    srcData = Seq(Seq(VecData(), VecData(), VecData(), V0Data(), VlData())),
++    piped = true,
++    writeVecRf = true,
++    writeV0Rf = true,
++    latency = CertainLatency(1),
++    vconfigWakeUp = true,
++    maskWakeUp = true, // v0 is also an ordinary source when vm=1.
++    destDataBits = 128,
++    exceptionOut = Seq(illegalInstr),
++  )
++
+   val VidivCfg = FuConfig (
+     name = "vidiv",
+     fuType = FuType.vidiv,
+@@ -838,13 +854,13 @@ object FuConfig {
+ 
+   def allConfigs = Seq(
+     JmpCfg, BrhCfg, I2fCfg, I2vCfg, F2vCfg, CsrCfg, AluCfg, MulCfg, DivCfg, FenceCfg, BkuCfg, VSetRvfWvfCfg, VSetRiWvfCfg, VSetRiWiCfg,
+-    LduCfg, StaCfg, StdCfg, MouCfg, MoudCfg, VialuCfg, VipuCfg, VlduCfg, VstuCfg, VseglduSeg, VsegstuCfg,
++    LduCfg, StaCfg, StdCfg, MouCfg, MoudCfg, VialuCfg, VipuCfg, VdotCfg, VlduCfg, VstuCfg, VseglduSeg, VsegstuCfg,
+     FaluCfg, FmacCfg, FcvtCfg, FdivCfg,
+     VfaluCfg, VfmaCfg, VfcvtCfg, HyldaCfg, HystaCfg
+   )
+ 
+   def VecArithFuConfigs = Seq(
+-    VialuCfg, VimacCfg, VppuCfg, VipuCfg, VfaluCfg, VfmaCfg, VfcvtCfg
++    VialuCfg, VimacCfg, VdotCfg, VppuCfg, VipuCfg, VfaluCfg, VfmaCfg, VfcvtCfg
+   )
+ }
+ 
+diff --git a/src/main/scala/xiangshan/backend/fu/FuType.scala b/src/main/scala/xiangshan/backend/fu/FuType.scala
+index 5172900ba..39f67cba5 100644
+--- a/src/main/scala/xiangshan/backend/fu/FuType.scala
++++ b/src/main/scala/xiangshan/backend/fu/FuType.scala
+@@ -71,6 +71,9 @@ object FuType extends OHEnumeration {
+   val vsegldu = addType(name = "vsegldu")
+   val vsegstu = addType(name = "vsegstu")
+ 
++  // Append to preserve existing one-hot identities. Activated by T10 decode/scheduling.
++  val vdot = addType(name = "vdot")
++
+   val intArithAll = Seq(jmp, brh, i2f, i2v, csr, alu, mul, div, fence, bku)
+   // dq0 includes int's iq0 and iq1
+   // dq1 includes int's iq2 and iq3
+@@ -124,7 +127,7 @@ object FuType extends OHEnumeration {
+   }
+   val fpArithAll = Seq(falu, fcvt, fmac, fDivSqrt, f2v)
+   val scalaMemAll = Seq(ldu, stu, mou)
+-  val vecOPI = Seq(vipu, vialuF, vppu, vimac, vidiv)
++  val vecOPI = Seq(vipu, vialuF, vppu, vimac, vidiv, vdot)
+   val vecOPF = Seq(vfpu, vfalu, vfma, vfdiv, vfcvt)
+   val vecVSET = Seq(vsetiwi, vsetiwf, vsetfwf)
+   val vecArith = vecOPI ++ vecOPF
+@@ -256,6 +259,7 @@ object FuType extends OHEnumeration {
+     vstu -> "vstu",
+     vppu -> "vppu",
+     vimac -> "vimac",
++    vdot -> "vdot",
+     vidiv -> "vidiv",
+     vfalu -> "vfalu",
+     vfma -> "vfma",
+diff --git a/src/main/scala/xiangshan/backend/fu/wrapper/CSR.scala b/src/main/scala/xiangshan/backend/fu/wrapper/CSR.scala
+index f92782ace..6c156381e 100644
+--- a/src/main/scala/xiangshan/backend/fu/wrapper/CSR.scala
++++ b/src/main/scala/xiangshan/backend/fu/wrapper/CSR.scala
+@@ -116,7 +116,11 @@ class CSR(cfg: FuConfig)(implicit p: Parameters) extends FuncUnit(cfg)
+       in.bits.dret := isDret
+       in.bits.redirectFlush := redirectFlush
+   }
+-  csrMod.io.trapInst := trapInstMod.io.currentTrapInst
++  // Physical-VL/configuration faults are discovered by VdotFu after decode.
++  // Use the precise ROB head's original word, including all register fields.
++  csrMod.io.trapInst := VdotTrapInstruction(csrIn.exception.valid,
++    csrIn.exception.bits.isInterrupt, csrIn.exception.bits.exceptionVec(EX_II),
++    csrIn.exception.bits.instr, trapInstMod.io.currentTrapInst)
+   csrMod.io.fetchMalTval := trapTvalMod.io.tval
+   csrMod.io.fromMem.excpVA  := csrIn.memExceptionVAddr
+   csrMod.io.fromMem.excpGPA := csrIn.memExceptionGPAddr
+@@ -534,4 +538,4 @@ class CSRToDecode(implicit p: Parameters) extends XSBundle {
+      */
+     val cboI2F = Bool()
+   }
+-}
+\ No newline at end of file
++}
+diff --git a/team/README.md b/team/README.md
+index 0ea5dd8d0..8456d09b9 100644
+--- a/team/README.md
++++ b/team/README.md
+@@ -2,7 +2,7 @@
+ 
+ 本队以《香山 vdot 赛题：执行计划》和《香山 vdot 赛题：三人分工与 Git 协作》作为项目计划文档，分别安排里程碑、验收标准和三人职责。成员先阅读两份计划，再按认领的任务推进开发。
+ 
+-本目录同时保存本队在 2026-10-09 完成的环境搭建、hello/vadd 源码和阶段一证据，并提供按当前仓库位置运行的脚本。香山硬件基线为 `16ae9ddcda54fc9a2fddffad73174cf793ac7814`。已有 T05 模型/数据、T05-E 异常程序、T08 NEMU 和 T09 RVV baseline 实现及本地验收；独立vdot硬件执行模块已通过单元仿真；全核RTL接入和DiffTest尚未完成。计划中的后续任务按实际验收结果更新进度。
++本目录同时保存本队在 2026-10-09 完成的环境搭建、hello/vadd 源码和阶段一证据，并提供按当前仓库位置运行的脚本。香山硬件基线为 `16ae9ddcda54fc9a2fddffad73174cf793ac7814`。已有 T05 模型/数据、T05-E 异常程序、T08 NEMU 和 T09 RVV baseline 实现及本地验收；独立vdot硬件执行模块及T06适配层已通过单元仿真；当前James主机hello/vadd全核DiffTest与波形路径已通过。vdot全核RTL接入和DiffTest尚未完成。计划中的后续任务按实际验收结果更新进度。
+ 
+ | 内容 | 入口 |
+ | --- | --- |
+@@ -12,6 +12,7 @@
+ | dev与James_Hotten对比、按进度集成及继承验收 | [dev集成记录](docs/dev-integration-20261013.md) |
+ | vdot 指令语义、候选编码、测试与待确认问题（第一版草案） | [vdot.vv 规格](spec/vdot.md) |
+ | 配置依赖、完整写回路径与分层控制验收（草案） | [RTL 接入接口](spec/rtl-interface.md) |
++| T06真实香山功能单元适配层、ROB取消及后续接入边界 | [T06接口实现](docs/t06-interface.md) |
+ | 精确非法异常、陷阱处理与状态观察（基础设施已实现，扩展验收待完成） | [异常测试方案](spec/exception-tests.md) |
+ | T05 独立数学模型、定向/随机数据与检查入口 | [模型与测试数据](tests/README.md) |
+ | T05-E 异常程序、运行自测与香山目标构建 | [异常 workload](workloads/vdot-exceptions/README.md) |
+@@ -27,6 +28,7 @@
+ | baseline 状态比较、scratch 与 T13 计时事件 | [测量合同](spec/measurement.md) |
+ | WSL、工具版本、安装方法、配套依赖 | [环境说明](docs/environment.md) |
+ | 构建和运行命令、启动问题、通过标准 | [阶段一说明](docs/stage1.md) |
++| James主机当前源码的hello/vadd全核基线、构建恢复及实际波形 | [T04本机记录](docs/t04-current-core.md) |
+ | hello/vadd 测试源码 | [workloads/hello-vadd](workloads/hello-vadd/) |
+ | 路径可配置的执行脚本 | [scripts](scripts/) |
+ | 昨天的通过日志、配置、反汇编和事件 CSV | [历史证据](evidence/stage1-20261009/) |
+diff --git a/team/progress.md b/team/progress.md
+index 58f57f421..24d1819ce 100644
+--- a/team/progress.md
++++ b/team/progress.md
+@@ -10,20 +10,20 @@ T03 初评基于提交 `c1ef31d81d50c209bf0e102af8ad7713c2da6dab` 的 `0.1.0-dra
+ 
+ | 工作 | 状态 | 依据与剩余事项 |
+ | --- | --- | --- |
+-| T01：主机环境与向量冒烟 | 原开发机已有通过证据 | [阶段一说明](docs/stage1.md)；尚未证明所有成员均可复现 |
++| T01：主机环境与向量冒烟 | 原开发机及James当前主机有本地通过证据，待全队复现 | [阶段一说明](docs/stage1.md)、[T04当前主机](docs/t04-current-core.md)；本机工具profile不同，正常冷构建/所有成员复现未关闭 |
+ | T02：团队检出与版本管理 | 部分完成，来源门禁已修复 | schema2绑定源码/配置/二进制角色，忽略路径及优化模式负控通过；非作者/全队复现待完成 |
+ | T03：语义与编码合同 | 草案完成，初步评审完成，未冻结 | 本文记录检查结果；三人意见及 Q01～Q07 的处理结论仍待记录 |
+-| T04：hello/vadd 与执行路径 | 程序已通过，交付未完成 | [2026-10-10 证据](evidence/script-check-20261010/README.md)；完整路径讲解、非作者复现、真实团队标识和录屏仍需验收 |
++| T04：hello/vadd 与执行路径 | 当前主机全核基线及实际路径已补齐，交付未完成 | [本机证据](evidence/t04-current-core-20261013/README.md)：3组/24项、真实DiffTest、GOOD TRAP、退出0、3次FU输入/输出及ROB提交；非作者/全队复现、真实团队标识和录屏仍需验收 |
+ | T05：独立模型与测试数据 | 已实现并通过本地检查，待成员复核 | [模型与数据](tests/README.md)：48 定向 + 10,000 固定随机，完整 128 位期望与生成摘要；当前生成器1.2.0扩展寄存器/VS交叉，Python共23个方法通过，原48 fixture保持 |
+ | T05-E：异常 workload 与陷阱观测 | 本地状态判定/来源门禁已修复，待成员复核 | 真实pre32、Initial/Clean置脏、异常降级负控及构建来源绑定通过；RTL执行待T11 |
+-| T06：硬件接入设计 | 接口草案完成，待 A/B/C 复核及实现 | [RTL 接入接口](spec/rtl-interface.md) 已列实际 VL 依赖、配置快照、完整写回与分层控制验收；单元选择、时序、接入证据仍待落实 |
++| T06：硬件接入设计 | 执行适配层实现及真实接口仿真通过；全核资源映射/人工确认待完成 | [T06实现](docs/t06-interface.md)：独立FU配置、实际VL输入、128位响应、vec/v0使能、非法完成及RobPtr选择取消；36配置、36864年龄检查、4000周期跟踪。未启用全核译码/EXU |
+ | T07：独立硬件执行模块 | 运算与局部控制已实现、单元仿真通过，待集成及成员复核 | [VdotExec](hardware/vdot/README.md)：复审后12022模型向量（含10000固定随机）、反压/取消/复位与4000周期scoreboard；频率/面积未测 |
+ | T08：NEMU 候选扩展 | 实现及本地来源/状态验收通过，待独立复现 | vdot1341项，三种非Off VS实际转换；六项源码注入拒绝。reference来源/接口已验，不代表真实DiffTest |
+ | T09：RVV baseline 与模型验收 | 实现及本地布局/状态验收通过，待独立复现 | 两平台各1304项、18种scratch布局、1147个操作数组合、全部32寄存器及96交叉；32768项仍仅为算法检查。见 [修复复审](docs/audit-fixes.md) |
+-| T10/T11：RTL全核与差分 | vdot全核接入及真实DiffTest待完成 | 单元RTL/NEMU standalone通过均不能替代全核DiffTest |
++| T10/T11：RTL全核与差分 | T10译码/执行资源已接入，验证进行中；T11待完成 | 见[T10接入](docs/t10-integration.md)；单元RTL/NEMU standalone通过均不能替代全核DiffTest |
+ | T12/T13：完整回归与性能 | 真实RTL回归、双方配对及周期实测待完成 | [测量合同](spec/measurement.md) 已明确scratch、CSR恢复和对称边界，不报告加速比 |
+ | T14～T18：优化、扩展、报告与交付 | 后续计划 | 先完成正确性和复现；优化与扩展按资源及通过情况决定 |
+-| James 本地工作区 | 模型/harness 自测与裸机编译环境可用；全核环境待验收 | WSL RISC-V GCC/binutils、QEMU 已使用；本地香山子模块仍未初始化，已构建/运行NEMU与独立vdot RTL单元仿真，尚未构建或运行完整香山RTL |
++| James 本地工作区 | 根Scala、真实FU仿真及当前MinimalConfig全核hello/vadd通过 | 锁定126递归子模块，当前源码/镜像绑定；Clang19.1.1全量编译，FST路径已核；正常冷构建与全队环境等价待复现，WSL约11GiB/3GiB swap，临时交换文件已清理 |
+ 
+ “尚无”描述当前检出的仓库，不推断其他成员私有工作目录中的进展。当前不将 G0/G1 标为全队验收完成，也不将 T03 标为已冻结。
+ 
+@@ -225,3 +225,27 @@ S01～S03及V01～V04已按 [修复报告](docs/audit-fixes.md) 落实：来源
+ 以main/dev的c1ef31d81为起点，快进合入James_Hotten至a978b3b8f，保留e27db6158→4d04e6b9f→7cd588a8f→16b3f2fd2→a978b3b8f五个交付提交。T03草案/初评、T05/T05-E、T08、T09最终修复及T07独立模块进入dev；成员确认、独立复现、T06全核映射及T10/T11/T12/T13未因此关闭。main与James_Hotten未改动。
+ 
+ 合并树与来源完全一致，无冲突；在dev重跑23个Python方法、25项C判定检查并核验431项历史归档及硬件来源/输入绑定。未重跑重型NEMU/QEMU/RTL，原验收按不可变源码与原日志继承。随后只更新dev进度入口和集成证据，具体差异/分阶段状态见 [集成记录](docs/dev-integration-20261013.md)。下一步按该记录推进T03/T01/T04前置及T06接入设计。
++
++## 14. 2026-10-13 T06执行适配层
++
++main/dev随后同步至5389bde79；本轮继续在dev工作区实现，尚未提交或推送。新增真实香山FuncUnit包装VdotFu、独立FuType.vdot与VdotCfg；原35类one-hot数值保持，总类型宽度增加1，后续全核必须重建。没有启用新译码或EXU资源。
++
++实际落实：槽4的8位物理VL、指令配置快照、完整128位输出、独立vec/v0使能、非法无数据完成、同步保存ROB/物理目的/调试身份，以及现有RobPtr.needFlush的选择取消；保守阻止同周期已取消输入握手。不上报架构CSR副作用，成功退休置脏仍由后续接入证明。
++
++初次真实仿真发现SEW字段转换错误：内部只有2位，按3位位置拼接导致合法vta=1误判；两项失败、一项年龄检查通过。已显式补零并断言64位总宽度，测试改为实际snapshot可表达的e16/e32/e64。保留初次实际失败与源码摘要，不以最后PASS抹去问题。另记录当前CSR vstart只保存低7位，255只用于8位接口压力，不能冒充全核可构造状态。
++
++最终根Scala/测试编译、生成与Verilator lint、三项真实FU仿真通过；36请求（8合法/28拒绝）、pending/incoming各18432检查、4000周期scoreboard。实际2079接受=1959返回+120取消，1236阻塞计数、1424同时替换、3次occupied reset；源码集合/摘要及递归子模块在运行前后复核一致。入口失败重跑旧PASS失效检查及归档见 [证据](evidence/t06-interface-20261013/README.md)，完整接口边界见 [T06说明](docs/t06-interface.md)。
++
++只初始化当前锁定依赖，Mill缓存放WSL用户的项目缓存目录；未修改全局PATH、Java安装或WSL配额。独立VdotExec保持前轮交付字节，12022数学向量未在本轮重复运行/计数。T03人工确认、T04本机全核基线、T06资源/团队复核、T10真实译码/调度/写回、T11guest DiffTest仍开放；先补全核基线，再激活接入，不开展性能优化。
++
++## 15. 2026-10-13 T04 当前主机全核基线与路径
++
++在dev现有未提交T06接口源码上补齐本机hello/vadd基线。通过规范字节比较及Linux物理摘要绑定436个根输入和126个锁定子模块；依赖审计21,236个文件，AM固定源码748个文件。使用本仓库当前源码的Linux副本，不切换到旧xs-env硬件。
++
++保留Mill参数冲突、直接RTL生成OOM、缺少完整退出的重试、单任务构建受控终止及GCC O3/O1高内存的过程记录。完整FIR解析与独立转换通过；两批248/274个旧对象分开备份后，Clang19.1.1以双任务/O1全量编译成功（13:13.84、最大RSS约2.83GiB）。本轮在WSL补装Clang及配套包，未升级已有包；临时8GiB swap已停用删除，没有改变永久配额/PATH/Java。
++
++真实运行通过：3组/24项、DiffTest开启、GOOD TRAP、退出0；16518条/42415周期、宿主235.919秒。完整FST与反汇编核对3次FU输入/输出和ROB侧提交，数据、编码、v3目的及顺序正确；首次波形名/层级假设错误已修正，保留诊断。ROBDiffTest有三周期内部延迟，本次使用其输入侧，明确不混用旧DPIC侧周期。
++
++入口重新验证源码、依赖、参考库角色/配置、实际编译器/profile、全部RTL、生成的DiffTest文件及镜像/flash。真实失败退出使旧receipt消失、Git忽略资源头文件拒绝/恢复、优化profile变化拒绝且二进制不变的负控通过。详见 [本机说明](docs/t04-current-core.md) 和 [证据](evidence/t04-current-core-20261013/README.md)。
++
++本次证明当前MinimalConfig的普通hello/vadd执行链路，不关闭vdot T10/T11。正常FIR-only冷构建尚待第二个干净副本复现；真实团队标识、A/B/C复核、非作者/全队复现、录屏和T03冻结仍开放。下一步按候选合同推进T10的准确译码/单uop非法路径、VL/v0依赖、执行资源、写回及退休置脏，再推进真正vdot DiffTest；暂不优化或报告加速比。本轮修改尚未提交或推送。
+diff --git a/team/scripts/artifact_guard.py b/team/scripts/artifact_guard.py
+index 2e6fdf1c1..5c0965946 100644
+--- a/team/scripts/artifact_guard.py
++++ b/team/scripts/artifact_guard.py
+@@ -176,6 +176,9 @@ def verify_nemu(repo, binary, mode):
+     config=(repo/'.config').read_text().splitlines()
+     require('CONFIG_RVV=y' in config and 'CONFIG_CUSTOM_VDOT=y' in config,'Candidate extension is not enabled')
+     require(('CONFIG_SHARE=y' in config)==(mode=='reference'),'NEMU configuration does not match binary role')
++    if mode=='reference' and 'CONFIG_RV_SMRNMI=y' in config:
++        require('CONFIG_NMIE_INIT=y' in config,
++                'Reference Smrnmi NMIE reset differs from XiangShan (NMIE=1); rebuild reference')
+     require(nemu_snapshot(repo)==provenance['source_sha256'],'NEMU source/generated inputs changed after build')
+     return provenance
+ 
+diff --git a/team/scripts/prepare-nemu-vdot.sh b/team/scripts/prepare-nemu-vdot.sh
+index 9b2a3266f..254b86a8c 100644
+--- a/team/scripts/prepare-nemu-vdot.sh
++++ b/team/scripts/prepare-nemu-vdot.sh
+@@ -56,16 +56,29 @@ export NEMU_HOME="$target"
+ if test "$mode" = standalone; then config=riscv64-xs_defconfig; else config=riscv64-xs-ref_defconfig; fi
+ cd "$target"
+ make "$config" > "$evidence/configure.txt" 2>&1
+-python3 - <<'PY'
++python3 - "$mode" <<'PY'
+ from pathlib import Path
++import sys
+ p=Path('.config');s=p.read_text();old='# CONFIG_CUSTOM_VDOT is not set'
+ if s.count(old)!=1:
+     raise RuntimeError('CUSTOM_VDOT configuration entry missing or duplicated')
+-p.write_text(s.replace(old,'CONFIG_CUSTOM_VDOT=y'))
++s=s.replace(old,'CONFIG_CUSTOM_VDOT=y')
++# XiangShan's Mnstatus.NMIE resets to 1. The pinned ref defconfig explicitly
++# disables NMIE_INIT; with Smrnmi enabled this suppresses ordinary traps and
++# returns PC=0. Keep the standalone profile and ISA patch unchanged.
++if sys.argv[1]=='reference' and 'CONFIG_RV_SMRNMI=y' in s.splitlines():
++    old='# CONFIG_NMIE_INIT is not set'
++    if s.count(old)!=1:
++        raise RuntimeError('Expected fixed reference NMIE_INIT entry')
++    s=s.replace(old,'CONFIG_NMIE_INIT=y')
++p.write_bytes(s.encode())
+ PY
+ tools/kconfig/build/conf --syncconfig Kconfig >> "$evidence/configure.txt" 2>&1
+ grep -qx 'CONFIG_CUSTOM_VDOT=y' .config
+ grep -qx 'CONFIG_RVV=y' .config
++if test "$mode" = reference && grep -qx 'CONFIG_RV_SMRNMI=y' .config; then
++  grep -qx 'CONFIG_NMIE_INIT=y' .config
++fi
+ # An empty value also overrides an inherited flag that would enable auto-commit.
+ make -j"${BUILD_JOBS:-2}" __NOT_DEFINED= CPT_CROSS_COMPILE=riscv64-linux-gnu- > "$evidence/build.txt" 2>&1
+ if test "$mode" = standalone; then binary=build/riscv64-nemu-interpreter; else binary=build/riscv64-nemu-interpreter-so; fi
+diff --git a/team/spec/rtl-interface.md b/team/spec/rtl-interface.md
+index 24f0fb411..f29c8e6cc 100644
+--- a/team/spec/rtl-interface.md
++++ b/team/spec/rtl-interface.md
+@@ -1,8 +1,10 @@
+ # vdot RTL 接入与验证接口草案
+ 
+-版本：`0.1.1-draft`，2026-10-12。适用合同：`vdot-s8x8-r32-v0.1`。
++版本：`0.1.2-draft`，2026-10-13。适用合同：`vdot-s8x8-r32-v0.1`。
+ 
+-状态：已有独立VdotExec运算/局部控制及单元仿真，见 [模块与接口](../hardware/vdot/README.md)；尚未接入香山全核。本文件是T06的评审输入，不代表T06已验收。A 确定最终单元、端口和时序，B/C 复核配置、异常和测试；成员尚未签字。
++状态：已有独立VdotExec运算/局部控制及单元仿真，见 [模块与接口](../hardware/vdot/README.md)；候选全核源码接入与验证进展见 [T10接入](../docs/t10-integration.md)。本文件是T06的评审输入，不代表T06已验收。A 确定最终单元、端口和时序，B/C 复核配置、异常和测试；成员尚未签字。
++
++2026-10-13补充：[T06实现](../docs/t06-interface.md) 已新增真实香山FuncUnit适配层 `VdotFu` 和独立 `VdotCfg/FuType.vdot`，明确一拍注册响应、五源槽、物理VL、身份/目的与ROB选择取消。当前无新译码表项或EXU资源启用；后文涉及实际读源、写回及退休的全核验收仍开放。
+ 
+ 关联：[指令合同](vdot.md)、[异常测试](exception-tests.md)、[进度](../progress.md)。阅读基线为团队提交 `c1ef31d81d50c209bf0e102af8ad7713c2da6dab`，硬件内容基于 `16ae9ddcda54fc9a2fddffad73174cf793ac7814`。下文区分已存在的通路与拟新增的 vdot 行为。
+ 

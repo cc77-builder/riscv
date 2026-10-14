@@ -2,7 +2,7 @@
 
 本队以《香山 vdot 赛题：执行计划》和《香山 vdot 赛题：三人分工与 Git 协作》作为项目计划文档，分别安排里程碑、验收标准和三人职责。成员先阅读两份计划，再按认领的任务推进开发。
 
-本目录同时保存本队在 2026-10-09 完成的环境搭建、hello/vadd 源码和阶段一证据，并提供按当前仓库位置运行的脚本。香山硬件基线为 `16ae9ddcda54fc9a2fddffad73174cf793ac7814`。已有 T05 模型/数据、T05-E 异常程序、T08 NEMU 和 T09 RVV baseline 实现及本地验收；独立vdot硬件执行模块已通过单元仿真；全核RTL接入和DiffTest尚未完成。计划中的后续任务按实际验收结果更新进度。
+本目录同时保存本队在 2026-10-09 完成的环境搭建、hello/vadd 源码和阶段一证据，并提供按当前仓库位置运行的脚本。香山硬件基线为 `16ae9ddcda54fc9a2fddffad73174cf793ac7814`。已有 T05 模型/数据、T05-E 异常程序、T08 NEMU 和 T09 RVV baseline 实现及本地验收；独立vdot硬件执行模块及T06适配层已通过单元仿真；当前James主机hello/vadd全核DiffTest与波形路径已通过。候选vdot全核接入已通过本机20项代表性DiffTest及旧vadd回归；T11完整机制检出/覆盖及成员验收待完成。计划中的后续任务按实际验收结果更新进度。
 
 | 内容 | 入口 |
 | --- | --- |
@@ -12,6 +12,9 @@
 | dev与James_Hotten对比、按进度集成及继承验收 | [dev集成记录](docs/dev-integration-20261013.md) |
 | vdot 指令语义、候选编码、测试与待确认问题（第一版草案） | [vdot.vv 规格](spec/vdot.md) |
 | 配置依赖、完整写回路径与分层控制验收（草案） | [RTL 接入接口](spec/rtl-interface.md) |
+| T06真实香山功能单元适配层、ROB取消及后续接入边界 | [T06接口实现](docs/t06-interface.md) |
+| T10候选译码/全核接入、代表性DiffTest及波形 | [T10接入记录](docs/t10-integration.md) |
+| 当前完成度审查及后续门禁修复、反例与复审 | [当前审查](docs/current-tasks-audit-20261014.md)、[修复记录](docs/current-tasks-fixes-20261014.md) |
 | 精确非法异常、陷阱处理与状态观察（基础设施已实现，扩展验收待完成） | [异常测试方案](spec/exception-tests.md) |
 | T05 独立数学模型、定向/随机数据与检查入口 | [模型与测试数据](tests/README.md) |
 | T05-E 异常程序、运行自测与香山目标构建 | [异常 workload](workloads/vdot-exceptions/README.md) |
@@ -27,6 +30,7 @@
 | baseline 状态比较、scratch 与 T13 计时事件 | [测量合同](spec/measurement.md) |
 | WSL、工具版本、安装方法、配套依赖 | [环境说明](docs/environment.md) |
 | 构建和运行命令、启动问题、通过标准 | [阶段一说明](docs/stage1.md) |
+| James主机当前源码的hello/vadd全核基线、构建恢复及实际波形 | [T04本机记录](docs/t04-current-core.md) |
 | hello/vadd 测试源码 | [workloads/hello-vadd](workloads/hello-vadd/) |
 | 路径可配置的执行脚本 | [scripts](scripts/) |
 | 昨天的通过日志、配置、反汇编和事件 CSV | [历史证据](evidence/stage1-20261009/) |

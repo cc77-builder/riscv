@@ -811,6 +811,8 @@ class DecodeUnit(implicit p: Parameters) extends XSModule with DecodeUnitConstan
     CBODecode.table ++
     SvinvalDecode.table ++
     HypervisorDecode.table ++
+    Array(VdotInstructions.VDOT -> XSDecode(SrcType.vp, SrcType.vp, SrcType.no,
+      FuType.vdot, FuOpType.X, SelImm.X, uopSplitType = UopSplitType.dummy, vWen = true).generate()) ++
     VecDecoder.table ++
     ZicondDecode.table ++
     ZimopDecode.table ++
@@ -1055,7 +1057,7 @@ class DecodeUnit(implicit p: Parameters) extends XSModule with DecodeUnitConstan
   decodedInst.vpu.isNarrow := isNarrow
   decodedInst.vpu.isDstMask := isDstMask
   decodedInst.vpu.isOpMask := isOpMask
-  decodedInst.vpu.isDependOldVd := isVppu || isVecOPF || isVStore || (isDstMask && !isOpMask) || isNarrow || isVlx || isVma || isFof || vstartIsNotZero
+  decodedInst.vpu.isDependOldVd := !inst.isVdot && (isVppu || isVecOPF || isVStore || (isDstMask && !isOpMask) || isNarrow || isVlx || isVma || isFof || vstartIsNotZero)
   decodedInst.vpu.isWritePartVd := isWritePartVd || isVlm || isVle && emulIsFrac
   decodedInst.vpu.vstart := io.enq.vstart
   decodedInst.vpu.isVleff := isFof && inst.NF === 0.U

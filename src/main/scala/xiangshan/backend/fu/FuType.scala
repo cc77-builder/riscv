@@ -71,6 +71,9 @@ object FuType extends OHEnumeration {
   val vsegldu = addType(name = "vsegldu")
   val vsegstu = addType(name = "vsegstu")
 
+  // Append to preserve existing one-hot identities. Activated by T10 decode/scheduling.
+  val vdot = addType(name = "vdot")
+
   val intArithAll = Seq(jmp, brh, i2f, i2v, csr, alu, mul, div, fence, bku)
   // dq0 includes int's iq0 and iq1
   // dq1 includes int's iq2 and iq3
@@ -124,7 +127,7 @@ object FuType extends OHEnumeration {
   }
   val fpArithAll = Seq(falu, fcvt, fmac, fDivSqrt, f2v)
   val scalaMemAll = Seq(ldu, stu, mou)
-  val vecOPI = Seq(vipu, vialuF, vppu, vimac, vidiv)
+  val vecOPI = Seq(vipu, vialuF, vppu, vimac, vidiv, vdot)
   val vecOPF = Seq(vfpu, vfalu, vfma, vfdiv, vfcvt)
   val vecVSET = Seq(vsetiwi, vsetiwf, vsetfwf)
   val vecArith = vecOPI ++ vecOPF
@@ -256,6 +259,7 @@ object FuType extends OHEnumeration {
     vstu -> "vstu",
     vppu -> "vppu",
     vimac -> "vimac",
+    vdot -> "vdot",
     vidiv -> "vidiv",
     vfalu -> "vfalu",
     vfma -> "vfma",

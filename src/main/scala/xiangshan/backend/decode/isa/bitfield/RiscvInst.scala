@@ -90,8 +90,10 @@ trait BitFieldsVec { this: Riscv32BitInst =>
       (this.WIDTH === 0.U || this.WIDTH(2) === 1.B)
   }
 
+  def isVdot = xiangshan.backend.decode.VdotInstructions.VDOT === inst
+
   def isVecArith = {
-    this.OPCODE5Bit === xiangshan.backend.decode.isa.bitfield.OPCODE5Bit.OP_V
+    this.OPCODE5Bit === xiangshan.backend.decode.isa.bitfield.OPCODE5Bit.OP_V || isVdot
   }
 
   def isOPIVV = {

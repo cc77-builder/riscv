@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/home/amesotten/.cache/codex-rvinno/t10/source-b657e0896a10d6c9/team/scripts/vdot_core_checks.py", line 198, in <module>
+    main()
+  File "/home/amesotten/.cache/codex-rvinno/t10/source-b657e0896a10d6c9/team/scripts/vdot_core_checks.py", line 193, in main
+    print(json.dumps(check(root, evidence, args.core.resolve(), args.am.resolve(), args.nemu.resolve(),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amesotten/.cache/codex-rvinno/t10/source-b657e0896a10d6c9/team/scripts/vdot_core_checks.py", line 145, in check
+    verify_manifest(evidence / 'workload.sha256', root, workload_inputs(evidence, am))
+  File "/home/amesotten/.cache/codex-rvinno/t10/source-b657e0896a10d6c9/team/scripts/vdot_core_checks.py", line 34, in verify_manifest
+    require(bool(expected) and set(entries) == expected,
+  File "/home/amesotten/.cache/codex-rvinno/t10/source-b657e0896a10d6c9/team/scripts/artifact_guard.py", line 21, in require
+    raise ValueError(message)
+ValueError: Artifact paths differ from actual selected inputs: /mnt/c/Code/RVInno/riscv/team/out/t10-relocation-negative-fixed-20261014-v2/workload.sha256

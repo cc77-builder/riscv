@@ -1,0 +1,29 @@
+================= xiangshan.test.testOnly xiangshan.backend.fu.vector.VdotFuSpec =================
+==================================================================================================
+[665/773] =============== xiangshan.test.testOnly x...end.fu.vector.VdotFuSpec =============== 61s
+[665] xiangshan.resources 14s
+==================================================================================================
+[773/773] xiangshan.test.testOnly
+[773] [32mVdotFuSpec:[0m
+[773] [32mVdotFu[0m
+[773] VDOT_FU_DIAGNOSTIC id=101 ptr=1 v0=false pdest=3 vl=8 vt=64 start=0 vm=true op=0 src1_128=0xa5a5a5a5a5a5a5a58080808080808080 src2_128=0x5a5a5a5a5a5a5a5a7f7f7f7f7f7f7f7f expected128=0xfffe0400 actual128=0x0
+[773] [31m- should preserve real metadata, route whole vector/v0 results and complete every configuration rejection *** FAILED ***[0m
+[773] [31m  In step 8: io_out_bits_data=0 (0x0) did not equal expected=4294837248 (0xfffe0400) at (VdotFuSpec.scala:150) (VdotFuSpec.scala:150)[0m
+[773] VDOT_FU_AGE_PASS pending=18432 incoming=18432 rob_entries=48 wrap=true flush_itself=true
+[773] [32m- should select pending and incoming cancellation by actual ROB age, wrap and redirect level[0m
+[773] make: Warning: File 'VVdotFuHarness__ver.d' has modification time 0.058 s in the future
+[773] make: warning:  Clock skew detected.  Your build may be incomplete.
+[773] VDOT_FU_DIAGNOSTIC id=12 ptr=79 v0=true pdest=82 vl=8 vt=192 start=0 vm=true op=0 src1_128=0xa618c376b82f53a6ceec814c33bd56d5 src2_128=0xc6c7634699c671d4d162758b4be9ad1c expected128=0xffff991f actual128=0x0
+[773] [31m- should conserve request identity under randomized stalls, simultaneous replacement, selective cancellation and reset *** FAILED ***[0m
+[773] [31m  In step 14: io_out_bits_data=0 (0x0) did not equal expected=4294940959 (0xffff991f) at (VdotFuSpec.scala:150) (VdotFuSpec.scala:150)[0m
+[773] [36mRun completed in 36 seconds, 735 milliseconds.[0m
+[773] [36mTotal number of tests run: 3[0m
+[773] [36mSuites: completed 1, aborted 0[0m
+[773] [36mTests: succeeded 1, failed 2, canceled 0, ignored 0, pending 0[0m
+[773] [31m*** 2 TESTS FAILED ***[0m
+[773/773] =============== xiangshan.test.testOnly ...end.fu.vector.VdotFuSpec =============== 115s
+==================================================================================================
+1 tasks failed
+xiangshan.test.testOnly 2 tests failed: 
+  xiangshan.backend.fu.vector.VdotFuSpec VdotFu should preserve real metadata, route whole vector/v0 results and complete every configuration rejection
+  xiangshan.backend.fu.vector.VdotFuSpec VdotFu should conserve request identity under randomized stalls, simultaneous replacement, selective cancellation and reset

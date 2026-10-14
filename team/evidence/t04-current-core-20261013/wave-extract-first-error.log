@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/mnt/c/Code/RVInno/riscv/team/out/t04-summarize-wave.py", line 46, in <module>
+    for cycle in range(last,time): sample(cycle)
+                                   ^^^^^^^^^^^^^
+  File "/mnt/c/Code/RVInno/riscv/team/out/t04-summarize-wave.py", line 33, in sample
+    alu.append(dict(cycle=cycle,scope=scope,phase='in',fuOpType=value(scope,'io_in_bits_ctrl_fuOpType'),
+                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Code/RVInno/riscv/team/out/t04-summarize-wave.py", line 17, in value
+    raise RuntimeError('Missing/unknown signal: '+scope+'.'+suffix)
+RuntimeError: Missing/unknown signal: TOP.SimTop.l_soc.core_with_l2.core.backend.inner_vfExuBlock.exus_2.VialuFix.io_in_bits_ctrl_fuOpType

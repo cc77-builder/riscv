@@ -1,8 +1,10 @@
 # vdot RTL 接入与验证接口草案
 
-版本：`0.1.1-draft`，2026-10-12。适用合同：`vdot-s8x8-r32-v0.1`。
+版本：`0.1.2-draft`，2026-10-13。适用合同：`vdot-s8x8-r32-v0.1`。
 
-状态：已有独立VdotExec运算/局部控制及单元仿真，见 [模块与接口](../hardware/vdot/README.md)；尚未接入香山全核。本文件是T06的评审输入，不代表T06已验收。A 确定最终单元、端口和时序，B/C 复核配置、异常和测试；成员尚未签字。
+状态：已有独立VdotExec运算/局部控制及单元仿真，见 [模块与接口](../hardware/vdot/README.md)；候选全核源码接入与验证进展见 [T10接入](../docs/t10-integration.md)。本文件是T06的评审输入，不代表T06已验收。A 确定最终单元、端口和时序，B/C 复核配置、异常和测试；成员尚未签字。
+
+2026-10-13补充：[T06实现](../docs/t06-interface.md) 已新增真实香山FuncUnit适配层 `VdotFu` 和独立 `VdotCfg/FuType.vdot`，明确一拍注册响应、五源槽、物理VL、身份/目的与ROB选择取消。T06证据冻结时无新译码表项或EXU资源启用；2026-10-14已按[T10记录](../docs/t10-integration.md)接入候选译码与VFEX1资源；后文涉及实际读源、写回及退休的全核验收仍开放。
 
 关联：[指令合同](vdot.md)、[异常测试](exception-tests.md)、[进度](../progress.md)。阅读基线为团队提交 `c1ef31d81d50c209bf0e102af8ad7713c2da6dab`，硬件内容基于 `16ae9ddcda54fc9a2fddffad73174cf793ac7814`。下文区分已存在的通路与拟新增的 vdot 行为。
 
@@ -129,7 +131,7 @@ VL/vtype 依赖压力测试在目标配置与 vdot 之间不插入 CSR 读回或
 - [ ] 补齐 V02/V03、别名/依赖及 C01a～C01d 的触发证据，不能只以随机算术覆盖代替。
 - [ ] 核对完整提交/回滚、VS 置脏和 DiffTest 的 128 位观察范围，保存配套 SHA、配置及日志。
 
-T05 模型及 T05-E harness 已交付；T08 NEMU 通过 standalone，T09 baseline 通过 QEMU/NEMU 模型验收，详见 [T09 记录](../docs/t09-baseline.md)。下一步 A 按本接口评审及接入，B/C 复核 T08/T09 和 measurement 合同，C 推进真实全核差分验收；本接口的 RTL 实现检查项仍未完成。
+T05 模型及 T05-E harness 已交付；T08 NEMU 通过 standalone，T09 baseline 通过 QEMU/NEMU 模型验收，详见 [T09 记录](../docs/t09-baseline.md)。2026-10-14已完成候选FU适配、精确译码/VFEX1资源映射及T10本机代表性全核验证，见[T10记录](../docs/t10-integration.md)。A/B/C人工确认、V02/V03配置依赖/恢复、C01全核取消、完整提交/回滚和DiffTest故障检出仍开放；上述交付清单需逐项按证据和成员确认关闭。
 
 ## 7. 独立模块阶段记录（2026-10-12）
 

@@ -176,6 +176,9 @@ def verify_nemu(repo, binary, mode):
     config=(repo/'.config').read_text().splitlines()
     require('CONFIG_RVV=y' in config and 'CONFIG_CUSTOM_VDOT=y' in config,'Candidate extension is not enabled')
     require(('CONFIG_SHARE=y' in config)==(mode=='reference'),'NEMU configuration does not match binary role')
+    if mode=='reference' and 'CONFIG_RV_SMRNMI=y' in config:
+        require('CONFIG_NMIE_INIT=y' in config,
+                'Reference Smrnmi NMIE reset differs from XiangShan (NMIE=1); rebuild reference')
     require(nemu_snapshot(repo)==provenance['source_sha256'],'NEMU source/generated inputs changed after build')
     return provenance
 

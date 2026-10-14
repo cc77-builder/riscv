@@ -1,0 +1,16 @@
+The image is /home/amesotten/.cache/codex-rvinno/t10/source-b657e0896a10d6c9/team/workloads/hello-vadd/build/hello-vadd-riscv64-xs.bin
+The reference model is /home/amesotten/.cache/codex-rvinno/t10/nemu-compatible/reference/build/riscv64-nemu-interpreter-so
+The first instruction of core 0 has commited. Difftest enabled. 
+[src/monitor/image_loader.c:205,load_img] Loading flash image: /home/amesotten/.cache/codex-rvinno/t10/source-b657e0896a10d6c9/team/workloads/hello-vadd/build/boot-flash.bin
+hello xiangshan, 我是riscv-vdot-team, IPaddress=172.25.74.154
+identity_status=placeholder; IPaddress is WSL host IPv4
+RVV VLEN=128 bits; SEW=8 LMUL=1 AVL=8
+vadd case=0 output: 9 9 9 9 9 9 9 9 PASS
+vadd case=1 output: 254 252 250 248 246 244 242 240 PASS
+vadd case=2 output: 128 127 0 0 0 0 254 254 PASS
+HELLO_VADD_PASS cases=3 lanes=24
+[PERF ][time=               42418] coupledLCore 0: HIT GOOD TRAP at pc = 0x8000029c
+Core-0 instrCnt = 16518, cycleCnt = 42415, IPC = 0.389438
+Host time spent: 37059ms
+	Exit status: 0
+HELLO_VADD_EMU_RUN_PASS

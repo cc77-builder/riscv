@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/home/amesotten/.cache/codex-rvinno/t10/source-b657e0896a10d6c9/team/scripts/vdot_core_checks.py", line 198, in <module>
+    main()
+  File "/home/amesotten/.cache/codex-rvinno/t10/source-b657e0896a10d6c9/team/scripts/vdot_core_checks.py", line 193, in main
+    print(json.dumps(check(root, evidence, args.core.resolve(), args.am.resolve(), args.nemu.resolve(),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amesotten/.cache/codex-rvinno/t10/source-b657e0896a10d6c9/team/scripts/vdot_core_checks.py", line 155, in check
+    check_guest_log((evidence / 'emulator-output.log').read_text())
+  File "/home/amesotten/.cache/codex-rvinno/t10/source-b657e0896a10d6c9/team/scripts/vdot_core_checks.py", line 107, in check_guest_log
+    require(len(rows) == 20 and {row[0] for row in rows} == CASE_IDS, 'Incomplete actual guest coverage')
+  File "/home/amesotten/.cache/codex-rvinno/t10/source-b657e0896a10d6c9/team/scripts/artifact_guard.py", line 21, in require
+    raise ValueError(message)
+ValueError: Incomplete actual guest coverage

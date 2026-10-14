@@ -46,4 +46,6 @@ python team/tests/review_vdot_encodings.py --rocket <固定rocket的Instructions
 
 生成器直接调用默认 `legacy`，保留原 48 定向 fixture 和数值 PRNG 的复现方式；`vdot-tests.sh` 与 baseline 默认使用 `expanded`，随机总数/裸机随机数均为 1000。expanded 增加 160 个寄存器/别名布局和 96 个政策/vxrm/vxsat/VS 组合，共 304 定向 + 1000 随机；每个随机例在三个16字节数据之后额外取三个 PRNG 字节选择 vd/vs1/vs2，并轮换 Initial/Clean/Dirty。别名初值仍统一。异常集合加入 Initial/Clean 两例，共37例。
 
-当前 Python 回归为23个方法，C判定器25项；NEMU vdot共1341项，baseline两平台各1304项。实际覆盖全部v0～v31、1147个操作数三元组、18种scratch布局和全部96个交叉组合，详见 [修复与复审](../docs/audit-fixes.md)。32768项分配算法检查仍不等于32768条真实执行路径。构建/运行使用同一数据目录和profile；运行阶段不重新生成输入，来源变化要求重编译。
+模型/数据阶段 Python 回归为23个方法，C判定器25项；NEMU vdot共1341项，baseline两平台各1304项。实际覆盖全部v0～v31、1147个操作数三元组、18种scratch布局和全部96个交叉组合，详见 [修复与复审](../docs/audit-fixes.md)。32768项分配算法检查仍不等于32768条真实执行路径。构建/运行使用同一数据目录和profile；运行阶段不重新生成输入，来源变化要求重编译。
+
+2026-10-14 新增 [test_vdot_core_checks.py](test_vdot_core_checks.py) 的10个方法后，上述 unittest 入口当前共 **33 个方法通过**。新增测试覆盖实际输入与清单路径绑定、相对路径、缺失/重复/畸形 guest 记录、错误状态、来源变化、编译/RTL选择失败及旧 PASS 清除，并在 Python 优化等级0/1/2下验证关键拒绝条件。详细入口反例及20项真实全核 DiffTest 见[当前修复记录](../docs/current-tasks-fixes-20261014.md)；这些门禁测试不增加硬件覆盖用例数。

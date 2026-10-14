@@ -1,0 +1,47 @@
+Picked up JAVA_TOOL_OPTIONS: -XX:ActiveProcessorCount=2
+Picked up JAVA_TOOL_OPTIONS: -XX:ActiveProcessorCount=2
+=============== xiangshan.test.testOnly xiangsha...an.backend.fu.vector.VdotFuSpec ===============
+==================================================================================================
+[760/773] xiangshan.test.compile
+[760] [info] compiling 1 Scala source to /home/amesotten/.cache/codex-rvinno/t10/source-4fd122ff6eb8fb45/out/xiangshan/test/compile.dest/classes ...
+[760] [info] done compiling
+[773/773] xiangshan.test.testOnly
+[773] Picked up JAVA_TOOL_OPTIONS: -XX:ActiveProcessorCount=2
+[773] [32mVdotDecodeSpec:[0m
+[773] [32mVDOT production decode[0m
+[773] VDOT_DECODE_TABLE_PASS register_encodings=32768 overlap=0 owners=1
+[773] [32m- should recognize only the frozen candidate bits without overlapping existing entries[0m
+[773] ImmUnion max len: 22
+[773] [VsetModule] log2Vlen: 7
+[773] [VsetModule] vlWidth: 8
+[773] [31m- should emit one uop with exact sources and recovered snapshots including stalls and redirects *** FAILED ***[0m
+[773] [31m  java.lang.IllegalArgumentException: requirement failed: Key PerfCounterOptionsKey is not defined in Parameters[0m
+[773] [31m  at ... ()[0m
+[773] [31m  at org.chipsalliance.cde.config$View.apply(config.scala:29)[0m
+[773] [31m  at utility.XSPerfAccumulate$.apply(PerfCounterUtils.scala:70)[0m
+[773] [31m  at xiangshan.backend.decode.DecodeStage.<init>(DecodeStage.scala:304)[0m
+[773] [31m  at xiangshan.backend.decode.VdotDecodeHarness.$anonfun$dut$2(VdotDecodeSpec.scala:33)[0m
+[773] [31m  at chisel3.Module$.evaluate(Module.scala:88)[0m
+[773] [31m  at chisel3.Module$.do_apply(Module.scala:35)[0m
+[773] [31m  at xiangshan.backend.decode.VdotDecodeHarness.$anonfun$dut$1(VdotDecodeSpec.scala:33)[0m
+[773] [31m  at chisel3.internal.plugin.package$.autoNameRecursively(package.scala:33)[0m
+[773] [31m  at xiangshan.backend.decode.VdotDecodeHarness.<init>(VdotDecodeSpec.scala:33)[0m
+[773] [31m  ...[0m
+[773] [32mVdotFuSpec:[0m
+[773] [32mVdotFu[0m
+[773] VDOT_FU_CONFIG_PASS requests=36 legal=8 illegal=28 full128=true metadata_stalls=true
+[773] [32m- should preserve real metadata, route whole vector/v0 results and complete every configuration rejection[0m
+[773] VDOT_FU_AGE_PASS pending=18432 incoming=18432 rob_entries=48 wrap=true flush_itself=true
+[773] [32m- should select pending and incoming cancellation by actual ROB age, wrap and redirect level[0m
+[773] VDOT_FU_SCOREBOARD_PASS cycles=4000 accepted=2079 returned=1959 cancelled=120 stalled=1236 replaced=1424 resets=3
+[773] [32m- should conserve request identity under randomized stalls, simultaneous replacement, selective cancellation and reset[0m
+[773] [36mRun completed in 31 seconds, 510 milliseconds.[0m
+[773] [36mTotal number of tests run: 5[0m
+[773] [36mSuites: completed 2, aborted 0[0m
+[773] [36mTests: succeeded 4, failed 1, canceled 0, ignored 0, pending 0[0m
+[773] [31m*** 1 TEST FAILED ***[0m
+[773/773] =============== xiangshan.test.testOnly x...end.fu.vector.VdotFuSpec =============== 41s
+==================================================================================================
+1 tasks failed
+xiangshan.test.testOnly 1 tests failed: 
+  xiangshan.backend.decode.VdotDecodeSpec VDOT production decode should emit one uop with exact sources and recovered snapshots including stalls and redirects
