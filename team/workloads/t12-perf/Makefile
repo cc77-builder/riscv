@@ -1,5 +1,5 @@
 T12_START ?= 0
-T12_COUNT ?= 65535
+T12_COUNT ?= T12_PLAN_COUNT
 CFLAGS += -DT12_START=$(T12_START) -DT12_COUNT=$(T12_COUNT)
 NAME = t12-perf
 SRCS = main.c sites.S ../vdot-exceptions/harness.S ../vdot-exceptions/judge.c

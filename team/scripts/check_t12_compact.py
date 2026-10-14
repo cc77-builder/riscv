@@ -31,7 +31,7 @@ def expected_digest(m,byid,start,limit):
   mix(struct.pack('<6Q',*([0,8,0,3,1,7] if bad else [0]*6)))
  return h,selected
 
-def check(text,data,start,limit,exit_code):
+def check_legacy(text,data,start,limit,exit_code):
  require(exit_code==0,'actual process did not exit zero')
  m,byid=load(data);expected,selected=expected_digest(m,byid,start,limit)
  text=re.sub(r'\x1b\[[0-9;]*m','',text);lines=text.splitlines()
@@ -58,6 +58,57 @@ def check(text,data,start,limit,exit_code):
  want=[seq for seq,item in enumerate(selected,start) if byid[item['id']]['kind']=='perf']
  require([r['seq'] for r in metrics]==want,'missing/extra/reordered perf')
  return dict(status='T12_ARCHITECTURAL_SLICE_PASS',start=start,limit=limit,executed=len(selected),digest=f'{expected:016x}',metrics=metrics,microarchitectural_events_observed=False)
+
+def check(text,data,start,limit,exit_code):
+ if 'T12R_BEGIN' not in text:
+  return check_legacy(text,data,start,limit,exit_code)
+ require(exit_code==0,'actual process did not exit zero')
+ m,byid=load(data)
+ require(type(start)is int and type(limit)is int and 0<=start<len(m['schedule']) and 0<limit<=len(m['schedule'])-start,'slice bounds')
+ selected=m['schedule'][start:start+limit]
+ text=re.sub(r'\x1b\[[0-9;]*m','',text);lines=text.splitlines()
+ require(not re.search(r'\b(?:FAIL|BAD TRAP|ABORT|Assertion failed|EXCEEDING|STOPS THE PROGRAM)\b',text),'failure/limit marker')
+ roles=[[i for i,s in enumerate(lines) if predicate(s)] for predicate in (
+  lambda s:s.startswith('T12R_BEGIN '),lambda s:s.startswith('T12R_END '),
+  lambda s:s=='T12_CONTROLS high96=1 preserved=1 csr=1',lambda s:'HIT GOOD TRAP' in s,
+  lambda s:'Difftest enabled' in s)]
+ require(all(len(x)==1 for x in roles),'missing/duplicate completion role')
+ begin,end,control,good,diff=[x[0] for x in roles]
+ require(diff<begin<control<end<good,'completion order')
+ require(lines[begin]==f'T12R_BEGIN start={start} limit={limit}','wrong compiled slice')
+ bits=bytearray((len(m['schedule'])+7)//8)
+ for seq in range(start,start+limit):bits[seq//8]|=1<<(seq%8)
+ require(lines[end]==f'T12R_END executed={limit} bits={bits.hex()}','missing/extra plan identity or failed check')
+ metrics=[]
+ for i,line in enumerate(lines):
+  if not line.startswith('T12R_PERF '):continue
+  require(begin<i<end,'perf outside run')
+  match=re.fullmatch(r'T12R_PERF seq=(\d+) cy=(\d+),(\d+) ir=(\d+),(\d+)',line)
+  require(match is not None,'malformed counters')
+  seq,cb,ce,ib,ie=map(int,match.groups());require(start<=seq<start+limit,'perf outside slice')
+  row=byid[m['schedule'][seq]['id']];require(row['kind']=='perf','wrong perf role')
+  require(ce>cb and ie>ib,'nonpositive counters')
+  metrics.append(dict(seq=seq,id=row['id'],scenario=row['scenario'],method=row['method'],repeat=m['schedule'][seq]['repeat'],dots=row['dots'],cycle_begin=cb,cycle_end=ce,instret_begin=ib,instret_end=ie,cycles=ce-cb,instret=ie-ib,input_sha256=hashlib.sha256(json.dumps(row['before']).encode()).hexdigest()))
+ want=[seq for seq in range(start,start+limit) if byid[m['schedule'][seq]['id']]['kind']=='perf']
+ require([r['seq'] for r in metrics]==want,'missing/extra/reordered perf')
+ return dict(status='T12_ARCHITECTURAL_SLICE_PASS',format='checked-plan-bitmap-v1',start=start,limit=limit,executed=limit,identities=[dict(seq=seq,**m['schedule'][seq]) for seq in range(start,start+limit)],metrics=metrics,microarchitectural_events_observed=False)
+
+def aggregate(results,data):
+ m,byid=load(data)
+ ids=[item for result in results for item in result['identities']]
+ expected=[dict(seq=i,**item) for i,item in enumerate(m['schedule'])]
+ require(ids==expected,'slice union not exactly the ordered plan: overlap, gap, wrong identity, or order')
+ require(len({(x['id'],x['repeat']) for x in ids})==len(ids),'nonunique planned identity')
+ metrics=[item for result in results for item in result['metrics']]
+ pairs=[]
+ for scenario in ('complete','known-config','independent-batch'):
+  for repeat in range(m['repeats']):
+   pair=[r for r in metrics if r['scenario']==scenario and r['repeat']==repeat and r['method']!='empty']
+   require(len(pair)==2 and {r['method'] for r in pair}=={'vdot','rvv'},'incomplete perf pair')
+   require(len({(r['dots'],r['input_sha256']) for r in pair})==1,'pair input/count mismatch')
+   vd=next(r for r in pair if r['method']=='vdot');rv=next(r for r in pair if r['method']=='rvv')
+   pairs.append(dict(scenario=scenario,repeat=repeat,order=[r['method'] for r in pair],vdot_cycles=vd['cycles'],rvv_cycles=rv['cycles'],rvv_over_vdot=rv['cycles']/vd['cycles']))
+ return dict(status='T12_ARCHITECTURAL_PLAN_PASS',executed=len(ids),unique_identities=len(ids),identities=ids,metrics=metrics,pairs=pairs,microarchitectural_events_observed=False,counter_interpretation='Uncalibrated raw rdcycle windows including stores/fences; not FU latency or frequency; no overhead subtraction')
 
 def bind(meta,data,source):
  require(re.fullmatch('[0-9a-f]{40}',source or ''),'explicit source SHA required')

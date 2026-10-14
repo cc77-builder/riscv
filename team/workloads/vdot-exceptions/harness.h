@@ -27,6 +27,11 @@ enum verdict {
 const char *verdict_name(enum verdict value);
 enum verdict judge(const struct trap_record *record, const struct expectation *expected,
                    const unsigned char actual[32][16], int guards_ok);
+/* Explicit scratch applies only to final vectors; all 32 input registers and
+ * all six pre/post CSRs are still checked. NULL post means unchanged CSRs. */
+enum verdict judge_with_scratch(const struct trap_record *record, const struct expectation *expected,
+                   const unsigned char actual[32][16], int guards_ok,
+                   uint32_t scratch, const struct vector_csrs *post);
 void vdot_run(struct trap_record *, const struct run_config *, const unsigned char [32][16],
               unsigned char [32][16], void (*stub)(void));
 void platform_halt(int code) __attribute__((noreturn));
