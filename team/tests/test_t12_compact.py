@@ -12,7 +12,11 @@ class Compact(unittest.TestCase):
   lines=['Difftest enabled',f'T12R_BEGIN start={start} limit={count}','T12_CONTROLS high96=1 preserved=1 csr=1']
   for seq in range(start,start+count):
    bits[seq//8]|=1<<(seq%8)
-   if self.rows[self.m['schedule'][seq]['id']]['kind']=='perf':lines.append(f'T12R_PERF seq={seq} cy=100,200 ir=100,150')
+   row=self.rows[self.m['schedule'][seq]['id']]
+   if row['kind']=='perf':lines.append(f'T12R_PERF seq={seq} cy=100,200 ir=100,{100+c.expected_instret(row)}')
+  selected=self.m['schedule'][start:start+count]
+  loops=sum(bool(self.rows[x['id']]['iterations']) for x in selected);faults=sum(self.rows[x['id']]['fault_vl'] is not None for x in selected)
+  lines.append(f'T12R_AUDIT loops={loops} faults={faults}')
   return '\n'.join(lines+[f'T12R_END executed={count} bits={bits.hex()}','HIT GOOD TRAP'])
  def reject(self,text,start=0,count=190,rc=0):
   with self.assertRaises(ValueError):c.check(text,self.data,start,count,rc)
@@ -47,6 +51,15 @@ class Compact(unittest.TestCase):
  def test_pair_mismatch(self):
   r=c.check(self.fixture(0,190),self.data,0,190,0);r['metrics'][1]['dots']+=1
   with self.assertRaises(ValueError):c.aggregate([r],self.data)
+ def test_mixed_manifest(self):
+  r=c.check(self.fixture(0,190),self.data,0,190,0);r['manifest_sha256']='0'*64
+  with self.assertRaises(ValueError):c.aggregate([r],self.data)
+ def test_counter_width_execution_and_new_controls(self):
+  log=self.fixture(0,190)
+  self.reject(log.replace('cy=100,200','cy=100,18446744073709551616',1))
+  self.reject(log.replace('ir=100,140','ir=100,101',1))
+  self.reject(log.replace('loops=4 faults=5','loops=3 faults=5'))
+  self.reject(log.replace('loops=4 faults=5','loops=4 faults=4'))
  def test_slice_bounds(self):
   for start,count in ((-1,1),(190,1),(0,0),(0,191)):
    self.reject(self.fixture(0,190),start,count)

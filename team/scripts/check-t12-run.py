@@ -1,6 +1,7 @@
 """Strict ordered T12 evidence checker. Host fixtures are never DUT evidence."""
 import argparse
 import csv
+import importlib.util
 import datetime
 import hashlib
 import json
@@ -12,6 +13,9 @@ PARENT = '6bf3c2c3be0c88ff3a020786ff10cbec9aa126d3'
 EMU = '43fd7b094a3fb8676395dc97ca08443fb2d2d37d1dbfea0d7b9078c67087718f'
 REFERENCE = 'e5f04192ad782581eef8cd17648933aa6da0fd0543944cb6e59eb931efc60cae'
 FLASH = 'a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994'
+_count_spec=importlib.util.spec_from_file_location('t12_counts',Path(__file__).with_name('check_t12_compact.py'))
+_count_module=importlib.util.module_from_spec(_count_spec);_count_spec.loader.exec_module(_count_module)
+expected_instret=_count_module.expected_instret
 
 def require(v,m):
     if not v: raise ValueError(m)
@@ -29,7 +33,9 @@ def fields(line,prefix):
 
 def number(v):
     require(re.fullmatch(r'(?:0x[0-9a-f]+|[0-9]+)',v),'invalid integer')
-    return int(v,16 if v.startswith('0x') else 10)
+    value=int(v,16 if v.startswith('0x') else 10)
+    require(value<2**64,'integer exceeds uint64')
+    return value
 
 def csr(v):
     values=[number(x) for x in v.split('/')]
@@ -99,6 +105,7 @@ def validate(content,exit_code,data,require_diff=True):
         cb,ce,ib,ie=[number(r[k]) for k in ('cycle_begin','cycle_end','instret_begin','instret_end')]
         if plan['kind']=='perf':
             require(ce>cb and ie>ib,'nonpositive performance')
+            require(ie-ib==expected_instret(plan),'retired instruction bracket differs from fixed program')
             metrics.append(dict(scenario=plan['scenario'],method=plan['method'],repeat=number(r['repeat']),
                                 dots=plan['dots'],cycle_begin=cb,cycle_end=ce,instret_begin=ib,instret_end=ie,
                                 cycles=ce-cb,instret=ie-ib,input_id=hashlib.sha256(json.dumps(plan['before']).encode()).hexdigest()))
