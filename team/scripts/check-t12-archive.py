@@ -7,6 +7,7 @@ import argparse
 import gzip
 import hashlib
 import importlib.util
+import io
 import json
 from pathlib import Path
 import re
@@ -30,6 +31,12 @@ def read(path):
 
 def load(path):
     return json.loads(read(path))
+
+def decode_log(raw):
+    # Match Path.read_text() in the actual suite driver: UART uses CRLF while
+    # hardware events use LF. Validate raw hashes before text interpretation.
+    with io.TextIOWrapper(io.BytesIO(raw), encoding='utf-8', newline=None) as stream:
+        return stream.read()
 
 def validate(root, source, emu, reference, flash):
     root = Path(root).resolve()
@@ -69,7 +76,7 @@ def validate(root, source, emu, reference, flash):
         require(all(hashlib.sha256(value).hexdigest()==record['raw_logs_sha256'][name] for name,value in raw.items()), 'raw stream digest mismatch')
         combined = read(directory/'run.log.gz')
         require(combined==raw['stderr.log']+raw['stdout.log'], 'derived log differs from raw streams')
-        text = combined.decode()
+        text = decode_log(combined)
         exit_code = int((directory/'exit-code.txt').read_text())
         require(exit_code==record['exit_code'], 'exit receipt mismatch')
         require('The reference model is '+selected in text, 'loaded reference differs from receipt')

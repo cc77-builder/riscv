@@ -27,8 +27,8 @@ EVENT_FIELDS = {
 def extract_events(text):
     """Remove only complete observer records. UART may surround a whole record.
 
-    stdbuf prevents mid-record stdio/UART interleaving. Partial records must fail,
-    never be guessed, silently dropped, or mistaken for missing coverage.
+    The final runner captures hardware and UART streams separately. Partial
+    records must fail, never be guessed, dropped, or treated as missing coverage.
     """
     events = []
     kinds = '|'.join(EVENT_FIELDS)
