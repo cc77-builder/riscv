@@ -8,6 +8,8 @@ extern void _halt(int);
 void platform_halt(int code) { _halt(code); for (;;) {} }
 struct trap_record *vdot_active_record;
 uint64_t t12_counts[4];
+uint64_t t12_iterations, t12_fault_valid;
+unsigned char t12_fault_regs[32][16] __attribute__((aligned(16)));
 struct vector_csrs t12_recovery_csrs;
 uint64_t t12_recovery_status;
 unsigned char t12_sink[4][16] __attribute__((aligned(16)));
@@ -46,7 +48,17 @@ static void zero(void *p, size_t n) {
   while(n--) *q++=0;
 }
 static int eq(const void *a,const void *b,size_t n) {
-  const unsigned char *p=a,*q=b; while (n--) if (*p++!=*q++) return 0; return 1;
+  const unsigned char *p=a,*q=b;
+  if ((((uintptr_t)p | (uintptr_t)q)&7)==0) {
+    p=__builtin_assume_aligned(p,8);q=__builtin_assume_aligned(q,8);
+    while(n>=8) {
+      uint64_t x,y;__builtin_memcpy(&x,p,8);__builtin_memcpy(&y,q,8);
+      if(x!=y) return 0;
+      p+=8;q+=8;n-=8;
+    }
+  }
+  while (n--) if (*p++!=*q++) return 0;
+  return 1;
 }
 static int same(const char *a,const char *b) {
   while (*a && *a==*b) { ++a; ++b; } return *a==*b;
@@ -55,9 +67,11 @@ static int guards(void) {
   return after.head[0]==canary && after.head[1]==canary && after.tail[0]==canary && after.tail[1]==canary;
 }
 static int verify(const struct t12_case *c) {
+  if (t12_iterations!=c->iterations) return 26;
   struct expectation e={config,c->fault_vl>=0 ? 2 : 0,c->expected,c->before};
   struct vector_csrs fault={0,(uint64_t)c->fault_vl,0,3,1,7};
   if (c->fault_vl>=0) {
+    if (t12_fault_valid!=1 || !eq(t12_fault_regs,c->before,sizeof(t12_fault_regs))) return 25;
     struct vector_csrs recovered={0,8,0,3,1,7};
     if (!eq(&record.post,&fault,sizeof(fault)) || !eq(&t12_recovery_csrs,&recovered,sizeof(recovered)) ||
         ((t12_recovery_status>>9)&3)!=3 || record.epc!=(uint64_t)c->fault || record.expected_pc!=(uint64_t)c->fault || record.tval!=0) return 20;
@@ -82,7 +96,7 @@ static void csrlog(const struct vector_csrs *c) {
 #ifndef T12_COUNT
 #define T12_COUNT T12_PLAN_COUNT
 #endif
-static unsigned done;
+static unsigned done, fault_controls, loop_controls;
 /* A bit is set only after the exact full-state judge succeeds. This is an
  * ordered result bitmap, not a probabilistic state hash. The generated plan
  * maps every bit to one (id, repeat), and the host requires the exact bitmap. */
@@ -92,6 +106,7 @@ static int controls_done;
 static int run(const struct t12_case *c,unsigned repeat,unsigned seq) {
   if (seq>=T12_PLAN_COUNT || (passed_bits[seq/8] & (1U<<(seq%8)))) return 24;
   zero(&record,sizeof(record));zero(t12_counts,sizeof(t12_counts));
+  t12_iterations=t12_fault_valid=0;zero(t12_fault_regs,sizeof(t12_fault_regs));
   zero(&t12_recovery_csrs,sizeof(t12_recovery_csrs));t12_recovery_status=0;zero(t12_sink,sizeof(t12_sink));
   zero(&after,sizeof(after));after.head[0]=after.head[1]=after.tail[0]=after.tail[1]=canary;
   phase(seq,"enter");
@@ -106,6 +121,18 @@ static int run(const struct t12_case *c,unsigned repeat,unsigned seq) {
     text("T12_CONTROLS high96=");decimal(high);text(" preserved=");decimal(preserved);text(" csr=");decimal(csr);_putc('\n');
     if (!(high && preserved && csr)) return 23;
     controls_done=1;
+  }
+  if (!rc && c->iterations) {
+    t12_iterations^=1;int detected=verify(c)!=0;t12_iterations^=1;
+    if(!detected) return 27;
+    ++loop_controls;
+  }
+  if (!rc && c->fault_vl>=0) {
+    /* A corrupt v10 snapshot must fail even though recovery later writes v10. */
+    t12_fault_regs[10][15]^=1;int hidden=verify(c)!=0;t12_fault_regs[10][15]^=1;
+    t12_fault_regs[16][15]^=1;int destination=verify(c)!=0;t12_fault_regs[16][15]^=1;
+    if(!(hidden && destination)) return 28;
+    ++fault_controls;
   }
   if (!rc) {
     passed_bits[seq/8] |= 1U<<(seq%8);
@@ -136,6 +163,7 @@ int main(void) {
   if (T12_START>=T12_PLAN_COUNT || T12_COUNT==0 || T12_COUNT>T12_PLAN_COUNT-T12_START) return 6;
   for (unsigned seq=T12_START;seq<T12_START+T12_COUNT;++seq)
     if (run(&t12_cases[t12_plan[seq].index],t12_plan[seq].repeat,seq)) return 2;
+  text("T12R_AUDIT loops=");decimal(loop_controls);text(" faults=");decimal(fault_controls);_putc('\n');
   text("T12R_END executed="); decimal(done); text(" bits=");
   for (unsigned i=0;i<sizeof(passed_bits);++i) {
     _putc("0123456789abcdef"[passed_bits[i]>>4]);

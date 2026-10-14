@@ -25,7 +25,7 @@ def fixture(data):
                 pre_csr=cs([0,8,0,3,1,7]),post_csr=cs([0,r['fault_vl'] if fault else 8,0,3,1,7]),
                 recovered_csr=cs([0,8,0,3,1,7] if fault else [0]*6),recovered_status='0x600' if fault else '0x0',dests=dest,
                 cycle_begin=100 if perf else 0,cycle_end=(200 if r['method']=='vdot' else 300) if perf else 0,
-                instret_begin=100 if perf else 0,instret_end=120 if perf else 0)
+                instret_begin=100 if perf else 0,instret_end=100+checker.expected_instret(r) if perf else 0)
         lines += ['T12_CASE '+' '.join(f'{k}={v}' for k,v in kv.items())]
     lines += [f'T12_SUMMARY executed={len(m["schedule"])} failed=0','HIT GOOD TRAP']
     return '\n'.join(lines)
@@ -96,6 +96,24 @@ class T12Tests(unittest.TestCase):
         self.assertIn('vsetvl zero, t1, t2\n  .word',asm)
         self.assertNotIn('printf',asm)
         self.assertEqual(sum(r['fault_vl'] is not None for r in corpus()),5)
+    def test_lean_preserves_original_pairs_and_adds_dependency_window(self):
+        original=corpus();lean=corpus('lean',True)
+        self.assertEqual(len(lean),len(original)+3)
+        for a,b in zip(original,lean):
+            for key in ('id','before','expected','dots','fault_vl'):
+                self.assertEqual(a[key],b[key])
+        self.assertEqual((len(general(lean=True)),len(general(known=True,lean=True)),len(batched(lean=True))),(7,5,14))
+        seq=general(lean=True)
+        self.assertLess(next(i for i,s in enumerate(seq) if 'vwmul' in s),next(i for i,s in enumerate(seq) if 'vmv.v.i' in s))
+        self.assertIn('  vsetivli zero, 8, e16, m1, tu, mu',seq)
+        self.assertIn('  vwredsum.vs v10, v2, v10',seq)
+        chain=next(r for r in lean if r['id']=='perf-dependency-chain-rvv')
+        self.assertEqual(chain['dots'],64)
+        self.assertIn('  vwmul.vv v2, v10, v9',chain['body'])
+        self.assertEqual(chain['scratch'],[2,3])
+    def test_scratch_collision_rejected(self):
+        for args in (dict(a=2,lean=True),dict(vd=3,lean=True),dict(a=4),dict(b=5),dict(vd=32,lean=True)):
+            with self.assertRaises(ValueError):general(**args)
     def test_optimized_baseline_not_narrow(self):
         for seq in (general(),general(known=True),batched()):
             self.assertTrue(any('vwmul.vv' in s for s in seq));self.assertTrue(any('vwredsum.vs' in s for s in seq))

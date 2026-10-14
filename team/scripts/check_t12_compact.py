@@ -6,6 +6,28 @@ PINS={'emu':'43fd7b094a3fb8676395dc97ca08443fb2d2d37d1dbfea0d7b9078c67087718f','
 def require(ok,message):
  if not ok:raise ValueError(message)
 def sha(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+def expected_instret(row):
+ lines=[s.strip() for s in row['body']]
+ labels={s[:-1]:i for i,s in enumerate(lines) if s.endswith(':')}
+ pc=0;loop=0;active=False;count=0
+ for steps in range(100000):
+  require(pc<len(lines),'missing instret end')
+  line=lines[pc]
+  if line.endswith(':'):pc+=1;continue
+  if line=='csrr a6, instret':require(not active,'repeated counter begin');active=True
+  if active:count+=2 if line.startswith('la ') else 1
+  if line=='csrr a7, instret':require(active,'counter order');return count
+  if line.startswith('li t6, '):loop=int(line.split(', ')[1])
+  if line=='addi t6, t6, -1':loop-=1
+  if line.startswith('bnez t6, ') and loop:pc=labels[line.split(', ')[1]]
+  else:pc+=1
+ raise ValueError('unbounded counter window')
+
+def check_counters(row,cb,ce,ib,ie):
+ require(all(0<=x<2**64 for x in (cb,ce,ib,ie)),'counter exceeds uint64')
+ require(ce>cb and ie>ib,'nonpositive counters')
+ require(ie-ib==expected_instret(row),'retired instruction bracket differs from fixed program')
+
 def load(data):
  data=Path(data);m=json.loads((data/'manifest.json').read_text())
  require(m['contract']=='vdot-s8x8-r32-v0.1','contract')
@@ -53,7 +75,7 @@ def check_legacy(text,data,start,limit,exit_code):
   require(match is not None,'malformed counters')
   seq,cb,ce,ib,ie=map(int,match.groups());require(start<=seq<start+len(selected),'perf outside slice')
   row=byid[m['schedule'][seq]['id']];require(row['kind']=='perf','wrong perf role')
-  require(ce>cb and ie>ib,'nonpositive counters')
+  check_counters(row,cb,ce,ib,ie)
   metrics.append(dict(seq=seq,id=row['id'],scenario=row['scenario'],method=row['method'],repeat=m['schedule'][seq]['repeat'],dots=row['dots'],cycle_begin=cb,cycle_end=ce,instret_begin=ib,instret_end=ie,cycles=ce-cb,instret=ie-ib,input_sha256=hashlib.sha256(json.dumps(row['before']).encode()).hexdigest()))
  want=[seq for seq,item in enumerate(selected,start) if byid[item['id']]['kind']=='perf']
  require([r['seq'] for r in metrics]==want,'missing/extra/reordered perf')
@@ -79,6 +101,12 @@ def check(text,data,start,limit,exit_code):
  bits=bytearray((len(m['schedule'])+7)//8)
  for seq in range(start,start+limit):bits[seq//8]|=1<<(seq%8)
  require(lines[end]==f'T12R_END executed={limit} bits={bits.hex()}','missing/extra plan identity or failed check')
+ if m.get('checks')==['iteration-count','fault-snapshot']:
+  loops=sum(bool(byid[x['id']]['iterations']) for x in selected)
+  faults=sum(byid[x['id']]['fault_vl'] is not None for x in selected)
+  audit=[i for i,s in enumerate(lines) if s.startswith('T12R_AUDIT ')]
+  require(len(audit)==1 and control<audit[0]<end,'missing/duplicate runtime checks')
+  require(lines[audit[0]]==f'T12R_AUDIT loops={loops} faults={faults}','loop/trap negative controls incomplete')
  metrics=[]
  for i,line in enumerate(lines):
   if not line.startswith('T12R_PERF '):continue
@@ -87,28 +115,33 @@ def check(text,data,start,limit,exit_code):
   require(match is not None,'malformed counters')
   seq,cb,ce,ib,ie=map(int,match.groups());require(start<=seq<start+limit,'perf outside slice')
   row=byid[m['schedule'][seq]['id']];require(row['kind']=='perf','wrong perf role')
-  require(ce>cb and ie>ib,'nonpositive counters')
+  check_counters(row,cb,ce,ib,ie)
   metrics.append(dict(seq=seq,id=row['id'],scenario=row['scenario'],method=row['method'],repeat=m['schedule'][seq]['repeat'],dots=row['dots'],cycle_begin=cb,cycle_end=ce,instret_begin=ib,instret_end=ie,cycles=ce-cb,instret=ie-ib,input_sha256=hashlib.sha256(json.dumps(row['before']).encode()).hexdigest()))
  want=[seq for seq in range(start,start+limit) if byid[m['schedule'][seq]['id']]['kind']=='perf']
  require([r['seq'] for r in metrics]==want,'missing/extra/reordered perf')
- return dict(status='T12_ARCHITECTURAL_SLICE_PASS',format='checked-plan-bitmap-v1',start=start,limit=limit,executed=limit,identities=[dict(seq=seq,**m['schedule'][seq]) for seq in range(start,start+limit)],metrics=metrics,microarchitectural_events_observed=False)
+ return dict(status='T12_ARCHITECTURAL_SLICE_PASS',manifest_sha256=sha(Path(data)/'manifest.json'),format='checked-plan-bitmap-v1',start=start,limit=limit,executed=limit,identities=[dict(seq=seq,**m['schedule'][seq]) for seq in range(start,start+limit)],metrics=metrics,microarchitectural_events_observed=False)
 
 def aggregate(results,data):
  m,byid=load(data)
+ require(results,'empty result set')
+ for result in results:
+  require(result['status']=='T12_ARCHITECTURAL_SLICE_PASS' and result['format']=='checked-plan-bitmap-v1','wrong result role')
+  require(result['manifest_sha256']==sha(Path(data)/'manifest.json'),'mixed plans/profiles')
+  require(result['executed']==result['limit']==len(result['identities']),'inconsistent slice size')
  ids=[item for result in results for item in result['identities']]
  expected=[dict(seq=i,**item) for i,item in enumerate(m['schedule'])]
  require(ids==expected,'slice union not exactly the ordered plan: overlap, gap, wrong identity, or order')
  require(len({(x['id'],x['repeat']) for x in ids})==len(ids),'nonunique planned identity')
  metrics=[item for result in results for item in result['metrics']]
  pairs=[]
- for scenario in ('complete','known-config','independent-batch'):
+ for scenario in m.get('scenarios',('complete','known-config','independent-batch')):
   for repeat in range(m['repeats']):
    pair=[r for r in metrics if r['scenario']==scenario and r['repeat']==repeat and r['method']!='empty']
    require(len(pair)==2 and {r['method'] for r in pair}=={'vdot','rvv'},'incomplete perf pair')
    require(len({(r['dots'],r['input_sha256']) for r in pair})==1,'pair input/count mismatch')
    vd=next(r for r in pair if r['method']=='vdot');rv=next(r for r in pair if r['method']=='rvv')
    pairs.append(dict(scenario=scenario,repeat=repeat,order=[r['method'] for r in pair],vdot_cycles=vd['cycles'],rvv_cycles=rv['cycles'],rvv_over_vdot=rv['cycles']/vd['cycles']))
- return dict(status='T12_ARCHITECTURAL_PLAN_PASS',executed=len(ids),unique_identities=len(ids),identities=ids,metrics=metrics,pairs=pairs,microarchitectural_events_observed=False,counter_interpretation='Uncalibrated raw rdcycle windows including stores/fences; not FU latency or frequency; no overhead subtraction')
+ return dict(status='T12_ARCHITECTURAL_PLAN_PASS',baseline=m.get('baseline','original'),executed=len(ids),unique_identities=len(ids),identities=ids,metrics=metrics,pairs=pairs,microarchitectural_events_observed=False,counter_interpretation='Uncalibrated raw rdcycle windows including stores/fences; not FU latency or frequency; no overhead subtraction')
 
 def bind(meta,data,source):
  require(re.fullmatch('[0-9a-f]{40}',source or ''),'explicit source SHA required')
@@ -129,7 +162,10 @@ if __name__=='__main__':
  for name in ('log','data','receipt','output'):p.add_argument('--'+name,type=Path,required=True)
  p.add_argument('--expected-source',required=True);a=p.parse_args()
  try:
-  meta=json.loads(a.receipt.read_text());bind(meta,a.data,a.expected_source)
-  result=check(a.log.read_text(),a.data,meta['start'],meta['limit'],meta['exit_code'])
+  require(a.receipt.resolve()==a.log.resolve().parent/'receipt.json','use actual launcher receipt')
+  require(a.log.name=='run.log','use actual launcher log')
+  from verify_t12_evidence import verify
+  result,actual_data=verify(a.log.parent,a.expected_source)
+  require(actual_data.resolve()==a.data.resolve(),'data path mismatch')
   a.output.write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result))
  except (ValueError,KeyError,TypeError,OSError) as e:raise SystemExit('T12C_REJECTED: '+str(e))

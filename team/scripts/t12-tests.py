@@ -64,7 +64,9 @@ def build(a):
   for path in sorted((a.toolchain/'usr/lib/x86_64-linux-gnu').glob('*.so*')):
    if path.is_file():toolinfo[str(path)]=dict(sha256=sha(path))
  write(out/'tools.json',toolinfo)
- success(child([sys.executable,'-B',str(ROOT/'team/tests/generate_t12.py'),'--output',str(out/'data')],out/'generate.log'))
+ generate_cmd=[sys.executable,'-B',str(ROOT/'team/tests/generate_t12.py'),'--output',str(out/'data'),'--baseline',a.baseline]
+ if a.include_chain:generate_cmd+=['--include-chain']
+ success(child(generate_cmd,out/'generate.log'))
  m,rows=checker.load(out/'data');limit=a.count if a.count is not None else len(m['schedule'])-a.start
  require(0<=a.start<len(m['schedule']) and 0<limit<=len(m['schedule'])-a.start,'invalid exact slice')
  cmd=['make','-C',str(ROOT/'team/workloads/t12-perf'),'ARCH=riscv64-xs','MARCH=rv64gcv',f'T12_START={a.start}',f'T12_COUNT={limit}',
@@ -104,6 +106,7 @@ def run(a):
 if __name__=='__main__':
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('action',choices=('build','run'));p.add_argument('--expected-source',required=True);p.add_argument('--output',type=Path,required=True)
  for name in ('am','toolchain','build','emu','nemu','reference','flash'):p.add_argument('--'+name,type=Path)
+ p.add_argument('--baseline',choices=('original','lean'),default='original');p.add_argument('--include-chain',action='store_true')
  p.add_argument('--start',type=int,default=0);p.add_argument('--count',type=int);p.add_argument('--diagnose',action='store_true');p.add_argument('--cycles',type=int,default=2000000);p.add_argument('--timeout',type=int,default=1200)
  a=p.parse_args()
  try:
