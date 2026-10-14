@@ -8,8 +8,9 @@
 | --- | --- |
 | 项目计划：阶段目标、执行步骤与验收标准 | [香山 vdot 赛题：执行计划](香山vdot赛题_执行计划.md) |
 | 项目计划：A/B/C 分工、评审与 Git 协作 | [香山 vdot 赛题：三人分工与 Git 协作](香山vdot赛题_三人分工与Git协作.md) |
-| 当前dev进度与James_Hotten来源的T03初步评审 | [进度与评审记录](progress.md) |
-| dev与James_Hotten对比、按进度集成及继承验收 | [dev集成记录](docs/dev-integration-20261013.md) |
+| 当前本地main进度与James_Hotten来源的T03初步评审 | [进度与评审记录](progress.md) |
+| 本地main与James_Hotten对比、T04/T06/T10整合及T11后续顺序 | [main本地整合](docs/main-integration-20261014.md) |
+| 历史dev与James_Hotten对比、按进度集成及继承验收 | [dev集成记录](docs/dev-integration-20261013.md) |
 | vdot 指令语义、候选编码、测试与待确认问题（第一版草案） | [vdot.vv 规格](spec/vdot.md) |
 | 配置依赖、完整写回路径与分层控制验收（草案） | [RTL 接入接口](spec/rtl-interface.md) |
 | T06真实香山功能单元适配层、ROB取消及后续接入边界 | [T06接口实现](docs/t06-interface.md) |

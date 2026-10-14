@@ -2,7 +2,7 @@
 
 版本：`0.1.2-draft`，2026-10-12。适用合同：`vdot-s8x8-r32-v0.1`。
 
-状态：异常 workload、陷阱处理程序、判定器与运行脚本已实现；QEMU harness 自测和负控通过，固定 nexus-am 的香山目标编译通过。T08 的真实 vdot standalone 合法/异常验收及补丁复现已通过，见 [T08 记录](../docs/t08-nemu.md)；RTL/NEMU 全核 DiffTest 尚待 T11/T12。实现入口见 [异常 workload](../workloads/vdot-exceptions/README.md)，范围与证据见 [T05/T05-E 初评](../docs/t05-t05e-review.md)。B/C 复核程序与采集判定，A 复核 RTL 异常路径；这些沿用计划角色，不代替成员认领或签字。
+状态：异常 workload、陷阱处理程序、判定器与运行脚本已实现；QEMU harness 自测和负控通过，固定 nexus-am 的香山目标编译通过。T08 的真实 vdot standalone 合法/异常验收及补丁复现已通过，见 [T08 记录](../docs/t08-nemu.md)；T10已取得代表性RTL/NEMU全核DiffTest及精确异常证据，见[T10记录](../docs/t10-integration.md)，完整异常矩阵和机制检出仍待T11/T12。实现入口见 [异常 workload](../workloads/vdot-exceptions/README.md)，范围与证据见 [T05/T05-E 初评](../docs/t05-t05e-review.md)。B/C 复核程序与采集判定，A 复核 RTL 异常路径；这些沿用计划角色，不代替成员认领或签字。
 
 关联：[vdot 规格](vdot.md) §4.3、E01/E02；[RTL 接口](rtl-interface.md)；[进度](../progress.md) R02/R03。算术合法用例先按 T05/T07/T08 推进，异常方案落实为 T05-E，完整执行验收进入 T08/T11/T12。
 
