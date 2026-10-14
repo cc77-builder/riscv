@@ -98,8 +98,13 @@ def run(args):
         env.pop('XS_NEGATIVE_VECTOR_TARGET', None)
         if name=='negative-vdot': env['XS_NEGATIVE_VECTOR_TARGET']='vdot'
         try:
-            with (directory/'run.log').open('w') as log:
-                rc = subprocess.run(command, cwd=ROOT, env=env, stdout=log, stderr=subprocess.STDOUT).returncode
+            # Separate descriptors: the simulator/reference can reconfigure C stdio
+            # buffering after stdbuf. Never merge UART bytes with SV printf bytes.
+            with (directory/'stdout.log').open('wb') as stdout, (directory/'stderr.log').open('wb') as stderr:
+                rc = subprocess.run(command, cwd=ROOT, env=env, stdout=stdout, stderr=stderr).returncode
+            (directory/'run.log').write_bytes((directory/'stderr.log').read_bytes()+(directory/'stdout.log').read_bytes())
+            record['log_format'] = 'separate-streams-v1; derived run.log = stderr.log + stdout.log'
+            record['raw_logs_sha256'] = {n:sha(directory/n) for n in ('stdout.log','stderr.log')}
             (directory/'exit-code.txt').write_text(str(rc)+'\n')
             record['exit_code'] = rc
             text = (directory/'run.log').read_text(errors='strict')
@@ -164,6 +169,6 @@ if __name__=='__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ('output','hardware-pins','emu','reference-root','negative-reference','flash','hello','control','matrix'):
         parser.add_argument('--'+name, type=lambda x:Path(x).resolve(), required=True)
-    parser.add_argument('--jobs', type=int, choices=(1,2), default=2)
+    parser.add_argument('--jobs', type=int, choices=(1,2,4), default=2)
     parser.add_argument('--timeout', default='120m')
     raise SystemExit(run(parser.parse_args()))

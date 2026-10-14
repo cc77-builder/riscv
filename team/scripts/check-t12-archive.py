@@ -64,7 +64,12 @@ def validate(root, source, emu, reference, flash):
         normal_refs = [v for p,v in record['files'].items() if p.endswith('/reference/build/riscv64-nemu-interpreter-so')]
         require(normal_refs==[reference], 'wrong normal reference')
         if name!='negative-vdot': require(record['files'][selected]==reference, 'positive run used injected reference')
-        text = read(directory/'run.log.gz').decode()
+        require(record.get('log_format')=='separate-streams-v1; derived run.log = stderr.log + stdout.log', 'missing separate raw streams')
+        raw = {name:read(directory/(name+'.gz')) for name in ('stdout.log','stderr.log')}
+        require(all(hashlib.sha256(value).hexdigest()==record['raw_logs_sha256'][name] for name,value in raw.items()), 'raw stream digest mismatch')
+        combined = read(directory/'run.log.gz')
+        require(combined==raw['stderr.log']+raw['stdout.log'], 'derived log differs from raw streams')
+        text = combined.decode()
         exit_code = int((directory/'exit-code.txt').read_text())
         require(exit_code==record['exit_code'], 'exit receipt mismatch')
         require('The reference model is '+selected in text, 'loaded reference differs from receipt')

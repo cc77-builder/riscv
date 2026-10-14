@@ -40,11 +40,13 @@ case "$action" in
     printf '\n' >> "$run_root/command.sh"
     date -Is > "$run_root/started.txt"
     set +e
-    "${command[@]}" > "$run_root/run.log" 2>&1
+    "${command[@]}" > "$run_root/stdout.log" 2> "$run_root/stderr.log"
     rc=$?
     set -e
     printf '%s\n' "$rc" > "$run_root/exit-code.txt"
     date -Is > "$run_root/finished.txt"
+    cat "$run_root/stderr.log" "$run_root/stdout.log" > "$run_root/run.log"
+    sha256sum "$run_root/stdout.log" "$run_root/stderr.log" > "$run_root/raw-logs.sha256"
     sha256sum -c "$run_root/runtime.sha256" > "$run_root/runtime-after.txt"
     python3 -B team/scripts/check-vdot-regression.py "$run_root/run.log" \
       --manifest "$run_root/data/manifest.json" --exit-code "$rc" --output "$run_root/result.json"

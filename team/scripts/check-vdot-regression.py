@@ -54,6 +54,58 @@ def extract_events(text):
     return events, uart
 
 
+VDOT_FU_TYPE = 0x800000000  # pinned FuType.vdot (bit 35)
+FU_EVENTS = {'ACCEPT', 'RESPONSE', 'KILL', 'STALL'}
+
+
+def normalize_fu_cycles(events):
+    """Anchor gated FU ticks to the *same* parent VFEX4 handshake.
+
+    ExeUnit's Dispatcher connects in/out ready-valid without a register. Its
+    uncer_en_reg holds the FU gate open from in.fire through out.fire (including
+    backpressure and cancellation). Thus ticks within an outstanding transaction
+    advance each core cycle, but idle gaps do not. Never compare raw FU ticks to
+    ROB cycles. Match every parent accept one-to-one and check the resulting time
+    against surrounding un-gated records in the original stderr stream.
+    """
+    parent = sorted((e for e in events if e[2]=='VFEX4_ACCEPT'
+                     and int(e[3]['fu'],16)==VDOT_FU_TYPE), key=lambda e:e[0])
+    child = sorted((e for e in events if e[2] in FU_EVENTS), key=lambda e:(e[0],e[1]))
+    require(len(parent)==sum(e[2]=='ACCEPT' for e in child), 'parent/FU acceptance count mismatch')
+    mapped = {}; active = None; index = 0; last_end = -1
+    for tick, order, kind, fields in child:
+        if kind=='ACCEPT':
+            require(active is None, 'two outstanding FU requests')
+            anchor = parent[index]; index += 1
+            require(anchor[3]['rob']==fields['rob'], 'parent/FU acceptance identity mismatch')
+            require(anchor[0]>last_end, 'overlapping parent/FU transactions')
+            active = (tick,anchor[0],fields['rob'])
+        require(active is not None and active[2]==fields['rob'], 'FU event without matching accepted request')
+        cycle = active[1]+tick-active[0]
+        if kind in ('RESPONSE','STALL'):
+            require(tick-active[0]>=3, 'FU response precedes E3')
+        mapped[order] = (cycle,order,kind,fields)
+        if kind in ('RESPONSE','KILL'):
+            last_end = cycle; active = None
+    require(active is None, 'unfinished FU request at end of run')
+    # Buffering may delay a stream, but cannot reorder bytes within stderr.
+    # This guard also rejects an incorrect clock mapping instead of hiding it.
+    global_events = [e for e in events if e[2] not in FU_EVENTS]
+    require(all(a[0]<=b[0] for a,b in zip(global_events,global_events[1:])),
+            'un-gated observer cycles are out of order')
+    before = -1
+    for event in events:
+        if event[2] in FU_EVENTS:
+            require(mapped[event[1]][0]>=before, 'FU clock mapping precedes surrounding global event')
+        else: before=event[0]
+    after = float('inf')
+    for event in reversed(events):
+        if event[2] in FU_EVENTS:
+            require(mapped[event[1]][0]<=after, 'FU clock mapping follows surrounding global event')
+        else: after=event[0]
+    return [mapped.get(e[1],e) for e in events]
+
+
 def check(text, manifest, exit_code):
     require(exit_code == 0, 'emulator exit code is not zero')
     require('The first instruction of core 0 has commited. Difftest enabled.' in text and 'The reference model is ' in text, 'missing DiffTest runtime banner')
@@ -68,6 +120,7 @@ def check(text, manifest, exit_code):
     require(len(begins)==1 and uart.count('T12_BEGIN')==1 and begins[0].start()<groups[0].start()
             and groups[-1].end()<summaries[0].start(), 'invalid begin/group/summary order')
     require(events,'missing RTL observer events')
+    events = normalize_fu_cycles(events)
     # Verilog printf order across modules is not a hardware ordering. Stable cycle
     # order with retire/redirect before re-allocation models the queue boundaries.
     rank={'COMMIT':0,'REDIRECT':1,'ENQUEUE':2,'ACCEPT':3,'STALL':4,'RESPONSE':5,'KILL':6,'VFEX4_ACCEPT':7,'VFEX4_WAIT':8}
@@ -134,6 +187,7 @@ def check(text, manifest, exit_code):
                  'ftq_wrap_repeated':counts['FTQ_WRAP']>=8}
     complete=all(obligations.values())
     return {'status':'T12_CONTROL_REGRESSION_PASS' if complete else 'T12_COVERAGE_INCOMPLETE',
+            'clock_mapping':'gated FU ticks anchored one-to-one to parent VFEX4 accepts; checked against surrounding global records',
             'architectural_checks':'PASS','coverage':obligations,'counts':dict(counts),
             'vfex4_fu_counts':dict(kinds),'expected_vdot_commits':expected,
             'scope':'pinned MinimalConfig M-mode; not virtualization/PPA/performance acceptance'}
