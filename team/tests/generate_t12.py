@@ -147,6 +147,15 @@ def corpus():
 def cbytes(values):
     return '{'+','.join('{'+','.join('0x'+v[i:i+2] for i in range(0,32,2))+'}' for v in values)+'}'
 
+def schedule(rows):
+    result=[dict(id=r['id'],repeat=0) for r in rows if r['kind']!='perf']
+    for scenario in ('complete','known-config','independent-batch'):
+        result.append(dict(id=f'perf-{scenario}-empty',repeat=0))
+        for repeat in range(REPEATS):
+            for method in (('vdot','rvv') if repeat%2==0 else ('rvv','vdot')):
+                result.append(dict(id=f'perf-{scenario}-{method}',repeat=repeat))
+    return result
+
 def generate(output):
     output=Path(output); output.mkdir(parents=True,exist_ok=False)
     rows=corpus()
@@ -165,18 +174,15 @@ def generate(output):
         kind={'stress':0,'equivalence':1,'perf':2}[row['kind']]
         vl=-1 if row['fault_vl'] is None else row['fault_vl']
         records.append('{'+f'"{row["id"]}",{name},{fault},{kind},0x{mask:08x}U,{vl},"{row["scenario"]}","{row["method"]}",{row["dots"]},'+cbytes(row['before'])+','+cbytes(row['expected'])+'}')
-    header += ['static const struct t12_case t12_cases[] = {',',\n'.join(records),'};',f'#define T12_REPEATS {REPEATS}', '#endif']
+    plan=schedule(rows)
+    indexes={r['id']:i for i,r in enumerate(rows)}
+    header += ['static const struct t12_case t12_cases[] = {',',\n'.join(records),'};',f'#define T12_REPEATS {REPEATS}',
+               f'#define T12_PLAN_COUNT {len(plan)}',
+               'static const struct { unsigned index, repeat; } t12_plan[] = {',
+               ','.join('{'+str(indexes[p['id']])+','+str(p['repeat'])+'}' for p in plan),'};', '#endif']
     for name,data in [('t12-sites.S','\n'.join(asm)+'\n'),('cases.h','\n'.join(header)+'\n'),('cases.json',json.dumps(rows,sort_keys=True,indent=2)+'\n'),('cases.jsonl',''.join(json.dumps(row,sort_keys=True)+'\n' for row in rows))]:
         (output/name).write_bytes(data.encode())
-    schedule=[]
-    for row in rows:
-        if row['kind']!='perf': schedule.append(dict(id=row['id'],repeat=0))
-    for scenario in ('complete','known-config','independent-batch'):
-        schedule.append(dict(id=f'perf-{scenario}-empty',repeat=0))
-        for repeat in range(REPEATS):
-            for method in (('vdot','rvv') if repeat%2==0 else ('rvv','vdot')):
-                schedule.append(dict(id=f'perf-{scenario}-{method}',repeat=repeat))
-    manifest=dict(contract=CONTRACT,seed=SEED,repeats=REPEATS,schedule=schedule,
+    manifest=dict(contract=CONTRACT,seed=SEED,repeats=REPEATS,schedule=plan,
                   generator_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                   files={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in output.iterdir()})
     (output/'manifest.json').write_bytes((json.dumps(manifest,sort_keys=True,indent=2)+'\n').encode())
