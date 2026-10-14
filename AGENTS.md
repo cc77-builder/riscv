@@ -1,6 +1,10 @@
 # 团队 Agent 入口
 
-## 当前阶段：T10 最小全核接入、T11 固定功能矩阵已验收
+## 当前本地阶段：T12 自动回归通过，待人工复核与发布
+
+先读 [T12 报告](team/docs/t12-regression.md) 与 [可离线复核的证据](team/evidence/t12-regression-20261014/README.md)。本轮本地分支 `local/t12-regression` 基于 `6bf3c2c3be0c88ff3a020786ff10cbec9aa126d3`；11 项实际运行满足预期，主机 108 项检查通过。硬件源码、执行软件 SHA 和实际二进制摘要分别列出，不把文档提交当作重新构建。共享分支尚未发布本轮成果；禁止据此虚构 START/RELEASE/ACK 或人工评审。下一项为公平 RVV/vdot 周期对照；T13、PPA、虚拟化和人工签字均未完成。以下保留 T10/T11 历史阶段信息。
+
+## 历史阶段：T10 最小全核接入、T11 固定功能矩阵已验收
 
 先读 [本轮验收与边界](team/docs/t10-t11-acceptance-20261013.md)、[可独立复算的实际证据](team/evidence/t10-t11-fullcore-20261013/README.md) 和 [两线协作约定](team/docs/collaboration-current.md)。固定被测源码 `1bd6f1d9c9485695876ff37a77fbb175a5125983`，其生产 RTL / build.sc 与实际 EMU 来源 `fcb16a8764d342339670df0bbf1bc67ef2028b86` 相同。后续发布提交只增加验收器修复、来源记录与文档。
 
@@ -12,7 +16,7 @@
 
 两人使用独立工作树和输出目录；仅共享远端 Push 按 START → RELEASE → ACK 有序交接。保留既有未提交和未发布成果，不 reset/clean/stash 掩盖他人工作；不强推、不改写历史、不删除 zjhwork，不向 main/James_Hotten/zjhwork 写入。GitHub Actions 完全不依赖，原 workflow 未改。
 
-## 下一批工作
+## T10/T11 时点的后续工作（历史）
 
 优先 T12：需要真实触发与观察的 VL/CSR 紧邻依赖、RAW/WAW、共享 VFEX4 与写回竞争、年轻 vdot 发射后被取消、ROB/FTQ 绕回；随后做公平 RVV 配对周期测量。M/HS/VS 委托与虚拟化尚未验证；综合/STA/功耗、官方规格确认、人工接口签字仍未完成。现有 FU 的 E0/E2/E3/II4 仅是局部握手时序，不是全核指令周期或频率。
 

@@ -1,0 +1,60 @@
+{
+  "status": "HISTORICAL_ATTEMPTS_EXCLUDED_FROM_T12_ACCEPTANCE",
+  "attempts": [
+    {
+      "name": "control-02",
+      "runtime_exit": 0,
+      "program_good_trap": true,
+      "accepted": false,
+      "reason": "Combined stdout/stderr corrupted records; initial event-local counters had incomparable origins, and FU also uses a gated clock. Excluded. Observers rebuilt with per-module counters; final run collects streams separately and checker anchors each FU transaction to its parent VFEX4 accept."
+    },
+    {
+      "name": "negative-vdot",
+      "runtime_exit": 1,
+      "accepted": false,
+      "reason": "Dense stress image injection reported vdot bit100 but mismatch PC did not equal injected PC; exact-PC negative gate rejected. Isolated original T11 shard-0 is the required negative/recovery image."
+    },
+    {
+      "name": "functional-0",
+      "runtime_exit": null,
+      "accepted": false,
+      "reason": "Interrupted before a recorded emulator exit or full summary. Must rerun."
+    },
+    {
+      "name": "functional-1",
+      "runtime_exit": null,
+      "accepted": false,
+      "reason": "Interrupted before a recorded emulator exit or full summary. Must rerun."
+    },
+    {
+      "name": "t11-matrix/build-0",
+      "accepted": false,
+      "reason": "Provenance rejected a noncanonical selected-data path containing /../. Rebuilt all shards under canonical absolute paths without changing inputs/expectations. First driver log was overwritten by the second attempt; do not claim it is archived."
+    },
+    {
+      "name": "components/decode",
+      "accepted": false,
+      "reason": "Missing activated Java/tool environment. decode-02 activated the pinned environment and passed."
+    },
+    {
+      "name": "emu-attempt1",
+      "accepted": false,
+      "reason": "Initial Scala elaboration failed on FuConfig qualification/UInt syntax; corrected before the first successful old observer build."
+    },
+    {
+      "name": "suite-observation-v2",
+      "accepted": false,
+      "reason": "New EMU still used combined descriptors; pinned difftest resets stderr buffering after stdbuf. hello/vadd exited 0 but malformed REDIRECT caused strict rejection. Owned jobs stopped; receipt retained. Excluded."
+    },
+    {
+      "name": "suite-separated-v3",
+      "accepted": false,
+      "reason": "Separate streams and gated-clock mapping passed a 2786-event prefix diagnostic only. Stopped owned jobs to use measured host capacity of 8 processes instead of 4. No full acceptance claimed. Same artifacts rerun as suite-final-v4."
+    },
+    {
+      "name": "archive-check-before-newline-fix",
+      "accepted": false,
+      "reason": "Offline byte decode preserved UART CRLF while online Path.read_text used universal newlines. Strict summary check rejected the same stored log. Repair matches live UTF-8/newline reading only, after raw-byte validation; new positive/negative tests pass. No raw log, hardware, image or coverage threshold changed."
+    }
+  ]
+}

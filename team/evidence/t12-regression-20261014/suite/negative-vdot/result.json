@@ -1,0 +1,36 @@
+{
+  "name": "negative-vdot",
+  "status": "EXPECTED_VDOT_HIGHBIT_REJECTION",
+  "started": "2026-10-14T17:48:59.942179+08:00",
+  "command": [
+    "timeout",
+    "120m",
+    "stdbuf",
+    "-o0",
+    "-e0",
+    "/home/riscv/riscv-lab/t12-regression-20261013/repo/build/emu",
+    "-i",
+    "/home/riscv/riscv-lab/t12-regression-20261013/runs/t11-matrix-canonical/build-0/vdot-exceptions.bin",
+    "--flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+    "--ram-size=128MB",
+    "--diff=/home/riscv/riscv-lab/t12-regression-20261013/build-evidence/negative-reference.so",
+    "--max-cycles=5000000"
+  ],
+  "files": {
+    "/home/riscv/riscv-lab/t12-regression-20261013/repo/build/emu": "e879356c4f3ad027a708de3adbabb7285ab6e36196426854040460d1e394b4de",
+    "/home/riscv/riscv-lab/t12-regression-20261013/nemu/reference/build/riscv64-nemu-interpreter-so": "efbed0774addc27eac38af1a19ab5d9c9dd5f179b5015f25ae7b80b966185bd4",
+    "/home/riscv/riscv-lab/t12-regression-20261013/build-evidence/negative-reference.so": "9b3aecf362b7c7ddb4f8bace355c2e0ee2cc919fd5f59eefc641db220ab40df0",
+    "/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+    "/home/riscv/riscv-lab/t12-regression-20261013/runs/t11-matrix-canonical/build-0/vdot-exceptions.bin": "b8b7e1a7032070bdfdfc2a747ab6453011ea9959ebd5ac52ca21b439d4d113b3"
+  },
+  "log_format": "separate-streams-v1; derived run.log = stderr.log + stdout.log",
+  "raw_logs_sha256": {
+    "stdout.log": "8959fee232e4dfdba729bb74c44bdda09aa6aa02bd7f86d5dd1dd63106100473",
+    "stderr.log": "a4e57cabf4a59e99eb4fb3be678949b8b66e10d02040f9b5f69185ffda0170aa"
+  },
+  "exit_code": 1,
+  "vd": 10,
+  "pc": "0x80001bdc",
+  "word": "0x0294050b",
+  "finished": "2026-10-14T18:03:39.795742+08:00"
+}

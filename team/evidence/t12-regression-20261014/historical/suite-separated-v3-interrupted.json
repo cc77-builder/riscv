@@ -1,0 +1,51 @@
+{
+  "status": "INTERRUPTED_NO_ACCEPTANCE",
+  "reason": "Resource calibration: observed 16 available logical CPUs and <80 MiB per emulator; restart once at eight independent jobs to finish the unchanged full matrix sooner. Raw stream and 2786-event clock prefix diagnostic succeeded; no partial run counted as PASS.",
+  "processes": [
+    [
+      454,
+      341,
+      "python3 -B team/scripts/run-t12-suite.py --output /home/riscv/riscv-lab/t12-regression-20261013/runs/suite-separated-v3 --hardware-pins /home/riscv/riscv-lab/t12-regression-20261013/build-evidence/hardware-inputs.json --emu /home/riscv/riscv-lab/t12-regression-20261013/repo/build/emu --reference-root /home/riscv/riscv-lab/t12-regression-20261013/nemu/reference --negative-reference /home/riscv/riscv-lab/t12-regression-20261013/build-evidence/negative-reference.so --flash /home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin --hello /home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/hello-vadd-riscv64-xs.bin --control /home/riscv/riscv-lab/t12-regression-20261013/runs/control-03 --matrix /home/riscv/riscv-lab/t12-regression-20261013/runs/t11-matrix-canonical --jobs 4"
+    ],
+    [
+      491,
+      454,
+      "timeout 120m stdbuf -o0 -e0 /home/riscv/riscv-lab/t12-regression-20261013/repo/build/emu -i /home/riscv/riscv-lab/t12-regression-20261013/runs/t11-matrix-canonical/build-0/vdot-exceptions.bin --flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin --ram-size=128MB --diff=/home/riscv/riscv-lab/t12-regression-20261013/build-evidence/negative-reference.so --max-cycles=5000000"
+    ],
+    [
+      492,
+      491,
+      "/home/riscv/riscv-lab/t12-regression-20261013/repo/build/emu -i /home/riscv/riscv-lab/t12-regression-20261013/runs/t11-matrix-canonical/build-0/vdot-exceptions.bin --flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin --ram-size=128MB --diff=/home/riscv/riscv-lab/t12-regression-20261013/build-evidence/negative-reference.so --max-cycles=5000000"
+    ],
+    [
+      493,
+      454,
+      "timeout 120m stdbuf -o0 -e0 /home/riscv/riscv-lab/t12-regression-20261013/repo/build/emu -i /home/riscv/riscv-lab/t12-regression-20261013/runs/t11-matrix-canonical/build-0/vdot-exceptions.bin --flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin --ram-size=128MB --diff=/home/riscv/riscv-lab/t12-regression-20261013/nemu/reference/build/riscv64-nemu-interpreter-so --max-cycles=5000000"
+    ],
+    [
+      494,
+      454,
+      "timeout 120m stdbuf -o0 -e0 /home/riscv/riscv-lab/t12-regression-20261013/repo/build/emu -i /home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/hello-vadd-riscv64-xs.bin --flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin --ram-size=128MB --diff=/home/riscv/riscv-lab/t12-regression-20261013/nemu/reference/build/riscv64-nemu-interpreter-so --max-cycles=5000000"
+    ],
+    [
+      495,
+      493,
+      "/home/riscv/riscv-lab/t12-regression-20261013/repo/build/emu -i /home/riscv/riscv-lab/t12-regression-20261013/runs/t11-matrix-canonical/build-0/vdot-exceptions.bin --flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin --ram-size=128MB --diff=/home/riscv/riscv-lab/t12-regression-20261013/nemu/reference/build/riscv64-nemu-interpreter-so --max-cycles=5000000"
+    ],
+    [
+      496,
+      454,
+      "timeout 120m stdbuf -o0 -e0 /home/riscv/riscv-lab/t12-regression-20261013/repo/build/emu -i /home/riscv/riscv-lab/t12-regression-20261013/runs/control-03/vdot-regression.bin --flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin --ram-size=128MB --diff=/home/riscv/riscv-lab/t12-regression-20261013/nemu/reference/build/riscv64-nemu-interpreter-so --max-cycles=5000000"
+    ],
+    [
+      497,
+      494,
+      "/home/riscv/riscv-lab/t12-regression-20261013/repo/build/emu -i /home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/hello-vadd-riscv64-xs.bin --flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin --ram-size=128MB --diff=/home/riscv/riscv-lab/t12-regression-20261013/nemu/reference/build/riscv64-nemu-interpreter-so --max-cycles=5000000"
+    ],
+    [
+      498,
+      496,
+      "/home/riscv/riscv-lab/t12-regression-20261013/repo/build/emu -i /home/riscv/riscv-lab/t12-regression-20261013/runs/control-03/vdot-regression.bin --flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin --ram-size=128MB --diff=/home/riscv/riscv-lab/t12-regression-20261013/nemu/reference/build/riscv64-nemu-interpreter-so --max-cycles=5000000"
+    ]
+  ]
+}
