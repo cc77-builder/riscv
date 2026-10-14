@@ -1,3 +1,5 @@
+> 历史早期证据入口：本目录空样本/NOT_RUN保留原状；后继实际190/199运行、全部63窗口见[最终原始证据](../t12-r2-20261014/README.md)，本次复核见[整合报告](../../docs/t12-zufan-integration-20261014.md)。
+
 # T12 本轮证据
 
 当前只有真实 host 检查、环境拒绝回执与源文件摘要。没有新 EMU 日志或处理器性能样本，T12 Architectural 全核验收 NOT_RUN，微架构事件 NOT_OBSERVED。

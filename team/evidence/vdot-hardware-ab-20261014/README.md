@@ -1,3 +1,5 @@
+> 历史硬件实验包，全部候选源码/patch/日志原样保留，未应用到生产、未启用。时序路径纠正见[前期时序审查](../../docs/t12-timing-precheck.md)；本次软件/验证合入不关闭[硬件晋升门禁](../../docs/t12-zufan-integration-20261014.md)。
+
 # VDot hardware A/B 工件与状态
 
 2026-10-14；基线 `6bf3c2c3be0c88ff3a020786ff10cbec9aa126d3`。

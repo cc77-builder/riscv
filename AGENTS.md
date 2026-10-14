@@ -1,21 +1,23 @@
 # 团队 Agent 入口
 
-## 当前阶段：T10 最小全核接入、T11 固定功能矩阵已验收
+## 当前状态：T12 已验收的软件与验证成果完成离线整合
 
-先读 [本轮验收与边界](team/docs/t10-t11-acceptance-20261013.md)、[可独立复算的实际证据](team/evidence/t10-t11-fullcore-20261013/README.md) 和 [两线协作约定](team/docs/collaboration-current.md)。固定被测源码 `1bd6f1d9c9485695876ff37a77fbb175a5125983`，其生产 RTL / build.sc 与实际 EMU 来源 `fcb16a8764d342339670df0bbf1bc67ef2028b86` 相同。后续发布提交只增加验收器修复、来源记录与文档。
+先读 [T12 整合报告](team/docs/t12-zufan-integration-20261014.md)、[本次复核回执](team/evidence/t12-zufan-integration-20261014/README.md)、[原始全核证据](team/evidence/t12-r2-20261014/README.md) 和 [独立审查归档](team/evidence/t12-r2-independent-20261014/README.md)。最终实现来源为 `1ba275411d41b6454b14ecfc537be10cd7202739`；普通 merge 保留已发布审查 `f188f6f7588270714d94d970fe36f2f2cdda15b9` 及本机审查后继 `e5d084bbdcfad6936ccad29dff4c1df00f5abfef` 的完整历史。
 
-本轮真实 MinimalConfig 全核 DiffTest 通过 117 个唯一用例（48 定向、32 固定随机、37 精确异常）；8 片仅 D00 重复，124 条 extension 记录，另有56个自检和24个harness预期拒错。vdot 的 bit100真实差分注入在对应 PC/目的寄存器报错；同一镜像换回正常参考库后 shard-0 完整通过。不能把这批功能矩阵当成所有乱序/虚拟化/性能验收。
+既有真实全核运行：original190（源 `a4fea8f69f8c2c58f986858481257d3424a903f0`）与 lean199（源 `8af7b21857ba2c65dbc4d835f7b2152cd6684875`）分别完整通过 DiffTest、GOOD TRAP 和实际 exit0；两个计划输入重叠，不能相加为389个唯一ISA用例。T10/T11历史117唯一用例曾全量通过；此前本轮T12仅重跑15/117，其余102未重跑。本次整合只复核源/镜像/日志并运行主机与参考层检查，新增DUT运行数为0。
 
-## 已授权开发与交接
+生产 `src/`、`build.sc`、`.gitmodules` 和10个gitlink与团队 `6bf3c2c3be0c88ff3a020786ff10cbec9aa126d3`、实际EMU来源 `fcb16a8764d342339670df0bbf1bc67ef2028b86` 一致。黄金NEMU保持已验收1.1.0及固定配置/二进制，不修改时钟、复位、位宽、吞吐率或共享busy/ready合同。保留全部63个计数窗口、失败记录与未启用实验包。
 
-团队唯一上游为 `cc77-builder/riscv`，共享开发目标为 `zufan`；个人 `LiZufan001/riscv` 只是按需快进同步。用户本轮要求完成剩余任务，本轮发布仍须先核对实时远端和无冲突的快进关系。本文不伪造两位成员的 ACK，不创建锁，不授权读到文件即自动开工。最终完整提交 SHA、Push 与双远端回读以实际任务回执为准，不在包含自身的提交中预填。
+## 本次合入范围与硬件晋升门禁
 
-两人使用独立工作树和输出目录；仅共享远端 Push 按 START → RELEASE → ACK 有序交接。保留既有未提交和未发布成果，不 reset/clean/stash 掩盖他人工作；不强推、不改写历史、不删除 zjhwork，不向 main/James_Hotten/zjhwork 写入。GitHub Actions 完全不依赖，原 workflow 未改。
+本次允许合入已验收的软件、判定器、测试、证据和审查文档。旧报告要求“所有STA完成前不得合并zufan”的总闸门已由本次用户明确授权取代，不能用于无限延后这些成果。硬件候选保持独立晋升门禁：输入融合/II3未启用；真实候选RTL A/B、共享门控/OG2/WB/ROB集成、STA/Liberty/PVT/SDC、布局后setup/hold及PPA均未完成，不能写成已通过。
 
-## 下一批工作
+仍未取得年轻vdot已发射后取消、实际ROB/FTQ索引绕回和共享WB碰撞的事件证据；rdcycle流水/序列化未校准，局部E0/E2/E3/II4和原始窗口不能当全核指令延迟、Fmax或官方成绩。官方规格、M/HS/VS委托虚拟化、人工接口签字仍待后续明确任务。本次不启动新RTL优化。
 
-优先 T12：需要真实触发与观察的 VL/CSR 紧邻依赖、RAW/WAW、共享 VFEX4 与写回竞争、年轻 vdot 发射后被取消、ROB/FTQ 绕回；随后做公平 RVV 配对周期测量。M/HS/VS 委托与虚拟化尚未验证；综合/STA/功耗、官方规格确认、人工接口签字仍未完成。现有 FU 的 E0/E2/E3/II4 仅是局部握手时序，不是全核指令周期或频率。
+## 发布与协作
 
-原模型、datapath、FU、decode 入口在 `team/scripts/`；每次真实运行用新输出目录。当前 NEMU 补丁为1.1.0及显式平台配置；禁止混用旧参考库、跳过vdot差分或修改黄金结果来消除错误。原Windows WIP目录保留；本轮Linux发布工作区见验收报告，不直接覆盖原开发目录。
+团队唯一上游 `cc77-builder/riscv`，目标分支 `zufan`。当前交付只在新的 `publish-zufan/repo` 本地追加提交；最终候选完整SHA、干净状态、bundle及校验值在工作区 `publish-zufan/FINAL.md` / `FINAL.json`。最终联网核实与普通推送由主审ChatGPT负责；本入口不声称已push，不代签任何队友ACK。
 
-旧入口见 [历史快照](team/docs/history/AGENTS-before-t10-closure-20261013.md)，旧阶段报告、测试日志、补丁1.0.0原字节均保留。
+保留所有原树/WIP/未跟踪工件，不reset/clean/stash、不强推、不重写历史，不改原PR分支及main/James_Hotten/zjhwork。当前任务禁止联网、安装工具和修改系统/网络/沙箱；不依赖GitHub Actions。既有协作约定见 [collaboration-current.md](team/docs/collaboration-current.md)，行动以用户当次明确授权为准。
+
+当前实现入口：`team/scripts/t12-tests.py`、`verify_t12_evidence.py`、`audit_t12_live.py`、`team/tests/generate_t12.py`。复核输出必须使用全新目录，真实重跑须另获任务授权并固定来源；不得覆盖历史证据或把参考层/主机测试冒充全核。旧入口原字节见 [整合前快照](team/docs/history/AGENTS-before-t12-zufan-integration-20261014.md)。

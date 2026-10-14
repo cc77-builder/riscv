@@ -1,3 +1,5 @@
+> 历史审查门禁（保留原文）。本文件对应早期Draft；其中“HOST-ONLY / NOT_RUN / Do not merge to zufan yet”已由[2026-10-14最终整合报告](t12-zufan-integration-20261014.md)对已验收软件/验证成果的结论取代。original190与lean199已完整运行，旧117本轮仅重跑15；不将缺少STA作为本批软件/证据合入的总闸门。第5项硬件候选晋升条件继续有效，未启用融合/II3。本文件跨RF/旁路寄存器的路径描述已由[时序前审](t12-timing-precheck.md)纠正。
+
 # T12 / VDot performance review gate — 2026-10-14
 
 **DRAFT: HOST-ONLY. No full-core T12 acceptance or measured performance.**
