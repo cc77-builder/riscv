@@ -169,6 +169,6 @@ if __name__=='__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ('output','hardware-pins','emu','reference-root','negative-reference','flash','hello','control','matrix'):
         parser.add_argument('--'+name, type=lambda x:Path(x).resolve(), required=True)
-    parser.add_argument('--jobs', type=int, choices=(1,2,4), default=2)
+    parser.add_argument('--jobs', type=int, choices=(1,2,4,8), default=2)
     parser.add_argument('--timeout', default='120m')
     raise SystemExit(run(parser.parse_args()))

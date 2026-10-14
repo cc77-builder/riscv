@@ -46,7 +46,7 @@ bash team/scripts/t12-regression.sh run
 
 ## 全套运行入口与来源
 
-`team/scripts/run-t12-suite.py` 接收已经完成构建的 EMU、reference、控制镜像及 8 个功能分片，逐项检查来源并运行。使用 `--help` 查看全部路径参数；每次 `--output` 必须是不存在的新目录。该入口不代替构建，不覆盖旧日志，默认同时运行两个仿真进程，也支持 `--jobs 4`。本机 WSL 配置约 20 GiB 内存且有 6 个逻辑 CPU，重跑使用四进程；这仅改变宿主调度，不改变被测单核配置。
+`team/scripts/run-t12-suite.py` 接收已经完成构建的 EMU、reference、控制镜像及 8 个功能分片，逐项检查来源并运行。使用 `--help` 查看全部路径参数；每次 `--output` 必须是不存在的新目录。该入口不代替构建，不覆盖旧日志，默认同时运行两个仿真进程，也支持 `--jobs 4` / `--jobs 8`。本机 WSL 实测约 20 GiB 内存、16 个可用逻辑 CPU，每个仿真实例约 74 MiB RSS；最终运行使用八个独立进程；这仅改变宿主调度，不改变被测单核配置。
 
 固定硬件输入记录包含顶层源码和实际使用的子模块文件摘要、MinimalConfig/单核/48 项 ROB/8 项 FTQ、`VDOT_T12_TRACE=1`、工具版本及构建参数。运行前后均核对 EMU、正常 reference、flash 和测试镜像摘要；正常参考库另经 `artifact_guard.py nemu-runtime` 验证补丁 1.1.0、NMIE/MDT/xTVAL 平台配置与编译来源。
 
