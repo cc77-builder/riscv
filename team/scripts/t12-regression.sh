@@ -34,7 +34,7 @@ case "$action" in
     riscv64-linux-gnu-gcc -c -march=rv64gc -mabi=lp64d team/workloads/hello-vadd/boot-flash.S -o "$run_root/boot-flash.o"
     riscv64-linux-gnu-objcopy -O binary -j .text "$run_root/boot-flash.o" "$run_root/boot-flash.bin"
     sha256sum "$emu" "$reference" "$run_root/boot-flash.bin" > "$run_root/runtime.sha256"
-    command=(timeout "${T12_TIMEOUT:-120m}" "$emu" -i "$run_root/vdot-regression.bin"
+    command=(timeout "${T12_TIMEOUT:-120m}" stdbuf -o0 -e0 "$emu" -i "$run_root/vdot-regression.bin"
       --flash="$run_root/boot-flash.bin" --ram-size=128MB --diff="$reference" --max-cycles=2000000)
     printf '%q ' "${command[@]}" > "$run_root/command.sh"
     printf '\n' >> "$run_root/command.sh"

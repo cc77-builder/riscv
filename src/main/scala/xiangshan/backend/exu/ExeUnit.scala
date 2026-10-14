@@ -226,11 +226,14 @@ class ExeUnitImp(
   io.in.ready := !busy && in1ToN.io.in.ready
 
   if (sys.env.get("VDOT_T12_TRACE").contains("1") && fuCfgs.contains(xiangshan.backend.fu.FuConfig.VDotCfg)) {
+    // Instantiate outside when: GTimer is a local register, not a global read.
+    require(!p(xiangshan.DebugOptionsKey).ResetGen, "T12 trace requires the common simulation reset")
+    val t12Cycle = GTimer()
     when(io.in.fire) {
-      printf(p"T12_VFEX4_ACCEPT cycle=${GTimer()} rob=${io.in.bits.robIdx.flag}:${io.in.bits.robIdx.value} fu=0x${Hexadecimal(io.in.bits.fuType)}\n")
+      printf(p"T12_VFEX4_ACCEPT cycle=${t12Cycle} rob=${io.in.bits.robIdx.flag}:${io.in.bits.robIdx.value} fu=0x${Hexadecimal(io.in.bits.fuType)}\n")
     }
     when(io.in.valid && !io.in.ready) {
-      printf(p"T12_VFEX4_WAIT cycle=${GTimer()} rob=${io.in.bits.robIdx.flag}:${io.in.bits.robIdx.value} fu=0x${Hexadecimal(io.in.bits.fuType)} busy=${busy}\n")
+      printf(p"T12_VFEX4_WAIT cycle=${t12Cycle} rob=${io.in.bits.robIdx.flag}:${io.in.bits.robIdx.value} fu=0x${Hexadecimal(io.in.bits.fuType)} busy=${busy}\n")
     }
   }
 

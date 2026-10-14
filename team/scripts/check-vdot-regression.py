@@ -11,23 +11,58 @@ def require(ok, message):
     if not ok:
         raise ValueError(message)
 
+EVENT_FIELDS = {
+    'ENQUEUE': ('cycle', 'rob', 'pc', 'ftq', 'word'),
+    'ACCEPT': ('cycle', 'rob', 'pdest', 'vl', 'illegal'),
+    'RESPONSE': ('cycle', 'rob', 'pdest', 'illegal', 'data'),
+    'KILL': ('cycle', 'rob', 'redirect', 'state'),
+    'STALL': ('cycle', 'rob'),
+    'COMMIT': ('cycle', 'rob', 'pc', 'ftq'),
+    'REDIRECT': ('cycle', 'rob', 'ftq'),
+    'VFEX4_ACCEPT': ('cycle', 'rob', 'fu'),
+    'VFEX4_WAIT': ('cycle', 'rob', 'fu', 'busy'),
+}
+
+
+def extract_events(text):
+    """Remove only complete observer records. UART may surround a whole record.
+
+    stdbuf prevents mid-record stdio/UART interleaving. Partial records must fail,
+    never be guessed, silently dropped, or mistaken for missing coverage.
+    """
+    events = []
+    kinds = '|'.join(EVENT_FIELDS)
+    pattern = re.compile(r'T12_(' + kinds + r') +([^\n]*)\n')
+    def take(match):
+        kind, body = match.groups()
+        values = []
+        for field in EVENT_FIELDS[kind]:
+            value = r'[01]\s*:\s*[0-9]+' if field in ('rob', 'ftq', 'redirect') else (
+                r'0x[0-9a-fA-F]+' if field in ('pc', 'word', 'data', 'fu') else r'[0-9]+')
+            values.append(field + r'=\s*(' + value + ')')
+        parsed = re.fullmatch(r'\s+'.join(values) + r'\s*', body)
+        require(parsed is not None, 'malformed observer event: ' + kind)
+        fields = {key: re.sub(r'\s', '', value)
+                  for key, value in zip(EVENT_FIELDS[kind], parsed.groups())}
+        events.append((int(fields['cycle']), len(events), kind, fields))
+        return ''
+    uart = pattern.sub(take, text)
+    allowed = {'T12_BEGIN', 'T12_GROUP_PASS', 'T12_SUMMARY',
+               'T12_MISMATCH', 'T12_CSR_FAIL', 'T12_SPEC_FAIL'}
+    require(all(tag in allowed for tag in re.findall(r'T12_[A-Z0-9_]*', uart)),
+            'malformed or truncated observer event')
+    return events, uart
+
+
 def check(text, manifest, exit_code):
     require(exit_code == 0, 'emulator exit code is not zero')
     require('The first instruction of core 0 has commited. Difftest enabled.' in text and 'The reference model is ' in text, 'missing DiffTest runtime banner')
     require(not re.search(r'T12_(?:MISMATCH|CSR_FAIL|SPEC_FAIL)|HIT BAD TRAP|Assertion failed|different at pc', text), 'failure in raw log')
-    uart = re.sub(r'T12_(?:ENQUEUE|ACCEPT|RESPONSE|KILL|STALL|COMMIT|REDIRECT|VFEX4_ACCEPT|VFEX4_WAIT)\s+[^\n]*\n', '', text)
-    summaries=list(re.finditer(r'T12_SUMMARY groups=4 checkpoints=128 speculative_attempts=256 failures=0',uart))
-    require(len(summaries)==1,'missing or duplicate successful workload summary')
+    events, uart = extract_events(text)
+    summaries=list(re.finditer(r'^T12_SUMMARY groups=4 checkpoints=128 speculative_attempts=256 failures=0$',uart,re.MULTILINE))
+    require(len(summaries)==1 and uart.count('T12_SUMMARY')==1,'missing or duplicate successful workload summary')
     require('HIT GOOD TRAP' in uart[summaries[0].end():], 'no GOOD TRAP after complete summary')
-    require(re.findall(r'T12_GROUP_PASS id=(\d+) checkpoints=32 bytes=16384',uart)==['0','1','2','3'], 'missing/reordered group result')
-    events=[]
-    for line in text.splitlines():
-        m=re.search(r'T12_(ENQUEUE|ACCEPT|RESPONSE|KILL|STALL|COMMIT|REDIRECT|VFEX4_ACCEPT|VFEX4_WAIT)\s+(.*)',line)
-        if not m: continue
-        fields=dict(re.findall(r'(\w+)\s*=\s*(0x[0-9a-fA-F]+|[0-9]+\s*:\s*[0-9]+|[0-9]+)',m[2]))
-        require('cycle' in fields and 'rob' in fields,'malformed observer event')
-        fields={k:re.sub(r'\s','',v) for k,v in fields.items()}
-        events.append((int(fields['cycle']),len(events),m[1],fields))
+    require(re.findall(r'^T12_GROUP_PASS id=(\d+) checkpoints=32 bytes=16384$',uart,re.MULTILINE)==['0','1','2','3'], 'missing/reordered group result')
     require(events,'missing RTL observer events')
     # Verilog printf order across modules is not a hardware ordering. Stable cycle
     # order with retire/redirect before re-allocation models the queue boundaries.

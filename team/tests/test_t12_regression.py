@@ -64,4 +64,30 @@ class T12AcceptanceTests(unittest.TestCase):
         text=fixture().replace('T12_GROUP_PASS id=0','T12_GROUP_T12_REDIRECT cycle=2000 rob=0:0 ftq=0:0\nPASS id=0')
         self.assertEqual(self.run_check(text)['status'],'T12_CONTROL_REGRESSION_PASS')
 
+    def test_partial_observer_record_is_rejected(self):
+        for bad in ('T12_RESPON', 'T12_', 'T12_STALL cycle=9 rob=0:5'):
+            with self.subTest(bad=bad), self.assertRaisesRegex(ValueError, 'malformed|truncated'):
+                self.run_check(fixture()+bad)
+    def test_uart_inside_observer_record_is_rejected(self):
+        with self.assertRaisesRegex(ValueError, 'malformed'):
+            self.run_check(fixture().replace('pdest=7 illegal=0', 'pdest=T12_GROUP_PASS7 illegal=0', 1))
+    def test_missing_observer_field_is_rejected(self):
+        with self.assertRaisesRegex(ValueError, 'malformed'):
+            self.run_check(fixture().replace(' pdest=7 illegal=0', ' illegal=0', 1))
+    def test_duplicate_field_is_rejected(self):
+        with self.assertRaisesRegex(ValueError, 'malformed'):
+            self.run_check(fixture().replace('pdest=7 illegal=0', 'pdest=7 pdest=8 illegal=0', 1))
+    def test_out_of_order_printing_is_sorted_by_cycle(self):
+        lines=fixture().splitlines()
+        observed=[x for x in lines if any(x.startswith('T12_'+k+' ') for k in checker.EVENT_FIELDS)]
+        remaining=[x for x in lines if x not in observed]
+        self.assertEqual(self.run_check('\n'.join(observed[::-1]+remaining)+'\n')['status'], 'T12_CONTROL_REGRESSION_PASS')
+
+    def test_nonzero_failure_suffix_is_rejected(self):
+        with self.assertRaisesRegex(ValueError, 'summary'):
+            self.run_check(fixture().replace('failures=0', 'failures=01'))
+    def test_extra_malformed_summary_is_rejected(self):
+        with self.assertRaisesRegex(ValueError, 'summary'):
+            self.run_check(fixture()+'T12_SUMMARY incomplete\n')
+
 if __name__=='__main__': unittest.main()
