@@ -23,8 +23,11 @@ def verify(out,source,repo=ROOT):
   require(hashlib.sha256(blob).hexdigest()==digest,'source blob mismatch: '+name)
  m,rows=c.load(data);require(m['generator_sha256']==b['sources']['team/tests/generate_t12.py'],'generator not compiled source')
  require(sha(build/'tools.json')==b['tools_sha256'],'tool record drift')
- for item in json.loads((build/'tools.json').read_text()).values():
-  if 'path' in item:require(sha(item['path'])==item['sha256'],'tool binary drift')
+ for name,item in json.loads((build/'tools.json').read_text()).items():
+  # Portable shared libraries use their absolute path as the record key.
+  # Re-read them as well as compiler/binutils/backend entries.
+  path=Path(item.get('path',name))
+  require(path.is_absolute() and sha(path)==item['sha256'],'tool/library binary drift: '+str(path))
  process=json.loads((out/'run.process.json').read_text())
  for key in ('pid','argv','cwd','exit_code','started_at','finished_at','timed_out'):
   require(process[key]==receipt[key],'process receipt mismatch: '+key)
