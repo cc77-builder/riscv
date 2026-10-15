@@ -12,6 +12,8 @@ import xiangshan.backend.fu.FuType
 import xiangshan._
 import yunsuan.{VfpuType, VipuType, VimacType, VpermType, VialuFixType, VfaluType, VfmaType, VfdivType, VfcvtType, VidivType}
 import xiangshan.backend.decode.Zvbb._
+import xiangshan.backend.decode.VDotInstructions._
+import xiangshan.backend.fu.wrapper.VDotOpType
 
 abstract class VecDecode extends XSDecodeBase {
   def generate() : List[BitPat]
@@ -185,6 +187,11 @@ case class VST(src2: BitPat, fuOp: BitPat, strided: Boolean = false, indexed: Bo
 }
 
 object VecDecoder extends DecodeConstants {
+  val customVdot: Array[(BitPat, XSDecodeBase)] = Array(
+    VDOT_VV -> OPIVV(FuType.vdot, VDotOpType.s8x8, T, F, F,
+      uopSplitType = UopSplitType.VEC_VDOT, src3 = SrcType.no),
+  )
+
   val opivv: Array[(BitPat, XSDecodeBase)] = Array(
     VADD_VV         -> OPIVV(FuType.vialuF, VialuFixType.vadd_vv, T, F, F),
     VSUB_VV         -> OPIVV(FuType.vialuF, VialuFixType.vsub_vv, T, F, F),
@@ -819,6 +826,6 @@ object VecDecoder extends DecodeConstants {
     VS8R_V        -> VST(SrcType.X,   VstuType.vsr, whole = T),
   )
 
-  override val decodeArray: Array[(BitPat, XSDecodeBase)] = vset ++
+  override val decodeArray: Array[(BitPat, XSDecodeBase)] = customVdot ++ vset ++
     opivv ++ opivx ++ opivi ++ opmvv ++ opmvx ++ opfvv ++ opfvf ++ opfff ++ vls
 }

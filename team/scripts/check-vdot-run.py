@@ -1,5 +1,7 @@
 """Check actual workload logs; selftest evidence cannot certify the extension."""
 import argparse
+import base64
+import binascii
 import hashlib
 import json
 from pathlib import Path
@@ -16,68 +18,65 @@ def fields(line):
     return dict(re.findall(r'([a-zA-Z0-9_]+)=([^\s]+)',line))
 
 
-def validate(content, mode, exit_code, data, *, expect_unextended=False, require_diff=False):
-    content = re.sub(r'\x1b\[[0-?]*[ -/]*[@-~]','',content)
-    if f'VDOT_BEGIN contract={CONTRACT} mode={mode}' not in content:
-        raise ValueError('missing matching mode/contract begin marker')
-    if 'HARNESS_SELFTEST_PASS cases=7 negative_controls=3' not in content:
-        raise ValueError('harness selftest did not complete')
-    negative = [fields(line) for line in content.splitlines() if line.startswith('HARNESS_NEGATIVE ')]
-    if len(negative)!=3 or {n.get('id') for n in negative}!={'N01-wrong-pc','N02-wrong-high-byte','N03-wrong-vs'}:
-        raise ValueError('missing or duplicate negative controls')
-    by_id={n['id']:n for n in negative}
-    if (by_id['N01-wrong-pc'].get('result')!='TRAP_PROTOCOL' or
-        int(by_id['N01-wrong-pc'].get('protocol_errors','0'),0)!=2 or
-        by_id['N02-wrong-high-byte'].get('result')!='VECTOR_CHANGED' or
-        by_id['N03-wrong-vs'].get('result')!='VS_CHANGED'):
-        raise ValueError('negative controls failed to detect errors')
-    manifest = json.loads((data/'manifest.json').read_text())
-    raw_cases = (data/'cases.jsonl').read_bytes()
-    if manifest['contract_id']!=CONTRACT or hashlib.sha256(raw_cases).hexdigest()!=manifest['cases_sha256']:
-        raise ValueError('test data contract/hash mismatch')
-    for name,digest in manifest['artifacts_sha256'].items():
-        if hashlib.sha256((data/name).read_bytes()).hexdigest()!=digest:
-            raise ValueError(f'generated artifact hash mismatch: {name}')
-    fixture = [json.loads(line) for line in raw_cases.splitlines()]
-    smoke = fixture[:manifest['smoke_count']]
-    exceptions = json.loads((data/'exceptions.json').read_text())
-    if len(exceptions)!=manifest['exception_count']:
-        raise ValueError('exception manifest count mismatch')
-    expected = dict(SELFTEST) if mode=='selftest' else {
-        **{c['id']:int(c['instruction'],0) for c in smoke}, **{c['id']:c['word'] for c in exceptions}}
-    scope = content
-    if mode=='full':
-        if content.count('VDOT_EXTENSION_BEGIN')!=1:
-            raise ValueError('missing or duplicate extension phase')
-        scope=content.split('VDOT_EXTENSION_BEGIN',1)[1]
-    records = [fields(line) for line in scope.splitlines() if line.startswith('VDOT_CASE ')]
-    summaries = [fields(line) for line in scope.splitlines() if line.startswith('VDOT_SUMMARY ')]
-    if len(summaries)!=1:
-        raise ValueError('missing or duplicate summary')
-    summary=summaries[0]
-    if summary.get('mode')!=mode or summary.get('contract')!=CONTRACT:
-        raise ValueError('summary mode/contract mismatch')
-    if expect_unextended:
-        if (mode!='full' or exit_code!=3 or len(records)!=1 or records[0].get('id')!='D00' or
-            records[0].get('result')!='TRAP_PROTOCOL' or int(records[0].get('actual_cause','0'),0)!=2 or
-            int(records[0].get('protocol_errors','0'),0)!=4 or
-            int(summary.get('failed','0'))!=1):
-            raise ValueError('expected legal-vdot rejection not observed')
-        return dict(status='UNEXTENDED_REJECTION_CONFIRMED',extension_pass=False)
-    if exit_code!=0:
-        raise ValueError(f'program exit code {exit_code}')
-    if re.search(r'\bFAIL[: ]|BAD TRAP',content):
-        raise ValueError('failure marker in output')
-    if require_diff and ('Difftest enabled' not in content or 'HIT GOOD TRAP' not in content):
-        raise ValueError('missing real DiffTest/GOOD TRAP evidence')
-    ids=[r.get('id') for r in records]
-    if len(set(ids))!=len(ids) or set(ids)!=set(expected):
-        raise ValueError('missing, unexpected or duplicate test IDs')
-    if any(int(summary.get(k,'-1'))!=len(expected) for k in ('planned','executed','passed')) or \
-       any(int(summary.get(k,'-1'))!=0 for k in ('failed','unreachable')):
-        raise ValueError('summary counts do not prove complete coverage')
-    legal_by_id={c['id']:c for c in smoke}
-    exceptions_by_id={c['id']:c for c in exceptions}
+def expand_packed_records(content):
+    """Losslessly expand packed-u64-v1 into original verbose records.
+
+    No successful record is inferred: all 34 original numeric fields must be
+    present in the payload, and the existing independent checks still run.
+    """
+    lines=content.splitlines()
+    packed=[line for line in lines if line.startswith(('VDOT_PACKED','HARNESS_PACKED'))]
+    markers=[line for line in lines if line.startswith('VDOT_LOG_FORMAT')]
+    if not markers and not packed:
+        return content
+    if markers!=['VDOT_LOG_FORMAT packed-u64-v1'] or not packed:
+        raise ValueError('missing, duplicate or unsupported packed log format')
+    if any(line.startswith(('VDOT_CASE ','HARNESS_NEGATIVE ')) for line in lines):
+        raise ValueError('mixed packed and verbose records')
+    expanded=[]
+    names=('instruction','trap_count','expected_cause','actual_cause','fault_pc','actual_epc',
+           'resume_pc','mtval','pre_mstatus','raw_mstatus','capture_phase','protocol_errors','requested_vs')
+    decimal={'trap_count','capture_phase','requested_vs','all32_checked','pre32_checked','guards_ok'}
+    for line in lines:
+        if not line.startswith(('VDOT_PACKED','HARNESS_PACKED')):
+            expanded.append(line);continue
+        m=re.fullmatch(r'(VDOT_PACKED|HARNESS_PACKED) id=([^\s=]+) result=([A-Z_]+) payload=([A-Za-z0-9+/=]+)',line)
+        if not m:raise ValueError('malformed packed record')
+        try:payload=base64.b64decode(m[4],validate=True)
+        except binascii.Error as e:raise ValueError('invalid packed base64') from e
+        if base64.b64encode(payload).decode()!=m[4]:raise ValueError('noncanonical packed base64')
+        values=[]; pos=0
+        while pos<len(payload) and len(values)<34:
+            tag=payload[pos];pos+=1
+            if tag<34:
+                if tag>=len(values):raise ValueError('invalid packed back-reference')
+                values.append(values[tag]);continue
+            if tag!=128:raise ValueError('invalid packed literal tag')
+            value=0
+            for byte_index in range(10):
+                if pos>=len(payload):raise ValueError('truncated packed integer')
+                byte=payload[pos];pos+=1
+                if byte_index==9 and byte>1:raise ValueError('packed integer overflows uint64')
+                value|=(byte&127)<<(7*byte_index)
+                if byte<128:
+                    if byte_index and byte==0:raise ValueError('noncanonical packed integer')
+                    break
+            else:raise ValueError('unterminated packed integer')
+            values.append(value)
+        if len(values)!=34 or pos!=len(payload):raise ValueError('wrong packed field count or trailing bytes')
+        record={'id':m[2],'result':m[3]}
+        record.update({key:(str(v) if key in decimal else hex(v)) for key,v in zip(names,values[:13])})
+        record['pre_csr']='/'.join(hex(v) for v in values[13:19])
+        record['post_csr']='/'.join(hex(v) for v in values[19:25])
+        for key,i in (('pre_vd128',25),('expected_vd128',27),('post_vd128',29)):
+            record[key]='0x'+format(values[i]|(values[i+1]<<64),'032x')
+        record.update({key:str(values[i]) for key,i in (('all32_checked',31),('pre32_checked',32),('guards_ok',33))})
+        prefix='VDOT_CASE' if m[1]=='VDOT_PACKED' else 'HARNESS_NEGATIVE'
+        expanded.append(prefix+' '+' '.join(f'{k}={v}' for k,v in record.items()))
+    return '\n'.join(expanded)
+
+
+def validate_record_details(records, expected, mode, legal_by_id, exceptions_by_id):
     for r in records:
         name=r['id']
         if r.get('result')!='PASS' or int(r.get('instruction','-1'),0)!=expected[name]:
@@ -129,6 +128,104 @@ def validate(content, mode, exit_code, data, *, expect_unextended=False, require
             raise ValueError(f'{name}: incomplete state check')
         if name in legal_by_id and int(r['post_vd128'],0)!=int(legal_by_id[name]['expected_128'],16):
             raise ValueError(f'{name}: disagrees with independent oracle')
+
+
+def require_record_order(records,expected):
+    ids=[r.get('id') for r in records]
+    if ids!=list(expected):
+        raise ValueError('case records are not in the declared order with legal control first')
+
+
+def validate_selftest_prefix(prefix):
+    lines=prefix.splitlines()
+    records=[fields(line) for line in lines if line.startswith('VDOT_CASE ')]
+    require_record_order(records,SELFTEST)
+    if len([x for x in lines if x=='HARNESS_SELFTEST_PASS cases=7 negative_controls=3'])!=1:
+        raise ValueError('missing or duplicate pre-extension selftest completion')
+    completion=lines.index('HARNESS_SELFTEST_PASS cases=7 negative_controls=3')
+    if any(x.startswith(('VDOT_CASE ','HARNESS_NEGATIVE ')) for x in lines[completion+1:]):
+        raise ValueError('selftest records follow their completion marker')
+    negative=[fields(x) for x in lines if x.startswith('HARNESS_NEGATIVE ')]
+    if [x.get('id') for x in negative]!=['N01-wrong-pc','N02-wrong-high-byte','N03-wrong-vs']:
+        raise ValueError('missing, duplicate or reordered pre-extension negative controls')
+    validate_record_details(records,SELFTEST,'selftest',{}, {})
+
+
+def validate(content, mode, exit_code, data, *, expect_unextended=False, require_diff=False):
+    content = re.sub(r'\x1b\[[0-?]*[ -/]*[@-~]','',content)
+    content = expand_packed_records(content)
+    begin=[x for x in content.splitlines() if x.startswith('VDOT_BEGIN ')]
+    if begin!=[f'VDOT_BEGIN contract={CONTRACT} mode={mode}']:
+        raise ValueError('missing, duplicate or wrong mode/contract begin marker')
+    if 'HARNESS_SELFTEST_PASS cases=7 negative_controls=3' not in content:
+        raise ValueError('harness selftest did not complete')
+    negative = [fields(line) for line in content.splitlines() if line.startswith('HARNESS_NEGATIVE ')]
+    if len(negative)!=3 or {n.get('id') for n in negative}!={'N01-wrong-pc','N02-wrong-high-byte','N03-wrong-vs'}:
+        raise ValueError('missing or duplicate negative controls')
+    by_id={n['id']:n for n in negative}
+    if (by_id['N01-wrong-pc'].get('result')!='TRAP_PROTOCOL' or
+        int(by_id['N01-wrong-pc'].get('protocol_errors','0'),0)!=2 or
+        by_id['N02-wrong-high-byte'].get('result')!='VECTOR_CHANGED' or
+        by_id['N03-wrong-vs'].get('result')!='VS_CHANGED'):
+        raise ValueError('negative controls failed to detect errors')
+    manifest = json.loads((data/'manifest.json').read_text())
+    raw_cases = (data/'cases.jsonl').read_bytes()
+    if manifest['contract_id']!=CONTRACT or hashlib.sha256(raw_cases).hexdigest()!=manifest['cases_sha256']:
+        raise ValueError('test data contract/hash mismatch')
+    for name,digest in manifest['artifacts_sha256'].items():
+        if hashlib.sha256((data/name).read_bytes()).hexdigest()!=digest:
+            raise ValueError(f'generated artifact hash mismatch: {name}')
+    fixture = [json.loads(line) for line in raw_cases.splitlines()]
+    smoke = fixture[:manifest['smoke_count']]
+    exceptions = json.loads((data/'exceptions.json').read_text())
+    if len(exceptions)!=manifest['exception_count']:
+        raise ValueError('exception manifest count mismatch')
+    expected = dict(SELFTEST) if mode=='selftest' else {
+        **{c['id']:int(c['instruction'],0) for c in smoke}, **{c['id']:c['word'] for c in exceptions}}
+    scope = content
+    if mode=='full':
+        if content.count('VDOT_EXTENSION_BEGIN')!=1:
+            raise ValueError('missing or duplicate extension phase')
+        prefix,scope=content.split('VDOT_EXTENSION_BEGIN',1)
+        validate_selftest_prefix(prefix)
+    records = [fields(line) for line in scope.splitlines() if line.startswith('VDOT_CASE ')]
+    summaries = [fields(line) for line in scope.splitlines() if line.startswith('VDOT_SUMMARY ')]
+    if len(summaries)!=1:
+        raise ValueError('missing or duplicate summary')
+    summary=summaries[0]
+    if summary.get('mode')!=mode or summary.get('contract')!=CONTRACT:
+        raise ValueError('summary mode/contract mismatch')
+    if expect_unextended:
+        if (mode!='full' or exit_code!=3 or len(records)!=1 or records[0].get('id')!='D00' or
+            records[0].get('result')!='TRAP_PROTOCOL' or int(records[0].get('actual_cause','0'),0)!=2 or
+            int(records[0].get('protocol_errors','0'),0)!=4 or
+            int(summary.get('failed','0'))!=1):
+            raise ValueError('expected legal-vdot rejection not observed')
+        return dict(status='UNEXTENDED_REJECTION_CONFIRMED',extension_pass=False)
+    if exit_code!=0:
+        raise ValueError(f'program exit code {exit_code}')
+    if re.search(r'\bFAIL[: ]|BAD TRAP',content):
+        raise ValueError('failure marker in output')
+    if require_diff:
+        lines=content.splitlines()
+        starts=[i for i,x in enumerate(lines) if 'Difftest enabled' in x]
+        goods=[i for i,x in enumerate(lines) if 'HIT GOOD TRAP' in x]
+        summaries=[i for i,x in enumerate(lines) if x.startswith('VDOT_SUMMARY ')]
+        begins=[i for i,x in enumerate(lines) if x.startswith('VDOT_BEGIN ')]
+        if not (len(starts)==len(goods)==len(summaries)==len(begins)==1 and starts[0]<begins[0]<summaries[0]<goods[0]):
+            raise ValueError('missing unique ordered DiffTest/begin/summary/GOOD TRAP completion')
+        if any(x.startswith(('VDOT_CASE ','HARNESS_NEGATIVE ')) for x in lines[summaries[0]+1:]):
+            raise ValueError('case records follow final target summary')
+    ids=[r.get('id') for r in records]
+    if len(set(ids))!=len(ids) or set(ids)!=set(expected):
+        raise ValueError('missing, unexpected or duplicate test IDs')
+    if any(int(summary.get(k,'-1'))!=len(expected) for k in ('planned','executed','passed')) or \
+       any(int(summary.get(k,'-1'))!=0 for k in ('failed','unreachable')):
+        raise ValueError('summary counts do not prove complete coverage')
+    require_record_order(records,expected)
+    legal_by_id={c['id']:c for c in smoke}
+    exceptions_by_id={c['id']:c for c in exceptions}
+    validate_record_details(records,expected,mode,legal_by_id,exceptions_by_id)
     return dict(status='HARNESS_SELFTEST_PASS' if mode=='selftest' else 'VDOT_WORKLOAD_PASS',
                 mode=mode,executed=len(records),extension_pass=mode=='full',difftest=require_diff)
 

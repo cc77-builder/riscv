@@ -70,7 +70,7 @@ class ArtifactTests(unittest.TestCase):
     def test_nemu_binary_config_and_source_provenance(self):
         build=self.repo/'build';build.mkdir()
         binary=build/'riscv64-nemu-interpreter';binary.write_bytes(b'fixture binary')
-        (self.repo/'.config').write_text('CONFIG_RVV=y\nCONFIG_CUSTOM_VDOT=y\n# CONFIG_SHARE is not set\n')
+        (self.repo/'.config').write_text('CONFIG_RVV=y\nCONFIG_CUSTOM_VDOT=y\nCONFIG_CUSTOM_VDOT_XS_TVAL=y\nCONFIG_TVAL_EX_II=y\nCONFIG_NMIE_INIT=y\n# CONFIG_MDT_INIT is not set\n# CONFIG_SHARE is not set\n')
         root=Path(self.temp.name)/'team-root'
         (root/'team/patches/nemu').mkdir(parents=True)
         manifest=dict(base_rev=self.revision,contract_id='vdot-s8x8-r32-v0.1',patch_sha256='fixture',
@@ -87,7 +87,7 @@ class ArtifactTests(unittest.TestCase):
             (self.repo/'.config').write_text('changed')
             with self.assertRaisesRegex(ValueError,'config changed'):
                 guard.verify_nemu(self.repo,binary,'standalone')
-            (self.repo/'.config').write_text('CONFIG_RVV=y\nCONFIG_CUSTOM_VDOT=y\n# CONFIG_SHARE is not set\n')
+            (self.repo/'.config').write_text('CONFIG_RVV=y\nCONFIG_CUSTOM_VDOT=y\nCONFIG_CUSTOM_VDOT_XS_TVAL=y\nCONFIG_TVAL_EX_II=y\nCONFIG_NMIE_INIT=y\n# CONFIG_MDT_INIT is not set\n# CONFIG_SHARE is not set\n')
             binary.write_bytes(b'changed binary')
             with self.assertRaisesRegex(ValueError,'binary changed'):
                 guard.verify_nemu(self.repo,binary,'standalone')

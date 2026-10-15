@@ -6,6 +6,6 @@ libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "3.2.19" % Test
 )
 addCompilerPlugin("org.chipsalliance" % "chisel-plugin" % "6.6.0" cross CrossVersion.full)
-Compile / unmanagedSources += baseDirectory.value / "../../../src/main/scala/xiangshan/backend/fu/vector/VdotExec.scala"
+Compile / unmanagedSources += baseDirectory.value / "../../legacy/james-vfex1/src/main/scala/xiangshan/backend/fu/vector/VdotExec.scala"
 Test / parallelExecution := false
 scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked", "-language:reflectiveCalls")

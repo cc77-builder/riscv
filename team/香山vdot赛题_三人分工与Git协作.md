@@ -1,5 +1,7 @@
 # 香山 vdot 赛题：三人分工与 Git 协作
 
+> **2026-10-13 当前约定优先：** zjhwork→zufan 合并已发布到团队及 Fork，G-M1/G-M2/G-M3 已通过，见 [发布记录](merge/2026-10-13-zjhwork-into-zufan.publication.md)。下一位核对最终 SHA 并记录接收后，两人各用独立工作区在共享 zufan 按 START→RELEASE→ACK 错峰 Push；另一开发线 James_Hotten，main 稳定线。具体职责和当班推送者以真实认领为准。本文旧 A/B/C 排期与按任务建分支命令是历史方案，不自动成为当前班次或推送授权。详见 [当前协作约定](docs/collaboration-current.md)。
+
 适用赛事：第二届 CIE 全国 RISC-V 高水平创新及应用大赛，香山社区应用赛道。  
 题目：面向边缘 AI 大语言模型推理的 RISC-V 自定义 vdot 指令设计，基于香山昆明湖 V2。  
 编制日期：2026-10-09。配套文档：[循序渐进执行计划](香山vdot赛题_执行计划.md)。阶段一实机结果见 [构建与运行记录](docs/stage1.md)。

@@ -563,22 +563,6 @@ object FuConfig {
     exceptionOut = Seq(illegalInstr),
   )
 
-  // Candidate VDOT is dispatched to VFEX1 with fixed-latency writeback reservation.
-  val VdotCfg = FuConfig (
-    name = "vdot",
-    fuType = FuType.vdot,
-    fuGen = (p: Parameters, cfg: FuConfig) => Module(new VdotFu(cfg)(p)),
-    srcData = Seq(Seq(VecData(), VecData(), VecData(), V0Data(), VlData())),
-    piped = true,
-    writeVecRf = true,
-    writeV0Rf = true,
-    latency = CertainLatency(1),
-    vconfigWakeUp = true,
-    maskWakeUp = true, // v0 is also an ordinary source when vm=1.
-    destDataBits = 128,
-    exceptionOut = Seq(illegalInstr),
-  )
-
   val VidivCfg = FuConfig (
     name = "vidiv",
     fuType = FuType.vidiv,
@@ -586,6 +570,21 @@ object FuConfig {
     srcData = Seq(
       Seq(VecData(), VecData(), VecData(), V0Data(), VlData()), // vs1, vs2, vd_old, v0, vtype&vl
     ),
+    piped = false,
+    writeVecRf = true,
+    writeV0Rf = true,
+    latency = UncertainLatency(),
+    vconfigWakeUp = true,
+    maskWakeUp = true,
+    destDataBits = 128,
+    exceptionOut = Seq(illegalInstr),
+  )
+
+  val VDotCfg = FuConfig (
+    name = "vdot",
+    fuType = FuType.vdot,
+    fuGen = (p: Parameters, cfg: FuConfig) => Module(new VDot(cfg)(p).suggestName("Vdot")),
+    srcData = Seq(Seq(VecData(), VecData(), VecData(), V0Data(), VlData())),
     piped = false,
     writeVecRf = true,
     writeV0Rf = true,
@@ -854,13 +853,13 @@ object FuConfig {
 
   def allConfigs = Seq(
     JmpCfg, BrhCfg, I2fCfg, I2vCfg, F2vCfg, CsrCfg, AluCfg, MulCfg, DivCfg, FenceCfg, BkuCfg, VSetRvfWvfCfg, VSetRiWvfCfg, VSetRiWiCfg,
-    LduCfg, StaCfg, StdCfg, MouCfg, MoudCfg, VialuCfg, VipuCfg, VdotCfg, VlduCfg, VstuCfg, VseglduSeg, VsegstuCfg,
+    LduCfg, StaCfg, StdCfg, MouCfg, MoudCfg, VialuCfg, VipuCfg, VlduCfg, VstuCfg, VseglduSeg, VsegstuCfg,
     FaluCfg, FmacCfg, FcvtCfg, FdivCfg,
-    VfaluCfg, VfmaCfg, VfcvtCfg, HyldaCfg, HystaCfg
+    VfaluCfg, VfmaCfg, VfcvtCfg, HyldaCfg, HystaCfg, VDotCfg
   )
 
   def VecArithFuConfigs = Seq(
-    VialuCfg, VimacCfg, VdotCfg, VppuCfg, VipuCfg, VfaluCfg, VfmaCfg, VfcvtCfg
+    VialuCfg, VimacCfg, VppuCfg, VipuCfg, VfaluCfg, VfmaCfg, VfcvtCfg
   )
 }
 

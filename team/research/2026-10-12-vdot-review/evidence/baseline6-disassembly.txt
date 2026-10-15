@@ -1,0 +1,15 @@
+
+/mnt/data/xiangshan_review/source/baseline6.o:	file format elf64-littleriscv
+
+Disassembly of section .text:
+
+0000000000000000 <baseline6_v10_v8_v9>:
+       0: c2102ef3     	csrr	t4, vtype
+       4: ee942157     	vwmul.vv	v2, v9, v8
+       8: c0847e57     	vsetivli	t3, 0x8, e16, m1, tu, mu
+       c: 5e003557     	vmv.v.i	v10, 0x0
+      10: c6250557     	vwredsum.vs	v10, v2, v10
+      14: 81de7057     	vsetvl	zero, t3, t4
+
+0000000000000018 <baseline6_end>:
+      18: 00008067     	ret

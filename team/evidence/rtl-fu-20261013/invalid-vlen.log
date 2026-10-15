@@ -1,0 +1,30 @@
+=============== vdotFu.runMain team.vdot.Generat...un1/invalid-vlen --invalid-vlen ===============
+==================================================================================================
+[723/723] vdotFu.runMain
+[723] Exception in thread "main" java.lang.IllegalArgumentException: requirement failed: VDot requires VLEN=128
+[723] 	at ... ()
+[723] 	at xiangshan.backend.fu.wrapper.VDot.<init>(VDot.scala:21)
+[723] 	at team.vdot.VDotFuTestTop.$anonfun$dut$2(GenerateVDotFu.scala:55)
+[723] 	at chisel3.Module$.evaluate(Module.scala:88)
+[723] 	at chisel3.Module$.do_apply(Module.scala:35)
+[723] 	at team.vdot.VDotFuTestTop.$anonfun$dut$1(GenerateVDotFu.scala:55)
+[723] 	at chisel3.internal.plugin.package$.autoNameRecursively(package.scala:33)
+[723] 	at team.vdot.VDotFuTestTop.<init>(GenerateVDotFu.scala:55)
+[723] 	at team.vdot.GenerateVDotFu$.$anonfun$main$1(GenerateVDotFu.scala:113)
+[723] 	at chisel3.Module$.evaluate(Module.scala:88)
+[723] 	at chisel3.Module$.do_apply(Module.scala:35)
+[723] 	at chisel3.stage.phases.Elaborate.$anonfun$transform$2(Elaborate.scala:52)
+[723] 	at chisel3.internal.Builder$.$anonfun$buildImpl$1(Builder.scala:1042)
+[723] 	at scala.util.DynamicVariable.withValue(DynamicVariable.scala:59)
+[723] 	at chisel3.internal.Builder$.buildImpl(Builder.scala:1032)
+[723] 	at chisel3.internal.Builder$.$anonfun$build$1(Builder.scala:1023)
+[723] 	at logger.Logger$.$anonfun$makeScope$4(Logger.scala:148)
+[723] 	at scala.util.DynamicVariable.withValue(DynamicVariable.scala:59)
+[723] 	at logger.Logger$.makeScope(Logger.scala:146)
+[723] 	at logger.Logger$.makeScope(Logger.scala:133)
+[723] 	at ... ()
+[723] 	at ... (Stack trace trimmed to user code only. Rerun with --full-stacktrace to see the full stack trace)
+[723/723] =============== vdotFu.runMain team.vdot....valid-vlen --invalid-vlen =============== 5s
+==================================================================================================
+1 tasks failed
+vdotFu.runMain Subprocess failed

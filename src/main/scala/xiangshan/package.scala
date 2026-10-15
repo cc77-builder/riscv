@@ -786,6 +786,7 @@ package object xiangshan {
     def VEC_FSLIDE1DOWN  = "b100011".U // vfslide1down.vf
     def VEC_VRED         = "b100100".U // VEC_VRED
     def VEC_SLIDEUP      = "b100101".U // VEC_SLIDEUP
+    def VEC_VDOT         = "b100110".U // custom dot: one uop for every vtype
     def VEC_SLIDEDOWN    = "b100111".U // VEC_SLIDEDOWN
     def VEC_M0X          = "b101001".U // VEC_M0X  0MV
     def VEC_MVV          = "b101010".U // VEC_MVV  VMV

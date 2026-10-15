@@ -353,6 +353,23 @@ class DecodeUnitComp()(implicit p : Parameters) extends XSModule with DecodeUnit
         csBundle(1).vpu.connectVType(io.vtypeBypass)
       }
     }
+    is(UopSplitType.VEC_VDOT) {
+      csBundle(0).lsrc(0) := src1
+      csBundle(0).lsrc(1) := src2
+      csBundle(0).ldest := dest
+      csBundle(0).srcType(0) := SrcType.vp
+      csBundle(0).srcType(1) := SrcType.vp
+      csBundle(0).srcType(2) := SrcType.no
+      csBundle(0).srcType(3) := SrcType.no
+      csBundle(0).srcType(4) := SrcType.vp
+      csBundle(0).lsrc(4) := Vl_IDX.U
+      csBundle(0).uopIdx := 0.U
+      csBundle(0).vpu.vuopIdx := 0.U
+      csBundle(0).vpu.isDependOldVd := false.B
+      csBundle(0).vpu.isWritePartVd := false.B
+      csBundle(0).blockBackward := false.B
+      csBundle(0).flushPipe := false.B
+    }
     is(UopSplitType.VEC_VVV) {
       for (i <- 0 until MAX_VLMUL) {
         csBundle(i).lsrc(0) := src1 + i.U
@@ -2028,6 +2045,11 @@ class DecodeUnitComp()(implicit p : Parameters) extends XSModule with DecodeUnit
   // when vstart is not zero, the last uop will modify vstart to zero
   // therefore, blockback and flush pipe
   fixedDecodedInst(numOfUop - 1.U).flushPipe := (vstartReg =/= 0.U) || latchedInst.flushPipe
+  when(typeOfSplit === UopSplitType.VEC_VDOT) {
+    // Nonzero vstart is an exception, never a normal vector completion that
+    // clears vstart. Override the generic final assignment as well.
+    fixedDecodedInst(0).flushPipe := false.B
+  }
   val uopsSeq = (0 until RenameWidth).map(i => VecInit(fixedDecodedInst.zipWithIndex.filter(_._2 % RenameWidth == i).map(_._1)))
 
   /** Generate output insts and valid signals */

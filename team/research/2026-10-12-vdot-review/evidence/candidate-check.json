@@ -1,0 +1,53 @@
+{
+  "status": "PASS",
+  "scope": "host_RVV_step_model_and_optional_assembly_only",
+  "utc": "2026-10-12T15:40:57.483514+00:00",
+  "seed": "0x20261012",
+  "python_version": "3.13.5",
+  "random_generator": "Python random.Random.getrandbits; compare corpus hash across runtimes",
+  "random_register_corpus_sha256": "9eb4b25bb9e221374ff6fc51eab8b72e2dedf37f22cd7da4999f26d6f71503c7",
+  "script_sha256": "a46e06218705e1e1147118e0898b0cd23b614c4ab2885b597f7ce8b1f4cd1c05",
+  "register_triples": 32768,
+  "policies": 4,
+  "tail_modes": 2,
+  "modeled_cases_per_variant": {
+    "B6": 262144,
+    "B7": 262144
+  },
+  "extra_extremes_per_variant": 4,
+  "negative_counterexamples": {
+    "16bit_accumulator_overflows": true,
+    "sign_extending_to128_is_wrong": true,
+    "restoring_constant_policy_loses_ta_ma": true,
+    "e8_scalar_extract_truncates_131072": true
+  },
+  "assembly": {
+    "status": "PASS",
+    "tool": "clang version 17.0.0 (https://github.com/swiftlang/llvm-project.git 10999b6d034fe318f3d56c83bddb6572593a8bb0)",
+    "variants": {
+      "B6": {
+        "register_triples": 32768,
+        "roi_instructions": 6,
+        "text_bytes_including_ret": 917504,
+        "text_sha256": "b207cb356caf80cfeff66f2132608caddddc5db1e7b4f3625e879bb49d2adae6",
+        "source_sha256": "aae6347b2416fbc7f02373c8bf62bbfab4ce9c590f67a5bf8615304a80463560"
+      },
+      "B7": {
+        "register_triples": 32768,
+        "roi_instructions": 7,
+        "text_bytes_including_ret": 1048576,
+        "text_sha256": "29403430d63677a70b18227ba05a2c8a3d8d16a9b2a097a9db5a2bed78c702ab",
+        "source_sha256": "190125ab8ce3d082eb927530d9d6c7441932673be022a2ccf31ba99f6f893ff4"
+      }
+    }
+  },
+  "not_verified": [
+    "actual_CPU_execution",
+    "VS_or_trap_behavior",
+    "NEMU",
+    "XiangShan_RTL",
+    "DiffTest",
+    "cycles",
+    "PPA"
+  ]
+}

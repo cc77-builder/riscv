@@ -1,0 +1,171 @@
+{
+  "scope": "HOST/SYNTHETIC AUDIT ONLY; NO RTL EXECUTION",
+  "input_hashes": {
+    "hardware-integration.diff": "e723a25af028e8718d66b3dea3a62010c43c9f4f595cdfcdcb4074f0ef11950e",
+    "partition-verified.json": "e8d3d6c2965db32a7f8131182f472d2ca8ff0b9f6a067b09a3ef2c8d9380cc51",
+    "prior-vdot-negative.json": "fbadfe82bc8c7dbd7c4ba18c9ed56300c5ad79a982656e373572b6b4cddf5b02",
+    "tval-patch.diff": "d230167d72db342442a54a10dd42b0e32972c4e2c60d39018749029b97267d11",
+    "tval-reference-api.json": "3223a6ecd296ad91bf6f96d20674214a6a9780952f43c2ab3fc116b065d949f0",
+    "verify-union-negative-tests.py": "2ecc6192ce911461aa5e1bbda37f5a5b0a7b8a27e0aa52c6811634779aa1e23f",
+    "verify-union.py": "0ab9ed4f23d4ea119aa506aee8876d9778ed2c9a7dc2db5ed172b892d221cf4f"
+  },
+  "partitions": [
+    {
+      "status": "INPUT_PARTITION_VERIFIED_NOT_EXECUTION",
+      "extension_pass": false,
+      "unique_cases": 117,
+      "unique_legal": 80,
+      "unique_exceptions": 37,
+      "shards": 4,
+      "executed_extension_records": 120,
+      "duplicate_legal_controls": 3,
+      "parent_plan_sha256": "c6fec6194bbca496d0b4a128f866e7a1f4d1187d356c7d224f53e6eef699cfd1",
+      "parent_manifest_sha256": "3beddf644c624d6974426956b522e3235026c7371bcab81f189dee7123e55497"
+    },
+    {
+      "status": "INPUT_PARTITION_VERIFIED_NOT_EXECUTION",
+      "extension_pass": false,
+      "unique_cases": 117,
+      "unique_legal": 80,
+      "unique_exceptions": 37,
+      "shards": 8,
+      "executed_extension_records": 124,
+      "duplicate_legal_controls": 7,
+      "parent_plan_sha256": "c6fec6194bbca496d0b4a128f866e7a1f4d1187d356c7d224f53e6eef699cfd1",
+      "parent_manifest_sha256": "3beddf644c624d6974426956b522e3235026c7371bcab81f189dee7123e55497"
+    }
+  ],
+  "negative_tests": [
+    {
+      "case": "missing-shard",
+      "status": "EXPECTED_REJECTION",
+      "message": "missing/inconsistent shards"
+    },
+    {
+      "case": "mixed-parent",
+      "status": "EXPECTED_REJECTION",
+      "message": "different parent plan"
+    },
+    {
+      "case": "corrupt-input",
+      "status": "EXPECTED_REJECTION",
+      "message": "case corpus checksum mismatch"
+    },
+    {
+      "case": "wrong-index",
+      "status": "EXPECTED_REJECTION",
+      "message": "duplicate shard index"
+    },
+    {
+      "case": "wrong-source",
+      "status": "EXPECTED_REJECTION",
+      "message": "mixed shard generator/model/source configuration"
+    },
+    {
+      "case": "incomplete-real-evidence",
+      "status": "EXPECTED_REJECTION",
+      "message": "[Errno 2] No such file or directory: 'D:\\\\Projects\\\\competitions\\\\2026-10-CIE-RISCV-XiangShan\\\\t10-t11-final-20261013\\\\scratch\\\\union-negative\\\\incomplete-real-evidence\\\\run-0\\\\status'"
+    },
+    {
+      "case": "summary_truncated_despite_exit_zero",
+      "status": "EXPECTED_REJECTION",
+      "message": "missing or duplicate summary"
+    }
+  ],
+  "accepted_counterexamples": [
+    {
+      "case": "all_receipts_bound_to_wrong_candidate",
+      "status": "UNEXPECTED_ACCEPTANCE",
+      "checker_status": "FULLCORE_VDOT_SHARDED_PASS"
+    },
+    {
+      "case": "missing_all_seven_selftest_records",
+      "status": "UNEXPECTED_ACCEPTANCE",
+      "checker_status": "FULLCORE_VDOT_SHARDED_PASS"
+    },
+    {
+      "case": "exceptions_executed_before_D00",
+      "status": "UNEXPECTED_ACCEPTANCE",
+      "checker_status": "FULLCORE_VDOT_SHARDED_PASS"
+    },
+    {
+      "case": "good_trap_before_extension_without_terminal_event",
+      "status": "UNEXPECTED_ACCEPTANCE",
+      "checker_status": "FULLCORE_VDOT_SHARDED_PASS"
+    },
+    {
+      "case": "contradictory_driver_status",
+      "status": "UNEXPECTED_ACCEPTANCE",
+      "checker_status": "FULLCORE_VDOT_SHARDED_PASS"
+    },
+    {
+      "case": "negative_mismatch_at_different_pc",
+      "status": "UNEXPECTED_ACCEPTANCE",
+      "checker_status": "FULLCORE_VDOT_SHARDED_PASS"
+    },
+    {
+      "case": "all_shards_claim_wrong_model_source",
+      "status": "UNEXPECTED_ACCEPTANCE",
+      "checker_status": "FULLCORE_VDOT_SHARDED_PASS"
+    }
+  ],
+  "synthetic_baseline_accepted": true,
+  "stale_current_hashes": [
+    {
+      "path": "team/patches/nemu/manifest.json",
+      "recorded": "1c604c7a2ff46cb7c514dfef8baca93ee8cf881094995edc4cefb927f781d350",
+      "actual": "1fee8f48616d7d09f46fd5924fb677f4a042ab7a6e2098a4af93e5e4e6a495a1"
+    },
+    {
+      "path": "team/patches/nemu/vdot-s8x8-r32-v0.1.patch",
+      "recorded": "7e508d84da2f2bbb93a103637c73a19bf27258ce2aa1b3bd2a56781ef3890006",
+      "actual": "6c165bf5f94ef0bfb4f894a5f06eb6d620d4a7e0e12f3b1400fa72811f5d24db"
+    },
+    {
+      "path": "team/scripts/artifact_guard.py",
+      "recorded": "a12b5b69c79e968038e889452adce1d9b48746eb616cefad5b1647cd1a9ff469",
+      "actual": "95eabdc0dc6191df4b03062e432ecc38877cc0c9626a81cdd002a4627ab54a85"
+    },
+    {
+      "path": "team/scripts/check-vdot-run.py",
+      "recorded": "9fcc3c5f19752006114bfd80f89aa1b46663fd97dd92299159735a9f19a5a3d3",
+      "actual": "a023962603328d14c9190a47bb59dbb84351ed69862c0f7f3aeb544a86bf20dc"
+    },
+    {
+      "path": "team/scripts/prepare-nemu-vdot.sh",
+      "recorded": "93a4314e68b64ea503904f310de99e7a8d20564a3efcb1d785c57241294460a6",
+      "actual": "bef805d62c5b64aedae63c295c1bb0a8d065147c48187a2ca7406afb92348e8a"
+    },
+    {
+      "path": "team/scripts/vdot-tests.sh",
+      "recorded": "b77e1b0807355861cfcc71d156673d8beb9cd00423d8381673584fe72ae5b1a3",
+      "actual": "89421e9d94ab980ee42c88be76fd138c4c9fc6b7f4ba46eb0421c8a7e1876e83"
+    },
+    {
+      "path": "team/tests/generate_vdot_cases.py",
+      "recorded": "3472a113c982b835a7792a2f9b9a044011ad33f530acf8d97fd9a62973cfcac4",
+      "actual": "904315963ed142f6e13c21b45eac1b5d79ff7fefc4e556779b9f0eb970157ff9"
+    },
+    {
+      "path": "team/tests/test_artifact_guard.py",
+      "recorded": "e75000a7cefa3df529b328696916661be2d41556199de73e7893198bfd8af316",
+      "actual": "2011144ff2ffb88d6d82d1e351d358c9bf563c8b329228f5b817b49b56a08012"
+    },
+    {
+      "path": "team/workloads/vdot-exceptions/Makefile",
+      "recorded": "d3d7e69bd0a1f4fd351e888476ad48158a57cea5cd3f64fc414e6bd8efb2c2c8",
+      "actual": "d1066718b62ef196a787e028e300f01060b6df244e88543eaf96623fc0b66ebd"
+    },
+    {
+      "path": "team/workloads/vdot-exceptions/main.c",
+      "recorded": "412103e6ce0e06b610a14f22ec250de1b0e240335be6bcc289ac9f16d5d890fd",
+      "actual": "bf51910cb9d0ba9e5c3e3cdb74b1e3c3c493d2f45edc3668cc34aac1654d6fe9"
+    }
+  ],
+  "new_nemu_headers_sha256": {
+    "src/isa/riscv64/instr/rvv/vdot.h": "6c668a153a5da5a8bfe2833830c7238bd9805a0405bfaa8906fb7520e1f2059b",
+    "src/isa/riscv64/local-include/vdot_tval.h": "a87e9b4933a045cf83b817865a038a82d3ae996519d400fa9555bf58317076ef"
+  },
+  "nemu_arithmetic_unchanged": true,
+  "patch_and_history_digests_verified": true
+}

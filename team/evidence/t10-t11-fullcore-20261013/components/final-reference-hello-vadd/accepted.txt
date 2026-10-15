@@ -1,0 +1,15 @@
+The image is /home/lizufan/xiangshan-t10-t11-supervisor-20261013/runs/hello-vadd-real-core/workload/build/hello-vadd-riscv64-xs.bin
+The reference model is /home/lizufan/xiangshan-t10-t11-supervisor-20261013/nemu-xs-tval/reference/build/riscv64-nemu-interpreter-so
+The first instruction of core 0 has commited. Difftest enabled. 
+[src/monitor/image_loader.c:205,load_img] Loading flash image: /home/lizufan/xiangshan-t10-t11-supervisor-20261013/runs/hello-vadd-real-core/boot-flash.bin
+hello xiangshan, 我是vdot-t10-regression, IPaddress=not-collected
+identity_status=placeholder; IPaddress is WSL host IPv4
+RVV VLEN=128 bits; SEW=8 LMUL=1 AVL=8
+vadd case=0 output: 9 9 9 9 9 9 9 9 PASS
+vadd case=1 output: 254 252 250 248 246 244 242 240 PASS
+vadd case=2 output: 128 127 0 0 0 0 254 254 PASS
+HELLO_VADD_PASS cases=3 lanes=24
+[PERF ][time=       Core 0: HIT GOOD TRAP at pc = 0x8000029c
+Core-0 instrCnt = 16687, cycleCnt = 43476, IPC = 0.383821
+Host time spent: 39173ms
+HELLO_VADD_EMU_RUN_PASS

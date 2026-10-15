@@ -116,11 +116,7 @@ class CSR(cfg: FuConfig)(implicit p: Parameters) extends FuncUnit(cfg)
       in.bits.dret := isDret
       in.bits.redirectFlush := redirectFlush
   }
-  // Physical-VL/configuration faults are discovered by VdotFu after decode.
-  // Use the precise ROB head's original word, including all register fields.
-  csrMod.io.trapInst := VdotTrapInstruction(csrIn.exception.valid,
-    csrIn.exception.bits.isInterrupt, csrIn.exception.bits.exceptionVec(EX_II),
-    csrIn.exception.bits.instr, trapInstMod.io.currentTrapInst)
+  csrMod.io.trapInst := trapInstMod.io.currentTrapInst
   csrMod.io.fetchMalTval := trapTvalMod.io.tval
   csrMod.io.fromMem.excpVA  := csrIn.memExceptionVAddr
   csrMod.io.fromMem.excpGPA := csrIn.memExceptionGPAddr

@@ -7,7 +7,7 @@ from pathlib import Path
 
 from vdot_model import CONTRACT_ID, MODEL_VERSION, VectorState, dot_s8, encode, execute
 
-GENERATOR_VERSION = "1.2.0"
+GENERATOR_VERSION = "1.3.0"
 SEED = 0x20261011
 DIRECTED = [
     ("D00", [0]*8, [127]*8, 0),
@@ -155,14 +155,14 @@ def exception_cases():
     return rows
 
 
-def emit_header(cases):
+def emit_header(cases, exceptions=None):
     rows = []
     for c in cases:
         cfg = c['config']
         rows.append('  {"%s", %sU, %d, %d, %d, %d, %d, %d, %d, %s, %s, %s, %s}' %
                     (c['id'],c['instruction'],c['vd'],c['vs1'],c['vs2'],cfg['vtype'],cfg['vxrm'],cfg['vxsat'],cfg['vs'],
                      *(c_bytes(c[k]) for k in ('src1_128','src2_128','old_vd_128','expected_128'))))
-    exceptions = exception_cases()
+    exceptions = exception_cases() if exceptions is None else exceptions
     erows = []
     for c in exceptions:
         erows.append('  {"%s", %s}' % (c['id'],', '.join(str(c[k])+('U' if k=='word' else '')
@@ -180,9 +180,10 @@ def emit_header(cases):
             '#define EXCEPTION_COUNT (sizeof(exception_cases_data)/sizeof(exception_cases_data[0]))\n#endif\n')
 
 
-def emit_stubs(cases):
+def emit_stubs(cases, exceptions=None):
+    exceptions = exception_cases() if exceptions is None else exceptions
     base = encode(10,8,9)
-    words = sorted({int(c['instruction'],16) for c in cases} |
+    words = sorted({int(c['instruction'],16) for c in cases} | {c['word'] for c in exceptions} |
                    {base ^ (1<<bit) for bit in (25,26,27,28,29,30,31,12,13,14)} |
                    {0x00100073,0x02940557})
     asm = ['/* Generated fixed 32-bit fault sites. */','#include "layout.h"',
@@ -208,28 +209,57 @@ def write_text(path, data):
     path.write_bytes(data.encode('utf-8') if isinstance(data,str) else data)
 
 
-def generate(output, count, seed, smoke_random_count=32, coverage_profile='legacy'):
+def generate(output, count, seed, smoke_random_count=32, coverage_profile='legacy', shard_index=0, shard_count=1):
     if smoke_random_count < 0:
         raise ValueError('nonnegative smoke random count required')
     if coverage_profile not in ('legacy','expanded'):
         raise ValueError('unsupported coverage profile')
     directed = directed_cases() + (expanded_cases() if coverage_profile=='expanded' else [])
     random = list(random_cases(count, seed,random_registers=coverage_profile=='expanded'))
-    data = jsonl(directed + random)
+    if shard_count < 1 or not 0 <= shard_index < shard_count:
+        raise ValueError('shard_count must be positive and shard_index within range')
+    full_smoke = directed+random[:smoke_random_count]
+    all_exceptions = exception_cases()
+    if shard_count > len(all_exceptions):
+        raise ValueError('each shard must contain at least one exception case')
+    smoke = full_smoke
+    exceptions = all_exceptions
+    corpus = directed+random
+    shard = None
+    if shard_count != 1:
+        # Every shard proves at least one legitimate vdot before any illegal
+        # instruction claims. Apart from D00, partition rather than duplicate.
+        if full_smoke[0]['id'] != 'D00':
+            raise ValueError('missing legal D00 control')
+        smoke = [full_smoke[0]]+[c for i,c in enumerate(full_smoke)
+                                if i % shard_count == shard_index and c['id'] != 'D00']
+        exceptions = [c for i,c in enumerate(all_exceptions) if i % shard_count == shard_index]
+        corpus = smoke
+        plan = json.dumps(dict(legal=full_smoke,exceptions=all_exceptions),
+                          sort_keys=True,separators=(',',':')).encode()
+        shard = dict(index=shard_index,count=shard_count,legal_control='D00',
+                     requested_random_count=count,requested_smoke_random_count=smoke_random_count,
+                     parent_legal_count=len(full_smoke),parent_exception_count=len(all_exceptions),
+                     parent_plan_sha256=hashlib.sha256(plan).hexdigest())
+    data = jsonl(corpus)
     write_text(output/'cases.jsonl',data)
-    smoke = directed+random[:smoke_random_count]
-    write_text(output/'cases.h',emit_header(smoke))
-    asm,header = emit_stubs(smoke)
+    write_text(output/'cases.h',emit_header(smoke,exceptions))
+    asm,header = emit_stubs(smoke,exceptions)
     write_text(output/'word-sites.S',asm)
     write_text(output/'stubs.h',header)
-    write_text(output/'exceptions.json',json.dumps(exception_cases(),sort_keys=True,indent=2)+'\n')
+    write_text(output/'exceptions.json',json.dumps(exceptions,sort_keys=True,indent=2)+'\n')
     sources = {p.name:hashlib.sha256(p.read_bytes()).hexdigest()
                for p in (Path(__file__),Path(__file__).with_name('vdot_model.py'))}
     manifest = dict(contract_id=CONTRACT_ID,model_version=MODEL_VERSION,generator_version=GENERATOR_VERSION,
                     prng='xorshift32-v1-low-byte',seed=f'0x{seed:08x}',random_count=count,
                     directed_count=len(directed),total=len(directed)+count,smoke_count=len(smoke),
                     byte_order='little',register_hex_order='most-significant-byte-first',source_sha256=sources,
-                    cases_sha256=hashlib.sha256(data).hexdigest(),exception_count=len(exception_cases()))
+                    cases_sha256=hashlib.sha256(data).hexdigest(),exception_count=len(exceptions))
+    if shard:
+        manifest['shard']=shard
+        manifest['random_count']=sum('random' in c['tags'] for c in corpus)
+        manifest['directed_count']=len(corpus)-manifest['random_count']
+        manifest['total']=len(corpus)
     manifest['coverage_profile']=coverage_profile
     manifest['coverage'] = dict(operand_registers=sorted({c[k] for c in smoke for k in ('vd','vs1','vs2')}),
         operand_tuple_count=len({(c['vd'],c['vs1'],c['vs2']) for c in smoke}),
@@ -248,5 +278,7 @@ if __name__ == '__main__':
     parser.add_argument('--seed',type=lambda s:int(s,0),default=SEED)
     parser.add_argument('--smoke-random-count',type=int,default=32)
     parser.add_argument('--coverage-profile',choices=('legacy','expanded'),default='legacy')
+    parser.add_argument('--shard-index',type=int,default=0)
+    parser.add_argument('--shard-count',type=int,default=1)
     args = parser.parse_args()
-    print(json.dumps(generate(args.output,args.random_count,args.seed,args.smoke_random_count,args.coverage_profile),sort_keys=True))
+    print(json.dumps(generate(args.output,args.random_count,args.seed,args.smoke_random_count,args.coverage_profile,args.shard_index,args.shard_count),sort_keys=True))

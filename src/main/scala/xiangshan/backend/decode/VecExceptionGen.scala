@@ -274,6 +274,11 @@ class VecExceptionGen(implicit p: Parameters) extends XSModule{
   // 8. vstart Illegal
   private val vstartIllegal = isVArith && (io.vstart =/= 0.U)
 
+  // VL is checked at FU acceptance from the renamed VL operand. These fields
+  // are the per-instruction decode snapshot; policy bits do not restrict vdot.
+  private val vdotConfigIllegal = inst.isVDot &&
+    (io.vtype.vsew =/= VSew.e8 || io.vtype.vlmul =/= VLmul.m1)
+
   //vs1
   private val vs1vdRegNotOverlap = vs1RegHi < vdRegLo || vdRegHi < vs1RegLo
   private val vs1Constraint1 = vs1IsMask && vdIsMask || !vs1IsMask && !vdIsMask && vs1Eew === vdEew
@@ -291,7 +296,7 @@ class VecExceptionGen(implicit p: Parameters) extends XSModule{
 
   private val regOverlapIllegal = v0Overlap || vs1vdOverlap || vs2vdOverlap
 
-  io.illegalInst := instIllegal || villIllegal || eewIllegal || emulIllegal || regNumIllegal || regOverlapIllegal || vstartIllegal
+  io.illegalInst := instIllegal || villIllegal || eewIllegal || emulIllegal || regNumIllegal || regOverlapIllegal || vstartIllegal || vdotConfigIllegal
   dontTouch(instIllegal)
   dontTouch(villIllegal)
   dontTouch(eewIllegal)
