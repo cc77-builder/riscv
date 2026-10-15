@@ -65,7 +65,7 @@ def generate(output):
     source_root = Path(__file__).resolve().parents[2]
     names = ['team/tests/vdot_model.py', 'team/tests/generate_vdot_cases.py',
              'team/tests/generate_vdot_hardware_vectors.py',
-             'src/main/scala/xiangshan/backend/fu/vector/VdotExec.scala',
+             'team/legacy/james-vfex1/src/main/scala/xiangshan/backend/fu/vector/VdotExec.scala',
              'team/hardware/vdot/build.sbt', 'team/hardware/vdot/project/build.properties',
              'team/hardware/vdot/src/main/scala/EmitVdot.scala',
              'team/hardware/vdot/src/test/scala/VdotExecSpec.scala',

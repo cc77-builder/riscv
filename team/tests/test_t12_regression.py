@@ -55,6 +55,23 @@ class T12AcceptanceTests(unittest.TestCase):
     def test_cancelled_instruction_commits(self):
         extra='T12_COMMIT cycle=4 rob=0:5 pc=0x80000004 ftq=0:1\n'
         with self.assertRaisesRegex(ValueError,'cancelled'): self.run_check(fixture().replace('T12_ENQUEUE cycle=20',extra+'T12_ENQUEUE cycle=20'))
+    def cancelled_transaction(self, *, redirect_before_accept=False):
+        redirect_cycle=10 if redirect_before_accept else 12
+        events=[
+            'T12_ENQUEUE cycle=9 rob=0:8 pc=0x80000008 ftq=0:1 word=0x0294050b',
+            'T12_ACCEPT cycle=11 rob=0:8 pdest=4 vl=8 illegal=0',
+            'T12_VFEX4_ACCEPT cycle=11 rob=0:8 fu=0x800000000',
+            f'T12_REDIRECT cycle={redirect_cycle} rob=0:7 ftq=0:1',
+            'T12_RESPONSE cycle=14 rob=0:8 pdest=4 illegal=0 data=0x00000000fffffff8',
+        ]
+        events.sort(key=lambda line:int(line.split('cycle=')[1].split()[0]))
+        return fixture().replace('T12_ENQUEUE cycle=20','\n'.join(events)+'\nT12_ENQUEUE cycle=20')
+    def test_cancelled_inflight_response_rejected_without_commit(self):
+        with self.assertRaisesRegex(ValueError,'cancelled.*response'):
+            self.run_check(self.cancelled_transaction())
+    def test_cancelled_instruction_cannot_be_accepted(self):
+        with self.assertRaisesRegex(ValueError,'cancelled.*accept'):
+            self.run_check(self.cancelled_transaction(redirect_before_accept=True))
     def test_missing_writeback_pressure_is_incomplete(self):
         text='\n'.join(x for x in fixture().splitlines() if not x.startswith('T12_STALL'))
         self.assertEqual(self.run_check(text)['status'],'T12_COVERAGE_INCOMPLETE')

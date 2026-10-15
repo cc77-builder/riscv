@@ -140,11 +140,13 @@ def check(text, manifest, exit_code):
             require(key in entries,'accept without observed enqueue')
             require(pending is None,'two outstanding FU requests')
             e=entries[key]
+            require(not e['cancelled'] and not e['done'],'cancelled or retired instruction accepted')
             require(not e['accepted'],'duplicate FU accept')
             e['accepted']=True;e['pdest']=f['pdest'];pending=key
             require(f['vl']=='8' and f['illegal']=='0','unexpected illegal stress request')
         elif kind=='RESPONSE':
             require(pending==key,'response without matching accepted request')
+            require(not entries[key]['cancelled'],'cancelled request produced a response')
             require(entries[key]['pdest']==f['pdest'],'response identity changed')
             require(int(f['data'],16)>>32==0,'high 96 result bits are nonzero')
             require(f['illegal']=='0','unexpected stress exception')
