@@ -9,12 +9,12 @@ from statistics import median
 import check as c
 
 
-def fu_statistics(text):
+def fu_statistics(text, fu_latency=3):
     path=Path(__file__).resolve().parents[2]/'scripts/check-vdot-regression.py'
     spec=importlib.util.spec_from_file_location('t12_observer',path)
     module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
     events,_=module.extract_events(text)
-    events=module.normalize_fu_cycles(events)
+    events=module.normalize_fu_cycles(events, min_response_latency=fu_latency)
     pending=None;latencies=[];accepted=0;killed=0;stalls=0;committed=0
     intervals=[];previous=None
     for cycle,order,kind,f in sorted(events,key=lambda e:(e[0],e[1])):
@@ -37,7 +37,7 @@ def fu_statistics(text):
                 acceptance_interval_min=min(intervals,default=None),scope='all accepted transactions, including speculation; gated ticks normalized per parent handshake')
 
 
-def analyze(images,runs,stream_images,stream_runs,out,external=None):
+def analyze(images,runs,stream_images,stream_runs,out,external=None,fu_latency=3):
     out=Path(out);out.mkdir(parents=True,exist_ok=False)
     selected=[]
     for source,logs,only_stream in [(Path(images),Path(runs),False),(Path(stream_images),Path(stream_runs),True)]:
@@ -54,7 +54,7 @@ def analyze(images,runs,stream_images,stream_runs,out,external=None):
         result=c.verify(build,run,external)
         if image['suite']=='performance' and image['shard'] in (7,8,9):
             c.require(json.loads((build/'data/manifest.json').read_text()).get('shared_stream'),'stream input not shared')
-        fu=fu_statistics(c.read_text(run/'stderr.log'))
+        fu=fu_statistics(c.read_text(run/'stderr.log'), fu_latency=fu_latency)
         expected=sum(r['dots'] for r in result['samples'] if r['method']=='vdot')
         c.require(fu['committed']==expected,'FU/architectural dot count mismatch')
         result['fu']=fu
@@ -105,4 +105,5 @@ if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     for name in ('images','runs','stream-images','stream-runs','output'):p.add_argument('--'+name,type=Path,required=True)
     p.add_argument('--external',type=Path)
-    a=p.parse_args();analyze(a.images,a.runs,a.stream_images,a.stream_runs,a.output,json.loads(a.external.read_text()) if a.external else None)
+    p.add_argument('--fu-latency',type=int,choices=(2,3),default=3)
+    a=p.parse_args();analyze(a.images,a.runs,a.stream_images,a.stream_runs,a.output,json.loads(a.external.read_text()) if a.external else None,fu_latency=a.fu_latency)

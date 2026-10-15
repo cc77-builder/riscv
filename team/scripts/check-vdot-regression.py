@@ -58,7 +58,7 @@ VDOT_FU_TYPE = 0x800000000  # pinned FuType.vdot (bit 35)
 FU_EVENTS = {'ACCEPT', 'RESPONSE', 'KILL', 'STALL'}
 
 
-def normalize_fu_cycles(events):
+def normalize_fu_cycles(events, min_response_latency=3):
     """Anchor gated FU ticks to the *same* parent VFEX4 handshake.
 
     ExeUnit's Dispatcher connects in/out ready-valid without a register. Its
@@ -68,6 +68,7 @@ def normalize_fu_cycles(events):
     ROB cycles. Match every parent accept one-to-one and check the resulting time
     against surrounding un-gated records in the original stderr stream.
     """
+    require(min_response_latency in (2, 3), 'unsupported FU latency contract')
     parent = sorted((e for e in events if e[2]=='VFEX4_ACCEPT'
                      and int(e[3]['fu'],16)==VDOT_FU_TYPE), key=lambda e:e[0])
     child = sorted((e for e in events if e[2] in FU_EVENTS), key=lambda e:(e[0],e[1]))
@@ -83,7 +84,7 @@ def normalize_fu_cycles(events):
         require(active is not None and active[2]==fields['rob'], 'FU event without matching accepted request')
         cycle = active[1]+tick-active[0]
         if kind in ('RESPONSE','STALL'):
-            require(tick-active[0]>=3, 'FU response precedes E3')
+            require(tick-active[0]>=min_response_latency, f'FU response precedes E{min_response_latency}')
         mapped[order] = (cycle,order,kind,fields)
         if kind in ('RESPONSE','KILL'):
             last_end = cycle; active = None
@@ -106,7 +107,7 @@ def normalize_fu_cycles(events):
     return [mapped.get(e[1],e) for e in events]
 
 
-def check(text, manifest, exit_code):
+def check(text, manifest, exit_code, fu_latency=3):
     require(exit_code == 0, 'emulator exit code is not zero')
     require('The first instruction of core 0 has commited. Difftest enabled.' in text and 'The reference model is ' in text, 'missing DiffTest runtime banner')
     require(not re.search(r'T12_(?:MISMATCH|CSR_FAIL|SPEC_FAIL)|HIT BAD TRAP|Assertion failed|different at pc', text), 'failure in raw log')
@@ -120,7 +121,7 @@ def check(text, manifest, exit_code):
     require(len(begins)==1 and uart.count('T12_BEGIN')==1 and begins[0].start()<groups[0].start()
             and groups[-1].end()<summaries[0].start(), 'invalid begin/group/summary order')
     require(events,'missing RTL observer events')
-    events = normalize_fu_cycles(events)
+    events = normalize_fu_cycles(events, min_response_latency=fu_latency)
     # Verilog printf order across modules is not a hardware ordering. Stable cycle
     # order with retire/redirect before re-allocation models the queue boundaries.
     rank={'COMMIT':0,'REDIRECT':1,'ENQUEUE':2,'ACCEPT':3,'STALL':4,'RESPONSE':5,'KILL':6,'VFEX4_ACCEPT':7,'VFEX4_WAIT':8}
@@ -198,8 +199,9 @@ if __name__=='__main__':
     parser.add_argument('--manifest',required=True,type=Path)
     parser.add_argument('--exit-code',required=True,type=int)
     parser.add_argument('--output',type=Path)
+    parser.add_argument('--fu-latency',type=int,choices=(2,3),default=3)
     args=parser.parse_args()
-    result=check(args.log.read_text(errors='replace'),json.loads(args.manifest.read_text()),args.exit_code)
+    result=check(args.log.read_text(errors='replace'),json.loads(args.manifest.read_text()),args.exit_code,fu_latency=args.fu_latency)
     encoded=json.dumps(result,indent=2)+'\n'
     if args.output: args.output.write_text(encoded)
     print(encoded,end='')
