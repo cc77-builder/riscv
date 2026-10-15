@@ -1,0 +1,229 @@
+"""Strict offline T13 evidence checking. Integer counters never pass through float."""
+import argparse
+import hashlib
+import io
+import json
+from pathlib import Path
+import re
+import struct
+
+START, STOP = 0x51300013, 0x51400013
+COUNTERS = [0xc0202773, 0xc0002873, 0xc00028f3, 0xc02027f3]
+
+
+def require(condition, message):
+    if not condition:
+        raise ValueError(message)
+
+
+def sha(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def read_text(path):
+    # Preserve raw bytes for SHA; normalize UART CRLF only for parsing.
+    return io.TextIOWrapper(io.BytesIO(Path(path).read_bytes()), encoding='utf-8', newline=None).read()
+
+
+def signed(value, width):
+    return value - (1 << width) if value & (1 << (width-1)) else value
+
+
+def elf_kernels(path):
+    data = Path(path).read_bytes()
+    require(data[:6] == b'\x7fELF\x02\x01', 'ELF64 little endian required')
+    shoff = struct.unpack_from('<Q', data, 40)[0]
+    size, count = struct.unpack_from('<HH', data, 58)
+    sections = [struct.unpack_from('<IIQQQQIIQQ', data, shoff+i*size) for i in range(count)]
+    result = {}
+    for sec in sections:
+        if sec[1] != 2:
+            continue
+        strings = sections[sec[6]]
+        names = data[strings[4]:strings[4]+strings[5]]
+        for at in range(sec[4], sec[4]+sec[5], sec[9]):
+            name, _, _, section, address, length = struct.unpack_from('<IBBHQQ', data, at)
+            name = names[name:names.find(b'\0', name)].decode()
+            if not re.fullmatch(r't13_kernel_\d+', name):
+                continue
+            owner = sections[section]
+            offset = owner[4]+address-owner[3]
+            require(length % 4 == 0 and address % 64 == 0, 'kernel size/alignment')
+            words = {address+i:struct.unpack_from('<I', data, offset+i)[0] for i in range(0,length,4)}
+            require(all(w & 3 == 3 for w in words.values()), 'compressed kernel instruction')
+            result[int(name.rsplit('_',1)[1])] = words
+    require(result, 'no kernels')
+    return result
+
+
+def walk(words):
+    """Bounded machine-code walk; only the generated t6 loop may branch."""
+    starts = [pc for pc,w in words.items() if w == START]
+    stops = [pc for pc,w in words.items() if w == STOP]
+    require(len(starts) == len(stops) == 1, 'unique markers')
+    pc, stop = starts[0], stops[0]
+    result, t6 = [], None
+    while True:
+        require(pc in words and len(result) < 20000, 'escaped/unbounded kernel')
+        word = words[pc]
+        result.append((pc,word))
+        if pc == stop:
+            break
+        op, rd, rs1, rs2 = word & 127, (word>>7)&31, (word>>15)&31, (word>>20)&31
+        if rd == 31 and op == 0x13:
+            require(((word>>12)&7) == 0 and rs1 in (0,31), 'unsupported loop write')
+            t6 = (0 if rs1 == 0 else t6)+signed(word>>20,12)
+        if op == 0x63:
+            require((word>>12)&7 == 1 and rs1 == 31 and rs2 == 0 and t6 is not None, 'unexpected branch')
+            imm = ((word>>31)<<12) | (((word>>7)&1)<<11) | (((word>>25)&63)<<5) | (((word>>8)&15)<<1)
+            pc += signed(imm,13) if t6 != 0 else 4
+        else:
+            require(op not in (0x6f,0x67), 'call/jump inside window')
+            pc += 4
+    counters = [(pc,w) for pc,w in result if w in COUNTERS]
+    require([w for _,w in counters] == COUNTERS, 'counter order')
+    return result
+
+
+FIELDS = {
+ 'COUNTER_ENQUEUE': r'cycle=\s*(\d+) rob=(\d+):\s*(\d+) pc=0x([0-9a-f]+) word=0x([0-9a-f]+) empty=(\d+) wait=(\d+) block=(\d+)',
+ 'CSR_SAMPLE': r'cycle=\s*(\d+) addr=0x([0-9a-f]+) data=0x([0-9a-f]+) wen=(\d+)',
+ 'RETIRE': r'cycle=\s*(\d+) slot=(\d+) rob=(\d+):\s*(\d+) pc=0x([0-9a-f]+) word=0x([0-9a-f]+) count=(\d+) data=0x([0-9a-f]+)',
+}
+
+
+def parse_events(text):
+    events = {key:[] for key in FIELDS}
+    for line in text.splitlines():
+        if not line.startswith('T13_'):
+            continue
+        tag, _, body = line.partition(' ')
+        key = tag[4:]
+        require(key in FIELDS, 'unknown hardware event '+tag)
+        m = re.fullmatch(FIELDS[key],body)
+        require(m is not None, 'malformed hardware event '+line)
+        values = m.groups()
+        hexes = {'COUNTER_ENQUEUE':(3,4),'CSR_SAMPLE':(1,2),'RETIRE':(4,5,7)}[key]
+        v = [int(x,16 if i in hexes else 10) for i,x in enumerate(values)]
+        if key == 'COUNTER_ENQUEUE':
+            row = dict(zip(('cycle','flag','rob','pc','word','empty','wait','block'),v))
+        elif key == 'CSR_SAMPLE':
+            row = dict(zip(('cycle','addr','data','wen'),v))
+        else:
+            row = dict(zip(('cycle','slot','flag','rob','pc','word','count','data'),v))
+        require(all(x >= 0 for x in v) and row.get('data',0) < 1<<64, 'event overflow')
+        events[key].append(row)
+    for key, rows in events.items():
+        require(all(a['cycle'] <= b['cycle'] for a,b in zip(rows,rows[1:])), 'event time reversal '+key)
+    return events
+
+
+def trace_windows(events, manifest, kernels):
+    retires = events['RETIRE']
+    windows, current = [], None
+    for event in retires:
+        if event['word'] == START:
+            require(current is None, 'nested marker')
+            current = []
+        if current is not None:
+            current.append(event)
+        else:
+            # The active flag can include later slots on the stop-marker cycle.
+            require(windows and event['cycle'] == windows[-1][-1]['cycle'] and event['word'] not in COUNTERS, 'retire outside marker')
+        if event['word'] == STOP:
+            require(current is not None, 'stop without start')
+            windows.append(current)
+            current = None
+    require(current is None and len(windows) == len(manifest['plan']), 'missing/extra windows')
+    enq, samples = events['COUNTER_ENQUEUE'], events['CSR_SAMPLE']
+    require(len(enq) == len(samples) == 4*len(windows), 'counter event count')
+    output = []
+    for index,(window,entry) in enumerate(zip(windows,manifest['plan'])):
+        row = manifest['rows'][entry['index']]
+        path = walk(kernels[entry['index']])
+        pos = 0
+        for event in window:
+            require(pos < len(path), 'extra retired instruction')
+            require((event['pc'],event['word']) == path[pos], f'retirement PC/word mismatch seq={index} position={pos}')
+            require(1 <= event['count'] <= 8, 'retirement count range')
+            # Compressed ROB entries must cover contiguous, non-control words.
+            covered = path[pos:pos+event['count']]
+            require(len(covered) == event['count'], 'retirement overrun')
+            if len(covered)>1:
+                require(all(pc == covered[0][0]+4*j for j,(pc,_) in enumerate(covered)), 'noncontiguous ROB compression')
+                require(all(w not in COUNTERS and w not in (START,STOP) and w&127 != 0x63 for _,w in covered), 'control in compressed retirement')
+            pos += event['count']
+        require(pos == len(path), 'incomplete retirement')
+        counters = [e for e in window if e['word'] in COUNTERS]
+        require([e['word'] for e in counters] == COUNTERS, 'retired counter sequence')
+        local_samples = samples[4*index:4*index+4]
+        for j,(q,s,t) in enumerate(zip(enq[4*index:4*index+4],local_samples,counters)):
+            require(all(q[k] == t[k] for k in ('flag','rob','pc','word')), 'counter identity mismatch')
+            require(q['cycle'] <= s['cycle'] < t['cycle'] and s['addr'] == COUNTERS[j]>>20 and s['wen'] == 0, 'counter sampling bounds')
+            require(s['data'] == t['data'], 'CSR sample/writeback mismatch')
+            # Every counter is immediately preceded/followed by a retiring
+            # fence in v2. No inference from rdcycle serialization is needed.
+            k = window.index(t)
+            require(k > 0 and window[k-1]['word'] == 0x0330000f, 'missing previous fence')
+            require(window[k-1]['cycle'] < s['cycle'], 'counter overtook previous fence')
+            require(k+1 < len(window) and window[k+1]['word'] == 0x0330000f, 'missing following fence')
+            require(window[k+1]['cycle'] > t['cycle'], 'following fence did not drain counter')
+        a,b,c,d = local_samples
+        cycles, instructions = c['data']-b['data'], d['data']-a['data']
+        require(0 < cycles < (1<<32) and instructions > 0, 'counter overflow/reversal')
+        require(cycles == c['cycle']-b['cycle'], 'cycle CSR/global clock disagreement')
+        retired_between = sum(e['count'] for e in window if a['cycle'] <= e['cycle'] < d['cycle'])
+        static_between = next(i for i,(_,w) in enumerate(path) if w == COUNTERS[-1])-next(i for i,(_,w) in enumerate(path) if w == COUNTERS[0])
+        require(instructions == retired_between == static_between, f'instret disagreement seq={index}: csr={instructions}, events={retired_between}, elf={static_between}')
+        body = path[next(i for i,(_,w) in enumerate(path) if w == COUNTERS[1])+2:next(i for i,(_,w) in enumerate(path) if w == COUNTERS[2])-1]
+        vdot_count = sum(w&0xfe00707f == 0x0200000b for _,w in body)
+        require(vdot_count == (row['dots'] if row['method']=='vdot' else 0), 'wrong custom instruction count')
+        output.append(dict(seq=index,id=row['id'],scenario=row['scenario'],method=row['method'],n=row['n'],dots=row['dots'],phase=entry['phase'],repeat=entry['repeat'],dataset=manifest['dataset'],cycles=cycles,instructions=instructions,counter_values=[s['data'] for s in local_samples],sample_ticks=[s['cycle'] for s in local_samples]))
+    return output
+
+
+def check_uart(text, manifest, results):
+    lines = [line for line in text.splitlines() if line.startswith('T13_')]
+    expected_begin = f"T13_BEGIN suite={manifest['suite']} dataset={manifest['dataset']} plan={len(manifest['plan'])} contract={manifest['contract']}"
+    require(lines and lines[0] == expected_begin, 'UART begin')
+    require(lines[-1] == f"T13_SUMMARY executed={len(manifest['plan'])} failures=0 scratch_control=1", 'UART summary')
+    require(lines.count('T13_CONTROLS detected=6 expected=6') == 1, 'negative controls')
+    require(lines.count('T13_SCRATCH_CONTROL allowed=1') == 1, 'scratch control')
+    records = [line for line in lines if line.startswith(('T13_P ','T13_CASE '))]
+    require(len(records) == len(results) and len(lines) == len(results)+4, 'UART record cardinality')
+    for line,item,entry in zip(records,results,manifest['plan']):
+        row = manifest['rows'][entry['index']]
+        if manifest['compact']:
+            require(line == f"T13_P seq={item['seq']} c={item['cycles']} i={item['instructions']}", 'UART/trace delta disagreement')
+        else:
+            a,b,c,d = item['counter_values']
+            dest = bytes.fromhex(row['expected'][row['operands'][0]])[::-1].hex()
+            wanted = f"T13_CASE seq={item['seq']} id={row['id']} phase={entry['phase']} repeat={entry['repeat']} result=PASS cycles={b},{c} instret={a},{d} iterations={row['iterations']} csr={row['vtype']}/8/0/3/1/7/0 dest={dest} checked_regs={32-len(row['scratch'])} stream_checked={len(row['outputs'])}"
+            require(line == wanted, 'UART/trace/state disagreement')
+    require('Difftest enabled.' in text and text.count('HIT GOOD TRAP') == 1, 'missing live DiffTest/GOOD TRAP')
+    require(text.find('HIT GOOD TRAP') > text.find('T13_SUMMARY'), 'trap before summary')
+    require(not re.search(r'T13_FAIL|HIT BAD TRAP|DIFFTEST FAIL|ABORT',text), 'failure in stdout')
+
+
+def verify(build, run):
+    build,run = Path(build),Path(run)
+    receipt = json.loads((run/'result.json').read_text())
+    require(receipt['exit_code'] == 0, 'EMU nonzero/incomplete')
+    for file,digest in receipt['files'].items():
+        require(sha(file) == digest, 'runtime input hash mismatch '+file)
+    manifest = json.loads((build/'data/manifest.json').read_text())
+    require(manifest['boundary'] == 'pinned-XiangShan-fence-serialized-v2','uncalibrated boundary')
+    for file,digest in manifest['files'].items():
+        require(sha(build/'data'/file) == digest, 'generated hash mismatch')
+    results = trace_windows(parse_events(read_text(run/'stderr.log')),manifest,elf_kernels(build/'vdot-perf.elf'))
+    check_uart(read_text(run/'stdout.log'),manifest,results)
+    return dict(status='PASS',scope='full-core DiffTest, exact state and calibrated CSR windows',samples=results,raw_sha256={f:sha(run/f) for f in ('stdout.log','stderr.log')},image_sha256=sha(build/'vdot-perf.bin'),elf_sha256=sha(build/'vdot-perf.elf'),manifest_sha256=sha(build/'data/manifest.json'))
+
+
+if __name__ == '__main__':
+    p=argparse.ArgumentParser(description=__doc__)
+    p.add_argument('--build',type=Path,required=True);p.add_argument('--run',type=Path,required=True)
+    p.add_argument('--output',type=Path,required=True)
+    a=p.parse_args();result=verify(a.build,a.run)
+    with a.output.open('x') as f:json.dump(result,f,indent=2);f.write('\n')
+    print(json.dumps(dict(status=result['status'],samples=len(result['samples']))))
