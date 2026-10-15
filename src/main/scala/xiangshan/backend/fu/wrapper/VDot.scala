@@ -15,7 +15,8 @@ object VDotOpType {
 
 /** Single-outstanding vdot-s8x8-r32-v0.1 functional unit.
   * E0 accepts sources/control, E1 registers products, E2 registers the result,
-  * and E3 is the earliest response handshake. Redirect kills precede response.
+  * and E3 is the earliest response handshake in the baseline. The opt-in T14
+  * variant captures products at E0 and responds at E2. Redirect kills precede response.
   */
 class VDot(cfg: FuConfig)(implicit p: Parameters) extends VecNonPipedFuncUnit(cfg) {
   require(VLEN == 128, "VDot requires VLEN=128")
@@ -25,10 +26,18 @@ class VDot(cfg: FuConfig)(implicit p: Parameters) extends VecNonPipedFuncUnit(cf
   require(!cfg.writeIntRf && !cfg.writeFpRf && !cfg.writeVlRf && !cfg.writeFakeIntRf)
   require(!cfg.writeFflags && !cfg.writeVxsat && !cfg.flushPipe && !cfg.replayInst)
 
+  // Elaboration-only ablation switch: no run-time mode mux or ISA change.
+  private val fuseInputProducts = sys.env.get("VDOT_T14_FUSED_INPUT") match {
+    case None | Some("0") => false
+    case Some("1") => true
+    case _ => throw new IllegalArgumentException("VDOT_T14_FUSED_INPUT must be 0 or 1")
+  }
+  println(s"VDot fusedInputProducts=$fuseInputProducts latency=${if (fuseInputProducts) 2 else 3}")
+
   private val idle :: mul :: reduce :: respond :: Nil = Enum(4)
   private val state = RegInit(idle)
-  private val src1Reg = Reg(UInt(128.W))
-  private val src2Reg = Reg(UInt(128.W))
+  private val src1Reg = if (fuseInputProducts) None else Some(Reg(UInt(128.W)))
+  private val src2Reg = if (fuseInputProducts) None else Some(Reg(UInt(128.W)))
   private val productsReg = Reg(Vec(8, SInt(16.W)))
   private val resultReg = Reg(UInt(128.W))
   private val illegalReg = Reg(Bool())
@@ -44,8 +53,8 @@ class VDot(cfg: FuConfig)(implicit p: Parameters) extends VecNonPipedFuncUnit(cf
 
   private val products = Module(new VDotProducts)
   private val sum = Module(new VDotReduce)
-  products.io.vs1 := src1Reg
-  products.io.vs2 := src2Reg
+  products.io.vs1 := (if (fuseInputProducts) vs1 else src1Reg.get)
+  products.io.vs2 := (if (fuseInputProducts) vs2 else src2Reg.get)
   sum.io.products := productsReg
 
   when(killed) {
@@ -54,10 +63,15 @@ class VDot(cfg: FuConfig)(implicit p: Parameters) extends VecNonPipedFuncUnit(cf
     switch(state) {
       is(idle) {
         when(io.in.fire) {
-          src1Reg := vs1
-          src2Reg := vs2
           illegalReg := illegalInput
-          state := mul
+          if (fuseInputProducts) {
+            productsReg := products.io.products
+            state := reduce
+          } else {
+            src1Reg.get := vs1
+            src2Reg.get := vs2
+            state := mul
+          }
         }
       }
       is(mul) {
