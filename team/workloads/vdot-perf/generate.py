@@ -162,7 +162,7 @@ def array(values):
     return '{' + ','.join('{'+','.join('0x'+v[i:i+2] for i in range(0,32,2))+'}' for v in values) + '}'
 
 
-def generate(output, suite, dataset, shard=0, shards=1):
+def generate(output, suite, dataset, shard=0, shards=1, shared_stream=False):
     out = Path(output)
     out.mkdir(parents=True, exist_ok=False)
     rows, plan = corpus(suite, dataset)
@@ -181,10 +181,16 @@ def generate(output, suite, dataset, shard=0, shards=1):
               'typedef void (*entry_t)(const void *, void *, const void *, void *);',
               'struct t13_case { const char *id, *scenario, *method; entry_t entry; unsigned iterations, dots, scratch, vtype, stream_count, dest; const unsigned char (*stream)[16], (*outputs)[16]; _Alignas(16) unsigned char before[32][16], expected[32][16]; };']
     records = []
+    stream_names = {}
     for index, row in enumerate(rows):
         name = f't13_kernel_{index}'
         header.append(f'extern void {name}(const void *, void *, const void *, void *);')
-        header.append(f'static const unsigned char stream_{index}[][16] = '+array(row['stream'] or ['00'*16])+';')
+        stream_key = tuple(row['stream']) if shared_stream else (index,)
+        if stream_key not in stream_names:
+            stream_names[stream_key] = f'stream_{index}'
+            alignment = '_Alignas(64) ' if shared_stream else ''
+            header.append(f'{alignment}static const unsigned char stream_{index}[][16] = '+array(row['stream'] or ['00'*16])+';')
+        stream_name = stream_names[stream_key]
         header.append(f'static const unsigned char outputs_{index}[][16] = '+array(row['outputs'] or ['00'*16])+';')
         pre = ['li t0, 0x6600', 'csrs mstatus, t0', 'csrwi vstart, 0', 'csrwi vcsr, 7',
                'vsetivli zero, 16, e8, m1, tu, mu']
@@ -211,7 +217,7 @@ def generate(output, suite, dataset, shard=0, shards=1):
         asm += [f'.size {name}, .-{name}']
         mask = sum(1 << i for i in row['scratch'])
         records.append('{'+f'"{row["id"]}","{row["scenario"]}","{row["method"]}",{name},'+
-                       f'{row["iterations"]},{row["dots"]},{mask}U,{row["vtype"]},{len(row["outputs"])},{row["operands"][0]},stream_{index},outputs_{index},'+
+                       f'{row["iterations"]},{row["dots"]},{mask}U,{row["vtype"]},{len(row["outputs"])},{row["operands"][0]},{stream_name},outputs_{index},'+
                        array(row['before'])+','+array(row['expected'])+'}')
     header += ['static const struct t13_case cases[] = {', ',\n'.join(records), '};',
                'static const struct { unsigned index, repeat; const char *phase; } plan[] = {',
@@ -225,6 +231,7 @@ def generate(output, suite, dataset, shard=0, shards=1):
                     baseline_source='f090665130107282be0990a7664aebf26e491b87',
                     shard=shard, shards=shards, compact=suite == 'performance',
                     boundary='pinned-XiangShan-fence-serialized-v2',
+                    shared_stream=shared_stream,
                     rows=rows, plan=plan, files={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in out.iterdir()})
     (out/'manifest.json').write_text(json.dumps(manifest, indent=2)+'\n')
     return manifest
@@ -237,6 +244,7 @@ if __name__ == '__main__':
     parser.add_argument('--dataset', type=int, choices=(0,1,2), default=0)
     parser.add_argument('--shard', type=int, default=0)
     parser.add_argument('--shards', type=int, default=1)
+    parser.add_argument('--shared-stream', action='store_true')
     args = parser.parse_args()
-    result = generate(args.output, args.suite, args.dataset, args.shard, args.shards)
+    result = generate(args.output, args.suite, args.dataset, args.shard, args.shards, args.shared_stream)
     print(json.dumps({'suite':args.suite, 'dataset':args.dataset, 'rows':len(result['rows']), 'plan':len(result['plan'])}))

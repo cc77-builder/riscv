@@ -31,8 +31,11 @@ def build(args):
     images=[]
     for suite,dataset,shards in [('functional',0,9)]+[('performance',i,13) for i in range(3)]:
         for shard in range(shards):
+            if args.stream_only and not (suite=='performance' and shard in (7,8,9)):
+                continue
             name=f'{suite}-d{dataset}-s{shard:02d}';d=out/name;d.mkdir()
-            subprocess.run(['python3','-B',str(Path(__file__).with_name('generate.py')),'--output',str(d/'data'),'--suite',suite,'--dataset',str(dataset),'--shard',str(shard),'--shards',str(shards)],check=True,stdout=subprocess.DEVNULL)
+            extra=['--shared-stream'] if args.stream_only else []
+            subprocess.run(['python3','-B',str(Path(__file__).with_name('generate.py')),'--output',str(d/'data'),'--suite',suite,'--dataset',str(dataset),'--shard',str(shard),'--shards',str(shards)]+extra,check=True,stdout=subprocess.DEVNULL)
             cmd='source team/scripts/activate.sh\nexport AM_HOME='+shlex.quote(str(args.am.resolve()))+'\n'+shlex.join(['make','-C','team/workloads/vdot-perf','ARCH=riscv64-xs','MARCH=rv64gcv','T13_DATA='+str(d/'data'),'T13_OBJ_ROOT='+str(d/'objects'),'BINARY='+str(d/'vdot-perf'),'-j1'])
             start=now()
             with (d/'build.log').open('wb') as f:r=subprocess.run(['bash','-c',cmd],cwd=ROOT,stdout=f,stderr=subprocess.STDOUT)
@@ -72,6 +75,7 @@ def run(args):
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);sub=p.add_subparsers(dest='action',required=True)
     b=sub.add_parser('build');b.add_argument('--output',type=Path,required=True);b.add_argument('--am',type=Path,required=True)
+    b.add_argument('--stream-only',action='store_true')
     r=sub.add_parser('run');r.add_argument('--output',type=Path,required=True);r.add_argument('--images',type=Path,required=True)
     for name in ('emu','reference','flash'):r.add_argument('--'+name,type=Path,required=True)
     r.add_argument('--jobs',type=int,default=8)
