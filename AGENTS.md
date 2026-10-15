@@ -1,6 +1,12 @@
 # 团队 Agent 入口
 
-## 当前本地阶段：T12 自动回归通过，待人工复核与发布
+## 当前本地阶段：T13 公平周期比较完成，尚未发布
+
+先读 [T13 报告](team/docs/t13-performance.md)、[测量约定](team/spec/measurement.md) 与 [离线证据](team/evidence/t13-performance-20261015/README.md)。T12 已按用户指示发布到 zjhwork，基线为 `2c0bf8e283d400c1c946ca75f890f266d7758411`；本轮 T13 在独立本地分支 `local/t13-performance-20261015` 完成，用户明确要求做完先不上传 GitHub。没有 Push、PR、main 合并或新的人工 ACK。
+
+本轮 108 次全核功能调用、1,404 个性能窗口及 13 个校准窗口通过；三个全新 EMU 重放逐窗口一致。硬件仅添加观察器，实际 EMU 来源与后续软件/文档提交分开固定。先由队友复核测量合同和离线数据，再按计划 G5 选择一个优化做 A/B。不能把通用调用中 CSR 管理开销产生的最大比值宣传为通用应用收益；PPA、虚拟化、官方语义确认及人工签字未由本轮补齐。
+
+## 历史阶段：T12 自动回归通过时的记录
 
 先读 [T12 报告](team/docs/t12-regression.md) 与 [可离线复核的证据](team/evidence/t12-regression-20261014/README.md)。本轮本地分支 `local/t12-regression` 基于 `6bf3c2c3be0c88ff3a020786ff10cbec9aa126d3`；11 项实际运行满足预期，主机 108 项检查通过。硬件源码、执行软件 SHA 和实际二进制摘要分别列出，不把文档提交当作重新构建。共享分支尚未发布本轮成果；禁止据此虚构 START/RELEASE/ACK 或人工评审。下一项为公平 RVV/vdot 周期对照；T13、PPA、虚拟化和人工签字均未完成。以下保留 T10/T11 历史阶段信息。
 
