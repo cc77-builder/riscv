@@ -1,4 +1,8 @@
-"""Offline, finite T12 build/run driver, adapted from the preserved intake driver.
+"""Historical trace-off VFEX4 profile (fcb16a8 / fixed EMU pins).
+The integrated trace-enabled VFEX4 uses t12-regression.sh. Reproduce this
+software profile in a separate worktree at its recorded source; never remove
+the hardware guard to reuse its binary for a different production tree.
+Offline, finite T12 build/run driver, adapted from the preserved intake driver.
 Reuses the accepted EMU and reference; requires committed source and fresh paths.
 """
 import argparse,datetime,gzip,hashlib,importlib.util,json,os,signal,subprocess,sys,time

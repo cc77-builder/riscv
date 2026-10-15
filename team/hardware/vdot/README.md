@@ -1,6 +1,8 @@
+> 2026-10-15：本目录仅验证历史 VFEX1 执行器，不是当前 VFEX4 生产验收入口。当前入口见 [整合报告](../../docs/james-integration-20261015.md)。
+
 # 独立 vdot 硬件执行模块
 
-合同 `vdot-s8x8-r32-v0.1`。生产源码：[VdotExec.scala](../../../src/main/scala/xiangshan/backend/fu/vector/VdotExec.scala)。采用精确的8路signed int8乘法和平衡加法树，可由处理器在退休前投机发射，响应携带身份并支持取消；不包含数值预测器或训练表。
+合同 `vdot-s8x8-r32-v0.1`。历史候选源码：[VdotExec.scala](../../legacy/james-vfex1/src/main/scala/xiangshan/backend/fu/vector/VdotExec.scala)。采用精确的8路signed int8乘法和平衡加法树，可由处理器在退休前投机发射，响应携带身份并支持取消；不包含数值预测器或训练表。
 
 本模块已能独立生成SystemVerilog并用Verilator仿真。当前不依赖香山参数或未初始化子模块；全核译码、调度、RF、写回、ROB及DiffTest接入仍待完成。这是T07的运算与局部控制实现，不等于T06/T07/T10整项验收。
 
