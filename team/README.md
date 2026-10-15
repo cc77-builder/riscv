@@ -1,8 +1,10 @@
 # 三人团队：项目计划与开发入口
 
-> **2026-10-13 最新验收：** T10 最小全核接入和 T11 固定功能矩阵已通过，117唯一用例（80合法/37异常）、vdot bit100差分负控及同镜像正常恢复均有完整原始日志。详见 [当前验收报告](docs/t10-t11-acceptance-20261013.md) 和 [证据入口](evidence/t10-t11-fullcore-20261013/README.md)。下方早期“尚未接入/未实现NEMU”等进度是历史快照，以本段链接的分层状态为准；仍未完成全核乱序控制压力、虚拟化、性能及PPA验收。
+> **2026-10-14 本机 T12 自动回归通过，待人工复核/发布。** 11 项全核运行满足预期，控制压力覆盖和原功能矩阵通过。当前成果仅在独立本地分支 `local/t12-regression`；共享远端进度没有随本地结果自动改变。见 [T12 报告](docs/t12-regression.md) 和 [完整证据](evidence/t12-regression-20261014/README.md)。下方 10 月 13 日及更早文字为历史阶段记录。
 
-> **2026-10-13 最新状态：已完成合并发布。** 用户确认双方无人开发后，已将验收候选 `734353d01e963610ac864fdddd81e01e91f521fe` 普通快进发布到团队及 Fork 的 zufan，两端 SHA 回读一致。见 [发布记录](merge/2026-10-13-zjhwork-into-zufan.publication.md)；[完整局部验收](merge/2026-10-13-zjhwork-into-zufan.codex-review.md)通过组合 22+10000 组、FU 6 类/71258 周期。后续两人共享 zufan，下一班须核对最终 SHA 并记录 ACK/START。
+> **2026-10-13 历史验收：** T10 最小全核接入和 T11 固定功能矩阵已通过，117唯一用例（80合法/37异常）、vdot bit100差分负控及同镜像正常恢复均有完整原始日志。详见 [当前验收报告](docs/t10-t11-acceptance-20261013.md) 和 [证据入口](evidence/t10-t11-fullcore-20261013/README.md)。下方早期“尚未接入/未实现NEMU”等进度是历史快照，以本段链接的分层状态为准；仍未完成全核乱序控制压力、虚拟化、性能及PPA验收。
+
+> **2026-10-13 历史发布状态：已完成合并发布。** 用户确认双方无人开发后，已将验收候选 `734353d01e963610ac864fdddd81e01e91f521fe` 普通快进发布到团队及 Fork 的 zufan，两端 SHA 回读一致。见 [发布记录](merge/2026-10-13-zjhwork-into-zufan.publication.md)；[完整局部验收](merge/2026-10-13-zjhwork-into-zufan.codex-review.md)通过组合 22+10000 组、FU 6 类/71258 周期。后续两人共享 zufan，下一班须核对最终 SHA 并记录 ACK/START。
 
 本队以《香山 vdot 赛题：执行计划》和《香山 vdot 赛题：三人分工与 Git 协作》作为项目计划文档，分别安排里程碑、验收标准和三人职责。成员先阅读两份计划，再按认领的任务推进开发。
 
@@ -29,7 +31,7 @@
 | 今天用仓库内脚本重新运行的验证结果 | [脚本验证记录](evidence/script-check-20261010/README.md) |
 | 源码锁定版本 | [versions.env](versions.env) |
 
-## 当前开发进度
+## 历史开发进度（T07 时点）
 
 T05 数学模型、T07-A 组合算术和 T07-B 独立 FU 均已有通过证据；T06 人工评审及接入验证仍待完成。FU 在真实香山 Bundle/RobPtr 下通过 10,022 组算术输入、反压、非法配置、取消、复位和随机控制测试。复现运行 `bash team/scripts/check-vdot-fu.sh`；纯算术入口 `bash team/scripts/check-vdot-datapath.sh` 继续保留。下一步按计划推进 NEMU 扩展与 T10 译码/VFEX4 接入，再做全核 DiffTest，见 [RTL 设计第 8 节](spec/rtl-interface.md#8-实施顺序三人交接与完成标准)。
 

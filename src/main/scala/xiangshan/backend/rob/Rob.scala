@@ -1476,6 +1476,28 @@ class RobImp(override val wrapper: Rob)(implicit p: Parameters, params: BackendP
     wpc(i) := SignExt(commitDebugUop(i).pc, XLEN)
   }
 
+
+  if (sys.env.get("VDOT_T12_TRACE").contains("1")) {
+    // Instantiate outside when: GTimer is a local register, not a global read.
+    require(!p(xiangshan.DebugOptionsKey).ResetGen, "T12 trace requires the common simulation reset")
+    val t12Cycle = GTimer()
+    for (i <- 0 until RenameWidth) {
+      val u = io.enq.req(i).bits
+      when(canEnqueue(i) && u.fuType === FuType.vdot.U) {
+        printf(p"T12_ENQUEUE cycle=${t12Cycle} rob=${allocatePtrVec(i).flag}:${allocatePtrVec(i).value} pc=0x${Hexadecimal(u.pc)} ftq=${u.ftqPtr.flag}:${u.ftqPtr.value} word=0x${Hexadecimal(u.instr)}\n")
+      }
+    }
+    for (i <- 0 until CommitWidth) {
+      val u = commitDebugUop(i)
+      when(io.commits.isCommit && io.commits.commitValid(i) && u.fuType === FuType.vdot.U) {
+        printf(p"T12_COMMIT cycle=${t12Cycle} rob=${deqPtrVec(i).flag}:${deqPtrVec(i).value} pc=0x${Hexadecimal(u.pc)} ftq=${u.ftqPtr.flag}:${u.ftqPtr.value}\n")
+      }
+    }
+    when(io.redirect.valid) {
+      printf(p"T12_REDIRECT cycle=${t12Cycle} rob=${io.redirect.bits.robIdx.flag}:${io.redirect.bits.robIdx.value} ftq=${io.redirect.bits.ftqIdx.flag}:${io.redirect.bits.ftqIdx.value}\n")
+    }
+  }
+
   if (env.EnableDifftest || env.AlwaysBasicDiff) {
     // These are the structures used by difftest only and should be optimized after synthesis.
     val dt_eliminatedMove = Mem(RobSize, Bool())

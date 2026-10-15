@@ -1,0 +1,86 @@
+diff --git a/src/main/scala/xiangshan/backend/exu/ExeUnit.scala b/src/main/scala/xiangshan/backend/exu/ExeUnit.scala
+index ad652ef..d74be83 100644
+--- a/src/main/scala/xiangshan/backend/exu/ExeUnit.scala
++++ b/src/main/scala/xiangshan/backend/exu/ExeUnit.scala
+@@ -225,6 +225,18 @@ class ExeUnitImp(
+   in1ToN.io.in.bits := io.in.bits
+   io.in.ready := !busy && in1ToN.io.in.ready
+ 
++  if (sys.env.get("VDOT_T12_TRACE").contains("1") && fuCfgs.contains(xiangshan.backend.fu.FuConfig.VDotCfg)) {
++    // Instantiate outside when: GTimer is a local register, not a global read.
++    require(!p(xiangshan.DebugOptionsKey).ResetGen, "T12 trace requires the common simulation reset")
++    val t12Cycle = GTimer()
++    when(io.in.fire) {
++      printf(p"T12_VFEX4_ACCEPT cycle=${t12Cycle} rob=${io.in.bits.robIdx.flag}:${io.in.bits.robIdx.value} fu=0x${Hexadecimal(io.in.bits.fuType)}\n")
++    }
++    when(io.in.valid && !io.in.ready) {
++      printf(p"T12_VFEX4_WAIT cycle=${t12Cycle} rob=${io.in.bits.robIdx.flag}:${io.in.bits.robIdx.value} fu=0x${Hexadecimal(io.in.bits.fuType)} busy=${busy}\n")
++    }
++  }
++
+   def pipelineReg(init: ExuInput, valid: Bool, latency: Int, flush: ValidIO[Redirect]): (Seq[ExuInput], Seq[Bool]) = {
+     val validVec = valid +: Seq.fill(latency)(RegInit(false.B))
+     val inVec = init +: Seq.fill(latency)(Reg(new ExuInput(exuParams)))
+diff --git a/src/main/scala/xiangshan/backend/fu/wrapper/VDot.scala b/src/main/scala/xiangshan/backend/fu/wrapper/VDot.scala
+index 9e393f3..715eabf 100644
+--- a/src/main/scala/xiangshan/backend/fu/wrapper/VDot.scala
++++ b/src/main/scala/xiangshan/backend/fu/wrapper/VDot.scala
+@@ -99,4 +99,25 @@ class VDot(cfg: FuConfig)(implicit p: Parameters) extends VecNonPipedFuncUnit(cf
+     assert(io.out.valid, "VDot lost a stalled response")
+     assert(io.out.bits.asUInt === heldResponse, "VDot changed a stalled response")
+   }
++
++  // Opt-in simulation observation only: no signal feeds back into the datapath.
++  // Build in a fresh output directory with VDOT_T12_TRACE=1; archive that setting.
++  if (sys.env.get("VDOT_T12_TRACE").contains("1")) {
++    // Instantiate outside when: GTimer is a local register, not a global read.
++    require(!p(xiangshan.DebugOptionsKey).ResetGen, "T12 trace requires the common simulation reset")
++    val t12Cycle = utility.GTimer()
++    when(io.in.fire) {
++      printf(p"T12_ACCEPT cycle=${t12Cycle} rob=${inCtrl.robIdx.flag}:${inCtrl.robIdx.value} pdest=${inCtrl.pdest} vl=${vl} illegal=${illegalInput}\n")
++    }
++    when(killed && !reset.asBool) {
++      printf(p"T12_KILL cycle=${t12Cycle} rob=${outCtrl.robIdx.flag}:${outCtrl.robIdx.value} redirect=${io.flush.bits.robIdx.flag}:${io.flush.bits.robIdx.value} state=${state}\n")
++    }
++    when(io.out.valid && !io.out.ready) {
++      printf(p"T12_STALL cycle=${t12Cycle} rob=${outCtrl.robIdx.flag}:${outCtrl.robIdx.value}\n")
++    }
++    when(io.out.fire) {
++      printf(p"T12_RESPONSE cycle=${t12Cycle} rob=${outCtrl.robIdx.flag}:${outCtrl.robIdx.value} pdest=${outCtrl.pdest} illegal=${illegalReg} data=0x${Hexadecimal(resultReg)}\n")
++    }
++  }
++
+ }
+diff --git a/src/main/scala/xiangshan/backend/rob/Rob.scala b/src/main/scala/xiangshan/backend/rob/Rob.scala
+index e8c9e56..e82a536 100644
+--- a/src/main/scala/xiangshan/backend/rob/Rob.scala
++++ b/src/main/scala/xiangshan/backend/rob/Rob.scala
+@@ -1476,6 +1476,28 @@ class RobImp(override val wrapper: Rob)(implicit p: Parameters, params: BackendP
+     wpc(i) := SignExt(commitDebugUop(i).pc, XLEN)
+   }
+ 
++
++  if (sys.env.get("VDOT_T12_TRACE").contains("1")) {
++    // Instantiate outside when: GTimer is a local register, not a global read.
++    require(!p(xiangshan.DebugOptionsKey).ResetGen, "T12 trace requires the common simulation reset")
++    val t12Cycle = GTimer()
++    for (i <- 0 until RenameWidth) {
++      val u = io.enq.req(i).bits
++      when(canEnqueue(i) && u.fuType === FuType.vdot.U) {
++        printf(p"T12_ENQUEUE cycle=${t12Cycle} rob=${allocatePtrVec(i).flag}:${allocatePtrVec(i).value} pc=0x${Hexadecimal(u.pc)} ftq=${u.ftqPtr.flag}:${u.ftqPtr.value} word=0x${Hexadecimal(u.instr)}\n")
++      }
++    }
++    for (i <- 0 until CommitWidth) {
++      val u = commitDebugUop(i)
++      when(io.commits.isCommit && io.commits.commitValid(i) && u.fuType === FuType.vdot.U) {
++        printf(p"T12_COMMIT cycle=${t12Cycle} rob=${deqPtrVec(i).flag}:${deqPtrVec(i).value} pc=0x${Hexadecimal(u.pc)} ftq=${u.ftqPtr.flag}:${u.ftqPtr.value}\n")
++      }
++    }
++    when(io.redirect.valid) {
++      printf(p"T12_REDIRECT cycle=${t12Cycle} rob=${io.redirect.bits.robIdx.flag}:${io.redirect.bits.robIdx.value} ftq=${io.redirect.bits.ftqIdx.flag}:${io.redirect.bits.ftqIdx.value}\n")
++    }
++  }
++
+   if (env.EnableDifftest || env.AlwaysBasicDiff) {
+     // These are the structures used by difftest only and should be optimized after synthesis.
+     val dt_eliminatedMove = Mem(RobSize, Bool())
