@@ -1,0 +1,626 @@
+[
+  {
+    "name": "clone",
+    "argv": [
+      "git",
+      "clone",
+      "--shared",
+      "--no-checkout",
+      "/mnt/c/Code/RVInno/riscv",
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015"
+    ],
+    "cwd": "/mnt/c/Code/RVInno/riscv",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 0.147
+  },
+  {
+    "name": "checkout",
+    "argv": [
+      "git",
+      "checkout",
+      "--detach",
+      "e5df93c7b"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 6.442
+  },
+  {
+    "name": "host-tests",
+    "argv": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "team/tests",
+      "-p",
+      "test_*.py"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 12.079
+  },
+  {
+    "name": "independent-model-tests",
+    "argv": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "team/models/vdot/tests",
+      "-p",
+      "test_*.py"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 1.114
+  },
+  {
+    "name": "source-and-oracles",
+    "argv": [
+      "python3",
+      "-B",
+      "team/scripts/check-vdot-integration-source.py"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 0.189
+  },
+  {
+    "name": "archive-recheck",
+    "argv": [
+      "python3",
+      "-B",
+      "team/scripts/check-t12-archive.py",
+      "team/evidence/t12-regression-20261014",
+      "--expected-source",
+      "117ecbf40e107872e046311f556cc4fdf3f733d7",
+      "--expected-emu",
+      "e879356c4f3ad027a708de3adbabb7285ab6e36196426854040460d1e394b4de",
+      "--expected-reference",
+      "efbed0774addc27eac38af1a19ab5d9c9dd5f179b5015f25ae7b80b966185bd4",
+      "--expected-flash",
+      "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 1.088
+  },
+  {
+    "name": "exception-judge-normal-build",
+    "argv": [
+      "gcc",
+      "-std=c11",
+      "-O2",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Iteam/workloads/vdot-exceptions",
+      "team/tests/test_exception_judge.c",
+      "team/workloads/vdot-exceptions/judge.c",
+      "-o",
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/exception-judge-normal"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 0.47
+  },
+  {
+    "name": "exception-judge-normal",
+    "argv": [
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/exception-judge-normal"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 0.006
+  },
+  {
+    "name": "exception-judge-ubsan-build",
+    "argv": [
+      "gcc",
+      "-std=c11",
+      "-O2",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-fsanitize=undefined",
+      "-fno-sanitize-recover=all",
+      "-Iteam/workloads/vdot-exceptions",
+      "team/tests/test_exception_judge.c",
+      "team/workloads/vdot-exceptions/judge.c",
+      "-o",
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/exception-judge-ubsan"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 0.5
+  },
+  {
+    "name": "exception-judge-ubsan",
+    "argv": [
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/exception-judge-ubsan"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 0.009
+  },
+  {
+    "name": "t12-judge-normal-build",
+    "argv": [
+      "gcc",
+      "-std=c11",
+      "-O2",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Iteam/workloads/vdot-exceptions",
+      "team/tests/test_t12_judge.c",
+      "team/workloads/vdot-exceptions/judge.c",
+      "-o",
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/t12-judge-normal"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 0.443
+  },
+  {
+    "name": "t12-judge-normal",
+    "argv": [
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/t12-judge-normal"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 0.019
+  },
+  {
+    "name": "t12-judge-ubsan-build",
+    "argv": [
+      "gcc",
+      "-std=c11",
+      "-O2",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-fsanitize=undefined",
+      "-fno-sanitize-recover=all",
+      "-Iteam/workloads/vdot-exceptions",
+      "team/tests/test_t12_judge.c",
+      "team/workloads/vdot-exceptions/judge.c",
+      "-o",
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/t12-judge-ubsan"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 0.496
+  },
+  {
+    "name": "t12-judge-ubsan",
+    "argv": [
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/t12-judge-ubsan"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 0.026
+  },
+  {
+    "name": "java-version",
+    "argv": [
+      "java",
+      "-version"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 0.164
+  },
+  {
+    "name": "java-version",
+    "argv": [
+      "java",
+      "-version"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 0.142
+  },
+  {
+    "name": "mill-version",
+    "argv": [
+      "bash",
+      "/home/amesotten/.cache/codex-rvinno/t06/tools/mill-0.12.3",
+      "--version"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 0.982
+  },
+  {
+    "name": "verilator-version",
+    "argv": [
+      "verilator",
+      "--version"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 0.098
+  },
+  {
+    "name": "gcc-version",
+    "argv": [
+      "gcc",
+      "--version"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 0.012
+  },
+  {
+    "name": "prepare-vectors",
+    "argv": [
+      "python3",
+      "-B",
+      "team/rtl/vdot/prepare_vectors.py",
+      "team/models/vdot/data",
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/vectors.tsv"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 0.078
+  },
+  {
+    "name": "datapath-elaborate",
+    "argv": [
+      "bash",
+      "/home/amesotten/.cache/codex-rvinno/t06/tools/mill-0.12.3",
+      "-i",
+      "-j",
+      "2",
+      "vdotDatapath.runMain",
+      "team.vdot.GenerateVDot",
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/datapath/rtl"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 13.029
+  },
+  {
+    "name": "datapath-lint",
+    "argv": [
+      "verilator",
+      "--lint-only",
+      "--assert",
+      "--top-module",
+      "VDotDatapath",
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/datapath/rtl/VDotDatapath.sv"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 0.061
+  },
+  {
+    "name": "datapath-build",
+    "argv": [
+      "verilator",
+      "--cc",
+      "--exe",
+      "--build",
+      "--assert",
+      "--top-module",
+      "VDotDatapath",
+      "--Mdir",
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/datapath/obj_dir",
+      "-j",
+      "2",
+      "-CFLAGS",
+      "-std=c++17 -O2",
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/datapath/rtl/VDotDatapath.sv",
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/rtl/vdot/datapath_test.cpp"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 3.032
+  },
+  {
+    "name": "datapath-simulation",
+    "argv": [
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/datapath/obj_dir/VVDotDatapath",
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/vectors.tsv"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 0.021
+  },
+  {
+    "name": "datapath-inject-bit-0",
+    "argv": [
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/datapath/obj_dir/VVDotDatapath",
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/vectors.tsv",
+      "--inject-bit=0"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 1,
+    "expected_exit_code": 1,
+    "seconds": 0.014
+  },
+  {
+    "name": "datapath-inject-bit-127",
+    "argv": [
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/datapath/obj_dir/VVDotDatapath",
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/vectors.tsv",
+      "--inject-bit=127"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 1,
+    "expected_exit_code": 1,
+    "seconds": 0.014
+  },
+  {
+    "name": "fu-elaborate",
+    "argv": [
+      "bash",
+      "/home/amesotten/.cache/codex-rvinno/t06/tools/mill-0.12.3",
+      "-i",
+      "-j",
+      "2",
+      "vdotFu.runMain",
+      "team.vdot.GenerateVDotFu",
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/fu/rtl"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 121.939
+  },
+  {
+    "name": "fu-lint",
+    "argv": [
+      "verilator",
+      "--lint-only",
+      "--assert",
+      "--top-module",
+      "VDotFuTestTop",
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/fu/rtl/VDotFuTestTop.sv"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 0.055
+  },
+  {
+    "name": "fu-build",
+    "argv": [
+      "verilator",
+      "--cc",
+      "--exe",
+      "--build",
+      "--assert",
+      "--top-module",
+      "VDotFuTestTop",
+      "--Mdir",
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/fu/obj_dir",
+      "-j",
+      "2",
+      "-CFLAGS",
+      "-std=c++17 -O2",
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/fu/rtl/VDotFuTestTop.sv",
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/rtl/vdot/fu_test.cpp"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 2.945
+  },
+  {
+    "name": "fu-simulation",
+    "argv": [
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/fu/obj_dir/VVDotFuTestTop",
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/vectors.tsv"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 0.057
+  },
+  {
+    "name": "fu-inject-identity",
+    "argv": [
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/fu/obj_dir/VVDotFuTestTop",
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/vectors.tsv",
+      "--inject-identity"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 1,
+    "expected_exit_code": 1,
+    "seconds": 0.06
+  },
+  {
+    "name": "fu-inject-cancel-leak",
+    "argv": [
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/fu/obj_dir/VVDotFuTestTop",
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/vectors.tsv",
+      "--inject-cancel-leak"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 1,
+    "expected_exit_code": 1,
+    "seconds": 0.055
+  },
+  {
+    "name": "decode-elaborate",
+    "argv": [
+      "bash",
+      "/home/amesotten/.cache/codex-rvinno/t06/tools/mill-0.12.3",
+      "-i",
+      "-j",
+      "2",
+      "vdotDecode.runMain",
+      "team.vdot.GenerateVDotDecode",
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/decode/rtl"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 26.542
+  },
+  {
+    "name": "decode-lint",
+    "argv": [
+      "verilator",
+      "--lint-only",
+      "--assert",
+      "--top-module",
+      "VDotDecodeTestTop",
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/decode/rtl/VDotDecodeTestTop.sv"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 0.459
+  },
+  {
+    "name": "decode-build",
+    "argv": [
+      "verilator",
+      "--cc",
+      "--exe",
+      "--build",
+      "--assert",
+      "--top-module",
+      "VDotDecodeTestTop",
+      "--Mdir",
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/decode/obj_dir",
+      "-j",
+      "2",
+      "-CFLAGS",
+      "-std=c++17 -O2",
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/decode/rtl/VDotDecodeTestTop.sv",
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/rtl/vdot/decode_test.cpp"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 86.144
+  },
+  {
+    "name": "decode-simulation",
+    "argv": [
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/decode/obj_dir/VVDotDecodeTestTop"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 0.789
+  },
+  {
+    "name": "fu-invalid-vlen",
+    "argv": [
+      "bash",
+      "/home/amesotten/.cache/codex-rvinno/t06/tools/mill-0.12.3",
+      "-i",
+      "-j",
+      "2",
+      "vdotFu.runMain",
+      "team.vdot.GenerateVDotFu",
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/invalid-vlen",
+      "--invalid-vlen"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 1,
+    "expected_exit_code": 1,
+    "seconds": 10.365
+  },
+  {
+    "name": "fu-trace-elaborate",
+    "argv": [
+      "bash",
+      "/home/amesotten/.cache/codex-rvinno/t06/tools/mill-0.12.3",
+      "-i",
+      "-j",
+      "2",
+      "vdotFu.runMain",
+      "team.vdot.GenerateVDotFu",
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/fu-trace/rtl"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 6.79
+  },
+  {
+    "name": "fu-trace-lint",
+    "argv": [
+      "verilator",
+      "--lint-only",
+      "--assert",
+      "--top-module",
+      "VDotFuTestTop",
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/fu-trace/rtl/VDotFuTestTop.sv"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 0.124
+  },
+  {
+    "name": "fu-trace-build",
+    "argv": [
+      "verilator",
+      "--cc",
+      "--exe",
+      "--build",
+      "--assert",
+      "--top-module",
+      "VDotFuTestTop",
+      "--Mdir",
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/fu-trace/obj_dir",
+      "-j",
+      "2",
+      "-CFLAGS",
+      "-std=c++17 -O2",
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/fu-trace/rtl/VDotFuTestTop.sv",
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/rtl/vdot/fu_test.cpp"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 3.105
+  },
+  {
+    "name": "fu-trace-simulation",
+    "argv": [
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/fu-trace/obj_dir/VVDotFuTestTop",
+      "/home/amesotten/.cache/codex-rvinno/integration-20261015/team/out/integration/vectors.tsv"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-20261015",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 7.879
+  }
+]
