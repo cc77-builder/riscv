@@ -1,5 +1,7 @@
 # 三人团队：项目计划与开发入口
 
+> **T13 交付至 zjhwork。** 用户已明确授权将本轮成果上传到 `cc77-builder/riscv` 的 `zjhwork`。代码、报告和验证证据版本为 `4526d857937def29ea1598a7c878aa539e2ef1f6`，本发布批次只补充入口说明，未改变硬件、工作负载或测量数据。见 [性能报告](docs/t13-performance.md) 和 [离线复核](evidence/t13-offline-review-20261015/README.md)。下方及归档中的“未上传”是发布前快照；队友人工复核仍待完成，不能把上传当作人工验收。
+
 > **2026-10-15 T13 本地自动验收完成，未上传 GitHub。** 固定版本的 RVV/vdot 公平周期对照通过 108 次全核功能调用与 1,404 个性能窗口，3 次重放一致。见 [T13 报告](docs/t13-performance.md)、[测量约定](spec/measurement.md) 和 [离线证据](evidence/t13-performance-20261015/README.md)。T12 已按用户要求发布到 `zjhwork`；T13 位于独立本地分支 `local/t13-performance-20261015`，待队友复核，未代签 ACK。后续可按计划 G5 选择单一优化做 A/B；PPA、虚拟化及人工签字仍未完成。
 
 > **2026-10-14 历史记录：当时本机 T12 自动回归通过，待人工复核/发布。** 11 项全核运行满足预期，控制压力覆盖和原功能矩阵通过。当前成果仅在独立本地分支 `local/t12-regression`；共享远端进度没有随本地结果自动改变。见 [T12 报告](docs/t12-regression.md) 和 [完整证据](evidence/t12-regression-20261014/README.md)。下方 10 月 13 日及更早文字为历史阶段记录。
