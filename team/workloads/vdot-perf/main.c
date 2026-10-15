@@ -29,12 +29,14 @@ static void decimal(uint64_t x) {
   do { buf[n++] = (char)('0' + x % 10); x /= 10; } while (x);
   while (n) _putc(buf[--n]);
 }
+#if !T13_COMPACT
 static void vector(const unsigned char *p) {
   for (int i = 15; i >= 0; --i) {
     _putc("0123456789abcdef"[p[i] >> 4]);
     _putc("0123456789abcdef"[p[i] & 15]);
   }
 }
+#endif
 static void fill(void *ptr, unsigned n, unsigned char value) {
   unsigned char *p = ptr;
   if (((uintptr_t)p & 7) == 0) {
