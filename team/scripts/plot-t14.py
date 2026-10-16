@@ -53,7 +53,7 @@ def plot(args):
         "axes.spines.top": False, "axes.spines.right": False, "legend.frameon": False,
     })
     fig, axes = plt.subplots(1, 2, sharex=True, sharey=True,
-                             figsize=(183 / 25.4, 145 / 25.4))
+                             figsize=(7.2047244094, 5.7086614173))
     fig.subplots_adjust(left=0.29, right=0.98, bottom=0.15, top=0.88, wspace=0.17)
     phases = [("first", "First", "#8b9095", "o", 0.22),
               ("warmup", "Warm-up", "#b77c32", "x", 0),
@@ -103,10 +103,10 @@ def plot(args):
         overlay_svg=str(stem) + ".alignment.svg",
         tolerance_pt=1.5, gutter_tolerance_pt=1.5,
         require_panel_labels=True, strict=True)
-    for extension in ("svg", "pdf"):
-        fig.savefig(str(stem) + "." + extension)
-    for extension in ("png", "tiff"):
-        fig.savefig(str(stem) + "." + extension, dpi=600)
+    fig.savefig(str(stem) + ".svg")
+    fig.savefig(str(stem) + ".pdf")
+    fig.savefig(str(stem) + ".png", dpi=600)
+    fig.savefig(str(stem) + ".tiff", dpi=600)
     with (args.output / "source-data.csv").open("w", newline="", encoding="utf-8") as stream:
         writer = csv.DictWriter(stream, list(drawing[0]))
         writer.writeheader()
