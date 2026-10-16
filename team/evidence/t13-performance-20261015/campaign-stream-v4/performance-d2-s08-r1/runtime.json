@@ -1,0 +1,27 @@
+{
+  "image": "performance-d2-s08",
+  "build": "/home/riscv/riscv-lab/t13-performance-20261015/runs/images-stream-v4/performance-d2-s08",
+  "replay": 1,
+  "started": "2026-10-15T16:44:33.444352+08:00",
+  "command": [
+    "timeout",
+    "120m",
+    "/home/riscv/riscv-lab/t13-performance-20261015/repo/build/emu",
+    "-i",
+    "/home/riscv/riscv-lab/t13-performance-20261015/runs/images-stream-v4/performance-d2-s08/vdot-perf.bin",
+    "--flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+    "--ram-size=128MB",
+    "--diff=/home/riscv/riscv-lab/t12-regression-20261013/nemu/reference/build/riscv64-nemu-interpreter-so",
+    "--max-cycles=2000000",
+    "--seed=1"
+  ],
+  "files": {
+    "/home/riscv/riscv-lab/t13-performance-20261015/repo/build/emu": "9903d6d8b3d59bed49090ca84d6bc06cb296de448d0baf7f7e9c90587e325b03",
+    "/home/riscv/riscv-lab/t12-regression-20261013/nemu/reference/build/riscv64-nemu-interpreter-so": "efbed0774addc27eac38af1a19ab5d9c9dd5f179b5015f25ae7b80b966185bd4",
+    "/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+    "/home/riscv/riscv-lab/t13-performance-20261015/runs/images-stream-v4/performance-d2-s08/vdot-perf.bin": "1f4615ba58d83e3551b73fabe3640297c11901fa80dfae00701d72d7ab564d8a"
+  },
+  "single_core": true,
+  "emu_threads": 1,
+  "host_concurrency": 4
+}

@@ -1,55 +1,97 @@
-# RVV baseline 与后续性能测量合同
+# T13 周期测量约定 v1
 
-版本 `0.1.0-draft`，2026-10-12。适用候选合同 `vdot-s8x8-r32-v0.1`；baseline 标识 `rvv-vdot-s8x8-r32-v1`。本轮落实 T09 的软件序列与状态比较；T13 的硬件计时尚未运行，须在 T09/T12 均通过后验收。
+适用对象：固定 MinimalConfig、单核、VL=8、SEW=8、LMUL=1、VLEN=128，`vdot-s8x8-r32-v0.1`。本文规定测量方法，实际完成状态以 T13 报告和运行回执为准。
 
-## 1. 入口与出口
+## 1. 两条路径必须计算同一结果
 
-入口固定 VLEN=128、e8/m1、**实际 vl=8**、vstart=0、vill=0、VS 非 Off。四种 vta/vma 均支持，vxrm/vxsat 可取全部合法值。非法配置不在 baseline 合同内，不能用本序列替代单条 vdot 的精确异常验证。
+低 8 个 signed int8 元素分别相乘，在足够宽的有符号整数中求和；目的向量低 32 位存二补码结果，高 96 位清零。检查完整 128 位，不用截断标量或摘要替代。`vdot` 不修改其他向量寄存器；RVV 只允许破坏事先声明的 scratch。
 
-序列只使用源低八字节，解释为 signed int8；从零求和。出口目的低 32 位为补码，高 96 位全零；vl/vtype 恢复实际入口值，vstart=0，vxrm/vxsat/vcsr 保持。成功后 VS Dirty。目的与源别名时，源中属于目的的寄存器按目的结果更新；其他源完整保持。
+复用来源为 `zufan@f090665130107282be0990a7664aebf26e491b87`。原文件与 SHA-256 位于 `team/references/zufan-t13/`，本轮重新构建和运行，不继承对方的 PASS 为本轮验收结果。
 
-每个寄存器组合在生成时选定四个向量 scratch：偶数起始的两个 product 寄存器，以及独立 seed、reduction 寄存器。四个 scratch 不与 vd/vs1/vs2 或 v0 重叠；精确编号及掩码写入 baseline-manifest 和逐用例日志。例如 vd10/vs1=8/vs2=9 使用 v2/v3、v1、v4，允许破坏掩码 `0x1e`。不是默认排除所有临时寄存器。
+| RVV 路径 | 点积主体指令数 | 向量 scratch | 入口与出口 |
+|---|---:|---|---|
+| 已知配置单次 | 5 | v2、v3 | e8/m1/VL8、tu/mu；退出恢复相同配置 |
+| 通用配置单次 | 7 | v2、v3，另用 t3/t4 保存 CSR | 保留原 VL/vtype，测试四种 tail/mask policy |
+| 独立四路批处理 | 14 / 4 个点积 | v16–v23 | e8/m1/VL8、tu/mu；退出恢复相同配置 |
 
-比较全部 32 个向量寄存器中的非 scratch 寄存器，包含目的完整 16 字节、非目的源和所有其余哨兵。baseline 的四个 scratch 排除于两种序列的共同出口比较集合；单条 vdot 自身仍须按 ISA 严格保持除目的外的全部向量寄存器。
+已知配置序列：`vwmul.vv` → 设置 e16/m1/VL8 → `vmv.v.i vd,0` → `vwredsum.vs` → 恢复 e8/m1/VL8。e16 下 8 个元素正好清零整个目的寄存器；宽化归约使用 tu，保留已经清零的高位。必须先乘后清目的寄存器，以支持源/目的别名。通用序列增加 `csrr vl/vtype`，末尾用 `vsetvl` 恢复。四路批处理共享两次 vtype 设置，不人为放大基线开销。
 
-序列使用 t2 搬运结果、t3 保存实际 vl、t4 保存实际 vtype；这些 GPR 允许破坏。测试 stub 还用 t0 记录 mstatus，harness 使用普通 ABI 的 caller-saved GPR。不能声称两种完整软件调用除目的外所有架构状态相同；ABI、返回地址和观察操作应分别记录。
+每次调用保存并比较全部 32 个向量寄存器，按声明排除 RVV scratch；检查 VL、vtype、vstart、vxrm、vxsat、vcsr、实际循环次数以及缓冲区前后 canary。访存组逐个比较全部 128 位输出，并检查未使用输出空间。C 判定器使用真实源文件进行原生及 UBSan 位翻转测试。
 
-## 2. 普通 RVV 实现
+## 2. 为什么不能直接使用一对 rdcycle
 
-在实际 vl/vtype 快照后：
+`DecodeUnit.scala` 的普通 CSR 表带 waitForward/blockBackward；但 `Rename.scala` 282–299 行会解除大部分只读 CSR 的这些限制。本轮初始观测确实看到 cycle/instret 在 ROB 未清空时进入，标志为零。因此不能由解码表单独推导 rdcycle 串行化，更不能把旧无校准窗口当作指令延迟。
 
-1. e32/m1、vl4、tu/mu 下把 seed 整寄存器清零。
-2. e8/m1、vl8、tu/mu 下 `vwmul.vv`，signed int8 乘积精确扩宽到 int16，product 的 EMUL=2，偶数对齐。
-3. e16/m2、vl8、tu/mu 下 `vwredsum.vs`，八个 int16 乘积符号扩展后归约到 32 位，并加零 seed。只使用八项，排除其余 product 尾部。
-4. e32/m1、vl4、tu/mu 下取出 reduction 的低 32 位到 t2，显式清零目的四个 32 位元素，再 `vmv.s.x` 写 element0。负结果只写低 32 位，tu 保持已清零的高 96 位。
-5. 用 `vsetvl zero,t3,t4` 恢复真实入口 vl/vtype。
+本轮在**软件测量边界**加入 `fence rw,rw`，不改变生产核执行规则。该固定版本的 fence 使用等待旧指令、阻止后续分派和 flush 的实现，作用必须通过实际日志确认。这是针对固定香山实现的实验方法，不是声称 RISC-V ISA 的普通内存 fence 在任意处理器上都能序列化计算和 CSR。
 
-归约的 scalar seed/result 各占单个向量寄存器，不因 m2 要求其编号偶数；其余目的元素遵守尾部策略。上述清零和 tu 保证目的全宽确定。依据为 [RISC-V V 1.0 规范](https://docs.riscv.org/reference/isa/extensions/vector/_attachments/riscv-v-spec.pdf) §12.11、§14.2、§16.1。独立模型仍是数学整数求和，没有复制此指令序列。
+窗口结构如下（所有实验分支相同）：
 
-本实现适配测试框架的寄存器入口，生成固定寄存器组合的汇编 stub；不是接受运行时寄存器编号的通用 C 库函数。
+```text
+fence; START; fence
+read instret_begin; fence
+read cycle_begin; fence
+执行显式汇编主体（含循环控制）
+fence; read cycle_end; fence
+read instret_end; fence
+STOP; fence
+保存结果；完整状态检查；打印
+```
 
-## 3. 计时边界与事件
+观察器以编译开关 `VDOT_T13_TRACE=1` 启用，仅打印 CSR 实际采样、计数器入 ROB 和窗口内退休信息。与 T12 观察器一起构建，不改数据通路、频率、复位、忙闲接口或 NEMU 计时。硬件源码提交为 `4460300e9557ad20ac152fa67b1827c5d62802dd`；工作负载另列实际构建提交，不能用后来的文档提交冒充重新构建。
 
-每个 stub 的 `baseline_<word>_begin` 到 `_end` 是完整核心序列边界，包含两次 CSR 快照、seed 清零、乘法/归约、配置切换、标量搬运、目的清零及配置恢复，共 13 条 32 位指令；不含前面的 mstatus 记录与末尾跳转观察。将来单条 vdot 的相应区间也排除共同观察代码。
+每个窗口必须同时满足：
 
-核心算术子区间从 `_multiply` 到 `_reduce + 4`，包含 vwmul、必需的 e16/m2 配置切换和 vwredsum，共三条指令。单独两条算术指令的事件可另列；不能把配置开销从完整 baseline 统计中隐去。seed、清零及恢复属于完整序列统计。
+1. 精确匹配四条计数器指令的 PC、机器码、ROB 身份与顺序。
+2. CSR 读值与对应退休写回数据相等，采样位于入队和退休之间。
+3. 每条计数器的前一 fence 已退休，后一 fence 在计数器退休后才退休。
+4. cycle 差值等于硬件全核采样 tick 差值。
+5. instret 差值等于真实退休计数，也等于从 ELF 机器码展开有限循环得到的指令数。
+6. 完整窗口及 UART 记录数量、顺序与 manifest 一致；真实 exit0、DiffTest 启用、完整成功 summary 后 GOOD TRAP。
 
-T13 须同时输出以下记录，当前均为待实测：
+绝对计数器可能大于 2^53，所有解析与差值计算使用 Python 整数。禁止经过 JavaScript Number 或浮点再保存绝对值。FU 自身时钟存在门控，使用已验收 T12 的 parent VFEX4 accept 逐事务归一化，不能直接拿 FU 局部 tick 减 ROB tick。
 
-| 项目 | 两边共同口径 |
-| --- | --- |
-| 功能预检 | 相同输入、目的初值、政策位和 CSR；先验证完整结果及上述共同出口状态 |
-| 核心延迟 | 分别记录执行输入就绪、结果写回/可被依赖指令读取的周期；baseline 包含配置切换的实际依赖 |
-| 完整序列 | 从确定的开始事件到最后恢复配置完成；统一选择提交事件或序列化计数器读，不能混用 |
-| 依赖延迟 | 按候选指令消费源低八字节设计链，记录链中数据变化和预期；不能只重复覆盖同一目的就称为依赖链 |
-| 吞吐 | 使用互不依赖的输入、目的及预分配 scratch，记录批次长度、issue/提交周期、资源冲突 |
-| 装载/存储 | 核心比较两边都排除共同装载/观察；端到端实验则两边都计入相同数量的搬运 |
-| 环境 | 同一硬件 SHA、配置、单核、时钟、内存、warmup、重复次数及差分开关；保存原始事件/CSV |
+空窗口、8 条整数指令、32 条依赖除法用于校准。**不从测量结果直接减掉空窗口开销**；小样本的屏障、取指和循环开销占比必须说明。
 
-若用 `rdcycle`，需先核验权限和本核执行/提交顺序，实施对称的序列化并测量读计数器开销；不得先假定读数自然包住乱序流水线。统计报告需注明延迟或吞吐，样本数、原始周期、剔除规则和计算式。NEMU 指令数、QEMU/Verilator 主机秒数都不作为处理器加速比。
+## 3. 工作负载矩阵
 
-## 4. T09 的验收边界
+| 场景 | n | 点积数 | 含义 |
+|---|---|---:|---|
+| single | 1 | 1 | 已知配置完整调用窗口 |
+| chain | 16、64、256 | n | 目的向量作为下一次源，观察依赖限制 |
+| batch | 1、8、32 | 4n | 每轮四个独立目的，比较共享配置的 RVV 批处理 |
+| stream | 1、16、64 | n | 两个 128 位加载、点积、128 位存储以及指针更新 |
+| generic | 1、16、64 | n | 原 vtype=192 的 CSR 保留对照 |
 
-当前入口 CSR、出口 CSR、完整目的、非 scratch 寄存器与缓冲区哨兵由 workload 检查；高位错误、非 scratch 错误、CSR 错误应被负控检出，声明的 scratch 改变应被允许。生成器对全部 32³ 寄存器编号组合检查 scratch 分组与非重叠；实际运行覆盖 T05 定向/别名/v0/v31、四种政策和固定随机输入。
+链式实验的反馈值是上一结果的完整向量表示，后续数值可能收敛到零。它用于固定依赖关系的微基准，不代表真实模型的数值分布。批处理四个目的独立且共享输入，用于消除人为增加的配置开销；不将其宣传为任意矩阵乘法性能。
 
-实际平台结果与复现命令见 [baseline workload](../workloads/rvv-baseline/README.md) 和 [T09 记录](../docs/t09-baseline.md)。T09 模型验收不能替代非作者复验、T11 故障检出、T12 全核回归或 T13 的真实 RTL 两种序列配对及性能测量。
+三组输入包括正极值、负极值和混合符号；高半区设置非零哨兵，访存组加入固定种子的随机数据。功能矩阵使用原始 22 组定向和前 32 组随机数据，轮换七种别名与四种 policy；这 54 对不是全部笛卡尔积。另用固定 NEMU 对全部 10,022 组数据重新检查精简基线，明确与全核执行层分开计数。
+
+每个配置同一镜像内运行 6 轮配对：首次样本、预热、4 轮正式样本；顺序按 AB/BA 交替。首次不是人为清空缓存后的“冷缓存”；预热也不保证全部微架构状态完全相同。每种配置单独分片，两个实现的入口均 64 字节对齐；代码长度、地址和寄存器压力的自然差异保留并记录。
+
+每个性能镜像以固定 seed=1 在全新 EMU 中运行三次。重放比较同一镜像、同一 seq 的周期和退休指令数；用于确定性复核，不作为独立统计样本，不给 p 值或统计显著性。宿主允许 8 个进程并行；每个 DUT 仍是同一个单核、EMU_THREADS=1 配置。宿主秒数仅用于安排任务，不参与加速比。
+
+## 4. 汇总与结论边界
+
+保留全部首次、预热、正式窗口。逐配置、逐数据集报告原始周期、周期/点积、指令数、正式样本 min/median/max；配对加速比为 `RVV cycles / vdot cycles`，减少比例为 `1 - vdot / RVV`。不以最优个例冒充总体，不在不同场景、不同 n 或不同数据集之间错配。若 vdot 变慢，照实记录。
+
+报告层次区分：局部 FU accept→response；完整序列的窗口；独立批处理的点积吞吐；包含加载/存储的循环。FU 局部 E3/II4 不是全核指令周期。端到端窗口含相同的隔离与循环开销，不等同于纯算术单元延迟。
+
+本轮不推断 Fmax、面积、功耗、PPA、实际 LLM 加速或官方比赛得分。没有 STA/综合结果，不把周期减少转换成频率提升。正式规范及队友人工复核仍按团队流程处理。
+
+## 5. 可复现入口
+
+```bash
+# 完整香山仓库中，使用现有 Ubuntu/WSL 工具链
+python3 -B -m unittest discover -s team/workloads/vdot-perf -p 'test_*.py' -v
+python3 -B team/workloads/vdot-perf/host_judge.py --output /新目录/host
+python3 -B team/workloads/vdot-perf/reference.py --reference /固定NEMU.so --output /新目录/reference
+python3 -B team/workloads/vdot-perf/campaign.py build --am /独立nexus-am --output /新目录/images
+python3 -B team/workloads/vdot-perf/campaign.py run --images /新目录/images --emu /固定emu --reference /固定NEMU.so --flash /固定flash --output /新目录/runs --jobs 8
+python3 -B team/workloads/vdot-perf/check.py --build /具体image目录 --run /具体run目录 --output /新文件/check.json
+```
+
+所有重跑使用新目录；不覆盖旧失败证据，不改黄金输入，不用 `--no-diff`。原始 stdout/stderr 分开保存并计算摘要。T13 仅本地开发，用户尚未授权上传本轮 GitHub。
+
+## T09 历史基线与当前 T13 的关系
+
+原 T09 使用13条完整序列和4个scratch，完整合同保存在[历史快照](../docs/history/measurement-james-before-t13-20261016.md)。其独立模型/状态检查继续有效，但本T13比较采用上文5/7/14条精简序列及各自显式scratch；不能混用指令数、排除寄存器或时序结果。原有全128位、非scratch保持、CSR恢复、异常另验要求继续适用。
