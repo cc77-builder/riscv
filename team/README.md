@@ -1,5 +1,7 @@
 # 三人团队：项目计划与开发入口
 
+> **2026-10-16 T14 本地进行中。** 单一候选为输入拍锁存乘积；基础/候选两模式 FU 验证通过（响应 3→2 拍、最小 II 4→3），候选全核已构建，正在完整回归与同镜像性能消融。见 [T14 合同](spec/t14-ablation.md)、[进度记录](docs/t14-optimization.md) 和 [外部建议评估](docs/t14-suggestion-review.md)。尚未宣称全核优化收益，尚未上传 T14。
+
 > **T13 交付至 zjhwork。** 用户已明确授权将本轮成果上传到 `cc77-builder/riscv` 的 `zjhwork`。代码、报告和验证证据版本为 `4526d857937def29ea1598a7c878aa539e2ef1f6`，本发布批次只补充入口说明，未改变硬件、工作负载或测量数据。见 [性能报告](docs/t13-performance.md) 和 [离线复核](evidence/t13-offline-review-20261015/README.md)。下方及归档中的“未上传”是发布前快照；队友人工复核仍待完成，不能把上传当作人工验收。
 
 > **2026-10-15 T13 本地自动验收完成，未上传 GitHub。** 固定版本的 RVV/vdot 公平周期对照通过 108 次全核功能调用与 1,404 个性能窗口，3 次重放一致。见 [T13 报告](docs/t13-performance.md)、[测量约定](spec/measurement.md) 和 [离线证据](evidence/t13-performance-20261015/README.md)。T12 已按用户要求发布到 `zjhwork`；T13 位于独立本地分支 `local/t13-performance-20261015`，待队友复核，未代签 ACK。后续可按计划 G5 选择单一优化做 A/B；PPA、虚拟化及人工签字仍未完成。

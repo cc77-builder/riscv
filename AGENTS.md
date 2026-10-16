@@ -1,5 +1,13 @@
 # 团队 Agent 入口
 
+## 当前任务：T14 单一优化消融，本地进行中
+
+用户于 2026-10-16 指示继续 T14，并要求独立判断外部优化建议。工作区为 `/home/riscv/riscv-lab/t14-optimization-20261015/repo`，分支 `local/t14-fused-input-20261015`。T13 已发布到 zjhwork；该次上传授权不代表自动发布 T14。
+
+先读 [T14 合同](team/spec/t14-ablation.md) 与 [建议评估](team/docs/t14-suggestion-review.md)。当前唯一候选为 `VDOT_T14_FUSED_INPUT=1` 的输入拍乘积锁存；默认 0 保持原版。两模式 FU 及检查器测试通过，候选 EMU 已构建，全核回归/性能消融仍在进行。不得据单元结果宣称全核性能验收完成。构建固定源码 `2443fb1c101dfc5974ac208275a8b86d68a11e0f`，硬件实际只改 VDot.scala。实时运行回执位于工作区上级的 `runs/fullcore-01/` 和 `build-evidence/`。
+
+原 T12/T13 构建、程序、参考库和数据只读复用，不重建覆盖；当前实验保持相同 ISA、相同 T13 ELF/bin 和测量窗口。新优化、参数扩展、人工 ACK 与远端发布均不由历史说明自动授权。
+
 ## 本轮交付：T13，目标 zjhwork
 
 用户最新明确指示“上传到 zjhwork 分支”，授权本轮将已验收 T13 提交 `4526d857937def29ea1598a7c878aa539e2ef1f6` 及这次入口说明普通快进推送到 `cc77-builder/riscv` 的 `zjhwork`。本次发布前已确认远端为 T12 基线 `2c0bf8e283d400c1c946ca75f890f266d7758411`，是本地成果的祖先。本节覆盖下方旧任务中的暂不上传、禁止写 zjhwork 等历史限制；不授权写入其他分支或任意后续推送。
