@@ -61,7 +61,7 @@ def compare(base, candidate, output):
     oldruns = {row["name"]: row for row in baseresult["receipt"]}
     newruns = {row["name"]: row for row in newresult["receipt"]}
     require(oldruns.keys() == newruns.keys() and len(oldruns) == 126, "different run inventory")
-    fu_totals = {variant: dict(accepted=0, responses=0, killed=0, stalls=0, latency_histogram={})
+    fu_totals = {variant: dict(accepted=0, responses=0, killed=0, stalls=0, latency_histogram={}, acceptance_interval_min=None)
                  for variant in ("baseline", "candidate")}
     for name in oldruns:
         old, new = load(base / (name + ".json")), load(candidate / (name + ".json"))
@@ -74,6 +74,11 @@ def compare(base, candidate, output):
             totals = fu_totals[variant]
             for field in ("accepted", "responses", "killed", "stalls"):
                 totals[field] += fu[field]
+            interval = fu["acceptance_interval_min"]
+            if interval is not None:
+                require(interval > 0, "nonpositive acceptance interval")
+                current = totals["acceptance_interval_min"]
+                totals["acceptance_interval_min"] = interval if current is None else min(current, interval)
             for delay, count in fu["response_latency_histogram"].items():
                 require(int(delay) >= latency, "early response in histogram")
                 totals["latency_histogram"][delay] = totals["latency_histogram"].get(delay, 0) + count

@@ -46,15 +46,15 @@ def report(base, offline, output):
         "正式 vdot 窗口的中位硬件加速比范围为 " + span(ab["vdot_median_speedup_range"], "×") +
         "。这里比较相同镜像在基础硬件与候选硬件的周期。三次确定性重放不是独立统计样本。",
         "",
-        "表中区间覆盖 3 组输入数据，每组先取 4 个正式轮次的中位数。各列分别汇总，不能将区间端点拼成新样本；节省为负表示变慢。",
+        "表中区间覆盖 3 组输入数据，每组先取 4 个正式轮次的中位数。加速比先按每轮基础/候选计算再取中位数，不由两列中位周期相除推导。各列分别汇总，不能将区间端点拼成新样本；节省为负表示变慢。",
         "",
-        "| 场景 / 数量参数 | 基础 vdot 周期 | 候选 vdot 周期 | 同方法硬件加速比 | RVV 节省周期 | 原 RVV/vdot | 候选 RVV/vdot |",
-        "|---|---:|---:|---:|---:|---:|---:|",
+        "| 场景 / 数量参数 | 实际点积数 | 基础 vdot 周期 | 候选 vdot 周期 | 同方法硬件加速比 | RVV 节省周期 | 原 RVV/vdot | 候选 RVV/vdot |",
+        "|---|---:|---:|---:|---:|---:|---:|---:|",
     ]
     for key in sorted(tables[2]):
         v = [r for r in tables[2][key] if r["method"] == "vdot"]
         rvv = [r for r in tables[2][key] if r["method"] == "rvv"]
-        values = [f"{key[0]} / {key[1]}",
+        values = [f"{key[0]} / {key[1]}", str(v[0]["dots"]),
                   span([r["baseline_cycles_median"] for r in v]),
                   span([r["candidate_cycles_median"] for r in v]),
                   span([r["hardware_speedup_median"] for r in v], "×"),
@@ -62,8 +62,16 @@ def report(base, offline, output):
                   span([r["speedup_median"] for r in tables[0][key]], "×"),
                   span([r["speedup_median"] for r in tables[1][key]], "×")]
         lines.append("| " + " | ".join(values) + " |")
+    lines += ["", "全核轨迹中的 FU 观测（包含投机事务）：", "",
+              "| 硬件 | 接受 | 响应 | 取消 | 写回反压 | 响应延迟直方图 | 最小接受间隔 |",
+              "|---|---:|---:|---:|---:|---|---:|"]
+    for variant, counts in ab["fu_observations"].items():
+        values = [variant] + [str(counts[k]) for k in ("accepted", "responses", "killed", "stalls")]
+        values += [str(counts["latency_histogram"]), str(counts["acceptance_interval_min"])]
+        lines.append("| " + " | ".join(values) + " |")
     lines += [
         "",
+        "最小接受间隔包含投机及取消后的重新接受；成功事务的无反压最小 II 由 FU 定向测试独立验证。",
         "single 是单次调用；chain 是 RAW 依赖链；batch 是独立寄存器批量；stream 包含访存；generic 包含通用接口的 CSR 管理。generic 的较大 RVV/vdot 比值不能推广到纯算术或所有应用。",
         "",
         "## 首次、预热与退化样本",
@@ -99,6 +107,7 @@ def report(base, offline, output):
         "声明计数包含仿真断言/调试状态，无用高位可能原本就会被综合删除，因此不能视作实际触发器或面积节省。",
         "",
         "乘法移到上游输入至乘积寄存器的路径，可能拉长关键路径。本轮没有综合/STA，不宣称面积、功耗或 Fmax 改善，也不给出工艺面积估计。",
+        "乘法器改接实时输入后，若上游在空闲或未接受请求时仍改变操作数，可能产生额外组合翻转；没有活动率与功耗测量，不能宣称功耗降低。",
         "如果某负载的周期加速比为 S，实际运行时间加速比还需乘以 F候选/F基础；要获得时间收益，需要 F候选/F基础 > 1/S。",
         "",
         "## 正确性和覆盖闭环",
