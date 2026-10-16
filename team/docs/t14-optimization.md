@@ -20,8 +20,8 @@
 
 ## 正在执行与待完成
 
-1. T12 全核回归：hello/vadd 和 bit100 故障注入已通过；原候选控制运行结果正确，但缺少写回反压覆盖。正在两版硬件运行同一补充扫描镜像，详见 [覆盖补齐记录](t14-control-coverage.md)。其余功能分片继续运行，严格覆盖条件不变。
-2. 校准 13 个计数器窗口。
+1. T12 全核回归：hello/vadd 和 bit100 故障注入已通过；原候选控制运行结果正确，但缺少写回反压覆盖。补充扫描已在两版硬件通过全部原覆盖项（写回反压分别 137/138 周期），详见 [覆盖补齐记录](t14-control-coverage.md)。其余功能/异常分片全部通过。
+2. 13 个计数器校准窗口已完成。
 3. 复用 T13 完全相同的 48 个已编译镜像，执行 126 次运行、108 次普通功能调用及 1,404 个性能窗口，固定 3 次重放。访存只使用原先确定的共享输入版。
 4. 保存基础/候选同方法对比、两版 RVV/vdot 比值、首次和正式样本、结构代价与退化结果；完成离线复算和最终报告。
 
@@ -33,7 +33,7 @@ T12 与性能工具在进入下一阶段前检查前一阶段结果。当前尚�
 
 - 构建与输入固定：`../build-evidence/emu-build-01.json`、`../build-evidence/hardware-inputs.json`。
 - 执行入口：`team/scripts/t14-campaign.py`，实际命令保存为 `../runs/fullcore-01-command.json`。
-- 阶段状态：`../runs/fullcore-01/campaign-state.json`。
+- 阶段状态：`../runs/fullcore-02/campaign-state.json`（成功补齐后继续）；`../runs/fullcore-01/campaign-state.json` 保留原覆盖失败。。
 - 原始输出：`../runs/fullcore-01/t12/`、之后的 `calibration/`、`performance/` 和 `analysis/`。
 - FU 回执：`../runs/fu-baseline-01/`、`../runs/fu-fused-01/`；结构审计 `../runs/structure-01.json`。
 
