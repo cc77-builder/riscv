@@ -43,7 +43,9 @@ def main(args):
     c.require(old_state["status"] == "FAILED" and old_state["failed_stage"] == "T12_RUNNING",
               "original campaign must have stopped at T12")
     original_suite = load(old / "t12/result.json")
+    c.require(original_suite["status"] == "T12_FULLCORE_SUITE_FAILED", "unexpected prior suite result")
     records = original_suite["runs"]
+    c.require({r["name"] for r in records} == {"control", "hello-vadd", "negative-vdot"} | {f"functional-{i}" for i in range(8)}, "incomplete prior job inventory")
     c.require(len(records) == 11 and {r["name"] for r in records if r["status"] == "FAILED"} == {"control"},
               "unexplained original failures")
     previous_control = load(old / "t12/control/control-result.json")
@@ -71,6 +73,11 @@ def main(args):
         c.require(result["status"] == "T12_CONTROL_REGRESSION_PASS", "sweep recheck failed")
         image = record["command"][record["command"].index("-i") + 1]
         c.require(record["files"][image] == sha(build / "vdot-regression.bin"), "paired control image mismatch")
+        hardware_root = args.t13_root if variant == "baseline" else base
+        expected_pins = load(hardware_root / "build-evidence/hardware-inputs.json")
+        emulator = next(x for x in record["command"] if x.endswith("/build/emu"))
+        c.require(record["files"][emulator] == expected_pins["emu_sha256"], "paired sweep hardware mismatch")
+        c.require(record["hardware_pins_sha256"] == sha(hardware_root / "build-evidence/hardware-inputs.json"), "sweep hardware receipt drift")
         controls[variant] = record
     pins = load(base / "build-evidence/hardware-inputs.json")
     emu = base / "repo/build/emu"
@@ -102,6 +109,8 @@ def main(args):
         source = base / "runs/control-sweep-candidate-02" if name == "control" else old / "t12" / name
         shutil.copytree(source, suite / name)
         actual = load(source / "result.json")
+        if name != "control":
+            c.require(actual == record, "original suite/job receipt disagreement")
         for filename, digest in actual["files"].items():
             c.require(sha(Path(filename)) == digest, "reused runtime input drift")
         for filename, digest in actual["raw_logs_sha256"].items():
