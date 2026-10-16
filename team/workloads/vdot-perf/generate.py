@@ -225,15 +225,15 @@ def generate(output, suite, dataset, shard=0, shards=1, shared_stream=False):
                f'#define T13_PLAN_COUNT {len(plan)}', f'#define T13_SUITE "{suite}"',
                f'#define T13_DATASET {dataset}',
                f'#define T13_COMPACT {int(suite == "performance")}', '#endif']
-    (out/'kernels.S').write_text('\n'.join(asm)+'\n')
-    (out/'cases.h').write_text('\n'.join(header)+'\n')
+    (out/'kernels.S').write_bytes(('\n'.join(asm)+'\n').encode())
+    (out/'cases.h').write_bytes(('\n'.join(header)+'\n').encode())
     manifest = dict(contract=CONTRACT, seed=SEED, suite=suite, dataset=dataset,
                     baseline_source='f090665130107282be0990a7664aebf26e491b87',
                     shard=shard, shards=shards, compact=suite == 'performance',
                     boundary='pinned-XiangShan-fence-serialized-v2',
                     shared_stream=shared_stream,
                     rows=rows, plan=plan, files={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in out.iterdir()})
-    (out/'manifest.json').write_text(json.dumps(manifest, indent=2)+'\n')
+    (out/'manifest.json').write_bytes((json.dumps(manifest, indent=2)+'\n').encode())
     return manifest
 
 

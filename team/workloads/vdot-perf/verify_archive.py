@@ -10,16 +10,22 @@ import check as c
 
 def main(a):
     root=a.archive.resolve()
+    def member(name):
+        path=(root/name).resolve()
+        c.require(path.is_relative_to(root), 'archive path escape')
+        return path
+    seal=json.loads((root/'file-manifest.json').read_text())['files']
+    present={p.relative_to(root).as_posix() for p in root.rglob('*') if p.is_file()}
+    c.require(present == set(seal) | {'file-manifest.json'}, 'archive inventory mismatch')
+    for name,digest in seal.items():
+        c.require(hashlib.sha256(member(name).read_bytes()).hexdigest()==digest,'final archive file mismatch '+name)
     files=json.loads((root/'archive-files.json').read_text())['files']
+    c.require(len({item['path'] for item in files}) == len(files), 'duplicate archive entry')
     for item in files:
-        path=(root/item['path']).resolve();c.require(path.is_relative_to(root),'archive path escape')
+        path=member(item['path'])
         data=path.read_bytes();c.require(hashlib.sha256(data).hexdigest()==item['sha256'],'archive byte mismatch '+item['path'])
         raw=gzip.decompress(data) if path.suffix=='.gz' else data
         c.require(len(raw)==item['raw_bytes'] and hashlib.sha256(raw).hexdigest()==item['raw_sha256'],'raw archive byte mismatch')
-    seal=root/'file-manifest.json'
-    if seal.exists():
-        for name,digest in json.loads(seal.read_text())['files'].items():
-            c.require(hashlib.sha256((root/name).read_bytes()).hexdigest()==digest,'final archive file mismatch '+name)
     external=json.loads((root/'external-artifacts.json').read_text())
     pins=json.loads((root/'hardware-build/hardware-inputs.json').read_text())
     c.require(set(external.values())=={pins['emu_sha256'],'efbed0774addc27eac38af1a19ab5d9c9dd5f179b5015f25ae7b80b966185bd4','a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994'},'external build pins')

@@ -4,6 +4,7 @@ ABI setup is adapted from the preserved zufan check_t12_lean_reference.py.
 This run uses our accepted reference hash, our 10,022 original vectors, and
 fresh generated kernels. No upstream PASS record is counted as our execution.
 """
+from check import require
 import argparse
 import ctypes as C
 import hashlib
@@ -20,7 +21,7 @@ TRIPLES=((10,8,9),(8,8,9),(9,8,9),(10,8,8),(8,8,8),(0,0,9),(31,8,31))
 
 def main(a):
     out=a.output.resolve();out.mkdir(parents=True,exist_ok=False)
-    assert hashlib.sha256(a.reference.read_bytes()).hexdigest()==HASH
+    require(hashlib.sha256(a.reference.read_bytes()).hexdigest()==HASH, 'Validation failed: hashlib.sha256(a.reference.read_bytes()).hexdigest()==HASH')
     seqs={}
     for d,x,y in TRIPLES:
         seqs[f'generic_{d}_{x}_{y}']=g.rvv(d,x,y,True)
@@ -32,8 +33,8 @@ def main(a):
     (out/'kernels.S').write_text('\n'.join(asm)+'\n')
     for tool,args in [('as',['-march=rv64gcv','-mabi=lp64d','-o',str(out/'kernels.o'),str(out/'kernels.S')]),('objcopy',['-j','.text','-O','binary',str(out/'kernels.o'),str(out/'kernels.bin')]),('objdump',['-d',str(out/'kernels.o')])]:
         with (out/(tool+'.log')).open('wb') as f:subprocess.run(['riscv64-linux-gnu-'+tool]+args,stdout=f,stderr=subprocess.STDOUT,check=True)
-    code=(out/'kernels.bin').read_bytes();assert len(code)==offset
-    lib=C.CDLL(str(a.reference.resolve()));assert C.c_uint.in_dll(lib,'DIFFTEST_REG_SIZE').value==1400
+    code=(out/'kernels.bin').read_bytes();require(len(code)==offset, 'Validation failed: len(code)==offset')
+    lib=C.CDLL(str(a.reference.resolve()));require(C.c_uint.in_dll(lib,'DIFFTEST_REG_SIZE').value==1400, "Validation failed: C.c_uint.in_dll(lib,'DIFFTEST_REG_SIZE').value==1400")
     for name,types in [('difftest_set_ramsize',[C.c_size_t]),('difftest_init_v2',[C.c_uint]),('difftest_regcpy',[C.c_void_p,C.c_bool]),('difftest_memcpy',[C.c_uint64,C.c_void_p,C.c_size_t,C.c_bool]),('difftest_exec',[C.c_uint64])]:
         f=getattr(lib,name);f.argtypes=types;f.restype=None
     lib.difftest_set_ramsize(16*1024*1024);lib.difftest_init_v2(1400)
@@ -55,19 +56,19 @@ def main(a):
         # This accepted DiffTest reference intentionally exposes one-step exec.
         for _ in range(n):lib.difftest_exec(1)
         r=read()
-        assert get(r,'pc')==0x80000000+offset+4*n and get(r,'mcause')==0,(name,'trap')
+        require(get(r,'pc')==0x80000000+offset+4*n and get(r,'mcause')==0, (name,'trap'))
         for i in range(32):
-            if i not in scratch:assert r[800+16*i:816+16*i]==want[i],(name,i,'full128')
-        for k in ('vl','vtype','vstart','vxrm','vxsat','vcsr','vlenb'):assert get(r,k)==get(b,k),(name,k)
-        assert ((get(r,'mstatus')>>9)&3)==3
+            if i not in scratch:require(r[800+16*i:816+16*i]==want[i], (name,i,'full128'))
+        for k in ('vl','vtype','vstart','vxrm','vxsat','vcsr','vlenb'):require(get(r,k)==get(b,k), (name,k))
+        require(((get(r,'mstatus')>>9)&3)==3, "Validation failed: ((get(r,'mstatus')>>9)&3)==3")
         for i in range(32):
-            if not (name.startswith('generic') and i in (28,29)):assert r[i*8:i*8+8]==b[i*8:i*8+8],(name,i,'GPR')
+            if not (name.startswith('generic') and i in (28,29)):require(r[i*8:i*8+8]==b[i*8:i*8+8], (name,i,'GPR'))
     data=g.ROOT/'team/models/vdot/data'
     vectors=[json.loads(line) for f in ('directed.jsonl','random.jsonl') for line in (data/f).read_text().splitlines()]
-    assert len(vectors)==10022
+    require(len(vectors)==10022, 'Validation failed: len(vectors)==10022')
     for i,row in enumerate(vectors):
         x=int(row['vs1'],16).to_bytes(16,'little');y=int(row['vs2'],16).to_bytes(16,'little')
-        assert oracle(x,y)==int(row['expected_vd'],16).to_bytes(16,'little')
+        require(oracle(x,y)==int(row['expected_vd'],16).to_bytes(16,'little'), "Validation failed: oracle(x,y)==int(row['expected_vd'],16).to_bytes(16,'little')")
         base=g.initial(x,y)
         configurations=[(t,p,q,s) for t in TRIPLES for p in (0,64,128,192) for q in range(4) for s in range(2)] if i<22 else [(TRIPLES[i%7],(i%4)*64,(i//4)%4,(i//16)%2)]
         for (d,xreg,yreg),policy,rounding,sat in configurations:

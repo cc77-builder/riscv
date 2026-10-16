@@ -1,4 +1,5 @@
 """Apply labelled synthetic corruptions to actual accepted artifacts in temporary copies."""
+from check import require
 import argparse
 import copy
 import json
@@ -36,7 +37,7 @@ def main(a):
         ('bad_trap',text.replace('HIT GOOD TRAP','HIT BAD TRAP')),
     ]:reject(name,lambda:c.check_uart(changed,manifest,evidence['samples']))
     symbols,read=c.elf_data(a.build/'vdot-perf.elf');addr,length=symbols['cases'];blob=read(addr,length)
-    original=(a.build/'vdot-perf.elf').read_bytes();offset=original.find(blob);assert offset>=0 and original.count(blob)==1
+    original=(a.build/'vdot-perf.elf').read_bytes();offset=original.find(blob);require(offset>=0 and original.count(blob)==1, 'Validation failed: offset>=0 and original.count(blob)==1')
     with tempfile.TemporaryDirectory(prefix='t13-negative-') as tmp:
         for name,relative,mask in [('golden_high_bit',592+15,128),('scratch_mask',40,1),('stream_pointer',56,16)]:
             changed=bytearray(original);changed[offset+relative]^=mask

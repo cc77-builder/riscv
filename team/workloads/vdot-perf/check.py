@@ -273,15 +273,16 @@ def verify_generation(build, manifest):
     receipt=json.loads((build/'build.json').read_text())
     recorded=receipt.get('software',receipt.get('software_files',{}))
     for name in ('generate.py','main.c','Makefile'):
-        key=next((k for k in recorded if k.rsplit('/',1)[-1]==name),None)
-        require(key is not None and sha(build/'source'/name)==recorded[key],'build source hash mismatch '+name)
+        keys=[k for k in recorded if k.rsplit('/',1)[-1]==name]
+        require(len(keys) == 1 and sha(build/'source'/name)==recorded[keys[0]],'build source hash missing/ambiguous/mismatch '+name)
     module=types.ModuleType('t13_archived_generator')
     module.__file__=str(Path(__file__).with_name('generate.py'))
     exec(compile(source.read_text(),str(source),'exec'),module.__dict__)
     with tempfile.TemporaryDirectory(prefix='t13-regenerate-') as temp:
         extra={'shared_stream':True} if manifest.get('shared_stream') else {}
         fresh=module.generate(Path(temp)/'data',manifest['suite'],manifest['dataset'],manifest.get('shard',0),manifest.get('shards',1),**extra)
-        for key in ('rows','plan','contract','seed'):
+        require(set(fresh) == set(manifest), 'generated manifest field inventory drift')
+        for key in set(fresh) - {'files'}:
             require(fresh[key]==manifest[key],'generated manifest drift '+key)
         # The archived generator used platform text writes. Reproduce its Linux
         # LF output on Windows without altering the frozen source or artifacts.
@@ -294,12 +295,85 @@ def verify_generation(build, manifest):
         require(lf_files==manifest['files'],'generated manifest drift files')
 
 
+AM_REVISION = '086a238062fdfb3281b745a537b361983d0154b5'
+
+# The first calibration predates complete receipts. Only these exact frozen
+# bytes qualify; deleting fields from a newer receipt cannot enable this path.
+CALIBRATION_BUILD = {
+    'build.json': '93a5236d38ec76692fd685debe52dc816450422e8048edc40c85d0ac4354c8d4',
+    'vdot-perf.bin': 'eaa629045d96327807fb967cf179549f07ba3c2e78dc8b013f6671386ea9318f',
+    'vdot-perf.elf': '1f2f2afcd507d62eab242a5e1ab13dc239a2b420c0350bf6a266faa7dbe73e30',
+    'data/manifest.json': 'c6233496ed88f9c5d6422343b7420633fd6f4b9085885d3e40b5d92351fe1753',
+}
+CALIBRATION_RUN = {
+    'result.json': '0abb0046b89d498c7ee7953bae624f3ad0ba074a8daf06e734a4fd3ad206b4d4',
+    'stdout.log': '8bdc3763ef0811c0d9307576755810cdf0616e882722fb79492a226a728e0355',
+    'stderr.log': 'd8e4678dad27aa56def37cf2d553333ab86cc14791c01f2d9fbd27bf97baf6f4',
+}
+
+
+def runtime_roles(command):
+    """Parse the supported EMU invocation without tolerating overriding flags."""
+    require(isinstance(command, list) and all(isinstance(x, str) for x in command), 'runtime command missing')
+    args = list(command)
+    if args and args[0] == 'timeout':
+        require(len(args) > 3 and re.fullmatch(r'[1-9][0-9]*[smh]?', args[1]), 'invalid timeout wrapper')
+        args = args[2:]
+    require(bool(args) and args[0].startswith('/'), 'absolute EMU path required')
+    emu, options = args[0], {}
+    i = 1
+    allowed = {'-i', '--flash', '--ram-size', '--diff', '--max-cycles', '--seed'}
+    while i < len(args):
+        option, sep, value = args[i].partition('=')
+        require(option in allowed and option not in options, 'unknown/duplicate runtime option '+option)
+        if not sep:
+            i += 1
+            require(i < len(args), 'missing runtime argument')
+            value = args[i]
+        options[option] = value
+        i += 1
+    require({'-i', '--flash', '--ram-size', '--diff', '--max-cycles'} <= set(options), 'incomplete runtime roles')
+    require(options['--ram-size'] == '128MB', 'wrong RAM configuration')
+    require(options['--max-cycles'].isdigit() and int(options['--max-cycles']) > 0, 'invalid cycle bound')
+    if '--seed' in options:
+        require(options['--seed'] == '1', 'wrong deterministic seed')
+    roles = {'emu': emu, 'image': options['-i'], 'reference': options['--diff'], 'flash': options['--flash']}
+    require(len(set(roles.values())) == 4 and all(p.startswith('/') for p in roles.values()), 'runtime role paths overlap or are relative')
+    return roles
+
+
+def verify_build_record(build, legacy=False):
+    record = json.loads((build/'build.json').read_text())
+    require(record.get('exit_code') == 0, 'build failed or incomplete')
+    require(not record.get('verification_error'), 'build verification failed')
+    if legacy:
+        require(all(sha(build/name) == digest for name, digest in CALIBRATION_BUILD.items()), 'legacy calibration build drift')
+    else:
+        require(re.fullmatch(r'[0-9a-f]{40}', record.get('source', '')), 'missing build source commit')
+        require(record.get('am_revision') == AM_REVISION, 'wrong AM revision')
+        artifacts = record.get('artifacts', {})
+        require(set(artifacts) == {'vdot-perf.bin', 'vdot-perf.elf', 'manifest.json'}, 'incomplete build artifact binding')
+        for name, digest in artifacts.items():
+            require(sha(build/('data' if name == 'manifest.json' else '')/name) == digest, 'build artifact mismatch '+name)
+    return record
+
+
 def verify(build, run, external=None):
     build,run = Path(build),Path(run)
     receipt = json.loads((run/'result.json').read_text())
     require(receipt['exit_code'] == 0, 'EMU nonzero/incomplete')
+    require(not receipt.get('verification_error'), 'runtime inputs changed')
+    legacy = sha(run/'result.json') == CALIBRATION_RUN['result.json']
+    if legacy:
+        require(all(sha(run/name) == digest for name, digest in CALIBRATION_RUN.items()), 'legacy calibration log drift')
+    else:
+        require(receipt.get('single_core') is True and receipt.get('emu_threads') == 1, 'wrong core/thread configuration')
+        require(set(receipt.get('raw_sha256', {})) == {'stdout.log', 'stderr.log'}, 'incomplete raw transcript binding')
+    roles = runtime_roles(receipt.get('command'))
+    require(set(receipt.get('files', {})) == set(roles.values()), 'incomplete runtime input binding')
+    verify_build_record(build, legacy)
     for file,digest in receipt['files'].items():
-        if file.endswith('/vdot-perf.bin'):
+        if file == roles['image']:
             require(sha(build/'vdot-perf.bin')==digest,'loaded image mismatch')
         elif external is not None:
             require(external.get(file)==digest,'external artifact pin mismatch '+file)
@@ -310,11 +384,8 @@ def verify(build, run, external=None):
     manifest = json.loads((build/'data/manifest.json').read_text())
     require(manifest['boundary'] == 'pinned-XiangShan-fence-serialized-v2','uncalibrated boundary')
     for file,digest in manifest['files'].items():
+        require(Path(file).name == file, 'unsafe generated filename')
         require(sha(build/'data'/file) == digest, 'generated hash mismatch')
-    build_record=json.loads((build/'build.json').read_text())
-    for file,digest in build_record.get('artifacts',{}).items():
-        path=build/'data'/file if file=='manifest.json' else build/file
-        require(sha(path)==digest,'build artifact mismatch '+file)
     verify_generation(build,manifest)
     check_compiled_cases(build/'vdot-perf.elf',manifest)
     stderr=read_text(run/'stderr.log')

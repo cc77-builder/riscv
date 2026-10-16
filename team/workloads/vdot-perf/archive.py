@@ -1,4 +1,5 @@
 """Create an immutable compact archive without deleting any live evidence."""
+from check import require
 import argparse
 import gzip
 import hashlib
@@ -14,7 +15,7 @@ def digest(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 def main(a):
     base=a.base.resolve();out=a.output.resolve();out.mkdir(parents=True,exist_ok=False)
     accepted=json.loads((base/'runs/analysis-v1/result.json').read_text())
-    assert accepted['status']=='T13_FAIR_CYCLE_COMPARISON_PASS'
+    require(accepted['status']=='T13_FAIR_CYCLE_COMPARISON_PASS', "Validation failed: accepted['status']=='T13_FAIR_CYCLE_COMPARISON_PASS'")
     copied=[]
     def copy(src,dst,compress=False):
         dst=out/dst;dst.parent.mkdir(parents=True,exist_ok=True)
@@ -35,7 +36,7 @@ def main(a):
             if not src.is_file():continue
             if src.name not in ('stdout.log','stderr.log','runtime.json','result.json','campaign.json'):continue
             if src.name=='result.json':
-                rec=json.loads(src.read_text());assert rec['exit_code']==0
+                rec=json.loads(src.read_text());require(rec['exit_code']==0, "Validation failed: rec['exit_code']==0")
                 for file,h in rec['files'].items():
                     if not file.endswith('/vdot-perf.bin'):external[file]=h
             copy(src,Path(group)/src.relative_to(base/'runs'/group),src.suffix=='.log')
@@ -52,7 +53,7 @@ def main(a):
         if src.exists():copy(src,Path('support')/name,True)
     for src in (base/'build-evidence').iterdir():
         if src.is_file():copy(src,Path('hardware-build')/src.name,src.suffix=='.log')
-    for file,h in external.items():assert digest(file)==h
+    for file,h in external.items():require(digest(file)==h, 'Validation failed: digest(file)==h')
     (out/'external-artifacts.json').write_text(json.dumps(external,indent=2)+'\n')
     (out/'archive-files.json').write_text(json.dumps(dict(version=1,files=copied,scope='Raw log bytes compressed losslessly; fixed EMU/reference/flash binaries remain external and are pinned separately.'),indent=2)+'\n')
     print(json.dumps(dict(status='ARCHIVED',files=len(copied),stored_bytes=sum((out/p['path']).stat().st_size for p in copied))))

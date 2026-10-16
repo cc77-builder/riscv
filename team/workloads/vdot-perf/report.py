@@ -1,4 +1,5 @@
 """Generate the Chinese T13 report from accepted measurements, never hand-enter timing values."""
+from check import require
 import argparse
 from collections import Counter
 import json
@@ -7,7 +8,7 @@ from pathlib import Path
 
 def main(a):
     base=a.base;analysis=base/'runs/analysis-v1'
-    record=json.loads((analysis/'result.json').read_text());assert record['status']=='T13_FAIR_CYCLE_COMPARISON_PASS'
+    record=json.loads((analysis/'result.json').read_text());require(record['status']=='T13_FAIR_CYCLE_COMPARISON_PASS', "Validation failed: record['status']=='T13_FAIR_CYCLE_COMPARISON_PASS'")
     stats=json.loads((analysis/'summary.json').read_text())
     pins=json.loads((base/'build-evidence/hardware-inputs.json').read_text())
     standard=json.loads((base/'runs/images-v3/functional-d0-s00/build.json').read_text())['source']
@@ -17,13 +18,13 @@ def main(a):
     table=[]
     for key in order:
         group=[s for s in stats if (s['scenario'],s['n'])==key]
-        assert len(group)==3
-        assert all({k:v for k,v in s.items() if k!='dataset'}=={k:v for k,v in group[0].items() if k!='dataset'} for s in group)
+        require(len(group)==3, 'Validation failed: len(group)==3')
+        require(all({k:v for k,v in s.items() if k!='dataset'}=={k:v for k,v in group[0].items() if k!='dataset'} for s in group), "Validation failed: all({k:v for k,v in s.items() if k!='dataset'}=={k:v for k,v in group[0].items() if k!='dataset'} for s in group)")
         s=group[0]
         table.append(f"| {names[s['scenario']]} | {s['n']} | {s['dots']} | {s['vdot_min']}/{s['vdot_median']:g}/{s['vdot_max']} | {s['rvv_min']}/{s['rvv_median']:g}/{s['rvv_max']} | {s['speedup_median']:.4f}× | {s['vdot_cycles_per_dot']:.4f} / {s['rvv_cycles_per_dot']:.4f} |")
     fu=Counter()
     for r in record['receipt']:fu.update(r['fu']['response_latency_histogram'])
-    assert fu=={'3':35856}
+    require(fu=={'3':35856}, "Validation failed: fu=={'3':35856}")
     text=f'''# T13：RVV 基线与 vdot 公平周期性能对比
 
 日期：2026-10-15（Asia/Shanghai）。**本地自动验收完成，未上传 GitHub，尚未代替队友人工复核。** 当前开发分支为 `local/t13-performance-20261015`，基于已发布至 zjhwork 的 T12 提交 `2c0bf8e283d400c1c946ca75f890f266d7758411`。原工作区与 main 保持原状态。

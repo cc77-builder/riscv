@@ -1,4 +1,5 @@
 """Compile the actual guest judge with native GCC and exhaustively flip bits."""
+from check import require
 import argparse
 import json
 from pathlib import Path
@@ -81,7 +82,7 @@ def main(a):
             result=subprocess.run([str(d/mode)],capture_output=True,text=True)
             (d/(mode+'.log')).write_text(result.stdout+result.stderr)
             records.append(dict(name=name,mode=mode,command=command,exit_code=result.returncode,result=result.stdout.strip()))
-            assert result.returncode==0,records[-1]
+            require(result.returncode==0, records[-1])
     (out/'result.json').write_text(json.dumps(dict(status='PASS',runs=records),indent=2)+'\n');print(json.dumps(records))
 
 

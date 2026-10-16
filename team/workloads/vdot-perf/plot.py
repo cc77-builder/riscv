@@ -1,4 +1,5 @@
 """Plot every accepted paired observation once; repeated identical replays stay in source data."""
+from check import require
 import argparse
 import json
 from pathlib import Path
@@ -12,10 +13,10 @@ def main(a):
     sys.path.insert(0,str(a.qa_scripts))
     from audit_panel_alignment import require_matplotlib_panel_alignment
     record=json.loads((a.analysis/'result.json').read_text())
-    assert record['status']=='T13_FAIR_CYCLE_COMPARISON_PASS' and record['replay_identical']
+    require(record['status']=='T13_FAIR_CYCLE_COMPARISON_PASS' and record['replay_identical'], "Validation failed: record['status']=='T13_FAIR_CYCLE_COMPARISON_PASS' and record['replay_identical']")
     pairs=json.loads((a.analysis/'pairs.json').read_text())
     rows=[r for r in pairs if r['replay']==0]
-    assert len(pairs)==702 and len(rows)==234
+    require(len(pairs)==702 and len(rows)==234, 'Validation failed: len(pairs)==702 and len(rows)==234')
     order=[('single',1),('chain',16),('chain',64),('chain',256),('batch',1),('batch',8),('batch',32),('stream',1),('stream',16),('stream',64),('generic',1),('generic',16),('generic',64)]
     labels=[('Single' if s=='single' else 'Chain' if s=='chain' else 'Batch (4 dots/iter)' if s=='batch' else 'Load / dot / store' if s=='stream' else 'Preserve VL/vtype')+f'  |  n={n}' for s,n in order]
     plt.rcParams.update({'font.family':'sans-serif','font.sans-serif':['Arial','DejaVu Sans'],'font.size':8,'axes.titlesize':9,'axes.labelsize':8,'xtick.labelsize':8,'ytick.labelsize':8,'legend.fontsize':8,'svg.fonttype':'none','pdf.fonttype':42,'axes.spines.top':False,'axes.spines.right':False,'axes.linewidth':0.7,'legend.frameon':False})
@@ -26,7 +27,7 @@ def main(a):
         xs,ys=[],[]
         for i,key in enumerate(order):
             group=[r for r in rows if (r['scenario'],r['n'])==key and r['phase']==phase]
-            assert len(group)==(12 if phase=='measured' else 3)
+            require(len(group)==(12 if phase=='measured' else 3), "Validation failed: len(group)==(12 if phase=='measured' else 3)")
             for j,r in enumerate(group):
                 xs.append(r['speedup']);ys.append(i+offset+(j-(len(group)-1)/2)*0.009)
         ax.scatter(xs,ys,s=13 if phase=='measured' else 17,c=color,marker=marker,linewidths=0.7,label=label,zorder=3)
@@ -34,7 +35,7 @@ def main(a):
     ax.set_yticks(range(len(order)),labels)
     ax.set_ylim(len(order)-0.5,-0.5)
     maximum=max(r['speedup'] for r in rows)
-    assert maximum>0
+    require(maximum>0, 'Validation failed: maximum>0')
     ax.set_xlim(0,maximum*1.08)
     ax.set_xlabel('Paired cycle ratio: RVV / vdot   (>1: vdot faster)')
     ax.set_title('Cycle benefit depends on workload and warm-up',loc='left',pad=31)
