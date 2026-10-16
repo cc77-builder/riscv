@@ -312,7 +312,7 @@ CALIBRATION_RUN = {
 }
 
 
-def runtime_roles(command):
+def runtime_roles(command, *, legacy_calibration=False):
     """Parse the supported EMU invocation without tolerating overriding flags."""
     require(isinstance(command, list) and all(isinstance(x, str) for x in command), 'runtime command missing')
     args = list(command)
@@ -333,6 +333,7 @@ def runtime_roles(command):
         options[option] = value
         i += 1
     require({'-i', '--flash', '--ram-size', '--diff', '--max-cycles'} <= set(options), 'incomplete runtime roles')
+    require(legacy_calibration or options.get('--seed') == '1', 'missing fixed replay seed')
     require(options['--ram-size'] == '128MB', 'wrong RAM configuration')
     require(options['--max-cycles'].isdigit() and int(options['--max-cycles']) > 0, 'invalid cycle bound')
     if '--seed' in options:
@@ -369,7 +370,7 @@ def verify(build, run, external=None):
     else:
         require(receipt.get('single_core') is True and receipt.get('emu_threads') == 1, 'wrong core/thread configuration')
         require(set(receipt.get('raw_sha256', {})) == {'stdout.log', 'stderr.log'}, 'incomplete raw transcript binding')
-    roles = runtime_roles(receipt.get('command'))
+    roles = runtime_roles(receipt.get('command'), legacy_calibration=legacy)
     require(set(receipt.get('files', {})) == set(roles.values()), 'incomplete runtime input binding')
     verify_build_record(build, legacy)
     for file,digest in receipt['files'].items():

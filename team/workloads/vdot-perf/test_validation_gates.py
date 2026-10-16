@@ -47,6 +47,7 @@ class ReceiptTests(unittest.TestCase):
             ('run', 'result.json', lambda r: r.pop('raw_sha256')),
             ('run', 'result.json', lambda r: r['command'].append('--no-diff')),
             ('run', 'result.json', lambda r: r['command'].append('--diff=/wrong.so')),
+            ('run', 'result.json', lambda r: r['command'].remove('--seed=1')),
             ('run', 'result.json', lambda r: r.update(emu_threads=2)),
             ('build', 'build.json', lambda r: r.update(exit_code=1)),
             ('build', 'build.json', lambda r: r.pop('artifacts')),
