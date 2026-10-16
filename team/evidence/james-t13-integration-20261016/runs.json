@@ -1,0 +1,196 @@
+[
+  {
+    "name": "clone",
+    "argv": [
+      "git",
+      "clone",
+      "--shared",
+      "--no-checkout",
+      "/mnt/c/Code/RVInno/riscv",
+      "/home/amesotten/.cache/codex-rvinno/integration-t13-20261016"
+    ],
+    "cwd": "/mnt/c/Code/RVInno/riscv",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 0.162
+  },
+  {
+    "name": "checkout",
+    "argv": [
+      "git",
+      "checkout",
+      "--detach",
+      "46b6715da"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-t13-20261016",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 6.899
+  },
+  {
+    "name": "host-tests",
+    "argv": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "team/tests",
+      "-p",
+      "test_*.py"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-t13-20261016",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 10.979
+  },
+  {
+    "name": "model-tests",
+    "argv": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "team/models/vdot/tests",
+      "-p",
+      "test_*.py"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-t13-20261016",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 1.11
+  },
+  {
+    "name": "t13-tests-opt0",
+    "argv": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "team/workloads/vdot-perf",
+      "-p",
+      "test_*.py"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-t13-20261016",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 0.911
+  },
+  {
+    "name": "t13-tests-opt1",
+    "argv": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "team/workloads/vdot-perf",
+      "-p",
+      "test_*.py"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-t13-20261016",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 1.178
+  },
+  {
+    "name": "t13-tests-opt2",
+    "argv": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "team/workloads/vdot-perf",
+      "-p",
+      "test_*.py"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-t13-20261016",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 1.157
+  },
+  {
+    "name": "host-judge-opt2",
+    "argv": [
+      "python3",
+      "-B",
+      "team/workloads/vdot-perf/host_judge.py",
+      "--output",
+      "/home/amesotten/.cache/codex-rvinno/integration-t13-20261016/team/out/t13-host-judge"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-t13-20261016",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 4.773
+  },
+  {
+    "name": "archive-replay-opt2",
+    "argv": [
+      "python3",
+      "-B",
+      "team/workloads/vdot-perf/verify_archive.py",
+      "--archive",
+      "team/evidence/t13-performance-20261015",
+      "--output",
+      "/home/amesotten/.cache/codex-rvinno/integration-t13-20261016/team/out/t13-replay"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-t13-20261016",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 8.297
+  },
+  {
+    "name": "fresh-stream-build",
+    "argv": [
+      "python3",
+      "-B",
+      "team/workloads/vdot-perf/campaign.py",
+      "build",
+      "--output",
+      "/home/amesotten/.cache/codex-rvinno/integration-t13-20261016/team/out/t13-fresh-stream",
+      "--am",
+      "/home/amesotten/.cache/codex-t05/nexus-am-086a238",
+      "--stream-only"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-t13-20261016",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 12.979
+  },
+  {
+    "name": "fresh-elf-verification",
+    "argv": [
+      "python3",
+      "-B",
+      "-c",
+      "import sys,json;from pathlib import Path;sys.path.insert(0,'team/workloads/vdot-perf');import check as c;root=Path('team/out/t13-fresh-stream');images=json.loads((root/'images.json').read_text())['images'];[(c.verify_build_record(Path(x['path'])),c.check_compiled_cases(Path(x['path'])/'vdot-perf.elf',json.loads((Path(x['path'])/'data/manifest.json').read_text()))) for x in images];print('FRESH_BUILD_ELF_PASS images='+str(len(images)))"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-t13-20261016",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 0.041
+  },
+  {
+    "name": "scala-compile",
+    "argv": [
+      "bash",
+      "/home/amesotten/.cache/codex-rvinno/t06/tools/mill-0.12.3",
+      "-i",
+      "-j",
+      "2",
+      "xiangshan.compile"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-t13-20261016",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 117.395
+  }
+]

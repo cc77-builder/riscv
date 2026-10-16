@@ -90,7 +90,7 @@ python3 -B team/workloads/vdot-perf/campaign.py run --images /新目录/images -
 python3 -B team/workloads/vdot-perf/check.py --build /具体image目录 --run /具体run目录 --output /新文件/check.json
 ```
 
-所有重跑使用新目录；不覆盖旧失败证据，不改黄金输入，不用 `--no-diff`。原始 stdout/stderr 分开保存并计算摘要。T13 仅本地开发，用户尚未授权上传本轮 GitHub。
+所有重跑使用新目录；不覆盖旧失败证据，不改黄金输入，不用 `--no-diff`。原始 stdout/stderr 分开保存并计算摘要。来源 T13 已交付至 zjhwork@3b337a5；2026-10-16 的 James 合并与修复仅在本地，未推送远端。当前构建、完整回执和来源门禁见 [工具说明](../workloads/vdot-perf/README.md)。
 
 ## T09 历史基线与当前 T13 的关系
 

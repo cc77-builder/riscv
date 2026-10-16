@@ -1,6 +1,6 @@
 # 团队开发入口
 
-**2026-10-15：James_Hotten 统一 VFEX4，整合 zufan 与 zjhwork 的实现、验证工具和历史证据。** 当前进度以 [progress.md](progress.md) 和 [整合评审报告](docs/james-integration-20261015.md) 为准。本次只更新本地 James_Hotten，未推送远端，未修改 main。
+**2026-10-16：James_Hotten 已并入 zjhwork 的 T13 校准、配对测量工具和历史证据，并修复验收门禁。** 当前进度以 [progress.md](progress.md) 和 [T13 整合评审](docs/james-t13-integration-20261016.md) 为准；VFEX4 路线整合见 [前轮报告](docs/james-integration-20261015.md)。本次只更新本地 James_Hotten，未推送远端，未修改 main。
 
 | 内容 | 入口 |
 | --- | --- |
@@ -12,6 +12,7 @@
 | T10/T11 历史117矩阵 | [报告](docs/t10-t11-acceptance-20261013.md) |
 | T12 控制与功能回归 | [报告](docs/t12-regression.md)、[归档复验](evidence/t12-regression-20261014/README.md) |
 | T12 软件/RVV 对照 | [zufan 整合](docs/t12-zufan-integration-20261014.md)、[原始归档](evidence/t12-r2-20261014/README.md) |
+| T13 校准与性能 | [测量合同](spec/measurement.md)、[来源结果](docs/t13-performance.md)、[工具](workloads/vdot-perf/README.md)、[本轮复核证据](evidence/james-t13-integration-20261016/README.md) |
 | James 的旧实现及原证据 | [历史候选](legacy/james-vfex1/README.md)、[原进度](docs/history/progress-before-james-integration-20261015.md) |
 | 环境与脚本 | [环境](docs/environment.md)、[脚本](scripts/) |
 
