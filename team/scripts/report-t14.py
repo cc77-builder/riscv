@@ -101,6 +101,7 @@ def report(base, offline, output):
         "| E3 | 最早响应 | 可接受下一请求 |",
         "| E4 | 可接受下一请求 | 后续事务推进 |",
         "",
+        "实现入口：[VDot.scala](../../src/main/scala/xiangshan/backend/fu/wrapper/VDot.scala)；[FU 定向测试](../rtl/vdot/fu_test.cpp)；[同镜像配对检查](../scripts/compare-t14.py)。",
         "VDOT_T14_FUSED_INPUT=0 或不设置为基础版，=1 为候选版，其他值拒绝构建。开关在 elaboration 阶段选择结构，不生成运行时选择器。ISA、编码、NEMU、算术算法、FuConfig 和单请求协议保持一致。",
         "",
         f"生成 RTL 的 VDot 寄存器声明从 {structure['baseline_declared_register_bits']} 位变成 {structure['candidate_declared_register_bits']} 位，去掉两个 128 位源寄存器声明；8 个乘法算子、7 个加法算子不变。",

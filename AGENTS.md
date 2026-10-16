@@ -4,7 +4,9 @@
 
 用户于 2026-10-16 指示继续 T14，并要求独立判断外部优化建议。工作区为 `/home/riscv/riscv-lab/t14-optimization-20261015/repo`，分支 `local/t14-fused-input-20261015`。T13 已发布到 zjhwork；该次上传授权不代表自动发布 T14。
 
-先读 [T14 合同](team/spec/t14-ablation.md) 与 [建议评估](team/docs/t14-suggestion-review.md)。当前唯一候选为 `VDOT_T14_FUSED_INPUT=1` 的输入拍乘积锁存；默认 0 保持原版。两模式 FU 及检查器测试通过，候选 EMU 已构建，全核回归/性能消融仍在进行。不得据单元结果宣称全核性能验收完成。构建固定源码 `2443fb1c101dfc5974ac208275a8b86d68a11e0f`，硬件实际只改 VDot.scala。实时运行回执位于工作区上级的 `runs/fullcore-01/` 和 `build-evidence/`。
+先读 [T14 合同](team/spec/t14-ablation.md) 与 [建议评估](team/docs/t14-suggestion-review.md)。当前唯一候选为 `VDOT_T14_FUSED_INPUT=1` 的输入拍乘积锁存；默认 0 保持原版。两模式 FU 及检查器测试通过，候选 EMU 已构建，全核回归/性能消融仍在进行。不得据单元结果宣称全核性能验收完成。构建固定源码 `2443fb1c101dfc5974ac208275a8b86d68a11e0f`，硬件实际只改 VDot.scala。原 `runs/fullcore-01/` 保留一次写回反压覆盖不足。补充的同镜像 F2v 扫描已在两版通过（反压 137/138 周期），8 个功能分片也通过；当前有效运行是 `runs/fullcore-02/`，13 个校准窗口已完成，正在 126 次固定镜像性能重放。构建固定材料仍在 `build-evidence/`。
+
+恢复时先读 `runs/fullcore-02/campaign-state.json`、`runs/t14-postprocess-state.json`。已启动的后处理会在全核通过后做同镜像比较、压缩归档、Linux 离线复算并生成报告；Windows 离线材料位于 `D:\yanyi\riscv大赛\doc\T14优化\离线复核材料`，另有等待归档完成的 Windows 核验进程。不能重复启动、覆盖输出或仅根据进程启动就宣称完成。
 
 原 T12/T13 构建、程序、参考库和数据只读复用，不重建覆盖；当前实验保持相同 ISA、相同 T13 ELF/bin 和测量窗口。新优化、参数扩展、人工 ACK 与远端发布均不由历史说明自动授权。
 
