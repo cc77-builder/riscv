@@ -40,6 +40,35 @@ class T12AcceptanceTests(unittest.TestCase):
         return checker.check(fixture() if text is None else text,self.manifest,rc)
     def test_complete_synthetic_fixture(self):
         self.assertEqual(self.run_check()['status'],'T12_CONTROL_REGRESSION_PASS')
+    def test_redirect_cycle_enqueue_attempt_does_not_allocate_rob(self):
+        # Rob.scala records canEnqueue, but robEntries writes/valid both require
+        # !io.redirect.valid. A same-cycle attempt must not survive a redirect.
+        for reverse in (False, True):
+            with self.subTest(reverse=reverse):
+                events=[
+                    'T12_ENQUEUE cycle=10 rob=0:10 pc=0x80001000 ftq=0:2 word=0x0294050b',
+                    'T12_REDIRECT cycle=10 rob=0:9 ftq=0:2',
+                ]
+                if reverse: events.reverse()
+                text=fixture().replace('T12_ENQUEUE cycle=20', '\n'.join(events)+'\nT12_ENQUEUE cycle=20')
+                result=self.run_check(text)
+                self.assertEqual(result['status'],'T12_CONTROL_REGRESSION_PASS')
+                self.assertEqual(result['counts']['SUPPRESSED_ENQUEUE'],1)
+    def test_suppressed_enqueue_cannot_commit(self):
+        events='\n'.join([
+            'T12_ENQUEUE cycle=10 rob=0:10 pc=0x80001000 ftq=0:2 word=0x0294050b',
+            'T12_REDIRECT cycle=10 rob=0:9 ftq=0:2',
+            'T12_COMMIT cycle=11 rob=0:10 pc=0x80001000 ftq=0:2',
+        ])+'\n'
+        with self.assertRaisesRegex(ValueError,'commit without observed enqueue'):
+            self.run_check(fixture().replace('T12_ENQUEUE cycle=20',events+'T12_ENQUEUE cycle=20'))
+        # Allocation is blocked even when the attempted pointer is older.
+        with self.assertRaisesRegex(ValueError,'commit without observed enqueue'):
+            self.run_check(fixture().replace('T12_ENQUEUE cycle=20',events.replace('rob=0:10','rob=0:2')+'T12_ENQUEUE cycle=20'))
+    def test_suppressed_enqueue_preserves_previous_lifetime(self):
+        text=fixture().replace('T12_KILL cycle=3',
+            'T12_ENQUEUE cycle=3 rob=0:5 pc=0x80000004 ftq=0:1 word=0x0294050b\nT12_KILL cycle=3')
+        self.assertEqual(self.run_check(text)['status'],'T12_CONTROL_REGRESSION_PASS')
     def test_nonzero_exit(self):
         with self.assertRaisesRegex(ValueError,'exit code'): self.run_check(rc=124)
     def test_missing_summary(self):
@@ -72,6 +101,23 @@ class T12AcceptanceTests(unittest.TestCase):
     def test_cancelled_instruction_cannot_be_accepted(self):
         with self.assertRaisesRegex(ValueError,'cancelled.*accept'):
             self.run_check(self.cancelled_transaction(redirect_before_accept=True))
+    def test_response_on_rob_redirect_cycle_precedes_fu_flush(self):
+        text=self.cancelled_transaction().replace('T12_REDIRECT cycle=12', 'T12_REDIRECT cycle=14')
+        self.assertEqual(self.run_check(text)['status'],'T12_CONTROL_REGRESSION_PASS')
+    def test_accept_on_rob_redirect_cycle_is_killed_next_cycle(self):
+        text=self.cancelled_transaction().replace('T12_REDIRECT cycle=12','T12_REDIRECT cycle=11')
+        text=text.replace('T12_RESPONSE cycle=14 rob=0:8 pdest=4 illegal=0 data=0x00000000fffffff8',
+                          'T12_KILL cycle=12 rob=0:8 redirect=0:7 state=1')
+        result=self.run_check(text)
+        self.assertEqual(result['status'],'T12_CONTROL_REGRESSION_PASS')
+        self.assertEqual(result['counts']['ACCEPTED_THEN_SQUASHED'],2)
+    def test_response_one_cycle_after_rob_redirect_is_rejected(self):
+        text=self.cancelled_transaction().replace('T12_REDIRECT cycle=12', 'T12_REDIRECT cycle=13')
+        with self.assertRaisesRegex(ValueError,'cancelled.*response'): self.run_check(text)
+    def test_same_cycle_response_cannot_commit_after_redirect(self):
+        text=self.cancelled_transaction().replace('T12_REDIRECT cycle=12', 'T12_REDIRECT cycle=14')
+        text=text.replace('T12_ENQUEUE cycle=20','T12_COMMIT cycle=15 rob=0:8 pc=0x80000008 ftq=0:1\nT12_ENQUEUE cycle=20')
+        with self.assertRaisesRegex(ValueError,'cancelled.*commit'): self.run_check(text)
     def test_missing_writeback_pressure_is_incomplete(self):
         text='\n'.join(x for x in fixture().splitlines() if not x.startswith('T12_STALL'))
         self.assertEqual(self.run_check(text)['status'],'T12_COVERAGE_INCOMPLETE')

@@ -121,6 +121,10 @@ def check(text, manifest, exit_code):
             and groups[-1].end()<summaries[0].start(), 'invalid begin/group/summary order')
     require(events,'missing RTL observer events')
     events = normalize_fu_cycles(events)
+    # Rob.scala observes canEnqueue, while both the entry write and valid-bit
+    # allocation additionally require !io.redirect.valid. Such prints describe
+    # suppressed attempts, irrespective of pointer age or printf ordering.
+    redirect_cycles = {e[0] for e in events if e[2] == 'REDIRECT'}
     # Verilog printf order across modules is not a hardware ordering. Stable cycle
     # order with retire/redirect before re-allocation models the queue boundaries.
     rank={'COMMIT':0,'REDIRECT':1,'ENQUEUE':2,'ACCEPT':3,'STALL':4,'RESPONSE':5,'KILL':6,'VFEX4_ACCEPT':7,'VFEX4_WAIT':8}
@@ -133,20 +137,27 @@ def check(text, manifest, exit_code):
     for cycle,_,kind,f in events:
         key=ptr(f['rob']);counts[kind]+=1
         if kind=='ENQUEUE':
-            require(key not in entries or entries[key]['done'] or entries[key]['cancelled'], 'reallocated live ROB identity')
             require(int(f['word'],16)&0xfe00707f==0x0200000b,'observer enqueued a non-vdot instruction')
-            entries[key]={'done':False,'cancelled':False,'accepted':False,'responded':False,'pc':f['pc'],'pdest':None}
+            if cycle in redirect_cycles:
+                counts['SUPPRESSED_ENQUEUE'] += 1
+                continue
+            require(key not in entries or entries[key]['done'] or entries[key]['cancelled'], 'reallocated live ROB identity')
+            entries[key]={'done':False,'cancelled':False,'cancel_cycle':None,'accepted':False,'responded':False,'pc':f['pc'],'pdest':None}
         elif kind=='ACCEPT':
             require(key in entries,'accept without observed enqueue')
             require(pending is None,'two outstanding FU requests')
             e=entries[key]
-            require(not e['cancelled'] and not e['done'],'cancelled or retired instruction accepted')
+            # CtrlBlock sends s1_s3_redirect to ROB and its one-cycle registered
+            # s2_s4_redirect to ExuBlock/FU. ROB cancellation is immediate, but
+            # same-cycle FU handshakes precede that flush. Retirement stays banned.
+            require((not e['cancelled'] or e['cancel_cycle']==cycle) and not e['done'],'cancelled or retired instruction accepted')
             require(not e['accepted'],'duplicate FU accept')
+            if e['cancelled']: counts['ACCEPTED_THEN_SQUASHED']+=1
             e['accepted']=True;e['pdest']=f['pdest'];pending=key
             require(f['vl']=='8' and f['illegal']=='0','unexpected illegal stress request')
         elif kind=='RESPONSE':
             require(pending==key,'response without matching accepted request')
-            require(not entries[key]['cancelled'],'cancelled request produced a response')
+            require(not entries[key]['cancelled'] or entries[key]['cancel_cycle']==cycle,'cancelled request produced a response')
             require(entries[key]['pdest']==f['pdest'],'response identity changed')
             require(int(f['data'],16)>>32==0,'high 96 result bits are nonzero')
             require(f['illegal']=='0','unexpected stress exception')
@@ -154,7 +165,9 @@ def check(text, manifest, exit_code):
         elif kind=='KILL':
             require(pending==key,'kill without matching accepted request')
             require(0<(key-ptr(f['redirect']))%(2*ROB_SIZE)<ROB_SIZE,'kill does not prove younger cancellation')
-            entries[key]['cancelled']=True;pending=None
+            entries[key]['cancelled']=True
+            if entries[key]['cancel_cycle'] is None: entries[key]['cancel_cycle']=cycle-1
+            pending=None
         elif kind=='STALL':
             require(pending==key,'stall without matching accepted request')
         elif kind=='REDIRECT':
@@ -164,6 +177,7 @@ def check(text, manifest, exit_code):
                 if not e['done'] and not e['cancelled'] and 0<delta<ROB_SIZE:
                     if e['accepted']: counts['ACCEPTED_THEN_SQUASHED']+=1
                     e['cancelled']=True
+                    e['cancel_cycle']=cycle
         elif kind=='COMMIT':
             require(key in entries,'commit without observed enqueue')
             e=entries[key]

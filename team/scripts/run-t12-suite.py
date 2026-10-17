@@ -25,6 +25,7 @@ def module(name, filename):
 guard = module('artifact_guard_t12', 'artifact_guard.py')
 control = module('control_check_t12', 'check-vdot-regression.py')
 functional = module('functional_check_t12', 'check-vdot-run.py')
+negative = module('negative_check_t12', 'check-vdot-negative.py')
 
 def sha(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
@@ -120,13 +121,7 @@ def run(args):
                 require(result['status']=='T12_CONTROL_REGRESSION_PASS', 'control coverage incomplete')
                 record['status'] = result['status']
             elif name=='negative-vdot':
-                inj = re.search(r'DIFFTEST_HIGHBIT_NEGATIVE_INJECTED bit=100 vd=(\d+) pc=(0x[0-9a-f]+) instruction=(0x[0-9a-f]+)', text)
-                require(inj is not None and rc==1, 'missing negative injection/wrong exit')
-                mismatch = re.search(r'v'+inj[1]+r'_high different at pc = (0x[0-9a-fA-F]+), right=\s*(0x[0-9a-fA-F]+), wrong =\s*(0x[0-9a-fA-F]+)', text)
-                require(mismatch is not None and int(inj[2],16)==int(mismatch[1],16), 'wrong negative PC/register')
-                require(int(mismatch[2],16)^int(mismatch[3],16)==1<<36, 'wrong negative bit')
-                require(int(inj[3],16)&0xfe00707f==0x0200000b, 'negative is not vdot')
-                record.update(status='EXPECTED_VDOT_HIGHBIT_REJECTION', vd=int(inj[1]), pc=inj[2], word=inj[3])
+                record.update(negative.check(text,rc))
             elif data:
                 result = functional.validate(uart, 'full', rc, data, require_diff=True)
                 save(directory/'functional-result.json', result)
@@ -154,10 +149,10 @@ def run(args):
     for i in range(8):
         guard.verify_build(args.matrix/f'build-{i}', args.matrix/f'build-{i}/vdot-exceptions.bin',
                            args.matrix/f'data-{i}', 'vdot', 'full')
-    negative = next(x for x in records if x['name']=='negative-vdot')
+    negative_record = next(x for x in records if x['name']=='negative-vdot')
     normal = next(x for x in records if x['name']=='functional-0')
     image = str(args.matrix/'build-0/vdot-exceptions.bin')
-    require(negative['files'][image]==normal['files'][image], 'negative recovery image mismatch')
+    require(negative_record['files'][image]==normal['files'][image], 'negative recovery image mismatch')
     passed = len(records)==11 and all(x['status']!='FAILED' for x in records)
     result = {'status':'T12_FULLCORE_SUITE_PASS' if passed else 'T12_FULLCORE_SUITE_FAILED',
               'finished':stamp(), 'matrix_unique':117, 'matrix_executed':124, 'runs':records}

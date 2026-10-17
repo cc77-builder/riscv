@@ -22,6 +22,7 @@ def module(name, filename):
 
 control = module('archive_t12_control', 'check-vdot-regression.py')
 functional = module('archive_t12_functional', 'check-vdot-run.py')
+negative_check = module('archive_t12_negative', 'check-vdot-negative.py')
 
 def require(ok, message):
     if not ok: raise ValueError(message)
@@ -93,13 +94,7 @@ def validate(root, source, emu, reference, flash):
             require(not re.search(r'HIT BAD TRAP|different at pc|Assertion failed',text),'hello/vadd failure')
             result = {'status':'HELLO_VADD_PASS'}
         else:
-            injection = re.search(r'DIFFTEST_HIGHBIT_NEGATIVE_INJECTED bit=100 vd=(\d+) pc=(0x[0-9a-f]+) instruction=(0x[0-9a-f]+)',text)
-            require(injection is not None and exit_code==1,'negative fixture did not reject')
-            mismatch = re.search(r'v'+injection[1]+r'_high different at pc = (0x[0-9a-fA-F]+), right=\s*(0x[0-9a-fA-F]+), wrong =\s*(0x[0-9a-fA-F]+)',text)
-            require(mismatch is not None and int(injection[2],16)==int(mismatch[1],16),'negative PC/register mismatch')
-            require(int(mismatch[2],16)^int(mismatch[3],16)==1<<36,'negative bit mismatch')
-            require(int(injection[3],16)&0xfe00707f==0x0200000b,'negative instruction is not vdot')
-            result = {'status':'EXPECTED_VDOT_HIGHBIT_REJECTION'}
+            result = negative_check.check(text,exit_code)
         records[name] = record
         results[name] = result
     negative = records['negative-vdot']; positive = records['functional-0']

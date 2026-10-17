@@ -71,8 +71,8 @@ def emit(output):
                                 'vsetivli zero,8,e8,m1,tu,mu']
                         regs[28] = list(bytes.fromhex('00006040')*4)  # exactly 3.5f
                         operations.append({'op':'fdiv-s-vfmv','expected_f32':'40600000'})
-                    divide(16+(j%4),8,9)
                     dot(10+(j%4),8,9)
+                    divide(16+(j%4),8,9)
                     add(24+(j%4),8,9)
                 else:
                     dot(10+(j%4),8,9)
