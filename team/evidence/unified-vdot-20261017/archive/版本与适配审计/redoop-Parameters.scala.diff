@@ -1,0 +1,198 @@
+--- /home/riscv/riscv-lab/unified-vdot-benchmark-20261017/variants/redoop/src/main/scala/xiangshan/Parameters.scala	2026-10-17 15:13:06.612318631 +0800
++++ /home/riscv/riscv-lab/unified-vdot-benchmark-20261017/references/redoop/rtl/xs-kunminghu-v2/src/main/scala/xiangshan/Parameters.scala	2026-10-17 15:12:46.215764661 +0800
+@@ -20,8 +20,7 @@
+ import chisel3._
+ import chisel3.util._
+ import huancun._
+-import system.SoCParamsKey
+-import system.CVMParamskey
++import system.{CVMParamsKey, SoCParamsKey}
+ import xiangshan.backend.datapath.RdConfig._
+ import xiangshan.backend.datapath.WbConfig._
+ import xiangshan.backend.exu.ExeUnitParams
+@@ -61,7 +60,7 @@
+   VLEN: Int = 128,
+   ELEN: Int = 64,
+   HSXLEN: Int = 64,
+-  HasBitmapCheck: Boolean = false,
++  HasBitmapCheck: Boolean = true,
+   HasBitmapCheckDefault: Boolean = false,
+   HasMExtension: Boolean = true,
+   HasCExtension: Boolean = true,
+@@ -170,7 +169,7 @@
+   LoadQueueRAWSize: Int = 32, // NOTE: make sure that LoadQueueRAWSize is power of 2.
+   RollbackGroupSize: Int = 8,
+   LoadQueueReplaySize: Int = 72,
+-  LoadUncacheBufferSize: Int = 4,
++  LoadUncacheBufferSize: Int = 16,
+   LoadQueueNWriteBanks: Int = 8, // NOTE: make sure that LoadQueueRARSize/LoadQueueRAWSize is divided by LoadQueueNWriteBanks
+   StoreQueueSize: Int = 56,
+   StoreQueueNWriteBanks: Int = 8, // NOTE: make sure that StoreQueueSize is divided by StoreQueueNWriteBanks
+@@ -233,16 +232,14 @@
+   VLUopWritebackWidth: Int = 2,
+   VSUopWritebackWidth: Int = 1,
+   VSegmentBufferSize: Int = 8,
+-  VFOFBufferSize: Int = 8,
+-  VLFOFWritebackWidth: Int = 1,
+   // ==============================
+-  UncacheBufferSize: Int = 4,
++  UncacheBufferSize: Int = 16,
+   EnableLoadToLoadForward: Boolean = false,
+   EnableFastForward: Boolean = true,
+   EnableLdVioCheckAfterReset: Boolean = true,
+   EnableSoftPrefetchAfterReset: Boolean = true,
+   EnableCacheErrorAfterReset: Boolean = true,
+-  EnableAccurateLoadError: Boolean = true,
++  EnableAccurateLoadError: Boolean = false,
+   EnableUncacheWriteOutstanding: Boolean = false,
+   EnableHardwareStoreMisalign: Boolean = true,
+   EnableHardwareLoadMisalign: Boolean = true,
+@@ -328,8 +325,7 @@
+   icacheParameters: ICacheParameters = ICacheParameters(
+     tagECC = Some("parity"),
+     dataECC = Some("parity"),
+-    replacer = Some("setplru"),
+-    cacheCtrlAddressOpt = Some(AddressSet(0x38022080, 0x7f))
++    replacer = Some("setplru")
+   ),
+   dcacheParametersOpt: Option[DCacheParameters] = Some(DCacheParameters(
+     tagECC = Some("secded"),
+@@ -340,8 +336,7 @@
+     nReleaseEntries = 18,
+     nMaxPrefetchEntry = 6,
+     enableTagEcc = true,
+-    enableDataEcc = true,
+-    cacheCtrlAddressOpt = Some(AddressSet(0x38022000, 0x7f))
++    enableDataEcc = true
+   )),
+   L2CacheParamsOpt: Option[L2Param] = Some(L2Param(
+     name = "l2",
+@@ -355,8 +350,9 @@
+   softTLB: Boolean = false, // dpi-c l1tlb debug only
+   softPTW: Boolean = false, // dpi-c l2tlb debug only
+   softPTWDelay: Int = 1,
+-  hasMbist: Boolean = false,
+-  hasSramCtl: Boolean = false,
++  wfiResume: Boolean = true,
++  hartIDDmodeWidth: Int = -1, // only for Customization
++  enableResetMtvec: Boolean = false, // only for Customization
+ ){
+   def ISABase = "rv64i"
+   def ISAExtensions = Seq(
+@@ -376,6 +372,11 @@
+ 
+   def vlWidth = log2Up(VLEN) + 1
+ 
++  /*
++    Top-Down, ExecutionStall used
++  */
++  def fewUops = 4
++
+   /**
+    * the minimum element length of vector elements
+    */
+@@ -445,7 +446,10 @@
+     implicit val schdType: SchedulerType = VfScheduler()
+     SchdBlockParams(Seq(
+       IssueBlockParams(Seq(
+-        ExeUnitParams("VFEX0", Seq(VfmaCfg, VialuCfg, VimacCfg, VppuCfg), Seq(VfWB(port = 0, 0), V0WB(port = 0, 0)), Seq(Seq(VfRD(0, 0)), Seq(VfRD(1, 0)), Seq(VfRD(2, 0)), Seq(V0RD(0, 0)), Seq(VlRD(0, 0)))),
++        // VFEX0 also hosts the custom vdot.vv unit; it reuses the existing
++        // VfRD(0..2)/V0RD/VlRD read ports and the VfWB(0,0)/V0WB(0,0) write ports
++        // (VdotCfg has the same 5-source layout as VimacCfg), so no new VPRF ports.
++        ExeUnitParams("VFEX0", Seq(VfmaCfg, VialuCfg, VimacCfg, VdotCfg, VppuCfg), Seq(VfWB(port = 0, 0), V0WB(port = 0, 0)), Seq(Seq(VfRD(0, 0)), Seq(VfRD(1, 0)), Seq(VfRD(2, 0)), Seq(V0RD(0, 0)), Seq(VlRD(0, 0)))),
+         ExeUnitParams("VFEX1", Seq(VfaluCfg, VfcvtCfg, VipuCfg, VSetRvfWvfCfg), Seq(VfWB(port = 0, 1), V0WB(port = 0, 1), VlWB(port = vfSchdVlWbPort, 0), IntWB(port = 1, 1), FpWB(port = 0, 1)), Seq(Seq(VfRD(0, 1)), Seq(VfRD(1, 1)), Seq(VfRD(2, 1)), Seq(V0RD(0, 1)), Seq(VlRD(0, 1)))),
+       ), numEntries = 16, numEnq = 2, numComp = 12),
+       IssueBlockParams(Seq(
+@@ -555,12 +559,16 @@
+ case class DebugOptions
+ (
+   FPGAPlatform: Boolean = false,
++  DumpCSR: Boolean = false,
+   ResetGen: Boolean = false,
+   EnableDifftest: Boolean = false,
+   AlwaysBasicDiff: Boolean = true,
++  FullBasicDiff: Boolean = false,
+   EnableDebug: Boolean = false,
+   EnablePerfDebug: Boolean = true,
+   PerfLevel: String = "VERBOSE",
++  EnableXMR: Boolean = true,
++  SimMemSize: Long = 8190L * 1024 * 1024 * 1024, // same as PMA, (0x80000000L, 0x80000000000L)
+   UseDRAMSim: Boolean = false,
+   EnableConstantin: Boolean = false,
+   EnableChiselDB: Boolean = false,
+@@ -568,13 +576,21 @@
+   EnableRollingDB: Boolean = false
+ )
+ 
++case object DFTOptionsKey extends Field[DFTOptions]
++
++case class DFTOptions
++(
++  EnableMbist: Boolean = true, // enable mbist default
++  EnableSramCtl: Boolean = false,
++)
++
+ trait HasXSParameter {
+ 
+   implicit val p: Parameters
+ 
+   def PAddrBits = p(SoCParamsKey).PAddrBits // PAddrBits is Phyical Memory addr bits
+   def PmemRanges = p(SoCParamsKey).PmemRanges
+-  def KeyIDBits = p(CVMParamskey).KeyIDBits
++  def KeyIDBits = p(CVMParamsKey).KeyIDBits
+   final val PageOffsetWidth = 12
+   def NodeIDWidth = p(SoCParamsKey).NodeIDWidthList(p(CHIIssue)) // NodeID width among NoC
+ 
+@@ -590,6 +606,8 @@
+   val minFLen = 32
+   val fLen = 64
+   def hartIdLen = p(MaxHartIdBits)
++  def hartIDDmodeWidth = coreParams.hartIDDmodeWidth
++  def enableResetMtvec = coreParams.enableResetMtvec
+   val xLen = XLEN
+ 
+   def HasBitmapCheck = coreParams.HasBitmapCheck
+@@ -772,6 +790,8 @@
+   def LoadQueueRARSize = coreParams.LoadQueueRARSize
+   def LoadQueueRAWSize = coreParams.LoadQueueRAWSize
+   def RollbackGroupSize = coreParams.RollbackGroupSize
++  val RAWlgSelectGroupSize = log2Ceil(RollbackGroupSize)
++  val RAWTotalDelayCycles = scala.math.ceil(log2Ceil(LoadQueueRAWSize).toFloat / RAWlgSelectGroupSize).toInt + 1 - 2
+   def LoadQueueReplaySize = coreParams.LoadQueueReplaySize
+   def LoadUncacheBufferSize = coreParams.LoadUncacheBufferSize
+   def LoadQueueNWriteBanks = coreParams.LoadQueueNWriteBanks
+@@ -810,7 +830,6 @@
+   def VLUopWritebackWidth = coreParams.VLUopWritebackWidth
+   def VSUopWritebackWidth = coreParams.VSUopWritebackWidth
+   def VSegmentBufferSize = coreParams.VSegmentBufferSize
+-  def VFOFBufferSize = coreParams.VFOFBufferSize
+   def UncacheBufferSize = coreParams.UncacheBufferSize
+   def UncacheBufferIndexWidth = log2Up(UncacheBufferSize)
+   def EnableLoadToLoadForward = coreParams.EnableLoadToLoadForward
+@@ -878,7 +897,7 @@
+   def LFSTEnable = true
+ 
+   def PCntIncrStep: Int = 6
+-  def numPCntHc: Int = 12
++  def numPCntHc: Int = 17
+   def numPCntPtw: Int = 19
+ 
+   def numCSRPCntFrontend = 8
+@@ -903,11 +922,12 @@
+   def PrivWidth              = coreParams.traceParams.PrivWidth
+   def IaddrWidth             = coreParams.traceParams.IaddrWidth
+   def ItypeWidth             = coreParams.traceParams.ItypeWidth
+-  def IretireWidthInPipe     = log2Up(RenameWidth * 2)
+-  def IretireWidthCompressed = log2Up(RenameWidth * CommitWidth * 2)
++  def IretireWidthInPipe     = log2Up(RenameWidth * 2 + 1)
++  def IretireWidthCompressed = log2Up(RenameWidth * CommitWidth * 2 + 1)
+   def IlastsizeWidth         = coreParams.traceParams.IlastsizeWidth
+ 
+-  def hasMbist               = coreParams.hasMbist
+-  def hasSramCtl             = coreParams.hasSramCtl
+-  def hasSramTest            = hasMbist || hasSramCtl
++  def wfiResume              = coreParams.wfiResume
++  def hasMbist               = p(DFTOptionsKey).EnableMbist
++  def hasSramCtl             = p(DFTOptionsKey).EnableSramCtl
++  def hasDFT                 = hasMbist || hasSramCtl
+ }

@@ -1,0 +1,24 @@
+--- /home/riscv/riscv-lab/unified-vdot-benchmark-20261017/variants/redoop/src/main/scala/xiangshan/backend/decode/VecDecoder.scala	2026-10-17 15:13:06.620375780 +0800
++++ /home/riscv/riscv-lab/unified-vdot-benchmark-20261017/references/redoop/rtl/xs-kunminghu-v2/src/main/scala/xiangshan/backend/decode/VecDecoder.scala	2026-10-17 15:12:46.220097996 +0800
+@@ -10,8 +10,9 @@
+ import xiangshan.ExceptionNO.illegalInstr
+ import xiangshan.backend.fu.FuType
+ import xiangshan._
+-import yunsuan.{VfpuType, VipuType, VimacType, VpermType, VialuFixType, VfaluType, VfmaType, VfdivType, VfcvtType, VidivType}
++import yunsuan.{VfpuType, VipuType, VimacType, VpermType, VialuFixType, VfaluType, VfmaType, VfdivType, VfcvtType, VidivType, VdotType}
+ import xiangshan.backend.decode.Zvbb._
++import xiangshan.backend.decode.Vdot._
+ 
+ abstract class VecDecode extends XSDecodeBase {
+   def generate() : List[BitPat]
+@@ -424,6 +425,10 @@
+     VWMACC_VV    -> OPMVV(T, FuType.vimac, VimacType.vwmacc, F, T, F, UopSplitType.VEC_VVW),
+     VWMACCSU_VV  -> OPMVV(T, FuType.vimac, VimacType.vwmaccsu, F, T, F, UopSplitType.VEC_VVW),
+     VWMACCU_VV   -> OPMVV(T, FuType.vimac, VimacType.vwmaccu, F, T, F, UopSplitType.VEC_VVW),
++    // custom vdot.vv: INT8 x INT8 -> INT32 dot product, accumulate into vd.
++    // One uop per lmul group (each uop produces a full 128-bit vd fragment),
++    // so it reuses the plain VEC_VVV split instead of the VVW widening split.
++    VDOT_VV      -> OPMVV(T, FuType.vdot, VdotType.vdot, F, T, F, UopSplitType.VEC_VVV),
+     VWMUL_VV     -> OPMVV(T, FuType.vimac, VimacType.vwmul, F, T, F, UopSplitType.VEC_VVW),
+     VWMULSU_VV   -> OPMVV(T, FuType.vimac, VimacType.vwmulsu, F, T, F, UopSplitType.VEC_VVW),
+     VWMULU_VV    -> OPMVV(T, FuType.vimac, VimacType.vwmulu, F, T, F, UopSplitType.VEC_VVW),

@@ -1,6 +1,8 @@
-# 四项目统一 vdot 全核测试（本地实验）
+# 四项目统一 vdot 全核测试
 
-本目录为 2026-10-17 新建的统一测试，不把公开项目原报告的数字当作本次实测。未上传 GitHub。
+本目录为 2026-10-17 新建的统一测试，结果来自本机全核重新测量。本次程序、结果与证据按用户要求交付至 `zjhwork`。
+
+[结果报告](../../docs/unified-vdot-comparison-20261017.md) · [完整证据](../../evidence/unified-vdot-20261017/README.md) · [发布记录](../../docs/unified-vdot-publication-20261017.md)
 
 ## 固定比较条件
 

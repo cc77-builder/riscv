@@ -1,5 +1,11 @@
 # 团队 Agent 入口
 
+## 本轮发布：四项目统一测试上传 zjhwork
+
+用户明确要求“上传github到zjhwork分支，留个记录”，授权将三项统一测试本地提交及本轮结果/证据/入口说明普通快进推送至 `cc77-builder/riscv:zjhwork`。发布前远端为 `05e07deaf7ba1f8c0dbb2d2c2bd2d2db7e051a37`，是本地成果的祖先。本节覆盖下方历史上传限制，不授权自动开始后续任务。
+
+先读 [本次交付记录](team/docs/unified-vdot-publication-20261017.md)、[结果](team/docs/unified-vdot-comparison-20261017.md) 和 [证据](team/evidence/unified-vdot-20261017/README.md)。64镜像、860窗口、384正式性能样本已通过；本次仅整理上传，不重复运行硬件或改动既有生产RTL。原归档的未上传状态保留为历史快照。推送后必须回读远端SHA，实际回执放在Windows `doc/四项目统一测试_20261017/Git交付/`。上传不代表人工ACK、官方排名或完成PPA/T16。
+
 ## 本轮发布：T15 上传 zjhwork
 
 用户已明确要求“把这次 T15 的成果上传到 zjhwork 分支”，授权将成果提交 `13851b2482603ac9f96c850795c697f4e3a6bf44` 及本次交付入口说明普通快进推送到 `cc77-builder/riscv:zjhwork`。发布前远端为 `6fea2969d05dc4cb168795a60e2e6ee9ca1f9988`，是本地祖先。本节覆盖下方对本次 T15 暂不上传的历史限制；后续任务按新的明确指示推进。

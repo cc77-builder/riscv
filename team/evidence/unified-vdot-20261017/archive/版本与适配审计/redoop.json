@@ -1,0 +1,99 @@
+{
+  "upstream_repository": "https://github.com/redoop/xiangshan-vdot",
+  "public_commit": "fba90f8eb0818ed9539aa097691b371fd852f7a1",
+  "common_xiangshan_base": "16ae9ddcda54fc9a2fddffad73174cf793ac7814",
+  "common_yunsuan_base": "cadd3c2f43096e253d61296b33ac697be8354e29",
+  "common_nemu_base": "a48a11f208ff81ad765591d83271d1b339fb3861",
+  "hardware_root": "/home/riscv/riscv-lab/unified-vdot-benchmark-20261017/variants/redoop",
+  "nemu_root": "/home/riscv/riscv-lab/unified-vdot-benchmark-20261017/variants/redoop/benchmark-nemu",
+  "observer_patch_sha256": "8e48a4e418a46923916d711ae809b66e8f7eb121ced691ae8a0f3278490e6693",
+  "native_instruction": {
+    "funct6": 57,
+    "funct3": 2,
+    "opcode": 87,
+    "vm": 1,
+    "sew": 32,
+    "vl": 4,
+    "lmul": 1,
+    "formula": "vd[j] += sum(4 signed INT8 products) modulo 2^32, j=0..3"
+  },
+  "normalization": {
+    "target": "low 8 signed INT8 pairs summed into low 32 bits, high 96 zero",
+    "instructions_per_dot": 7,
+    "scratch_vector_register": 2,
+    "alias_safe": true,
+    "high_input_64_bits": "arbitrary, only low two partial lanes are reduced",
+    "restored_vtype": "e8,m1,tu,mu",
+    "restored_vl": 8,
+    "batch4_instructions": 19,
+    "batch4_scratch": [
+      16,
+      18,
+      20,
+      22
+    ]
+  },
+  "status": "source prepared; NEMU built and unified functional reference passed; awaiting RTL build/run by root",
+  "native_source_unchanged": {
+    "src/main/scala/xiangshan/backend/fu/wrapper/VdotU.scala": "9d00b45f280120d6211c5627c9219bd4691c559a1d3afd5f41c22f390290fb42",
+    "yunsuan/src/main/scala/yunsuan/vector/vectorIMAC/Vdot64b.scala": "b2c0209894e3d7d01729093f204494abf4c82662b3585f16e2f1e4a17a32f1d0",
+    "yunsuan/src/main/scala/yunsuan/encoding/Opcode/VdotOpcode.scala": "749e792d2625b5aefc97a7beff5efe2b6a84d3e7294b6cd49b9e3ea33d843fe2",
+    "yunsuan/src/test/scala/vector/VectorALU/Vdot64bSpec.scala": "9aaca5e827f18c6d10b9c98c6edf0912275ac8e5f7fe3c56271b89854f134725"
+  },
+  "license": "No root LICENSE found in public snapshot; local comparative use only, no publishing by this task",
+  "patch_sha256": {
+    "redoop-xiangshan.patch": "c42c1b38ec0902b100f36f94fbd946345680cb167186aad3634e9a59e43b4510",
+    "redoop-yunsuan.patch": "6b9bd81a9ce14e0e60392973dccb29af67e4a404524016a5c3b5aab682e2147c",
+    "redoop-nemu.patch": "9b4d9da2d4a678c6bb028b6d6f5bf1ff1abd4571bbe123d2ba39d3b804680043"
+  },
+  "nemu_build": {
+    "status": "PASS",
+    "returncode": 0,
+    "shared_object": "/home/riscv/riscv-lab/unified-vdot-benchmark-20261017/variants/redoop/benchmark-nemu/build/riscv64-nemu-interpreter-so",
+    "sha256": "4762f99366fee5bab12559f902c722d1b01eb22a2780df5ce09fa2e00d5d0387",
+    "log": "/home/riscv/riscv-lab/unified-vdot-benchmark-20261017/audit/redoop-nemu-build.log"
+  },
+  "reference_validation": {
+    "status": "PASS_REFERENCE_ONLY",
+    "counts": {
+      "generic_vdot_pairs": 10154,
+      "known": 10022,
+      "batch": 10022
+    },
+    "variant": "redoop",
+    "reference_sha256": "4762f99366fee5bab12559f902c722d1b01eb22a2780df5ce09fa2e00d5d0387",
+    "layout": {
+      "size": 1400,
+      "mode": 512,
+      "mstatus": 520,
+      "pc": 656,
+      "mcause": 584,
+      "mepc": 536,
+      "mtvec": 568,
+      "vr": 800,
+      "vstart": 1312,
+      "vl": 1344,
+      "vtype": 1352,
+      "vlenb": 1360,
+      "vxrm": 1328,
+      "vxsat": 1320,
+      "vcsr": 1336
+    },
+    "code_sha256": "ed31b6b1527928e4e5fde378d9b65fac3060e4b424fc36466aa99f194ad56402",
+    "input_sha256": {
+      "directed.jsonl": "b78708eca1145437d34af230721a3999c35889176131cdf57acfa6b7a6b8b333",
+      "random.jsonl": "6201847c400f7ecac85848690704abac15b7278a824e447b35ad60788da70363"
+    },
+    "source_sha256": "a166b5cc61f165d1c0fcf3d4f686c07a013c3cc589d8f0adbb29fbc1c422bf57",
+    "full_core": false,
+    "performance": false
+  },
+  "nemu_config_sha256": "db745dff04ef02a4c5bb2258a491c6eef8fdd1767872bda624c5ae859722267e",
+  "nemu_dependency_commits": {
+    "resource/softfloat/repo": "a0c6494cdc11865811dec815d5c0049fba9d82a8",
+    "resource/nanopb": "5cfa739e2ed1dd5cbd64c65c73723c93832084c8",
+    "resource/LibCheckpoint": "1d8905cc2803c242ef257569128c2e68bf4272aa",
+    "resource/LibCheckpoint/resource/nanopb": "671672b4d7994a9b07a307ae654885c7202ae886",
+    "resource/gcpt_restore": "5169da768d18f4682a489eaabe7c071df6d6ef88"
+  }
+}

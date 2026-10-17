@@ -1,5 +1,7 @@
 # 三人团队：项目计划与开发入口
 
+> **2026-10-17 四项目统一测试交付至 zjhwork。** 同一香山基础版本/MinimalConfig/VLEN128下，四个实现64个全核镜像、860个窗口通过；正式性能样本384个。四路独立点积加速比：本项目1.496×、Jade2.605×、试水2.322×、Redoop＋dot8适配0.929×。见 [完整结果](docs/unified-vdot-comparison-20261017.md)、[程序](workloads/unified-vdot/README.md) 和 [验证归档](evidence/unified-vdot-20261017/README.md)。这是T15后的补充比较，未自动推进T16或新增人工ACK；下方“未上传”等为历史时点快照。
+
 > **T15 成果交付至 zjhwork。** 用户已授权上传成果 `13851b2482603ac9f96c850795c697f4e3a6bf44` 及本次交付入口说明。新增 s16x8/r64 独立参数单元、参考模型、94＋10000 组扩展数据、协议测试和 Linux/Windows 离线核验材料。实际正式验证源码为 `65f6159`，本发布批次只补充说明。见 [T15 报告](docs/t15-parameter-extension.md) 和 [最新计划进度](docs/progress-t15-20261017.md)。下方及密封材料中的“未上传”保留为发布前历史记录；人工复核仍待完成，下一项为 T16。
 
 > **2026-10-17 T15 本地自动验收完成，尚未上传。** 已验证 8 对 int16 的独立参数单元，94 定向＋10000 随机完整结果、单请求协议与跨平台离线复核通过。T14/T15 两项 G5 开发验证已具备，下一项是 T16 材料整合；人工复核待完成。见 [T15 报告](docs/t15-parameter-extension.md) 和 [最新计划进度](docs/progress-t15-20261017.md)。本轮没有扩展全核 ISA。
@@ -24,6 +26,7 @@
 
 | 内容 | 入口 |
 | --- | --- |
+| 四项目统一测试、公开实现对比与验证记录 | [结果](docs/unified-vdot-comparison-20261017.md) · [程序](workloads/unified-vdot/README.md) · [证据](evidence/unified-vdot-20261017/README.md) |
 | T15 独立参数扩展、验证结果与边界 | [T15 报告](docs/t15-parameter-extension.md) · [参数合同](spec/t15-parameters.md) |
 | T15 原始证据与跨平台核验 | [证据](evidence/t15-parameters-20261017/README.md) · [离线复核](evidence/t15-offline-review-20261017/README.md) |
 | T15 完成后的计划状态 | [最新进度](docs/progress-t15-20261017.md) |

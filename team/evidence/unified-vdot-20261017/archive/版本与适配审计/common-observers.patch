@@ -1,0 +1,53 @@
+--- a/src/main/scala/xiangshan/backend/fu/NewCSR/NewCSR.scala
++++ b/src/main/scala/xiangshan/backend/fu/NewCSR/NewCSR.scala
+@@ -1038,6 +1038,14 @@
+ 
+ 
+   // Todo: check IMSIC EX_II and EX_VI
++  if (sys.env.get("VDOT_T13_TRACE").contains("1")) {
++    require(!p(xiangshan.DebugOptionsKey).ResetGen, "T13 trace requires common simulation reset")
++    val t13Cycle = utility.GTimer()
++    when(io.in.fire && ren && (addr === "hc00".U || addr === "hc02".U)) {
++      printf(p"T13_CSR_SAMPLE cycle=${t13Cycle} addr=0x${Hexadecimal(addr)} data=0x${Hexadecimal(rdata)} wen=${wen}\n")
++    }
++  }
++
+   private val imsicIllegal = fromAIA.rdata.valid && fromAIA.rdata.bits.illegal
+   private val imsic_EX_II = imsicIllegal && !V.asUInt.asBool
+   private val imsic_EX_VI = imsicIllegal && V.asUInt.asBool
+--- a/src/main/scala/xiangshan/backend/rob/Rob.scala
++++ b/src/main/scala/xiangshan/backend/rob/Rob.scala
+@@ -1474,6 +1474,33 @@
+     val idx = deqPtrVec(i).value
+     wdata(i) := debug_exuData(idx)
+     wpc(i) := SignExt(commitDebugUop(i).pc, XLEN)
++  }
++
++
++  if (sys.env.get("VDOT_T13_TRACE").contains("1")) {
++    require(!p(xiangshan.DebugOptionsKey).ResetGen, "T13 trace requires common simulation reset")
++    val t13Cycle = GTimer()
++    val t13Active = RegInit(false.B)
++    for (i <- 0 until RenameWidth) {
++      val u = io.enq.req(i).bits
++      val counterRead = u.fuType === FuType.csr.U && (u.instr(31, 20) === "hc00".U || u.instr(31, 20) === "hc02".U)
++      when(canEnqueue(i) && counterRead) {
++        printf(p"T13_COUNTER_ENQUEUE cycle=${t13Cycle} rob=${allocatePtrVec(i).flag}:${allocatePtrVec(i).value} pc=0x${Hexadecimal(u.pc)} word=0x${Hexadecimal(u.instr)} empty=${isEmpty} wait=${u.waitForward} block=${u.blockBackward}\n")
++      }
++    }
++    for (i <- 0 until CommitWidth) {
++      val u = commitDebugUop(i)
++      val committed = io.commits.isCommit && io.commits.commitValid(i)
++      val start = u.instr === "h51300013".U
++      val stop = u.instr === "h51400013".U
++      val counterRead = u.fuType === FuType.csr.U && (u.instr(31, 20) === "hc00".U || u.instr(31, 20) === "hc02".U)
++      when(committed && start) { t13Active := true.B }
++      when(committed && stop) { t13Active := false.B }
++      when(committed && (t13Active || start || counterRead)) {
++        val retired = CommitType.isFused(io.commits.info(i).commitType).asUInt + io.commits.info(i).instrSize
++        printf(p"T13_RETIRE cycle=${t13Cycle} slot=${i.U} rob=${deqPtrVec(i).flag}:${deqPtrVec(i).value} pc=0x${Hexadecimal(u.pc)} word=0x${Hexadecimal(u.instr)} count=${retired} data=0x${Hexadecimal(wdata(i))}\n")
++      }
++    }
+   }
+ 
+   if (env.EnableDifftest || env.AlwaysBasicDiff) {

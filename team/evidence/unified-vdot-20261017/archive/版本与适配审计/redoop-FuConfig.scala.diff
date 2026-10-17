@@ -1,0 +1,120 @@
+--- /home/riscv/riscv-lab/unified-vdot-benchmark-20261017/variants/redoop/src/main/scala/xiangshan/backend/fu/FuConfig.scala	2026-10-17 15:13:06.628432925 +0800
++++ /home/riscv/riscv-lab/unified-vdot-benchmark-20261017/references/redoop/rtl/xs-kunminghu-v2/src/main/scala/xiangshan/backend/fu/FuConfig.scala	2026-10-17 15:12:46.220097996 +0800
+@@ -161,7 +161,7 @@
+ 
+   def needVecCtrl: Boolean = {
+     import FuType._
+-    Seq(vipu, vialuF, vimac, vidiv, vfpu, vppu, vfalu, vfma, vfdiv, vfcvt, vldu, vstu).contains(fuType)
++    Seq(vipu, vialuF, vimac, vidiv, vfpu, vppu, vfalu, vfma, vfdiv, vfcvt, vldu, vstu, vdot).contains(fuType)
+   }
+ 
+   def needCriticalErrors: Boolean = Seq(FuType.csr).contains(fuType)
+@@ -182,7 +182,7 @@
+                             fuType == FuType.vppu || fuType == FuType.vipu ||
+                             fuType == FuType.vfalu || fuType == FuType.vfma ||
+                             fuType == FuType.vfdiv || fuType == FuType.vfcvt ||
+-                            fuType == FuType.vidiv
++                            fuType == FuType.vidiv || fuType == FuType.vdot
+ 
+   def isVecMem: Boolean = fuType == FuType.vldu || fuType == FuType.vstu ||
+                           fuType == FuType.vsegldu || fuType == FuType.vsegstu
+@@ -440,7 +440,7 @@
+     ),
+     piped = false,
+     latency = UncertainLatency(),
+-    exceptionOut = Seq(storeAddrMisaligned, storeAccessFault, storePageFault, storeGuestPageFault, breakPoint),
++    exceptionOut = Seq(storeAddrMisaligned, storeAccessFault, storePageFault, storeGuestPageFault, breakPoint, hardwareError),
+     flushPipe = true,
+     trigger = true,
+     immType = Set(SelImm.IMM_S),
+@@ -469,7 +469,7 @@
+     writeIntRf = true,
+     writeFpRf = true,
+     latency = UncertainLatency(3),
+-    exceptionOut = Seq(loadAddrMisaligned, loadAccessFault, loadPageFault, loadGuestPageFault),
++    exceptionOut = Seq(loadAddrMisaligned, loadAccessFault, loadPageFault, loadGuestPageFault, breakPoint, hardwareError),
+     flushPipe = true,
+     replayInst = true,
+     hasLoadError = true,
+@@ -485,7 +485,7 @@
+     ),
+     piped = false,
+     latency = UncertainLatency(),
+-    exceptionOut = Seq(storeAddrMisaligned, storeAccessFault, storePageFault, storeGuestPageFault),
++    exceptionOut = Seq(storeAddrMisaligned, storeAccessFault, storePageFault, storeGuestPageFault, breakPoint, hardwareError),
+     immType = Set(SelImm.IMM_S),
+   )
+ 
+@@ -563,6 +563,27 @@
+     exceptionOut = Seq(illegalInstr),
+   )
+ 
++  // Custom vdot.vv (INT8 x INT8 -> INT32 dot product, accumulate).
++  // Follows the VimacCfg template: same 5-source layout (vs1/vs2/oldVd/v0/vl),
++  // pipelined with 2-cycle latency matching the two register stages inside Vdot64b.
++  // No vxsat (wrap-around accumulation, no saturation), so writeVxsat stays false.
++  val VdotCfg = FuConfig (
++    name = "vdot",
++    fuType = FuType.vdot,
++    fuGen = (p: Parameters, cfg: FuConfig) => Module(new VdotU(cfg)(p).suggestName("Vdot")),
++    srcData = Seq(
++      Seq(VecData(), VecData(), VecData(), V0Data(), VlData()), // vs1, vs2, vd_old, v0, vtype&vl
++    ),
++    piped = true,
++    writeVecRf = true,
++    writeV0Rf = true,
++    latency = CertainLatency(2),
++    vconfigWakeUp = true,
++    maskWakeUp = true,
++    destDataBits = 128,
++    exceptionOut = Seq(illegalInstr),
++  )
++
+   val VidivCfg = FuConfig (
+     name = "vidiv",
+     fuType = FuType.vidiv,
+@@ -766,7 +787,7 @@
+     writeV0Rf = true,
+     writeVlRf = true,
+     latency = UncertainLatency(),
+-    exceptionOut = Seq(loadAddrMisaligned, loadAccessFault, loadPageFault, loadGuestPageFault, breakPoint),
++    exceptionOut = Seq(loadAddrMisaligned, loadAccessFault, loadPageFault, loadGuestPageFault, breakPoint, hardwareError),
+     flushPipe = true,
+     replayInst = true,
+     trigger = true,
+@@ -785,7 +806,7 @@
+     ),
+     piped = false,
+     latency = UncertainLatency(),
+-    exceptionOut = Seq(storeAddrMisaligned, storeAccessFault, storePageFault, storeGuestPageFault, breakPoint),
++    exceptionOut = Seq(storeAddrMisaligned, storeAccessFault, storePageFault, storeGuestPageFault, breakPoint, hardwareError),
+     flushPipe = true,
+     replayInst = true,
+     trigger = true,
+@@ -807,7 +828,7 @@
+     writeV0Rf = true,
+     writeVlRf = true,
+     latency = UncertainLatency(),
+-    exceptionOut = Seq(loadAddrMisaligned, loadAccessFault, loadPageFault, breakPoint),
++    exceptionOut = Seq(loadAddrMisaligned, loadAccessFault, loadPageFault, breakPoint, hardwareError),
+     flushPipe = true,
+     replayInst = true,
+     trigger = true,
+@@ -826,7 +847,7 @@
+     ),
+     piped = false,
+     latency = UncertainLatency(),
+-    exceptionOut = Seq(storeAddrMisaligned, storeAccessFault, storePageFault, breakPoint),
++    exceptionOut = Seq(storeAddrMisaligned, storeAccessFault, storePageFault, breakPoint, hardwareError),
+     flushPipe = true,
+     replayInst = true,
+     trigger = true,
+@@ -844,7 +865,7 @@
+   )
+ 
+   def VecArithFuConfigs = Seq(
+-    VialuCfg, VimacCfg, VppuCfg, VipuCfg, VfaluCfg, VfmaCfg, VfcvtCfg
++    VialuCfg, VimacCfg, VdotCfg, VppuCfg, VipuCfg, VfaluCfg, VfmaCfg, VfcvtCfg
+   )
+ }
+ 
