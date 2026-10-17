@@ -17,6 +17,8 @@ def main(root):
         base=manifests['ours']
         for v in variants:
             m=manifests[v]
+            match={'ours':0x0200000b,'jade':0xe6000057,'shishui':0xfa000057,'redoop':0xe6002057}
+            check.require(m['variant']==v and m['custom_match']==match[v] and m['custom_mask']==0xfe00707f,'variant/code binding differs')
             check.check_compiled_cases(folders[v]/'vdot-perf.elf',m)
             check.require(base['plan']==m['plan'],'run order differs')
             for i,(a,b) in enumerate(zip(base['rows'],m['rows'])):

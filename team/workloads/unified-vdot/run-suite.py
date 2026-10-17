@@ -11,6 +11,9 @@ import check
 def main(a):
     a.output.mkdir(parents=True,exist_ok=False)
     images=json.loads((a.images/'images.json').read_text())['images']
+    for item in images:
+        manifest=json.loads((Path(item['path'])/'data/manifest.json').read_text())
+        check.require(manifest['variant']==a.variant,'image variant binding mismatch')
     state={'variant':a.variant,'status':'RUNNING','stages':[], 'started':campaign.now()}
     campaign.save(a.output/'state.json',state)
     all_samples=[]
