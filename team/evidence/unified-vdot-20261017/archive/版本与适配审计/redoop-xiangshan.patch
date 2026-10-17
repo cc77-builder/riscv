@@ -1,0 +1,333 @@
+diff --git a/src/main/scala/xiangshan/Parameters.scala b/src/main/scala/xiangshan/Parameters.scala
+index 40b33df..e630be1 100644
+--- a/src/main/scala/xiangshan/Parameters.scala
++++ b/src/main/scala/xiangshan/Parameters.scala
+@@ -445,7 +445,10 @@ case class XSCoreParameters
+     implicit val schdType: SchedulerType = VfScheduler()
+     SchdBlockParams(Seq(
+       IssueBlockParams(Seq(
+-        ExeUnitParams("VFEX0", Seq(VfmaCfg, VialuCfg, VimacCfg, VppuCfg), Seq(VfWB(port = 0, 0), V0WB(port = 0, 0)), Seq(Seq(VfRD(0, 0)), Seq(VfRD(1, 0)), Seq(VfRD(2, 0)), Seq(V0RD(0, 0)), Seq(VlRD(0, 0)))),
++        // VFEX0 also hosts the custom vdot.vv unit; it reuses the existing
++        // VfRD(0..2)/V0RD/VlRD read ports and the VfWB(0,0)/V0WB(0,0) write ports
++        // (VdotCfg has the same 5-source layout as VimacCfg), so no new VPRF ports.
++        ExeUnitParams("VFEX0", Seq(VfmaCfg, VialuCfg, VimacCfg, VdotCfg, VppuCfg), Seq(VfWB(port = 0, 0), V0WB(port = 0, 0)), Seq(Seq(VfRD(0, 0)), Seq(VfRD(1, 0)), Seq(VfRD(2, 0)), Seq(V0RD(0, 0)), Seq(VlRD(0, 0)))),
+         ExeUnitParams("VFEX1", Seq(VfaluCfg, VfcvtCfg, VipuCfg, VSetRvfWvfCfg), Seq(VfWB(port = 0, 1), V0WB(port = 0, 1), VlWB(port = vfSchdVlWbPort, 0), IntWB(port = 1, 1), FpWB(port = 0, 1)), Seq(Seq(VfRD(0, 1)), Seq(VfRD(1, 1)), Seq(VfRD(2, 1)), Seq(V0RD(0, 1)), Seq(VlRD(0, 1)))),
+       ), numEntries = 16, numEnq = 2, numComp = 12),
+       IssueBlockParams(Seq(
+diff --git a/src/main/scala/xiangshan/backend/decode/DecodeUnit.scala b/src/main/scala/xiangshan/backend/decode/DecodeUnit.scala
+index 5b1419e..2e7385b 100644
+--- a/src/main/scala/xiangshan/backend/decode/DecodeUnit.scala
++++ b/src/main/scala/xiangshan/backend/decode/DecodeUnit.scala
+@@ -34,6 +34,7 @@ import xiangshan.backend.decode.isa.bitfield.{InstVType, OPCODE5Bit, XSInstBitFi
+ import xiangshan.backend.fu.vector.Bundles.{VType, Vl}
+ import xiangshan.backend.fu.wrapper.CSRToDecode
+ import xiangshan.backend.decode.Zimop._
++import xiangshan.backend.decode.Vdot._
+ import yunsuan.{VfaluType, VfcvtType}
+ 
+ /**
+@@ -965,6 +966,7 @@ class DecodeUnit(implicit p: Parameters) extends XSModule with DecodeUnitConstan
+   private val vmaInsts = Seq(
+     VMACC_VV, VMACC_VX, VNMSAC_VV, VNMSAC_VX, VMADD_VV, VMADD_VX, VNMSUB_VV, VNMSUB_VX,
+     VWMACCU_VV, VWMACCU_VX, VWMACC_VV, VWMACC_VX, VWMACCSU_VV, VWMACCSU_VX, VWMACCUS_VX,
++    VDOT_VV,
+   )
+   private val wfflagsInsts = Seq(
+     // opfff
+diff --git a/src/main/scala/xiangshan/backend/decode/Instructions.scala b/src/main/scala/xiangshan/backend/decode/Instructions.scala
+index 0b2f535..a4de03f 100644
+--- a/src/main/scala/xiangshan/backend/decode/Instructions.scala
++++ b/src/main/scala/xiangshan/backend/decode/Instructions.scala
+@@ -25,3 +25,13 @@ object Zimop {
+   def MOP_R  = BitPat("b1?00??0111???????100?????1110011")
+   def MOP_RR = BitPat("b1?00??1??????????100?????1110011")
+ }
++
++// Custom vector dot-product extension (contest design): vdot.vv
++// Encoding: OP-V (opcode 1010111), funct6 = 111001 (unused by RVV / Zvbb in
++// this tree), funct3 = 010 (same VV-field as the widening ops like vwmaccu.vv).
++//   vdot.vv vd, vs1, vs2   # INT8 x INT8 -> INT32 dot product, accumulate
++// vm bit (inst[25]) is a wildcard so both masked (v0.t) and unmasked forms
++// decode to the same entry; masking is handled by the vector mask machinery.
++object Vdot {
++  def VDOT_VV = BitPat("b111001???????????010?????1010111")
++}
+diff --git a/src/main/scala/xiangshan/backend/decode/VecDecoder.scala b/src/main/scala/xiangshan/backend/decode/VecDecoder.scala
+index 3764191..f4582f6 100644
+--- a/src/main/scala/xiangshan/backend/decode/VecDecoder.scala
++++ b/src/main/scala/xiangshan/backend/decode/VecDecoder.scala
+@@ -10,8 +10,9 @@ import utils._
+ import xiangshan.ExceptionNO.illegalInstr
+ import xiangshan.backend.fu.FuType
+ import xiangshan._
+-import yunsuan.{VfpuType, VipuType, VimacType, VpermType, VialuFixType, VfaluType, VfmaType, VfdivType, VfcvtType, VidivType}
++import yunsuan.{VfpuType, VipuType, VimacType, VpermType, VialuFixType, VfaluType, VfmaType, VfdivType, VfcvtType, VidivType, VdotType}
+ import xiangshan.backend.decode.Zvbb._
++import xiangshan.backend.decode.Vdot._
+ 
+ abstract class VecDecode extends XSDecodeBase {
+   def generate() : List[BitPat]
+@@ -424,6 +425,10 @@ object VecDecoder extends DecodeConstants {
+     VWMACC_VV    -> OPMVV(T, FuType.vimac, VimacType.vwmacc, F, T, F, UopSplitType.VEC_VVW),
+     VWMACCSU_VV  -> OPMVV(T, FuType.vimac, VimacType.vwmaccsu, F, T, F, UopSplitType.VEC_VVW),
+     VWMACCU_VV   -> OPMVV(T, FuType.vimac, VimacType.vwmaccu, F, T, F, UopSplitType.VEC_VVW),
++    // custom vdot.vv: INT8 x INT8 -> INT32 dot product, accumulate into vd.
++    // One uop per lmul group (each uop produces a full 128-bit vd fragment),
++    // so it reuses the plain VEC_VVV split instead of the VVW widening split.
++    VDOT_VV      -> OPMVV(T, FuType.vdot, VdotType.vdot, F, T, F, UopSplitType.VEC_VVV),
+     VWMUL_VV     -> OPMVV(T, FuType.vimac, VimacType.vwmul, F, T, F, UopSplitType.VEC_VVW),
+     VWMULSU_VV   -> OPMVV(T, FuType.vimac, VimacType.vwmulsu, F, T, F, UopSplitType.VEC_VVW),
+     VWMULU_VV    -> OPMVV(T, FuType.vimac, VimacType.vwmulu, F, T, F, UopSplitType.VEC_VVW),
+diff --git a/src/main/scala/xiangshan/backend/decode/VecExceptionGen.scala b/src/main/scala/xiangshan/backend/decode/VecExceptionGen.scala
+index b885c68..3777094 100644
+--- a/src/main/scala/xiangshan/backend/decode/VecExceptionGen.scala
++++ b/src/main/scala/xiangshan/backend/decode/VecExceptionGen.scala
+@@ -13,6 +13,7 @@ import xiangshan.backend.fu.FuType
+ import xiangshan.backend.fu.vector.Bundles._
+ import xiangshan.backend.decode.isa.bitfield.{InstVType, XSInstBitFields, OPCODE7Bit}
+ import xiangshan.backend.decode.Zvbb._
++import xiangshan.backend.decode.Vdot._
+ 
+ object RegNumNotAlign {
+   def apply(reg: UInt, emul: UInt): Bool = {
+@@ -192,7 +193,14 @@ class VecExceptionGen(implicit p: Parameters) extends XSModule{
+ 
+   private val wnEewIllegal = (vdWideningInst || narrowingInst || redWideningInst) && SEW === 3.U
+ 
+-  private val eewIllegal = fpEewIllegal || intExtEewIllegal || wnEewIllegal
++  // Custom vdot.vv: fixed INT8 x INT8 -> INT32 semantics, one uop per lmul
++  // group (VEC_VVV). It does NOT use the RVV 2-uop widening lists above;
++  // instead it requires vsew = e32 so that vl (in e32 units, VLMAX = 4 per
++  // 128-bit register for m1) matches the 4 x INT32 dest elements per uop.
++  private val vdotInst = VDOT_VV === inst.ALL
++  private val vdotEewIllegal = vdotInst && SEW =/= VSew.e32
++
++  private val eewIllegal = fpEewIllegal || intExtEewIllegal || wnEewIllegal || vdotEewIllegal
+ 
+   // 4. EMUL Illegal
+   private val lsEmulIllegal = (lsStrideInst || lsIndexInst) && (LMUL +& inst.WIDTH(1, 0) < SEW +& 1.U || LMUL +& inst.WIDTH(1, 0) > SEW +& 7.U)
+diff --git a/src/main/scala/xiangshan/backend/fu/FuConfig.scala b/src/main/scala/xiangshan/backend/fu/FuConfig.scala
+index 235ca4f..301e4e4 100644
+--- a/src/main/scala/xiangshan/backend/fu/FuConfig.scala
++++ b/src/main/scala/xiangshan/backend/fu/FuConfig.scala
+@@ -161,7 +161,7 @@ case class FuConfig (
+ 
+   def needVecCtrl: Boolean = {
+     import FuType._
+-    Seq(vipu, vialuF, vimac, vidiv, vfpu, vppu, vfalu, vfma, vfdiv, vfcvt, vldu, vstu).contains(fuType)
++    Seq(vipu, vialuF, vimac, vidiv, vfpu, vppu, vfalu, vfma, vfdiv, vfcvt, vldu, vstu, vdot).contains(fuType)
+   }
+ 
+   def needCriticalErrors: Boolean = Seq(FuType.csr).contains(fuType)
+@@ -182,7 +182,7 @@ case class FuConfig (
+                             fuType == FuType.vppu || fuType == FuType.vipu ||
+                             fuType == FuType.vfalu || fuType == FuType.vfma ||
+                             fuType == FuType.vfdiv || fuType == FuType.vfcvt ||
+-                            fuType == FuType.vidiv
++                            fuType == FuType.vidiv || fuType == FuType.vdot
+ 
+   def isVecMem: Boolean = fuType == FuType.vldu || fuType == FuType.vstu ||
+                           fuType == FuType.vsegldu || fuType == FuType.vsegstu
+@@ -563,6 +563,27 @@ object FuConfig {
+     exceptionOut = Seq(illegalInstr),
+   )
+ 
++  // Custom vdot.vv (INT8 x INT8 -> INT32 dot product, accumulate).
++  // Follows the VimacCfg template: same 5-source layout (vs1/vs2/oldVd/v0/vl),
++  // pipelined with 2-cycle latency matching the two register stages inside Vdot64b.
++  // No vxsat (wrap-around accumulation, no saturation), so writeVxsat stays false.
++  val VdotCfg = FuConfig (
++    name = "vdot",
++    fuType = FuType.vdot,
++    fuGen = (p: Parameters, cfg: FuConfig) => Module(new VdotU(cfg)(p).suggestName("Vdot")),
++    srcData = Seq(
++      Seq(VecData(), VecData(), VecData(), V0Data(), VlData()), // vs1, vs2, vd_old, v0, vtype&vl
++    ),
++    piped = true,
++    writeVecRf = true,
++    writeV0Rf = true,
++    latency = CertainLatency(2),
++    vconfigWakeUp = true,
++    maskWakeUp = true,
++    destDataBits = 128,
++    exceptionOut = Seq(illegalInstr),
++  )
++
+   val VidivCfg = FuConfig (
+     name = "vidiv",
+     fuType = FuType.vidiv,
+@@ -844,7 +865,7 @@ object FuConfig {
+   )
+ 
+   def VecArithFuConfigs = Seq(
+-    VialuCfg, VimacCfg, VppuCfg, VipuCfg, VfaluCfg, VfmaCfg, VfcvtCfg
++    VialuCfg, VimacCfg, VdotCfg, VppuCfg, VipuCfg, VfaluCfg, VfmaCfg, VfcvtCfg
+   )
+ }
+ 
+diff --git a/src/main/scala/xiangshan/backend/fu/FuType.scala b/src/main/scala/xiangshan/backend/fu/FuType.scala
+index 5172900..10b3b00 100644
+--- a/src/main/scala/xiangshan/backend/fu/FuType.scala
++++ b/src/main/scala/xiangshan/backend/fu/FuType.scala
+@@ -70,6 +70,9 @@ object FuType extends OHEnumeration {
+   val vstu = addType(name = "vstu")
+   val vsegldu = addType(name = "vsegldu")
+   val vsegstu = addType(name = "vsegstu")
++  // custom vector dot product (vdot.vv, INT8 x INT8 -> INT32 accumulate)
++  // NOTE: appended at the end on purpose so all pre-existing one-hot IDs stay stable
++  val vdot = addType(name = "vdot")
+ 
+   val intArithAll = Seq(jmp, brh, i2f, i2v, csr, alu, mul, div, fence, bku)
+   // dq0 includes int's iq0 and iq1
+@@ -124,7 +127,7 @@ object FuType extends OHEnumeration {
+   }
+   val fpArithAll = Seq(falu, fcvt, fmac, fDivSqrt, f2v)
+   val scalaMemAll = Seq(ldu, stu, mou)
+-  val vecOPI = Seq(vipu, vialuF, vppu, vimac, vidiv)
++  val vecOPI = Seq(vipu, vialuF, vppu, vimac, vidiv, vdot)
+   val vecOPF = Seq(vfpu, vfalu, vfma, vfdiv, vfcvt)
+   val vecVSET = Seq(vsetiwi, vsetiwf, vsetfwf)
+   val vecArith = vecOPI ++ vecOPF
+diff --git a/src/main/scala/xiangshan/backend/fu/wrapper/VdotU.scala b/src/main/scala/xiangshan/backend/fu/wrapper/VdotU.scala
+new file mode 100644
+index 0000000..e51fdc3
+--- /dev/null
++++ b/src/main/scala/xiangshan/backend/fu/wrapper/VdotU.scala
+@@ -0,0 +1,131 @@
++package xiangshan.backend.fu.wrapper
++
++import org.chipsalliance.cde.config.Parameters
++import chisel3._
++import chisel3.util._
++import utility.XSError
++import xiangshan.backend.fu.FuConfig
++import xiangshan.backend.fu.vector.Bundles.VSew
++import xiangshan.backend.fu.vector.utils.VecDataSplitModule
++import xiangshan.backend.fu.vector.{Mgu, VecPipedFuncUnit, VecSrcTypeModule}
++import xiangshan.ExceptionNO
++import yunsuan.VdotType
++import yunsuan.vector.mac.Vdot64b
++
++/** Source/dest type decode for the custom vdot.vv instruction.
++  *
++  * vdot.vv fixes its data layout regardless of vsetvl:
++  *   - sources vs1/vs2 are always INT8 (EEW = 8): 16 elements per 128-bit register
++  *   - dest vd is always INT32 (EEW = 32): 4 elements per 128-bit register
++  * Each 32-bit dest lane accumulates the dot product of 4 consecutive INT8 pairs.
++  *
++  * The vsew recorded by vsetvl must be e32 so that vl (in e32 units) matches the
++  * number of INT32 dest elements; otherwise the instruction is illegal.
++  */
++class VdotSrcTypeModule extends VecSrcTypeModule {
++
++  private val vs2Sign = VdotType.vs2Sign(fuOpType)
++  private val vs1Sign = VdotType.vs1Sign(fuOpType)
++  private val vdSign  = VdotType.vdSign(fuOpType)
++
++  private val vs2IntType = Cat(0.U(1.W), vs2Sign)
++  private val vs1IntType = Cat(0.U(1.W), vs1Sign)
++  private val vdIntType  = Cat(0.U(1.W), vdSign)
++
++  // fixed EEW: INT8 sources, INT32 dest
++  private val vs2Type = Cat(vs2IntType, VSew.e8)
++  private val vs1Type = Cat(vs1IntType, VSew.e8)
++  private val vdType  = Cat(vdIntType, VSew.e32)
++
++  private val vsewIllegal = vsew =/= VSew.e32
++
++  io.out.illegal := vsewIllegal
++  io.out.vs2Type := vs2Type
++  io.out.vs1Type := vs1Type
++  io.out.vdType  := vdType
++}
++
++class VdotU(cfg: FuConfig)(implicit p: Parameters) extends VecPipedFuncUnit(cfg) {
++  XSError(io.in.valid && io.in.bits.ctrl.fuOpType === VdotType.dummy, "Vdot OpType not supported")
++
++  // params alias
++  private val dataWidth = cfg.destDataBits
++  private val dataWidthOfDataModule = 64
++  private val numVecModule = dataWidth / dataWidthOfDataModule
++
++  // io alias
++  private val opcode = VdotType.getOpcode(fuOpType)
++
++  // modules
++  private val typeMod = Module(new VdotSrcTypeModule)
++  private val vs2Split = Module(new VecDataSplitModule(dataWidth, dataWidthOfDataModule))
++  private val vs1Split = Module(new VecDataSplitModule(dataWidth, dataWidthOfDataModule))
++  private val oldVdSplit  = Module(new VecDataSplitModule(dataWidth, dataWidthOfDataModule))
++  private val vdots = Seq.fill(numVecModule)(Module(new Vdot64b))
++  private val mgu = Module(new Mgu(dataWidth))
++
++  /**
++    * [[typeMod]]'s in connection
++    */
++  typeMod.io.in.fuOpType := fuOpType
++  typeMod.io.in.vsew := vsew
++  typeMod.io.in.isReverse := isReverse
++  typeMod.io.in.isExt := isExt
++  typeMod.io.in.isDstMask := vecCtrl.isDstMask
++  typeMod.io.in.isMove := isMove
++
++  /**
++    * In connection of [[vs2Split]], [[vs1Split]] and [[oldVdSplit]]
++    */
++  vs2Split.io.inVecData := vs2
++  vs1Split.io.inVecData := vs1
++  oldVdSplit.io.inVecData := oldVd
++
++  /**
++    * [[vdots]]'s in connection
++    */
++  vdots.zipWithIndex.foreach {
++    case (mod, i) =>
++      mod.io.fire        := io.in.valid
++      mod.io.info.vm     := vm
++      mod.io.info.ma     := vma
++      mod.io.info.ta     := vta
++      mod.io.info.vlmul  := vlmul
++      mod.io.info.vl     := srcVConfig.vl
++      mod.io.info.vstart := vstart
++      mod.io.info.uopIdx := vuopIdx
++      mod.io.info.vxrm   := vxrm
++      mod.io.srcType(0)  := typeMod.io.out.vs2Type
++      mod.io.srcType(1)  := typeMod.io.out.vs1Type
++      mod.io.vdType      := typeMod.io.out.vdType
++      mod.io.vs1         := vs1Split.io.outVec64b(i)
++      mod.io.vs2         := vs2Split.io.outVec64b(i)
++      mod.io.oldVd       := oldVdSplit.io.outVec64b(i)
++  }
++
++  /**
++    * [[mgu]]'s in connection
++    */
++  private val outVd = Cat(vdots.reverse.map(_.io.vd))
++
++  // dest element width is always e32 for vdot
++  private val outEew = VSew.e32
++  mgu.io.in.vd := outVd
++  mgu.io.in.oldVd := outOldVd
++  mgu.io.in.mask := outSrcMask
++  mgu.io.in.info.ta := outVecCtrl.vta
++  mgu.io.in.info.ma := outVecCtrl.vma
++  mgu.io.in.info.vl := outVl
++  mgu.io.in.info.vlmul := outVecCtrl.vlmul
++  mgu.io.in.info.valid := io.out.valid
++  mgu.io.in.info.vstart := outVecCtrl.vstart
++  mgu.io.in.info.eew := outEew
++  mgu.io.in.info.vsew := outVecCtrl.vsew
++  mgu.io.in.info.vdIdx := outVecCtrl.vuopIdx
++  mgu.io.in.info.narrow := 0.B
++  mgu.io.in.info.dstMask := 0.B
++  mgu.io.in.isIndexedVls := false.B
++
++  io.out.bits.res.data := mgu.io.out.vd
++  io.out.bits.ctrl.exceptionVec.get(ExceptionNO.illegalInstr) := mgu.io.out.illegal
++}
+diff --git a/yunsuan b/yunsuan
+--- a/yunsuan
++++ b/yunsuan
+@@ -1 +1 @@
+-Subproject commit cadd3c2f43096e253d61296b33ac697be8354e29
++Subproject commit cadd3c2f43096e253d61296b33ac697be8354e29-dirty

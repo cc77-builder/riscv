@@ -46,6 +46,8 @@ def run(args):
     pins = json.loads(args.hardware_pins.read_text())
     require(pins['VDOT_T12_TRACE']=='1' and pins['config']=='MinimalConfig' and pins['NUM_CORES']==1,
             'wrong observer/configuration pins')
+    require(args.fu_latency==(2 if pins.get('VDOT_T14_FUSED_INPUT')=='1' else 3),
+            'FU latency does not match the elaboration variant')
     require(pins['emu_sha256']==sha(args.emu), 'EMU does not match finished build pins')
     def hardware_guard():
         for name, value in pins['files'].items():
@@ -116,7 +118,7 @@ def run(args):
                     'missing DiffTest runtime banner')
             require('The reference model is '+str(selected_ref) in text, 'wrong loaded reference path')
             if name=='control':
-                result = control.check(text, json.loads((args.control/'data/manifest.json').read_text()), rc)
+                result = control.check(text, json.loads((args.control/'data/manifest.json').read_text()), rc, fu_latency=args.fu_latency)
                 save(directory/'control-result.json', result)
                 require(result['status']=='T12_CONTROL_REGRESSION_PASS', 'control coverage incomplete')
                 record['status'] = result['status']
@@ -166,4 +168,5 @@ if __name__=='__main__':
         parser.add_argument('--'+name, type=lambda x:Path(x).resolve(), required=True)
     parser.add_argument('--jobs', type=int, choices=(1,2,4,8), default=2)
     parser.add_argument('--timeout', default='120m')
+    parser.add_argument('--fu-latency', type=int, choices=(2,3), default=3)
     raise SystemExit(run(parser.parse_args()))

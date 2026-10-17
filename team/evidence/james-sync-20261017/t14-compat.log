@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/mnt/c/Code/RVInno/riscv/team/out/james-sync-20261017/t14-compat.py", line 31, in <module>
+    v.verify(archive,out/'t14-historical-replay')
+  File "/mnt/c/Code/RVInno/riscv/team/scripts/verify-t14-archive.py", line 96, in verify
+    calibration = c.verify(baseline / "support/smoke-build-02",
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Code/RVInno/riscv/team/workloads/vdot-perf/check.py", line 375, in verify
+    verify_build_record(build, legacy)
+  File "/mnt/c/Code/RVInno/riscv/team/workloads/vdot-perf/check.py", line 353, in verify_build_record
+    require(re.fullmatch(r'[0-9a-f]{40}', record.get('source', '')), 'missing build source commit')
+  File "/mnt/c/Code/RVInno/riscv/team/workloads/vdot-perf/check.py", line 19, in require
+    raise ValueError(message)
+ValueError: missing build source commit

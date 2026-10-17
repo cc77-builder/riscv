@@ -1,0 +1,26 @@
+--- /home/riscv/riscv-lab/unified-vdot-benchmark-20261017/variants/redoop/src/main/scala/xiangshan/backend/decode/VecExceptionGen.scala	2026-10-17 15:13:06.620375780 +0800
++++ /home/riscv/riscv-lab/unified-vdot-benchmark-20261017/references/redoop/rtl/xs-kunminghu-v2/src/main/scala/xiangshan/backend/decode/VecExceptionGen.scala	2026-10-17 15:12:46.220097996 +0800
+@@ -13,6 +13,7 @@
+ import xiangshan.backend.fu.vector.Bundles._
+ import xiangshan.backend.decode.isa.bitfield.{InstVType, XSInstBitFields, OPCODE7Bit}
+ import xiangshan.backend.decode.Zvbb._
++import xiangshan.backend.decode.Vdot._
+ 
+ object RegNumNotAlign {
+   def apply(reg: UInt, emul: UInt): Bool = {
+@@ -192,7 +193,14 @@
+ 
+   private val wnEewIllegal = (vdWideningInst || narrowingInst || redWideningInst) && SEW === 3.U
+ 
+-  private val eewIllegal = fpEewIllegal || intExtEewIllegal || wnEewIllegal
++  // Custom vdot.vv: fixed INT8 x INT8 -> INT32 semantics, one uop per lmul
++  // group (VEC_VVV). It does NOT use the RVV 2-uop widening lists above;
++  // instead it requires vsew = e32 so that vl (in e32 units, VLMAX = 4 per
++  // 128-bit register for m1) matches the 4 x INT32 dest elements per uop.
++  private val vdotInst = VDOT_VV === inst.ALL
++  private val vdotEewIllegal = vdotInst && SEW =/= VSew.e32
++
++  private val eewIllegal = fpEewIllegal || intExtEewIllegal || wnEewIllegal || vdotEewIllegal
+ 
+   // 4. EMUL Illegal
+   private val lsEmulIllegal = (lsStrideInst || lsIndexInst) && (LMUL +& inst.WIDTH(1, 0) < SEW +& 1.U || LMUL +& inst.WIDTH(1, 0) > SEW +& 7.U)

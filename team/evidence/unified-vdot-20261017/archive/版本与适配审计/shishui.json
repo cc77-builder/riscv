@@ -1,0 +1,143 @@
+{
+  "variant": "shishui",
+  "repository": "https://github.com/vienna-0FFH/cie2026-shishui-vdot",
+  "public_commit": "4421d88beb39f8e95e23e25c78eaaaf1a7de4b52",
+  "prepared_utc": "2026-10-17T07:18:41.405285+00:00",
+  "reference_clone": "/home/riscv/riscv-lab/unified-vdot-benchmark-20261017/references/shishui",
+  "variant_root": "/home/riscv/riscv-lab/unified-vdot-benchmark-20261017/variants/shishui",
+  "xiangshan_base": "16ae9ddcda54fc9a2fddffad73174cf793ac7814",
+  "nemu_base": "a48a11f208ff81ad765591d83271d1b339fb3861",
+  "submodules": {
+    "coupledL2": {
+      "expected": "82079f4081bbc1f0221c790fbf8a29b1f23f48b8",
+      "actual": "82079f4081bbc1f0221c790fbf8a29b1f23f48b8"
+    },
+    "difftest": {
+      "expected": "62e4540c03c03aa947bdb67f4b6bf66f1a29c5d0",
+      "actual": "62e4540c03c03aa947bdb67f4b6bf66f1a29c5d0"
+    },
+    "fudian": {
+      "expected": "e1bd4695ca7beb36a5ce7357e9527ad9e95b9ec1",
+      "actual": "e1bd4695ca7beb36a5ce7357e9527ad9e95b9ec1"
+    },
+    "huancun": {
+      "expected": "90aaf5935206ff322e461c3d021436c20dd0ac85",
+      "actual": "90aaf5935206ff322e461c3d021436c20dd0ac85"
+    },
+    "openLLC": {
+      "expected": "614ceb4c5d39d32e6ae786693a35da429ea32c12",
+      "actual": "614ceb4c5d39d32e6ae786693a35da429ea32c12"
+    },
+    "openLLC/openNCB": {
+      "expected": "546a621ed82302db1bd1edc900b17ba55682c15c",
+      "actual": "546a621ed82302db1bd1edc900b17ba55682c15c"
+    },
+    "ready-to-run": {
+      "expected": "ed8c30e1ec8a9c9aa6b116ce54281235d00273fa",
+      "actual": "ed8c30e1ec8a9c9aa6b116ce54281235d00273fa"
+    },
+    "rocket-chip": {
+      "expected": "bea0af5d855a871699b907c1988961141bbf28e7",
+      "actual": "bea0af5d855a871699b907c1988961141bbf28e7"
+    },
+    "rocket-chip/cde": {
+      "expected": "52768c97a27b254c0cc0ac9401feb55b29e18c28",
+      "actual": "52768c97a27b254c0cc0ac9401feb55b29e18c28"
+    },
+    "rocket-chip/hardfloat": {
+      "expected": "d93aa570806013dea479a92ba9bb33d1f2d4f69f",
+      "actual": "d93aa570806013dea479a92ba9bb33d1f2d4f69f"
+    },
+    "src/main/resources/aia": {
+      "expected": "9464aee3c77b021a037f28aa1b3fe53c71b516f6",
+      "actual": "9464aee3c77b021a037f28aa1b3fe53c71b516f6"
+    },
+    "utility": {
+      "expected": "a8ca0c6564865ee69b564d431ecbc52074ba8060",
+      "actual": "a8ca0c6564865ee69b564d431ecbc52074ba8060"
+    },
+    "yunsuan": {
+      "expected": "cadd3c2f43096e253d61296b33ac697be8354e29",
+      "actual": "cadd3c2f43096e253d61296b33ac697be8354e29"
+    }
+  },
+  "nemu_resources": {
+    "resource/softfloat/repo": "a0c6494cdc11865811dec815d5c0049fba9d82a8",
+    "resource/nanopb": "26e4b21317f88a66fb351f5aa3d8cc0083622b25",
+    "resource/LibCheckpoint": "1d8905cc2803c242ef257569128c2e68bf4272aa",
+    "resource/gcpt_restore": "5169da768d18f4682a489eaabe7c071df6d6ef88"
+  },
+  "original_patch_sha256": {
+    "xiangshan-vdot.patch": "d5d014f19d57bd06d1f4c2b816788010aa0c1677ea4154912d4e68e53384ee65",
+    "yunsuan-vdot.patch": "5460c1364c981b6e4095ed2cbdc51df36c82f7f64dd032bc0085b5b39c80d8bf",
+    "nemu-vdot.patch": "8fc06534f0c91ca542b1d6f71197d182f111597d801f31a7f2462d4eba330e76"
+  },
+  "common_observers_patch_sha256": "8e48a4e418a46923916d711ae809b66e8f7eb121ced691ae8a0f3278490e6693",
+  "adaptation": {
+    "hardware": "Original complete patch applies cleanly with --exclude=yunsuan to ignore invalid dirty gitlink; no arithmetic or scheduling changes. Standalone balanced-tree incremental patch is intentionally not applied again.",
+    "yunsuan": "Original patch applies cleanly to cadd3c2.",
+    "nemu": "Original patch applies cleanly to a48a11; no semantic adaptation."
+  },
+  "encoding": {
+    "match": "0xfa000057",
+    "mask": "0xfe00707f",
+    "example_vd3_vs1_1_vs2_2": "0xfa2081d7",
+    "funct6": "111110",
+    "funct3": "000",
+    "vm": 1
+  },
+  "semantics": {
+    "input": "eight signed 8-bit pairs from each source low64 bits",
+    "output": "sum represented in low32; high96 forced zero",
+    "configuration": "SEW8 LMUL1 vm1 vstart0; VL does not gate the fixed operation",
+    "overlap": "source/destination alias supported by public NEMU; fullcore confirmation pending"
+  },
+  "timing": "Existing piped VIMacCfg CertainLatency(2), combinational multiply and balanced reduction from outData in final stage. Standalone 4-stage RTL is not the integrated datapath.",
+  "target_config": {
+    "CONFIG": "MinimalConfig",
+    "NUM_CORES": 1,
+    "EMU_THREADS": 1,
+    "JVM_XMX": "12G",
+    "observers": "T13 common CSR/ROB only; no T12 observer"
+  },
+  "nemu_build": {
+    "argv": [
+      "make",
+      "-j1"
+    ],
+    "cwd": "/home/riscv/riscv-lab/unified-vdot-benchmark-20261017/variants/shishui/.benchmark/nemu",
+    "NEMU_HOME": "/home/riscv/riscv-lab/unified-vdot-benchmark-20261017/variants/shishui/.benchmark/nemu",
+    "started_utc": "2026-10-17T07:17:16Z",
+    "note": "No __NOT_DEFINED assignment: disabled NEMU upstream compile_git auto-commit macro.",
+    "exit": 0,
+    "finished_utc": "2026-10-17T07:17:21Z",
+    "binary_sha256": "6117e9f5ec76685efabc4e6d3223a1b685f871e965ba86911608b42badcc2268",
+    "binary": "/home/riscv/riscv-lab/unified-vdot-benchmark-20261017/variants/shishui/.benchmark/nemu/build/riscv64-nemu-interpreter-so",
+    "git_head": "a48a11f208ff81ad765591d83271d1b339fb3861",
+    "staged_diff": ""
+  },
+  "nemu_config_sha256": "65432da3d9cbb9418481866682190416cea2bd6800c06b8b6fba18763c3edae6",
+  "model_test": {
+    "status": "PASS",
+    "scope": "Python public mathematical model only; not RTL/DiffTest",
+    "datasets": [
+      {
+        "dataset": "/home/riscv/riscv-lab/unified-vdot-benchmark-20261017/repo/team/models/vdot/data/directed.jsonl",
+        "sha256": "b78708eca1145437d34af230721a3999c35889176131cdf57acfa6b7a6b8b333",
+        "passed": 22
+      },
+      {
+        "dataset": "/home/riscv/riscv-lab/unified-vdot-benchmark-20261017/repo/team/models/vdot/data/random.jsonl",
+        "sha256": "6201847c400f7ecac85848690704abac15b7278a824e447b35ad60788da70363",
+        "passed": 10000
+      }
+    ]
+  },
+  "unified_reference_run": "/home/riscv/riscv-lab/unified-vdot-benchmark-20261017/runs/shishui-reference-01",
+  "full_core_status": "Root agent owns build and tests; not asserted by this preparation audit.",
+  "setup_notes": [
+    "System pytest absent and python3-venv ensurepip absent: public pytest suite not run. Independent public mathematical model conformance passed 22+10000 existing full128 vectors.",
+    "Initial make olddefconfig failed because NEMU only implements %defconfig files; used tools/kconfig/build/conf --syncconfig Kconfig.",
+    "Initial build mistakenly set __NOT_DEFINED=1 enabling upstream auto-commit macro. Its git add outside repo and missing identity failed; no commit or staging occurred. Final make -j1 without this variable successfully rebuilt identical .so, with HEAD a48a11 and clean index."
+  ]
+}

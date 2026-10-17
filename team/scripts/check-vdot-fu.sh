@@ -10,6 +10,12 @@ out_dir=$(cd "$out_dir" && pwd)
 export CHISEL_FIRTOOL_PATH=${CHISEL_FIRTOOL_PATH:-"$HOME/.cache/llvm-firtool/1.62.1/bin"}
 export JAVA_OPTS=${JAVA_OPTS:-"-Xmx12G -Xss16m"}
 build_jobs=${BUILD_JOBS:-2}
+case "${VDOT_T14_FUSED_INPUT:-0}" in
+  0) expected_latency=3 ;;
+  1) expected_latency=2 ;;
+  *) echo 'VDOT_T14_FUSED_INPUT must be 0 or 1' >&2; exit 2 ;;
+esac
+printf 'VDOT_FU_VARIANT fused=%s expected_latency=%s\n' "${VDOT_T14_FUSED_INPUT:-0}" "$expected_latency"
 exec > >(tee "$out_dir/check.log") 2>&1
 trap 'rc=$?; printf "exit_code=%s end=%s\n" "$rc" "$(date -Is)" > "$out_dir/check.status"' EXIT
 cd "$repo_root"
@@ -41,7 +47,7 @@ cat "$out_dir/elaboration.log"
 test -s "$out_dir/rtl/VDotFuTestTop.sv"
 sha256sum "$out_dir/rtl/VDotFuTestTop.sv" > "$out_dir/rtl.sha256"
 verilator --cc --exe --build --assert --top-module VDotFuTestTop \
-  --Mdir "$out_dir/obj_dir" -j "$build_jobs" -CFLAGS '-std=c++17 -O2' \
+  --Mdir "$out_dir/obj_dir" -j "$build_jobs" -CFLAGS "-std=c++17 -O2 -DVDOT_FU_EXPECTED_LATENCY=$expected_latency" \
   "$out_dir/rtl/VDotFuTestTop.sv" "$test_root/fu_test.cpp" \
   > "$out_dir/verilator-build.log" 2>&1 || { cat "$out_dir/verilator-build.log"; exit 1; }
 "$out_dir/obj_dir/VVDotFuTestTop" "$out_dir/vectors.tsv" | tee "$out_dir/results.log"

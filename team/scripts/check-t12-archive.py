@@ -39,7 +39,7 @@ def decode_log(raw):
     with io.TextIOWrapper(io.BytesIO(raw), encoding='utf-8', newline=None) as stream:
         return stream.read()
 
-def validate(root, source, emu, reference, flash):
+def validate(root, source, emu, reference, flash, fu_latency=3):
     root = Path(root).resolve()
     hashes = load(root/'archive-manifest.json')
     require(bool(hashes['files']), 'empty archive')
@@ -52,6 +52,7 @@ def validate(root, source, emu, reference, flash):
     pins = load(root/'suite/hardware-pins.json.gz')
     require(pins['source_commit']==source and pins['emu_sha256']==emu, 'unexpected hardware source/binary pins')
     require(pins['config']=='MinimalConfig' and pins['NUM_CORES']==1 and pins['VDOT_T12_TRACE']=='1', 'wrong configuration')
+    require(fu_latency in (2,3) and fu_latency==(2 if pins.get('VDOT_T14_FUSED_INPUT')=='1' else 3), 'FU latency does not match hardware pins')
     expected_names = {'control','hello-vadd','negative-vdot'} | {f'functional-{i}' for i in range(8)}
     suite = load(root/'suite/result.json')
     require(suite['status']=='T12_FULLCORE_SUITE_PASS', 'suite was not accepted')
@@ -84,7 +85,7 @@ def validate(root, source, emu, reference, flash):
         require('The first instruction of core 0 has commited. Difftest enabled.' in text, 'DiffTest not enabled')
         events, uart = control.extract_events(text)
         if name=='control':
-            result = control.check(text, load(root/'control/manifest.json.gz'), exit_code)
+            result = control.check(text, load(root/'control/manifest.json.gz'), exit_code, fu_latency=fu_latency)
             require(result['status']=='T12_CONTROL_REGRESSION_PASS', 'control coverage incomplete')
         elif name.startswith('functional-'):
             index = int(name.split('-')[1])
@@ -122,6 +123,7 @@ if __name__=='__main__':
     parser.add_argument('archive',type=Path)
     for name in ('source','emu','reference','flash'):
         parser.add_argument('--expected-'+name,required=True)
+    parser.add_argument('--fu-latency',type=int,choices=(2,3),default=3)
     args = parser.parse_args()
     print(json.dumps(validate(args.archive,args.expected_source,args.expected_emu,
-                              args.expected_reference,args.expected_flash),indent=2))
+                              args.expected_reference,args.expected_flash,fu_latency=args.fu_latency),indent=2))

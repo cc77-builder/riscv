@@ -1,6 +1,6 @@
 # 团队开发入口
 
-**2026-10-16：James_Hotten 已并入 zjhwork 的 T13 校准、配对测量工具和历史证据，并修复验收门禁。** 当前进度以 [progress.md](progress.md) 和 [T13 整合评审](docs/james-t13-integration-20261016.md) 为准；VFEX4 路线整合见 [前轮报告](docs/james-integration-20261015.md)。本次只更新本地 James_Hotten，未推送远端，未修改 main。
+**2026-10-17：James_Hotten 已并入 zjhwork / zjhwork2 的 T14、T15、统一测试与 O0 工具。** 当前进度见 [progress.md](progress.md) 和 [同步记录](docs/james-sync-20261017.md)。当前分支原 T12/T13 全核复验见 [报告](docs/james-fullcore-20261016.md)；该证据绑定旧源码 d3706f0b8。默认 VFEX4 基础模式保持 II4，T14 候选仅显式开启；本轮不推送、不改 main。
 
 | 内容 | 入口 |
 | --- | --- |
@@ -26,3 +26,12 @@
 - `vdot-fu-tests.sh` / `vdot-decode-tests.sh` 是已退休的 VFEX1 入口，明确退出并指向新入口。`team/hardware/vdot` 仅为历史执行器独立实验。
 
 不能把历史归档复算、主机测试或组件仿真当作新的全核运行。不能宣称尚未完成的官方规格冻结、人工签字、虚拟化、STA/PPA或性能成绩。旧入口原文见 [历史快照](docs/history/README-before-james-integration-20261015.md)。
+
+| 新并入内容 | 入口 |
+| --- | --- |
+| T14 可选输入乘积融合及消融 | [合同](spec/t14-ablation.md)、[来源报告](docs/t14-optimization.md) |
+| T15 独立 s16x8/r64 单元 | [合同](spec/t15-parameters.md)、[来源报告](docs/t15-parameter-extension.md) |
+| 四项目统一微基准 | [程序](workloads/unified-vdot/README.md)、[来源结果与限制](docs/unified-vdot-comparison-20261017.md) |
+| O0 诊断与 O1 未实现草案 | [归档重放](optimizations/o0/ARCHIVE_REPLAY.md)、[O1 合同](optimizations/o1/CONTRACT.md) |
+| 后续执行顺序 | [优化方案](香山vdot_后续优化方案_20261017.md)：工程优化、回归、独立复现完成后再集中编写 T16 |
+| 来源分支入口历史 | [zjhwork2 原始 README](docs/history/README-zjhwork2-20261017.md) |
