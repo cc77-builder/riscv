@@ -1,0 +1,462 @@
+[
+  {
+    "name": "clone-am",
+    "argv": [
+      "git",
+      "clone",
+      "--shared",
+      "--no-checkout",
+      "/home/amesotten/.cache/codex-t05/nexus-am-086a238",
+      "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/nexus-am"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410",
+    "started": 1792152838.2081845,
+    "status": "FINISHED",
+    "environment": {},
+    "exit_code": 0,
+    "seconds": 0.202
+  },
+  {
+    "name": "checkout-am",
+    "argv": [
+      "git",
+      "-C",
+      "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/nexus-am",
+      "checkout",
+      "--detach",
+      "086a238062fdfb3281b745a537b361983d0154b5"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410",
+    "started": 1792152838.4141042,
+    "status": "FINISHED",
+    "environment": {},
+    "exit_code": 0,
+    "seconds": 0.168
+  },
+  {
+    "name": "calibration-build",
+    "argv": [
+      "make",
+      "-C",
+      "team/workloads/vdot-perf",
+      "ARCH=riscv64-xs",
+      "MARCH=rv64gcv",
+      "T13_DATA=/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/calibration/data",
+      "T13_OBJ_ROOT=/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/calibration/objects",
+      "BINARY=/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/calibration/vdot-perf",
+      "-j1"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410",
+    "started": 1792152838.759692,
+    "status": "FINISHED",
+    "environment": {},
+    "exit_code": 0,
+    "seconds": 2.681
+  },
+  {
+    "name": "hello-build",
+    "argv": [
+      "make",
+      "-C",
+      "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410/team/workloads/hello-vadd",
+      "ARCH=riscv64-xs",
+      "MARCH=rv64gcv",
+      "BINARY=/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/hello-vadd",
+      "-j1"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410",
+    "started": 1792152841.5556948,
+    "status": "FINISHED",
+    "environment": {},
+    "exit_code": 0,
+    "seconds": 0.313
+  },
+  {
+    "name": "flash-assemble",
+    "argv": [
+      "riscv64-linux-gnu-gcc",
+      "-c",
+      "-march=rv64gc",
+      "-mabi=lp64d",
+      "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410/team/workloads/hello-vadd/boot-flash.S",
+      "-o",
+      "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/boot-flash.o"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410",
+    "started": 1792152841.8734038,
+    "status": "FINISHED",
+    "environment": {},
+    "exit_code": 0,
+    "seconds": 0.02
+  },
+  {
+    "name": "flash-objcopy",
+    "argv": [
+      "riscv64-linux-gnu-objcopy",
+      "-O",
+      "binary",
+      "-j",
+      ".text",
+      "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/boot-flash.o",
+      "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/boot-flash.bin"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410",
+    "started": 1792152841.896688,
+    "status": "FINISHED",
+    "environment": {},
+    "exit_code": 0,
+    "seconds": 0.006
+  },
+  {
+    "name": "control-build",
+    "argv": [
+      "bash",
+      "team/scripts/t12-regression.sh",
+      "build-workload"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410",
+    "started": 1792152841.907922,
+    "status": "FINISHED",
+    "environment": {
+      "T12_RUN_ROOT": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/control",
+      "TEAM_XS_ENV_ROOT": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/xs-env"
+    },
+    "exit_code": 0,
+    "seconds": 29.454
+  },
+  {
+    "name": "matrix-build-0",
+    "argv": [
+      "bash",
+      "team/scripts/vdot-tests.sh",
+      "build-xs",
+      "full"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410",
+    "started": 1792152871.366631,
+    "status": "FINISHED",
+    "environment": {
+      "VDOT_DATA": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/matrix/data-0",
+      "TEAM_EVIDENCE_DIR": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/matrix/build-0",
+      "VDOT_COVERAGE_PROFILE": "legacy",
+      "VDOT_RANDOM_COUNT": "32",
+      "VDOT_SMOKE_RANDOM_COUNT": "32",
+      "VDOT_SHARD_INDEX": "0",
+      "VDOT_SHARD_COUNT": "8",
+      "VDOT_LOG_COMPACT": "1"
+    },
+    "exit_code": 0,
+    "seconds": 17.426
+  },
+  {
+    "name": "matrix-build-1",
+    "argv": [
+      "bash",
+      "team/scripts/vdot-tests.sh",
+      "build-xs",
+      "full"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410",
+    "started": 1792152888.797017,
+    "status": "FINISHED",
+    "environment": {
+      "VDOT_DATA": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/matrix/data-1",
+      "TEAM_EVIDENCE_DIR": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/matrix/build-1",
+      "VDOT_COVERAGE_PROFILE": "legacy",
+      "VDOT_RANDOM_COUNT": "32",
+      "VDOT_SMOKE_RANDOM_COUNT": "32",
+      "VDOT_SHARD_INDEX": "1",
+      "VDOT_SHARD_COUNT": "8",
+      "VDOT_LOG_COMPACT": "1"
+    },
+    "exit_code": 0,
+    "seconds": 16.144
+  },
+  {
+    "name": "matrix-build-2",
+    "argv": [
+      "bash",
+      "team/scripts/vdot-tests.sh",
+      "build-xs",
+      "full"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410",
+    "started": 1792152904.9455705,
+    "status": "FINISHED",
+    "environment": {
+      "VDOT_DATA": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/matrix/data-2",
+      "TEAM_EVIDENCE_DIR": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/matrix/build-2",
+      "VDOT_COVERAGE_PROFILE": "legacy",
+      "VDOT_RANDOM_COUNT": "32",
+      "VDOT_SMOKE_RANDOM_COUNT": "32",
+      "VDOT_SHARD_INDEX": "2",
+      "VDOT_SHARD_COUNT": "8",
+      "VDOT_LOG_COMPACT": "1"
+    },
+    "exit_code": 0,
+    "seconds": 16.622
+  },
+  {
+    "name": "matrix-build-3",
+    "argv": [
+      "bash",
+      "team/scripts/vdot-tests.sh",
+      "build-xs",
+      "full"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410",
+    "started": 1792152921.572019,
+    "status": "FINISHED",
+    "environment": {
+      "VDOT_DATA": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/matrix/data-3",
+      "TEAM_EVIDENCE_DIR": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/matrix/build-3",
+      "VDOT_COVERAGE_PROFILE": "legacy",
+      "VDOT_RANDOM_COUNT": "32",
+      "VDOT_SMOKE_RANDOM_COUNT": "32",
+      "VDOT_SHARD_INDEX": "3",
+      "VDOT_SHARD_COUNT": "8",
+      "VDOT_LOG_COMPACT": "1"
+    },
+    "exit_code": 0,
+    "seconds": 14.523
+  },
+  {
+    "name": "matrix-build-4",
+    "argv": [
+      "bash",
+      "team/scripts/vdot-tests.sh",
+      "build-xs",
+      "full"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410",
+    "started": 1792152936.0990777,
+    "status": "FINISHED",
+    "environment": {
+      "VDOT_DATA": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/matrix/data-4",
+      "TEAM_EVIDENCE_DIR": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/matrix/build-4",
+      "VDOT_COVERAGE_PROFILE": "legacy",
+      "VDOT_RANDOM_COUNT": "32",
+      "VDOT_SMOKE_RANDOM_COUNT": "32",
+      "VDOT_SHARD_INDEX": "4",
+      "VDOT_SHARD_COUNT": "8",
+      "VDOT_LOG_COMPACT": "1"
+    },
+    "exit_code": 0,
+    "seconds": 16.264
+  },
+  {
+    "name": "matrix-build-5",
+    "argv": [
+      "bash",
+      "team/scripts/vdot-tests.sh",
+      "build-xs",
+      "full"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410",
+    "started": 1792152952.3668008,
+    "status": "FINISHED",
+    "environment": {
+      "VDOT_DATA": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/matrix/data-5",
+      "TEAM_EVIDENCE_DIR": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/matrix/build-5",
+      "VDOT_COVERAGE_PROFILE": "legacy",
+      "VDOT_RANDOM_COUNT": "32",
+      "VDOT_SMOKE_RANDOM_COUNT": "32",
+      "VDOT_SHARD_INDEX": "5",
+      "VDOT_SHARD_COUNT": "8",
+      "VDOT_LOG_COMPACT": "1"
+    },
+    "exit_code": 0,
+    "seconds": 15.817
+  },
+  {
+    "name": "matrix-build-6",
+    "argv": [
+      "bash",
+      "team/scripts/vdot-tests.sh",
+      "build-xs",
+      "full"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410",
+    "started": 1792152968.1876867,
+    "status": "FINISHED",
+    "environment": {
+      "VDOT_DATA": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/matrix/data-6",
+      "TEAM_EVIDENCE_DIR": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/matrix/build-6",
+      "VDOT_COVERAGE_PROFILE": "legacy",
+      "VDOT_RANDOM_COUNT": "32",
+      "VDOT_SMOKE_RANDOM_COUNT": "32",
+      "VDOT_SHARD_INDEX": "6",
+      "VDOT_SHARD_COUNT": "8",
+      "VDOT_LOG_COMPACT": "1"
+    },
+    "exit_code": 0,
+    "seconds": 16.414
+  },
+  {
+    "name": "matrix-build-7",
+    "argv": [
+      "bash",
+      "team/scripts/vdot-tests.sh",
+      "build-xs",
+      "full"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410",
+    "started": 1792152984.6059396,
+    "status": "FINISHED",
+    "environment": {
+      "VDOT_DATA": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/matrix/data-7",
+      "TEAM_EVIDENCE_DIR": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/matrix/build-7",
+      "VDOT_COVERAGE_PROFILE": "legacy",
+      "VDOT_RANDOM_COUNT": "32",
+      "VDOT_SMOKE_RANDOM_COUNT": "32",
+      "VDOT_SHARD_INDEX": "7",
+      "VDOT_SHARD_COUNT": "8",
+      "VDOT_LOG_COMPACT": "1"
+    },
+    "exit_code": 0,
+    "seconds": 16.335
+  },
+  {
+    "name": "original-generate",
+    "argv": [
+      "python3",
+      "-B",
+      "team/tests/generate_t12.py",
+      "--output",
+      "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/software-original/data",
+      "--baseline",
+      "original"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410",
+    "started": 1792153000.946691,
+    "status": "FINISHED",
+    "environment": {},
+    "exit_code": 0,
+    "seconds": 0.139
+  },
+  {
+    "name": "original-build",
+    "argv": [
+      "make",
+      "-C",
+      "team/workloads/t12-perf",
+      "ARCH=riscv64-xs",
+      "MARCH=rv64gcv",
+      "T12_START=0",
+      "T12_COUNT=190",
+      "T12_DATA=/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/software-original/data",
+      "VDOT_OBJ_ROOT=/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/software-original/objects",
+      "BINARY=/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/software-original/test",
+      "-j1"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410",
+    "started": 1792153001.0904508,
+    "status": "FINISHED",
+    "environment": {},
+    "exit_code": 0,
+    "seconds": 0.795
+  },
+  {
+    "name": "lean-generate",
+    "argv": [
+      "python3",
+      "-B",
+      "team/tests/generate_t12.py",
+      "--output",
+      "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/software-lean/data",
+      "--baseline",
+      "lean",
+      "--include-chain"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410",
+    "started": 1792153001.986346,
+    "status": "FINISHED",
+    "environment": {},
+    "exit_code": 0,
+    "seconds": 0.16
+  },
+  {
+    "name": "lean-build",
+    "argv": [
+      "make",
+      "-C",
+      "team/workloads/t12-perf",
+      "ARCH=riscv64-xs",
+      "MARCH=rv64gcv",
+      "T12_START=0",
+      "T12_COUNT=199",
+      "T12_DATA=/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/software-lean/data",
+      "VDOT_OBJ_ROOT=/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/software-lean/objects",
+      "BINARY=/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/software-lean/test",
+      "-j1"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410",
+    "started": 1792153002.1515558,
+    "status": "FINISHED",
+    "environment": {},
+    "exit_code": 0,
+    "seconds": 0.815
+  },
+  {
+    "name": "negative-fixture-build",
+    "argv": [
+      "gcc",
+      "-shared",
+      "-fPIC",
+      "-O2",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-DREF_SO=\"/home/amesotten/.cache/codex-rvinno/fullcore-20261016/nemu/reference/build/riscv64-nemu-interpreter-so\"",
+      "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410/team/evidence/t12-regression-20261014/negative-fixture.c",
+      "-ldl",
+      "-o",
+      "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/negative-reference.so"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410",
+    "started": 1792153003.0600393,
+    "status": "FINISHED",
+    "environment": {},
+    "exit_code": 0,
+    "seconds": 0.597
+  },
+  {
+    "name": "t13-images-build",
+    "argv": [
+      "python3",
+      "-B",
+      "team/workloads/vdot-perf/campaign.py",
+      "build",
+      "--output",
+      "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/t13-images",
+      "--am",
+      "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/nexus-am"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410",
+    "started": 1792153003.6605093,
+    "status": "FINISHED",
+    "environment": {},
+    "exit_code": 0,
+    "seconds": 43.76
+  },
+  {
+    "name": "t13-stream-build",
+    "argv": [
+      "python3",
+      "-B",
+      "team/workloads/vdot-perf/campaign.py",
+      "build",
+      "--output",
+      "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/t13-stream",
+      "--am",
+      "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/nexus-am",
+      "--stream-only"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410",
+    "started": 1792153047.4250867,
+    "status": "FINISHED",
+    "environment": {},
+    "exit_code": 0,
+    "seconds": 23.256
+  }
+]

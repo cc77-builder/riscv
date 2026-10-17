@@ -1,0 +1,61 @@
+[
+  {
+    "name": "calibration-run",
+    "argv": [
+      "python3",
+      "-B",
+      "team/workloads/vdot-perf/campaign.py",
+      "run",
+      "--images",
+      "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/calibration-inventory",
+      "--output",
+      "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/runs/calibration",
+      "--emu",
+      "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410/build/emu",
+      "--reference",
+      "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/nemu/reference/build/riscv64-nemu-interpreter-so",
+      "--flash",
+      "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/boot-flash.bin",
+      "--jobs",
+      "1"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410",
+    "started": "2026-10-16T22:08:18.903571+08:00",
+    "status": "FINISHED",
+    "exit_code": 0,
+    "finished": "2026-10-16T22:16:07.808885+08:00"
+  },
+  {
+    "name": "t12-suite",
+    "argv": [
+      "python3",
+      "-B",
+      "team/scripts/run-t12-suite.py",
+      "--output",
+      "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/runs/t12-suite",
+      "--hardware-pins",
+      "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/runs/hardware-inputs.json",
+      "--emu",
+      "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410/build/emu",
+      "--reference-root",
+      "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/nemu/reference",
+      "--negative-reference",
+      "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/negative-reference.so",
+      "--flash",
+      "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/boot-flash.bin",
+      "--hello",
+      "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/hello-vadd.bin",
+      "--control",
+      "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/control",
+      "--matrix",
+      "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/matrix",
+      "--jobs",
+      "4"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410",
+    "started": "2026-10-16T22:16:08.930662+08:00",
+    "status": "FINISHED",
+    "exit_code": 1,
+    "finished": "2026-10-16T22:44:55.935831+08:00"
+  }
+]

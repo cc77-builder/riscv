@@ -1,0 +1,373 @@
+{
+  "status": "T12_FULLCORE_SUITE_PASS",
+  "finished": "2026-10-16T22:44:55.914307+08:00",
+  "matrix_unique": 117,
+  "matrix_executed": 124,
+  "runs": [
+    {
+      "name": "negative-vdot",
+      "status": "EXPECTED_VDOT_HIGHBIT_REJECTION",
+      "started": "2026-10-16T22:18:41.486489+08:00",
+      "command": [
+        "timeout",
+        "120m",
+        "stdbuf",
+        "-o0",
+        "-e0",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410/build/emu",
+        "-i",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/matrix/build-0/vdot-exceptions.bin",
+        "--flash=/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/boot-flash.bin",
+        "--ram-size=128MB",
+        "--diff=/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/negative-reference-v2.so",
+        "--max-cycles=5000000"
+      ],
+      "files": {
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410/build/emu": "3e41b191bc82c17bfed5dbcc1df7a69f19bc9f94b56489e085035a19e77d96d1",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/nemu/reference/build/riscv64-nemu-interpreter-so": "e8c9c9be7d798a348a0f8c5ad3a4c601c27511a1967ca3c4cc0af576233f52a1",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/negative-reference-v2.so": "8b16e687e672339126bb94cc111531030c607006730d299fcbd4af99c753cd5b",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/matrix/build-0/vdot-exceptions.bin": "8e6b40a390fcf6d84b151db8b1a9390668abaea58bcaa0f71b5225cb368f66ea"
+      },
+      "exit_code": 1,
+      "log_format": "separate-streams-v1; derived run.log = stderr.log + stdout.log",
+      "raw_logs_sha256": {
+        "stdout.log": "f52ca21985ac3318389ec9e8a014396dac8f54479e4b7da3e4fe3a8172854814",
+        "stderr.log": "e9c847fc8ccf4463e434d12355851e180bffd66930a4a2bf15e7287d488c03bc"
+      },
+      "finished": "2026-10-16T22:23:25.572172+08:00",
+      "vd": 10,
+      "pc": "0x80001c4c",
+      "word": "0x0294050b",
+      "group_pc": "0x80001c40",
+      "group_instructions": 6,
+      "bit": 100,
+      "recheck": {
+        "original_result_sha256": "985659c7ac96a93497ec04fd7742364c5813f01f4e7b61b5c6a585bcb1f31080",
+        "reason": "DiffTest mismatch PC is commit group start; injected instruction is bound to group trace",
+        "checker_sha256": "bf061be2809d4fbe38d3c68fea45dfe79440abccde096426755fd3aa538b2834"
+      }
+    },
+    {
+      "name": "hello-vadd",
+      "status": "HELLO_VADD_PASS",
+      "started": "2026-10-16T22:16:11.446553+08:00",
+      "command": [
+        "timeout",
+        "120m",
+        "stdbuf",
+        "-o0",
+        "-e0",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410/build/emu",
+        "-i",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/hello-vadd.bin",
+        "--flash=/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/boot-flash.bin",
+        "--ram-size=128MB",
+        "--diff=/home/amesotten/.cache/codex-rvinno/fullcore-20261016/nemu/reference/build/riscv64-nemu-interpreter-so",
+        "--max-cycles=5000000"
+      ],
+      "files": {
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410/build/emu": "3e41b191bc82c17bfed5dbcc1df7a69f19bc9f94b56489e085035a19e77d96d1",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/nemu/reference/build/riscv64-nemu-interpreter-so": "e8c9c9be7d798a348a0f8c5ad3a4c601c27511a1967ca3c4cc0af576233f52a1",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/hello-vadd.bin": "33f8af8e3859f795c41699189986ffd05fe38d3236738143da05eaa2eda9777d"
+      },
+      "log_format": "separate-streams-v1; derived run.log = stderr.log + stdout.log",
+      "raw_logs_sha256": {
+        "stdout.log": "c66e60c48bdaedd11baa9f311ca717bc5c032f796208e57a6d1c3b8fc4d6c08d",
+        "stderr.log": "63c19d2b6fb6de3160df3f05f15fee76d1043be5c90963a32bb74b4d61103863"
+      },
+      "exit_code": 0,
+      "finished": "2026-10-16T22:16:57.993753+08:00"
+    },
+    {
+      "name": "control",
+      "status": "T12_CONTROL_REGRESSION_PASS",
+      "command": [
+        "timeout",
+        "120m",
+        "stdbuf",
+        "-o0",
+        "-e0",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410/build/emu",
+        "-i",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/control-pressure-v2/vdot-regression.bin",
+        "--flash=/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/boot-flash.bin",
+        "--ram-size=128MB",
+        "--diff=/home/amesotten/.cache/codex-rvinno/fullcore-20261016/nemu/reference/build/riscv64-nemu-interpreter-so",
+        "--max-cycles=2000000"
+      ],
+      "files": {
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410/build/emu": "3e41b191bc82c17bfed5dbcc1df7a69f19bc9f94b56489e085035a19e77d96d1",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/nemu/reference/build/riscv64-nemu-interpreter-so": "e8c9c9be7d798a348a0f8c5ad3a4c601c27511a1967ca3c4cc0af576233f52a1",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/control-pressure-v2/vdot-regression.bin": "92cecfe539977e837d3282d568dbb4375b1e62d6b45e412f407e2670baa23807"
+      },
+      "started": "2026-10-16T22:37:27.064947+08:00",
+      "exit_code": 0,
+      "finished": "2026-10-16T22:43:02.273978+08:00",
+      "raw_logs_sha256": {
+        "stdout.log": "657093bd5b7d9bfcef3cbdf794da316cdf75b6a0204e4c2cca77b25d099c5336",
+        "stderr.log": "50aa89765f8cdd414ae3133856fb39e0ed26320e5c50bb546c3fe029d48787e0"
+      },
+      "log_format": "separate-streams-v1; derived run.log = stderr.log + stdout.log"
+    },
+    {
+      "name": "functional-0",
+      "status": "VDOT_MATRIX_SHARD_PASS",
+      "started": "2026-10-16T22:16:11.447847+08:00",
+      "command": [
+        "timeout",
+        "120m",
+        "stdbuf",
+        "-o0",
+        "-e0",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410/build/emu",
+        "-i",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/matrix/build-0/vdot-exceptions.bin",
+        "--flash=/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/boot-flash.bin",
+        "--ram-size=128MB",
+        "--diff=/home/amesotten/.cache/codex-rvinno/fullcore-20261016/nemu/reference/build/riscv64-nemu-interpreter-so",
+        "--max-cycles=5000000"
+      ],
+      "files": {
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410/build/emu": "3e41b191bc82c17bfed5dbcc1df7a69f19bc9f94b56489e085035a19e77d96d1",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/nemu/reference/build/riscv64-nemu-interpreter-so": "e8c9c9be7d798a348a0f8c5ad3a4c601c27511a1967ca3c4cc0af576233f52a1",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/matrix/build-0/vdot-exceptions.bin": "8e6b40a390fcf6d84b151db8b1a9390668abaea58bcaa0f71b5225cb368f66ea"
+      },
+      "log_format": "separate-streams-v1; derived run.log = stderr.log + stdout.log",
+      "raw_logs_sha256": {
+        "stdout.log": "e96bf57cae09d3901c34359d3a025744b50ea78c0e0057b11e2b37603656cade",
+        "stderr.log": "726c7cf6f7ab8fb5143ad040679bce0f08f6984f06bceb3c563b1ac2930f9fc0"
+      },
+      "exit_code": 0,
+      "finished": "2026-10-16T22:27:12.951912+08:00"
+    },
+    {
+      "name": "functional-1",
+      "status": "VDOT_MATRIX_SHARD_PASS",
+      "started": "2026-10-16T22:16:20.223085+08:00",
+      "command": [
+        "timeout",
+        "120m",
+        "stdbuf",
+        "-o0",
+        "-e0",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410/build/emu",
+        "-i",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/matrix/build-1/vdot-exceptions.bin",
+        "--flash=/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/boot-flash.bin",
+        "--ram-size=128MB",
+        "--diff=/home/amesotten/.cache/codex-rvinno/fullcore-20261016/nemu/reference/build/riscv64-nemu-interpreter-so",
+        "--max-cycles=5000000"
+      ],
+      "files": {
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410/build/emu": "3e41b191bc82c17bfed5dbcc1df7a69f19bc9f94b56489e085035a19e77d96d1",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/nemu/reference/build/riscv64-nemu-interpreter-so": "e8c9c9be7d798a348a0f8c5ad3a4c601c27511a1967ca3c4cc0af576233f52a1",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/matrix/build-1/vdot-exceptions.bin": "f49395766811a859788fb0420a638912175b3b451918ff3935a06c5dfc6b1042"
+      },
+      "log_format": "separate-streams-v1; derived run.log = stderr.log + stdout.log",
+      "raw_logs_sha256": {
+        "stdout.log": "5367caf92694a80ac777c2cc1b8e87b8c61acf9dc8f3b4af849ba1feee54ec58",
+        "stderr.log": "4940c5bb0258ee5ca8802554c0d16c0efc368b1a73cab21f1f606ad29dd89492"
+      },
+      "exit_code": 0,
+      "finished": "2026-10-16T22:27:54.242918+08:00"
+    },
+    {
+      "name": "functional-2",
+      "status": "VDOT_MATRIX_SHARD_PASS",
+      "started": "2026-10-16T22:16:57.997396+08:00",
+      "command": [
+        "timeout",
+        "120m",
+        "stdbuf",
+        "-o0",
+        "-e0",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410/build/emu",
+        "-i",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/matrix/build-2/vdot-exceptions.bin",
+        "--flash=/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/boot-flash.bin",
+        "--ram-size=128MB",
+        "--diff=/home/amesotten/.cache/codex-rvinno/fullcore-20261016/nemu/reference/build/riscv64-nemu-interpreter-so",
+        "--max-cycles=5000000"
+      ],
+      "files": {
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410/build/emu": "3e41b191bc82c17bfed5dbcc1df7a69f19bc9f94b56489e085035a19e77d96d1",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/nemu/reference/build/riscv64-nemu-interpreter-so": "e8c9c9be7d798a348a0f8c5ad3a4c601c27511a1967ca3c4cc0af576233f52a1",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/matrix/build-2/vdot-exceptions.bin": "d834b4b021f8037178e1a1ac1e4f22d5a2bd71bff148c6ed378493bbb6972139"
+      },
+      "log_format": "separate-streams-v1; derived run.log = stderr.log + stdout.log",
+      "raw_logs_sha256": {
+        "stdout.log": "a9f04e02d3cca17da7c9ba03d0901b3d81bbcfb0bc148a59849449341c63fc55",
+        "stderr.log": "c925cb9355d0609ec69afbc11a01e21d7a02ba4e93e3829e8ec5a87e2611f2b7"
+      },
+      "exit_code": 0,
+      "finished": "2026-10-16T22:28:30.700576+08:00"
+    },
+    {
+      "name": "functional-3",
+      "status": "VDOT_MATRIX_SHARD_PASS",
+      "started": "2026-10-16T22:21:47.297681+08:00",
+      "command": [
+        "timeout",
+        "120m",
+        "stdbuf",
+        "-o0",
+        "-e0",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410/build/emu",
+        "-i",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/matrix/build-3/vdot-exceptions.bin",
+        "--flash=/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/boot-flash.bin",
+        "--ram-size=128MB",
+        "--diff=/home/amesotten/.cache/codex-rvinno/fullcore-20261016/nemu/reference/build/riscv64-nemu-interpreter-so",
+        "--max-cycles=5000000"
+      ],
+      "files": {
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410/build/emu": "3e41b191bc82c17bfed5dbcc1df7a69f19bc9f94b56489e085035a19e77d96d1",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/nemu/reference/build/riscv64-nemu-interpreter-so": "e8c9c9be7d798a348a0f8c5ad3a4c601c27511a1967ca3c4cc0af576233f52a1",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/matrix/build-3/vdot-exceptions.bin": "20d0e26f2a13fe9ff76ea7eea0d26de319dfb739a8e00be91a859e7d60a3c22c"
+      },
+      "log_format": "separate-streams-v1; derived run.log = stderr.log + stdout.log",
+      "raw_logs_sha256": {
+        "stdout.log": "1cb21d5216a73a088979b770cf4b44fb008da0e853defba985aefe57b8f05fb6",
+        "stderr.log": "dda8c8807a6ff50a0c88c50d2250d5cec05e69bf51a53f461a2397cf8cf03f98"
+      },
+      "exit_code": 0,
+      "finished": "2026-10-16T22:33:36.807441+08:00"
+    },
+    {
+      "name": "functional-4",
+      "status": "VDOT_MATRIX_SHARD_PASS",
+      "started": "2026-10-16T22:27:12.953421+08:00",
+      "command": [
+        "timeout",
+        "120m",
+        "stdbuf",
+        "-o0",
+        "-e0",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410/build/emu",
+        "-i",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/matrix/build-4/vdot-exceptions.bin",
+        "--flash=/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/boot-flash.bin",
+        "--ram-size=128MB",
+        "--diff=/home/amesotten/.cache/codex-rvinno/fullcore-20261016/nemu/reference/build/riscv64-nemu-interpreter-so",
+        "--max-cycles=5000000"
+      ],
+      "files": {
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410/build/emu": "3e41b191bc82c17bfed5dbcc1df7a69f19bc9f94b56489e085035a19e77d96d1",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/nemu/reference/build/riscv64-nemu-interpreter-so": "e8c9c9be7d798a348a0f8c5ad3a4c601c27511a1967ca3c4cc0af576233f52a1",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/matrix/build-4/vdot-exceptions.bin": "c11a78a8dfaf70663b77ed319a5b7310bebe25efceafdd9e4a522afbe9b18a4c"
+      },
+      "log_format": "separate-streams-v1; derived run.log = stderr.log + stdout.log",
+      "raw_logs_sha256": {
+        "stdout.log": "1c2c675592fe495b1bb39857e4aaa507f4f1ca0ee3f7d9f75859a1251c3c0eb3",
+        "stderr.log": "611366eb61385a2a429a6de9165a3315841e355e5af5a18a8126f21f0322a5c9"
+      },
+      "exit_code": 0,
+      "finished": "2026-10-16T22:39:11.902854+08:00"
+    },
+    {
+      "name": "functional-5",
+      "status": "VDOT_MATRIX_SHARD_PASS",
+      "started": "2026-10-16T22:27:54.244321+08:00",
+      "command": [
+        "timeout",
+        "120m",
+        "stdbuf",
+        "-o0",
+        "-e0",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410/build/emu",
+        "-i",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/matrix/build-5/vdot-exceptions.bin",
+        "--flash=/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/boot-flash.bin",
+        "--ram-size=128MB",
+        "--diff=/home/amesotten/.cache/codex-rvinno/fullcore-20261016/nemu/reference/build/riscv64-nemu-interpreter-so",
+        "--max-cycles=5000000"
+      ],
+      "files": {
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410/build/emu": "3e41b191bc82c17bfed5dbcc1df7a69f19bc9f94b56489e085035a19e77d96d1",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/nemu/reference/build/riscv64-nemu-interpreter-so": "e8c9c9be7d798a348a0f8c5ad3a4c601c27511a1967ca3c4cc0af576233f52a1",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/matrix/build-5/vdot-exceptions.bin": "e10d7935bada9b2e25f845d06220958976597bfe02740b908639b45f711b81f7"
+      },
+      "log_format": "separate-streams-v1; derived run.log = stderr.log + stdout.log",
+      "raw_logs_sha256": {
+        "stdout.log": "c36e685593d24ea520618b4e40adbe983fd28448d200d1301b4c90a7dc7a8c22",
+        "stderr.log": "409fab0e61f2a88fd9c627b8a142250b95ff5efced9cc7b752a0c16d5134c44a"
+      },
+      "exit_code": 0,
+      "finished": "2026-10-16T22:39:23.743697+08:00"
+    },
+    {
+      "name": "functional-6",
+      "status": "VDOT_MATRIX_SHARD_PASS",
+      "started": "2026-10-16T22:28:30.701739+08:00",
+      "command": [
+        "timeout",
+        "120m",
+        "stdbuf",
+        "-o0",
+        "-e0",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410/build/emu",
+        "-i",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/matrix/build-6/vdot-exceptions.bin",
+        "--flash=/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/boot-flash.bin",
+        "--ram-size=128MB",
+        "--diff=/home/amesotten/.cache/codex-rvinno/fullcore-20261016/nemu/reference/build/riscv64-nemu-interpreter-so",
+        "--max-cycles=5000000"
+      ],
+      "files": {
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410/build/emu": "3e41b191bc82c17bfed5dbcc1df7a69f19bc9f94b56489e085035a19e77d96d1",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/nemu/reference/build/riscv64-nemu-interpreter-so": "e8c9c9be7d798a348a0f8c5ad3a4c601c27511a1967ca3c4cc0af576233f52a1",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/matrix/build-6/vdot-exceptions.bin": "3339c108fa3a8ad87f6263c04e7f9f5842c983e1c9c9608e8b9c6c73a9916156"
+      },
+      "log_format": "separate-streams-v1; derived run.log = stderr.log + stdout.log",
+      "raw_logs_sha256": {
+        "stdout.log": "f865770ceedf39da439a7ba683b2ea55bdbc0ec89d20e887f141198a94fa36e4",
+        "stderr.log": "7246e70cf7a104f81c3154f7b3bf5b8ea8c0ab6f3398c485339362e44a4961a9"
+      },
+      "exit_code": 0,
+      "finished": "2026-10-16T22:40:07.108052+08:00"
+    },
+    {
+      "name": "functional-7",
+      "status": "VDOT_MATRIX_SHARD_PASS",
+      "started": "2026-10-16T22:33:36.808639+08:00",
+      "command": [
+        "timeout",
+        "120m",
+        "stdbuf",
+        "-o0",
+        "-e0",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410/build/emu",
+        "-i",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/matrix/build-7/vdot-exceptions.bin",
+        "--flash=/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/boot-flash.bin",
+        "--ram-size=128MB",
+        "--diff=/home/amesotten/.cache/codex-rvinno/fullcore-20261016/nemu/reference/build/riscv64-nemu-interpreter-so",
+        "--max-cycles=5000000"
+      ],
+      "files": {
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410/build/emu": "3e41b191bc82c17bfed5dbcc1df7a69f19bc9f94b56489e085035a19e77d96d1",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/nemu/reference/build/riscv64-nemu-interpreter-so": "e8c9c9be7d798a348a0f8c5ad3a4c601c27511a1967ca3c4cc0af576233f52a1",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+        "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/workloads/matrix/build-7/vdot-exceptions.bin": "f88226a848dbdfee910d17cb571c4810088ae3730e9323dcbd54eaa91e2c0f9f"
+      },
+      "log_format": "separate-streams-v1; derived run.log = stderr.log + stdout.log",
+      "raw_logs_sha256": {
+        "stdout.log": "49c17ce0bc0a2f304bd0b159709cebc2e39174e51a35fcd968bc3c6390839ba4",
+        "stderr.log": "3042c4e2dc3e0ce74b42ff4522df0613d55436222c3690e42dc1401c21f974a9"
+      },
+      "exit_code": 0,
+      "finished": "2026-10-16T22:44:54.315934+08:00"
+    }
+  ],
+  "aggregation": "original 9 positive runs + corrected negative fixture recheck + separately executed pressure workload; all original attempts retained"
+}

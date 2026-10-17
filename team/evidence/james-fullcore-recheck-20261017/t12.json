@@ -1,0 +1,114 @@
+{
+  "status": "T12_ARCHIVE_RECHECK_PASS",
+  "scope": "recheck stored logs and receipts; not a new DUT run",
+  "hardware_source": "d3706f0b86ecfdfbb24cb34cbcf2c18a0314f7f9",
+  "emu_sha256": "3e41b191bc82c17bfed5dbcc1df7a69f19bc9f94b56489e085035a19e77d96d1",
+  "reference_sha256": "e8c9c9be7d798a348a0f8c5ad3a4c601c27511a1967ca3c4cc0af576233f52a1",
+  "matrix_unique": 117,
+  "matrix_executed": 124,
+  "results": {
+    "control": {
+      "status": "T12_CONTROL_REGRESSION_PASS",
+      "clock_mapping": "gated FU ticks anchored one-to-one to parent VFEX4 accepts; checked against surrounding global records",
+      "architectural_checks": "PASS",
+      "coverage": {
+        "accepted_younger_squashed": true,
+        "inflight_fu_killed": true,
+        "shared_vfex4_fu_kinds": true,
+        "shared_vfex4_backpressure": true,
+        "vdot_writeback_backpressure": true,
+        "rob_wrap_repeated": true,
+        "ftq_wrap_repeated": true
+      },
+      "counts": {
+        "REDIRECT": 307,
+        "ENQUEUE": 2242,
+        "ACCEPT": 2230,
+        "VFEX4_ACCEPT": 3173,
+        "RESPONSE": 2224,
+        "VFEX4_WAIT": 6295,
+        "COMMIT": 2157,
+        "ROB_WRAP": 250,
+        "FTQ_WRAP": 329,
+        "STALL": 1,
+        "ACCEPTED_THEN_SQUASHED": 73,
+        "KILL": 6,
+        "SUPPRESSED_ENQUEUE": 2
+      },
+      "vfex4_fu_counts": {
+        "0x800000000": 2230,
+        "0x000400000": 943
+      },
+      "expected_vdot_commits": 2157,
+      "scope": "pinned MinimalConfig M-mode; not virtualization/PPA/performance acceptance"
+    },
+    "functional-0": {
+      "status": "VDOT_WORKLOAD_PASS",
+      "mode": "full",
+      "executed": 15,
+      "extension_pass": true,
+      "difftest": true
+    },
+    "functional-1": {
+      "status": "VDOT_WORKLOAD_PASS",
+      "mode": "full",
+      "executed": 16,
+      "extension_pass": true,
+      "difftest": true
+    },
+    "functional-2": {
+      "status": "VDOT_WORKLOAD_PASS",
+      "mode": "full",
+      "executed": 16,
+      "extension_pass": true,
+      "difftest": true
+    },
+    "functional-3": {
+      "status": "VDOT_WORKLOAD_PASS",
+      "mode": "full",
+      "executed": 16,
+      "extension_pass": true,
+      "difftest": true
+    },
+    "functional-4": {
+      "status": "VDOT_WORKLOAD_PASS",
+      "mode": "full",
+      "executed": 16,
+      "extension_pass": true,
+      "difftest": true
+    },
+    "functional-5": {
+      "status": "VDOT_WORKLOAD_PASS",
+      "mode": "full",
+      "executed": 15,
+      "extension_pass": true,
+      "difftest": true
+    },
+    "functional-6": {
+      "status": "VDOT_WORKLOAD_PASS",
+      "mode": "full",
+      "executed": 15,
+      "extension_pass": true,
+      "difftest": true
+    },
+    "functional-7": {
+      "status": "VDOT_WORKLOAD_PASS",
+      "mode": "full",
+      "executed": 15,
+      "extension_pass": true,
+      "difftest": true
+    },
+    "hello-vadd": {
+      "status": "HELLO_VADD_PASS"
+    },
+    "negative-vdot": {
+      "status": "EXPECTED_VDOT_HIGHBIT_REJECTION",
+      "vd": 10,
+      "pc": "0x80001c4c",
+      "word": "0x0294050b",
+      "group_pc": "0x80001c40",
+      "group_instructions": 6,
+      "bit": 100
+    }
+  }
+}

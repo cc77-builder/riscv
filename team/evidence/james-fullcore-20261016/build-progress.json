@@ -1,0 +1,120 @@
+[
+  {
+    "name": "checkout",
+    "argv": [
+      "git",
+      "checkout",
+      "--detach",
+      "d3706f0b86ecfdfbb24cb34cbcf2c18a0314f7f9"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-t13-20261016",
+    "started": 1792152601.0508547,
+    "status": "FINISHED",
+    "exit_code": 0,
+    "seconds": 14.308
+  },
+  {
+    "name": "source-pack",
+    "argv": [
+      "python3",
+      "-B",
+      "team/scripts/prepare-core-baseline.py",
+      "pack",
+      "--source",
+      "/home/amesotten/.cache/codex-rvinno/integration-t13-20261016",
+      "--pack",
+      "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-pack"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-t13-20261016",
+    "started": 1792152617.3723888,
+    "status": "FINISHED",
+    "exit_code": 0,
+    "seconds": 48.692
+  },
+  {
+    "name": "materialize",
+    "argv": [
+      "python3",
+      "-B",
+      "team/scripts/prepare-core-baseline.py",
+      "materialize",
+      "--source",
+      "/home/amesotten/.cache/codex-rvinno/integration-t13-20261016",
+      "--pack",
+      "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-pack",
+      "--cache",
+      "/home/amesotten/.cache/codex-rvinno/fullcore-20261016"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/integration-t13-20261016",
+    "started": 1792152666.069414,
+    "status": "FINISHED",
+    "exit_code": 0,
+    "seconds": 42.228
+  },
+  {
+    "name": "dependencies",
+    "argv": [
+      "python3",
+      "-B",
+      "team/scripts/audit-core-dependencies.py",
+      "--target",
+      "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410",
+      "--evidence",
+      "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/hardware"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410",
+    "started": 1792152708.3077946,
+    "status": "FINISHED",
+    "exit_code": 0,
+    "seconds": 15.504
+  },
+  {
+    "name": "core-split-build",
+    "argv": [
+      "bash",
+      "team/scripts/core-baseline-split.sh"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410",
+    "started": 1792152723.82628,
+    "status": "FINISHED",
+    "exit_code": 0,
+    "seconds": 2394.13
+  },
+  {
+    "name": "source-after",
+    "argv": [
+      "python3",
+      "-B",
+      "team/scripts/prepare-core-baseline.py",
+      "verify",
+      "--source",
+      "/home/amesotten/.cache/codex-rvinno/integration-t13-20261016",
+      "--pack",
+      "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-pack",
+      "--target",
+      "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410",
+    "started": 1792155117.9642699,
+    "status": "FINISHED",
+    "exit_code": 0,
+    "seconds": 14.444
+  },
+  {
+    "name": "dependencies-after",
+    "argv": [
+      "python3",
+      "-B",
+      "team/scripts/audit-core-dependencies.py",
+      "--target",
+      "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410",
+      "--evidence",
+      "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/hardware-after"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/fullcore-20261016/source-9a5c75274233d410",
+    "started": 1792155132.4131467,
+    "status": "FINISHED",
+    "exit_code": 0,
+    "seconds": 15.972
+  }
+]
