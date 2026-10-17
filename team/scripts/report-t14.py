@@ -37,7 +37,7 @@ def report(base, offline, output):
     lines = [
         "# T14：输入拍乘积锁存优化与消融",
         "",
-        "2026-10-16。本地自动验收完成；尚未上传 GitHub，B/C 人工复核待完成。默认基础模式仍保留。",
+        "实验与离线复算于 2026-10-16 完成，2026-10-17 完成交付复核。本地自动验收完成；尚未上传 GitHub，团队人工复核待完成。默认基础模式仍保留。",
         "",
         "## 实测结果",
         "",
@@ -62,7 +62,15 @@ def report(base, offline, output):
                   span([r["speedup_median"] for r in tables[0][key]], "×"),
                   span([r["speedup_median"] for r in tables[1][key]], "×")]
         lines.append("| " + " | ".join(values) + " |")
-    lines += ["", "全核轨迹中的 FU 观测（包含投机事务）：", "",
+    lines += [
+        "",
+        "128 次独立点积由 599.5 降至 464 周期，配对中位加速 1.2906×；256 次依赖链由 2114 降至 1857 周期，加速 1.1384×。访存场景仅约 1.0009–1.0129×，说明该改动的收益随负载明显变化。最大 1.5701× 出现在包含 CSR 管理的 generic/64，不作为所有应用的收益。",
+        "",
+        "![T14 相同程序的硬件周期消融](../figures/t14-optimization-20261017/t14-hardware-ablation.png)",
+        "",
+        "图：a 为 vdot，b 为未改动的 RVV 对照，横轴均为基础周期/候选周期。展示全部场景、3 组输入和首次/预热/正式轮次的配对原始值；仅绘制 replay=0 的 468 行，另外两次相同重放仍保存在归档中。圆、叉、菱形区分阶段；纵向错开不改变横向数值。没有统计置信区间，也未按收益筛选。[PDF](../figures/t14-optimization-20261017/t14-hardware-ablation.pdf) · [数据与图表复核](../figures/t14-optimization-20261017/QA.md)。",
+        "",
+        "全核轨迹中的 FU 观测（包含投机事务）：", "",
               "| 硬件 | 接受 | 响应 | 取消 | 写回反压 | 响应延迟直方图 | 最小接受间隔 |",
               "|---|---:|---:|---:|---:|---|---:|"]
     for variant, counts in ab["fu_observations"].items():
@@ -145,6 +153,7 @@ def report(base, offline, output):
         "",
         "离线核验命令：python3 -B team/scripts/verify-t14-archive.py --archive team/evidence/t14-optimization-20261016 --output /tmp/t14-offline-new。输出目录须是新目录。",
         "硬件复建先加载 team/scripts/activate.sh，使用固定依赖、全新构建输出和证据中的实际命令；不要混用两个开关模式的构建缓存。",
+        "Linux 与 Windows 离线复核均通过，回执解析后相同，归档副本逐字节一致。见[跨平台回执与源码摘要](../evidence/t14-offline-review-20261017/README.md)。离线包不包含完整硬件构建依赖，不能替代后续新机器构建复现。",
         "",
         "## 团队复核",
         "",

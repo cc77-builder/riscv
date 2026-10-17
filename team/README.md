@@ -1,6 +1,6 @@
 # 三人团队：项目计划与开发入口
 
-> **2026-10-16 T14 本地进行中。** 单一候选为输入拍锁存乘积；基础/候选两模式 FU 验证通过（响应 3→2 拍、最小 II 4→3），候选全核已构建，正在完整回归与同镜像性能消融。见 [T14 合同](spec/t14-ablation.md)、[进度记录](docs/t14-optimization.md) 和 [外部建议评估](docs/t14-suggestion-review.md)。尚未宣称全核优化收益，尚未上传 T14。
+> **2026-10-17 T14 本地自动验收完成，尚未上传。** 输入拍锁存乘积使 FU 响应 3→2 拍、最小 II 4→3；完整回归、126 次相同镜像运行、1,404 个性能窗口及 Linux/Windows 离线复核通过。128 次独立点积约 1.29×，256 次依赖链约 1.14×，访存场景收益很小。见 [结果与局限](docs/t14-optimization.md)、[合同](spec/t14-ablation.md)、[外部建议评估](docs/t14-suggestion-review.md) 和 [离线回执](evidence/t14-offline-review-20261017/README.md)。默认基础模式保留，团队人工复核及物理时序评估待完成。
 
 > **T13 交付至 zjhwork。** 用户已明确授权将本轮成果上传到 `cc77-builder/riscv` 的 `zjhwork`。代码、报告和验证证据版本为 `4526d857937def29ea1598a7c878aa539e2ef1f6`，本发布批次只补充入口说明，未改变硬件、工作负载或测量数据。见 [性能报告](docs/t13-performance.md) 和 [离线复核](evidence/t13-offline-review-20261015/README.md)。下方及归档中的“未上传”是发布前快照；队友人工复核仍待完成，不能把上传当作人工验收。
 
@@ -18,6 +18,8 @@
 
 | 内容 | 入口 |
 | --- | --- |
+| T14 单一优化消融、完整数据与局限 | [T14 报告](docs/t14-optimization.md) |
+| T14 原始证据及跨平台核验 | [证据](evidence/t14-optimization-20261016/README.md) · [离线复核](evidence/t14-offline-review-20261017/README.md) |
 | T13 公平周期性能对比、完整数据与局限 | [T13 报告](docs/t13-performance.md) |
 | T13 可搬迁离线复算与原始证据 | [T13 证据包](evidence/t13-performance-20261015/README.md) |
 | 当前协作机制：无 Actions、共享分支交接、Fork 按需同步 | [三人两线协作机制](docs/collaboration-current.md) |

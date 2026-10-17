@@ -1,0 +1,114 @@
+{
+  "status": "T14_T12_WINDOWS_REPLAY_PASS",
+  "result_identical_to_linux": true,
+  "hardware_rerun": false,
+  "scope": "T12 control/functional/negative only; T14 performance still running",
+  "windows_receipt_sha256": "70913643b0a1888ac1998a2121c2d8e655c08f669d96c2a4baeaa41163de387d",
+  "result": {
+    "status": "T12_ARCHIVE_RECHECK_PASS",
+    "scope": "recheck stored logs and receipts; not a new DUT run",
+    "hardware_source": "2443fb1c101dfc5974ac208275a8b86d68a11e0f",
+    "emu_sha256": "60521f406816846f8724de13021906a3ebbffa7044f35e6ee93c28bed7bf96b5",
+    "reference_sha256": "efbed0774addc27eac38af1a19ab5d9c9dd5f179b5015f25ae7b80b966185bd4",
+    "matrix_unique": 117,
+    "matrix_executed": 124,
+    "results": {
+      "control": {
+        "status": "T12_CONTROL_REGRESSION_PASS",
+        "clock_mapping": "gated FU ticks anchored one-to-one to parent VFEX4 accepts; checked against surrounding global records",
+        "architectural_checks": "PASS",
+        "coverage": {
+          "accepted_younger_squashed": true,
+          "inflight_fu_killed": true,
+          "shared_vfex4_fu_kinds": true,
+          "shared_vfex4_backpressure": true,
+          "vdot_writeback_backpressure": true,
+          "rob_wrap_repeated": true,
+          "ftq_wrap_repeated": true
+        },
+        "counts": {
+          "REDIRECT": 319,
+          "ENQUEUE": 2283,
+          "ACCEPT": 2264,
+          "VFEX4_ACCEPT": 3210,
+          "RESPONSE": 2263,
+          "VFEX4_WAIT": 6127,
+          "COMMIT": 2157,
+          "FTQ_WRAP": 330,
+          "ROB_WRAP": 311,
+          "STALL": 138,
+          "ACCEPTED_THEN_SQUASHED": 107,
+          "KILL": 1
+        },
+        "vfex4_fu_counts": {
+          "0x800000000": 2264,
+          "0x000400000": 946
+        },
+        "expected_vdot_commits": 2157,
+        "scope": "pinned MinimalConfig M-mode; not virtualization/PPA/performance acceptance"
+      },
+      "functional-0": {
+        "status": "VDOT_WORKLOAD_PASS",
+        "mode": "full",
+        "executed": 15,
+        "extension_pass": true,
+        "difftest": true
+      },
+      "functional-1": {
+        "status": "VDOT_WORKLOAD_PASS",
+        "mode": "full",
+        "executed": 16,
+        "extension_pass": true,
+        "difftest": true
+      },
+      "functional-2": {
+        "status": "VDOT_WORKLOAD_PASS",
+        "mode": "full",
+        "executed": 16,
+        "extension_pass": true,
+        "difftest": true
+      },
+      "functional-3": {
+        "status": "VDOT_WORKLOAD_PASS",
+        "mode": "full",
+        "executed": 16,
+        "extension_pass": true,
+        "difftest": true
+      },
+      "functional-4": {
+        "status": "VDOT_WORKLOAD_PASS",
+        "mode": "full",
+        "executed": 16,
+        "extension_pass": true,
+        "difftest": true
+      },
+      "functional-5": {
+        "status": "VDOT_WORKLOAD_PASS",
+        "mode": "full",
+        "executed": 15,
+        "extension_pass": true,
+        "difftest": true
+      },
+      "functional-6": {
+        "status": "VDOT_WORKLOAD_PASS",
+        "mode": "full",
+        "executed": 15,
+        "extension_pass": true,
+        "difftest": true
+      },
+      "functional-7": {
+        "status": "VDOT_WORKLOAD_PASS",
+        "mode": "full",
+        "executed": 15,
+        "extension_pass": true,
+        "difftest": true
+      },
+      "hello-vadd": {
+        "status": "HELLO_VADD_PASS"
+      },
+      "negative-vdot": {
+        "status": "EXPECTED_VDOT_HIGHBIT_REJECTION"
+      }
+    }
+  }
+}

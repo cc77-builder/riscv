@@ -106,7 +106,7 @@ def plot(args):
     fig.savefig(str(stem) + ".svg")
     fig.savefig(str(stem) + ".pdf")
     fig.savefig(str(stem) + ".png", dpi=600)
-    fig.savefig(str(stem) + ".tiff", dpi=600)
+    fig.savefig(str(stem) + ".tiff", dpi=600, pil_kwargs={"compression": "tiff_lzw"})
     with (args.output / "source-data.csv").open("w", newline="", encoding="utf-8") as stream:
         writer = csv.DictWriter(stream, list(drawing[0]))
         writer.writeheader()
