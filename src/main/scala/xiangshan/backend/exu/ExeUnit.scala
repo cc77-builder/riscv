@@ -59,6 +59,9 @@ class ExeUnitImp(
   p: Parameters, exuParams: ExeUnitParams
 ) extends LazyModuleImp(wrapper) with HasXSParameter with HasCriticalErrors {
   private val fuCfgs = exuParams.fuConfigs
+  // Keep all other EXUs and both old vdot modes on the original Scala branch.
+  private val vdotHandoff = fuCfgs.exists(_.fuType == FuType.vdot) &&
+    xiangshan.backend.fu.wrapper.VDotHandoff.enabled
 
   val io = IO(new ExeUnitIO(exuParams))
 
@@ -130,14 +133,27 @@ class ExeUnitImp(
   }
   else {
     val robIdx = RegEnable(io.in.bits.robIdx, io.in.fire)
-    when(io.in.fire && io.in.bits.robIdx.needFlush(io.flush)) {
-      busy := false.B
-    }.elsewhen(busy && robIdx.needFlush(io.flush)) {
-      busy := false.B
-    }.elsewhen(io.out.fire) {
-      busy := false.B
-    }.elsewhen(io.in.fire) {
-      busy := true.B
+    if (vdotHandoff) {
+      when(io.in.fire && io.in.bits.robIdx.needFlush(io.flush)) {
+        busy := false.B
+      }.elsewhen(busy && robIdx.needFlush(io.flush)) {
+        busy := false.B
+      }.elsewhen(io.in.fire) {
+        // A response and a new request can coincide: the NEW request remains busy.
+        busy := true.B
+      }.elsewhen(io.out.fire) {
+        busy := false.B
+      }
+    } else {
+      when(io.in.fire && io.in.bits.robIdx.needFlush(io.flush)) {
+        busy := false.B
+      }.elsewhen(busy && robIdx.needFlush(io.flush)) {
+        busy := false.B
+      }.elsewhen(io.out.fire) {
+        busy := false.B
+      }.elsewhen(io.in.fire) {
+        busy := true.B
+      }
     }
   }
 
@@ -221,9 +237,33 @@ class ExeUnitImp(
   val in1ToN = Module(new Dispatcher(new ExuInput(exuParams), funcUnits.length, acceptCond))
 
   // ExeUnit.in <---> Dispatcher.in
-  in1ToN.io.in.valid := io.in.valid && !busy
-  in1ToN.io.in.bits := io.in.bits
-  io.in.ready := !busy && in1ToN.io.in.ready
+  if (vdotHandoff) {
+    require(exuParams.name == "VFEX4" && !exuParams.latencyCertain,
+      "O1 handoff is restricted to the current uncertain-latency VFEX4")
+    require(fuCfgs.count(_.fuType == FuType.vdot) == 1)
+    val vdotIndex = fuCfgs.indexWhere(_.fuType == FuType.vdot)
+    val vdotFu = funcUnits(vdotIndex)
+    val activeIsVDot = RegInit(false.B)
+    when(io.in.fire) { activeIsVDot := io.in.bits.fuType === FuType.vdot }
+    val newIsVDot = io.in.bits.fuType === FuType.vdot
+    // The shared output remains one-hot; neither div->vdot nor vdot->div overlaps.
+    val handoff = busy && activeIsVDot && newIsVDot && vdotFu.io.out.valid && io.out.ready &&
+      !io.flush.valid && !reset.asBool
+    val allowInput = (!busy || handoff) && !io.flush.valid && !reset.asBool
+    in1ToN.io.in.valid := io.in.valid && allowInput
+    in1ToN.io.in.bits := io.in.bits
+    io.in.ready := allowInput && in1ToN.io.in.ready
+    when(io.in.fire && busy) {
+      assert(handoff && vdotFu.io.out.fire && io.out.fire,
+        "O1 accepted into a busy EXU without retiring the old vdot response")
+    }
+    // Dispatcher ANDs every FU's ready; detect any parent/selected-FU mismatch.
+    assert(vdotFu.io.in.fire === (io.in.fire && newIsVDot))
+  } else {
+    in1ToN.io.in.valid := io.in.valid && !busy
+    in1ToN.io.in.bits := io.in.bits
+    io.in.ready := !busy && in1ToN.io.in.ready
+  }
 
   if (sys.env.get("VDOT_T12_TRACE").contains("1") && fuCfgs.contains(xiangshan.backend.fu.FuConfig.VDotCfg)) {
     // Instantiate outside when: GTimer is a local register, not a global read.

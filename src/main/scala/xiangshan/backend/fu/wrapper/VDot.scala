@@ -34,6 +34,9 @@ class VDot(cfg: FuConfig)(implicit p: Parameters) extends VecNonPipedFuncUnit(cf
   }
   println(s"VDot fusedInputProducts=$fuseInputProducts latency=${if (fuseInputProducts) 2 else 3}")
 
+  // O1 is elaboration-only and requires the already supported T14 datapath.
+  private val handoffEnabled = VDotHandoff.enabled
+
   private val idle :: mul :: reduce :: respond :: Nil = Enum(4)
   private val state = RegInit(idle)
   private val src1Reg = if (fuseInputProducts) None else Some(Reg(UInt(128.W)))
@@ -48,7 +51,13 @@ class VDot(cfg: FuConfig)(implicit p: Parameters) extends VecNonPipedFuncUnit(cf
   // The base class registers this RobPtr only on in.fire, together with pdest.
   private val killed = state =/= idle && io.out.bits.ctrl.robIdx.needFlush(io.flush)
 
-  io.in.ready := state === idle && !io.flush.valid && !reset.asBool
+  if (handoffEnabled) {
+    // Do not depend on the new input's valid/data: the old response owns this cycle.
+    io.in.ready := (state === idle || (state === respond && io.out.ready && !killed)) &&
+      !io.flush.valid && !reset.asBool
+  } else {
+    io.in.ready := state === idle && !io.flush.valid && !reset.asBool
+  }
   io.out.valid := state === respond && !killed && !reset.asBool
 
   private val products = Module(new VDotProducts)
@@ -83,14 +92,37 @@ class VDot(cfg: FuConfig)(implicit p: Parameters) extends VecNonPipedFuncUnit(cf
         state := respond
       }
       is(respond) {
-        when(io.out.fire) { state := idle }
+        if (handoffEnabled) {
+          when(io.out.fire) {
+            when(io.in.fire) {
+              // Old result/control remain visible until this edge. Only the new
+              // products and legality are captured; no second request stays in flight.
+              productsReg := products.io.products
+              illegalReg := illegalInput
+              state := reduce
+            }.otherwise {
+              state := idle
+            }
+          }
+        } else {
+          when(io.out.fire) { state := idle }
+        }
       }
     }
   }
 
   io.out.bits.res.data := resultReg
-  io.out.bits.ctrl.vecWen.get := outCtrl.vecWen.get && !illegalReg
-  io.out.bits.ctrl.v0Wen.get := outCtrl.v0Wen.get && !illegalReg
+  if (handoffEnabled) {
+    // outCtrl is DataHoldBypass and would expose the NEW request on in.fire.
+    // Match the base class's registered ROB/pdest/vpu/perf identity instead.
+    val savedVecWen = RegEnable(inCtrl.vecWen.get, io.in.fire)
+    val savedV0Wen = RegEnable(inCtrl.v0Wen.get, io.in.fire)
+    io.out.bits.ctrl.vecWen.get := savedVecWen && !illegalReg
+    io.out.bits.ctrl.v0Wen.get := savedV0Wen && !illegalReg
+  } else {
+    io.out.bits.ctrl.vecWen.get := outCtrl.vecWen.get && !illegalReg
+    io.out.bits.ctrl.v0Wen.get := outCtrl.v0Wen.get && !illegalReg
+  }
   io.out.bits.ctrl.exceptionVec.get := 0.U.asTypeOf(io.out.bits.ctrl.exceptionVec.get)
   io.out.bits.ctrl.exceptionVec.get(ExceptionNO.illegalInstr) := illegalReg
 
@@ -99,7 +131,11 @@ class VDot(cfg: FuConfig)(implicit p: Parameters) extends VecNonPipedFuncUnit(cf
     assert(inCtrl.vecWen.get ^ inCtrl.v0Wen.get, "VDot requires one destination class")
   }
   when(io.out.valid) {
-    assert(!io.in.ready)
+    if (handoffEnabled) {
+      assert(io.in.ready === (io.out.ready && !io.flush.valid && !reset.asBool))
+    } else {
+      assert(!io.in.ready)
+    }
     assert(io.out.bits.res.data(127, 32) === 0.U)
     when(illegalReg) {
       assert(!io.out.bits.ctrl.vecWen.get && !io.out.bits.ctrl.v0Wen.get)
