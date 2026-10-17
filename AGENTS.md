@@ -1,8 +1,12 @@
 # 团队 Agent 入口
 
-## 当前任务：T15 独立单元参数扩展，本地开发
+## 当前任务：T15 独立参数单元已完成，本地保存
 
-用户于 2026-10-17 授权开始 T15，完成后先不上传 GitHub。本轮工作区 `/home/riscv/riscv-lab/t15-parameter-extension-20261017/repo`，分支 `local/t15-s16x8-20261017`，起点为已发布 T14 `6fea296`。先读 [T15 合同](team/spec/t15-parameters.md)。只增加 8 对 int16 / 64 位结果字段这一项独立单元配置；保留原生产硬件、ISA、NEMU、T05 数据及已封存证据。未完成真实测试前不声明通过，不自动推送或开始 T16。
+2026-10-17。用户要求完成 T15 后先不上传 GitHub，禁止本轮 push、PR 或更改 main/zufan/zjhwork。当前分支 local/t15-s16x8-20261017，工作区 `/home/riscv/riscv-lab/t15-parameter-extension-20261017/repo`，起点为已发布 T14 6fea296。
+
+先读 [T15 报告](team/docs/t15-parameter-extension.md)、[参数合同](team/spec/t15-parameters.md)、[最新进度](team/docs/progress-t15-20261017.md) 和 [跨平台复核](team/evidence/t15-offline-review-20261017/README.md)。实际正式验证源码 65f6159e305adc10b4f8bd67812f3a6460ccf360；runs/unit-02 为最终验收，两个单元配置、8 个非法参数、错误检出及 Linux/Windows 离线核验通过。不要重复启动已完成任务或覆盖密封证据。
+
+本轮为 s16x8/r64 独立算术/实验包装，不是全核 SEW=16 指令；原生产 src 树、NEMU、ISA 和 T05 向量保持不变。初次 Windows manifest 路径失败及修复记录保留；生成器路径改为 POSIX，四份数值文件未变化。T14 现有主频/PPA 边界继续有效。没有新增人工 ACK，不自动开始 T16。Windows 交付入口 D:\yanyi\riscv大赛\doc\T15参数扩展。
 
 ## 本轮发布：T14 上传 zjhwork
 
