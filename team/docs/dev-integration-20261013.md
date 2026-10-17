@@ -1,3 +1,5 @@
+> 历史阶段记录：下文实现及命令属于原 VFEX1 版本；当前入口与追溯方式见 [退役说明](retired-vfex1.md)。
+
 # dev 分支按进度集成
 
 2026-10-13（北京时间）。目标分支dev；来源James_Hotten。合并前dev/main为`c1ef31d81d50c209bf0e102af8ad7713c2da6dab`，来源为`a978b3b8fe731dd9422a41f80d9d53e40c775656`。远端与本地两分支分别一致，dev是来源的祖先，采用快进合并，保留全部5个交付提交，不复制文件或重写原历史。
@@ -14,7 +16,7 @@
 
 提交按原交付顺序保留；任务编号不表示必须按数字串行。T09按原计划可先于RTL全核实现，T07独立原型不等于T06已定稿。所有规划及接口文档一并纳入，保留其草案/待办状态。
 
-代码差异集中在team目录和单个生产源码[VdotExec.scala](../../src/main/scala/xiangshan/backend/fu/vector/VdotExec.scala)，另有LF属性及忽略规则。根build.sc/build.sbt与.gitmodules未改变；未接入全核译码/FU分类/调度/写回，不升级硬件或配套基线。main和来源分支均保持原提交。
+代码差异集中在team目录和单个生产源码[VdotExec.scala](https://github.com/cc77-builder/riscv/blob/9bb544812df9b424e399ae3ca91899a904f583bd/src/main/scala/xiangshan/backend/fu/vector/VdotExec.scala)，另有LF属性及忽略规则。根build.sc/build.sbt与.gitmodules未改变；未接入全核译码/FU分类/调度/写回，不升级硬件或配套基线。main和来源分支均保持原提交。
 
 ## 合并验证
 

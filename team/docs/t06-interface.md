@@ -1,3 +1,5 @@
+> 历史阶段记录：下文实现及命令属于原 VFEX1 版本；当前入口与追溯方式见 [退役说明](retired-vfex1.md)。
+
 > **历史记录：** 本文描述原 James 候选及当时配置。2026-10-15 已统一为 VFEX4 / NEMU 1.1.0；当前入口见 [整合报告](james-integration-20261015.md)，历史日志不计作新实现的运行结果。
 
 # T06：香山功能单元适配层
@@ -12,7 +14,7 @@
 
 | 接口 | 当前实现与理由 |
 | --- | --- |
-| 运算 | [VdotFu.scala](../../src/main/scala/xiangshan/backend/fu/wrapper/VdotFu.scala) 实例化原独立模块；完整128位结果直接输出，不经过 Mgu，不读取旧目的参与运算 |
+| 运算 | [VdotFu.scala](https://github.com/cc77-builder/riscv/blob/9bb544812df9b424e399ae3ca91899a904f583bd/src/main/scala/xiangshan/backend/fu/wrapper/VdotFu.scala) 实例化原独立模块；完整128位结果直接输出，不经过 Mgu，不读取旧目的参与运算 |
 | 类型/配置 | 新类型追加在枚举末尾，原 one-hot 数值保持；纳入 vecOPI/vecAll、needVecCtrl、配置索引；尚未启用译码或 EXU |
 | 源槽 | 沿用五槽：两个128位源、保留的旧目的、128位 v0、8位物理 VL；`maskWakeUp` 保留以支持 vm=1 时的普通 v0 源 |
 | 配置 | 实际 VL 只来自槽4，合法性使用本次输入的 vpu.vill/vsew/vlmul/vstart/vm；vta/vma 均接受，不把 vpu.vl 当实际物理 VL |

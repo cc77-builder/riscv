@@ -1,6 +1,6 @@
-# 当前进度（2026-10-17，James_Hotten）
+# 当前进度（2026-10-17，VFEX4 统一版本）
 
-当前路线为 **VFEX4**。2026-10-17 已抓取两个仓库并合并 cc77-builder 的 zjhwork@3d051f0d8、zjhwork2@a877e0575，新增25个来源提交；其他非main分支进度已包含，无需重复合并。本轮仅本地 James_Hotten，未推送、未修改 main。见 [同步与问题修复记录](docs/james-sync-20261017.md)；此前 [T13整合](docs/james-t13-integration-20261016.md) 与 [VFEX4整合](docs/james-integration-20261015.md) 保留。
+当前路线为 **VFEX4**。2026-10-17 已抓取两个仓库并合并 cc77-builder 的 zjhwork@3d051f0d8、zjhwork2@a877e0575，新增25个来源提交；其他非main分支进度已包含，无需重复合并。上述25个来源提交已于前轮推送到 James_Hotten；本轮用户授权删除旧实现并同步 main，见 [清理与同步记录](docs/vfex4-main-sync-20261017.md)。前轮 [同步与问题修复记录](docs/james-sync-20261017.md)、此前 [T13整合](docs/james-t13-integration-20261016.md) 与 [VFEX4整合](docs/james-integration-20261015.md) 保留。
 
 前轮 [James源码全核复验](docs/james-fullcore-20261016.md) 已完成：新EMU/NEMU构建、13窗口校准、117唯一用例矩阵、T12控制与bit100负控、original190/lean199软件计划、T13全量126次运行及归档独立解包复算均通过。执行硬件固定d3706f0b8，检查器修复与控制序列调整单独绑定；共143次实际启动、141次接受、2次排除，原始失败证据保留。
 
@@ -34,4 +34,4 @@
 2. 以本轮固定EMU/参考库/镜像与完整原始日志作为后续A/B基线；保持旧布局排除规则、三次确定性重放和完整状态/计数边界检查。
 3. 先补齐 O0 四场景和固定工作量/并行路数诊断矩阵，再决定 O1 最小改动；当前 O1 仅合同。保留基础/候选模式，工程优化、回归和独立复现完成后再编写 T16，STA/PPA 仍独立待办。
 
-原 James 进度完整保存在 [历史快照](docs/history/progress-before-james-integration-20261015.md)。历史 VFEX1 执行器、适配器及旧测试见 [归档](legacy/james-vfex1/README.md)。
+原 James 进度完整保存在 [历史快照](docs/history/progress-before-james-integration-20261015.md)。旧 VFEX1 执行器、适配器、独立工程与专用测试已删除；旧实现仅通过 [固定 Git 提交](docs/retired-vfex1.md) 追溯，原验收证据保留。

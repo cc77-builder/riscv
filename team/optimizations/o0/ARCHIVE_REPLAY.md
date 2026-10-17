@@ -1,3 +1,5 @@
+> 当前统一分支状态（2026-10-17）：完整旧 pilot 硬件流已重放通过，见 [回执](../../evidence/james-sync-20261017/o0-trace.json)。下文环境/下载限制是来源分支当时记录；O0完整矩阵仍未关闭。当前解析器固定摘要以 analyze.py 的 PARSER_BLOB 为准，整合依据见 [复核记录](../../docs/james-sync-20261017.md)。
+
 # O0：归档来源核验与真实轨迹重放入口
 
 基点：`492db2d9e2a5041db5e0a7d1dec16555a7e1b205`；唯一发布目标 `cc77-builder/riscv:zjhwork2`。本批是 O0 的推进，不是 O1 RTL 优化，也不是最终 T16 报告。

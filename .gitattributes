@@ -2,22 +2,14 @@
 /.gitattributes text eol=lf
 team/** text eol=lf
 team/**/*.log -text -whitespace
-# Preserve the standalone executor's hashed source bytes on Windows and Linux.
-src/main/scala/xiangshan/backend/fu/vector/VdotExec.scala text eol=lf
-# T06 delivery hashes the adapter, configuration and actual-core test sources.
-src/main/scala/xiangshan/backend/fu/wrapper/VdotFu.scala text eol=lf
+# Configuration sources retain their recorded LF bytes.
 src/main/scala/xiangshan/backend/fu/FuConfig.scala text eol=lf
 src/main/scala/xiangshan/backend/fu/FuType.scala text eol=lf
-src/test/scala/xiangshan/backend/fu/vector/VdotFuSpec.scala text eol=lf
-# T10 exact decode and integration tests share canonical Linux/Windows bytes.
+# Decode/integration sources share canonical Linux/Windows bytes.
 src/main/scala/xiangshan/Parameters.scala text eol=lf
 src/main/scala/xiangshan/backend/decode/DecodeUnit.scala text eol=lf
-src/main/scala/xiangshan/backend/decode/VdotInstructions.scala text eol=lf
 src/main/scala/xiangshan/backend/decode/isa/bitfield/RiscvInst.scala text eol=lf
-src/test/scala/xiangshan/backend/decode/VdotDecodeSpec.scala text eol=lf
 src/main/scala/xiangshan/backend/fu/wrapper/CSR.scala text eol=lf
-src/main/scala/xiangshan/backend/fu/wrapper/VdotTrapInstruction.scala text eol=lf
-src/test/scala/xiangshan/backend/fu/vector/VdotTrapInstructionSpec.scala text eol=lf
 
 # Source-bound VFEX4/T15 checks must use identical checkout bytes on Windows/WSL.
 /build.sc text eol=lf

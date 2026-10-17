@@ -1,3 +1,5 @@
+> 历史阶段记录：下文实现及命令属于原 VFEX1 版本；当前入口与追溯方式见 [退役说明](retired-vfex1.md)。
+
 > **历史记录：** 本文描述原 James 候选及当时配置。2026-10-15 已统一为 VFEX4 / NEMU 1.1.0；当前入口见 [整合报告](james-integration-20261015.md)，历史日志不计作新实现的运行结果。
 
 # T10：候选 VDOT 全核接入
@@ -8,14 +10,14 @@
 
 | 环节 | 实现与复核依据 |
 | --- | --- |
-| 精确译码 | [VdotInstructions](../../src/main/scala/xiangshan/backend/decode/VdotInstructions.scala) 固定 mask=`0xfe00707f`、match=`0x0200000b`；[DecodeUnit](../../src/main/scala/xiangshan/backend/decode/DecodeUnit.scala) 新增独立 `FuType.vdot` 表项；vm=0 不属于 VDOT |
+| 精确译码 | [VdotInstructions](https://github.com/cc77-builder/riscv/blob/9bb544812df9b424e399ae3ca91899a904f583bd/src/main/scala/xiangshan/backend/decode/VdotInstructions.scala) 固定 mask=`0xfe00707f`、match=`0x0200000b`；[DecodeUnit](../../src/main/scala/xiangshan/backend/decode/DecodeUnit.scala) 新增独立 `FuType.vdot` 表项；vm=0 不属于 VDOT |
 | 向量分类/权限 | [RiscvInst](../../src/main/scala/xiangshan/backend/decode/isa/bitfield/RiscvInst.scala) 只把精确匹配的 custom-0 纳入 `isVecArith`；现有 `FuType.vecAll` 的 VS Off 检查覆盖它 |
 | 微操作 | 复用 `UopSplitType.dummy`，进入真实复杂译码路径且数量恒为1；SEW/LMUL 非法也不按 LMUL 展开目的寄存器组。禁止 ROB 压缩 |
 | 源/快照 | 源槽0/1为 vs1/vs2，槽2不依赖旧目的；槽4仍是物理 VL。vtype/vstart 由实际译码快照传递，FU 再检查 e8/m1/vl8/vstart0/vill0；内部2位SEW不能独立表达ISA的第三位，保留 vset/vill 的上游约束 |
 | v0 | [DecodeStage](../../src/main/scala/xiangshan/backend/decode/DecodeStage.scala) 对 v0 源启用槽3；[BypassNetwork](../../src/main/scala/xiangshan/backend/datapath/BypassNetwork.scala) 把实际 v0 数据送入槽0/1；vd=0 仅启用 v0 写使能，非0仅启用 vec 写使能 |
 | 物理依赖 | [Rename](../../src/main/scala/xiangshan/backend/rename/Rename.scala) 保留 VL RAT 读取和同批 vset 目的旁路；v0 使用专用 RAT/旁路。没有用影子 `vpu.vl` 代替物理 VL |
 | 执行资源 | [Parameters](../../src/main/scala/xiangshan/Parameters.scala) 仅在 VFEX1 加入 `VdotCfg`；FU延迟1，OG2使调度/写回预留为2，IQ唤醒延迟1。复用原读写口、FU/WB busy table 和碰撞断言 |
-| 完整写回 | [VdotFu](../../src/main/scala/xiangshan/backend/fu/wrapper/VdotFu.scala) 直接给出128位结果，不经 Mgu；非法响应关闭 vec/v0 写使能仍保留 valid、ROB身份和非法指令异常。全核固定延迟 EXU 的输出 ready 恒真，不能把单元任意反压测试当作全核端口冲突证明 |
+| 完整写回 | [VdotFu](https://github.com/cc77-builder/riscv/blob/9bb544812df9b424e399ae3ca91899a904f583bd/src/main/scala/xiangshan/backend/fu/wrapper/VdotFu.scala) 直接给出128位结果，不经 Mgu；非法响应关闭 vec/v0 写使能仍保留 valid、ROB身份和非法指令异常。全核固定延迟 EXU 的输出 ready 恒真，不能把单元任意反压测试当作全核端口冲突证明 |
 | 完成/退休 | [ExeUnit](../../src/main/scala/xiangshan/backend/exu/ExeUnit.scala) 选择完整结果、标签和异常；[WbDataPath](../../src/main/scala/xiangshan/backend/datapath/WbArbiter.scala) 以输入 fire 产生送ROB的完成，不以数据写使能筛掉非法响应；dummy 进入既有 dirtyVs 分类，ROB 仅按成功提交有效位触发 VS Dirty |
 
 这些路径复核来自源码，不能替代波形、真实 DiffTest 或故障检出。静态检查只能证明配置进入相应机制，不能单独证明同时写回、预测取消和回滚均正确。
@@ -24,7 +26,7 @@
 
 ## 验证入口与边界
 
-[vdot-decode-tests.sh](../scripts/vdot-decode-tests.sh) 通过根 Mill 工程编译真实依赖，检查全部32,768种寄存器编码、与所有既有译码项不重叠及唯一资源归属，并实例化生产 `DecodeStage` 检查别名、配置恢复、停顿和 redirect；同时保留三项 T06 FU 测试。源码/依赖在运行前后核对，检查器仅在完整通过后生成 receipt。
+[vdot-decode-tests.sh](https://github.com/cc77-builder/riscv/blob/9bb544812df9b424e399ae3ca91899a904f583bd/team/scripts/vdot-decode-tests.sh) 通过根 Mill 工程编译真实依赖，检查全部32,768种寄存器编码、与所有既有译码项不重叠及唯一资源归属，并实例化生产 `DecodeStage` 检查别名、配置恢复、停顿和 redirect；同时保留三项 T06 FU 测试。源码/依赖在运行前后核对，检查器仅在完整通过后生成 receipt。
 
 复杂译码的输出有效位受到 rename 就绪数量约束，停顿期间无效的输出载荷不具有保持语义；测试在停顿中改变后续输入，恢复时检查原已缓冲微操作。局部测试关闭性能打印、补齐日志/性能配置，不建立全局日志端点以避开 chiseltest6 对 Probe 端口的限制；生产模块内的 XSError 断言保留。测试使用单翻译单元编译绕过 chiseltest6 强制头文件与 Verilator5.020/GCC 预编译头的冲突，不改生产RTL。
 
@@ -38,9 +40,9 @@
 
 已在独立NEMU检出中把reference配置设为NMIE_INIT=y，ISA补丁和基线提交保持原值；[构建脚本](../scripts/prepare-nemu-vdot.sh)与[运行来源门禁](../scripts/artifact_guard.py)补齐目标复位配置核对。新增[参考API测试](../tests/nemu_reference_traps.cpp)使用实际DUT生成的状态结构并由difftest_init_v2核对ABI，旧参考库被复位检查拒绝，新参考库的单步ebreak、非法配置VDOT精确cause/PC/mtval与全寄存器保持、合法VDOT完整结果/VS Dirty均通过。此次参考复位修复未改硬件或陷阱时序；参考配置与运行验证源码单独捕获，不冒充原编译输入包的字节。该阶段随后进入兼容配置下全核重跑；最终结果见下节。
 
-参考复位修复后的首次全核重跑：10项合法与X02-m2通过，X02-mf2晚发现异常发生mtval不一致（DUT零、参考指令字）。依据异常测试合同，保留此失败并补齐[CSR包装器](../../src/main/scala/xiangshan/backend/fu/wrapper/CSR.scala)的VDOT原始指令路径：[VdotTrapInstruction](../../src/main/scala/xiangshan/backend/fu/wrapper/VdotTrapInstruction.scala)仅在精确VDOT、真实非中断EX_II陷阱时优先使用精确ROB队首的原始指令，其他情形保留原TrapInstMod行为。ROB已有的原始指令寄存器始终存在，也已用于架构异常PC/指令输出，未引入按Debug开关消失的数据源。
+参考复位修复后的首次全核重跑：10项合法与X02-m2通过，X02-mf2晚发现异常发生mtval不一致（DUT零、参考指令字）。依据异常测试合同，保留此失败并补齐[CSR包装器](../../src/main/scala/xiangshan/backend/fu/wrapper/CSR.scala)的VDOT原始指令路径：[VdotTrapInstruction](https://github.com/cc77-builder/riscv/blob/9bb544812df9b424e399ae3ca91899a904f583bd/src/main/scala/xiangshan/backend/fu/wrapper/VdotTrapInstruction.scala)仅在精确VDOT、真实非中断EX_II陷阱时优先使用精确ROB队首的原始指令，其他情形保留原TrapInstMod行为。ROB已有的原始指令寄存器始终存在，也已用于架构异常PC/指令输出，未引入按Debug开关消失的数据源。
 
-[晚发现异常选择测试](../../src/test/scala/xiangshan/backend/fu/vector/VdotTrapInstructionSpec.scala)共65,586项，覆盖全部32,768种原始寄存器编码、空/旧缓冲优先级、陷阱/中断/异常条件以及17位固定编码扰动；6项真实单元测试及lint通过，7,127项源码清单前后一致。其后重新冻结v5；完整冷构建与20项实际DiffTest结果见下节。旧基线普通ebreak在兼容参考配置下完成精确陷阱记录，但诊断整次运行在10分钟限制处退出124，只作因果定位，不记为7项入口自测全部通过。
+[晚发现异常选择测试](https://github.com/cc77-builder/riscv/blob/9bb544812df9b424e399ae3ca91899a904f583bd/src/test/scala/xiangshan/backend/fu/vector/VdotTrapInstructionSpec.scala)共65,586项，覆盖全部32,768种原始寄存器编码、空/旧缓冲优先级、陷阱/中断/异常条件以及17位固定编码扰动；6项真实单元测试及lint通过，7,127项源码清单前后一致。其后重新冻结v5；完整冷构建与20项实际DiffTest结果见下节。旧基线普通ebreak在兼容参考配置下完成精确陷阱记录，但诊断整次运行在10分钟限制处退出124，只作因果定位，不记为7项入口自测全部通过。
 
 
 ## 最终本机结果与复现

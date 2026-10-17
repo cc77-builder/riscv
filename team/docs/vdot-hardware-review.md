@@ -1,6 +1,8 @@
+> 历史阶段记录：下文实现及命令属于原 VFEX1 版本；当前入口与追溯方式见 [退役说明](retired-vfex1.md)。
+
 # 独立 vdot 硬件模块审查与交付
 
-2026-10-12（北京时间），分支 `James_Hotten`。固定审查基准 `16b3f2fd24d8f218abadccca268bf37aa03e661c` 加本轮工作区及未跟踪源码；基准到HEAD没有新提交，因此实际范围为工作区差异。按code-review技能分别做Standards/Spec只读审查，主执行者做实际负控与复验。规格依据为 [vdot合同](../spec/vdot.md)、[接入接口](../spec/rtl-interface.md)、[原任务表](../香山vdot赛题_三人分工与Git协作.md) 与 [模块说明](../hardware/vdot/README.md)。
+2026-10-12（北京时间），分支 `James_Hotten`。固定审查基准 `16b3f2fd24d8f218abadccca268bf37aa03e661c` 加本轮工作区及未跟踪源码；基准到HEAD没有新提交，因此实际范围为工作区差异。按code-review技能分别做Standards/Spec只读审查，主执行者做实际负控与复验。规格依据为 [vdot合同](../spec/vdot.md)、[接入接口](../spec/rtl-interface.md)、[原任务表](../香山vdot赛题_三人分工与Git协作.md) 与 [模块说明](https://github.com/cc77-builder/riscv/blob/9bb544812df9b424e399ae3ca91899a904f583bd/team/hardware/vdot/README.md)。
 
 ## Standards
 
