@@ -24,7 +24,7 @@ def corpus():
     originals = {}
     for suite in ("directed", "random"):
         path = ROOT / "team/models/vdot/data" / (suite + ".jsonl")
-        originals[str(path.relative_to(ROOT))] = sha(path.read_bytes())
+        originals[path.relative_to(ROOT).as_posix()] = sha(path.read_bytes())
         for item in map(json.loads, path.read_text(encoding="utf-8").splitlines()):
             entry = row(suite, item["id"], int(item["vs1"], 16), int(item["vs2"], 16), PROFILES["s8x8"], "original-t05")
             if entry["expected_sum"] != item["expected_sum"] or int(entry["expected_vd"], 16) != int(item["expected_vd"], 16):

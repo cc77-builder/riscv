@@ -84,3 +84,10 @@ class ParameterOracleTests(unittest.TestCase):
             generate.check(root)
             (root/'s16x8.tsv').write_bytes(first['s16x8.tsv'][:-1])
             with self.assertRaises(ValueError):generate.check(root)
+
+    def test_manifest_names_are_portable(self):
+        _, originals = generate.corpus()
+        self.assertEqual(set(originals), {
+            "team/models/vdot/data/directed.jsonl",
+            "team/models/vdot/data/random.jsonl",
+        })
