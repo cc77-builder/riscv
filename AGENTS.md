@@ -1,6 +1,12 @@
 # 团队 Agent 入口
 
-## 当前任务：T14 本地自动验收完成，尚未发布
+## 本轮发布：T14 上传 zjhwork
+
+用户于 2026-10-17 明确要求“把这次 T14 的成果上传到 zjhwork 分支”，并查看计划进度。授权将 T14 成果提交 `458b7170bfdf41814dac785b41027114bddd512d` 及本次进度/入口说明普通快进推送至 `cc77-builder/riscv:zjhwork`。发布前回读 zjhwork 为 `3b337a5b186ed60163a8d11edaeb3677dfd67750`，是本地祖先。本节覆盖下方对本次 T14 暂不推送的历史限制；不授权向 main/zufan 推送或自动发布后续 T15。
+
+当前计划进度见 [T00–T18 / G0–G7 清单](team/docs/progress-20261017.md)。本次只补充进度与发布入口，不改变硬件、程序、验证结果或密封证据；不把上传视为成员 ACK。普通推送后必须回读远端 SHA，实际回执保存在 Windows `doc/T14优化/Git交付/`。原始未上传状态按生成时点保留。
+
+## 历史状态：T14 完成本地自动验收，发布前记录
 
 2026-10-17 完成交付复核。工作区 `/home/riscv/riscv-lab/t14-optimization-20261015/repo`，分支 `local/t14-fused-input-20261015`。T13 已发布到 zjhwork；该次上传授权不代表自动发布 T14。本轮不得推送 main、zufan 或 zjhwork。
 
@@ -12,7 +18,7 @@ runs/fullcore-01 的原始写回反压覆盖不足完整保留；同一个补充
 
 证据 team/evidence/t14-optimization-20261016 已封存；新核验材料放在相邻目录，不改旧归档。Windows 交付入口 D:\yanyi\riscv大赛\doc\T14优化。原 T12/T13 构建及数据只读保留。尚无综合/STA/Fmax/PPA 证据，尚未完成团队人工 ACK 或新机器完整构建复现；不自动开始 T15 或切换默认模式。
 
-## 本轮交付：T13，目标 zjhwork
+## 历史交付：T13，目标 zjhwork
 
 用户最新明确指示“上传到 zjhwork 分支”，授权本轮将已验收 T13 提交 `4526d857937def29ea1598a7c878aa539e2ef1f6` 及这次入口说明普通快进推送到 `cc77-builder/riscv` 的 `zjhwork`。本次发布前已确认远端为 T12 基线 `2c0bf8e283d400c1c946ca75f890f266d7758411`，是本地成果的祖先。本节覆盖下方旧任务中的暂不上传、禁止写 zjhwork 等历史限制；不授权写入其他分支或任意后续推送。
 
