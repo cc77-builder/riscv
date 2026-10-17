@@ -384,3 +384,15 @@ object xiangshan extends XiangShanModule with HasChisel with ScalafmtModule {
     override def forkEnv = Map("PATH" -> envPATH)
   }
 }
+
+// T15 independent parameter experiment; does not change production FU sources.
+object vdotParam extends HasChisel {
+  override def sources = T.sources {
+    Seq(
+      PathRef(pwd / "src/main/scala/xiangshan/backend/fu/vector/VDotDatapath.scala"),
+      PathRef(pwd / "team/rtl/vdot/param/VDotParam.scala"),
+      PathRef(pwd / "team/rtl/vdot/param/GenerateVDotParam.scala"),
+    )
+  }
+  override def forkArgs = Seq("-Xmx2G", "-Xss8m")
+}

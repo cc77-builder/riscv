@@ -1,5 +1,9 @@
 # 团队 Agent 入口
 
+## 当前任务：T15 独立单元参数扩展，本地开发
+
+用户于 2026-10-17 授权开始 T15，完成后先不上传 GitHub。本轮工作区 `/home/riscv/riscv-lab/t15-parameter-extension-20261017/repo`，分支 `local/t15-s16x8-20261017`，起点为已发布 T14 `6fea296`。先读 [T15 合同](team/spec/t15-parameters.md)。只增加 8 对 int16 / 64 位结果字段这一项独立单元配置；保留原生产硬件、ISA、NEMU、T05 数据及已封存证据。未完成真实测试前不声明通过，不自动推送或开始 T16。
+
 ## 本轮发布：T14 上传 zjhwork
 
 用户于 2026-10-17 明确要求“把这次 T14 的成果上传到 zjhwork 分支”，并查看计划进度。授权将 T14 成果提交 `458b7170bfdf41814dac785b41027114bddd512d` 及本次进度/入口说明普通快进推送至 `cc77-builder/riscv:zjhwork`。发布前回读 zjhwork 为 `3b337a5b186ed60163a8d11edaeb3677dfd67750`，是本地祖先。本节覆盖下方对本次 T14 暂不推送的历史限制；不授权向 main/zufan 推送或自动发布后续 T15。
