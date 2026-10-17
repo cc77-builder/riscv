@@ -57,6 +57,8 @@ def main(a):
       '- 周期比较假设共同频率。未完成统一工艺和时序约束下的STA/PPA，不据此判断实际最高频率、功耗或芯片时间。',
       '- 本项目使用T14融合输入路径；T15独立INT16实验不改变该生产路径。',
       '- 本实验固定使用一套共同RVV算法，不代表穷尽软件优化后的最佳RVV性能。',
+      '- 每行加速比使用该实现上实测的同一RVV程序作分母；接入不同功能单元后，RVV实测周期不必完全相同，跨项目还应比较绝对cycles。',
+      '- 已固定窗口内核的机器码/地址与输入输出布局，但窗口外C检查辅助代码未强制逐字节一致；未完全隔离所有微架构状态影响，细小差异不作强排名。',
       '- 这是一次受控实验，不是官方跑分或获奖排名。','']
     (a.output/'统一测试结果.md').write_text('\n'.join(lines))
     print(json.dumps({'status':'UNIFIED_FOUR_PROJECT_COMPARISON_PASS','rows':len(records),'measured_samples':len(all_samples)}))
