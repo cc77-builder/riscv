@@ -11,7 +11,8 @@ import run_suite as runner
 
 def negative_text(vd=10, pc="0x80001bdc", word="0x0294050b", right="0x0000001000000000", wrong="0x0"):
     return (f"DIFFTEST_HIGHBIT_NEGATIVE_INJECTED bit=100 vd={vd} pc={pc} instruction={word}\n"
-            f"v{vd}_high different at pc = {pc}, right= {right}, wrong = {wrong}\n")
+            f"v{vd}_high different at pc = {pc}, right= {right}, wrong = {wrong}\n"
+            "Core 0: \x1b[31mABORT at pc = 0x800016b0\n\x1b[0m")
 
 
 def passing_records():
@@ -60,7 +61,8 @@ class FullcoreRunnerTests(unittest.TestCase):
         for message in ("DIFFTEST FAIL", "v10_high different at pc = 0x80000000"):
             with self.assertRaises(ValueError):
                 runner.validate_failure_markers(message)
-        runner.validate_failure_markers("DIFFTEST FAIL", negative=True)
+        with self.assertRaises(ValueError):
+            runner.validate_failure_markers("DIFFTEST FAIL", negative=True)
 
     def test_partial_observation_never_passes_normal_job(self):
         runner.validate_observation({"status": "O1_TRACE_PASS"})
