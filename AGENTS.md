@@ -1,8 +1,9 @@
 # James_Hotten O0/O1 integration scope
 
-The current user authorizes merging fetched branch progress into James_Hotten
-and pushing James_Hotten only, then completing FTQ/counter observations and the
-O1 matrix/DiffTest negative control. Main is outside this publication scope.
+The current user authorizes committing and pushing the completed observation
+work to James_Hotten, then synchronizing other branches and reviewing all work
+for correctness, acceptance vulnerabilities, optimization and performance.
+Main is outside this publication scope; O1 remains off by default.
 The zjhwork c3c417a26 FU evidence and stricter negative gate are integrated;
 that branch's historical publication instructions do not replace this scope.
 
@@ -11,11 +12,13 @@ and review of correctness, acceptance security and performance evidence.
 The previous VFEX1 cleanup/main synchronization finished at e9c70db38;
 its publication record is team/docs/vfex4-main-sync-20261017.md.
 Integration review: team/docs/james-o1-integration-20261018.md.
-Current observation work and evidence: team/docs/o1-trace-20261018.md.
+Current observation work and evidence: team/docs/o1-complete-20261018.md.
+Earlier schema-1 observation evidence: team/docs/o1-trace-20261018.md.
 Parent clock optimization and earlier evidence: team/docs/o1-parent-20261018.md.
 O0 matrix history: team/docs/o0-progress-20261018.md.
-The matrix runner deliberately pins the existing d3706f0b8 II4 baseline;
-new matrix execution does not imply integrated-source or T14 hardware coverage.
+The historical O0 matrix runner deliberately pins the d3706f0b8 II4 baseline;
+its runs do not imply integrated-source or T14 hardware coverage. The separate
+O1 extended runner binds the current patched source, EMU and observer profile.
 The retired implementation is recoverable from Git, not a second working-tree
 implementation. Recovery and active test entries: team/docs/retired-vfex1.md.
 Prior full-core validation in team/docs/james-fullcore-20261016.md executed against
@@ -35,9 +38,16 @@ The frozen T12/T13 observers cannot validate O1 overlapping transactions.
 VDOT_O1_TRACE is a separate default-off schema. Atomic ungated EXU frames and
 ROB events are checked with the explicit one-cycle redirect delay. Three real
 parent modes, trace-off RTL byte equivalence, and log corruption checks pass.
-The new O1 EMU passes hello/vadd, control and frozen batch128 observations:
-control commits 2157 VDots with 384 handoffs; batch commits 768 with 719 handoffs.
-Schema 1 omits FTQ wrap; its protocol pass is not complete T12/T13 acceptance.
+The new source-bound O1 EMU passes hello/vadd, control, 117 unique matrix cases
+(124 executions), real bit100 DiffTest injection and same-image normal recovery.
+The O2 companion preserves schema 1 and adds FTQ identity and CSR ownership,
+sampling and per-commit-slot windows. Control records 2157 VDot commits, 384
+handoffs and 329 FTQ wraps; calibration/batch validate 25 windows and 100 CSR
+samples. All 13 actual launches meet expectations (12 exit 0, one injected exit 1).
+72 host tests and 15 real-log corruption checks pass. Current O1 original/lean
+software-plan runs and full same-source performance A/B remain separate work.
+The merged checkpoint 02e46c5c9 was pushed first. The completed observation
+checkpoint is now being published separately; preserve both source bindings.
 Preserve archive bytes, source bindings, failure records and fail-closed checks.
 Do not fabricate teammate approval, STA/PPA, performance, virtualization or
 official ISA acceptance. Reports follow engineering completion and version freeze.

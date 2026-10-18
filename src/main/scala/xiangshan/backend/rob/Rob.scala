@@ -1484,24 +1484,50 @@ class RobImp(override val wrapper: Rob)(implicit p: Parameters, params: BackendP
     val mode = xiangshan.backend.fu.wrapper.VDotO1Trace.mode
     when(cycle === 0.U) {
       printf(p"O1_ROB_BEGIN schema=1 cycle=${cycle} mode=${mode.U} robsize=${RobSize.U} pdestbits=${PhyRegIdxWidth.U} hart=${p(XSCoreParamsKey).HartId.U}\n")
+      printf(p"O2_ROB_BEGIN schema=2 cycle=${cycle} mode=${mode.U} robsize=${RobSize.U} ftqsize=${FtqSize.U} predictwidth=${PredictWidth.U} renamewidth=${RenameWidth.U} commitwidth=${CommitWidth.U} hart=${p(XSCoreParamsKey).HartId.U}\n")
     }
     for (i <- 0 until RenameWidth) {
       val u = io.enq.req(i).bits
       // Match the real ROB allocation enable; redirect suppresses allocation.
       when(canEnqueue(i) && !io.redirect.valid && u.fuType === FuType.vdot.U) {
         printf(p"O1_ROB_ENQ cycle=${cycle} slot=${i.U} rf=${allocatePtrVec(i).flag} rv=${allocatePtrVec(i).value} dest=${u.pdest} pc=0x${Hexadecimal(u.pc)} word=0x${Hexadecimal(u.instr)}\n")
+        printf(p"O2_FTQ_ENQ cycle=${cycle} slot=${i.U} rf=${allocatePtrVec(i).flag} rv=${allocatePtrVec(i).value} ftf=${u.ftqPtr.flag} ftv=${u.ftqPtr.value} fto=${u.ftqOffset}\n")
+      }
+      val counter = u.fuType === FuType.csr.U && (u.instr(31, 20) === "hc00".U || u.instr(31, 20) === "hc02".U)
+      when(canEnqueue(i) && !io.redirect.valid && counter) {
+        printf(p"O2_COUNTER_ENQ cycle=${cycle} slot=${i.U} rf=${allocatePtrVec(i).flag} rv=${allocatePtrVec(i).value} pc=0x${Hexadecimal(u.pc)} word=0x${Hexadecimal(u.instr)} empty=${isEmpty} wait=${u.waitForward} block=${u.blockBackward}\n")
       }
     }
+    // Fold marker state across commit slots, including start/stop in one group.
+    // A registered active bit alone misses slots after start and overprints stop.
+    val active = RegInit(false.B)
+    val activeAtSlot = Wire(Vec(CommitWidth + 1, Bool()))
+    activeAtSlot(0) := active
     for (i <- 0 until CommitWidth) {
       val u = commitDebugUop(i)
-      when(io.commits.isCommit && io.commits.commitValid(i) && u.fuType === FuType.vdot.U) {
+      val committed = io.commits.isCommit && io.commits.commitValid(i)
+      val start = u.instr === "h51300013".U
+      val stop = u.instr === "h51400013".U
+      activeAtSlot(i + 1) := Mux(committed && (start || stop), start, activeAtSlot(i))
+      when(committed && (activeAtSlot(i) || start || stop)) {
+        val retired = CommitType.isFused(io.commits.info(i).commitType).asUInt + io.commits.info(i).instrSize
+        printf(p"O2_RETIRE cycle=${cycle} slot=${i.U} rf=${deqPtrVec(i).flag} rv=${deqPtrVec(i).value} pc=0x${Hexadecimal(u.pc)} word=0x${Hexadecimal(u.instr)} count=${retired} data=0x${Hexadecimal(wdata(i))}\n")
+      }
+      val counter = u.fuType === FuType.csr.U && (u.instr(31, 20) === "hc00".U || u.instr(31, 20) === "hc02".U)
+      when(committed && counter) {
+        printf(p"O2_COUNTER_COMMIT cycle=${cycle} slot=${i.U} rf=${deqPtrVec(i).flag} rv=${deqPtrVec(i).value} pc=0x${Hexadecimal(u.pc)} word=0x${Hexadecimal(u.instr)} data=0x${Hexadecimal(wdata(i))}\n")
+      }
+      when(committed && u.fuType === FuType.vdot.U) {
         printf(p"O1_ROB_COMMIT cycle=${cycle} slot=${i.U} rf=${deqPtrVec(i).flag} rv=${deqPtrVec(i).value} dest=${io.commits.info(i).debug_pdest.get} pc=0x${Hexadecimal(u.pc)} word=0x${Hexadecimal(u.instr)}\n")
+        printf(p"O2_FTQ_COMMIT cycle=${cycle} slot=${i.U} rf=${deqPtrVec(i).flag} rv=${deqPtrVec(i).value} ftf=${u.ftqPtr.flag} ftv=${u.ftqPtr.value} fto=${u.ftqOffset}\n")
       }
     }
+    active := activeAtSlot(CommitWidth)
     // CtrlBlock sends this redirect to EXU through one register. The parser
     // checks that explicit +1-cycle relationship, without inferring clock maps.
     when(io.redirect.valid) {
       printf(p"O1_ROB_REDIRECT cycle=${cycle} rf=${io.redirect.bits.robIdx.flag} rv=${io.redirect.bits.robIdx.value} self=${io.redirect.bits.flushItself()}\n")
+      printf(p"O2_FTQ_REDIRECT cycle=${cycle} rf=${io.redirect.bits.robIdx.flag} rv=${io.redirect.bits.robIdx.value} self=${io.redirect.bits.flushItself()} ftf=${io.redirect.bits.ftqIdx.flag} ftv=${io.redirect.bits.ftqIdx.value} fto=${io.redirect.bits.ftqOffset}\n")
     }
   }
 

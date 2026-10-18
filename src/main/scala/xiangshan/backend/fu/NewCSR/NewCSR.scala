@@ -1038,6 +1038,17 @@ class NewCSR(implicit val p: Parameters) extends Module
 
 
   // Todo: check IMSIC EX_II and EX_VI
+  if (xiangshan.backend.fu.wrapper.VDotO1Trace.enabled) {
+    require(!p(xiangshan.DebugOptionsKey).ResetGen, "O1 counter trace requires common simulation reset")
+    val cycle = RegInit(0.U(64.W))
+    cycle := cycle + 1.U
+    when(cycle === 0.U) {
+      printf(p"O2_CSR_BEGIN schema=2 cycle=${cycle} mode=${xiangshan.backend.fu.wrapper.VDotO1Trace.mode.U} hart=${p(XSCoreParamsKey).HartId.U}\n")
+    }
+    when(io.in.fire && ren && (addr === "hc00".U || addr === "hc02".U)) {
+      printf(p"O2_CSR_SAMPLE cycle=${cycle} addr=0x${Hexadecimal(addr)} data=0x${Hexadecimal(rdata)} wen=${wen}\n")
+    }
+  }
   if (sys.env.get("VDOT_T13_TRACE").contains("1")) {
     require(!p(xiangshan.DebugOptionsKey).ResetGen, "T13 trace requires common simulation reset")
     val t13Cycle = utility.GTimer()

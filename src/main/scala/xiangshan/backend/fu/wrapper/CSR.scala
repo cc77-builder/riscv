@@ -63,6 +63,19 @@ class CSR(cfg: FuConfig)(implicit p: Parameters) extends FuncUnit(cfg)
   private val isCSRAcc = CSROpType.isCsrAccess(func)
 
   val csrMod = Module(new NewCSR)
+  if (VDotO1Trace.enabled) {
+    require(!p(xiangshan.DebugOptionsKey).ResetGen, "O1 counter trace requires common simulation reset")
+    // CSR is clock-always-enabled (FuConfig.ckAlwaysEn); all three observers
+    // share the ungated simulation time, without reconstructing local clocks.
+    val cycle = RegInit(0.U(64.W))
+    cycle := cycle + 1.U
+    when(cycle === 0.U) {
+      printf(p"O2_CSR_OWNER_BEGIN schema=2 cycle=${cycle} mode=${VDotO1Trace.mode.U} hart=${p(XSCoreParamsKey).HartId.U}\n")
+    }
+    when(csrMod.io.in.fire && csrMod.io.in.bits.ren && (addr === "hc00".U || addr === "hc02".U)) {
+      printf(p"O2_CSR_ISSUE cycle=${cycle} rf=${io.in.bits.ctrl.robIdx.flag} rv=${io.in.bits.ctrl.robIdx.value} addr=0x${Hexadecimal(addr)} wen=${csrMod.io.in.bits.wen}\n")
+    }
+  }
   val trapInstMod = Module(new TrapInstMod)
   val trapTvalMod = Module(new TrapTvalMod)
 

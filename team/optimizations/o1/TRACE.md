@@ -1,5 +1,9 @@
 # O1 observation schema 1
 
+The schema-1 records and this acceptance boundary are preserved. The current
+observer additionally emits the versioned [O2 companion](TRACE-EXTENDED.md)
+for FTQ and counter windows; only its separate strict entry checks that coverage.
+
 `VDOT_O1_TRACE=1` selects a simulation observer at elaboration. The default is
 off. It can observe baseline (mode 0), T14 (1), or T14+O1 (2). It does not enable
 O1 itself. Invalid flag values and mixing with the frozen T12/T13 observers are

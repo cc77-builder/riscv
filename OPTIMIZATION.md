@@ -1,6 +1,6 @@
 # 后续优化开发入口
 
-2026-10-18 最新进度：James_Hotten 已完成真实 VFEX4 父级三模式、取消时钟修复及独立 O1 同拍观察；新 EMU 的 hello、控制压力、batch128 已实测，见[观察记录](team/docs/o1-trace-20261018.md)。本轮另合入 zjhwork 的严格负控、独立漏检退出码和[三模式 FU 来源证据](team/optimizations/o1/evidence/20261018-fu-validation/README.md)。两份运行来自不同源码/工具环境，分别保留，不能合并计数。下一步为 FTQ/计数窗口、当前 O1 完整矩阵和 DiffTest 负控；O1 默认关闭，仅推送 James_Hotten。
+2026-10-18 最新进度：James_Hotten已完成FTQ/CSR窗口观测，当前O1新EMU完成117唯一矩阵/124执行、真实DiffTest负控及恢复、控制8项覆盖、25计数窗口；见[本轮记录](team/docs/o1-complete-20261018.md)。zjhwork的严格负控和[三模式FU来源证据](team/optimizations/o1/evidence/20261018-fu-validation/README.md)已合并推送02e46c5c9，后续新观测与回归成果保留本地。不同来源运行分别保存，不能合并计数。下一步为当前O1完整软件计划与同源码baseline/T14/O1性能A/B；O1默认关闭，main未更新。下文pilot记录保留当时状态。
 
 ## 前轮进展：James_Hotten 已并入候选并完成三模式 FU 实测
 
