@@ -244,8 +244,8 @@ class ExeUnitImp(
     val vdotIndex = fuCfgs.indexWhere(_.fuType == FuType.vdot)
     val vdotFu = funcUnits(vdotIndex)
     val activeIsVDot = RegInit(false.B)
-    when(io.in.fire) { activeIsVDot := io.in.bits.fuType === FuType.vdot }
-    val newIsVDot = io.in.bits.fuType === FuType.vdot
+    when(io.in.fire) { activeIsVDot := io.in.bits.fuType === FuType.vdot.U }
+    val newIsVDot = io.in.bits.fuType === FuType.vdot.U
     // The shared output remains one-hot; neither div->vdot nor vdot->div overlaps.
     val handoff = busy && activeIsVDot && newIsVDot && vdotFu.io.out.valid && io.out.ready &&
       !io.flush.valid && !reset.asBool
