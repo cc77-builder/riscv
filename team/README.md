@@ -1,5 +1,7 @@
 # 三人团队：项目计划与开发入口
 
+> **2026-10-18 O1 全核回归进行中。** O1 观察器已进入新构建的 MinimalConfig 单核 EMU，十二项真实运行正在推进。见 [全核工程入口](optimizations/o1/fullcore/README.md) 和 [观察协议](optimizations/o1/fullcore/SCHEMA.md)。尚未完成完整全核验收或新性能 A/B；成果本地保存。
+
 > **2026-10-18 真实 VFEX4 父级联调通过，本地保存。** 真实 VDot/VIDiv/VFDivSqrt、Dispatcher、busy 和门控共同验证；DIV 切换、反压、432 组 redirect、27 组 reset、20000 拍随机控制及七项负控通过。O1 同拍交接 10343 次，父级连续 vdot 接受间隔 2 拍。见 [父级工程记录](optimizations/o1/parent/README.md)、[证据](optimizations/o1/evidence/20261018-parent-validation/README.md) 和 [优化进度](../OPTIMIZATION.md)。本轮未推送；O1 全核回归和新性能测量待做，不能用测试总周期比值声称应用加速。下方父级未验证等状态按历史时点阅读。
 
 > **2026-10-18 O0/O1 本地验证完成，交付目标 zjhwork。** 已复用 zjhwork2 成果并修复环境预检、负控假通过及两处 `FuType.vdot.U` 类型比较。实际源码 `db0408aa42afc13e3ff93e865f26a2d5bfb02c93` 的三模式 FU 验证通过，延迟/最小接受间隔为 3/4、2/3、2/2 拍；O0 113 项、O1 26 项主机检查通过。首轮失败与修复后成功日志均保留，见 [O1 入口](optimizations/o1/README.md)、[本轮证据](optimizations/o1/evidence/20261018-fu-validation/README.md) 和 [优化进度](../OPTIMIZATION.md)。O1 默认关闭，真实父级 elaboration、全核 DiffTest 和新性能测量尚未完成；下一步为真实 VFEX4（含 DIV）父级联调。此条更新本轮目标分支，下方协作与交付记录按各自历史时点阅读。

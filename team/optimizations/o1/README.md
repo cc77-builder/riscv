@@ -1,5 +1,9 @@
 # O1：受控 vdot→vdot 同拍交接候选
 
+**2026-10-18 当前任务：O1 观察器适配已完成构建，十二项全核回归进行中。** 固定硬件源码 `18c0ce08a40e889654bfe76d5435f272854ad7d0`，使用新全局周期及身份协议，真实日志与版本保存在本地工作根。见 [全核工程入口](fullcore/README.md)、[观察协议](fullcore/SCHEMA.md) 和 [日志门禁](audit/README.md)。完整全核验收尚未完成；旧父级/FU 通过状态保留为分层历史结果。
+
+本轮允许 `VDOT_O1_TRACE=1` 配合 `VDOT_T13_TRACE=1` 保存 CSR/ROB 全局记录，但仍禁止 O1 使用旧 T12 FU 轨迹。旧历史段落中的 trace 限制对应当时版本。运行中的检查器保持冻结，结束后用新严格日志门禁离线重审；本轮不推送 GitHub，不开始性能 A/B 或正式 T16 报告。
+
 **2026-10-18：真实 VFEX4 父级两模式联调通过，成果本地保存。** 固定源码 `99d5f6c751234622b8f824ed7fcee39f3aae711d`，真实 VDot/VIDiv/VFDivSqrt、Dispatcher、busy 和门控共同仿真；覆盖 DIV 切换、反压、432 组重定向、27 组复位及 20000 拍随机控制。O1 完成 10343 次同拍交接，七项负控全部检出。见 [父级工程记录](parent/README.md) 和 [原始证据](evidence/20261018-parent-validation/README.md)。
 
 当前 `parent_exu_elaborated=true`、`parent_validation_pass=true`、`fullcore_difftest=false`、`performance_measured=false`。两模式边界刺激有差异，DIV 取消当拍旧 valid 及取消后门控开启行为见工程记录；不能用总测试周期比值宣布加速。下一步为 O1 观察器与全核回归，之后公平性能 A/B；默认 O1 仍关闭，T16 报告继续后置。

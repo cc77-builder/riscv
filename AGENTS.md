@@ -1,6 +1,12 @@
 # 团队 Agent 入口
 
-## 本轮：真实 VFEX4 父级联调已通过，本地保存
+## 当前任务：O1 观察器适配与全核回归进行中
+
+用户 2026-10-18 要求“开始 O1 观察器适配及全核回归”。工作分支 `local/o1-fullcore-20261018`，工程入口见 [fullcore/README.md](team/optimizations/o1/fullcore/README.md)。全新 EMU 已从 `18c0ce08a40e889654bfe76d5435f272854ad7d0` 构建通过，实际十二项回归正在运行；构建与主机检查不能代替完整全核验收。
+
+运行中的六个检查器和硬件输入均已冻结，不在中途改动。新增独立日志门禁与离线重审工具放在 `team/optimizations/o1/audit/`；全套结束后再集成门禁，并针对未修改的原始日志重新审核。当前 `fullcore_difftest_run=true`、`fullcore_validation_pass=false`、`performance_measured=false`。本轮本地保存，不推送 GitHub；O1 默认关闭，正式 T16 报告继续后置。
+
+## 前一轮：真实 VFEX4 父级联调已通过，本地保存
 
 用户 2026-10-18 要求“开始真实 VFEX4 父级联调，包含 DIV 切换、反压及取消”。在本地分支 `local/o1-parent-validation-20261018` 完成，实际受测源码 `99d5f6c751234622b8f824ed7fcee39f3aae711d`；本轮没有新 Push，不改远端分支。下方 FU 已发布状态和旧父级未验证状态为历史记录。
 

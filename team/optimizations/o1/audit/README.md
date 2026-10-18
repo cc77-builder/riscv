@@ -28,3 +28,18 @@ python3 -B team/optimizations/o1/audit/runtime_gate.py \
 ```
 
 这些是主机门禁检查与原始日志离线复核，不是新 EMU 运行。`NORMAL_FAILURE_MARKERS_CLEAR` 仅表示未发现已知失败标记，仍需原有工作负载、DiffTest、身份/覆盖与运行退出码验收。首轮驱动集成补丁暂存外部，等待全部 12 项仿真结束后应用、测试并重审原始日志。
+
+## 全套离线重审
+
+`recheck_suite.py` 不运行 EMU。它从活动任务记录的原提交取回六个检查器 Git blob 并比对摘要，核验硬件源码/依赖、实际 EMU、118 个冻结输入、12 项真实退出码与原始双流日志，然后增加本目录的新日志门禁。原检查器和新门禁分别保存身份与源码快照，原结果不会被替换。
+
+全部仿真结束并集成门禁后执行：
+
+```bash
+python3 -B -m unittest discover -s team/optimizations/o1/audit -p 'test_*.py' -v
+python3 -B team/optimizations/o1/audit/recheck_suite.py \
+  --campaign /absolute/completed/regression \
+  --output /absolute/new/offline-recheck
+```
+
+`O1_OFFLINE_FULL_SUITE_RECHECK_PASS` 必须同时满足全部十二项、负控后的同镜像正常恢复、完整观察与覆盖、原始证据前后未变化。运行期间可以添加 `--completed-only` 演练已结束的项目，但结果始终为 `O1_PARTIAL_AUDIT`，即使选中的项目全部通过，也不会置 `whole_suite_pass=true`。这不是新机器硬件构建复现或新的性能对比。
