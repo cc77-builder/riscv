@@ -1,12 +1,13 @@
 """Build T14 from identical O1 hardware sources with handoff=0 in a separate output.
 
-The original O1 build remains untouched. This builder uses an absolute BUILD_DIR
+The original O1 binary remains untouched. This builder uses an absolute BUILD_DIR
 override inherited by recursive make; no source or dependency changes.
 """
 import argparse
 from datetime import datetime, timezone
 import hashlib
 import json
+import shutil
 from pathlib import Path
 import subprocess
 import sys
@@ -63,6 +64,27 @@ def dependency_snapshot():
     return modules, dict(sorted(files.items()))
 
 
+
+def stage_auxiliary(products):
+    """SimTop/FileControl write these files to root build, independently of BUILD_DIR."""
+    products.mkdir(parents=True, exist_ok=True)
+    sources = [ROOT / "build" / name for name in
+               ("chisel_db.cpp", "chisel_db.h", "constantin.cpp", "constantin.hpp")]
+    sources += sorted(p for p in (ROOT / "build/generated-src").rglob("*") if p.is_file())
+    require(len(sources) >= 8, "missing fresh generated support files")
+    result = []
+    for source in sources:
+        require(source.is_file(), "missing generated auxiliary " + str(source))
+        relative = source.relative_to(ROOT / "build")
+        target = products / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        require(not target.exists() or sha(target) == sha(source), "auxiliary destination conflict")
+        shutil.copyfile(source, target)
+        result.append({"source": str(source), "destination": str(target),
+                       "sha256": sha(source), "generated_mtime": source.stat().st_mtime})
+    return result
+
+
 def main(out):
     out = out.resolve()
     require(not out.exists(), "output already exists")
@@ -111,8 +133,14 @@ def main(out):
         state.update(status="BUILDING", build_started_utc=now(), command=["bash", "-c", shell])
         save(out / "build-state.json", state)
         print("T14_MATCHED_BUILD_STARTED " + str(out), flush=True)
+        generation = ["bash", "-c", shell.replace("make emu ", "make sim-verilog ", 1)]
+        state["generation_command"] = generation
+        save(out / "build-state.json", state)
         with (out / "emu-build.log").open("wb") as log:
-            rc = subprocess.run(state["command"], cwd=ROOT, stdout=log, stderr=subprocess.STDOUT).returncode
+            rc = subprocess.run(generation, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT).returncode
+            if rc == 0:
+                save(out / "generated-auxiliary.json", stage_auxiliary(products))
+                rc = subprocess.run(state["command"], cwd=ROOT, stdout=log, stderr=subprocess.STDOUT).returncode
         state.update(build_exit_code=rc, build_finished_utc=now())
         save(out / "build-state.json", state)
         require(rc == 0, "EMU build failed; keep emu-build.log and build/ unchanged")

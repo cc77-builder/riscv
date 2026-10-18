@@ -7,7 +7,7 @@
 - 两模式使用同一组 427 个硬件文件、21236 个依赖文件，保持 MinimalConfig、单核、VLEN128、EMU_THREADS=1。
 - O1 使用刚通过完整回归的 b13b05a3b03d2dd178d5e07b55bda1e8d99d7a094d44cf30405241f9793170cb 二进制，硬件源码18c0ce08；记录为复用已固定二进制。
 - T14 从相同硬件输入重新生成，唯一模式差异 VDOT_O1_HANDOFF=0；O1为1。两者都设置 FUSED_INPUT=1、O1_TRACE=1、T12_TRACE=0、T13_TRACE=1。
-- 同版本 JDK/Mill/firtool/Verilator/实际C++编译器及 -O3/-O0、j2、12G JVM。T14使用独立BUILD_DIR，原O1 build不移动、不覆盖。
+- 同版本 JDK/Mill/firtool/Verilator/实际C++编译器及 -O3/-O0、j2、12G JVM。T14使用独立BUILD_DIR，原O1仿真器不移动、不覆盖。SimTop/FileControl固定输出的辅助文件先逐字节复制到外置目录，再编译；失败及恢复过程单独保留。
 - 统一采用四项目比较的 ours-images-02 全部16镜像（校准1、功能3、性能12）。同一ELF/机器码/数据布局/参考库/flash/seed=1用于两模式，不重新生成程序。
 
 ## 预定运行与门禁
