@@ -1,5 +1,7 @@
 # 三人团队：项目计划与开发入口
 
+> **2026-10-18 O0/O1 本地验证完成，交付目标 zjhwork。** 已复用 zjhwork2 成果并修复环境预检、负控假通过及两处 `FuType.vdot.U` 类型比较。实际源码 `db0408aa42afc13e3ff93e865f26a2d5bfb02c93` 的三模式 FU 验证通过，延迟/最小接受间隔为 3/4、2/3、2/2 拍；O0 113 项、O1 26 项主机检查通过。首轮失败与修复后成功日志均保留，见 [O1 入口](optimizations/o1/README.md)、[本轮证据](optimizations/o1/evidence/20261018-fu-validation/README.md) 和 [优化进度](../OPTIMIZATION.md)。O1 默认关闭，真实父级 elaboration、全核 DiffTest 和新性能测量尚未完成；下一步为真实 VFEX4（含 DIV）父级联调。此条更新本轮目标分支，下方协作与交付记录按各自历史时点阅读。
+
 > **2026-10-17 后续优化安排更新。** 见 [香山 vdot 后续优化方案](香山vdot_后续优化方案_20261017.md)：先完成工程优化、测试回归与独立复现，工程完成并冻结版本后集中编写 T16 报告及答辩材料。开发期间持续保存命令、版本、日志与原始数据，其余优化路线、性能目标和验收要求不变。此安排更新下方历史记录中的 T16 执行顺序。
 
 > **2026-10-17 四项目统一测试交付至 zjhwork。** 同一香山基础版本/MinimalConfig/VLEN128下，四个实现64个全核镜像、860个窗口通过；正式性能样本384个。四路独立点积加速比：本项目1.496×、Jade2.605×、试水2.322×、Redoop＋dot8适配0.929×。见 [完整结果](docs/unified-vdot-comparison-20261017.md)、[程序](workloads/unified-vdot/README.md) 和 [验证归档](evidence/unified-vdot-20261017/README.md)。这是T15后的补充比较，未自动推进T16或新增人工ACK；下方“未上传”等为历史时点快照。
@@ -28,6 +30,7 @@
 
 | 内容 | 入口 |
 | --- | --- |
+| O0/O1 同拍交接开发与三模式 FU 验证 | [工程入口](optimizations/o1/README.md) · [证据](optimizations/o1/evidence/20261018-fu-validation/README.md) · [优化进度](../OPTIMIZATION.md) |
 | 四项目统一测试、公开实现对比与验证记录 | [结果](docs/unified-vdot-comparison-20261017.md) · [程序](workloads/unified-vdot/README.md) · [证据](evidence/unified-vdot-20261017/README.md) |
 | T15 独立参数扩展、验证结果与边界 | [T15 报告](docs/t15-parameter-extension.md) · [参数合同](spec/t15-parameters.md) |
 | T15 原始证据与跨平台核验 | [证据](evidence/t15-parameters-20261017/README.md) · [离线复核](evidence/t15-offline-review-20261017/README.md) |

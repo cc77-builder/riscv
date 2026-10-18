@@ -1,6 +1,16 @@
-# zjhwork2：后续优化开发入口
+# 后续优化开发入口
 
-## 当前进展：O1 同拍交接候选已实现，RTL 验证待执行
+## 当前进展：三模式 FU 本地验证通过，交付目标 zjhwork
+
+2026-10-18，按用户要求复用 `zjhwork2@75dce60` 的 O0/O1，在本地修复并验证后准备普通快进上传 `cc77-builder/riscv:zjhwork`。实际构建源码为 `db0408aa42afc13e3ff93e865f26a2d5bfb02c93`；下方 zjhwork2 目标和未验证状态均为历史记录。
+
+本轮将环境激活移到工具检查之前，并用严格负控校验拒绝 `fault escaped`、无关错误和重复标记；首次真实编译又修复 `ExeUnit.scala` 两处 `FuType.vdot` 硬件比较，右侧改为 `FuType.vdot.U`。`fu-01` 的编译失败保留，修复后的 `fu-02` 三模式 Chisel/Verilator 验证通过。原基础版、T14 和 O1 的真实 FU 响应延迟/最小接受间隔分别为 **3/4、2/3、2/2 拍**。
+
+O0 113 项、O1 26 项主机检查通过。O1 接受 13626、响应 13212、取消 388、复位丢弃 26；同拍交接 12237 次、反压 26659 拍。原 10022 算术向量完整结果及控制用例通过，候选与旧模式控制矩阵并非完全相同。四项 C++ 观测值破坏均被严格检出。见 [O1 工程入口](team/optimizations/o1/README.md) 和 [本轮证据](team/optimizations/o1/evidence/20261018-fu-validation/README.md)。
+
+当前 `parent_exu_elaborated=false`、`fullcore_difftest=false`、`performance_measured=false`，O1 默认关闭。下一步是真实 VFEX4 父级（含 DIV）联调，再补观察器、全核回归及公平性能 A/B。本轮没有新的全核加速比；正式 T16 报告仍待工程完成后集中编写。
+
+## 历史：zjhwork2 的 O1 候选实现，尚未运行 RTL 验证
 
 基点 `9e7cce9c9dc090e5280f1a7f8791551612777cc6`；唯一提交目标仍为 `cc77-builder/riscv:zjhwork2`。本批已修改生产 `VDot.scala` 和 `ExeUnit.scala`，新增 elaboration-only 开关 `VDOT_O1_HANDOFF=1`（必须同时设置 `VDOT_T14_FUSED_INPUT=1`）。默认开关为 0，原基础版/T14 分支保留。
 

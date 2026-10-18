@@ -1,5 +1,15 @@
 # 团队 Agent 入口
 
+## 本轮：O0/O1 复用与三模式 FU 验证，交付目标 zjhwork
+
+2026-10-18，用户明确要求“接下来复用 O0，沿用 O1 候选，先修这两处，再跑三模式 FU 验证。先拉取到本地，本地测试通过再上传 zjhwork”。本轮已在独立本地分支复用 `zjhwork2@75dce60`，本地验证通过；授权将该批成果及修复普通快进推送至 `cc77-builder/riscv:zjhwork`。发布前核对实时远端与祖先关系，发布后回读 SHA，实际推送以回执为准。本节覆盖下方历史分支限制，保留 zjhwork2 原记录，不授权写入其他分支或自动展开下一项任务。
+
+先读 [O1 工程入口](team/optimizations/o1/README.md)、[本轮证据](team/optimizations/o1/evidence/20261018-fu-validation/README.md) 和 [优化入口](OPTIMIZATION.md)。真实构建源码为 `db0408aa42afc13e3ff93e865f26a2d5bfb02c93`。修复包括激活环境后再预检工具、严格负控及独立漏检退出码，以及首轮编译发现的 `ExeUnit.scala` 两处 `FuType.vdot.U` 类型比较。保留 `fu-01` 编译失败和 `fu-02` 三模式通过证据，不覆盖旧归档，不因文档提交重复构建。
+
+O0 113 项、O1 26 项主机检查通过；真实 FU 延迟/最小接受间隔为原基础 3/4、T14 2/3、O1 2/2 拍。O1 接受 13626、响应 13212、取消 388、复位丢弃 26，同拍交接 12237 次、反压 26659 拍。原 10022 算术向量加控制场景通过；候选与旧模式控制矩阵不同，四项负控属于 C++ 观测值破坏检错。不得将主机合同测试或 Scala 编译称为真实父级联调。
+
+当前 `parent_exu_elaborated=false`、`fullcore_difftest=false`、`performance_measured=false`；O1 默认关闭，无新增全核加速比或 PPA 证据。下一步为真实 VFEX4 父级（含 DIV）联调。正式 T16 报告继续后置，开发命令、版本与原始证据持续保存；不代签成员 ACK。
+
 ## 本轮发布：四项目统一测试上传 zjhwork
 
 用户明确要求“上传github到zjhwork分支，留个记录”，授权将三项统一测试本地提交及本轮结果/证据/入口说明普通快进推送至 `cc77-builder/riscv:zjhwork`。发布前远端为 `05e07deaf7ba1f8c0dbb2d2c2bd2d2db7e051a37`，是本地成果的祖先。本节覆盖下方历史上传限制，不授权自动开始后续任务。
