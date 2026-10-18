@@ -263,6 +263,13 @@ object vdotFu extends HasChisel {
   override def forkArgs = Seq("-Xmx4G", "-Xss8m")
 }
 
+// Real VFEX4 integration test: original ExeUnit, Dispatcher, clock gates and DIV FUs.
+object vdotParent extends HasChisel {
+  override def sources = T.sources { Seq(PathRef(pwd / "team/optimizations/o1/parent/GenerateVDotParent.scala")) }
+  override def moduleDeps = Seq(xiangshan)
+  override def forkArgs = Seq("-Xmx4G", "-Xss8m")
+}
+
 object vdotDecode extends HasChisel {
   override def sources = T.sources { Seq(PathRef(pwd / "team/rtl/vdot/GenerateVDotDecode.scala")) }
   override def moduleDeps = Seq(xiangshan)
