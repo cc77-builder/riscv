@@ -1,12 +1,12 @@
 # 团队 Agent 入口
 
-## 当前任务：T14/O1 同镜像公平性能比较进行中
+## 当前任务：T14/O1 同镜像公平性能比较完成，本地保存
 
-用户要求完成 T14/O1 同镜像公平比较。分支为 local/o1-performance-20261018，工作根为 /home/riscv/riscv-lab/o1-performance-20261018；先读 team/optimizations/o1/performance/CONTRACT.md 和工作根 WORK_STATE.json。正式 campaign-01 的执行源码提交为 3fa8a70645cf3f38a9d05618ac555a4582041013。两模式共用原统一测试的16个ELF/bin、参考库和flash，计划36次运行（含4次额外确定性重放）、478个窗口、192个正式性能窗口。
+独立batch128平均周期 453.25→362.50，降低20.02%；O1相对实测RVV为1.870×。36次主运行、478窗口、192正式样本、4次额外确定性重放及完整原始日志离线复算通过；最后22项主机检查通过。
 
-匹配T14已完成真实编译及输入/依赖/编译参数核对，最终回执 t14-build-final-01/build-state.json；原O1固定二进制与1673个已登记生成工件未变。首轮辅助文件路径失败、恢复编译及可变宿主time.log审计范围修正都已保留，不覆盖失败记录。目前两模式的校准与功能门禁均通过，正在执行正式性能场景；不得在完整数据验收前宣布新加速比。
+见 [工程入口](team/optimizations/o1/performance/README.md)、[合同](team/optimizations/o1/performance/CONTRACT.md) 和 [证据](team/optimizations/o1/evidence/20261018-performance-ab/README.md)。实际执行检查器、受测硬件源码、二进制和后续导出工具身份分别记录。不要重启已经完成的campaign或覆盖原始/密封证据。
 
-运行期间禁止修改 campaign-01/artifact-pins.json 中的源码、检查器或输入，也不再构建覆盖两个受测EMU。仅后续结果导出/工程文档可在冻结输入之外准备。等待全部36项结束，再运行 results.py 全套离线重审、调查任何超过2%的退化，随后密封证据、核对Git存储字节并交付Windows副本。本轮本地保存，不推送GitHub；O1默认关闭，正式T16报告继续后置，不代签人工ACK。
+分支local/o1-performance-20261018，工作根/home/riscv/riscv-lab/o1-performance-20261018。成果本地保存，未推送GitHub，O1默认关闭；O2按收益/接口成本另行决定，O3应用、O4时序代价、O5/T17独立复现及人工ACK仍未完成，正式T16报告继续后置。
 
 ## 前一轮：O1 全核功能与控制回归、严格离线复核通过
 

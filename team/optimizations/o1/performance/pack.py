@@ -50,6 +50,10 @@ def main(work, campaign, results):
             and not audit["new_emu_executed"], "no final offline recheck")
     require(host["status"] == "PAIRED_RUNNER_HOST_PASS" and host["source_unchanged"], "no final host PASS")
     require(re.findall(r"Ran (\d+) tests in", (work / "host-03/stderr.log").read_text()) == ["20"], "wrong host count")
+    latest_host = json.loads((work / "host-04/result.json").read_text())
+    require(latest_host["status"] == "PAIRED_RUNNER_AND_BUILD_SCOPE_HOST_PASS"
+            and latest_host["source_unchanged"], "no final build-scope host PASS")
+    require(re.findall(r"Ran (\d+) tests in", (work / "host-04/stderr.log").read_text()) == ["22"], "wrong final host count")
     require(json.loads((work / "launch-01/result.json").read_text())["exit_code"] == 0, "launcher incomplete")
     pins = json.loads((campaign / "artifact-pins.json").read_text())
     compare.verify_hashes(pins)
