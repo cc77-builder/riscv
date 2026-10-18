@@ -1,0 +1,46 @@
+{
+  "attempts": {
+    "attempt-01": "exit_code=1",
+    "attempt-02": "exit_code=1",
+    "attempt-03": "exit_code=1",
+    "attempt-04": "exit_code=1",
+    "attempt-05": "exit_code=1",
+    "attempt-06": "exit_code=1",
+    "attempt-07": "exit_code=0",
+    "harness-01": "exit_code=0",
+    "clock-repro-01": "exit_code=1"
+  },
+  "results": {
+    "0": [
+      "VFEX4_PARENT_PASS mode=0 accepted=12154 responses=11849 canceled=299 reset=6 overlap=0 stalls=11902",
+      "FU kind=0 accepted=10836 latency=3:3 clocks=47679 canceled_idle_clocks=0",
+      "FU kind=1 accepted=651 latency=6:13 clocks=9461 canceled_idle_clocks=0",
+      "FU kind=2 accepted=667 latency=8:8 clocks=9382 canceled_idle_clocks=0"
+    ],
+    "1": [
+      "VFEX4_PARENT_PASS mode=1 accepted=12211 responses=11909 canceled=296 reset=6 overlap=0 stalls=12035",
+      "FU kind=0 accepted=10828 latency=2:2 clocks=36954 canceled_idle_clocks=0",
+      "FU kind=1 accepted=694 latency=6:12 clocks=9864 canceled_idle_clocks=0",
+      "FU kind=2 accepted=689 latency=8:8 clocks=9551 canceled_idle_clocks=0"
+    ],
+    "2": [
+      "VFEX4_PARENT_PASS mode=2 accepted=12312 responses=12010 canceled=296 reset=6 overlap=10311 stalls=12067",
+      "FU kind=0 accepted=10961 latency=2:2 clocks=27061 canceled_idle_clocks=0",
+      "FU kind=1 accepted=678 latency=6:13 clocks=9779 canceled_idle_clocks=0",
+      "FU kind=2 accepted=673 latency=8:8 clocks=9348 canceled_idle_clocks=0"
+    ]
+  },
+  "source_commit": "2403719bc49aaf9dd3309aa621132e00add55a85",
+  "parent_simulated": true,
+  "fullcore_simulated": false,
+  "o1_default_enabled": false,
+  "old_clock_reproduction": "clock-repro-01.log",
+  "negative_controls": [
+    "identity",
+    "wen",
+    "high",
+    "cancel"
+  ],
+  "no_new_system_installations": true,
+  "physical_timing_or_power_measured": false
+}

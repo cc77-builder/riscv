@@ -1,0 +1,164 @@
+{
+  "status": "O1_PARENT_ARCHIVE_REPLAY_PASS",
+  "modes": [
+    {
+      "mode": 0,
+      "exit_code": 0,
+      "log_sha256": "5ab8a747d2713d8ebd7f59a2e190c9ebc5e05c2ee47412b6bdca5a2c05d17ef7",
+      "checked": {
+        "schema": 1,
+        "scope": "parent",
+        "mode": 0,
+        "epochs": 7,
+        "frames": 66522,
+        "accepted": 12154,
+        "responses": 11849,
+        "canceled": 299,
+        "reset": 6,
+        "overlap": 0,
+        "stalls": 11902,
+        "waits": 50283,
+        "vdot_stalls": 4385,
+        "vdot_canceled": 53,
+        "accepted_by_kind": {
+          "0": 10836,
+          "1": 651,
+          "2": 667
+        },
+        "status": "O1_TRACE_PROTOCOL_PASS_ARCHITECTURAL_VALIDATION_SEPARATE"
+      }
+    },
+    {
+      "mode": 1,
+      "exit_code": 0,
+      "log_sha256": "53ae62cc658572053b29a8c729710af1b2ef5d172a01c8ec97cd9c1c63281eee",
+      "checked": {
+        "schema": 1,
+        "scope": "parent",
+        "mode": 1,
+        "epochs": 7,
+        "frames": 56369,
+        "accepted": 12211,
+        "responses": 11909,
+        "canceled": 296,
+        "reset": 6,
+        "overlap": 0,
+        "stalls": 12035,
+        "waits": 40117,
+        "vdot_stalls": 4493,
+        "vdot_canceled": 48,
+        "accepted_by_kind": {
+          "0": 10828,
+          "1": 694,
+          "2": 689
+        },
+        "status": "O1_TRACE_PROTOCOL_PASS_ARCHITECTURAL_VALIDATION_SEPARATE"
+      }
+    },
+    {
+      "mode": 2,
+      "exit_code": 0,
+      "log_sha256": "e2a13dbdc257b05e8ca2881aacbaf81e255ebfe1f21e1aa0e4e9f5fb4bee8f52",
+      "checked": {
+        "schema": 1,
+        "scope": "parent",
+        "mode": 2,
+        "epochs": 7,
+        "frames": 46188,
+        "accepted": 12312,
+        "responses": 12010,
+        "canceled": 296,
+        "reset": 6,
+        "overlap": 10311,
+        "stalls": 12067,
+        "waits": 29853,
+        "vdot_stalls": 4521,
+        "vdot_canceled": 60,
+        "accepted_by_kind": {
+          "0": 10961,
+          "1": 678,
+          "2": 673
+        },
+        "status": "O1_TRACE_PROTOCOL_PASS_ARCHITECTURAL_VALIDATION_SEPARATE"
+      }
+    }
+  ],
+  "negatives": {
+    "status": "O1_REAL_TRACE_NEGATIVES_PASS",
+    "source_sha256": "e2a13dbdc257b05e8ca2881aacbaf81e255ebfe1f21e1aa0e4e9f5fb4bee8f52",
+    "positive": {
+      "schema": 1,
+      "scope": "parent",
+      "mode": 2,
+      "epochs": 7,
+      "frames": 46188,
+      "accepted": 12312,
+      "responses": 12010,
+      "canceled": 296,
+      "reset": 6,
+      "overlap": 10311,
+      "stalls": 12067,
+      "waits": 29853,
+      "vdot_stalls": 4521,
+      "vdot_canceled": 60,
+      "accepted_by_kind": {
+        "0": 10961,
+        "1": 678,
+        "2": 673
+      },
+      "status": "O1_TRACE_PROTOCOL_PASS_ARCHITECTURAL_VALIDATION_SEPARATE"
+    },
+    "mutations": [
+      {
+        "name": "new-destination-as-old",
+        "status": "EXPECTED_REJECTION",
+        "reason": "line 4: old response identity mismatch",
+        "mutated_sha256": "4d03d4fe09b8259e0a18ba61fb1dfcea37872c3f6983767d1b7636dd434a4fe8"
+      },
+      {
+        "name": "vector-high-bit",
+        "status": "EXPECTED_REJECTION",
+        "reason": "line 4: shared/vector/v0 writeback mismatch",
+        "mutated_sha256": "e66b68f7e98f85fd067556dca6b6b94c4cb7f109ad860fbbee16605c5d85b3c2"
+      },
+      {
+        "name": "lost-child-acceptance",
+        "status": "EXPECTED_REJECTION",
+        "reason": "line 4: child/parent acceptance mismatch",
+        "mutated_sha256": "03ff78e83541a40b986f9bc88a1085fc1b3091f0a31e5a9e5d95252e756a532a"
+      },
+      {
+        "name": "lost-cancellation",
+        "status": "EXPECTED_REJECTION",
+        "reason": "line 32905: kill disagrees with ROB age",
+        "mutated_sha256": "ae8457a51ff2aa00459e5b67be4f5b3239b2e190e9f2af9023a9f0398da35d95"
+      },
+      {
+        "name": "missing-handoff-frame",
+        "status": "EXPECTED_REJECTION",
+        "reason": "line 4: missing busy EXU cycle",
+        "mutated_sha256": "5bedef2304485fa4fca2c9b8c43a314f26475c7b62da0438d26a1a0195488fa2"
+      },
+      {
+        "name": "duplicate-handoff-frame",
+        "status": "EXPECTED_REJECTION",
+        "reason": "line 5: duplicate/reversed EXU cycle",
+        "mutated_sha256": "f0d00c3ce192974594bb019e82eed8897a173d3398a7051b65025a69a9e5046b"
+      },
+      {
+        "name": "truncated-busy-tail",
+        "status": "EXPECTED_REJECTION",
+        "reason": "unfinished EXU transaction at EOF",
+        "mutated_sha256": "4c0ed4def19df7ff8191539cece2d6d15e4dd8ca66786f1174fd8c628c2c6ed8"
+      },
+      {
+        "name": "missing-independent-ledger",
+        "status": "EXPECTED_REJECTION",
+        "reason": "independent C++ ledger disagrees or is missing",
+        "mutated_sha256": "5201f1d3ba835eb5e9d0140d225b3110482e593f92d36edf12b23e53783c363d"
+      }
+    ]
+  },
+  "archive_sha256": "e2b4b01a76bbfe07de9d5d7b6e1b40cb7902b9e16655aeee810f625c9ed481a2",
+  "checker_sha256": "ff4f0e4c607de58770c920c2764c3d7932796a4ef410ab29f02141291dd5ae98"
+}

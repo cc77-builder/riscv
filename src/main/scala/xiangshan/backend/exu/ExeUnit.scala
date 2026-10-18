@@ -71,6 +71,10 @@ class ExeUnitImp(
     module
   })
 
+  // VFEX4 has one live owner, including O1's atomic vdot handoff. Reuse the
+  // parent's ROB cancellation below; a canceled FU never fires its response
+  // to release the uncertain-latency clock hold. No extra ROB register needed.
+  private val cancelVFEX4Clock = WireInit(false.B)
   if (EnableClockGate) {
     fuCfgs.zip(funcUnits).foreach { case (cfg, fu) =>
       val clk_en = WireInit(false.B)
@@ -103,8 +107,12 @@ class ExeUnitImp(
       fuVld_en_reg := fuVld_en
 
       when(uncerLat.asBool && fu.io.in.fire) {
-        uncer_en_reg := true.B
-      }.elsewhen(uncerLat.asBool && fu.io.out.fire) {
+        if (exuParams.name == "VFEX4") {
+          uncer_en_reg := !fu.io.in.bits.ctrl.robIdx.needFlush(io.flush)
+        } else {
+          uncer_en_reg := true.B
+        }
+      }.elsewhen(uncerLat.asBool && (fu.io.out.fire || cancelVFEX4Clock)) {
         uncer_en_reg := false.B
       }
 
@@ -133,6 +141,9 @@ class ExeUnitImp(
   }
   else {
     val robIdx = RegEnable(io.in.bits.robIdx, io.in.fire)
+    if (exuParams.name == "VFEX4") {
+      cancelVFEX4Clock := busy && robIdx.needFlush(io.flush)
+    }
     if (vdotHandoff) {
       when(io.in.fire && io.in.bits.robIdx.needFlush(io.flush)) {
         busy := false.B
@@ -457,6 +468,31 @@ class ExeUnitImp(
   io.out.bits.debug     := 0.U.asTypeOf(io.out.bits.debug)
   io.out.bits.debug.isPerfCnt := funcUnits.map(_.io.csrio.map(_.isPerfCnt)).map(_.getOrElse(false.B)).reduce(_ || _)
   io.out.bits.debugInfo := Mux1H(fuOutValidOH, fuOutBitsVec.map(_.perfDebugInfo))
+
+  if (fuCfgs.exists(_.fuType == FuType.vdot) && xiangshan.backend.fu.wrapper.VDotO1Trace.enabled) {
+    require(exuParams.name == "VFEX4" && !p(xiangshan.DebugOptionsKey).ResetGen,
+      "O1 trace requires VFEX4 and common simulation reset")
+    // The parent clock is ungated. One atomic pre-edge frame carries BOTH the
+    // old response and the new request, even when the gated FU hands off at II2.
+    val cycle = RegInit(0.U(64.W))
+    cycle := cycle + 1.U
+    val mode = xiangshan.backend.fu.wrapper.VDotO1Trace.mode
+    val observed = Seq(FuType.vdot, FuType.vidiv, FuType.vfdiv).map(t => funcUnits(fuCfgs.indexWhere(_.fuType == t)))
+    val acceptMask = VecInit(observed.map(_.io.in.fire)).asUInt
+    val validMask = VecInit(observed.map(_.io.out.valid)).asUInt
+    val kind = MuxLookup(io.in.bits.fuType, 3.U)(Seq(FuType.vdot.U -> 0.U, FuType.vidiv.U -> 1.U, FuType.vfdiv.U -> 2.U))
+    val in = io.in.bits
+    val out = io.out.bits
+    // Read the VDot's actual renamed operands (including physical VL), not a
+    // decoded immediate or the potentially stale vpu.vl control field.
+    val dot = observed.head.io.in.bits
+    when(cycle === 0.U) {
+      printf(p"O1_EXU_BEGIN schema=1 cycle=${cycle} mode=${mode.U} robsize=${RobSize.U} pdestbits=${PhyRegIdxWidth.U} hart=${p(xiangshan.XSCoreParamsKey).HartId.U}\n")
+    }
+    when(busy || io.in.valid || io.out.valid || io.flush.valid) {
+      printf(p"O1_EXU cycle=${cycle} busy=${busy} iv=${io.in.valid} ir=${io.in.ready} kind=${kind} irf=${in.robIdx.flag} irv=${in.robIdx.value} id=${in.pdest} iwv=${in.vecWen.get} iw0=${in.v0Wen.get} ca=${acceptMask} cv=${validMask} a=0x${Hexadecimal(dot.data.src(0))} b=0x${Hexadecimal(dot.data.src(1))} vl=${dot.data.src(4)(7, 0)} vill=${dot.ctrl.vpu.get.vill} vm=${dot.ctrl.vpu.get.vm} sew=${dot.ctrl.vpu.get.vsew} lmul=${dot.ctrl.vpu.get.vlmul} start=${dot.ctrl.vpu.get.vstart} op=${dot.ctrl.fuOpType} ov=${io.out.valid} ready=${io.out.ready} orf=${out.robIdx.flag} orv=${out.robIdx.value} od=${out.pdest} owv=${out.vecWen.get} ow0=${out.v0Wen.get} exc=0x${Hexadecimal(out.exceptionVec.get.asUInt)} data=0x${Hexadecimal(out.data(0))} vec=0x${Hexadecimal(out.data(exuParams.wbVecIndex))} v0=0x${Hexadecimal(out.data(exuParams.wbV0Index))} ff=${out.fflags.get.asUInt} fv=${io.flush.valid} frf=${io.flush.bits.robIdx.flag} frv=${io.flush.bits.robIdx.value} self=${io.flush.bits.flushItself()} kill=${cancelVFEX4Clock}\n")
+    }
+  }
 }
 
 class DispatcherIO[T <: Data](private val gen: T, n: Int) extends Bundle {

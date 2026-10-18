@@ -1,0 +1,58 @@
+diff --git a/build.sc b/build.sc
+index 94e99f9b5..b5045eaff 100644
+--- a/build.sc
++++ b/build.sc
+@@ -263,6 +263,13 @@ object vdotFu extends HasChisel {
+   override def forkArgs = Seq("-Xmx4G", "-Xss8m")
+ }
+ 
++// Real VFEX4 parent, production dividers and clock gates; only flat IO is adapted.
++object vdotExu extends HasChisel {
++  override def sources = T.sources { Seq(PathRef(pwd / "team/rtl/vdot/GenerateVDotExu.scala")) }
++  override def moduleDeps = Seq(xiangshan)
++  override def forkArgs = Seq("-Xmx4G", "-Xss8m")
++}
++
+ object vdotDecode extends HasChisel {
+   override def sources = T.sources { Seq(PathRef(pwd / "team/rtl/vdot/GenerateVDotDecode.scala")) }
+   override def moduleDeps = Seq(xiangshan)
+diff --git a/src/main/scala/xiangshan/backend/exu/ExeUnit.scala b/src/main/scala/xiangshan/backend/exu/ExeUnit.scala
+index a6ec5c5dc..31356712d 100644
+--- a/src/main/scala/xiangshan/backend/exu/ExeUnit.scala
++++ b/src/main/scala/xiangshan/backend/exu/ExeUnit.scala
+@@ -71,6 +71,10 @@ class ExeUnitImp(
+     module
+   })
+ 
++  // VFEX4 has one live owner, including O1's atomic vdot handoff. Reuse the
++  // parent's ROB cancellation below; a canceled FU never fires its response
++  // to release the uncertain-latency clock hold. No extra ROB register needed.
++  private val cancelVFEX4Clock = WireInit(false.B)
+   if (EnableClockGate) {
+     fuCfgs.zip(funcUnits).foreach { case (cfg, fu) =>
+       val clk_en = WireInit(false.B)
+@@ -103,8 +107,12 @@ class ExeUnitImp(
+       fuVld_en_reg := fuVld_en
+ 
+       when(uncerLat.asBool && fu.io.in.fire) {
+-        uncer_en_reg := true.B
+-      }.elsewhen(uncerLat.asBool && fu.io.out.fire) {
++        if (exuParams.name == "VFEX4") {
++          uncer_en_reg := !fu.io.in.bits.ctrl.robIdx.needFlush(io.flush)
++        } else {
++          uncer_en_reg := true.B
++        }
++      }.elsewhen(uncerLat.asBool && (fu.io.out.fire || cancelVFEX4Clock)) {
+         uncer_en_reg := false.B
+       }
+ 
+@@ -133,6 +141,9 @@ class ExeUnitImp(
+   }
+   else {
+     val robIdx = RegEnable(io.in.bits.robIdx, io.in.fire)
++    if (exuParams.name == "VFEX4") {
++      cancelVFEX4Clock := busy && robIdx.needFlush(io.flush)
++    }
+     if (vdotHandoff) {
+       when(io.in.fire && io.in.bits.robIdx.needFlush(io.flush)) {
+         busy := false.B

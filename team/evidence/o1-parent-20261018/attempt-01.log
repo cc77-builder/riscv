@@ -1,0 +1,39 @@
+/usr/bin/python3
+/usr/lib/jvm/java-21-openjdk-amd64/bin/java
+/home/amesotten/.cache/codex-rvinno/o1-integration-20261018/tools/mill
+/usr/bin/verilator
+/home/amesotten/.cache/codex-rvinno/o1-integration-20261018/tools/clang++
+/home/amesotten/.cache/codex-rvinno/o1-integration-20261018/tools/rg
+Picked up JAVA_TOOL_OPTIONS: -XX:ActiveProcessorCount=2
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1-1-24.04.4-Ubuntu)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-24.04.4-Ubuntu, mixed mode, sharing)
+Picked up JAVA_TOOL_OPTIONS: -XX:ActiveProcessorCount=2
+Picked up JAVA_TOOL_OPTIONS: -XX:ActiveProcessorCount=2
+Mill Build Tool version 0.12.3
+Java version: 21.0.12.1, vendor: Ubuntu, runtime: /usr/lib/jvm/java-21-openjdk-amd64
+Default locale: en, platform encoding: UTF-8
+OS name: "Linux", version: 6.6.87.2-microsoft-standard-WSL2, arch: amd64
+Verilator 5.020 2024-01-01 rev (Debian 5.020-1)
+Ubuntu clang version 19.1.1 (1ubuntu1~24.04.2)
+Target: x86_64-pc-linux-gnu
+Thread model: posix
+InstalledDir: /usr/lib/llvm-19/bin
+LLVM (http://llvm.org/):
+  LLVM version 18.0.0git
+  Optimized build.
+CIRCT firtool-1.62.1
+VECTOR_CHECK_PASS suite=directed count=22 sha256=b78708eca1145437d34af230721a3999c35889176131cdf57acfa6b7a6b8b333
+VECTOR_CHECK_PASS suite=random count=10000 sha256=6201847c400f7ecac85848690704abac15b7278a824e447b35ad60788da70363
+VECTOR_EXPORT_PASS contract=vdot-s8x8-r32-v0.1 total=10022 sha256=901a7be30e62b81bcd3df55b20538a5ba9c879ba9c7c34f28b8c0421d8e6a327
++ for mode in 0 1 2
++ export VDOT_T14_FUSED_INPUT=0 VDOT_O1_HANDOFF=0
++ VDOT_T14_FUSED_INPUT=0
++ VDOT_O1_HANDOFF=0
++ [[ 0 == 0 ]]
++ [[ 0 != 2 ]]
++ dir=/home/amesotten/.cache/codex-rvinno/o1-parent-20261018/attempt-01/mode-0
++ mkdir /home/amesotten/.cache/codex-rvinno/o1-parent-20261018/attempt-01/mode-0
++ mill -i -j 2 vdotExu.runMain team.vdot.GenerateVDotExu /home/amesotten/.cache/codex-rvinno/o1-parent-20261018/attempt-01/mode-0/rtl
++ rc=1
++ printf 'exit_code=%s\n' 1

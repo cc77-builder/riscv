@@ -1477,6 +1477,34 @@ class RobImp(override val wrapper: Rob)(implicit p: Parameters, params: BackendP
   }
 
 
+  if (xiangshan.backend.fu.wrapper.VDotO1Trace.enabled) {
+    require(!p(xiangshan.DebugOptionsKey).ResetGen, "O1 trace requires common simulation reset")
+    val cycle = RegInit(0.U(64.W))
+    cycle := cycle + 1.U
+    val mode = xiangshan.backend.fu.wrapper.VDotO1Trace.mode
+    when(cycle === 0.U) {
+      printf(p"O1_ROB_BEGIN schema=1 cycle=${cycle} mode=${mode.U} robsize=${RobSize.U} pdestbits=${PhyRegIdxWidth.U} hart=${p(XSCoreParamsKey).HartId.U}\n")
+    }
+    for (i <- 0 until RenameWidth) {
+      val u = io.enq.req(i).bits
+      // Match the real ROB allocation enable; redirect suppresses allocation.
+      when(canEnqueue(i) && !io.redirect.valid && u.fuType === FuType.vdot.U) {
+        printf(p"O1_ROB_ENQ cycle=${cycle} slot=${i.U} rf=${allocatePtrVec(i).flag} rv=${allocatePtrVec(i).value} dest=${u.pdest} pc=0x${Hexadecimal(u.pc)} word=0x${Hexadecimal(u.instr)}\n")
+      }
+    }
+    for (i <- 0 until CommitWidth) {
+      val u = commitDebugUop(i)
+      when(io.commits.isCommit && io.commits.commitValid(i) && u.fuType === FuType.vdot.U) {
+        printf(p"O1_ROB_COMMIT cycle=${cycle} slot=${i.U} rf=${deqPtrVec(i).flag} rv=${deqPtrVec(i).value} dest=${io.commits.info(i).debug_pdest.get} pc=0x${Hexadecimal(u.pc)} word=0x${Hexadecimal(u.instr)}\n")
+      }
+    }
+    // CtrlBlock sends this redirect to EXU through one register. The parser
+    // checks that explicit +1-cycle relationship, without inferring clock maps.
+    when(io.redirect.valid) {
+      printf(p"O1_ROB_REDIRECT cycle=${cycle} rf=${io.redirect.bits.robIdx.flag} rv=${io.redirect.bits.robIdx.value} self=${io.redirect.bits.flushItself()}\n")
+    }
+  }
+
   if (sys.env.get("VDOT_T13_TRACE").contains("1")) {
     require(!p(xiangshan.DebugOptionsKey).ResetGen, "T13 trace requires common simulation reset")
     val t13Cycle = GTimer()

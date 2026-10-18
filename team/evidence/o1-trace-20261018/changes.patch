@@ -1,0 +1,224 @@
+diff --git a/AGENTS.md b/AGENTS.md
+index 66111d528..c1da87563 100644
+--- a/AGENTS.md
++++ b/AGENTS.md
+@@ -1,10 +1,11 @@
+ # James_Hotten O0/O1 integration scope
+ 
+-The current request integrates branch updates into James_Hotten and reviews
+-correctness, acceptance security and performance evidence.
++The current request starts optimization on James_Hotten after branch integration
++and review of correctness, acceptance security and performance evidence.
+ The previous VFEX1 cleanup/main synchronization finished at e9c70db38;
+ its publication record is team/docs/vfex4-main-sync-20261017.md.
+-Current work and evidence scope: team/docs/james-o1-integration-20261018.md.
++Integration review: team/docs/james-o1-integration-20261018.md.
++Current optimization and evidence: team/docs/o1-parent-20261018.md.
+ O0 matrix history: team/docs/o0-progress-20261018.md.
+ The matrix runner deliberately pins the existing d3706f0b8 II4 baseline;
+ new matrix execution does not imply integrated-source or T14 hardware coverage.
+@@ -19,7 +20,10 @@ Production uses VFEX4/VDot with NEMU 1.1.0. T14 input-product fusion is opt-in
+ T15 is a standalone parameter experiment, not a full-core SEW16 ISA change.
+ O0 diagnostics are incomplete. O1 has an opt-in RTL candidate, not accepted
+ hardware; VDOT_O1_HANDOFF remains off by default and requires T14 when enabled.
+-Three FU modes have real simulation evidence; parent EXU/full-core O1 is pending.
++Three FU and real VFEX4 parent modes have simulation evidence. The parent uses
++production dividers and clock gates; canceled-owner clock holds are cleared in
++all three VFEX4 modes. O1 parent II2 is measured; full-core O1 remains pending.
++Clock pulse reductions are simulation activity, not measured power or STA/PPA.
+ The frozen T12/T13 observers cannot validate O1 overlapping transactions.
+ Preserve archive bytes, source bindings, failure records and fail-closed checks.
+ Do not fabricate teammate approval, STA/PPA, performance, virtualization or
+diff --git a/build.sc b/build.sc
+index 94e99f9b5..b5045eaff 100644
+--- a/build.sc
++++ b/build.sc
+@@ -263,6 +263,13 @@ object vdotFu extends HasChisel {
+   override def forkArgs = Seq("-Xmx4G", "-Xss8m")
+ }
+ 
++// Real VFEX4 parent, production dividers and clock gates; only flat IO is adapted.
++object vdotExu extends HasChisel {
++  override def sources = T.sources { Seq(PathRef(pwd / "team/rtl/vdot/GenerateVDotExu.scala")) }
++  override def moduleDeps = Seq(xiangshan)
++  override def forkArgs = Seq("-Xmx4G", "-Xss8m")
++}
++
+ object vdotDecode extends HasChisel {
+   override def sources = T.sources { Seq(PathRef(pwd / "team/rtl/vdot/GenerateVDotDecode.scala")) }
+   override def moduleDeps = Seq(xiangshan)
+diff --git a/src/main/scala/xiangshan/backend/exu/ExeUnit.scala b/src/main/scala/xiangshan/backend/exu/ExeUnit.scala
+index a6ec5c5dc..ec3da6cc5 100644
+--- a/src/main/scala/xiangshan/backend/exu/ExeUnit.scala
++++ b/src/main/scala/xiangshan/backend/exu/ExeUnit.scala
+@@ -71,6 +71,10 @@ class ExeUnitImp(
+     module
+   })
+ 
++  // VFEX4 has one live owner, including O1's atomic vdot handoff. Reuse the
++  // parent's ROB cancellation below; a canceled FU never fires its response
++  // to release the uncertain-latency clock hold. No extra ROB register needed.
++  private val cancelVFEX4Clock = WireInit(false.B)
+   if (EnableClockGate) {
+     fuCfgs.zip(funcUnits).foreach { case (cfg, fu) =>
+       val clk_en = WireInit(false.B)
+@@ -103,8 +107,12 @@ class ExeUnitImp(
+       fuVld_en_reg := fuVld_en
+ 
+       when(uncerLat.asBool && fu.io.in.fire) {
+-        uncer_en_reg := true.B
+-      }.elsewhen(uncerLat.asBool && fu.io.out.fire) {
++        if (exuParams.name == "VFEX4") {
++          uncer_en_reg := !fu.io.in.bits.ctrl.robIdx.needFlush(io.flush)
++        } else {
++          uncer_en_reg := true.B
++        }
++      }.elsewhen(uncerLat.asBool && (fu.io.out.fire || cancelVFEX4Clock)) {
+         uncer_en_reg := false.B
+       }
+ 
+@@ -133,6 +141,9 @@ class ExeUnitImp(
+   }
+   else {
+     val robIdx = RegEnable(io.in.bits.robIdx, io.in.fire)
++    if (exuParams.name == "VFEX4") {
++      cancelVFEX4Clock := busy && robIdx.needFlush(io.flush)
++    }
+     if (vdotHandoff) {
+       when(io.in.fire && io.in.bits.robIdx.needFlush(io.flush)) {
+         busy := false.B
+@@ -457,6 +468,31 @@ class ExeUnitImp(
+   io.out.bits.debug     := 0.U.asTypeOf(io.out.bits.debug)
+   io.out.bits.debug.isPerfCnt := funcUnits.map(_.io.csrio.map(_.isPerfCnt)).map(_.getOrElse(false.B)).reduce(_ || _)
+   io.out.bits.debugInfo := Mux1H(fuOutValidOH, fuOutBitsVec.map(_.perfDebugInfo))
++
++  if (fuCfgs.exists(_.fuType == FuType.vdot) && xiangshan.backend.fu.wrapper.VDotO1Trace.enabled) {
++    require(exuParams.name == "VFEX4" && !p(xiangshan.DebugOptionsKey).ResetGen,
++      "O1 trace requires VFEX4 and common simulation reset")
++    // The parent clock is ungated. One atomic pre-edge frame carries BOTH the
++    // old response and the new request, even when the gated FU hands off at II2.
++    val cycle = RegInit(0.U(64.W))
++    cycle := cycle + 1.U
++    val mode = xiangshan.backend.fu.wrapper.VDotO1Trace.mode
++    val observed = Seq(FuType.vdot, FuType.vidiv, FuType.vfdiv).map(t => funcUnits(fuCfgs.indexWhere(_.fuType == t)))
++    val acceptMask = VecInit(observed.map(_.io.in.fire)).asUInt
++    val validMask = VecInit(observed.map(_.io.out.valid)).asUInt
++    val kind = MuxLookup(io.in.bits.fuType, 3.U)(Seq(FuType.vdot.U -> 0.U, FuType.vidiv.U -> 1.U, FuType.vfdiv.U -> 2.U))
++    val in = io.in.bits
++    val out = io.out.bits
++    // Read the VDot's actual renamed operands (including physical VL), not a
++    // decoded immediate or the potentially stale vpu.vl control field.
++    val dot = observed.head.io.in.bits
++    when(cycle === 0.U) {
++      printf(p"O1_EXU_BEGIN schema=1 cycle=${cycle} mode=${mode.U} robsize=${RobSize.U} pdestbits=${PhyRegIdxWidth.U} hart=${p(xiangshan.XSCoreParamsKey).HartId.U}\n")
++    }
++    when(busy || io.in.valid || io.out.valid || io.flush.valid) {
++      printf(p"O1_EXU cycle=${cycle} busy=${busy} iv=${io.in.valid} ir=${io.in.ready} kind=${kind} irf=${in.robIdx.flag} irv=${in.robIdx.value} id=${in.pdest} iwv=${in.vecWen.get} iw0=${in.v0Wen.get} ca=${acceptMask} cv=${validMask} a=0x${Hexadecimal(dot.data.src(0))} b=0x${Hexadecimal(dot.data.src(1))} vl=${dot.data.src(4)(7, 0)} vill=${dot.ctrl.vpu.get.vill} vm=${dot.ctrl.vpu.get.vm} sew=${dot.ctrl.vpu.get.vsew} lmul=${dot.ctrl.vpu.get.vlmul} start=${dot.ctrl.vpu.get.vstart} op=${dot.ctrl.fuOpType} ov=${io.out.valid} ready=${io.out.ready} orf=${out.robIdx.flag} orv=${out.robIdx.value} od=${out.pdest} owv=${out.vecWen.get} ow0=${out.v0Wen.get} exc=0x${Hexadecimal(out.exceptionVec.get.asUInt)} data=0x${Hexadecimal(out.data(0))} vec=0x${Hexadecimal(out.data(exuParams.wbVecIndex))} v0=0x${Hexadecimal(out.data(exuParams.wbV0Index))} ff=${out.fflags.get.asUInt} fv=${io.flush.valid} frf=${io.flush.bits.robIdx.flag} frv=${io.flush.bits.robIdx.value} self=${io.flush.bits.flushItself()} kill=${cancelVFEX4Clock}\n")
++    }
++  }
+ }
+ 
+ class DispatcherIO[T <: Data](private val gen: T, n: Int) extends Bundle {
+diff --git a/src/main/scala/xiangshan/backend/rob/Rob.scala b/src/main/scala/xiangshan/backend/rob/Rob.scala
+index 84d5b50b4..c9bac3022 100644
+--- a/src/main/scala/xiangshan/backend/rob/Rob.scala
++++ b/src/main/scala/xiangshan/backend/rob/Rob.scala
+@@ -1477,6 +1477,34 @@ class RobImp(override val wrapper: Rob)(implicit p: Parameters, params: BackendP
+   }
+ 
+ 
++  if (xiangshan.backend.fu.wrapper.VDotO1Trace.enabled) {
++    require(!p(xiangshan.DebugOptionsKey).ResetGen, "O1 trace requires common simulation reset")
++    val cycle = RegInit(0.U(64.W))
++    cycle := cycle + 1.U
++    val mode = xiangshan.backend.fu.wrapper.VDotO1Trace.mode
++    when(cycle === 0.U) {
++      printf(p"O1_ROB_BEGIN schema=1 cycle=${cycle} mode=${mode.U} robsize=${RobSize.U} pdestbits=${PhyRegIdxWidth.U} hart=${p(XSCoreParamsKey).HartId.U}\n")
++    }
++    for (i <- 0 until RenameWidth) {
++      val u = io.enq.req(i).bits
++      // Match the real ROB allocation enable; redirect suppresses allocation.
++      when(canEnqueue(i) && !io.redirect.valid && u.fuType === FuType.vdot.U) {
++        printf(p"O1_ROB_ENQ cycle=${cycle} slot=${i.U} rf=${allocatePtrVec(i).flag} rv=${allocatePtrVec(i).value} dest=${u.pdest} pc=0x${Hexadecimal(u.pc)} word=0x${Hexadecimal(u.instr)}\n")
++      }
++    }
++    for (i <- 0 until CommitWidth) {
++      val u = commitDebugUop(i)
++      when(io.commits.isCommit && io.commits.commitValid(i) && u.fuType === FuType.vdot.U) {
++        printf(p"O1_ROB_COMMIT cycle=${cycle} slot=${i.U} rf=${deqPtrVec(i).flag} rv=${deqPtrVec(i).value} dest=${io.commits.info(i).debug_pdest.get} pc=0x${Hexadecimal(u.pc)} word=0x${Hexadecimal(u.instr)}\n")
++      }
++    }
++    // CtrlBlock sends this redirect to EXU through one register. The parser
++    // checks that explicit +1-cycle relationship, without inferring clock maps.
++    when(io.redirect.valid) {
++      printf(p"O1_ROB_REDIRECT cycle=${cycle} rf=${io.redirect.bits.robIdx.flag} rv=${io.redirect.bits.robIdx.value} self=${io.redirect.bits.flushItself()}\n")
++    }
++  }
++
+   if (sys.env.get("VDOT_T13_TRACE").contains("1")) {
+     require(!p(xiangshan.DebugOptionsKey).ResetGen, "T13 trace requires common simulation reset")
+     val t13Cycle = GTimer()
+diff --git a/team/optimizations/o1/README.md b/team/optimizations/o1/README.md
+index 9596fffc2..1e339fa84 100644
+--- a/team/optimizations/o1/README.md
++++ b/team/optimizations/o1/README.md
+@@ -2,19 +2,19 @@
+ 
+ 基点 `9e7cce9c9dc090e5280f1a7f8791551612777cc6`，目标 `cc77-builder/riscv:zjhwork2`。依据是 O0 batch128 的真实日志：738 次旧响应当拍父级 busy 阻塞，同一请求在下一拍接受。该数字不等于候选可以节省的周期数。本页是开发记录，不是 T16 最终报告。
+ 
+-**当前状态（James_Hotten，2026-10-18）：候选已并入并修复父级 FuType 比较的 Scala 类型错误；baseline/T14/O1 三模式真实 FU 仿真通过，O1 在该单元测试中达到响应2拍、接受间隔2拍。默认关闭，真实父级与全核尚未验收。** 当前证据与限制见[整合审查](../../docs/james-o1-integration-20261018.md)。此前 CONTRACT.md 和下文原分支记录保留，不覆盖旧证据或代签人工 ACK。
++**当前状态（James_Hotten，2026-10-18）：baseline/T14/O1 三模式真实 FU 及 VFEX4 父级仿真通过。父级包含生产整数/浮点除法器与真实时钟门控；O1响应2拍、接受间隔2拍，10311次同拍交接通过。修复三模式取消后的时钟保持位未清除。O1默认关闭，全核尚未验收。** 新证据与限制见[父级优化](../../docs/o1-parent-20261018.md)，前轮见[整合审查](../../docs/james-o1-integration-20261018.md)。此前 CONTRACT.md 和下文原分支记录保留，不覆盖旧证据或代签人工 ACK。
+ 
+ ## 改动
+ 
+ - `VDot.scala`：仅 O1 模式允许 RESP/out.ready 且无 reset/redirect/kill 时接收下一请求；该边沿锁存新乘积与非法标志，下一状态为 REDUCE，旧结果在边沿前继续有效。
+ - 该模式用独立 `RegEnable` 保存 vec/v0 写使能，与基类已寄存的 ROB、pdest、vpu、perf 字段保持同一事务；不让 DataHoldBypass 的新输入覆盖旧响应控制。不修改通用 FuncUnit 或 utility。
+ - `ExeUnit.scala`：仅含 VDot 的 VFEX4 候选路径增加 activeIsVDot；只允许 vdot→vdot 交接，不放行 div→vdot、vdot→div 或 div→div 的同拍重叠。redirect/reset 时不接收新请求。完成+接受同拍时 busy 保留新请求。
+-- 原 Dispatcher、输出 one-hot 选择、端口、仲裁优先级和时钟使能更新逻辑不变；增加父级/VDot 的 in.fire 一致性断言。尤其仍保留 Dispatcher 的所有 ready 相与，不能假定其他 FU 的 ready 行为已验证。
+-- ISA、8 路乘法与归约、NEMU、原 22+10000 黄金输入不变。没有吞吐、延迟、Fmax、面积或功耗的新实测结论。
++- 保留原 Dispatcher 的所有 ready 相与、输出 one-hot 选择、端口及仲裁优先级，增加父级/VDot 的 in.fire 一致性断言。本轮已通过真实除法器检查 ready 交互，并复用父级 busy/ROB 取消判断清除 VFEX4 的时钟保持位。
++- ISA、8 路乘法与归约、NEMU、原22+10000黄金输入不变。FU与父级延迟/接受间隔已实测；没有CPU整体收益、Fmax、面积或功耗的新实测结论。
+ 
+ ## 开关与测试入口
+ 
+-| VDOT_T14_FUSED_INPUT | VDOT_O1_HANDOFF | 所选结构（已在FU顶层实测，非全核） |
++| VDOT_T14_FUSED_INPUT | VDOT_O1_HANDOFF | 所选结构（FU及真实VFEX4父级实测，非全核） |
+ |---|---|---|
+ | 0 或未设 | 0 或未设 | 原基础模式，响应 3 拍/接受间隔 4 拍 |
+ | 1 | 0 或未设 | 原 T14 模式，响应 2 拍/接受间隔 3 拍 |
+@@ -29,6 +29,8 @@ O1 开关只在 elaboration 选择结构，不生成运行时切换器。`VDOT_O
+ bash team/optimizations/o1/check-handoff.sh "$PWD/team/out/o1-validation-new"
+ ```
+ 
++真实父级另有入口：`bash team/optimizations/o1/check-parent.sh /absolute/new/output`。它执行三模式 lint、实际时钟门控下的事务/混合除法回归、取消后空闲时钟检查及四类负控，成功标记为 `VFEX4_PARENT_RUNNER_PASS_FULLCORE_PENDING`。依赖子模块必须处于已初始化的固定干净版本。`parent.vlt`只豁免已审阅且由表达式守卫约束的一行除法器位宽告警；其余警告仍阻止通过。
++
+ 输出目录必须不存在。脚本依次运行原基础版和 T14 的未修改 FU 回归，再用真实 VDotFuTestTop 生成候选，并运行 `handoff_test.cpp`。只修改环境变量不保证旧产物重编，必须按脚本使用新的 RTL/对象输出目录。
+ 
+ 新 C++ 检查器逐边沿先比较旧输出，再结算旧响应/取消/复位，最后登记新接受；drain 时明确 valid=0，避免噪声被当作新事务。测试包含原 10022 数值向量连续交接、0/1/2/7 拍反压、96 条合法/非法交替、vec/v0 和身份变化、48 个年龄/环绕/时点/ready 重定向组合、3 个复位时点、10000 拍随机控制，以及身份/写使能/高位/取消读回破坏检出。原分支仅做主机检查；James_Hotten已运行真实FU，实际计数见当前整合审查及新证据，不改写原分支的verification.json。
+@@ -49,4 +51,4 @@ verification.json 记录 17 项主机检查、shell 语法、C++ 在仅端口声
+ 
+ 提交前已核对两个生产文件的原始 Git blob；增量之外的源码未变，候选关闭时保留原 Scala 分支。**尚未生成旧模式与候选 RTL，因此没有生成物等价、Chisel 类型正确性或组合环排除证据。** 原冻结源码、基类、时钟门控和其他 FU 的完整联调仍须实测。
+ 
+-下一步门禁：三模式 FU 真实构建/运行 → 真实 VFEX4（含两种除法）父级联调与时钟/ready 反馈检查 → O1 观察器及双事务同拍配对 → 新 EMU hello/vadd、原功能/异常矩阵和 DiffTest 负控 → T12 控制压力 → 相同镜像性能 A/B → 独立复现。未通过这些门禁，不切换默认模式、不合入 main，不把“候选已提交”写成“II=2 优化完成”。
++下一步门禁：O1观察器及双事务同拍配对 → 新EMU hello/vadd、原功能/异常矩阵和DiffTest负控 → T12控制压力 → 同源码、相同镜像性能A/B → 独立复现。三模式FU和真实VFEX4父级门禁已通过；后续未通过前不切换默认模式、不合入main，不把父级II2等同于CPU优化验收完成。
+diff --git a/team/progress.md b/team/progress.md
+index 11bbb7fd7..2fb41cb31 100644
+--- a/team/progress.md
++++ b/team/progress.md
+@@ -1,5 +1,7 @@
+ # 当前进度（2026-10-18，VFEX4 统一版本）
+ 
++本轮新增[真实VFEX4父级验证与时钟优化](docs/o1-parent-20261018.md)：默认/T14/O1三模式的生产ExeUnit、两种除法器和实际时钟门控通过回归；修复取消后时钟保持位未清除，专门空闲采样三路各192个脉冲降至0。O1父级达到响应2拍/接受间隔2拍，10311次同拍交接通过；仍默认关闭，全核观察器、回归、同源码性能A/B及STA/PPA待完成。修改目前仅在James_Hotten本地，未提交推送。
++
+ 当前路线为 **VFEX4**。2026-10-17 已抓取两个仓库并合并 cc77-builder 的 zjhwork@3d051f0d8、zjhwork2@a877e0575，新增25个来源提交。旧实现清理及 James_Hotten/main 同步已完成于 e9c70db38，见 [清理与同步记录](docs/vfex4-main-sync-20261017.md)。当前推进 [O0四场景诊断与256点积矩阵](docs/o0-progress-20261018.md)。前轮 [同步与问题修复记录](docs/james-sync-20261017.md)、此前 [T13整合](docs/james-t13-integration-20261016.md) 与 [VFEX4整合](docs/james-integration-20261015.md) 保留。
+ 
+ 前轮 [James源码全核复验](docs/james-fullcore-20261016.md) 已完成：新EMU/NEMU构建、13窗口校准、117唯一用例矩阵、T12控制与bit100负控、original190/lean199软件计划、T13全量126次运行及归档独立解包复算均通过。执行硬件固定d3706f0b8，检查器修复与控制序列调整单独绑定；共143次实际启动、141次接受、2次排除，原始失败证据保留。
+@@ -19,7 +21,7 @@
+ | T14 | 可选输入乘积融合已并入，默认关闭；来源完整 A/B 与本轮冻结工具离线复算通过；当前检查器接受两模式控制日志 | 无本轮新EMU验证；未晋升默认模式；STA/PPA待验证 |
+ | T15 | 独立 s16x8/r64 模型、数据与真实单元证据并入，本轮离线重算通过 | 非全核SEW16 ISA；人工复核待完成 |
+ | 统一微基准 | 四项目程序/原始归档并入；修复3类验收漏洞，当前工具复验64镜像/860窗口通过 | 非新全核运行、官方排名或物理时序结论 |
+-| O0/O1 | 四场景12轨迹/144窗口归档诊断通过；256点积1/2/4路矩阵18镜像、II4基线54次新运行/648窗口通过；O1默认关闭候选已并入James_Hotten | 矩阵硬件固定d370；同源码baseline/T14配对及长间隔归因未完成；O1真实父级、观察器和全核验收未完成；详见[整合审查](docs/james-o1-integration-20261018.md) |
++| O0/O1 | O0四场景12轨迹/144窗口与256点积矩阵54次/648窗口保留；O1默认关闭；三模式真实VFEX4父级回归通过，修复取消后空闲时钟，O1父级II2/10311次交接 | 矩阵硬件固定d370；同源码性能配对及长间隔归因未完成；O1观察器、全核验收未完成；详见[父级优化](docs/o1-parent-20261018.md)及[整合审查](docs/james-o1-integration-20261018.md) |
+ | T16～T18 | 工程优化、回归与独立复现后集中整理报告/答辩材料 | STA/Liberty/PVT/SDC、布局时序、PPA、最终报告与交付未完成 |
+ 
+ ## 当前架构

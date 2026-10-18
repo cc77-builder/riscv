@@ -1,0 +1,5 @@
+`verilator_config
+// Pinned yunsuan cadd3c2 + firtool 1.62.1: index is zero-extended sign bit + 1,
+// hence 1 or 2 into four entries. Only the two operand-extension warnings here.
+// check-parent.sh verifies the exact expression before applying this waiver.
+lint_off -rule WIDTHEXPAND -file "*/IterBlockI8Nr4.sv" -lines 37
