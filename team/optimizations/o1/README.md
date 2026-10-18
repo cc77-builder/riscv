@@ -1,5 +1,11 @@
 # O1：受控 vdot→vdot 同拍交接候选
 
+**2026-10-18：真实 VFEX4 父级两模式联调通过，成果本地保存。** 固定源码 `99d5f6c751234622b8f824ed7fcee39f3aae711d`，真实 VDot/VIDiv/VFDivSqrt、Dispatcher、busy 和门控共同仿真；覆盖 DIV 切换、反压、432 组重定向、27 组复位及 20000 拍随机控制。O1 完成 10343 次同拍交接，七项负控全部检出。见 [父级工程记录](parent/README.md) 和 [原始证据](evidence/20261018-parent-validation/README.md)。
+
+当前 `parent_exu_elaborated=true`、`parent_validation_pass=true`、`fullcore_difftest=false`、`performance_measured=false`。两模式边界刺激有差异，DIV 取消当拍旧 valid 及取消后门控开启行为见工程记录；不能用总测试周期比值宣布加速。下一步为 O1 观察器与全核回归，之后公平性能 A/B；默认 O1 仍关闭，T16 报告继续后置。
+
+## 前一轮：三模式 FU 验证与交付（历史）
+
 **2026-10-18：三模式真实 FU 验证通过，本轮交付目标为 `cc77-builder/riscv:zjhwork`。** 复用 `zjhwork2@75dce60` 的 O0/O1 成果，修复测试入口及真实编译发现的问题后，实际构建源码固定为 `db0408aa42afc13e3ff93e865f26a2d5bfb02c93`。本页为工程记录；正式 T16 报告继续后置。
 
 [本轮验证证据](evidence/20261018-fu-validation/README.md) 保存首轮 `fu-01` 的编译失败及修复后的 `fu-02` 成功记录。三模式都已执行 Chisel 生成和 Verilator 仿真；生成顶层只实例化真实 VDot FU，尚未实例化真实 ExeUnit。状态为 `fu_validation_pass=true`、`parent_exu_elaborated=false`、`fullcore_difftest=false`、`performance_measured=false`。默认 O1 开关仍为 0。
@@ -39,7 +45,7 @@ bash team/optimizations/o1/check-handoff.sh "$PWD/team/out/o1-validation-new"
 
 脚本依次运行原基础版、T14 版和 O1 候选，使用独立 RTL/对象目录，保存源码摘要并在结束时复核。成功标记为 `O1_FU_ONLY_PASS` 和 `O1_FU_RUNNER_PASS_PARENT_ELABORATION_AND_FULLCORE_PENDING`。原 FU 测试文件及旧脚本保留。`contract_model.py` 是独立接口约定模型，其中假设的除法 5 拍仅作主机刺激，不表示真实除法器延迟。
 
-下一步是**真实 VFEX4 父级联调，包含 DIV 及 vdot/DIV 切换、busy、ready 反馈和时钟门控**；之后补 O1 观察器、全核功能/异常与 DiffTest、控制压力、同镜像性能 A/B 和独立复现。当前默认模式继续关闭 O1，不把 FU 的 II=2 当成整核优化验收完成。
+在该轮 FU 完成时，下一步是**真实 VFEX4 父级联调，包含 DIV 及 vdot/DIV 切换、busy、ready 反馈和时钟门控**；之后补 O1 观察器、全核功能/异常与 DiffTest、控制压力、同镜像性能 A/B 和独立复现。当前默认模式继续关闭 O1，不把 FU 的 II=2 当成整核优化验收完成。
 
 ## 历史：zjhwork2 候选阶段
 

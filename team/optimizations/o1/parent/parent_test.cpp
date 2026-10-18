@@ -142,7 +142,8 @@ class Bench {
   void inject() { injected=true;std::cerr<<"O1_PARENT_INJECT "<<fault<<'\n'; }
   Cycle step(const Req& q,bool valid=false,bool ready=true,Flush f={},bool reset=false) {
     dut->clock=0;dut->reset=reset;dut->io_test_enable=reset;
-    // The old parent relies on upstream suppression at reset/redirect boundaries.
+    // For this T14 baseline test only, suppress valid at reset/redirect boundaries.
+    // This stimulus restriction is not a verified upstream interface contract.
     // O1 is additionally stressed with valid still asserted at those boundaries.
     const bool offered=valid && (handoff || (!reset && !f.valid));
     if(valid && !offered) ++legacySuppressed;

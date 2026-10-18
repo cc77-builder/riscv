@@ -1,6 +1,15 @@
 # 后续优化开发入口
 
-## 当前进展：三模式 FU 本地验证通过，交付目标 zjhwork
+## 当前进展：O1 真实 VFEX4 父级联调通过，本地保存
+
+2026-10-18，固定源码 `99d5f6c` 的真实 ExeUnit＋VDot/VIDiv/VFDivSqrt＋三个 ClockGate 两模式通过。10022 组 vdot、真实 DIV、全部九种 FU 切换、432 组 redirect、27 组 reset、20000 拍随机控制及七项负控均有原始证据。O1 同拍交接 10343 次，连续 vdot 接受间隔从 T14 的 3 拍变为 2 拍；这是父级指标。
+
+[父级工程记录](team/optimizations/o1/parent/README.md) 与 [证据](team/optimizations/o1/evidence/20261018-parent-validation/README.md) 记录两次前期失败、实际源码/工具/依赖和边界。T14 对照在 reset/redirect 主动抑制 valid，O1 不抑制；两模式总周期不能作为公平加速比。现有 DIV 的取消当拍旧响应及取消后门控行为留待全核验证，不隐去或改变其黄金预期。
+
+本轮未改生产 RTL，成果本地提交，尚未推送 GitHub。`parent_validation_pass=true`，O1 全核回归、观察器适配和性能 A/B 尚未完成。下一步补 O1 观察器并跑全核功能/异常/控制压力，通过后再测同镜像性能。默认 O1 关闭，正式 T16 报告继续后置。
+
+
+## 前一轮：三模式 FU 本地验证通过（历史）
 
 2026-10-18，按用户要求复用 `zjhwork2@75dce60` 的 O0/O1，在本地修复并验证后准备普通快进上传 `cc77-builder/riscv:zjhwork`。实际构建源码为 `db0408aa42afc13e3ff93e865f26a2d5bfb02c93`；下方 zjhwork2 目标和未验证状态均为历史记录。
 

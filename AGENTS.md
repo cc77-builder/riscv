@@ -1,6 +1,15 @@
 # 团队 Agent 入口
 
-## 本轮：O0/O1 复用与三模式 FU 验证，交付目标 zjhwork
+## 本轮：真实 VFEX4 父级联调已通过，本地保存
+
+用户 2026-10-18 要求“开始真实 VFEX4 父级联调，包含 DIV 切换、反压及取消”。在本地分支 `local/o1-parent-validation-20261018` 完成，实际受测源码 `99d5f6c751234622b8f824ed7fcee39f3aae711d`；本轮没有新 Push，不改远端分支。下方 FU 已发布状态和旧父级未验证状态为历史记录。
+
+先读 [父级工程记录](team/optimizations/o1/parent/README.md) 与 [原始证据](team/optimizations/o1/evidence/20261018-parent-validation/README.md)。`parent-02` 的真实两模式、七项检查器负控通过；O1 接受 13659、响应 13087、取消 510、复位丢弃 62、同拍交接 10343 次。所有原始失败/探针记录保留，本轮生产 src、依赖、ISA/NEMU/黄金数据未变化。交付后唯一测试源变动是纠正一条过强注释，非注释行一致，补丁单独归档；不因文档/注释重跑构建。
+
+T14 baseline 在 reset/redirect 周期抑制输入 valid 是测试限制，不是已证明的系统合同。DIV 取消当拍旧 valid 和取消后门控仍开已如实记录；不能据此宣称 ROB 提交/整核验证通过。当前 `parent_exu_elaborated=true`、`parent_validation_pass=true`、`fullcore_difftest=false`、`performance_measured=false`。下一项为 O1 观察器、全核回归，然后同镜像性能 A/B；默认 O1 仍关闭，正式 T16 报告继续后置，不代签人工 ACK。
+
+
+## 前一轮：O0/O1 复用与三模式 FU 验证（已发布的历史记录）
 
 2026-10-18，用户明确要求“接下来复用 O0，沿用 O1 候选，先修这两处，再跑三模式 FU 验证。先拉取到本地，本地测试通过再上传 zjhwork”。本轮已在独立本地分支复用 `zjhwork2@75dce60`，本地验证通过；授权将该批成果及修复普通快进推送至 `cc77-builder/riscv:zjhwork`。发布前核对实时远端与祖先关系，发布后回读 SHA，实际推送以回执为准。本节覆盖下方历史分支限制，保留 zjhwork2 原记录，不授权写入其他分支或自动展开下一项任务。
 
