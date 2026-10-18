@@ -1,5 +1,7 @@
 # 团队开发入口
 
+**2026-10-18：James_Hotten 已完成真实父级和新全核同拍观察，正在补齐 FTQ、计数窗口、完整矩阵及 DiffTest 负控。** O1 默认关闭，详见[当前观察证据](docs/o1-trace-20261018.md)。另并入 zjhwork 的[独立三模式 FU 验证](optimizations/o1/evidence/20261018-fu-validation/README.md)及严格负控；当前推送范围仅 James_Hotten，下文 main 同步为历史操作。
+
 **2026-10-17：当前生产路线统一为 VFEX4；旧 VFEX1 实现及专用构建/测试入口已从工作树删除。** 用户授权本轮更新 James_Hotten 并同步 main，交付过程见 [清理与同步记录](docs/vfex4-main-sync-20261017.md)。进度见 [progress.md](progress.md)。T14 候选默认关闭；原全核证据绑定各自执行源码，不将此次清理或历史复算称为新的全核运行。
 
 | 内容 | 入口 |

@@ -1,5 +1,11 @@
 # James_Hotten O0/O1 integration scope
 
+The current user authorizes merging fetched branch progress into James_Hotten
+and pushing James_Hotten only, then completing FTQ/counter observations and the
+O1 matrix/DiffTest negative control. Main is outside this publication scope.
+The zjhwork c3c417a26 FU evidence and stricter negative gate are integrated;
+that branch's historical publication instructions do not replace this scope.
+
 The current request starts optimization on James_Hotten after branch integration
 and review of correctness, acceptance security and performance evidence.
 The previous VFEX1 cleanup/main synchronization finished at e9c70db38;

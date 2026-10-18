@@ -178,7 +178,12 @@ int main(int argc,char** argv) {
   try {
     std::string fault=argc==3?argv[2]:"";
     require(fault.empty()||fault=="identity"||fault=="wen"||fault=="high"||fault=="cancel","unknown fault");
-    auto data=load(argv[1]);Bench b(fault);test(b,data);require(fault.empty(),"fault escaped");
+    auto data=load(argv[1]);Bench b(fault);test(b,data);
+    // An injected fault that survives the scoreboard is a gate failure, never an
+    // expected DUT rejection. Keep its status distinct from caught violations.
+    if(!fault.empty()) {
+      std::cerr<<"O1_FU_FAULT_ESCAPED "<<fault<<'\n';return 3;
+    }
     std::cout<<"O1_FU_ONLY_PASS latency=2 ii=2 accepted="<<b.accepted<<" responses="<<b.responses
       <<" cancelled="<<b.cancels<<" reset_dropped="<<b.resets<<" handoffs="<<b.overlaps
       <<" stalls="<<b.stalls<<" parent_tested=0 fullcore_tested=0\n";return 0;

@@ -6,6 +6,8 @@
 
 ## 改动
 
+2026-10-18 补充并入 zjhwork@c3c417a26：FU 负控要求准确的注入类型、失败原因、行序和真实 exit=1；漏检单独返回 exit=3，不能当作预期检出。构建入口保留 James 的 HEAD 补丁与未跟踪输入保护，并纳入负控检查器来源。该分支的[三模式 FU 证据](evidence/20261018-fu-validation/README.md)绑定 db0408aa4，独立于 James 的父级/全核运行，不将两批计数混合。其两处 FuType.vdot.U 修复已在 James 存在，合并未改生产 RTL。
+
 - `VDot.scala`：仅 O1 模式允许 RESP/out.ready 且无 reset/redirect/kill 时接收下一请求；该边沿锁存新乘积与非法标志，下一状态为 REDUCE，旧结果在边沿前继续有效。
 - 该模式用独立 `RegEnable` 保存 vec/v0 写使能，与基类已寄存的 ROB、pdest、vpu、perf 字段保持同一事务；不让 DataHoldBypass 的新输入覆盖旧响应控制。不修改通用 FuncUnit 或 utility。
 - `ExeUnit.scala`：仅含 VDot 的 VFEX4 候选路径增加 activeIsVDot；只允许 vdot→vdot 交接，不放行 div→vdot、vdot→div 或 div→div 的同拍重叠。redirect/reset 时不接收新请求。完成+接受同拍时 busy 保留新请求。
@@ -49,7 +51,7 @@ contract_model.py 是独立接口约定模型，不解释或执行 Chisel。其�
 
 ## 来源分支的原始验证与限制（并入前）
 
-verification.json 记录 17 项主机检查、shell 语法、C++ 在仅端口声明桩下的 -fsyntax-only 及真实 RTL 入口缺 Mill 时的 exit=2。C++ 声明桩没有 DUT 行为，没有链接或执行仿真。已有 O0 性能数据只作为决策依据，不当成新核结果。
+原 [候选阶段回执](evidence/20261018-candidate-host/verification.json)记录 17 项主机检查、shell 语法、C++ 在仅端口声明桩下的 -fsyntax-only 及真实 RTL 入口缺 Mill 时的 exit=2。C++ 声明桩没有 DUT 行为，没有链接或执行仿真。目录 verification.json 现指向 zjhwork 后续 FU 实测；已有 O0 性能数据只作为决策依据，不当成新核结果。
 
 提交前已核对两个生产文件的原始 Git blob；增量之外的源码未变，候选关闭时保留原 Scala 分支。**尚未生成旧模式与候选 RTL，因此没有生成物等价、Chisel 类型正确性或组合环排除证据。** 原冻结源码、基类、时钟门控和其他 FU 的完整联调仍须实测。
 
