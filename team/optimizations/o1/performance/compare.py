@@ -7,6 +7,7 @@ import hashlib
 import importlib.util
 import json
 import os
+import re
 from pathlib import Path
 import statistics
 import subprocess
@@ -18,7 +19,7 @@ HERE = Path(__file__).resolve().parent
 DEFAULT_WORK = Path("/home/riscv/riscv-lab/o1-performance-20261018")
 IMAGE_ROOT = Path("/home/riscv/riscv-lab/unified-vdot-benchmark-20261017/runs/ours-images-02")
 O1_PINS = Path("/home/riscv/riscv-lab/zjhwork2-review-20261018/runs/o1-fullcore-build-02/hardware-inputs.json")
-T14_PINS = DEFAULT_WORK / "t14-build-resume-01/hardware-inputs.json"
+T14_PINS = DEFAULT_WORK / "t14-build-final-01/hardware-inputs.json"
 REFERENCE = Path("/home/riscv/riscv-lab/t12-regression-20261013/nemu/reference/build/riscv64-nemu-interpreter-so")
 FLASH = Path("/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin")
 MODES = ("t14", "o1")
@@ -48,6 +49,12 @@ def load_module(name, path):
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
+
+
+
+def validate_loaded_reference(text, reference, normalize):
+    paths = [s.strip() for s in re.findall(r"The reference model is ([^\r\n]+)", normalize(text))]
+    require(paths == [str(reference)], "wrong or ambiguous loaded reference")
 
 
 def expected_names():
@@ -198,6 +205,9 @@ def run(args):
         files[str(args.t14_pins)] = sha(args.t14_pins)
         files[str(args.reference)] = "efbed0774addc27eac38af1a19ab5d9c9dd5f179b5015f25ae7b80b966185bd4"
         files[str(args.flash)] = "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994"
+        for auxiliary in (ROOT / "build/constantin.txt", ROOT / "build/plusArgs"):
+            if auxiliary.is_file():
+                files[str(auxiliary)] = sha(auxiliary)
         driver_paths = [Path(__file__), HERE / "CONTRACT.md", Path(check.__file__),
                         Path(observer.__file__), Path(gate.__file__),
                         ROOT / "team/workloads/unified-vdot/generate.py"]
@@ -231,7 +241,8 @@ def run(args):
                       "stage": image["suite"], "build": str(build), "replay": replay,
                       "command": command, "cwd": str(ROOT), "started_utc": now(), "status": "RUNNING",
                       "files": {str(p): files[str(p)] for p in (Path(emu), args.reference, args.flash, binary)},
-                      "single_core": True, "emu_threads": 1}
+                      "single_core": True, "emu_threads": 1,
+                      "runtime_environment": {k: os.environ.get(k) for k in ("NOOP_HOME", "NEMU_HOME", "CONSTANTIN_ROOT")}}
             save(directory / "runtime.json", record)
             try:
                 verify_hashes(files)
@@ -246,11 +257,7 @@ def run(args):
                 stderr = (directory / "stderr.log").read_text()
                 for stream in (stdout, stderr):
                     gate.validate_failure_markers(stream)
-                loaded = [s.strip() for s in __import__("re").findall(r"The reference model is ([^\r\n]+)", gate.normalize_console(stdout))]
-                # Emulator versions can print the loaded-reference banner to stderr.
-                if not loaded:
-                    loaded = [s.strip() for s in __import__("re").findall(r"The reference model is ([^\r\n]+)", gate.normalize_console(stderr))]
-                require(loaded == [str(args.reference)], "wrong or ambiguous loaded reference")
+                validate_loaded_reference(stderr + stdout, args.reference, gate.normalize_console)
                 windows = check.verify(build, directory)
                 analysis = observer.analyze(stderr + stdout)
                 require(analysis["status"] == "O1_TRACE_PASS", "incomplete observer")

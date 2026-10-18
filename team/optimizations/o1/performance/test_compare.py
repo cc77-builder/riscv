@@ -147,5 +147,20 @@ class Replay(unittest.TestCase):
         ]), compare.summarize(samples()))
 
 
+
+class ReferenceBinding(unittest.TestCase):
+    def test_one_reference_banner_passes(self):
+        compare.validate_loaded_reference("The reference model is /ref.so\n", "/ref.so", lambda x: x)
+
+    def test_duplicate_across_streams_rejected(self):
+        with self.assertRaises(ValueError):
+            compare.validate_loaded_reference("The reference model is /ref.so\nThe reference model is /ref.so\n",
+                                              "/ref.so", lambda x: x)
+
+    def test_foreign_reference_rejected(self):
+        with self.assertRaises(ValueError):
+            compare.validate_loaded_reference("The reference model is /foreign.so\n", "/ref.so", lambda x: x)
+
+
 if __name__ == "__main__":
     unittest.main()
