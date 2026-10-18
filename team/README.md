@@ -1,5 +1,7 @@
 # 三人团队：项目计划与开发入口
 
+> **2026-10-18 O1 成果交付 zjhwork。** 本次包括真实父级联调、全核回归及T14/O1同镜像公平性能比较；batch128周期降低20.02%，相对RVV为1.870×。见 [发布说明](docs/o1-publication-20261018.md)。本条更新下方未上传状态，实际最终版本以远端回读为准；密封证据保持原样，O1默认关闭，未代签人工ACK。
+
 > **T14/O1 同镜像公平性能比较完成，本地保存。** 独立batch128平均周期 453.25→362.50，降低20.02%；O1相对实测RVV为1.870×。36次主运行、478窗口及完整离线复算通过。见 [性能入口](optimizations/o1/performance/README.md) · [证据](optimizations/o1/evidence/20261018-performance-ab/README.md)。O1默认关闭，未推送；PPA/T17/人工ACK仍待完成，正式T16报告后置，下方按历史时点阅读。
 
 > **2026-10-18 O1 全核功能与控制回归、严格离线复核通过，本地保存。** 固定硬件 `18c0ce08`、原检查器 `518c0567` 的十二项运行全部符合预期；门禁集成 `d1100020` 后对未修改原日志重审通过，未新增 EMU 运行。正常提交 3,012 条 vdot；117 个唯一功能用例（80 合法、37 异常）、124 次分片执行、bit100 负控及正常恢复通过。控制程序自身满足八项覆盖，同拍交接 303 次，密集程序另有 725 次。见 [全核工程入口](optimizations/o1/fullcore/README.md)、[严格日志门禁](optimizations/o1/audit/README.md) 和 [完整证据](optimizations/o1/evidence/20261018-fullcore-validation/README.md)。本轮全核覆盖 vdot/VIDiv，未覆盖 VFDiv，取消仅观察到 vdot reduce 阶段；尚无新性能 A/B、PPA、T17 或人工 ACK 结论。O1 默认关闭，本轮不推送，正式 T16 报告继续后置；下方状态为历史记录。
