@@ -20,6 +20,7 @@ import org.chipsalliance.cde.config.Parameters
 import chisel3._
 import chisel3.experimental.hierarchy.{Definition, instantiable}
 import chisel3.util._
+import chisel3.util.experimental.BoringUtils.tapAndRead
 import freechips.rocketchip.diplomacy.{LazyModule, LazyModuleImp}
 import utility._
 import xiangshan.backend.fu.{CSRFileIO, FenceIO, FuncUnitInput}
@@ -274,6 +275,68 @@ class ExeUnitImp(
     }
     when(io.in.valid && !io.in.ready) {
       printf(p"T12_VFEX4_WAIT cycle=${t12Cycle} rob=${io.in.bits.robIdx.flag}:${io.in.bits.robIdx.value} fu=0x${Hexadecimal(io.in.bits.fuType)} busy=${busy}\n")
+    }
+  }
+
+  if (xiangshan.backend.fu.wrapper.VDotHandoff.traceEnabled &&
+      fuCfgs.contains(xiangshan.backend.fu.FuConfig.VDotCfg)) {
+    require(exuParams.name == "VFEX4" && !exuParams.latencyCertain,
+      "O1 trace requires the current uncertain-latency VFEX4")
+    require(!p(xiangshan.DebugOptionsKey).ResetGen,
+      "O1 trace requires the common simulation reset")
+    require(fuCfgs.count(_.fuType == FuType.vdot) == 1)
+    val observedVDot = funcUnits(fuCfgs.indexWhere(_.fuType == FuType.vdot))
+      .asInstanceOf[xiangshan.backend.fu.wrapper.VDot]
+    // Every timestamp and sequence register is on the ungated parent clock.
+    // Child I/O is read directly; private expressions are tapped without feedback.
+    val o1Cycle = GTimer()
+    val o1NextSeq = RegInit(0.U(64.W))
+    val o1ActiveVDotSeq = RegInit(0.U(64.W))
+    val o1SchemaPrinted = RegInit(false.B)
+    val o1Killed = tapAndRead(observedVDot.o1ObservedKilled)
+    val o1State = tapAndRead(observedVDot.o1ObservedState)
+    val o1IllegalInput = tapAndRead(observedVDot.o1ObservedIllegalInput)
+    val o1Vl = tapAndRead(observedVDot.o1ObservedVl)
+    val o1In = observedVDot.io.in.bits.ctrl
+    // DataHoldBypass outCtrl exposes the NEW request during a handoff. These
+    // actual registered output fields continue to identify the OLD response.
+    val o1Out = observedVDot.io.out.bits.ctrl
+    val o1Data = observedVDot.io.out.bits.res.data
+    val o1Exception = o1Out.exceptionVec.get.asUInt
+    val o1Illegal = o1Out.exceptionVec.get(xiangshan.ExceptionNO.illegalInstr)
+    when(io.in.fire) { o1NextSeq := o1NextSeq + 1.U }
+    when(observedVDot.io.in.fire) { o1ActiveVDotSeq := o1NextSeq }
+    when(!reset.asBool) {
+      when(!o1SchemaPrinted) {
+        printf(p"O1_SCHEMA version=1 clock=global latency=2 rob_size=${RobSize.U} ftq_size=${FtqSize.U} vlen=${VLEN.U} handoff=${vdotHandoff.B.asUInt}\n")
+        o1SchemaPrinted := true.B
+      }
+      when(io.in.fire) {
+        printf(p"O1_VFEX4_ACCEPT cycle=${o1Cycle} seq=${o1NextSeq} rob=${io.in.bits.robIdx.flag}:${io.in.bits.robIdx.value} fu=0x${Hexadecimal(io.in.bits.fuType)} pdest=${io.in.bits.pdest}\n")
+      }
+      when(io.in.valid && !io.in.ready) {
+        printf(p"O1_VFEX4_WAIT cycle=${o1Cycle} rob=${io.in.bits.robIdx.flag}:${io.in.bits.robIdx.value} fu=0x${Hexadecimal(io.in.bits.fuType)} busy=${busy}\n")
+      }
+      // CtrlBlock registers the ROB redirect once before delivering this flush.
+      // Log both boundaries instead of inferring the parent flush from ROB time.
+      when(io.flush.valid) {
+        printf(p"O1_VFEX4_REDIRECT cycle=${o1Cycle} rob=${io.flush.bits.robIdx.flag}:${io.flush.bits.robIdx.value} self=${io.flush.bits.flushItself()}\n")
+      }
+      when(observedVDot.io.in.fire) {
+        printf(p"O1_ACCEPT cycle=${o1Cycle} seq=${o1NextSeq} rob=${o1In.robIdx.flag}:${o1In.robIdx.value} pdest=${o1In.pdest} vl=${o1Vl} illegal=${o1IllegalInput} vecwen=${o1In.vecWen.get} v0wen=${o1In.v0Wen.get}\n")
+      }
+      when(o1Killed) {
+        printf(p"O1_KILL cycle=${o1Cycle} seq=${o1ActiveVDotSeq} rob=${o1Out.robIdx.flag}:${o1Out.robIdx.value} pdest=${o1Out.pdest} redirect=${io.flush.bits.robIdx.flag}:${io.flush.bits.robIdx.value} self=${io.flush.bits.flushItself()} state=${o1State}\n")
+      }
+      when(observedVDot.io.out.valid && !observedVDot.io.out.ready) {
+        printf(p"O1_STALL cycle=${o1Cycle} seq=${o1ActiveVDotSeq} rob=${o1Out.robIdx.flag}:${o1Out.robIdx.value} pdest=${o1Out.pdest} illegal=${o1Illegal} data=0x${Hexadecimal(o1Data)} vecwen=${o1Out.vecWen.get} v0wen=${o1Out.v0Wen.get} exception=0x${Hexadecimal(o1Exception)}\n")
+      }
+      when(observedVDot.io.out.fire) {
+        printf(p"O1_RESPONSE cycle=${o1Cycle} seq=${o1ActiveVDotSeq} rob=${o1Out.robIdx.flag}:${o1Out.robIdx.value} pdest=${o1Out.pdest} illegal=${o1Illegal} data=0x${Hexadecimal(o1Data)} vecwen=${o1Out.vecWen.get} v0wen=${o1Out.v0Wen.get} exception=0x${Hexadecimal(o1Exception)}\n")
+      }
+      when(observedVDot.io.out.fire && observedVDot.io.in.fire) {
+        printf(p"O1_HANDOFF cycle=${o1Cycle} oldseq=${o1ActiveVDotSeq} newseq=${o1NextSeq} oldrob=${o1Out.robIdx.flag}:${o1Out.robIdx.value} newrob=${o1In.robIdx.flag}:${o1In.robIdx.value} oldpdest=${o1Out.pdest} newpdest=${o1In.pdest} busy=${busy}\n")
+      }
     }
   }
 
