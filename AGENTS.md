@@ -1,6 +1,14 @@
 # 团队 Agent 入口
 
-## 当前任务：O1 全核功能与控制回归、严格离线复核通过
+## 当前任务：T14/O1 同镜像公平性能比较进行中
+
+用户要求完成 T14/O1 同镜像公平比较。分支为 local/o1-performance-20261018，工作根为 /home/riscv/riscv-lab/o1-performance-20261018；先读 team/optimizations/o1/performance/CONTRACT.md 和工作根 WORK_STATE.json。正式 campaign-01 的执行源码提交为 3fa8a70645cf3f38a9d05618ac555a4582041013。两模式共用原统一测试的16个ELF/bin、参考库和flash，计划36次运行（含4次额外确定性重放）、478个窗口、192个正式性能窗口。
+
+匹配T14已完成真实编译及输入/依赖/编译参数核对，最终回执 t14-build-final-01/build-state.json；原O1固定二进制与1673个已登记生成工件未变。首轮辅助文件路径失败、恢复编译及可变宿主time.log审计范围修正都已保留，不覆盖失败记录。目前两模式的校准与功能门禁均通过，正在执行正式性能场景；不得在完整数据验收前宣布新加速比。
+
+运行期间禁止修改 campaign-01/artifact-pins.json 中的源码、检查器或输入，也不再构建覆盖两个受测EMU。仅后续结果导出/工程文档可在冻结输入之外准备。等待全部36项结束，再运行 results.py 全套离线重审、调查任何超过2%的退化，随后密封证据、核对Git存储字节并交付Windows副本。本轮本地保存，不推送GitHub；O1默认关闭，正式T16报告继续后置，不代签人工ACK。
+
+## 前一轮：O1 全核功能与控制回归、严格离线复核通过
 
 用户 2026-10-18 要求的 O1 观察器适配及本轮全核回归已完成，工作分支为 `local/o1-fullcore-20261018`。MinimalConfig 单核 EMU 的硬件构建源码为 `18c0ce08a40e889654bfe76d5435f272854ad7d0`，原运行检查器冻结在 `518c05674d5ecfed04a944cf01c99cea488b6c8a`；运行结束后以 `d110002006001d45a39dbc00591a299672940818` 集成严格日志门禁，并对同一份未修改原始日志完成离线全套重审，没有再次运行 EMU。十二项作业全部符合预期（十一项正常通过、一项 bit100 差分负控按预期拒错），同镜像正常参考库恢复通过；主机检查 41＋25＝66 项通过。先读 [全核工程入口](team/optimizations/o1/fullcore/README.md)、[日志门禁](team/optimizations/o1/audit/README.md) 和 [归档证据](team/optimizations/o1/evidence/20261018-fullcore-validation/README.md)。
 
