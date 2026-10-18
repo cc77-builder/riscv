@@ -118,8 +118,12 @@ def ptr(value):
 
 
 def flushed(rob, origin, self_flush):
-    delta = (ptr(rob) - ptr(origin)) % 96
-    return 0 < delta < 48 or (delta == 0 and self_flush == 1)
+    # Exact CircularQueuePtr.isAfter comparator, including equal indices with
+    # opposite flags (distance 48). Do not substitute a strict half-ring bound.
+    flag, index = map(int, rob.split(':'))
+    origin_flag, origin_index = map(int, origin.split(':'))
+    after = bool(flag ^ origin_flag) ^ (index > origin_index)
+    return after or (rob == origin and self_flush == 1)
 
 
 def histogram(values):

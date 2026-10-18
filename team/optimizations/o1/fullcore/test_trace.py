@@ -148,6 +148,23 @@ def replace_line(text, prefix, transform):
 
 
 class TraceTests(unittest.TestCase):
+    def test_all_rob_pointer_pairs_match_inclusive_half_ring_contract(self):
+        # Independent modular-distance oracle for every pair of the 96 encoded
+        # pointers and both redirect modes. In hardware the opposite wrap flag
+        # at the same index isAfter, so the distance-48 boundary is inclusive.
+        checks = 0
+        for left in range(96):
+            rob = f'{left//48}:{left%48}'
+            for right in range(96):
+                origin = f'{right//48}:{right%48}'
+                distance = (left - right) % 96
+                for self_flush in (0, 1):
+                    expected = 1 <= distance <= 48 or (distance == 0 and self_flush == 1)
+                    self.assertEqual(a.flushed(rob, origin, self_flush), expected,
+                                     (rob, origin, self_flush))
+                    checks += 1
+        self.assertEqual(checks, 18432)
+
     def test_real_handoff_identity_with_div_sequence_gap(self):
         result = a.analyze(handoff_fixture().text())
         self.assertEqual(result['status'], 'O1_TRACE_PASS')
