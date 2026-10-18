@@ -11,10 +11,10 @@ mkdir -p "$out"
 exec > >(tee "$out/runner.log") 2>&1
 trap 'rc=$?; printf "exit_code=%s\n" "$rc" > "$out/runner.status"' EXIT
 cd "$root"
+source team/scripts/activate.sh
 for tool in python3 java mill verilator clang++; do
   command -v "$tool" || { echo "O1_RTL_NOT_RUN_MISSING_TOOL=$tool"; exit 2; }
 done
-source team/scripts/activate.sh
 export CHISEL_FIRTOOL_PATH=${CHISEL_FIRTOOL_PATH:-"$HOME/.cache/llvm-firtool/1.62.1/bin"}
 test -x "$CHISEL_FIRTOOL_PATH/firtool"
 export JAVA_OPTS=${JAVA_OPTS:-"-Xmx12G -Xss16m"}
@@ -30,7 +30,7 @@ sha256sum src/main/scala/xiangshan/backend/fu/wrapper/VDot{,Handoff}.scala \
   src/main/scala/xiangshan/backend/fu/{FuncUnit,FuConfig}.scala \
   src/main/scala/xiangshan/backend/fu/vector/{VecNonPipedFuncUnit,VDotDatapath}.scala \
   team/rtl/vdot/{GenerateVDotFu.scala,prepare_vectors.py,fu_test.cpp} \
-  team/optimizations/o1/{handoff_test.cpp,check-handoff.sh} build.sc > "$out/source.sha256"
+  team/optimizations/o1/{handoff_test.cpp,check-handoff.sh,check_negative.py,test_negative_gate.py,test_runner_preflight.py} build.sc > "$out/source.sha256"
 # Existing tests and input data stay unchanged and cover the default and T14 modes.
 for fused in 0 1; do
   VDOT_O1_HANDOFF=0 VDOT_T14_FUSED_INPUT="$fused" VDOT_OUT_DIR="$out/legacy-$fused" \
@@ -51,9 +51,8 @@ grep -q '^O1_FU_ONLY_PASS ' "$out/result.log"
 for fault in identity wen high cancel; do
   rc=0
   "$binary" "$out/vectors.tsv" "$fault" > "$out/inject-$fault.log" 2>&1 || rc=$?
-  test "$rc" -eq 1
-  grep -q "^O1_INJECT $fault$" "$out/inject-$fault.log"
-  grep -q '^O1_FU_FAIL ' "$out/inject-$fault.log"
+  python3 -B team/optimizations/o1/check_negative.py --fault "$fault" \
+    --return-code "$rc" --log "$out/inject-$fault.log"
 done
 sha256sum -c "$out/source.sha256" > "$out/source-after.log"
 echo 'O1_FU_RUNNER_PASS_PARENT_ELABORATION_AND_FULLCORE_PENDING'
