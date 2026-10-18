@@ -1,43 +1,64 @@
-> 当前统一分支状态（2026-10-17）：完整旧 pilot 硬件流已重放通过，见 [回执](../../evidence/james-sync-20261017/o0-trace.json)。下文环境/下载限制是来源分支当时记录；O0完整矩阵仍未关闭。当前解析器固定摘要以 analyze.py 的 PARSER_BLOB 为准，整合依据见 [复核记录](../../docs/james-sync-20261017.md)。
-
 # O0：先量化接受间隔和等待，再修改接口
 
-本批实现可运行的只读诊断器，不改生产 RTL。分析对象仅为固定单核 MinimalConfig 的旧单请求协议：基础版响应延迟 3 拍，T14 融合输入版 2 拍。源码基点 `3d051f0d870945215724bcc579496403e8884aee`。
+当前进度见 [2026-10-18记录](../../docs/o0-progress-20261018.md)。旧 T14 pilot 和统一微基准四场景原始轨迹已重放；固定256点积矩阵完成18镜像编译、II4基线54次新运行/648窗口验收。T14 同矩阵对照仍未完成，O0 未关闭，O1 仍是 [接口草案](../o1/CONTRACT.md)。
 
-## 能回答与不能回答的问题
+## 工具与证据边界
 
-`analyze.py` 直接复用 `team/scripts/check-vdot-regression.py` 的事件解析与 FU 时钟归一化，并校验其 Git blob 为 `6c2020bbb4ad4877d98c4f6b33acc77c1507cd6c`。FU 内 GTimer 是门控时钟计数，必须逐事务绑定相同 ROB 身份的父级 VFEX4 接受事件，不能直接与全核周期相减。
+- `analyze.py`：单核旧单请求协议的原始轨迹诊断。基础模式响应延迟3拍，T14融合输入模式2拍；不接受O1同拍交接。固定 T12 解析器 blob 为 `4093e685388f915dd78a15729889631999dba74d`。
+- `replay_archive.py`：固定旧 T14 batch128 pilot，见 [原入口](ARCHIVE_REPLAY.md)。
+- `replay_scenarios.py`：固定统一微基准归档清单与镜像包，重新验证 ours 的16镜像/215正确性窗口，再诊断12性能轨迹/144窗口。所有模式先验证原始证据，不从派生汇总猜测硬件事件。
+- `generate_matrix.py`：256点积、1/2/4路独立目的、相同/不同输入、vdot/RVV、3组输入。18个分片镜像、216个计划窗口。
+- `compile_matrix.py`：独立导出固定AM源码，交叉编译18个镜像，直接检查ELF常量、完整状态数据和256次点积的机器码路径；不会启动DUT。
+- `matrix_check.py` / `run_matrix.py`：绑定本次固定构建回执与既有 d3706f0b8 II4 EMU，先验证一个真实pilot，再执行全18镜像各3次确定性重放；保留原始流，检查完整退休路径、CSR边界、UART负控和FU生命周期。
+- `summarize_matrix.py`：独立复核全部54次运行，性能汇总只取各镜像的replay 0，不将确定性重放当作独立样本；[封存归档复算](../../evidence/o0-baseline-20261018/README.md)无需EMU或编译器。
 
-输出 `diagnosis.json` 和 `timeline.csv`，包括每笔事务的全核接受/响应或取消周期、物理目的身份、反压次数，以及接受间隔与释放到下一次接受的直方图。统计父级对 vdot/其他 FU 的 busy 与非 busy 等待，并标出“旧响应同拍，父级仍因 busy 阻塞 vdot”的观察样本。
+FU 的 GTimer 是门控时钟计数，诊断按每笔事务绑定父级 VFEX4 全核接受周期。接受间隔按实际工作负载统计，不能直接等同硬件II；busy与响应同拍是观察，不能证明同拍交接合法。计数包含投机事务，不能直接替代退休点积数。日志没有完整每周期上游需求、仲裁授权或所有idle状态，不能对全部空拍作因果归因。
 
-这些样本用于 O1 接口调查，**不证明同拍放行一定合法、不证明所有空拍来自 busy，也不直接得到硬件 II 或加速比**。现有日志不包含完整每周期上游需求、仲裁授权和全部 idle 状态。未观察到等待不代表不存在上游瓶颈。统计包含投机/取消事务，不等于退休点积数；不同层的等待事件不可简单相加成互斥周期成本。
-
-诊断器要求完整 FU 生命周期，拒绝缺父握手、非法身份、重复/截断记录、超出合同的重叠、响应身份变化、缺失反压记录、非零结果高位和配置响应不一致。算术输入、完整 ISA 状态、总工作量和原实验真实性仍由原验收工具负责。状态名固定为 `O0_DIAGNOSTICS_ONLY`，不是全核 PASS。
+矩阵固定算术工作量，但1/2/4路的循环次数和动态指令数不同；单路的same/different输入天然一致，保留为控制项。主机生成、编译、归档复算和新DUT执行分别记录，不混用状态名。
 
 ## 运行
 
-Python 3.10+ 标准库即可。从仓库根执行主机检查：
+主机测试仅依赖Python标准库（含真实归档与编译ELF的负控）：
 
-```bash
-python3 -B -m unittest discover -s team/optimizations/o0 -p 'test_*.py' -v
+```sh
+python3 -OO -B -m unittest discover -s team/optimizations/o0 -p 'test_*.py' -v
 ```
 
-对已有 **VDOT_T12_TRACE=1** 的 T14 原始分流日志进行离线诊断（不是重新运行 RTL）：
+从仓库根重放四场景，输出目录必须不存在：
 
-```bash
+```sh
+python3 -OO -B team/optimizations/o0/replay_scenarios.py --output /tmp/o0-four-scenes-new
+```
+
+独立诊断已有完整原始流；模式参数必须对应真实EMU，不得为消除失败修改：
+
+```sh
 python3 -B team/optimizations/o0/analyze.py \
-  --stderr /实际运行目录/stderr.log.gz \
-  --stdout /实际运行目录/stdout.log.gz \
-  --exit-code 0 --fu-latency 2 \
-  --output /新的输出目录/o0-diagnosis
+  --stderr /run/stderr.log.gz --stdout /run/stdout.log.gz \
+  --exit-code 0 --fu-latency 2 --output /tmp/o0-diagnosis-new
 ```
 
-`--exit-code` 必须来自该次真实运行；基础模式改用 `--fu-latency 3`，不得为消除检查失败修改它。两份日志须来自同一运行，保留原始流，不合并、不裁切；未压缩 `.log` 同样支持。输出目录必须不存在；错误返回 2，不覆盖历史结果。输入的解压后 SHA256 写入报告。三次确定性重放不能当作独立统计样本。
+生成单个固定工作量分片：
 
-缺少父级/FU 观察事件时，此工具会拒绝空跑。新建观察版 EMU 必须在单独检出/输出目录构建，不能把仅设置环境变量当作旧二进制已重编；新运行仍需原 T12/T13 功能和测量门禁。
+```sh
+python3 -B team/optimizations/o0/generate_matrix.py \
+  --dataset 0 --shard 0 --shards 6 --output /tmp/o0-matrix-data-new
+```
 
-## 当前进度与下一步
+使用已有GNU RISC-V工具链在Linux/WSL编译；AM从Git固定提交导出，原仓库不修改：
 
-本批已在执行容器运行合成轨迹主机测试，记录见 `host-check.json` 和 `host-tests.txt`。本环境未安装 Mill、firtool、Verilator，容器不能解析 GitHub 下载域名；没有执行 Chisel/RTL、新 EMU 或用户 WSL 任务。未把现有大体积压缩轨迹复制到本次运行环境，因此**真实旧轨迹重算也尚未运行**。不据此虚构 O0 已完成或已证明吞吐瓶颈。
+```sh
+python3 -B team/optimizations/o0/compile_matrix.py \
+  --am-repository /path/to/nexus-am --output /tmp/o0-matrix-build-new
+```
 
-下一批先在冻结 T14/四场景的真实轨迹上运行诊断，再补计划中的固定 256 点积、1/2/4 路、相同/不同输入矩阵。现有工具明确拒绝 O1 同拍交接；O1 必须增加新协议的事务/时钟映射与测试，不能放宽旧检查器掩盖变化。接口约定见 [O1 草案](../o1/CONTRACT.md)。
+运行入口刻意只接受本次固定构建回执和基线二进制。重新编译的路径/工具日志会改变回执，需先审查并更新独立pin，不能编辑回执强行匹配。新模式或新硬件来源必须另立证据门禁。
+
+```sh
+python3 -B team/optimizations/o0/run_matrix.py \
+  --images /path/to/frozen-matrix-build --output /tmp/o0-baseline-runs-new \
+  --emu /path/to/pinned-emu --reference /path/to/pinned-nemu.so \
+  --flash /path/to/pinned-flash.bin --jobs 8
+```
+
+既有结果见 [证据目录](../../evidence/o0-progress-20261017/)。所有执行/输出目录均须新建，不覆盖失败或历史结果。这里的旧 `host-check.json`、`host-tests.txt` 仅记录最初来源分支的合成轨迹测试，不表示当前环境缺工具或真实重放尚未完成。

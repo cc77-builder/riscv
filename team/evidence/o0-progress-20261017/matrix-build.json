@@ -1,0 +1,713 @@
+{
+  "status": "O0_MATRIX_18_IMAGES_COMPILED_NOT_EXECUTED",
+  "new_hardware_run": false,
+  "am_revision": "086a238062fdfb3281b745a537b361983d0154b5",
+  "am_archive_sha256": "f08760900e92d9ae6677663f27289bd4e890123e04b1b453acecffdeab422383",
+  "source_sha256": {
+    "team/optimizations/o0/compile_matrix.py": "22a75d82df86b1788f4f4aa5047100a3f3260894e5f93166043c21954c1f9fac",
+    "team/optimizations/o0/generate_matrix.py": "299d468286423997cdecbedbc07c5bf53b6ee4a77d7824816c0a1a96311f69ba",
+    "team/workloads/unified-vdot/generate.py": "9d30e8a0cdc25d67c558bf643aa545cb91e861f8b6814f9c616cfcb78c202ee4",
+    "team/workloads/unified-vdot/main.c": "7c7855b99ffc75ff027876e845bac0df127cfabea8f1c78d92898baa28c85f68",
+    "team/workloads/unified-vdot/Makefile": "98e7ae3cd127623b741d520c0c9cc93d583d755e573c0db457440376b333c9c2",
+    "team/workloads/unified-vdot/fixed-layout.ld": "fea739d1b0a19fd3254f92e1aa5eefc564eb2fb243dc3519091bfad262363e67",
+    "team/workloads/unified-vdot/check.py": "bc21d1da34daf7c4fe765ee1d595fa4487f03adef499bb1b3f5225908b1233ca",
+    "team/workloads/vdot-perf/check.py": "3298ca43d01aff694d5d6eccf51b85dbae7a4841c8b8cc358008f9029bb7f677"
+  },
+  "compiler": {
+    "path": "/usr/bin/riscv64-linux-gnu-gcc",
+    "sha256": "0c2a199ea3ae14d39b008fd4080d4b18d675b07daa17976c7d9755e8ea67310b",
+    "version": "riscv64-linux-gnu-gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0"
+  },
+  "images": [
+    {
+      "image": "matrix-d0-s00",
+      "command": [
+        "make",
+        "-C",
+        "/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/source/team/workloads/unified-vdot",
+        "ARCH=riscv64-xs",
+        "MARCH=rv64gcv",
+        "T13_DATA=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d0-s00/data",
+        "T13_OBJ_ROOT=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d0-s00/objects",
+        "BINARY=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d0-s00/vdot-perf",
+        "-j1"
+      ],
+      "exit_code": 0,
+      "static_kernel_checks": [
+        {
+          "id": "matrix-l1-same-vdot",
+          "dots": 256,
+          "vdot_instructions": 256,
+          "rvv_reductions": 0,
+          "marker_path_instructions": 1037
+        },
+        {
+          "id": "matrix-l1-same-rvv",
+          "dots": 256,
+          "vdot_instructions": 0,
+          "rvv_reductions": 256,
+          "marker_path_instructions": 2061
+        }
+      ],
+      "sha256": {
+        "vdot-perf.bin": "bf72b9ef73214e2b5ced5abb294920bcb6f20736a44e0ad9c643d448a7d90786",
+        "vdot-perf.elf": "3cc16d9ec5f02431c705bf166261d5105048aa2230765a42683b663ee77fcb91",
+        "data/manifest.json": "b928c0f01b2af87a8b54189a81825dfee981ced922e142c01d848ec5ea87b70b",
+        "build.log": "0ffc30170eac06c7d4aadba2bb12183576082b4f4d7e9049f0d5e3fcaf5dd3f2"
+      },
+      "status": "COMPILED_STATIC_CHECK_PASS_NOT_DUT"
+    },
+    {
+      "image": "matrix-d0-s01",
+      "command": [
+        "make",
+        "-C",
+        "/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/source/team/workloads/unified-vdot",
+        "ARCH=riscv64-xs",
+        "MARCH=rv64gcv",
+        "T13_DATA=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d0-s01/data",
+        "T13_OBJ_ROOT=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d0-s01/objects",
+        "BINARY=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d0-s01/vdot-perf",
+        "-j1"
+      ],
+      "exit_code": 0,
+      "static_kernel_checks": [
+        {
+          "id": "matrix-l1-different-vdot",
+          "dots": 256,
+          "vdot_instructions": 256,
+          "rvv_reductions": 0,
+          "marker_path_instructions": 1037
+        },
+        {
+          "id": "matrix-l1-different-rvv",
+          "dots": 256,
+          "vdot_instructions": 0,
+          "rvv_reductions": 256,
+          "marker_path_instructions": 2061
+        }
+      ],
+      "sha256": {
+        "vdot-perf.bin": "b6efd7cd4acf6ff4337c4950a1e09f0ab84a475f0c5df69e5c13d8cc6bc29c05",
+        "vdot-perf.elf": "cfba3ce4e0adc8b59761e6fc36cce78832d0309d48b1d50165245fd48d5da60c",
+        "data/manifest.json": "a57d6dc012fae3662aa086d882da40f5e9d035e1d0a537a5df5a6304dd57b58f",
+        "build.log": "31c543b3fee8d48d7e6dabcf2012bcdd7b20f69c22adf1a69f0f626dc21be9a3"
+      },
+      "status": "COMPILED_STATIC_CHECK_PASS_NOT_DUT"
+    },
+    {
+      "image": "matrix-d0-s02",
+      "command": [
+        "make",
+        "-C",
+        "/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/source/team/workloads/unified-vdot",
+        "ARCH=riscv64-xs",
+        "MARCH=rv64gcv",
+        "T13_DATA=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d0-s02/data",
+        "T13_OBJ_ROOT=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d0-s02/objects",
+        "BINARY=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d0-s02/vdot-perf",
+        "-j1"
+      ],
+      "exit_code": 0,
+      "static_kernel_checks": [
+        {
+          "id": "matrix-l2-same-vdot",
+          "dots": 256,
+          "vdot_instructions": 256,
+          "rvv_reductions": 0,
+          "marker_path_instructions": 653
+        },
+        {
+          "id": "matrix-l2-same-rvv",
+          "dots": 256,
+          "vdot_instructions": 0,
+          "rvv_reductions": 256,
+          "marker_path_instructions": 1421
+        }
+      ],
+      "sha256": {
+        "vdot-perf.bin": "27b36a8fac87ab6f0431e33dbb6684fcd2894fe7acabb64ab4f127dc86f58dc4",
+        "vdot-perf.elf": "910540767d761a640984aa41b0566882e75370e193f75f77ef12e5cc36ba7eb4",
+        "data/manifest.json": "f1ae99bc3d3b2211c69d3b9550d9096e507f1e4f85076f2ebd0510ab3bdc7ecc",
+        "build.log": "384348b026cf34ee52ddb178e1155e1edbdb7d13bccc639c1e4da5edb3d6be98"
+      },
+      "status": "COMPILED_STATIC_CHECK_PASS_NOT_DUT"
+    },
+    {
+      "image": "matrix-d0-s03",
+      "command": [
+        "make",
+        "-C",
+        "/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/source/team/workloads/unified-vdot",
+        "ARCH=riscv64-xs",
+        "MARCH=rv64gcv",
+        "T13_DATA=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d0-s03/data",
+        "T13_OBJ_ROOT=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d0-s03/objects",
+        "BINARY=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d0-s03/vdot-perf",
+        "-j1"
+      ],
+      "exit_code": 0,
+      "static_kernel_checks": [
+        {
+          "id": "matrix-l2-different-vdot",
+          "dots": 256,
+          "vdot_instructions": 256,
+          "rvv_reductions": 0,
+          "marker_path_instructions": 653
+        },
+        {
+          "id": "matrix-l2-different-rvv",
+          "dots": 256,
+          "vdot_instructions": 0,
+          "rvv_reductions": 256,
+          "marker_path_instructions": 1421
+        }
+      ],
+      "sha256": {
+        "vdot-perf.bin": "6c5bb50e1e3beba06a9f648ab688a0a3db39ad894907ab5caf8d0328bf0baf62",
+        "vdot-perf.elf": "ee2753ccc2d0c8ce55c8cd8ef586619b159c7918573d382a691612e3950bfb71",
+        "data/manifest.json": "1f3619d97361cb678046ee22f8169a252779f198ff7997236f502f85b0d69aae",
+        "build.log": "dbd76a2c91b6cb236e8e32f8d58c7d54e374d84ba40fd84f89f6b0fae158dd9a"
+      },
+      "status": "COMPILED_STATIC_CHECK_PASS_NOT_DUT"
+    },
+    {
+      "image": "matrix-d0-s04",
+      "command": [
+        "make",
+        "-C",
+        "/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/source/team/workloads/unified-vdot",
+        "ARCH=riscv64-xs",
+        "MARCH=rv64gcv",
+        "T13_DATA=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d0-s04/data",
+        "T13_OBJ_ROOT=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d0-s04/objects",
+        "BINARY=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d0-s04/vdot-perf",
+        "-j1"
+      ],
+      "exit_code": 0,
+      "static_kernel_checks": [
+        {
+          "id": "matrix-l4-same-vdot",
+          "dots": 256,
+          "vdot_instructions": 256,
+          "rvv_reductions": 0,
+          "marker_path_instructions": 461
+        },
+        {
+          "id": "matrix-l4-same-rvv",
+          "dots": 256,
+          "vdot_instructions": 0,
+          "rvv_reductions": 256,
+          "marker_path_instructions": 1101
+        }
+      ],
+      "sha256": {
+        "vdot-perf.bin": "e588a66f3f8c6b58867b130887440ece3ae8eaf760478dafd2120a22823b582c",
+        "vdot-perf.elf": "014557f9144f07338889942d7d02e5eb1cd065eb8d9d3fa01ec0ad7edfc0dc0c",
+        "data/manifest.json": "a28354d395caad1d2524ef3660d456a8e1c861274c8e7c5cc4384101cf2ba768",
+        "build.log": "cbd2f1acb80c2ee7b36866c267b09f655a422463b97917dc4de7db55b1f80dec"
+      },
+      "status": "COMPILED_STATIC_CHECK_PASS_NOT_DUT"
+    },
+    {
+      "image": "matrix-d0-s05",
+      "command": [
+        "make",
+        "-C",
+        "/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/source/team/workloads/unified-vdot",
+        "ARCH=riscv64-xs",
+        "MARCH=rv64gcv",
+        "T13_DATA=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d0-s05/data",
+        "T13_OBJ_ROOT=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d0-s05/objects",
+        "BINARY=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d0-s05/vdot-perf",
+        "-j1"
+      ],
+      "exit_code": 0,
+      "static_kernel_checks": [
+        {
+          "id": "matrix-l4-different-vdot",
+          "dots": 256,
+          "vdot_instructions": 256,
+          "rvv_reductions": 0,
+          "marker_path_instructions": 461
+        },
+        {
+          "id": "matrix-l4-different-rvv",
+          "dots": 256,
+          "vdot_instructions": 0,
+          "rvv_reductions": 256,
+          "marker_path_instructions": 1101
+        }
+      ],
+      "sha256": {
+        "vdot-perf.bin": "48b78265c5f939802a4bfd03dec47d3054eaff68da15bc09916fa2b925f4dfdd",
+        "vdot-perf.elf": "7b8901dd0cdcf6754a0d6918c2623f73ebb4400616e65b777c8a8cccc368c2dd",
+        "data/manifest.json": "20dbc8d6564629fce7478c84f4233a09c9b92d4bad9fb7108eb2558ff27a3ed2",
+        "build.log": "9cecbc7f087c3546f1160697bc621cc27f777126c3a78d1be7cb843f28210835"
+      },
+      "status": "COMPILED_STATIC_CHECK_PASS_NOT_DUT"
+    },
+    {
+      "image": "matrix-d1-s00",
+      "command": [
+        "make",
+        "-C",
+        "/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/source/team/workloads/unified-vdot",
+        "ARCH=riscv64-xs",
+        "MARCH=rv64gcv",
+        "T13_DATA=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d1-s00/data",
+        "T13_OBJ_ROOT=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d1-s00/objects",
+        "BINARY=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d1-s00/vdot-perf",
+        "-j1"
+      ],
+      "exit_code": 0,
+      "static_kernel_checks": [
+        {
+          "id": "matrix-l1-same-vdot",
+          "dots": 256,
+          "vdot_instructions": 256,
+          "rvv_reductions": 0,
+          "marker_path_instructions": 1037
+        },
+        {
+          "id": "matrix-l1-same-rvv",
+          "dots": 256,
+          "vdot_instructions": 0,
+          "rvv_reductions": 256,
+          "marker_path_instructions": 2061
+        }
+      ],
+      "sha256": {
+        "vdot-perf.bin": "6bf1c758d10fa0536089d2f78f65f2ed14ed9002211daebdca98601a83d2f2b1",
+        "vdot-perf.elf": "e8530189607c5ba7314e84235dc41e1580833513d5729f0ab9e67a78b6df843a",
+        "data/manifest.json": "f5a3ec643177e00e5f2921393b186a228fb3826ad57688687ef3c18bcab148dc",
+        "build.log": "bd9ac758fda70eef334861906cde6cdd7bb9cf34fd060b35cf515f43dfbfe33c"
+      },
+      "status": "COMPILED_STATIC_CHECK_PASS_NOT_DUT"
+    },
+    {
+      "image": "matrix-d1-s01",
+      "command": [
+        "make",
+        "-C",
+        "/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/source/team/workloads/unified-vdot",
+        "ARCH=riscv64-xs",
+        "MARCH=rv64gcv",
+        "T13_DATA=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d1-s01/data",
+        "T13_OBJ_ROOT=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d1-s01/objects",
+        "BINARY=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d1-s01/vdot-perf",
+        "-j1"
+      ],
+      "exit_code": 0,
+      "static_kernel_checks": [
+        {
+          "id": "matrix-l1-different-vdot",
+          "dots": 256,
+          "vdot_instructions": 256,
+          "rvv_reductions": 0,
+          "marker_path_instructions": 1037
+        },
+        {
+          "id": "matrix-l1-different-rvv",
+          "dots": 256,
+          "vdot_instructions": 0,
+          "rvv_reductions": 256,
+          "marker_path_instructions": 2061
+        }
+      ],
+      "sha256": {
+        "vdot-perf.bin": "84022278e6b36ddd69ebae0519f0abd18cabd7f4fb9549e9ba139d19700da5aa",
+        "vdot-perf.elf": "f3cd4d91f0109e5f3751933b51c0687f93dd532ab634596abf20526fda04e2c6",
+        "data/manifest.json": "56fabe7c2d2ab53ad1f694235815d173e6eb15fde5ada81c023e13dc9753969e",
+        "build.log": "ebb6b35af1e27a6e73a5bb597ee532f353d75dd81279682c39e81a2ea7af5ceb"
+      },
+      "status": "COMPILED_STATIC_CHECK_PASS_NOT_DUT"
+    },
+    {
+      "image": "matrix-d1-s02",
+      "command": [
+        "make",
+        "-C",
+        "/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/source/team/workloads/unified-vdot",
+        "ARCH=riscv64-xs",
+        "MARCH=rv64gcv",
+        "T13_DATA=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d1-s02/data",
+        "T13_OBJ_ROOT=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d1-s02/objects",
+        "BINARY=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d1-s02/vdot-perf",
+        "-j1"
+      ],
+      "exit_code": 0,
+      "static_kernel_checks": [
+        {
+          "id": "matrix-l2-same-vdot",
+          "dots": 256,
+          "vdot_instructions": 256,
+          "rvv_reductions": 0,
+          "marker_path_instructions": 653
+        },
+        {
+          "id": "matrix-l2-same-rvv",
+          "dots": 256,
+          "vdot_instructions": 0,
+          "rvv_reductions": 256,
+          "marker_path_instructions": 1421
+        }
+      ],
+      "sha256": {
+        "vdot-perf.bin": "df437944791441978454d49c075a5869657d1a6da06139abb4bc287ecdfa2292",
+        "vdot-perf.elf": "8aa8aa66de7e05e93fee44d8a9d188f1605e6ec11abdc03747a9e2b00337a3fb",
+        "data/manifest.json": "eed7572a54fdbb841a4522d8e22851e0fd4e6dfdf053c26045e8654b95d5ab35",
+        "build.log": "1042ce76711112c284fedfdf9b1182a63f34ae9601b4ef5317bab1b102655170"
+      },
+      "status": "COMPILED_STATIC_CHECK_PASS_NOT_DUT"
+    },
+    {
+      "image": "matrix-d1-s03",
+      "command": [
+        "make",
+        "-C",
+        "/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/source/team/workloads/unified-vdot",
+        "ARCH=riscv64-xs",
+        "MARCH=rv64gcv",
+        "T13_DATA=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d1-s03/data",
+        "T13_OBJ_ROOT=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d1-s03/objects",
+        "BINARY=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d1-s03/vdot-perf",
+        "-j1"
+      ],
+      "exit_code": 0,
+      "static_kernel_checks": [
+        {
+          "id": "matrix-l2-different-vdot",
+          "dots": 256,
+          "vdot_instructions": 256,
+          "rvv_reductions": 0,
+          "marker_path_instructions": 653
+        },
+        {
+          "id": "matrix-l2-different-rvv",
+          "dots": 256,
+          "vdot_instructions": 0,
+          "rvv_reductions": 256,
+          "marker_path_instructions": 1421
+        }
+      ],
+      "sha256": {
+        "vdot-perf.bin": "55230715e0ccc12a9fe43df713227e44b3cfb247afce22588a97ab2febfcc91b",
+        "vdot-perf.elf": "a0ab08dcd1ba578b09cff340f2e22caab3df92db5c71febb3a098d2671b9cf89",
+        "data/manifest.json": "3e7a2c9a91db8c996fb24dac30fa745e370d0f3474f6ce33aa6d8a71862f55c7",
+        "build.log": "67ff00b42167e547473ded13101232f3b9d7fae90b5e6e13b6f575250039236a"
+      },
+      "status": "COMPILED_STATIC_CHECK_PASS_NOT_DUT"
+    },
+    {
+      "image": "matrix-d1-s04",
+      "command": [
+        "make",
+        "-C",
+        "/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/source/team/workloads/unified-vdot",
+        "ARCH=riscv64-xs",
+        "MARCH=rv64gcv",
+        "T13_DATA=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d1-s04/data",
+        "T13_OBJ_ROOT=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d1-s04/objects",
+        "BINARY=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d1-s04/vdot-perf",
+        "-j1"
+      ],
+      "exit_code": 0,
+      "static_kernel_checks": [
+        {
+          "id": "matrix-l4-same-vdot",
+          "dots": 256,
+          "vdot_instructions": 256,
+          "rvv_reductions": 0,
+          "marker_path_instructions": 461
+        },
+        {
+          "id": "matrix-l4-same-rvv",
+          "dots": 256,
+          "vdot_instructions": 0,
+          "rvv_reductions": 256,
+          "marker_path_instructions": 1101
+        }
+      ],
+      "sha256": {
+        "vdot-perf.bin": "68848767f09c0cef98ab8450f13861816a91bb3c3997f110edcb6d45b24f12b9",
+        "vdot-perf.elf": "656dded6abf086ea49fbc7764332cd9fa1befd25bde1a7462c40d8d3e204fb3b",
+        "data/manifest.json": "2b916671374d07f21aa6c47fa959fc1478543c4496ad84769c7fe3b24a593ee9",
+        "build.log": "962fa0dddac7a7d61e091882d128142769b9efd9cfdc27a9e692768978d5ea6f"
+      },
+      "status": "COMPILED_STATIC_CHECK_PASS_NOT_DUT"
+    },
+    {
+      "image": "matrix-d1-s05",
+      "command": [
+        "make",
+        "-C",
+        "/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/source/team/workloads/unified-vdot",
+        "ARCH=riscv64-xs",
+        "MARCH=rv64gcv",
+        "T13_DATA=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d1-s05/data",
+        "T13_OBJ_ROOT=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d1-s05/objects",
+        "BINARY=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d1-s05/vdot-perf",
+        "-j1"
+      ],
+      "exit_code": 0,
+      "static_kernel_checks": [
+        {
+          "id": "matrix-l4-different-vdot",
+          "dots": 256,
+          "vdot_instructions": 256,
+          "rvv_reductions": 0,
+          "marker_path_instructions": 461
+        },
+        {
+          "id": "matrix-l4-different-rvv",
+          "dots": 256,
+          "vdot_instructions": 0,
+          "rvv_reductions": 256,
+          "marker_path_instructions": 1101
+        }
+      ],
+      "sha256": {
+        "vdot-perf.bin": "77367290c910a62a72ea535585d2a01f2c9b742ffa650f8c362c363bc6e75bc1",
+        "vdot-perf.elf": "be3f9dad6821d0089e1239a4765251b885ed3361e00f5b838fce520bbc50fb25",
+        "data/manifest.json": "5710d2f82da0cd007c632ba04b5ee680d76037cb427511088a884788f3e35fcc",
+        "build.log": "50f3a4420cc6920936692ed12aa5b1de675e5f2e796fb3fba9ec1467b39c2f58"
+      },
+      "status": "COMPILED_STATIC_CHECK_PASS_NOT_DUT"
+    },
+    {
+      "image": "matrix-d2-s00",
+      "command": [
+        "make",
+        "-C",
+        "/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/source/team/workloads/unified-vdot",
+        "ARCH=riscv64-xs",
+        "MARCH=rv64gcv",
+        "T13_DATA=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d2-s00/data",
+        "T13_OBJ_ROOT=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d2-s00/objects",
+        "BINARY=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d2-s00/vdot-perf",
+        "-j1"
+      ],
+      "exit_code": 0,
+      "static_kernel_checks": [
+        {
+          "id": "matrix-l1-same-vdot",
+          "dots": 256,
+          "vdot_instructions": 256,
+          "rvv_reductions": 0,
+          "marker_path_instructions": 1037
+        },
+        {
+          "id": "matrix-l1-same-rvv",
+          "dots": 256,
+          "vdot_instructions": 0,
+          "rvv_reductions": 256,
+          "marker_path_instructions": 2061
+        }
+      ],
+      "sha256": {
+        "vdot-perf.bin": "eaa3d8d31521825ba8720bfd67559f3c6dbee6bf1328cab0f09436ac0b36d34e",
+        "vdot-perf.elf": "3398ec62a60c3b37a229d0a6275a79548ffa555ec15e728215b7d59a40e96b40",
+        "data/manifest.json": "409f8cea2dd6fc1ab0541776ae8d676ac918d1650601459bb2c886acb908ed52",
+        "build.log": "d9b5812939d14409bf0d8d9f0a2191a030078d690e9e4c028557a69c4b0494f3"
+      },
+      "status": "COMPILED_STATIC_CHECK_PASS_NOT_DUT"
+    },
+    {
+      "image": "matrix-d2-s01",
+      "command": [
+        "make",
+        "-C",
+        "/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/source/team/workloads/unified-vdot",
+        "ARCH=riscv64-xs",
+        "MARCH=rv64gcv",
+        "T13_DATA=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d2-s01/data",
+        "T13_OBJ_ROOT=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d2-s01/objects",
+        "BINARY=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d2-s01/vdot-perf",
+        "-j1"
+      ],
+      "exit_code": 0,
+      "static_kernel_checks": [
+        {
+          "id": "matrix-l1-different-vdot",
+          "dots": 256,
+          "vdot_instructions": 256,
+          "rvv_reductions": 0,
+          "marker_path_instructions": 1037
+        },
+        {
+          "id": "matrix-l1-different-rvv",
+          "dots": 256,
+          "vdot_instructions": 0,
+          "rvv_reductions": 256,
+          "marker_path_instructions": 2061
+        }
+      ],
+      "sha256": {
+        "vdot-perf.bin": "a8d50e14a026215a0a34f4f63fb708f07ef5907135c6012c82b97e2c469bcdb6",
+        "vdot-perf.elf": "476d7591325bce1635afb11b30771bb661a3f15970545261cd5ea234ccd55136",
+        "data/manifest.json": "6bdacf4eeb0a84c1602500f9e28ef90d155b4aa636813ffcf3cd84a6dc062877",
+        "build.log": "0ab67472746e4356dc1e84d4f0f50e810871b9570e006b9317c0d06fd5db8183"
+      },
+      "status": "COMPILED_STATIC_CHECK_PASS_NOT_DUT"
+    },
+    {
+      "image": "matrix-d2-s02",
+      "command": [
+        "make",
+        "-C",
+        "/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/source/team/workloads/unified-vdot",
+        "ARCH=riscv64-xs",
+        "MARCH=rv64gcv",
+        "T13_DATA=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d2-s02/data",
+        "T13_OBJ_ROOT=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d2-s02/objects",
+        "BINARY=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d2-s02/vdot-perf",
+        "-j1"
+      ],
+      "exit_code": 0,
+      "static_kernel_checks": [
+        {
+          "id": "matrix-l2-same-vdot",
+          "dots": 256,
+          "vdot_instructions": 256,
+          "rvv_reductions": 0,
+          "marker_path_instructions": 653
+        },
+        {
+          "id": "matrix-l2-same-rvv",
+          "dots": 256,
+          "vdot_instructions": 0,
+          "rvv_reductions": 256,
+          "marker_path_instructions": 1421
+        }
+      ],
+      "sha256": {
+        "vdot-perf.bin": "2ed6d15f90cac55082e57a971b35fb41ccf4d675f070502b5fcb49be0e8cee61",
+        "vdot-perf.elf": "524bba53aff8dd799fba3a3a842205d3675e2e92d8bfaba48b4ee3e8ef581e86",
+        "data/manifest.json": "1dd6b44f81b8ee3c234b4b17475ac647795025310ad4fec305d641a7e50b0022",
+        "build.log": "e982c0020ee3930c5cfc91f653650e6ce6383e07fb20ac4887e875ab8cd01202"
+      },
+      "status": "COMPILED_STATIC_CHECK_PASS_NOT_DUT"
+    },
+    {
+      "image": "matrix-d2-s03",
+      "command": [
+        "make",
+        "-C",
+        "/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/source/team/workloads/unified-vdot",
+        "ARCH=riscv64-xs",
+        "MARCH=rv64gcv",
+        "T13_DATA=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d2-s03/data",
+        "T13_OBJ_ROOT=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d2-s03/objects",
+        "BINARY=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d2-s03/vdot-perf",
+        "-j1"
+      ],
+      "exit_code": 0,
+      "static_kernel_checks": [
+        {
+          "id": "matrix-l2-different-vdot",
+          "dots": 256,
+          "vdot_instructions": 256,
+          "rvv_reductions": 0,
+          "marker_path_instructions": 653
+        },
+        {
+          "id": "matrix-l2-different-rvv",
+          "dots": 256,
+          "vdot_instructions": 0,
+          "rvv_reductions": 256,
+          "marker_path_instructions": 1421
+        }
+      ],
+      "sha256": {
+        "vdot-perf.bin": "0c686f5c28f9378d64125cf4e0567c71c7a63c0abdd75ea3f9e84d943c3b2b7c",
+        "vdot-perf.elf": "bd2d9ab02585c5e205d1f63bade14e305a7c31846bf19bf82296c03f0442a1f2",
+        "data/manifest.json": "ebe2d866c6edd8015397a978b4e15fe3dbc91a2e9e423e503bc0764139e5c346",
+        "build.log": "225842fe5f2038cb7bdb2ca210cf1ad232a2cb448fae987afedaec9e547cf0b1"
+      },
+      "status": "COMPILED_STATIC_CHECK_PASS_NOT_DUT"
+    },
+    {
+      "image": "matrix-d2-s04",
+      "command": [
+        "make",
+        "-C",
+        "/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/source/team/workloads/unified-vdot",
+        "ARCH=riscv64-xs",
+        "MARCH=rv64gcv",
+        "T13_DATA=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d2-s04/data",
+        "T13_OBJ_ROOT=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d2-s04/objects",
+        "BINARY=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d2-s04/vdot-perf",
+        "-j1"
+      ],
+      "exit_code": 0,
+      "static_kernel_checks": [
+        {
+          "id": "matrix-l4-same-vdot",
+          "dots": 256,
+          "vdot_instructions": 256,
+          "rvv_reductions": 0,
+          "marker_path_instructions": 461
+        },
+        {
+          "id": "matrix-l4-same-rvv",
+          "dots": 256,
+          "vdot_instructions": 0,
+          "rvv_reductions": 256,
+          "marker_path_instructions": 1101
+        }
+      ],
+      "sha256": {
+        "vdot-perf.bin": "6dd26c8f6d47b45d24ac2a0269f94fe43ba0400423ec53a4040dfa7dd4f70322",
+        "vdot-perf.elf": "ed06b1e418e87ede3605d6ba6948e96252337b09add687335669163baa505420",
+        "data/manifest.json": "3c50e29d11b8aee8aa8d5268843e1e5c274623d3d4e826c291868109e72984d1",
+        "build.log": "76817c866403df4a44f2141fccfa6cc37a068d4c379257eaf1657eeb66710d21"
+      },
+      "status": "COMPILED_STATIC_CHECK_PASS_NOT_DUT"
+    },
+    {
+      "image": "matrix-d2-s05",
+      "command": [
+        "make",
+        "-C",
+        "/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/source/team/workloads/unified-vdot",
+        "ARCH=riscv64-xs",
+        "MARCH=rv64gcv",
+        "T13_DATA=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d2-s05/data",
+        "T13_OBJ_ROOT=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d2-s05/objects",
+        "BINARY=/home/amesotten/.cache/codex-rvinno/o0-matrix-20261017/attempt-02/matrix-d2-s05/vdot-perf",
+        "-j1"
+      ],
+      "exit_code": 0,
+      "static_kernel_checks": [
+        {
+          "id": "matrix-l4-different-vdot",
+          "dots": 256,
+          "vdot_instructions": 256,
+          "rvv_reductions": 0,
+          "marker_path_instructions": 461
+        },
+        {
+          "id": "matrix-l4-different-rvv",
+          "dots": 256,
+          "vdot_instructions": 0,
+          "rvv_reductions": 256,
+          "marker_path_instructions": 1101
+        }
+      ],
+      "sha256": {
+        "vdot-perf.bin": "1d0074097af1c993c915ecfb8b872b49279365adca5cf11c9a331fe0df5cba79",
+        "vdot-perf.elf": "6c34223a5e8b3533b891b5c338925ec37a7f250991e004fbf8bfc7eaea0cdfa7",
+        "data/manifest.json": "a0a8b2ca8c13b656e501add09f2aec0df0aa4c2f6ff645c1d77f5358ddfcce2c",
+        "build.log": "199b0a7842f8d3745aa4df0ad0b4edf5ffc65d9af9e2a1b656759002ae688a0a"
+      },
+      "status": "COMPILED_STATIC_CHECK_PASS_NOT_DUT"
+    }
+  ],
+  "rows": 36,
+  "planned_windows": 216,
+  "limits": [
+    "No DUT execution, calibration or measured performance is claimed.",
+    "Runner/provenance and matrix inventory acceptance must be added before hardware acceptance."
+  ]
+}

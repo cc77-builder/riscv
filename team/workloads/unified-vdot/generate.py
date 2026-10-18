@@ -196,9 +196,16 @@ def generate(output, suite, dataset, shard=0, shards=1, shared_stream=False, var
     if variant not in MATCH:
         raise ValueError('unknown variant')
     VARIANT = variant
+    rows, plan = corpus(suite, dataset)
+    return emit(output, rows, plan, suite, dataset, shard, shards, shared_stream, variant)
+
+
+def emit(output, rows, plan, suite, dataset, shard=0, shards=1, shared_stream=False, variant='ours'):
+    """Emit the shared full-state/CSR harness for an explicitly supplied corpus."""
+    if variant not in MATCH:
+        raise ValueError('unknown variant')
     out = Path(output)
     out.mkdir(parents=True, exist_ok=False)
-    rows, plan = corpus(suite, dataset)
     # Keep paired methods and all repeat phases together in the same shard.
     if not 0 <= shard < shards:
         raise ValueError('invalid shard')
@@ -258,15 +265,15 @@ def generate(output, suite, dataset, shard=0, shards=1, shared_stream=False, var
                f'#define T13_PLAN_COUNT {len(plan)}', f'#define T13_SUITE "{suite}"',
                f'#define T13_DATASET {dataset}',
                f'#define T13_COMPACT {1}', '#endif']
-    (out/'kernels.S').write_text('\n'.join(asm)+'\n')
-    (out/'cases.h').write_text('\n'.join(header)+'\n')
+    (out/'kernels.S').write_text('\n'.join(asm)+'\n', encoding='utf-8', newline='\n')
+    (out/'cases.h').write_text('\n'.join(header)+'\n', encoding='utf-8', newline='\n')
     manifest = dict(variant=variant, custom_match=MATCH[variant], custom_mask=0xfe00707f, contract=CONTRACT, seed=SEED, suite=suite, dataset=dataset,
                     baseline_source='f090665130107282be0990a7664aebf26e491b87',
                     shard=shard, shards=shards, compact=True,
                     boundary='pinned-XiangShan-fence-serialized-v2',
                     shared_stream=shared_stream,
                     rows=rows, plan=plan, files={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in out.iterdir()})
-    (out/'manifest.json').write_text(json.dumps(manifest, indent=2)+'\n')
+    (out/'manifest.json').write_text(json.dumps(manifest, indent=2)+'\n', encoding='utf-8', newline='\n')
     return manifest
 
 

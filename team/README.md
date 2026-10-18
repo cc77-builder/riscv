@@ -32,6 +32,6 @@
 | T14 可选输入乘积融合及消融 | [合同](spec/t14-ablation.md)、[来源报告](docs/t14-optimization.md) |
 | T15 独立 s16x8/r64 单元 | [合同](spec/t15-parameters.md)、[来源报告](docs/t15-parameter-extension.md) |
 | 四项目统一微基准 | [程序](workloads/unified-vdot/README.md)、[来源结果与限制](docs/unified-vdot-comparison-20261017.md) |
-| O0 诊断与 O1 未实现草案 | [归档重放](optimizations/o0/ARCHIVE_REPLAY.md)、[O1 合同](optimizations/o1/CONTRACT.md) |
+| O0 诊断与 O1 未实现草案 | [当前进度](docs/o0-progress-20261018.md)、[运行入口](optimizations/o0/README.md)、[旧pilot重放](optimizations/o0/ARCHIVE_REPLAY.md)、[O1 合同](optimizations/o1/CONTRACT.md) |
 | 后续执行顺序 | [优化方案](香山vdot_后续优化方案_20261017.md)：工程优化、回归、独立复现完成后再集中编写 T16 |
 | 来源分支入口历史 | [zjhwork2 原始 README](docs/history/README-zjhwork2-20261017.md) |

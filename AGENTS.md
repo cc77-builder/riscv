@@ -1,9 +1,11 @@
-# James_Hotten integration scope
+# James_Hotten O0 scope
 
-The current request authorizes removing the retired VFEX1 implementation,
-updating James_Hotten and synchronizing main, including both remote branches.
-Preserve main's unique historical integration evidence through an ordinary merge.
-Current cleanup/publication record: team/docs/vfex4-main-sync-20261017.md.
+The current request advances O0 diagnosis and its fixed-work matrix.
+The previous VFEX1 cleanup/main synchronization finished at e9c70db38;
+its publication record is team/docs/vfex4-main-sync-20261017.md.
+Current work and evidence scope: team/docs/o0-progress-20261018.md.
+The matrix runner deliberately pins the existing d3706f0b8 II4 baseline;
+new matrix execution does not imply integrated-source or T14 hardware coverage.
 The retired implementation is recoverable from Git, not a second working-tree
 implementation. Recovery and active test entries: team/docs/retired-vfex1.md.
 Prior full-core validation in team/docs/james-fullcore-20261016.md executed against
