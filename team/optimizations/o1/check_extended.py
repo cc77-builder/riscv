@@ -118,6 +118,12 @@ def ftq_audit(lines, rows):
                 if last_flag is not None and last_flag != row['ftf']: count['wraps']+=1
                 last_flag=row['ftf']
             else:
+                # A self-flush of an observed live VDot (e.g. late illegal
+                # configuration) targets that allocation's exact fetch slot.
+                # Non-self redirects/replays can carry a different FTQ origin.
+                if row['self'] and ptr in live:
+                    require(all(row[k]==live[ptr][k] for k in ('ftf','ftv','fto')),
+                            'FTQ self-flush target identity mismatch')
                 for p in list(live):
                     if killed(p,(*ptr,row['self']),48):
                         del live[p]; count['squashed']+=1

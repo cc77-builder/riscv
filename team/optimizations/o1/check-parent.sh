@@ -36,6 +36,9 @@ import hashlib, json, runpy, sys, tarfile
 from pathlib import Path
 root=Path.cwd(); out=Path(sys.argv[1])
 helper=runpy.run_path('team/scripts/prepare-core-baseline.py')
+dependencies=helper['modules'](root)
+helper['verify_dependencies'](root,dependencies)
+(out/'dependencies.json').write_text(json.dumps(dependencies,sort_keys=True,indent=2)+'\n')
 names=set(helper['root_inputs'](root))
 for directory in ('team/rtl/vdot','team/models/vdot','team/optimizations/o1'):
     names.update(p.as_posix() for p in Path(directory).rglob('*') if p.is_file() and '__pycache__' not in p.parts)
@@ -75,9 +78,14 @@ done
 for fault in identity wen high cancel; do
   rc=0
   "$out/mode-2/obj/VVDotExuTestTop" "$out/vectors.tsv" 2 "$fault" > "$out/inject-$fault.log" 2>&1 || rc=$?
-  test "$rc" -eq 1
-  grep -q "^PARENT_INJECT $fault$" "$out/inject-$fault.log"
-  grep -q '^VFEX4_PARENT_FAIL ' "$out/inject-$fault.log"
+  python3 -B team/optimizations/o1/check_parent_negative.py --fault "$fault" \
+    --return-code "$rc" --log "$out/inject-$fault.log"
 done
 sha256sum -c "$out/source.sha256" > "$out/source-after.log"
+python3 -B - "$out" <<'PY'
+import json, runpy, sys
+from pathlib import Path
+helper=runpy.run_path('team/scripts/prepare-core-baseline.py')
+helper['verify_dependencies'](Path.cwd(),json.loads((Path(sys.argv[1])/'dependencies.json').read_text()))
+PY
 echo 'VFEX4_PARENT_RUNNER_PASS_FULLCORE_PENDING'

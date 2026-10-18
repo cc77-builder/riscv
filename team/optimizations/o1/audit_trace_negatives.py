@@ -50,10 +50,12 @@ def check(path):
 
 
 if __name__ == "__main__":
+    from evidence_output import require_new_output, write_new_json
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("log", type=Path)
     parser.add_argument("--output", required=True, type=Path)
     args = parser.parse_args()
+    require_new_output(args.output)
     result = check(args.log)
-    args.output.write_text(json.dumps(result, indent=2)+"\n", encoding="utf-8")
+    write_new_json(args.output,result)
     print(result["status"], "mutations=" + str(len(result["mutations"])))

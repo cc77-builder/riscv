@@ -1,0 +1,36 @@
+{
+  "status": "NESTED_SOURCE_FIX_PASS",
+  "command": [
+    "python3",
+    "-OO",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "/mnt/c/Code/RVInno/riscv/team/tests",
+    "-p",
+    "test_core_dependency_inputs.py",
+    "-v"
+  ],
+  "tests": 7,
+  "exit_code": 0,
+  "log_sha256": "8c4b9a6731298babe75e93a8fc1a829711b444304a071a6366c67da01e0bdefa",
+  "real_nested_dependency_mutations": [
+    {
+      "dependency": "cde",
+      "revision": "52768c97a27b254c0cc0ac9401feb55b29e18c28",
+      "source": "cde/src/Extra.ignored.scala",
+      "status": "REJECTED",
+      "reason": "Ignored dependency compiler inputs: cde ['cde/src/Extra.ignored.scala']"
+    },
+    {
+      "dependency": "hardfloat",
+      "revision": "d93aa570806013dea479a92ba9bb33d1f2d4f69f",
+      "source": "hardfloat/src/main/scala/Extra.ignored.scala",
+      "status": "REJECTED",
+      "reason": "Ignored dependency compiler inputs: hardfloat ['hardfloat/src/main/scala/Extra.ignored.scala']"
+    }
+  ],
+  "native_modules_accepted": 126
+}

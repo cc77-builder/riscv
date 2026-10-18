@@ -7,6 +7,7 @@ from pathlib import Path
 
 from check_extended import extended_audit, record, HEX
 from check_trace import require
+from evidence_output import require_new_output, write_new_json
 
 
 def emit(tag,row):
@@ -14,6 +15,7 @@ def emit(tag,row):
 
 
 def check(control, calibration, build, output):
+    require_new_output(output)
     root=Path(__file__).resolve().parents[3]
     spec=importlib.util.spec_from_file_location('negative_perf',root/'team/workloads/vdot-perf/check.py')
     perf=importlib.util.module_from_spec(spec);spec.loader.exec_module(perf)
@@ -72,7 +74,7 @@ def check(control, calibration, build, output):
         else:raise ValueError('negative escaped: '+name)
     result=dict(status='O2_REAL_TRACE_NEGATIVES_PASS',count=len(results),
                 source_sha256={k:hashlib.sha256(p.read_bytes()).hexdigest() for k,p in [('control',control),('calibration',calibration)]},tests=results)
-    output.write_text(json.dumps(result,indent=2)+'\n')
+    write_new_json(output,result)
     return result
 
 

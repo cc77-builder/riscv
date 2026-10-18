@@ -346,12 +346,15 @@ def audit(lines, mode, scope):
 
 
 def main():
+    from evidence_output import require_new_output, write_new_json
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("log", type=Path)
     ap.add_argument("--mode", required=True, type=int, choices=(0, 1, 2))
     ap.add_argument("--scope", required=True, choices=("parent", "fullcore"))
     ap.add_argument("--output", type=Path)
     args = ap.parse_args()
+    if args.output:
+        require_new_output(args.output)
     try:
         # Strict UTF-8, no replacement of corrupted bytes; digest the exact input.
         raw = args.log.read_bytes()
@@ -363,7 +366,7 @@ def main():
         code = 1
     text = json.dumps(result, indent=2, sort_keys=True) + "\n"
     if args.output:
-        args.output.write_text(text, encoding="utf-8")
+        write_new_json(args.output, result)
     print(text, end="")
     return code
 

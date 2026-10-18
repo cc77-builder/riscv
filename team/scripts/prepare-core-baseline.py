@@ -52,6 +52,34 @@ def modules(repo):
     return result
 
 
+def verify_dependencies(repo, dependencies):
+    """Reject changed or additional dependency sources at every reuse boundary.
+
+    Build outputs outside compiler source roots remain permitted. Git's ignored
+    inventory is checked explicitly because --exclude-standard hides them.
+    """
+    source_dirs = {'src', 'include', 'lib-include', 'source', 'generator'}
+    for name, revision in dependencies.items():
+        child = repo/name
+        require(git(child,'rev-parse','HEAD').decode().strip() == revision,
+                'Build dependency changed: '+name)
+        subprocess.run(['git','-C',str(child),'diff','--exit-code','--quiet',
+                        '--ignore-submodules=all','HEAD'], check=True)
+        unknown = names(child, '--others', '--exclude-standard')
+        require(not unknown, 'Untracked dependency inputs: '+name+' '+str(unknown[:3]))
+        # Some Mill modules start below the Git repository root, notably
+        # hardfloat/src and cde/src. Derive those source roots from the pinned
+        # tracked layout instead of checking only top-level src directories.
+        roots = set(source_dirs) | {'macros/src'}
+        for tracked in names(child, '--cached'):
+            parts = tracked.split('/')
+            for index, part in enumerate(parts[:-1]):
+                if part in source_dirs:
+                    roots.add('/'.join(parts[:index+1]))
+        ignored = names(child, '--others', '--ignored', '--exclude-standard', '--', *sorted(roots))
+        require(not ignored, 'Ignored dependency compiler inputs: '+name+' '+str(ignored[:3]))
+
+
 def pack(repo, output):
     require(not output.exists(), 'Use a fresh source pack directory: '+str(output))
     output.mkdir(parents=True)
@@ -68,12 +96,7 @@ def pack(repo, output):
         untracked[name] = digest(target)
     dependencies = modules(repo)
     # Snapshot clones use the pinned dependency trees, so reject local changes.
-    for name in dependencies:
-        child = repo/name
-        subprocess.run(['git','-C',str(child),'diff','--exit-code','--quiet',
-                        '--ignore-submodules=all','HEAD'], check=True)
-        unknown = names(child, '--others', '--exclude-standard')
-        require(not unknown, 'Untracked dependency inputs: '+name+' '+str(unknown[:3]))
+    verify_dependencies(repo, dependencies)
     record = dict(schema=1, revision=revision, canonical_root_inputs=root_inputs(repo),
                   modules=dependencies, patch_sha256=digest(output/'changes.patch'), untracked_sha256=untracked)
     encoded = (json.dumps(record, sort_keys=True, indent=2)+'\n').encode('utf-8')
@@ -113,6 +136,7 @@ def materialize(source, packed, cache):
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(origin, destination)
     require(root_inputs(target) == record['canonical_root_inputs'], 'Build copy source differs from current workspace')
+    verify_dependencies(target, record['modules'])
     # Record physical Linux compiler inputs after canonical workspace comparison.
     physical = {name:digest(target/name) for name in record['canonical_root_inputs']}
     binding = dict(source_pack_sha256=identity, revision=record['revision'],
@@ -132,9 +156,7 @@ def verify(source, packed, target):
     require(root_inputs(target) == record['canonical_root_inputs'], 'Build copy compiler inputs changed')
     for name, expected in binding['physical_root_sha256'].items():
         require(digest(target/name) == expected, 'Build copy bytes changed: '+name)
-    for name, expected in record['modules'].items():
-        require(git(target/name,'rev-parse','HEAD').decode().strip() == expected, 'Build dependency changed: '+name)
-        subprocess.run(['git','-C',str(target/name),'diff','--exit-code','--quiet','--ignore-submodules=all','HEAD'],check=True)
+    verify_dependencies(target, record['modules'])
     print(json.dumps(dict(status='CORE_SOURCE_BINDING_PASS',root_inputs=len(binding['physical_root_sha256']),
                           modules=len(record['modules']),source_pack_sha256=binding['source_pack_sha256']),sort_keys=True))
 

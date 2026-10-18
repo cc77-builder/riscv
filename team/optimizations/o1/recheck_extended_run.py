@@ -12,7 +12,8 @@ import re
 from check_trace import require
 from check_extended import extended_audit
 from run_extended_core import ROOT, module, matrix_union
-from run_trace_core import control_check, save, sha
+from run_trace_core import control_check, sha
+from evidence_output import require_new_output, write_new_json
 
 
 def recheck(folder):
@@ -93,4 +94,8 @@ def recheck(folder):
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--run',type=Path,required=True);p.add_argument('--output',type=Path,required=True)
-    a=p.parse_args();result=recheck(a.run);save(a.output,result);print(result['status'])
+    a=p.parse_args()
+    require_new_output(a.output)
+    result=recheck(a.run)
+    write_new_json(a.output,result)
+    print(result['status'])

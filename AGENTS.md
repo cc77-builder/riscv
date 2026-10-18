@@ -46,8 +46,14 @@ handoffs and 329 FTQ wraps; calibration/batch validate 25 windows and 100 CSR
 samples. All 13 actual launches meet expectations (12 exit 0, one injected exit 1).
 72 host tests and 15 real-log corruption checks pass. Current O1 original/lean
 software-plan runs and full same-source performance A/B remain separate work.
-The merged checkpoint 02e46c5c9 was pushed first. The completed observation
-checkpoint is now being published separately; preserve both source bindings.
+The observation checkpoint fb1e7bdc8 is pushed to James_Hotten. Both remotes
+were fetched again; all ten actual remote branch tips are already included.
+The four gate defects from team/docs/o1-publication-review-20261018.md are
+repaired; closure and limits: team/docs/o1-gate-fixes-20261018.md. Aggregate
+host checks pass (504), with 13 archived CPU logs rechecked, 24 FTQ mutations,
+15 prior corruption checks and 8 real parent binary replays. No new CPU run
+or performance claim is made. This publication includes the reviewed repairs; production
+RTL and historical evidence bytes are unchanged. O1 remains off by default.
 Preserve archive bytes, source bindings, failure records and fail-closed checks.
 Do not fabricate teammate approval, STA/PPA, performance, virtualization or
 official ISA acceptance. Reports follow engineering completion and version freeze.

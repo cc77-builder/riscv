@@ -1,0 +1,100 @@
+{
+  "count": 15,
+  "source_sha256": {
+    "calibration": "590fbfcf72f8b969f74f3e80a5214033eb44aa266145c97be3076637d2d91c01",
+    "control": "355f9a4421c3ac3a79cd5f88d6efa54e0a4312e03e78a17722ab72740a49088d"
+  },
+  "status": "O2_REAL_TRACE_NEGATIVES_PASS",
+  "tests": [
+    {
+      "mutated_sha256": "0d817bdb1622bfa8d14e08a7e72a82f3916db8e6a6e222b04e281f6c5cc067e8",
+      "name": "ftq_flag",
+      "reason": "FTQ commit identity mismatch",
+      "status": "REJECTED"
+    },
+    {
+      "mutated_sha256": "794a8190f58ac574391f7b047b7e7864e7cc82c33c513049bb3e5f362c6632f9",
+      "name": "ftq_offset",
+      "reason": "FTQ commit identity mismatch",
+      "status": "REJECTED"
+    },
+    {
+      "mutated_sha256": "57ead6b32b3cf439b7965b171f1ca100df754d92984d63214a06f14db0714174",
+      "name": "ftq_index_width",
+      "reason": "O2 field out of range: ftv",
+      "status": "REJECTED"
+    },
+    {
+      "mutated_sha256": "fdb7d6d8a3841060bfa5f4be7f28015c0f30ab2893b9e8c6011e58daba6e1e30",
+      "name": "missing_all_ftq",
+      "reason": "FTQ/base event cardinality mismatch",
+      "status": "REJECTED"
+    },
+    {
+      "mutated_sha256": "0baf3a2fa8805b844eeb0d9e30b2568d8add8c4c7e944cb80e62daebe76b5215",
+      "name": "csr_owner",
+      "reason": "CSR sample without allocated owner",
+      "status": "REJECTED"
+    },
+    {
+      "mutated_sha256": "6f071b4f5530ab124ced1b8149a31f31efb873f095fc20be8ada25ccd6fd8277",
+      "name": "csr_sample_highbit",
+      "reason": "counter retirement/sample mismatch",
+      "status": "REJECTED"
+    },
+    {
+      "mutated_sha256": "194e8a364f6d037fa245118745eaf9e7d4366dde59d77751b346d003bfc65ff6",
+      "name": "csr_write_enable",
+      "reason": "CSR sample/owner mismatch",
+      "status": "REJECTED"
+    },
+    {
+      "mutated_sha256": "1a57604bf4166500443676f38f2b733e14ae961a6dc01968363803712bcf38cb",
+      "name": "counter_commit",
+      "reason": "counter retirement/sample mismatch",
+      "status": "REJECTED"
+    },
+    {
+      "mutated_sha256": "b7a26970978ddec749d63f4fcee8e41f4f68a361e972299d8196ac867baebe53",
+      "name": "retired_instruction_count",
+      "reason": "control in compressed retirement",
+      "status": "REJECTED"
+    },
+    {
+      "mutated_sha256": "ee16189ce17ae3e026f23b4a6b25f8d4759f05f5b9eb8e54b724c10a2838518d",
+      "name": "retired_pc",
+      "reason": "retirement PC/word mismatch seq=0 position=0",
+      "status": "REJECTED"
+    },
+    {
+      "mutated_sha256": "4040a6277db8c9300860b48d44e70d81d01aa238a76121b66e4703b29024ab36",
+      "name": "consistent_cycle_delta",
+      "reason": "cycle CSR/global clock disagreement",
+      "status": "REJECTED"
+    },
+    {
+      "mutated_sha256": "9d1e386cb110390db110f89b8b7d8aba8dc94337c19c123e4a491b18478cd32d",
+      "name": "consistent_instret_delta",
+      "reason": "instret disagreement seq=0: csr=8, events=7, elf=7",
+      "status": "REJECTED"
+    },
+    {
+      "mutated_sha256": "4fcc8dbf3f13591f5b40434e771b5ab1e09306fed6d68fcc09f6f6207ccc74dd",
+      "name": "missing_csr_sample",
+      "reason": "CSR owner/sample cardinality mismatch",
+      "status": "REJECTED"
+    },
+    {
+      "mutated_sha256": "eda29b2c55cffcba98d27e0f0ec7c9eccb1d3165e19a90f68b457844ab7b192a",
+      "name": "missing_owner_header",
+      "reason": "O2 event before header",
+      "status": "REJECTED"
+    },
+    {
+      "mutated_sha256": "b1a1facd0f7e502c15cb01ec3f62fb602f116a34bc05613b7a1525c8e9165d14",
+      "name": "missing_all_windows",
+      "reason": "missing/extra windows",
+      "status": "REJECTED"
+    }
+  ]
+}
