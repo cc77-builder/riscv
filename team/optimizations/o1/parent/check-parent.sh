@@ -122,7 +122,9 @@ for mode in 0 1; do
   run "$prefix-elaboration.log" mill -i -j "$BUILD_JOBS" vdotParent.runMain team.vdot.GenerateVDotParent "$rtl"
   # Resolve the actual FIRRTL inline blackboxes. Never substitute an empty gate
   # model or use a Verilator blackbox option to make elaboration pass.
-  python3 -B - "$rtl" "$out/$prefix-resources.txt" <<'PY'
+  python3 -B - "$rtl" "$out/$prefix-resources.txt" "$out/$prefix-sources.txt" "$out/$prefix-generated-files.json" <<'PY'
+import hashlib
+import json
 from pathlib import Path
 import shlex
 import sys
@@ -142,12 +144,29 @@ for line in manifest.read_text(encoding="utf-8").splitlines():
 if not any(p.name == "ClockGate.sv" for p in resources):
     raise SystemExit("real ClockGate.sv was not generated")
 Path(sys.argv[2]).write_text("".join(str(p) + "\n" for p in resources), encoding="utf-8")
+# --split-verilog emits every module separately. Use each original generated
+# source exactly once, including the ClockGate referenced by the manifest.
+sources = sorted({p.resolve() for pattern in ("*.sv", "*.v") for p in rtl.rglob(pattern)})
+if rtl / "VDotParentTestTop.sv" not in sources or not set(resources).issubset(sources):
+    raise SystemExit("missing top or blackbox in generated source set")
+for p in sources:
+    if not p.is_relative_to(rtl) or not p.is_file():
+        raise SystemExit(f"external or missing generated HDL source: {p}")
+    if b'// ----- 8< ----- FILE "' in p.read_bytes():
+        raise SystemExit(f"embedded virtual files remain; use native --split-verilog: {p.name}")
+Path(sys.argv[3]).write_text("".join(str(p) + "\n" for p in sources), encoding="utf-8")
+# Preserve all original emitted bytes and record their hashes before Verilator.
+artifacts = [{"path": p.relative_to(rtl).as_posix(), "bytes": p.stat().st_size,
+              "sha256": hashlib.sha256(p.read_bytes()).hexdigest()}
+             for p in sorted(set(sources + [manifest]))]
+Path(sys.argv[4]).write_text(json.dumps(artifacts, indent=2) + "\n", encoding="utf-8")
 print("O1_PARENT_BLACKBOX_CAPTURE_PASS " + " ".join(p.name for p in resources))
+print(f"O1_PARENT_NATIVE_SPLIT_CAPTURE_PASS sources={len(sources)}")
 PY
-  mapfile -t resources < "$out/$prefix-resources.txt"
+  mapfile -t rtl_sources < "$out/$prefix-sources.txt"
   run "$prefix-verilator.log" verilator --cc --exe --build --assert --top-module VDotParentTestTop \
     --Mdir "$obj" -j "$BUILD_JOBS" -CFLAGS "-std=c++17 -O2 -DO1_PARENT_HANDOFF=$mode" \
-    "$rtl/VDotParentTestTop.sv" "${resources[@]}" "$root/team/optimizations/o1/parent/parent_test.cpp"
+    "${rtl_sources[@]}" "$root/team/optimizations/o1/parent/parent_test.cpp"
   binary="$obj/VVDotParentTestTop"
   run "$prefix-result.log" "$binary" "$out/vectors.tsv"
   # Exactly one positive completion marker must bind the executable's mode.

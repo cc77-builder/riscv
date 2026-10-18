@@ -213,7 +213,9 @@ object GenerateVDotParent {
         perfLevel = utility.XSPerfLevel.VERBOSE, perfDBHartID = 0)
     }
     ChiselStage.emitSystemVerilogFile(new VDotParentTestTop,
-      args = Array("--target-dir", args(0)),
+      // Use the Chisel stage split option so firtool emits real module/blackbox
+      // files and its manifest, rather than concatenated FILE-marker sections.
+      args = Array("--target-dir", args(0), "--split-verilog"),
       firtoolOpts = Array("-disable-all-randomization", "-strip-debug-info"))
   }
 }
