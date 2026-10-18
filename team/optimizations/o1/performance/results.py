@@ -3,6 +3,7 @@ import argparse
 import csv
 import importlib.util
 import json
+import statistics
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -75,7 +76,18 @@ def main(campaign, output):
     flat, comparison = [], []
     for row in stats:
         for mode in compare.MODES:
-            flat.append(dict(scenario=row["scenario"], mode=mode, **row[mode]))
+            selected = [sample for sample in samples if sample["mode"] == mode
+                        and sample["scenario"] == row["scenario"] and sample["stage"] == "performance"
+                        and sample["phase"] == "measured" and sample["replay"] == 0]
+            rvv = [sample["cycles"] for sample in selected if sample["method"] == "rvv"]
+            instructions = {method: {sample["instructions"] for sample in selected if sample["method"] == method}
+                            for method in ("vdot", "rvv")}
+            require(all(len(values) == 1 for values in instructions.values()), "instruction count changed across equal-work samples")
+            flat.append(dict(scenario=row["scenario"], mode=mode, **row[mode],
+                             rvv_median_cycles=statistics.median(rvv),
+                             rvv_mean_cycles_per_dot=row[mode]["rvv_mean_cycles"] / row[mode]["dots"],
+                             custom_window_instructions=next(iter(instructions["vdot"])),
+                             rvv_window_instructions=next(iter(instructions["rvv"]))))
         comparison.append(dict(scenario=row["scenario"], dots=row["t14"]["dots"],
                                t14_custom_mean_cycles=row["t14"]["custom_mean_cycles"],
                                o1_custom_mean_cycles=row["o1"]["custom_mean_cycles"],
@@ -85,10 +97,15 @@ def main(campaign, output):
                                o1_rvv_mean_cycles=row["o1"]["rvv_mean_cycles"],
                                t14_speedup=row["t14"]["speedup_ratio_of_sums"],
                                o1_speedup=row["o1"]["speedup_ratio_of_sums"],
+                               rvv_cycle_reduction=row["rvv_cycle_reduction"],
                                investigation_required=row["investigation_required"]))
     csv_rows(output / "summary.csv", flat)
     csv_rows(output / "comparison.csv", comparison)
-    csv_rows(output / "samples.csv", samples)
+    csv_rows(output / "samples.csv", [
+        dict(sample, included_in_measured_statistics=(sample["stage"] == "performance"
+             and sample["phase"] == "measured" and sample["replay"] == 0))
+        for sample in samples])
+
     receipt = dict(status="OFFLINE_T14_O1_PAIRED_RECHECK_PASS", finished_utc=compare.now(),
                    campaign=str(campaign), campaign_result_sha256=sha(campaign / "result.json"),
                    jobs=36, windows=478, measured_windows=192, replay_jobs=4,
@@ -122,7 +139,7 @@ def main(campaign, output):
               f'预定20%目标{"达到" if batch["custom_cycle_reduction"] >= 0.2 else "尚未达到"}。'
               "该目标是工程投入参考，不是官方计分门槛。", "",
               "超过2%的预定退化调查项：" + ("、".join(LABELS[r["scenario"]] for r in stats if r["investigation_required"]) or "无"), "",
-              "原始整数计数器、所有阶段及重放样本保存在samples.csv；逐模式范围与均值见summary.csv，配对差异见comparison.csv。",
+              "原始整数计数器、所有阶段及重放样本保存在samples.csv；逐模式均值、中位数、范围与指令数见summary.csv，配对差异见comparison.csv。",
               "batch128的额外四个重放作业逐seq周期/指令数一致，只证明代表镜像的确定性，不作为独立统计样本或全部镜像重放证明。", "",
               "窗口包含循环与屏障开销；single窗口不是FU固有延迟，cycles/dot不是硬件II。batch4对同一输入产生四个独立结果，不能直接宣传为任意GEMV收益。",
               "本轮不推导最高频率、面积、功耗、PPA或官方排名。O1默认仍关闭；最终采用结合周期收益、接口成本、应用实例与独立复现决定。", "",
