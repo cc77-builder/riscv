@@ -14,7 +14,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[4]
 FLAGS = {"VDOT_O1_HANDOFF": "1", "VDOT_T14_FUSED_INPUT": "1",
          "VDOT_O1_TRACE": "1", "VDOT_T12_TRACE": "0", "VDOT_T13_TRACE": "1"}
-HARDWARE = ["src", "scripts", "build.sc", "Makefile", "Makefile.test"]
+HARDWARE = ["src", "scripts", "build.sc", "Makefile", "Makefile.test", "team/scripts/activate.sh"]
 
 
 def now():
@@ -69,6 +69,8 @@ def main(out):
     require(not out.is_relative_to(ROOT), "output must be outside checkout")
     require(not (ROOT / "build").exists(), "existing build/ must be preserved separately first")
     require(not git("diff", "HEAD", "--", *HARDWARE), "commit hardware changes before building")
+    require(not git("ls-files", "--others", "--exclude-standard", "--", *HARDWARE),
+            "untracked hardware inputs must be committed before building")
     out.mkdir(parents=True)
     state = {"status": "CAPTURING", "started_utc": now(), "source_root": str(ROOT),
              "source_commit": git("rev-parse", "HEAD").decode().strip(), "flags": FLAGS}

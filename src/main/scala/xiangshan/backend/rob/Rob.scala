@@ -1530,7 +1530,7 @@ class RobImp(override val wrapper: Rob)(implicit p: Parameters, params: BackendP
     val o1Cycle = GTimer()
     for (i <- 0 until RenameWidth) {
       val u = io.enq.req(i).bits
-      when(!reset.asBool && canEnqueue(i) && u.fuType === FuType.vdot.U) {
+      when(!reset.asBool && !io.redirect.valid && canEnqueue(i) && u.fuType === FuType.vdot.U) {
         printf(p"O1_ENQUEUE cycle=${o1Cycle} rob=${allocatePtrVec(i).flag}:${allocatePtrVec(i).value} pc=0x${Hexadecimal(u.pc)} ftq=${u.ftqPtr.flag}:${u.ftqPtr.value} word=0x${Hexadecimal(u.instr)}\n")
       }
     }
