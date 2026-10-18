@@ -1,0 +1,37 @@
+test_actual_c_encoder_against_independent_decoder (test_packed_vdot_log.PackedLogTests.test_actual_c_encoder_against_independent_decoder) ... COMPILER_STDERR: 
+ERROR
+test_actual_patched_header_complete_register_domain_and_boundary_states (test_vdot_tval_policy.TrapValuePolicyTests.test_actual_patched_header_complete_register_domain_and_boundary_states) ... COMPILER_STDERR: b''
+ERROR
+
+======================================================================
+ERROR: test_actual_c_encoder_against_independent_decoder (test_packed_vdot_log.PackedLogTests.test_actual_c_encoder_against_independent_decoder)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Code\RVInno\riscv\team\tests\test_packed_vdot_log.py", line 125, in test_actual_c_encoder_against_independent_decoder
+    subprocess.run(['gcc','-std=c11','-O2','-Wall','-Wextra','-Werror','-I'+str(ROOT/'team/workloads/vdot-exceptions'),str(source),'-o',str(exe)],check=True,capture_output=True,text=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Code\RVInno\riscv\team\out\diagnose-host-c.py", line 8, in run
+    return original(*args, **kwargs)
+  File "C:\ProgramData\anaconda3\Lib\subprocess.py", line 577, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['gcc', '-std=c11', '-O2', '-Wall', '-Wextra', '-Werror', '-IC:\\Code\\RVInno\\riscv\\team\\workloads\\vdot-exceptions', 'C:\\Users\\JAMESH~1\\AppData\\Local\\Temp\\tmpugkr5_xu\\encoder.c', '-o', 'C:\\Users\\JAMESH~1\\AppData\\Local\\Temp\\tmpugkr5_xu\\encoder']' returned non-zero exit status 1.
+
+======================================================================
+ERROR: test_actual_patched_header_complete_register_domain_and_boundary_states (test_vdot_tval_policy.TrapValuePolicyTests.test_actual_patched_header_complete_register_domain_and_boundary_states)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Code\RVInno\riscv\team\tests\test_vdot_tval_policy.py", line 52, in test_actual_patched_header_complete_register_domain_and_boundary_states
+    subprocess.run(['gcc','-std=c11','-O2','-Wall','-Wextra','-Werror',str(root/'check.c'),'-o',str(root/'check')],check=True,capture_output=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Code\RVInno\riscv\team\out\diagnose-host-c.py", line 8, in run
+    return original(*args, **kwargs)
+  File "C:\ProgramData\anaconda3\Lib\subprocess.py", line 577, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['gcc', '-std=c11', '-O2', '-Wall', '-Wextra', '-Werror', 'C:\\Users\\JAMESH~1\\AppData\\Local\\Temp\\tmpay0ospin\\check.c', '-o', 'C:\\Users\\JAMESH~1\\AppData\\Local\\Temp\\tmpay0ospin\\check']' returned non-zero exit status 1.
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.518s
+
+FAILED (errors=2)

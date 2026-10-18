@@ -41,7 +41,8 @@ class PerformanceTraceTests(unittest.TestCase):
     def test_all_dynamic_lifetimes(self):
         r=self.result
         self.assertEqual(r['accepted_responded_committed'],768)
-        self.assertEqual(r['preaccept_cancelled_allocations'],12)
+        self.assertEqual(r['preaccept_cancelled_allocations'],6)
+        self.assertEqual(r['suppressed_enqueue_attempts'],6)
         self.assertEqual(len(r['lifetimes']),768)
         self.assertEqual({e['response_cycle']-e['accept_cycle'] for e in r['lifetimes']},{2})
         self.assertEqual(r['raw_csr_samples_checked'],48)
@@ -122,6 +123,22 @@ class PerformanceTraceTests(unittest.TestCase):
         tx = [{'accept_cycle': 3, 'rob': '0:11', 'pdest': 1, 'index': 0}]
         with self.assertRaisesRegex(ValueError, 'unbound/duplicate accept'):
             m.bind_retirements(events, tx)
+
+    def test_cancelled_rob_reuse_and_same_cycle_retire_reallocate(self):
+        fields = {'rob': '0:11', 'pc': '0x100', 'word': '0x0200000b'}
+        events = [(1, 0, 'ENQUEUE', fields), (2, 1, 'REDIRECT', {'rob': '0:10'})]
+        tx = []
+        for index, start in enumerate((3, 7)):
+            # Deliberately put the next ENQUEUE before previous COMMIT in print order.
+            events += [(start, 0, 'ENQUEUE', fields),
+                       (start+1, 1, 'ACCEPT', {'rob': '0:11', 'pdest': str(index+1)}),
+                       (start+3, 2, 'RESPONSE', {'rob': '0:11', 'pdest': str(index+1), 'data': '0x1'}),
+                       (start+4, 3, 'COMMIT', {'rob': '0:11', 'pc': '0x100'})]
+            tx.append(dict(accept_cycle=start+1, end_cycle=start+3, rob='0:11',
+                           pdest=index+1, index=index, outcome='response'))
+        lifetimes, cancelled = m.bind_retirements(events, tx)
+        self.assertEqual(cancelled, 1)
+        self.assertEqual([e['pdest'] for e in lifetimes], [1, 2])
 
     def test_scope_not_overclaimed(self):
         for name in ('o0_full_matrix_complete','o1_rtl_implemented','new_hardware_run'):

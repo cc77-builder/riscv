@@ -108,6 +108,8 @@ def correlate(stderr, analysis, diagnosis, checker):
     events, _ = checker.extract_events(stderr)
     events = checker.normalize_fu_cycles(events, min_response_latency=2)
     lifetimes, preaccept_cancelled = bind_retirements(events, diagnosis['transactions'])
+    redirect_cycles = {e[0] for e in events if e[2] == 'REDIRECT'}
+    suppressed_enqueues = sum(e[2] == 'ENQUEUE' and e[0] in redirect_cycles for e in events)
     require(len(lifetimes) == analysis['fu']['committed'], 'commit total differs from archive')
     # Recheck all 48 raw samples, not just arithmetic on archived counter values.
     pattern = re.compile(r'^T13_CSR_SAMPLE cycle=\s*(\d+) addr=(0x[0-9a-fA-F]+) data=(0x[0-9a-fA-F]+) wen=(\d+)\s*$', re.M)
@@ -151,6 +153,7 @@ def correlate(stderr, analysis, diagnosis, checker):
     return dict(status='O0_BATCH128_DIAGNOSIS_PASS_NOT_FULL_MATRIX',
         development_base=BASE, raw_csr_samples_checked=len(sampled),
         accepted_responded_committed=len(lifetimes), preaccept_cancelled_allocations=preaccept_cancelled,
+        suppressed_enqueue_attempts=suppressed_enqueues,
         total_busy_wait_events=sum(r['busy_wait_events'] for r in rows),
         total_nonbusy_wait_events=sum(r['nonbusy_wait_events'] for r in rows),
         response_busy_coincidences=sum(r['response_busy_coincidences'] for r in rows),

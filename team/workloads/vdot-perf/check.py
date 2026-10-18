@@ -179,6 +179,14 @@ def parse_events(text):
     return events
 
 
+def verify_rvv_work(body, row):
+    """Count actual walked/retired dot operations, not the declared loop count."""
+    expected = row['dots'] if row['method'] == 'rvv' else 0
+    multiply = sum(w & 0xfc00707f == 0xec002057 for _, w in body)  # vwmul.vv
+    reduce = sum(w & 0xfc00707f == 0xc4000057 for _, w in body)  # vwredsum.vs
+    require(multiply == reduce == expected, 'wrong RVV dot work count')
+
+
 def trace_windows(events, manifest, kernels):
     retires = events['RETIRE']
     windows, current = [], None
@@ -239,6 +247,7 @@ def trace_windows(events, manifest, kernels):
         body = path[next(i for i,(_,w) in enumerate(path) if w == COUNTERS[1])+2:next(i for i,(_,w) in enumerate(path) if w == COUNTERS[2])-1]
         vdot_count = sum(w&0xfe00707f == 0x0200000b for _,w in body)
         require(vdot_count == (row['dots'] if row['method']=='vdot' else 0), 'wrong custom instruction count')
+        verify_rvv_work(body, row)
         output.append(dict(seq=index,id=row['id'],scenario=row['scenario'],method=row['method'],n=row['n'],dots=row['dots'],phase=entry['phase'],repeat=entry['repeat'],dataset=manifest['dataset'],cycles=cycles,instructions=instructions,counter_values=[s['data'] for s in local_samples],sample_ticks=[s['cycle'] for s in local_samples]))
     return output
 
@@ -266,6 +275,32 @@ def check_uart(text, manifest, results):
     require(not re.search(r'T13_FAIL|HIT BAD TRAP|DIFFTEST FAIL|ABORT',text), 'failure in stdout')
 
 
+# Reviewed repository generators, independent of any supplied build receipt.
+# Hash LF bytes so a Windows checkout has the same trust identity; receipt
+# integrity still checks the original bytes. Add versions only after review.
+TRUSTED_GENERATORS = {
+    'vdot-perf': frozenset({
+        'dcc2ca0126bd77a78683c6e043319e081266ee4547e0056535029ebb00928f9f',  # T13 v3
+        'f3b6d2a979aafcaff6309d17e9e8b2e389f8be3712ba84da015678bebae86d83',  # stream v4
+        '08418e8e95634931970c426701d77f83bfed8a609c7429cd7af128f018a98561',  # James fullcore/current
+    }),
+    'unified-vdot': frozenset({
+        '2aee46109a3fa0d5267a784e4ef0845e1e2bf65f012fee89053c799d4df0acb9',  # 64 archived images
+        '9d30e8a0cdc25d67c558bf643aa545cb91e861f8b6814f9c616cfcb78c202ee4',  # shared emit refactor
+    }),
+}
+
+
+def trusted_generator_source(source, family):
+    with source.open('rb') as stream:
+        data = stream.read(128 * 1024 + 1)
+    require(len(data) <= 128 * 1024, 'generator source exceeds size limit')
+    canonical = data.replace(b'\r\n', b'\n')
+    require(hashlib.sha256(canonical).hexdigest() in TRUSTED_GENERATORS[family],
+            'unreviewed generator source; receipt hashes cannot authorize code execution')
+    return canonical
+
+
 def verify_generation(build, manifest):
     """Regenerate from the exact generator stored with this image's receipt."""
     source=build/'source/generate.py'
@@ -277,7 +312,7 @@ def verify_generation(build, manifest):
         require(len(keys) == 1 and sha(build/'source'/name)==recorded[keys[0]],'build source hash missing/ambiguous/mismatch '+name)
     module=types.ModuleType('t13_archived_generator')
     module.__file__=str(Path(__file__).with_name('generate.py'))
-    exec(compile(source.read_text(),str(source),'exec'),module.__dict__)
+    exec(compile(trusted_generator_source(source, 'vdot-perf'),str(source),'exec'),module.__dict__)
     with tempfile.TemporaryDirectory(prefix='t13-regenerate-') as temp:
         extra={'shared_stream':True} if manifest.get('shared_stream') else {}
         fresh=module.generate(Path(temp)/'data',manifest['suite'],manifest['dataset'],manifest.get('shard',0),manifest.get('shards',1),**extra)

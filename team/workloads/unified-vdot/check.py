@@ -240,6 +240,7 @@ def trace_windows(events, manifest, kernels):
         body = path[next(i for i,(_,w) in enumerate(path) if w == COUNTERS[1])+2:next(i for i,(_,w) in enumerate(path) if w == COUNTERS[2])-1]
         vdot_count = sum(w&manifest['custom_mask'] == manifest['custom_match'] for _,w in body)
         require(vdot_count == (row['dots'] if row['method']=='vdot' else 0), 'wrong custom instruction count')
+        _provenance.verify_rvv_work(body, row)
         output.append(dict(seq=index,id=row['id'],scenario=row['scenario'],method=row['method'],n=row['n'],dots=row['dots'],phase=entry['phase'],repeat=entry['repeat'],dataset=manifest['dataset'],cycles=cycles,instructions=instructions,counter_values=[s['data'] for s in local_samples],sample_ticks=[s['cycle'] for s in local_samples]))
     return output
 
@@ -274,11 +275,11 @@ def verify_generation(build, manifest):
     receipt=json.loads((build/'build.json').read_text())
     recorded=receipt.get('software',receipt.get('software_files',{}))
     for name in ('generate.py','main.c','Makefile','fixed-layout.ld'):
-        key=next((k for k in recorded if k.rsplit('/',1)[-1]==name),None)
-        require(key is not None and sha(build/'source'/name)==recorded[key],'build source hash mismatch '+name)
+        keys=[k for k in recorded if k.rsplit('/',1)[-1]==name]
+        require(len(keys) == 1 and sha(build/'source'/name)==recorded[keys[0]],'build source hash missing/ambiguous/mismatch '+name)
     module=types.ModuleType('t13_archived_generator')
     module.__file__=str(Path(__file__).with_name('generate.py'))
-    exec(compile(source.read_text(),str(source),'exec'),module.__dict__)
+    exec(compile(_provenance.trusted_generator_source(source, 'unified-vdot'),str(source),'exec'),module.__dict__)
     with tempfile.TemporaryDirectory(prefix='t13-regenerate-') as temp:
         extra={'shared_stream':manifest.get('shared_stream',False), 'variant':manifest['variant']}
         fresh=module.generate(Path(temp)/'data',manifest['suite'],manifest['dataset'],manifest.get('shard',0),manifest.get('shards',1),**extra)

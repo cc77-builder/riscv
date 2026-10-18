@@ -1,0 +1,200 @@
+/usr/bin/python3
+/usr/lib/jvm/java-21-openjdk-amd64/bin/java
+/home/amesotten/.cache/codex-rvinno/o1-integration-20261018/tools/mill
+/usr/bin/verilator
+/home/amesotten/.cache/codex-rvinno/o1-integration-20261018/tools/clang++
+VDOT_FU_VARIANT fused=0 expected_latency=3
+VDOT_FU_CHECK_START date=2026-10-18T11:34:26+08:00 output=/home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-0
+51d7b19280cf6f28dc2ee79e51695625c6a3b413
+ M src/main/scala/xiangshan/backend/exu/ExeUnit.scala
+ M team/optimizations/o0/evidence/20261017-performance-trace/.gitattributes
+ M team/optimizations/o0/summarize_performance_trace.py
+ M team/optimizations/o0/test_performance_trace.py
+?? team/evidence/o1-integration-20261018/
+/usr/lib/jvm/java-21-openjdk-amd64/bin/java
+/home/amesotten/.cache/codex-rvinno/o1-integration-20261018/tools/mill
+/usr/bin/python3
+/usr/bin/verilator
+/home/amesotten/.cache/codex-rvinno/o1-integration-20261018/tools/clang++
+/home/amesotten/.cache/codex-rvinno/o1-integration-20261018/tools/rg
+Picked up JAVA_TOOL_OPTIONS: -XX:ActiveProcessorCount=2
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1-1-24.04.4-Ubuntu)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-24.04.4-Ubuntu, mixed mode, sharing)
+Picked up JAVA_TOOL_OPTIONS: -XX:ActiveProcessorCount=2
+Picked up JAVA_TOOL_OPTIONS: -XX:ActiveProcessorCount=2
+Mill Build Tool version 0.12.3
+Java version: 21.0.12.1, vendor: Ubuntu, runtime: /usr/lib/jvm/java-21-openjdk-amd64
+Default locale: en, platform encoding: UTF-8
+OS name: "Linux", version: 6.6.87.2-microsoft-standard-WSL2, arch: amd64
+LLVM (http://llvm.org/):
+  LLVM version 18.0.0git
+  Optimized build.
+CIRCT firtool-1.62.1
+Verilator 5.020 2024-01-01 rev (Debian 5.020-1)
+Ubuntu clang version 19.1.1 (1ubuntu1~24.04.2)
+Target: x86_64-pc-linux-gnu
+Thread model: posix
+InstalledDir: /usr/lib/llvm-19/bin
+Python 3.12.3
++ python3 -B /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/source-6ee2e8f10475549e/team/rtl/vdot/prepare_vectors.py /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/source-6ee2e8f10475549e/team/models/vdot/data /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-0/vectors.tsv
+VECTOR_CHECK_PASS suite=directed count=22 sha256=b78708eca1145437d34af230721a3999c35889176131cdf57acfa6b7a6b8b333
+VECTOR_CHECK_PASS suite=random count=10000 sha256=6201847c400f7ecac85848690704abac15b7278a824e447b35ad60788da70363
+VECTOR_EXPORT_PASS contract=vdot-s8x8-r32-v0.1 total=10022 sha256=901a7be30e62b81bcd3df55b20538a5ba9c879ba9c7c34f28b8c0421d8e6a327
++ mill -i -j 2 vdotFu.runMain team.vdot.GenerateVDotFu /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-0/rtl
++ cat /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-0/elaboration.log
+Picked up JAVA_TOOL_OPTIONS: -XX:ActiveProcessorCount=2
+Picked up JAVA_TOOL_OPTIONS: -XX:ActiveProcessorCount=2
+=============== vdotFu.runMain team.vdot.Generat...1018/fu-attempt-03/legacy-0/rtl ===============
+==================================================================================================
+[709/723] xiangshan.compile
+[709] [info] compiling 373 Scala sources to /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/source-6ee2e8f10475549e/out/xiangshan/compile.dest/classes ...
+[709/723] =============== vdotFu.runMain team.vdot....-attempt-03/legacy-0/rtl =============== 62s
+[709] xiangshan.compile 55s
+==================================================================================================
+[709] [info] done compiling
+[716/723] vdotFu.compile
+[716] [info] compiling 1 Scala source to /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/source-6ee2e8f10475549e/out/vdotFu/compile.dest/classes ...
+[716] [info] done compiling
+[723/723] vdotFu.runMain
+[723] Picked up JAVA_TOOL_OPTIONS: -XX:ActiveProcessorCount=2
+[723] VDot fusedInputProducts=false latency=3
+[723/723] =============== vdotFu.runMain team.vdot....-attempt-03/legacy-0/rtl =============== 76s
+==================================================================================================
++ test -s /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-0/rtl/VDotFuTestTop.sv
++ sha256sum /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-0/rtl/VDotFuTestTop.sv
++ verilator --cc --exe --build --assert --top-module VDotFuTestTop --Mdir /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-0/obj_dir -j 2 -CFLAGS '-std=c++17 -O2 -DVDOT_FU_EXPECTED_LATENCY=3' /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-0/rtl/VDotFuTestTop.sv /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/source-6ee2e8f10475549e/team/rtl/vdot/fu_test.cpp
++ /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-0/obj_dir/VVDotFuTestTop /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-0/vectors.tsv
++ tee /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-0/results.log
+VDOT_FU_GROUP_PASS arithmetic=10022 stalls=0,1,2,7 continuous-valid identity-snapshot latency-II
+VDOT_FU_GROUP_PASS illegal=22 policy-vxrm=16 renamed-VL exception-no-write
+VDOT_FU_GROUP_PASS idle-flush input-not-accepted recovery
+VDOT_FU_GROUP_PASS redirect-matrix=64 MUL-REDUCE-RESP-stalled older-self-wrap handshake-priority
+VDOT_FU_GROUP_PASS reset-phases=4 no-ghost-response recovery
+VDOT_FU_GROUP_PASS random-control cycles=5000 seed=0x20261013 conservation-watchdog
+VDOT_FU_PASS latency=3 min_ii=4 groups=6 cycles=71258 accepted=11245 responded=10960 killed=271 reset_dropped=14 illegal_responses=90 stall_cycles=25700
++ for fault in identity cancel-leak
++ /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-0/obj_dir/VVDotFuTestTop /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-0/vectors.tsv --inject-identity
++ rc=1
++ test 1 -eq 1
++ rg -q '^VDOT_FU_FAULT_INJECTION identity' /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-0/inject-identity.log
++ rg -q '^VDOT_FU_FAIL case=' /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-0/inject-identity.log
++ cat /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-0/inject-identity.log
+VDOT_FU_FAULT_INJECTION identity
+VDOT_FU_FAIL case=all-vectors-with-backpressure cycle=9 pdest identity mismatch
++ printf 'FU_FAULT_DETECTION_PASS fault=%s expected_exit=1\n' identity
+FU_FAULT_DETECTION_PASS fault=identity expected_exit=1
++ for fault in identity cancel-leak
++ /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-0/obj_dir/VVDotFuTestTop /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-0/vectors.tsv --inject-cancel-leak
++ rc=1
++ test 1 -eq 1
++ rg -q '^VDOT_FU_FAULT_INJECTION cancel-leak' /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-0/inject-cancel-leak.log
++ rg -q '^VDOT_FU_FAIL case=' /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-0/inject-cancel-leak.log
++ cat /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-0/inject-cancel-leak.log
+VDOT_FU_GROUP_PASS arithmetic=10022 stalls=0,1,2,7 continuous-valid identity-snapshot latency-II
+VDOT_FU_GROUP_PASS illegal=22 policy-vxrm=16 renamed-VL exception-no-write
+VDOT_FU_GROUP_PASS idle-flush input-not-accepted recovery
+VDOT_FU_FAULT_INJECTION cancel-leak
+VDOT_FU_FAIL case=redirect-case-0 cycle=65379 output valid/kill/latency mismatch
++ printf 'FU_FAULT_DETECTION_PASS fault=%s expected_exit=1\n' cancel-leak
+FU_FAULT_DETECTION_PASS fault=cancel-leak expected_exit=1
++ mill -i -j 2 vdotFu.runMain team.vdot.GenerateVDotFu /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-0/invalid-vlen --invalid-vlen
++ rg -q 'VDot requires VLEN=128' /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-0/invalid-vlen.log
++ echo 'VLEN_GUARD_PASS unsupported=256'
+VLEN_GUARD_PASS unsupported=256
++ set +x
+VDOT_FU_CHECK_PASS (real FU RTL and RobPtr; no EXU/CPU/NEMU integration validation)
+VDOT_FU_VARIANT fused=1 expected_latency=2
+VDOT_FU_CHECK_START date=2026-10-18T11:36:10+08:00 output=/home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-1
+51d7b19280cf6f28dc2ee79e51695625c6a3b413
+ M src/main/scala/xiangshan/backend/exu/ExeUnit.scala
+ M team/optimizations/o0/evidence/20261017-performance-trace/.gitattributes
+ M team/optimizations/o0/summarize_performance_trace.py
+ M team/optimizations/o0/test_performance_trace.py
+?? team/evidence/o1-integration-20261018/
+/usr/lib/jvm/java-21-openjdk-amd64/bin/java
+/home/amesotten/.cache/codex-rvinno/o1-integration-20261018/tools/mill
+/usr/bin/python3
+/usr/bin/verilator
+/home/amesotten/.cache/codex-rvinno/o1-integration-20261018/tools/clang++
+/home/amesotten/.cache/codex-rvinno/o1-integration-20261018/tools/rg
+Picked up JAVA_TOOL_OPTIONS: -XX:ActiveProcessorCount=2
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1-1-24.04.4-Ubuntu)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-24.04.4-Ubuntu, mixed mode, sharing)
+Picked up JAVA_TOOL_OPTIONS: -XX:ActiveProcessorCount=2
+Picked up JAVA_TOOL_OPTIONS: -XX:ActiveProcessorCount=2
+Mill Build Tool version 0.12.3
+Java version: 21.0.12.1, vendor: Ubuntu, runtime: /usr/lib/jvm/java-21-openjdk-amd64
+Default locale: en, platform encoding: UTF-8
+OS name: "Linux", version: 6.6.87.2-microsoft-standard-WSL2, arch: amd64
+LLVM (http://llvm.org/):
+  LLVM version 18.0.0git
+  Optimized build.
+CIRCT firtool-1.62.1
+Verilator 5.020 2024-01-01 rev (Debian 5.020-1)
+Ubuntu clang version 19.1.1 (1ubuntu1~24.04.2)
+Target: x86_64-pc-linux-gnu
+Thread model: posix
+InstalledDir: /usr/lib/llvm-19/bin
+Python 3.12.3
++ python3 -B /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/source-6ee2e8f10475549e/team/rtl/vdot/prepare_vectors.py /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/source-6ee2e8f10475549e/team/models/vdot/data /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-1/vectors.tsv
+VECTOR_CHECK_PASS suite=directed count=22 sha256=b78708eca1145437d34af230721a3999c35889176131cdf57acfa6b7a6b8b333
+VECTOR_CHECK_PASS suite=random count=10000 sha256=6201847c400f7ecac85848690704abac15b7278a824e447b35ad60788da70363
+VECTOR_EXPORT_PASS contract=vdot-s8x8-r32-v0.1 total=10022 sha256=901a7be30e62b81bcd3df55b20538a5ba9c879ba9c7c34f28b8c0421d8e6a327
++ mill -i -j 2 vdotFu.runMain team.vdot.GenerateVDotFu /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-1/rtl
++ cat /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-1/elaboration.log
+Picked up JAVA_TOOL_OPTIONS: -XX:ActiveProcessorCount=2
+Picked up JAVA_TOOL_OPTIONS: -XX:ActiveProcessorCount=2
+=============== vdotFu.runMain team.vdot.Generat...1018/fu-attempt-03/legacy-1/rtl ===============
+==================================================================================================
+[723/723] vdotFu.runMain
+[723] Picked up JAVA_TOOL_OPTIONS: -XX:ActiveProcessorCount=2
+[723] VDot fusedInputProducts=true latency=2
+[723/723] =============== vdotFu.runMain team.vdot....u-attempt-03/legacy-1/rtl =============== 9s
+==================================================================================================
++ test -s /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-1/rtl/VDotFuTestTop.sv
++ sha256sum /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-1/rtl/VDotFuTestTop.sv
++ verilator --cc --exe --build --assert --top-module VDotFuTestTop --Mdir /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-1/obj_dir -j 2 -CFLAGS '-std=c++17 -O2 -DVDOT_FU_EXPECTED_LATENCY=2' /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-1/rtl/VDotFuTestTop.sv /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/source-6ee2e8f10475549e/team/rtl/vdot/fu_test.cpp
++ /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-1/obj_dir/VVDotFuTestTop /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-1/vectors.tsv
++ tee /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-1/results.log
+VDOT_FU_GROUP_PASS arithmetic=10022 stalls=0,1,2,7 continuous-valid identity-snapshot latency-II
+VDOT_FU_GROUP_PASS illegal=22 policy-vxrm=16 renamed-VL exception-no-write
+VDOT_FU_GROUP_PASS idle-flush input-not-accepted recovery
+VDOT_FU_GROUP_PASS redirect-matrix=64 MUL-REDUCE-RESP-stalled older-self-wrap handshake-priority
+VDOT_FU_GROUP_PASS reset-phases=4 no-ghost-response recovery
+VDOT_FU_GROUP_PASS random-control cycles=5000 seed=0x20261013 conservation-watchdog
+VDOT_FU_PASS latency=2 min_ii=3 groups=6 cycles=61108 accepted=11457 responded=11199 killed=243 reset_dropped=15 illegal_responses=101 stall_cycles=25873
++ for fault in identity cancel-leak
++ /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-1/obj_dir/VVDotFuTestTop /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-1/vectors.tsv --inject-identity
++ rc=1
++ test 1 -eq 1
++ rg -q '^VDOT_FU_FAULT_INJECTION identity' /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-1/inject-identity.log
++ rg -q '^VDOT_FU_FAIL case=' /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-1/inject-identity.log
++ cat /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-1/inject-identity.log
+VDOT_FU_FAULT_INJECTION identity
+VDOT_FU_FAIL case=all-vectors-with-backpressure cycle=8 pdest identity mismatch
++ printf 'FU_FAULT_DETECTION_PASS fault=%s expected_exit=1\n' identity
+FU_FAULT_DETECTION_PASS fault=identity expected_exit=1
++ for fault in identity cancel-leak
++ /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-1/obj_dir/VVDotFuTestTop /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-1/vectors.tsv --inject-cancel-leak
++ rc=1
++ test 1 -eq 1
++ rg -q '^VDOT_FU_FAULT_INJECTION cancel-leak' /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-1/inject-cancel-leak.log
++ rg -q '^VDOT_FU_FAIL case=' /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-1/inject-cancel-leak.log
++ cat /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-1/inject-cancel-leak.log
+VDOT_FU_GROUP_PASS arithmetic=10022 stalls=0,1,2,7 continuous-valid identity-snapshot latency-II
+VDOT_FU_GROUP_PASS illegal=22 policy-vxrm=16 renamed-VL exception-no-write
+VDOT_FU_GROUP_PASS idle-flush input-not-accepted recovery
+VDOT_FU_FAULT_INJECTION cancel-leak
+VDOT_FU_FAIL case=redirect-case-0 cycle=55317 output valid/kill/latency mismatch
++ printf 'FU_FAULT_DETECTION_PASS fault=%s expected_exit=1\n' cancel-leak
+FU_FAULT_DETECTION_PASS fault=cancel-leak expected_exit=1
++ mill -i -j 2 vdotFu.runMain team.vdot.GenerateVDotFu /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-1/invalid-vlen --invalid-vlen
++ rg -q 'VDot requires VLEN=128' /home/amesotten/.cache/codex-rvinno/o1-integration-20261018/fu-attempt-03/legacy-1/invalid-vlen.log
++ echo 'VLEN_GUARD_PASS unsupported=256'
+VLEN_GUARD_PASS unsupported=256
++ set +x
+VDOT_FU_CHECK_PASS (real FU RTL and RobPtr; no EXU/CPU/NEMU integration validation)
+O1_FU_ONLY_PASS latency=2 ii=2 accepted=13625 responses=13193 cancelled=392 reset_dropped=40 handoffs=12261 stalls=26701 parent_tested=0 fullcore_tested=0
+O1_FU_RUNNER_PASS_PARENT_ELABORATION_AND_FULLCORE_PENDING
