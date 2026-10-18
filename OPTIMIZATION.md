@@ -1,6 +1,32 @@
 # zjhwork2：后续优化开发入口
 
-## 当前进展：O0 归档来源核验（未关闭 O0）
+## 当前进展：O1 同拍交接候选已实现，RTL 验证待执行
+
+基点 `9e7cce9c9dc090e5280f1a7f8791551612777cc6`；唯一提交目标仍为 `cc77-builder/riscv:zjhwork2`。本批已修改生产 `VDot.scala` 和 `ExeUnit.scala`，新增 elaboration-only 开关 `VDOT_O1_HANDOFF=1`（必须同时设置 `VDOT_T14_FUSED_INPUT=1`）。默认开关为 0，原基础版/T14 分支保留。
+
+候选包括 FU 响应拍接收下一请求、旧写使能寄存、父级只允许 vdot→vdot 交接，以及同拍完成/接受后保持 busy。ISA、乘法/归约、NEMU、原始数据、旧检查器及历史归档没有修改。旧 T12/T13 观察协议不适用于同拍交接，候选暂时拒绝启用这些旧 trace 开关，不能复用其通过记录。
+
+新增真实 FU C++ 测试及三模式运行脚本。17 项主机合同/源码检查通过，C++ 仅用端口声明桩做语法检查通过，shell 语法通过；真实 RTL 脚本因缺少 Mill 明确退出 2。**没有 Chisel elaboration、Verilator、真实父级联调、新整核 DiffTest 或性能结果；不能声称 II=2 已在硬件验证。** 详见 [O1 候选入口](team/optimizations/o1/README.md) 及该目录的 verification.json。
+
+下一步先在匹配环境运行三模式 FU 回归，再补真实 VFEX4 父级测试、O1 观察/时钟映射、完整控制回归与冻结基准 A/B。O0 其他场景仍是待办；本 pilot 的结果足以启动受控候选开发，不等于全部诊断结束。正式 T16 报告继续后置。
+
+## 上一批：性能 batch128 逐拍诊断（历史）
+
+从 `91b94073` 继续，仅写 `zjhwork2`。此次 176,256 字节上传文件与原性能 pilot 完全一致，原严格 trace 入口实际通过。768 次接受—响应—提交、48 条 CSR 采样已关联；发现 **738 次旧响应当拍的 busy 等待，且同一等待请求全部在下一拍被接受**。0 次写回反压；每个正式 128 点积窗口有 125 次上述匹配。
+
+见 [性能轨迹诊断](team/optimizations/o0/PERFORMANCE_TRACE.md) 和 [实际回执](team/optimizations/o0/evidence/20261017-performance-trace/execution.json)。新增逐窗口/动态 ROB 分析器和 16 项离线测试，旧 functional 18 项也重跑通过。此次不再存在性能文件传输阻塞。
+
+**此 pilot 已完成，为 O1 同拍交接原型提供依据；完整 O0 矩阵、O1 RTL/父级验证和新性能 A/B 尚未完成。738 不是可直接节省的周期数。** 本批不改生产 RTL、ISA、NEMU、原检查器和旧封存证据，不产生新加速比。后续优先联合处理 FU/父级 busy/新旧身份，不直接改写回优先级；正式报告仍后置。
+
+## 上一批：上传功能日志重放（历史）
+
+本批基点 `a877e0575ea91392edc7816637e51ae8d1689b36`，唯一发布目标仍是 `cc77-builder/riscv:zjhwork2`。
+
+用户上传的 gzip 经完整摘要比对识别为 **functional-d0-s06-r0**，不是原性能 pilot 的 performance-d0-s06-r0。本批实际解析硬件原始流，关联 12 次功能调用、48 条 CSR 采样、6 条 FU 接受—响应—提交；每条响应 2 拍、提交观测差 4 拍，未观察到 busy 等待/写回反压。18 项离线回归与拒错检查通过。
+
+详见 [本次真实轨迹与边界](team/optimizations/o0/FUNCTIONAL_TRACE.md)。新入口为 `replay_functional_trace.py`；旧性能 pins 和原检查器不变。该运行只有孤立功能调用，不能证明吞吐瓶颈或新加速比。**O0 密集性能诊断未关闭，O1 生产 RTL 未修改。** 下方是此前批次的历史状态，不将本次功能重放当成性能 pilot 已完成。
+
+## 上一批：O0 归档来源核验（历史）
 
 本批在 `492db2d9e2a5041db5e0a7d1dec16555a7e1b205` 上续做，唯一目标仍为 `cc77-builder/riscv:zjhwork2`。
 
