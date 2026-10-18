@@ -1,0 +1,90 @@
+src/main/scala/xiangshan/backend/fu/FuType.scala
+1: package xiangshan.backend.fu
+2: 
+3: import chisel3._
+4: import chisel3.util.BitPat
+5: import utils.EnumUtils.OHEnumeration
+6: import org.chipsalliance.cde.config.Parameters
+7: import xiangshan.XSCoreParamsKey
+8: 
+9: import scala.language.implicitConversions
+10: 
+11: object FuType extends OHEnumeration {
+12:   class OHType(i: Int, name: String) extends super.OHVal(i: Int, name: String)
+13: 
+14:   def OHType(i: Int, name: String): OHType = new OHType(i, name)
+15: 
+16:   implicit class fromOHValToLiteral(x: OHType) {
+17:     def U: UInt = x.ohid.U
+18:     def U(width: Width): UInt = x.ohid.U(width)
+19:   }
+20: 
+21:   private var initVal = 0
+22: 
+23:   private def addType(name: String): OHType = {
+24:     val ohval = OHType(initVal, name)
+25:     initVal += 1
+26:     ohval
+27:   }
+28: 
+29:   // int
+30:   val jmp = addType(name = "jmp")
+31:   val brh = addType(name = "brh")
+32:   val i2f = addType(name = "i2f")
+33:   val i2v = addType(name = "i2v")
+34:   val f2v = addType(name = "f2v")
+35:   val csr = addType(name = "csr")
+36:   val alu = addType(name = "alu")
+37:   val mul = addType(name = "mul")
+38:   val div = addType(name = "div")
+39:   val fence = addType(name = "fence")
+40:   val bku = addType(name = "bku")
+41: 
+42:   // fp
+43:   val falu = addType(name = "falu")
+44:   val fmac = addType(name = "fmac")
+45:   val fcvt = addType(name = "fcvt")
+46:   val fDivSqrt = addType(name = "fDivSqrt")
+47: 
+48:   // ls
+49:   val ldu = addType(name = "ldu")
+50:   val stu = addType(name = "stu")
+51:   val mou = addType(name = "mou")
+52: 
+53:   // vec
+54:   val vipu = addType(name = "vipu")
+55:   val vialuF = addType(name = "vialuF")
+56:   val vppu = addType(name = "vppu")
+57:   val vimac = addType(name = "vimac")
+58:   val vidiv = addType(name = "vidiv")
+59:   val vfpu = addType(name = "vfpu") // will be deleted
+60:   val vfalu = addType(name = "vfalu")
+61:   val vfma = addType(name = "vfma")
+62:   val vfdiv = addType(name = "vfdiv")
+63:   val vfcvt = addType(name = "vfcvt")
+64:   val vsetiwi = addType(name = "vsetiwi") // vset read rs write rd
+65:   val vsetiwf = addType(name = "vsetiwf") // vset read rs write vconfig
+66:   val vsetfwf = addType(name = "vsetfwf") // vset read old vl write vconfig
+67: 
+68:   // vec ls
+69:   val vldu = addType(name = "vldu")
+70:   val vstu = addType(name = "vstu")
+71:   val vsegldu = addType(name = "vsegldu")
+72:   val vsegstu = addType(name = "vsegstu")
+73: 
+74:   // Append to preserve the indices of existing FU types.
+75:   val vdot = addType(name = "vdot")
+
+src/main/scala/utils/EnumUtils.scala
+1: package utils
+2: 
+3: import MathUtils.IntToOH
+4: 
+5: object EnumUtils {
+6:   class OHEnumeration() extends Enumeration {
+7:     protected class OHVal(i: Int, name: String) extends super.Val(i, name) {
+8:       def ohid: BigInt = IntToOH(id)
+9:     }
+10:   }
+11: }
+

@@ -1,6 +1,6 @@
 # 三人团队：项目计划与开发入口
 
-> **2026-10-18 O1 全核回归进行中。** O1 观察器已进入新构建的 MinimalConfig 单核 EMU，十二项真实运行正在推进。见 [全核工程入口](optimizations/o1/fullcore/README.md) 和 [观察协议](optimizations/o1/fullcore/SCHEMA.md)。尚未完成完整全核验收或新性能 A/B；成果本地保存。
+> **2026-10-18 O1 全核功能与控制回归、严格离线复核通过，本地保存。** 固定硬件 `18c0ce08`、原检查器 `518c0567` 的十二项运行全部符合预期；门禁集成 `d1100020` 后对未修改原日志重审通过，未新增 EMU 运行。正常提交 3,012 条 vdot；117 个唯一功能用例（80 合法、37 异常）、124 次分片执行、bit100 负控及正常恢复通过。控制程序自身满足八项覆盖，同拍交接 303 次，密集程序另有 725 次。见 [全核工程入口](optimizations/o1/fullcore/README.md)、[严格日志门禁](optimizations/o1/audit/README.md) 和 [完整证据](optimizations/o1/evidence/20261018-fullcore-validation/README.md)。本轮全核覆盖 vdot/VIDiv，未覆盖 VFDiv，取消仅观察到 vdot reduce 阶段；尚无新性能 A/B、PPA、T17 或人工 ACK 结论。O1 默认关闭，本轮不推送，正式 T16 报告继续后置；下方状态为历史记录。
 
 > **2026-10-18 真实 VFEX4 父级联调通过，本地保存。** 真实 VDot/VIDiv/VFDivSqrt、Dispatcher、busy 和门控共同验证；DIV 切换、反压、432 组 redirect、27 组 reset、20000 拍随机控制及七项负控通过。O1 同拍交接 10343 次，父级连续 vdot 接受间隔 2 拍。见 [父级工程记录](optimizations/o1/parent/README.md)、[证据](optimizations/o1/evidence/20261018-parent-validation/README.md) 和 [优化进度](../OPTIMIZATION.md)。本轮未推送；O1 全核回归和新性能测量待做，不能用测试总周期比值声称应用加速。下方父级未验证等状态按历史时点阅读。
 
@@ -34,6 +34,7 @@
 
 | 内容 | 入口 |
 | --- | --- |
+| O1 全核功能与控制回归、严格离线复核 | [工程记录](optimizations/o1/fullcore/README.md) · [日志门禁](optimizations/o1/audit/README.md) · [证据](optimizations/o1/evidence/20261018-fullcore-validation/README.md) |
 | O1 真实 VFEX4 父级联调 | [工程记录](optimizations/o1/parent/README.md) · [证据](optimizations/o1/evidence/20261018-parent-validation/README.md) |
 | O0/O1 同拍交接开发与三模式 FU 验证 | [工程入口](optimizations/o1/README.md) · [证据](optimizations/o1/evidence/20261018-fu-validation/README.md) · [优化进度](../OPTIMIZATION.md) |
 | 四项目统一测试、公开实现对比与验证记录 | [结果](docs/unified-vdot-comparison-20261017.md) · [程序](workloads/unified-vdot/README.md) · [证据](evidence/unified-vdot-20261017/README.md) |

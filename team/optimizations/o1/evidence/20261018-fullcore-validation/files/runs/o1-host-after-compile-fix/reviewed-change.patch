@@ -1,0 +1,23 @@
+commit db0408aa42afc13e3ff93e865f26a2d5bfb02c93
+Author:     cc77-builder <334095609+cc77-builder@users.noreply.github.com>
+AuthorDate: Sun Oct 18 11:53:59 2026 +0800
+Commit:     cc77-builder <334095609+cc77-builder@users.noreply.github.com>
+CommitDate: Sun Oct 18 11:53:59 2026 +0800
+
+    fix(vdot): compare handoff FU selectors as hardware literals
+
+diff --git a/src/main/scala/xiangshan/backend/exu/ExeUnit.scala b/src/main/scala/xiangshan/backend/exu/ExeUnit.scala
+index 0f9fe9b..9c693c0 100644
+--- a/src/main/scala/xiangshan/backend/exu/ExeUnit.scala
++++ b/src/main/scala/xiangshan/backend/exu/ExeUnit.scala
+@@ -244,8 +244,8 @@ class ExeUnitImp(
+     val vdotIndex = fuCfgs.indexWhere(_.fuType == FuType.vdot)
+     val vdotFu = funcUnits(vdotIndex)
+     val activeIsVDot = RegInit(false.B)
+-    when(io.in.fire) { activeIsVDot := io.in.bits.fuType === FuType.vdot }
+-    val newIsVDot = io.in.bits.fuType === FuType.vdot
++    when(io.in.fire) { activeIsVDot := io.in.bits.fuType === FuType.vdot.U }
++    val newIsVDot = io.in.bits.fuType === FuType.vdot.U
+     // The shared output remains one-hot; neither div->vdot nor vdot->div overlaps.
+     val handoff = busy && activeIsVDot && newIsVDot && vdotFu.io.out.valid && io.out.ready &&
+       !io.flush.valid && !reset.asBool

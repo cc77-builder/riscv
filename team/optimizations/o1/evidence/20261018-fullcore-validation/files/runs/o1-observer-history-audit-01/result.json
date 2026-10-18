@@ -1,0 +1,243 @@
+{
+  "status": "HISTORICAL_TRACE_FORMAT_AND_OBSERVER_DIAGNOSTIC_COMPLETE",
+  "repository": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo",
+  "head": "518c05674d5ecfed04a944cf01c99cea488b6c8a",
+  "checker_versions_sha256": {
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/scripts/check-vdot-regression.py": "c10e914e69b983cf62132516a95e73b8c902380087b8bb098c4fbc2fc3b12f4a",
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o1/fullcore/analyze.py": "70b9709e02da598b12b72f779bcb4a3dc394b57f7e1589ba388792884fa998dd",
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o1/fullcore/check_control.py": "27a25ffc6161ae895051454a5fe86ff7800e90f28e04f458c2db90b63b89ec62",
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/src/main/scala/xiangshan/backend/rob/Rob.scala": "914a80a60091b337c6525d001716e3a04289744d431e5f2bc52fd88f250d2e3f",
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/src/main/scala/xiangshan/backend/CtrlBlock.scala": "80c873f65548222885fee00e1e4637a604f1c934196af2683cbab2284a7faa6e"
+  },
+  "command": [
+    "/usr/bin/python3",
+    "-B",
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/runs/o1-observer-history-audit-01/audit.py"
+  ],
+  "audit_script_sha256": "e06fc52076a5efa5c7649138bb2c07860b5cdef461e71497267a2df91092d998",
+  "new_emu_executed": false,
+  "new_o1_rtl_validation": false,
+  "historical_logs_modified": false,
+  "production_sources_modified": false,
+  "findings": [
+    "Actual Chisel space-padded decimal fields, rob=0: 8, hexadecimal PC and 128-bit result formatting are handled by the strict field grammar.",
+    "All 4608 RETIRE, 48 COUNTER_ENQUEUE and 48 CSR_SAMPLE records in the sampled historical dense log match the current known-T13 stripping grammar.",
+    "Old ENQUEUE tags coincide with ROB redirect in one sampled control event and six sampled dense events. Actual ROB connectEnq is suppressed when redirect.valid, so new O1 observation must apply that gate.",
+    "The limited legal-only historical lifetime diagnostic has no unfinished allocations or live overwrites after excluding those same-cycle enqueue tags."
+  ],
+  "limits": [
+    "This is historical-format and observer-boundary diagnosis, not a new emulator run, new O1 pass, or performance comparison.",
+    "No T12 record was relabeled as O1, and no historical log was edited or emitted as new-run evidence.",
+    "Functional-0 was used only for format samples; no exact self-redirect lifetime verdict is inferred from its legacy schema."
+  ],
+  "logs": [
+    {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/evidence/t14-optimization-20261016/t12/suite/functional-0/stderr.log.gz",
+      "compressed_sha256": "8021a3c5871f15d04aa5da09ad52aaaace5503516e2ee20b0cd73fb92c5b7af7",
+      "uncompressed_sha256": "1ecd91ce695c3aa97a9429c6aa62dc9458da7217667cbe30399f83bd0e826fd1",
+      "uncompressed_bytes": 3260911,
+      "crlf_count": 0,
+      "legacy_observer_record_count": 3397,
+      "tag_counts": {
+        "T12_REDIRECT": 3337,
+        "T12_ENQUEUE": 14,
+        "T12_VFEX4_ACCEPT": 12,
+        "T12_ACCEPT": 12,
+        "T12_RESPONSE": 12,
+        "T12_COMMIT": 10
+      },
+      "format_samples": {
+        "T12_REDIRECT": "T12_REDIRECT cycle=                2198 rob=0: 2 ftq=0:2",
+        "T12_ENQUEUE": "T12_ENQUEUE cycle=              311080 rob=0: 8 pc=0x0000080001bdc ftq=1:5 word=0x0294050b",
+        "T12_VFEX4_ACCEPT": "T12_VFEX4_ACCEPT cycle=              311084 rob=0: 8 fu=0x800000000",
+        "T12_ACCEPT": "T12_ACCEPT cycle=                   0 rob=0: 8 pdest=124 vl=  8 illegal=0",
+        "T12_RESPONSE": "T12_RESPONSE cycle=                   2 rob=0: 8 pdest=124 illegal=0 data=0x00000000000000000000000000000000",
+        "T12_COMMIT": "T12_COMMIT cycle=              311094 rob=0: 8 pc=0x0000080001bdc ftq=1:5"
+      },
+      "t13_hardware_rows_validated_against_current_stripper": {},
+      "enqueue_tags_same_cycle_as_rob_redirect": []
+    },
+    {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/evidence/t14-optimization-20261016/control-sweep/candidate/stderr.log.gz",
+      "compressed_sha256": "e346c45c25035c8a05ea0d38b4b021d78e852372aa1d1687dc8cfcf3cadd4066",
+      "uncompressed_sha256": "0c41fe07ba041920e770883d9efc8fab12b3f3bfe8ca49ba7be5dfbae7a7bfb7",
+      "uncompressed_bytes": 4537399,
+      "crlf_count": 0,
+      "legacy_observer_record_count": 18762,
+      "tag_counts": {
+        "T12_REDIRECT": 319,
+        "T12_ENQUEUE": 2283,
+        "T12_VFEX4_ACCEPT": 3210,
+        "T12_ACCEPT": 2264,
+        "T12_RESPONSE": 2263,
+        "T12_VFEX4_WAIT": 6127,
+        "T12_COMMIT": 2157,
+        "T12_STALL": 138,
+        "T12_KILL": 1
+      },
+      "format_samples": {
+        "T12_REDIRECT": "T12_REDIRECT cycle=                2198 rob=0: 2 ftq=0:2",
+        "T12_ENQUEUE": "T12_ENQUEUE cycle=                8272 rob=1:25 pc=0x0000080000298 ftq=1:5 word=0x0294000b",
+        "T12_VFEX4_ACCEPT": "T12_VFEX4_ACCEPT cycle=                8285 rob=1:25 fu=0x800000000",
+        "T12_ACCEPT": "T12_ACCEPT cycle=                   0 rob=1:25 pdest=  2 vl=  8 illegal=0",
+        "T12_RESPONSE": "T12_RESPONSE cycle=                   2 rob=1:25 pdest=  2 illegal=0 data=0x000000000000000000000000ffffc869",
+        "T12_VFEX4_WAIT": "T12_VFEX4_WAIT cycle=                8309 rob=1:35 fu=0x800000000 busy=1",
+        "T12_COMMIT": "T12_COMMIT cycle=                8333 rob=1:25 pc=0x0000080000298 ftq=1:5",
+        "T12_STALL": "T12_STALL cycle=                3074 rob=1:46",
+        "T12_KILL": "T12_KILL cycle=                6656 rob=1:33 redirect=1: 8 state=3"
+      },
+      "t13_hardware_rows_validated_against_current_stripper": {},
+      "enqueue_tags_same_cycle_as_rob_redirect": [
+        {
+          "cycle": 351792,
+          "enqueue_rob": "0:5",
+          "records": [
+            {
+              "physical_line": 18412,
+              "record": "T12_ENQUEUE cycle=              351792 rob=0: 5 pc=0x0000080011700 ftq=1:1 word=0x02940a0b"
+            },
+            {
+              "physical_line": 18413,
+              "record": "T12_REDIRECT cycle=              351792 rob=1:17 ftq=0:2"
+            }
+          ]
+        }
+      ],
+      "limited_legacy_lifetime_diagnostic": {
+        "allocation_tags_after_excluding_redirect_cycle_tags": 2282,
+        "unfinished_entries": [],
+        "uncompleted_entry_overwritten": [],
+        "note": "Diagnostic only. Old REDIRECT lacks self bit; these legal-only control/dense streams use younger-cancellation for this check. No log bytes or event names were rewritten."
+      }
+    },
+    {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/evidence/t14-optimization-20261016/fullcore/performance/performance-d0-s06-r0/stderr.log.gz",
+      "compressed_sha256": "b293042cc80c43d539db15ebca7fe5a1907bc0b541b25f8553cec2f69e88ca7b",
+      "uncompressed_sha256": "b539264f42164a220b5835983ebf54f6454365bf58037d590d19fbfb018c17ef",
+      "uncompressed_bytes": 4086304,
+      "crlf_count": 0,
+      "legacy_observer_record_count": 5772,
+      "tag_counts": {
+        "T12_REDIRECT": 446,
+        "T13_RETIRE": 4608,
+        "T13_COUNTER_ENQUEUE": 48,
+        "T13_CSR_SAMPLE": 48,
+        "T12_ENQUEUE": 780,
+        "T12_VFEX4_ACCEPT": 768,
+        "T12_ACCEPT": 768,
+        "T12_VFEX4_WAIT": 1474,
+        "T12_RESPONSE": 768,
+        "T12_COMMIT": 768
+      },
+      "format_samples": {
+        "T12_REDIRECT": "T12_REDIRECT cycle=                2198 rob=0: 2 ftq=0:2",
+        "T13_RETIRE": "T13_RETIRE cycle=               10883 slot=0 rob=1:24 pc=0x0000080000530 word=0x51300013 count=1 data=0x0000000000000513",
+        "T13_COUNTER_ENQUEUE": "T13_COUNTER_ENQUEUE cycle=               10911 rob=1:26 pc=0x0000080000538 word=0xc0202773 empty=1 wait=0 block=0",
+        "T13_CSR_SAMPLE": "T13_CSR_SAMPLE cycle=               10914 addr=0xc02 data=0xcd2e1879d1561996 wen=0",
+        "T12_ENQUEUE": "T12_ENQUEUE cycle=               10980 rob=1:31 pc=0x000008000054c ftq=0:4 word=0x0294050b",
+        "T12_VFEX4_ACCEPT": "T12_VFEX4_ACCEPT cycle=               10984 rob=1:31 fu=0x800000000",
+        "T12_ACCEPT": "T12_ACCEPT cycle=                   0 rob=1:31 pdest=110 vl=  8 illegal=0",
+        "T12_VFEX4_WAIT": "T12_VFEX4_WAIT cycle=               10985 rob=1:32 fu=0x800000000 busy=1",
+        "T12_RESPONSE": "T12_RESPONSE cycle=                   2 rob=1:31 pdest=110 illegal=0 data=0x00000000000000000000000000020000",
+        "T12_COMMIT": "T12_COMMIT cycle=               10988 rob=1:31 pc=0x000008000054c ftq=0:4"
+      },
+      "t13_hardware_rows_validated_against_current_stripper": {
+        "T13_RETIRE": 4608,
+        "T13_COUNTER_ENQUEUE": 48,
+        "T13_CSR_SAMPLE": 48
+      },
+      "enqueue_tags_same_cycle_as_rob_redirect": [
+        {
+          "cycle": 11372,
+          "enqueue_rob": "1:38",
+          "records": [
+            {
+              "physical_line": 1064,
+              "record": "T12_ENQUEUE cycle=               11372 rob=1:38 pc=0x0000080000550 ftq=0:4 word=0x0294058b"
+            },
+            {
+              "physical_line": 1065,
+              "record": "T12_REDIRECT cycle=               11372 rob=1:36 ftq=0:3"
+            }
+          ]
+        },
+        {
+          "cycle": 35570,
+          "enqueue_rob": "0:34",
+          "records": [
+            {
+              "physical_line": 3508,
+              "record": "T12_ENQUEUE cycle=               35570 rob=0:34 pc=0x0000080000550 ftq=0:4 word=0x0294058b"
+            },
+            {
+              "physical_line": 3509,
+              "record": "T12_REDIRECT cycle=               35570 rob=0:32 ftq=0:3"
+            }
+          ]
+        },
+        {
+          "cycle": 40114,
+          "enqueue_rob": "1:26",
+          "records": [
+            {
+              "physical_line": 4643,
+              "record": "T12_ENQUEUE cycle=               40114 rob=1:26 pc=0x0000080000550 ftq=0:7 word=0x0294058b"
+            },
+            {
+              "physical_line": 4644,
+              "record": "T12_REDIRECT cycle=               40114 rob=1:24 ftq=0:6"
+            }
+          ]
+        },
+        {
+          "cycle": 54134,
+          "enqueue_rob": "0:18",
+          "records": [
+            {
+              "physical_line": 6947,
+              "record": "T12_ENQUEUE cycle=               54134 rob=0:18 pc=0x0000080000550 ftq=0:2 word=0x0294058b"
+            },
+            {
+              "physical_line": 6948,
+              "record": "T12_REDIRECT cycle=               54134 rob=0:16 ftq=0:1"
+            }
+          ]
+        },
+        {
+          "cycle": 58684,
+          "enqueue_rob": "1:9",
+          "records": [
+            {
+              "physical_line": 8079,
+              "record": "T12_ENQUEUE cycle=               58684 rob=1: 9 pc=0x0000080000550 ftq=0:5 word=0x0294058b"
+            },
+            {
+              "physical_line": 8080,
+              "record": "T12_REDIRECT cycle=               58684 rob=1: 7 ftq=0:4"
+            }
+          ]
+        },
+        {
+          "cycle": 72820,
+          "enqueue_rob": "0:18",
+          "records": [
+            {
+              "physical_line": 10381,
+              "record": "T12_ENQUEUE cycle=               72820 rob=0:18 pc=0x0000080000550 ftq=0:6 word=0x0294058b"
+            },
+            {
+              "physical_line": 10382,
+              "record": "T12_REDIRECT cycle=               72820 rob=0:16 ftq=0:5"
+            }
+          ]
+        }
+      ],
+      "limited_legacy_lifetime_diagnostic": {
+        "allocation_tags_after_excluding_redirect_cycle_tags": 774,
+        "unfinished_entries": [],
+        "uncompleted_entry_overwritten": [],
+        "note": "Diagnostic only. Old REDIRECT lacks self bit; these legal-only control/dense streams use younger-cancellation for this check. No log bytes or event names were rewritten."
+      }
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "name": "functional-0",
+  "status": "VDOT_MATRIX_SHARD_PASS",
+  "started": "2026-10-18T15:36:30.618039+08:00",
+  "command": [
+    "timeout",
+    "120m",
+    "stdbuf",
+    "-o0",
+    "-e0",
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/build/emu",
+    "-i",
+    "/home/riscv/riscv-lab/t12-regression-20261013/runs/t11-matrix-canonical/build-0/vdot-exceptions.bin",
+    "--flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+    "--ram-size=128MB",
+    "--diff=/home/riscv/riscv-lab/t12-regression-20261013/nemu/reference/build/riscv64-nemu-interpreter-so",
+    "--max-cycles=5000000"
+  ],
+  "files": {
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/build/emu": "b13b05a3b03d2dd178d5e07b55bda1e8d99d7a094d44cf30405241f9793170cb",
+    "/home/riscv/riscv-lab/t12-regression-20261013/nemu/reference/build/riscv64-nemu-interpreter-so": "efbed0774addc27eac38af1a19ab5d9c9dd5f179b5015f25ae7b80b966185bd4",
+    "/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+    "/home/riscv/riscv-lab/t12-regression-20261013/runs/t11-matrix-canonical/build-0/vdot-exceptions.bin": "b8b7e1a7032070bdfdfc2a747ab6453011ea9959ebd5ac52ca21b439d4d113b3"
+  },
+  "negative_target": null,
+  "exit_code": 0,
+  "raw_logs_sha256": {
+    "stdout.log": "d7974090faad95273b737e555b84100708a54511a6395905c7f4aebfebed85d2",
+    "stderr.log": "f6ddbec5e1cf4e34f874069773780dfe4c06568512538ab9bdfc487df5075418",
+    "run.log": "315372e60cc26ddc2876dfba1da4e87925db74a771fd1480ae59e838e2b1e2f7"
+  },
+  "log_format": "separate-streams-v1; derived run.log = stderr.log + stdout.log",
+  "expected_vdot_commits": 10,
+  "observation_status": "O1_TRACE_PASS",
+  "observation_counts": {
+    "VFEX4_ACCEPT": 12,
+    "VFEX4_WAIT": 0,
+    "VFEX4_REDIRECT": 3337,
+    "ACCEPT": 12,
+    "RESPONSE": 12,
+    "STALL": 0,
+    "KILL": 0,
+    "HANDOFF": 0,
+    "ENQUEUE": 14,
+    "COMMIT": 10,
+    "REDIRECT": 3337,
+    "ROB_WRAP": 5,
+    "FTQ_WRAP": 6,
+    "ACCEPTED_THEN_SQUASHED": 2,
+    "ACCEPTED_YOUNGER_SQUASHED": 0
+  },
+  "finished": "2026-10-18T16:26:40.074177+08:00"
+}

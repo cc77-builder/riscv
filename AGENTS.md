@@ -1,10 +1,12 @@
 # 团队 Agent 入口
 
-## 当前任务：O1 观察器适配与全核回归进行中
+## 当前任务：O1 全核功能与控制回归、严格离线复核通过
 
-用户 2026-10-18 要求“开始 O1 观察器适配及全核回归”。工作分支 `local/o1-fullcore-20261018`，工程入口见 [fullcore/README.md](team/optimizations/o1/fullcore/README.md)。全新 EMU 已从 `18c0ce08a40e889654bfe76d5435f272854ad7d0` 构建通过，实际十二项回归正在运行；构建与主机检查不能代替完整全核验收。
+用户 2026-10-18 要求的 O1 观察器适配及本轮全核回归已完成，工作分支为 `local/o1-fullcore-20261018`。MinimalConfig 单核 EMU 的硬件构建源码为 `18c0ce08a40e889654bfe76d5435f272854ad7d0`，原运行检查器冻结在 `518c05674d5ecfed04a944cf01c99cea488b6c8a`；运行结束后以 `d110002006001d45a39dbc00591a299672940818` 集成严格日志门禁，并对同一份未修改原始日志完成离线全套重审，没有再次运行 EMU。十二项作业全部符合预期（十一项正常通过、一项 bit100 差分负控按预期拒错），同镜像正常参考库恢复通过；主机检查 41＋25＝66 项通过。先读 [全核工程入口](team/optimizations/o1/fullcore/README.md)、[日志门禁](team/optimizations/o1/audit/README.md) 和 [归档证据](team/optimizations/o1/evidence/20261018-fullcore-validation/README.md)。
 
-运行中的六个检查器和硬件输入均已冻结，不在中途改动。新增独立日志门禁与离线重审工具放在 `team/optimizations/o1/audit/`；全套结束后再集成门禁，并针对未修改的原始日志重新审核。当前 `fullcore_difftest_run=true`、`fullcore_validation_pass=false`、`performance_measured=false`。本轮本地保存，不推送 GitHub；O1 默认关闭，正式 T16 报告继续后置。
+正常程序共提交 3,012 条 vdot；功能矩阵为 117 个唯一用例（80 合法、37 异常），八分片共执行 124 次。控制程序独立满足八项覆盖，记录 303 次同拍交接、62 拍 vdot 写回反压、3 次在途取消；密集程序的 12 个窗口通过，另有 725 次同拍交接及 2 次取消。全核共享 FU 覆盖 vdot 与 VIDiv，未覆盖 VFDiv；所观察到的 vdot 取消仅在 reduce 阶段，不扩大为所有取消阶段或 DIV 取消已验收。
+
+当前 `fullcore_validation_pass=true`、`offline_full_suite_recheck_pass=true`，完成范围仅为本轮固定配置的功能、异常和控制验证；没有新性能 A/B、PPA、T17 或团队人工 ACK 结论。下一项技术工作为同镜像 T14/O1 公平性能对照；本轮成果本地保存，不推送 GitHub，O1 默认关闭，正式 T16 报告继续后置。下文保留各历史阶段的状态。
 
 ## 前一轮：真实 VFEX4 父级联调已通过，本地保存
 

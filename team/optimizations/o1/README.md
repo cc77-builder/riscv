@@ -1,8 +1,8 @@
 # O1：受控 vdot→vdot 同拍交接候选
 
-**2026-10-18 当前任务：O1 观察器适配已完成构建，十二项全核回归进行中。** 固定硬件源码 `18c0ce08a40e889654bfe76d5435f272854ad7d0`，使用新全局周期及身份协议，真实日志与版本保存在本地工作根。见 [全核工程入口](fullcore/README.md)、[观察协议](fullcore/SCHEMA.md) 和 [日志门禁](audit/README.md)。完整全核验收尚未完成；旧父级/FU 通过状态保留为分层历史结果。
+**2026-10-18 当前任务：O1 全核功能与控制回归、严格离线全套复核通过，成果本地保存。** 硬件构建源码 `18c0ce08a40e889654bfe76d5435f272854ad7d0`，原运行检查器 `518c05674d5ecfed04a944cf01c99cea488b6c8a`；十二项作业全部符合预期，严格门禁集成 `d110002006001d45a39dbc00591a299672940818` 后针对同一份未修改原日志重审通过，没有新增 EMU 运行。正常程序共提交 3,012 条 vdot；117 个唯一功能用例（80 合法、37 异常）在八分片执行 124 次，bit100 差分负控及同镜像正常恢复通过，主机检查 66 项通过。控制程序独立满足八项覆盖，记录同拍交接 303 次、vdot 写回反压 62 拍及在途取消 3 次；密集程序 12 个窗口通过，另有同拍交接 725 次及取消 2 次。见 [全核工程入口](fullcore/README.md)、[观察协议](fullcore/SCHEMA.md)、[日志门禁](audit/README.md) 和 [完整证据](evidence/20261018-fullcore-validation/README.md)。
 
-本轮允许 `VDOT_O1_TRACE=1` 配合 `VDOT_T13_TRACE=1` 保存 CSR/ROB 全局记录，但仍禁止 O1 使用旧 T12 FU 轨迹。旧历史段落中的 trace 限制对应当时版本。运行中的检查器保持冻结，结束后用新严格日志门禁离线重审；本轮不推送 GitHub，不开始性能 A/B 或正式 T16 报告。
+`fullcore_validation_pass=true`、`offline_full_suite_recheck_pass=true` 仅表示本轮固定 MinimalConfig 单核的功能、异常和控制验收完成；共享 FU 全核覆盖 vdot/VIDiv，未覆盖 VFDiv，vdot 取消仅观察到 reduce 阶段。本轮使用 `VDOT_O1_TRACE=1` 与 `VDOT_T13_TRACE=1` 保存全局观察记录，`VDOT_T12_TRACE=0`，不使用旧 T12 门控时钟映射。下一步为同镜像 T14/O1 公平性能 A/B，现有数据不构成新的加速比或 PPA 结论；T17 与团队人工 ACK 未完成。O1 默认关闭，本轮不推送 GitHub，正式 T16 报告继续后置。下文父级/FU 结果、trace 限制及未完成状态均保留为对应版本的历史记录。
 
 **2026-10-18：真实 VFEX4 父级两模式联调通过，成果本地保存。** 固定源码 `99d5f6c751234622b8f824ed7fcee39f3aae711d`，真实 VDot/VIDiv/VFDivSqrt、Dispatcher、busy 和门控共同仿真；覆盖 DIV 切换、反压、432 组重定向、27 组复位及 20000 拍随机控制。O1 完成 10343 次同拍交接，七项负控全部检出。见 [父级工程记录](parent/README.md) 和 [原始证据](evidence/20261018-parent-validation/README.md)。
 
