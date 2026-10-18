@@ -12,6 +12,13 @@ spec.loader.exec_module(builder)
 ROOT = builder.ROOT
 
 
+
+def generated_input_inventory(products):
+    """Only the root host timing output is mutable; retain every other input."""
+    return {str(p): builder.sha(p) for p in products.rglob("*")
+            if p.is_file() and p != products / "time.log"}
+
+
 def main(attempt, output):
     require, sha, save, now = builder.require, builder.sha, builder.save, builder.now
     require(not output.exists(), "resume evidence must use a new directory")
@@ -31,8 +38,9 @@ def main(attempt, output):
                  original_attempt_status=old["status"], build_products=str(products), flags=old["flags"],
                  scope="same freshly generated T14 RTL, resume compilation after generated support path fix")
     save(output / "build-state.json", state)
-    generated_before = {str(p): sha(p) for p in products.rglob("*") if p.is_file()}
+    generated_before = generated_input_inventory(products)
     save(output / "generated-before-resume.json", generated_before)
+    save(output / "excluded-host-outputs.json", {"paths": [str(products / "time.log")], "reason": "Make host timing output; not a hardware input"})
     auxiliary = builder.stage_auxiliary(products)
     save(output / "generated-auxiliary.json", auxiliary)
     shell = old["command"][2]

@@ -3,6 +3,7 @@ import copy
 import importlib.util
 from pathlib import Path
 import unittest
+import tempfile
 
 path = Path(__file__).with_name("compare.py")
 spec = importlib.util.spec_from_file_location("paired_compare", path)
@@ -160,6 +161,38 @@ class ReferenceBinding(unittest.TestCase):
     def test_foreign_reference_rejected(self):
         with self.assertRaises(ValueError):
             compare.validate_loaded_reference("The reference model is /foreign.so\n", "/ref.so", lambda x: x)
+
+
+
+class GeneratedInputScope(unittest.TestCase):
+    def module(self):
+        return compare.load_module("resume_scope_test", Path(__file__).with_name("resume_t14.py"))
+
+    def test_only_root_host_timing_log_is_excluded(self):
+        module = self.module()
+        with tempfile.TemporaryDirectory() as temp:
+            products = Path(temp)
+            (products / "time.log").write_text("host output")
+            (products / "rtl").mkdir()
+            nested = products / "rtl/time.log"
+            nested.write_text("keep this input")
+            rtl = products / "rtl/top.sv"
+            rtl.write_text("module top; endmodule")
+            inventory = module.generated_input_inventory(products)
+            self.assertNotIn(str(products / "time.log"), inventory)
+            self.assertIn(str(nested), inventory)
+            self.assertIn(str(rtl), inventory)
+
+    def test_rtl_change_is_still_detected(self):
+        module = self.module()
+        with tempfile.TemporaryDirectory() as temp:
+            products = Path(temp)
+            rtl = products / "top.sv"
+            rtl.write_text("first")
+            before = module.generated_input_inventory(products)
+            rtl.write_text("second")
+            after = module.generated_input_inventory(products)
+            self.assertNotEqual(before[str(rtl)], after[str(rtl)])
 
 
 if __name__ == "__main__":
