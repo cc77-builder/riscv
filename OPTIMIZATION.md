@@ -1,6 +1,12 @@
 # 后续优化开发入口
 
-## 当前进度：O2 G1/G2 已完成，下一步 G3
+## 当前进度：O2 G3 全核自动验收通过，下一步 G4
+
+2026-10-19，新O2全核EMU的原十二项与两项补充验证已满足预期；117唯一矩阵、bit100差分拒错/正常恢复、原F2v七项、dense十二窗口及六项两槽覆盖均通过，正常程序共5378条vdot提交。95项主机检查及原始日志严格离线重审通过。见 [全核工程入口](team/optimizations/o2/fullcore/README.md) 与 [封存证据](team/optimizations/o2/evidence/20261019-fullcore-validation/README.md)。
+
+本轮仅本地保存，未推送；O2默认关闭。下一步G4公平O1/O2性能对比，本轮没有新增加速比/PPA/最终采用或人工ACK结论，T16报告继续后置。
+
+## 前一轮：O2 G1/G2 完成时的进度
 
 2026-10-19，两槽弹性 FU、局部原子派发及真实占用门控已实现，隔离 FU 与真实 VFEX4/DIV/ClockGate 自动验收通过。连续流 II=1、无阻塞响应 2 拍；父级 13,515 条接受全部终结，16 项观察负控、旧模式回归与独立离线复核通过。见 [实现与复现](team/optimizations/o2/IMPLEMENTATION.md)、[正式证据](team/optimizations/o2/evidence/20261019-elastic-parent/README.md)。
 

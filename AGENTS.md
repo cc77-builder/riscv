@@ -1,5 +1,9 @@
 # 团队 Agent 入口
 
+## 当前状态：O2 G3 已通过，本地保存
+
+2026-10-19，local/o2-fullcore-20261019。先读team/optimizations/o2/fullcore/README.md与evidence/20261019-fullcore-validation/README.md。最终合格集合core-02＋supplements-02；recheck-02严格离线重审通过。14项作业满足各自预期，5378正常vdot提交，六项两槽全核覆盖齐全，95主机测试通过；失败尝试保留。不要重跑已完成campaign或改密封证据。G3完成不授权自动G4、push或切换默认模式；没有O2公平性能/PPA/人工ACK，正式T16继续后置。下面各节保留历史时点。
+
 ## 当前任务：O2 G3 全核观察器与回归（已授权，本地）
 
 用户于2026-10-19明确要求开始G3。工作分支local/o2-fullcore-20261019，起点901687a；按team/optimizations/o2/CONTRACT.md完成两槽全核观察器、新EMU、hello/vadd、117唯一功能/异常矩阵、T12等价控制、故障参考库和正常恢复。旧G1/G2不自动推进G3的限制现由此授权更新。输出/home/riscv/riscv-lab/o2-fullcore-20261019；旧封存材料保持不变。不推送GitHub、不自动开始G4公平性能、不改变ISA/NEMU/黄金数据，不代签人工ACK。构建前冻结生产源码；只运行一个重构建，默认2编译线程、12G JVM、1个EMU线程。
