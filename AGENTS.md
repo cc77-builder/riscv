@@ -1,5 +1,9 @@
 # 团队 Agent 入口
 
+## 当前任务：O1/O2 同镜像公平性能 G4（已授权，本地）
+
+2026-10-19用户明确要求运行O1/O2公平对比。分支local/o2-performance-20261019，工作根/home/riscv/riscv-lab/o2-performance-20261019，基点07ed301。先读team/optimizations/o2/performance/CONTRACT.md。沿用冻结16镜像及原四场景样本规则，复用G3固定O2 EMU，从同一429硬件文件/依赖重建O1。两模式用各自合法O1/O2观察器、共同T13全局时钟，不改ISA/NEMU/工作负载/黄金数据；只顺序做一个重构建，j2/12G，最多两个单线程EMU。完整保存日志、失败和版本，性能全部实际重跑并离线复算。用户本轮已授权G4，覆盖下文历史未授权G4的限制。不自动推送GitHub、切换默认模式、开展G5或写正式T16报告，不代签人工ACK。
+
 ## 当前状态：O2 G3 已通过，本地保存
 
 2026-10-19，local/o2-fullcore-20261019。先读team/optimizations/o2/fullcore/README.md与evidence/20261019-fullcore-validation/README.md。最终合格集合core-02＋supplements-02；recheck-02严格离线重审通过。14项作业满足各自预期，5378正常vdot提交，六项两槽全核覆盖齐全，95主机测试通过；失败尝试保留。不要重跑已完成campaign或改密封证据。G3完成不授权自动G4、push或切换默认模式；没有O2公平性能/PPA/人工ACK，正式T16继续后置。下面各节保留历史时点。
