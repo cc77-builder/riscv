@@ -1,0 +1,79 @@
+{
+  "kind": "INDEPENDENT_HELLO_ONLY_DIAGNOSTIC_NOT_G3_ACCEPTANCE",
+  "time_utc": "2026-10-19T05:51:47.629446+00:00",
+  "checker_commit": "e2d9c063ac716665f4596bc95a806bd62a56d3a7",
+  "checker_sha256": "27d9fe451c035157848625e84c2a229ac1d83073eb56ba3ebc25131e5569d496",
+  "inputs": {
+    "/home/riscv/riscv-lab/o2-fullcore-20261019/core-02/hello-vadd/stderr.log": {
+      "bytes": 3181830,
+      "sha256": "635f726db973f91eec189a598150fbdce327081bd7d305d60582a4d071424178"
+    },
+    "/home/riscv/riscv-lab/o2-fullcore-20261019/core-02/hello-vadd/stdout.log": {
+      "bytes": 1478,
+      "sha256": "46473096074f3ac963fc2951ce56c9f7a3cc57b06ab8fa2352f2a7f100b2e1ec"
+    },
+    "/home/riscv/riscv-lab/o2-fullcore-20261019/core-02/hello-vadd/result.json": {
+      "bytes": 2535,
+      "sha256": "513dfdeae651eb187688f2f1f240e8ae65841e35fb2e34b9d4fd0b42abad9363"
+    }
+  },
+  "hello": {
+    "command": [
+      "python3",
+      "-B",
+      "/home/riscv/riscv-lab/o2-fullcore-20261019/live-observer-check-02/reproduce.py",
+      "/home/riscv/riscv-lab/o2-fullcore-20261019/live-observer-check-02/analyze.frozen.py",
+      "/home/riscv/riscv-lab/o2-fullcore-20261019/live-observer-check-02/hello-run.log",
+      "complete"
+    ],
+    "exit_code": 0,
+    "status": "O2_TRACE_PASS",
+    "counts": {
+      "STATE": 324,
+      "VFEX4_ACCEPT": 0,
+      "VFEX4_WAIT": 0,
+      "VFEX4_REDIRECT": 165,
+      "ACCEPT": 0,
+      "MOVE": 0,
+      "RESPONSE": 0,
+      "STALL": 0,
+      "KILL": 0,
+      "DIV_ACCEPT": 0,
+      "DIV_KILL": 0,
+      "DIV_OUTPUT": 0,
+      "ENQUEUE": 0,
+      "COMMIT": 0,
+      "REDIRECT": 165,
+      "MULTI_INFLIGHT": 0,
+      "OVERLAP": 0,
+      "TRIPLE_OVERLAP": 0,
+      "FULL_STALL": 0,
+      "KILL_P": 0,
+      "KILL_R": 0,
+      "PARTIAL_KILL": 0,
+      "BOTH_KILL": 0,
+      "R_KILL_P_SURVIVES": 0,
+      "P_KILL_R_SURVIVES": 0,
+      "UNRELATED_FLUSH": 0,
+      "ROB_WRAP": 0,
+      "FTQ_WRAP": 0,
+      "DIV_RESPONSE": 0,
+      "ACCEPTED_THEN_SQUASHED": 0,
+      "ACCEPTED_YOUNGER_SQUASHED": 0
+    }
+  },
+  "old_partial_reanalysis": {
+    "command": [
+      "python3",
+      "-B",
+      "/home/riscv/riscv-lab/o2-fullcore-20261019/live-observer-check-02/reproduce.py",
+      "/home/riscv/riscv-lab/o2-fullcore-20261019/live-observer-check-02/analyze.frozen.py",
+      "/home/riscv/riscv-lab/o2-fullcore-20261019/live-observer-check-01/completed-cycles-prefix.log",
+      "partial"
+    ],
+    "exit_code": 0,
+    "input_sha256": "77691bc38eb693b93a7450f777970284cd0d226a6495b316e637e0a75c3474ff",
+    "status": "O2_PARTIAL_TRACE_AUDIT"
+  },
+  "current_vdot_status": "negative-vdot/functional-1 underway; no actual VDOT event observed at capture time"
+}

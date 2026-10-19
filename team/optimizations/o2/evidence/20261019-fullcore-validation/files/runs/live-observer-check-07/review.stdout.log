@@ -1,0 +1,95 @@
+{
+  "status": "COMPLETE_CONTROL_OBSERVER_CHECK_PASS",
+  "counts": {
+    "STATE": 18066,
+    "VFEX4_ACCEPT": 3187,
+    "VFEX4_WAIT": 5403,
+    "VFEX4_REDIRECT": 310,
+    "ACCEPT": 2254,
+    "MOVE": 2251,
+    "RESPONSE": 2249,
+    "STALL": 64,
+    "KILL": 5,
+    "DIV_ACCEPT": 933,
+    "DIV_KILL": 52,
+    "DIV_OUTPUT": 1164,
+    "ENQUEUE": 2269,
+    "COMMIT": 2157,
+    "REDIRECT": 310,
+    "MULTI_INFLIGHT": 284,
+    "OVERLAP": 174,
+    "TRIPLE_OVERLAP": 57,
+    "FULL_STALL": 13,
+    "KILL_P": 3,
+    "KILL_R": 2,
+    "PARTIAL_KILL": 0,
+    "BOTH_KILL": 0,
+    "R_KILL_P_SURVIVES": 0,
+    "P_KILL_R_SURVIVES": 0,
+    "UNRELATED_FLUSH": 0,
+    "ROB_WRAP": 310,
+    "FTQ_WRAP": 330,
+    "DIV_RESPONSE": 881,
+    "ACCEPTED_THEN_SQUASHED": 97,
+    "ACCEPTED_YOUNGER_SQUASHED": 97
+  },
+  "coverage": {
+    "multi_inflight": true,
+    "triple_overlap": true,
+    "full_stall": true,
+    "kill_p": true,
+    "kill_r": true,
+    "partial_kill": false
+  },
+  "first_cycles": {
+    "multi_inflight": 8310,
+    "triple_overlap": 178763,
+    "full_stall": 181599,
+    "kill_r": 345177,
+    "kill_p": 346272
+  },
+  "all_slot_kills": [
+    {
+      "slot": "R",
+      "cycle": 345177,
+      "seq": 2603,
+      "rob": "0:44",
+      "partial_kill": false
+    },
+    {
+      "slot": "P",
+      "cycle": 346272,
+      "seq": 2685,
+      "rob": "0:41",
+      "partial_kill": false
+    },
+    {
+      "slot": "R",
+      "cycle": 347549,
+      "seq": 2786,
+      "rob": "0:16",
+      "partial_kill": false
+    },
+    {
+      "slot": "P",
+      "cycle": 351311,
+      "seq": 3067,
+      "rob": "0:38",
+      "partial_kill": false
+    },
+    {
+      "slot": "P",
+      "cycle": 351385,
+      "seq": 3075,
+      "rob": "1:14",
+      "partial_kill": false
+    }
+  ],
+  "pending_count": 0,
+  "unfinished_rob_count": 0,
+  "notes": [
+    "All five slot kills occur with occupancy=1; no partial survivor exists in this run.",
+    "No inference about the writer winning downstream arbitration.",
+    "This is control-only review, not final G3 acceptance."
+  ]
+}

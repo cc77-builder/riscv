@@ -1,0 +1,193 @@
+{
+  "kind": "ALIAS_AND_EXCEPTION_PARTIAL_DIAGNOSTIC_NOT_FORMAL_ACCEPTANCE",
+  "time_utc": "2026-10-19T06:10:35.913140+00:00",
+  "checker_commit": "e2d9c063ac716665f4596bc95a806bd62a56d3a7",
+  "checker_sha256": "27d9fe451c035157848625e84c2a229ac1d83073eb56ba3ebc25131e5569d496",
+  "inputs": {
+    "stderr.log": {
+      "source": "/home/riscv/riscv-lab/o2-fullcore-20261019/core-02/functional-1/stderr.log",
+      "bytes": 2588672,
+      "sha256": "e2b7254b33b9199ba3b3618dce2b62f059413905677f0f722e4af1fbeeea65a8",
+      "size_before": 2588672,
+      "size_after": 2588672,
+      "mtime_ns_before": 1792390225318333023,
+      "mtime_ns_after": 1792390225318333023
+    },
+    "stdout.log": {
+      "source": "/home/riscv/riscv-lab/o2-fullcore-20261019/core-02/functional-1/stdout.log",
+      "bytes": 4855,
+      "sha256": "b4c1aa9a385c9a50527a9c05c0734ed2ca5dfabbfcd1036232b7cd92060244a6",
+      "size_before": 4855,
+      "size_after": 4855,
+      "mtime_ns_before": 1792390235800463033,
+      "mtime_ns_after": 1792390235800463033
+    }
+  },
+  "partial": {
+    "excluded_latest_cycle": 689520,
+    "bytes": 2588595,
+    "sha256": "60ca2181d18ee8dfec0be2edd265f70b8174d4fc512ec7249ca72ff00c295ac4"
+  },
+  "analysis_command": [
+    "python3",
+    "-B",
+    "/home/riscv/riscv-lab/o2-fullcore-20261019/live-observer-check-04/analyze.frozen.py",
+    "/home/riscv/riscv-lab/o2-fullcore-20261019/live-observer-check-04/completed-cycles-prefix.log",
+    "--partial",
+    "--output",
+    "/home/riscv/riscv-lab/o2-fullcore-20261019/live-observer-check-04/analysis.json"
+  ],
+  "analysis_rc": 0,
+  "alias_transactions": [
+    {
+      "seq": 4,
+      "decoded": {
+        "vd": 8,
+        "vs1": 8,
+        "vs2": 8
+      },
+      "enqueue": {
+        "cycle": 422234,
+        "rob": "0:39",
+        "pc": 2147490672,
+        "ftq": "1:2",
+        "word": 42206219
+      },
+      "events": [
+        {
+          "kind": "ACCEPT",
+          "cycle": 422238,
+          "seq": 4,
+          "rob": "0:39",
+          "pdest": 143,
+          "vl": 8,
+          "illegal": 0,
+          "vecwen": 1,
+          "v0wen": 0,
+          "vpu": 383123886643719907295546637845863265354179916928647168,
+          "perf": 0,
+          "vs1": 220182708007666064600458890952453390335,
+          "vs2": 220182708007666064600458890952453390335
+        },
+        {
+          "kind": "MOVE",
+          "cycle": 422239,
+          "seq": 4,
+          "rob": "0:39",
+          "pdest": 143,
+          "illegal": 0,
+          "vecwen": 1,
+          "v0wen": 0,
+          "exception": 0,
+          "vpu": 383123886643719907295546637845863265354179916928647168,
+          "perf": 0
+        },
+        {
+          "kind": "RESPONSE",
+          "cycle": 422240,
+          "seq": 4,
+          "rob": "0:39",
+          "pdest": 143,
+          "illegal": 0,
+          "data": 8,
+          "vecwen": 1,
+          "v0wen": 0,
+          "exception": 0,
+          "vpu": 383123886643719907295546637845863265354179916928647168,
+          "perf": 0
+        }
+      ],
+      "identical_source_register_values": true
+    }
+  ],
+  "illegal_fu_accept_count": 0,
+  "v0_fu_accept_count": 0,
+  "unaccepted_cancelled_allocations": [
+    {
+      "enqueue": {
+        "cycle": 626722,
+        "rob": "1:17",
+        "pc": 2147490728,
+        "ftq": "1:1",
+        "word": 43255051
+      },
+      "rob_redirect": {
+        "cycle": 626734,
+        "rob": "1:17",
+        "ftq": "1:1",
+        "self": 1
+      },
+      "parent_redirect": [
+        {
+          "cycle": 626735,
+          "rob": "1:17",
+          "self": 1
+        }
+      ],
+      "accepted": false
+    },
+    {
+      "enqueue": {
+        "cycle": 655115,
+        "rob": "1:9",
+        "pc": 2147490728,
+        "ftq": "1:1",
+        "word": 43255051
+      },
+      "rob_redirect": {
+        "cycle": 655131,
+        "rob": "1:9",
+        "ftq": "1:1",
+        "self": 1
+      },
+      "parent_redirect": [
+        {
+          "cycle": 655132,
+          "rob": "1:9",
+          "self": 1
+        }
+      ],
+      "accepted": false
+    }
+  ],
+  "complete_exception_uart_records": [
+    "VDOT_PACKED id=X02-m2 result=PASS payload=gIuK0BSAAYACAoCot4CACASArLeAgAgAgIDMgYCggYCAgAGAgPyBgKCBgYCAAQGAAIADAYAICwsLCwEOCwsLC4D///////////8BGRkZGRkBAQE=",
+    "VDOT_PACKED id=X04-vstart7 result=PASS payload=gIuK0BSAAYACAoCot4CACASArLeAgAgAgIDMgYCggYCAgAGAgPyBgKCBgYCAAQGAAIADC4AIgAcLCwsLDg8LCwuA////////////ARkZGRkZAQEB"
+  ],
+  "manifest_sha256": "4034bccb6417c63c440d4067ca418aff1bd7c7780fa50608ac33f568df63eeb0",
+  "status": "O2_PARTIAL_TRACE_AUDIT",
+  "counts": {
+    "STATE": 7208,
+    "VFEX4_ACCEPT": 11,
+    "VFEX4_WAIT": 0,
+    "VFEX4_REDIRECT": 3603,
+    "ACCEPT": 11,
+    "MOVE": 11,
+    "RESPONSE": 11,
+    "STALL": 0,
+    "KILL": 0,
+    "DIV_ACCEPT": 0,
+    "DIV_KILL": 0,
+    "DIV_OUTPUT": 0,
+    "ENQUEUE": 13,
+    "COMMIT": 11,
+    "REDIRECT": 3603,
+    "MULTI_INFLIGHT": 0,
+    "OVERLAP": 0,
+    "TRIPLE_OVERLAP": 0,
+    "FULL_STALL": 0,
+    "KILL_P": 0,
+    "KILL_R": 0,
+    "PARTIAL_KILL": 0,
+    "BOTH_KILL": 0,
+    "R_KILL_P_SURVIVES": 0,
+    "P_KILL_R_SURVIVES": 0,
+    "UNRELATED_FLUSH": 0,
+    "ROB_WRAP": 4,
+    "FTQ_WRAP": 5,
+    "DIV_RESPONSE": 0,
+    "ACCEPTED_THEN_SQUASHED": 0,
+    "ACCEPTED_YOUNGER_SQUASHED": 0
+  },
+  "unfinished_rob_count": 0
+}

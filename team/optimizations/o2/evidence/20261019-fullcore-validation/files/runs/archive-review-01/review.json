@@ -1,0 +1,210 @@
+{
+  "status": "ARCHIVE_PLAN_REVIEW_COMPLETE_PENDING_FINAL_RUNS",
+  "reviewed_at_utc": "2026-10-19T06:06:00.352167+00:00",
+  "source_commit_at_review": "e2d9c063ac716665f4596bc95a806bd62a56d3a7",
+  "reviewed_sha256": {
+    "team/optimizations/o2/fullcore/archive.py": "7d03ab5edabd13f55767cb92cbc439467c1728991d70357490f927fb226e7d01",
+    "team/optimizations/o2/fullcore/portable.py": "b80ce6037272d6a5fef2a7a3858fff03aca9b9b08d54a0a4cb7b67dafbf0583a",
+    "team/optimizations/o2/fullcore/test_portable.py": "e73018e7c6284812c2ab1b995b76b8547a75e8196302b3298b32177028042e0b",
+    "team/optimizations/o2/fullcore/recheck.py": "5aa5083eb7cdafab949404a3a6ab3df6fc15c8a6db9f016d021fe8a8bb139619"
+  },
+  "new_emu_run": false,
+  "modified_runtime_files": false,
+  "scope": "Read-only export-policy/portable-audit review and current filesystem size survey; final 14-job archive does not yet exist.",
+  "build03": {
+    "verdict": "METADATA_ONLY_INCLUDE",
+    "files": 16,
+    "raw_bytes": 7130914,
+    "estimated_stored_bytes": 2049935,
+    "actual_emu_path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/build/emu",
+    "actual_emu_bytes": 71256352,
+    "actual_emu_outside_work_root": true,
+    "reason": "Build03 contains receipts/source+dependency hashes, commands, version logs and generated-artifact hash inventory; no generated RTL/binary body."
+  },
+  "selected_size_snapshot": {
+    "files": 350,
+    "raw_bytes": 62793663,
+    "estimated_gzip9_stored_bytes": 13204954,
+    "excluded_files": 2802,
+    "excluded_bytes": 2560709453,
+    "size_estimate_excludes_later_jobs_review_files_and_global_tracked_tool_snapshot": true,
+    "unstable_files_detected": [],
+    "future_supplement_portable_inputs_raw_bytes": 6659218
+  },
+  "selected_binary_summary": {
+    "count": 12,
+    "max_bytes": 211240,
+    "verdict": "Only small RISC-V workload bin/elf inputs; no .sv/.fir/.o/.a or EMU currently selected.",
+    "future_intentional_snapshot_binaries": [
+      {
+        "path": "/home/riscv/riscv-lab/t12-regression-20261013/nemu/reference/build/riscv64-nemu-interpreter-so",
+        "bytes": 1459056
+      },
+      {
+        "path": "/usr/bin/riscv64-linux-gnu-gcc-11",
+        "bytes": 2035504
+      }
+    ]
+  },
+  "required_job_paths": 98,
+  "required_job_paths_policy_included": true,
+  "required_campaign_build_paths": [
+    "core-02/preflight.json",
+    "core-02/hardware-pins.json",
+    "core-02/campaign-state.json",
+    "core-02/result.json",
+    "supplements-01/preflight.json",
+    "supplements-01/hardware-pins.json",
+    "supplements-01/campaign-state.json",
+    "supplements-01/result.json",
+    "build-03/build-state.json",
+    "build-03/hardware-inputs.json",
+    "build-03/generated-artifacts.json",
+    "build-03/build-command.sh",
+    "build-03/emu-build.log",
+    "build-03/dependencies.json"
+  ],
+  "required_campaign_build_paths_policy_included": true,
+  "current_final_job_inventory": [
+    {
+      "campaign": "core-02",
+      "name": "hello-vadd",
+      "result_exists": true,
+      "recorded_status": "HELLO_VADD_PASS"
+    },
+    {
+      "campaign": "core-02",
+      "name": "negative-vdot",
+      "result_exists": true,
+      "recorded_status": "EXPECTED_VDOT_HIGHBIT_REJECTION"
+    },
+    {
+      "campaign": "core-02",
+      "name": "functional-0",
+      "result_exists": false,
+      "recorded_status": null
+    },
+    {
+      "campaign": "core-02",
+      "name": "functional-1",
+      "result_exists": false,
+      "recorded_status": null
+    },
+    {
+      "campaign": "core-02",
+      "name": "functional-2",
+      "result_exists": false,
+      "recorded_status": null
+    },
+    {
+      "campaign": "core-02",
+      "name": "functional-3",
+      "result_exists": false,
+      "recorded_status": null
+    },
+    {
+      "campaign": "core-02",
+      "name": "functional-4",
+      "result_exists": false,
+      "recorded_status": null
+    },
+    {
+      "campaign": "core-02",
+      "name": "functional-5",
+      "result_exists": false,
+      "recorded_status": null
+    },
+    {
+      "campaign": "core-02",
+      "name": "functional-6",
+      "result_exists": false,
+      "recorded_status": null
+    },
+    {
+      "campaign": "core-02",
+      "name": "functional-7",
+      "result_exists": false,
+      "recorded_status": null
+    },
+    {
+      "campaign": "core-02",
+      "name": "control",
+      "result_exists": false,
+      "recorded_status": null
+    },
+    {
+      "campaign": "core-02",
+      "name": "dense-batch128",
+      "result_exists": false,
+      "recorded_status": null
+    },
+    {
+      "campaign": "supplements-01",
+      "name": "o2-diagnostic",
+      "result_exists": false,
+      "recorded_status": null
+    },
+    {
+      "campaign": "supplements-01",
+      "name": "o2-control-diagnostic",
+      "result_exists": false,
+      "recorded_status": null
+    }
+  ],
+  "stored_path_collisions_in_current_selection": [],
+  "review_points": [
+    {
+      "severity": "info",
+      "topic": "Archive completeness",
+      "conclusion": "All raw streams, exit codes, runtime/result/observation receipts, preflights and hardware pins are selected by policy. Final evidence is not complete until all 14 jobs finish; do not export active streams as final acceptance."
+    },
+    {
+      "severity": "info",
+      "topic": "Source identity",
+      "conclusion": "Build source commit and 429 source/21236 dependency SHA entries plus EMU hash retained; actual hardware source bodies and Linux Git proof are outside portable audit scope. recheck.py separately verifies them."
+    },
+    {
+      "severity": "info",
+      "topic": "Exact original tools",
+      "conclusion": "recheck.py saves original-checkers/<full repository-relative path>, including runtime_gate.py. Supplement runner also snapshots tools/<full path>. portable.py matches complete suffix and preflight SHA, then replays archived parser/runtime gate."
+    },
+    {
+      "severity": "info",
+      "topic": "Portable scope",
+      "conclusion": "Portable audit validates all archive stored/raw bytes and 13 complete traces plus one intentional negative partial trace; explicitly does not claim new NEMU/EMU execution, full workload/ISA replay, Linux Git/input verification or G4."
+    },
+    {
+      "severity": "pending",
+      "topic": "New portable source files",
+      "conclusion": "portable.py and test_portable.py currently untracked, so archive.py git ls-files will omit them from global tools unless root tracks/commits them before final export or explicitly copies them as deliverables."
+    },
+    {
+      "severity": "info",
+      "topic": "Old build exclusion",
+      "conclusion": "2.56 GB excluded by old-build/generated-RTL/object rules. Do not exclude build-03 wholesale: its small metadata is required evidence."
+    },
+    {
+      "severity": "low",
+      "topic": "Future build naming",
+      "conclusion": "EXCLUDED_TOP names build-01-generated and build-02-generated explicitly. No build-03-generated exists now; if a future retry creates one, add it to exclusion before final export. No current fix is necessary."
+    },
+    {
+      "severity": "low",
+      "topic": "Archive verifier invocation",
+      "conclusion": "archive.py uses assert checks; use normal Python without -O. portable.py independently uses explicit require() checks that remain active with -O."
+    },
+    {
+      "severity": "info",
+      "topic": "Estimated size",
+      "conclusion": "Current selected data compresses from 62.79 MB to approximately 13.20 MB. More logs/receipts and approximately 6.66 MB of supplement input snapshots will be added; no precise final size is claimed while runs are active."
+    }
+  ],
+  "recommended_pre_export_actions": [
+    "Wait for 14 jobs and strict Linux recheck completion or explicitly label incomplete result",
+    "Record final job inventory and stop writing campaign/raw streams before final archive",
+    "Track/commit new portable deliverable tools before git-ls-files based export",
+    "Verify no newly-created *-generated/emu-compile directory appeared under work_root",
+    "Run archive.verify then portable audit on Windows with exact final campaign names"
+  ],
+  "mandatory_runtime_or_parser_fixes_found": false
+}

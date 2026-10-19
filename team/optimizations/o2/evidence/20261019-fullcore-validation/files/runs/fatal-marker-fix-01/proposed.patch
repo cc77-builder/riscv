@@ -1,0 +1,253 @@
+--- a/team/optimizations/o2/fullcore/workloads/check.py
++++ b/team/optimizations/o2/fullcore/workloads/check.py
+@@ -7,6 +7,20 @@
+ def require(ok,message):
+     if not ok:
+         raise ValueError(message)
++
++
++def reject_fatal_output(text):
++    """Reject fatal emulator/software errors even when exit=0 says GOOD TRAP.
++
++    This O2-only gate supplements the immutable shared O1 bit100/runtime gate.
++    Strip complete ANSI CSI escapes before matching, including color escapes
++    inserted within words. Unknown escape sequences remain fail-closed.
++    """
++    plain = re.sub(r'\x1b\[[0-?]*[ -/]*[@-~]', '', text)
++    require('\x1b' not in plain and '\x9b' not in plain,
++            'unsupported or truncated terminal escape')
++    require(re.search(r'\b(?:CRITICAL\s+ERROR|double\s+trap|PMA\s+check\s+failed)\b',
++                      plain, re.I) is None, 'O2 fatal runtime output')
+ 
+ def marker_position(uart, marker):
+     matches=list(re.finditer("^"+re.escape(marker)+"$",uart,re.M))
+@@ -24,6 +38,7 @@
+     return json.loads((build/"data/manifest.json").read_text())
+ 
+ def check(uart,manifest,exit_code,analysis):
++    reject_fatal_output(uart)
+     require(exit_code==0,"diagnostic EMU nonzero exit")
+     uart=uart.replace("\r\n","\n")
+     require(not re.search(r"O2_DIAG_FAIL|HIT BAD TRAP|different at pc|DIFFTEST FAIL|ABORT|Assertion.*failed",uart),
+@@ -55,6 +70,7 @@
+                 observation_counts=analysis["counts"],performance_measured=False)
+ 
+ def check_control(uart,manifest,exit_code,analysis):
++    reject_fatal_output(uart)
+     require(exit_code==0,"control diagnostic EMU nonzero exit")
+     uart=uart.replace("\r\n","\n")
+     require(not re.search(r"O2_CONTROL_FAIL|HIT BAD TRAP|different at pc|DIFFTEST FAIL|ABORT|Assertion.*failed",uart),
+--- a/team/optimizations/o2/fullcore/recheck.py
++++ b/team/optimizations/o2/fullcore/recheck.py
+@@ -29,6 +29,20 @@
+     if not condition:
+         raise ValueError(message)
+ 
++
++
++def reject_fatal_output(text):
++    """Reject fatal emulator/software errors even when exit=0 says GOOD TRAP.
++
++    This O2-only gate supplements the immutable shared O1 bit100/runtime gate.
++    Strip complete ANSI CSI escapes before matching, including color escapes
++    inserted within words. Unknown escape sequences remain fail-closed.
++    """
++    plain = re.sub(r'\x1b\[[0-?]*[ -/]*[@-~]', '', text)
++    require('\x1b' not in plain and '\x9b' not in plain,
++            'unsupported or truncated terminal escape')
++    require(re.search(r'\b(?:CRITICAL\s+ERROR|double\s+trap|PMA\s+check\s+failed)\b',
++                      plain, re.I) is None, 'O2 fatal runtime output')
+ 
+ def sha(path):
+     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+@@ -175,6 +189,7 @@
+     try:
+         rc, text = check_raw_job(directory, original, command, files, "vdot" if name == "negative-vdot" else None)
+         record.update(exit_code=rc, raw_logs_sha256=original["raw_logs_sha256"])
++        reject_fatal_output(text)
+         runner.validate_runtime(text, reference)
+         if name == "negative-vdot":
+             record["runtime_gate"] = gate.validate_negative(text, rc)
+@@ -290,6 +305,8 @@
+     require(sha(workload_path) == preflight['driver_files'].get(str(workload_path)),
+             'supplement workload checker differs from sealed run')
+     workload = load_blob('o2_bound_supplement_workload', workload_path, workload_path.read_bytes())
++    for name in sorted(SUPPLEMENT_NAMES):
++        reject_fatal_output((campaign / name / 'run.log').read_text(encoding='utf-8'))
+     return module.recheck_campaign(campaign, out / 'supplements', pins, emu_sha,
+                                    analyze=analyzer, workload=workload)
+ 
+--- a/team/optimizations/o2/fullcore/portable.py
++++ b/team/optimizations/o2/fullcore/portable.py
+@@ -23,6 +23,20 @@
+ def require(ok,message):
+     if not ok:
+         raise ValueError(message)
++
++
++def reject_fatal_output(text):
++    """Reject fatal emulator/software errors even when exit=0 says GOOD TRAP.
++
++    This O2-only gate supplements the immutable shared O1 bit100/runtime gate.
++    Strip complete ANSI CSI escapes before matching, including color escapes
++    inserted within words. Unknown escape sequences remain fail-closed.
++    """
++    plain = re.sub(r'\x1b\[[0-?]*[ -/]*[@-~]', '', text)
++    require('\x1b' not in plain and '\x9b' not in plain,
++            'unsupported or truncated terminal escape')
++    require(re.search(r'\b(?:CRITICAL\s+ERROR|double\s+trap|PMA\s+check\s+failed)\b',
++                      plain, re.I) is None, 'O2 fatal runtime output')
+ 
+ def digest(raw):
+     return hashlib.sha256(raw).hexdigest()
+@@ -157,6 +171,7 @@
+             preflight.get("input_files",{}).get(reference)==expected_ref,"reference identity receipt mismatch")
+     require(record["files"].get(command[5])==pins["emu_sha256"],"job EMU identity mismatch")
+     text=text_view(raw_logs["run.log"])
++    reject_fatal_output(text)
+     normalized=gate.normalize_console(text)
+     require("The first instruction of core 0 has commited. Difftest enabled." in text,
+             "missing real DiffTest runtime banner")
+--- /dev/null
++++ b/team/optimizations/o2/fullcore/test_fatal_output.py
+@@ -0,0 +1,140 @@
++"""O2 fatal-output regressions, independent of workload generation tests."""
++import hashlib
++import importlib.util
++import json
++from pathlib import Path
++import tempfile
++from types import SimpleNamespace
++import unittest
++from unittest import mock
++
++HERE = Path(__file__).resolve().parent
++ROOT = HERE.parents[3]
++
++def load(name,path):
++    spec=importlib.util.spec_from_file_location(name,path)
++    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
++    return module
++
++workload=load('fatal_workload_check',HERE/'workloads/check.py')
++recheck=load('fatal_recheck',HERE/'recheck.py')
++portable=load('fatal_portable',HERE/'portable.py')
++legacy=load('fatal_unchanged_legacy',ROOT/'team/optimizations/o1/audit/runtime_gate.py')
++GATES=(workload,recheck,portable)
++
++REAL_FAILURE_STDOUT = 'emu compiled at Oct 19 2026, 13:34:18\nUsing simulated 32768B flash\nuse /home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin as flash bin\nUsing simulated 128MB RAM\nThe image is /home/riscv/riscv-lab/o2-fullcore-20261019/diagnostic-build-02/o2-diag.bin\nThe reference model is /home/riscv/riscv-lab/t12-regression-20261013/nemu/reference/build/riscv64-nemu-interpreter-so\nThe first instruction of core 0 has commited. Difftest enabled. \n\x1b[1;34m[src/monitor/image_loader.c:205,load_img] Loading flash image: /home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin\n\x1b[0m\n\x1b[1;34m[src/monitor/image_loader.c:250,load_img] Read 12 bytes from file /home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin to 0x0xf0000000\x1b[0m\nO2_DIAG_BEGIN cases=10 fixed_dots=128 contract=vdot-s8x8-r32-v0.1\nO2_DIAG_CHECKER_CONTROL highbit_detected=1\nO2_DIAG_CASE_PASS seq=0 id=shared-input-1 dots=128 register_bytes=512 csr_fields=7\nO2_DIAG_CASE_PASS seq=1 id=shared-input-2 dots=128 register_bytes=512 csr_fields=7\nO2_DIAG_CASE_PASS seq=2 id=shared-input-4 dots=128 register_bytes=512 csr_fields=7\nO2_DIAG_CASE_PASS seq=3 id=distinct-input-1 dots=128 register_bytes=512 csr_fields=7\nO2_DIAG_CASE_PASS seq=4 id=distinct-input-2 dots=128 register_bytes=512 csr_fields=7\nO2_DIAG_CASE_PASS seq=5 id=distinct-input-4 dots=128 register_bytes=512 csr_fields=7\nO2_DIAG_CASE_PASS seq=6 id=recurrence-1 dots=128 register_bytes=512 csr_fields=7\nO2_DIAG_CASE_PASS seq=7 id=recurrence-2 dots=128 register_bytes=512 csr_fields=7\nO2_DIAG_CASE_PASS seq=8 id=recurrence-4 dots=128 register_bytes=512 csr_fields=7\n\x1b[1;34m[src/memory/paddr.c:293,check_paddr] isa pma check failed, vaddr=0x0000000000000000, paddr=0x0000000000000000, len=0x2, type=0x0, mode=0x3\x1b[0m\n\x1b[1;34m[src/memory/paddr.c:293,check_paddr] isa pma check failed, vaddr=0x0000000000000000, paddr=0x0000000000000000, len=0x2, type=0x0, mode=0x3\x1b[0m\nCore 0 dump: \x1b[31mHIT CRITICAL ERROR: please check if software cause a double trap. \n\x1b[0mCore 0: \x1b[32mHIT GOOD TRAP at pc = 0xe\n\x1b[0m\x1b[35mCore-0 instrCnt = 58597, cycleCnt = 111765, IPC = 0.524288\n\x1b[0m\x1b[34mSeed=0 Guest cycle spent: 111769 (this will be different from cycleCnt if emu loads a snapshot)\n\x1b[0m\x1b[34mHost time spent: 231193ms\n\x1b[0m'
++
++NEGATIVE = (
++    'DIFFTEST_HIGHBIT_NEGATIVE_INJECTED bit=100 vd=10 pc=0x80001bdc instruction=0x0294050b\n'
++    'v10_high different at pc = 0x0080001bdc, right= 0x0000001000000000, wrong = 0x0000000000000000\n'
++    'Core 0: ABORT at pc = 0x800016b0\n'
++)
++
++def fixture(control=False):
++    if control:
++        manifest=dict(groups=[dict(id=i) for i in range(16)],expected_vdot_commits=1208,
++                      whole_vector_bytes_checked=131072)
++        rows=['O2_CONTROL_BEGIN groups=16 trials=256 contract=vdot-s8x8-r32-v0.1']
++        rows += [f'O2_CONTROL_GROUP_PASS id={i} trials=16 register_bytes=8192' for i in range(16)]
++        rows += ['O2_CONTROL_SUMMARY groups=16 trials=256 register_bytes=131072 failures=0','HIT GOOD TRAP']
++    else:
++        cases=[dict(id='fixture-'+str(i),counts={'vdot':128 if i<9 else 6}) for i in range(10)]
++        manifest=dict(cases=cases,expected_vdot_commits=1158)
++        rows=['O2_DIAG_BEGIN cases=10 fixed_dots=128 contract=vdot-s8x8-r32-v0.1',
++              'O2_DIAG_CHECKER_CONTROL highbit_detected=1']
++        rows += [f'O2_DIAG_CASE_PASS seq={i} id={case["id"]} dots={case["counts"]["vdot"]} register_bytes=512 csr_fields=7'
++                 for i,case in enumerate(cases)]
++        rows += ['O2_DIAG_SUMMARY cases=10 dots=1158 failures=0','HIT GOOD TRAP']
++    observation=dict(status='O2_TRACE_PASS',counts={'COMMIT':manifest['expected_vdot_commits']},
++                     pending_count=0,unfinished_rob_count=0)
++    return '\n'.join(rows)+'\n',manifest,observation
++
++
++class FatalOutputTests(unittest.TestCase):
++    def test_real_failed_stdout_is_explicitly_fatal(self):
++        # Exact original stdout from supplements-01/o2-diagnostic, embedded so
++        # future host tests do not depend on the developer's absolute directory.
++        self.assertIn('seq=8 id=recurrence-4',REAL_FAILURE_STDOUT)
++        self.assertIn('HIT GOOD TRAP at pc = 0xe',REAL_FAILURE_STDOUT)
++        legacy.validate_failure_markers(REAL_FAILURE_STDOUT)
++        for module in GATES:
++            with self.subTest(module=module.__name__),self.assertRaisesRegex(ValueError,'fatal runtime'):
++                module.reject_fatal_output(REAL_FAILURE_STDOUT)
++
++    def test_exact_new_fatal_classes_with_color_case_and_whitespace(self):
++        variants=('HIT CRITICAL ERROR','critical error','CRI\x1b[31mTICAL\x1b[0m ERROR',
++                  'please check if software cause a double trap.',
++                  'DOUBLE\tTRAP','isa pma check failed, vaddr=0x0','PMA\ncheck failed')
++        for module in GATES:
++            for fatal in variants:
++                with self.subTest(module=module.__name__,fatal=fatal),self.assertRaisesRegex(ValueError,'fatal runtime'):
++                    module.reject_fatal_output('HIT GOOD TRAP\n'+fatal+'\n')
++
++    def test_forged_complete_success_cannot_hide_fatal_output(self):
++        for control in (False,True):
++            text,manifest,observation=fixture(control)
++            checker=workload.check_control if control else workload.check
++            self.assertTrue(checker(text,manifest,0,observation)['status'].endswith('_PASS'))
++            for fatal in ('HIT CRITICAL ERROR','double trap','isa pma check failed'):
++                for forged in (fatal+'\n'+text,text.replace('HIT GOOD TRAP',fatal+'\nHIT GOOD TRAP'),
++                               text+fatal+'\n'):
++                    with self.subTest(control=control,fatal=fatal),self.assertRaisesRegex(ValueError,'fatal runtime'):
++                        checker(forged,manifest,0,observation)
++
++    def test_expected_bit100_chain_still_passes_original_negative_contract(self):
++        for text in (NEGATIVE,NEGATIVE.replace('ABORT','\x1b[31mABORT\x1b[0m').replace('\n','\r\n')):
++            for module in GATES:
++                module.reject_fatal_output(text)
++                self.assertEqual(legacy.validate_negative(text,1)['bit'],100)
++        for module in GATES:
++            with self.assertRaisesRegex(ValueError,'fatal runtime'):
++                module.reject_fatal_output(NEGATIVE+'HIT CRITICAL ERROR\n')
++
++    def test_normal_success_and_unrelated_words_are_allowed(self):
++        for module in GATES:
++            module.reject_fatal_output('normal report: critical path measured; trap handler configured\nHIT GOOD TRAP\n')
++            with self.assertRaisesRegex(ValueError,'terminal escape'):
++                module.reject_fatal_output('CRITICAL\x1b[')
++
++    def test_offline_core_recheck_rejects_fatal_before_parser(self):
++        with tempfile.TemporaryDirectory() as td:
++            base=Path(td);out=base/'audit';out.mkdir()
++            artifact=base/'artifact';artifact.write_bytes(b'fixture')
++            args=SimpleNamespace(emu=artifact,timeout='1m')
++            original=dict(status='HELLO_VADD_PASS',started='2026-10-19T00:00:00+00:00',
++                          finished='2026-10-19T00:00:01+00:00',raw_logs_sha256={})
++            runner=SimpleNamespace(validate_runtime=lambda *_:None)
++            parser=SimpleNamespace(analyze=lambda *_a,**_k: (_ for _ in ()).throw(AssertionError('parser must not run')))
++            with mock.patch.object(recheck,'check_raw_job',return_value=(0,REAL_FAILURE_STDOUT)):
++                result=recheck.recheck_job('hello-vadd',artifact,None,artifact,original,
++                    base,out,args,dict(reference=artifact,flash=artifact),
++                    [runner,parser,None,None,None,None],legacy)
++            self.assertEqual(result['status'],'FAILED')
++            self.assertIn('fatal runtime',result['error'])
++
++    def test_portable_raw_job_rejects_fatal_before_parser(self):
++        stdout=('The reference model is /ref.so\n'
++                'The first instruction of core 0 has commited. Difftest enabled.\n'
++                'HIT CRITICAL ERROR: double trap\nHIT GOOD TRAP at pc = 0xe\n').encode()
++        raw={'stdout.log':stdout,'stderr.log':b'','run.log':stdout}
++        command=['timeout','1m','stdbuf','-o0','-e0','/emu','-i','/image',
++                 '--flash=/flash','--ram-size=128MB','--diff=/ref.so','--max-cycles=5000000']
++        record=dict(name='hello-vadd',command=command,exit_code=0,
++                    files={'/ref.so':portable.NORMAL_REFERENCE,'/emu':'a'*64},
++                    raw_logs_sha256={k:portable.digest(v) for k,v in raw.items()})
++        class Archive:
++            def json(self,path):
++                if path.endswith('/result.json'):return record
++                raise AssertionError('cached observation must not run')
++            def raw(self,path):
++                leaf=path.rsplit('/',1)[1]
++                return b'0\n' if leaf=='exit-code.txt' else raw[leaf]
++        parser=SimpleNamespace(analyze=lambda *_a,**_k: (_ for _ in ()).throw(AssertionError('parser must not run')))
++        with self.assertRaisesRegex(ValueError,'fatal runtime'):
++            portable.audit_job(Archive(),'core','hello-vadd',
++                {'input_files':{'/ref.so':portable.NORMAL_REFERENCE}},
++                {'emu_sha256':'a'*64},parser,legacy)
++
++
++if __name__=='__main__':
++    unittest.main()

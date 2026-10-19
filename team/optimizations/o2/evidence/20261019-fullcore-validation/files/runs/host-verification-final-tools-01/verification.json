@@ -1,0 +1,69 @@
+{
+  "time": "2026-10-19T06:03:17.451838+00:00",
+  "jobs": [
+    {
+      "name": "fullcore",
+      "command": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "team/optimizations/o2/fullcore",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "workloads",
+      "command": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "team/optimizations/o2/fullcore/workloads",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "scope": "host tests only; no EMU launched",
+  "source_commit_at_receipt": "e2d9c063ac716665f4596bc95a806bd62a56d3a7",
+  "file_hashes_at_receipt": {
+    "team/optimizations/o2/fullcore/analyze.py": "27d9fe451c035157848625e84c2a229ac1d83073eb56ba3ebc25131e5569d496",
+    "team/optimizations/o2/fullcore/archive.py": "7d03ab5edabd13f55767cb92cbc439467c1728991d70357490f927fb226e7d01",
+    "team/optimizations/o2/fullcore/build_fullcore.py": "9ba9ee253f25572e18827c7940a4c6ee33332c3558564ee2145b402598f6352e",
+    "team/optimizations/o2/fullcore/check_control.py": "72715f041d1a72ddee5d8a95c3a4d686280837ec735cab486a2a91c4ba2374e2",
+    "team/optimizations/o2/fullcore/portable.py": "b80ce6037272d6a5fef2a7a3858fff03aca9b9b08d54a0a4cb7b67dafbf0583a",
+    "team/optimizations/o2/fullcore/recheck.py": "5aa5083eb7cdafab949404a3a6ab3df6fc15c8a6db9f016d021fe8a8bb139619",
+    "team/optimizations/o2/fullcore/run_suite.py": "7bc68d73cd830ceb8fb9aa18469ebe6ff3efcdf56de6922049e05556b0e02475",
+    "team/optimizations/o2/fullcore/run_supplements.py": "1ae08d1902cd077fdb4572be7b94b1708db3ee8244dc16b095c7123da5be6380",
+    "team/optimizations/o2/fullcore/test_portable.py": "e73018e7c6284812c2ab1b995b76b8547a75e8196302b3298b32177028042e0b",
+    "team/optimizations/o2/fullcore/test_recheck.py": "8631df3dbaf2b9a319a52306c9ce2d0d49e20f945cfc2354206ab8ea0db3e452",
+    "team/optimizations/o2/fullcore/test_run_suite.py": "3533de0d91ef8a6075adcc2adf7e5d78869261032556e46f566c59f1828d94ff",
+    "team/optimizations/o2/fullcore/test_supplements.py": "59678f2e25f6a29c229fd093497e3d1c9449ce67cd4ad98f7e1dfd4855cb8236",
+    "team/optimizations/o2/fullcore/test_trace.py": "bf6fb9baa1d941fa1eeaf44d92b46c51ce874efcdc214c01db777b8c00c57dcf",
+    "team/optimizations/o2/fullcore/workloads/build.py": "def54063b4779c3f58ae5860b12b10abad31e1aea80ff55addd97f8ee9fa8fe5",
+    "team/optimizations/o2/fullcore/workloads/check.py": "6fa2fb60f0a6697742e6e9761baa7016589f5dc62d7ed085756ff8a0b44d66c1",
+    "team/optimizations/o2/fullcore/workloads/generate.py": "98a4bf8bc090ead18cd8cff8e1caa43a9f4821ed9e60b85e6a34ae9464c9df9c",
+    "team/optimizations/o2/fullcore/workloads/generate_control.py": "209fb1f5a9231f047ae72004039c09e0a6e08026f1e55bc2bad47d6b5c14909a",
+    "team/optimizations/o2/fullcore/workloads/test_workloads.py": "51eafd9e43590331f8c41b14928a3e61fe3e159317c64f44d28e7829b8e3b19f"
+  },
+  "logs_sha256": {
+    "fullcore.log": "eb68b5268a85d54b5eca707070065d27441668716001d11040e815dfa5c7e3db",
+    "workloads.log": "0ce1e172520e2440450f647828e0d061833e0425f2b7bf3673bab516816436ec"
+  },
+  "tests": {
+    "fullcore": 71,
+    "workloads": 10,
+    "total": 81
+  },
+  "identity_scope": "hashes captured immediately after host run; portable tools are currently uncommitted; actual regression driver commit is separately frozen"
+}

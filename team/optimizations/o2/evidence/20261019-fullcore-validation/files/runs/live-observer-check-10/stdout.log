@@ -1,0 +1,33 @@
+emu compiled at Oct 19 2026, 13:34:18
+Using simulated 32768B flash
+use /home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin as flash bin
+Using simulated 128MB RAM
+The image is /home/riscv/riscv-lab/o2-fullcore-20261019/control-diagnostic-build-04/o2-control.bin
+The reference model is /home/riscv/riscv-lab/t12-regression-20261013/nemu/reference/build/riscv64-nemu-interpreter-so
+The first instruction of core 0 has commited. Difftest enabled. 
+[1;34m[src/monitor/image_loader.c:205,load_img] Loading flash image: /home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin
+[0m
+[1;34m[src/monitor/image_loader.c:250,load_img] Read 12 bytes from file /home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin to 0x0xf0000000[0m
+O2_CONTROL_BEGIN groups=16 trials=256 contract=vdot-s8x8-r32-v0.1
+O2_CONTROL_GROUP_PASS id=0 trials=16 register_bytes=8192
+O2_CONTROL_GROUP_PASS id=1 trials=16 register_bytes=8192
+O2_CONTROL_GROUP_PASS id=2 trials=16 register_bytes=8192
+O2_CONTROL_GROUP_PASS id=3 trials=16 register_bytes=8192
+O2_CONTROL_GROUP_PASS id=4 trials=16 register_bytes=8192
+O2_CONTROL_GROUP_PASS id=5 trials=16 register_bytes=8192
+O2_CONTROL_GROUP_PASS id=6 trials=16 register_bytes=8192
+O2_CONTROL_GROUP_PASS id=7 trials=16 register_bytes=8192
+O2_CONTROL_GROUP_PASS id=8 trials=16 register_bytes=8192
+O2_CONTROL_GROUP_PASS id=9 trials=16 register_bytes=8192
+O2_CONTROL_GROUP_PASS id=10 trials=16 register_bytes=8192
+O2_CONTROL_GROUP_PASS id=11 trials=16 register_bytes=8192
+O2_CONTROL_GROUP_PASS id=12 trials=16 register_bytes=8192
+O2_CONTROL_GROUP_PASS id=13 trials=16 register_bytes=8192
+O2_CONTROL_GROUP_PASS id=14 trials=16 register_bytes=8192
+O2_CONTROL_GROUP_PASS id=15 trials=16 register_bytes=8192
+O2_CONTROL_SUMMARY groups=16 trials=256 register_bytes=131072 failures=0
+Core 0: [32mHIT GOOD TRAP at pc = 0x80002ef8
+[0m[35mCore-0 instrCnt = 1104835, cycleCnt = 703131, IPC = 1.571307
+[0m[34mSeed=0 Guest cycle spent: 703135 (this will be different from cycleCnt if emu loads a snapshot)
+[0m[34mHost time spent: 1013485ms
+[0m
