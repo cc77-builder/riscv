@@ -19,8 +19,9 @@ def main():
     if len(sys.argv) != 3 or sys.argv[1] not in ("fu", "parent"):
         raise SystemExit("usage: run_rtl.py fu|parent /absolute/new/output")
     stage, out = sys.argv[1], Path(sys.argv[2])
-    if not out.is_absolute() or out.exists() or out.is_relative_to(ROOT):
+    if not out.is_absolute() or out.exists() or out.resolve().is_relative_to(ROOT):
         raise SystemExit("output must be new, absolute, and outside checkout")
+    out = out.resolve()
     out.mkdir(parents=True)
     os.chdir(ROOT)
     # Activate first, before resolving any executable; do not persist environment secrets.
@@ -71,7 +72,10 @@ def main():
         run("working-tree.patch",["git","diff","--binary","HEAD"])
         names=subprocess.check_output(["git","ls-files","-z","--cached","--others","--exclude-standard","--",
             "build.sc","src","team/scripts/activate.sh","team/rtl/vdot","team/models/vdot",
-            "team/optimizations/o2/"+stage,"team/optimizations/o2/run_rtl.py",
+            *["team/optimizations/o2/"+stage+"/"+name for name in
+                (("GenerateVDotElasticFu.scala","fu_test.cpp") if stage=="fu" else
+                 ("GenerateVDotElasticParent.scala","parent_test.cpp","check_negative.py","test_negative.py"))],
+            "team/optimizations/o2/run_rtl.py",
             "team/optimizations/o2/check_negative_fu.py","team/optimizations/o2/test_negative_fu.py"]).split(b"\0")
         source={s.decode():digest(ROOT/s.decode()) for s in names if s and (ROOT/s.decode()).is_file()}
         (out/"source.json").write_text(json.dumps(source,indent=2)+"\n")
