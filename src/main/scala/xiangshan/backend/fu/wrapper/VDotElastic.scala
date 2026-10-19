@@ -104,8 +104,12 @@ class VDotElastic(cfg: FuConfig)(implicit p: Parameters) extends FuncUnit(cfg)
   private[backend] def o2ObservedRCtrl: FuncUnitCtrlOutput = rPacket.ctrl
   private[backend] def o2ObservedPValid: Bool = pValid
   private[backend] def o2ObservedRValid: Bool = rValid
-  private[backend] def o2ObservedKillP: Bool = killP && !reset.asBool
-  private[backend] def o2ObservedKillR: Bool = killR && !reset.asBool
+  // Build derived observations in the child's elaboration context. A parent
+  // tap must only read a pre-existing node, never construct child logic there.
+  private val observedKillP = killP && !reset.asBool
+  private val observedKillR = killR && !reset.asBool
+  private[backend] def o2ObservedKillP: Bool = observedKillP
+  private[backend] def o2ObservedKillR: Bool = observedKillR
   private[backend] def o2ObservedMove: Bool = move
   private[backend] def o2ObservedIllegalInput: Bool = illegalInput
   private[backend] def o2ObservedVl: UInt = vl

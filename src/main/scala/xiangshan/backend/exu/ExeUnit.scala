@@ -486,7 +486,11 @@ class ExeUnitImp(
     when(reset.asBool && o2SchemaPrinted) {
       // Runtime reset ends this epoch. G3's complete-run checker rejects
       // multiple epochs; the initial simulation reset emits no such record.
-      printf(p"O2_RESET cycle=${o2Cycle} pvalid=${o2PValid} pseq=${o2PSeq} rvalid=${o2RValid} rseq=${o2RSeq} divactive=${o2DivActive} divseq=${o2DivSeq}\n")
+      // printf normally suppresses itself during reset; this diagnostic must
+      // use only the explicit outer reset condition to record the old epoch.
+      withReset(false.B) {
+        printf(p"O2_RESET cycle=${o2Cycle} pvalid=${o2PValid} pseq=${o2PSeq} rvalid=${o2RValid} rseq=${o2RSeq} divactive=${o2DivActive} divseq=${o2DivSeq}\n")
+      }
     }
     when(!reset.asBool) {
       when(!o2SchemaPrinted) {
