@@ -48,7 +48,8 @@ def build(root, suite, dataset, shard):
     value["artifacts"]={name:sha(root/name) for name in ("vdot-perf.elf","vdot-perf.bin")}
     value["artifacts"]["manifest.json"]=sha(root/"data/manifest.json")
     save(root/"build.json",value)
-    c=load("o3_original_elf_checker",ROOT/"team/workloads/unified-vdot/check.py")
+    wrapper=load("o3_application_elf_checker",HERE/"check.py")
+    c=wrapper.base
     manifest=json.loads((root/"data/manifest.json").read_text())
     c.verify_generation(root,manifest);c.check_compiled_cases(root/"vdot-perf.elf",manifest)
     kernels=c.elf_kernels(root/"vdot-perf.elf")
