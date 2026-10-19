@@ -30,6 +30,20 @@ def require(condition, message):
         raise ValueError(message)
 
 
+
+def reject_fatal_output(text):
+    """Reject fatal emulator/software errors even when exit=0 says GOOD TRAP.
+
+    This O2-only gate supplements the immutable shared O1 bit100/runtime gate.
+    Strip complete ANSI CSI escapes before matching, including color escapes
+    inserted within words. Unknown escape sequences remain fail-closed.
+    """
+    plain = re.sub(r'\x1b\[[0-?]*[ -/]*[@-~]', '', text)
+    require('\x1b' not in plain and '\x9b' not in plain,
+            'unsupported or truncated terminal escape')
+    require(re.search(r'\b(?:CRITICAL\s+ERROR|double\s+trap|PMA\s+check\s+failed)\b',
+                      plain, re.I) is None, 'O2 fatal runtime output')
+
 def sha(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
@@ -175,6 +189,7 @@ def recheck_job(name, image, data, reference, original, campaign, out, args, pat
     try:
         rc, text = check_raw_job(directory, original, command, files, "vdot" if name == "negative-vdot" else None)
         record.update(exit_code=rc, raw_logs_sha256=original["raw_logs_sha256"])
+        reject_fatal_output(text)
         runner.validate_runtime(text, reference)
         if name == "negative-vdot":
             record["runtime_gate"] = gate.validate_negative(text, rc)
@@ -290,6 +305,8 @@ def replay_supplements(campaign, out, pins, emu_sha, core_preflight, runner, ana
     require(sha(workload_path) == preflight['driver_files'].get(str(workload_path)),
             'supplement workload checker differs from sealed run')
     workload = load_blob('o2_bound_supplement_workload', workload_path, workload_path.read_bytes())
+    for name in sorted(SUPPLEMENT_NAMES):
+        reject_fatal_output((campaign / name / 'run.log').read_text(encoding='utf-8'))
     return module.recheck_campaign(campaign, out / 'supplements', pins, emu_sha,
                                    analyze=analyzer, workload=workload)
 

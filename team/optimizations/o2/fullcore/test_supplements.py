@@ -6,6 +6,8 @@ import unittest
 from unittest.mock import patch
 import run_supplements as run
 
+real_workload = run.suite.load_module('supplement_test_workload', run.HERE/'workloads/check.py')
+
 class SupplementTest(unittest.TestCase):
     def setUp(self):
         self.ref=Path("/normal.so")
@@ -16,6 +18,7 @@ class SupplementTest(unittest.TestCase):
             analyze=lambda text,require_complete: copy.deepcopy(self.observation),
             extract_events_and_uart=lambda text:([],text))
         self.workload=types.SimpleNamespace(
+            reject_fatal_output=real_workload.reject_fatal_output,
             check=lambda *args:dict(status="O2_DIAGNOSTIC_PASS",checked_register_bytes=5120),
             check_control=lambda *args:dict(status="O2_CONTROL_DIAGNOSTIC_PASS",checked_register_bytes=131072))
 
@@ -34,9 +37,15 @@ class SupplementTest(unittest.TestCase):
         for code in [1,124,-9,False]:
             with self.subTest(code=code),self.assertRaises(ValueError):
                 self.evaluate(exit_code=code)
-        for marker in ["ABORT","EXCEEDING CYCLE/INSTR LIMIT","HIT BAD TRAP","different at pc"]:
+        for marker in ["ABORT","EXCEEDING CYCLE/INSTR LIMIT","HIT BAD TRAP","different at pc","HIT CRITICAL ERROR","double trap","isa pma check failed"]:
             with self.subTest(marker=marker),self.assertRaises(ValueError):
                 self.evaluate(text=self.text+marker)
+
+    def test_fatal_raw_is_rejected_before_uart_extraction(self):
+        self.analyze.analyze=lambda *a,**k: self.fail("fatal raw must not reach trace parser")
+        self.analyze.extract_events_and_uart=lambda text:([],self.text)
+        with self.assertRaisesRegex(ValueError,"fatal runtime"):
+            self.evaluate(text=self.text+"HIT CRITICAL ERROR: double trap\n")
 
     def test_reference_and_banner_are_mandatory(self):
         for text in [self.text.replace("/normal.so","/other.so"),self.text.replace("Difftest enabled.","disabled")]:

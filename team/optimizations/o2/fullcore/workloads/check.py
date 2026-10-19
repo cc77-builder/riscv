@@ -8,6 +8,20 @@ def require(ok,message):
     if not ok:
         raise ValueError(message)
 
+
+def reject_fatal_output(text):
+    """Reject fatal emulator/software errors even when exit=0 says GOOD TRAP.
+
+    This O2-only gate supplements the immutable shared O1 bit100/runtime gate.
+    Strip complete ANSI CSI escapes before matching, including color escapes
+    inserted within words. Unknown escape sequences remain fail-closed.
+    """
+    plain = re.sub(r'\x1b\[[0-?]*[ -/]*[@-~]', '', text)
+    require('\x1b' not in plain and '\x9b' not in plain,
+            'unsupported or truncated terminal escape')
+    require(re.search(r'\b(?:CRITICAL\s+ERROR|double\s+trap|PMA\s+check\s+failed)\b',
+                      plain, re.I) is None, 'O2 fatal runtime output')
+
 def marker_position(uart, marker):
     matches=list(re.finditer("^"+re.escape(marker)+"$",uart,re.M))
     require(len(matches)==1 and uart.count(marker)==1,"missing/duplicate/noncanonical marker: "+marker)
@@ -24,6 +38,7 @@ def verify_build(build):
     return json.loads((build/"data/manifest.json").read_text())
 
 def check(uart,manifest,exit_code,analysis):
+    reject_fatal_output(uart)
     require(exit_code==0,"diagnostic EMU nonzero exit")
     uart=uart.replace("\r\n","\n")
     require(not re.search(r"O2_DIAG_FAIL|HIT BAD TRAP|different at pc|DIFFTEST FAIL|ABORT|Assertion.*failed",uart),
@@ -55,6 +70,7 @@ def check(uart,manifest,exit_code,analysis):
                 observation_counts=analysis["counts"],performance_measured=False)
 
 def check_control(uart,manifest,exit_code,analysis):
+    reject_fatal_output(uart)
     require(exit_code==0,"control diagnostic EMU nonzero exit")
     uart=uart.replace("\r\n","\n")
     require(not re.search(r"O2_CONTROL_FAIL|HIT BAD TRAP|different at pc|DIFFTEST FAIL|ABORT|Assertion.*failed",uart),

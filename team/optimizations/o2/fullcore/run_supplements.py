@@ -41,6 +41,7 @@ def evaluate(text,exit_code,kind,manifest,reference,analyze,workload):
     """Pure post-run gate also used by offline rechecks; never runs hardware."""
     suite.require(kind in EXPECTED_CHECK_STATUS,"unknown supplement kind")
     suite.require(type(exit_code) is int and exit_code==0,"supplement EMU exit code is not zero")
+    workload.reject_fatal_output(text)
     suite.validate_runtime(text,reference)
     suite.validate_failure_markers(text)
     observation=analyze.analyze(text,require_complete=True)

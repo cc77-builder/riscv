@@ -64,7 +64,10 @@ def generate(out):
             if kind == "transitions":
                 nxt = ops[len([x for x in body if x.startswith("vmv.x.s")])+1:]
                 next_vl = 8 if not nxt or nxt[0]["op"] == "vdot" else 4
-                low = int.from_bytes(bytes(after[d][:4]),"little",signed=True)
+                # vmv.x.s extracts/sign-extends the current SEW, not dot's
+                # 32-bit accumulator width. The next vsetvli consumes this value.
+                extract_bytes = 1 if op["op"] == "vdot" else 4
+                low = int.from_bytes(bytes(after[d][:extract_bytes]),"little",signed=True)
                 constant = (low ^ next_vl) & ((1 << 64) - 1)
                 body += [f"vmv.x.s t2, v{d}", f"li t3, 0x{constant:016x}", "xor t2, t2, t3"]
         if kind == "transitions":
