@@ -22,8 +22,8 @@ import run_suite as suite
 DEFAULT_BASE=Path("/home/riscv/riscv-lab/o2-fullcore-20261019")
 JOBS={
     "o2-diagnostic": dict(kind="diagnostic",image="o2-diag.bin",commits=1158,
-        image_sha256="ed35725a24708fc7ffb4efb617248fe5e6911f18c803280a6e75be3f8ad6dfc7",
-        default=DEFAULT_BASE/"diagnostic-build-02"),
+        image_sha256="56915e3aaca02e02597c207de07ac18352ab53b6d06c4cb92a18fcddea1da4d4",
+        default=DEFAULT_BASE/"diagnostic-build-03"),
     "o2-control-diagnostic": dict(kind="control",image="o2-control.bin",commits=1208,
         image_sha256="45cdf2a6cb6848b3bcb56d860c36bc26a975a8aa96bfe1411d33dce6036bd305",
         default=DEFAULT_BASE/"control-diagnostic-build-04"),

@@ -34,8 +34,9 @@
 
 精确 vdot 提交数 **1158**（9×128+6）。C 程序额外翻转目的第 127 位，要求自身检查器拒绝并还原；这是软件检查器负控，不是 RTL 故障注入。
 
-当前构建：/home/riscv/riscv-lab/o2-fullcore-20261019/diagnostic-build-02/o2-diag.bin。
-SHA-256：ed35725a24708fc7ffb4efb617248fe5e6911f18c803280a6e75be3f8ad6dfc7。
+修正后构建：/home/riscv/riscv-lab/o2-fullcore-20261019/diagnostic-build-03/o2-diag.bin。
+SHA-256：56915e3aaca02e02597c207de07ac18352ab53b6d06c4cb92a18fcddea1da4d4。
+旧 diagnostic-build-02 与失败的 supplements-01 保留；旧镜像不作为修正后诊断的通过证据。
 
 ## 3. 新增取消与写回竞争诊断
 
@@ -81,3 +82,9 @@ O2_DIAG_BEGIN、O2_DIAG_CHECKER_CONTROL、O2_DIAG_CASE_PASS、O2_DIAG_SUMMARY、
 ## 5. 构建后的检查器修正
 
 冻结两份 bin 与源副本之后，运行检查器单独加强了 UART 行边界与顺序验证，并将控制诊断的 CRLF 处理改为真实换行转换。新增 CRLF、标记后缀、检查器负控标记顺序的主机反例测试。这不修改程序语义或镜像；运行门禁另存当前检查器的源码 SHA 和 Git 提交，不能把构建副本中的旧 check.py 当作实际运行检查器。
+
+## 6. 首轮软件故障与修正
+
+supplements-01 的前九个诊断完整通过，第十个切换病例在第二条 vdot 前产生 VL=16。实际 vmv.x.s 按当前 SEW=8 取低字节并符号扩展，生成器却以完整 signed32 点积结果计算下一次 AVL 常数。修复仅使这六个常数按当前 SEW 计算；原数学黄金值、cases.h、前九病例、1158条预期提交数保持不变。新增逐条解释 vset/vmv/li/xor 的主机检查能重现旧故障并覆盖8/32位符号边界。
+
+另外，双重异常可伴随退出码0与GOOD TRAP；O2实时补充入口、UART、Linux离线及便携审计现在额外拒绝CRITICAL ERROR、double trap、PMA check failed。旧共享O1门禁、原core运行工具及其原始日志不修改。新一轮supplements-02使用修正诊断及原control04镜像，明确保存新检查器身份。首轮control的合格结果与partial witness完整保存，但不直接并入新一轮联合覆盖。
