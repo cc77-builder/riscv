@@ -29,6 +29,8 @@ overlaps stalls p_to_r full_cycles full_blocked p_accept_r_blocked
 r_response_p_survivor kill_p_only kill_r_only kill_both reset_both redirects
 reset_cases te0_resets empty_te0_resets idle_clock_samples cancel_idle_clock_on
 parent_tested fullcore_tested performance_measured""".split())
+TRANSITION_CASES = {f"switch-{old}-{new}-{delay}" for old in range(3)
+                    for new in range(3) for delay in (0, 1, 7)}
 FU_KEYS = set("""kind accepted responded killed reset_dropped raw_killed_response
 latency_min latency_max latency_samples clock_edges waits""".split())
 
@@ -155,6 +157,11 @@ def check_trace(text, require_campaign=True):
                     require(output_mask == int(live_r), "vdot output qualification mismatch")
                 elif div:
                     require(output_mask in (0, 1 << live[div]["kind"]), "wrong DIV output owner")
+                    if live[div]["seen"] and not kd:
+                        # A prior visible DIV result that was not consumed still
+                        # owns the output. Only its kill/reset may withdraw valid.
+                        require(output_mask == 1 << live[div]["kind"],
+                                "stalled DIV valid withdrawn without kill/reset")
                 else:
                     require(output_mask == 0, "ghost output after termination")
             response = bool(output_mask and ready_out and not reset and not kr and not kd)
@@ -207,6 +214,7 @@ def check_trace(text, require_campaign=True):
                 (row["case"].startswith("TE0-reset-") or row["case"] == "DIV-legacy-reset"))
             previous_reset = bool(reset)
             if row["case"].startswith("switch-"):
+                require(row["case"] in TRANSITION_CASES, "unknown FU transition case")
                 transition_cases.add(row["case"])
             require(row["reset_drop"] == (len(live) if reset else 0), "reset drop count mismatch")
             if reset:
@@ -275,7 +283,8 @@ def check_trace(text, require_campaign=True):
         for name in FU_KEYS - {"kind"}:
             require(summary[name] == per_fu[kind][name], f"FU {kind} summary mismatch: {name}")
     if require_campaign:
-        require(len(groups) == 12 and len(transition_cases) == 27, "incomplete directed groups/transitions")
+        require(len(groups) == 12 and transition_cases == TRANSITION_CASES,
+                "incomplete directed groups/transitions")
         require(len(frozen_accept_cycles) == len(frozen_response_latencies) == 10022 and
                 all(b - a == 1 for a, b in zip(frozen_accept_cycles, frozen_accept_cycles[1:])) and
                 set(frozen_response_latencies) == {2}, "frozen II=1/latency=2 evidence missing")

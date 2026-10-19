@@ -162,6 +162,24 @@ class TraceTests(unittest.TestCase):
         with self.assertRaises(TraceError):
             check_trace(encode(rows, fus, final), require_campaign=False)
 
+    def test_stalled_div_valid_cannot_withdraw_without_kill(self):
+        rows, fus, final = fixture()
+        rows[8].update(child_out=2, out_ready=0, stall=1)
+        rows[9].update(child_out=0, stall=0)
+        # Preserve counters and adapt the first-visible latency; aggregate-only
+        # checking would accept this invalid one-cycle withdrawal.
+        fus[1].update(latency_min=1, latency_max=1)
+        with self.assertRaisesRegex(TraceError, "stalled DIV valid withdrawn"):
+            check_trace(encode(rows, fus, final), require_campaign=False)
+
+    def test_unknown_transition_name_cannot_replace_real_pair(self):
+        rows, fus, final = fixture()
+        rows[1]["case"] = "switch-0-0-0"
+        check_trace(encode(rows, fus, final), require_campaign=False)
+        rows[1]["case"] = "switch-99-99-99"
+        with self.assertRaisesRegex(TraceError, "unknown FU transition case"):
+            check_trace(encode(rows, fus, final), require_campaign=False)
+
     def test_missing_cycle_rejected(self):
         rows, fus, final = fixture()
         rows.pop(3)
