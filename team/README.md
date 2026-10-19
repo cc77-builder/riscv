@@ -1,5 +1,7 @@
 # 三人团队：项目计划与开发入口
 
+> **2026-10-19 O2可行性评估与设计合同完成，本地保存。** [评估与后续步骤](optimizations/o2/README.md) · [设计合同](optimizations/o2/CONTRACT.md) · [旧轨迹分析](optimizations/o2/TRACE_ANALYSIS.md)。推荐下一轮先验证VFEX4两槽弹性原型；本轮未改生产RTL、未运行新EMU、未上传GitHub。O1已有结果继续有效，O2实测收益与最终采用仍待验证，下方状态按历史时点阅读。
+
 > **2026-10-18 O1 成果交付 zjhwork。** 本次包括真实父级联调、全核回归及T14/O1同镜像公平性能比较；batch128周期降低20.02%，相对RVV为1.870×。见 [发布说明](docs/o1-publication-20261018.md)。本条更新下方未上传状态，实际最终版本以远端回读为准；密封证据保持原样，O1默认关闭，未代签人工ACK。
 
 > **T14/O1 同镜像公平性能比较完成，本地保存。** 独立batch128平均周期 453.25→362.50，降低20.02%；O1相对实测RVV为1.870×。36次主运行、478窗口及完整离线复算通过。见 [性能入口](optimizations/o1/performance/README.md) · [证据](optimizations/o1/evidence/20261018-performance-ab/README.md)。O1默认关闭，未推送；PPA/T17/人工ACK仍待完成，正式T16报告后置，下方按历史时点阅读。

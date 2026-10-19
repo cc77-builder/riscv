@@ -1,5 +1,11 @@
 # 团队 Agent 入口
 
+## 当前任务：O2可行性评估与设计合同（本地）
+
+2026-10-18开始、2026-10-19续接完成。基点cd866d52，工作分支local/o2-feasibility-20261018；见 [O2入口](team/optimizations/o2/README.md)、[设计合同](team/optimizations/o2/CONTRACT.md) 与 [轨迹分析](team/optimizations/o2/TRACE_ANALYSIS.md)。本轮只审查生产源码、复算旧轨迹并写合同，不实施O2 RTL、不运行新EMU、不推送GitHub。
+
+结论为有条件进入VFEX4两槽弹性候选的隔离FU/真实父级原型；O2采用、II=1、全核性能和PPA仍未验证。O1 batch的1275次busy等待中1266次对应同窗口正常提交请求，9次属于接受前取消；等待不能当可省周期。正式T16报告后置，核心接口人工ACK待成员确认。下方O1发布授权与未上传文字均为对应历史阶段，不自动授权本轮O2发布或后续实现。
+
 ## 当前发布：O1 已完成成果交付 zjhwork
 
 用户明确授权将真实父级联调、全核回归和T14/O1公平性能结果普通快进上传至 cc77-builder/riscv:zjhwork。见 [交付说明](team/docs/o1-publication-20261018.md)。本条覆盖下方“本地保存/未上传”的当前限制；密封证据保留生成时点状态。实际推送结果以远端SHA回读回执为准，O1默认关闭，不重复已完成仿真，不自动开始下一项任务。
