@@ -1,6 +1,6 @@
 # O1 FTQ 与计数窗口扩展（O2 schema 2）
 
-由现有 `VDOT_O1_TRACE=1` 一并生成，默认关闭；T14/O1 仍须各自显式选择。保留全部 schema 1 EXU/ROB 记录和历史检查器，另用 `O2_` 前缀记录补充证据。只有 `check_extended.py` / `run_extended_core.py` 接受扩展覆盖；旧入口仍只宣称 schema 1 范围。
+由现有 `VDOT_O1_TRACE=1 VDOT_O1_TRACE_PROFILE=frames` 一并生成，默认关闭；T14/O1 仍须各自显式选择。保留全部 schema 1 EXU/ROB 记录和历史检查器，另用 `O2_` 前缀记录补充证据。只有 `check_extended.py` / `run_extended_core.py` 接受扩展覆盖；旧入口仍只宣称 schema 1 范围。
 
 固定单 hart MinimalConfig：ROB48、FTQ8、PredictWidth16、RenameWidth6、CommitWidth8。ROB、CSR wrapper 和 NewCSR 各自从共同仿真复位开始计时，启动头绑定模式与配置。CSR 的 `FuConfig.ckAlwaysEn` 保证时钟持续运行；不推断或拟合时钟偏移。
 

@@ -73,7 +73,7 @@ def build_guard(args, out, phase):
     require('CORE_BASELINE_BUILD_PASS' in (build/'build.log').read_text() and
             'CORE_SPLIT_BUILD_PASS' in (build/'split-build.log').read_text(),'missing build completion')
     env=(build/'environment.txt').read_text().splitlines()
-    for item in ('VDOT_O1_TRACE=1','VDOT_O1_HANDOFF=1','VDOT_T14_FUSED_INPUT=1','VDOT_T12_TRACE=0','VDOT_T13_TRACE=0'):
+    for item in ('VDOT_O1_TRACE=1','VDOT_O1_TRACE_PROFILE=frames','VDOT_O1_HANDOFF=1','VDOT_T14_FUSED_INPUT=1','VDOT_T12_TRACE=0','VDOT_T13_TRACE=0'):
         require(item in env,'wrong hardware observer flags')
     require(sha(emu)==(build/'emu.sha256').read_text().split()[0],'EMU differs from build')
     require((build/'source-binding.json').read_bytes()==(args.core/'build/source-binding.json').read_bytes(),'wrong source receipt')

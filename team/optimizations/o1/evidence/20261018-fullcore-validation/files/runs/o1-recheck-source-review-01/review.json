@@ -1,0 +1,145 @@
+{
+  "schema_version": 1,
+  "status": "O1_RECHECK_SOURCE_REVIEW_PASS",
+  "reviewer": "/root/o1_build_review",
+  "created_utc": "2026-10-18T08:14:28.472471+00:00",
+  "scope": "Independent read-only source review of the frozen offline rechecker and its tests; records existing host-test and partial-probe receipts without rerunning them.",
+  "read_only_review": true,
+  "writes_limited_to": "This new review.json only; no source, generated RTL, checker, original campaign result or raw log modified.",
+  "tests_rerun": false,
+  "new_emu_executed": false,
+  "emulators_executed": 0,
+  "whole_suite_pass": false,
+  "fullcore_run_completion_verified": false,
+  "performance_measured": false,
+  "frozen_source_sha256": {
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o1/audit/recheck_suite.py": "80fa2f1baf1fcbc3f79281f16dd834f58a44049d25d349e08bc2ccfa61c93e8e",
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o1/audit/test_recheck_suite.py": "5680edb4a5a726696a5c405e4bb07cd2511c19714d51ae062237eeee824c921a"
+  },
+  "host_test_evidence": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/runs/o1-recheck-host-tests-01/result.json",
+    "sha256": "00b4a335a2b5566fbaa013ea232eea97b136ff9121918d7d80587aabde23bcaa",
+    "status": "HOST_TEST_PASS",
+    "exit_code": 0,
+    "tests_passed": 9,
+    "test_count_source": "/home/riscv/riscv-lab/zjhwork2-review-20261018/runs/o1-recheck-host-tests-01/stderr.log",
+    "raw_sha256_verified": {
+      "/home/riscv/riscv-lab/zjhwork2-review-20261018/runs/o1-recheck-host-tests-01/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "/home/riscv/riscv-lab/zjhwork2-review-20261018/runs/o1-recheck-host-tests-01/stderr.log": "77fc72dbaa212dd7d1e9ac52cee8e36e1a553b2312b3aeb87321f0c0cb33413a",
+      "/home/riscv/riscv-lab/zjhwork2-review-20261018/runs/o1-recheck-host-tests-01/exit-code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "source_hashes_match_reviewed_files": true,
+    "new_emu_executed": false
+  },
+  "partial_probe_evidence": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/runs/o1-recheck-probe-02/result.json",
+    "sha256": "0fb9da7a615adf7981c8c9f49e82a63c6e33f4994635a780113f69d31c7a0b4f",
+    "status": "O1_PARTIAL_AUDIT",
+    "checks_passed": true,
+    "whole_suite_pass": false,
+    "selected_jobs": [
+      "hello-vadd",
+      "negative-vdot"
+    ],
+    "missing_jobs": [
+      "functional-0",
+      "functional-1",
+      "functional-2",
+      "functional-3",
+      "functional-4",
+      "functional-5",
+      "functional-6",
+      "functional-7",
+      "control",
+      "dense-batch128"
+    ],
+    "original_source_commit": "518c05674d5ecfed04a944cf01c99cea488b6c8a",
+    "build_source_commit": "18c0ce08a40e889654bfe76d5435f272854ad7d0",
+    "original_evidence_unchanged": true,
+    "new_emu_executed": false,
+    "performance_measured": false,
+    "checker_sha256": {
+      "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o1/audit/recheck_suite.py": "80fa2f1baf1fcbc3f79281f16dd834f58a44049d25d349e08bc2ccfa61c93e8e",
+      "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o1/audit/runtime_gate.py": "80315b278f4dc0168edd33657a07ae648b20f0279fa57a69f35b0f983fa42ea1"
+    }
+  },
+  "expected_full_inventory": [
+    "hello-vadd",
+    "negative-vdot",
+    "functional-0",
+    "functional-1",
+    "functional-2",
+    "functional-3",
+    "functional-4",
+    "functional-5",
+    "functional-6",
+    "functional-7",
+    "control",
+    "dense-batch128"
+  ],
+  "review_items": [
+    {
+      "id": "inventory_and_completion",
+      "conclusion": "PASS",
+      "basis": "Exactly 12 expected jobs; unexpected directories rejected. Full audit requires completed named receipts, timestamps, final state and summary agreement. Running or absent jobs cannot yield a full pass."
+    },
+    {
+      "id": "original_git_blob_binding",
+      "conclusion": "PASS",
+      "basis": "Six original driver/checker files loaded from the exact original 40-hex source commit via Git blobs and checked against original preflight hashes. Current checkout contents do not replace original checker bytes; original analyzer is installed before importing original control checker."
+    },
+    {
+      "id": "source_input_provenance",
+      "conclusion": "PASS",
+      "basis": "Pinned build source and input identities checked, hardware paths matched to build-source Git blobs, original preflight rerun with its bound code, and binary/reference/dependency identities verified."
+    },
+    {
+      "id": "raw_logs_exit_and_reference",
+      "conclusion": "PASS",
+      "basis": "Command, image, reference, flash, EMU and negative target bind to receipts. All three original raw log hashes verified; combined run.log must byte-equal stderr.log plus stdout.log; typed result exit code agrees with the exact exit-code file. Normalization affects only parser input."
+    },
+    {
+      "id": "original_evidence_preservation",
+      "conclusion": "PASS",
+      "basis": "Original completed-job receipts, runtime, exit and raw logs plus campaign metadata are hashed before and after. New outputs and checker snapshots go to a separate output directory; original result files are not rewritten."
+    },
+    {
+      "id": "negative_runtime_gate",
+      "conclusion": "PASS",
+      "basis": "Separate identified ANSI-aware gate requires intended bit-100 mismatch identity, exit 1 and canonical adjacent abort; raw stdout adjacency is checked directly. Ordinary jobs require exit 0 without failure markers."
+    },
+    {
+      "id": "partial_never_whole",
+      "conclusion": "PASS",
+      "basis": "Completed-only always yields O1_PARTIAL_AUDIT with whole_suite_pass false, even if all selected checks pass. Confirmed in existing probe02 receipt."
+    },
+    {
+      "id": "final_coverage",
+      "conclusion": "PASS",
+      "basis": "Full assessment retains original suite obligations, 12 completed jobs, normal-reference same-image recovery after the negative run, seven legacy control coverage requirements, independent dense HANDOFF greater than zero and 12 calibrated windows. Local control handoff absence remains explicit."
+    },
+    {
+      "id": "behavior_test_coverage",
+      "conclusion": "PASS",
+      "basis": "Nine existing passing host tests cover inventory/completion, raw preservation, tampering, exit/reference/input binding, partial verdict, final campaign metadata and original Git-blob provenance; source hashes match the reviewed frozen files."
+    }
+  ],
+  "finding": "No concrete false-pass or original-evidence mutation defect identified in the reviewed frozen rechecker and test code.",
+  "limitations": [
+    "This is source review plus verification of already-produced receipts, not formal proof and not a new execution of tests or EMU.",
+    "Probe02 checks only hello-vadd and negative-vdot; the ten missing jobs are not verified by this receipt.",
+    "The original campaign was RUNNING in the probe snapshot. This review does not certify that the full campaign has completed or passed.",
+    "Final whole-suite evidence requires a separate audit after all original jobs and final campaign metadata are complete.",
+    "No fullcore performance, speedup, timing closure, area or power conclusion is supported."
+  ],
+  "review_inputs_sha256": {
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o1/audit/recheck_suite.py": "80fa2f1baf1fcbc3f79281f16dd834f58a44049d25d349e08bc2ccfa61c93e8e",
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o1/audit/test_recheck_suite.py": "5680edb4a5a726696a5c405e4bb07cd2511c19714d51ae062237eeee824c921a",
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/runs/o1-recheck-host-tests-01/result.json": "00b4a335a2b5566fbaa013ea232eea97b136ff9121918d7d80587aabde23bcaa",
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/runs/o1-recheck-probe-02/result.json": "0fb9da7a615adf7981c8c9f49e82a63c6e33f4994635a780113f69d31c7a0b4f",
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/runs/o1-recheck-host-tests-01/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/runs/o1-recheck-host-tests-01/stderr.log": "77fc72dbaa212dd7d1e9ac52cee8e36e1a553b2312b3aeb87321f0c0cb33413a",
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/runs/o1-recheck-host-tests-01/exit-code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+  },
+  "review_inputs_unchanged_during_recording": true
+}

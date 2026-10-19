@@ -1,0 +1,9 @@
+{
+  "created_utc": "2026-10-18T11:50:46.894432+00:00",
+  "status": "PRE_COMPLETION_VALIDATION_SCOPE_CORRECTION",
+  "excluded_mutable_file": "/home/riscv/riscv-lab/o1-performance-20261018/t14-build-01/products/time.log",
+  "reason": "Makefile and difftest/Makefile direct time -o to BUILD_DIR/time.log during RTL generation and compilation; this is a host timing output, not generated hardware input.",
+  "original_wrapper_issue": "generated-before-resume includes time.log and will reject its expected update after compile exit0.",
+  "required_final_validation": "Preserve original wrapper outcome. A separately versioned finalizer may exclude only this exact host timing log; every generated RTL/source file, copied support file, original hardware/dependency and both EMU identities must be verified.",
+  "new_emu_executed": false
+}

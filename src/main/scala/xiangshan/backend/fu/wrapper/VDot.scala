@@ -51,6 +51,13 @@ class VDot(cfg: FuConfig)(implicit p: Parameters) extends VecNonPipedFuncUnit(cf
   // The base class registers this RobPtr only on in.fire, together with pdest.
   private val killed = state =/= idle && io.out.bits.ctrl.robIdx.needFlush(io.flush)
 
+  // Read-only handles for the opt-in observer in the ungated parent EXU.
+  // No additional state, functional port, or signal feeds back into this FU.
+  private[backend] def o1ObservedState: UInt = state
+  private[backend] def o1ObservedKilled: Bool = killed
+  private[backend] def o1ObservedIllegalInput: Bool = illegalInput
+  private[backend] def o1ObservedVl: UInt = vl
+
   if (handoffEnabled) {
     // Do not depend on the new input's valid/data: the old response owns this cycle.
     io.in.ready := (state === idle || (state === respond && io.out.ready && !killed)) &&

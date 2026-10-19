@@ -1,0 +1,36 @@
+/usr/bin/python3
+/opt/graalvm-jdk-21/bin/java
+/usr/local/bin/mill
+/usr/local/bin/verilator
+/usr/local/llvm/bin/clang++
+/usr/bin/make
+/usr/bin/git
+/usr/bin/sha256sum
+COMMAND 1 git --version 
+RESULT 1 exit=0 log=git-version.log
+COMMAND 2 java -version 
+RESULT 2 exit=0 log=java-version.log
+COMMAND 3 mill --version 
+RESULT 3 exit=0 log=mill-version.log
+COMMAND 4 verilator --version 
+RESULT 4 exit=0 log=verilator-version.log
+COMMAND 5 clang++ --version 
+RESULT 5 exit=0 log=clang-version.log
+COMMAND 6 make --version 
+RESULT 6 exit=0 log=make-version.log
+COMMAND 7 /home/riscv/.cache/llvm-firtool/1.62.1/bin/firtool --version 
+RESULT 7 exit=0 log=firtool-version.log
+COMMAND 8 git rev-parse HEAD 
+RESULT 8 exit=0 log=source-commit.log
+COMMAND 9 git status --short 
+RESULT 9 exit=0 log=source-status.log
+COMMAND 10 git diff --binary HEAD 
+RESULT 10 exit=0 log=working-tree.patch
+O1_PARENT_SOURCE_CAPTURE_PASS files=427 dependencies=126
+COMMAND 11 python3 -B team/rtl/vdot/prepare_vectors.py team/models/vdot/data /home/riscv/riscv-lab/zjhwork2-review-20261018/runs/parent-01/vectors.tsv 
+RESULT 11 exit=0 log=vectors.log
+COMMAND 12 python3 -B -m unittest discover -s team/optimizations/o1/parent -p test_negative_gate.py -v 
+RESULT 12 exit=0 log=negative-gate-tests.log
+COMMAND 13 mill -i -j 2 vdotParent.runMain team.vdot.GenerateVDotParent /home/riscv/riscv-lab/zjhwork2-review-20261018/runs/parent-01/mode-0-rtl 
+RESULT 13 exit=0 log=mode-0-elaboration.log
+missing generated FIRRTL blackbox manifest

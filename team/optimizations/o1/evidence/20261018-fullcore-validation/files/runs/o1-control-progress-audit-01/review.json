@@ -1,0 +1,190 @@
+{
+  "status": "IN_PROGRESS_DIAGNOSTIC_ONLY",
+  "created_utc": "2026-10-18T10:31:15.536753+00:00",
+  "new_emu_executed": false,
+  "process_modified": false,
+  "whole_suite_pass": false,
+  "control_pass_claimed": false,
+  "campaign_result_present": false,
+  "snapshots": {
+    "stdout.log": {
+      "source": "/home/riscv/riscv-lab/zjhwork2-review-20261018/runs/o1-fullcore-suite-01/control/stdout.log",
+      "snapshot": "/home/riscv/riscv-lab/zjhwork2-review-20261018/runs/o1-control-progress-audit-01/stdout.partial.log",
+      "snapshot_bytes": 1057,
+      "snapshot_sha256": "8b70831596355a1d60935d230e4da37255d94760dfd299d186750f55fd08db2d",
+      "read_start_utc": "2026-10-18T10:31:15.455184+00:00",
+      "read_end_utc": "2026-10-18T10:31:15.455623+00:00",
+      "source_size_before": 1057,
+      "source_size_after": 1057,
+      "source_mtime_utc": "2026-10-18T10:30:06.372786+00:00",
+      "scope": "in-progress bytes only; not a completed run hash"
+    },
+    "stderr.log": {
+      "source": "/home/riscv/riscv-lab/zjhwork2-review-20261018/runs/o1-fullcore-suite-01/control/stderr.log",
+      "snapshot": "/home/riscv/riscv-lab/zjhwork2-review-20261018/runs/o1-control-progress-audit-01/stderr.partial.log",
+      "snapshot_bytes": 1597440,
+      "snapshot_sha256": "81b3e7d9d377a3aea983f228b6df9fcb447af5b19b027713d4047c6570575008",
+      "read_start_utc": "2026-10-18T10:31:15.455660+00:00",
+      "read_end_utc": "2026-10-18T10:31:15.462275+00:00",
+      "source_size_before": 1597440,
+      "source_size_after": 1597440,
+      "source_mtime_utc": "2026-10-18T10:30:27.567108+00:00",
+      "scope": "in-progress bytes only; not a completed run hash"
+    }
+  },
+  "latest_complete_observed_cycle": 269781,
+  "observed_group_pass_lines": [
+    "T12_GROUP_PASS id=0 checkpoints=32 bytes=16384",
+    "T12_GROUP_PASS id=1 checkpoints=32 bytes=16384",
+    "T12_GROUP_PASS id=2 checkpoints=32 bytes=16384"
+  ],
+  "current_excerpt": [
+    {
+      "line": 5347,
+      "text": "O1_ENQUEUE cycle=              107108 rob=0:34 pc=0x000008000845c ftq=0:4 word=0x0294050b"
+    },
+    {
+      "line": 5348,
+      "text": "O1_VFEX4_ACCEPT cycle=              107116 seq=                1021 rob=0:34 fu=0x800000000 pdest=111"
+    },
+    {
+      "line": 5349,
+      "text": "O1_ACCEPT cycle=              107116 seq=                1021 rob=0:34 pdest=111 vl=  8 illegal=0 vecwen=1 v0wen=0"
+    },
+    {
+      "line": 5350,
+      "text": "O1_RESPONSE cycle=              107118 seq=                1021 rob=0:34 pdest=111 illegal=0 data=0x000000000000000000000000fffff6b5 vecwen=1 v0wen=0 exception=0x000000"
+    },
+    {
+      "line": 5351,
+      "text": "O1_COMMIT cycle=              107120 rob=0:34 pc=0x000008000845c ftq=0:4"
+    },
+    {
+      "line": 5371,
+      "text": "O1_VFEX4_REDIRECT cycle=              107386 rob=1:21 self=0"
+    },
+    {
+      "line": 5372,
+      "text": "O1_REDIRECT cycle=              171212 rob=1:23 ftq=0:0 self=0"
+    }
+  ],
+  "old_same_image_log": {
+    "path": "/home/riscv/riscv-lab/t14-optimization-20261015/runs/control-sweep-candidate-02/stderr.log",
+    "sha256": "0c41fe07ba041920e770883d9efc8fab12b3f3bfe8ca49ba7be5dfbae7a7bfb7",
+    "excerpts": [
+      {
+        "line": 5242,
+        "text": "T12_ENQUEUE cycle=              107191 rob=0:34 pc=0x000008000845c ftq=0:4 word=0x0294050b"
+      },
+      {
+        "line": 5243,
+        "text": "T12_VFEX4_ACCEPT cycle=              107199 rob=0:34 fu=0x800000000"
+      },
+      {
+        "line": 5246,
+        "text": "T12_COMMIT cycle=              107203 rob=0:34 pc=0x000008000845c ftq=0:4"
+      },
+      {
+        "line": 5261,
+        "text": "T12_REDIRECT cycle=              107468 rob=1:21 ftq=0:6"
+      },
+      {
+        "line": 5262,
+        "text": "T12_REDIRECT cycle=              171312 rob=1:40 ftq=0:0"
+      },
+      {
+        "line": 13604,
+        "text": "T12_COMMIT cycle=              190508 rob=0: 2 pc=0x000008000dca0 ftq=0:0"
+      },
+      {
+        "line": 13605,
+        "text": "T12_COMMIT cycle=              190508 rob=0: 5 pc=0x000008000dcac ftq=0:1"
+      },
+      {
+        "line": 13606,
+        "text": "T12_REDIRECT cycle=              255251 rob=0:32 ftq=1:3"
+      }
+    ]
+  },
+  "program_sources": [
+    {
+      "path": "/home/riscv/riscv-lab/t14-optimization-20261015/runs/control-sweep-02/source/main.c",
+      "sha256": "49650424618b88f9085a414c41007e3f6cbc64fca0d3f4bc0c62b2916524dcdd",
+      "excerpts": [
+        {
+          "start_line": 8,
+          "end_line": 23,
+          "text": "static void check(unsigned group, const uint8_t *want, unsigned size) {\n  const uint8_t *got=(const uint8_t *)actual;\n  for (unsigned i=0;i<size;++i) if(got[i]!=want[i]) {\n    printf(\"T12_MISMATCH group=%d byte=%d actual=%d expected=%d\\n\",group,i,got[i],want[i]);\n    ++errors; return;\n  }\n  printf(\"T12_GROUP_PASS id=%d checkpoints=32 bytes=%d\\n\",group,size);\n}\nint main(void) {\n  __asm__ volatile(\"li t0,0x6600; csrs mstatus,t0; csrwi vstart,0; csrwi vcsr,0\" ::: \"t0\",\"memory\");\n  printf(\"T12_BEGIN seed=0x20261014 contract=vdot-s8x8-r32-v0.1\\n\");\n  t12_group0(input0,actual,csr); check(0,(const uint8_t *)expected0,sizeof(expected0));\n  t12_group1(input1,actual,csr); check(1,(const uint8_t *)expected1,sizeof(expected1));\n  for(unsigned i=0;i<512;++i) if(csr[i]!=(i/16+i%16)%8) { ++errors; printf(\"T12_CSR_FAIL index=%d\\n\",i); break; }\n  t12_group2(input2,actual,csr); check(2,(const uint8_t *)expected2,sizeof(expected2));\n  t12_group3(input3,actual,csr); check(3,(const uint8_t *)expected3,sizeof(expected3));"
+        }
+      ]
+    },
+    {
+      "path": "/home/riscv/riscv-lab/t14-optimization-20261015/runs/control-sweep-02/source/generate.py",
+      "sha256": "78283e2dd5cfa31a0924c3a65c91483baf39064af400f2d2c2978dd11a69aabe",
+      "excerpts": [
+        {
+          "start_line": 55,
+          "end_line": 62,
+          "text": "                elif g==1:\n                    # Replace a previous VL=16 with VL=8 immediately before vdot.\n                    # CSR readback is saved after the sequence, without using it as an oracle.\n                    asm += ['vsetivli zero,16,e8,m1,tu,mu',\n                            f'csrwi vcsr,{(block+j)%8}',\n                            'vsetivli zero,8,e8,m1,tu,mu']\n                    dot(10,8,9)\n                    asm += ['csrr t0,vcsr','sd t0,0(a2)','addi a2,a2,8']"
+        }
+      ]
+    },
+    {
+      "path": "/home/riscv/riscv-lab/t14-optimization-20261015/runs/control-sweep-02/vdot-regression.txt",
+      "sha256": "43ff0c224ff7e3d5c4a1f672cbb55cdd38f869d36adb327d659239f4fecce6e3",
+      "excerpts": [
+        {
+          "start_line": 84,
+          "end_line": 102,
+          "text": "000000008000012a <check.constprop.0>:\n    8000012a:\t88ae                \tmv\ta7,a1\n    8000012c:\t00028817          \tauipc\ta6,0x28\n    80000130:\tc8480813          \taddi\ta6,a6,-892 # 80027db0 <actual>\n    80000134:\t85aa                \tmv\ta1,a0\n    80000136:\t4781                \tli\ta5,0\n    80000138:\t6311                \tlui\tt1,0x4\n    8000013a:\t00f88733          \tadd\ta4,a7,a5\n    8000013e:\t00084683          \tlbu\ta3,0(a6)\n    80000142:\t00074703          \tlbu\ta4,0(a4)\n    80000146:\t0007861b          \tsext.w\ta2,a5\n    8000014a:\t0785                \taddi\ta5,a5,1\n    8000014c:\t00e69c63          \tbne\ta3,a4,80000164 <check.constprop.0+0x3a>\n    80000150:\t0805                \taddi\ta6,a6,1\n    80000152:\tfe6794e3          \tbne\ta5,t1,8000013a <check.constprop.0+0x10>\n    80000156:\t6611                \tlui\ta2,0x4\n    80000158:\t00013517          \tauipc\ta0,0x13\n    8000015c:\t88050513          \taddi\ta0,a0,-1920 # 800129d8 <printf_+0x6e>\n    80000160:\t00b1206f          \tj\t8001296a <printf_>"
+        },
+        {
+          "start_line": 8483,
+          "end_line": 8495,
+          "text": "    80008434:\tc0087057          \tvsetivli\tzero,16,e8,m1,tu,mu\n    80008438:\t00f1d073          \tcsrwi\tvcsr,3\n    8000843c:\tc0047057          \tvsetivli\tzero,8,e8,m1,tu,mu\n    80008440:\t0294050b          \t.word\t0x0294050b\n    80008444:\t00f022f3          \tcsrr\tt0,vcsr\n    80008448:\t00563023          \tsd\tt0,0(a2)\n    8000844c:\t00860613          \taddi\ta2,a2,8\n    80008450:\tc0087057          \tvsetivli\tzero,16,e8,m1,tu,mu\n    80008454:\t00f25073          \tcsrwi\tvcsr,4\n    80008458:\tc0047057          \tvsetivli\tzero,8,e8,m1,tu,mu\n    8000845c:\t0294050b          \t.word\t0x0294050b\n    80008460:\t00f022f3          \tcsrr\tt0,vcsr\n    80008464:\t00563023          \tsd\tt0,0(a2)"
+        },
+        {
+          "start_line": 17917,
+          "end_line": 17931,
+          "text": "    8001176a:\t00015617          \tauipc\ta2,0x15\n    8001176e:\t64660613          \taddi\ta2,a2,1606 # 80026db0 <csr>\n    80011772:\t00016597          \tauipc\ta1,0x16\n    80011776:\t63e58593          \taddi\ta1,a1,1598 # 80027db0 <actual>\n    8001177a:\t00001517          \tauipc\ta0,0x1\n    8001177e:\t54650513          \taddi\ta0,a0,1350 # 80012cc0 <input1>\n    80011782:\td16f10ef          \tjal\tra,80002c98 <t12_group1>\n    80011786:\t0000c597          \tauipc\ta1,0xc\n    8001178a:\t36a58593          \taddi\ta1,a1,874 # 8001daf0 <expected1>\n    8001178e:\t4505                \tli\ta0,1\n    80011790:\t99bee0ef          \tjal\tra,8000012a <check.constprop.0>\n    80011794:\t00015717          \tauipc\ta4,0x15\n    80011798:\t61c70713          \taddi\ta4,a4,1564 # 80026db0 <csr>\n    8001179c:\t4581                \tli\ta1,0\n    8001179e:\t20000613          \tli\ta2,512"
+        }
+      ]
+    }
+  ],
+  "image": {
+    "path": "/home/riscv/riscv-lab/t14-optimization-20261015/runs/control-sweep-02/vdot-regression.bin",
+    "sha256": "b447c98209f5074072d7e36c77e63e92f8bd51a2cc05e2dbe7cfe857f4d37df7"
+  },
+  "proc_observation": {
+    "pid": 10894,
+    "cmdline": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/build/emu -i /home/riscv/riscv-lab/t14-optimization-20261015/runs/control-sweep-02/vdot-regression.bin --flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin --ram-size=128MB --diff=/home/riscv/riscv-lab/t12-regression-20261013/nemu/reference/build/riscv64-nemu-interpreter-so --max-cycles=5000000 ",
+    "stat": "10894 (emu) R 10893 10893 3580 34818 3580 4194304 3031 0 0 0 59023 5 0 0 20 0 16 0 1462188 1949577216 18816 18446744073709551615 102089477681152 102089545082573 140732423677472 0 0 0 0 0 2 0 0 0 17 4 0 0 0 0 0 102089548628880 102089548638456 102090265276416 140732423684502 140732423684903 140732423684903 140732423688122 0\n",
+    "read_utc": "2026-10-18T10:31:15.536736+00:00"
+  },
+  "quiet_global_cycle_intervals": {
+    "old_after_group1": {
+      "start": 107468,
+      "end": 171312,
+      "gap": 63844
+    },
+    "current_after_group1": {
+      "start": 107386,
+      "end": 171212,
+      "gap": 63826
+    },
+    "old_after_group2": {
+      "start": 190508,
+      "end": 255251,
+      "gap": 64743
+    }
+  },
+  "findings": [
+    "The originally questioned PC0x8000845c was subsequently accepted at107116, responded at107118, and committed at107120. It is not still waiting at the reported tail.",
+    "PC0x80008440/845c are near the end of t12_group1, exercising VL/vcsr transitions.",
+    "main calls check(1, expected1, 16384) after t12_group1. Disassembly shows two scalar lbu operations and a bounded 16384-byte comparison loop, with success printing only after the loop.",
+    "The approximately63800-cycle silent region appears in both old and current global event traces. This is consistent with the scalar validation interval rather than a persistent vdot deadlock.",
+    "The partial file tail is only the currently visible output boundary. Its precise buffering/flush delay cannot be proven from these logs alone.",
+    "A similar later silent interval exists in the old run after group2. Do not infer a hang from short-term log byte stability alone.",
+    "These are progress diagnostics on a running process. No control coverage, complete trace, DiffTest completion, whole-suite PASS or speedup conclusion is established."
+  ]
+}

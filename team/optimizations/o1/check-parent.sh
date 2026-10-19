@@ -16,6 +16,8 @@ export JAVA_OPTS=${JAVA_OPTS:-"-Xmx6G -Xss16m"}
 jobs=${BUILD_JOBS:-2}
 [[ "$jobs" =~ ^[1-9][0-9]*$ ]] || exit 2
 export VDOT_T12_TRACE=0 VDOT_T13_TRACE=0
+# This runner checks the atomic-frame protocol, including the unfused mode.
+export VDOT_O1_TRACE_PROFILE=frames
 waiver=team/optimizations/o1/parent.vlt
 waiver_line=37
 if [[ "${VDOT_O1_TRACE:-0}" == 1 ]]; then
@@ -38,6 +40,9 @@ root=Path.cwd(); out=Path(sys.argv[1])
 helper=runpy.run_path('team/scripts/prepare-core-baseline.py')
 dependencies=helper['modules'](root)
 helper['verify_dependencies'](root,dependencies)
+sys.path.append(str(root/'team/optimizations/o1'))
+from build_inputs import hardware_files
+(out/'hardware-inputs.json').write_text(json.dumps(hardware_files(root),sort_keys=True,indent=2)+'\n')
 (out/'dependencies.json').write_text(json.dumps(dependencies,sort_keys=True,indent=2)+'\n')
 names=set(helper['root_inputs'](root))
 for directory in ('team/rtl/vdot','team/models/vdot','team/optimizations/o1'):
@@ -87,5 +92,8 @@ import json, runpy, sys
 from pathlib import Path
 helper=runpy.run_path('team/scripts/prepare-core-baseline.py')
 helper['verify_dependencies'](Path.cwd(),json.loads((Path(sys.argv[1])/'dependencies.json').read_text()))
+sys.path.append(str(Path.cwd()/'team/optimizations/o1'))
+from build_inputs import verify_hardware_files
+verify_hardware_files(Path.cwd(),json.loads((Path(sys.argv[1])/'hardware-inputs.json').read_text()))
 PY
 echo 'VFEX4_PARENT_RUNNER_PASS_FULLCORE_PENDING'

@@ -1,0 +1,93 @@
+{
+  "captured_utc": "2026-10-18T06:30:33.508105+00:00",
+  "source_commit": "a572e4d2e572ab4298660013661198e4b233c933",
+  "scope": "source-level review; generated netlist and runtime event cross-check still required",
+  "common_clock_conclusion": "With ResetGen disabled, ExeUnit/ROB GTimer counters use the same core clock and common simulation reset. No division or FU gate applies to these two observer counters.",
+  "schema_parameters": {
+    "rob_size": 48,
+    "ftq_size": 8,
+    "vlen": 128
+  },
+  "evidence": [
+    {
+      "path": "utility/src/main/scala/utility/GTimer.scala",
+      "sha256": "da03b5cc65fc683c473993b5ae0ec436b9acc2c3745b549cea1e2243a6df2dda",
+      "start_line": 21,
+      "end_line": 26,
+      "excerpt": "object GTimer {\n  def apply() = {\n    val c = RegInit(0.U(64.W))\n    c := c + 1.U\n    c\n  }",
+      "interpretation": "Each invocation is a 64-bit RegInit(0) counter incrementing every local clock."
+    },
+    {
+      "path": "src/main/scala/xiangshan/backend/Backend.scala",
+      "sha256": "346c2677150a5a64e8e865b9ec3929dcfbdcfb43697c04b468e1bccc2bd812d7",
+      "start_line": 180,
+      "end_line": 210,
+      "excerpt": "  val ctrlBlock = LazyModule(new CtrlBlock(params))\n  val intScheduler = params.intSchdParams.map(x => LazyModule(new Scheduler(x)))\n  val fpScheduler = params.fpSchdParams.map(x => LazyModule(new Scheduler(x)))\n  val vfScheduler = params.vfSchdParams.map(x => LazyModule(new Scheduler(x)))\n  val memScheduler = params.memSchdParams.map(x => LazyModule(new Scheduler(x)))\n  val dataPath = LazyModule(new DataPath(params))\n  val intExuBlock = params.intSchdParams.map(x => LazyModule(new ExuBlock(x)))\n  val fpExuBlock = params.fpSchdParams.map(x => LazyModule(new ExuBlock(x)))\n  val vfExuBlock = params.vfSchdParams.map(x => LazyModule(new ExuBlock(x)))\n  val wbFuBusyTable = LazyModule(new WbFuBusyTable(params))\n\n  lazy val module = new BackendInlinedImp(this)\n}\n\nclass BackendInlinedImp(override val wrapper: BackendInlined)(implicit p: Parameters) extends LazyModuleImp(wrapper)\n  with HasXSParameter\n  with HasPerfEvents\n  with HasCriticalErrors {\n  implicit private val params: BackendParams = wrapper.params\n\n  val io = IO(new BackendIO()(p, wrapper.params))\n\n  private val ctrlBlock = wrapper.ctrlBlock.module\n  private val intScheduler: SchedulerImpBase = wrapper.intScheduler.get.module\n  private val fpScheduler = wrapper.fpScheduler.get.module\n  private val vfScheduler = wrapper.vfScheduler.get.module\n  private val memScheduler = wrapper.memScheduler.get.module\n  private val dataPath = wrapper.dataPath.module\n  private val intExuBlock = wrapper.intExuBlock.get.module\n  private val fpExuBlock = wrapper.fpExuBlock.get.module\n  private val vfExuBlock = wrapper.vfExuBlock.get.module",
+      "interpretation": "CtrlBlock and vector ExuBlock are child modules of the same BackendInlinedImp."
+    },
+    {
+      "path": "src/main/scala/xiangshan/backend/Backend.scala",
+      "sha256": "346c2677150a5a64e8e865b9ec3929dcfbdcfb43697c04b468e1bccc2bd812d7",
+      "start_line": 882,
+      "end_line": 910,
+      "excerpt": "  // reset tree\n  if (p(DebugOptionsKey).ResetGen) {\n    val rightResetTree = ResetGenNode(Seq(\n      ModuleNode(dataPath),\n      ModuleNode(intExuBlock),\n      ModuleNode(fpExuBlock),\n      ModuleNode(vfExuBlock),\n      ModuleNode(bypassNetwork),\n      ModuleNode(wbDataPath)\n    ))\n    val leftResetTree = ResetGenNode(Seq(\n      ModuleNode(intScheduler),\n      ModuleNode(fpScheduler),\n      ModuleNode(vfScheduler),\n      ModuleNode(memScheduler),\n      ModuleNode(og2ForVector),\n      ModuleNode(wbFuBusyTable),\n      ResetGenNode(Seq(\n        ModuleNode(ctrlBlock),\n        // ResetGenNode(Seq(\n          CellNode(io.frontendReset)\n        // ))\n      ))\n    ))\n    ResetGen(leftResetTree, reset, sim = false, io.sramTest.mbistReset)\n    ResetGen(rightResetTree, reset, sim = false, io.sramTest.mbistReset)\n  } else {\n    io.frontendReset := DontCare\n  }",
+      "interpretation": "Only ResetGen=true introduces separate backend reset trees; O1 trace requires ResetGen=false."
+    },
+    {
+      "path": "src/main/scala/xiangshan/backend/exu/ExuBlock.scala",
+      "sha256": "04398639ab72250fe6f858268ecb667e349423153bb03c60e800ee63f1e7f963",
+      "start_line": 17,
+      "end_line": 39,
+      "excerpt": "class ExuBlock(params: SchdBlockParams)(implicit p: Parameters) extends LazyModule with HasXSParameter {\n  override def shouldBeInlined: Boolean = false\n\n  val exus: Seq[ExeUnit] = params.issueBlockParams.flatMap(_.exuBlockParams.map(x => LazyModule(x.genExuModule)))\n\n  lazy val module = new ExuBlockImp(this)(p, params)\n}\n\nclass ExuBlockImp(\n  override val wrapper: ExuBlock\n)(implicit\n  p: Parameters,\n  params: SchdBlockParams\n) extends LazyModuleImp(wrapper) with HasCriticalErrors {\n  val io = IO(new ExuBlockIO)\n\n  private val exus = wrapper.exus.map(_.module)\n\n  private val ins: collection.IndexedSeq[DecoupledIO[ExuInput]] = io.in.flatten\n  private val outs: collection.IndexedSeq[DecoupledIO[ExuOutput]] = io.out.flatten\n\n  (ins zip exus zip outs).foreach { case ((input, exu), output) =>\n    exu.io.flush <> io.flush",
+      "interpretation": "ExeUnit modules inherit the ExuBlock clock/reset; there is no extra parent clock gate or reset override."
+    },
+    {
+      "path": "src/main/scala/xiangshan/backend/exu/ExeUnit.scala",
+      "sha256": "eb74c75d191cdbdd4e0d89ae75865c4b0227a3641f8f7031cf1866ad46b9a601",
+      "start_line": 74,
+      "end_line": 127,
+      "excerpt": "\n  if (EnableClockGate) {\n    fuCfgs.zip(funcUnits).foreach { case (cfg, fu) =>\n      val clk_en = WireInit(false.B)\n      val fuVld_en = WireInit(false.B)\n      val fuVld_en_reg = RegInit(false.B)\n      val uncer_en_reg = RegInit(false.B)\n\n      def latReal: Int = cfg.latency.latencyVal.getOrElse(0)\n      def extralat: Int = cfg.latency.extraLatencyVal.getOrElse(0)\n\n      val uncerLat = cfg.latency.uncertainEnable.nonEmpty\n      val lat0 = (latReal == 0 && !uncerLat).asBool\n      val latN = (latReal >  0 && !uncerLat).asBool\n\n      val fuVldVec = (fu.io.in.valid && latN) +: Seq.fill(latReal)(RegInit(false.B))\n      val fuRdyVec = Seq.fill(latReal)(Wire(Bool())) :+ fu.io.out.ready\n\n      for (i <- 0 until latReal) {\n        fuRdyVec(i) := !fuVldVec(i + 1) || fuRdyVec(i + 1)\n      }\n\n      for (i <- 1 to latReal) {\n        when(fuRdyVec(i - 1) && fuVldVec(i - 1)) {\n          fuVldVec(i) := fuVldVec(i - 1)\n        }.elsewhen(fuRdyVec(i)) {\n          fuVldVec(i) := false.B\n        }\n      }\n      fuVld_en := fuVldVec.map(v => v).reduce(_ || _)\n      fuVld_en_reg := fuVld_en\n\n      when(uncerLat.asBool && fu.io.in.fire) {\n        uncer_en_reg := true.B\n      }.elsewhen(uncerLat.asBool && fu.io.out.fire) {\n        uncer_en_reg := false.B\n      }\n\n      when(lat0 && fu.io.in.fire) {\n        clk_en := true.B\n      }.elsewhen(latN && fuVld_en || fuVld_en_reg) {\n        clk_en := true.B\n      }.elsewhen(uncerLat.asBool && fu.io.in.fire || uncer_en_reg) {\n        clk_en := true.B\n      }\n\n      if (cfg.ckAlwaysEn) {\n        clk_en := true.B\n      }\n\n      if (latReal != 0 || uncerLat) {\n        fu.clock := ClockGate(ClockGate.genTeSink.cgen, clk_en, clock)\n      }\n      XSPerfAccumulate(s\"clock_gate_en_${fu.cfg.name}\", clk_en)",
+      "interpretation": "Clock gates change child FU clocks only, not the ExeUnit clock used for O1 timestamps."
+    },
+    {
+      "path": "src/main/scala/xiangshan/backend/exu/ExeUnit.scala",
+      "sha256": "eb74c75d191cdbdd4e0d89ae75865c4b0227a3641f8f7031cf1866ad46b9a601",
+      "start_line": 281,
+      "end_line": 310,
+      "excerpt": "  if (xiangshan.backend.fu.wrapper.VDotHandoff.traceEnabled &&\n      fuCfgs.contains(xiangshan.backend.fu.FuConfig.VDotCfg)) {\n    require(exuParams.name == \"VFEX4\" && !exuParams.latencyCertain,\n      \"O1 trace requires the current uncertain-latency VFEX4\")\n    require(!p(xiangshan.DebugOptionsKey).ResetGen,\n      \"O1 trace requires the common simulation reset\")\n    require(fuCfgs.count(_.fuType == FuType.vdot) == 1)\n    val observedVDot = funcUnits(fuCfgs.indexWhere(_.fuType == FuType.vdot))\n      .asInstanceOf[xiangshan.backend.fu.wrapper.VDot]\n    // Every timestamp and sequence register is on the ungated parent clock.\n    // Child I/O is read directly; private expressions are tapped without feedback.\n    val o1Cycle = GTimer()\n    val o1NextSeq = RegInit(0.U(64.W))\n    val o1ActiveVDotSeq = RegInit(0.U(64.W))\n    val o1SchemaPrinted = RegInit(false.B)\n    val o1Killed = tapAndRead(observedVDot.o1ObservedKilled)\n    val o1State = tapAndRead(observedVDot.o1ObservedState)\n    val o1IllegalInput = tapAndRead(observedVDot.o1ObservedIllegalInput)\n    val o1Vl = tapAndRead(observedVDot.o1ObservedVl)\n    val o1In = observedVDot.io.in.bits.ctrl\n    // DataHoldBypass outCtrl exposes the NEW request during a handoff. These\n    // actual registered output fields continue to identify the OLD response.\n    val o1Out = observedVDot.io.out.bits.ctrl\n    val o1Data = observedVDot.io.out.bits.res.data\n    val o1Exception = o1Out.exceptionVec.get.asUInt\n    val o1Illegal = o1Out.exceptionVec.get(xiangshan.ExceptionNO.illegalInstr)\n    when(io.in.fire) { o1NextSeq := o1NextSeq + 1.U }\n    when(observedVDot.io.in.fire) { o1ActiveVDotSeq := o1NextSeq }\n    when(!reset.asBool) {\n      when(!o1SchemaPrinted) {",
+      "interpretation": "O1 global GTimer and sequence registers are instantiated in ExeUnit, common reset required."
+    },
+    {
+      "path": "src/main/scala/xiangshan/backend/rob/Rob.scala",
+      "sha256": "afb1a728d9cd4a668eee03d13468c3307ed00e184bf937d3d3dcbff4ca4eda6c",
+      "start_line": 1527,
+      "end_line": 1546,
+      "excerpt": "  if (xiangshan.backend.fu.wrapper.VDotHandoff.traceEnabled) {\n    require(!p(xiangshan.DebugOptionsKey).ResetGen,\n      \"O1 trace requires the common simulation reset\")\n    val o1Cycle = GTimer()\n    for (i <- 0 until RenameWidth) {\n      val u = io.enq.req(i).bits\n      when(!reset.asBool && canEnqueue(i) && u.fuType === FuType.vdot.U) {\n        printf(p\"O1_ENQUEUE cycle=${o1Cycle} rob=${allocatePtrVec(i).flag}:${allocatePtrVec(i).value} pc=0x${Hexadecimal(u.pc)} ftq=${u.ftqPtr.flag}:${u.ftqPtr.value} word=0x${Hexadecimal(u.instr)}\\n\")\n      }\n    }\n    for (i <- 0 until CommitWidth) {\n      val u = commitDebugUop(i)\n      when(!reset.asBool && io.commits.isCommit && io.commits.commitValid(i) && u.fuType === FuType.vdot.U) {\n        printf(p\"O1_COMMIT cycle=${o1Cycle} rob=${deqPtrVec(i).flag}:${deqPtrVec(i).value} pc=0x${Hexadecimal(u.pc)} ftq=${u.ftqPtr.flag}:${u.ftqPtr.value}\\n\")\n      }\n    }\n    when(!reset.asBool && io.redirect.valid) {\n      printf(p\"O1_REDIRECT cycle=${o1Cycle} rob=${io.redirect.bits.robIdx.flag}:${io.redirect.bits.robIdx.value} ftq=${io.redirect.bits.ftqIdx.flag}:${io.redirect.bits.ftqIdx.value} self=${io.redirect.bits.flushItself()}\\n\")\n    }\n  }",
+      "interpretation": "O1 ROB GTimer is instantiated directly in ROB with common reset required."
+    },
+    {
+      "path": "src/main/scala/top/Configs.scala",
+      "sha256": "febd1212adf7b3c7069f378c0f54373e40ade36ee902e0d1cf63503c300d6fd2",
+      "start_line": 67,
+      "end_line": 93,
+      "excerpt": "class MinimalConfig(n: Int = 1) extends Config(\n  new BaseConfig(n).alter((site, here, up) => {\n    case XSTileKey => up(XSTileKey).map(\n      p => p.copy(\n        DecodeWidth = 6,\n        RenameWidth = 6,\n        RobCommitWidth = 8,\n        // FetchWidth = 4, // NOTE: make sure that FTQ SRAM width is not a prime number bigger than 256.\n        VirtualLoadQueueSize = 24,\n        LoadQueueRARSize = 24,\n        LoadQueueRAWSize = 12,\n        LoadQueueReplaySize = 24,\n        LoadUncacheBufferSize = 8,\n        LoadQueueNWriteBanks = 4, // NOTE: make sure that LoadQueue{RAR, RAW, Replay}Size is divided by LoadQueueNWriteBanks.\n        RollbackGroupSize = 8,\n        StoreQueueSize = 20,\n        StoreQueueNWriteBanks = 4, // NOTE: make sure that StoreQueueSize is divided by StoreQueueNWriteBanks\n        StoreQueueForwardWithMask = true,\n        // ============ VLSU ============\n        VlMergeBufferSize = 16,\n        VsMergeBufferSize = 8,\n        UopWritebackWidth = 2,\n        // ==============================\n        RobSize = 48,\n        RabSize = 96,\n        FtqSize = 8,\n        IBufSize = 24,",
+      "interpretation": "Pinned MinimalConfig gives RobSize=48 and FtqSize=8."
+    },
+    {
+      "path": "src/main/scala/xiangshan/backend/CtrlBlock.scala",
+      "sha256": "80c873f65548222885fee00e1e4637a604f1c934196af2683cbab2284a7faa6e",
+      "start_line": 120,
+      "end_line": 122,
+      "excerpt": "  // Redirect will be RegNext at ExuBlocks and IssueBlocks\n  val s2_s4_redirect = RegNextWithEnable(s1_s3_redirect)\n  val s3_s5_redirect = RegNextWithEnable(s2_s4_redirect)",
+      "interpretation": "s2_s4_redirect registers s1_s3 once."
+    },
+    {
+      "path": "src/main/scala/xiangshan/backend/CtrlBlock.scala",
+      "sha256": "80c873f65548222885fee00e1e4637a604f1c934196af2683cbab2284a7faa6e",
+      "start_line": 740,
+      "end_line": 745,
+      "excerpt": "  io.toDataPath.flush := s2_s4_redirect\n  io.toExuBlock.flush := s2_s4_redirect\n\n\n  rob.io.hartId := io.fromTop.hartId\n  rob.io.redirect := s1_s3_redirect",
+      "interpretation": "EXU gets s2_s4; ROB gets s1_s3, so parent flush is one cycle later."
+    }
+  ]
+}

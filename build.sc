@@ -263,6 +263,13 @@ object vdotFu extends HasChisel {
   override def forkArgs = Seq("-Xmx4G", "-Xss8m")
 }
 
+// Latest upstream parent harness; retain the independent frame harness below.
+object vdotParent extends HasChisel {
+  override def sources = T.sources { Seq(PathRef(pwd / "team/optimizations/o1/parent/GenerateVDotParent.scala")) }
+  override def moduleDeps = Seq(xiangshan)
+  override def forkArgs = Seq("-Xmx4G", "-Xss8m")
+}
+
 // Real VFEX4 parent, production dividers and clock gates; only flat IO is adapted.
 object vdotExu extends HasChisel {
   override def sources = T.sources { Seq(PathRef(pwd / "team/rtl/vdot/GenerateVDotExu.scala")) }

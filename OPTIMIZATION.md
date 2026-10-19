@@ -1,12 +1,43 @@
 # 后续优化开发入口
 
-2026-10-18 最新进度：James_Hotten已完成FTQ/CSR窗口观测，当前O1新EMU完成117唯一矩阵/124执行、真实DiffTest负控及恢复、控制8项覆盖、25计数窗口；见[本轮记录](team/docs/o1-complete-20261018.md)。zjhwork的严格负控和[三模式FU来源证据](team/optimizations/o1/evidence/20261018-fu-validation/README.md)已合并推送02e46c5c9，后续新观测与回归成果保留本地。不同来源运行分别保存，不能合并计数。下一步为当前O1完整软件计划与同源码baseline/T14/O1性能A/B；O1默认关闭，main未更新。下文pilot记录保留当时状态。
+> 当前整合（2026-10-19）：以最新 zjhwork `cd866d52d` 为基准，并保留 James_Hotten `724fbb12f` 的时钟取消与验收修复。当前状态见[整合与审查记录](team/docs/o1-latest-integration-20261019.md)。以下全核及性能数字保留原受测版本绑定，不代表合并后源码的新运行；O1默认关闭。
 
-## 前轮进展：James_Hotten 已并入候选并完成三模式 FU 实测
+## 当前发布：O1 成果交付 zjhwork
 
-2026-10-18：O0 成果先提交于 b12a97b86，zjhwork2 三项更新并入于 51d7b1928；随后修复 O1 编译错误、O0 重定向计数、归档生成器信任边界与 RVV 工作量验收漏洞。三模式 FU 真实仿真通过，默认未设开关与显式关闭 RTL 相同；O1 的2拍接受间隔仅在 FU 顶层实测。主机432项检查、O0 54次/648窗口、统一基准64镜像/860窗口及 T13 126次/1404性能窗口离线复验通过。真实父级/全核与同源性能A/B仍未完成，不启用默认O1，不同步main。详见[当前整合审查](team/docs/james-o1-integration-20261018.md)。以下为来源分支历史记录。
+已获用户授权，交付范围包括真实父级联调、全核回归与同镜像公平性能结果，见 [发布说明](team/docs/o1-publication-20261018.md)。下方未上传状态按历史时点阅读；实际发布以远端回读为准。O1默认关闭，后续优化及验证待新任务推进。
 
-## 历史进展：O1 同拍交接候选已实现，RTL 验证待执行
+## 当前任务：O1公平周期对比完成
+
+独立batch128平均周期 453.25→362.50，降低20.02%；O1相对实测RVV为1.870×。36次主运行及完整离线复算通过，其他场景数据见 [工程入口](team/optimizations/o1/performance/README.md)。
+
+O1默认关闭，成果本地保存，未推送。O2按收益/成本另行决定，O3应用/O4时序与O5/T17复现仍待推进；正式T16报告后置，尚无PPA或人工ACK结论。
+
+## 前一轮：O1 全核功能与控制回归通过，下一步为公平性能 A/B
+
+新全局周期及身份观察器已在固定硬件 `18c0ce08` 的 MinimalConfig 单核 EMU 上完成十二项真实运行，全部符合预期；原检查器 `518c0567` 保持冻结，严格门禁集成提交 `d1100020` 对应的离线全套重审也已通过，原日志未改、未新增 EMU 运行。正常程序共提交 3,012 条 vdot，功能矩阵覆盖 117 个唯一用例（80 合法、37 异常），八分片执行 124 次；bit100 差分负控及同镜像正常恢复通过。控制程序自身满足八项覆盖，303 次同拍交接、62 拍 vdot 写回反压、3 次在途取消；密集程序 12 个窗口通过，另有 725 次交接及 2 次取消。见 [工程入口](team/optimizations/o1/fullcore/README.md)、[协议](team/optimizations/o1/fullcore/SCHEMA.md) 和 [完整证据](team/optimizations/o1/evidence/20261018-fullcore-validation/README.md)。
+
+本轮完成固定配置下的功能、异常和控制验证；全核共享 FU 仅覆盖 vdot/VIDiv，未覆盖 VFDiv，vdot 取消仅观察到 reduce 阶段。下一步按计划开展 T14/O1 同镜像公平周期性能 A/B，现有密集窗口数据不构成新的加速比或 PPA 结论。O1 默认关闭，成果本地保存，不推送 GitHub；正式 T16 报告继续后置，T17 及团队人工 ACK 未完成。下文父级/FU 等状态按各自历史时点阅读。
+
+## 前一轮：O1 真实 VFEX4 父级联调通过，本地保存
+
+2026-10-18，固定源码 `99d5f6c` 的真实 ExeUnit＋VDot/VIDiv/VFDivSqrt＋三个 ClockGate 两模式通过。10022 组 vdot、真实 DIV、全部九种 FU 切换、432 组 redirect、27 组 reset、20000 拍随机控制及七项负控均有原始证据。O1 同拍交接 10343 次，连续 vdot 接受间隔从 T14 的 3 拍变为 2 拍；这是父级指标。
+
+[父级工程记录](team/optimizations/o1/parent/README.md) 与 [证据](team/optimizations/o1/evidence/20261018-parent-validation/README.md) 记录两次前期失败、实际源码/工具/依赖和边界。T14 对照在 reset/redirect 主动抑制 valid，O1 不抑制；两模式总周期不能作为公平加速比。现有 DIV 的取消当拍旧响应及取消后门控行为留待全核验证，不隐去或改变其黄金预期。
+
+本轮未改生产 RTL，成果本地提交，尚未推送 GitHub。`parent_validation_pass=true`，O1 全核回归、观察器适配和性能 A/B 尚未完成。下一步补 O1 观察器并跑全核功能/异常/控制压力，通过后再测同镜像性能。默认 O1 关闭，正式 T16 报告继续后置。
+
+
+## 前一轮：三模式 FU 本地验证通过（历史）
+
+2026-10-18，按用户要求复用 `zjhwork2@75dce60` 的 O0/O1，在本地修复并验证后准备普通快进上传 `cc77-builder/riscv:zjhwork`。实际构建源码为 `db0408aa42afc13e3ff93e865f26a2d5bfb02c93`；下方 zjhwork2 目标和未验证状态均为历史记录。
+
+本轮将环境激活移到工具检查之前，并用严格负控校验拒绝 `fault escaped`、无关错误和重复标记；首次真实编译又修复 `ExeUnit.scala` 两处 `FuType.vdot` 硬件比较，右侧改为 `FuType.vdot.U`。`fu-01` 的编译失败保留，修复后的 `fu-02` 三模式 Chisel/Verilator 验证通过。原基础版、T14 和 O1 的真实 FU 响应延迟/最小接受间隔分别为 **3/4、2/3、2/2 拍**。
+
+O0 113 项、O1 26 项主机检查通过。O1 接受 13626、响应 13212、取消 388、复位丢弃 26；同拍交接 12237 次、反压 26659 拍。原 10022 算术向量完整结果及控制用例通过，候选与旧模式控制矩阵并非完全相同。四项 C++ 观测值破坏均被严格检出。见 [O1 工程入口](team/optimizations/o1/README.md) 和 [本轮证据](team/optimizations/o1/evidence/20261018-fu-validation/README.md)。
+
+当前 `parent_exu_elaborated=false`、`fullcore_difftest=false`、`performance_measured=false`，O1 默认关闭。下一步是真实 VFEX4 父级（含 DIV）联调，再补观察器、全核回归及公平性能 A/B。本轮没有新的全核加速比；正式 T16 报告仍待工程完成后集中编写。
+
+## 历史：zjhwork2 的 O1 候选实现，尚未运行 RTL 验证
 
 基点 `9e7cce9c9dc090e5280f1a7f8791551612777cc6`；唯一提交目标仍为 `cc77-builder/riscv:zjhwork2`。本批已修改生产 `VDot.scala` 和 `ExeUnit.scala`，新增 elaboration-only 开关 `VDOT_O1_HANDOFF=1`（必须同时设置 `VDOT_T14_FUSED_INPUT=1`）。默认开关为 0，原基础版/T14 分支保留。
 

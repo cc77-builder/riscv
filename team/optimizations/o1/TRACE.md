@@ -4,7 +4,7 @@ The schema-1 records and this acceptance boundary are preserved. The current
 observer additionally emits the versioned [O2 companion](TRACE-EXTENDED.md)
 for FTQ and counter windows; only its separate strict entry checks that coverage.
 
-`VDOT_O1_TRACE=1` selects a simulation observer at elaboration. The default is
+`VDOT_O1_TRACE=1 VDOT_O1_TRACE_PROFILE=frames` selects a simulation observer at elaboration. The default is
 off. It can observe baseline (mode 0), T14 (1), or T14+O1 (2). It does not enable
 O1 itself. Invalid flag values and mixing with the frozen T12/T13 observers are
 rejected. O1 still requires T14, and its legacy-observer guards remain intact.
@@ -82,7 +82,7 @@ entries changes the default O1 mode or the historical acceptance profiles.
 From a prepared Linux/WSL repository root with the existing Mill/Verilator tools:
 
 ```bash
-VDOT_O1_TRACE=1 bash team/optimizations/o1/check-parent.sh /absolute/fresh/output
+VDOT_O1_TRACE=1 VDOT_O1_TRACE_PROFILE=frames bash team/optimizations/o1/check-parent.sh /absolute/fresh/output
 python3 -OO -B -m unittest discover -s team/optimizations/o1 -p 'test_*.py' -v
 python3 -OO -B team/optimizations/o1/audit_trace_negatives.py \
   /absolute/fresh/output/mode-2/results.log --output /absolute/negatives.json

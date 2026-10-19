@@ -1,4 +1,18 @@
-# James_Hotten O0/O1 integration scope
+# James_Hotten latest O1 integration scope
+
+Current task: integrate latest zjhwork cd866d52d into James_Hotten 724fbb12f.
+Use the latest event observer by default; VDOT_O1_TRACE_PROFILE=frames explicitly
+selects the existing atomic-frame/FTQ/CSR observer. Never emit both protocols.
+Retain clock-cancellation and all four acceptance/provenance gate repairs.
+Imported historical results retain their source bindings; merged RTL needs fresh
+validation. Main is excluded and O1 stays off. Current integration record:
+team/docs/o1-latest-integration-20261019.md. Statements below describe prior work.
+
+Integration validation: 606 host tests, 35 compiled option cases, three frame
+parent modes/four faults, two latest parent modes/seven faults and event-enabled
+parent execution pass. Source and archive identity receipts are preserved in
+team/evidence/o1-latest-integration-20261019. No new full-core run or merged-source
+performance claim. This merge remains local; main and remote refs are unchanged.
 
 The current user authorizes committing and pushing the completed observation
 work to James_Hotten, then synchronizing other branches and reviewing all work

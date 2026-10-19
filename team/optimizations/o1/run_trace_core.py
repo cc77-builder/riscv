@@ -71,7 +71,7 @@ def main(args):
             (build/'split-build.status').read_text().strip() == 'exit_code=0', "source-bound build incomplete")
     require('CORE_BASELINE_BUILD_PASS' in (build/'build.log').read_text(), "missing build completion")
     env = (build/'environment.txt').read_text().splitlines()
-    for item in ('VDOT_O1_TRACE=1', 'VDOT_O1_HANDOFF=1', 'VDOT_T14_FUSED_INPUT=1', 'VDOT_T12_TRACE=0', 'VDOT_T13_TRACE=0'):
+    for item in ('VDOT_O1_TRACE=1', 'VDOT_O1_TRACE_PROFILE=frames', 'VDOT_O1_HANDOFF=1', 'VDOT_T14_FUSED_INPUT=1', 'VDOT_T12_TRACE=0', 'VDOT_T13_TRACE=0'):
         require(item in env, "wrong elaboration environment: " + item)
     emu = args.core/'build/emu'
     expected_emu = (build/'emu.sha256').read_text().split()[0]
