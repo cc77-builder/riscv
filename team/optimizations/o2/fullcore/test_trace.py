@@ -184,7 +184,49 @@ def drop(text,prefix):
     raise AssertionError(prefix)
 
 
+REAL_RESET_PREFIX = 'O2_SCHEMA version=1 clock=global latency=2 slots=2 rob_size=48 ftq_size= 8 vlen=128 vpu_width=195 perf_width= 577\nO2_STATE cycle=                   0 pvalid=0 pseq=                   0 prob=0:16 ppdest=142 rvalid=0 rseq=                   0 rrob=1:63 rpdest=236 occupancy=0 invalid=0 inready=0 vready=1 outvalid=0 outready=1 move=0 killp=0 killr=0 divactive=0 divseq=                   0 divoccupied=0 busy=0\n'
+
+
 class Tests(unittest.TestCase):
+
+    def test_real_hello_reset_prefix_ignores_invalid_slot_rob_indices(self):
+        # Exact first two observer records from core-01/hello-vadd/stderr.log.
+        # Only this prefix is a host fixture; the interrupted run is not a PASS.
+        text=REAL_RESET_PREFIX
+        events,_=a.extract_events_and_uart(text)
+        state=events[1][3]
+        self.assertEqual((state['pvalid'],state['rvalid']),(0,0))
+        self.assertEqual((state['prob'],state['rrob']),('0:16','1:63'))
+        self.assertEqual(a.analyze(text)['counts']['ACCEPT'],0)
+
+    def test_inactive_slots_allow_only_six_bit_raw_index(self):
+        for prefix in ('p','r'):
+            key=prefix+'rob'
+            old='0:16' if prefix=='p' else '1:63'
+            for index in (0,47,48,63):
+                text=REAL_RESET_PREFIX.replace(key+'='+old,key+'=1:'+str(index))
+                events,_=a.extract_events_and_uart(text)
+                self.assertEqual(events[1][3][key],'1:'+str(index))
+            for index in (64,127,999):
+                with self.subTest(prefix=prefix,index=index),self.assertRaisesRegex(ValueError,'pointer outside'):
+                    a.extract_events_and_uart(REAL_RESET_PREFIX.replace(key+'='+old,key+'=1:'+str(index)))
+
+    def test_active_slot_and_transaction_pointers_keep_48_entry_domain(self):
+        for prefix in ('p','r'):
+            key=prefix+'rob'
+            old='0:16' if prefix=='p' else '1:63'
+            for index in (48,63):
+                text=REAL_RESET_PREFIX.replace(key+'='+old,key+'=1:'+str(index))
+                text=text.replace(prefix+'valid=0',prefix+'valid=1')
+                with self.subTest(prefix=prefix,index=index),self.assertRaisesRegex(ValueError,'active slot pointer'):
+                    a.extract_events_and_uart(text)
+        text=basic().text()
+        for event in ('ENQUEUE','VFEX4_ACCEPT','ACCEPT','MOVE','RESPONSE','COMMIT'):
+            for index in (48,63):
+                bad=change(text,'O2_'+event+' ','rob=0:5','rob=0:'+str(index))
+                with self.subTest(event=event,index=index),self.assertRaisesRegex(ValueError,'pointer outside'):
+                    a.extract_events_and_uart(bad)
+
     def test_single_full128_oracle(self):
         r=a.analyze(basic().text())
         self.assertEqual(r['status'],'O2_TRACE_PASS')
@@ -310,7 +352,7 @@ class Tests(unittest.TestCase):
     def test_parse_rejects_wrong_schema_unknown_truncated_and_legacy(self):
         text=basic().text()
         mutants=[text.replace('slots=2','slots=1'),text.replace('vpu_width=195','vpu_width=0'),
-                 text.replace('prob=0:0','prob=0:48',1),text.replace('pvalid=0','pvalid=2',1),
+                 text.replace('prob=0:0','prob=0:64',1),text.replace('pvalid=0','pvalid=2',1),
                  text+'O2_UNKNOWN cycle=99\n',text+'O2_STATE cycle=99',
                  text+'O1_RESPONSE cycle=99\n',text.replace('O2_MOVE','O2_MOVE_X'),
                  text+text.splitlines()[0]+'\n',text.replace('clock=global','clock=gated')]

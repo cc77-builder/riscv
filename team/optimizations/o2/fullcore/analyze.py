@@ -78,7 +78,13 @@ def parse_fields(kind, body, fields, schema=None, t13=False):
         value = re.sub(r'\s', '', raw)
         if key in POINTERS:
             _, index = map(int, value.split(':'))
-            require(index < (8 if key == 'ftq' else 48), 'pointer outside pinned configuration')
+            # Empty P/R registers are not reset data: Verilator may expose
+            # any six-bit raw index there, including 48..63. Their valid bit,
+            # checked after the entire row is parsed, determines whether the
+            # stricter 48-entry ROB domain applies.
+            raw_slot = kind == 'STATE' and key in ('prob', 'rrob')
+            limit = 64 if raw_slot else 8 if key == 'ftq' else 48
+            require(index < limit, 'pointer outside pinned configuration')
         elif key not in ('clock',) and not (key == 'slot' and not t13):
             value = int(value, 16 if key in HEXES else 10)
             width = (schema[key + '_width'] if key in ('vpu', 'perf') and schema else
@@ -90,6 +96,11 @@ def parse_fields(kind, body, fields, schema=None, t13=False):
             if key == 'occupancy':
                 require(value <= 2, 'invalid occupancy')
         out[key] = value
+    if kind == 'STATE':
+        for prefix in ('p', 'r'):
+            if out[prefix + 'valid']:
+                index = int(out[prefix + 'rob'].split(':')[1])
+                require(index < 48, 'active slot pointer outside pinned ROB configuration')
     return out
 
 
