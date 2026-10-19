@@ -43,4 +43,41 @@ class PortableBindings(unittest.TestCase):
         for bad in (records[:-1],records[:-1]+[records[0]]):
             with self.assertRaises(ValueError):portable.validate_inventory(bad,modes,names)
 
+class CorpusSupport(unittest.TestCase):
+    def fixture(self,root):
+        import json,hashlib
+        archive=root/"archive";archive.mkdir()
+        files={}
+        for i,rel in enumerate(sorted(portable.CORPUS_FILES)):
+            raw=(f'{{"id":{i}}}\n').encode()
+            p=archive/"support"/rel;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(raw)
+            files[rel]=dict(bytes=len(raw),sha256=portable.digest(raw),
+                           git_blob=hashlib.sha1(("blob "+str(len(raw))+"\0").encode()+raw).hexdigest())
+        body=(json.dumps(dict(version=1,source_revision="a"*40,files=files))+"\n").encode()
+        (archive/"support-manifest.json").write_bytes(body)
+        (archive/"support-manifest.sha256").write_text(portable.digest(body)+"  support-manifest.json\n")
+        return archive
+
+    def test_restores_exact_functional_corpus(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);archive=self.fixture(root);tools=root/"tools"
+            out=portable.load_corpus_support(archive,tools,"a"*40)
+            self.assertEqual(out["files"],2)
+            for rel in portable.CORPUS_FILES:
+                self.assertEqual((tools/rel).read_bytes(),(archive/"support"/rel).read_bytes())
+
+    def test_wrong_revision_or_changed_data_rejected(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);archive=self.fixture(root)
+            with self.assertRaisesRegex(ValueError,"revision"):
+                portable.load_corpus_support(archive,root/"tools","b"*40)
+            p=archive/"support"/sorted(portable.CORPUS_FILES)[0];p.write_bytes(b"changed")
+            with self.assertRaisesRegex(ValueError,"raw-byte"):
+                portable.load_corpus_support(archive,root/"tools","a"*40)
+
+    def test_missing_bundle_cannot_fall_back_to_local_models(self):
+        with tempfile.TemporaryDirectory() as td:
+            with self.assertRaisesRegex(ValueError,"missing frozen"):
+                portable.load_corpus_support(Path(td),Path(td)/"tools","a"*40)
+
 if __name__=="__main__":unittest.main()

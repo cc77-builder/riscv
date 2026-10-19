@@ -162,6 +162,36 @@ def validate_runtime_binding(record,runtime,pins,artifacts,inputs):
             "runtime artifact identities differ")
     return ref
 
+
+CORPUS_FILES={"team/models/vdot/data/directed.jsonl","team/models/vdot/data/random.jsonl"}
+
+def load_corpus_support(archive_path,tools,revision):
+    """Restore only the two Git-bound data inputs used by frozen regeneration."""
+    root=Path(archive_path)
+    manifest=root/"support-manifest.json";checksum=root/"support-manifest.sha256"
+    require(manifest.is_file() and checksum.is_file(),"missing frozen functional corpus support")
+    body=manifest.read_bytes()
+    require(checksum.read_text(encoding="ascii")==digest(body)+"  support-manifest.json\n","corpus manifest hash mismatch")
+    data=json.loads(body.decode("utf-8"))
+    require(data.get("version")==1 and data.get("source_revision")==revision and
+            set(data.get("files",{}))==CORPUS_FILES,"corpus revision or exact inventory mismatch")
+    actual=set()
+    for p in (root/"support").rglob("*"):
+        require(not p.is_symlink(),"corpus support symlink")
+        if p.is_file():actual.add(p.relative_to(root/"support").as_posix())
+    require(actual==CORPUS_FILES,"extra/missing corpus support file")
+    for rel,item in data["files"].items():
+        safe_relative(rel)
+        p=root/"support"/Path(*PurePosixPath(rel).parts)
+        raw=p.read_bytes()
+        require(len(raw)==item["bytes"] and digest(raw)==item["sha256"],"corpus raw-byte mismatch")
+        oid=hashlib.sha1(("blob "+str(len(raw))+"\0").encode()+raw).hexdigest()
+        require(oid==item["git_blob"],"corpus Git blob mismatch")
+        target=tools/Path(*PurePosixPath(rel).parts)
+        target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(raw)
+    return dict(files=2,bytes=sum(x["bytes"] for x in data["files"].values()),
+                source_revision=revision,manifest_sha256=digest(body))
+
 def audit(path,campaign):
     archive=Archive(path)
     safe_relative(campaign);require(len(PurePosixPath(campaign).parts)==1,"campaign must be one directory")
@@ -176,6 +206,8 @@ def audit(path,campaign):
         run=stage/"runs"/campaign
         artifacts=json.loads((run/"artifact-pins.json").read_text(encoding="utf-8"))
         tools=run/"checker-snapshots"
+        original_state=json.loads((run/"state.json").read_text(encoding="utf-8"))
+        corpus=load_corpus_support(path,tools,original_state["source_commit"])
         perf=tools/"team/optimizations/o2/performance"
         sys.path.insert(0,str(perf))
         # compare imports its same-directory helper; bind that helper first.
@@ -236,7 +268,7 @@ def audit(path,campaign):
         require(count==478 and all_samples==result["samples"],"global sample inventory differs")
         stats=compare.summarize(all_samples)
         require(stats==result["rows"],"derived statistics differ")
-        return dict(status="ARCHIVE_O1_O2_WINDOWS_RECHECK_PASS",archive=archive.bytes_result,
+        return dict(status="ARCHIVE_O1_O2_WINDOWS_RECHECK_PASS",archive=archive.bytes_result,corpus_support=corpus,
                     jobs=36,windows=478,measured_windows=192,replay_jobs=4,rows=stats,new_emu_run=False,
                     linux_git_toolchain_dependency_provenance_rechecked=False,
                     scope="all sealed bytes, original raw/exit identities, exact architectural and calibrated counter windows, both observer protocols, replay determinism and paired statistics; no new EMU/NEMU or Linux provenance run")
