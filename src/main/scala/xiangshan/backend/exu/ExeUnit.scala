@@ -63,6 +63,16 @@ class ExeUnitImp(
   // Keep all other EXUs and both old vdot modes on the original Scala branch.
   private val vdotHandoff = fuCfgs.exists(_.fuType == FuType.vdot) &&
     xiangshan.backend.fu.wrapper.VDotHandoff.enabled
+  private val vdotElastic = fuCfgs.exists(_.fuType == FuType.vdot) &&
+    xiangshan.backend.fu.wrapper.VDotO2.enabled
+  if (vdotElastic) {
+    require(exuParams.name == "VFEX4" && !exuParams.latencyCertain,
+      "O2 elastic dispatch is restricted to the current uncertain-latency VFEX4")
+    require(fuCfgs.size == 3 && fuCfgs.map(_.fuType).toSet == Set(FuType.vdot, FuType.vidiv, FuType.vfdiv),
+      "O2 requires exactly VDot, VIDiv and VFDivSqrt")
+    require(!xiangshan.backend.fu.wrapper.VDotHandoff.traceEnabled,
+      "O2 requires its own observer; the single-outstanding O1 observer is unsupported")
+  }
 
   val io = IO(new ExeUnitIO(exuParams))
 
@@ -71,6 +81,14 @@ class ExeUnitImp(
     val module = cfg.fuGen(p, cfg)
     module
   })
+
+  private val elasticVDot = if (vdotElastic) {
+    Some(funcUnits(fuCfgs.indexWhere(_.fuType == FuType.vdot))
+      .asInstanceOf[xiangshan.backend.fu.wrapper.VDotElastic])
+  } else None
+  private val elasticVDotOccupied = elasticVDot.map { fu =>
+    fu.pipelineStatus.pValid || fu.pipelineStatus.rValid
+  }
 
   if (EnableClockGate) {
     fuCfgs.zip(funcUnits).foreach { case (cfg, fu) =>
@@ -117,6 +135,13 @@ class ExeUnitImp(
         clk_en := true.B
       }
 
+      if (vdotElastic && cfg.fuType == FuType.vdot) {
+        // These are actual, unmasked slot registers. Keep the clearing edge
+        // even when this cycle's redirect kills every slot. Reset also opens
+        // an empty, previously gated FU without relying on clock-test enable.
+        clk_en := elasticVDotOccupied.get || fu.io.in.fire || reset.asBool
+      }
+
       if (cfg.ckAlwaysEn) {
         clk_en := true.B
       }
@@ -128,8 +153,35 @@ class ExeUnitImp(
     }
   }
 
-  val busy = RegInit(false.B)
-  if (exuParams.latencyCertain){
+  // Only DIV uses a single transaction/ROB register in O2. A vdot response
+  // or redirect cannot release another vdot still held by the other slot.
+  private val elasticDivOccupied = if (vdotElastic) {
+    val divUnits = funcUnits.filter(_.cfg.fuType != FuType.vdot)
+    val divBusy = RegInit(false.B)
+    val divAccept = io.in.fire && io.in.bits.fuType =/= FuType.vdot.U
+    val divRobIdx = RegEnable(io.in.bits.robIdx, divAccept)
+    val divOutValid = divUnits.map(_.io.out.valid).reduce(_ || _)
+    val divOutFire = divUnits.map(_.io.out.fire).reduce(_ || _)
+    val divReady = divUnits.map(_.io.in.ready).reduce(_ && _)
+    when(divBusy && divRobIdx.needFlush(io.flush)) {
+      divBusy := false.B
+    }.elsewhen(divOutFire) {
+      divBusy := false.B
+    }.elsewhen(divAccept) {
+      divBusy := true.B
+    }
+    // Existing DIV cancellation need not withdraw out.valid combinationally.
+    // Wait for the physical output to disappear and the actual DIVs to return
+    // ready; neither cancellation nor completion permits same-cycle switching.
+    Some(divBusy || divOutValid || !divReady)
+  } else None
+
+  val busy = if (vdotElastic) {
+    WireDefault(elasticVDotOccupied.get || elasticDivOccupied.get)
+  } else RegInit(false.B)
+  if (vdotElastic) {
+    // busy is derived from the real two-slot state plus independent DIV state.
+  } else if (exuParams.latencyCertain){
     busy := false.B
   }
   else {
@@ -235,35 +287,73 @@ class ExeUnitImp(
     input.params.fuConfigs.map(_.fuSel(input))
   }
 
-  val in1ToN = Module(new Dispatcher(new ExuInput(exuParams), funcUnits.length, acceptCond))
-
-  // ExeUnit.in <---> Dispatcher.in
-  if (vdotHandoff) {
-    require(exuParams.name == "VFEX4" && !exuParams.latencyCertain,
-      "O1 handoff is restricted to the current uncertain-latency VFEX4")
-    require(fuCfgs.count(_.fuType == FuType.vdot) == 1)
-    val vdotIndex = fuCfgs.indexWhere(_.fuType == FuType.vdot)
-    val vdotFu = funcUnits(vdotIndex)
-    val activeIsVDot = RegInit(false.B)
-    when(io.in.fire) { activeIsVDot := io.in.bits.fuType === FuType.vdot.U }
+  val dispatchedInputs = if (vdotElastic) {
+    // Local selected-ready dispatch: the generic Dispatcher ANDs every ready,
+    // while each valid is independent of that AND. Reusing it here could let
+    // a child accept without the parent accepting when another FU is busy.
+    val sources = Wire(Vec(funcUnits.length, DecoupledIO(new ExuInput(exuParams))))
+    val selected = VecInit(acceptCond(io.in.bits))
     val newIsVDot = io.in.bits.fuType === FuType.vdot.U
-    // The shared output remains one-hot; neither div->vdot nor vdot->div overlaps.
-    val handoff = busy && activeIsVDot && newIsVDot && vdotFu.io.out.valid && io.out.ready &&
+    val allowInput = !elasticDivOccupied.get &&
+      (newIsVDot || !elasticVDotOccupied.get) &&
       !io.flush.valid && !reset.asBool
-    val allowInput = (!busy || handoff) && !io.flush.valid && !reset.asBool
-    in1ToN.io.in.valid := io.in.valid && allowInput
-    in1ToN.io.in.bits := io.in.bits
-    io.in.ready := allowInput && in1ToN.io.in.ready
-    when(io.in.fire && busy) {
-      assert(handoff && vdotFu.io.out.fire && io.out.fire,
-        "O1 accepted into a busy EXU without retiring the old vdot response")
+    val selectedReady = Mux1H(selected, funcUnits.map(_.io.in.ready))
+    io.in.ready := allowInput && selectedReady
+    sources.zipWithIndex.foreach { case (source, i) =>
+      source.bits := io.in.bits
+      source.valid := io.in.valid && allowInput && selected(i)
     }
-    // Dispatcher ANDs every FU's ready; detect any parent/selected-FU mismatch.
-    assert(vdotFu.io.in.fire === (io.in.fire && newIsVDot))
+    when(io.in.valid && !reset.asBool) {
+      assert(PopCount(selected) === 1.U, "O2 input must select exactly one VFEX4 FU")
+    }
+    val childFires = funcUnits.map(_.io.in.fire)
+    assert(io.in.fire === childFires.reduce(_ || _),
+      "O2 parent and selected child acceptance disagree")
+    assert(PopCount(childFires) <= 1.U, "O2 dispatched one request to multiple FUs")
+    childFires.zipWithIndex.foreach { case (fire, i) =>
+      when(fire) {
+        assert(io.in.fire && selected(i), "O2 unselected child accepted a request")
+      }
+    }
+    when(io.in.fire && !newIsVDot) {
+      assert(!elasticVDotOccupied.get && !elasticDivOccupied.get,
+        "O2 switched to DIV before the previous FU drained")
+    }
+    assert(PopCount(funcUnits.map(_.io.out.valid)) <= 1.U,
+      "O2 VFEX4 output must remain one-hot")
+    sources
   } else {
-    in1ToN.io.in.valid := io.in.valid && !busy
-    in1ToN.io.in.bits := io.in.bits
-    io.in.ready := !busy && in1ToN.io.in.ready
+    val in1ToN = Module(new Dispatcher(new ExuInput(exuParams), funcUnits.length, acceptCond))
+
+    // ExeUnit.in <---> Dispatcher.in
+    if (vdotHandoff) {
+      require(exuParams.name == "VFEX4" && !exuParams.latencyCertain,
+        "O1 handoff is restricted to the current uncertain-latency VFEX4")
+      require(fuCfgs.count(_.fuType == FuType.vdot) == 1)
+      val vdotIndex = fuCfgs.indexWhere(_.fuType == FuType.vdot)
+      val vdotFu = funcUnits(vdotIndex)
+      val activeIsVDot = RegInit(false.B)
+      when(io.in.fire) { activeIsVDot := io.in.bits.fuType === FuType.vdot.U }
+      val newIsVDot = io.in.bits.fuType === FuType.vdot.U
+      // The shared output remains one-hot; neither div->vdot nor vdot->div overlaps.
+      val handoff = busy && activeIsVDot && newIsVDot && vdotFu.io.out.valid && io.out.ready &&
+        !io.flush.valid && !reset.asBool
+      val allowInput = (!busy || handoff) && !io.flush.valid && !reset.asBool
+      in1ToN.io.in.valid := io.in.valid && allowInput
+      in1ToN.io.in.bits := io.in.bits
+      io.in.ready := allowInput && in1ToN.io.in.ready
+      when(io.in.fire && busy) {
+        assert(handoff && vdotFu.io.out.fire && io.out.fire,
+          "O1 accepted into a busy EXU without retiring the old vdot response")
+      }
+      // Dispatcher ANDs every FU's ready; detect any parent/selected-FU mismatch.
+      assert(vdotFu.io.in.fire === (io.in.fire && newIsVDot))
+    } else {
+      in1ToN.io.in.valid := io.in.valid && !busy
+      in1ToN.io.in.bits := io.in.bits
+      io.in.ready := !busy && in1ToN.io.in.ready
+    }
+    in1ToN.io.out
   }
 
   if (sys.env.get("VDOT_T12_TRACE").contains("1") && fuCfgs.contains(xiangshan.backend.fu.FuConfig.VDotCfg)) {
@@ -355,7 +445,7 @@ class ExeUnitImp(
   val latencyMax = fuCfgs.map(_.latency.latencyVal.getOrElse(0)).max
   val inPipe = pipelineReg(io.in.bits, io.in.valid, latencyMax, io.flush)
   // Dispatcher.out <---> FunctionUnits
-  in1ToN.io.out.zip(funcUnits.map(_.io.in)).foreach {
+  dispatchedInputs.zip(funcUnits.map(_.io.in)).foreach {
     case (source: DecoupledIO[ExuInput], sink: DecoupledIO[FuncUnitInput]) =>
       sink.valid := source.valid
       source.ready := sink.ready
