@@ -99,7 +99,7 @@ class VDotElastic(cfg: FuConfig)(implicit p: Parameters) extends FuncUnit(cfg)
 
   // Read-only handles for the separate G1/G2 observation harness. These carry
   // no debug sequence state and never feed back into functional decisions.
-  private[backend] def o2ObservedPPerf = pPerf
+  private[backend] def o2ObservedPPerf: xiangshan.PerfDebugInfo = pPerf
   private[backend] def o2ObservedPCtrl: FuncUnitCtrlOutput = pCtrl
   private[backend] def o2ObservedRCtrl: FuncUnitCtrlOutput = rPacket.ctrl
   private[backend] def o2ObservedPValid: Bool = pValid
