@@ -1,4 +1,26 @@
-# James_Hotten latest O1 integration scope
+# James_Hotten current O1 optimization scope
+
+Continue optimization from local merge 77caa4384. Current work and honest
+acceptance boundaries: team/docs/o1-optimization-20261019.md. Implement the
+complete original/lean software-plan runner and same-input native build
+contracts before claiming a new performance A/B. New contract probes, builds
+and resumes use a shared restricted environment. The user now authorizes
+committing and pushing this completed work to origin/James_Hotten only.
+O1 remains off; main is outside this publication scope. The fresh frames full-core build binds
+source pack 21dce14309ebe4d2f5c196d48e36271fb1a7eb1005824dad03df9ba71b5742f0.
+Do not confuse its split-build receipt with the events native-build contract.
+This fresh EMU completed 15 real launches: 14 normal passes and one expected
+bit100 rejection, including the full matrix, same-image recovery, control,
+25 calibrated windows and complete original190/lean199 software plans.
+Raw-log replay and six software-log corruption probes pass; related host checks
+total 383. Evidence: team/evidence/o1-optimization-20261019. The events contract
+full EMU build and baseline/T14/O1 A/B remain unexecuted. Batch measured windows
+420/360/363/360 show long acceptance gaps; keep the slow sample and do not claim
+a causal diagnosis or a new speedup. Validation and evidence sealing preceded
+publication; push completion must be confirmed by reading the remote branch.
+Statements below retain the preceding integration/publication history.
+
+# Previous latest O1 integration scope
 
 Current task: integrate latest zjhwork cd866d52d into James_Hotten 724fbb12f.
 Use the latest event observer by default; VDOT_O1_TRACE_PROFILE=frames explicitly

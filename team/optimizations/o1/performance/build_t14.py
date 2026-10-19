@@ -7,13 +7,16 @@ import argparse
 from datetime import datetime, timezone
 import hashlib
 import json
+import re
 import shutil
+import shlex
 from pathlib import Path
 import subprocess
 import sys
 
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 from build_inputs import HARDWARE, hardware_files, verify_dependencies, verify_hardware_files
+import build_recipe
 
 ROOT = Path(__file__).resolve().parents[4]
 FLAGS = {"VDOT_O1_HANDOFF": "0", "VDOT_T14_FUSED_INPUT": "1",
@@ -89,7 +92,26 @@ def stage_auxiliary(products):
     return result
 
 
-def main(out):
+def validate_reference(pins, state, files, dependency_files, contract, original_sha):
+    """A new reference must be a completed, same-input O1 build, not just a hash."""
+    build_recipe.validate(contract)
+    require(state.get("status") == "O1_FULLCORE_BUILD_PASS" and type(state.get("build_exit_code")) is int
+            and state["build_exit_code"] == 0,
+            "reference O1 build did not complete")
+    require(re.fullmatch(r"[0-9a-f]{40}", pins.get("source_commit", "")) is not None
+            and state.get("source_commit") == pins["source_commit"], "reference source identity differs")
+    require(pins.get("emu_sha256") == state.get("emu_sha256") == original_sha,
+            "reference O1 binary identity drift")
+    require(pins.get("files") == files and pins.get("dependency_files") == dependency_files,
+            "reference O1 compiler inputs differ")
+    require(pins.get("native_build_contract") == contract, "reference native build contract differs")
+    expected = dict(FLAGS, VDOT_O1_HANDOFF="1", config="MinimalConfig", NUM_CORES=1,
+                    EMU_THREADS=1, JVM_XMX="12G", BUILD_JOBS=2)
+    require(all(type(pins.get(k)) is type(v) and pins[k] == v for k, v in expected.items()),
+            "reference O1 build profile differs")
+
+
+def main(out, o1_build=None):
     out = out.resolve()
     require(not out.exists(), "output already exists")
     require(not out.is_relative_to(ROOT), "output must be outside checkout")
@@ -97,7 +119,12 @@ def main(out):
     require(not products.exists(), "fresh products directory required")
     original_emu = ROOT / "build/emu"
     original_sha = sha(original_emu)
-    require(original_sha == "b13b05a3b03d2dd178d5e07b55bda1e8d99d7a094d44cf30405241f9793170cb", "original O1 binary identity drift")
+    reference = None
+    if o1_build is None:
+        require(original_sha == "b13b05a3b03d2dd178d5e07b55bda1e8d99d7a094d44cf30405241f9793170cb", "original O1 binary identity drift")
+    else:
+        o1_build = o1_build.resolve()
+        reference = {name: sha(o1_build / name) for name in ("hardware-inputs.json", "build-state.json")}
     require(not git("diff", "HEAD", "--", *HARDWARE), "commit hardware changes before building")
     require(not git("ls-files", "--others", "--exclude-standard", "--", *HARDWARE),
             "untracked hardware inputs must be committed before building")
@@ -110,11 +137,27 @@ def main(out):
         (out / "working-tree.patch").write_bytes(git("diff", "--binary", "HEAD"))
         files = hardware_files(ROOT)
         dependencies, dependency_files = dependency_snapshot()
+        contract = None
+        build_environment = None
+        if reference is not None:
+            contract = build_recipe.capture(ROOT)
+            build_environment = build_recipe.environment()
+            prior = json.loads((o1_build / "hardware-inputs.json").read_text())
+            require(Path(prior["emu_path"]).resolve() == original_emu.resolve(), "reference O1 binary path differs")
+            validate_reference(prior, json.loads((o1_build / "build-state.json").read_text()),
+                               files, dependency_files, contract, original_sha)
+            save(out / "reference-build.json", dict(directory=str(o1_build), files=reference))
+            snapshot = out / "source-snapshot"
+            snapshot.mkdir()
+            for source in (Path(__file__), Path(build_recipe.__file__)):
+                (snapshot / source.name).write_bytes(source.read_bytes())
         save(out / "dependencies.json", dependencies)
         pins = {"source_commit": state["source_commit"], "config": "MinimalConfig",
                 "NUM_CORES": 1, "EMU_THREADS": 1, "JVM_XMX": "12G", "BUILD_JOBS": 2,
                 **FLAGS, "files": dict(sorted(files.items())), "dependency_files": dependency_files,
                 "build_script_sha256": sha(Path(__file__)), "source_root": str(ROOT)}
+        if contract is not None:
+            pins["native_build_contract"] = contract
         save(out / "hardware-inputs-before.json", pins)
         activated = "source team/scripts/activate.sh\n"
         tools = {"java": "java -version", "mill": "mill --version", "verilator": "verilator --version",
@@ -123,11 +166,14 @@ def main(out):
         for name, command in tools.items():
             with (out / (name + "-version.log")).open("wb") as log:
                 rc = subprocess.run(["bash", "-c", activated + command], cwd=ROOT,
-                                    stdout=log, stderr=subprocess.STDOUT).returncode
+                                    env=build_environment, stdout=log, stderr=subprocess.STDOUT).returncode
             require(rc == 0, "missing tool " + name)
         shell = activated + "export " + " ".join(k + "=" + v for k, v in FLAGS.items()) + "\n"
         shell += 'export CHISEL_FIRTOOL_PATH="$HOME/.cache/llvm-firtool/1.62.1/bin"\n'
-        shell += "make emu CONFIG=MinimalConfig NUM_CORES=1 EMU_THREADS=1 JVM_XMX=12G OPT_FAST=-O3 OPT_SLOW=-O0 BUILD_DIR=" + str(products) + " -j2\n"
+        if contract is not None:
+            shell += build_recipe.make_command(contract, products)
+        else:
+            shell += "make emu CONFIG=MinimalConfig NUM_CORES=1 EMU_THREADS=1 JVM_XMX=12G OPT_FAST=-O3 OPT_SLOW=-O0 BUILD_DIR=" + shlex.quote(str(products)) + " -j2\n"
         (out / "build-command.sh").write_text(shell, encoding="utf-8")
         state.update(status="BUILDING", build_started_utc=now(), command=["bash", "-c", shell])
         save(out / "build-state.json", state)
@@ -136,10 +182,12 @@ def main(out):
         state["generation_command"] = generation
         save(out / "build-state.json", state)
         with (out / "emu-build.log").open("wb") as log:
-            rc = subprocess.run(generation, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT).returncode
+            rc = subprocess.run(generation, cwd=ROOT, env=build_environment,
+                                stdout=log, stderr=subprocess.STDOUT).returncode
             if rc == 0:
                 save(out / "generated-auxiliary.json", stage_auxiliary(products))
-                rc = subprocess.run(state["command"], cwd=ROOT, stdout=log, stderr=subprocess.STDOUT).returncode
+                rc = subprocess.run(state["command"], cwd=ROOT, env=build_environment,
+                                    stdout=log, stderr=subprocess.STDOUT).returncode
         state.update(build_exit_code=rc, build_finished_utc=now())
         save(out / "build-state.json", state)
         require(rc == 0, "EMU build failed; keep emu-build.log and build/ unchanged")
@@ -147,6 +195,10 @@ def main(out):
             for path, digest in pins[group].items():
                 require(sha(ROOT / path) == digest, "source changed during build: " + path)
         verify_hardware_files(ROOT, pins["files"])
+        if reference is not None:
+            build_recipe.verify(ROOT, contract)
+            require(all(sha(o1_build / name) == digest for name, digest in reference.items()),
+                    "reference build receipt changed")
         dep_after, dep_files_after = dependency_snapshot()
         require(dep_after == dependencies and dep_files_after == dependency_files, "dependencies changed")
         binary = products / "emu"
@@ -173,4 +225,7 @@ def main(out):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
-    raise SystemExit(main(parser.parse_args().output))
+    parser.add_argument("--o1-build", type=Path,
+                        help="completed current O1 build directory with a matching native build contract")
+    args = parser.parse_args()
+    raise SystemExit(main(args.output, args.o1_build))

@@ -1,0 +1,56 @@
+{
+  "status": "NATIVE_BUILD_RECIPE_PROBE_PASS",
+  "contract": {
+    "schema": 1,
+    "make_args": [
+      "CONFIG=MinimalConfig",
+      "NUM_CORES=1",
+      "EMU_THREADS=1",
+      "JVM_XMX=12G",
+      "OPT_FAST=-O3",
+      "OPT_SLOW=-O0",
+      "EMU_TRACE=0",
+      "WITH_CHISELDB=0",
+      "WITH_CONSTANTIN=0",
+      "WITH_ROLLINGDB=0",
+      "-j2"
+    ],
+    "compilers": {
+      "cxx": {
+        "path": "/usr/bin/x86_64-linux-gnu-g++-13",
+        "sha256": "1353e9bdd29a7295c7226bf6c63abccce056d8cac31f112e5cdbecc3f28c2769",
+        "version": "x86_64-linux-gnu-g++-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n"
+      },
+      "cc": {
+        "path": "/usr/bin/x86_64-linux-gnu-gcc-13",
+        "sha256": "1b99826121ae6682a634e5efe09bd3e3df58ce58e0b28f849114ab5b89139c26",
+        "version": "x86_64-linux-gnu-gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n"
+      },
+      "java": {
+        "path": "/usr/lib/jvm/java-21-openjdk-amd64/bin/java",
+        "sha256": "635baf419576ec4ad4f785014283fb93f1be1103e6d02252f7a00517f0e2a245",
+        "version": "openjdk version \"21.0.12.1\" 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-24.04.4-Ubuntu)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-24.04.4-Ubuntu, mixed mode, sharing)\n"
+      },
+      "mill": {
+        "path": "/home/amesotten/.cache/codex-rvinno/o1-optimization-20261019/source-21dce14309ebe4d2/build/tools/mill",
+        "sha256": "cf7a6c86c2bfcddbc5877bafe359a44118f2f2ca6fcc9afbe39d37ac63b86454",
+        "version": "Mill Build Tool version 0.12.3\nJava version: 21.0.12.1, vendor: Ubuntu, runtime: /usr/lib/jvm/java-21-openjdk-amd64\nDefault locale: en, platform encoding: UTF-8\nOS name: \"Linux\", version: 6.6.87.2-microsoft-standard-WSL2, arch: amd64\n"
+      },
+      "verilator": {
+        "path": "/usr/bin/verilator",
+        "sha256": "4c6292ab82e57b7f34ab26dbae86ba9c494bacfb088b6ff34be93c553d1301b1",
+        "version": "Verilator 5.020 2024-01-01 rev (Debian 5.020-1)\n"
+      },
+      "firtool": {
+        "path": "/home/amesotten/.cache/llvm-firtool/1.62.1/bin/firtool",
+        "sha256": "7f52d2a3782d09736895f66e7eb0e5cc4b3b1b18aa1ad0d04fca4cd6e42cd2ee",
+        "version": "LLVM (http://llvm.org/):\n  LLVM version 18.0.0git\n  Optimized build.\nCIRCT firtool-1.62.1\n"
+      }
+    },
+    "inherited_make": {
+      "DRAMSIM3_HOME": "/home/amesotten/riscv-lab/xs-env/DRAMsim3"
+    },
+    "recipe_sha256": "e91a13349c97f708d9de739c91de555d15a385bcea1dcbed0e7445ca29b5afd3"
+  },
+  "command": "make emu CONFIG=MinimalConfig NUM_CORES=1 EMU_THREADS=1 JVM_XMX=12G OPT_FAST=-O3 OPT_SLOW=-O0 EMU_TRACE=0 WITH_CHISELDB=0 WITH_CONSTANTIN=0 WITH_ROLLINGDB=0 -j2 CXX=/usr/bin/x86_64-linux-gnu-g++-13 CC=/usr/bin/x86_64-linux-gnu-gcc-13 'BUILD_DIR=/tmp/test build'\n"
+}

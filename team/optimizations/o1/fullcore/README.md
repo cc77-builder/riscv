@@ -1,5 +1,11 @@
 # O1 观察器适配与全核回归
 
+新 `build_fullcore.py` 回执包含 `native_build_contract`，固定实际编译器与生成工具，供 `performance/build_t14.py --o1-build` 进行同源码配对。旧回执不自动升级。
+
+完整 T12 original/lean 软件计划另有 `../run_software_core.py` 入口，要求源码绑定的 split-build 回执及 **frames** 观察协议，参数与 `run_extended_core.py` 相同，`--jobs` 支持1或2（默认2）；每个模拟器仍是单核单线程。它核对封存的 ELF/bin/数据，完整执行 190/199 项，分别检查架构结果和 O1/O2 事务；原始软件计数窗口不冒充校准后的性能结果。该入口与本页的 events 回执不能混用。
+
+该 frames 入口已在当前 `77caa4384` 新 EMU 上实测通过，两套完整软件计划、扩展矩阵、原始日志复算与负控见[2026-10-19 优化复验](../../../docs/o1-optimization-20261019.md)。新 events 原生合同入口尚未完成实际全核构建验证。
+
 > 整合状态（2026-10-19）：以下运行及性能数字属于所列冻结版本。当前工具已接入events显式身份、严格源码清单和依赖门禁；历史复算须用归档内冻结检查器。当前合并源码的新验证见[整合记录](../../../docs/o1-latest-integration-20261019.md)，不能沿用历史20.02%作为新硬件成绩。
 
 这是工程复现入口，正式 T16 报告继续后置。2026-10-18 完成全新 EMU 构建、12 项实际全核运行及严格离线复核，分别取得 `O1_FULLCORE_SUITE_PASS` 与 `O1_OFFLINE_FULL_SUITE_RECHECK_PASS`。成果仅在本地分支 `local/o1-fullcore-20261018` 保存。

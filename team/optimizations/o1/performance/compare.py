@@ -16,6 +16,7 @@ from threading import Lock
 
 os.sys.path.append(str(Path(__file__).resolve().parents[1]))
 from build_inputs import verify_hardware_files
+import build_recipe
 
 ROOT = Path(__file__).resolve().parents[4]
 HERE = Path(__file__).resolve().parent
@@ -66,6 +67,10 @@ def expected_names():
 
 
 def validate_pair(t14, o1):
+    build_recipe.validate(t14.get("native_build_contract"))
+    build_recipe.validate(o1.get("native_build_contract"))
+    require(t14.get("native_build_contract") == o1.get("native_build_contract"),
+            "non-handoff native compiler/build difference")
     require(t14.get("VDOT_O1_TRACE_PROFILE") == o1.get("VDOT_O1_TRACE_PROFILE") == "events",
             "paired build requires explicit events profile")
     for key in ("files", "dependency_files", "config", "NUM_CORES", "EMU_THREADS",
@@ -74,7 +79,9 @@ def validate_pair(t14, o1):
         require(t14[key] == o1[key], "non-handoff build difference: " + key)
     require(t14["VDOT_O1_HANDOFF"] == "0" and o1["VDOT_O1_HANDOFF"] == "1",
             "mode identity requires T14=0/O1=1")
-    require(o1["config"] == "MinimalConfig" and o1["NUM_CORES"] == o1["EMU_THREADS"] == 1,
+    require(o1["config"] == "MinimalConfig" and type(o1["NUM_CORES"]) is int
+            and type(o1["EMU_THREADS"]) is int and o1["NUM_CORES"] == o1["EMU_THREADS"] == 1
+            and type(t14["NUM_CORES"]) is int and type(t14["EMU_THREADS"]) is int,
             "unexpected core configuration")
     require(o1["VDOT_T14_FUSED_INPUT"] == o1["VDOT_O1_TRACE"] == o1["VDOT_T13_TRACE"] == "1"
             and o1["VDOT_T12_TRACE"] == "0", "unexpected observation/build flags")
@@ -213,7 +220,7 @@ def run(args):
         for auxiliary in (ROOT / "build/constantin.txt", ROOT / "build/plusArgs"):
             if auxiliary.is_file():
                 files[str(auxiliary)] = sha(auxiliary)
-        driver_paths = [HERE.parent / "build_inputs.py", ROOT / "team/scripts/prepare-core-baseline.py", Path(__file__), HERE / "CONTRACT.md", Path(check.__file__),
+        driver_paths = [HERE.parent / "build_inputs.py", HERE.parent / "build_recipe.py", ROOT / "team/scripts/prepare-core-baseline.py", Path(__file__), HERE / "CONTRACT.md", Path(check.__file__),
                         Path(observer.__file__), Path(gate.__file__),
                         ROOT / "team/workloads/unified-vdot/generate.py"]
         files.update({str(p): sha(p) for p in driver_paths})

@@ -1,5 +1,18 @@
 # T14/O1 同镜像公平性能比较
 
+## 当前源码的构建入口
+
+新实验先用 `fullcore/build_fullcore.py` 生成 O1，再执行：
+
+```bash
+python3 -B team/optimizations/o1/performance/build_t14.py \
+  --o1-build /absolute/new/o1-build --output /absolute/new/t14-build
+```
+
+`--o1-build` 要求已成功完成的 O1 回执、匹配的实际二进制、完整源码/依赖库存和相同原生构建合同。合同记录并显式选择 C/C++ 编译器，绑定 Java、Mill、Verilator、firtool 身份和受限构建环境；结束时再次核验。探针、首次构建和恢复构建共用环境，只保留工具启动所需设置，不继承 Make、额外头文件/动态库、PGO 或 shell 启动注入参数。新构建关闭 ChiselDB/Constantin/rollingDB，使用同一组明确参数。此入口仅接受 events 观察协议。
+
+省略该选项仍保留旧 `b13b...` 二进制固定校验。当前 `compare.py` 要求双方都有匹配的新合同；旧回执必须交给其归档检查器，不能补写合同后冒充新实验。新入口的主机检查和工具探针不等于完成了新的全核 A/B。
+
 > 整合状态（2026-10-19）：以下运行及性能数字属于所列冻结版本。当前工具已接入events显式身份、严格源码清单和依赖门禁；历史复算须用归档内冻结检查器。当前合并源码的新验证见[整合记录](../../../docs/o1-latest-integration-20261019.md)，不能沿用历史20.02%作为新硬件成绩。
 
 > **交付更新：** 本结果随O1父级及全核成果交付 zjhwork，见 [发布说明](../../../docs/o1-publication-20261018.md)。下方“本地保存”及密封证据中的未上传字段为生成时点状态；最终发布以远端回读为准。本次不重复仿真、不修改原始数据。

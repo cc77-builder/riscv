@@ -2,6 +2,7 @@
 import argparse
 import importlib.util
 import json
+import shlex
 from pathlib import Path
 import subprocess
 
@@ -24,6 +25,14 @@ def main(attempt, output):
     require(not output.exists(), "resume evidence must use a new directory")
     old = json.loads((attempt / "build-state.json").read_text())
     pins = json.loads((attempt / "hardware-inputs-before.json").read_text())
+    reference = None
+    build_environment = None
+    if "native_build_contract" in pins:
+        builder.build_recipe.verify(ROOT, pins["native_build_contract"])
+        build_environment = builder.build_recipe.environment()
+        reference = json.loads((attempt / "reference-build.json").read_text())
+        require(all(sha(Path(reference["directory"]) / name) == digest
+                    for name, digest in reference["files"].items()), "reference build receipt changed")
     require(old["status"] == "FAILED" and old["build_exit_code"] == 2, "unexpected prior failure")
     require("chisel_db.cpp" in (attempt / "emu-build.log").read_text(), "not the known auxiliary path failure")
     products = Path(old["build_products"])
@@ -47,13 +56,15 @@ def main(attempt, output):
     auxiliary = builder.stage_auxiliary(products)
     save(output / "generated-auxiliary.json", auxiliary)
     shell = old["command"][2]
-    require("VDOT_O1_HANDOFF=0" in shell and "BUILD_DIR=" + str(products) in shell, "mode/path binding")
+    require("VDOT_O1_HANDOFF=0" in shell and "BUILD_DIR=" + str(products) in shlex.split(shell.splitlines()[-1]),
+            "mode/path binding")
     state.update(status="COMPILING", command=["bash", "-c", shell], build_started_utc=now())
     save(output / "build-state.json", state)
     (output / "build-command.sh").write_text(shell)
     print("T14_MATCHED_RESUME_STARTED", flush=True)
     with (output / "emu-build.log").open("wb") as log:
-        rc = subprocess.run(state["command"], cwd=ROOT, stdout=log, stderr=subprocess.STDOUT).returncode
+        rc = subprocess.run(state["command"], cwd=ROOT, env=build_environment,
+                            stdout=log, stderr=subprocess.STDOUT).returncode
     state.update(build_exit_code=rc, build_finished_utc=now())
     save(output / "build-state.json", state)
     require(rc == 0, "resumed compilation failed; preserve all files")
@@ -65,6 +76,10 @@ def main(attempt, output):
             require(sha(ROOT / name) == digest, "hardware changed during resumed compilation: " + name)
     builder.verify_hardware_files(ROOT, pins["files"])
     deps, dep_files = builder.dependency_snapshot()
+    if reference is not None:
+        builder.build_recipe.verify(ROOT, pins["native_build_contract"])
+        require(all(sha(Path(reference["directory"]) / name) == digest
+                    for name, digest in reference["files"].items()), "reference build receipt changed")
     require(dep_files == pins["dependency_files"], "dependency inventory drift")
     save(output / "dependencies.json", deps)
     require(sha(ROOT / "build/emu") == old["original_o1_emu_sha256"], "original O1 EMU changed")

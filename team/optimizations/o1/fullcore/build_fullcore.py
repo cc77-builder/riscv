@@ -13,6 +13,7 @@ import sys
 
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 from build_inputs import HARDWARE, hardware_files, verify_dependencies, verify_hardware_files
+import build_recipe
 
 ROOT = Path(__file__).resolve().parents[4]
 FLAGS = {"VDOT_O1_HANDOFF": "1", "VDOT_T14_FUSED_INPUT": "1",
@@ -84,11 +85,18 @@ def main(out):
         (out / "working-tree.patch").write_bytes(git("diff", "--binary", "HEAD"))
         files = hardware_files(ROOT)
         dependencies, dependency_files = dependency_snapshot()
+        contract = build_recipe.capture(ROOT)
+        build_environment = build_recipe.environment()
+        snapshot = out / "source-snapshot"
+        snapshot.mkdir()
+        for source in (Path(__file__), Path(build_recipe.__file__)):
+            (snapshot / source.name).write_bytes(source.read_bytes())
         save(out / "dependencies.json", dependencies)
         pins = {"source_commit": state["source_commit"], "config": "MinimalConfig",
                 "NUM_CORES": 1, "EMU_THREADS": 1, "JVM_XMX": "12G", "BUILD_JOBS": 2,
                 **FLAGS, "files": dict(sorted(files.items())), "dependency_files": dependency_files,
-                "build_script_sha256": sha(Path(__file__)), "source_root": str(ROOT)}
+                "build_script_sha256": sha(Path(__file__)), "source_root": str(ROOT),
+                "native_build_contract": contract}
         save(out / "hardware-inputs-before.json", pins)
         activated = "source team/scripts/activate.sh\n"
         tools = {"java": "java -version", "mill": "mill --version", "verilator": "verilator --version",
@@ -97,17 +105,18 @@ def main(out):
         for name, command in tools.items():
             with (out / (name + "-version.log")).open("wb") as log:
                 rc = subprocess.run(["bash", "-c", activated + command], cwd=ROOT,
-                                    stdout=log, stderr=subprocess.STDOUT).returncode
+                                    env=build_environment, stdout=log, stderr=subprocess.STDOUT).returncode
             require(rc == 0, "missing tool " + name)
         shell = activated + "export " + " ".join(k + "=" + v for k, v in FLAGS.items()) + "\n"
         shell += 'export CHISEL_FIRTOOL_PATH="$HOME/.cache/llvm-firtool/1.62.1/bin"\n'
-        shell += "make emu CONFIG=MinimalConfig NUM_CORES=1 EMU_THREADS=1 JVM_XMX=12G OPT_FAST=-O3 OPT_SLOW=-O0 -j2\n"
+        shell += build_recipe.make_command(contract)
         (out / "build-command.sh").write_text(shell, encoding="utf-8")
         state.update(status="BUILDING", build_started_utc=now(), command=["bash", "-c", shell])
         save(out / "build-state.json", state)
         print("O1_FULLCORE_BUILD_STARTED " + str(out), flush=True)
         with (out / "emu-build.log").open("wb") as log:
-            rc = subprocess.run(state["command"], cwd=ROOT, stdout=log, stderr=subprocess.STDOUT).returncode
+            rc = subprocess.run(state["command"], cwd=ROOT, env=build_environment,
+                                stdout=log, stderr=subprocess.STDOUT).returncode
         state.update(build_exit_code=rc, build_finished_utc=now())
         save(out / "build-state.json", state)
         require(rc == 0, "EMU build failed; keep emu-build.log and build/ unchanged")
@@ -115,6 +124,7 @@ def main(out):
             for path, digest in pins[group].items():
                 require(sha(ROOT / path) == digest, "source changed during build: " + path)
         verify_hardware_files(ROOT, pins["files"])
+        build_recipe.verify(ROOT, contract)
         dep_after, dep_files_after = dependency_snapshot()
         require(dep_after == dependencies and dep_files_after == dependency_files, "dependencies changed")
         binary = ROOT / "build/emu"
