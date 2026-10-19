@@ -1,6 +1,6 @@
 # O3 INT8 GEMV应用评估
 
-2026-10-19开始，本地分支local/o3-gemv-20261019，未推送GitHub。当前处于软件/镜像准备，尚无O3全核性能结果；不要以模型通过代替RTL通过。
+2026-10-19开始，本地分支local/o3-gemv-20261019，未推送GitHub。26份镜像已编译及ELF审计，22项主机检查、4项真实O1/O2冒烟通过；正式应用campaign进行中，尚无完整O3性能结论。不要以模型通过代替RTL通过。
 
 [测试合同](CONTRACT.md)规定四尺寸、三数据集、两计时口径、基础/复用两种软件和公平RVV对照。复用G4固定O1/O2，不修改硬件或旧基准。
 
@@ -13,3 +13,5 @@
     python3 -B team/workloads/o3-gemv/build.py --output /absolute/new/images
 
 所有实际运行和结果随后以新的campaign目录记录；本轮不自动O4/O5/G5，不改变默认模式，正式T16报告后置。
+
+当前运行状态：/home/riscv/riscv-lab/o3-gemv-20261019/campaign-01/state.json；交付监督状态：/home/riscv/riscv-lab/o3-gemv-delivery-20261019/state.json。不要重复启动campaign。通过后监督程序自动严格复核、封存、原生Windows复算并本地提交；失败会保留日志并停止，不自动重跑EMU。

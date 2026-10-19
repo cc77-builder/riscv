@@ -1,3 +1,21 @@
+# 当前任务：O3 GEMV应用测试进行中（本地）
+
+用户2026-10-19明确授权开始O3。工作分支local/o3-gemv-20261019，基点08fc5b4；
+先读team/workloads/o3-gemv/CONTRACT.md及README.md。
+26新镜像已编译/ELF审计，22主机检查通过，4项真实O1/O2冒烟已通过；
+campaign-01正在正式应用测量，不能提前宣称56项/768正式窗口完成。
+运行源码冻结7a642b6，构建软件5fdeba3，后处理工具6df07ca。
+
+原始工作根/home/riscv/riscv-lab/o3-gemv-20261019；
+交付监督根/home/riscv/riscv-lab/o3-gemv-delivery-20261019；
+Windows入口D:/yanyi/riscv大赛/doc/O3应用测试_20261019。
+先查两个state.json和launch-state.json。已经启动的launch.py及finish.py负责继续测量和通过后的严格复核/封存/Windows复算/本地交付；
+不要重启已经在跑或完成的campaign，不覆盖原始日志。失败先读真实stderr/退出码，不能静默剔除样本或直接重跑所有任务。
+
+O1/O2复用G4固定硬件，四尺寸(4,8),(8,32),(16,64),(4,13)，两口径/两软件/两方法/三数据集；
+不改ISA/NEMU/旧基准和旧证据。最多两个单线程EMU。成果先本地保存，不push、不自动O4/O5/G5/默认切换，正式T16后置。
+下文为历史状态。
+
 # 团队 Agent 入口
 
 ## 当前状态：O1/O2 G4公平测量完成，本地保存
