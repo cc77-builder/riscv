@@ -1,6 +1,6 @@
 # O1/O2 同镜像公平周期对比
 
-**G4公平测量及Linux原始日志严格重审完成，本地保存，未推送GitHub。** 完成时间：2026-10-19T11:34:55.879421+00:00。正式T16报告继续后置。
+**G4公平测量、Linux原始日志严格重审及Windows全量离线复算完成，本地保存，未推送GitHub。** 完成时间：2026-10-19T11:34:55.879421+00:00。正式T16报告继续后置。
 
 | 场景 | O1 vdot均值cycles | O2 vdot均值cycles | O2周期降低 | O2相对实测RVV |
 | --- | ---: | ---: | ---: | ---: |
@@ -52,3 +52,13 @@
 ## 取舍边界
 
 本次确认同镜像的RTL周期收益；没有Fmax/面积/功耗/PPA、官方计分或最终采用结论。O2默认关闭。后续按G5结合O3应用、O4时序/结构与O5/T17独立复现、成员人工ACK决定是否采用，再集中编写T16/T18材料。本任务未自动执行这些后续工作。
+
+## 交付复核
+
+Windows原生Python 3.13.2全量离线复算通过，覆盖36项作业、478个窗口、192条正式性能窗口及4项重放。见[原生复算回执](../evidence/20261019-performance-ab/delivery/windows-portable-audit.json)。它复核封存记录，不另跑EMU，也不替代Linux构建来源审核。
+
+交付时补齐了原冻结功能生成器依赖的两份模型语料，逐字节取自运行工具提交63b95a5并绑定Git blob及SHA-256；原镜像、测量日志和646份主封存payload均未改变。原30项主机测试及新增3项语料绑定检查共33项通过；首次封装复算失败和修复后成功记录均保留。Windows请用Python UTF-8模式执行：
+
+    python -X utf8 -B performance/portable.py --archive evidence/20261019-performance-ab --campaign campaign-01 --output /absolute/new/portable-verification.json
+
+上述相对路径适用于Windows交付目录；仓库内对应team/optimizations/o2下的路径。

@@ -30,8 +30,16 @@
 
 用Python3.10+运行：
 
-    python -B team/optimizations/o2/performance/portable.py --archive team/optimizations/o2/evidence/20261019-performance-ab --campaign campaign-01 --output /absolute/new/portable-verification.json
+    python -X utf8 -B team/optimizations/o2/performance/portable.py --archive team/optimizations/o2/evidence/20261019-performance-ab --campaign campaign-01 --output /absolute/new/portable-verification.json
 
 工具复核全部封存字节、36项原始日志/退出码、ELF机器码与完整计数窗口、两模式协议、重放和配对统计。它不新运行EMU/NEMU，也不重复Linux的Git/依赖/编译工具来源核验。Windows实际复算回执另存交付目录。
 
 本轮结果为固定配置的RTL周期测量，没有Fmax/面积/功耗/PPA、官方排名、最终采用或人工ACK结论；G5、O3/O4/O5和T17仍待后续完成。
+
+## 交付补充：冻结功能语料
+
+首次Windows完整复算在功能生成器处发现封装遗漏：该原始生成器还会读取T05 directed.jsonl及random.jsonl（仅前8条用于本功能集合）。补充数据从运行工具提交63b95a5075df7f361c4bf7b51a0bba74b6c8db17逐Git blob提取，并核验当前字节相同；没有生成新测试向量，没有改写已运行的ELF、镜像、日志或原始payload/manifest。
+
+[support-manifest](support-manifest.json)及[摘要](support-manifest.sha256)绑定两份补充文件的原始SHA-256/Git blob；portable.py还要求语料版本与原campaign的source_commit一致，再恢复到临时检查器目录。补充交付工具33项主机测试通过（原30项＋3项语料绑定检查）；运行时原30项记录保留为当时时点。首次Windows失败与修复回执保存于交付目录。完整复算请使用当前performance/portable.py，归档内旧工具快照保持原样。
+
+Windows原生全量离线复算已通过：[成功回执](delivery/windows-portable-audit.json)、[实际命令和退出码](delivery/windows-audit-attempt-02.json)、[33项交付检查](delivery/host-corpus-fix-01/verification.json)、[首次失败记录](delivery/windows-audit-attempt-01.json)。复算覆盖全部36项作业、478个窗口、192条正式窗口及4项重放；不增加真实EMU运行数。
