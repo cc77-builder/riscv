@@ -1,5 +1,10 @@
 # 团队 Agent 入口
 
+## 当前任务：O2 G3 全核观察器与回归（已授权，本地）
+
+用户于2026-10-19明确要求开始G3。工作分支local/o2-fullcore-20261019，起点901687a；按team/optimizations/o2/CONTRACT.md完成两槽全核观察器、新EMU、hello/vadd、117唯一功能/异常矩阵、T12等价控制、故障参考库和正常恢复。旧G1/G2不自动推进G3的限制现由此授权更新。输出/home/riscv/riscv-lab/o2-fullcore-20261019；旧封存材料保持不变。不推送GitHub、不自动开始G4公平性能、不改变ISA/NEMU/黄金数据，不代签人工ACK。构建前冻结生产源码；只运行一个重构建，默认2编译线程、12G JVM、1个EMU线程。
+
+
 ## 当前任务：O2两槽弹性FU与真实父级联调（本地开发）
 
 2026-10-19用户明确授权实现O2隔离FU，然后完成真实VFEX4/DIV/ClockGate父级联调。工作分支local/o2-elastic-parent-20261019，起点7643b8d；合同team/optimizations/o2/CONTRACT.md。G1/G2真实RTL验证及旧模式兼容回归已完成；工程入口team/optimizations/o2/IMPLEMENTATION.md，正式证据evidence/20261019-elastic-parent。下一步为G3；不自动推进全核G3或性能G4，不推送GitHub。保留旧模式及密封证据，独立输出目录/home/riscv/riscv-lab/o2-elastic-parent-20261019。下方评估阶段不实施RTL的限制为历史记录。

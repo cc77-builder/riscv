@@ -430,6 +430,117 @@ class ExeUnitImp(
     }
   }
 
+  if (xiangshan.backend.fu.wrapper.VDotO2.traceEnabled &&
+      fuCfgs.contains(xiangshan.backend.fu.FuConfig.VDotCfg)) {
+    require(vdotElastic && exuParams.name == "VFEX4" && !exuParams.latencyCertain,
+      "O2 trace requires the elastic, uncertain-latency VFEX4")
+    require(!p(xiangshan.DebugOptionsKey).ResetGen,
+      "O2 trace requires the common simulation reset")
+    val observedVDot = elasticVDot.get
+    // All timestamps, sequence tags and shadow DIV lifecycle are observations
+    // on the ungated parent clock. No trace state drives functional logic.
+    val o2Cycle = GTimer()
+    val o2NextSeq = RegInit(0.U(64.W))
+    val o2PSeq = RegInit(0.U(64.W))
+    val o2RSeq = RegInit(0.U(64.W))
+    val o2SchemaPrinted = RegInit(false.B)
+    val o2P = tapAndRead(observedVDot.o2ObservedPCtrl)
+    val o2PPerf = tapAndRead(observedVDot.o2ObservedPPerf)
+    val o2R = observedVDot.io.out.bits.ctrl
+    val o2PValid = observedVDot.pipelineStatus.pValid
+    val o2RValid = observedVDot.pipelineStatus.rValid
+    val o2KillP = tapAndRead(observedVDot.o2ObservedKillP)
+    val o2KillR = tapAndRead(observedVDot.o2ObservedKillR)
+    val o2Move = tapAndRead(observedVDot.o2ObservedMove)
+    val o2IllegalInput = tapAndRead(observedVDot.o2ObservedIllegalInput)
+    val o2Vl = tapAndRead(observedVDot.o2ObservedVl)
+    val o2In = observedVDot.io.in.bits.ctrl
+    val o2Out = observedVDot.io.out
+    val o2DivAccept = io.in.fire && io.in.bits.fuType =/= FuType.vdot.U
+    val o2DivActive = RegInit(false.B)
+    val o2DivSeq = RegInit(0.U(64.W))
+    val o2DivRob = Reg(chiselTypeOf(io.in.bits.robIdx))
+    val o2DivFu = Reg(chiselTypeOf(io.in.bits.fuType))
+    val o2DivPdest = Reg(chiselTypeOf(io.in.bits.pdest))
+    val o2DivKill = o2DivActive && o2DivRob.needFlush(io.flush) && !reset.asBool
+    val o2DivUnits = funcUnits.filter(_.cfg.fuType != FuType.vdot)
+    val o2DivFire = o2DivUnits.map(_.io.out.fire).reduce(_ || _)
+
+    when(io.in.fire) { o2NextSeq := o2NextSeq + 1.U }
+    when(observedVDot.io.in.fire) { o2PSeq := o2NextSeq }
+    // Old P transfers even when a different new request replaces P this edge.
+    when(o2Move) { o2RSeq := o2PSeq }
+    when(o2DivAccept) {
+      o2DivActive := true.B
+      o2DivSeq := o2NextSeq
+      o2DivRob := io.in.bits.robIdx
+      o2DivFu := io.in.bits.fuType
+      o2DivPdest := io.in.bits.pdest
+    }.elsewhen(o2DivKill || o2DivFire) {
+      o2DivActive := false.B
+    }
+
+    val o2Activity = o2PValid || o2RValid || elasticDivOccupied.get ||
+      io.in.valid || io.flush.valid
+    val o2PreviousActivity = RegNext(o2Activity, false.B)
+    when(reset.asBool && o2SchemaPrinted) {
+      // Runtime reset ends this epoch. G3's complete-run checker rejects
+      // multiple epochs; the initial simulation reset emits no such record.
+      printf(p"O2_RESET cycle=${o2Cycle} pvalid=${o2PValid} pseq=${o2PSeq} rvalid=${o2RValid} rseq=${o2RSeq} divactive=${o2DivActive} divseq=${o2DivSeq}\n")
+    }
+    when(!reset.asBool) {
+      when(!o2SchemaPrinted) {
+        printf(p"O2_SCHEMA version=1 clock=global latency=2 slots=2 rob_size=${RobSize.U} ftq_size=${FtqSize.U} vlen=${VLEN.U} vpu_width=${o2In.vpu.get.getWidth.U} perf_width=${observedVDot.io.in.bits.perfDebugInfo.getWidth.U}\n")
+        o2SchemaPrinted := true.B
+      }
+      when(o2Activity || o2PreviousActivity || !o2SchemaPrinted) {
+        printf(p"O2_STATE cycle=${o2Cycle} pvalid=${o2PValid} pseq=${o2PSeq} prob=${o2P.robIdx.flag}:${o2P.robIdx.value} ppdest=${o2P.pdest} rvalid=${o2RValid} rseq=${o2RSeq} rrob=${o2R.robIdx.flag}:${o2R.robIdx.value} rpdest=${o2R.pdest} occupancy=${observedVDot.pipelineStatus.occupancy} invalid=${io.in.valid} inready=${io.in.ready} vready=${observedVDot.io.in.ready} outvalid=${o2Out.valid} outready=${o2Out.ready} move=${o2Move} killp=${o2KillP} killr=${o2KillR} divactive=${o2DivActive} divseq=${o2DivSeq} divoccupied=${elasticDivOccupied.get} busy=${busy}\n")
+      }
+      when(io.in.fire) {
+        printf(p"O2_VFEX4_ACCEPT cycle=${o2Cycle} seq=${o2NextSeq} rob=${io.in.bits.robIdx.flag}:${io.in.bits.robIdx.value} fu=0x${Hexadecimal(io.in.bits.fuType)} pdest=${io.in.bits.pdest}\n")
+      }
+      when(io.in.valid && !io.in.ready) {
+        printf(p"O2_VFEX4_WAIT cycle=${o2Cycle} rob=${io.in.bits.robIdx.flag}:${io.in.bits.robIdx.value} fu=0x${Hexadecimal(io.in.bits.fuType)} busy=${busy}\n")
+      }
+      // The actual VFEX4 flush is a registered stage later than ROB redirect.
+      when(io.flush.valid) {
+        printf(p"O2_VFEX4_REDIRECT cycle=${o2Cycle} rob=${io.flush.bits.robIdx.flag}:${io.flush.bits.robIdx.value} self=${io.flush.bits.flushItself()}\n")
+      }
+      when(observedVDot.io.in.fire) {
+        printf(p"O2_ACCEPT cycle=${o2Cycle} seq=${o2NextSeq} rob=${o2In.robIdx.flag}:${o2In.robIdx.value} pdest=${o2In.pdest} vl=${o2Vl} illegal=${o2IllegalInput} vecwen=${o2In.vecWen.get} v0wen=${o2In.v0Wen.get} vpu=0x${Hexadecimal(o2In.vpu.get.asUInt)} perf=0x${Hexadecimal(observedVDot.io.in.bits.perfDebugInfo.asUInt)} vs1=0x${Hexadecimal(observedVDot.io.in.bits.data.src(0))} vs2=0x${Hexadecimal(observedVDot.io.in.bits.data.src(1))}\n")
+      }
+      when(o2Move) {
+        printf(p"O2_MOVE cycle=${o2Cycle} seq=${o2PSeq} rob=${o2P.robIdx.flag}:${o2P.robIdx.value} pdest=${o2P.pdest} illegal=${o2P.exceptionVec.get(xiangshan.ExceptionNO.illegalInstr)} vecwen=${o2P.vecWen.get} v0wen=${o2P.v0Wen.get} exception=0x${Hexadecimal(o2P.exceptionVec.get.asUInt)} vpu=0x${Hexadecimal(o2P.vpu.get.asUInt)} perf=0x${Hexadecimal(o2PPerf.asUInt)}\n")
+      }
+      when(o2KillP) {
+        printf(p"O2_KILL cycle=${o2Cycle} seq=${o2PSeq} slot=P rob=${o2P.robIdx.flag}:${o2P.robIdx.value} pdest=${o2P.pdest} redirect=${io.flush.bits.robIdx.flag}:${io.flush.bits.robIdx.value} self=${io.flush.bits.flushItself()}\n")
+      }
+      when(o2KillR) {
+        printf(p"O2_KILL cycle=${o2Cycle} seq=${o2RSeq} slot=R rob=${o2R.robIdx.flag}:${o2R.robIdx.value} pdest=${o2R.pdest} redirect=${io.flush.bits.robIdx.flag}:${io.flush.bits.robIdx.value} self=${io.flush.bits.flushItself()}\n")
+      }
+      when(o2Out.valid && !o2Out.ready) {
+        printf(p"O2_STALL cycle=${o2Cycle} seq=${o2RSeq} rob=${o2R.robIdx.flag}:${o2R.robIdx.value} pdest=${o2R.pdest} illegal=${o2R.exceptionVec.get(xiangshan.ExceptionNO.illegalInstr)} data=0x${Hexadecimal(o2Out.bits.res.data)} vecwen=${o2R.vecWen.get} v0wen=${o2R.v0Wen.get} exception=0x${Hexadecimal(o2R.exceptionVec.get.asUInt)} vpu=0x${Hexadecimal(o2R.vpu.get.asUInt)} perf=0x${Hexadecimal(o2Out.bits.perfDebugInfo.asUInt)}\n")
+      }
+      when(o2Out.fire) {
+        printf(p"O2_RESPONSE cycle=${o2Cycle} seq=${o2RSeq} rob=${o2R.robIdx.flag}:${o2R.robIdx.value} pdest=${o2R.pdest} illegal=${o2R.exceptionVec.get(xiangshan.ExceptionNO.illegalInstr)} data=0x${Hexadecimal(o2Out.bits.res.data)} vecwen=${o2R.vecWen.get} v0wen=${o2R.v0Wen.get} exception=0x${Hexadecimal(o2R.exceptionVec.get.asUInt)} vpu=0x${Hexadecimal(o2R.vpu.get.asUInt)} perf=0x${Hexadecimal(o2Out.bits.perfDebugInfo.asUInt)}\n")
+      }
+      when(o2DivAccept) {
+        printf(p"O2_DIV_ACCEPT cycle=${o2Cycle} seq=${o2NextSeq} rob=${io.in.bits.robIdx.flag}:${io.in.bits.robIdx.value} fu=0x${Hexadecimal(io.in.bits.fuType)} pdest=${io.in.bits.pdest}\n")
+      }
+      when(o2DivKill) {
+        printf(p"O2_DIV_KILL cycle=${o2Cycle} seq=${o2DivSeq} rob=${o2DivRob.flag}:${o2DivRob.value} fu=0x${Hexadecimal(o2DivFu)} pdest=${o2DivPdest} redirect=${io.flush.bits.robIdx.flag}:${io.flush.bits.robIdx.value} self=${io.flush.bits.flushItself()}\n")
+      }
+      o2DivUnits.foreach { fu =>
+        val ctrl = fu.io.out.bits.ctrl
+        when(fu.io.out.valid) {
+          // Retain the last DIV seq after logical kill until physical output
+          // disappears. Output identity always comes from the real child.
+          printf(p"O2_DIV_OUTPUT cycle=${o2Cycle} seq=${o2DivSeq} rob=${ctrl.robIdx.flag}:${ctrl.robIdx.value} fu=0x${Hexadecimal(fu.cfg.fuType.U)} pdest=${ctrl.pdest} ready=${fu.io.out.ready} cancelled=${!o2DivActive || o2DivKill}\n")
+        }
+      }
+    }
+  }
+
   def pipelineReg(init: ExuInput, valid: Bool, latency: Int, flush: ValidIO[Redirect]): (Seq[ExuInput], Seq[Bool]) = {
     val validVec = valid +: Seq.fill(latency)(RegInit(false.B))
     val inVec = init +: Seq.fill(latency)(Reg(new ExuInput(exuParams)))

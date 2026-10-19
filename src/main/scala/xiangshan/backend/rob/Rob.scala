@@ -1545,6 +1545,27 @@ class RobImp(override val wrapper: Rob)(implicit p: Parameters, params: BackendP
     }
   }
 
+  if (xiangshan.backend.fu.wrapper.VDotO2.traceEnabled) {
+    require(!p(xiangshan.DebugOptionsKey).ResetGen,
+      "O2 trace requires the common simulation reset")
+    val o2Cycle = GTimer()
+    for (i <- 0 until RenameWidth) {
+      val u = io.enq.req(i).bits
+      when(!reset.asBool && !io.redirect.valid && canEnqueue(i) && u.fuType === FuType.vdot.U) {
+        printf(p"O2_ENQUEUE cycle=${o2Cycle} rob=${allocatePtrVec(i).flag}:${allocatePtrVec(i).value} pc=0x${Hexadecimal(u.pc)} ftq=${u.ftqPtr.flag}:${u.ftqPtr.value} word=0x${Hexadecimal(u.instr)}\n")
+      }
+    }
+    for (i <- 0 until CommitWidth) {
+      val u = commitDebugUop(i)
+      when(!reset.asBool && io.commits.isCommit && io.commits.commitValid(i) && u.fuType === FuType.vdot.U) {
+        printf(p"O2_COMMIT cycle=${o2Cycle} rob=${deqPtrVec(i).flag}:${deqPtrVec(i).value} pc=0x${Hexadecimal(u.pc)} ftq=${u.ftqPtr.flag}:${u.ftqPtr.value}\n")
+      }
+    }
+    when(!reset.asBool && io.redirect.valid) {
+      printf(p"O2_REDIRECT cycle=${o2Cycle} rob=${io.redirect.bits.robIdx.flag}:${io.redirect.bits.robIdx.value} ftq=${io.redirect.bits.ftqIdx.flag}:${io.redirect.bits.ftqIdx.value} self=${io.redirect.bits.flushItself()}\n")
+    }
+  }
+
   if (env.EnableDifftest || env.AlwaysBasicDiff) {
     // These are the structures used by difftest only and should be optimized after synthesis.
     val dt_eliminatedMove = Mem(RobSize, Bool())
