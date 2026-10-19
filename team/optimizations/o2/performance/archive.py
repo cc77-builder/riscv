@@ -1,4 +1,4 @@
-"""Archive G3 evidence without build objects, generated RTL, or old emulators.
+"""Archive G4 performance evidence without build objects, generated RTL, or old emulators.
 
 All selected source bytes and stored bytes receive independent hashes. Gzip
 is deterministic; verification checks decompression too. This is packaging,
@@ -36,7 +36,7 @@ def verify(output):
         assert len(raw) == record["raw_bytes"] and sha(raw) == record["raw_sha256"]
     actual = {p.relative_to(output).as_posix() for p in (output / "files").rglob("*") if p.is_file()}
     assert actual == expected, "missing or unexpected archive file"
-    return dict(status="O2_G3_ARCHIVE_BYTES_PASS", files=len(expected),
+    return dict(status="O1_O2_PERFORMANCE_ARCHIVE_BYTES_PASS", files=len(expected),
                 raw_bytes=sum(x["raw_bytes"] for x in manifest["files"]),
                 stored_bytes=sum(x["stored_bytes"] for x in manifest["files"]),
                 archive_manifest_sha256=sha((output / "archive-manifest.json").read_bytes()),
