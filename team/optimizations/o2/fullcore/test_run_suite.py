@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 import sys
 import tempfile
+import threading
 import unittest
 
 import run_suite as runner
@@ -195,6 +196,47 @@ class FullcoreRunnerTests(unittest.TestCase):
         for bad in (True,-1,1.5,"1"):
             rows=passing_records();rows[0]["observation_counts"]["KILL_P"]=bad
             with self.assertRaises(ValueError):runner.coverage_union(rows)
+
+    def test_scheduler_smoke_recovery_order_and_two_worker_limit(self):
+        for workers in (1, 2):
+            lock = threading.Lock()
+            independent_started = threading.Event()
+            flags = {"smoke": False, "negative_done": False, "active": 0, "peak": 0}
+            progress = []
+            names = ["hello", "negative", "recovery", "independent", "other"]
+            def worker(name):
+                with lock:
+                    if name != "hello":
+                        self.assertTrue(flags["smoke"])
+                    flags["active"] += 1
+                    flags["peak"] = max(flags["peak"], flags["active"])
+                try:
+                    if name == "hello":
+                        flags["smoke"] = True
+                    elif name == "negative":
+                        if workers == 2:
+                            self.assertTrue(independent_started.wait(5),
+                                            "second worker remained idle during negative")
+                        flags["negative_done"] = True
+                    elif name == "recovery":
+                        self.assertTrue(flags["negative_done"])
+                    elif name == "independent":
+                        independent_started.set()
+                    return {"name": name, "status": "HOST_FIXTURE"}
+                finally:
+                    with lock:
+                        flags["active"] -= 1
+            rows = runner.execute_jobs([(name,) for name in names], worker, workers,
+                                       lambda rows: progress.append([r["name"] for r in rows]))
+            ordered = [r["name"] for r in rows]
+            self.assertEqual(ordered[0], "hello")
+            self.assertLess(ordered.index("negative"), ordered.index("recovery"))
+            self.assertEqual(set(ordered), set(names))
+            self.assertEqual(len(rows), len(names))
+            self.assertEqual(flags["peak"], workers)
+            self.assertEqual(progress[-1], ordered)
+        with self.assertRaises(ValueError):
+            runner.execute_jobs([], lambda: None, 4, lambda _: None)
 
     def test_real_subprocess_keeps_exit_and_separate_streams(self):
         # A host Python fixture, not EMU: exercise OS descriptors and exit status.

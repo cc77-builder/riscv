@@ -16,6 +16,7 @@ from pathlib import Path
 import re
 import subprocess
 import sys
+from threading import Lock
 
 ROOT = Path(__file__).resolve().parents[4]
 HERE = Path(__file__).resolve().parent
@@ -295,6 +296,33 @@ def preflight(args, guard, perf):
     }
 
 
+def execute_jobs(jobs, worker, max_workers, on_progress):
+    """Keep smoke first and negative->recovery ordered, without an idle slot."""
+    require(max_workers in (1, 2), "only one or two emulators allowed")
+    records = []
+    lock = Lock()
+
+    def run_record(item):
+        record = worker(*item)
+        with lock:
+            records.append(record)
+            on_progress(list(records))
+        return record
+
+    run_record(jobs[0])
+
+    def recovery_chain():
+        run_record(jobs[1])
+        run_record(jobs[2])
+
+    with ThreadPoolExecutor(max_workers=max_workers) as pool:
+        futures = [pool.submit(recovery_chain)]
+        futures += [pool.submit(run_record, item) for item in jobs[3:]]
+        for future in as_completed(futures):
+            future.result()
+    return records
+
+
 def run(args):
     require(args.preflight_only or (args.hardware_pins is not None and args.emu is not None),
             "--hardware-pins and --emu are required for an actual run")
@@ -433,16 +461,10 @@ def run(args):
             print(name, record["status"], record.get("error", ""), flush=True)
             return record
 
-        # Smoke, intentional failure, then normal-reference recovery on the exact
-        # same image. All later jobs are independent and continue after failures.
-        for item in jobs[:3]:
-            records.append(job(*item))
-            save(out / "progress.json", records)
-        with ThreadPoolExecutor(max_workers=args.jobs) as pool:
-            futures = [pool.submit(job, *item) for item in jobs[3:]]
-            for future in as_completed(futures):
-                records.append(future.result())
-                save(out / "progress.json", records)
+        # Smoke must finish first. The negative/recovery pair stays ordered
+        # in one worker; independent shards can use the second worker.
+        records = execute_jobs(jobs, job, args.jobs,
+                               lambda rows: save(out / "progress.json", rows))
         artifact_guard()
         guard.verify_nemu(args.t12_root / "nemu/reference", paths["reference"], "reference")
         for i in range(8):
