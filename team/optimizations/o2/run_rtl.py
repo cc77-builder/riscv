@@ -114,7 +114,10 @@ def main():
         if len(passes)!=1 or any(x in text for x in (prefix+"_FAIL",prefix+"_INJECT",prefix+"_FAULT_ESCAPED")):
             raise RuntimeError("positive completion gate")
         print(passes[0],flush=True)
-        faults=("identity","wen","high","cancel") if stage=="fu" else ("identity","wen","high","cancel","busy","route","clock")
+        if stage=="parent":
+            run("positive-replay.log",["python3","-B","team/optimizations/o2/parent/check_negative.py",
+                "--positive","--return-code","0","--log",out/"result.log"])
+        faults=("identity","wen","high","cancel") if stage=="fu" else ("identity","rob","high","metadata","wen","stall","route","double","clock","occupancy","kill_p","kill_r","survivor","duplicate","missing","reset")
         checker=ROOT/"team/optimizations/o2"/("check_negative_fu.py" if stage=="fu" else "parent/check_negative.py")
         for fault in faults:
             log="inject-"+fault+".log"
