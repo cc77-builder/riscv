@@ -40,7 +40,7 @@ def verify(output):
                 raw_bytes=sum(x["raw_bytes"] for x in manifest["files"]),
                 stored_bytes=sum(x["stored_bytes"] for x in manifest["files"]),
                 archive_manifest_sha256=sha((output / "archive-manifest.json").read_bytes()),
-                scope="byte preservation only; see independent G3 recheck for functional verdict")
+                scope="byte preservation only; see independent G4 recheck for the performance verdict")
 
 def create(work_root, output):
     work_root, output = work_root.resolve(), output.resolve()
