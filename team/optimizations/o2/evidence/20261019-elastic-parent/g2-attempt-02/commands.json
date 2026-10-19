@@ -1,0 +1,714 @@
+[
+  {
+    "command": [
+      "git",
+      "--version"
+    ],
+    "start": "2026-10-19T04:57:23.821869+00:00",
+    "end": "2026-10-19T04:57:23.824013+00:00",
+    "exit_code": 0,
+    "log": "git-version.log"
+  },
+  {
+    "command": [
+      "java",
+      "-version"
+    ],
+    "start": "2026-10-19T04:57:23.824326+00:00",
+    "end": "2026-10-19T04:57:23.888673+00:00",
+    "exit_code": 0,
+    "log": "java-version.log"
+  },
+  {
+    "command": [
+      "mill",
+      "--version"
+    ],
+    "start": "2026-10-19T04:57:23.888950+00:00",
+    "end": "2026-10-19T04:57:23.048056+00:00",
+    "exit_code": 0,
+    "log": "mill-version.log"
+  },
+  {
+    "command": [
+      "verilator",
+      "--version"
+    ],
+    "start": "2026-10-19T04:57:23.048457+00:00",
+    "end": "2026-10-19T04:57:23.099332+00:00",
+    "exit_code": 0,
+    "log": "verilator-version.log"
+  },
+  {
+    "command": [
+      "g++",
+      "--version"
+    ],
+    "start": "2026-10-19T04:57:23.099725+00:00",
+    "end": "2026-10-19T04:57:23.105649+00:00",
+    "exit_code": 0,
+    "log": "cxx-version.log"
+  },
+  {
+    "command": [
+      "clang++",
+      "--version"
+    ],
+    "start": "2026-10-19T04:57:23.106003+00:00",
+    "end": "2026-10-19T04:57:23.131907+00:00",
+    "exit_code": 0,
+    "log": "clang-version.log"
+  },
+  {
+    "command": [
+      "make",
+      "--version"
+    ],
+    "start": "2026-10-19T04:57:23.132292+00:00",
+    "end": "2026-10-19T04:57:23.134028+00:00",
+    "exit_code": 0,
+    "log": "make-version.log"
+  },
+  {
+    "command": [
+      "/home/riscv/.cache/llvm-firtool/1.62.1/bin/firtool",
+      "--version"
+    ],
+    "start": "2026-10-19T04:57:23.134262+00:00",
+    "end": "2026-10-19T04:57:23.136757+00:00",
+    "exit_code": 0,
+    "log": "firtool-version.log"
+  },
+  {
+    "command": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "start": "2026-10-19T04:57:23.136947+00:00",
+    "end": "2026-10-19T04:57:23.139022+00:00",
+    "exit_code": 0,
+    "log": "source-commit.log"
+  },
+  {
+    "command": [
+      "git",
+      "status",
+      "--short"
+    ],
+    "start": "2026-10-19T04:57:23.139247+00:00",
+    "end": "2026-10-19T04:57:23.572355+00:00",
+    "exit_code": 0,
+    "log": "source-status.log"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--binary",
+      "HEAD"
+    ],
+    "start": "2026-10-19T04:57:23.572765+00:00",
+    "end": "2026-10-19T04:57:23.938971+00:00",
+    "exit_code": 0,
+    "log": "working-tree.patch"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "team/rtl/vdot/prepare_vectors.py",
+      "team/models/vdot/data",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/vectors.tsv"
+    ],
+    "start": "2026-10-19T04:57:26.076382+00:00",
+    "end": "2026-10-19T04:57:26.155640+00:00",
+    "exit_code": 0,
+    "log": "vectors.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "team/optimizations/o2/parent",
+      "-p",
+      "test_negative.py",
+      "-v"
+    ],
+    "start": "2026-10-19T04:57:26.156028+00:00",
+    "end": "2026-10-19T04:57:26.194912+00:00",
+    "exit_code": 0,
+    "log": "negative-gate-tests.log"
+  },
+  {
+    "command": [
+      "mill",
+      "-i",
+      "-j",
+      "2",
+      "vdotElasticParent.runMain",
+      "team.vdot.GenerateVDotElasticParent",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl"
+    ],
+    "start": "2026-10-19T04:57:26.195337+00:00",
+    "end": "2026-10-19T04:57:36.756085+00:00",
+    "exit_code": 0,
+    "log": "elaboration.log"
+  },
+  {
+    "command": [
+      "verilator",
+      "--cc",
+      "--exe",
+      "--build",
+      "--assert",
+      "--top-module",
+      "VDotElasticParentTestTop",
+      "--Mdir",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/obj",
+      "-j",
+      "2",
+      "-CFLAGS",
+      "-std=c++17 -O2",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/ByteMaskTailGen.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/CSA3_2.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/CSA3_2_1.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/CSA3_2_124.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/CSA3_2_186.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/CSA3_2_30.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/CSA3_2_5.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/CSA3to2.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/CSA3to2_4.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/ClockGate.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/Conversion.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/Conversion_12.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/Conversion_8.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/ExeUnit.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/I8DivNr4.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/IterBlockI8Nr4.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/IterBlock_v4.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/IterBlock_v4_4.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/IterBlock_v4_6.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/LogPerfEndpoint.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/MaskExtractor.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/Mgu.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/SRT16Divint.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/SRT16Divint_4.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/SRT16Divint_6.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/SRT4qdsCons.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/SelBlock_v4.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/ShiftLeftPriorityWithLZDResult.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/ShiftLeftPriorityWithLZDResult_2.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/ShiftLeftPriorityWithLZDResult_4.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/SignDec.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/SpecBlock_v4.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/UIntToContLow0s.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/UIntToContLow1s.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/VDotElastic.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/VDotElasticParentTestTop.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/VDotProducts.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/VDotReduce.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/VFDivSqrt.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/VIDiv.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/VecDataSplitModule.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/VectorFloatDivider.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/VectorFloatDividerR64.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/VectorIdiv.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/extern_modules.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/fpdiv_r64_block_vector.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/fpsqrt_r16_block.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/fpsqrt_vector_r16.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/lzc.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/lzc_1.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/lzc_2.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/r4_qds.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/r4_qds_cg.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/r4_qds_spec.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/r4_qds_v2.sv",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/rtl/r4_qds_v2_spec.sv",
+      "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/parent/parent_test.cpp"
+    ],
+    "start": "2026-10-19T04:57:36.762685+00:00",
+    "end": "2026-10-19T04:57:54.663805+00:00",
+    "exit_code": 0,
+    "log": "verilator.log"
+  },
+  {
+    "command": [
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/obj/VVDotElasticParentTestTop",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/vectors.tsv"
+    ],
+    "start": "2026-10-19T04:57:54.664647+00:00",
+    "end": "2026-10-19T04:57:54.946149+00:00",
+    "exit_code": 0,
+    "log": "result.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "team/optimizations/o2/parent/check_negative.py",
+      "--positive",
+      "--return-code",
+      "0",
+      "--log",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/result.log"
+    ],
+    "start": "2026-10-19T04:57:55.005743+00:00",
+    "end": "2026-10-19T04:57:54.128718+00:00",
+    "exit_code": 0,
+    "log": "positive-replay.log"
+  },
+  {
+    "command": [
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/obj/VVDotElasticParentTestTop",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/vectors.tsv",
+      "identity"
+    ],
+    "start": "2026-10-19T04:57:54.129245+00:00",
+    "end": "2026-10-19T04:57:54.149210+00:00",
+    "exit_code": 1,
+    "log": "inject-identity.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "identity",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/inject-identity.log"
+    ],
+    "start": "2026-10-19T04:57:54.149874+00:00",
+    "end": "2026-10-19T04:57:54.176004+00:00",
+    "exit_code": 0,
+    "log": "check-identity.log"
+  },
+  {
+    "command": [
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/obj/VVDotElasticParentTestTop",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/vectors.tsv",
+      "rob"
+    ],
+    "start": "2026-10-19T04:57:54.176517+00:00",
+    "end": "2026-10-19T04:57:54.197715+00:00",
+    "exit_code": 1,
+    "log": "inject-rob.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "rob",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/inject-rob.log"
+    ],
+    "start": "2026-10-19T04:57:54.198332+00:00",
+    "end": "2026-10-19T04:57:54.224222+00:00",
+    "exit_code": 0,
+    "log": "check-rob.log"
+  },
+  {
+    "command": [
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/obj/VVDotElasticParentTestTop",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/vectors.tsv",
+      "high"
+    ],
+    "start": "2026-10-19T04:57:54.224774+00:00",
+    "end": "2026-10-19T04:57:54.244480+00:00",
+    "exit_code": 1,
+    "log": "inject-high.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "high",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/inject-high.log"
+    ],
+    "start": "2026-10-19T04:57:54.245117+00:00",
+    "end": "2026-10-19T04:57:54.271277+00:00",
+    "exit_code": 0,
+    "log": "check-high.log"
+  },
+  {
+    "command": [
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/obj/VVDotElasticParentTestTop",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/vectors.tsv",
+      "metadata"
+    ],
+    "start": "2026-10-19T04:57:54.271917+00:00",
+    "end": "2026-10-19T04:57:54.292396+00:00",
+    "exit_code": 1,
+    "log": "inject-metadata.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "metadata",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/inject-metadata.log"
+    ],
+    "start": "2026-10-19T04:57:54.293037+00:00",
+    "end": "2026-10-19T04:57:54.319207+00:00",
+    "exit_code": 0,
+    "log": "check-metadata.log"
+  },
+  {
+    "command": [
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/obj/VVDotElasticParentTestTop",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/vectors.tsv",
+      "wen"
+    ],
+    "start": "2026-10-19T04:57:54.319885+00:00",
+    "end": "2026-10-19T04:57:54.340343+00:00",
+    "exit_code": 1,
+    "log": "inject-wen.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "wen",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/inject-wen.log"
+    ],
+    "start": "2026-10-19T04:57:54.340885+00:00",
+    "end": "2026-10-19T04:57:54.366116+00:00",
+    "exit_code": 0,
+    "log": "check-wen.log"
+  },
+  {
+    "command": [
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/obj/VVDotElasticParentTestTop",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/vectors.tsv",
+      "stall"
+    ],
+    "start": "2026-10-19T04:57:54.366662+00:00",
+    "end": "2026-10-19T04:57:54.433715+00:00",
+    "exit_code": 1,
+    "log": "inject-stall.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "stall",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/inject-stall.log"
+    ],
+    "start": "2026-10-19T04:57:54.434510+00:00",
+    "end": "2026-10-19T04:57:54.460521+00:00",
+    "exit_code": 0,
+    "log": "check-stall.log"
+  },
+  {
+    "command": [
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/obj/VVDotElasticParentTestTop",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/vectors.tsv",
+      "route"
+    ],
+    "start": "2026-10-19T04:57:54.461409+00:00",
+    "end": "2026-10-19T04:57:54.480366+00:00",
+    "exit_code": 1,
+    "log": "inject-route.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "route",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/inject-route.log"
+    ],
+    "start": "2026-10-19T04:57:54.480987+00:00",
+    "end": "2026-10-19T04:57:54.506828+00:00",
+    "exit_code": 0,
+    "log": "check-route.log"
+  },
+  {
+    "command": [
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/obj/VVDotElasticParentTestTop",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/vectors.tsv",
+      "double"
+    ],
+    "start": "2026-10-19T04:57:54.507411+00:00",
+    "end": "2026-10-19T04:57:54.527155+00:00",
+    "exit_code": 1,
+    "log": "inject-double.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "double",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/inject-double.log"
+    ],
+    "start": "2026-10-19T04:57:54.528522+00:00",
+    "end": "2026-10-19T04:57:54.555671+00:00",
+    "exit_code": 0,
+    "log": "check-double.log"
+  },
+  {
+    "command": [
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/obj/VVDotElasticParentTestTop",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/vectors.tsv",
+      "clock"
+    ],
+    "start": "2026-10-19T04:57:54.556290+00:00",
+    "end": "2026-10-19T04:57:54.622028+00:00",
+    "exit_code": 1,
+    "log": "inject-clock.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "clock",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/inject-clock.log"
+    ],
+    "start": "2026-10-19T04:57:54.622655+00:00",
+    "end": "2026-10-19T04:57:54.650460+00:00",
+    "exit_code": 0,
+    "log": "check-clock.log"
+  },
+  {
+    "command": [
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/obj/VVDotElasticParentTestTop",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/vectors.tsv",
+      "occupancy"
+    ],
+    "start": "2026-10-19T04:57:54.651127+00:00",
+    "end": "2026-10-19T04:57:54.670458+00:00",
+    "exit_code": 1,
+    "log": "inject-occupancy.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "occupancy",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/inject-occupancy.log"
+    ],
+    "start": "2026-10-19T04:57:54.671078+00:00",
+    "end": "2026-10-19T04:57:54.697790+00:00",
+    "exit_code": 0,
+    "log": "check-occupancy.log"
+  },
+  {
+    "command": [
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/obj/VVDotElasticParentTestTop",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/vectors.tsv",
+      "kill_p"
+    ],
+    "start": "2026-10-19T04:57:54.698387+00:00",
+    "end": "2026-10-19T04:57:54.774226+00:00",
+    "exit_code": 1,
+    "log": "inject-kill_p.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "kill_p",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/inject-kill_p.log"
+    ],
+    "start": "2026-10-19T04:57:54.774968+00:00",
+    "end": "2026-10-19T04:57:54.801754+00:00",
+    "exit_code": 0,
+    "log": "check-kill_p.log"
+  },
+  {
+    "command": [
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/obj/VVDotElasticParentTestTop",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/vectors.tsv",
+      "kill_r"
+    ],
+    "start": "2026-10-19T04:57:54.802330+00:00",
+    "end": "2026-10-19T04:57:54.883242+00:00",
+    "exit_code": 1,
+    "log": "inject-kill_r.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "kill_r",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/inject-kill_r.log"
+    ],
+    "start": "2026-10-19T04:57:54.883894+00:00",
+    "end": "2026-10-19T04:57:54.911687+00:00",
+    "exit_code": 0,
+    "log": "check-kill_r.log"
+  },
+  {
+    "command": [
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/obj/VVDotElasticParentTestTop",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/vectors.tsv",
+      "survivor"
+    ],
+    "start": "2026-10-19T04:57:54.912332+00:00",
+    "end": "2026-10-19T04:57:54.988308+00:00",
+    "exit_code": 1,
+    "log": "inject-survivor.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "survivor",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/inject-survivor.log"
+    ],
+    "start": "2026-10-19T04:57:54.989012+00:00",
+    "end": "2026-10-19T04:57:55.016371+00:00",
+    "exit_code": 0,
+    "log": "check-survivor.log"
+  },
+  {
+    "command": [
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/obj/VVDotElasticParentTestTop",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/vectors.tsv",
+      "duplicate"
+    ],
+    "start": "2026-10-19T04:57:55.017124+00:00",
+    "end": "2026-10-19T04:57:55.085714+00:00",
+    "exit_code": 1,
+    "log": "inject-duplicate.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "duplicate",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/inject-duplicate.log"
+    ],
+    "start": "2026-10-19T04:57:55.086660+00:00",
+    "end": "2026-10-19T04:57:55.113866+00:00",
+    "exit_code": 0,
+    "log": "check-duplicate.log"
+  },
+  {
+    "command": [
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/obj/VVDotElasticParentTestTop",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/vectors.tsv",
+      "missing"
+    ],
+    "start": "2026-10-19T04:57:55.114508+00:00",
+    "end": "2026-10-19T04:57:55.133645+00:00",
+    "exit_code": 1,
+    "log": "inject-missing.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "missing",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/inject-missing.log"
+    ],
+    "start": "2026-10-19T04:57:55.134297+00:00",
+    "end": "2026-10-19T04:57:55.158927+00:00",
+    "exit_code": 0,
+    "log": "check-missing.log"
+  },
+  {
+    "command": [
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/obj/VVDotElasticParentTestTop",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/vectors.tsv",
+      "reset"
+    ],
+    "start": "2026-10-19T04:57:55.159615+00:00",
+    "end": "2026-10-19T04:57:55.241083+00:00",
+    "exit_code": 1,
+    "log": "inject-reset.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "reset",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/riscv/riscv-lab/o2-elastic-parent-20261019/g2-attempt-02/inject-reset.log"
+    ],
+    "start": "2026-10-19T04:57:55.241755+00:00",
+    "end": "2026-10-19T04:57:55.268946+00:00",
+    "exit_code": 0,
+    "log": "check-reset.log"
+  }
+]

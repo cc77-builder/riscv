@@ -1,5 +1,7 @@
 # 三人团队：项目计划与开发入口
 
+> **2026-10-19 O2 G1/G2 完成，本地保存。** 两槽弹性 FU 与真实 VFEX4＋DIV＋ClockGate 联调通过，连续流 II=1、无阻塞响应 2 拍；完整数据/身份、反压、精确取消、复位及旧模式兼容性通过，41 项主机测试和独立逐拍核验通过。见 [工程记录](optimizations/o2/IMPLEMENTATION.md) · [证据](optimizations/o2/evidence/20261019-elastic-parent/README.md)。下一步为 G3 观察器适配及全核回归；没有 O2 新整核加速比，默认关闭，未推送 GitHub，下方按历史时点阅读。
+
 > **2026-10-19 O2可行性评估与设计合同完成，本地保存。** [评估与后续步骤](optimizations/o2/README.md) · [设计合同](optimizations/o2/CONTRACT.md) · [旧轨迹分析](optimizations/o2/TRACE_ANALYSIS.md)。推荐下一轮先验证VFEX4两槽弹性原型；本轮未改生产RTL、未运行新EMU、未上传GitHub。O1已有结果继续有效，O2实测收益与最终采用仍待验证，下方状态按历史时点阅读。
 
 > **2026-10-18 O1 成果交付 zjhwork。** 本次包括真实父级联调、全核回归及T14/O1同镜像公平性能比较；batch128周期降低20.02%，相对RVV为1.870×。见 [发布说明](docs/o1-publication-20261018.md)。本条更新下方未上传状态，实际最终版本以远端回读为准；密封证据保持原样，O1默认关闭，未代签人工ACK。
