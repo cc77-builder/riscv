@@ -1,3 +1,9 @@
+# 当前任务：O4结构与时序代价评估（本地）
+
+2026-10-20用户明确授权O4，覆盖下方历史不自动O4的限制。入口team/optimizations/o4/README.md和CONTRACT.md。
+本轮新增公共生产接口harness及独立综合/STA工具，不改生产src/ISA/NEMU或旧封存证据；不push、不切换默认、不自动O5/G5，正式T16后置。
+工作根/home/riscv/riscv-lab/o4-cost-20261020。失败记录保留；不能把前布局参考库数字当作整核Fmax或实际功耗。
+
 # 当前发布：O2与O3成果交付 zjhwork（2026-10-20）
 
 用户明确要求把当前成果推送GitHub的zjhwork，授权本批正常快进发布到cc77-builder/riscv:zjhwork。
