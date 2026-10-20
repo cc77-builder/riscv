@@ -1,3 +1,13 @@
+# 当前任务：O3中断恢复进行中（2026-10-20，本地）
+
+原campaign-01在46项通过后中断；两项只有部分日志、无真实完成退出，不能宣称仍在跑或已完成。
+当前由resume.py在campaign-02导入46项字节相同证据，仅补跑剩余10项，另2中断尝试保留。
+原始campaign-01、镜像和运行源码不修改。恢复编排99f04b9，原execute源码7a642b6，恢复交付工具8aab2ed。
+当前进度查/home/riscv/riscv-lab/o3-gemv-20261019/campaign-02/state.json；
+恢复启动回执recovery-launch-state.json；新监督根/home/riscv/riscv-lab/o3-gemv-recovery-delivery-20261020。
+finish-recovery.py负责通过后的严格复核、封存、Windows复算和本地交付。不要再启动旧launch.py/finish.py或重跑全部测试。
+本轮不push，不自动O4/O5/G5/默认切换，正式T16后置。以下状态为历史记录。
+
 # 当前任务：O3 GEMV应用测试进行中（本地）
 
 用户2026-10-19明确授权开始O3。工作分支local/o3-gemv-20261019，基点08fc5b4；
