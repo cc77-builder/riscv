@@ -43,3 +43,5 @@ ABC目标1000ps，同驱动/负载约束；组合映射与DFF映射身份完整�
 分析器拒绝缺模式、不同约束/库、缺时序路径/未知单元、被静默忽略的工具错误和不一致面积。初始失败不得删除。
 工具运行一次只安排一个重型生成/综合，Mill最多2并发任务，不占用旧build/emu；工作根/home/riscv/riscv-lab/o4-cost-20261020。
 输出为可复现工程比较、明确的适用边界及G5所需代价依据；最终采用仍需O5/T17与人工复核。
+
+首轮o1-fu-map-01因Yosys0.9不支持automatic局部变量失败。统一firtool lowering禁用局部变量/packed arrays，仅改变RTL输出格式。旧Yosys没有dffunmap命令；synth -noabc生成基础DFF后直接dfflibmap，映射闭合检查仍必须通过。

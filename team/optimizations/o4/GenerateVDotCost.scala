@@ -66,6 +66,7 @@ object GenerateVDotCost {
     ChiselStage.emitSystemVerilogFile(
       if (args(0) == "fu") new CommonFuCostTop else new CommonParentCostTop,
       args = Array("--target-dir", args(1), "--split-verilog"),
-      firtoolOpts = Array("-disable-all-randomization", "-strip-debug-info"))
+      firtoolOpts = Array("-disable-all-randomization", "-strip-debug-info",
+        "--lowering-options=disallowLocalVariables,disallowPackedArrays"))
   }
 }
