@@ -96,6 +96,8 @@ def audit(archive,output):
         recovery_module=load("o3_native_recovery_check",Path(__file__).with_name("recovery_check.py"))
         recovery=recovery_module.validate(work,campaign,records,manifest["work_root"])
         stats=c.summarize(records)
+        ordering=load("o3_native_measured_identity",Path(__file__).with_name("evidence_order.py"))
+        ordering.require_same_measured(stats["measured_samples"],aggregate["measured_samples"])
         sealed=json.loads((work/manifest.get("results_name","results-01")/"verification.json").read_text(encoding="utf-8"))
         require(sealed["status"]=="O3_RAW_EVIDENCE_RECHECK_PASS","Linux audit status")
         for key in ("rows","best_rvv_comparison"):

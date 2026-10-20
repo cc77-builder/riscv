@@ -65,7 +65,12 @@ def recheck(root,output):
             c.require([(s["seq"],s["cycles"],s["instructions"]) for s in r["samples"]]==[(s["seq"],s["cycles"],s["instructions"]) for s in baseline["samples"]],"replay drift")
     recovery=recovery_module.validate(root.parent,root,records,str(root.parent))
     stats=c.summarize(records)
-    for key,value in stats.items():c.require(value==aggregate[key],"aggregate statistics drift "+key)
+    ordering=c.load("o3_exact_measured_identity",Path(__file__).with_name("evidence_order.py"))
+    for key,value in stats.items():
+        if key=="measured_samples":
+            ordering.require_same_measured(value,aggregate[key])
+        else:
+            c.require(value==aggregate[key],"aggregate statistics drift "+key)
     c.verify_hashes(files)
     samples=[]
     for r in records:
