@@ -1,27 +1,18 @@
-# 当前任务：O3中断恢复进行中（2026-10-20，本地）
-
-原campaign-01在46项通过后中断；两项只有部分日志、无真实完成退出，不能宣称仍在跑或已完成。
-当前由resume.py在campaign-02导入46项字节相同证据，仅补跑剩余10项，另2中断尝试保留。
-原始campaign-01、镜像和运行源码不修改。恢复编排99f04b9，原execute源码7a642b6，恢复交付工具8aab2ed。
-当前进度查/home/riscv/riscv-lab/o3-gemv-20261019/campaign-02/state.json；
-恢复启动回执recovery-launch-state.json；新监督根/home/riscv/riscv-lab/o3-gemv-recovery-delivery-20261020。
-finish-recovery.py负责通过后的严格复核、封存、Windows复算和本地交付。不要再启动旧launch.py/finish.py或重跑全部测试。
-本轮不push，不自动O4/O5/G5/默认切换，正式T16后置。以下状态为历史记录。
-
 # O3 INT8 GEMV应用评估
 
-2026-10-19开始，本地分支local/o3-gemv-20261019，未推送GitHub。26份镜像已编译及ELF审计，22项主机检查、4项真实O1/O2冒烟通过；正式应用campaign进行中，尚无完整O3性能结论。不要以模型通过代替RTL通过。
+真实O1/O2应用测量及Linux原始日志重审完成，Windows交付复算另见delivery回执；本地保存未push，正式T16报告后置。
 
-[测试合同](CONTRACT.md)规定四尺寸、三数据集、两计时口径、基础/复用两种软件和公平RVV对照。复用G4固定O1/O2，不修改硬件或旧基准。
+四尺寸、三数据集、core/endtoend、basic/reuse、vdot/RVV；56项合格EMU作业（46项原通过复用、10项恢复补跑，另2项中断尝试保留），1280校验窗口，768正式性能窗口，4项代表重放逐seq一致。全部规定尺寸和有利/不利结果保留。
 
-模型及生成器检查：
+[合同](CONTRACT.md) · [封存结果与证据](evidence/20261020-application/README.md)
+
+core包含所有A/x加载、乘法/归约、累加及输出寄存器形成，endtoend再包括kernel初始配置和结果存储；测试框架和VS启用在窗外。K=13的vdot标量尾部成本计入；RVV使用最多16项宽向量及动态尾部，不能称为已证明全局最优。
+
+硬件O1/O2使用G4相同429硬件文件/21236依赖及固定EMU；未重构建、未改ISA/NEMU/旧基准。原测量execute冻结7a642b6，构建软件5fdeba3；恢复编排99f04b9、后处理恢复审核8aab2ed、顺序修复8b6163b；不同提交角色分别记录，文档提交不是重构建。
 
     python3 -B -m unittest discover -s team/workloads/o3-gemv -p 'test_*.py' -v
-
-在完整香山检出中编译新镜像，输出目录必须不存在：
-
     python3 -B team/workloads/o3-gemv/build.py --output /absolute/new/images
+    python3 -B team/workloads/o3-gemv/campaign.py --images /absolute/completed/images --output /absolute/new/campaign
+    python3 -B team/workloads/o3-gemv/results.py --campaign /absolute/completed/campaign --output /absolute/new/results
 
-所有实际运行和结果随后以新的campaign目录记录；本轮不自动O4/O5/G5，不改变默认模式，正式T16报告后置。
-
-当前运行状态：/home/riscv/riscv-lab/o3-gemv-20261019/campaign-01/state.json；交付监督状态：/home/riscv/riscv-lab/o3-gemv-delivery-20261019/state.json。不要重复启动campaign。通过后监督程序自动严格复核、封存、原生Windows复算并本地提交；失败会保留日志并停止，不自动重跑EMU。
+不要重启已完成campaign或改写旧证据。新的完整复跑必须用新目录；不以离线复算冒称T17干净构建。O4/O5/G5、默认模式采用和人工ACK仍待后续。
