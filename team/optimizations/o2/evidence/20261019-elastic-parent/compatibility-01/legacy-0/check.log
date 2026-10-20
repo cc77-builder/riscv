@@ -1,0 +1,85 @@
+VDOT_FU_CHECK_START date=2026-10-19T12:51:34+08:00 output=/home/riscv/riscv-lab/o2-elastic-parent-20261019/compatibility-01/legacy-0
+a7d32f1d03eef251ce7845bb89a8b42cebe096ad
+ M team/optimizations/o2/run_rtl.py
+?? team/optimizations/o2/parent/
+/opt/graalvm-jdk-21/bin/java
+/usr/local/bin/mill
+/usr/bin/python3
+/usr/local/bin/verilator
+/usr/local/llvm/bin/clang++
+/usr/bin/rg
+java version "21.0.12" 2026-07-21 LTS
+Java(TM) SE Runtime Environment Oracle GraalVM 21.0.12+7.1 (build 21.0.12+7-LTS-jvmci-23.1-b96)
+Java HotSpot(TM) 64-Bit Server VM Oracle GraalVM 21.0.12+7.1 (build 21.0.12+7-LTS-jvmci-23.1-b96, mixed mode, sharing)
+Mill Build Tool version 0.12.3
+Java version: 21.0.12, vendor: Oracle Corporation, runtime: /opt/graalvm-jdk-21
+Default locale: en, platform encoding: UTF-8
+OS name: "Linux", version: 6.6.87.2-microsoft-standard-WSL2, arch: amd64
+LLVM (http://llvm.org/):
+  LLVM version 18.0.0git
+  Optimized build.
+CIRCT firtool-1.62.1
+Verilator 5.052 2026-09-05 rev v5.052
+Ubuntu clang version 19.1.7 (++20250114103320+cd708029e0b2-1~exp1~20250114103432.75)
+Target: x86_64-pc-linux-gnu
+Thread model: posix
+InstalledDir: /usr/lib/llvm-19/bin
+Python 3.10.12
++ python3 -B /home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/rtl/vdot/prepare_vectors.py /home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/models/vdot/data /home/riscv/riscv-lab/o2-elastic-parent-20261019/compatibility-01/legacy-0/vectors.tsv
+VECTOR_CHECK_PASS suite=directed count=22 sha256=b78708eca1145437d34af230721a3999c35889176131cdf57acfa6b7a6b8b333
+VECTOR_CHECK_PASS suite=random count=10000 sha256=6201847c400f7ecac85848690704abac15b7278a824e447b35ad60788da70363
+VECTOR_EXPORT_PASS contract=vdot-s8x8-r32-v0.1 total=10022 sha256=901a7be30e62b81bcd3df55b20538a5ba9c879ba9c7c34f28b8c0421d8e6a327
++ mill -i -j 2 vdotFu.runMain team.vdot.GenerateVDotFu /home/riscv/riscv-lab/o2-elastic-parent-20261019/compatibility-01/legacy-0/rtl
++ cat /home/riscv/riscv-lab/o2-elastic-parent-20261019/compatibility-01/legacy-0/elaboration.log
+=============== vdotFu.runMain team.vdot.Generat...9/compatibility-01/legacy-0/rtl ===============
+==================================================================================================
+[716/723] vdotFu.compile
+[716] [info] compiling 1 Scala source to /home/riscv/riscv-lab/zjhwork2-review-20261018/repo/out/vdotFu/compile.dest/classes ...
+[716] [info] done compiling
+[723/723] vdotFu.runMain
+[723] VDot fusedInputProducts=false latency=3
+[723/723] =============== vdotFu.runMain team.vdot....tibility-01/legacy-0/rtl =============== 11s
+==================================================================================================
++ test -s /home/riscv/riscv-lab/o2-elastic-parent-20261019/compatibility-01/legacy-0/rtl/VDotFuTestTop.sv
++ sha256sum /home/riscv/riscv-lab/o2-elastic-parent-20261019/compatibility-01/legacy-0/rtl/VDotFuTestTop.sv
++ verilator --cc --exe --build --assert --top-module VDotFuTestTop --Mdir /home/riscv/riscv-lab/o2-elastic-parent-20261019/compatibility-01/legacy-0/obj_dir -j 2 -CFLAGS '-std=c++17 -O2 -DVDOT_FU_EXPECTED_LATENCY=3' /home/riscv/riscv-lab/o2-elastic-parent-20261019/compatibility-01/legacy-0/rtl/VDotFuTestTop.sv /home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/rtl/vdot/fu_test.cpp
++ /home/riscv/riscv-lab/o2-elastic-parent-20261019/compatibility-01/legacy-0/obj_dir/VVDotFuTestTop /home/riscv/riscv-lab/o2-elastic-parent-20261019/compatibility-01/legacy-0/vectors.tsv
++ tee /home/riscv/riscv-lab/o2-elastic-parent-20261019/compatibility-01/legacy-0/results.log
+VDOT_FU_GROUP_PASS arithmetic=10022 stalls=0,1,2,7 continuous-valid identity-snapshot latency-II
+VDOT_FU_GROUP_PASS illegal=22 policy-vxrm=16 renamed-VL exception-no-write
+VDOT_FU_GROUP_PASS idle-flush input-not-accepted recovery
+VDOT_FU_GROUP_PASS redirect-matrix=64 MUL-REDUCE-RESP-stalled older-self-wrap handshake-priority
+VDOT_FU_GROUP_PASS reset-phases=4 no-ghost-response recovery
+VDOT_FU_GROUP_PASS random-control cycles=5000 seed=0x20261013 conservation-watchdog
+VDOT_FU_PASS latency=3 min_ii=4 groups=6 cycles=71258 accepted=11245 responded=10960 killed=271 reset_dropped=14 illegal_responses=90 stall_cycles=25700
++ for fault in identity cancel-leak
++ /home/riscv/riscv-lab/o2-elastic-parent-20261019/compatibility-01/legacy-0/obj_dir/VVDotFuTestTop /home/riscv/riscv-lab/o2-elastic-parent-20261019/compatibility-01/legacy-0/vectors.tsv --inject-identity
++ rc=1
++ test 1 -eq 1
++ rg -q '^VDOT_FU_FAULT_INJECTION identity' /home/riscv/riscv-lab/o2-elastic-parent-20261019/compatibility-01/legacy-0/inject-identity.log
++ rg -q '^VDOT_FU_FAIL case=' /home/riscv/riscv-lab/o2-elastic-parent-20261019/compatibility-01/legacy-0/inject-identity.log
++ cat /home/riscv/riscv-lab/o2-elastic-parent-20261019/compatibility-01/legacy-0/inject-identity.log
+VDOT_FU_FAULT_INJECTION identity
+VDOT_FU_FAIL case=all-vectors-with-backpressure cycle=9 pdest identity mismatch
++ printf 'FU_FAULT_DETECTION_PASS fault=%s expected_exit=1\n' identity
+FU_FAULT_DETECTION_PASS fault=identity expected_exit=1
++ for fault in identity cancel-leak
++ /home/riscv/riscv-lab/o2-elastic-parent-20261019/compatibility-01/legacy-0/obj_dir/VVDotFuTestTop /home/riscv/riscv-lab/o2-elastic-parent-20261019/compatibility-01/legacy-0/vectors.tsv --inject-cancel-leak
++ rc=1
++ test 1 -eq 1
++ rg -q '^VDOT_FU_FAULT_INJECTION cancel-leak' /home/riscv/riscv-lab/o2-elastic-parent-20261019/compatibility-01/legacy-0/inject-cancel-leak.log
++ rg -q '^VDOT_FU_FAIL case=' /home/riscv/riscv-lab/o2-elastic-parent-20261019/compatibility-01/legacy-0/inject-cancel-leak.log
++ cat /home/riscv/riscv-lab/o2-elastic-parent-20261019/compatibility-01/legacy-0/inject-cancel-leak.log
+VDOT_FU_GROUP_PASS arithmetic=10022 stalls=0,1,2,7 continuous-valid identity-snapshot latency-II
+VDOT_FU_GROUP_PASS illegal=22 policy-vxrm=16 renamed-VL exception-no-write
+VDOT_FU_GROUP_PASS idle-flush input-not-accepted recovery
+VDOT_FU_FAULT_INJECTION cancel-leak
+VDOT_FU_FAIL case=redirect-case-0 cycle=65379 output valid/kill/latency mismatch
++ printf 'FU_FAULT_DETECTION_PASS fault=%s expected_exit=1\n' cancel-leak
+FU_FAULT_DETECTION_PASS fault=cancel-leak expected_exit=1
++ mill -i -j 2 vdotFu.runMain team.vdot.GenerateVDotFu /home/riscv/riscv-lab/o2-elastic-parent-20261019/compatibility-01/legacy-0/invalid-vlen --invalid-vlen
++ rg -q 'VDot requires VLEN=128' /home/riscv/riscv-lab/o2-elastic-parent-20261019/compatibility-01/legacy-0/invalid-vlen.log
++ echo 'VLEN_GUARD_PASS unsupported=256'
+VLEN_GUARD_PASS unsupported=256
++ set +x
+VDOT_FU_CHECK_PASS (real FU RTL and RobPtr; no EXU/CPU/NEMU integration validation)

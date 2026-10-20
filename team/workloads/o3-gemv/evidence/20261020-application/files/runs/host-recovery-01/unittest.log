@@ -1,0 +1,43 @@
+test_all_samples_and_best_rvv (test_campaign.CampaignTests) ... ok
+test_duplicate_key_rejected (test_campaign.CampaignTests) ... ok
+test_first_and_replay_not_measured (test_campaign.CampaignTests) ... ok
+test_missing_sample_rejected (test_campaign.CampaignTests) ... ok
+test_retirement_drift_rejected (test_campaign.CampaignTests) ... ok
+test_control_flow_rejected (test_checker.CheckerTests) ... ok
+test_counter_order_rejected (test_checker.CheckerTests) ... ok
+test_missing_counter_rejected (test_checker.CheckerTests) ... ok
+test_pointer_write_to_t6_is_not_a_loop (test_checker.CheckerTests) ... ok
+test_export_rejects_unfinished_measurements (test_delivery.DeliveryTests) ... ok
+test_portable_rejects_changed_stored_bytes (test_delivery.DeliveryTests) ... ok
+test_portable_rejects_manifest_digest_change (test_delivery.DeliveryTests) ... ok
+test_portable_rejects_path_escape (test_delivery.DeliveryTests) ... ok
+test_recheck_rejects_incomplete_campaign (test_delivery.DeliveryTests) ... ok
+test_all_emitted_kernels_against_independent_gemv (test_model.ModelTests) ... ok
+test_deterministic_generator (test_model.ModelTests) ... ok
+test_inputs_shared_and_no_row_padding (test_model.ModelTests) ... ok
+test_invalid_inputs (test_model.ModelTests) ... ok
+test_oracle_detects_input_error (test_model.ModelTests) ... ok
+test_reuse_reduces_x_loads (test_model.ModelTests) ... ok
+test_scope_stores_after_counter (test_model.ModelTests) ... ok
+test_signed_limits (test_model.ModelTests) ... ok
+test_complete_marker_cannot_replace_actual_exit (test_resume.RecoveryTests) ... ok
+test_exact_pending_set (test_resume.RecoveryTests) ... ok
+test_extract_original_executor_without_rewriting (test_resume.RecoveryTests) ... ERROR
+test_partial_log_is_not_accepted_without_exit (test_resume.RecoveryTests) ... ok
+
+======================================================================
+ERROR: test_extract_original_executor_without_rewriting (test_resume.RecoveryTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/workloads/o3-gemv/test_resume.py", line 16, in test_extract_original_executor_without_rewriting
+    node=resume.frozen_executor(source)
+  File "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/workloads/o3-gemv/resume.py", line 24, in frozen_executor
+    c.require(len(nodes)==1,"one original executor required")
+  File "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/workloads/o3-gemv/campaign.py", line 25, in require
+    if not ok:raise ValueError(message)
+ValueError: one original executor required
+
+----------------------------------------------------------------------
+Ran 26 tests in 0.223s
+
+FAILED (errors=1)

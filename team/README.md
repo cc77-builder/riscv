@@ -1,6 +1,19 @@
+> 2026-10-20 James_Hotten：已整合并审查 O2/O3 的40项新提交，修复取消时钟、来源及验收问题；631项主机检查与新父级验证通过。见[本轮记录](docs/o2-o3-integration-20261020.md)。历史性能保持原版本绑定，O1/O2默认关闭，本次仅本地合并，main不改。
+
+# 最新交付：O2与O3成果至zjhwork
+
+2026-10-20用户授权本批普通快进发布，实际成功与SHA以回读为准。[发布范围与下一步](docs/o2-o3-publication-20261020.md) · [O3完整应用结果](workloads/o3-gemv/README.md) · [O1/O2公平性能](optimizations/o2/performance/README.md)
+
+O2 G0–G4及O3已完成。O3共56项合格作业（46复用＋10补跑，另2中断记录保留）、1280校验窗口、768正式性能样本；Linux/Windows离线复算通过。G4独立batch128降低39.03%，O3应用reuse/endtoend降低0.62%–1.50%，适用范围分别报告。
+
+下一项O4结构/时序代价，再推进O5/T17队友干净检出复现与G5最终采用。O2默认关闭，T16报告继续后置。本条更新下方“未上传/待做”等历史状态，不修改密封证据。
+
 # 三人团队：项目计划与开发入口
 
 > 当前整合（2026-10-19）：以最新 zjhwork `cd866d52d` 为基准，并保留 James_Hotten `724fbb12f` 的时钟取消与验收修复。当前状态见[整合与审查记录](docs/o1-latest-integration-20261019.md)。以下全核及性能数字保留原受测版本绑定，不代表合并后源码的新运行；O1默认关闭。
+> **2026-10-19 O2 G1/G2 完成，本地保存。** 两槽弹性 FU 与真实 VFEX4＋DIV＋ClockGate 联调通过，连续流 II=1、无阻塞响应 2 拍；完整数据/身份、反压、精确取消、复位及旧模式兼容性通过，41 项主机测试和独立逐拍核验通过。见 [工程记录](optimizations/o2/IMPLEMENTATION.md) · [证据](optimizations/o2/evidence/20261019-elastic-parent/README.md)。下一步为 G3 观察器适配及全核回归；没有 O2 新整核加速比，默认关闭，未推送 GitHub，下方按历史时点阅读。
+
+> **2026-10-19 O2可行性评估与设计合同完成，本地保存。** [评估与后续步骤](optimizations/o2/README.md) · [设计合同](optimizations/o2/CONTRACT.md) · [旧轨迹分析](optimizations/o2/TRACE_ANALYSIS.md)。推荐下一轮先验证VFEX4两槽弹性原型；本轮未改生产RTL、未运行新EMU、未上传GitHub。O1已有结果继续有效，O2实测收益与最终采用仍待验证，下方状态按历史时点阅读。
 
 > **2026-10-18 O1 成果交付 zjhwork。** 本次包括真实父级联调、全核回归及T14/O1同镜像公平性能比较；batch128周期降低20.02%，相对RVV为1.870×。见 [发布说明](docs/o1-publication-20261018.md)。本条更新下方未上传状态，实际最终版本以远端回读为准；密封证据保持原样，O1默认关闭，未代签人工ACK。
 

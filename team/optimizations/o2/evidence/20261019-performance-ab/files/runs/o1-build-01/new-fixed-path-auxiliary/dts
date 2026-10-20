@@ -1,0 +1,96 @@
+/dts-v1/;
+
+/ {
+	#address-cells = <2>;
+	#size-cells = <2>;
+	compatible = "freechips,rocketchip-unknown-dev";
+	model = "xiangshan,Kunminghu-dev-a239dace (riscv@ZJH) # Oct 19 05:06:21 2026";
+	L16: cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		timebase-frequency;
+		L11: cpu@0 {
+			clock-frequency = <0>;
+			compatible = "ICT,xiangshan", "riscv";
+			d-cache-block-size = <64>;
+			d-cache-sets = <64>;
+			d-cache-size = <32768>;
+			d-tlb-sets = <1>;
+			d-tlb-size = <4>;
+			device_type = "cpu";
+			i-cache-block-size = <64>;
+			i-cache-sets = <64>;
+			i-cache-size = <16384>;
+			i-tlb-sets = <1>;
+			i-tlb-size = <4>;
+			mmu-type = "riscv,sv50";
+			next-level-cache = <&L0>;
+			reg = <0x0>;
+			riscv,isa = "rv64imafdcvh";
+			riscv,isa-base = "rv64i";
+			riscv,isa-extensions = "i", "m", "a", "f", "d", "c", "v", "h", "sdtrig", "sha", "shcounterenw", "shgatpa", "shlcofideleg", "shtvala", "shvsatpa", "shvstvala", "shvstvecd", "smaia", "smcsrind", "smdbltrp", "smmpm", "smnpm", "smrnmi", "smstateen", "ss1p13", "ssaia", "ssccptr", "sscofpmf", "sscounterenw", "sscsrind", "ssdbltrp", "ssnpm", "sspm", "ssstateen", "ssstrict", "sstc", "sstvala", "sstvecd", "ssu64xl", "supm", "sv39", "sv48", "svade", "svbare", "svinval", "svnapot", "svpbmt", "za64rs", "zacas", "zawrs", "zba", "zbb", "zbc", "zbkb", "zbkc", "zbkx", "zbs", "zcb", "zcmop", "zfa", "zfh", "zfhmin", "zic64b", "zicbom", "zicbop", "zicboz", "ziccamoa", "ziccif", "zicclsm", "ziccrse", "zicntr", "zicond", "zicsr", "zifencei", "zihintntl", "zihintpause", "zihpm", "zimop", "zkn", "zknd", "zkne", "zknh", "zksed", "zksh", "zkt", "zvbb", "zvfh", "zvfhmin", "zvkt", "zvl128b", "zvl32b", "zvl64b";
+			status = "okay";
+			timebase-frequency = <1000000>;
+			tlb-split;
+			L12: interrupt-controller {
+				#interrupt-cells = <1>;
+				compatible = "riscv,cpu-intc";
+				interrupt-controller;
+			};
+		};
+	};
+	L0: memory@80000000 {
+		device_type = "memory";
+		reg = <0x0 0x80000000 0xffff 0x80000000 0x0 0x80000000 0xffff 0x80000000>;
+	};
+	L15: soc {
+		#address-cells = <2>;
+		#size-cells = <2>;
+		compatible = "freechips,rocketchip-unknown-soc", "simple-bus";
+		ranges;
+		L13: bus-error-unit {
+			compatible = "sifive,buserror0";
+			interrupt-parent = <&L3>;
+			interrupts = <65>;
+		};
+		L2: clint@38000000 {
+			compatible = "riscv,clint0";
+			interrupts-extended = <&L12 3 &L12 7>;
+			reg = <0x0 0x38000000 0x0 0x10000>;
+			reg-names = "control";
+		};
+		L5: debug-controller@38020000 {
+			compatible = "sifive,debug-013", "riscv,debug-013";
+			debug-attach = "jtag";
+			interrupts-extended = <&L12 65535>;
+			reg = <0x0 0x38020000 0x0 0x1000>;
+			reg-names = "control";
+		};
+		L8: error-device@0 {
+			compatible = "sifive,error0";
+			reg = <0x0 0x0 0x0 0x80000000>;
+		};
+		L3: interrupt-controller@3c000000 {
+			#interrupt-cells = <1>;
+			compatible = "riscv,plic0";
+			interrupt-controller;
+			interrupts-extended = <&L12 11 &L12 9>;
+			reg = <0x0 0x3c000000 0x0 0x4000000>;
+			reg-names = "control";
+			riscv,max-priority = <7>;
+			riscv,ndev = <65>;
+		};
+		L7: mmpma@38021000 {
+			reg = <0x0 0x38021000 0x0 0x1000>;
+			reg-names = "control";
+		};
+		L4: pll_ctrl@3a000000 {
+			reg = <0x0 0x3a000000 0x0 0x1000>;
+			reg-names = "control";
+		};
+		L1: serial@40600000 {
+			compatible = "xilinx,uartlite";
+			reg = <0x0 0x40600000 0x0 0x40>;
+		};
+	};
+};

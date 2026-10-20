@@ -1,0 +1,192 @@
+{
+  "status": "FINAL_GATE_REVIEW_PASS_NO_RTL_RUN",
+  "revision": "e2d9c063ac716665f4596bc95a806bd62a56d3a7",
+  "created": "2026-10-19T14:04:22.858224+08:00",
+  "new_emu_executed": false,
+  "frozen_files_modified": false,
+  "source_sha256": {
+    "team/optimizations/o2/fullcore/recheck.py": "5aa5083eb7cdafab949404a3a6ab3df6fc15c8a6db9f016d021fe8a8bb139619",
+    "team/optimizations/o2/fullcore/run_suite.py": "7bc68d73cd830ceb8fb9aa18469ebe6ff3efcdf56de6922049e05556b0e02475",
+    "team/optimizations/o2/fullcore/check_control.py": "72715f041d1a72ddee5d8a95c3a4d686280837ec735cab486a2a91c4ba2374e2",
+    "team/optimizations/o2/fullcore/run_supplements.py": "1ae08d1902cd077fdb4572be7b94b1708db3ee8244dc16b095c7123da5be6380",
+    "team/optimizations/o2/fullcore/analyze.py": "27d9fe451c035157848625e84c2a229ac1d83073eb56ba3ebc25131e5569d496",
+    "team/scripts/check-vdot-run.py": "1d9868017f2467031b12c9d1f3c38fbf36b4a9c635e8aeb31cc8d83cd8ce1df9",
+    "team/workloads/vdot-perf/check.py": "ecaf2a44e3dee0a360c4da6742869af403eff293bf86842c59c30d348a834fc0",
+    "team/optimizations/o1/audit/runtime_gate.py": "80315b278f4dc0168edd33657a07ae648b20f0279fa57a69f35b0f983fa42ea1"
+  },
+  "source_review": {
+    "core_inventory": "exact12",
+    "functional_matrix": "117 unique /124 executed from frozen8shards; each checked independently",
+    "negative": "exact bit100 mismatch and abort, no GOOD TRAP, original stdout terminal adjacency",
+    "recovery": "functional0 sameimage with normalref, starts after negativefinished",
+    "legacy_control": "all7 required inside frozen control image; supplements cannot replace",
+    "dense": "frozen image, exact12 CSR windows, both MULTI_INFLIGHT and TRIPLE_OVERLAP strictly positive inside dense run",
+    "g3_union": "six fixed positivecounts, qualified complete core/supplement records only; negative partial excluded",
+    "supplements": "exact2, sameEMU/pins and sharedcheckerSHA, independently recomputed rawstreams",
+    "final": "core12correct AND supplement2correct AND all6coverage; partial flag never upgrades"
+  },
+  "synthetic_gate_mutations": [
+    {
+      "test": "missing_hello-vadd",
+      "outcome": "EXPECTED_REJECTION"
+    },
+    {
+      "test": "missing_negative-vdot",
+      "outcome": "EXPECTED_REJECTION"
+    },
+    {
+      "test": "missing_functional-0",
+      "outcome": "EXPECTED_REJECTION"
+    },
+    {
+      "test": "missing_functional-1",
+      "outcome": "EXPECTED_REJECTION"
+    },
+    {
+      "test": "missing_functional-2",
+      "outcome": "EXPECTED_REJECTION"
+    },
+    {
+      "test": "missing_functional-3",
+      "outcome": "EXPECTED_REJECTION"
+    },
+    {
+      "test": "missing_functional-4",
+      "outcome": "EXPECTED_REJECTION"
+    },
+    {
+      "test": "missing_functional-5",
+      "outcome": "EXPECTED_REJECTION"
+    },
+    {
+      "test": "missing_functional-6",
+      "outcome": "EXPECTED_REJECTION"
+    },
+    {
+      "test": "missing_functional-7",
+      "outcome": "EXPECTED_REJECTION"
+    },
+    {
+      "test": "missing_control",
+      "outcome": "EXPECTED_REJECTION"
+    },
+    {
+      "test": "missing_dense-batch128",
+      "outcome": "EXPECTED_REJECTION"
+    },
+    {
+      "test": "supplement_cannot_replace_failed_control",
+      "outcome": "EXPECTED_REJECTION"
+    },
+    {
+      "test": "supplement_cannot_replace_failed_dense-batch128",
+      "outcome": "EXPECTED_REJECTION"
+    },
+    {
+      "test": "supplement_cannot_replace_failed_functional-0",
+      "outcome": "EXPECTED_REJECTION"
+    },
+    {
+      "test": "supplement_cannot_replace_failed_functional-1",
+      "outcome": "EXPECTED_REJECTION"
+    },
+    {
+      "test": "supplement_cannot_replace_failed_functional-2",
+      "outcome": "EXPECTED_REJECTION"
+    },
+    {
+      "test": "supplement_cannot_replace_failed_functional-3",
+      "outcome": "EXPECTED_REJECTION"
+    },
+    {
+      "test": "supplement_cannot_replace_failed_functional-4",
+      "outcome": "EXPECTED_REJECTION"
+    },
+    {
+      "test": "supplement_cannot_replace_failed_functional-5",
+      "outcome": "EXPECTED_REJECTION"
+    },
+    {
+      "test": "supplement_cannot_replace_failed_functional-6",
+      "outcome": "EXPECTED_REJECTION"
+    },
+    {
+      "test": "supplement_cannot_replace_failed_functional-7",
+      "outcome": "EXPECTED_REJECTION"
+    },
+    {
+      "test": "normal_recovery_cannot_precede_negative",
+      "outcome": "EXPECTED_REJECTION"
+    },
+    {
+      "test": "normal_recovery_image_mismatch",
+      "outcome": "EXPECTED_REJECTION"
+    },
+    {
+      "test": "normal_job_partial_trace_forbidden",
+      "outcome": "EXPECTED_REJECTION"
+    },
+    {
+      "test": "negative_partial_counts_never_supply_coverage",
+      "outcome": "EXPECTED_REJECTION"
+    },
+    {
+      "test": "new_coverage_cannot_replace_legacy_accepted_younger_squashed",
+      "outcome": "EXPECTED_REJECTION"
+    },
+    {
+      "test": "new_coverage_cannot_replace_legacy_inflight_fu_killed",
+      "outcome": "EXPECTED_REJECTION"
+    },
+    {
+      "test": "new_coverage_cannot_replace_legacy_shared_vfex4_fu_kinds",
+      "outcome": "EXPECTED_REJECTION"
+    },
+    {
+      "test": "new_coverage_cannot_replace_legacy_shared_vfex4_backpressure",
+      "outcome": "EXPECTED_REJECTION"
+    },
+    {
+      "test": "new_coverage_cannot_replace_legacy_vdot_writeback_backpressure",
+      "outcome": "EXPECTED_REJECTION"
+    },
+    {
+      "test": "new_coverage_cannot_replace_legacy_rob_wrap_repeated",
+      "outcome": "EXPECTED_REJECTION"
+    },
+    {
+      "test": "new_coverage_cannot_replace_legacy_ftq_wrap_repeated",
+      "outcome": "EXPECTED_REJECTION"
+    },
+    {
+      "test": "all_other_gates_cannot_replace_MULTI_INFLIGHT",
+      "outcome": "EXPECTED_INCOMPLETE"
+    },
+    {
+      "test": "all_other_gates_cannot_replace_TRIPLE_OVERLAP",
+      "outcome": "EXPECTED_INCOMPLETE"
+    },
+    {
+      "test": "all_other_gates_cannot_replace_FULL_STALL",
+      "outcome": "EXPECTED_INCOMPLETE"
+    },
+    {
+      "test": "all_other_gates_cannot_replace_KILL_P",
+      "outcome": "EXPECTED_INCOMPLETE"
+    },
+    {
+      "test": "all_other_gates_cannot_replace_KILL_R",
+      "outcome": "EXPECTED_INCOMPLETE"
+    },
+    {
+      "test": "all_other_gates_cannot_replace_PARTIAL_KILL",
+      "outcome": "EXPECTED_INCOMPLETE"
+    }
+  ],
+  "synthetic_mutation_count": 39,
+  "findings": [],
+  "limitations": [
+    "Static/control-function review; actual G3 acceptance remains pending completion and offline recheck of real jobs.",
+    "Same-image recovery chronology uses bound runner receipts and timestamps, not a trusted external clock."
+  ]
+}

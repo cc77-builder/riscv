@@ -1,0 +1,27 @@
+
+/home/riscv/riscv-lab/o2-fullcore-20261019/diagnostic-build-02/o2-diag.elf:     file format elf64-littleriscv
+
+
+Disassembly of section .text:
+
+0000000080002be0 <o2_diag_9+0x120>:
+    80002be0:	c0047057          	vsetivli	zero,8,e8,m1,tu,mu
+
+0000000080002be4 <o2_diag_9_begin>:
+    80002be4:	c0047057          	vsetivli	zero,8,e8,m1,tu,mu
+    80002be8:	0294080b          	.word	0x0294080b
+    80002bec:	430023d7          	vmv.x.s	t2,v16
+    80002bf0:	ffffee37          	lui	t3,0xffffe
+    80002bf4:	429e0e1b          	addiw	t3,t3,1065 # ffffffffffffe429 <_pmem_end+0xffffffff3fffe429>
+    80002bf8:	01c3c3b3          	xor	t2,t2,t3
+    80002bfc:	0003f057          	vsetvli	zero,t2,e8,m1,tu,mu
+    80002c00:	0294088b          	.word	0x0294088b
+    80002c04:	431023d7          	vmv.x.s	t2,v17
+    80002c08:	ffffee37          	lui	t3,0xffffe
+    80002c0c:	429e0e1b          	addiw	t3,t3,1065 # ffffffffffffe429 <_pmem_end+0xffffffff3fffe429>
+    80002c10:	01c3c3b3          	xor	t2,t2,t3
+    80002c14:	0003f057          	vsetvli	zero,t2,e8,m1,tu,mu
+    80002c18:	0294090b          	.word	0x0294090b
+    80002c1c:	432023d7          	vmv.x.s	t2,v18
+    80002c20:	ffffee37          	lui	t3,0xffffe
+    80002c24:	425e0e1b          	addiw	t3,t3,1061 # ffffffffffffe425 <_pmem_end+0xffffffff3fffe425>

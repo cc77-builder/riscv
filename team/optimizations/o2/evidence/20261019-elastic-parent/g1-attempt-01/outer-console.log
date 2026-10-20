@@ -1,0 +1,26 @@
+COMMAND exit=0 log=git-version.log git --version
+COMMAND exit=0 log=java-version.log java -version
+COMMAND exit=0 log=mill-version.log mill --version
+COMMAND exit=0 log=verilator-version.log verilator --version
+COMMAND exit=0 log=cxx-version.log g++ --version
+COMMAND exit=0 log=clang-version.log clang++ --version
+COMMAND exit=0 log=make-version.log make --version
+COMMAND exit=0 log=firtool-version.log /home/riscv/.cache/llvm-firtool/1.62.1/bin/firtool --version
+COMMAND exit=0 log=source-commit.log git rev-parse HEAD
+COMMAND exit=0 log=source-status.log git status --short
+COMMAND exit=0 log=working-tree.patch git diff --binary HEAD
+COMMAND exit=0 log=vectors.log python3 -B team/rtl/vdot/prepare_vectors.py team/models/vdot/data /home/riscv/riscv-lab/o2-elastic-parent-20261019/g1-attempt-01/vectors.tsv
+COMMAND exit=0 log=negative-gate-tests.log python3 -B -m unittest discover -s team/optimizations/o2 -p test_negative_fu.py -v
+COMMAND exit=0 log=elaboration.log mill -i -j 2 vdotElasticFu.runMain team.vdot.GenerateVDotElasticFu /home/riscv/riscv-lab/o2-elastic-parent-20261019/g1-attempt-01/rtl
+COMMAND exit=0 log=verilator.log verilator --cc --exe --build --assert --top-module VDotElasticFuTestTop --Mdir /home/riscv/riscv-lab/o2-elastic-parent-20261019/g1-attempt-01/obj -j 2 -CFLAGS '-std=c++17 -O2' /home/riscv/riscv-lab/o2-elastic-parent-20261019/g1-attempt-01/rtl/VDotElastic.sv /home/riscv/riscv-lab/o2-elastic-parent-20261019/g1-attempt-01/rtl/VDotElasticFuTestTop.sv /home/riscv/riscv-lab/o2-elastic-parent-20261019/g1-attempt-01/rtl/VDotProducts.sv /home/riscv/riscv-lab/o2-elastic-parent-20261019/g1-attempt-01/rtl/VDotReduce.sv /home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/fu/fu_test.cpp
+COMMAND exit=0 log=result.log /home/riscv/riscv-lab/o2-elastic-parent-20261019/g1-attempt-01/obj/VVDotElasticFuTestTop /home/riscv/riscv-lab/o2-elastic-parent-20261019/g1-attempt-01/vectors.tsv
+O2_FU_PASS vectors=10022 cycles=31499 accepted=23311 responses=22460 cancelled=739 reset_dropped=112 overlaps=19856 stalls=4900 full=24901 partial_kill=322 both_kill=158 reset_cases=8 ii1_intervals=10021 latency2_probes=1
+COMMAND exit=1 log=inject-identity.log /home/riscv/riscv-lab/o2-elastic-parent-20261019/g1-attempt-01/obj/VVDotElasticFuTestTop /home/riscv/riscv-lab/o2-elastic-parent-20261019/g1-attempt-01/vectors.tsv identity
+COMMAND exit=0 log=check-identity.log python3 -B /home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/check_negative_fu.py --fault identity --return-code 1 --log /home/riscv/riscv-lab/o2-elastic-parent-20261019/g1-attempt-01/inject-identity.log
+COMMAND exit=1 log=inject-wen.log /home/riscv/riscv-lab/o2-elastic-parent-20261019/g1-attempt-01/obj/VVDotElasticFuTestTop /home/riscv/riscv-lab/o2-elastic-parent-20261019/g1-attempt-01/vectors.tsv wen
+COMMAND exit=0 log=check-wen.log python3 -B /home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/check_negative_fu.py --fault wen --return-code 1 --log /home/riscv/riscv-lab/o2-elastic-parent-20261019/g1-attempt-01/inject-wen.log
+COMMAND exit=1 log=inject-high.log /home/riscv/riscv-lab/o2-elastic-parent-20261019/g1-attempt-01/obj/VVDotElasticFuTestTop /home/riscv/riscv-lab/o2-elastic-parent-20261019/g1-attempt-01/vectors.tsv high
+COMMAND exit=0 log=check-high.log python3 -B /home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/check_negative_fu.py --fault high --return-code 1 --log /home/riscv/riscv-lab/o2-elastic-parent-20261019/g1-attempt-01/inject-high.log
+COMMAND exit=1 log=inject-cancel.log /home/riscv/riscv-lab/o2-elastic-parent-20261019/g1-attempt-01/obj/VVDotElasticFuTestTop /home/riscv/riscv-lab/o2-elastic-parent-20261019/g1-attempt-01/vectors.tsv cancel
+COMMAND exit=0 log=check-cancel.log python3 -B /home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/check_negative_fu.py --fault cancel --return-code 1 --log /home/riscv/riscv-lab/o2-elastic-parent-20261019/g1-attempt-01/inject-cancel.log
+O2_FU_RUNNER_PASS isolated_not_fullcore

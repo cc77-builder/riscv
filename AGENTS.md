@@ -1,3 +1,28 @@
+# Current James_Hotten integration scope (2026-10-20)
+
+Integrate zjhwork 676ec7372 into James_Hotten 6ea846edb. Review O2 elastic RTL,
+observer exclusivity, source/build gates and O3 application evidence. Preserve
+James clock cancellation, frames/events separation and strict native contracts.
+O1 and O2 remain default-off. Main is excluded. Imported publication commands
+and historical task instructions below do not authorize actions in this chat.
+Frozen O2/O3 measurements retain their original source identity; integration
+checks are new evidence, not new full-core performance measurements.
+
+Integration validation completed: 631 related host tests, 28 compiled option
+cases, actual red/green O2 parent reproduction (13,515 requests after repair),
+16 O2 observation negatives, three legacy frames modes and four negatives.
+DIV cancellation now releases its clock hold; raw-cycle checks reject idle
+clock leakage. Imported 3,446 evidence blobs and G3/G4/O3 portable replays pass.
+Current O2 native contracts, explicit O3 build/calibration selection, transitive
+checker snapshots and optimized-Python archive gates are repaired. Final tested
+compiler binding covers 439 root inputs and 126 dependencies. Details and limits:
+team/docs/o2-o3-integration-20261020.md. No merged-source EMU/performance/PPA claim.
+Next validation must use fresh current-source full-core builds/calibration;
+historical receipts remain archived and must not receive invented new contracts.
+This task completes a local merge only; main and remote branches stay unchanged.
+
+# Prior task and imported history
+
 # James_Hotten current O1 optimization scope
 
 Continue optimization from local merge 77caa4384. Current work and honest
@@ -19,6 +44,77 @@ full EMU build and baseline/T14/O1 A/B remain unexecuted. Batch measured windows
 a causal diagnosis or a new speedup. Validation and evidence sealing preceded
 publication; push completion must be confirmed by reading the remote branch.
 Statements below retain the preceding integration/publication history.
+# 当前发布：O2与O3成果交付 zjhwork（2026-10-20）
+
+用户明确要求把当前成果推送GitHub的zjhwork，授权本批正常快进发布到cc77-builder/riscv:zjhwork。
+本条覆盖下方历史“不push/本地保存”限制，不授权其他分支、强推、自动O4/O5/G5、默认模式切换或人工ACK。
+先读team/docs/o2-o3-publication-20261020.md；结果基点db2281b，实际发布结果以远端SHA回读为准。
+G4 batch128降低39.03%；O3全部56项合格作业、1280窗口、768正式样本与Linux/Windows复算通过，35项主机检查通过。
+O3中断恢复与后处理问题均已解决，旧记录按历史时点保留。下一项技术工作O4，随后O5/T17、G5；正式T16继续后置。
+本轮只发布和更新入口，不重复构建、仿真或改封存证据。以下为历史状态。
+
+# O3应用评估：本轮自动测量及Linux严格重审完成
+
+2026-10-19（任务开始日期），local/o3-gemv-20261019。先读team/workloads/o3-gemv/README.md及对应证据入口。56项合格作业（46项原通过复用、10项恢复补跑，另2项中断尝试保留）、1280窗口、768正式窗口及4项确定性重放通过；Windows原生复算状态另见delivery回执。不要重跑完成campaign或改密封证据。本轮本地保存未push，不自动O4/O5/G5或切换默认模式，正式T16后置。以下为历史状态。
+
+# 当前任务：O3中断恢复进行中（2026-10-20，本地）
+
+原campaign-01在46项通过后中断；两项只有部分日志、无真实完成退出，不能宣称仍在跑或已完成。
+当前由resume.py在campaign-02导入46项字节相同证据，仅补跑剩余10项，另2中断尝试保留。
+原始campaign-01、镜像和运行源码不修改。恢复编排99f04b9，原execute源码7a642b6，恢复交付工具8aab2ed。
+当前进度查/home/riscv/riscv-lab/o3-gemv-20261019/campaign-02/state.json；
+恢复启动回执recovery-launch-state.json；新监督根/home/riscv/riscv-lab/o3-gemv-recovery-delivery-20261020。
+finish-recovery.py负责通过后的严格复核、封存、Windows复算和本地交付。不要再启动旧launch.py/finish.py或重跑全部测试。
+本轮不push，不自动O4/O5/G5/默认切换，正式T16后置。以下状态为历史记录。
+
+# 当前任务：O3 GEMV应用测试进行中（本地）
+
+用户2026-10-19明确授权开始O3。工作分支local/o3-gemv-20261019，基点08fc5b4；
+先读team/workloads/o3-gemv/CONTRACT.md及README.md。
+26新镜像已编译/ELF审计，22主机检查通过，4项真实O1/O2冒烟已通过；
+campaign-01正在正式应用测量，不能提前宣称56项/768正式窗口完成。
+运行源码冻结7a642b6，构建软件5fdeba3，后处理工具6df07ca。
+
+原始工作根/home/riscv/riscv-lab/o3-gemv-20261019；
+交付监督根/home/riscv/riscv-lab/o3-gemv-delivery-20261019；
+Windows入口D:/yanyi/riscv大赛/doc/O3应用测试_20261019。
+先查两个state.json和launch-state.json。已经启动的launch.py及finish.py负责继续测量和通过后的严格复核/封存/Windows复算/本地交付；
+不要重启已经在跑或完成的campaign，不覆盖原始日志。失败先读真实stderr/退出码，不能静默剔除样本或直接重跑所有任务。
+
+O1/O2复用G4固定硬件，四尺寸(4,8),(8,32),(16,64),(4,13)，两口径/两软件/两方法/三数据集；
+不改ISA/NEMU/旧基准和旧证据。最多两个单线程EMU。成果先本地保存，不push、不自动O4/O5/G5/默认切换，正式T16后置。
+下文为历史状态。
+
+# 团队 Agent 入口
+
+## 当前状态：O1/O2 G4公平测量完成，本地保存
+
+2026-10-19，local/o2-performance-20261019。先读team/optimizations/o2/performance/README.md及evidence/20261019-performance-ab/README.md。36项真实新运行、478窗口、192正式样本、30主机检查与严格离线重审通过。结果见results-01及final-summary.json；不要重跑完成的campaign或改密封证据。不自动推送/切换默认/G5或代签ACK，正式T16后置。下文保留历史状态。
+
+## 当前任务：O1/O2 同镜像公平性能 G4（已授权，本地）
+
+2026-10-19用户明确要求运行O1/O2公平对比。分支local/o2-performance-20261019，工作根/home/riscv/riscv-lab/o2-performance-20261019，基点07ed301。先读team/optimizations/o2/performance/CONTRACT.md。沿用冻结16镜像及原四场景样本规则，复用G3固定O2 EMU，从同一429硬件文件/依赖重建O1。两模式用各自合法O1/O2观察器、共同T13全局时钟，不改ISA/NEMU/工作负载/黄金数据；只顺序做一个重构建，j2/12G，最多两个单线程EMU。完整保存日志、失败和版本，性能全部实际重跑并离线复算。用户本轮已授权G4，覆盖下文历史未授权G4的限制。不自动推送GitHub、切换默认模式、开展G5或写正式T16报告，不代签人工ACK。
+
+## 当前状态：O2 G3 已通过，本地保存
+
+2026-10-19，local/o2-fullcore-20261019。先读team/optimizations/o2/fullcore/README.md与evidence/20261019-fullcore-validation/README.md。最终合格集合core-02＋supplements-02；recheck-02严格离线重审通过。14项作业满足各自预期，5378正常vdot提交，六项两槽全核覆盖齐全，95主机测试通过；失败尝试保留。不要重跑已完成campaign或改密封证据。G3完成不授权自动G4、push或切换默认模式；没有O2公平性能/PPA/人工ACK，正式T16继续后置。下面各节保留历史时点。
+
+## 当前任务：O2 G3 全核观察器与回归（已授权，本地）
+
+用户于2026-10-19明确要求开始G3。工作分支local/o2-fullcore-20261019，起点901687a；按team/optimizations/o2/CONTRACT.md完成两槽全核观察器、新EMU、hello/vadd、117唯一功能/异常矩阵、T12等价控制、故障参考库和正常恢复。旧G1/G2不自动推进G3的限制现由此授权更新。输出/home/riscv/riscv-lab/o2-fullcore-20261019；旧封存材料保持不变。不推送GitHub、不自动开始G4公平性能、不改变ISA/NEMU/黄金数据，不代签人工ACK。构建前冻结生产源码；只运行一个重构建，默认2编译线程、12G JVM、1个EMU线程。
+
+
+## 当前任务：O2两槽弹性FU与真实父级联调（本地开发）
+
+2026-10-19用户明确授权实现O2隔离FU，然后完成真实VFEX4/DIV/ClockGate父级联调。工作分支local/o2-elastic-parent-20261019，起点7643b8d；合同team/optimizations/o2/CONTRACT.md。G1/G2真实RTL验证及旧模式兼容回归已完成；工程入口team/optimizations/o2/IMPLEMENTATION.md，正式证据evidence/20261019-elastic-parent。下一步为G3；不自动推进全核G3或性能G4，不推送GitHub。保留旧模式及密封证据，独立输出目录/home/riscv/riscv-lab/o2-elastic-parent-20261019。下方评估阶段不实施RTL的限制为历史记录。
+
+## 当前任务：O2可行性评估与设计合同（本地）
+
+2026-10-18开始、2026-10-19续接完成。基点cd866d52，工作分支local/o2-feasibility-20261018；见 [O2入口](team/optimizations/o2/README.md)、[设计合同](team/optimizations/o2/CONTRACT.md) 与 [轨迹分析](team/optimizations/o2/TRACE_ANALYSIS.md)。本轮只审查生产源码、复算旧轨迹并写合同，不实施O2 RTL、不运行新EMU、不推送GitHub。
+
+结论为有条件进入VFEX4两槽弹性候选的隔离FU/真实父级原型；O2采用、II=1、全核性能和PPA仍未验证。O1 batch的1275次busy等待中1266次对应同窗口正常提交请求，9次属于接受前取消；等待不能当可省周期。正式T16报告后置，核心接口人工ACK待成员确认。下方O1发布授权与未上传文字均为对应历史阶段，不自动授权本轮O2发布或后续实现。
+
+## 当前发布：O1 已完成成果交付 zjhwork
 
 # Previous latest O1 integration scope
 

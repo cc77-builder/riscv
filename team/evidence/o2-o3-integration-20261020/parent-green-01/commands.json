@@ -1,0 +1,785 @@
+[
+  {
+    "command": [
+      "git",
+      "--version"
+    ],
+    "start": "2026-10-20T14:18:33.425316+00:00",
+    "end": "2026-10-20T14:18:33.427157+00:00",
+    "exit_code": 0,
+    "log": "git-version.log"
+  },
+  {
+    "command": [
+      "java",
+      "-version"
+    ],
+    "start": "2026-10-20T14:18:33.427427+00:00",
+    "end": "2026-10-20T14:18:33.477593+00:00",
+    "exit_code": 0,
+    "log": "java-version.log"
+  },
+  {
+    "command": [
+      "mill",
+      "--version"
+    ],
+    "start": "2026-10-20T14:18:33.479172+00:00",
+    "end": "2026-10-20T14:18:34.219906+00:00",
+    "exit_code": 0,
+    "log": "mill-version.log"
+  },
+  {
+    "command": [
+      "verilator",
+      "--version"
+    ],
+    "start": "2026-10-20T14:18:34.220238+00:00",
+    "end": "2026-10-20T14:18:34.269135+00:00",
+    "exit_code": 0,
+    "log": "verilator-version.log"
+  },
+  {
+    "command": [
+      "g++",
+      "--version"
+    ],
+    "start": "2026-10-20T14:18:34.269657+00:00",
+    "end": "2026-10-20T14:18:34.272010+00:00",
+    "exit_code": 0,
+    "log": "cxx-version.log"
+  },
+  {
+    "command": [
+      "clang++",
+      "--version"
+    ],
+    "start": "2026-10-20T14:18:34.272447+00:00",
+    "end": "2026-10-20T14:18:34.386501+00:00",
+    "exit_code": 0,
+    "log": "clang-version.log"
+  },
+  {
+    "command": [
+      "make",
+      "--version"
+    ],
+    "start": "2026-10-20T14:18:34.387023+00:00",
+    "end": "2026-10-20T14:18:34.389114+00:00",
+    "exit_code": 0,
+    "log": "make-version.log"
+  },
+  {
+    "command": [
+      "/home/amesotten/.cache/llvm-firtool/1.62.1/bin/firtool",
+      "--version"
+    ],
+    "start": "2026-10-20T14:18:34.389612+00:00",
+    "end": "2026-10-20T14:18:34.392645+00:00",
+    "exit_code": 0,
+    "log": "firtool-version.log"
+  },
+  {
+    "command": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "start": "2026-10-20T14:18:34.393020+00:00",
+    "end": "2026-10-20T14:18:34.395384+00:00",
+    "exit_code": 0,
+    "log": "source-commit.log"
+  },
+  {
+    "command": [
+      "git",
+      "status",
+      "--short"
+    ],
+    "start": "2026-10-20T14:18:34.395595+00:00",
+    "end": "2026-10-20T14:18:48.207761+00:00",
+    "exit_code": 0,
+    "log": "source-status.log"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--binary",
+      "HEAD"
+    ],
+    "start": "2026-10-20T14:18:48.208131+00:00",
+    "end": "2026-10-20T14:18:59.628347+00:00",
+    "exit_code": 0,
+    "log": "working-tree.patch"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "team/rtl/vdot/prepare_vectors.py",
+      "team/models/vdot/data",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/vectors.tsv"
+    ],
+    "start": "2026-10-20T14:20:05.479984+00:00",
+    "end": "2026-10-20T14:20:05.559137+00:00",
+    "exit_code": 0,
+    "log": "vectors.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "team/optimizations/o2/parent",
+      "-p",
+      "test_negative.py",
+      "-v"
+    ],
+    "start": "2026-10-20T14:20:05.559583+00:00",
+    "end": "2026-10-20T14:20:05.608639+00:00",
+    "exit_code": 0,
+    "log": "negative-gate-tests.log"
+  },
+  {
+    "command": [
+      "mill",
+      "-i",
+      "-j",
+      "2",
+      "vdotElasticParent.runMain",
+      "team.vdot.GenerateVDotElasticParent",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl"
+    ],
+    "start": "2026-10-20T14:20:05.609611+00:00",
+    "end": "2026-10-20T14:20:29.344216+00:00",
+    "exit_code": 0,
+    "log": "elaboration.log"
+  },
+  {
+    "command": [
+      "verilator",
+      "--lint-only",
+      "--assert",
+      "--top-module",
+      "VDotElasticParentTestTop",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/divider-width.vlt",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/ByteMaskTailGen.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/CSA3_2.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/CSA3_2_1.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/CSA3_2_124.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/CSA3_2_186.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/CSA3_2_30.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/CSA3_2_5.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/CSA3to2.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/CSA3to2_4.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/ClockGate.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/Conversion.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/Conversion_12.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/Conversion_8.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/ExeUnit.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/I8DivNr4.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/IterBlockI8Nr4.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/IterBlock_v4.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/IterBlock_v4_4.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/IterBlock_v4_6.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/LogPerfEndpoint.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/MaskExtractor.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/Mgu.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/SRT16Divint.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/SRT16Divint_4.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/SRT16Divint_6.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/SRT4qdsCons.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/SelBlock_v4.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/ShiftLeftPriorityWithLZDResult.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/ShiftLeftPriorityWithLZDResult_2.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/ShiftLeftPriorityWithLZDResult_4.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/SignDec.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/SpecBlock_v4.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/UIntToContLow0s.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/UIntToContLow1s.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/VDotElastic.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/VDotElasticParentTestTop.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/VDotProducts.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/VDotReduce.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/VFDivSqrt.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/VIDiv.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/VecDataSplitModule.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/VectorFloatDivider.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/VectorFloatDividerR64.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/VectorIdiv.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/extern_modules.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/fpdiv_r64_block_vector.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/fpsqrt_r16_block.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/fpsqrt_vector_r16.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/lzc.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/lzc_1.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/lzc_2.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/r4_qds.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/r4_qds_cg.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/r4_qds_spec.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/r4_qds_v2.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/r4_qds_v2_spec.sv"
+    ],
+    "start": "2026-10-20T14:20:29.351514+00:00",
+    "end": "2026-10-20T14:20:31.849656+00:00",
+    "exit_code": 0,
+    "log": "lint.log"
+  },
+  {
+    "command": [
+      "verilator",
+      "--cc",
+      "--exe",
+      "--build",
+      "--assert",
+      "--top-module",
+      "VDotElasticParentTestTop",
+      "--Mdir",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/obj",
+      "-j",
+      "2",
+      "-CFLAGS",
+      "-std=c++17 -O2",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/divider-width.vlt",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/ByteMaskTailGen.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/CSA3_2.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/CSA3_2_1.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/CSA3_2_124.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/CSA3_2_186.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/CSA3_2_30.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/CSA3_2_5.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/CSA3to2.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/CSA3to2_4.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/ClockGate.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/Conversion.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/Conversion_12.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/Conversion_8.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/ExeUnit.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/I8DivNr4.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/IterBlockI8Nr4.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/IterBlock_v4.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/IterBlock_v4_4.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/IterBlock_v4_6.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/LogPerfEndpoint.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/MaskExtractor.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/Mgu.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/SRT16Divint.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/SRT16Divint_4.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/SRT16Divint_6.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/SRT4qdsCons.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/SelBlock_v4.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/ShiftLeftPriorityWithLZDResult.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/ShiftLeftPriorityWithLZDResult_2.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/ShiftLeftPriorityWithLZDResult_4.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/SignDec.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/SpecBlock_v4.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/UIntToContLow0s.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/UIntToContLow1s.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/VDotElastic.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/VDotElasticParentTestTop.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/VDotProducts.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/VDotReduce.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/VFDivSqrt.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/VIDiv.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/VecDataSplitModule.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/VectorFloatDivider.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/VectorFloatDividerR64.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/VectorIdiv.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/extern_modules.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/fpdiv_r64_block_vector.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/fpsqrt_r16_block.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/fpsqrt_vector_r16.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/lzc.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/lzc_1.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/lzc_2.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/r4_qds.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/r4_qds_cg.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/r4_qds_spec.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/r4_qds_v2.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/rtl/r4_qds_v2_spec.sv",
+      "/home/amesotten/.cache/codex-rvinno/sync20/source-d13def17dc8de4b8/team/optimizations/o2/parent/parent_test.cpp"
+    ],
+    "start": "2026-10-20T14:20:31.850172+00:00",
+    "end": "2026-10-20T14:21:08.368095+00:00",
+    "exit_code": 0,
+    "log": "verilator.log"
+  },
+  {
+    "command": [
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/obj/VVDotElasticParentTestTop",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/vectors.tsv"
+    ],
+    "start": "2026-10-20T14:21:08.368714+00:00",
+    "end": "2026-10-20T14:21:08.743984+00:00",
+    "exit_code": 0,
+    "log": "result.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "team/optimizations/o2/parent/check_negative.py",
+      "--positive",
+      "--return-code",
+      "0",
+      "--log",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/result.log"
+    ],
+    "start": "2026-10-20T14:21:08.806625+00:00",
+    "end": "2026-10-20T14:21:09.492263+00:00",
+    "exit_code": 0,
+    "log": "positive-replay.log"
+  },
+  {
+    "command": [
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/obj/VVDotElasticParentTestTop",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/vectors.tsv",
+      "identity"
+    ],
+    "start": "2026-10-20T14:21:09.492829+00:00",
+    "end": "2026-10-20T14:21:09.518856+00:00",
+    "exit_code": 1,
+    "log": "inject-identity.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/amesotten/.cache/codex-rvinno/sync20/source-d13def17dc8de4b8/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "identity",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/inject-identity.log"
+    ],
+    "start": "2026-10-20T14:21:09.519306+00:00",
+    "end": "2026-10-20T14:21:09.551770+00:00",
+    "exit_code": 0,
+    "log": "check-identity.log"
+  },
+  {
+    "command": [
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/obj/VVDotElasticParentTestTop",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/vectors.tsv",
+      "rob"
+    ],
+    "start": "2026-10-20T14:21:09.552380+00:00",
+    "end": "2026-10-20T14:21:09.575760+00:00",
+    "exit_code": 1,
+    "log": "inject-rob.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/amesotten/.cache/codex-rvinno/sync20/source-d13def17dc8de4b8/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "rob",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/inject-rob.log"
+    ],
+    "start": "2026-10-20T14:21:09.576202+00:00",
+    "end": "2026-10-20T14:21:09.605278+00:00",
+    "exit_code": 0,
+    "log": "check-rob.log"
+  },
+  {
+    "command": [
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/obj/VVDotElasticParentTestTop",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/vectors.tsv",
+      "high"
+    ],
+    "start": "2026-10-20T14:21:09.605824+00:00",
+    "end": "2026-10-20T14:21:09.629266+00:00",
+    "exit_code": 1,
+    "log": "inject-high.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/amesotten/.cache/codex-rvinno/sync20/source-d13def17dc8de4b8/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "high",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/inject-high.log"
+    ],
+    "start": "2026-10-20T14:21:09.630694+00:00",
+    "end": "2026-10-20T14:21:09.660243+00:00",
+    "exit_code": 0,
+    "log": "check-high.log"
+  },
+  {
+    "command": [
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/obj/VVDotElasticParentTestTop",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/vectors.tsv",
+      "metadata"
+    ],
+    "start": "2026-10-20T14:21:09.660683+00:00",
+    "end": "2026-10-20T14:21:09.686654+00:00",
+    "exit_code": 1,
+    "log": "inject-metadata.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/amesotten/.cache/codex-rvinno/sync20/source-d13def17dc8de4b8/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "metadata",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/inject-metadata.log"
+    ],
+    "start": "2026-10-20T14:21:09.687110+00:00",
+    "end": "2026-10-20T14:21:09.719221+00:00",
+    "exit_code": 0,
+    "log": "check-metadata.log"
+  },
+  {
+    "command": [
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/obj/VVDotElasticParentTestTop",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/vectors.tsv",
+      "wen"
+    ],
+    "start": "2026-10-20T14:21:09.719894+00:00",
+    "end": "2026-10-20T14:21:09.745519+00:00",
+    "exit_code": 1,
+    "log": "inject-wen.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/amesotten/.cache/codex-rvinno/sync20/source-d13def17dc8de4b8/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "wen",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/inject-wen.log"
+    ],
+    "start": "2026-10-20T14:21:09.746085+00:00",
+    "end": "2026-10-20T14:21:09.773367+00:00",
+    "exit_code": 0,
+    "log": "check-wen.log"
+  },
+  {
+    "command": [
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/obj/VVDotElasticParentTestTop",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/vectors.tsv",
+      "stall"
+    ],
+    "start": "2026-10-20T14:21:09.773817+00:00",
+    "end": "2026-10-20T14:21:09.862530+00:00",
+    "exit_code": 1,
+    "log": "inject-stall.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/amesotten/.cache/codex-rvinno/sync20/source-d13def17dc8de4b8/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "stall",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/inject-stall.log"
+    ],
+    "start": "2026-10-20T14:21:09.863204+00:00",
+    "end": "2026-10-20T14:21:09.892730+00:00",
+    "exit_code": 0,
+    "log": "check-stall.log"
+  },
+  {
+    "command": [
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/obj/VVDotElasticParentTestTop",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/vectors.tsv",
+      "route"
+    ],
+    "start": "2026-10-20T14:21:09.893260+00:00",
+    "end": "2026-10-20T14:21:09.919456+00:00",
+    "exit_code": 1,
+    "log": "inject-route.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/amesotten/.cache/codex-rvinno/sync20/source-d13def17dc8de4b8/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "route",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/inject-route.log"
+    ],
+    "start": "2026-10-20T14:21:09.920136+00:00",
+    "end": "2026-10-20T14:21:09.954898+00:00",
+    "exit_code": 0,
+    "log": "check-route.log"
+  },
+  {
+    "command": [
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/obj/VVDotElasticParentTestTop",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/vectors.tsv",
+      "double"
+    ],
+    "start": "2026-10-20T14:21:09.955609+00:00",
+    "end": "2026-10-20T14:21:09.979050+00:00",
+    "exit_code": 1,
+    "log": "inject-double.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/amesotten/.cache/codex-rvinno/sync20/source-d13def17dc8de4b8/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "double",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/inject-double.log"
+    ],
+    "start": "2026-10-20T14:21:09.979712+00:00",
+    "end": "2026-10-20T14:21:10.013595+00:00",
+    "exit_code": 0,
+    "log": "check-double.log"
+  },
+  {
+    "command": [
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/obj/VVDotElasticParentTestTop",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/vectors.tsv",
+      "clock"
+    ],
+    "start": "2026-10-20T14:21:10.014885+00:00",
+    "end": "2026-10-20T14:21:10.108801+00:00",
+    "exit_code": 1,
+    "log": "inject-clock.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/amesotten/.cache/codex-rvinno/sync20/source-d13def17dc8de4b8/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "clock",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/inject-clock.log"
+    ],
+    "start": "2026-10-20T14:21:10.109458+00:00",
+    "end": "2026-10-20T14:21:10.142179+00:00",
+    "exit_code": 0,
+    "log": "check-clock.log"
+  },
+  {
+    "command": [
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/obj/VVDotElasticParentTestTop",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/vectors.tsv",
+      "occupancy"
+    ],
+    "start": "2026-10-20T14:21:10.142775+00:00",
+    "end": "2026-10-20T14:21:10.167468+00:00",
+    "exit_code": 1,
+    "log": "inject-occupancy.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/amesotten/.cache/codex-rvinno/sync20/source-d13def17dc8de4b8/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "occupancy",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/inject-occupancy.log"
+    ],
+    "start": "2026-10-20T14:21:10.167974+00:00",
+    "end": "2026-10-20T14:21:10.200221+00:00",
+    "exit_code": 0,
+    "log": "check-occupancy.log"
+  },
+  {
+    "command": [
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/obj/VVDotElasticParentTestTop",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/vectors.tsv",
+      "kill_p"
+    ],
+    "start": "2026-10-20T14:21:10.200766+00:00",
+    "end": "2026-10-20T14:21:10.316643+00:00",
+    "exit_code": 1,
+    "log": "inject-kill_p.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/amesotten/.cache/codex-rvinno/sync20/source-d13def17dc8de4b8/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "kill_p",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/inject-kill_p.log"
+    ],
+    "start": "2026-10-20T14:21:10.317444+00:00",
+    "end": "2026-10-20T14:21:10.352300+00:00",
+    "exit_code": 0,
+    "log": "check-kill_p.log"
+  },
+  {
+    "command": [
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/obj/VVDotElasticParentTestTop",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/vectors.tsv",
+      "kill_r"
+    ],
+    "start": "2026-10-20T14:21:10.354734+00:00",
+    "end": "2026-10-20T14:21:10.476747+00:00",
+    "exit_code": 1,
+    "log": "inject-kill_r.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/amesotten/.cache/codex-rvinno/sync20/source-d13def17dc8de4b8/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "kill_r",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/inject-kill_r.log"
+    ],
+    "start": "2026-10-20T14:21:10.477458+00:00",
+    "end": "2026-10-20T14:21:10.514310+00:00",
+    "exit_code": 0,
+    "log": "check-kill_r.log"
+  },
+  {
+    "command": [
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/obj/VVDotElasticParentTestTop",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/vectors.tsv",
+      "survivor"
+    ],
+    "start": "2026-10-20T14:21:10.514976+00:00",
+    "end": "2026-10-20T14:21:10.629793+00:00",
+    "exit_code": 1,
+    "log": "inject-survivor.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/amesotten/.cache/codex-rvinno/sync20/source-d13def17dc8de4b8/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "survivor",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/inject-survivor.log"
+    ],
+    "start": "2026-10-20T14:21:10.630880+00:00",
+    "end": "2026-10-20T14:21:10.667214+00:00",
+    "exit_code": 0,
+    "log": "check-survivor.log"
+  },
+  {
+    "command": [
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/obj/VVDotElasticParentTestTop",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/vectors.tsv",
+      "duplicate"
+    ],
+    "start": "2026-10-20T14:21:10.667884+00:00",
+    "end": "2026-10-20T14:21:10.756300+00:00",
+    "exit_code": 1,
+    "log": "inject-duplicate.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/amesotten/.cache/codex-rvinno/sync20/source-d13def17dc8de4b8/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "duplicate",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/inject-duplicate.log"
+    ],
+    "start": "2026-10-20T14:21:10.757041+00:00",
+    "end": "2026-10-20T14:21:10.787840+00:00",
+    "exit_code": 0,
+    "log": "check-duplicate.log"
+  },
+  {
+    "command": [
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/obj/VVDotElasticParentTestTop",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/vectors.tsv",
+      "missing"
+    ],
+    "start": "2026-10-20T14:21:10.788571+00:00",
+    "end": "2026-10-20T14:21:10.817359+00:00",
+    "exit_code": 1,
+    "log": "inject-missing.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/amesotten/.cache/codex-rvinno/sync20/source-d13def17dc8de4b8/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "missing",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/inject-missing.log"
+    ],
+    "start": "2026-10-20T14:21:10.817936+00:00",
+    "end": "2026-10-20T14:21:10.849499+00:00",
+    "exit_code": 0,
+    "log": "check-missing.log"
+  },
+  {
+    "command": [
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/obj/VVDotElasticParentTestTop",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/vectors.tsv",
+      "reset"
+    ],
+    "start": "2026-10-20T14:21:10.850295+00:00",
+    "end": "2026-10-20T14:21:10.976317+00:00",
+    "exit_code": 1,
+    "log": "inject-reset.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/amesotten/.cache/codex-rvinno/sync20/source-d13def17dc8de4b8/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "reset",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/amesotten/.cache/codex-rvinno/sync20/parent-green-01/inject-reset.log"
+    ],
+    "start": "2026-10-20T14:21:10.976995+00:00",
+    "end": "2026-10-20T14:21:11.007728+00:00",
+    "exit_code": 0,
+    "log": "check-reset.log"
+  }
+]

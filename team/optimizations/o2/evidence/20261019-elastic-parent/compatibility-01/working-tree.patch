@@ -1,0 +1,13 @@
+diff --git a/team/optimizations/o2/run_rtl.py b/team/optimizations/o2/run_rtl.py
+index f3e25c4..68bd2ce 100644
+--- a/team/optimizations/o2/run_rtl.py
++++ b/team/optimizations/o2/run_rtl.py
+@@ -114,7 +114,7 @@ def main():
+         if len(passes)!=1 or any(x in text for x in (prefix+"_FAIL",prefix+"_INJECT",prefix+"_FAULT_ESCAPED")):
+             raise RuntimeError("positive completion gate")
+         print(passes[0],flush=True)
+-        faults=("identity","wen","high","cancel") if stage=="fu" else ("identity","wen","high","cancel","busy","route","clock")
++        faults=("identity","wen","high","cancel") if stage=="fu" else ("identity","rob","high","metadata","wen","stall","route","double","clock","occupancy","kill_p","kill_r","survivor","duplicate","missing","reset")
+         checker=ROOT/"team/optimizations/o2"/("check_negative_fu.py" if stage=="fu" else "parent/check_negative.py")
+         for fault in faults:
+             log="inject-"+fault+".log"

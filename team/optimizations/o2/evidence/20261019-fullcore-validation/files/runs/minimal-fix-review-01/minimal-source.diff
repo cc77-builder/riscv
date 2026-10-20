@@ -1,0 +1,731 @@
+diff --git a/team/optimizations/o2/fullcore/portable.py b/team/optimizations/o2/fullcore/portable.py
+new file mode 100644
+index 0000000..a75599e
+--- /dev/null
++++ b/team/optimizations/o2/fullcore/portable.py
+@@ -0,0 +1,248 @@
++"""Cross-platform archive-byte and O2 trace replay, using only Python's stdlib.
++
++This does not execute EMU/NEMU, rebuild hardware, revalidate Linux Git/input
++provenance, repeat every architectural workload check, or measure G4 performance.
++"""
++import argparse
++import gzip
++import hashlib
++import io
++import json
++from pathlib import Path, PurePosixPath, PureWindowsPath
++import re
++import sys
++import types
++
++CORE_JOBS={"hello-vadd","negative-vdot","control","dense-batch128"}|{f"functional-{i}" for i in range(8)}
++SUPPLEMENT_JOBS={"o2-diagnostic","o2-control-diagnostic"}
++PARSER="team/optimizations/o2/fullcore/analyze.py"
++RUNTIME_GATE="team/optimizations/o1/audit/runtime_gate.py"
++NORMAL_REFERENCE="efbed0774addc27eac38af1a19ab5d9c9dd5f179b5015f25ae7b80b966185bd4"
++NEGATIVE_REFERENCE="9b3aecf362b7c7ddb4f8bace355c2e0ee2cc919fd5f59eefc641db220ab40df0"
++
++def require(ok,message):
++    if not ok:
++        raise ValueError(message)
++
++
++def reject_fatal_output(text):
++    """Reject fatal emulator/software errors even when exit=0 says GOOD TRAP.
++
++    This O2-only gate supplements the immutable shared O1 bit100/runtime gate.
++    Strip complete ANSI CSI escapes before matching, including color escapes
++    inserted within words. Unknown escape sequences remain fail-closed.
++    """
++    plain = re.sub(r'\x1b\[[0-?]*[ -/]*[@-~]', '', text)
++    require('\x1b' not in plain and '\x9b' not in plain,
++            'unsupported or truncated terminal escape')
++    require(re.search(r'\b(?:CRITICAL\s+ERROR|double\s+trap|PMA\s+check\s+failed)\b',
++                      plain, re.I) is None, 'O2 fatal runtime output')
++
++def digest(raw):
++    return hashlib.sha256(raw).hexdigest()
++
++def safe_relative(name):
++    require(isinstance(name,str) and name and "\\" not in name and ":" not in name,
++            "unsafe portable path")
++    p=PurePosixPath(name)
++    require(not p.is_absolute() and not PureWindowsPath(name).drive and
++            ".." not in p.parts and str(p)==name and "." not in p.parts,"unsafe portable path")
++    return p
++
++class Archive:
++    """Validate every stored/raw byte pair, then serve decoded logical paths."""
++    def __init__(self,path):
++        self.path=Path(path)
++        data=(self.path/"archive-manifest.json").read_bytes()
++        hash_text=(self.path/"archive-manifest.sha256").read_text(encoding="ascii")
++        require(re.fullmatch(r"[0-9a-f]{64}  archive-manifest\.json\n",hash_text) is not None,
++                "invalid archive manifest digest record")
++        require(digest(data)==hash_text.split()[0],"archive manifest hash mismatch")
++        self.manifest=json.loads(data.decode("utf-8"))
++        require(self.manifest.get("version")==1 and isinstance(self.manifest.get("files"),list),
++                "unsupported archive manifest")
++        self.manifest_sha256=digest(data)
++        self.records={}
++        stored_paths=set()
++        for record in self.manifest["files"]:
++            stored=safe_relative(record["stored"])
++            require(stored.parts[0]=="files" and len(stored.parts)>1,"stored path outside files/")
++            require(str(stored) not in stored_paths,"duplicate stored archive path")
++            stored_paths.add(str(stored))
++            require(record["encoding"] in ("identity","gzip"),"unknown archive encoding")
++            logical=str(stored.relative_to("files"))
++            if record["encoding"]=="gzip":
++                require(logical.endswith(".gz"),"gzip record must use .gz suffix")
++                logical=logical[:-3]
++            require(logical not in self.records,"duplicate decoded archive path")
++            self.records[logical]=record
++            self.raw(logical)
++        actual=set()
++        for p in (self.path/"files").rglob("*"):
++            require(not p.is_symlink(),"archive contains symlink")
++            if p.is_file():
++                actual.add(p.relative_to(self.path).as_posix())
++        require(actual==stored_paths,"missing or unexpected archive file")
++        self.bytes_result=dict(files=len(stored_paths),
++            raw_bytes=sum(r["raw_bytes"] for r in self.records.values()),
++            stored_bytes=sum(r["stored_bytes"] for r in self.records.values()),
++            archive_manifest_sha256=self.manifest_sha256)
++
++    def raw(self,logical):
++        safe_relative(logical)
++        require(logical in self.records,"archive missing: "+logical)
++        r=self.records[logical]
++        p=self.path.joinpath(*PurePosixPath(r["stored"]).parts)
++        require(p.resolve().is_relative_to(self.path.resolve()),"archive path resolves outside archive")
++        require(not p.is_symlink(),"archive symlink")
++        stored=p.read_bytes()
++        for key in ("stored_bytes","raw_bytes"):
++            require(type(r[key]) is int and r[key]>=0,"invalid byte length")
++        require(len(stored)==r["stored_bytes"] and digest(stored)==r["stored_sha256"],
++                "stored-byte mismatch: "+logical)
++        raw=gzip.decompress(stored) if r["encoding"]=="gzip" else stored
++        require(len(raw)==r["raw_bytes"] and digest(raw)==r["raw_sha256"],
++                "raw-byte mismatch: "+logical)
++        return raw
++
++    def json(self,logical):
++        return json.loads(self.raw(logical).decode("utf-8"))
++
++    def tool(self,relative,expected_sha):
++        safe_relative(relative)
++        require(re.fullmatch(r"[0-9a-f]{64}",expected_sha) is not None,"invalid checker SHA")
++        matches=[name for name,r in self.records.items()
++                 if (name==relative or name.endswith("/"+relative)) and r["raw_sha256"]==expected_sha]
++        require(matches,"sealed checker not found with pinned hash: "+relative)
++        raw=self.raw(sorted(matches)[0])
++        # The caller deliberately executes this archive's pinned checker source.
++        # It is an audit of a trusted local export, not a third-party code sandbox.
++        name="_o2_portable_"+expected_sha
++        module=types.ModuleType(name)
++        module.__file__="archive://"+matches[0]
++        sys.modules[name]=module
++        exec(compile(raw,module.__file__,"exec"),module.__dict__)
++        return module
++
++def tool_pin(preflight,suffix):
++    matches=[v for k,v in preflight.get("driver_files",{}).items() if k.endswith("/"+suffix)]
++    require(len(matches)==1,"missing or ambiguous checker pin: "+suffix)
++    return matches[0]
++
++def text_view(raw):
++    # The live drivers used Path.read_text(), i.e. universal-newline decoding.
++    # Match that view while preserving independent raw stream SHA checks.
++    return io.TextIOWrapper(io.BytesIO(raw),encoding="utf-8",newline=None).read()
++
++def campaign_inputs(archive,campaign):
++    require(len(safe_relative(campaign).parts)==1,"campaign must be a single directory name")
++    prefix="runs/"+campaign
++    preflight=archive.json(prefix+"/preflight.json")
++    pin_raw=archive.raw(prefix+"/hardware-pins.json")
++    pins=json.loads(pin_raw)
++    require(preflight["hardware_pins_sha256"]==digest(pin_raw),"campaign hardware pins changed")
++    require(preflight["emu_sha256"]==pins["emu_sha256"],"campaign EMU identity mismatch")
++    parser=archive.tool(PARSER,tool_pin(preflight,PARSER))
++    gate=archive.tool(RUNTIME_GATE,tool_pin(preflight,RUNTIME_GATE))
++    return preflight,pins,parser,gate
++
++def audit_job(archive,campaign,name,preflight,pins,parser,gate):
++    prefix="runs/"+campaign+"/"+name
++    record=archive.json(prefix+"/result.json")
++    require(record.get("name")==name,"job identity mismatch")
++    raw_logs={key:archive.raw(prefix+"/"+key) for key in ("stdout.log","stderr.log","run.log")}
++    require(record.get("raw_logs_sha256")=={key:digest(raw) for key,raw in raw_logs.items()},
++            "job raw stream receipt mismatch: "+name)
++    require(raw_logs["run.log"]==raw_logs["stderr.log"]+raw_logs["stdout.log"],
++            "derived transcript is not exact stderr + stdout: "+name)
++    rc_raw=archive.raw(prefix+"/exit-code.txt")
++    require(re.fullmatch(rb"-?[0-9]+\n",rc_raw) is not None,"malformed exit-code file")
++    rc=int(rc_raw)
++    require(type(record.get("exit_code")) is int and record["exit_code"]==rc,"exit-code receipt mismatch")
++    command=record.get("command")
++    require(isinstance(command,list) and len(command)==12 and
++            command[:1]==["timeout"] and command[2:5]==["stdbuf","-o0","-e0"] and command[6]=="-i" and
++            command[8].startswith("--flash=") and command[9]=="--ram-size=128MB" and
++            command[10].startswith("--diff=") and command[11]=="--max-cycles=5000000",
++            "unexpected emulator command")
++    reference=command[10].split("=",1)[1]
++    expected_ref=NEGATIVE_REFERENCE if name=="negative-vdot" else NORMAL_REFERENCE
++    require(record["files"].get(reference)==expected_ref and
++            preflight.get("input_files",{}).get(reference)==expected_ref,"reference identity receipt mismatch")
++    require(record["files"].get(command[5])==pins["emu_sha256"],"job EMU identity mismatch")
++    text=text_view(raw_logs["run.log"])
++    reject_fatal_output(text)
++    normalized=gate.normalize_console(text)
++    require("The first instruction of core 0 has commited. Difftest enabled." in text,
++            "missing real DiffTest runtime banner")
++    loaded=re.findall(r"The reference model is ([^\r\n]+)",normalized)
++    require([v.strip() for v in loaded]==[reference],"loaded reference differs from command")
++    negative=name=="negative-vdot"
++    if negative:
++        gate.validate_negative(text,rc)
++    else:
++        require(rc==0,"normal job nonzero exit code")
++        gate.validate_failure_markers(text)
++        require(normalized.count("HIT GOOD TRAP")==1,"normal job missing unique GOOD TRAP")
++    observation=parser.analyze(text,require_complete=not negative)
++    wanted="O2_PARTIAL_TRACE_AUDIT" if negative else "O2_TRACE_PASS"
++    require(observation["status"]==wanted,"wrong trace scope")
++    # JSON normalization preserves the exact persisted schema for keys/histograms.
++    canonical=json.loads(json.dumps(observation))
++    require(archive.json(prefix+"/observation.json")==canonical,"cached observation differs from raw replay")
++    require(record.get("observation_status")==wanted and
++            record.get("observation_counts")==observation["counts"],"job trace verdict differs from replay")
++    if not negative:
++        require(observation["pending_count"]==0 and observation["pending_div_count"]==0 and
++                observation["unfinished_rob_count"]==0,"normal job did not drain")
++    return dict(name=name,recorded_job_status=record.get("status"),exit_code=rc,
++                observation_status=wanted,counts=observation["counts"],
++                raw_sha256=digest(raw_logs["run.log"]),text_view_sha256=digest(text.encode()),
++                input_sha256=observation["input_sha256"],
++                negative_scope="intentional bit100 rejection; partial trace only" if negative else None)
++
++def audit(archive_path,core_campaign,supplement_campaign):
++    require(core_campaign!=supplement_campaign,"core and supplement campaign must differ")
++    archive=Archive(archive_path)
++    records=[]
++    identities=[]
++    for campaign,expected in ((core_campaign,CORE_JOBS),(supplement_campaign,SUPPLEMENT_JOBS)):
++        preflight,pins,parser,gate=campaign_inputs(archive,campaign)
++        identities.append((pins,tool_pin(preflight,PARSER),tool_pin(preflight,RUNTIME_GATE)))
++        result=archive.json("runs/"+campaign+"/result.json")
++        require(isinstance(result.get("runs"),list) and len(result["runs"])==len(expected) and
++                {r.get("name") for r in result["runs"]}==expected,"campaign job inventory mismatch")
++        names={name.split("/")[2] for name in archive.records
++               if name.startswith("runs/"+campaign+"/") and name.endswith("/result.json")
++               and len(name.split("/"))==4}
++        require(names==expected,"extra or missing sealed job result")
++        for name in sorted(expected):
++            record=archive.json("runs/"+campaign+"/"+name+"/result.json")
++            require([r for r in result["runs"] if r.get("name")==name]==[record],
++                    "campaign and job receipts disagree")
++            records.append(audit_job(archive,campaign,name,preflight,pins,parser,gate))
++    require(identities[0]==identities[1],"campaigns used different hardware or trace checkers")
++    return dict(status="ARCHIVE_BYTES_AND_TRACE_AUDIT",archive=archive.bytes_result,
++                core_campaign=core_campaign,supplement_campaign=supplement_campaign,
++                jobs=len(records),complete_traces=sum(r["observation_status"]=="O2_TRACE_PASS" for r in records),
++                partial_negative_traces=sum(r["observation_status"]=="O2_PARTIAL_TRACE_AUDIT" for r in records),
++                emu_sha256=identities[0][0]["emu_sha256"],runs=records,new_emu_run=False,
++                new_nemu_run=False,linux_git_and_input_provenance_rechecked=False,
++                architectural_workload_checks_repeated=False,performance_measured=False,
++                scope="All archived stored/raw bytes, original exit/log identities, normal failure gates, bit100 negative chain, and exact O2 trace replay only")
++
++def main():
++    parser=argparse.ArgumentParser(description=__doc__)
++    parser.add_argument("--archive",type=Path,required=True)
++    parser.add_argument("--core-campaign",required=True)
++    parser.add_argument("--supplement-campaign",required=True)
++    parser.add_argument("--output",type=Path,required=True)
++    args=parser.parse_args()
++    require(not args.output.exists(),"output already exists")
++    result=audit(args.archive,args.core_campaign,args.supplement_campaign)
++    args.output.parent.mkdir(parents=True,exist_ok=True)
++    args.output.write_text(json.dumps(result,indent=2)+"\n",encoding="utf-8")
++    print(json.dumps({k:v for k,v in result.items() if k!="runs"},indent=2))
++
++if __name__=="__main__":
++    main()
+diff --git a/team/optimizations/o2/fullcore/recheck.py b/team/optimizations/o2/fullcore/recheck.py
+index df24acc..f2320e8 100644
+--- a/team/optimizations/o2/fullcore/recheck.py
++++ b/team/optimizations/o2/fullcore/recheck.py
+@@ -30,6 +30,20 @@ def require(condition, message):
+         raise ValueError(message)
+ 
+ 
++
++def reject_fatal_output(text):
++    """Reject fatal emulator/software errors even when exit=0 says GOOD TRAP.
++
++    This O2-only gate supplements the immutable shared O1 bit100/runtime gate.
++    Strip complete ANSI CSI escapes before matching, including color escapes
++    inserted within words. Unknown escape sequences remain fail-closed.
++    """
++    plain = re.sub(r'\x1b\[[0-?]*[ -/]*[@-~]', '', text)
++    require('\x1b' not in plain and '\x9b' not in plain,
++            'unsupported or truncated terminal escape')
++    require(re.search(r'\b(?:CRITICAL\s+ERROR|double\s+trap|PMA\s+check\s+failed)\b',
++                      plain, re.I) is None, 'O2 fatal runtime output')
++
+ def sha(path):
+     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+ 
+@@ -175,6 +189,7 @@ def recheck_job(name, image, data, reference, original, campaign, out, args, pat
+     try:
+         rc, text = check_raw_job(directory, original, command, files, "vdot" if name == "negative-vdot" else None)
+         record.update(exit_code=rc, raw_logs_sha256=original["raw_logs_sha256"])
++        reject_fatal_output(text)
+         runner.validate_runtime(text, reference)
+         if name == "negative-vdot":
+             record["runtime_gate"] = gate.validate_negative(text, rc)
+@@ -290,6 +305,8 @@ def replay_supplements(campaign, out, pins, emu_sha, core_preflight, runner, ana
+     require(sha(workload_path) == preflight['driver_files'].get(str(workload_path)),
+             'supplement workload checker differs from sealed run')
+     workload = load_blob('o2_bound_supplement_workload', workload_path, workload_path.read_bytes())
++    for name in sorted(SUPPLEMENT_NAMES):
++        reject_fatal_output((campaign / name / 'run.log').read_text(encoding='utf-8'))
+     return module.recheck_campaign(campaign, out / 'supplements', pins, emu_sha,
+                                    analyze=analyzer, workload=workload)
+ 
+diff --git a/team/optimizations/o2/fullcore/run_supplements.py b/team/optimizations/o2/fullcore/run_supplements.py
+index 4ff7e94..f0297c2 100644
+--- a/team/optimizations/o2/fullcore/run_supplements.py
++++ b/team/optimizations/o2/fullcore/run_supplements.py
+@@ -22,8 +22,8 @@ import run_suite as suite
+ DEFAULT_BASE=Path("/home/riscv/riscv-lab/o2-fullcore-20261019")
+ JOBS={
+     "o2-diagnostic": dict(kind="diagnostic",image="o2-diag.bin",commits=1158,
+-        image_sha256="ed35725a24708fc7ffb4efb617248fe5e6911f18c803280a6e75be3f8ad6dfc7",
+-        default=DEFAULT_BASE/"diagnostic-build-02"),
++        image_sha256="56915e3aaca02e02597c207de07ac18352ab53b6d06c4cb92a18fcddea1da4d4",
++        default=DEFAULT_BASE/"diagnostic-build-03"),
+     "o2-control-diagnostic": dict(kind="control",image="o2-control.bin",commits=1208,
+         image_sha256="45cdf2a6cb6848b3bcb56d860c36bc26a975a8aa96bfe1411d33dce6036bd305",
+         default=DEFAULT_BASE/"control-diagnostic-build-04"),
+@@ -41,6 +41,7 @@ def evaluate(text,exit_code,kind,manifest,reference,analyze,workload):
+     """Pure post-run gate also used by offline rechecks; never runs hardware."""
+     suite.require(kind in EXPECTED_CHECK_STATUS,"unknown supplement kind")
+     suite.require(type(exit_code) is int and exit_code==0,"supplement EMU exit code is not zero")
++    workload.reject_fatal_output(text)
+     suite.validate_runtime(text,reference)
+     suite.validate_failure_markers(text)
+     observation=analyze.analyze(text,require_complete=True)
+diff --git a/team/optimizations/o2/fullcore/test_fatal_output.py b/team/optimizations/o2/fullcore/test_fatal_output.py
+new file mode 100644
+index 0000000..3051f8d
+--- /dev/null
++++ b/team/optimizations/o2/fullcore/test_fatal_output.py
+@@ -0,0 +1,140 @@
++"""O2 fatal-output regressions, independent of workload generation tests."""
++import hashlib
++import importlib.util
++import json
++from pathlib import Path
++import tempfile
++from types import SimpleNamespace
++import unittest
++from unittest import mock
++
++HERE = Path(__file__).resolve().parent
++ROOT = HERE.parents[3]
++
++def load(name,path):
++    spec=importlib.util.spec_from_file_location(name,path)
++    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
++    return module
++
++workload=load('fatal_workload_check',HERE/'workloads/check.py')
++recheck=load('fatal_recheck',HERE/'recheck.py')
++portable=load('fatal_portable',HERE/'portable.py')
++legacy=load('fatal_unchanged_legacy',ROOT/'team/optimizations/o1/audit/runtime_gate.py')
++GATES=(workload,recheck,portable)
++
++REAL_FAILURE_STDOUT = 'emu compiled at Oct 19 2026, 13:34:18\nUsing simulated 32768B flash\nuse /home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin as flash bin\nUsing simulated 128MB RAM\nThe image is /home/riscv/riscv-lab/o2-fullcore-20261019/diagnostic-build-02/o2-diag.bin\nThe reference model is /home/riscv/riscv-lab/t12-regression-20261013/nemu/reference/build/riscv64-nemu-interpreter-so\nThe first instruction of core 0 has commited. Difftest enabled. \n\x1b[1;34m[src/monitor/image_loader.c:205,load_img] Loading flash image: /home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin\n\x1b[0m\n\x1b[1;34m[src/monitor/image_loader.c:250,load_img] Read 12 bytes from file /home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin to 0x0xf0000000\x1b[0m\nO2_DIAG_BEGIN cases=10 fixed_dots=128 contract=vdot-s8x8-r32-v0.1\nO2_DIAG_CHECKER_CONTROL highbit_detected=1\nO2_DIAG_CASE_PASS seq=0 id=shared-input-1 dots=128 register_bytes=512 csr_fields=7\nO2_DIAG_CASE_PASS seq=1 id=shared-input-2 dots=128 register_bytes=512 csr_fields=7\nO2_DIAG_CASE_PASS seq=2 id=shared-input-4 dots=128 register_bytes=512 csr_fields=7\nO2_DIAG_CASE_PASS seq=3 id=distinct-input-1 dots=128 register_bytes=512 csr_fields=7\nO2_DIAG_CASE_PASS seq=4 id=distinct-input-2 dots=128 register_bytes=512 csr_fields=7\nO2_DIAG_CASE_PASS seq=5 id=distinct-input-4 dots=128 register_bytes=512 csr_fields=7\nO2_DIAG_CASE_PASS seq=6 id=recurrence-1 dots=128 register_bytes=512 csr_fields=7\nO2_DIAG_CASE_PASS seq=7 id=recurrence-2 dots=128 register_bytes=512 csr_fields=7\nO2_DIAG_CASE_PASS seq=8 id=recurrence-4 dots=128 register_bytes=512 csr_fields=7\n\x1b[1;34m[src/memory/paddr.c:293,check_paddr] isa pma check failed, vaddr=0x0000000000000000, paddr=0x0000000000000000, len=0x2, type=0x0, mode=0x3\x1b[0m\n\x1b[1;34m[src/memory/paddr.c:293,check_paddr] isa pma check failed, vaddr=0x0000000000000000, paddr=0x0000000000000000, len=0x2, type=0x0, mode=0x3\x1b[0m\nCore 0 dump: \x1b[31mHIT CRITICAL ERROR: please check if software cause a double trap. \n\x1b[0mCore 0: \x1b[32mHIT GOOD TRAP at pc = 0xe\n\x1b[0m\x1b[35mCore-0 instrCnt = 58597, cycleCnt = 111765, IPC = 0.524288\n\x1b[0m\x1b[34mSeed=0 Guest cycle spent: 111769 (this will be different from cycleCnt if emu loads a snapshot)\n\x1b[0m\x1b[34mHost time spent: 231193ms\n\x1b[0m'
++
++NEGATIVE = (
++    'DIFFTEST_HIGHBIT_NEGATIVE_INJECTED bit=100 vd=10 pc=0x80001bdc instruction=0x0294050b\n'
++    'v10_high different at pc = 0x0080001bdc, right= 0x0000001000000000, wrong = 0x0000000000000000\n'
++    'Core 0: ABORT at pc = 0x800016b0\n'
++)
++
++def fixture(control=False):
++    if control:
++        manifest=dict(groups=[dict(id=i) for i in range(16)],expected_vdot_commits=1208,
++                      whole_vector_bytes_checked=131072)
++        rows=['O2_CONTROL_BEGIN groups=16 trials=256 contract=vdot-s8x8-r32-v0.1']
++        rows += [f'O2_CONTROL_GROUP_PASS id={i} trials=16 register_bytes=8192' for i in range(16)]
++        rows += ['O2_CONTROL_SUMMARY groups=16 trials=256 register_bytes=131072 failures=0','HIT GOOD TRAP']
++    else:
++        cases=[dict(id='fixture-'+str(i),counts={'vdot':128 if i<9 else 6}) for i in range(10)]
++        manifest=dict(cases=cases,expected_vdot_commits=1158)
++        rows=['O2_DIAG_BEGIN cases=10 fixed_dots=128 contract=vdot-s8x8-r32-v0.1',
++              'O2_DIAG_CHECKER_CONTROL highbit_detected=1']
++        rows += [f'O2_DIAG_CASE_PASS seq={i} id={case["id"]} dots={case["counts"]["vdot"]} register_bytes=512 csr_fields=7'
++                 for i,case in enumerate(cases)]
++        rows += ['O2_DIAG_SUMMARY cases=10 dots=1158 failures=0','HIT GOOD TRAP']
++    observation=dict(status='O2_TRACE_PASS',counts={'COMMIT':manifest['expected_vdot_commits']},
++                     pending_count=0,unfinished_rob_count=0)
++    return '\n'.join(rows)+'\n',manifest,observation
++
++
++class FatalOutputTests(unittest.TestCase):
++    def test_real_failed_stdout_is_explicitly_fatal(self):
++        # Exact original stdout from supplements-01/o2-diagnostic, embedded so
++        # future host tests do not depend on the developer's absolute directory.
++        self.assertIn('seq=8 id=recurrence-4',REAL_FAILURE_STDOUT)
++        self.assertIn('HIT GOOD TRAP at pc = 0xe',REAL_FAILURE_STDOUT)
++        legacy.validate_failure_markers(REAL_FAILURE_STDOUT)
++        for module in GATES:
++            with self.subTest(module=module.__name__),self.assertRaisesRegex(ValueError,'fatal runtime'):
++                module.reject_fatal_output(REAL_FAILURE_STDOUT)
++
++    def test_exact_new_fatal_classes_with_color_case_and_whitespace(self):
++        variants=('HIT CRITICAL ERROR','critical error','CRI\x1b[31mTICAL\x1b[0m ERROR',
++                  'please check if software cause a double trap.',
++                  'DOUBLE\tTRAP','isa pma check failed, vaddr=0x0','PMA\ncheck failed')
++        for module in GATES:
++            for fatal in variants:
++                with self.subTest(module=module.__name__,fatal=fatal),self.assertRaisesRegex(ValueError,'fatal runtime'):
++                    module.reject_fatal_output('HIT GOOD TRAP\n'+fatal+'\n')
++
++    def test_forged_complete_success_cannot_hide_fatal_output(self):
++        for control in (False,True):
++            text,manifest,observation=fixture(control)
++            checker=workload.check_control if control else workload.check
++            self.assertTrue(checker(text,manifest,0,observation)['status'].endswith('_PASS'))
++            for fatal in ('HIT CRITICAL ERROR','double trap','isa pma check failed'):
++                for forged in (fatal+'\n'+text,text.replace('HIT GOOD TRAP',fatal+'\nHIT GOOD TRAP'),
++                               text+fatal+'\n'):
++                    with self.subTest(control=control,fatal=fatal),self.assertRaisesRegex(ValueError,'fatal runtime'):
++                        checker(forged,manifest,0,observation)
++
++    def test_expected_bit100_chain_still_passes_original_negative_contract(self):
++        for text in (NEGATIVE,NEGATIVE.replace('ABORT','\x1b[31mABORT\x1b[0m').replace('\n','\r\n')):
++            for module in GATES:
++                module.reject_fatal_output(text)
++                self.assertEqual(legacy.validate_negative(text,1)['bit'],100)
++        for module in GATES:
++            with self.assertRaisesRegex(ValueError,'fatal runtime'):
++                module.reject_fatal_output(NEGATIVE+'HIT CRITICAL ERROR\n')
++
++    def test_normal_success_and_unrelated_words_are_allowed(self):
++        for module in GATES:
++            module.reject_fatal_output('normal report: critical path measured; trap handler configured\nHIT GOOD TRAP\n')
++            with self.assertRaisesRegex(ValueError,'terminal escape'):
++                module.reject_fatal_output('CRITICAL\x1b[')
++
++    def test_offline_core_recheck_rejects_fatal_before_parser(self):
++        with tempfile.TemporaryDirectory() as td:
++            base=Path(td);out=base/'audit';out.mkdir()
++            artifact=base/'artifact';artifact.write_bytes(b'fixture')
++            args=SimpleNamespace(emu=artifact,timeout='1m')
++            original=dict(status='HELLO_VADD_PASS',started='2026-10-19T00:00:00+00:00',
++                          finished='2026-10-19T00:00:01+00:00',raw_logs_sha256={})
++            runner=SimpleNamespace(validate_runtime=lambda *_:None)
++            parser=SimpleNamespace(analyze=lambda *_a,**_k: (_ for _ in ()).throw(AssertionError('parser must not run')))
++            with mock.patch.object(recheck,'check_raw_job',return_value=(0,REAL_FAILURE_STDOUT)):
++                result=recheck.recheck_job('hello-vadd',artifact,None,artifact,original,
++                    base,out,args,dict(reference=artifact,flash=artifact),
++                    [runner,parser,None,None,None,None],legacy)
++            self.assertEqual(result['status'],'FAILED')
++            self.assertIn('fatal runtime',result['error'])
++
++    def test_portable_raw_job_rejects_fatal_before_parser(self):
++        stdout=('The reference model is /ref.so\n'
++                'The first instruction of core 0 has commited. Difftest enabled.\n'
++                'HIT CRITICAL ERROR: double trap\nHIT GOOD TRAP at pc = 0xe\n').encode()
++        raw={'stdout.log':stdout,'stderr.log':b'','run.log':stdout}
++        command=['timeout','1m','stdbuf','-o0','-e0','/emu','-i','/image',
++                 '--flash=/flash','--ram-size=128MB','--diff=/ref.so','--max-cycles=5000000']
++        record=dict(name='hello-vadd',command=command,exit_code=0,
++                    files={'/ref.so':portable.NORMAL_REFERENCE,'/emu':'a'*64},
++                    raw_logs_sha256={k:portable.digest(v) for k,v in raw.items()})
++        class Archive:
++            def json(self,path):
++                if path.endswith('/result.json'):return record
++                raise AssertionError('cached observation must not run')
++            def raw(self,path):
++                leaf=path.rsplit('/',1)[1]
++                return b'0\n' if leaf=='exit-code.txt' else raw[leaf]
++        parser=SimpleNamespace(analyze=lambda *_a,**_k: (_ for _ in ()).throw(AssertionError('parser must not run')))
++        with self.assertRaisesRegex(ValueError,'fatal runtime'):
++            portable.audit_job(Archive(),'core','hello-vadd',
++                {'input_files':{'/ref.so':portable.NORMAL_REFERENCE}},
++                {'emu_sha256':'a'*64},parser,legacy)
++
++
++if __name__=='__main__':
++    unittest.main()
+diff --git a/team/optimizations/o2/fullcore/test_supplements.py b/team/optimizations/o2/fullcore/test_supplements.py
+index fa7e616..5a71e20 100644
+--- a/team/optimizations/o2/fullcore/test_supplements.py
++++ b/team/optimizations/o2/fullcore/test_supplements.py
+@@ -6,6 +6,8 @@ import unittest
+ from unittest.mock import patch
+ import run_supplements as run
+ 
++real_workload = run.suite.load_module('supplement_test_workload', run.HERE/'workloads/check.py')
++
+ class SupplementTest(unittest.TestCase):
+     def setUp(self):
+         self.ref=Path("/normal.so")
+@@ -16,6 +18,7 @@ class SupplementTest(unittest.TestCase):
+             analyze=lambda text,require_complete: copy.deepcopy(self.observation),
+             extract_events_and_uart=lambda text:([],text))
+         self.workload=types.SimpleNamespace(
++            reject_fatal_output=real_workload.reject_fatal_output,
+             check=lambda *args:dict(status="O2_DIAGNOSTIC_PASS",checked_register_bytes=5120),
+             check_control=lambda *args:dict(status="O2_CONTROL_DIAGNOSTIC_PASS",checked_register_bytes=131072))
+ 
+@@ -34,10 +37,16 @@ class SupplementTest(unittest.TestCase):
+         for code in [1,124,-9,False]:
+             with self.subTest(code=code),self.assertRaises(ValueError):
+                 self.evaluate(exit_code=code)
+-        for marker in ["ABORT","EXCEEDING CYCLE/INSTR LIMIT","HIT BAD TRAP","different at pc"]:
++        for marker in ["ABORT","EXCEEDING CYCLE/INSTR LIMIT","HIT BAD TRAP","different at pc","HIT CRITICAL ERROR","double trap","isa pma check failed"]:
+             with self.subTest(marker=marker),self.assertRaises(ValueError):
+                 self.evaluate(text=self.text+marker)
+ 
++    def test_fatal_raw_is_rejected_before_uart_extraction(self):
++        self.analyze.analyze=lambda *a,**k: self.fail("fatal raw must not reach trace parser")
++        self.analyze.extract_events_and_uart=lambda text:([],self.text)
++        with self.assertRaisesRegex(ValueError,"fatal runtime"):
++            self.evaluate(text=self.text+"HIT CRITICAL ERROR: double trap\n")
++
+     def test_reference_and_banner_are_mandatory(self):
+         for text in [self.text.replace("/normal.so","/other.so"),self.text.replace("Difftest enabled.","disabled")]:
+             with self.assertRaises(ValueError):
+diff --git a/team/optimizations/o2/fullcore/workloads/check.py b/team/optimizations/o2/fullcore/workloads/check.py
+index 39ad685..1ad6b57 100644
+--- a/team/optimizations/o2/fullcore/workloads/check.py
++++ b/team/optimizations/o2/fullcore/workloads/check.py
+@@ -8,6 +8,20 @@ def require(ok,message):
+     if not ok:
+         raise ValueError(message)
+ 
++
++def reject_fatal_output(text):
++    """Reject fatal emulator/software errors even when exit=0 says GOOD TRAP.
++
++    This O2-only gate supplements the immutable shared O1 bit100/runtime gate.
++    Strip complete ANSI CSI escapes before matching, including color escapes
++    inserted within words. Unknown escape sequences remain fail-closed.
++    """
++    plain = re.sub(r'\x1b\[[0-?]*[ -/]*[@-~]', '', text)
++    require('\x1b' not in plain and '\x9b' not in plain,
++            'unsupported or truncated terminal escape')
++    require(re.search(r'\b(?:CRITICAL\s+ERROR|double\s+trap|PMA\s+check\s+failed)\b',
++                      plain, re.I) is None, 'O2 fatal runtime output')
++
+ def marker_position(uart, marker):
+     matches=list(re.finditer("^"+re.escape(marker)+"$",uart,re.M))
+     require(len(matches)==1 and uart.count(marker)==1,"missing/duplicate/noncanonical marker: "+marker)
+@@ -24,6 +38,7 @@ def verify_build(build):
+     return json.loads((build/"data/manifest.json").read_text())
+ 
+ def check(uart,manifest,exit_code,analysis):
++    reject_fatal_output(uart)
+     require(exit_code==0,"diagnostic EMU nonzero exit")
+     uart=uart.replace("\r\n","\n")
+     require(not re.search(r"O2_DIAG_FAIL|HIT BAD TRAP|different at pc|DIFFTEST FAIL|ABORT|Assertion.*failed",uart),
+@@ -55,6 +70,7 @@ def check(uart,manifest,exit_code,analysis):
+                 observation_counts=analysis["counts"],performance_measured=False)
+ 
+ def check_control(uart,manifest,exit_code,analysis):
++    reject_fatal_output(uart)
+     require(exit_code==0,"control diagnostic EMU nonzero exit")
+     uart=uart.replace("\r\n","\n")
+     require(not re.search(r"O2_CONTROL_FAIL|HIT BAD TRAP|different at pc|DIFFTEST FAIL|ABORT|Assertion.*failed",uart),
+diff --git a/team/optimizations/o2/fullcore/workloads/generate.py b/team/optimizations/o2/fullcore/workloads/generate.py
+index 3921da8..fb2ae6a 100644
+--- a/team/optimizations/o2/fullcore/workloads/generate.py
++++ b/team/optimizations/o2/fullcore/workloads/generate.py
+@@ -64,7 +64,10 @@ def generate(out):
+             if kind == "transitions":
+                 nxt = ops[len([x for x in body if x.startswith("vmv.x.s")])+1:]
+                 next_vl = 8 if not nxt or nxt[0]["op"] == "vdot" else 4
+-                low = int.from_bytes(bytes(after[d][:4]),"little",signed=True)
++                # vmv.x.s extracts/sign-extends the current SEW, not dot's
++                # 32-bit accumulator width. The next vsetvli consumes this value.
++                extract_bytes = 1 if op["op"] == "vdot" else 4
++                low = int.from_bytes(bytes(after[d][:extract_bytes]),"little",signed=True)
+                 constant = (low ^ next_vl) & ((1 << 64) - 1)
+                 body += [f"vmv.x.s t2, v{d}", f"li t3, 0x{constant:016x}", "xor t2, t2, t3"]
+         if kind == "transitions":
+diff --git a/team/optimizations/o2/fullcore/workloads/test_transition_state.py b/team/optimizations/o2/fullcore/workloads/test_transition_state.py
+new file mode 100644
+index 0000000..70420ff
+--- /dev/null
++++ b/team/optimizations/o2/fullcore/workloads/test_transition_state.py
+@@ -0,0 +1,164 @@
++"""Execute emitted transition control with SEW-aware scalar extraction.
++
++This host model checks source-level AVL/data dependence; it is not an RTL,
++NEMU or full-core test. It intentionally does not call generator arithmetic.
++"""
++import copy
++from pathlib import Path
++import re
++import struct
++import tempfile
++import unittest
++from unittest.mock import patch
++import generate
++
++MASK64 = (1 << 64) - 1
++
++
++def replay(case):
++    regs = [bytearray(r) for r in case["before"]]
++    scalar = {}
++    sew = vl = None
++    operation = 0
++    extraction = []
++    configs = []
++    for text in case["body_instructions"]:
++        parts = text.replace(",", " ").split()
++        mnemonic = parts[0]
++        if mnemonic in ("vsetivli", "vsetvli"):
++            target_sew = int(parts[3][1:])
++            want_vl = 8 if target_sew == 8 else 4
++            avl = int(parts[2], 0) if mnemonic == "vsetivli" else scalar[parts[2]]
++            if avl != want_vl:
++                raise ValueError(f"AVL {avl:#x} != {want_vl} before operation {operation}: {text}")
++            sew, vl = target_sew, min(avl, 128 // target_sew)
++            configs.append((sew, vl, avl))
++        elif mnemonic == "vmv.x.s":
++            register = int(parts[2][1:])
++            lane_bits = int.from_bytes(regs[register], "little") & ((1 << sew) - 1)
++            signed_value = lane_bits - (1 << sew) if lane_bits & (1 << (sew - 1)) else lane_bits
++            scalar[parts[1]] = signed_value & MASK64
++            extraction.append((sew, lane_bits, scalar[parts[1]]))
++        elif mnemonic == "li":
++            scalar[parts[1]] = int(parts[2], 0) & MASK64
++        elif mnemonic == "xor":
++            scalar[parts[1]] = (scalar[parts[2]] ^ scalar[parts[3]]) & MASK64
++        elif mnemonic in (".word", "vdivu.vv", "vfdiv.vv"):
++            spec = case["ops"][operation]
++            if mnemonic == ".word":
++                word = int(parts[1], 0)
++                if word & 0xfe00707f != 0x0200000b:
++                    raise ValueError("unexpected custom instruction encoding")
++                dest, left, right = (word >> 7) & 31, (word >> 15) & 31, (word >> 20) & 31
++                if (sew, vl, spec["op"]) != (8, 8, "vdot"):
++                    raise ValueError("illegal dot configuration")
++                aa = [x - 256 if x >= 128 else x for x in regs[left][:8]]
++                bb = [x - 256 if x >= 128 else x for x in regs[right][:8]]
++                result = sum(a * b for a, b in zip(aa, bb)) & 0xffffffff
++                regs[dest][:] = result.to_bytes(4, "little") + bytes(12)
++            else:
++                dest, left, right = [int(p[1:]) for p in parts[1:]]
++                if (sew, vl) != (32, 4):
++                    raise ValueError("illegal DIV configuration")
++                if mnemonic == "vdivu.vv":
++                    if spec["op"] != "vidiv":
++                        raise ValueError("DIV kind mismatch")
++                    aa = struct.unpack("<4I", regs[left])
++                    bb = struct.unpack("<4I", regs[right])
++                    regs[dest][:] = struct.pack("<4I", *(a // b if b else 0xffffffff for a, b in zip(aa, bb)))
++                else:
++                    if spec["op"] != "vfdiv":
++                        raise ValueError("DIV kind mismatch")
++                    # Frozen diagnostic operands have finite exactly representable quotients.
++                    aa = struct.unpack("<4f", regs[left])
++                    bb = struct.unpack("<4f", regs[right])
++                    regs[dest][:] = struct.pack("<4f", *(a / b for a, b in zip(aa, bb)))
++            if (dest, left, right) != (spec["d"], spec["a"], spec["b"]):
++                raise ValueError("instruction identity differs from operation manifest")
++            operation += 1
++        else:
++            raise ValueError("unhandled transition instruction: " + text)
++    if operation != len(case["ops"]):
++        raise ValueError("missing emitted operation")
++    if [list(r) for r in regs] != case["expected"]:
++        raise ValueError("full 32-register result differs")
++    if (sew, vl) != (8, 8):
++        raise ValueError("final vtype/VL contract differs")
++    return dict(operations=operation, extraction=extraction, configs=configs)
++
++
++class TransitionStateTest(unittest.TestCase):
++    def make_case(self, directory, initial=None):
++        if initial is None:
++            manifest = generate.generate(Path(directory)/"data")
++        else:
++            with patch.object(generate, "initial", return_value=initial):
++                manifest = generate.generate(Path(directory)/"data")
++        return manifest["cases"][-1]
++
++    def test_complete_emitted_chain_all_18_operations(self):
++        with tempfile.TemporaryDirectory() as d:
++            result = replay(self.make_case(d))
++        self.assertEqual(result["operations"], 18)
++        self.assertEqual(len(result["extraction"]), 18)
++        self.assertEqual(len(result["configs"]), 19)
++        self.assertEqual(result["extraction"][0], (8, 0x21, 0x21))
++        self.assertEqual({sew for sew, _, _ in result["extraction"]}, {8, 32})
++
++    def test_original_32_bit_constant_reproduces_observed_bad_avl(self):
++        with tempfile.TemporaryDirectory() as d:
++            case = self.make_case(d)
++        case["body_instructions"][3] = "li t3, 0xffffffffffffe429"
++        with self.assertRaisesRegex(ValueError, "AVL 0xffffffffffffe408 != 8 before operation 1"):
++            replay(case)
++
++    def test_dot_outputs_beyond_signed_byte_and_byte_sign_boundaries(self):
++        for left, right, want in [(2,64,128),(2,-65,-130),(1,-128,-128),(1,127,127)]:
++            with self.subTest(want=want), tempfile.TemporaryDirectory() as d:
++                initial = [[0]*16 for _ in range(32)]
++                initial[8][0], initial[9][0] = left & 255, right & 255
++                case = self.make_case(d, initial)
++                result = replay(case)
++                first = result["extraction"][0]
++                lane = want & 255
++                signed = lane - 256 if lane >= 128 else lane
++                self.assertEqual(first, (8, lane, signed & MASK64))
++
++    def test_unsigned_byte_extraction_mutant_is_rejected(self):
++        with tempfile.TemporaryDirectory() as d:
++            initial = [[0]*16 for _ in range(32)]
++            initial[8][0], initial[9][0] = 2, 64
++            case = self.make_case(d, initial)
++        case["body_instructions"][3] = "li t3, 0x88"
++        with self.assertRaisesRegex(ValueError, "AVL 0xffffffffffffff08 != 8"):
++            replay(case)
++
++    def test_32_bit_extract_sign_extension_and_final_e8_restoration(self):
++        for bits in [0x7fffffff, 0x80000000, 0xffffffff]:
++            with self.subTest(bits=hex(bits)):
++                regs = [[0]*16 for _ in range(32)]
++                regs[4][:4] = bits.to_bytes(4, "little")
++                signed = bits - (1 << 32) if bits & (1 << 31) else bits
++                case = dict(before=regs, expected=copy.deepcopy(regs), ops=[],
++                    body_instructions=["vsetivli zero, 4, e32, m1, tu, mu",
++                                       "vmv.x.s t2, v4",
++                                       f"li t3, {(signed ^ 8) & MASK64:#x}",
++                                       "xor t2, t2, t3",
++                                       "vsetvli zero, t2, e8, m1, tu, mu"])
++                self.assertEqual(replay(case)["extraction"], [(32,bits,signed & MASK64)])
++
++    def test_wrong_final_avl_and_missing_chain_are_rejected(self):
++        with tempfile.TemporaryDirectory() as d:
++            case = self.make_case(d)
++        wrong = copy.deepcopy(case)
++        wrong["body_instructions"][-2] = "xor t2, t2, t2"
++        with self.assertRaisesRegex(ValueError, "AVL 0x0 != 8"):
++            replay(wrong)
++        missing = copy.deepcopy(case)
++        del missing["body_instructions"][2:5]
++        with self.assertRaises(KeyError):
++            replay(missing)
++
++
++if __name__ == "__main__":
++    unittest.main()
