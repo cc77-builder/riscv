@@ -1,0 +1,40 @@
+Startpoint: io_out_ready (input port clocked by core_clk)
+Endpoint: io_in_ready (output port clocked by core_clk)
+Path Group: core_clk
+Path Type: max
+
+Fanout         Cap        Slew       Delay        Time   Description
+--------------------------------------------------------------------------------------------
+                     0.050000    0.000000    0.000000   clock core_clk (rise edge)
+                                 0.000000    0.000000   clock network delay (ideal)
+                                 0.100000    0.100000 ^ input external delay
+                     0.050000    0.000000    0.100000 ^ io_out_ready (in)
+    2    4.018250                                       io_out_ready (net)
+                     0.050000    0.000014    0.100014 ^ _07253_/A2 (NAND2_X1)
+                     0.011502    0.020065    0.120079 v _07253_/ZN (NAND2_X1)
+    1    1.860206                                       _00043_ (net)
+                     0.011502    0.000012    0.120091 v _07254_/B2 (OAI22_X1)
+                     0.030794    0.045182    0.165273 ^ _07254_/ZN (OAI22_X1)
+    1    2.009970                                       _00044_ (net)
+                     0.030794    0.000013    0.165285 ^ _07255_/A (INV_X1)
+                     0.008367    0.010150    0.175436 v _07255_/ZN (INV_X1)
+    1    1.862458                                       _00045_ (net)
+                     0.008367    0.000012    0.175447 v _07256_/A3 (NOR3_X1)
+                     0.049335    0.073196    0.248644 ^ _07256_/ZN (NOR3_X1)
+    3    3.638829                                       io_in_ready (net)
+                     0.049335    0.000003    0.248647 ^ io_in_ready (out)
+                                             0.248647   data arrival time
+
+                     0.050000    1.000000    1.000000   clock core_clk (rise edge)
+                                 0.000000    1.000000   clock network delay (ideal)
+                                -0.050000    0.950000   clock uncertainty
+                                 0.000000    0.950000   clock reconvergence pessimism
+                                -0.100000    0.850000   output external delay
+                                             0.850000   data required time
+--------------------------------------------------------------------------------------------
+                                             0.850000   data required time
+                                            -0.248647   data arrival time
+--------------------------------------------------------------------------------------------
+                                             0.601353   slack (MET)
+
+
