@@ -38,7 +38,7 @@ def audit(archive,output):
                 require(not name.is_absolute() and ".." not in name.parts and name.as_posix() not in originals,"original path")
                 originals.add(name.as_posix());target=work/Path(*name.parts);target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(raw)
         require({p.relative_to(archive).as_posix() for p in (archive/"files").rglob("*") if p.is_file()}==stored_names,"unexpected archive files")
-        campaign=work/"campaign-01"
+        campaign=work/manifest.get("campaign_name","campaign-01")
         pins=json.loads((campaign/"artifact-pins.json").read_text(encoding="utf-8"))
         state=json.loads((campaign/"state.json").read_text(encoding="utf-8"))
         require(state["status"]=="O3_PAIRED_APPLICATION_CAMPAIGN_PASS","incomplete campaign")
@@ -93,14 +93,16 @@ def audit(archive,output):
             base=next(r for r in rows if r["replay"]==0)
             for row in rows:
                 require([(s["seq"],s["cycles"],s["instructions"]) for s in row["samples"]]==[(s["seq"],s["cycles"],s["instructions"]) for s in base["samples"]],"replay")
+        recovery_module=load("o3_native_recovery_check",Path(__file__).with_name("recovery_check.py"))
+        recovery=recovery_module.validate(work,campaign,records,manifest["work_root"])
         stats=c.summarize(records)
-        sealed=json.loads((work/"results-01/verification.json").read_text(encoding="utf-8"))
+        sealed=json.loads((work/manifest.get("results_name","results-01")/"verification.json").read_text(encoding="utf-8"))
         require(sealed["status"]=="O3_RAW_EVIDENCE_RECHECK_PASS","Linux audit status")
         for key in ("rows","best_rvv_comparison"):
             require(stats[key]==aggregate[key]==sealed[key],"recomputed statistics "+key)
         require(windows==1280 and len(stats["measured_samples"])==768,"window count")
         result=dict(status="O3_NATIVE_OFFLINE_RECHECK_PASS",platform=sys.platform,jobs=56,windows=windows,
-                    measured_windows=768,replay_jobs=4,archive_files=len(stored_names),archive_manifest_sha256=sha(archive/"archive-manifest.json"),
+                    measured_windows=768,replay_jobs=4,recovery=recovery,archive_files=len(stored_names),archive_manifest_sha256=sha(archive/"archive-manifest.json"),
                     rows=stats["rows"],best_rvv_comparison=stats["best_rvv_comparison"],new_emu_run=False,
                     linux_git_compiler_dependency_provenance_rechecked=False,
                     scope="sealed raw bytes, source/image regeneration, full application/state gates, exact ELF/counter windows, both protocols, replay and statistics; no new EMU or Linux provenance run")

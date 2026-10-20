@@ -28,6 +28,7 @@ def recheck(root,output):
     fatal=c.load("o3_recheck_fatal",c.ROOT/"team/optimizations/o2/fullcore/workloads/check.py")
     observers={m:c.load("o3_recheck_observer_"+m,c.ROOT/("team/optimizations/"+m+"/fullcore/analyze.py")) for m in ("o1","o2")}
     aggregate=json.loads((root/"result.json").read_text());records=[]
+    recovery_module=c.load("o3_linux_recovery_check",Path(__file__).with_name("recovery_check.py"))
     paths=sorted([*root.glob("o1/*/result.json"),*root.glob("o2/*/result.json")])
     c.require(len(paths)==56,"strict exact run count")
     recorded={(r["mode"],r["image"],r["replay"]):r for r in aggregate["runs"]}
@@ -62,6 +63,7 @@ def recheck(root,output):
         baseline=next(r for r in rows if r["replay"]==0)
         for r in rows:
             c.require([(s["seq"],s["cycles"],s["instructions"]) for s in r["samples"]]==[(s["seq"],s["cycles"],s["instructions"]) for s in baseline["samples"]],"replay drift")
+    recovery=recovery_module.validate(root.parent,root,records,str(root.parent))
     stats=c.summarize(records)
     for key,value in stats.items():c.require(value==aggregate[key],"aggregate statistics drift "+key)
     c.verify_hashes(files)
@@ -80,6 +82,7 @@ def recheck(root,output):
         rows.append(v)
     csv_file(output/"comparison.csv",rows);csv_file(output/"best-rvv.csv",stats["best_rvv_comparison"])
     table=["# O3 GEMV工程结果","",
+           ("中断恢复：46项原通过作业逐字节复用，10项恢复补跑；另2项中断尝试完整保留、不计入正式统计。共56项合格作业、58次启动尝试。" if recovery["recovered"] else "无中断恢复。"),"",
            "O1/O2相同镜像、相同数学输入输出。全部56项实际EMU运行、1280个校验窗口、768条正式性能窗口通过严格原始日志重审；4项重放逐seq一致。",
            "正式样本每shape/scope/software/mode/method为3数据集×4measured。first/warmup/重放均保留，不作为额外独立样本。","",
            "|M×K|口径|软件|O1 vdot cycles|O2 vdot cycles|O2周期降低|O1 RVV cycles|O2 RVV cycles|O2 RVV/vdot|",
@@ -94,7 +97,7 @@ def recheck(root,output):
     table+=["","core包含A/x加载、运算、跨块累加及结果寄存器形成；endtoend再计入kernel配置及全部输出存储。输入无打包；VS启用和测试框架初始化在窗外。输出为每行16字节槽，不能冒称最优GEMV库或完整LLM端到端。",
             "K=13的vdot标量尾部成本计入，RVV可用动态VL。所有有利/不利预定尺寸均展示；本轮不推断PPA/Fmax、官方得分或最终采用。O4/O5/G5和正式T16仍待后续。"]
     (output/"结果与工程记录.md").write_text("\n".join(table)+"\n",encoding="utf-8")
-    v=dict(status="O3_RAW_EVIDENCE_RECHECK_PASS",source_commit=state["source_commit"],jobs=56,windows=len(samples),
+    v=dict(status="O3_RAW_EVIDENCE_RECHECK_PASS",source_commit=state["source_commit"],recovery=recovery,jobs=56,windows=len(samples),
            measured_windows=len(stats["measured_samples"]),replay_jobs=4,original_inputs_unchanged=True,new_emu_run=False,
            rows=stats["rows"],best_rvv_comparison=stats["best_rvv_comparison"])
     c.require(v["windows"]==1280,"window inventory")
