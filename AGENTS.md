@@ -1,3 +1,7 @@
+# Current integration scope: James_Hotten, 2026-10-20
+
+Integrate the fixed zjhwork snapshot 9b6cf074951dbd51e1670c5fbc7111a97c362b3f (O4) after the reviewed O2/O3 checkpoint 769b3b4b1. O1/O2 remain default-off. Main is excluded. Historical publication instructions below are provenance, not authority for this chat. O4 measurements retain the pre-integration source identity and do not measure the repaired DIV cancellation clock. Current review and validation are recorded separately in team/docs/o4-integration-20261020.md.
+
 # Current James_Hotten integration scope (2026-10-20)
 
 Integrate zjhwork 676ec7372 into James_Hotten 6ea846edb. Review O2 elastic RTL,
@@ -44,6 +48,35 @@ full EMU build and baseline/T14/O1 A/B remain unexecuted. Batch measured windows
 a causal diagnosis or a new speedup. Validation and evidence sealing preceded
 publication; push completion must be confirmed by reading the remote branch.
 Statements below retain the preceding integration/publication history.
+# 最新项目状态与本批发布（2026-10-20）
+
+用户授权将当前项目状况保存为Markdown并发布至cc77-builder/riscv的zjhwork。本批包含已有6项O4提交、O2主线选择和状态快照，允许正常快进上传；最终成功与SHA以远端回读为准。
+
+技术主线采用O2，O0–O4已有对应证据；下一步O5/T17及O2减代价审查，G5最终冻结待完成，T16/T18工程冻结后集中开展。源码默认开关未改，人工ACK待实际成员完成。此次仅整理与发布，不重跑已完成工程或改旧封存载荷。
+
+当前入口：[项目当前状况](team/docs/project-status-20261020.md)。下方“未上传/不push/待做”等按历史时点阅读；原始证据保持生成状态。
+
+# 当前主线：O2 两槽弹性 FU（2026-10-20）
+
+按用户“推荐一版并沿用其继续优化”的要求，后续开发采用O2，O1作为冻结对照与回退。G4 batch周期少39.03%，O3应用仅少0.62%–1.50%；完整FU面积+41.41%、VFEX4父级+1.25%。这是一项开发主线选择，最终参赛采用仍须完成O5/T17及G5。
+
+下一步固定O2复现入口、补齐独立复现，同时审查额外性能字段和控制路径成本；后续每次只实施一个有证据支持的优化。工程冻结后再集中编写T16与准备T18。默认源码开关与旧封存证据保持原状，本次只更新计划，未运行新测试或推送GitHub。
+
+详细依据和执行顺序见[O2主线选择](team/docs/o2-mainline-decision-20261020.md)。下方保留历史状态与原始计划，不作为当前待办顺序。
+
+# 当前状态：O4结构与参考时序评估完成（本地）
+
+2026-10-20：4项映射/20项STA/140份路径及13项主机检查通过离线复核，结果见team/optimizations/o4/README.md。
+完整FU面积+41.41%，含完整DIV的真实VFEX4面积+1.25%；两版均未满足1ns参考目标，不宣称整核Fmax/功耗。
+当前local/o4-cost-20261020，本轮不push、不切换默认。下一项O5/T17独立复现，随后G5最终采用；正式T16后置。
+不要重跑已完成O4或改封存证据。下方内容为历史状态/原计划。
+
+# 当前任务：O4结构与时序代价评估（本地）
+
+2026-10-20用户明确授权O4，覆盖下方历史不自动O4的限制。入口team/optimizations/o4/README.md和CONTRACT.md。
+本轮新增公共生产接口harness及独立综合/STA工具，不改生产src/ISA/NEMU或旧封存证据；不push、不切换默认、不自动O5/G5，正式T16后置。
+工作根/home/riscv/riscv-lab/o4-cost-20261020。失败记录保留；不能把前布局参考库数字当作整核Fmax或实际功耗。
+
 # 当前发布：O2与O3成果交付 zjhwork（2026-10-20）
 
 用户明确要求把当前成果推送GitHub的zjhwork，授权本批正常快进发布到cc77-builder/riscv:zjhwork。

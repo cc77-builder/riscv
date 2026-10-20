@@ -1,0 +1,1236 @@
+
+ /----------------------------------------------------------------------------\
+ |                                                                            |
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |                                                                            |
+ |  Copyright (C) 2012 - 2019  Clifford Wolf <clifford@clifford.at>           |
+ |                                                                            |
+ |  Permission to use, copy, modify, and/or distribute this software for any  |
+ |  purpose with or without fee is hereby granted, provided that the above    |
+ |  copyright notice and this permission notice appear in all copies.         |
+ |                                                                            |
+ |  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES  |
+ |  WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF          |
+ |  MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR   |
+ |  ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES    |
+ |  WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN     |
+ |  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF   |
+ |  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.            |
+ |                                                                            |
+ \----------------------------------------------------------------------------/
+
+ Yosys 0.9 (git sha1 1979e0b)
+
+
+-- Executing script file `/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-map-02/map.ys' --
+
+1. Executing Liberty frontend.
+Imported 135 cell types from liberty file.
+
+2. Executing Verilog-2005 frontend: /home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/CommonFuCostTop.sv
+Parsing SystemVerilog input from `/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/CommonFuCostTop.sv' to AST representation.
+Generating RTLIL representation for module `\CommonFuCostTop'.
+Successfully finished Verilog frontend.
+
+3. Executing Verilog-2005 frontend: /home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv
+Parsing SystemVerilog input from `/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv' to AST representation.
+Generating RTLIL representation for module `\VDot'.
+Successfully finished Verilog frontend.
+
+4. Executing Verilog-2005 frontend: /home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotProducts.sv
+Parsing SystemVerilog input from `/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotProducts.sv' to AST representation.
+Generating RTLIL representation for module `\VDotProducts'.
+Successfully finished Verilog frontend.
+
+5. Executing Verilog-2005 frontend: /home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotReduce.sv
+Parsing SystemVerilog input from `/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotReduce.sv' to AST representation.
+Generating RTLIL representation for module `\VDotReduce'.
+Successfully finished Verilog frontend.
+
+6. Executing HIERARCHY pass (managing design hierarchy).
+
+6.1. Analyzing design hierarchy..
+Top module:  \CommonFuCostTop
+Used module:     \VDot
+Used module:         \VDotReduce
+Used module:         \VDotProducts
+
+6.2. Analyzing design hierarchy..
+Top module:  \CommonFuCostTop
+Used module:     \VDot
+Used module:         \VDotReduce
+Used module:         \VDotProducts
+Removed 0 unused modules.
+
+7. Executing PROC pass (convert processes to netlists).
+
+7.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+7.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Marked 9 switch rules as full_case in process $proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49 in module VDot.
+Removed a total of 0 dead cases.
+
+7.3. Executing PROC_INIT pass (extract init attributes).
+
+7.4. Executing PROC_ARST pass (detect async resets in processes).
+
+7.5. Executing PROC_MUX pass (convert decision trees to multiplexers).
+Creating decoders for process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+     1/64: $0\heldResponse[940:0]
+     2/64: $0\stalled[0:0]
+     3/64: $0\savedV0Wen[0:0]
+     4/64: $0\savedVecWen[0:0]
+     5/64: $0\illegalReg[0:0]
+     6/64: $0\resultReg[127:0]
+     7/64: $0\productsReg_7[15:0]
+     8/64: $0\productsReg_6[15:0]
+     9/64: $0\productsReg_5[15:0]
+    10/64: $0\productsReg_4[15:0]
+    11/64: $0\productsReg_3[15:0]
+    12/64: $0\productsReg_2[15:0]
+    13/64: $0\productsReg_1[15:0]
+    14/64: $0\productsReg_0[15:0]
+    15/64: $0\state[1:0]
+    16/64: $0\io_out_bits_perfDebugInfo_r_tlbRespTime[63:0]
+    17/64: $0\io_out_bits_perfDebugInfo_r_tlbFirstReqTime[63:0]
+    18/64: $0\io_out_bits_perfDebugInfo_r_runahead_checkpoint_id[63:0]
+    19/64: $0\io_out_bits_perfDebugInfo_r_writebackTime[63:0]
+    20/64: $0\io_out_bits_perfDebugInfo_r_issueTime[63:0]
+    21/64: $0\io_out_bits_perfDebugInfo_r_selectTime[63:0]
+    22/64: $0\io_out_bits_perfDebugInfo_r_enqRsTime[63:0]
+    23/64: $0\io_out_bits_perfDebugInfo_r_dispatchTime[63:0]
+    24/64: $0\io_out_bits_perfDebugInfo_r_renameTime[63:0]
+    25/64: $0\io_out_bits_perfDebugInfo_r_eliminatedMove[0:0]
+    26/64: $0\io_out_bits_ctrl_vpu_r_isVleff[0:0]
+    27/64: $0\io_out_bits_ctrl_vpu_r_isWritePartVd[0:0]
+    28/64: $0\io_out_bits_ctrl_vpu_r_isDependOldVd[0:0]
+    29/64: $0\io_out_bits_ctrl_vpu_r_isMove[0:0]
+    30/64: $0\io_out_bits_ctrl_vpu_r_isOpMask[0:0]
+    31/64: $0\io_out_bits_ctrl_vpu_r_isDstMask[0:0]
+    32/64: $0\io_out_bits_ctrl_vpu_r_isNarrow[0:0]
+    33/64: $0\io_out_bits_ctrl_vpu_r_isExt[0:0]
+    34/64: $0\io_out_bits_ctrl_vpu_r_isReverse[0:0]
+    35/64: $0\io_out_bits_ctrl_vpu_r_veew[1:0]
+    36/64: $0\io_out_bits_ctrl_vpu_r_nf[2:0]
+    37/64: $0\io_out_bits_ctrl_vpu_r_vl[7:0]
+    38/64: $0\io_out_bits_ctrl_vpu_r_vmask[127:0]
+    39/64: $0\io_out_bits_ctrl_vpu_r_lastUop[0:0]
+    40/64: $0\io_out_bits_ctrl_vpu_r_vuopIdx[6:0]
+    41/64: $0\io_out_bits_ctrl_vpu_r_vxrm[1:0]
+    42/64: $0\io_out_bits_ctrl_vpu_r_fpu_isFoldTo1_8[0:0]
+    43/64: $0\io_out_bits_ctrl_vpu_r_fpu_isFoldTo1_4[0:0]
+    44/64: $0\io_out_bits_ctrl_vpu_r_fpu_isFoldTo1_2[0:0]
+    45/64: $0\io_out_bits_ctrl_vpu_r_fpu_isReduction[0:0]
+    46/64: $0\io_out_bits_ctrl_vpu_r_fpu_isFP64Instr[0:0]
+    47/64: $0\io_out_bits_ctrl_vpu_r_fpu_isFP32Instr[0:0]
+    48/64: $0\io_out_bits_ctrl_vpu_r_fpu_isFpToVecInst[0:0]
+    49/64: $0\io_out_bits_ctrl_vpu_r_frm[2:0]
+    50/64: $0\io_out_bits_ctrl_vpu_r_vstart[7:0]
+    51/64: $0\io_out_bits_ctrl_vpu_r_vm[0:0]
+    52/64: $0\io_out_bits_ctrl_vpu_r_specVlmul[2:0]
+    53/64: $0\io_out_bits_ctrl_vpu_r_specVsew[1:0]
+    54/64: $0\io_out_bits_ctrl_vpu_r_specVta[0:0]
+    55/64: $0\io_out_bits_ctrl_vpu_r_specVma[0:0]
+    56/64: $0\io_out_bits_ctrl_vpu_r_specVill[0:0]
+    57/64: $0\io_out_bits_ctrl_vpu_r_vlmul[2:0]
+    58/64: $0\io_out_bits_ctrl_vpu_r_vsew[1:0]
+    59/64: $0\io_out_bits_ctrl_vpu_r_vta[0:0]
+    60/64: $0\io_out_bits_ctrl_vpu_r_vma[0:0]
+    61/64: $0\io_out_bits_ctrl_vpu_r_vill[0:0]
+    62/64: $0\io_out_bits_ctrl_pdest_r[7:0]
+    63/64: $0\io_out_bits_ctrl_robIdx_r_value[5:0]
+    64/64: $0\io_out_bits_ctrl_robIdx_r_flag[0:0]
+
+7.6. Executing PROC_DLATCH pass (convert process syncs to latches).
+
+7.7. Executing PROC_DFF pass (convert process syncs to FFs).
+Creating register for signal `\VDot.\io_out_bits_ctrl_robIdx_r_flag' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$255' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_ctrl_robIdx_r_value' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$256' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_ctrl_pdest_r' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$257' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_ctrl_vpu_r_vill' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$258' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_ctrl_vpu_r_vma' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$259' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_ctrl_vpu_r_vta' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$260' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_ctrl_vpu_r_vsew' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$261' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_ctrl_vpu_r_vlmul' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$262' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_ctrl_vpu_r_specVill' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$263' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_ctrl_vpu_r_specVma' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$264' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_ctrl_vpu_r_specVta' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$265' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_ctrl_vpu_r_specVsew' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$266' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_ctrl_vpu_r_specVlmul' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$267' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_ctrl_vpu_r_vm' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$268' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_ctrl_vpu_r_vstart' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$269' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_ctrl_vpu_r_frm' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$270' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_ctrl_vpu_r_fpu_isFpToVecInst' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$271' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_ctrl_vpu_r_fpu_isFP32Instr' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$272' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_ctrl_vpu_r_fpu_isFP64Instr' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$273' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_ctrl_vpu_r_fpu_isReduction' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$274' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_ctrl_vpu_r_fpu_isFoldTo1_2' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$275' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_ctrl_vpu_r_fpu_isFoldTo1_4' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$276' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_ctrl_vpu_r_fpu_isFoldTo1_8' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$277' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_ctrl_vpu_r_vxrm' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$278' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_ctrl_vpu_r_vuopIdx' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$279' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_ctrl_vpu_r_lastUop' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$280' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_ctrl_vpu_r_vmask' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$281' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_ctrl_vpu_r_vl' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$282' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_ctrl_vpu_r_nf' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$283' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_ctrl_vpu_r_veew' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$284' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_ctrl_vpu_r_isReverse' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$285' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_ctrl_vpu_r_isExt' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$286' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_ctrl_vpu_r_isNarrow' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$287' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_ctrl_vpu_r_isDstMask' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$288' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_ctrl_vpu_r_isOpMask' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$289' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_ctrl_vpu_r_isMove' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$290' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_ctrl_vpu_r_isDependOldVd' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$291' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_ctrl_vpu_r_isWritePartVd' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$292' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_ctrl_vpu_r_isVleff' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$293' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_perfDebugInfo_r_eliminatedMove' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$294' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_perfDebugInfo_r_renameTime' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$295' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_perfDebugInfo_r_dispatchTime' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$296' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_perfDebugInfo_r_enqRsTime' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$297' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_perfDebugInfo_r_selectTime' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$298' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_perfDebugInfo_r_issueTime' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$299' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_perfDebugInfo_r_writebackTime' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$300' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_perfDebugInfo_r_runahead_checkpoint_id' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$301' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_perfDebugInfo_r_tlbFirstReqTime' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$302' with positive edge clock.
+Creating register for signal `\VDot.\io_out_bits_perfDebugInfo_r_tlbRespTime' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$303' with positive edge clock.
+Creating register for signal `\VDot.\state' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$304' with positive edge clock.
+Creating register for signal `\VDot.\productsReg_0' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$305' with positive edge clock.
+Creating register for signal `\VDot.\productsReg_1' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$306' with positive edge clock.
+Creating register for signal `\VDot.\productsReg_2' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$307' with positive edge clock.
+Creating register for signal `\VDot.\productsReg_3' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$308' with positive edge clock.
+Creating register for signal `\VDot.\productsReg_4' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$309' with positive edge clock.
+Creating register for signal `\VDot.\productsReg_5' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$310' with positive edge clock.
+Creating register for signal `\VDot.\productsReg_6' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$311' with positive edge clock.
+Creating register for signal `\VDot.\productsReg_7' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$312' with positive edge clock.
+Creating register for signal `\VDot.\resultReg' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$313' with positive edge clock.
+Creating register for signal `\VDot.\illegalReg' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$314' with positive edge clock.
+Creating register for signal `\VDot.\savedVecWen' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$315' with positive edge clock.
+Creating register for signal `\VDot.\savedV0Wen' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$316' with positive edge clock.
+Creating register for signal `\VDot.\stalled' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$317' with positive edge clock.
+Creating register for signal `\VDot.\heldResponse' using process `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+  created $dff cell `$procdff$318' with positive edge clock.
+
+7.8. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Found and cleaned up 15 empty switches in `\VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+Removing empty process `VDot.$proc$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:338$49'.
+Cleaned up 15 empty switches.
+
+8. Executing OPT pass (performing simple optimizations).
+
+8.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module VDotReduce.
+Optimizing module VDotProducts.
+Optimizing module VDot.
+<suppressed ~1 debug messages>
+Optimizing module CommonFuCostTop.
+
+8.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\VDotReduce'.
+Finding identical cells in module `\VDotProducts'.
+Finding identical cells in module `\VDot'.
+<suppressed ~51 debug messages>
+Finding identical cells in module `\CommonFuCostTop'.
+Removed a total of 17 cells.
+
+8.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \VDotReduce..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \VDotProducts..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \VDot..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \CommonFuCostTop..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Removed 0 multiplexer ports.
+<suppressed ~65 debug messages>
+
+8.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \VDotReduce.
+  Optimizing cells in module \VDotProducts.
+  Optimizing cells in module \VDot.
+    New input vector for $reduce_or cell $reduce_or$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:331$31: { \io_in_bits_ctrl_vpu_vsew [0] \io_in_bits_ctrl_vpu_vsew [1] }
+    New input vector for $reduce_or cell $reduce_or$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:331$33: { \io_in_bits_ctrl_vpu_vlmul [0] \io_in_bits_ctrl_vpu_vlmul [1] \io_in_bits_ctrl_vpu_vlmul [2] }
+    New input vector for $reduce_or cell $reduce_or$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:332$37: { \io_in_bits_ctrl_vpu_vstart [0] \io_in_bits_ctrl_vpu_vstart [1] \io_in_bits_ctrl_vpu_vstart [2] \io_in_bits_ctrl_vpu_vstart [3] \io_in_bits_ctrl_vpu_vstart [4] \io_in_bits_ctrl_vpu_vstart [5] \io_in_bits_ctrl_vpu_vstart [6] \io_in_bits_ctrl_vpu_vstart [7] }
+    New input vector for $reduce_or cell $reduce_or$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:333$41: { \io_in_bits_ctrl_fuOpType [0] \io_in_bits_ctrl_fuOpType [1] \io_in_bits_ctrl_fuOpType [2] \io_in_bits_ctrl_fuOpType [3] \io_in_bits_ctrl_fuOpType [4] \io_in_bits_ctrl_fuOpType [5] \io_in_bits_ctrl_fuOpType [6] \io_in_bits_ctrl_fuOpType [7] \io_in_bits_ctrl_fuOpType [8] }
+    New input vector for $reduce_or cell $reduce_or$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:485$72: { \state [0] \state [1] }
+    New input vector for $reduce_and cell $reduce_and$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:490$73: { \state [0] \state [1] }
+  Optimizing cells in module \VDot.
+  Optimizing cells in module \CommonFuCostTop.
+Performed a total of 6 changes.
+
+8.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\VDotReduce'.
+Finding identical cells in module `\VDotProducts'.
+Finding identical cells in module `\VDot'.
+Finding identical cells in module `\CommonFuCostTop'.
+Removed a total of 0 cells.
+
+8.6. Executing OPT_RMDFF pass (remove dff with constant values).
+
+8.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \VDotReduce..
+Finding unused cells or wires in module \VDotProducts..
+Finding unused cells or wires in module \VDot..
+Finding unused cells or wires in module \CommonFuCostTop..
+Removed 6 unused cells and 186 unused wires.
+<suppressed ~11 debug messages>
+
+8.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module CommonFuCostTop.
+Optimizing module VDot.
+Optimizing module VDotProducts.
+Optimizing module VDotReduce.
+
+8.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+8.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \CommonFuCostTop..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \VDot..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \VDotProducts..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \VDotReduce..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Removed 0 multiplexer ports.
+<suppressed ~63 debug messages>
+
+8.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \CommonFuCostTop.
+  Optimizing cells in module \VDot.
+  Optimizing cells in module \VDotProducts.
+  Optimizing cells in module \VDotReduce.
+Performed a total of 0 changes.
+
+8.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\CommonFuCostTop'.
+Finding identical cells in module `\VDot'.
+Finding identical cells in module `\VDotProducts'.
+Finding identical cells in module `\VDotReduce'.
+Removed a total of 0 cells.
+
+8.13. Executing OPT_RMDFF pass (remove dff with constant values).
+
+8.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \CommonFuCostTop..
+Finding unused cells or wires in module \VDot..
+Finding unused cells or wires in module \VDotProducts..
+Finding unused cells or wires in module \VDotReduce..
+
+8.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module CommonFuCostTop.
+Optimizing module VDot.
+Optimizing module VDotProducts.
+Optimizing module VDotReduce.
+
+8.16. Finished OPT passes. (There is nothing left to do.)
+
+9. Executing JSON backend.
+
+10. Executing SYNTH pass.
+
+10.1. Executing HIERARCHY pass (managing design hierarchy).
+
+10.1.1. Analyzing design hierarchy..
+Top module:  \CommonFuCostTop
+Used module:     \VDot
+Used module:         \VDotProducts
+Used module:         \VDotReduce
+
+10.1.2. Analyzing design hierarchy..
+Top module:  \CommonFuCostTop
+Used module:     \VDot
+Used module:         \VDotProducts
+Used module:         \VDotReduce
+Removed 0 unused modules.
+
+10.2. Executing PROC pass (convert processes to netlists).
+
+10.2.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+10.2.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Removed a total of 0 dead cases.
+
+10.2.3. Executing PROC_INIT pass (extract init attributes).
+
+10.2.4. Executing PROC_ARST pass (detect async resets in processes).
+
+10.2.5. Executing PROC_MUX pass (convert decision trees to multiplexers).
+
+10.2.6. Executing PROC_DLATCH pass (convert process syncs to latches).
+
+10.2.7. Executing PROC_DFF pass (convert process syncs to FFs).
+
+10.2.8. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+10.3. Executing FLATTEN pass (flatten design).
+Using template VDot for cells of type VDot.
+Using template VDotProducts for cells of type VDotProducts.
+Using template VDotReduce for cells of type VDotReduce.
+<suppressed ~3 debug messages>
+No more expansions possible.
+Deleting now unused module VDot.
+Deleting now unused module VDotProducts.
+Deleting now unused module VDotReduce.
+
+10.4. Executing OPT_EXPR pass (perform const folding).
+Optimizing module CommonFuCostTop.
+
+10.5. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \CommonFuCostTop..
+
+10.6. Executing CHECK pass (checking for obvious problems).
+checking module CommonFuCostTop..
+found and reported 0 problems.
+
+10.7. Executing OPT pass (performing simple optimizations).
+
+10.7.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module CommonFuCostTop.
+
+10.7.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\CommonFuCostTop'.
+Removed a total of 0 cells.
+
+10.7.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \CommonFuCostTop..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~63 debug messages>
+
+10.7.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \CommonFuCostTop.
+Performed a total of 0 changes.
+
+10.7.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\CommonFuCostTop'.
+Removed a total of 0 cells.
+
+10.7.6. Executing OPT_RMDFF pass (remove dff with constant values).
+
+10.7.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \CommonFuCostTop..
+
+10.7.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module CommonFuCostTop.
+
+10.7.9. Finished OPT passes. (There is nothing left to do.)
+
+10.8. Executing WREDUCE pass (reducing word size of cells).
+Removed top 1 bits (of 2) from port B of cell CommonFuCostTop.$techmap\dut.$eq$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:334$43 ($eq).
+Removed top 4 bits (of 8) from port B of cell CommonFuCostTop.$techmap\dut.$ne$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:333$39 ($ne).
+Removed top 96 bits (of 128) from mux cell CommonFuCostTop.$techmap\dut.$ternary$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:410$64 ($mux).
+Removed top 96 bits (of 128) from wire CommonFuCostTop.$techmap\dut.$ternary$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:410$64_Y.
+Removed top 96 bits (of 128) from wire CommonFuCostTop.dut._sum_io_result.
+Removed top 96 bits (of 128) from wire CommonFuCostTop.dut.sum.io_result.
+
+10.9. Executing PEEPOPT pass (run peephole optimizers).
+
+10.10. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \CommonFuCostTop..
+Removed 0 unused cells and 3 unused wires.
+<suppressed ~1 debug messages>
+
+10.11. Executing TECHMAP pass (map to technology primitives).
+
+10.11.1. Executing Verilog-2005 frontend: /home/riscv/riscv-lab/o4-cost-20261020/tools/root/usr/bin/../share/yosys/cmp2lut.v
+Parsing Verilog input from `/home/riscv/riscv-lab/o4-cost-20261020/tools/root/usr/bin/../share/yosys/cmp2lut.v' to AST representation.
+Generating RTLIL representation for module `\_90_lut_cmp_'.
+Successfully finished Verilog frontend.
+
+10.11.2. Continuing TECHMAP pass.
+No more expansions possible.
+<suppressed ~84 debug messages>
+
+10.12. Executing ALUMACC pass (create $alu and $macc cells).
+Extracting $alu and $macc cells in module CommonFuCostTop:
+  creating $macc model for $techmap\dut.products.$mul$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotProducts.sv:35$77 ($mul).
+  creating $macc model for $techmap\dut.products.$mul$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotProducts.sv:37$78 ($mul).
+  creating $macc model for $techmap\dut.products.$mul$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotProducts.sv:39$79 ($mul).
+  creating $macc model for $techmap\dut.products.$mul$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotProducts.sv:41$80 ($mul).
+  creating $macc model for $techmap\dut.products.$mul$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotProducts.sv:43$81 ($mul).
+  creating $macc model for $techmap\dut.products.$mul$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotProducts.sv:45$82 ($mul).
+  creating $macc model for $techmap\dut.products.$mul$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotProducts.sv:47$83 ($mul).
+  creating $macc model for $techmap\dut.products.$mul$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotProducts.sv:49$84 ($mul).
+  creating $macc model for $techmap\dut.sum.$add$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotReduce.sv:35$85 ($add).
+  creating $macc model for $techmap\dut.sum.$add$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotReduce.sv:37$86 ($add).
+  creating $macc model for $techmap\dut.sum.$add$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotReduce.sv:39$87 ($add).
+  creating $macc model for $techmap\dut.sum.$add$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotReduce.sv:41$88 ($add).
+  creating $macc model for $techmap\dut.sum.$add$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotReduce.sv:42$89 ($add).
+  creating $macc model for $techmap\dut.sum.$add$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotReduce.sv:43$90 ($add).
+  creating $macc model for $techmap\dut.sum.$add$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotReduce.sv:44$91 ($add).
+  creating $alu model for $macc $techmap\dut.sum.$add$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotReduce.sv:44$91.
+  creating $alu model for $macc $techmap\dut.sum.$add$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotReduce.sv:43$90.
+  creating $alu model for $macc $techmap\dut.sum.$add$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotReduce.sv:42$89.
+  creating $alu model for $macc $techmap\dut.sum.$add$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotReduce.sv:41$88.
+  creating $alu model for $macc $techmap\dut.sum.$add$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotReduce.sv:39$87.
+  creating $alu model for $macc $techmap\dut.sum.$add$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotReduce.sv:37$86.
+  creating $alu model for $macc $techmap\dut.sum.$add$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotReduce.sv:35$85.
+  creating $macc cell for $techmap\dut.products.$mul$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotProducts.sv:49$84: $auto$alumacc.cc:354:replace_macc$322
+  creating $macc cell for $techmap\dut.products.$mul$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotProducts.sv:47$83: $auto$alumacc.cc:354:replace_macc$323
+  creating $macc cell for $techmap\dut.products.$mul$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotProducts.sv:45$82: $auto$alumacc.cc:354:replace_macc$324
+  creating $macc cell for $techmap\dut.products.$mul$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotProducts.sv:43$81: $auto$alumacc.cc:354:replace_macc$325
+  creating $macc cell for $techmap\dut.products.$mul$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotProducts.sv:41$80: $auto$alumacc.cc:354:replace_macc$326
+  creating $macc cell for $techmap\dut.products.$mul$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotProducts.sv:39$79: $auto$alumacc.cc:354:replace_macc$327
+  creating $macc cell for $techmap\dut.products.$mul$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotProducts.sv:37$78: $auto$alumacc.cc:354:replace_macc$328
+  creating $macc cell for $techmap\dut.products.$mul$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotProducts.sv:35$77: $auto$alumacc.cc:354:replace_macc$329
+  creating $alu model for $techmap\dut.$gt$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:221$7 ($gt): new $alu
+  creating $alu cell for $techmap\dut.$gt$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:221$7: $auto$alumacc.cc:474:replace_alu$331
+  creating $alu cell for $techmap\dut.sum.$add$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotReduce.sv:35$85: $auto$alumacc.cc:474:replace_alu$342
+  creating $alu cell for $techmap\dut.sum.$add$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotReduce.sv:37$86: $auto$alumacc.cc:474:replace_alu$345
+  creating $alu cell for $techmap\dut.sum.$add$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotReduce.sv:39$87: $auto$alumacc.cc:474:replace_alu$348
+  creating $alu cell for $techmap\dut.sum.$add$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotReduce.sv:41$88: $auto$alumacc.cc:474:replace_alu$351
+  creating $alu cell for $techmap\dut.sum.$add$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotReduce.sv:42$89: $auto$alumacc.cc:474:replace_alu$354
+  creating $alu cell for $techmap\dut.sum.$add$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotReduce.sv:43$90: $auto$alumacc.cc:474:replace_alu$357
+  creating $alu cell for $techmap\dut.sum.$add$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDotReduce.sv:44$91: $auto$alumacc.cc:474:replace_alu$360
+  created 8 $alu and 8 $macc cells.
+
+10.13. Executing SHARE pass (SAT-based resource sharing).
+
+10.14. Executing OPT pass (performing simple optimizations).
+
+10.14.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module CommonFuCostTop.
+
+10.14.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\CommonFuCostTop'.
+Removed a total of 0 cells.
+
+10.14.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \CommonFuCostTop..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~63 debug messages>
+
+10.14.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \CommonFuCostTop.
+    New input vector for $reduce_and cell $auto$alumacc.cc:64:get_eq$334: { $auto$alumacc.cc:490:replace_alu$332 [0] $auto$alumacc.cc:490:replace_alu$332 [1] $auto$alumacc.cc:490:replace_alu$332 [2] $auto$alumacc.cc:490:replace_alu$332 [3] $auto$alumacc.cc:490:replace_alu$332 [4] $auto$alumacc.cc:490:replace_alu$332 [5] }
+  Optimizing cells in module \CommonFuCostTop.
+Performed a total of 1 changes.
+
+10.14.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\CommonFuCostTop'.
+Removed a total of 0 cells.
+
+10.14.6. Executing OPT_RMDFF pass (remove dff with constant values).
+
+10.14.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \CommonFuCostTop..
+Removed 0 unused cells and 1 unused wires.
+<suppressed ~1 debug messages>
+
+10.14.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module CommonFuCostTop.
+
+10.14.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+10.14.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \CommonFuCostTop..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~63 debug messages>
+
+10.14.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \CommonFuCostTop.
+Performed a total of 0 changes.
+
+10.14.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\CommonFuCostTop'.
+Removed a total of 0 cells.
+
+10.14.13. Executing OPT_RMDFF pass (remove dff with constant values).
+
+10.14.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \CommonFuCostTop..
+
+10.14.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module CommonFuCostTop.
+
+10.14.16. Finished OPT passes. (There is nothing left to do.)
+
+10.15. Executing FSM pass (extract and optimize FSM).
+
+10.15.1. Executing FSM_DETECT pass (finding FSMs in design).
+
+10.15.2. Executing FSM_EXTRACT pass (extracting FSM from design).
+
+10.15.3. Executing FSM_OPT pass (simple optimizations of FSMs).
+
+10.15.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \CommonFuCostTop..
+
+10.15.5. Executing FSM_OPT pass (simple optimizations of FSMs).
+
+10.15.6. Executing FSM_RECODE pass (re-assigning FSM state encoding).
+
+10.15.7. Executing FSM_INFO pass (dumping all available information on FSM cells).
+
+10.15.8. Executing FSM_MAP pass (mapping FSMs to basic logic).
+
+10.16. Executing OPT pass (performing simple optimizations).
+
+10.16.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module CommonFuCostTop.
+
+10.16.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\CommonFuCostTop'.
+Removed a total of 0 cells.
+
+10.16.3. Executing OPT_RMDFF pass (remove dff with constant values).
+
+10.16.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \CommonFuCostTop..
+
+10.16.5. Finished fast OPT passes.
+
+10.17. Executing MEMORY pass.
+
+10.17.1. Executing MEMORY_DFF pass (merging $dff cells to $memrd and $memwr).
+
+10.17.2. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \CommonFuCostTop..
+
+10.17.3. Executing MEMORY_SHARE pass (consolidating $memrd/$memwr cells).
+
+10.17.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \CommonFuCostTop..
+
+10.17.5. Executing MEMORY_COLLECT pass (generating $mem cells).
+
+10.18. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \CommonFuCostTop..
+
+10.19. Executing OPT pass (performing simple optimizations).
+
+10.19.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module CommonFuCostTop.
+
+10.19.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\CommonFuCostTop'.
+Removed a total of 0 cells.
+
+10.19.3. Executing OPT_RMDFF pass (remove dff with constant values).
+
+10.19.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \CommonFuCostTop..
+
+10.19.5. Finished fast OPT passes.
+
+10.20. Executing MEMORY_MAP pass (converting $mem cells to logic and flip-flops).
+
+10.21. Executing OPT pass (performing simple optimizations).
+
+10.21.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module CommonFuCostTop.
+
+10.21.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\CommonFuCostTop'.
+Removed a total of 0 cells.
+
+10.21.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \CommonFuCostTop..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~63 debug messages>
+
+10.21.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \CommonFuCostTop.
+    Consolidated identical input bits for $mux cell $techmap\dut.$ternary$/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-02/rtl/VDot.sv:410$64:
+      Old ports: A={ \dut.sum.sum19 [18] \dut.sum.sum19 [18] \dut.sum.sum19 [18] \dut.sum.sum19 [18] \dut.sum.sum19 [18] \dut.sum.sum19 [18] \dut.sum.sum19 [18] \dut.sum.sum19 [18] \dut.sum.sum19 [18] \dut.sum.sum19 [18] \dut.sum.sum19 [18] \dut.sum.sum19 [18] \dut.sum.sum19 [18] \dut.sum.sum19 }, B=0, Y=$auto$wreduce.cc:455:run$319 [31:0]
+      New ports: A=\dut.sum.sum19, B=19'0000000000000000000, Y=$auto$wreduce.cc:455:run$319 [18:0]
+      New connections: $auto$wreduce.cc:455:run$319 [31:19] = { $auto$wreduce.cc:455:run$319 [18] $auto$wreduce.cc:455:run$319 [18] $auto$wreduce.cc:455:run$319 [18] $auto$wreduce.cc:455:run$319 [18] $auto$wreduce.cc:455:run$319 [18] $auto$wreduce.cc:455:run$319 [18] $auto$wreduce.cc:455:run$319 [18] $auto$wreduce.cc:455:run$319 [18] $auto$wreduce.cc:455:run$319 [18] $auto$wreduce.cc:455:run$319 [18] $auto$wreduce.cc:455:run$319 [18] $auto$wreduce.cc:455:run$319 [18] $auto$wreduce.cc:455:run$319 [18] }
+  Optimizing cells in module \CommonFuCostTop.
+Performed a total of 1 changes.
+
+10.21.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\CommonFuCostTop'.
+Removed a total of 0 cells.
+
+10.21.6. Executing OPT_RMDFF pass (remove dff with constant values).
+
+10.21.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \CommonFuCostTop..
+
+10.21.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module CommonFuCostTop.
+
+10.21.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+10.21.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \CommonFuCostTop..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~63 debug messages>
+
+10.21.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \CommonFuCostTop.
+Performed a total of 0 changes.
+
+10.21.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\CommonFuCostTop'.
+Removed a total of 0 cells.
+
+10.21.13. Executing OPT_RMDFF pass (remove dff with constant values).
+
+10.21.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \CommonFuCostTop..
+
+10.21.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module CommonFuCostTop.
+
+10.21.16. Finished OPT passes. (There is nothing left to do.)
+
+10.22. Executing TECHMAP pass (map to technology primitives).
+
+10.22.1. Executing Verilog-2005 frontend: <techmap.v>
+Parsing Verilog input from `<techmap.v>' to AST representation.
+Generating RTLIL representation for module `\_90_simplemap_bool_ops'.
+Generating RTLIL representation for module `\_90_simplemap_reduce_ops'.
+Generating RTLIL representation for module `\_90_simplemap_logic_ops'.
+Generating RTLIL representation for module `\_90_simplemap_compare_ops'.
+Generating RTLIL representation for module `\_90_simplemap_various'.
+Generating RTLIL representation for module `\_90_simplemap_registers'.
+Generating RTLIL representation for module `\_90_shift_ops_shr_shl_sshl_sshr'.
+Generating RTLIL representation for module `\_90_shift_shiftx'.
+Generating RTLIL representation for module `\_90_fa'.
+Generating RTLIL representation for module `\_90_lcu'.
+Generating RTLIL representation for module `\_90_alu'.
+Generating RTLIL representation for module `\_90_macc'.
+Generating RTLIL representation for module `\_90_alumacc'.
+Generating RTLIL representation for module `\$__div_mod_u'.
+Generating RTLIL representation for module `\$__div_mod'.
+Generating RTLIL representation for module `\_90_div'.
+Generating RTLIL representation for module `\_90_mod'.
+Generating RTLIL representation for module `\_90_pow'.
+Generating RTLIL representation for module `\_90_pmux'.
+Generating RTLIL representation for module `\_90_lut'.
+Successfully finished Verilog frontend.
+
+10.22.2. Continuing TECHMAP pass.
+Using extmapper simplemap for cells of type $not.
+Using template $paramod\_90_alu\A_SIGNED=0\B_SIGNED=0\A_WIDTH=17\B_WIDTH=17\Y_WIDTH=17 for cells of type $alu.
+Using template $paramod\_90_alu\A_SIGNED=0\B_SIGNED=0\A_WIDTH=18\B_WIDTH=18\Y_WIDTH=18 for cells of type $alu.
+Using template $paramod\_90_alu\A_SIGNED=0\B_SIGNED=0\A_WIDTH=19\B_WIDTH=19\Y_WIDTH=19 for cells of type $alu.
+Using extmapper maccmap for cells of type $macc.
+  add { \io_in_bits_data_src_0 [23] \io_in_bits_data_src_0 [23] \io_in_bits_data_src_0 [23] \io_in_bits_data_src_0 [23] \io_in_bits_data_src_0 [23] \io_in_bits_data_src_0 [23] \io_in_bits_data_src_0 [23] \io_in_bits_data_src_0 [23] \io_in_bits_data_src_0 [23:16] } * { \io_in_bits_data_src_1 [23] \io_in_bits_data_src_1 [23] \io_in_bits_data_src_1 [23] \io_in_bits_data_src_1 [23] \io_in_bits_data_src_1 [23] \io_in_bits_data_src_1 [23] \io_in_bits_data_src_1 [23] \io_in_bits_data_src_1 [23] \io_in_bits_data_src_1 [23:16] } (16x16 bits, unsigned)
+  add { \io_in_bits_data_src_0 [7] \io_in_bits_data_src_0 [7] \io_in_bits_data_src_0 [7] \io_in_bits_data_src_0 [7] \io_in_bits_data_src_0 [7] \io_in_bits_data_src_0 [7] \io_in_bits_data_src_0 [7] \io_in_bits_data_src_0 [7] \io_in_bits_data_src_0 [7:0] } * { \io_in_bits_data_src_1 [7] \io_in_bits_data_src_1 [7] \io_in_bits_data_src_1 [7] \io_in_bits_data_src_1 [7] \io_in_bits_data_src_1 [7] \io_in_bits_data_src_1 [7] \io_in_bits_data_src_1 [7] \io_in_bits_data_src_1 [7] \io_in_bits_data_src_1 [7:0] } (16x16 bits, unsigned)
+Using extmapper simplemap for cells of type $or.
+Using template $paramod\_90_alu\A_SIGNED=0\B_SIGNED=0\A_WIDTH=6\B_WIDTH=6\Y_WIDTH=6 for cells of type $alu.
+  add { \io_in_bits_data_src_0 [63] \io_in_bits_data_src_0 [63] \io_in_bits_data_src_0 [63] \io_in_bits_data_src_0 [63] \io_in_bits_data_src_0 [63] \io_in_bits_data_src_0 [63] \io_in_bits_data_src_0 [63] \io_in_bits_data_src_0 [63] \io_in_bits_data_src_0 [63:56] } * { \io_in_bits_data_src_1 [63] \io_in_bits_data_src_1 [63] \io_in_bits_data_src_1 [63] \io_in_bits_data_src_1 [63] \io_in_bits_data_src_1 [63] \io_in_bits_data_src_1 [63] \io_in_bits_data_src_1 [63] \io_in_bits_data_src_1 [63] \io_in_bits_data_src_1 [63:56] } (16x16 bits, unsigned)
+  add { \io_in_bits_data_src_0 [15] \io_in_bits_data_src_0 [15] \io_in_bits_data_src_0 [15] \io_in_bits_data_src_0 [15] \io_in_bits_data_src_0 [15] \io_in_bits_data_src_0 [15] \io_in_bits_data_src_0 [15] \io_in_bits_data_src_0 [15] \io_in_bits_data_src_0 [15:8] } * { \io_in_bits_data_src_1 [15] \io_in_bits_data_src_1 [15] \io_in_bits_data_src_1 [15] \io_in_bits_data_src_1 [15] \io_in_bits_data_src_1 [15] \io_in_bits_data_src_1 [15] \io_in_bits_data_src_1 [15] \io_in_bits_data_src_1 [15] \io_in_bits_data_src_1 [15:8] } (16x16 bits, unsigned)
+  add { \io_in_bits_data_src_0 [31] \io_in_bits_data_src_0 [31] \io_in_bits_data_src_0 [31] \io_in_bits_data_src_0 [31] \io_in_bits_data_src_0 [31] \io_in_bits_data_src_0 [31] \io_in_bits_data_src_0 [31] \io_in_bits_data_src_0 [31] \io_in_bits_data_src_0 [31:24] } * { \io_in_bits_data_src_1 [31] \io_in_bits_data_src_1 [31] \io_in_bits_data_src_1 [31] \io_in_bits_data_src_1 [31] \io_in_bits_data_src_1 [31] \io_in_bits_data_src_1 [31] \io_in_bits_data_src_1 [31] \io_in_bits_data_src_1 [31] \io_in_bits_data_src_1 [31:24] } (16x16 bits, unsigned)
+  add { \io_in_bits_data_src_0 [55] \io_in_bits_data_src_0 [55] \io_in_bits_data_src_0 [55] \io_in_bits_data_src_0 [55] \io_in_bits_data_src_0 [55] \io_in_bits_data_src_0 [55] \io_in_bits_data_src_0 [55] \io_in_bits_data_src_0 [55] \io_in_bits_data_src_0 [55:48] } * { \io_in_bits_data_src_1 [55] \io_in_bits_data_src_1 [55] \io_in_bits_data_src_1 [55] \io_in_bits_data_src_1 [55] \io_in_bits_data_src_1 [55] \io_in_bits_data_src_1 [55] \io_in_bits_data_src_1 [55] \io_in_bits_data_src_1 [55] \io_in_bits_data_src_1 [55:48] } (16x16 bits, unsigned)
+  add { \io_in_bits_data_src_0 [47] \io_in_bits_data_src_0 [47] \io_in_bits_data_src_0 [47] \io_in_bits_data_src_0 [47] \io_in_bits_data_src_0 [47] \io_in_bits_data_src_0 [47] \io_in_bits_data_src_0 [47] \io_in_bits_data_src_0 [47] \io_in_bits_data_src_0 [47:40] } * { \io_in_bits_data_src_1 [47] \io_in_bits_data_src_1 [47] \io_in_bits_data_src_1 [47] \io_in_bits_data_src_1 [47] \io_in_bits_data_src_1 [47] \io_in_bits_data_src_1 [47] \io_in_bits_data_src_1 [47] \io_in_bits_data_src_1 [47] \io_in_bits_data_src_1 [47:40] } (16x16 bits, unsigned)
+  add { \io_in_bits_data_src_0 [39] \io_in_bits_data_src_0 [39] \io_in_bits_data_src_0 [39] \io_in_bits_data_src_0 [39] \io_in_bits_data_src_0 [39] \io_in_bits_data_src_0 [39] \io_in_bits_data_src_0 [39] \io_in_bits_data_src_0 [39] \io_in_bits_data_src_0 [39:32] } * { \io_in_bits_data_src_1 [39] \io_in_bits_data_src_1 [39] \io_in_bits_data_src_1 [39] \io_in_bits_data_src_1 [39] \io_in_bits_data_src_1 [39] \io_in_bits_data_src_1 [39] \io_in_bits_data_src_1 [39] \io_in_bits_data_src_1 [39] \io_in_bits_data_src_1 [39:32] } (16x16 bits, unsigned)
+Using extmapper simplemap for cells of type $reduce_and.
+Using extmapper simplemap for cells of type $and.
+Using extmapper simplemap for cells of type $eq.
+Using extmapper simplemap for cells of type $ne.
+Using extmapper simplemap for cells of type $dff.
+Using extmapper simplemap for cells of type $mux.
+Using extmapper simplemap for cells of type $reduce_or.
+Using extmapper simplemap for cells of type $xor.
+Using template $paramod\_90_lcu\WIDTH=17 for cells of type $lcu.
+Using extmapper simplemap for cells of type $pos.
+Using template $paramod\_90_fa\WIDTH=16 for cells of type $fa.
+Using template $paramod\_90_lcu\WIDTH=18 for cells of type $lcu.
+Using template $paramod\_90_lcu\WIDTH=19 for cells of type $lcu.
+Using template $paramod\_90_alu\A_SIGNED=0\B_SIGNED=0\A_WIDTH=16\B_WIDTH=16\Y_WIDTH=16 for cells of type $alu.
+Using template $paramod\_90_lcu\WIDTH=6 for cells of type $lcu.
+Using template $paramod\_90_lcu\WIDTH=16 for cells of type $lcu.
+No more expansions possible.
+<suppressed ~2906 debug messages>
+
+10.23. Executing OPT pass (performing simple optimizations).
+
+10.23.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module CommonFuCostTop.
+<suppressed ~6261 debug messages>
+
+10.23.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\CommonFuCostTop'.
+<suppressed ~3825 debug messages>
+Removed a total of 1275 cells.
+
+10.23.3. Executing OPT_RMDFF pass (remove dff with constant values).
+
+10.23.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \CommonFuCostTop..
+Removed 571 unused cells and 1924 unused wires.
+<suppressed ~572 debug messages>
+
+10.23.5. Finished fast OPT passes.
+
+10.24. Executing HIERARCHY pass (managing design hierarchy).
+
+10.24.1. Analyzing design hierarchy..
+Top module:  \CommonFuCostTop
+
+10.24.2. Analyzing design hierarchy..
+Top module:  \CommonFuCostTop
+Removed 0 unused modules.
+
+10.25. Printing statistics.
+
+=== CommonFuCostTop ===
+
+   Number of wires:               1687
+   Number of wire bits:          18189
+   Number of public wires:         446
+   Number of public wire bits:    6769
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:               7469
+     $_AND_                       2490
+     $_DFF_P_                     1048
+     $_MUX_                       1083
+     $_NOT_                         20
+     $_OR_                         917
+     $_XOR_                       1911
+
+10.26. Executing CHECK pass (checking for obvious problems).
+checking module CommonFuCostTop..
+found and reported 0 problems.
+
+11. Executing DFFLIBMAP pass (mapping DFF cells to sequential cells from liberty file).
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFRS_X1' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFRS_X2' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFR_X1' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFR_X2' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFS_X1' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFS_X2' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFF_X1' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFF_X2' - skipping.
+  cell DFF_X1 (noninv, pins=4, area=4.52) is a direct match for cell type $_DFF_P_.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFRS_X1' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFRS_X2' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFR_X1' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFR_X2' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFS_X1' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFS_X2' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFF_X1' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFF_X2' - skipping.
+  cell DFFR_X1 (noninv, pins=5, area=5.32) is a direct match for cell type $_DFF_PN0_.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFRS_X1' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFRS_X2' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFR_X1' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFR_X2' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFS_X1' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFS_X2' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFF_X1' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFF_X2' - skipping.
+  cell DFFS_X1 (noninv, pins=5, area=5.32) is a direct match for cell type $_DFF_PN1_.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFRS_X1' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFRS_X2' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFR_X1' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFR_X2' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFS_X1' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFS_X2' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFF_X1' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFF_X2' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFRS_X1' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFRS_X2' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFR_X1' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFR_X2' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFS_X1' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFS_X2' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFF_X1' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFF_X2' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFRS_X1' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFRS_X2' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFR_X1' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFR_X2' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFS_X1' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFS_X2' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFF_X1' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFF_X2' - skipping.
+  cell DFFRS_X1 (noninv, pins=6, area=6.38) is a direct match for cell type $_DFFSR_PNN_.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFRS_X1' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFRS_X2' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFR_X1' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFR_X2' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFS_X1' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFS_X2' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFF_X1' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFF_X2' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFRS_X1' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFRS_X2' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFR_X1' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFR_X2' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFS_X1' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFS_X2' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFF_X1' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFF_X2' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFRS_X1' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFRS_X2' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFR_X1' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFR_X2' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFS_X1' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFFS_X2' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFF_X1' - skipping.
+Warning: Found unsupported expression 'SE*SI+D*!SE' in pin attribute of cell 'SDFF_X2' - skipping.
+  create mapping for $_DFF_PP0_ from mapping for $_DFF_PN0_.
+  create mapping for $_DFF_PP1_ from mapping for $_DFF_PN1_.
+  create mapping for $_DFFSR_PPN_ from mapping for $_DFFSR_PNN_.
+  create mapping for $_DFFSR_PNP_ from mapping for $_DFFSR_PNN_.
+  create mapping for $_DFFSR_PPP_ from mapping for $_DFFSR_PNP_.
+  create mapping for $_DFF_N_ from mapping for $_DFF_P_.
+  create mapping for $_DFF_NN0_ from mapping for $_DFF_PN0_.
+  create mapping for $_DFF_NP0_ from mapping for $_DFF_NN0_.
+  create mapping for $_DFF_NN1_ from mapping for $_DFF_NN0_.
+  create mapping for $_DFF_NP1_ from mapping for $_DFF_NN1_.
+  create mapping for $_DFFSR_NNN_ from mapping for $_DFFSR_PNN_.
+  create mapping for $_DFFSR_NPN_ from mapping for $_DFFSR_NNN_.
+  create mapping for $_DFFSR_NNP_ from mapping for $_DFFSR_NNN_.
+  create mapping for $_DFFSR_NPP_ from mapping for $_DFFSR_NNP_.
+  final dff cell mappings:
+    DFF_X1 _DFF_N_ (.CK(~C), .D( D), .Q( Q), .QN(~Q));
+    DFF_X1 _DFF_P_ (.CK( C), .D( D), .Q( Q), .QN(~Q));
+    DFFR_X1 _DFF_NN0_ (.CK(~C), .D( D), .Q( Q), .QN(~Q), .RN( R));
+    DFFR_X1 _DFF_NN1_ (.CK(~C), .D(~D), .Q(~Q), .QN( Q), .RN( R));
+    DFFR_X1 _DFF_NP0_ (.CK(~C), .D( D), .Q( Q), .QN(~Q), .RN(~R));
+    DFFR_X1 _DFF_NP1_ (.CK(~C), .D(~D), .Q(~Q), .QN( Q), .RN(~R));
+    DFFR_X1 _DFF_PN0_ (.CK( C), .D( D), .Q( Q), .QN(~Q), .RN( R));
+    DFFS_X1 _DFF_PN1_ (.CK( C), .D( D), .Q( Q), .QN(~Q), .SN( R));
+    DFFR_X1 _DFF_PP0_ (.CK( C), .D( D), .Q( Q), .QN(~Q), .RN(~R));
+    DFFS_X1 _DFF_PP1_ (.CK( C), .D( D), .Q( Q), .QN(~Q), .SN(~R));
+    DFFRS_X1 _DFFSR_NNN_ (.CK(~C), .D( D), .Q( Q), .QN(~Q), .RN( R), .SN( S));
+    DFFRS_X1 _DFFSR_NNP_ (.CK(~C), .D( D), .Q( Q), .QN(~Q), .RN(~R), .SN( S));
+    DFFRS_X1 _DFFSR_NPN_ (.CK(~C), .D( D), .Q( Q), .QN(~Q), .RN( R), .SN(~S));
+    DFFRS_X1 _DFFSR_NPP_ (.CK(~C), .D( D), .Q( Q), .QN(~Q), .RN(~R), .SN(~S));
+    DFFRS_X1 _DFFSR_PNN_ (.CK( C), .D( D), .Q( Q), .QN(~Q), .RN( R), .SN( S));
+    DFFRS_X1 _DFFSR_PNP_ (.CK( C), .D( D), .Q( Q), .QN(~Q), .RN(~R), .SN( S));
+    DFFRS_X1 _DFFSR_PPN_ (.CK( C), .D( D), .Q( Q), .QN(~Q), .RN( R), .SN(~S));
+    DFFRS_X1 _DFFSR_PPP_ (.CK( C), .D( D), .Q( Q), .QN(~Q), .RN(~R), .SN(~S));
+Mapping DFF cells in module `\CommonFuCostTop':
+  mapped 1048 $_DFF_P_ cells to \DFF_X1 cells.
+
+12. Executing ABC pass (technology mapping using ABC).
+
+12.1. Extracting gate netlist of module `\CommonFuCostTop' to `<abc-temp-dir>/input.blif'..
+Extracted 6421 gates and 8418 wires to a netlist network with 1995 inputs and 1052 outputs.
+
+12.1.1. Executing ABC.
+Running ABC command: <yosys-exe-dir>/berkeley-abc -s -f <abc-temp-dir>/abc.script 2>&1
+ABC: ABC command line: "source <abc-temp-dir>/abc.script".
+ABC: 
+ABC: + read_blif <abc-temp-dir>/input.blif 
+ABC: + read_lib -w /home/riscv/riscv-lab/o4-cost-20261020/library/NangateOpenCellLibrary_typical.lib 
+ABC: Parsing finished successfully.  Parsing time =     0.04 sec
+ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNA_X1" due to dont_use attribute.
+ABC: Scl_LibertyReadGenlib() skipped cell "CLKGATETST_X1" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "CLKGATETST_X2" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "CLKGATETST_X4" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "CLKGATETST_X8" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "CLKGATE_X1" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "CLKGATE_X2" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "CLKGATE_X4" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "CLKGATE_X8" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRS_X1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRS_X2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFR_X1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFR_X2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFS_X1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFS_X2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFF_X1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFF_X2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLH_X1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLH_X2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLL_X1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLL_X2".
+ABC: Scl_LibertyReadGenlib() skipped cell "FILLCELL_X1" due to dont_use attribute.
+ABC: Scl_LibertyReadGenlib() skipped cell "TAPCELL_X1" due to dont_use attribute.
+ABC: Scl_LibertyReadGenlib() skipped cell "FILLCELL_X2" due to dont_use attribute.
+ABC: Scl_LibertyReadGenlib() skipped cell "FILLCELL_X4" due to dont_use attribute.
+ABC: Scl_LibertyReadGenlib() skipped cell "FILLCELL_X8" due to dont_use attribute.
+ABC: Scl_LibertyReadGenlib() skipped cell "FILLCELL_X16" due to dont_use attribute.
+ABC: Scl_LibertyReadGenlib() skipped cell "FILLCELL_X32" due to dont_use attribute.
+ABC: Scl_LibertyReadGenlib() skipped cell "LOGIC0_X1" due to dont_use attribute.
+ABC: Scl_LibertyReadGenlib() skipped cell "LOGIC1_X1" due to dont_use attribute.
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRS_X1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRS_X2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFR_X1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFR_X2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFS_X1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFS_X2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFF_X1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFF_X2".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "TBUF_X1".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "TBUF_X2".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "TBUF_X4".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "TBUF_X8".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "TBUF_X16".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "TINV_X1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "TLAT_X1".
+ABC: Library "NangateOpenCellLibrary" from "/home/riscv/riscv-lab/o4-cost-20261020/library/NangateOpenCellLibrary_typical.lib" has 90 cells (35 skipped: 21 seq; 6 tri-state; 8 no func; 10 dont_use).  Time =     0.05 sec
+ABC: Memory =    8.88 MB. Time =     0.05 sec
+ABC: Warning: Detected 2 multi-output gates (for example, "FA_X1").
+ABC: + read_constr -v /home/riscv/riscv-lab/o4-cost-20261020/o1-fu-map-02/abc.constr 
+ABC: Setting driving cell to be "BUF_X1".
+ABC: Setting output load to be 5.000000.
+ABC: + strash 
+ABC: + ifraig 
+ABC: + scorr 
+ABC: Warning: The network is combinational (run "fraig" or "fraig_sweep").
+ABC: + dc2 
+ABC: + dretime 
+ABC: + retime -D 1000 
+ABC: + strash 
+ABC: + &get -n 
+ABC: + &dch -f 
+ABC: + &nf -D 1000 
+ABC: + &put 
+ABC: + buffer 
+ABC: + upsize -D 1000 
+ABC: + dnsize -D 1000 
+ABC: + stime -p 
+ABC: WireLoad = "none"  Gates =   6167 (  8.3 %)   Cap =  3.5 ff (  2.5 %)   Area =     7786.09 ( 91.9 %)   Delay =  1008.35 ps  ( 13.7 %)               
+ABC: Path  0 --    1990 : 0    2 pi       A =   0.00  Df =   8.9   -2.5 ps  S =  10.6 ps  Cin =  0.0 ff  Cout =   3.4 ff  Cmax =   0.0 ff  G =    0  
+ABC: Path  1 --    5509 : 1   10 BUF_X2   A =   1.06  Df =  43.5   -4.9 ps  S =  18.5 ps  Cin =  1.7 ff  Cout =  13.6 ff  Cmax = 121.2 ff  G =  777  
+ABC: Path  2 --    5691 : 3    4 AND3_X2  A =   1.60  Df =  91.3  -16.4 ps  S =  13.0 ps  Cin =  1.6 ff  Cout =   5.9 ff  Cmax = 120.5 ff  G =  349  
+ABC: Path  3 --    5694 : 3    3 OR3_X1   A =   1.33  Df = 145.4  -22.0 ps  S =  15.8 ps  Cin =  0.9 ff  Cout =   4.2 ff  Cmax =  60.6 ff  G =  453  
+ABC: Path  4 --    5696 : 3    4 AND3_X1  A =   1.33  Df = 189.4   -7.1 ps  S =  21.0 ps  Cin =  0.9 ff  Cout =   6.8 ff  Cmax =  60.4 ff  G =  697  
+ABC: Path  5 --    5703 : 3    2 OR3_X2   A =   1.60  Df = 249.9  -25.5 ps  S =  12.4 ps  Cin =  1.6 ff  Cout =   3.3 ff  Cmax = 121.2 ff  G =  197  
+ABC: Path  6 --    5705 : 3    3 AND3_X2  A =   1.60  Df = 285.8   -5.3 ps  S =  13.8 ps  Cin =  1.6 ff  Cout =   6.6 ff  Cmax = 120.5 ff  G =  385  
+ABC: Path  7 --    5718 : 3    3 OR3_X4   A =   2.93  Df = 340.8  -15.7 ps  S =  11.3 ps  Cin =  3.2 ff  Cout =   4.2 ff  Cmax = 242.3 ff  G =  127  
+ABC: Path  8 --    5720 : 3    3 AND3_X1  A =   1.33  Df = 380.1   -2.2 ps  S =  17.5 ps  Cin =  0.9 ff  Cout =   5.1 ff  Cmax =  60.4 ff  G =  521  
+ABC: Path  9 --    5722 : 2    1 NOR2_X1  A =   0.80  Df = 408.0  -17.4 ps  S =  19.6 ps  Cin =  1.6 ff  Cout =   2.6 ff  Cmax =  26.7 ff  G =  155  
+ABC: Path 10 --    5723 : 2    2 XNOR2_X1 A =   1.60  Df = 456.6  -19.9 ps  S =  29.4 ps  Cin =  2.3 ff  Cout =   4.0 ff  Cmax =  26.0 ff  G =  170  
+ABC: Path 11 --    5724 : 2    3 XOR2_X1  A =   1.60  Df = 519.2  -19.2 ps  S =  34.4 ps  Cin =  2.3 ff  Cout =   4.3 ff  Cmax =  25.3 ff  G =  181  
+ABC: Path 12 --    5726 : 2    2 OR2_X2   A =   1.33  Df = 566.9  -16.0 ps  S =   8.2 ps  Cin =  1.6 ff  Cout =   2.6 ff  Cmax = 121.2 ff  G =  153  
+ABC: Path 13 --    5727 : 4    3 AND4_X1  A =   1.60  Df = 624.9  -14.0 ps  S =  19.5 ps  Cin =  0.9 ff  Cout =   5.0 ff  Cmax =  60.3 ff  G =  533  
+ABC: Path 14 --    5729 : 4    3 OR4_X2   A =   1.86  Df = 717.4  -60.6 ps  S =  16.8 ps  Cin =  1.6 ff  Cout =   4.2 ff  Cmax = 120.8 ff  G =  255  
+ABC: Path 15 --    5777 : 3    2 AOI21_X1 A =   1.06  Df = 751.4  -67.6 ps  S =  26.0 ps  Cin =  1.6 ff  Cout =   2.7 ff  Cmax =  25.3 ff  G =  159  
+ABC: Path 16 --    5783 : 2    2 OR2_X1   A =   1.06  Df = 785.6  -48.4 ps  S =  11.0 ps  Cin =  0.9 ff  Cout =   3.3 ff  Cmax =  60.6 ff  G =  355  
+ABC: Path 17 --    5837 : 2    3 AND2_X2  A =   1.33  Df = 819.8  -47.3 ps  S =  11.8 ps  Cin =  1.6 ff  Cout =   6.3 ff  Cmax = 120.8 ff  G =  369  
+ABC: Path 18 --    5886 : 3    2 OAI21_X2 A =   1.86  Df = 833.8  -35.6 ps  S =  18.2 ps  Cin =  3.1 ff  Cout =   3.3 ff  Cmax =  52.1 ff  G =  102  
+ABC: Path 19 --    5890 : 2    2 NAND2_X1 A =   0.80  Df = 862.3  -40.4 ps  S =  18.4 ps  Cin =  1.6 ff  Cout =   5.7 ff  Cmax =  59.4 ff  G =  344  
+ABC: Path 20 --    5944 : 3    2 AOI21_X2 A =   1.86  Df = 881.3  -21.0 ps  S =  26.8 ps  Cin =  3.1 ff  Cout =   5.7 ff  Cmax =  50.7 ff  G =  176  
+ABC: Path 21 --    6035 : 3    2 AOI21_X2 A =   1.86  Df = 916.1  -36.8 ps  S =  22.9 ps  Cin =  3.1 ff  Cout =   4.0 ff  Cmax =  50.7 ff  G =  128  
+ABC: Path 22 --    6036 : 2    1 XOR2_X1  A =   1.60  Df = 960.5  -27.8 ps  S =  19.5 ps  Cin =  2.3 ff  Cout =   0.9 ff  Cmax =  25.3 ff  G =   40  
+ABC: Path 23 --    6038 : 3    1 MUX2_X1  A =   1.86  Df =1008.3   -9.1 ps  S =  15.9 ps  Cin =  1.2 ff  Cout =   5.0 ff  Cmax =  60.5 ff  G =  404  
+ABC: Start-point = pi1989 (\io_in_bits_data_src_1 [33]).  End-point = po191 ($techmap\dut.$0\productsReg_4[15:0] [14]).
+ABC: + write_blif <abc-temp-dir>/output.blif 
+
+12.1.2. Re-integrating ABC results.
+ABC RESULTS:           AND2_X1 cells:      340
+ABC RESULTS:           AND2_X2 cells:       22
+ABC RESULTS:           AND3_X1 cells:      136
+ABC RESULTS:           AND3_X2 cells:       12
+ABC RESULTS:           AND3_X4 cells:        4
+ABC RESULTS:           AND4_X1 cells:       56
+ABC RESULTS:           AND4_X2 cells:        4
+ABC RESULTS:         AOI211_X1 cells:        8
+ABC RESULTS:          AOI21_X1 cells:      381
+ABC RESULTS:          AOI21_X2 cells:       22
+ABC RESULTS:          AOI21_X4 cells:        5
+ABC RESULTS:         AOI221_X1 cells:        4
+ABC RESULTS:          AOI22_X1 cells:      122
+ABC RESULTS:            BUF_X1 cells:      184
+ABC RESULTS:            BUF_X2 cells:       92
+ABC RESULTS:            BUF_X4 cells:       25
+ABC RESULTS:         CLKBUF_X1 cells:        3
+ABC RESULTS:         CLKBUF_X2 cells:        3
+ABC RESULTS:            INV_X1 cells:      203
+ABC RESULTS:            INV_X2 cells:        1
+ABC RESULTS:           MUX2_X1 cells:      871
+ABC RESULTS:           MUX2_X2 cells:        5
+ABC RESULTS:          NAND2_X1 cells:      817
+ABC RESULTS:          NAND2_X2 cells:        4
+ABC RESULTS:          NAND2_X4 cells:        2
+ABC RESULTS:          NAND3_X1 cells:      130
+ABC RESULTS:          NAND4_X1 cells:       34
+ABC RESULTS:           NOR2_X1 cells:      477
+ABC RESULTS:           NOR2_X2 cells:       12
+ABC RESULTS:           NOR2_X4 cells:        2
+ABC RESULTS:           NOR3_X1 cells:       65
+ABC RESULTS:           NOR4_X1 cells:        7
+ABC RESULTS:           NOR4_X2 cells:        1
+ABC RESULTS:         OAI211_X1 cells:       14
+ABC RESULTS:          OAI21_X1 cells:      461
+ABC RESULTS:          OAI21_X2 cells:       15
+ABC RESULTS:          OAI21_X4 cells:        2
+ABC RESULTS:         OAI221_X2 cells:        1
+ABC RESULTS:         OAI221_X4 cells:        2
+ABC RESULTS:          OAI22_X1 cells:       26
+ABC RESULTS:          OAI33_X1 cells:        2
+ABC RESULTS:            OR2_X1 cells:      118
+ABC RESULTS:            OR2_X2 cells:        6
+ABC RESULTS:            OR2_X4 cells:        1
+ABC RESULTS:            OR3_X1 cells:       97
+ABC RESULTS:            OR3_X2 cells:       25
+ABC RESULTS:            OR3_X4 cells:        3
+ABC RESULTS:            OR4_X2 cells:        4
+ABC RESULTS:          XNOR2_X1 cells:      797
+ABC RESULTS:          XNOR2_X2 cells:       14
+ABC RESULTS:           XOR2_X1 cells:      505
+ABC RESULTS:           XOR2_X2 cells:       20
+ABC RESULTS:        internal signals:     5371
+ABC RESULTS:           input signals:     1995
+ABC RESULTS:          output signals:     1052
+Removing temp directory.
+Removed 0 unused cells and 3270 unused wires.
+
+13. Executing CHECK pass (checking for obvious problems).
+checking module CommonFuCostTop..
+found and reported 0 problems.
+
+14. Printing statistics.
+
+=== CommonFuCostTop ===
+
+   Number of wires:               7628
+   Number of wire bits:          13613
+   Number of public wires:         417
+   Number of public wire bits:    6402
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:               7215
+     AND2_X1                       340
+     AND2_X2                        22
+     AND3_X1                       136
+     AND3_X2                        12
+     AND3_X4                         4
+     AND4_X1                        56
+     AND4_X2                         4
+     AOI211_X1                       8
+     AOI21_X1                      381
+     AOI21_X2                       22
+     AOI21_X4                        5
+     AOI221_X1                       4
+     AOI22_X1                      122
+     BUF_X1                        184
+     BUF_X2                         92
+     BUF_X4                         25
+     CLKBUF_X1                       3
+     CLKBUF_X2                       3
+     DFF_X1                       1048
+     INV_X1                        203
+     INV_X2                          1
+     MUX2_X1                       871
+     MUX2_X2                         5
+     NAND2_X1                      817
+     NAND2_X2                        4
+     NAND2_X4                        2
+     NAND3_X1                      130
+     NAND4_X1                       34
+     NOR2_X1                       477
+     NOR2_X2                        12
+     NOR2_X4                         2
+     NOR3_X1                        65
+     NOR4_X1                         7
+     NOR4_X2                         1
+     OAI211_X1                      14
+     OAI21_X1                      461
+     OAI21_X2                       15
+     OAI21_X4                        2
+     OAI221_X2                       1
+     OAI221_X4                       2
+     OAI22_X1                       26
+     OAI33_X1                        2
+     OR2_X1                        118
+     OR2_X2                          6
+     OR2_X4                          1
+     OR3_X1                         97
+     OR3_X2                         25
+     OR3_X4                          3
+     OR4_X2                          4
+     XNOR2_X1                      797
+     XNOR2_X2                       14
+     XOR2_X1                       505
+     XOR2_X2                        20
+
+   Chip area for module '\CommonFuCostTop': 12525.142000
+
+15. Executing JSON backend.
+
+16. Executing Verilog backend.
+Dumping module `\CommonFuCostTop'.

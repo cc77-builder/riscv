@@ -1,0 +1,4 @@
+help set_wire_load_model
+help set_wire_load_mode
+help report_wire_load
+exit
