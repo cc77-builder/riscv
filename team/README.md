@@ -1,3 +1,10 @@
+# 当前状态：O4结构与参考时序评估完成（本地）
+
+2026-10-20：4项映射/20项STA/140份路径及13项主机检查通过离线复核，结果见optimizations/o4/README.md。
+完整FU面积+41.41%，含完整DIV的真实VFEX4面积+1.25%；两版均未满足1ns参考目标，不宣称整核Fmax/功耗。
+当前local/o4-cost-20261020，本轮不push、不切换默认。下一项O5/T17独立复现，随后G5最终采用；正式T16后置。
+不要重跑已完成O4或改封存证据。下方内容为历史状态/原计划。
+
 # 最新交付：O2与O3成果至zjhwork
 
 2026-10-20用户授权本批普通快进发布，实际成功与SHA以回读为准。[发布范围与下一步](docs/o2-o3-publication-20261020.md) · [O3完整应用结果](workloads/o3-gemv/README.md) · [O1/O2公平性能](optimizations/o2/performance/README.md)

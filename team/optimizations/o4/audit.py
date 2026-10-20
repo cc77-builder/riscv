@@ -75,15 +75,33 @@ if __name__=="__main__":
     selection={"o1-fu":("o1-fu-map-02","o1-fu-sta-03"),"o2-fu":("o2-fu-map-01","o2-fu-sta-02"),"o1-parent":("o1-parent-map-01","o1-parent-sta-08"),"o2-parent":("o2-parent-map-01","o2-parent-sta-01")}
     result={}
     for key,(mapped,timed) in selection.items():
-        s,m=mapping_audit(work/mapped,lib); t=timing_audit(work/timed,work/mapped,m)
+        s,m=mapping_audit(work/mapped,lib)
+        if key!=s["mode"]+"-"+s["boundary"] or s["exit_code"]!=0:raise ValueError("missing/wrong mode or nonzero mapping")
+        generation=work/Path(s["generation"]).name
+        g=json.loads((generation/"result.json").read_text())
+        if sha(generation/"result.json")!=s["generation_sha256"] or g["mode"]!=s["mode"] or g["boundary"]!=s["boundary"] or g["exit_code"]!=0:raise ValueError("generation/mapping binding")
+        expected={"VDOT_T14_FUSED_INPUT":"1","VDOT_O1_HANDOFF":"1" if s["mode"]=="o1" else "0","VDOT_O2_ELASTIC":"1" if s["mode"]=="o2" else "0",**{x:"0" for x in ["VDOT_T12_TRACE","VDOT_T13_TRACE","VDOT_O1_TRACE","VDOT_O2_TRACE"]}}
+        if g["flags"]!=expected:raise ValueError("mode/trace flags")
+        for filename,item in g["rtl"].items():
+            if sha(generation/filename)!=item["sha256"]:raise ValueError("generated RTL changed")
+        if sha(work/mapped/"map.ys")!=s["map_script_sha256"]:raise ValueError("mapping script changed")
+        t=timing_audit(work/timed,work/mapped,m)
         result[key]={"mapping":s,"timing":t}
         if key.endswith("-fu"):result[key]["registers"]=register_groups(json.loads((work/mapped/"structure.json").read_text()),s["mode"])
     for boundary in ["fu","parent"]:
         compare_interfaces(result["o1-"+boundary]["mapping"]["ports"],result["o2-"+boundary]["mapping"]["ports"])
+    leaf_identity={}
     for leaf in ["VDotProducts.sv","VDotReduce.sv"]:
-        h=sha(work/"o1-fu-02/rtl"/leaf)
-        for generation in ["o2-fu-01","o1-parent-01","o2-parent-01"]:
-            if sha(work/generation/"rtl"/leaf)!=h:raise ValueError("arithmetic leaf differs")
-    final={"audit_pass":True,"results":result,"selection":selection,"not_signoff":True}
+        module=leaf[:-3]
+        variants={}
+        for generation in ["o1-fu-02","o2-fu-01","o1-parent-01","o2-parent-01"]:
+            path=work/generation/"rtl"/leaf
+            text=path.read_text()
+            body=text[text.index("module "+module):]
+            variants[generation]={"raw_sha256":sha(path),"module_body_sha256":hashlib.sha256(body.encode()).hexdigest()}
+        if variants["o1-fu-02"]["raw_sha256"]!=variants["o2-fu-01"]["raw_sha256"] or variants["o1-parent-01"]["raw_sha256"]!=variants["o2-parent-01"]["raw_sha256"]:raise ValueError("arithmetic differs between modes at same boundary")
+        if len({v["module_body_sha256"] for v in variants.values()})!=1:raise ValueError("arithmetic module body differs across boundaries")
+        leaf_identity[leaf]=variants
+    final={"audit_pass":True,"results":result,"selection":selection,"not_signoff":True,"arithmetic_identity":leaf_identity}
     (work/"assessment.json").write_text(json.dumps(final,indent=2)+"\n")
     print("O4_OFFLINE_AUDIT_PASS")
