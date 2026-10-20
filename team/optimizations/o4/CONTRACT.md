@@ -45,3 +45,5 @@ ABC目标1000ps，同驱动/负载约束；组合映射与DFF映射身份完整�
 输出为可复现工程比较、明确的适用边界及G5所需代价依据；最终采用仍需O5/T17与人工复核。
 
 首轮o1-fu-map-01因Yosys0.9不支持automatic局部变量失败。统一firtool lowering禁用局部变量/packed arrays，仅改变RTL输出格式。旧Yosys没有dffunmap命令；synth -noabc生成基础DFF后直接dfflibmap，映射闭合检查仍必须通过。
+
+Liberty默认wire_load为5K_hvratio_1_1；STA明确使用top模式和此模型，不是提取互连。输入/理想时钟转换均0.05ns。父级额外记录Vdot寄存器子集路径和3个真实ICG的E端setup路径，避免DIV最长路径掩盖vdot代价。常量输出无时序起点可单列；任何动态未约束端点必须拒收。

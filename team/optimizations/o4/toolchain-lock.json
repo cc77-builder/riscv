@@ -1,0 +1,57 @@
+{
+  "platform": "Ubuntu22.04 amd64; existing shared libraries must resolve via ldd",
+  "packages": [
+    {
+      "name": "berkeley-abc_1.01+20211229git48498af+dfsg-2_amd64.deb",
+      "sha256": "5f9d897a2a215d36dc1526cf377910deeccf8ba62749e7abdab92a520a310219",
+      "metadata": "Package: berkeley-abc\nVersion: 1.01+20211229git48498af+dfsg-2\nDepends: libbz2-1.0, libc6 (>= 2.34), libgcc-s1 (>= 3.3.1), libreadline8 (>= 6.0), libstdc++6 (>= 5), zlib1g (>= 1:1.1.4)\n"
+    },
+    {
+      "name": "opensta_0~20191111gitc018cb2+dfsg-1build1_amd64.deb",
+      "sha256": "b1272a4816bc2c67098872f39820f27b4dddf640205e09a31444c71c9fe41e9e",
+      "metadata": "Package: opensta\nVersion: 0~20191111gitc018cb2+dfsg-1build1\nDepends: libc6 (>= 2.29), libgcc-s1 (>= 3.0), libreadline8 (>= 6.0), libstdc++6 (>= 6), libtcl8.6 (>= 8.6.0), zlib1g (>= 1:1.1.4)\n"
+    },
+    {
+      "name": "yosys_0.9-2_amd64.deb",
+      "sha256": "b9f27c0a999753ecc12efa31ebdf97de5a0ca4f970780ddf580b8668a47e8a20",
+      "metadata": "Package: yosys\nVersion: 0.9-2\nDepends: libc6 (>= 2.34), libffi8 (>= 3.4), libgcc-s1 (>= 3.0), libreadline8 (>= 6.0), libstdc++6 (>= 11), libtcl8.6 (>= 8.6.0), python3:any, berkeley-abc (>= 1.01+20161002hgeb6eca6+dfsg), xdot\n"
+    }
+  ],
+  "apt_specs": [
+    "yosys=0.9-2",
+    "opensta=0~20191111gitc018cb2+dfsg-1build1",
+    "berkeley-abc=1.01+20211229git48498af+dfsg-2"
+  ],
+  "library": {
+    "repository": "The-OpenROAD-Project/OpenROAD-flow-scripts",
+    "commit": "bf3f9b344bf7d9d999f199778a722833bccbd33c",
+    "files": [
+      {
+        "path": "flow/platforms/nangate45/lib/NangateOpenCellLibrary_typical.lib",
+        "url": "https://raw.githubusercontent.com/The-OpenROAD-Project/OpenROAD-flow-scripts/bf3f9b344bf7d9d999f199778a722833bccbd33c/flow/platforms/nangate45/lib/NangateOpenCellLibrary_typical.lib",
+        "file": "NangateOpenCellLibrary_typical.lib",
+        "bytes": 6692032,
+        "sha256": "8d540a4d4cf6d09d27c87ad067857a9c0c2eeb023ab7a56e058cd3113db4e9b1"
+      },
+      {
+        "path": "flow/platforms/nangate45/config.mk",
+        "url": "https://raw.githubusercontent.com/The-OpenROAD-Project/OpenROAD-flow-scripts/bf3f9b344bf7d9d999f199778a722833bccbd33c/flow/platforms/nangate45/config.mk",
+        "file": "config.mk",
+        "bytes": 3634,
+        "sha256": "913db541a9b035e4b58ac9b82f7f275646120c21b3f83fb132670a252369bc98"
+      },
+      {
+        "path": "LICENSE",
+        "status": "unavailable",
+        "error": "HTTP Error 404: Not Found"
+      },
+      {
+        "path": "flow/platforms/nangate45/LICENSE",
+        "url": "https://raw.githubusercontent.com/The-OpenROAD-Project/OpenROAD-flow-scripts/bf3f9b344bf7d9d999f199778a722833bccbd33c/flow/platforms/nangate45/LICENSE",
+        "file": "LICENSE",
+        "bytes": 10174,
+        "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+      }
+    ]
+  }
+}
