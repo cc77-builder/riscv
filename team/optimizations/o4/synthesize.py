@@ -33,10 +33,10 @@ def main():
     commands=[f"read_liberty -lib {lib}",*[f"read_verilog -sv -DSYNTHESIS {f}" for f in rtl],f"hierarchy -check -top {top}","proc","opt",f"write_json {a.output/'structure.json'}",f"synth -top {top} -flatten -noabc",f"dfflibmap -liberty {lib}",f"abc -exe {bin/'berkeley-abc'} -liberty {lib} -D 1000 -constr {a.output/'abc.constr'}","clean","check -assert",f"stat -liberty {lib}",f"write_json {a.output/'mapped.json'}",f"write_verilog -noattr {a.output/'mapped.v'}"]
     (a.output/"map.ys").write_text("\n".join(commands)+"\n")
     command=[str(bin/"yosys"),"-T","-s",str(a.output/"map.ys")]
-    meta={"generation":str(a.generation),"generation_sha256":sha(a.generation/"result.json"),"mode":g["mode"],"boundary":g["boundary"],"top":top,"library_sha256":sha(lib),"command":command,"clockgate_mapping":replacement,"start":time.time()}
+    meta={"generation":str(a.generation),"generation_sha256":sha(a.generation/"result.json"),"mode":g["mode"],"boundary":g["boundary"],"top":top,"library_sha256":sha(lib),"command":command,"clockgate_mapping":replacement,"start":time.time(),"timeout_seconds":1800}
     try:
         with (a.output/"synthesis.log").open("w") as f:
-            rc=subprocess.run(command,stdout=f,stderr=subprocess.STDOUT,timeout=900).returncode
+            rc=subprocess.run(command,stdout=f,stderr=subprocess.STDOUT,timeout=1800).returncode
     except subprocess.TimeoutExpired: rc=124
     meta.update(exit_code=rc,end=time.time())
     (a.output/"run.json").write_text(json.dumps(meta,indent=2)+"\n")

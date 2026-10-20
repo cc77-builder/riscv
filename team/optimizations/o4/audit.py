@@ -23,16 +23,36 @@ def mapping_audit(directory,lib):
 def timing_audit(directory,mapping,design):
     s=json.loads((directory/"summary.json").read_text())
     if not s["pass"] or s["mapping_summary_sha256"]!=sha(mapping/"summary.json"):raise ValueError("STA identity")
+    ms=json.loads((mapping/"summary.json").read_text())
+    if s["library_sha256"]!=ms["library_sha256"] or s["mapped_sha256"]!=ms["mapped_sha256"]:raise ValueError("STA library/netlist binding")
+    if s["boundary"]=="parent":
+        from compact import topology
+        from canonical import bind,emit
+        binding=json.loads((directory/"canonical-binding.json").read_text())
+        if binding!=s["name_binding"] or binding["exit_code"]!=0 or binding["input_mapping_json_sha256"]!=sha(mapping/"mapped.json"):raise ValueError("name binding")
+        for filename,key in [("sta-names.json","import_json_sha256"),("sta-canonical.v","sta_netlist_sha256"),("instance-binding.json","instance_binding_sha256")]:
+            if sha(directory/filename)!=binding[key]:raise ValueError("canonical identity")
+        graph=json.loads((directory/"sta-names.json").read_text())["modules"][ms["top"]]
+        graph=bind(graph,design,json.loads((directory/"instance-binding.json").read_text()))
+        if Counter(c["type"] for c in graph["cells"].values())!=Counter(c["type"] for c in design["cells"].values()):raise ValueError("canonical changed cells")
+        if topology(design)!=binding["topology_sha256"] or topology(graph,True)!=binding["topology_sha256"]:raise ValueError("canonical changed connectivity")
     expected={"nominal":(1,5),"period050":(.5,5),"period200":(2,5),"load001":(1,1),"load020":(1,20)}
     if set(p["profile"] for p in s["profiles"])!=set(expected) or len(s["profiles"])!=5:raise ValueError("missing/duplicate sensitivity")
     for p in s["profiles"]:
         if (p["period_ns"],p["load_ff"])!=expected[p["profile"]]:raise ValueError("constraint mismatch")
         d=directory/p["profile"];validate_log((d/"sta.log").read_text())
+        tcl=(d/"timing.tcl").read_text()
+        fixed=["set_cmd_units -time ns -capacitance fF","set_wire_load_mode top","set_wire_load_model -name 5K_hvratio_1_1","set_clock_uncertainty 0.05 [get_clocks core_clk]","set_clock_transition 0.05 [get_clocks core_clk]","set_input_delay -max 0.1 -clock core_clk $inputs","set_output_delay -max 0.1 -clock core_clk $outputs","set_input_transition 0.05 $inputs",f"set_load {p['load_ff']} $outputs"]
+        if any(tcl.splitlines().count(x)!=1 for x in fixed):raise ValueError("actual Tcl constraints differ")
+        clock=re.findall(r"^create_clock -name core_clk -period ([0-9.]+) ",tcl,re.M)
+        if len(clock)!=1 or float(clock[0])!=p["period_ns"] or "set_false_path" in tcl:raise ValueError("clock/path constraints differ")
+        if s["boundary"]=="parent" and "set_case_analysis 0 [get_ports testEnable]" not in tcl:raise ValueError("missing functional testEnable case")
+
         if sha(d/"sta.log")!=p["log_sha256"]:raise ValueError("STA log identity")
         if json.loads((d/"run.json").read_text())["exit_code"]!=0:raise ValueError("real tool exit")
         for k,v in p["paths"].items():
             if parse_path((d/(k+".rpt")).read_text())!=v or not v["exists"]:raise ValueError("path mismatch")
-        if constant_warnings((d/"setup-checks.rpt").read_text(),design)!=p["constant_unconstrained_outputs"]:raise ValueError("constraint coverage mismatch")
+        if constant_warnings((d/"setup-checks.rpt").read_text(),graph if s["boundary"]=="parent" else design,["testEnable"] if s["boundary"]=="parent" else [])!=p.get("reviewed_unconstrained_endpoints",p.get("constant_unconstrained_outputs")):raise ValueError("constraint coverage mismatch")
     return s
 def register_groups(structure,mode):
     mn="VDot" if mode=="o1" else "VDotElastic"
@@ -52,7 +72,7 @@ if __name__=="__main__":
     import argparse
     p=argparse.ArgumentParser();p.add_argument("work",type=Path);a=p.parse_args()
     work=a.work;lib=work/"library/NangateOpenCellLibrary_typical.lib"
-    selection={"o1-fu":("o1-fu-map-02","o1-fu-sta-03"),"o2-fu":("o2-fu-map-01","o2-fu-sta-02"),"o1-parent":("o1-parent-map-01","o1-parent-sta-01"),"o2-parent":("o2-parent-map-01","o2-parent-sta-01")}
+    selection={"o1-fu":("o1-fu-map-02","o1-fu-sta-03"),"o2-fu":("o2-fu-map-01","o2-fu-sta-02"),"o1-parent":("o1-parent-map-01","o1-parent-sta-08"),"o2-parent":("o2-parent-map-01","o2-parent-sta-01")}
     result={}
     for key,(mapped,timed) in selection.items():
         s,m=mapping_audit(work/mapped,lib); t=timing_audit(work/timed,work/mapped,m)

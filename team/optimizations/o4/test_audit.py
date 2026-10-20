@@ -9,6 +9,11 @@ class EvidenceGates(unittest.TestCase):
         self.assertEqual(parse_path(path)["slack_ns"],-.3)
     def test_zero_exit_with_tcl_error_is_rejected(self):
         with self.assertRaises(ValueError):validate_log("Error: invalid command\nO4_STA_COMPLETE\n")
+    def test_unbound_pin_even_without_tcl_error_is_rejected(self):
+        with self.assertRaises(ValueError):validate_log("Warning: pin x not found.\nO4_STA_COMPLETE\n")
+    def test_multiple_paths_cannot_mix_arrival_and_slack(self):
+        text="Startpoint: a\nEndpoint: b\n 1.2 data arrival time\n -0.3 slack (VIOLATED)\n"
+        with self.assertRaises(ValueError):parse_path(text+text)
     def test_partial_log_is_rejected(self):
         with self.assertRaises(ValueError):validate_log("OpenSTA loaded design\n")
     def test_missing_path_is_not_zero_delay(self):
@@ -22,11 +27,36 @@ class EvidenceGates(unittest.TestCase):
         self.assertEqual(constant_warnings("Warning: There are 1 unconstrained endpoints.\n  constant\n",design),["constant"])
         with self.assertRaises(ValueError):constant_warnings("Warning: There are 2 unconstrained endpoints.\n  constant\n",design)
         with self.assertRaises(ValueError):constant_warnings("Warning: no clock\n",design)
+    def test_icg_test_pin_requires_proven_case_zero_connection(self):
+        design={"ports":{"testEnable":{"direction":"input","bits":[9]}},"cells":{"g":{"type":"CLKGATETST_X1","connections":{"SE":[9]}}}}
+        warning="Warning: There are 1 unconstrained endpoints.\n  g/SE\n"
+        with self.assertRaises(ValueError):constant_warnings(warning,design)
+        self.assertEqual(constant_warnings(warning,design,["testEnable"]),["g/SE"])
+        design["cells"]["g"]["connections"]["SE"]=[10]
+        with self.assertRaises(ValueError):constant_warnings(warning,design,["testEnable"])
     def test_port_width_or_direction_mismatch_is_rejected(self):
         a={"x":{"width":1,"direction":"input"}}
         compare_interfaces(a,copy.deepcopy(a))
         with self.assertRaises(ValueError):compare_interfaces(a,{"x":{"width":2,"direction":"input"}})
         with self.assertRaises(ValueError):compare_interfaces(a,{"x":{"width":1,"direction":"output"}})
+    def test_connection_proof_ignores_names_but_rejects_rewired_dff(self):
+        from compact import topology
+        from canonical import emit,bind
+        old={"ports":{"clock":{"direction":"input","bits":[1]},"data":{"direction":"input","bits":[2]},"q":{"direction":"output","bits":[3]}},"netnames":{},"cells":{"original":{"type":"DFF_X1","parameters":{},"attributes":{},"port_directions":{"CK":"input","D":"input","Q":"output"},"connections":{"CK":[1],"D":[2],"Q":[3]}}}}
+        new=copy.deepcopy(old)
+        new["cells"]={"c0":new["cells"].pop("original")}
+        bind(new,old,{"c0":"original"})
+        self.assertEqual(topology(old),topology(new,True))
+        new["cells"]["c0"]["connections"]["D"]=[1]
+        self.assertNotEqual(topology(old),topology(new,True))
+    def test_canonical_writer_emits_only_scalar_aliases(self):
+        from canonical import emit
+        m={"ports":{"x":{"direction":"input","bits":[1,2]},"y":{"direction":"output","bits":[1,2]}},"cells":{}}
+        with tempfile.TemporaryDirectory() as tmp:
+            path=Path(tmp)/"net.v";emit(m,"top",path)
+            self.assertIn("assign n1 = x[0];",path.read_text())
+            self.assertIn("assign y[1] = n2;",path.read_text())
+            self.assertNotIn("assign {",path.read_text())
     def test_area_tamper_and_unknown_cell_are_rejected(self):
         # Minimal independently assembled mapped fixture, not a copy of synthesis output.
         from hashlib import sha256
