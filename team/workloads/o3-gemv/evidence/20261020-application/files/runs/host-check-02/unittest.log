@@ -1,0 +1,59 @@
+test_all_samples_and_best_rvv (test_campaign.CampaignTests) ... ok
+test_duplicate_key_rejected (test_campaign.CampaignTests) ... ok
+test_first_and_replay_not_measured (test_campaign.CampaignTests) ... ok
+test_missing_sample_rejected (test_campaign.CampaignTests) ... ok
+test_retirement_drift_rejected (test_campaign.CampaignTests) ... ok
+test_control_flow_rejected (test_checker.CheckerTests) ... ok
+test_counter_order_rejected (test_checker.CheckerTests) ... ok
+test_missing_counter_rejected (test_checker.CheckerTests) ... ok
+test_pointer_write_to_t6_is_not_a_loop (test_checker.CheckerTests) ... ok
+test_export_rejects_unfinished_measurements (test_delivery.DeliveryTests) ... ok
+test_portable_rejects_changed_stored_bytes (test_delivery.DeliveryTests) ... FAIL
+test_portable_rejects_manifest_digest_change (test_delivery.DeliveryTests) ... ok
+test_portable_rejects_path_escape (test_delivery.DeliveryTests) ... FAIL
+test_recheck_rejects_incomplete_campaign (test_delivery.DeliveryTests) ... ERROR
+test_all_emitted_kernels_against_independent_gemv (test_model.ModelTests) ... ok
+test_deterministic_generator (test_model.ModelTests) ... ok
+test_inputs_shared_and_no_row_padding (test_model.ModelTests) ... ok
+test_invalid_inputs (test_model.ModelTests) ... ok
+test_oracle_detects_input_error (test_model.ModelTests) ... ok
+test_reuse_reduces_x_loads (test_model.ModelTests) ... ok
+test_scope_stores_after_counter (test_model.ModelTests) ... ok
+test_signed_limits (test_model.ModelTests) ... ok
+
+======================================================================
+ERROR: test_recheck_rejects_incomplete_campaign (test_delivery.DeliveryTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/workloads/o3-gemv/test_delivery.py", line 19, in test_recheck_rejects_incomplete_campaign
+    with self.assertRaisesRegex(ValueError,"incomplete"):results.recheck(root,root/"out")
+AttributeError: module 'results' has no attribute 'recheck'
+
+======================================================================
+FAIL: test_portable_rejects_changed_stored_bytes (test_delivery.DeliveryTests)
+----------------------------------------------------------------------
+ValueError: unsupported archive manifest
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/workloads/o3-gemv/test_delivery.py", line 43, in test_portable_rejects_changed_stored_bytes
+    with self.assertRaisesRegex(ValueError,"stored hash"):portable.audit(root,root/"result.json")
+AssertionError: "stored hash" does not match "unsupported archive manifest"
+
+======================================================================
+FAIL: test_portable_rejects_path_escape (test_delivery.DeliveryTests)
+----------------------------------------------------------------------
+ValueError: unsupported archive manifest
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/workloads/o3-gemv/test_delivery.py", line 37, in test_portable_rejects_path_escape
+    with self.assertRaisesRegex(ValueError,"archive path"):portable.audit(root,root/"result.json")
+AssertionError: "archive path" does not match "unsupported archive manifest"
+
+----------------------------------------------------------------------
+Ran 22 tests in 0.320s
+
+FAILED (failures=2, errors=1)
