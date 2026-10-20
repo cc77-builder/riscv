@@ -1,3 +1,11 @@
+# 最新交付：O2与O3成果至zjhwork
+
+2026-10-20用户授权本批普通快进发布，实际成功与SHA以回读为准。[发布范围与下一步](docs/o2-o3-publication-20261020.md) · [O3完整应用结果](workloads/o3-gemv/README.md) · [O1/O2公平性能](optimizations/o2/performance/README.md)
+
+O2 G0–G4及O3已完成。O3共56项合格作业（46复用＋10补跑，另2中断记录保留）、1280校验窗口、768正式性能样本；Linux/Windows离线复算通过。G4独立batch128降低39.03%，O3应用reuse/endtoend降低0.62%–1.50%，适用范围分别报告。
+
+下一项O4结构/时序代价，再推进O5/T17队友干净检出复现与G5最终采用。O2默认关闭，T16报告继续后置。本条更新下方“未上传/待做”等历史状态，不修改密封证据。
+
 # 三人团队：项目计划与开发入口
 
 > **2026-10-19 O2 G1/G2 完成，本地保存。** 两槽弹性 FU 与真实 VFEX4＋DIV＋ClockGate 联调通过，连续流 II=1、无阻塞响应 2 拍；完整数据/身份、反压、精确取消、复位及旧模式兼容性通过，41 项主机测试和独立逐拍核验通过。见 [工程记录](optimizations/o2/IMPLEMENTATION.md) · [证据](optimizations/o2/evidence/20261019-elastic-parent/README.md)。下一步为 G3 观察器适配及全核回归；没有 O2 新整核加速比，默认关闭，未推送 GitHub，下方按历史时点阅读。
