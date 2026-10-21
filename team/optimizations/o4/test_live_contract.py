@@ -20,9 +20,10 @@ def tool_contract():
 
 def generation():
     native=dict(schema=2,make_args=build_recipe.MAKE_ARGS,environment_sha256="4"*64,
+                mill_launch=["/bin/bash", "/bin/mill"],
                 launch_metadata={".mill-version":dict(sha256="0"*64,value="0.12.3")},
                 recipe_sha256="5"*64,compilers={name:dict(path="/bin/"+name,sha256="6"*64,version="pinned")
-                   for name in ("cxx","cc","java","mill","verilator","verilator_bin","firtool")})
+                   for name in ("cxx","cc","java","bash","mill","verilator","verilator_bin","firtool")})
     return dict(source_commit="a"*40,source_inputs_unchanged=True,
                 source_inputs=dict(source_commit="a"*40,files={"src/control.scala":"7"*64},
                                    dependency_files={"dep/module.scala":"8"*64}),

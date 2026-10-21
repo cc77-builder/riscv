@@ -16,10 +16,11 @@ def pins():
                 NUM_CORES=1,EMU_THREADS=1,JVM_XMX="12G",BUILD_JOBS=2,
                 source_commit="a"*40,
                 native_build_contract=dict(schema=2,make_args=list(compare.build_recipe.MAKE_ARGS),
+                    mill_launch=["/tools/bash", "/tools/mill"],
                     launch_metadata={".mill-version":dict(sha256="d"*64,value="0.12.3")},
                     environment_sha256="a"*64,recipe_sha256="b"*64,
                     compilers={role:dict(path="/tools/"+role,sha256="c"*64,version="v1")
-                               for role in ("cxx","cc","java","mill","verilator","verilator_bin","firtool")}),
+                               for role in ("cxx","cc","java","bash","mill","verilator","verilator_bin","firtool")}),
                 VDOT_T14_FUSED_INPUT="1",VDOT_T12_TRACE="0",VDOT_T13_TRACE="1")
     return (dict(copy.deepcopy(common),VDOT_O1_HANDOFF="1",VDOT_O2_ELASTIC="0",VDOT_O1_TRACE="1",VDOT_O2_TRACE="0",VDOT_O1_TRACE_PROFILE="events"),
             dict(copy.deepcopy(common),VDOT_O1_HANDOFF="0",VDOT_O2_ELASTIC="1",VDOT_O1_TRACE="0",VDOT_O2_TRACE="1"))

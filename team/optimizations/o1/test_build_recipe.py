@@ -4,6 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 import subprocess
+import shutil
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -20,7 +21,7 @@ def digest(path):
 class NativePayloads(unittest.TestCase):
     def tools(self, folder):
         tools = {name: folder / name for name in
-                 ("g++", "gcc", "java", "mill", "verilator", "verilator_bin", "firtool")}
+                 ("g++", "gcc", "java", "bash", "mill", "verilator", "verilator_bin", "firtool")}
         for name, path in tools.items():
             path.write_bytes(("compiler fixture " + name).encode())
         with zipfile.ZipFile(tools["mill"], "w") as archive:
@@ -71,13 +72,35 @@ class NativePayloads(unittest.TestCase):
         with patch.dict(recipe.os.environ, {"VERILATOR_ROOT": "/foreign", "VERILATOR_BIN": "foreign_bin"}):
             self.assertFalse({"VERILATOR_ROOT", "VERILATOR_BIN"} & recipe.environment().keys())
 
+    @unittest.skipUnless(shutil.which("bash") and Path("/bin/bash").is_file(), "native POSIX launcher test")
+    def test_shebang_free_executable_jar_is_probed_via_bound_bash(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            tools = self.tools(Path(tmp))
+            tools["bash"] = Path("/bin/bash").resolve()
+            # Match Mill's supported format: shell preamble plus ZIP payload,
+            # with no kernel shebang. A direct execve raises ENOEXEC.
+            tools["mill"].write_bytes(b"printf 'polyglot compiler version\\n'\nexit 0\n")
+            with zipfile.ZipFile(tools["mill"], "a") as archive:
+                archive.writestr("mill/compiler.class", b"compiler")
+            tools["mill"].chmod(0o755)
+            real = subprocess.check_output
+            calls = []
+            def execute(command, **kwargs):
+                calls.append(command)
+                return real(command, **kwargs) if str(tools["mill"]) in command else "fixture version"
+            with patch.object(recipe.shutil, "which", side_effect=lambda name: str(tools[Path(name).name])), \
+                    patch.object(recipe.subprocess, "check_output", side_effect=execute):
+                captured = recipe.probe_tools()
+            self.assertEqual(captured["mill"]["version"], "polyglot compiler version\n")
+            self.assertIn([str(tools["bash"]), str(tools["mill"]), "--version"], calls)
+
 
 class MetadataContract(unittest.TestCase):
     def contract(self, root):
         # Probe output is supplied independently; exercise the actual capture,
         # metadata hashing and schema validation outside native Linux execution.
         tools = {role: dict(path="/tools/" + role, sha256="a" * 64, version="test")
-                 for role in ("cxx", "cc", "java", "mill", "verilator", "verilator_bin", "firtool")}
+                 for role in ("cxx", "cc", "java", "bash", "mill", "verilator", "verilator_bin", "firtool")}
         with patch.object(recipe.subprocess, "check_output", return_value=json.dumps(tools)):
             result = recipe.capture(root)
         recipe.validate(result)
@@ -107,7 +130,8 @@ class MetadataContract(unittest.TestCase):
             mutations = (lambda c: c.update(schema=1),
                          lambda c: c.pop("launch_metadata"),
                          lambda c: c["launch_metadata"][".mill-version"].pop("sha256"),
-                         lambda c: c["compilers"].pop("verilator_bin"))
+                         lambda c: c["compilers"].pop("verilator_bin"),
+                         lambda c: c.pop("mill_launch"))
             for mutate in mutations:
                 changed = copy.deepcopy(original)
                 mutate(changed)
