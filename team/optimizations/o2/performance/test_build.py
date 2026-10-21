@@ -74,6 +74,7 @@ class NativeProfileTests(unittest.TestCase):
             for role, tool in contract["compilers"].items():
                 path=root/role;path.write_bytes(role.encode())
                 tool.update(path=str(path),sha256=build.sha(path))
+            contract["mill_launch"]=[contract["compilers"]["sh"]["path"],contract["compilers"]["mill"]["path"]]
             directories=[]
             for mode,status in (("o1","O1_MATCHED_BUILD_PASS"),("o2","O2_FULLCORE_BUILD_PASS")):
                 directory=root/mode;directory.mkdir();directories.append(directory)

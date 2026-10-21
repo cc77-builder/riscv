@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 import subprocess
 import shutil
+import shlex
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -21,7 +22,7 @@ def digest(path):
 class NativePayloads(unittest.TestCase):
     def tools(self, folder):
         tools = {name: folder / name for name in
-                 ("g++", "gcc", "java", "bash", "mill", "verilator", "verilator_bin", "firtool")}
+                 ("g++", "gcc", "java", "bash", "sh", "time", "mill", "verilator", "verilator_bin", "firtool")}
         for name, path in tools.items():
             path.write_bytes(("compiler fixture " + name).encode())
         with zipfile.ZipFile(tools["mill"], "w") as archive:
@@ -73,10 +74,11 @@ class NativePayloads(unittest.TestCase):
             self.assertFalse({"VERILATOR_ROOT", "VERILATOR_BIN"} & recipe.environment().keys())
 
     @unittest.skipUnless(shutil.which("bash") and Path("/bin/bash").is_file(), "native POSIX launcher test")
-    def test_shebang_free_executable_jar_is_probed_via_bound_bash(self):
+    def test_shebang_free_executable_jar_is_probed_via_bound_posix_shell(self):
         with tempfile.TemporaryDirectory() as tmp:
             tools = self.tools(Path(tmp))
             tools["bash"] = Path("/bin/bash").resolve()
+            tools["sh"] = Path("/bin/sh").resolve()
             # Match Mill's supported format: shell preamble plus ZIP payload,
             # with no kernel shebang. A direct execve raises ENOEXEC.
             tools["mill"].write_bytes(b"printf 'polyglot compiler version\\n'\nexit 0\n")
@@ -92,7 +94,7 @@ class NativePayloads(unittest.TestCase):
                     patch.object(recipe.subprocess, "check_output", side_effect=execute):
                 captured = recipe.probe_tools()
             self.assertEqual(captured["mill"]["version"], "polyglot compiler version\n")
-            self.assertIn([str(tools["bash"]), str(tools["mill"]), "--version"], calls)
+            self.assertIn([str(tools["sh"]), str(tools["mill"]), "--version"], calls)
 
 
 class MetadataContract(unittest.TestCase):
@@ -100,7 +102,7 @@ class MetadataContract(unittest.TestCase):
         # Probe output is supplied independently; exercise the actual capture,
         # metadata hashing and schema validation outside native Linux execution.
         tools = {role: dict(path="/tools/" + role, sha256="a" * 64, version="test")
-                 for role in ("cxx", "cc", "java", "bash", "mill", "verilator", "verilator_bin", "firtool")}
+                 for role in ("cxx", "cc", "java", "bash", "sh", "time", "mill", "verilator", "verilator_bin", "firtool")}
         with patch.object(recipe.subprocess, "check_output", return_value=json.dumps(tools)):
             result = recipe.capture(root)
         recipe.validate(result)
@@ -152,6 +154,31 @@ class MetadataContract(unittest.TestCase):
             with patch.object(build_inputs, "verify_dependencies", return_value={}), \
                     self.assertRaisesRegex(RuntimeError, "inventory changed"):
                 build_inputs.verify_hardware_files(root, before)
+
+    @unittest.skipUnless(Path("/usr/bin/time").is_file() and Path("/bin/bash").is_file(),
+                         "native GNU time/Make dispatch test")
+    def test_make_uses_bound_external_time_for_shebang_free_mill(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / ".mill-version").write_bytes(b"0.12.3\n")
+            contract = self.contract(root)
+            mill = root / "mill payload"
+            mill.write_bytes(b"printf 'timed polyglot version\\n'\nexit 0\n")
+            with zipfile.ZipFile(mill, "a") as archive:
+                archive.writestr("mill/compiler.class", b"compiler")
+            mill.chmod(0o755)
+            for role, path in (("bash", Path("/bin/bash").resolve()), ("sh", Path("/bin/sh").resolve()),
+                               ("time", Path("/usr/bin/time")), ("mill", mill)):
+                contract["compilers"][role].update(path=str(path), sha256=digest(path))
+            contract["mill_launch"]=[contract["compilers"]["sh"]["path"], str(mill)]
+            timing = root / "timing output.log"
+            (root / "Makefile").write_text("TIMELOG := " + str(timing) + "\nemu:\n\t$(TIME_CMD) " +
+                                          shlex.quote(str(mill)) + " --version\n", encoding="utf-8")
+            result = subprocess.run(shlex.split(recipe.make_command(contract)), cwd=root,
+                                    capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            self.assertIn("timed polyglot version", result.stdout)
+            self.assertIn("Exit status: 0", timing.read_text())
 
 
 if __name__ == "__main__":

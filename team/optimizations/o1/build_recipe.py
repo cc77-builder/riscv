@@ -36,7 +36,8 @@ def probe_tools():
     """Resolve compiler payloads, rejecting unbound launcher indirection."""
     result = {}
     for role, command, option in (("cxx", "g++", "--version"), ("cc", "gcc", "--version"),
-        ("java", "java", "-version"), ("bash", "bash", "--version"), ("mill", "mill", "--version"),
+        ("java", "java", "-version"), ("bash", "bash", "--version"),
+        ("sh", "/bin/sh", "-c"), ("time", "/usr/bin/time", "--version"), ("mill", "mill", "--version"),
         ("verilator", "verilator", "--version"),
         ("firtool", str(Path.home()/".cache/llvm-firtool/1.62.1/bin/firtool"), "--version")):
         path = shutil.which(command)
@@ -47,7 +48,12 @@ def probe_tools():
         # shell wrapper's hash would leave its actual compiler payload unbound.
         if role == "mill" and not zipfile.is_zipfile(path):
             raise ValueError("mill must resolve directly to its executable JAR payload")
-        command = ([result["bash"]["path"], str(path), option] if role == "mill" else [str(path), option])
+        command = ([result["sh"]["path"], str(path), option] if role == "mill" else [str(path), option])
+        if role == "sh":
+            # GNU time uses execvp, whose ENOEXEC fallback is /bin/sh for
+            # Mill's executable JAR. Dash has no --version option; record a
+            # successful shell probe together with its executable digest.
+            command.append("printf '%s\\n' 'POSIX shell ENOEXEC fallback'")
         result[role] = dict(path=str(path), sha256=hashlib.sha256(path.read_bytes()).hexdigest(),
                            version=subprocess.check_output(command, text=True, stderr=subprocess.STDOUT))
     # Ubuntu's verilator executable is a Perl launcher; normal (non-debug)
@@ -72,7 +78,7 @@ def capture(root):
     captured = json.loads(subprocess.check_output(["bash", "-c", command], cwd=root, text=True, env=clean))
     metadata = Path(root) / ".mill-version"
     return dict(schema=2, make_args=list(MAKE_ARGS), compilers=captured,
-                mill_launch=[captured["bash"]["path"], captured["mill"]["path"]],
+                mill_launch=[captured["sh"]["path"], captured["mill"]["path"]],
                 launch_metadata={".mill-version": dict(sha256=hashlib.sha256(metadata.read_bytes()).hexdigest(),
                                                        value=metadata.read_text(encoding="utf-8").strip())},
                 environment_sha256=hashlib.sha256(json.dumps(clean, sort_keys=True).encode()).hexdigest(),
@@ -90,12 +96,12 @@ def validate(contract):
             or not metadata[".mill-version"].get("value")
             or not re.fullmatch(r"[0-9a-f]{64}", metadata[".mill-version"].get("sha256", ""))):
         raise ValueError("missing Mill launcher metadata identity")
-    for role in ("cxx", "cc", "java", "bash", "mill", "verilator", "verilator_bin", "firtool"):
+    for role in ("cxx", "cc", "java", "bash", "sh", "time", "mill", "verilator", "verilator_bin", "firtool"):
         tool = contract.get("compilers", {}).get(role, {})
         if (not PurePosixPath(tool.get("path", "")).is_absolute() or not tool.get("version")
                 or not re.fullmatch(r"[0-9a-f]{64}", tool.get("sha256", ""))):
             raise ValueError("missing native tool identity: " + role)
-    if contract.get("mill_launch") != [contract["compilers"]["bash"]["path"], contract["compilers"]["mill"]["path"]]:
+    if contract.get("mill_launch") != [contract["compilers"]["sh"]["path"], contract["compilers"]["mill"]["path"]]:
         raise ValueError("missing bound Mill shell launch command")
 
 
@@ -103,6 +109,9 @@ def make_command(contract, products=None):
     validate(contract)
     args = ["make", "emu", *MAKE_ARGS,
             "SHELL=" + contract["compilers"]["bash"]["path"],
+            # Make expands TIMELOG in its own scope. Shell quoting preserves
+            # the expression until then, including output paths with spaces.
+            "TIME_CMD=" + shlex.join([contract["compilers"]["time"]["path"], "-avp", "-o", "$(TIMELOG)"]),
             "CXX=" + contract["compilers"]["cxx"]["path"],
             "CC=" + contract["compilers"]["cc"]["path"]]
     if products is not None:
