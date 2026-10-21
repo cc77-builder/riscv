@@ -19,6 +19,7 @@ import sys
 from threading import Lock
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import live_inputs
+import input_contract
 
 ROOT = Path(__file__).resolve().parents[4]
 HERE = Path(__file__).resolve().parent
@@ -248,7 +249,16 @@ def preflight(args, guard, perf):
         "hello": args.t12_root / "repo/team/workloads/hello-vadd/build/hello-vadd-riscv64-xs.bin",
         "control": args.t14_root / "runs/control-sweep-02/vdot-regression.bin",
     }
+    contract_path = getattr(args, "input_contract", None)
+    contract = None
+    contract_files = {}
+    matrix = args.t12_root / "runs/t11-matrix-canonical"
+    if contract_path is not None:
+        contract, contract_files = input_contract.validate(contract_path, paths, matrix, ROOT)
+        input_contract.verify_am(contract, guard)
     for name, digest in FROZEN.items():
+        if contract is not None and name in input_contract.ROLES:
+            continue
         require(sha(paths[name]) == digest, "frozen input drift: " + name)
     paths["dense"] = args.dense_build / "vdot-perf.bin"
     frozen_dense = ROOT / "team/evidence/t13-performance-20261015/images-v3/performance-d0-s06"
@@ -264,9 +274,11 @@ def preflight(args, guard, perf):
     perf.check_compiled_cases(args.dense_build / "vdot-perf.elf", dense_manifest)
     # The small fault wrapper has a compiled-in absolute dlopen/DT_NEEDED path.
     linked_reference = DEFAULT_T12 / "nemu/reference/build/riscv64-nemu-interpreter-so"
-    require(paths["reference"].resolve() == linked_reference.resolve(),
+    require(contract is not None or paths["reference"].resolve() == linked_reference.resolve(),
             "frozen negative wrapper requires its original normal-reference path")
     reference = guard.verify_nemu(args.t12_root / "nemu/reference", paths["reference"], "reference")
+    if contract is not None:
+        input_contract.bind_reference(contract, paths["reference"], reference)
     control_build = args.t14_root / "runs/control-sweep-02"
     frozen_control = ROOT / "team/evidence/t14-optimization-20261016/control-sweep/build"
     require((control_build / "build.json").read_bytes() == (frozen_control / "build.json").read_bytes(),
@@ -278,13 +290,15 @@ def preflight(args, guard, perf):
     corpus = [json.loads(line) for line in (parent / "cases.jsonl").read_text().splitlines()]
     corpus += json.loads((parent / "exceptions.json").read_text())
     expected = {case["id"]: case for case in corpus}
-    matrix = args.t12_root / "runs/t11-matrix-canonical"
     builds, seen, executed = [], {}, 0
-    for index, digest in enumerate(MATRIX_SHA):
+    matrix_sha = MATRIX_SHA if contract is None else contract["sha256"]["matrix"]
+    for index, digest in enumerate(matrix_sha):
         data, build = matrix / f"data-{index}", matrix / f"build-{index}"
         image = build / "vdot-exceptions.bin"
         require(sha(image) == digest, f"frozen matrix image drift: {index}")
         receipt = guard.verify_build(build, image, data, "vdot", "full")
+        if contract is not None:
+            input_contract.bind_matrix(contract, ROOT, build, receipt)
         builds.append(receipt)
         cases = [json.loads(line) for line in (data / "cases.jsonl").read_text().splitlines()]
         cases += json.loads((data / "exceptions.json").read_text())
@@ -297,7 +311,7 @@ def preflight(args, guard, perf):
             "incomplete fixed matrix")
     # Include every checker in the run identity; a later checker change cannot
     # silently reinterpret the same run under the original receipt.
-    driver_files = [Path(live_inputs.__file__), Path(live_inputs.build_recipe.__file__), ROOT / "team/optimizations/o1/build_inputs.py", Path(__file__), HERE / "analyze.py", HERE / "check_control.py",
+    driver_files = [Path(input_contract.__file__), Path(live_inputs.__file__), Path(live_inputs.build_recipe.__file__), ROOT / "team/optimizations/o1/build_inputs.py", Path(__file__), HERE / "analyze.py", HERE / "check_control.py",
                     ROOT / "team/optimizations/o1/audit/runtime_gate.py",
                     ROOT / "team/scripts/artifact_guard.py", ROOT / "team/scripts/check-vdot-run.py",
                     ROOT / "team/workloads/vdot-perf/check.py"]
@@ -305,6 +319,7 @@ def preflight(args, guard, perf):
     if not args.preflight_only:
         verify_committed_drivers(driver_files)
     input_files = {str(path): sha(path) for path in paths.values()}
+    input_files.update(contract_files)
     input_files.update({str(args.dense_build / name): sha(args.dense_build / name) for name in dense_files})
     input_files[str(control_build / "build.json")] = sha(control_build / "build.json")
     for name, digest in control_receipt["files"].items():
@@ -314,7 +329,11 @@ def preflight(args, guard, perf):
             input_files.update(receipt.get(group, {}))
         input_files[str(matrix / f"build-{index}/workload-provenance.json")] = sha(matrix / f"build-{index}/workload-provenance.json")
     return pins, paths, {
-        "status": "O2_FROZEN_INPUTS_VERIFIED_HARDWARE_NOT_CHECKED" if args.preflight_only else "O2_FULLCORE_INPUTS_VERIFIED",
+        "status": (("O2_FROZEN_INPUTS_VERIFIED_HARDWARE_NOT_CHECKED" if contract is None else
+                    "O2_CURRENT_INPUTS_VERIFIED_HARDWARE_NOT_CHECKED") if args.preflight_only else "O2_FULLCORE_INPUTS_VERIFIED"),
+        "input_identity": "historical-frozen" if contract is None else input_contract.NAME,
+        "input_contract": None if contract is None else str(contract_path),
+        "input_contract_sha256": None if contract is None else contract_files[str(contract_path)],
         "hardware_checked": not args.preflight_only,
         "hardware_pins_sha256": None if args.preflight_only else sha(args.hardware_pins),
         "emu_sha256": None if args.preflight_only else sha(args.emu),
@@ -537,10 +556,12 @@ def main():
     parser.add_argument("--t12-root", type=Path, default=DEFAULT_T12)
     parser.add_argument("--t14-root", type=Path, default=DEFAULT_T14)
     parser.add_argument("--dense-build", type=Path, default=DEFAULT_DENSE)
+    parser.add_argument("--input-contract", type=Path,
+                        help="explicit versioned rebuilt inputs; omission preserves the historical frozen contract")
     parser.add_argument("--jobs", type=int, choices=(1, 2), default=2)
     parser.add_argument("--timeout", default="120m")
     args = parser.parse_args()
-    for field in ("hardware_pins", "emu", "t12_root", "t14_root", "dense_build"):
+    for field in ("hardware_pins", "emu", "t12_root", "t14_root", "dense_build", "input_contract"):
         value = getattr(args, field)
         if value is not None:
             setattr(args, field, value.resolve())

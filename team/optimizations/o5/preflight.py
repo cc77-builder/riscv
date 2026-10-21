@@ -116,6 +116,66 @@ def collect_inputs(t12, t14, dense, perf):
     return rows
 
 
+def assess_current(args, report, before, perf):
+    """Explicit new input identity; never retry through the historical contract."""
+    selected = Path(args.input_contract)
+    report["input_identity"] = suite.input_contract.NAME
+    report["input_contract"] = str(selected)
+    report["strict_frozen_preflight"] = dict(status="NOT_SELECTED", reason="explicit versioned rebuilt inputs")
+    report["strict_current_preflight"] = dict(status="NOT_RUN", reason="input contract prerequisites unavailable")
+    report["inventory_expansion_complete"] = False
+    report["inventory_note"] = "Declared prerequisites are aggregated first; only strict G3 preflight establishes complete transitive identity."
+    row = inspect_file(selected, role="versioned input contract")
+    rows = [row]
+    try:
+        if row["status"] == "OK":
+            value = json.loads(selected.read_text(encoding="utf-8"))
+            if not isinstance(value, dict) or not isinstance(value.get("files"), dict) or not value["files"]:
+                raise ValueError("missing nonempty versioned input inventory")
+            for name, expected in value["files"].items():
+                if not Path(name).is_absolute() or not isinstance(expected, str) or re.fullmatch(r"[0-9a-f]{64}", expected) is None:
+                    raise ValueError("invalid versioned input inventory entry")
+                rows.append(inspect_file(name, expected, "versioned input"))
+    except (ValueError, TypeError, OSError) as error:
+        row.update(status="INVALID_RECEIPT", error=str(error))
+    report["negative_reference_binding"] = dict(status="NOT_VERIFIED", reason="fresh wrapper binding requires strict input contract validation")
+    if all(item["status"] == "OK" for item in rows):
+        try:
+            guard = suite.load_module("o5_current_input_artifact_guard", ROOT / "team/scripts/artifact_guard.py")
+            _, paths, receipt = suite.preflight(SimpleNamespace(preflight_only=True, t12_root=args.t12_root,
+                t14_root=args.t14_root, dense_build=args.dense_build, input_contract=selected), guard, perf)
+            if (receipt.get("status") != "O2_CURRENT_INPUTS_VERIFIED_HARDWARE_NOT_CHECKED" or
+                    receipt.get("hardware_checked") is not False or receipt.get("input_identity") != suite.input_contract.NAME or
+                    receipt.get("input_contract_sha256") != row["sha256"] or not receipt.get("input_files")):
+                raise ValueError("wrong/incomplete current input preflight receipt")
+            rows = [inspect_file(name, expected, "strictly verified current input")
+                    for name, expected in receipt["input_files"].items()]
+            if any(item["status"] != "OK" for item in rows):
+                raise ValueError("input changed after strict preflight")
+            report["strict_current_preflight"] = dict(status="PASS", receipt=receipt)
+            report["negative_reference_binding"] = dict(status="OK", selected=str(paths["reference"]),
+                reason="fresh wrapper exact compiler command, trusted source and normal reference hash verified")
+            report["inventory_expansion_complete"] = True
+        except Exception as error:
+            report["strict_current_preflight"] = dict(status="FAIL", error=str(error))
+    report["files"] = rows
+    bad = [item for item in rows if item["status"] != "OK"]
+    report["input_counts"] = dict(required=len(rows), checked=len(rows) - len(bad), unavailable_or_drifted=len(bad))
+    after = source_state(args.source_commit)
+    report["git_state_unchanged_during_check"] = before == after
+    if before != after:
+        report["findings"].append("SOURCE_CHANGED_DURING_CHECK")
+    report["complete_input_identity_checked"] = report["strict_current_preflight"]["status"] == "PASS"
+    if report["complete_input_identity_checked"] and not bad and not report["findings"]:
+        report["status"] = "READY_INPUTS_ONLY"
+    report["next_steps"] = [
+        "Resolve every declared-input and strict-preflight failure without changing the historical frozen contract.",
+        "Commit the candidate and verify complete hardware/dependency/native-tool contracts before building.",
+        "Run fresh current-source core and supplements with this same input contract; T17 and actual human ACK remain separate.",
+    ]
+    return report
+
+
 def assess(args):
     report = dict(schema_version=1, scope="O5 inputs preparation for O2 core G3 only",
                   created_utc=datetime.now(timezone.utc).isoformat(), status="NOT_READY",
@@ -130,6 +190,8 @@ def assess(args):
     if not before["git_clean"]:
         report["findings"].append("SOURCE_GIT_DIRTY: commit the intended candidate before readiness acceptance")
     perf = suite.load_module("o5_input_window_checker", ROOT / "team/workloads/vdot-perf/check.py")
+    if getattr(args, "input_contract", None) is not None:
+        return assess_current(args, report, before, perf)
     report["files"] = collect_inputs(args.t12_root, args.t14_root, args.dense_build, perf)
     report["inventory_expansion_complete"] = all(row["status"] == "OK" for row in report["files"]
                                                  if row["role"] == "provenance")
@@ -177,12 +239,15 @@ def main():
     parser.add_argument("--t12-root", type=Path, default=suite.DEFAULT_T12)
     parser.add_argument("--t14-root", type=Path, default=suite.DEFAULT_T14)
     parser.add_argument("--dense-build", type=Path, default=suite.DEFAULT_DENSE)
+    parser.add_argument("--input-contract", type=Path, help="explicit versioned rebuilt input contract; default remains historical frozen inputs")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     if re.fullmatch(r"[0-9a-f]{40}", args.source_commit) is None:
         parser.error("--source-commit must be a full 40-character lowercase SHA")
     for name in ("t12_root", "t14_root", "dense_build"):
         setattr(args, name, getattr(args, name).resolve())
+    if args.input_contract is not None:
+        args.input_contract = args.input_contract.resolve()
     destination = output_path(args.output)
     report = assess(args)
     with destination.open("x", encoding="utf-8", newline="\n") as stream:

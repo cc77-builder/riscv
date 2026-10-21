@@ -14,6 +14,10 @@ python3 -B team/optimizations/o5/preflight.py \
 
 可明确提供 `--t12-root`、`--t14-root`、`--dense-build`，含义与 O2 `fullcore/run_suite.py` 一致。脚本聚合缺失文件、SHA 漂移、错误参考库位置及 Git 工作区状态；每次使用新输出文件，保留失败尝试。退出码 0 为 `READY_INPUTS_ONLY`，1 为 `NOT_READY`。
 
+新建输入使用显式 `--input-contract /absolute/current-inputs.json`，合同名为 `o2-g3-current-inputs-v1`；同时提供该合同对应的三个输入根目录。省略此参数仍执行原冻结合同，不会自动切换身份。新模式先聚合合同声明的缺失或漂移文件，再调用当前 G3 严格预检，核验参考库源码/配置、故障包装器链接目标、hello/flash 实际构建命令、矩阵完整源码及 AM 输入。117 个唯一用例、124 次执行以及 control/dense 冻结身份保持原要求。只有严格预检通过且候选源码状态合格，才给出 `READY_INPUTS_ONLY`；失败不会回退到旧合同。
+
+新模式在回执中使用 `strict_current_preflight`，并将 `strict_frozen_preflight` 标为 `NOT_SELECTED`。完整输入清单取自成功的严格预检回执；预检失败时 `inventory_expansion_complete=false`，已声明文件数量不代表全部依赖已验证。新增合同允许记录两项补充诊断的输入绑定，但此 O5 入口仍不执行补充诊断完整构建/运行验收。
+
 `--source-commit` 必须是本机 HEAD。报告的 `source.checked_paths` 列出本轮检查的硬件源码与 G3/O5 工具路径；这些路径存在未提交/未跟踪文件时不得给出就绪结论。报告保存检查前的候选身份及脏文件列表，并比较检查前后的 Git 状态。为避免重复扫描历史证据，此处不检查其他文档路径；也**不覆盖忽略目录里的编译输入或子模块状态**。完整依赖门禁仍由后续构建入口执行。
 
 ## 冻结输入及限制

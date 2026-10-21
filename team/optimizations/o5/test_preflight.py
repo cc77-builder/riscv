@@ -1,6 +1,7 @@
 """Readiness must preserve frozen identities and aggregate actionable failures."""
 import copy
 import hashlib
+import json
 from pathlib import Path
 import subprocess
 import tempfile
@@ -95,6 +96,64 @@ class InputReadinessTests(unittest.TestCase):
                 with self.subTest(target=target), self.assertRaises(ValueError):
                     preflight.output_path(target, root)
             self.assertEqual(outside.read_text(encoding="utf-8"), "preserved")
+
+    def test_explicit_current_contract_uses_strict_gate_and_preserves_scope(self):
+        source = dict(head="a" * 40, expected_commit="a" * 40, head_matches=True, git_clean=True, dirty_entries=[])
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            image = root / "input.bin"
+            image.write_bytes(b"current input")
+            selected = root / "contract.json"
+            files = {str(image): preflight.sha(image)}
+            selected.write_text(json.dumps(dict(files=files)), encoding="utf-8")
+            files[str(selected)] = preflight.sha(selected)
+            receipt = dict(status="O2_CURRENT_INPUTS_VERIFIED_HARDWARE_NOT_CHECKED", hardware_checked=False,
+                input_identity=preflight.suite.input_contract.NAME, input_contract_sha256=preflight.sha(selected), input_files=files)
+            args = SimpleNamespace(source_commit="a" * 40, t12_root=root / "t12", t14_root=root / "t14",
+                                   dense_build=root / "dense", input_contract=selected)
+            with patch.object(preflight, "source_state", return_value=source), \
+                    patch.object(preflight.suite, "preflight", return_value=(None, {"reference": image}, receipt)) as gate:
+                report = preflight.assess(args)
+            self.assertEqual(gate.call_args.args[0].input_contract, selected)
+            self.assertEqual(report["status"], "READY_INPUTS_ONLY")
+            self.assertEqual(report["strict_frozen_preflight"]["status"], "NOT_SELECTED")
+            self.assertTrue(report["complete_input_identity_checked"])
+            self.assertTrue(report["inventory_expansion_complete"])
+            for field in ("hardware_checked", "native_tools_checked", "compiler_inventory_checked", "dependency_pins_checked",
+                          "supplements_checked", "t17_complete", "human_acknowledgements_checked"):
+                self.assertFalse(report[field])
+            self.assertEqual(report["emulators_executed"], 0)
+            source["git_clean"] = False
+            source["dirty_entries"] = [" M src/candidate.scala"]
+            with patch.object(preflight, "source_state", return_value=source), \
+                    patch.object(preflight.suite, "preflight", return_value=(None, {"reference": image}, receipt)):
+                self.assertEqual(preflight.assess(args)["status"], "NOT_READY")
+
+    def test_current_contract_failure_cannot_fall_back_to_frozen_inputs(self):
+        source = dict(head="a" * 40, expected_commit="a" * 40, head_matches=True, git_clean=True, dirty_entries=[])
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            image = root / "input.bin"
+            image.write_bytes(b"input")
+            selected = root / "contract.json"
+            selected.write_text(json.dumps(dict(files={str(image): preflight.sha(image)})), encoding="utf-8")
+            args = SimpleNamespace(source_commit="a" * 40, t12_root=root / "t12", t14_root=root / "t14",
+                                   dense_build=root / "dense", input_contract=selected)
+            with patch.object(preflight, "source_state", return_value=source), \
+                    patch.object(preflight.suite, "preflight", side_effect=ValueError("invalid reference binding")) as gate:
+                report = preflight.assess(args)
+            self.assertEqual(gate.call_count, 1)
+            self.assertEqual(report["status"], "NOT_READY")
+            self.assertFalse(report["complete_input_identity_checked"])
+            self.assertFalse(report["inventory_expansion_complete"])
+            self.assertEqual(report["strict_current_preflight"]["status"], "FAIL")
+            image.unlink()
+            with patch.object(preflight, "source_state", return_value=source), \
+                    patch.object(preflight.suite, "preflight", side_effect=AssertionError("missing prerequisite must stop")) as gate:
+                report = preflight.assess(args)
+            gate.assert_not_called()
+            self.assertEqual(report["status"], "NOT_READY")
+            self.assertEqual(report["input_counts"]["unavailable_or_drifted"], 1)
 
 
 if __name__ == "__main__":

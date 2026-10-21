@@ -71,7 +71,8 @@ def main():
             if observed!=expected:
                 raise ValueError("compiled control vdot sequence differs: "+str(i))
             checked.append(dict(group=i,begin=hex(begin),end=hex(end),static_vdot_count=len(observed)))
-    am=Path(os.environ.get("HOME","/home/riscv"))/"riscv-lab/xs-env/nexus-am"
+    am=Path(os.environ.get("TEAM_XS_ENV_ROOT",str(Path.home()/"riscv-lab/xs-env")))/"nexus-am"
+    am=am.resolve()
     libs=[am/"am/build/am-riscv64-xs.a",am/"libs/klib/build/klib-riscv64-xs.a"]
     receipt=dict(schema=1,status="O2_DIAGNOSTIC_BUILD_PASS",started=started,kind=args.kind,
                  finished=datetime.now().astimezone().isoformat(),exit_code=rc,

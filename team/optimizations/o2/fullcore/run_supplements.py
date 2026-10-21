@@ -6,6 +6,7 @@ import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import inspect
 import hashlib
+import gzip
 import json
 import os
 from pathlib import Path
@@ -63,14 +64,74 @@ def evaluate(text,exit_code,kind,manifest,reference,analyze,workload):
     return observation,uart,result
 
 
-def validate_build(kind,build,workload):
+def current_inputs(path):
+    """Explicit rebuilt input selection; omission still uses frozen artifacts."""
+    value=json.loads(Path(path).read_text())
+    paths={key:Path(name) for key,name in value["paths"].items()}
+    t12=paths["reference"].parents[3]
+    contract,files=suite.input_contract.validate(Path(path),paths,t12/"runs/t11-matrix-canonical",ROOT)
+    guard=suite.load_module("o2_supplement_artifact_guard",ROOT/"team/scripts/artifact_guard.py")
+    suite.input_contract.verify_am(contract,guard)
+    provenance=guard.verify_nemu(paths["reference"].parents[1],paths["reference"],"reference")
+    suite.input_contract.bind_reference(contract,paths["reference"],provenance)
+    return paths,contract,files,provenance
+
+
+def validate_build(kind,build,workload,contract=None):
     spec=JOBS["o2-diagnostic" if kind=="diagnostic" else "o2-control-diagnostic"]
     manifest=workload.verify_build(build)
     receipt=json.loads((build/"build.json").read_text())
     suite.require(receipt.get("kind")==kind,"wrong supplement build kind")
     suite.require(manifest.get("expected_vdot_commits")==spec["commits"],"supplement count changed")
     image=build/spec["image"]
-    suite.require(suite.sha(image)==spec["image_sha256"],"supplement image is not frozen")
+    expected=spec["image_sha256"]
+    if contract is not None:
+        selected=contract.get("supplements",{}).get(kind,{})
+        suite.require(selected.get("build")==str(build),"supplement build differs from input contract")
+        expected=selected.get("sha256")
+        image_base=image.stem
+        suite.require(set(receipt.get("images_sha256",{}))=={image_base+ext for ext in (".elf",".bin",".txt")}|{"symbols.txt"},
+                      "incomplete fresh supplement image inventory")
+        hello=json.loads(Path(contract["receipts"]["hello"]).read_text())
+        am=Path(hello["am_home"])
+        expected_libraries={str(am/part):contract["files"].get(str(am/part)) for part in
+                            ("am/build/am-riscv64-xs.a","libs/klib/build/klib-riscv64-xs.a")}
+        suite.require(receipt.get("am_libraries_sha256")==expected_libraries and
+                      receipt.get("nexus_am_commit")==hello["am_revision"],"supplement AM contract differs")
+        for group in ("source_sha256","generated_sha256","images_sha256","am_libraries_sha256"):
+            suite.require(isinstance(receipt.get(group),dict) and receipt[group],"missing fresh supplement inventory")
+            for name,digest in receipt[group].items():
+                path=Path(name) if Path(name).is_absolute() else build/name
+                suite.require(contract["files"].get(str(path))==digest,"unbound fresh supplement input")
+        revision=receipt.get("source_commit","")
+        suite.require(re.fullmatch(r"[0-9a-f]{40}",revision),"missing supplement source commit")
+        suite.require(subprocess.run(["git","merge-base","--is-ancestor",revision,"HEAD"],cwd=ROOT,
+                                     stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL).returncode==0,
+                      "supplement source is not in candidate history")
+        source_prefix="team/optimizations/o2/fullcore/workloads/"
+        tracked=subprocess.check_output(["git","ls-tree","-r","--name-only",revision,"--",source_prefix],cwd=ROOT,text=True).splitlines()
+        expected_sources={"source/"+name[len(source_prefix):] for name in tracked if "/" not in name[len(source_prefix):]}
+        suite.require(set(receipt["source_sha256"])==expected_sources,"incomplete supplement Git source inventory")
+        for name,digest in receipt["source_sha256"].items():
+            suite.require(Path(name).parts[0]=="source" and len(Path(name).parts)==2,"unsafe supplement source")
+            relative="team/optimizations/o2/fullcore/workloads/"+Path(name).name
+            blob=subprocess.check_output(["git","show",revision+":"+relative],cwd=ROOT)
+            suite.require(hashlib.sha256(blob).hexdigest()==digest==suite.sha(ROOT/relative),"supplement source not bound to Git")
+        frozen=ROOT/"team/optimizations/o2/evidence/20261019-fullcore-validation/files/runs"/(
+            "diagnostic-build-03" if kind=="diagnostic" else "control-diagnostic-build-04")
+        suite.require(set(receipt["generated_sha256"])=={"data/manifest.json","data/kernels.S","data/cases.h"},
+                      "incomplete supplement generated inventory")
+        for name in receipt["generated_sha256"]:
+            source=frozen/name
+            body=source.read_bytes() if source.exists() else gzip.decompress(Path(str(source)+".gz").read_bytes())
+            suite.require((build/name).read_bytes()==body,"supplement generated corpus differs from fixed specification")
+        command=["make","-C",str(build/"source"),"ARCH=riscv64-xs","MARCH=rv64gcv",
+                 "O2_DATA="+str(build/"data"),"O2_OBJ_ROOT="+str(build/"objects"),
+                 "BINARY="+str(image.with_suffix("")),"-j2"]
+        if kind=="control":command += ["-f","Makefile.control"]
+        suite.require(receipt.get("command")==command and type(receipt.get("exit_code")) is int and receipt["exit_code"]==0,
+                      "supplement build command/status changed")
+    suite.require(suite.sha(image)==expected,"supplement image differs from selected contract")
     return manifest,receipt,image
 
 
@@ -91,6 +152,8 @@ def run_job(name,build,image,manifest,paths,args,pins,receipt,analyze,workload):
                 files={str(p):suite.sha(p) for p in [args.emu,paths["reference"],paths["flash"],image]},
                 hardware_pins_sha256=receipt["hardware_pins_sha256"],
                 build_source_commit=pins["source_commit"],input_manifest_sha256=suite.sha(build/"data/manifest.json"))
+    if getattr(args,"input_contract",None) is not None:
+        record.update(input_contract=str(args.input_contract),input_contract_sha256=receipt["input_contract_sha256"])
     suite.save(directory/"runtime.json",record)
     suite.save(directory/"input-manifest.json",manifest)
     record["archived_manifest_sha256"]=suite.sha(directory/"input-manifest.json")
@@ -101,7 +164,7 @@ def run_job(name,build,image,manifest,paths,args,pins,receipt,analyze,workload):
         suite.require(suite.sha(args.hardware_pins)==receipt["hardware_pins_sha256"],"hardware pins changed")
         verify_files(receipt["driver_files"])
         verify_files(receipt["input_files"])
-        validate_build(spec["kind"],build,workload)
+        validate_build(spec["kind"],build,workload,getattr(args,"fresh_contract",None))
     try:
         guard()
         env=os.environ.copy()
@@ -137,7 +200,7 @@ def assess(records):
                 for r in records))
 
 
-def recheck_job(directory,analyze=None,workload=None):
+def recheck_job(directory,analyze=None,workload=None,contract=None):
     """Replay a sealed job using current identical checker sources, without EMU."""
     directory=Path(directory)
     record=json.loads((directory/"result.json").read_text())
@@ -148,6 +211,17 @@ def recheck_job(directory,analyze=None,workload=None):
     suite.require(suite.sha(directory/"input-manifest.json")==record.get("archived_manifest_sha256"),
                   "stored manifest changed")
     runtime=json.loads((directory/"runtime.json").read_text())
+    expected_image=spec["image_sha256"]
+    expected_inputs=suite.FROZEN
+    if record.get("input_contract") is not None:
+        suite.require(contract is not None,"fresh supplement requires validated input contract")
+        suite.require(runtime.get("input_contract")==record["input_contract"] and
+                      runtime.get("input_contract_sha256")==record.get("input_contract_sha256") and
+                      suite.sha(record["input_contract"])==record["input_contract_sha256"],"supplement input contract changed")
+        expected_image=contract["supplements"][spec["kind"]]["sha256"]
+        expected_inputs=contract["sha256"]
+    else:
+        suite.require(contract is None,"frozen job cannot borrow fresh contract")
     for name in ["name","kind","command","files","hardware_pins_sha256","build_source_commit",
                  "input_manifest_sha256","archived_manifest_sha256","expected_vdot_commits"]:
         suite.require(record.get(name)==runtime.get(name),"stored runtime identity changed: "+name)
@@ -156,15 +230,15 @@ def recheck_job(directory,analyze=None,workload=None):
                   command[0]=="timeout" and command[2:5]==["stdbuf","-o0","-e0"] and
                   command[6]=="-i" and command[9]=="--ram-size=128MB" and
                   command[11]=="--max-cycles=5000000","stored run command differs from contract")
-    suite.require(record["files"].get(command[7])==spec["image_sha256"],"stored input image changed")
+    suite.require(record["files"].get(command[7])==expected_image,"stored input image changed")
     for option,key in [(8,"flash"),(10,"reference")]:
         prefix="--flash=" if key=="flash" else "--diff="
         suite.require(command[option].startswith(prefix),"stored input command changed")
-        suite.require(record["files"].get(command[option].split("=",1)[1])==suite.FROZEN[key],
+        suite.require(record["files"].get(command[option].split("=",1)[1])==expected_inputs[key],
                       "stored fixed input identity changed")
     build_receipt=json.loads((directory/"build-receipt.json").read_text())
     suite.require(build_receipt.get("kind")==spec["kind"] and
-                  build_receipt.get("images_sha256",{}).get(spec["image"])==spec["image_sha256"],
+                  build_receipt.get("images_sha256",{}).get(spec["image"])==expected_image,
                   "stored build receipt differs from frozen image")
     for name,digest in record.get("raw_logs_sha256",{}).items():
         suite.require(name in ["stdout.log","stderr.log","run.log"],"unknown raw stream")
@@ -207,8 +281,16 @@ def recheck_supplements(campaign,expected_pins,expected_emu_sha,analyze=None,wor
                   "missing or extra supplement campaign directory")
     verify_files(preflight.get("input_files",{}))
     normal=suite.DEFAULT_T12/"nemu/reference/build/riscv64-nemu-interpreter-so"
+    contract=None
+    if preflight.get("input_contract") is not None:
+        selected=Path(preflight["input_contract"])
+        suite.require(suite.sha(selected)==preflight.get("input_contract_sha256") and
+                      preflight["input_files"].get(str(selected))==preflight["input_contract_sha256"],"unbound supplement contract")
+        paths,contract,contract_files,_=current_inputs(selected)
+        suite.require(all(preflight["input_files"].get(k)==v for k,v in contract_files.items()),"incomplete supplement contract inventory")
+        normal=paths["reference"]
     ref_guard=suite.load_module("o2_supplement_recheck_guard",ROOT/"team/scripts/artifact_guard.py")
-    ref_guard.verify_nemu(suite.DEFAULT_T12/"nemu/reference",normal,"reference")
+    ref_guard.verify_nemu(normal.parents[1],normal,"reference")
     suite.require(preflight.get("hardware_pins_sha256")==suite.sha(campaign/"hardware-pins.json") and
                   preflight.get("emu_sha256")==expected_emu_sha,"supplement campaign pins/hash changed")
     tool_commit=preflight.get("tool_source_commit","")
@@ -227,6 +309,8 @@ def recheck_supplements(campaign,expected_pins,expected_emu_sha,analyze=None,wor
     if hasattr(suite, "live_inputs"):
         expected_driver_paths.update({"team/optimizations/o2/fullcore/live_inputs.py",
             "team/optimizations/o1/build_recipe.py", "team/optimizations/o1/build_inputs.py"})
+    if hasattr(suite,"input_contract"):
+        expected_driver_paths.add("team/optimizations/o2/fullcore/input_contract.py")
     driver_paths=set()
     for name,digest in preflight.get("driver_files",{}).items():
         original=Path(name)
@@ -257,11 +341,11 @@ def recheck_supplements(campaign,expected_pins,expected_emu_sha,analyze=None,wor
     records=[]
     for name in JOBS:
         directory=campaign/name
-        replay=recheck_job(directory,analyze,workload)
+        replay=recheck_job(directory,analyze,workload,contract)
         record=json.loads((directory/"result.json").read_text())
         suite.hardware_guard(pins,Path(record["command"][5]))
         original_build=Path(record["command"][7]).parent
-        manifest,original_receipt,_=validate_build(JOBS[name]["kind"],original_build,workload)
+        manifest,original_receipt,_=validate_build(JOBS[name]["kind"],original_build,workload,contract)
         suite.require((original_build/"data/manifest.json").read_bytes()==(directory/"input-manifest.json").read_bytes() and
                       original_receipt==json.loads((directory/"build-receipt.json").read_text()),
                       "original and archived workload receipts disagree")
@@ -314,16 +398,22 @@ def run(args):
         suite.hardware_guard(pins,args.emu)
         paths=dict(reference=suite.DEFAULT_T12/"nemu/reference/build/riscv64-nemu-interpreter-so",
                    flash=suite.DEFAULT_T12/"repo/team/workloads/hello-vadd/build/boot-flash.bin")
-        for key,path in paths.items():
-            suite.require(suite.sha(path)==suite.FROZEN[key],"frozen input changed: "+key)
         guard=suite.load_module("o2_supplement_artifact_guard",ROOT/"team/scripts/artifact_guard.py")
-        reference_provenance=guard.verify_nemu(suite.DEFAULT_T12/"nemu/reference",paths["reference"],"reference")
+        contract=None;contract_files={}
+        if getattr(args,"input_contract",None) is not None:
+            paths,contract,contract_files,reference_provenance=current_inputs(args.input_contract)
+        else:
+            for key,path in paths.items():
+                suite.require(suite.sha(path)==suite.FROZEN[key],"frozen input changed: "+key)
+            reference_provenance=guard.verify_nemu(paths["reference"].parents[1],paths["reference"],"reference")
+        args.fresh_contract=contract
         builds={"o2-diagnostic":args.diagnostic_build,"o2-control-diagnostic":args.control_build}
         manifests={}
         prepared={}
         inputs={str(p):suite.sha(p) for p in paths.values()}
+        inputs.update(contract_files)
         for name,build in builds.items():
-            manifest,build_receipt,image=validate_build(JOBS[name]["kind"],build,workload)
+            manifest,build_receipt,image=validate_build(JOBS[name]["kind"],build,workload,contract)
             manifests[name]=manifest
             prepared[name]=(build,image,manifest)
             for group in ["source_sha256","generated_sha256","images_sha256","am_libraries_sha256"]:
@@ -334,7 +424,7 @@ def run(args):
         drivers=[Path(__file__),HERE/"run_suite.py",HERE/"analyze.py",HERE/"workloads/check.py",
                  ROOT/"team/optimizations/o1/audit/runtime_gate.py",ROOT/"team/scripts/artifact_guard.py"]
         drivers.extend([Path(suite.live_inputs.__file__), Path(suite.live_inputs.build_recipe.__file__),
-                        ROOT/"team/optimizations/o1/build_inputs.py"])
+                        ROOT/"team/optimizations/o1/build_inputs.py",Path(suite.input_contract.__file__)])
         driver_files={str(p):suite.sha(p) for p in drivers}
         tool_commit=subprocess.check_output(["git","rev-parse","HEAD"],cwd=ROOT,text=True).strip()
         for path,digest in driver_files.items():
@@ -366,6 +456,9 @@ def run(args):
                      toolchain=toolchain,reference_provenance=reference_provenance,
                      portable_input_files=portable,tool_source_commit=tool_commit,
                      build_source_commit=pins["source_commit"])
+        if contract is not None:
+            receipt.update(input_contract=str(args.input_contract),input_contract_sha256=suite.sha(args.input_contract),
+                           input_identity=suite.input_contract.NAME)
         suite.save(args.output/"preflight.json",receipt)
         shutil.copyfile(args.hardware_pins,args.output/"hardware-pins.json")
         state.update(status="RUNNING",build_source_commit=pins["source_commit"])
@@ -379,7 +472,7 @@ def run(args):
         suite.hardware_guard(pins,args.emu)
         verify_files(inputs)
         verify_files(driver_files)
-        guard.verify_nemu(suite.DEFAULT_T12/"nemu/reference",paths["reference"],"reference")
+        guard.verify_nemu(paths["reference"].parents[1],paths["reference"],"reference")
         passed=assess(records)
         result=dict(status="O2_SUPPLEMENTS_PASS" if passed else "O2_SUPPLEMENTS_FAILED",
                     runs=records,coverage=suite.coverage_union(records),performance_measured=False,
@@ -409,7 +502,10 @@ def main():
     parser.add_argument("--control-build",type=Path,default=JOBS["o2-control-diagnostic"]["default"])
     parser.add_argument("--jobs",type=int,choices=[1,2],default=2)
     parser.add_argument("--timeout",default="120m")
+    parser.add_argument("--input-contract",type=Path)
     args=parser.parse_args()
+    if args.input_contract is not None:
+        args.input_contract=args.input_contract.resolve()
     suite.require(re.fullmatch(r"[1-9][0-9]*(?:s|m|h)",args.timeout) is not None,"invalid timeout")
     for name in ["emu","hardware_pins","diagnostic_build","control_build"]:
         setattr(args,name,getattr(args,name).resolve())

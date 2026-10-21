@@ -49,9 +49,9 @@ class ReplayBindings(unittest.TestCase):
 
     def test_real_driver_imports_ignore_and_restore_poisoned_module_cache(self):
         root = recheck.ROOT
-        blobs = {name: (root/name).read_bytes() for name in recheck.DRIVERS + recheck.LIVE_DEPENDENCIES}
+        blobs = {name: (root/name).read_bytes() for name in recheck.DRIVERS + recheck.LIVE_DEPENDENCIES + recheck.INPUT_DEPENDENCIES}
         missing = object()
-        aliases = ('build_recipe', 'build_inputs', 'live_inputs', 'analyze', 'run_suite')
+        aliases = ('build_recipe', 'build_inputs', 'live_inputs', 'input_contract', 'analyze', 'run_suite')
         original = {name: sys.modules.get(name, missing) for name in aliases}
         poisoned = {name: types.ModuleType(name) for name in aliases}
         old_path = list(sys.path)
@@ -60,6 +60,7 @@ class ReplayBindings(unittest.TestCase):
             with recheck.bound_driver_modules(root, blobs) as modules:
                 runner = modules[0]
                 self.assertIsNot(runner.live_inputs, poisoned['live_inputs'])
+                self.assertIsNot(runner.input_contract, poisoned['input_contract'])
                 self.assertIs(runner.live_inputs.build_recipe, sys.modules['build_recipe'])
                 self.assertIs(sys.modules['run_suite'], runner)
                 gate = runner.load_module('replay_test_dynamic_gate', root/recheck.DRIVERS[-1])

@@ -27,6 +27,7 @@ DRIVERS = ("team/optimizations/o2/fullcore/run_suite.py", "team/optimizations/o2
 LIVE_DEPENDENCIES = ("team/optimizations/o1/build_recipe.py",
                      "team/optimizations/o1/build_inputs.py",
                      "team/optimizations/o2/fullcore/live_inputs.py")
+INPUT_DEPENDENCIES = ("team/optimizations/o2/fullcore/input_contract.py",)
 RAW_NAMES = ("stdout.log", "stderr.log", "run.log")
 
 
@@ -95,11 +96,13 @@ def bind_original_drivers(repo, revision, recorded):
     imports = {alias.name for node in ast.walk(ast.parse(blobs[DRIVERS[0]]))
                if isinstance(node, ast.Import) for alias in node.names}
     paths = DRIVERS + (LIVE_DEPENDENCIES if "live_inputs" in imports else ())
+    if "input_contract" in imports:
+        paths += INPUT_DEPENDENCIES
     expected = {str(repo / name) for name in paths}
     require(set(recorded) == expected,
             "original driver inventory must match seven frozen checkers or complete live dependencies")
-    if "live_inputs" in imports:
-        blobs.update(git_blobs(repo, revision, LIVE_DEPENDENCIES))
+    if len(paths) > len(DRIVERS):
+        blobs.update(git_blobs(repo, revision, paths[len(DRIVERS):]))
     for name, body in blobs.items():
         require(hashlib.sha256(body).hexdigest() == recorded[str(repo / name)],
                 "original driver does not match its Git source commit: " + name)
@@ -114,7 +117,7 @@ def bound_driver_modules(repo, blobs):
         if name not in previous: previous[name] = sys.modules.get(name, missing)
         return load_blob(name, path, body)
     try:
-        for path in LIVE_DEPENDENCIES:
+        for path in LIVE_DEPENDENCIES + INPUT_DEPENDENCIES:
             if path in blobs: load(Path(path).stem, repo / path, blobs[path])
         names = ("o2_original_runner", "analyze", "o2_original_control", "o2_original_guard",
                  "o2_original_functional", "o2_original_perf", "o2_original_runtime_gate")
@@ -196,6 +199,7 @@ def original_arguments(state, runner):
     parser.add_argument("--t12-root", type=Path, default=runner.DEFAULT_T12)
     parser.add_argument("--t14-root", type=Path, default=runner.DEFAULT_T14)
     parser.add_argument("--dense-build", type=Path, default=runner.DEFAULT_DENSE)
+    parser.add_argument("--input-contract", type=Path)
     parser.add_argument("--jobs", type=int, default=2)
     parser.add_argument("--timeout", default="120m")
     invocation = state["invocation"]
@@ -206,6 +210,9 @@ def original_arguments(state, runner):
     args.preflight_only = False
     for field in ("output", "hardware_pins", "emu", "t12_root", "t14_root", "dense_build"):
         setattr(args, field, getattr(args, field).resolve())
+    if args.input_contract is not None:
+        require(hasattr(runner, "input_contract"), "historical runner has no fresh input contract")
+        args.input_contract = args.input_contract.resolve()
     require(args.jobs in (1, 2) and args.jobs == state["jobs"] and args.timeout == state["timeout"], "original execution limits disagree")
     require(str(args.emu) == state["emu"] and str(args.hardware_pins) == state["hardware_pins"] and str(args.output) == state["output"], "original execution paths disagree")
     return args
@@ -339,6 +346,9 @@ def replay_supplements(campaign, out, pins, emu_sha, core_preflight, runner, ana
               'team/optimizations/o2/fullcore/analyze.py',
               'team/scripts/artifact_guard.py', 'team/optimizations/o1/audit/runtime_gate.py')
     if hasattr(runner, "live_inputs"): shared += LIVE_DEPENDENCIES
+    if hasattr(runner, "input_contract"): shared += INPUT_DEPENDENCIES
+    require(preflight.get("input_contract_sha256") == core_preflight.get("input_contract_sha256"),
+            "supplement input contract differs from core campaign")
     for name in shared:
         key = str(ROOT / name)
         require(preflight.get('driver_files', {}).get(key) == core_preflight['driver_files'][key],
