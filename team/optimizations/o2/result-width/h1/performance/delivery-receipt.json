@@ -1,0 +1,81 @@
+{
+  "status": "B0_H1_EVIDENCE_DELIVERY_PASS",
+  "pid": 638,
+  "started": "2026-10-21T04:36:19.395902+00:00",
+  "steps": [
+    {
+      "name": "archive",
+      "command": [
+        "python3",
+        "-B",
+        "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/result-width/h1/performance/archive.py",
+        "--work-root",
+        "/home/riscv/riscv-lab/o2-h1-performance-20261021",
+        "--output",
+        "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/result-width/h1/performance/evidence/20261021-performance"
+      ],
+      "started": "2026-10-21T05:46:53.591459+00:00",
+      "pid": 2685,
+      "exit_code": 0,
+      "finished": "2026-10-21T05:46:57.522105+00:00"
+    },
+    {
+      "name": "support",
+      "command": [
+        "python3",
+        "-B",
+        "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/result-width/h1/performance/prepare_inputs.py",
+        "--archive",
+        "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/result-width/h1/performance/evidence/20261021-performance"
+      ],
+      "started": "2026-10-21T05:46:57.522657+00:00",
+      "pid": 2687,
+      "exit_code": 0,
+      "finished": "2026-10-21T05:46:57.600462+00:00"
+    },
+    {
+      "name": "linux-portable",
+      "command": [
+        "python3",
+        "-B",
+        "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/result-width/h1/performance/portable.py",
+        "--archive",
+        "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/result-width/h1/performance/evidence/20261021-performance",
+        "--output",
+        "/home/riscv/riscv-lab/o2-h1-performance-delivery-20261021/linux-portable.json"
+      ],
+      "started": "2026-10-21T05:46:57.600869+00:00",
+      "pid": 2692,
+      "exit_code": 0,
+      "finished": "2026-10-21T05:47:54.470887+00:00"
+    },
+    {
+      "name": "windows-portable",
+      "command": [
+        "/mnt/d/python location/python.exe",
+        "-X",
+        "utf8",
+        "-B",
+        "D:\\yanyi\\riscv大赛\\doc\\B0_H1同镜像周期检查_20261021\\tools\\portable.py",
+        "--archive",
+        "D:\\yanyi\\riscv大赛\\doc\\B0_H1同镜像周期检查_20261021\\archive",
+        "--output",
+        "D:\\yanyi\\riscv大赛\\doc\\B0_H1同镜像周期检查_20261021\\windows-portable.json"
+      ],
+      "started": "2026-10-21T05:48:39.822091+00:00",
+      "pid": 2730,
+      "exit_code": 0,
+      "finished": "2026-10-21T05:50:00.040998+00:00"
+    }
+  ],
+  "finished": "2026-10-21T05:50:00.060433+00:00",
+  "archive_manifest_sha256": "0b9dd85132b4d443b74f59a4ea591d5815f320fd0a002f14a7de2d958975f58d",
+  "jobs": 36,
+  "windows": 478,
+  "measured_windows": 192,
+  "matched_formal_pairs": 96,
+  "cycle_nonregression_pass": true,
+  "exact_measured_cycle_equality": true,
+  "linux_windows_equal": true,
+  "no_github_push": true
+}

@@ -1,0 +1,369 @@
+{
+  "status": "O2_SUPPLEMENT_OFFLINE_RECHECK_PASS",
+  "runs": [
+    {
+      "name": "o2-diagnostic",
+      "kind": "diagnostic",
+      "status": "O2_SUPPLEMENT_PASS",
+      "started": "2026-10-21T11:42:08.402377+08:00",
+      "command": [
+        "timeout",
+        "120m",
+        "stdbuf",
+        "-o0",
+        "-e0",
+        "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/build/emu",
+        "-i",
+        "/home/riscv/riscv-lab/o2-fullcore-20261019/diagnostic-build-03/o2-diag.bin",
+        "--flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+        "--ram-size=128MB",
+        "--diff=/home/riscv/riscv-lab/t12-regression-20261013/nemu/reference/build/riscv64-nemu-interpreter-so",
+        "--max-cycles=5000000"
+      ],
+      "expected_vdot_commits": 1158,
+      "performance_measured": false,
+      "files": {
+        "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/build/emu": "e37b3c267cae29036bda0b6952a17db2523ca0b3a573d45281341d4207df8747",
+        "/home/riscv/riscv-lab/t12-regression-20261013/nemu/reference/build/riscv64-nemu-interpreter-so": "efbed0774addc27eac38af1a19ab5d9c9dd5f179b5015f25ae7b80b966185bd4",
+        "/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+        "/home/riscv/riscv-lab/o2-fullcore-20261019/diagnostic-build-03/o2-diag.bin": "56915e3aaca02e02597c207de07ac18352ab53b6d06c4cb92a18fcddea1da4d4"
+      },
+      "hardware_pins_sha256": "39f525c9a9e2a068aee04ef1e08878af3f4056da24115a1236ddacf09b893666",
+      "build_source_commit": "8b5024fcbd96986871cc40ce8c9fb71a67c495eb",
+      "input_manifest_sha256": "1f52076f4386beaa9919dd4702498eb9a8dee5b486cd93a2bef95129fde2223f",
+      "archived_manifest_sha256": "1f52076f4386beaa9919dd4702498eb9a8dee5b486cd93a2bef95129fde2223f",
+      "exit_code": 0,
+      "raw_logs_sha256": {
+        "stdout.log": "4f735a684ab6be5d0357f07ce7742c3f747df17f64eeeec23b5462600fc5b752",
+        "stderr.log": "ea1433d5bec114a9fb24bd077bfca6af72608ff332739e38583f8a91c2f1e014",
+        "run.log": "d73cae3a0964a0f27ededfe25d6b1cd152f3b7c7a7bce539ccc15fdf8e6c3110"
+      },
+      "log_format": "separate-streams-v1; derived run.log = stderr.log + stdout.log",
+      "workload_status": "O2_DIAGNOSTIC_PASS",
+      "observation_status": "O2_TRACE_PASS",
+      "observation_counts": {
+        "STATE": 2486,
+        "VFEX4_ACCEPT": 1170,
+        "VFEX4_WAIT": 0,
+        "VFEX4_REDIRECT": 196,
+        "ACCEPT": 1158,
+        "MOVE": 1158,
+        "RESPONSE": 1158,
+        "STALL": 0,
+        "KILL": 0,
+        "DIV_ACCEPT": 12,
+        "DIV_KILL": 0,
+        "DIV_OUTPUT": 12,
+        "ENQUEUE": 1158,
+        "COMMIT": 1158,
+        "REDIRECT": 196,
+        "MULTI_INFLIGHT": 893,
+        "OVERLAP": 772,
+        "TRIPLE_OVERLAP": 768,
+        "FULL_STALL": 0,
+        "KILL_P": 0,
+        "KILL_R": 0,
+        "PARTIAL_KILL": 0,
+        "BOTH_KILL": 0,
+        "R_KILL_P_SURVIVES": 0,
+        "P_KILL_R_SURVIVES": 0,
+        "UNRELATED_FLUSH": 0,
+        "ROB_WRAP": 27,
+        "FTQ_WRAP": 24,
+        "DIV_RESPONSE": 12,
+        "ACCEPTED_THEN_SQUASHED": 0,
+        "ACCEPTED_YOUNGER_SQUASHED": 0
+      },
+      "checked_register_bytes": 5120,
+      "finished": "2026-10-21T11:46:14.956756+08:00"
+    },
+    {
+      "name": "o2-control-diagnostic",
+      "kind": "control",
+      "status": "O2_SUPPLEMENT_PASS",
+      "started": "2026-10-21T11:42:08.402647+08:00",
+      "command": [
+        "timeout",
+        "120m",
+        "stdbuf",
+        "-o0",
+        "-e0",
+        "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/build/emu",
+        "-i",
+        "/home/riscv/riscv-lab/o2-fullcore-20261019/control-diagnostic-build-04/o2-control.bin",
+        "--flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+        "--ram-size=128MB",
+        "--diff=/home/riscv/riscv-lab/t12-regression-20261013/nemu/reference/build/riscv64-nemu-interpreter-so",
+        "--max-cycles=5000000"
+      ],
+      "expected_vdot_commits": 1208,
+      "performance_measured": false,
+      "files": {
+        "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/build/emu": "e37b3c267cae29036bda0b6952a17db2523ca0b3a573d45281341d4207df8747",
+        "/home/riscv/riscv-lab/t12-regression-20261013/nemu/reference/build/riscv64-nemu-interpreter-so": "efbed0774addc27eac38af1a19ab5d9c9dd5f179b5015f25ae7b80b966185bd4",
+        "/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+        "/home/riscv/riscv-lab/o2-fullcore-20261019/control-diagnostic-build-04/o2-control.bin": "45cdf2a6cb6848b3bcb56d860c36bc26a975a8aa96bfe1411d33dce6036bd305"
+      },
+      "hardware_pins_sha256": "39f525c9a9e2a068aee04ef1e08878af3f4056da24115a1236ddacf09b893666",
+      "build_source_commit": "8b5024fcbd96986871cc40ce8c9fb71a67c495eb",
+      "input_manifest_sha256": "072f7179f239c0c8d4dac3a4c3b1dda72a16f5b3aca1f70e3a13c21cc841a399",
+      "archived_manifest_sha256": "072f7179f239c0c8d4dac3a4c3b1dda72a16f5b3aca1f70e3a13c21cc841a399",
+      "exit_code": 0,
+      "raw_logs_sha256": {
+        "stdout.log": "06b77218f1d7a21c447a968867a33fbfbc5b7a4e9502338ba8975fc11f45bdff",
+        "stderr.log": "f132ad85f6e75173eb814db0b5e543302f31e736e307786a76297054ba39b041",
+        "run.log": "ffb2feafa9f089fbd85405a54ad21e1f390639c9b5b2150d4dfc5d8584d37718"
+      },
+      "log_format": "separate-streams-v1; derived run.log = stderr.log + stdout.log",
+      "workload_status": "O2_CONTROL_DIAGNOSTIC_PASS",
+      "observation_status": "O2_TRACE_PASS",
+      "observation_counts": {
+        "STATE": 5619,
+        "VFEX4_ACCEPT": 1899,
+        "VFEX4_WAIT": 1406,
+        "VFEX4_REDIRECT": 307,
+        "ACCEPT": 1643,
+        "MOVE": 1615,
+        "RESPONSE": 1590,
+        "STALL": 0,
+        "KILL": 53,
+        "DIV_ACCEPT": 256,
+        "DIV_KILL": 0,
+        "DIV_OUTPUT": 256,
+        "ENQUEUE": 1752,
+        "COMMIT": 1208,
+        "REDIRECT": 307,
+        "MULTI_INFLIGHT": 984,
+        "OVERLAP": 1004,
+        "TRIPLE_OVERLAP": 744,
+        "FULL_STALL": 0,
+        "KILL_P": 28,
+        "KILL_R": 25,
+        "PARTIAL_KILL": 1,
+        "BOTH_KILL": 16,
+        "R_KILL_P_SURVIVES": 0,
+        "P_KILL_R_SURVIVES": 1,
+        "UNRELATED_FLUSH": 0,
+        "ROB_WRAP": 258,
+        "FTQ_WRAP": 151,
+        "DIV_RESPONSE": 256,
+        "ACCEPTED_THEN_SQUASHED": 435,
+        "ACCEPTED_YOUNGER_SQUASHED": 435
+      },
+      "checked_register_bytes": 131072,
+      "finished": "2026-10-21T12:04:22.077194+08:00"
+    }
+  ],
+  "records": [
+    {
+      "name": "o2-diagnostic",
+      "kind": "diagnostic",
+      "status": "O2_SUPPLEMENT_PASS",
+      "started": "2026-10-21T11:42:08.402377+08:00",
+      "command": [
+        "timeout",
+        "120m",
+        "stdbuf",
+        "-o0",
+        "-e0",
+        "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/build/emu",
+        "-i",
+        "/home/riscv/riscv-lab/o2-fullcore-20261019/diagnostic-build-03/o2-diag.bin",
+        "--flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+        "--ram-size=128MB",
+        "--diff=/home/riscv/riscv-lab/t12-regression-20261013/nemu/reference/build/riscv64-nemu-interpreter-so",
+        "--max-cycles=5000000"
+      ],
+      "expected_vdot_commits": 1158,
+      "performance_measured": false,
+      "files": {
+        "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/build/emu": "e37b3c267cae29036bda0b6952a17db2523ca0b3a573d45281341d4207df8747",
+        "/home/riscv/riscv-lab/t12-regression-20261013/nemu/reference/build/riscv64-nemu-interpreter-so": "efbed0774addc27eac38af1a19ab5d9c9dd5f179b5015f25ae7b80b966185bd4",
+        "/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+        "/home/riscv/riscv-lab/o2-fullcore-20261019/diagnostic-build-03/o2-diag.bin": "56915e3aaca02e02597c207de07ac18352ab53b6d06c4cb92a18fcddea1da4d4"
+      },
+      "hardware_pins_sha256": "39f525c9a9e2a068aee04ef1e08878af3f4056da24115a1236ddacf09b893666",
+      "build_source_commit": "8b5024fcbd96986871cc40ce8c9fb71a67c495eb",
+      "input_manifest_sha256": "1f52076f4386beaa9919dd4702498eb9a8dee5b486cd93a2bef95129fde2223f",
+      "archived_manifest_sha256": "1f52076f4386beaa9919dd4702498eb9a8dee5b486cd93a2bef95129fde2223f",
+      "exit_code": 0,
+      "raw_logs_sha256": {
+        "stdout.log": "4f735a684ab6be5d0357f07ce7742c3f747df17f64eeeec23b5462600fc5b752",
+        "stderr.log": "ea1433d5bec114a9fb24bd077bfca6af72608ff332739e38583f8a91c2f1e014",
+        "run.log": "d73cae3a0964a0f27ededfe25d6b1cd152f3b7c7a7bce539ccc15fdf8e6c3110"
+      },
+      "log_format": "separate-streams-v1; derived run.log = stderr.log + stdout.log",
+      "workload_status": "O2_DIAGNOSTIC_PASS",
+      "observation_status": "O2_TRACE_PASS",
+      "observation_counts": {
+        "STATE": 2486,
+        "VFEX4_ACCEPT": 1170,
+        "VFEX4_WAIT": 0,
+        "VFEX4_REDIRECT": 196,
+        "ACCEPT": 1158,
+        "MOVE": 1158,
+        "RESPONSE": 1158,
+        "STALL": 0,
+        "KILL": 0,
+        "DIV_ACCEPT": 12,
+        "DIV_KILL": 0,
+        "DIV_OUTPUT": 12,
+        "ENQUEUE": 1158,
+        "COMMIT": 1158,
+        "REDIRECT": 196,
+        "MULTI_INFLIGHT": 893,
+        "OVERLAP": 772,
+        "TRIPLE_OVERLAP": 768,
+        "FULL_STALL": 0,
+        "KILL_P": 0,
+        "KILL_R": 0,
+        "PARTIAL_KILL": 0,
+        "BOTH_KILL": 0,
+        "R_KILL_P_SURVIVES": 0,
+        "P_KILL_R_SURVIVES": 0,
+        "UNRELATED_FLUSH": 0,
+        "ROB_WRAP": 27,
+        "FTQ_WRAP": 24,
+        "DIV_RESPONSE": 12,
+        "ACCEPTED_THEN_SQUASHED": 0,
+        "ACCEPTED_YOUNGER_SQUASHED": 0
+      },
+      "checked_register_bytes": 5120,
+      "finished": "2026-10-21T11:46:14.956756+08:00"
+    },
+    {
+      "name": "o2-control-diagnostic",
+      "kind": "control",
+      "status": "O2_SUPPLEMENT_PASS",
+      "started": "2026-10-21T11:42:08.402647+08:00",
+      "command": [
+        "timeout",
+        "120m",
+        "stdbuf",
+        "-o0",
+        "-e0",
+        "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/build/emu",
+        "-i",
+        "/home/riscv/riscv-lab/o2-fullcore-20261019/control-diagnostic-build-04/o2-control.bin",
+        "--flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+        "--ram-size=128MB",
+        "--diff=/home/riscv/riscv-lab/t12-regression-20261013/nemu/reference/build/riscv64-nemu-interpreter-so",
+        "--max-cycles=5000000"
+      ],
+      "expected_vdot_commits": 1208,
+      "performance_measured": false,
+      "files": {
+        "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/build/emu": "e37b3c267cae29036bda0b6952a17db2523ca0b3a573d45281341d4207df8747",
+        "/home/riscv/riscv-lab/t12-regression-20261013/nemu/reference/build/riscv64-nemu-interpreter-so": "efbed0774addc27eac38af1a19ab5d9c9dd5f179b5015f25ae7b80b966185bd4",
+        "/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+        "/home/riscv/riscv-lab/o2-fullcore-20261019/control-diagnostic-build-04/o2-control.bin": "45cdf2a6cb6848b3bcb56d860c36bc26a975a8aa96bfe1411d33dce6036bd305"
+      },
+      "hardware_pins_sha256": "39f525c9a9e2a068aee04ef1e08878af3f4056da24115a1236ddacf09b893666",
+      "build_source_commit": "8b5024fcbd96986871cc40ce8c9fb71a67c495eb",
+      "input_manifest_sha256": "072f7179f239c0c8d4dac3a4c3b1dda72a16f5b3aca1f70e3a13c21cc841a399",
+      "archived_manifest_sha256": "072f7179f239c0c8d4dac3a4c3b1dda72a16f5b3aca1f70e3a13c21cc841a399",
+      "exit_code": 0,
+      "raw_logs_sha256": {
+        "stdout.log": "06b77218f1d7a21c447a968867a33fbfbc5b7a4e9502338ba8975fc11f45bdff",
+        "stderr.log": "f132ad85f6e75173eb814db0b5e543302f31e736e307786a76297054ba39b041",
+        "run.log": "ffb2feafa9f089fbd85405a54ad21e1f390639c9b5b2150d4dfc5d8584d37718"
+      },
+      "log_format": "separate-streams-v1; derived run.log = stderr.log + stdout.log",
+      "workload_status": "O2_CONTROL_DIAGNOSTIC_PASS",
+      "observation_status": "O2_TRACE_PASS",
+      "observation_counts": {
+        "STATE": 5619,
+        "VFEX4_ACCEPT": 1899,
+        "VFEX4_WAIT": 1406,
+        "VFEX4_REDIRECT": 307,
+        "ACCEPT": 1643,
+        "MOVE": 1615,
+        "RESPONSE": 1590,
+        "STALL": 0,
+        "KILL": 53,
+        "DIV_ACCEPT": 256,
+        "DIV_KILL": 0,
+        "DIV_OUTPUT": 256,
+        "ENQUEUE": 1752,
+        "COMMIT": 1208,
+        "REDIRECT": 307,
+        "MULTI_INFLIGHT": 984,
+        "OVERLAP": 1004,
+        "TRIPLE_OVERLAP": 744,
+        "FULL_STALL": 0,
+        "KILL_P": 28,
+        "KILL_R": 25,
+        "PARTIAL_KILL": 1,
+        "BOTH_KILL": 16,
+        "R_KILL_P_SURVIVES": 0,
+        "P_KILL_R_SURVIVES": 1,
+        "UNRELATED_FLUSH": 0,
+        "ROB_WRAP": 258,
+        "FTQ_WRAP": 151,
+        "DIV_RESPONSE": 256,
+        "ACCEPTED_THEN_SQUASHED": 435,
+        "ACCEPTED_YOUNGER_SQUASHED": 435
+      },
+      "checked_register_bytes": 131072,
+      "finished": "2026-10-21T12:04:22.077194+08:00"
+    }
+  ],
+  "coverage": {
+    "required": [
+      "MULTI_INFLIGHT",
+      "TRIPLE_OVERLAP",
+      "FULL_STALL",
+      "KILL_P",
+      "KILL_R",
+      "PARTIAL_KILL"
+    ],
+    "sources": {
+      "MULTI_INFLIGHT": [
+        {
+          "name": "o2-diagnostic",
+          "count": 893
+        },
+        {
+          "name": "o2-control-diagnostic",
+          "count": 984
+        }
+      ],
+      "TRIPLE_OVERLAP": [
+        {
+          "name": "o2-diagnostic",
+          "count": 768
+        },
+        {
+          "name": "o2-control-diagnostic",
+          "count": 744
+        }
+      ],
+      "FULL_STALL": [],
+      "KILL_P": [
+        {
+          "name": "o2-control-diagnostic",
+          "count": 28
+        }
+      ],
+      "KILL_R": [
+        {
+          "name": "o2-control-diagnostic",
+          "count": 25
+        }
+      ],
+      "PARTIAL_KILL": [
+        {
+          "name": "o2-control-diagnostic",
+          "count": 1
+        }
+      ]
+    },
+    "complete": false,
+    "missing": [
+      "FULL_STALL"
+    ]
+  },
+  "new_emu_run": false,
+  "emu_sha256": "e37b3c267cae29036bda0b6952a17db2523ca0b3a573d45281341d4207df8747",
+  "hardware_pins_sha256": "39f525c9a9e2a068aee04ef1e08878af3f4056da24115a1236ddacf09b893666"
+}

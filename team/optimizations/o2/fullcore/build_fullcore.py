@@ -7,6 +7,7 @@ import argparse
 from datetime import datetime, timezone
 import hashlib
 import json
+import shlex
 from pathlib import Path
 import subprocess
 import sys
@@ -54,7 +55,24 @@ def verify_committed_build_tools(root, revision, files):
                 "build tool differs from committed source: " + name)
 
 
-def main(out, profile="direct"):
+def profile_flags(profile):
+    require(profile in ("observe", "cost"), "unknown O2 profile")
+    flags = dict(FLAGS)
+    if profile == "cost":
+        for key in ("VDOT_O2_TRACE", "VDOT_O1_TRACE", "VDOT_T12_TRACE", "VDOT_T13_TRACE"):
+            flags[key] = "0"
+    return flags
+
+
+def build_shell(contract, flags, pins_path, out):
+    shell = "source team/scripts/activate.sh\n"
+    shell += "export " + " ".join(k + "=" + shlex.quote(v) for k, v in flags.items()) + "\n"
+    shell += "export CHISEL_FIRTOOL_PATH=" + shlex.quote(build_recipe.firtool_directory(contract)) + "\n"
+    return shell + build_recipe.execution_command(contract, pins_path, out)
+
+
+def main(out, profile="direct", trace_profile="observe", firtool_dir=None):
+    flags = profile_flags(trace_profile)
     out = out.resolve()
     require(not out.exists(), "output already exists")
     require(not out.is_relative_to(ROOT), "output must be outside checkout")
@@ -64,20 +82,21 @@ def main(out, profile="direct"):
             "untracked hardware inputs must be committed before building")
     out.mkdir(parents=True)
     state = {"status": "CAPTURING", "started_utc": now(), "source_root": str(ROOT),
-             "source_commit": git("rev-parse", "HEAD").decode().strip(), "flags": FLAGS,
-             "build_profile": profile}
+             "source_commit": git("rev-parse", "HEAD").decode().strip(), "flags": flags,
+             "build_profile": profile, "profile": trace_profile}
     save(out / "build-state.json", state)
     try:
         (out / "source-status.txt").write_bytes(git("status", "--short"))
         (out / "working-tree.patch").write_bytes(git("diff", "--binary", "HEAD"))
         files = hardware_files(ROOT)
-        contract = build_recipe.capture(ROOT, profile=profile)
+        contract = build_recipe.capture(ROOT, profile=profile, firtool_dir=firtool_dir)
         clean = build_recipe.environment()
         dependencies, dependency_files = dependency_snapshot()
         save(out / "dependencies.json", dependencies)
         pins = {"source_commit": state["source_commit"], "config": "MinimalConfig",
                 "NUM_CORES": 1, "EMU_THREADS": 1, "JVM_XMX": "6G" if profile in build_recipe.SPLIT_PROFILES else "12G", "BUILD_JOBS": 2,
-                **FLAGS, "native_build_contract": contract, "files": dict(sorted(files.items())), "dependency_files": dependency_files,
+                **flags, "profile": trace_profile, "native_build_contract": contract,
+                "files": dict(sorted(files.items())), "dependency_files": dependency_files,
                 "build_tools": {p.relative_to(ROOT).as_posix(): sha(p) for p in
                     (Path(__file__), Path(live_inputs.__file__), Path(build_recipe.__file__))},
                 "build_script_sha256": sha(Path(__file__)), "source_root": str(ROOT)}
@@ -90,15 +109,13 @@ def main(out, profile="direct"):
         activated = "source team/scripts/activate.sh\n"
         tools = {"java": "java -version", "mill": "mill --version", "verilator": "verilator --version",
                  "clang": "clang++ --version", "make": "make --version", "python": "python3 --version",
-                 "firtool": '\"$HOME/.cache/llvm-firtool/1.62.1/bin/firtool\" --version'}
+                 "firtool": shlex.quote(contract["compilers"]["firtool"]["path"]) + " --version"}
         for name, command in tools.items():
             with (out / (name + "-version.log")).open("wb") as log:
                 rc = subprocess.run(["bash", "-c", activated + command], cwd=ROOT,
                                     stdout=log, stderr=subprocess.STDOUT, env=clean).returncode
             require(rc == 0, "missing tool " + name)
-        shell = activated + "export " + " ".join(k + "=" + v for k, v in FLAGS.items()) + "\n"
-        shell += 'export CHISEL_FIRTOOL_PATH="$HOME/.cache/llvm-firtool/1.62.1/bin"\n'
-        shell += build_recipe.execution_command(contract, out/"hardware-inputs-before.json", out)
+        shell = build_shell(contract, flags, out/"hardware-inputs-before.json", out)
         (out / "build-command.sh").write_text(shell, encoding="utf-8")
         state.update(status="BUILDING", build_started_utc=now(), command=["bash", "-c", shell])
         save(out / "build-state.json", state)
@@ -142,5 +159,8 @@ if __name__ == "__main__":
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--recipe", choices=("direct", *build_recipe.SPLIT_PROFILES), default="direct",
                         help="explicit native build profile; split-clang-v2 also binds link/archive/runtime and PCH selection")
+    parser.add_argument("--profile", choices=("observe", "cost"), default="observe",
+                        help="observation configuration, independent of the native compiler recipe")
+    parser.add_argument("--firtool-dir", type=Path, help="explicit firtool directory, bound in the native contract")
     args=parser.parse_args()
-    raise SystemExit(main(args.output,args.recipe))
+    raise SystemExit(main(args.output,args.recipe,args.profile,args.firtool_dir))

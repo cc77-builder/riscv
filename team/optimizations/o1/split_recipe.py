@@ -40,13 +40,17 @@ def environment(pins):
     # only that explicit project configuration and the pins' VDOT switches.
     env = recipe.environment()
     for name in ("LINUX_GNU_TOOLCHAIN", "XS_PROJECT_ROOT", "NOOP_HOME", "NEMU_HOME", "AM_HOME",
-                 "DRAMSIM3_HOME", "CHISEL_FIRTOOL_PATH"):
+                 "DRAMSIM3_HOME"):
         if name in os.environ:
             env[name] = os.environ[name]
     for name, value in pins.items():
         if name.startswith("VDOT_"):
             require(os.environ.get(name) == value, "parent VDOT configuration differs: " + name)
             env[name] = value
+    directory = recipe.firtool_directory(pins["native_build_contract"])
+    require(os.environ.get("CHISEL_FIRTOOL_PATH", directory) == directory,
+            "parent firtool configuration differs from native contract")
+    env["CHISEL_FIRTOOL_PATH"] = directory
     return env
 
 
@@ -62,6 +66,10 @@ def verify_tools(contract, root):
         if "payload_path" in tool:
             require(str(Path(tool["path"]).resolve()) == tool["payload_path"],
                     "native driver payload target changed: " + tool["path"])
+    if "firtool_directory" in contract:
+        selected = Path(contract["firtool_directory"]) / "firtool"
+        require(str(selected.resolve()) == contract["compilers"]["firtool"]["path"],
+                "explicit firtool selector target changed")
     if "verilator_support" in contract:
         require(recipe.verilator_support(contract["verilator_support"]["root"]) == contract["verilator_support"],
                 "Verilator runtime/template inventory changed")

@@ -55,7 +55,7 @@ def environment():
     return result
 
 
-def probe_tools(profile="direct"):
+def probe_tools(profile="direct", firtool_dir=None):
     """Resolve compiler payloads, rejecting unbound launcher indirection."""
     if profile not in ("direct", *SPLIT_PROFILES):
         raise ValueError("unsupported native recipe profile")
@@ -66,7 +66,8 @@ def probe_tools(profile="direct"):
         ("java", "java", "-version"), ("bash", "bash", "--version"),
         ("sh", "/bin/sh", "-c"), ("time", "/usr/bin/time", "--version"), ("mill", "mill", "--version"),
         ("verilator", "verilator", "--version"),
-        ("firtool", str(Path.home()/".cache/llvm-firtool/1.62.1/bin/firtool"), "--version")]
+        ("firtool", str((Path(firtool_dir) if firtool_dir is not None else
+                        Path.home()/".cache/llvm-firtool/1.62.1/bin") / "firtool"), "--version")]
     if profile in SPLIT_PROFILES:
         selected += [("python", "python3", "--version"), ("make", "make", "--version")]
     if profile == "split-clang-v2":
@@ -138,8 +139,8 @@ def compiler_runtime(tools):
     return dict(roles=list(NATIVE_RUNTIME_ROLES), files=dict(sorted(files.items())))
 
 
-def probe_linked_tools(profile):
-    tools = probe_tools(profile)
+def probe_linked_tools(profile, firtool_dir=None):
+    tools = probe_tools(profile, firtool_dir)
     config = subprocess.check_output([tools["verilator"]["path"], "-V"], text=True)
     roots = re.findall(r"^\s*VERILATOR_ROOT\s*=\s*(\S+)\s*$", config, re.MULTILINE)
     if len(set(roots)) != 1:
@@ -147,14 +148,17 @@ def probe_linked_tools(profile):
     return dict(compilers=tools, verilator_support=verilator_support(roots[0]), compiler_runtime=compiler_runtime(tools))
 
 
-def capture(root, profile="direct"):
+def capture(root, profile="direct", firtool_dir=None):
     # Probe in precisely the environment used by the build; explicitly pass
     # these compiler paths to Make instead of merely recording clang --version.
     if profile not in ("direct", *SPLIT_PROFILES):
         raise ValueError("unsupported native recipe profile")
     probe_name = "probe_linked_tools" if profile == "split-clang-v2" else "probe_tools"
+    # Preserve the original contract shape when no explicit selection is made.
+    selected_dir = str(Path(firtool_dir).resolve()) if firtool_dir is not None else None
+    probe_args = repr(profile) + (", firtool_dir=" + repr(selected_dir) if selected_dir is not None else "")
     probe = ("import json,runpy; helper=runpy.run_path(" + repr(str(Path(__file__).resolve())) +
-             "); print(json.dumps(helper[" + repr(probe_name) + "](" + repr(profile) + ")))")
+             "); print(json.dumps(helper[" + repr(probe_name) + "](" + probe_args + ")))")
     command = "source team/scripts/activate.sh\npython3 -c " + shlex.quote(probe)
     clean = environment()
     captured = json.loads(subprocess.check_output(["bash", "-c", command], cwd=root, text=True, env=clean))
@@ -176,12 +180,19 @@ def capture(root, profile="direct"):
         result["compiler_commands"] = dict(CLANG_COMMANDS)
     if profile == "split-clang-v2":
         result.update(native_link=dict(CLANG_LINK), verilator_support=support, compiler_runtime=runtime)
+    if selected_dir is not None:
+        result["firtool_directory"] = selected_dir
     return result
 
 
 def validate(contract):
     if not isinstance(contract, dict):
         raise ValueError("unsupported native build contract")
+    if "firtool_directory" in contract:
+        directory = contract["firtool_directory"]
+        if (not isinstance(directory, str) or not PurePosixPath(directory).is_absolute()
+                or ".." in PurePosixPath(directory).parts or "\x00" in directory):
+            raise ValueError("invalid explicit firtool directory")
     if contract.get("schema") == 2:
         if contract.get("make_args") != MAKE_ARGS or any(name in contract for name in ("profile", "phases", "split_script_sha256")):
             raise ValueError("unsupported native build contract")
@@ -285,5 +296,12 @@ def execution_command(contract, pins_path, output):
 
 def verify(root, expected):
     validate(expected)
-    if capture(root, expected.get("profile", "direct")) != expected:
+    options = {"firtool_dir": expected["firtool_directory"]} if "firtool_directory" in expected else {}
+    if capture(root, expected.get("profile", "direct"), **options) != expected:
         raise ValueError("native compiler/build contract changed")
+
+
+def firtool_directory(contract):
+    """Use the recorded selector, or the legacy bound executable's directory."""
+    validate(contract)
+    return contract.get("firtool_directory", str(PurePosixPath(contract["compilers"]["firtool"]["path"]).parent))
