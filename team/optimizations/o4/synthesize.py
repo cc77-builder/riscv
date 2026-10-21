@@ -3,6 +3,7 @@
 import argparse, hashlib, json, os, re, subprocess, time
 from collections import Counter
 from pathlib import Path
+import live_contract
 DEFAULT=Path("/home/riscv/riscv-lab/o4-cost-20261020")
 def require(ok,message):
     if not ok:raise ValueError(message)
@@ -17,6 +18,7 @@ def library_areas(path):
 def main():
     p=argparse.ArgumentParser(); p.add_argument("generation",type=Path);p.add_argument("output",type=Path);p.add_argument("--work",type=Path,default=DEFAULT);a=p.parse_args()
     g=json.loads((a.generation/"result.json").read_text()); require(type(g.get("exit_code")) is int and g["exit_code"]==0 and not g.get("verification_error") and isinstance(g.get("source_inputs"),dict) and bool(g["source_inputs"]) and g.get("source_inputs_unchanged") is True, "synthesis input/mapping validation failed")
+    contract=live_contract.verify(a.work)
     a.output.mkdir(parents=True,exist_ok=False)
     lib=a.work/"library/NangateOpenCellLibrary_typical.lib"; bin=a.work/"tools/root/usr/bin"
     top="CommonFuCostTop" if g["boundary"]=="fu" else "CommonParentCostTop"
@@ -36,14 +38,19 @@ def main():
     commands=[f"read_liberty -lib {lib}",*[f"read_verilog -sv -DSYNTHESIS {f}" for f in rtl],f"hierarchy -check -top {top}","proc","opt",f"write_json {a.output/'structure.json'}",f"synth -top {top} -flatten -noabc",f"dfflibmap -liberty {lib}",f"abc -exe {bin/'berkeley-abc'} -liberty {lib} -D 1000 -constr {a.output/'abc.constr'}","clean","check -assert",f"stat -liberty {lib}",f"write_json {a.output/'mapped.json'}",f"write_verilog -noattr {a.output/'mapped.v'}"]
     (a.output/"map.ys").write_text("\n".join(commands)+"\n")
     command=[str(bin/"yosys"),"-T","-s",str(a.output/"map.ys")]
-    meta={"generation":str(a.generation),"generation_sha256":sha(a.generation/"result.json"),"mode":g["mode"],"boundary":g["boundary"],"top":top,"library_sha256":sha(lib),"command":command,"clockgate_mapping":replacement,"start":time.time(),"timeout_seconds":1800}
+    meta={"generation":str(a.generation),"generation_sha256":sha(a.generation/"result.json"),"mode":g["mode"],"boundary":g["boundary"],"top":top,"library_sha256":sha(lib),"command":command,"clockgate_mapping":replacement,"start":time.time(),"timeout_seconds":1800,"tool_contract":contract}
     try:
         with (a.output/"synthesis.log").open("w") as f:
-            rc=subprocess.run(command,stdout=f,stderr=subprocess.STDOUT,timeout=1800).returncode
+            rc=subprocess.run(command,stdout=f,stderr=subprocess.STDOUT,timeout=1800,env=live_contract.environment()).returncode
     except subprocess.TimeoutExpired: rc=124
-    meta.update(exit_code=rc,end=time.time())
+    meta.update(tool_exit_code=rc,exit_code=rc,end=time.time())
+    try:
+        live_contract.verify(a.work,contract)
+        meta["tool_contract_unchanged"]=True
+    except Exception as exc:
+        meta.update(tool_contract_unchanged=False,verification_error=str(exc),exit_code=rc or 1)
     (a.output/"run.json").write_text(json.dumps(meta,indent=2)+"\n")
-    if rc: print(json.dumps(meta));raise SystemExit(rc)
+    if meta["exit_code"]: print(json.dumps(meta));raise SystemExit(meta["exit_code"])
     design=json.loads((a.output/"mapped.json").read_text())["modules"][top]
     counts=Counter(c["type"] for c in design["cells"].values());areas=library_areas(lib)
     unknown=sorted(set(counts)-set(areas))

@@ -212,6 +212,30 @@ def run_process(command, directory, env):
     return rc, {name: sha(directory / name) for name in ("stdout.log", "stderr.log", "run.log")}
 
 
+def runtime_command(emu, image, reference, flash, timeout="120m"):
+    """Use the shared strict runtime protocol for every new core job."""
+    return ["timeout", timeout, str(emu), "-i", str(image),
+            "--flash=" + str(flash), "--ram-size=128MB", "--diff=" + str(reference),
+            "--max-cycles=5000000", "--seed=1"]
+
+
+def dense_runtime_receipt(record):
+    """Expose original streams to the window checker; retain derived run.log separately."""
+    return dict(record, raw_sha256={name: record["raw_logs_sha256"][name]
+                                   for name in ("stdout.log", "stderr.log")})
+
+
+def verify_committed_drivers(files, root=ROOT):
+    """Reject a run that the immutable offline replay could never authenticate."""
+    revision = subprocess.check_output(["git", "-C", str(root), "rev-parse", "HEAD"], text=True).strip()
+    for path, digest in files.items():
+        relative = Path(path).relative_to(root).as_posix()
+        body = subprocess.check_output(["git", "-C", str(root), "show", revision + ":" + relative])
+        require(hashlib.sha256(body).hexdigest() == digest,
+                "runtime checker must match committed source before execution: " + relative)
+    return revision
+
+
 def preflight(args, guard, perf):
     pins = None
     if not args.preflight_only:
@@ -277,6 +301,9 @@ def preflight(args, guard, perf):
                     ROOT / "team/optimizations/o1/audit/runtime_gate.py",
                     ROOT / "team/scripts/artifact_guard.py", ROOT / "team/scripts/check-vdot-run.py",
                     ROOT / "team/workloads/vdot-perf/check.py"]
+    driver_files = {str(p): sha(p) for p in driver_files}
+    if not args.preflight_only:
+        verify_committed_drivers(driver_files)
     input_files = {str(path): sha(path) for path in paths.values()}
     input_files.update({str(args.dense_build / name): sha(args.dense_build / name) for name in dense_files})
     input_files[str(control_build / "build.json")] = sha(control_build / "build.json")
@@ -291,7 +318,7 @@ def preflight(args, guard, perf):
         "hardware_checked": not args.preflight_only,
         "hardware_pins_sha256": None if args.preflight_only else sha(args.hardware_pins),
         "emu_sha256": None if args.preflight_only else sha(args.emu),
-        "driver_files": {str(p): sha(p) for p in driver_files},
+        "driver_files": driver_files,
         "input_files": input_files, "reference_provenance": reference,
         "matrix_unique": 117, "matrix_executed": 124,
         "control_build": str(control_build), "control_build_receipt": control_receipt,
@@ -354,6 +381,10 @@ def run(args):
         inspect.signature(control.check).bind("", {}, 0, analysis={})
         inspect.signature(perf.verify).bind(Path("/example/build"), Path("/example/run"))
         pins, paths, receipt = preflight(args, guard, perf)
+        if not args.preflight_only:
+            # Exercise the real parser before any expensive emulator launch.
+            perf.runtime_roles(runtime_command(args.emu, paths["dense"], paths["reference"],
+                                               paths["flash"], args.timeout))
         save(out / "preflight.json", receipt)
         if args.preflight_only:
             manifest.update(status="O2_PREFLIGHT_ONLY_PASS", hardware_checked=False,
@@ -383,11 +414,10 @@ def run(args):
         def job(name, image, data, selected_ref):
             directory = out / name
             directory.mkdir()
-            command = ["timeout", args.timeout, "stdbuf", "-o0", "-e0", str(args.emu),
-                       "-i", str(image), "--flash=" + str(paths["flash"]), "--ram-size=128MB",
-                       "--diff=" + str(selected_ref), "--max-cycles=5000000"]
+            command = runtime_command(args.emu, image, selected_ref, paths["flash"], args.timeout)
             record = {"name": name, "status": "RUNNING", "started": stamp(), "command": command,
-                      "files": {}, "negative_target": "vdot" if name == "negative-vdot" else None}
+                      "files": {}, "negative_target": "vdot" if name == "negative-vdot" else None,
+                      "single_core": pins["NUM_CORES"] == 1, "emu_threads": pins["EMU_THREADS"]}
             save(directory / "runtime.json", record)
             env = os.environ.copy()
             env.pop("XS_NEGATIVE_VECTOR_TARGET", None)
@@ -425,7 +455,7 @@ def run(args):
                 elif name == "dense-batch128":
                     # The original checker reads result.json as its runtime
                     # receipt; keep this provisional state until all gates pass.
-                    record["raw_sha256"] = record["raw_logs_sha256"]
+                    record = dense_runtime_receipt(record)
                     save(directory / "result.json", record)
                     result = perf.verify(args.dense_build, directory)
                     save(directory / "window-result.json", result)

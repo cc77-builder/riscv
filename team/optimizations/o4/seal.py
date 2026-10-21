@@ -15,7 +15,7 @@ def main():
     files=a.output/"files";files.mkdir();index=[];external=[]
 
     accepted={name for pair in assessment["selection"].values() for name in pair}
-    accepted|={"o1-fu-02","o2-fu-01","o1-parent-01","o2-parent-01"}
+    accepted|={Path(row["mapping"]["generation"]).name for row in assessment["results"].values()}
     for src in sorted(a.work.rglob("*")):
         rel=src.relative_to(a.work)
         if rel.parts[:2] in [("tools","root"),("tools","debs")]:continue

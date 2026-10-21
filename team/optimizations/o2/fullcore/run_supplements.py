@@ -224,6 +224,9 @@ def recheck_supplements(campaign,expected_pins,expected_emu_sha,analyze=None,wor
         "team/optimizations/o2/fullcore/run_suite.py","team/optimizations/o2/fullcore/analyze.py",
         "team/optimizations/o2/fullcore/workloads/check.py","team/optimizations/o1/audit/runtime_gate.py",
         "team/scripts/artifact_guard.py"}
+    if hasattr(suite, "live_inputs"):
+        expected_driver_paths.update({"team/optimizations/o2/fullcore/live_inputs.py",
+            "team/optimizations/o1/build_recipe.py", "team/optimizations/o1/build_inputs.py"})
     driver_paths=set()
     for name,digest in preflight.get("driver_files",{}).items():
         original=Path(name)
@@ -237,7 +240,7 @@ def recheck_supplements(campaign,expected_pins,expected_emu_sha,analyze=None,wor
         suite.require(suite.sha(saved)==digest and suite.sha(ROOT/relative)==digest and
                       hashlib.sha256(blob).hexdigest()==digest,
                       "offline checker bytes differ from original committed run tools: "+str(relative))
-    suite.require(driver_paths==expected_driver_paths and len(preflight["driver_files"])==6,
+    suite.require(driver_paths==expected_driver_paths and len(preflight["driver_files"])==len(expected_driver_paths),
                   "incomplete or unexpected offline checker identities")
     result=json.loads((campaign/"result.json").read_text())
     suite.require(result.get("status")=="O2_SUPPLEMENTS_PASS" and assess(result.get("runs",[])),
@@ -330,6 +333,8 @@ def run(args):
             inputs[str(build/"build.json")]=suite.sha(build/"build.json")
         drivers=[Path(__file__),HERE/"run_suite.py",HERE/"analyze.py",HERE/"workloads/check.py",
                  ROOT/"team/optimizations/o1/audit/runtime_gate.py",ROOT/"team/scripts/artifact_guard.py"]
+        drivers.extend([Path(suite.live_inputs.__file__), Path(suite.live_inputs.build_recipe.__file__),
+                        ROOT/"team/optimizations/o1/build_inputs.py"])
         driver_files={str(p):suite.sha(p) for p in drivers}
         tool_commit=subprocess.check_output(["git","rev-parse","HEAD"],cwd=ROOT,text=True).strip()
         for path,digest in driver_files.items():

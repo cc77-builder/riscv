@@ -47,11 +47,12 @@
 
 在完整checkout中使用全新输出目录：
 
-    python3 -B team/optimizations/o2/performance/build_o1.py --output /absolute/new/o1-build
-    python3 -B team/optimizations/o2/performance/compare.py --o1-pins /absolute/completed/o1-build/hardware-inputs.json --output /absolute/new/campaign
+    python3 -B team/optimizations/o2/fullcore/build_fullcore.py --output /absolute/new/o2-build
+    python3 -B team/optimizations/o2/performance/build_o1.py --o2-build /absolute/new/o2-build --output /absolute/new/o1-build
+    python3 -B team/optimizations/o2/performance/compare.py --o1-pins /absolute/new/o1-build/hardware-inputs.json --o2-pins /absolute/new/o2-build/hardware-inputs.json --images /absolute/restored/performance-images --reference /absolute/restored/reference.so --flash /absolute/restored/boot-flash.bin --output /absolute/new/campaign
     python3 -B team/optimizations/o2/performance/results.py --campaign /absolute/completed/campaign --output /absolute/new/results
 
-默认路径绑定本机固定参考库、flash和冻结镜像。不要重启已完成campaign或覆盖封存输出。本轮不是T17新机器完整构建复现。
+第一步要求当前 checkout 的 build/ 不存在；使用新的完整 checkout，保留已有构建和证据。后两步使用第一步同一源码、依赖和工具环境；compare 的 images/reference/flash 必须恢复完整已核验输入，不能只复制或重命名 bin。默认路径绑定原机器固定输入，以上显式参数须按实际恢复目录填写。不要重启已完成campaign或覆盖封存输出。本轮不是T17新机器完整构建复现。
 
 ## 取舍边界
 

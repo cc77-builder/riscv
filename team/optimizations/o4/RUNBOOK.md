@@ -16,6 +16,8 @@ python3 -B team/optimizations/o4/prepare.py /home/riscv/riscv-lab/o4-reproduce-N
 Deb、Liberty、配置和许可证均由toolchain-lock.json固定SHA256；若仓库不再提供同版本，不能静默换版本。
 原先实际准备的日志、ldd、可执行文件/共享库摘要另见证据tools/。工具不是随仓库分发的二进制。
 
+当前入口在准备结束生成 `tools/contract.json`，绑定实际解析后的 Yosys/ABC/STA 路径、字节、版本、共享库及受限环境；Liberty、config 和许可证始终核对 lock 中的固定 SHA。综合和 STA 启动前后均复验该合同，四组比较及逐阶段原始回执须使用相同合同。旧工具目录缺少合同时应重新准备新工作根，不能给封存证据补写新合同。
+
 ## 2. RTL生成、综合、STA
 
 ~~~bash
@@ -57,6 +59,14 @@ recheck在临时目录校验全部原始/压缩字节后重建所需文件，复
 不调用Yosys/OpenSTA/EMU，不冒称重新综合或队友T17干净构建。
 如需审查本次未压缩工作目录，使用audit.py /home/riscv/riscv-lab/o4-cost-20261020。
 该脚本选择的是本次已完成尝试名称；全新综合后的审计须显式更新selection到新目录并记录差异，不能误用旧文件。
+
+当前全新实验使用 `audit.py "$O4_WORK" --selection "$O4_WORK/selection.json"`，不需修改审计源码。清单必须包括四组，每组按顺序给出工作根下的综合、STA 目录名，例如：
+
+~~~json
+{"o1-fu":["o1-fu-map","o1-fu-sta"],"o2-fu":["o2-fu-map","o2-fu-sta"],"o1-parent":["o1-parent-map","o1-parent-sta"],"o2-parent":["o2-parent-map","o2-parent-sta"]}
+~~~
+
+新审计还比较四次生成的完整源码/依赖库存及原生生成工具合同。`provenance_scope` 明确标为当前合同或历史复算；历史通道仅识别原四份生成回执的固定 SHA，不能用于新结果或与新工具合同混合。归档根据实际 selection 保留合格生成文件，便携复算重新使用该选择清单。这些入口修复本身不构成新面积、时序或 T17 结果。
 
 ## 4. 结论边界
 

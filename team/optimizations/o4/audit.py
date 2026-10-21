@@ -5,6 +5,40 @@ from collections import Counter
 from pathlib import Path, PurePosixPath
 from synthesize import library_areas
 from timing import parse_path, validate_log, constant_warnings, required_paths, PROFILES
+import live_contract
+from archive_gate import safe_path
+
+HISTORICAL_GENERATIONS={
+    "o1-fu-02":"8211202dbcc699ce77d60551f4cebf0ee0f42b81eac7dd6045213523e50d647b",
+    "o1-parent-01":"91ef34800dd009eb4c3c366b079aa9485fb371139aa2a887f8de19f4bea8030a",
+    "o2-fu-01":"103b9985a81fcc69f312c3726e9ab30ab8c912eb5fe65bdc6c9aa566bbc8fbde",
+    "o2-parent-01":"f7699b3511903751acaceb2580dbac478a73dfddbdab6bace811896c624b7086"}
+
+
+def validate_pair(generations, results):
+    # Exact old receipt bytes identify historical replay. Never upgrade them to
+    # current provenance merely because their mapped outputs still parse.
+    historical=(len(generations)==4 and {name: item[1] for name,item in generations.values()}==HISTORICAL_GENERATIONS)
+    if historical:
+        if any("tool_contract" in row[stage] for row in results.values() for stage in ("mapping","timing")):
+            raise ValueError("historical/current tool contracts mixed")
+        return "historical-20261020-replay"
+    live_contract.paired_sources([item[0] for _,item in generations.values()])
+    live_contract.paired_tools(results)
+    return "current-source-and-tool-contracts"
+
+
+def validate_selection(selection):
+    if not isinstance(selection,dict) or set(selection)!={"o1-fu","o2-fu","o1-parent","o2-parent"}:
+        raise ValueError("four O4 selections required")
+    names=[]
+    for pair in selection.values():
+        if not isinstance(pair,(list,tuple)) or len(pair)!=2:raise ValueError("mapping/STA selection required")
+        for name in pair:
+            if len(safe_path(name).parts)!=1:raise ValueError("selection must name work directories")
+            names.append(name)
+    if len(set(names))!=8:raise ValueError("duplicate O4 selection")
+    return selection
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def finite_number(value):
     return type(value) in (int,float) and math.isfinite(value)
@@ -81,6 +115,11 @@ def compare_interfaces(a,b):
 def mapping_audit(directory,lib):
     s=json.loads((directory/"summary.json").read_text())
     if s.get("pass") is not True or type(s.get("exit_code")) is not int or s["exit_code"]!=0 or sha(lib)!=s["library_sha256"]:raise ValueError("mapping/library identity")
+    if "tool_contract" in s:
+        live_contract.validate(s["tool_contract"])
+        if s["library_sha256"]!=s["tool_contract"]["library"]["NangateOpenCellLibrary_typical.lib"]:raise ValueError("mapping fixed library differs")
+        run=json.loads((directory/"run.json").read_text())
+        live_contract.stage_receipt(s["tool_contract"],run)
     if sha(directory/"mapped.v")!=s["mapped_sha256"] or sha(directory/"mapped.json")!=s["mapped_json_sha256"]:raise ValueError("mapped identity")
     m=json.loads((directory/"mapped.json").read_text())["modules"][s["top"]]
     counts=Counter(c["type"] for c in m["cells"].values());areas=library_areas(lib)
@@ -106,6 +145,7 @@ def timing_audit(directory,mapping,design):
         from compact import topology
         from canonical import bind,emit
         binding=json.loads((directory/"canonical-binding.json").read_text())
+        if "tool_contract" in s:live_contract.stage_receipt(s["tool_contract"],binding)
         if binding!=s["name_binding"] or type(binding.get("exit_code")) is not int or binding["exit_code"]!=0 or binding["input_mapping_json_sha256"]!=sha(mapping/"mapped.json"):raise ValueError("name binding")
         for filename,key in [("sta-names.json","import_json_sha256"),("sta-canonical.v","sta_netlist_sha256"),("instance-binding.json","instance_binding_sha256")]:
             if sha(directory/filename)!=binding[key]:raise ValueError("canonical identity")
@@ -120,6 +160,7 @@ def timing_audit(directory,mapping,design):
 
         if sha(d/"sta.log")!=p["log_sha256"]:raise ValueError("STA log identity")
         run=json.loads((d/"run.json").read_text())
+        if "tool_contract" in s:live_contract.stage_receipt(s["tool_contract"],run)
         if type(run.get("exit_code")) is not int or run["exit_code"]!=0:raise ValueError("real tool exit")
         expected_reports=required_paths(s["boundary"])|{"setup-checks"}
         if {x.stem for x in d.glob("*.rpt")}!=expected_reports:raise ValueError("timing report file inventory")
@@ -143,15 +184,18 @@ def register_groups(structure,mode):
     return {"total_bits":len(q),"groups":counts}
 if __name__=="__main__":
     import argparse
-    p=argparse.ArgumentParser();p.add_argument("work",type=Path);a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument("work",type=Path);p.add_argument("--selection",type=Path);a=p.parse_args()
     work=a.work;lib=work/"library/NangateOpenCellLibrary_typical.lib"
     selection={"o1-fu":("o1-fu-map-02","o1-fu-sta-03"),"o2-fu":("o2-fu-map-01","o2-fu-sta-02"),"o1-parent":("o1-parent-map-01","o1-parent-sta-08"),"o2-parent":("o2-parent-map-01","o2-parent-sta-01")}
-    result={}
+    if a.selection:selection=json.loads(a.selection.read_text(encoding="utf-8"))
+    validate_selection(selection)
+    result={};generations={}
     for key,(mapped,timed) in selection.items():
         s,m=mapping_audit(work/mapped,lib)
         if key!=s["mode"]+"-"+s["boundary"] or s["exit_code"]!=0:raise ValueError("missing/wrong mode or nonzero mapping")
         generation=work/Path(s["generation"]).name
         g=json.loads((generation/"result.json").read_text())
+        generations[key]=(generation.name,(g,sha(generation/"result.json")))
         if sha(generation/"result.json")!=s["generation_sha256"] or g["mode"]!=s["mode"] or g["boundary"]!=s["boundary"] or type(g.get("exit_code")) is not int or g["exit_code"]!=0:raise ValueError("generation/mapping binding")
         if not re.fullmatch(r"[0-9a-f]{40}",g.get("source_commit","")):raise ValueError("missing generation source commit")
         if g.get("verification_error") or ("source_inputs" in g and g.get("source_inputs_unchanged") is not True):raise ValueError("generation source verification failed")
@@ -162,20 +206,22 @@ if __name__=="__main__":
         t=timing_audit(work/timed,work/mapped,m)
         result[key]={"mapping":s,"timing":t}
         if key.endswith("-fu"):result[key]["registers"]=register_groups(json.loads((work/mapped/"structure.json").read_text()),s["mode"])
+    provenance_scope=validate_pair(generations,result)
     for boundary in ["fu","parent"]:
         compare_interfaces(result["o1-"+boundary]["mapping"]["ports"],result["o2-"+boundary]["mapping"]["ports"])
     leaf_identity={}
     for leaf in ["VDotProducts.sv","VDotReduce.sv"]:
         module=leaf[:-3]
         variants={}
-        for generation in ["o1-fu-02","o2-fu-01","o1-parent-01","o2-parent-01"]:
+        for generation,_ in generations.values():
             path=work/generation/"rtl"/leaf
             text=path.read_text()
             body=text[text.index("module "+module):]
             variants[generation]={"raw_sha256":sha(path),"module_body_sha256":hashlib.sha256(body.encode()).hexdigest()}
-        if variants["o1-fu-02"]["raw_sha256"]!=variants["o2-fu-01"]["raw_sha256"] or variants["o1-parent-01"]["raw_sha256"]!=variants["o2-parent-01"]["raw_sha256"]:raise ValueError("arithmetic differs between modes at same boundary")
+        if any(variants[generations["o1-"+boundary][0]]["raw_sha256"]!=variants[generations["o2-"+boundary][0]]["raw_sha256"] for boundary in ("fu","parent")):raise ValueError("arithmetic differs between modes at same boundary")
         if len({v["module_body_sha256"] for v in variants.values()})!=1:raise ValueError("arithmetic module body differs across boundaries")
         leaf_identity[leaf]=variants
     final={"audit_pass":True,"results":result,"selection":selection,"not_signoff":True,"arithmetic_identity":leaf_identity}
+    final["provenance_scope"]=provenance_scope
     (work/"assessment.json").write_text(json.dumps(final,indent=2)+"\n")
     print("O4_OFFLINE_AUDIT_PASS")

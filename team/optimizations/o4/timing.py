@@ -3,6 +3,7 @@
 import argparse, hashlib, json, math, re, subprocess, time
 from pathlib import Path
 from synthesize import DEFAULT
+import live_contract
 
 PROFILES={"nominal":(1,5),"period050":(.5,5),"period200":(2,5),"load001":(1,1),"load020":(1,20)}
 
@@ -66,6 +67,9 @@ def main():
     p=argparse.ArgumentParser();p.add_argument("mapping",type=Path);p.add_argument("output",type=Path);p.add_argument("--work",type=Path,default=DEFAULT);a=p.parse_args()
     m=json.loads((a.mapping/"summary.json").read_text())
     require(m.get("pass") is True and type(m.get("exit_code")) is int and m["exit_code"]==0,"mapping incomplete")
+    live_contract.validate(m.get("tool_contract"))
+    require(m.get("tool_contract_unchanged") is True,"mapping tools not verified")
+    contract=live_contract.verify(a.work,m["tool_contract"])
     require(sha(a.mapping/"mapped.v")==m["mapped_sha256"], 'timing input or canonical mapping validation failed')
     a.output.mkdir(parents=True,exist_ok=False)
     lib=a.work/"library/NangateOpenCellLibrary_typical.lib"
@@ -84,10 +88,12 @@ def main():
         ys.write_text(f"read_liberty -lib {lib}\nread_verilog {sta_netlist}\nhierarchy -check -top {m['top']}\nwrite_json {a.output/'sta-names.json'}\n")
         command=[str(a.work/"tools/root/usr/bin/yosys"),"-T","-s",str(ys)]
         with (a.output/"import-canonical.log").open("w") as f:
-            try:rc=subprocess.run(command,stdout=f,stderr=subprocess.STDOUT,timeout=180).returncode
+            try:rc=subprocess.run(command,stdout=f,stderr=subprocess.STDOUT,timeout=180,env=live_contract.environment()).returncode
             except subprocess.TimeoutExpired:rc=124
         binding={"command":command,"exit_code":rc,"input_mapping_json_sha256":sha(a.mapping/"mapped.json"),"sta_netlist_sha256":sha(sta_netlist),"instance_binding_sha256":sha(a.output/"instance-binding.json"),"import_json_sha256":sha(a.output/"sta-names.json") if (a.output/"sta-names.json").exists() else None}
         (a.output/"canonical-binding.json").write_text(json.dumps(binding,indent=2)+"\n")
+        live_contract.verify(a.work,contract)
+        binding.update(tool_contract=contract,tool_contract_unchanged=True)
         if rc:raise ValueError("canonical import failed")
         design=json.loads((a.output/"sta-names.json").read_text())["modules"][m["top"]]
         design=bind(design,original,by_instance)
@@ -127,11 +133,14 @@ def main():
         lines+=['puts "O4_STA_COMPLETE"',"exit"]
         (d/"timing.tcl").write_text("\n".join(lines)+"\n")
         command=[str(a.work/"tools/root/usr/bin/sta"),"-no_init","-exit",str(d/"timing.tcl")]
+        live_contract.verify(a.work,contract)
         start=time.time()
         with (d/"sta.log").open("w") as f:
-            try:rc=subprocess.run(command,stdout=f,stderr=subprocess.STDOUT,timeout=180).returncode
+            try:rc=subprocess.run(command,stdout=f,stderr=subprocess.STDOUT,timeout=180,env=live_contract.environment()).returncode
             except subprocess.TimeoutExpired:rc=124
         (d/"run.json").write_text(json.dumps({"command":command,"exit_code":rc,"start":start,"end":time.time()},indent=2)+"\n")
+        live_contract.verify(a.work,contract)
+        (d/"run.json").write_text(json.dumps({"command":command,"exit_code":rc,"start":start,"end":time.time(),"tool_contract":contract,"tool_contract_unchanged":True},indent=2)+"\n")
         if rc:raise ValueError(f"STA nonzero {rc}")
         log=(d/"sta.log").read_text();validate_log(log)
         if "not found" in log:raise ValueError("unbound object in STA")
@@ -141,6 +150,7 @@ def main():
         checks=(d/"setup-checks.rpt").read_text();allowed=constant_warnings(checks,design,["testEnable"] if m["boundary"]=="parent" else [])
         allresults.append({"profile":name,"period_ns":period,"load_ff":load,"paths":parsed,"setup_checks":checks,"reviewed_unconstrained_endpoints":sorted(allowed),"log_sha256":sha(d/"sta.log")})
     summary={"mode":m["mode"],"boundary":m["boundary"],"mapping_summary_sha256":sha(a.mapping/"summary.json"),"mapped_sha256":m["mapped_sha256"],"library_sha256":m["library_sha256"],"wire_load_model":"5K_hvratio_1_1","name_binding":binding,"vdot_register_count":len(vdot_regs),"gate_count":len(gate_regs),"profiles":allresults,"pass":True}
+    summary.update(tool_contract=contract,tool_contract_unchanged=True)
     (a.output/"summary.json").write_text(json.dumps(summary,indent=2)+"\n")
     print(json.dumps({"mode":m["mode"],"boundary":m["boundary"],"profiles":len(allresults),"pass":True}))
 if __name__=="__main__":main()

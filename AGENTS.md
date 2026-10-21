@@ -1,3 +1,7 @@
+# Current scope: reproduction readiness, 2026-10-21
+
+Continue James_Hotten from 2157dca6f. Both remote repositories have no unmerged branch heads. Current work repairs live G3 replay and O4 source/tool contracts and adds O5 input readiness. O1/O2 remain default-off; main and remote branches are unchanged. Inputs are NOT_READY: 70 known prerequisites are missing and transitive inventories cannot fully expand. No new EMU, synthesis, STA, performance or T17 acceptance. See team/docs/reproduction-readiness-20261021.md; historical authorizations below are provenance only.
+
 # Current integration scope: James_Hotten, 2026-10-20
 
 Integrate the fixed zjhwork snapshot 9b6cf074951dbd51e1670c5fbc7111a97c362b3f (O4) after the reviewed O2/O3 checkpoint 769b3b4b1. O1/O2 remain default-off. Main is excluded. Historical publication instructions below are provenance, not authority for this chat. O4 measurements retain the pre-integration source identity and do not measure the repaired DIV cancellation clock. Current review and validation are recorded separately in team/docs/o4-integration-20261020.md.

@@ -5,6 +5,8 @@ new runtime gate and this auditor have separate identities. A completed-only
 probe always remains PARTIAL_AUDIT, even when all selected jobs pass.
 """
 import argparse
+import ast
+from contextlib import contextmanager, ExitStack
 from datetime import datetime
 import hashlib
 import io
@@ -22,6 +24,9 @@ DRIVERS = ("team/optimizations/o2/fullcore/run_suite.py", "team/optimizations/o2
            "team/optimizations/o2/fullcore/check_control.py", "team/scripts/artifact_guard.py",
            "team/scripts/check-vdot-run.py", "team/workloads/vdot-perf/check.py",
            "team/optimizations/o1/audit/runtime_gate.py")
+LIVE_DEPENDENCIES = ("team/optimizations/o1/build_recipe.py",
+                     "team/optimizations/o1/build_inputs.py",
+                     "team/optimizations/o2/fullcore/live_inputs.py")
 RAW_NAMES = ("stdout.log", "stderr.log", "run.log")
 
 
@@ -86,13 +91,47 @@ def git_blobs(repo, revision, names):
 
 
 def bind_original_drivers(repo, revision, recorded):
-    expected = {str(repo / name) for name in DRIVERS}
-    require(set(recorded) == expected, "original driver inventory is not exactly the seven frozen checkers")
     blobs = git_blobs(repo, revision, DRIVERS)
+    imports = {alias.name for node in ast.walk(ast.parse(blobs[DRIVERS[0]]))
+               if isinstance(node, ast.Import) for alias in node.names}
+    paths = DRIVERS + (LIVE_DEPENDENCIES if "live_inputs" in imports else ())
+    expected = {str(repo / name) for name in paths}
+    require(set(recorded) == expected,
+            "original driver inventory must match seven frozen checkers or complete live dependencies")
+    if "live_inputs" in imports:
+        blobs.update(git_blobs(repo, revision, LIVE_DEPENDENCIES))
     for name, body in blobs.items():
         require(hashlib.sha256(body).hexdigest() == recorded[str(repo / name)],
                 "original driver does not match its Git source commit: " + name)
     return blobs
+
+
+@contextmanager
+def bound_driver_modules(repo, blobs):
+    """Use Git-bound transitive modules even when current Python imports differ."""
+    missing = object(); previous = {}; old_path = list(sys.path)
+    def load(name, path, body):
+        if name not in previous: previous[name] = sys.modules.get(name, missing)
+        return load_blob(name, path, body)
+    try:
+        for path in LIVE_DEPENDENCIES:
+            if path in blobs: load(Path(path).stem, repo / path, blobs[path])
+        names = ("o2_original_runner", "analyze", "o2_original_control", "o2_original_guard",
+                 "o2_original_functional", "o2_original_perf", "o2_original_runtime_gate")
+        modules = [load(name, repo / path, blobs[path]) for name, path in zip(names, DRIVERS)]
+        def pinned_import(name, path):
+            relative = Path(path).relative_to(repo).as_posix()
+            require(relative in blobs, "unbound dynamic checker import: " + relative)
+            return load(name, path, blobs[relative])
+        modules[0].load_module = pinned_import
+        if 'run_suite' not in previous: previous['run_suite'] = sys.modules.get('run_suite', missing)
+        sys.modules['run_suite'] = modules[0]
+        yield modules
+    finally:
+        sys.path[:] = old_path
+        for name, old in previous.items():
+            if old is missing: sys.modules.pop(name, None)
+            else: sys.modules[name] = old
 
 
 def load_blob(name, path, body):
@@ -126,7 +165,9 @@ def check_raw_job(directory, record, command, files, negative_target):
     require(record.get("files") == files and record.get("negative_target") == negative_target,
             "recorded job inputs differ from frozen workload/reference")
     runtime = read_json(directory / "runtime.json")
-    for field in ("name", "started", "command", "files", "negative_target"):
+    fields = ("name", "started", "command", "files", "negative_target")
+    if "single_core" in record: fields += ("single_core", "emu_threads")
+    for field in fields:
         require(runtime.get(field) == record.get(field), "runtime/result disagreement: " + field)
     require(datetime.fromisoformat(record["started"]) <= datetime.fromisoformat(record["finished"]), "negative job duration")
     require(set(record.get("raw_logs_sha256", {})) == set(RAW_NAMES), "missing raw stream hashes")
@@ -135,7 +176,9 @@ def check_raw_job(directory, record, command, files, negative_target):
         require(hashlib.sha256(body).hexdigest() == record["raw_logs_sha256"][name], "raw log hash mismatch: " + name)
     require(raw["run.log"] == raw["stderr.log"] + raw["stdout.log"], "derived run.log is not stderr + stdout")
     if "raw_sha256" in record:
-        require(record["raw_sha256"] == record["raw_logs_sha256"], "secondary raw hash inventory differs")
+        expected_raw = {name: record["raw_logs_sha256"][name] for name in
+                        (("stdout.log", "stderr.log") if command[2:5] != ["stdbuf", "-o0", "-e0"] else RAW_NAMES)}
+        require(record["raw_sha256"] == expected_raw, "secondary raw hash inventory differs")
     rc_text = (directory / "exit-code.txt").read_text(encoding="ascii")
     require(re.fullmatch(r"-?\d+\n", rc_text), "malformed exit-code file")
     rc = int(rc_text)
@@ -183,6 +226,10 @@ def recheck_job(name, image, data, reference, original, campaign, out, args, pat
     result_dir = out / name; result_dir.mkdir()
     command = ["timeout", args.timeout, "stdbuf", "-o0", "-e0", str(args.emu), "-i", str(image),
                "--flash=" + str(paths["flash"]), "--ram-size=128MB", "--diff=" + str(reference), "--max-cycles=5000000"]
+    if hasattr(runner, "runtime_command"):
+        command = runner.runtime_command(args.emu, image, reference, paths["flash"], args.timeout)
+        require(original.get("single_core") is True and type(original.get("emu_threads")) is int
+                and original["emu_threads"] == 1, "missing current runtime core/thread contract")
     files = {str(p): sha(p) for p in (args.emu, paths["reference"], reference, paths["flash"], image)}
     record = {"name": name, "original_status": original["status"], "started": original["started"],
               "finished": original["finished"], "files": files, "new_emu_executed": False}
@@ -288,9 +335,11 @@ def replay_supplements(campaign, out, pins, emu_sha, core_preflight, runner, ana
     """Bind supplemental tools and require shared checker and hardware identity."""
     campaign = Path(campaign).resolve()
     preflight = read_json(campaign / 'preflight.json')
-    for name in ('team/optimizations/o2/fullcore/run_suite.py',
-                 'team/optimizations/o2/fullcore/analyze.py',
-                 'team/scripts/artifact_guard.py', 'team/optimizations/o1/audit/runtime_gate.py'):
+    shared = ('team/optimizations/o2/fullcore/run_suite.py',
+              'team/optimizations/o2/fullcore/analyze.py',
+              'team/scripts/artifact_guard.py', 'team/optimizations/o1/audit/runtime_gate.py')
+    if hasattr(runner, "live_inputs"): shared += LIVE_DEPENDENCIES
+    for name in shared:
         key = str(ROOT / name)
         require(preflight.get('driver_files', {}).get(key) == core_preflight['driver_files'][key],
                 'supplement shared checker differs from core campaign: ' + name)
@@ -321,6 +370,7 @@ def audit(args):
               "checks_passed": False, "whole_suite_pass": False, "new_emu_executed": False,
               "emulators_executed": 0, "completed_only": args.completed_only, "campaign": str(campaign),
               "created": datetime.now().astimezone().isoformat(), "runs": [], "performance_measured": False}
+    bindings = ExitStack()
     try:
         state_bytes = (campaign / "campaign-state.json").read_bytes()
         state = json.loads(state_bytes)
@@ -339,8 +389,7 @@ def audit(args):
             for leaf in ("result.json", "campaign-state.json"):
                 stable[str(campaign / leaf)] = sha(campaign / leaf)
         blobs = bind_original_drivers(ROOT, state["source_commit_at_start"], preflight["driver_files"])
-        names = ("o2_original_runner", "analyze", "o2_original_control", "o2_original_guard", "o2_original_functional", "o2_original_perf", "o2_original_runtime_gate")
-        modules = [load_blob(name, ROOT / path, blobs[path]) for name, path in zip(names, DRIVERS)]
+        modules = bindings.enter_context(bound_driver_modules(ROOT, blobs))
         runner, _, _, guard, _, perf = modules[:6]
         original_args = original_arguments(state, runner)
         require(original_args.output == campaign, "invocation belongs to another campaign")
@@ -402,6 +451,8 @@ def audit(args):
     except (Exception, SystemExit) as exc:
         result.update(error=repr(exc), checks_passed=False, whole_suite_pass=False, g3_complete=False)
         result["status"] = "O2_PARTIAL_AUDIT" if args.completed_only else "O2_G3_OFFLINE_RECHECK_FAILED"
+    finally:
+        bindings.close()
     result["finished"] = datetime.now().astimezone().isoformat()
     result["scope"] = "offline original-evidence recheck using Git-bound original checker blobs; no new EMU run or performance comparison"
     save(out / "result.json", result)

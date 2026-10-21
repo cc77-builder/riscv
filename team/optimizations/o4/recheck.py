@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Validate sealed bytes, restore in isolation, then run the current strict audit."""
 import argparse
+import json
 from pathlib import Path
 import subprocess
 import sys
@@ -15,8 +16,13 @@ def recheck(evidence):
         claimed = assessment(root)
         # Keep optimization enabled in the child when checking -OO behavior.
         option = "-" + "O" * sys.flags.optimize if sys.flags.optimize else "-B"
-        subprocess.run([sys.executable, option, str(Path(__file__).with_name("audit.py")), str(root)], check=True)
+        selection=root/"recheck-selection.json"
+        selection.write_text(json.dumps(claimed["selection"]),encoding="utf-8")
+        subprocess.run([sys.executable, option, str(Path(__file__).with_name("audit.py")), str(root),
+                        "--selection",str(selection)], check=True)
         actual = assessment(root)
+        require(claimed.get("provenance_scope", "historical-20261020-replay") == actual.get("provenance_scope"),
+                "stored provenance scope differs from independent audit")
         require(all(actual.get(key) == claimed.get(key) for key in
                     ("results", "selection", "arithmetic_identity", "not_signoff")),
                 "stored assessment differs from independent audit")

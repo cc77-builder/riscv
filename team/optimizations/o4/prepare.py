@@ -2,6 +2,7 @@
 """Prepare pinned isolated tools without sudo or system-package mutation."""
 import argparse, hashlib, json, subprocess, urllib.request
 from pathlib import Path
+import live_contract
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def main():
     p=argparse.ArgumentParser();p.add_argument("work",type=Path);a=p.parse_args()
@@ -26,5 +27,6 @@ def main():
         with urllib.request.urlopen(item["url"],timeout=60) as resp:path.write_bytes(resp.read())
         if sha(path)!=item["sha256"]:raise ValueError("library/source SHA mismatch")
     (lib/"provenance.json").write_text(json.dumps(lock["library"],indent=2)+"\n")
+    (tools/"contract.json").write_text(json.dumps(live_contract.capture(a.work),indent=2)+"\n", encoding="utf-8")
     print("O4_ISOLATED_TOOLS_READY")
 if __name__=="__main__":main()
