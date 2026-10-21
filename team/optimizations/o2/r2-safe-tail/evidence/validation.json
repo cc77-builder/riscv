@@ -1,0 +1,105 @@
+{
+  "status": "S2_IMPLEMENTED_HOST_VALIDATED_EMU_PENDING",
+  "date": "2026-10-21",
+  "base_commit": "a89648d78bc954d9e27a78b987d3fef63cc1ab93",
+  "write_branch": "zjhwork2",
+  "preserve_branch": "zjhwork",
+  "preserve_head_before": "17bab1d6e51692ccf1cc007e1ec73054ceda168e",
+  "changes": "opt-in software generator, host checks, S1 design only; no RTL/ISA/NEMU/default or historical evidence edits",
+  "host_tests": {
+    "run": 21,
+    "passed": 21,
+    "failed": 0,
+    "candidate_mutation_negative_controls": 8
+  },
+  "cross_assembly": {
+    "compiler": "clang version 17.0.0 (https://github.com/swiftlang/llvm-project.git 10999b6d034fe318f3d56c83bddb6572593a8bb0)",
+    "body_programs": 24,
+    "original_elf_body_sha_matches": 4
+  },
+  "instruction_model": {
+    "executions": 7452,
+    "input_cases_4x13": 533,
+    "input_cases_16x64": 88,
+    "configurations_per_shape": 12,
+    "initial_vector_registers": "nonzero seeded pollution",
+    "checks": [
+      "full 128-bit result",
+      "protected vector registers",
+      "final CSR/ABI",
+      "per-row input bounds",
+      "explicit tail lane zeros",
+      "output stores"
+    ],
+    "is_nemu": false,
+    "is_cycle_model": false
+  },
+  "renderer_integration": {
+    "source_sets": 24,
+    "functions_compiled": 96,
+    "C_ABI_objects": 24,
+    "runnable_elfs": 0
+  },
+  "s2_reuse_endtoend_instructions": {
+    "old": 117,
+    "new": 83,
+    "old_marker_span": 129,
+    "new_marker_span": 95
+  },
+  "s1": {
+    "allocation_review": true,
+    "rvv_equal_opportunity_design": true,
+    "kernel_implemented": false,
+    "performance_measured": false
+  },
+  "new_rtl_builds": 0,
+  "new_emu_runs": 0,
+  "new_performance_samples": 0,
+  "r2_complete": false,
+  "member_ack": false,
+  "pending": [
+    "candidate-aware runnable ELF generation and strict validation",
+    "B0/H1 NEMU DiffTest smoke",
+    "paired cycle screening including faster qualifying RVV"
+  ],
+  "source_files": {
+    "candidate.py": {
+      "sha256": "a0e914da892037c70a5bd44b41e9ec04e2b15b0cb957534e1708e4194a87fdeb",
+      "git_blob": "e8b0a80f05151442fec29fd309e632e6d32a93ed"
+    },
+    "integration.py": {
+      "sha256": "68449961fb01c283a5ee22ec2ba92fc5684a90de3b3c62de135a97ec617662b1",
+      "git_blob": "ab7ca401be284e642b7947c69f275dee0560757b"
+    },
+    "machine_model.py": {
+      "sha256": "8fb2ac208d8db9083464fb839c06b46ec365234d72b819822563830dad90171e",
+      "git_blob": "d1bcff0912cc6892922b8ef661ab9445b558d17b"
+    },
+    "screen.py": {
+      "sha256": "e2ee12f80ca1485e2f8660e5088c8534bbd9fcfa487af3bc2f990d07fb439b41",
+      "git_blob": "d66147a655b2caa15439183f847df167b5aae81c"
+    },
+    "test_safe_tail.py": {
+      "sha256": "4af1ab100886cd463acd448747700ccaa499abac90b7b178a26f30e356c7dccf",
+      "git_blob": "476ba0c662d2680d69b3f6c00b6c23ff88b88b45"
+    }
+  },
+  "payloads": {
+    ".gitattributes": {
+      "sha256": "e97602ab9cac70102245345c5ab0fc9830df8b17f1072b188265a662a3a547ae",
+      "bytes": 20
+    },
+    "host-tests.txt": {
+      "sha256": "afdd1591ff06e9add8a1ba68038d8000660e4e841ac8ca28b2c6aa76eeaf4fce",
+      "bytes": 2317
+    },
+    "instruction-counts.csv": {
+      "sha256": "b34c7be58d2dc86efb8b84962cb6e2ed602e0d20486a69670e634f94f290496a",
+      "bytes": 1332
+    }
+  },
+  "full_reports_in_delivery_archive": {
+    "host-screen/report.json": "bb408be334c44ba018860ae26514611c50cb816fadaac7ed70280ae9899bc096",
+    "renderer-integration/report.json": "c6963aad2c6d749af5da8e256dff67b9a7b1ab19b883547d79a964061e674180"
+  }
+}
