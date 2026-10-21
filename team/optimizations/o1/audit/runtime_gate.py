@@ -25,6 +25,11 @@ MISMATCH = re.compile(
     r'^v(\d+)_high different at pc = (0x[0-9a-fA-F]+), '
     r'right=\s*(0x[0-9a-fA-F]+), wrong =\s*(0x[0-9a-fA-F]+)$', re.M)
 ABORT = re.compile(r'^Core 0: ABORT at pc = (0x[0-9a-fA-F]+)$', re.M)
+COMMIT_GROUP = re.compile(r'commit group \[(\d+)\]: pc ([0-9a-fA-F]{1,16}) cmtcnt (\d+)( <--)?[ \t]*')
+COMMIT_ROW = re.compile(
+    r'\[(\d+)\] commit pc ([0-9a-fA-F]{1,16}) inst ([0-9a-fA-F]{1,8}) '
+    r'wen ([01]) dst (\d+) data ([0-9a-fA-F]{1,16}) idx ([0-9a-fA-F]+)'
+    r'(?: \([0-9a-fA-F]+\))?( <--)?[ \t]*')
 
 
 def require(condition, message):
@@ -58,6 +63,63 @@ def validate_failure_markers(text, negative=False):
             'runtime failure marker')
 
 
+def bind_commit_group(plain, injection, mismatch, pc, word, vd, mismatch_pc):
+    """Bind the newest 32-slot DiffTest ring batch, never a PC interval.
+
+    Keep this in the Git-bound runtime checker instead of importing another
+    parser outside existing replay inventories. The ring/count interpretation
+    matches team/scripts/check-vdot-negative.py and DiffState::display().
+    """
+    groups, rows, first_pcs = {}, {}, {}
+    latest_groups, latest_rows = [], []
+    positions = []
+    for line in re.finditer(r'[^\n]+', plain):
+        text = line[0]
+        if text.startswith('commit group '):
+            parsed = COMMIT_GROUP.fullmatch(text)
+            require(parsed is not None, 'malformed commit group record')
+            slot, group_pc, count, latest = parsed.groups()
+            slot, group_pc, count = int(slot), int(group_pc, 16), int(count)
+            require(0 <= slot < 16 and slot not in groups and 0 <= count <= 32,
+                    'invalid/duplicate commit group slot or count')
+            groups[slot] = (group_pc, count)
+            if latest:
+                latest_groups.append(slot)
+        elif re.match(r'^\[[^\]]+\] (?:commit|exception|interrupt)\b', text):
+            parsed = COMMIT_ROW.fullmatch(text)
+            require(parsed is not None, 'malformed/unrepresentable instruction trace record')
+            slot, row_pc, row_word, wen, dst, _, _, latest = parsed.groups()
+            slot, dst = int(slot), int(dst)
+            require(0 <= slot < 32 and slot not in rows and 0 <= dst < 32,
+                    'invalid/duplicate instruction trace slot or destination')
+            rows[slot] = (int(row_pc, 16), int(row_word, 16), int(wen), dst)
+            if latest:
+                latest_rows.append(slot)
+        elif text.startswith('the first commit instr pc of '):
+            parsed = re.fullmatch(r'the first commit instr pc of (DUT|REF) is (0x[0-9a-fA-F]{1,16})[ \t]*', text)
+            require(parsed is not None and parsed[1] not in first_pcs,
+                    'missing/malformed/duplicate DUT or REF group PC')
+            first_pcs[parsed[1]] = int(parsed[2], 16)
+        else:
+            continue
+        positions.append((line.start(), line.end()))
+    require(len(latest_groups) == len(latest_rows) == 1 and set(first_pcs) == {'DUT', 'REF'},
+            'missing/ambiguous latest commit group evidence')
+    require(all(injection.end() < start and end < mismatch.start() for start, end in positions),
+            'commit group evidence must follow injection and precede mismatch')
+    group_pc, count = groups[latest_groups[0]]
+    require(0 < count <= 32 and group_pc == mismatch_pc == first_pcs['DUT'] == first_pcs['REF'],
+            'negative mismatch belongs to another or unrepresentable commit group')
+    slots = [(latest_rows[0] - count + 1 + index) % 32 for index in range(count)]
+    require(all(slot in rows for slot in slots), 'incomplete latest commit group')
+    batch = [rows[slot] for slot in slots]
+    require(batch[0][0] == group_pc, 'commit count does not bind the displayed group')
+    require(batch.count((pc, word, 1, vd)) == 1,
+            'injected vdot not uniquely present in failing commit group')
+    return dict(mismatch_pc=hex(mismatch_pc), group_pc=hex(group_pc), group_instructions=count,
+                group_slots=slots, fault_pc_binding='injected instruction uniquely bound to latest DiffTest commit group')
+
+
 def validate_negative(text, return_code):
     require(return_code == 1, 'negative run must exit 1')
     plain = normalize_console(text)
@@ -78,8 +140,13 @@ def validate_negative(text, return_code):
             'expected exactly one complete vector high-half mismatch')
     diff_vd, diff_pc, right_text, wrong_text = mismatches[0].groups()
     right, wrong = int(right_text, 16), int(wrong_text, 16)
-    require(int(diff_vd) == vd and int(diff_pc, 16) == pc,
-            'negative mismatch must bind injected PC and vector register')
+    mismatch_pc = int(diff_pc, 16)
+    require(int(diff_vd) == vd and mismatch_pc < 1 << 64,
+            'negative mismatch must bind injected vector register and valid PC')
+    require(injected[0].end() < mismatches[0].start(), 'negative mismatch must follow injection')
+    binding = dict(fault_pc_binding='injection PC equals mismatch PC')
+    if mismatch_pc != pc or re.search(r'commit group |the first commit instr pc of |\[\d+\] commit pc ', plain):
+        binding = bind_commit_group(plain, injected[0], mismatches[0], pc, word, vd, mismatch_pc)
     require(right < 1 << 64 and wrong < 1 << 64 and right ^ wrong == 1 << 36,
             'negative mismatch is not exactly vector bit100')
     aborted = list(ABORT.finditer(plain))
@@ -94,7 +161,7 @@ def validate_negative(text, return_code):
     # it is not the dut->commit[0].pc used for the mismatch diagnostic.
     return dict(vd=vd, pc=hex(pc), word=f'0x{word:08x}', bit=100,
                 abort_event_pc=hex(abort_pc), abort_count=1,
-                fault_pc_binding='injection PC equals mismatch PC',
+                **binding,
                 abort_pc_scope='recorded XSTrap event field; not required to equal mismatch PC')
 
 

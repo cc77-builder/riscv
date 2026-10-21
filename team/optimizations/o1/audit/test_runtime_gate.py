@@ -20,7 +20,91 @@ def fixture(color=False, crlf=False):
     return text.replace('\n','\r\n') if crlf else text
 
 
+def group_fixture(wrap=False, color=False, crlf=False):
+    """Actual six-instruction batch shape, including its noncontiguous jump."""
+    instructions = ((0x80001c40, 0x0c543423, 0, 8), (0x80001c44, 0x00100293, 1, 5),
+                    (0x80001c48, 0x00543c23, 0, 24), (0x80001c4c, 0x0294050b, 1, 10),
+                    (0x80001c50, 0xb3dff06f, 0, 0), (0x8000178c, 0x02043283, 1, 5))
+    rows = []
+    for index, (pc, word, wen, dst) in enumerate(instructions):
+        slot = ((30 if wrap else 9) + index) % 32
+        row = f'[{slot:02d}] commit pc {pc:016x} inst {word:08x} wen {wen} dst {dst:02d} data 0000000000000000 idx {index + 2:03x}'
+        rows.append(row + (' <--' if index == len(instructions) - 1 else ''))
+    group = ('the first commit instr pc of DUT is 0x0000000080001c40\n'
+             'the first commit instr pc of REF is 0x0000000080001c40\n'
+             'commit group [02]: pc 0080001c40 cmtcnt 6 <--\n' + '\n'.join(rows))
+    text = fixture().replace('pc=0x80001bdc', 'pc=0x80001c4c').replace('pc = 0x0080001bdc', 'pc = 0x0080001c40')
+    text = text.replace('register dump omitted in this synthetic fixture', group)
+    if color:
+        text = '\x1b[35m' + text.replace('ABORT', '\x1b[31mABORT') + '\x1b[0m'
+    return text.replace('\n', '\r\n') if crlf else text
+
+
 class RuntimeGateTests(unittest.TestCase):
+    def test_distinct_pc_requires_exact_latest_commit_group(self):
+        for wrap in (False, True):
+            for color in (False, True):
+                for crlf in (False, True):
+                    with self.subTest(wrap=wrap, color=color, crlf=crlf):
+                        result = gate.validate_negative(group_fixture(wrap, color, crlf), 1)
+                        self.assertEqual(result['pc'], '0x80001c4c')
+                        self.assertEqual(result['mismatch_pc'], '0x80001c40')
+                        self.assertEqual(result['group_instructions'], 6)
+
+    def test_group_binding_rejects_corrupt_or_unrelated_evidence(self):
+        text = group_fixture()
+        mutations = (('cmtcnt 6', 'cmtcnt 5'), ('cmtcnt 6', 'cmtcnt 0'), ('cmtcnt 6', 'cmtcnt 33'),
+                     ('group [02]', 'group [16]'), ('pc 0080001c40 cmtcnt', 'pc 0080001c44 cmtcnt'),
+                     ('REF is 0x0000000080001c40', 'REF is 0x0000000080001c44'),
+                     ('DUT is 0x0000000080001c40', 'DUT is 0x0000000080001c44'),
+                     ('[12] commit', '[08] commit'), ('inst 0294050b', 'inst 0294058b'),
+                     ('wen 1 dst 10', 'wen 0 dst 10'), ('wen 1 dst 10', 'wen 1 dst 11'),
+                     ('pc 0000000080001c4c inst', 'pc 0000000080001c4e inst'),
+                     ('pc 0000000080001c4c inst', 'pc 10000000080001c4c inst'),
+                     ('inst 0294050b', 'inst 10294050b'), ('idx 007 <--', 'idx 007'),
+                     ('idx 003\n', 'idx 003 <--\n'), ('idx 007 <--', 'idx 007 <-- <--'))
+        for old, new in mutations:
+            with self.subTest(old=old, new=new), self.assertRaises(ValueError):
+                gate.validate_negative(text.replace(old, new), 1)
+        for line in text.splitlines():
+            if line.startswith(('the first commit', 'commit group', '[12]')):
+                for changed in (text.replace(line + '\n', ''), text.replace(line, line + '\n' + line)):
+                    with self.subTest(line=line), self.assertRaises(ValueError):
+                        gate.validate_negative(changed, 1)
+
+    def test_group_must_follow_injection_and_precede_mismatch(self):
+        text = group_fixture()
+        injection = text.splitlines()[0] + '\n'
+        with self.assertRaises(ValueError):
+            gate.validate_negative(text.replace(injection, '') + injection, 1)
+        marker = 'commit group [02]: pc 0080001c40 cmtcnt 6 <--\n'
+        for changed in (marker + text.replace(marker, ''), text.replace(marker, '') + marker):
+            with self.assertRaises(ValueError):
+                gate.validate_negative(changed, 1)
+
+    def test_equal_pc_cannot_bypass_present_group_evidence(self):
+        text = group_fixture().replace('pc=0x80001c4c', 'pc=0x80001c40')
+        text = text.replace('inst 0c543423 wen 0 dst 08', 'inst 0294050b wen 1 dst 10')
+        result = gate.validate_negative(text, 1)
+        self.assertEqual(result['pc'], result['group_pc'])
+        for bad in (text.replace('cmtcnt 6', 'cmtcnt 5'), text.replace('idx 007 <--', 'idx 007'),
+                    text.replace('REF is 0x0000000080001c40', 'REF is 0x0000000080001c44')):
+            with self.assertRaises(ValueError):
+                gate.validate_negative(bad, 1)
+
+    def test_injected_tuple_must_be_unique_inside_latest_group(self):
+        text = group_fixture()
+        # A matching row in history cannot authorize a different latest batch.
+        outside = text.replace('[12] commit', '[08] commit')
+        filler = '[12] commit pc 0000000080001c4c inst 00100513 wen 1 dst 10 data 0000000000000000 idx 005\n'
+        outside = outside.replace('[13] commit', filler + '[13] commit')
+        # Two identical PC/word/write destinations are ambiguous, even in one batch.
+        duplicate = text.replace('pc 0000000080001c48 inst 00543c23 wen 0 dst 24',
+                                 'pc 0000000080001c4c inst 0294050b wen 1 dst 10')
+        for bad in (outside, duplicate):
+            with self.assertRaisesRegex(ValueError, 'not uniquely present'):
+                gate.validate_negative(bad, 1)
+
     def test_real_format_is_independent_of_ansi_and_crlf(self):
         expected = gate.validate_negative(fixture(), 1)
         for color in (False, True):

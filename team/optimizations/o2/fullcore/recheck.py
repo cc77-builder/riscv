@@ -29,6 +29,7 @@ LIVE_DEPENDENCIES = ("team/optimizations/o1/build_recipe.py",
                      "team/optimizations/o2/fullcore/live_inputs.py")
 INPUT_DEPENDENCIES = ("team/optimizations/o2/fullcore/input_contract.py",)
 RAW_NAMES = ("stdout.log", "stderr.log", "run.log")
+AUDITOR_PATH = "team/optimizations/o2/fullcore/recheck.py"
 
 
 def require(condition, message):
@@ -143,6 +144,45 @@ def load_blob(name, path, body):
     sys.modules[name] = module
     exec(compile(body, str(path), "exec"), module.__dict__)
     return module
+
+
+@contextmanager
+def audit_runtime_gate(repo, revision, original, output):
+    """Select an explicitly versioned audit fix without changing run evidence.
+
+    The same commit binds this auditor and the replacement gate. The original
+    runner and all its dependencies keep their original Git-bound identities.
+    """
+    if revision is None:
+        yield original, None
+        return
+    source = DRIVERS[-1]
+    blobs = git_blobs(repo, revision, (AUDITOR_PATH, source))
+    require(Path(__file__).read_bytes() == blobs[AUDITOR_PATH],
+            "explicit audit commit does not bind the executing auditor")
+    body = blobs[source]
+    snapshot = Path(output) / "runtime_gate.py"
+    with snapshot.open("xb") as stream:
+        stream.write(body)
+    identity = dict(source_commit=revision, source_path=source,
+                    sha256=hashlib.sha256(body).hexdigest(), snapshot=str(snapshot),
+                    auditor_sha256=hashlib.sha256(blobs[AUDITOR_PATH]).hexdigest())
+    name = "o2_selected_audit_runtime_gate"
+    missing = object()
+    previous = sys.modules.get(name, missing)
+    try:
+        gate = load_blob(name, snapshot, body)
+        require(all(callable(getattr(gate, key, None)) for key in
+                    ("validate_negative", "validate_failure_markers", "normalize_console")),
+                "selected audit gate lacks the runtime interface")
+        require(all(hasattr(getattr(gate, key, None), "finditer") for key in ("MISMATCH", "ABORT")),
+                "selected audit gate lacks terminal parsers")
+        yield gate, identity
+    finally:
+        if previous is missing:
+            sys.modules.pop(name, None)
+        else:
+            sys.modules[name] = previous
 
 
 def inventory(campaign, completed_only):
@@ -413,9 +453,13 @@ def audit(args):
         # work. Their old identities were verified above from exact Git blobs.
         require({k: v for k, v in fresh.items() if k != "driver_files"} ==
                 {k: v for k, v in preflight.items() if k != "driver_files"}, "frozen input/provenance preflight differs")
-        gate = modules[6]
         new_checkers = {str(Path(__file__)): sha(Path(__file__))}
         (out / "new-checkers").mkdir()
+        gate, gate_audit = bindings.enter_context(audit_runtime_gate(
+            ROOT, getattr(args, "runtime_gate_commit", None), modules[6], out / "new-checkers"))
+        if gate_audit is not None:
+            new_checkers[gate_audit["snapshot"]] = gate_audit["sha256"]
+        result["runtime_gate_audit"] = gate_audit
         for path, digest in new_checkers.items():
             body = Path(path).read_bytes()
             require(hashlib.sha256(body).hexdigest() == digest, "new checker changed while snapshotting")
@@ -465,6 +509,8 @@ def audit(args):
         bindings.close()
     result["finished"] = datetime.now().astimezone().isoformat()
     result["scope"] = "offline original-evidence recheck using Git-bound original checker blobs; no new EMU run or performance comparison"
+    if result.get("runtime_gate_audit") is not None:
+        result["scope"] += "; explicitly selected Git-bound runtime gate fix, original verdicts retained"
     save(out / "result.json", result)
     print(json.dumps({k: result[k] for k in ("status", "checks_passed", "whole_suite_pass", "new_emu_executed")}))
     return 0 if result["checks_passed"] else 1
@@ -476,6 +522,8 @@ def main():
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--completed-only", action="store_true")
     parser.add_argument("--supplements", type=Path, help="sealed same-EMU two-job supplemental campaign; required for complete G3 verdict")
+    parser.add_argument("--runtime-gate-commit",
+                        help="explicit full Git commit binding this auditor and its replacement runtime gate; original gate is the default")
     return audit(parser.parse_args())
 
 
