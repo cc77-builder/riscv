@@ -12,10 +12,28 @@ import shlex
 import shutil
 import subprocess
 import zipfile
+import copy
 
 MAKE_ARGS = ["CONFIG=MinimalConfig", "NUM_CORES=1", "EMU_THREADS=1", "JVM_XMX=12G",
              "OPT_FAST=-O3", "OPT_SLOW=-O0", "EMU_TRACE=0", "WITH_CHISELDB=0",
              "WITH_CONSTANTIN=0", "WITH_ROLLINGDB=0", "-j2"]
+SPLIT_MAKE_ARGS = [arg if arg != "JVM_XMX=12G" else "JVM_XMX=6G" for arg in MAKE_ARGS]
+SPLIT_MAKE_ARGS.insert(4, "JVM_XSS=16m")
+SPLIT_PHASES = [
+    dict(name="scala-compile", mill_args=["-i", "-Djvm-xmx=6G", "-Djvm-xss=16m", "xiangshan.test.compile"],
+         environment=dict(JAVA_OPTS="-Xmx3g -XX:ActiveProcessorCount=2", JAVA_TOOL_OPTIONS="-XX:ActiveProcessorCount=2")),
+    dict(name="fir-elaborate", make_args=["sim-verilog", "CONFIG=MinimalConfig", "NUM_CORES=1", "JVM_XMX=6G",
+         "JVM_XSS=16m", "CHISEL_TARGET=chirrtl", "-j1"],
+         environment=dict(JAVA_OPTS="-Xmx1g -XX:ActiveProcessorCount=2", JAVA_TOOL_OPTIONS="-XX:ActiveProcessorCount=2")),
+    dict(name="fir-lower", firtool_args=["build/rtl/SimTop.fir", "--format=fir", "--split-verilog", "-o", "build/rtl",
+         "--mlir-disable-threading", "--repl-seq-mem", "--repl-seq-mem-file=SimTop.sv.conf", "-O=release",
+         "--disable-annotation-unknown", "--lowering-options=explicitBitcast,disallowLocalVariables,disallowPortDeclSharing,locationInfoStyle=none"]),
+    dict(name="memory-generate", script="scripts/gen_sep_mem.sh",
+         arguments=["scripts/vlsi_mem_gen", "build/rtl/SimTop.sv.conf", "build/rtl"]),
+    dict(name="rtl-postprocess", implementation="root-Makefile-default-assertions-and-git-comment-v1"),
+    dict(name="native-compile", make_args=["emu", *SPLIT_MAKE_ARGS],
+         environment=dict(JAVA_OPTS="-Xmx1g -XX:ActiveProcessorCount=2", JAVA_TOOL_OPTIONS="-XX:ActiveProcessorCount=2")),
+]
 
 
 def environment():
@@ -32,14 +50,17 @@ def environment():
     return result
 
 
-def probe_tools():
+def probe_tools(profile="direct"):
     """Resolve compiler payloads, rejecting unbound launcher indirection."""
     result = {}
-    for role, command, option in (("cxx", "g++", "--version"), ("cc", "gcc", "--version"),
+    selected = [("cxx", "g++", "--version"), ("cc", "gcc", "--version"),
         ("java", "java", "-version"), ("bash", "bash", "--version"),
         ("sh", "/bin/sh", "-c"), ("time", "/usr/bin/time", "--version"), ("mill", "mill", "--version"),
         ("verilator", "verilator", "--version"),
-        ("firtool", str(Path.home()/".cache/llvm-firtool/1.62.1/bin/firtool"), "--version")):
+        ("firtool", str(Path.home()/".cache/llvm-firtool/1.62.1/bin/firtool"), "--version")]
+    if profile == "split-v1":
+        selected += [("python", "python3", "--version"), ("make", "make", "--version")]
+    for role, command, option in selected:
         path = shutil.which(command)
         if not path:
             raise ValueError("missing compiler " + command)
@@ -68,25 +89,41 @@ def probe_tools():
     return result
 
 
-def capture(root):
+def capture(root, profile="direct"):
     # Probe in precisely the environment used by the build; explicitly pass
     # these compiler paths to Make instead of merely recording clang --version.
+    if profile not in ("direct", "split-v1"):
+        raise ValueError("unsupported native recipe profile")
     probe = ("import json,runpy; helper=runpy.run_path(" + repr(str(Path(__file__).resolve())) +
-             "); print(json.dumps(helper['probe_tools']()))")
+             "); print(json.dumps(helper['probe_tools'](" + repr(profile) + ")))")
     command = "source team/scripts/activate.sh\npython3 -c " + shlex.quote(probe)
     clean = environment()
     captured = json.loads(subprocess.check_output(["bash", "-c", command], cwd=root, text=True, env=clean))
     metadata = Path(root) / ".mill-version"
-    return dict(schema=2, make_args=list(MAKE_ARGS), compilers=captured,
+    result = dict(schema=2, make_args=list(MAKE_ARGS), compilers=captured,
                 mill_launch=[captured["sh"]["path"], captured["mill"]["path"]],
                 launch_metadata={".mill-version": dict(sha256=hashlib.sha256(metadata.read_bytes()).hexdigest(),
                                                        value=metadata.read_text(encoding="utf-8").strip())},
                 environment_sha256=hashlib.sha256(json.dumps(clean, sort_keys=True).encode()).hexdigest(),
                 recipe_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest())
+    if profile == "split-v1":
+        result.update(schema=3, profile=profile, make_args=list(SPLIT_MAKE_ARGS), phases=copy.deepcopy(SPLIT_PHASES),
+                      split_script_sha256=hashlib.sha256(Path(__file__).with_name("split_recipe.py").read_bytes()).hexdigest())
+    return result
 
 
 def validate(contract):
-    if not isinstance(contract, dict) or contract.get("schema") != 2 or contract.get("make_args") != MAKE_ARGS:
+    if not isinstance(contract, dict):
+        raise ValueError("unsupported native build contract")
+    if contract.get("schema") == 2:
+        if contract.get("make_args") != MAKE_ARGS or any(name in contract for name in ("profile", "phases", "split_script_sha256")):
+            raise ValueError("unsupported native build contract")
+    elif contract.get("schema") == 3:
+        if (contract.get("profile") != "split-v1" or contract.get("make_args") != SPLIT_MAKE_ARGS or
+                contract.get("phases") != SPLIT_PHASES or
+                not re.fullmatch(r"[0-9a-f]{64}", contract.get("split_script_sha256", ""))):
+            raise ValueError("unsupported split native build contract")
+    else:
         raise ValueError("unsupported native build contract")
     if not all(re.fullmatch(r"[0-9a-f]{64}", contract.get(key, ""))
                for key in ("environment_sha256", "recipe_sha256")):
@@ -96,7 +133,10 @@ def validate(contract):
             or not metadata[".mill-version"].get("value")
             or not re.fullmatch(r"[0-9a-f]{64}", metadata[".mill-version"].get("sha256", ""))):
         raise ValueError("missing Mill launcher metadata identity")
-    for role in ("cxx", "cc", "java", "bash", "sh", "time", "mill", "verilator", "verilator_bin", "firtool"):
+    roles = ("cxx", "cc", "java", "bash", "sh", "time", "mill", "verilator", "verilator_bin", "firtool")
+    if contract["schema"] == 3:
+        roles += ("python", "make")
+    for role in roles:
         tool = contract.get("compilers", {}).get(role, {})
         if (not PurePosixPath(tool.get("path", "")).is_absolute() or not tool.get("version")
                 or not re.fullmatch(r"[0-9a-f]{64}", tool.get("sha256", ""))):
@@ -105,20 +145,35 @@ def validate(contract):
         raise ValueError("missing bound Mill shell launch command")
 
 
-def make_command(contract, products=None):
+def make_overrides(contract):
     validate(contract)
-    args = ["make", "emu", *MAKE_ARGS,
-            "SHELL=" + contract["compilers"]["bash"]["path"],
+    return ["SHELL=" + contract["compilers"]["bash"]["path"],
             # Make expands TIMELOG in its own scope. Shell quoting preserves
             # the expression until then, including output paths with spaces.
             "TIME_CMD=" + shlex.join([contract["compilers"]["time"]["path"], "-avp", "-o", "$(TIMELOG)"]),
             "CXX=" + contract["compilers"]["cxx"]["path"],
             "CC=" + contract["compilers"]["cc"]["path"]]
+
+
+def make_command(contract, products=None):
+    validate(contract)
+    executable = contract["compilers"]["make"]["path"] if contract["schema"] == 3 else "make"
+    args = [executable, "emu", *contract["make_args"], *make_overrides(contract)]
     if products is not None:
         args.append("BUILD_DIR=" + str(products))
     return shlex.join(args) + "\n"
 
 
+def execution_command(contract, pins_path, output):
+    """Select an explicit fresh recipe; split never resumes a direct build."""
+    validate(contract)
+    if contract["schema"] == 2:
+        return make_command(contract)
+    return shlex.join([contract["compilers"]["python"]["path"], str(Path(__file__).with_name("split_recipe.py").resolve()),
+                       "--pins", str(pins_path), "--output", str(Path(output) / "split")]) + "\n"
+
+
 def verify(root, expected):
-    if capture(root) != expected:
+    validate(expected)
+    if capture(root, expected.get("profile", "direct")) != expected:
         raise ValueError("native compiler/build contract changed")

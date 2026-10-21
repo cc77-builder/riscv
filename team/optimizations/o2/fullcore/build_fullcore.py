@@ -47,7 +47,7 @@ def dependency_snapshot():
     return live_inputs.dependency_snapshot(ROOT)
 
 
-def main(out):
+def main(out, profile="direct"):
     out = out.resolve()
     require(not out.exists(), "output already exists")
     require(not out.is_relative_to(ROOT), "output must be outside checkout")
@@ -57,22 +57,27 @@ def main(out):
             "untracked hardware inputs must be committed before building")
     out.mkdir(parents=True)
     state = {"status": "CAPTURING", "started_utc": now(), "source_root": str(ROOT),
-             "source_commit": git("rev-parse", "HEAD").decode().strip(), "flags": FLAGS}
+             "source_commit": git("rev-parse", "HEAD").decode().strip(), "flags": FLAGS,
+             "build_profile": profile}
     save(out / "build-state.json", state)
     try:
         (out / "source-status.txt").write_bytes(git("status", "--short"))
         (out / "working-tree.patch").write_bytes(git("diff", "--binary", "HEAD"))
         files = hardware_files(ROOT)
-        contract = build_recipe.capture(ROOT)
+        contract = build_recipe.capture(ROOT, profile=profile)
         clean = build_recipe.environment()
         dependencies, dependency_files = dependency_snapshot()
         save(out / "dependencies.json", dependencies)
         pins = {"source_commit": state["source_commit"], "config": "MinimalConfig",
-                "NUM_CORES": 1, "EMU_THREADS": 1, "JVM_XMX": "12G", "BUILD_JOBS": 2,
+                "NUM_CORES": 1, "EMU_THREADS": 1, "JVM_XMX": "6G" if profile=="split-v1" else "12G", "BUILD_JOBS": 2,
                 **FLAGS, "native_build_contract": contract, "files": dict(sorted(files.items())), "dependency_files": dependency_files,
                 "build_tools": {str(p.relative_to(ROOT)): sha(p) for p in
                     (Path(__file__), Path(live_inputs.__file__), Path(build_recipe.__file__))},
                 "build_script_sha256": sha(Path(__file__)), "source_root": str(ROOT)}
+        if profile=="split-v1":
+            pins.update(JVM_XSS="16m", recipe_profile=profile)
+            split_driver=Path(build_recipe.__file__).with_name("split_recipe.py")
+            pins["build_tools"][split_driver.relative_to(ROOT).as_posix()]=sha(split_driver)
         save(out / "hardware-inputs-before.json", pins)
         activated = "source team/scripts/activate.sh\n"
         tools = {"java": "java -version", "mill": "mill --version", "verilator": "verilator --version",
@@ -85,7 +90,7 @@ def main(out):
             require(rc == 0, "missing tool " + name)
         shell = activated + "export " + " ".join(k + "=" + v for k, v in FLAGS.items()) + "\n"
         shell += 'export CHISEL_FIRTOOL_PATH="$HOME/.cache/llvm-firtool/1.62.1/bin"\n'
-        shell += build_recipe.make_command(contract)
+        shell += build_recipe.execution_command(contract, out/"hardware-inputs-before.json", out)
         (out / "build-command.sh").write_text(shell, encoding="utf-8")
         state.update(status="BUILDING", build_started_utc=now(), command=["bash", "-c", shell])
         save(out / "build-state.json", state)
@@ -127,4 +132,7 @@ def main(out):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
-    raise SystemExit(main(parser.parse_args().output))
+    parser.add_argument("--recipe", choices=("direct","split-v1"), default="direct",
+                        help="explicit native build profile; split-v1 bounds peak memory by separating phases")
+    args=parser.parse_args()
+    raise SystemExit(main(args.output,args.recipe))
