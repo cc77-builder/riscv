@@ -1,5 +1,28 @@
 # G3 执行与离线复核
 
+## 当前 Linux LF 与新输入入口（2026-10-21）
+
+本次来源和结果以[当前源码复验记录](../../../docs/o5-current-fullcore-20261021.md)为准；下方2026-10-19身份保留为历史说明。先准备干净的Linux LF检出、递归依赖和显式 `o2-g3-current-inputs-v1` 合同，运行 O5 预检。重新构建的输入须保留源码、命令、工具及产物回执；不能仅改旧路径或SHA。
+
+内存受限机器显式使用 `build_fullcore.py --recipe split-v1 --output /absolute/new/build-receipt`，其schema 3阶段合同与默认direct合同分别记录。先将已有checkout `build/`完整保存到其他目录。成功回执必须为 `O2_FULLCORE_BUILD_PASS`；随后使用其 `hardware-inputs.json` 和同一个新EMU运行：
+
+```bash
+python3 -B team/optimizations/o2/fullcore/run_suite.py \
+  --hardware-pins /absolute/build-receipt/hardware-inputs.json --emu /absolute/repo/build/emu \
+  --input-contract /absolute/inputs/input-contract-v1.json \
+  --t12-root /absolute/inputs/t12 --t14-root /absolute/inputs/t14 \
+  --dense-build /absolute/inputs/dense --output /absolute/new/core --jobs 2
+python3 -B team/optimizations/o2/fullcore/run_supplements.py \
+  --hardware-pins /absolute/build-receipt/hardware-inputs.json --emu /absolute/repo/build/emu \
+  --input-contract /absolute/inputs/input-contract-v1.json \
+  --diagnostic-build /absolute/inputs/supplement-diagnostic \
+  --control-build /absolute/inputs/supplement-control --output /absolute/new/supplements --jobs 2
+python3 -B team/optimizations/o2/fullcore/recheck.py \
+  --campaign /absolute/new/core --supplements /absolute/new/supplements --output /absolute/new/recheck
+```
+
+两个运行入口必须使用同一输入合同、硬件pins和EMU。预检只判输入就绪；完整G3还要求全部实际作业、真实DiffTest负控、同镜像正常恢复、六项覆盖和离线重审通过。下方旧便携归档流程不能直接作为新输入合同的跨机执行证明。
+
 本页是工程操作说明，不是 T16 报告。已有运行不要覆盖或重启；最终结论及证据位置见 README。所有命令均从完整香山 checkout 的根目录执行。Windows 材料目录不是硬件构建目录。
 
 ## 1. 先辨认三种身份

@@ -1,4 +1,8 @@
-# Current scope: reproduction readiness, 2026-10-21
+# Current scope: Linux LF and current-source O2 G3, 2026-10-21
+
+Continue James_Hotten from 7d0630202. Native Linux LF checkout and 126 pinned dependencies are prepared. Explicit current-inputs-v1 restores/rebuilds missing prerequisites; 3,430 strictly checked input files pass. Three real build attempts are retained, including a kernel-confirmed OOM with no final native exit receipt. A fresh explicit split-v1 recipe separates JVM elaboration and serial firtool. Current full-core build is in progress; EMU regressions have not started. O1/O2 remain default-off; no push, main change, new performance/PPA claim or T17/member ACK. See team/docs/o5-current-fullcore-20261021.md. Earlier scope statements below are historical.
+
+# Previous scope: reproduction readiness, 2026-10-21
 
 Continue James_Hotten from 2157dca6f. Both remote repositories have no unmerged branch heads. Current work repairs live G3 replay and O4 source/tool contracts and adds O5 input readiness. O1/O2 remain default-off; main and remote branches are unchanged. Inputs are NOT_READY: 70 known prerequisites are missing and transitive inventories cannot fully expand. No new EMU, synthesis, STA, performance or T17 acceptance. See team/docs/reproduction-readiness-20261021.md; historical authorizations below are provenance only.
 
