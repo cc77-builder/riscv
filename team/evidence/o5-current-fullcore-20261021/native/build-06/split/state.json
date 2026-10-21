@@ -1,0 +1,162 @@
+{
+  "status": "SPLIT_NATIVE_BUILD_PASS",
+  "profile": "split-clang-v2",
+  "started": "2026-10-21T05:25:51.267600+00:00",
+  "phases": [
+    {
+      "name": "scala-compile",
+      "status": "PASS",
+      "started": "2026-10-21T05:25:51.642289+00:00",
+      "environment": {
+        "JAVA_OPTS": "-Xmx3g -XX:ActiveProcessorCount=2",
+        "JAVA_TOOL_OPTIONS": "-XX:ActiveProcessorCount=2"
+      },
+      "command": [
+        "/usr/bin/time",
+        "-v",
+        "-o",
+        "/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/build-06/split/scala-compile.time.log",
+        "/usr/bin/dash",
+        "/home/amesotten/.cache/codex-rvinno/t06/tools/mill-0.12.3",
+        "-i",
+        "-Djvm-xmx=6G",
+        "-Djvm-xss=16m",
+        "xiangshan.test.compile"
+      ],
+      "exit_code": 0,
+      "finished": "2026-10-21T05:25:54.385530+00:00"
+    },
+    {
+      "name": "fir-elaborate",
+      "status": "PASS",
+      "started": "2026-10-21T05:25:54.778866+00:00",
+      "environment": {
+        "JAVA_OPTS": "-Xmx1g -XX:ActiveProcessorCount=2",
+        "JAVA_TOOL_OPTIONS": "-XX:ActiveProcessorCount=2"
+      },
+      "command": [
+        "/usr/bin/time",
+        "-v",
+        "-o",
+        "/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/build-06/split/fir-elaborate.time.log",
+        "/usr/bin/make",
+        "sim-verilog",
+        "CONFIG=MinimalConfig",
+        "NUM_CORES=1",
+        "JVM_XMX=6G",
+        "JVM_XSS=16m",
+        "CHISEL_TARGET=chirrtl",
+        "-j1",
+        "SHELL=/usr/bin/bash",
+        "TIME_CMD=/usr/bin/time -avp -o '$(TIMELOG)'",
+        "CXX=/usr/bin/clang++-19",
+        "CC=/usr/bin/clang-19",
+        "LINK=/usr/bin/clang++-19 --ld-path=/usr/bin/x86_64-linux-gnu-ld.bfd",
+        "AR=/usr/bin/x86_64-linux-gnu-ar",
+        "CFG_GCH_IF_CLANG=.gch",
+        "CFG_CXXFLAGS_PCH_I=-include-pch",
+        "PYTHON3=/usr/bin/python3.12",
+        "PERL=/usr/bin/perl"
+      ],
+      "exit_code": 0,
+      "finished": "2026-10-21T05:27:33.863451+00:00"
+    },
+    {
+      "name": "fir-lower",
+      "status": "PASS",
+      "started": "2026-10-21T05:27:34.259781+00:00",
+      "environment": {},
+      "command": [
+        "/usr/bin/time",
+        "-v",
+        "-o",
+        "/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/build-06/split/fir-lower.time.log",
+        "/home/amesotten/.cache/llvm-firtool/1.62.1/bin/firtool",
+        "build/rtl/SimTop.fir",
+        "--format=fir",
+        "--split-verilog",
+        "-o",
+        "build/rtl",
+        "--mlir-disable-threading",
+        "--repl-seq-mem",
+        "--repl-seq-mem-file=SimTop.sv.conf",
+        "-O=release",
+        "--disable-annotation-unknown",
+        "--lowering-options=explicitBitcast,disallowLocalVariables,disallowPortDeclSharing,locationInfoStyle=none"
+      ],
+      "exit_code": 0,
+      "finished": "2026-10-21T05:33:26.537749+00:00"
+    },
+    {
+      "name": "memory-generate",
+      "status": "PASS",
+      "started": "2026-10-21T05:33:26.922056+00:00",
+      "environment": {},
+      "command": [
+        "/usr/bin/time",
+        "-v",
+        "-o",
+        "/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/build-06/split/memory-generate.time.log",
+        "/usr/bin/bash",
+        "scripts/gen_sep_mem.sh",
+        "scripts/vlsi_mem_gen",
+        "build/rtl/SimTop.sv.conf",
+        "build/rtl"
+      ],
+      "exit_code": 0,
+      "finished": "2026-10-21T05:33:28.061089+00:00"
+    },
+    {
+      "name": "rtl-postprocess",
+      "status": "PASS",
+      "started": "2026-10-21T05:33:28.440310+00:00",
+      "environment": {},
+      "implementation": "root-Makefile-default-assertions-and-git-comment-v1",
+      "finished": "2026-10-21T05:33:40.684847+00:00"
+    },
+    {
+      "name": "native-compile",
+      "status": "PASS",
+      "started": "2026-10-21T05:33:41.071804+00:00",
+      "environment": {
+        "JAVA_OPTS": "-Xmx1g -XX:ActiveProcessorCount=2",
+        "JAVA_TOOL_OPTIONS": "-XX:ActiveProcessorCount=2"
+      },
+      "command": [
+        "/usr/bin/time",
+        "-v",
+        "-o",
+        "/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/build-06/split/native-compile.time.log",
+        "/usr/bin/make",
+        "emu",
+        "CONFIG=MinimalConfig",
+        "NUM_CORES=1",
+        "EMU_THREADS=1",
+        "JVM_XMX=6G",
+        "JVM_XSS=16m",
+        "OPT_FAST=-O3",
+        "OPT_SLOW=-O0",
+        "EMU_TRACE=0",
+        "WITH_CHISELDB=0",
+        "WITH_CONSTANTIN=0",
+        "WITH_ROLLINGDB=0",
+        "-j2",
+        "SHELL=/usr/bin/bash",
+        "TIME_CMD=/usr/bin/time -avp -o '$(TIMELOG)'",
+        "CXX=/usr/bin/clang++-19",
+        "CC=/usr/bin/clang-19",
+        "LINK=/usr/bin/clang++-19 --ld-path=/usr/bin/x86_64-linux-gnu-ld.bfd",
+        "AR=/usr/bin/x86_64-linux-gnu-ar",
+        "CFG_GCH_IF_CLANG=.gch",
+        "CFG_CXXFLAGS_PCH_I=-include-pch",
+        "PYTHON3=/usr/bin/python3.12",
+        "PERL=/usr/bin/perl"
+      ],
+      "exit_code": 0,
+      "finished": "2026-10-21T05:45:25.095148+00:00"
+    }
+  ],
+  "pins_sha256": "01bff19827d6f13ea25907d968bc09c7145a4a507b444c50a3039c70be26e005",
+  "finished": "2026-10-21T05:45:25.095445+00:00",
+  "emu_sha256": "b2b8f01324613f44f5c2ab9b1f4948f1bbe7db15457383d450608014d5c1ece9"
+}

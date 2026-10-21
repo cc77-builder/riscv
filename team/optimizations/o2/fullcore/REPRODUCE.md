@@ -1,10 +1,12 @@
+> 2026-10-21封存：0484构建成功，03重审INCOMPLETE（PARTIAL_KILL缺失）。命令模板不代表验收通过；旧证据和后续H1源码分别绑定身份。
+
 # G3 执行与离线复核
 
 ## 当前 Linux LF 与新输入入口（2026-10-21）
 
 本次来源和结果以[当前源码复验记录](../../../docs/o5-current-fullcore-20261021.md)为准；下方2026-10-19身份保留为历史说明。先准备干净的Linux LF检出、递归依赖和显式 `o2-g3-current-inputs-v1` 合同，运行 O5 预检。重新构建的输入须保留源码、命令、工具及产物回执；不能仅改旧路径或SHA。
 
-内存受限机器显式使用 `build_fullcore.py --recipe split-v1 --output /absolute/new/build-receipt`，其schema 3阶段合同与默认direct合同分别记录。先将已有checkout `build/`完整保存到其他目录。成功回执必须为 `O2_FULLCORE_BUILD_PASS`；随后使用其 `hardware-inputs.json` 和同一个新EMU运行：
+内存受限机器显式使用 `build_fullcore.py --recipe split-v1 --output /absolute/new/build-receipt`；需要Clang 19时显式改为 `--recipe split-clang-v2`，显式约束实际编译/归档/链接链；旧v1不再用于新Clang复验。schema 3阶段合同与默认direct合同分别记录，不能据此直接混作G4配对。先将已有checkout `build/`完整保存到其他目录。成功回执必须为 `O2_FULLCORE_BUILD_PASS`；随后使用其 `hardware-inputs.json` 和同一个新EMU运行：
 
 ```bash
 python3 -B team/optimizations/o2/fullcore/run_suite.py \
@@ -22,6 +24,8 @@ python3 -B team/optimizations/o2/fullcore/recheck.py \
 ```
 
 两个运行入口必须使用同一输入合同、硬件pins和EMU。预检只判输入就绪；完整G3还要求全部实际作业、真实DiffTest负控、同镜像正常恢复、六项覆盖和离线重审通过。下方旧便携归档流程不能直接作为新输入合同的跨机执行证明。
+
+若复核本轮旧门禁的批量提交PC误拒绝，所有EMU作业结束后保留Linux HEAD及原运行检查器，仅从固定修复提交部署其 `recheck.py`，显式追加 `--runtime-gate-commit 2b6c5d6c1d29cc4a933f73853ce2ccbfc449f2fa`。该参数同时绑定正在执行的审计器和从Git读取的runtime gate，不接受HEAD等浮动引用。使用新的输出目录并保存部署及启动回执；不要替换原runtime_gate.py，否则原supplements来源校验会拒绝。原失败结果、日志及启动账本不改，修正结果单列。具体实际路径及脚本随本轮证据保存。
 
 本页是工程操作说明，不是 T16 报告。已有运行不要覆盖或重启；最终结论及证据位置见 README。所有命令均从完整香山 checkout 的根目录执行。Windows 材料目录不是硬件构建目录。
 

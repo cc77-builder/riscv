@@ -1,0 +1,78 @@
+
+[mill] Generating Verilog files...
+Wed, 21 Oct 2026 05:25:54 +0000
+	Command being timed: "mill -i -Djvm-xmx=6G -Djvm-xss=16m xiangshan.test.runMain top.SimTop --target-dir build/rtl --config MinimalConfig --issue E.b --firtool-opt --repl-seq-mem --repl-seq-mem-file=SimTop.sv.conf --num-cores 1 --dump-fir --target chirrtl --split-verilog --firtool-opt -O=release --disable-annotation-unknown --lowering-options=explicitBitcast,disallowLocalVariables,disallowPortDeclSharing,locationInfoStyle=none --enable-difftest --full-stacktrace"
+	User time (seconds): 144.44
+	System time (seconds): 16.75
+	Percent of CPU this job got: 163%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:38.55
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 7100044
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 1952
+	Minor (reclaiming a frame) page faults: 2007808
+	Voluntary context switches: 328585
+	Involuntary context switches: 318
+	Swaps: 0
+	File system inputs: 367344
+	File system outputs: 2065216
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+
+[verilator] Generating C++ files...
+Wed, 21 Oct 2026 05:33:41 +0000
+	Command being timed: "verilator --exe -O3 --cc --top-module SimTop +define+VERILATOR=1 +define+PRINTF_COND=1 +define+RANDOMIZE_REG_INIT +define+RANDOMIZE_MEM_INIT +define+RANDOMIZE_GARBAGE_ASSIGN +define+RANDOMIZE_DELAY=0 -Wno-STMTDLY -Wno-WIDTH --max-num-width 150000 --assert --x-assign unique --output-split 30000 --output-split-cfuncs 30000 -I/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/build/rtl -I/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/build/generated-src -CFLAGS -I/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/difftest/src/test/csrc/common -I/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/difftest/config -DNOOP_HOME=\"/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo\" -I/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/build/generated-src -I/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/difftest/src/test/csrc/plugin/include -I/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/difftest/src/test/csrc/difftest -DREF_PROXY=NemuProxy -DREF_HOME=\"/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/inputs/xs-env/NEMU\" -I/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/difftest/src/test/csrc/plugin/spikedasm -I/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/difftest/src/test/csrc/verilator -DVERILATOR -DNUM_CORES=1 --std=c++17 -DVERILATOR_4_210 -DEMU_THREAD=1 -LDFLAGS -lz -lzstd -ldl -CFLAGS $(PGO_CFLAGS) -LDFLAGS $(PGO_LDFLAGS) -o /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/build/emu +define+DIFFTEST --instr-count-dpi 1 --no-timing +define+VERILATOR_5 --threads 1 --threads-dpi all -Mdir /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/build/emu-compile /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/build/rtl/SimTop.sv /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/difftest/src/test/vsrc/common/ref.v /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/difftest/src/test/vsrc/common/assert.v /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/difftest/src/test/vsrc/common/SimJTAG.v /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/difftest/src/test/csrc/common/device.cpp /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/difftest/src/test/csrc/common/query.cpp /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/difftest/src/test/csrc/common/uart.cpp /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/difftest/src/test/csrc/common/ram.cpp /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/difftest/src/test/csrc/common/dut.cpp /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/difftest/src/test/csrc/common/golden.cpp /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/difftest/src/test/csrc/common/elfloader.cpp /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/difftest/src/test/csrc/common/keyboard.cpp /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/difftest/src/test/csrc/common/remote_bitbang.cpp /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/difftest/src/test/csrc/common/flash.cpp /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/difftest/src/test/csrc/common/sdcard.cpp /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/difftest/src/test/csrc/common/compress.cpp /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/difftest/src/test/csrc/common/lightsss.cpp /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/difftest/src/test/csrc/common/common.cpp /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/difftest/src/test/csrc/common/vga.cpp /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/difftest/src/test/csrc/common/perf.cpp /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/difftest/src/test/csrc/common/mpool.cpp /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/difftest/src/test/csrc/common/coverage.cpp /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/difftest/src/test/csrc/common/main.cpp /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/difftest/src/test/csrc/common/SimJTAG.cpp /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/build/generated-src/difftest-dpic.cpp /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/difftest/src/test/csrc/difftest/goldenmem.cpp /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/difftest/src/test/csrc/difftest/difftrace.cpp /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/difftest/src/test/csrc/difftest/refproxy.cpp /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/difftest/src/test/csrc/difftest/difftest.cpp /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/difftest/src/test/csrc/plugin/spikedasm/spikedasm.cpp /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/difftest/src/test/csrc/verilator/emu.cpp /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/difftest/src/test/csrc/verilator/snapshot.cpp"
+	User time (seconds): 220.88
+	System time (seconds): 9.04
+	Percent of CPU this job got: 100%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 3:49.80
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 7311708
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 1897962
+	Voluntary context switches: 5
+	Involuntary context switches: 238
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 1883328
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+
+[c++] Compiling C++ files...
+Wed, 21 Oct 2026 05:37:31 +0000
+	Command being timed: "/usr/bin/make -s VM_PARALLEL_BUILDS=1 OPT_SLOW=-O0 OPT_FAST=-O3 PGO_CFLAGS= PGO_LDFLAGS= -C /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/build/emu-compile -f /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/build/emu-compile/VSimTop.mk"
+	User time (seconds): 845.81
+	System time (seconds): 94.67
+	Percent of CPU this job got: 199%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 7:52.53
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 1795084
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 89
+	Minor (reclaiming a frame) page faults: 33528628
+	Voluntary context switches: 2326
+	Involuntary context switches: 1954
+	Swaps: 0
+	File system inputs: 1744
+	File system outputs: 1801136
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

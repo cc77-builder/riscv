@@ -1,0 +1,146 @@
+{
+  "status": "RUNNING",
+  "profile": "split-v1",
+  "started": "2026-10-21T04:15:16.703425+00:00",
+  "phases": [
+    {
+      "name": "scala-compile",
+      "status": "PASS",
+      "started": "2026-10-21T04:15:16.805013+00:00",
+      "environment": {
+        "JAVA_OPTS": "-Xmx3g -XX:ActiveProcessorCount=2",
+        "JAVA_TOOL_OPTIONS": "-XX:ActiveProcessorCount=2"
+      },
+      "command": [
+        "/usr/bin/time",
+        "-v",
+        "-o",
+        "/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/build-04/split/scala-compile.time.log",
+        "/usr/bin/dash",
+        "/home/amesotten/.cache/codex-rvinno/t06/tools/mill-0.12.3",
+        "-i",
+        "-Djvm-xmx=6G",
+        "-Djvm-xss=16m",
+        "xiangshan.test.compile"
+      ],
+      "exit_code": 0,
+      "finished": "2026-10-21T04:15:19.065776+00:00"
+    },
+    {
+      "name": "fir-elaborate",
+      "status": "PASS",
+      "started": "2026-10-21T04:15:19.157858+00:00",
+      "environment": {
+        "JAVA_OPTS": "-Xmx1g -XX:ActiveProcessorCount=2",
+        "JAVA_TOOL_OPTIONS": "-XX:ActiveProcessorCount=2"
+      },
+      "command": [
+        "/usr/bin/time",
+        "-v",
+        "-o",
+        "/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/build-04/split/fir-elaborate.time.log",
+        "/usr/bin/make",
+        "sim-verilog",
+        "CONFIG=MinimalConfig",
+        "NUM_CORES=1",
+        "JVM_XMX=6G",
+        "JVM_XSS=16m",
+        "CHISEL_TARGET=chirrtl",
+        "-j1",
+        "SHELL=/usr/bin/bash",
+        "TIME_CMD=/usr/bin/time -avp -o '$(TIMELOG)'",
+        "CXX=/usr/bin/x86_64-linux-gnu-g++-13",
+        "CC=/usr/bin/x86_64-linux-gnu-gcc-13"
+      ],
+      "exit_code": 0,
+      "finished": "2026-10-21T04:16:59.245761+00:00"
+    },
+    {
+      "name": "fir-lower",
+      "status": "PASS",
+      "started": "2026-10-21T04:16:59.349161+00:00",
+      "environment": {},
+      "command": [
+        "/usr/bin/time",
+        "-v",
+        "-o",
+        "/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/build-04/split/fir-lower.time.log",
+        "/home/amesotten/.cache/llvm-firtool/1.62.1/bin/firtool",
+        "build/rtl/SimTop.fir",
+        "--format=fir",
+        "--split-verilog",
+        "-o",
+        "build/rtl",
+        "--mlir-disable-threading",
+        "--repl-seq-mem",
+        "--repl-seq-mem-file=SimTop.sv.conf",
+        "-O=release",
+        "--disable-annotation-unknown",
+        "--lowering-options=explicitBitcast,disallowLocalVariables,disallowPortDeclSharing,locationInfoStyle=none"
+      ],
+      "exit_code": 0,
+      "finished": "2026-10-21T04:22:59.688865+00:00"
+    },
+    {
+      "name": "memory-generate",
+      "status": "PASS",
+      "started": "2026-10-21T04:22:59.791124+00:00",
+      "environment": {},
+      "command": [
+        "/usr/bin/time",
+        "-v",
+        "-o",
+        "/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/build-04/split/memory-generate.time.log",
+        "/usr/bin/bash",
+        "scripts/gen_sep_mem.sh",
+        "scripts/vlsi_mem_gen",
+        "build/rtl/SimTop.sv.conf",
+        "build/rtl"
+      ],
+      "exit_code": 0,
+      "finished": "2026-10-21T04:23:00.677482+00:00"
+    },
+    {
+      "name": "rtl-postprocess",
+      "status": "PASS",
+      "started": "2026-10-21T04:23:00.779910+00:00",
+      "environment": {},
+      "implementation": "root-Makefile-default-assertions-and-git-comment-v1",
+      "finished": "2026-10-21T04:23:13.361296+00:00"
+    },
+    {
+      "name": "native-compile",
+      "status": "RUNNING",
+      "started": "2026-10-21T04:23:13.470069+00:00",
+      "environment": {
+        "JAVA_OPTS": "-Xmx1g -XX:ActiveProcessorCount=2",
+        "JAVA_TOOL_OPTIONS": "-XX:ActiveProcessorCount=2"
+      },
+      "command": [
+        "/usr/bin/time",
+        "-v",
+        "-o",
+        "/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/build-04/split/native-compile.time.log",
+        "/usr/bin/make",
+        "emu",
+        "CONFIG=MinimalConfig",
+        "NUM_CORES=1",
+        "EMU_THREADS=1",
+        "JVM_XMX=6G",
+        "JVM_XSS=16m",
+        "OPT_FAST=-O3",
+        "OPT_SLOW=-O0",
+        "EMU_TRACE=0",
+        "WITH_CHISELDB=0",
+        "WITH_CONSTANTIN=0",
+        "WITH_ROLLINGDB=0",
+        "-j2",
+        "SHELL=/usr/bin/bash",
+        "TIME_CMD=/usr/bin/time -avp -o '$(TIMELOG)'",
+        "CXX=/usr/bin/x86_64-linux-gnu-g++-13",
+        "CC=/usr/bin/x86_64-linux-gnu-gcc-13"
+      ]
+    }
+  ],
+  "pins_sha256": "828b743a19bfcc3864a232117dbbe4154639515151e266998af0c4511e9b3b01"
+}

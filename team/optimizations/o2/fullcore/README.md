@@ -1,8 +1,12 @@
+> 当前基线已封存：G3 INCOMPLETE，仅缺PARTIAL_KILL。seed=1补测未改变该结论。见[最终记录](../../../docs/o5-current-fullcore-20261021.md)。下方执行中措辞为历史阶段。
+
 # 当前源码复验（2026-10-21）
 
-本轮 Linux LF 和显式新输入准备见[当前复验记录](../../../docs/o5-current-fullcore-20261021.md)。3430项软件输入严格预检通过，当前源码全核构建继续执行；下方 G3 成绩为2026-10-19冻结版本，不代表本轮结果。
+本轮 Linux LF 和显式新输入准备见[当前复验记录](../../../docs/o5-current-fullcore-20261021.md)。3430项软件输入严格预检通过，0484候选全核构建通过，实际回归进行中；负控发现旧门禁未正确处理DiffTest批量提交PC，修复单独绑定2b6c提交并离线复核，原始判决保留。下方 G3 成绩为2026-10-19冻结版本，不代表本轮结果。
 
 内存受限机器可显式选择 `build_fullcore.py --recipe split-v1 --output /absolute/fresh-output`。此独立schema 3合同逐阶段绑定Scala编译、6G/16m FIR展开、单线程firtool、内存生成、断言后处理及g++编译；阶段顺序、工具字节与最终RTL库存必须一致。默认仍为原direct合同，不能将已有direct失败目录续作成功。每次必须使用新的输出目录和空的checkout `build/`，先保存旧产物。软件输入选择使用 `--input-contract`，不得重写冻结证据。
+
+若g++处理大生成文件时内存不足，可显式选择独立的 `--recipe split-clang-v2`，绑定Clang 19的驱动/动态实现、LINK/底层ld、AR及Verilator模板/运行时，其他优化/硬件参数相同。选择新profile需从新 `build/` 构建、重新绑定当前候选检查器；不能把Clang与GCC结果直接用作公平G4配对。分阶段流程降低并发峰值，不保证任意编译单元都低于固定内存上限。旧v1仅保留历史兼容；新Clang构建使用v2。
 
 # 先前整合入口说明（2026-10-20）
 

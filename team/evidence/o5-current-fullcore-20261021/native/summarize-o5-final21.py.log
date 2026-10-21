@@ -1,0 +1,210 @@
+{
+  "status": "O2_G3_OFFLINE_RECHECK_INCOMPLETE",
+  "source": "/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/runs/recheck-03/result.json",
+  "source_sha256": "c38f63aacfaf13ec25d98a216ee2a425313bc2c224afcbdca85856a1896e5d3d",
+  "build_source_commit": "0484f1feb25d0e8fa9fa281a643f1943eabc7bb5",
+  "runtime_gate_audit": {
+    "source_commit": "2b6c5d6c1d29cc4a933f73853ce2ccbfc449f2fa",
+    "source_path": "team/optimizations/o1/audit/runtime_gate.py",
+    "sha256": "172551fb537e93f33937819b1a7625e39986726c039266750adadb73e8ccc05c",
+    "snapshot": "/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/runs/recheck-03/new-checkers/runtime_gate.py",
+    "auditor_sha256": "65d3eb5384e03b49fec5a675ed77b4d7009c107a75f31e69ece547af6a14b861"
+  },
+  "emu_sha256": "b2b8f01324613f44f5c2ab9b1f4948f1bbe7db15457383d450608014d5c1ece9",
+  "selected_jobs": 14,
+  "actual_launches": 16,
+  "normal_jobs": 13,
+  "g3_complete": false,
+  "matrix_executed": 124,
+  "normal_vdot_commits": 5378,
+  "normal_reference_recovery": true,
+  "original_evidence_unchanged": true,
+  "coverage": {
+    "required": [
+      "MULTI_INFLIGHT",
+      "TRIPLE_OVERLAP",
+      "FULL_STALL",
+      "KILL_P",
+      "KILL_R",
+      "PARTIAL_KILL"
+    ],
+    "sources": {
+      "MULTI_INFLIGHT": [
+        {
+          "name": "control",
+          "count": 284
+        },
+        {
+          "name": "dense-batch128",
+          "count": 668
+        },
+        {
+          "name": "o2-diagnostic",
+          "count": 896
+        },
+        {
+          "name": "o2-control-diagnostic",
+          "count": 938
+        }
+      ],
+      "TRIPLE_OVERLAP": [
+        {
+          "name": "control",
+          "count": 57
+        },
+        {
+          "name": "dense-batch128",
+          "count": 564
+        },
+        {
+          "name": "o2-diagnostic",
+          "count": 773
+        },
+        {
+          "name": "o2-control-diagnostic",
+          "count": 710
+        }
+      ],
+      "FULL_STALL": [
+        {
+          "name": "control",
+          "count": 13
+        }
+      ],
+      "KILL_P": [
+        {
+          "name": "control",
+          "count": 3
+        },
+        {
+          "name": "dense-batch128",
+          "count": 6
+        },
+        {
+          "name": "o2-control-diagnostic",
+          "count": 32
+        }
+      ],
+      "KILL_R": [
+        {
+          "name": "control",
+          "count": 2
+        },
+        {
+          "name": "dense-batch128",
+          "count": 2
+        },
+        {
+          "name": "o2-control-diagnostic",
+          "count": 26
+        }
+      ],
+      "PARTIAL_KILL": []
+    },
+    "complete": false,
+    "missing": [
+      "PARTIAL_KILL"
+    ]
+  },
+  "verdicts": [
+    {
+      "name": "hello-vadd",
+      "status": "HELLO_VADD_PASS",
+      "exit_code": 0,
+      "original_status": "HELLO_VADD_PASS",
+      "commits": 0
+    },
+    {
+      "name": "negative-vdot",
+      "status": "EXPECTED_VDOT_HIGHBIT_REJECTION",
+      "exit_code": 1,
+      "original_status": "FAILED",
+      "commits": 1
+    },
+    {
+      "name": "functional-0",
+      "status": "VDOT_MATRIX_SHARD_PASS",
+      "exit_code": 0,
+      "original_status": "VDOT_MATRIX_SHARD_PASS",
+      "commits": 10
+    },
+    {
+      "name": "functional-1",
+      "status": "VDOT_MATRIX_SHARD_PASS",
+      "exit_code": 0,
+      "original_status": "VDOT_MATRIX_SHARD_PASS",
+      "commits": 11
+    },
+    {
+      "name": "functional-2",
+      "status": "VDOT_MATRIX_SHARD_PASS",
+      "exit_code": 0,
+      "original_status": "VDOT_MATRIX_SHARD_PASS",
+      "commits": 11
+    },
+    {
+      "name": "functional-3",
+      "status": "VDOT_MATRIX_SHARD_PASS",
+      "exit_code": 0,
+      "original_status": "VDOT_MATRIX_SHARD_PASS",
+      "commits": 11
+    },
+    {
+      "name": "functional-4",
+      "status": "VDOT_MATRIX_SHARD_PASS",
+      "exit_code": 0,
+      "original_status": "VDOT_MATRIX_SHARD_PASS",
+      "commits": 11
+    },
+    {
+      "name": "functional-5",
+      "status": "VDOT_MATRIX_SHARD_PASS",
+      "exit_code": 0,
+      "original_status": "VDOT_MATRIX_SHARD_PASS",
+      "commits": 11
+    },
+    {
+      "name": "functional-6",
+      "status": "VDOT_MATRIX_SHARD_PASS",
+      "exit_code": 0,
+      "original_status": "VDOT_MATRIX_SHARD_PASS",
+      "commits": 11
+    },
+    {
+      "name": "functional-7",
+      "status": "VDOT_MATRIX_SHARD_PASS",
+      "exit_code": 0,
+      "original_status": "VDOT_MATRIX_SHARD_PASS",
+      "commits": 11
+    },
+    {
+      "name": "control",
+      "status": "O2_CONTROL_LEGACY_PASS",
+      "exit_code": 0,
+      "original_status": "O2_CONTROL_LEGACY_PASS",
+      "commits": 2157
+    },
+    {
+      "name": "dense-batch128",
+      "status": "O2_DENSE_ELASTIC_AND_WINDOWS_PASS",
+      "exit_code": 0,
+      "original_status": "O2_DENSE_ELASTIC_AND_WINDOWS_PASS",
+      "commits": 768
+    },
+    {
+      "name": "o2-diagnostic",
+      "status": "O2_SUPPLEMENT_PASS",
+      "exit_code": 0,
+      "original_status": null,
+      "commits": 1158
+    },
+    {
+      "name": "o2-control-diagnostic",
+      "status": "O2_SUPPLEMENT_PASS",
+      "exit_code": 0,
+      "original_status": null,
+      "commits": 1208
+    }
+  ],
+  "scope": "Derivative summary only; no additional emulator execution or performance measurement"
+}

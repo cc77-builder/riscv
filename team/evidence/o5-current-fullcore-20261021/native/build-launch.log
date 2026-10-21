@@ -1,0 +1,32 @@
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/team/optimizations/o1/build_recipe.py", line 51, in probe_tools
+    version=subprocess.check_output([str(path), option], text=True, stderr=subprocess.STDOUT))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 1026, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.12/subprocess.py", line 1955, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+OSError: [Errno 8] Exec format error: '/home/amesotten/.cache/codex-rvinno/t06/tools/mill-0.12.3'
+Traceback (most recent call last):
+  File "/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/team/optimizations/o2/fullcore/build_fullcore.py", line 130, in <module>
+    raise SystemExit(main(parser.parse_args().output))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/team/optimizations/o2/fullcore/build_fullcore.py", line 66, in main
+    contract = build_recipe.capture(ROOT)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/team/optimizations/o1/build_recipe.py", line 71, in capture
+    captured = json.loads(subprocess.check_output(["bash", "-c", command], cwd=root, text=True, env=clean))
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['bash', '-c', 'source team/scripts/activate.sh\npython3 -c \'import json,runpy; helper=runpy.run_path(\'"\'"\'/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/team/optimizations/o1/build_recipe.py\'"\'"\'); print(json.dumps(helper[\'"\'"\'probe_tools\'"\'"\']()))\'']' returned non-zero exit status 1.

@@ -1,0 +1,58 @@
+{
+  "status": "REAL_LOG_CORRUPTION_PROBES_PASS",
+  "raw_sha256": "c8054d63390d4390deb93a8cff9b38b6d44e753ceaa8d77bab7649fe4995c1b7",
+  "checker_sha256": "172551fb537e93f33937819b1a7625e39986726c039266750adadb73e8ccc05c",
+  "probes": {
+    "missing_injected_slot": {
+      "status": "REJECTED",
+      "reason": "incomplete latest commit group",
+      "mutated_sha256": "b9e650276e4f92cd8287a33d05dcc162ae154950f67687bd81b8c4c4b11687a3"
+    },
+    "duplicate_injected_slot": {
+      "status": "REJECTED",
+      "reason": "invalid/duplicate instruction trace slot or destination",
+      "mutated_sha256": "00ab0e84deeb44dfc34c09b0ee30d02ea68662cec57bf36d04bc36d5ac53c28a"
+    },
+    "wrong_group_count": {
+      "status": "REJECTED",
+      "reason": "commit count does not bind the displayed group",
+      "mutated_sha256": "668757489d61afad2b7a3d69122529f2c05a99b94d9ce7c597af35954382593c"
+    },
+    "wrong_reference_group": {
+      "status": "REJECTED",
+      "reason": "negative mismatch belongs to another or unrepresentable commit group",
+      "mutated_sha256": "b95e08c50a9f96249315a9604bac4882ed61c357f7c96915903a75cea743c9aa"
+    },
+    "wrong_word": {
+      "status": "REJECTED",
+      "reason": "injected vdot not uniquely present in failing commit group",
+      "mutated_sha256": "bee5599a277a4d763f18e1d2000e7f58a75e8cddc5efd7aa81d745c66db04b25"
+    },
+    "wrong_write_enable": {
+      "status": "REJECTED",
+      "reason": "injected vdot not uniquely present in failing commit group",
+      "mutated_sha256": "cd0b5ee2b12cfeec8215e8b9e9b89240fff14b1d6bb967a54c1d5f40db9c84a9"
+    },
+    "duplicate_latest_instruction": {
+      "status": "REJECTED",
+      "reason": "missing/ambiguous latest commit group evidence",
+      "mutated_sha256": "0035089f29864b34769d4a0ae0ffe2cead2c6600aaff32334ad587ab759b98c8"
+    },
+    "wrong_bit": {
+      "status": "REJECTED",
+      "reason": "negative mismatch is not exactly vector bit100",
+      "mutated_sha256": "9f13c2c9a74aca863e2199b609afb064b8304f5e602d913c9170ab98cf6d7cd1"
+    },
+    "unrelated_fatal": {
+      "status": "REJECTED",
+      "reason": "unrelated runtime failure marker",
+      "mutated_sha256": "52f55ea2b783805f6baf4a62ce4eab420e046d99925f39c482d5a86f2c27fc0f"
+    },
+    "duplicate_abort": {
+      "status": "REJECTED",
+      "reason": "expected exactly one canonical Core 0 ABORT",
+      "mutated_sha256": "b980bde7cfb8b5d929d4639df89e6ec24801a1c6b7a7ee723c4d44ff1a155090"
+    }
+  },
+  "new_emu_run": false
+}

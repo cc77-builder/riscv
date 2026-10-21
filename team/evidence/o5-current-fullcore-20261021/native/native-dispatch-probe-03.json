@@ -1,0 +1,26 @@
+{
+  "command": [
+    "make",
+    "emu",
+    "CONFIG=MinimalConfig",
+    "NUM_CORES=1",
+    "EMU_THREADS=1",
+    "JVM_XMX=12G",
+    "OPT_FAST=-O3",
+    "OPT_SLOW=-O0",
+    "EMU_TRACE=0",
+    "WITH_CHISELDB=0",
+    "WITH_CONSTANTIN=0",
+    "WITH_ROLLINGDB=0",
+    "-j2",
+    "SHELL=/usr/bin/bash",
+    "TIME_CMD=/usr/bin/time -avp -o '$(TIMELOG)'",
+    "CXX=/usr/bin/x86_64-linux-gnu-g++-13",
+    "CC=/usr/bin/x86_64-linux-gnu-gcc-13"
+  ],
+  "exit_code": 0,
+  "stdout": "/usr/bin/time -avp -o '/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/native-dispatch-8s279x06/timing output.log' mill --version\nMill Build Tool version 0.12.3\nJava version: 21.0.12.1, vendor: Ubuntu, runtime: /usr/lib/jvm/java-21-openjdk-amd64\nDefault locale: en, platform encoding: UTF-8\nOS name: \"Linux\", version: 6.6.87.2-microsoft-standard-WSL2, arch: amd64\n",
+  "stderr": "Picked up JAVA_TOOL_OPTIONS: -XX:ActiveProcessorCount=2\nPicked up JAVA_TOOL_OPTIONS: -XX:ActiveProcessorCount=2\n",
+  "timing": "\tCommand being timed: \"mill --version\"\n\tUser time (seconds): 0.58\n\tSystem time (seconds): 0.25\n\tPercent of CPU this job got: 83%\n\tElapsed (wall clock) time (h:mm:ss or m:ss): 0:01.01\n\tAverage shared text size (kbytes): 0\n\tAverage unshared data size (kbytes): 0\n\tAverage stack size (kbytes): 0\n\tAverage total size (kbytes): 0\n\tMaximum resident set size (kbytes): 71424\n\tAverage resident set size (kbytes): 0\n\tMajor (requiring I/O) page faults: 426\n\tMinor (reclaiming a frame) page faults: 20806\n\tVoluntary context switches: 3901\n\tInvoluntary context switches: 3\n\tSwaps: 0\n\tFile system inputs: 98904\n\tFile system outputs: 200\n\tSocket messages sent: 0\n\tSocket messages received: 0\n\tSignals delivered: 0\n\tPage size (bytes): 4096\n\tExit status: 0\n",
+  "scope": "Actual bound GNU time/Make/POSIX fallback launches installed Mill payload; no RTL build"
+}

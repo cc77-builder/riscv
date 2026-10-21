@@ -1,0 +1,264 @@
+{
+  "contract": {
+    "schema": 3,
+    "make_args": [
+      "CONFIG=MinimalConfig",
+      "NUM_CORES=1",
+      "EMU_THREADS=1",
+      "JVM_XMX=6G",
+      "JVM_XSS=16m",
+      "OPT_FAST=-O3",
+      "OPT_SLOW=-O0",
+      "EMU_TRACE=0",
+      "WITH_CHISELDB=0",
+      "WITH_CONSTANTIN=0",
+      "WITH_ROLLINGDB=0",
+      "-j2"
+    ],
+    "compilers": {
+      "cxx": {
+        "path": "/usr/bin/clang++-19",
+        "sha256": "f6d5286a52de10b1e3e8841457c9903a1ea28f222ac0f58cd616697d0dcd9db3",
+        "version": "Ubuntu clang version 19.1.1 (1ubuntu1~24.04.2)\nTarget: x86_64-pc-linux-gnu\nThread model: posix\nInstalledDir: /usr/lib/llvm-19/bin\n",
+        "payload_path": "/usr/lib/llvm-19/bin/clang"
+      },
+      "cc": {
+        "path": "/usr/bin/clang-19",
+        "sha256": "f6d5286a52de10b1e3e8841457c9903a1ea28f222ac0f58cd616697d0dcd9db3",
+        "version": "Ubuntu clang version 19.1.1 (1ubuntu1~24.04.2)\nTarget: x86_64-pc-linux-gnu\nThread model: posix\nInstalledDir: /usr/lib/llvm-19/bin\n",
+        "payload_path": "/usr/lib/llvm-19/bin/clang"
+      },
+      "java": {
+        "path": "/usr/lib/jvm/java-21-openjdk-amd64/bin/java",
+        "sha256": "635baf419576ec4ad4f785014283fb93f1be1103e6d02252f7a00517f0e2a245",
+        "version": "Picked up JAVA_TOOL_OPTIONS: -XX:ActiveProcessorCount=2\nopenjdk version \"21.0.12.1\" 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-24.04.4-Ubuntu)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-24.04.4-Ubuntu, mixed mode, sharing)\n"
+      },
+      "bash": {
+        "path": "/usr/bin/bash",
+        "sha256": "bc5945feb8bd26203ebfafea5ce1878bb2e32cb8fb50ab7ae395cfb1e1aaaef1",
+        "version": "GNU bash, version 5.2.21(1)-release (x86_64-pc-linux-gnu)\nCopyright (C) 2022 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>\n\nThis is free software; you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law.\n"
+      },
+      "sh": {
+        "path": "/usr/bin/dash",
+        "sha256": "86d31f6fb799e91fa21bad341484564510ca287703a16e9e46c53338776f4f42",
+        "version": "POSIX shell ENOEXEC fallback\n"
+      },
+      "time": {
+        "path": "/usr/bin/time",
+        "sha256": "3b11dec50514a8473e9f6efa7a34d584d0657538c09988f61b72d38ad4991a10",
+        "version": "time (GNU Time) UNKNOWN\nCopyright (C) 2018 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.\nThis is free software: you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law.\n\nWritten by David Keppel, David MacKenzie, and Assaf Gordon.\n"
+      },
+      "mill": {
+        "path": "/home/amesotten/.cache/codex-rvinno/t06/tools/mill-0.12.3",
+        "sha256": "336346091edc69b248c306ca51aaccb73d888d8bf525ce45e02df89db449b41d",
+        "version": "Picked up JAVA_TOOL_OPTIONS: -XX:ActiveProcessorCount=2\nPicked up JAVA_TOOL_OPTIONS: -XX:ActiveProcessorCount=2\nMill Build Tool version 0.12.3\nJava version: 21.0.12.1, vendor: Ubuntu, runtime: /usr/lib/jvm/java-21-openjdk-amd64\nDefault locale: en, platform encoding: UTF-8\nOS name: \"Linux\", version: 6.6.87.2-microsoft-standard-WSL2, arch: amd64\n"
+      },
+      "verilator": {
+        "path": "/usr/bin/verilator",
+        "sha256": "4c6292ab82e57b7f34ab26dbae86ba9c494bacfb088b6ff34be93c553d1301b1",
+        "version": "Verilator 5.020 2024-01-01 rev (Debian 5.020-1)\n"
+      },
+      "firtool": {
+        "path": "/home/amesotten/.cache/llvm-firtool/1.62.1/bin/firtool",
+        "sha256": "7f52d2a3782d09736895f66e7eb0e5cc4b3b1b18aa1ad0d04fca4cd6e42cd2ee",
+        "version": "LLVM (http://llvm.org/):\n  LLVM version 18.0.0git\n  Optimized build.\nCIRCT firtool-1.62.1\n"
+      },
+      "python": {
+        "path": "/usr/bin/python3.12",
+        "sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+        "version": "Python 3.12.3\n"
+      },
+      "make": {
+        "path": "/usr/bin/make",
+        "sha256": "d78b8f1d099fbcfb6f2f49ab87223b9b68fb3956642f92d6ec6de812e8afa965",
+        "version": "GNU Make 4.3\nBuilt for x86_64-pc-linux-gnu\nCopyright (C) 1988-2020 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>\nThis is free software: you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law.\n"
+      },
+      "verilator_bin": {
+        "path": "/usr/bin/verilator_bin",
+        "sha256": "25f33046f0055a6982c67cdc55081685a844abb50d044cfda087bd418db9be6c",
+        "version": "Verilator 5.020 2024-01-01 rev (Debian 5.020-1)\n"
+      }
+    },
+    "mill_launch": [
+      "/usr/bin/dash",
+      "/home/amesotten/.cache/codex-rvinno/t06/tools/mill-0.12.3"
+    ],
+    "launch_metadata": {
+      ".mill-version": {
+        "sha256": "01a507eda916863d2c56c6d24b13985c877640445bb13e272692d67ccf33f057",
+        "value": "0.12.3"
+      }
+    },
+    "environment_sha256": "13093f048ef303c466b077a5e764ea17bbd70aed67d97c4795e2564e639d27a7",
+    "recipe_sha256": "287687493be39653e945b34b4bbf032024fad6a3a5b57ad26a452ac75df3f4c2",
+    "profile": "split-clang-v1",
+    "phases": [
+      {
+        "name": "scala-compile",
+        "mill_args": [
+          "-i",
+          "-Djvm-xmx=6G",
+          "-Djvm-xss=16m",
+          "xiangshan.test.compile"
+        ],
+        "environment": {
+          "JAVA_OPTS": "-Xmx3g -XX:ActiveProcessorCount=2",
+          "JAVA_TOOL_OPTIONS": "-XX:ActiveProcessorCount=2"
+        }
+      },
+      {
+        "name": "fir-elaborate",
+        "make_args": [
+          "sim-verilog",
+          "CONFIG=MinimalConfig",
+          "NUM_CORES=1",
+          "JVM_XMX=6G",
+          "JVM_XSS=16m",
+          "CHISEL_TARGET=chirrtl",
+          "-j1"
+        ],
+        "environment": {
+          "JAVA_OPTS": "-Xmx1g -XX:ActiveProcessorCount=2",
+          "JAVA_TOOL_OPTIONS": "-XX:ActiveProcessorCount=2"
+        }
+      },
+      {
+        "name": "fir-lower",
+        "firtool_args": [
+          "build/rtl/SimTop.fir",
+          "--format=fir",
+          "--split-verilog",
+          "-o",
+          "build/rtl",
+          "--mlir-disable-threading",
+          "--repl-seq-mem",
+          "--repl-seq-mem-file=SimTop.sv.conf",
+          "-O=release",
+          "--disable-annotation-unknown",
+          "--lowering-options=explicitBitcast,disallowLocalVariables,disallowPortDeclSharing,locationInfoStyle=none"
+        ]
+      },
+      {
+        "name": "memory-generate",
+        "script": "scripts/gen_sep_mem.sh",
+        "arguments": [
+          "scripts/vlsi_mem_gen",
+          "build/rtl/SimTop.sv.conf",
+          "build/rtl"
+        ]
+      },
+      {
+        "name": "rtl-postprocess",
+        "implementation": "root-Makefile-default-assertions-and-git-comment-v1"
+      },
+      {
+        "name": "native-compile",
+        "make_args": [
+          "emu",
+          "CONFIG=MinimalConfig",
+          "NUM_CORES=1",
+          "EMU_THREADS=1",
+          "JVM_XMX=6G",
+          "JVM_XSS=16m",
+          "OPT_FAST=-O3",
+          "OPT_SLOW=-O0",
+          "EMU_TRACE=0",
+          "WITH_CHISELDB=0",
+          "WITH_CONSTANTIN=0",
+          "WITH_ROLLINGDB=0",
+          "-j2"
+        ],
+        "environment": {
+          "JAVA_OPTS": "-Xmx1g -XX:ActiveProcessorCount=2",
+          "JAVA_TOOL_OPTIONS": "-XX:ActiveProcessorCount=2"
+        }
+      }
+    ],
+    "split_script_sha256": "89709db44fa4fbe614ac0c9037f3a52adbd73480603b4c5ff47c46c5f16be85e",
+    "compiler_commands": {
+      "cxx": "clang++-19",
+      "cc": "clang-19"
+    }
+  },
+  "commands": {
+    "scala-compile": [
+      "/usr/bin/dash",
+      "/home/amesotten/.cache/codex-rvinno/t06/tools/mill-0.12.3",
+      "-i",
+      "-Djvm-xmx=6G",
+      "-Djvm-xss=16m",
+      "xiangshan.test.compile"
+    ],
+    "fir-elaborate": [
+      "/usr/bin/make",
+      "sim-verilog",
+      "CONFIG=MinimalConfig",
+      "NUM_CORES=1",
+      "JVM_XMX=6G",
+      "JVM_XSS=16m",
+      "CHISEL_TARGET=chirrtl",
+      "-j1",
+      "SHELL=/usr/bin/bash",
+      "TIME_CMD=/usr/bin/time -avp -o '$(TIMELOG)'",
+      "CXX=/usr/bin/clang++-19",
+      "CC=/usr/bin/clang-19"
+    ],
+    "fir-lower": [
+      "/home/amesotten/.cache/llvm-firtool/1.62.1/bin/firtool",
+      "build/rtl/SimTop.fir",
+      "--format=fir",
+      "--split-verilog",
+      "-o",
+      "build/rtl",
+      "--mlir-disable-threading",
+      "--repl-seq-mem",
+      "--repl-seq-mem-file=SimTop.sv.conf",
+      "-O=release",
+      "--disable-annotation-unknown",
+      "--lowering-options=explicitBitcast,disallowLocalVariables,disallowPortDeclSharing,locationInfoStyle=none"
+    ],
+    "memory-generate": [
+      "/usr/bin/bash",
+      "scripts/gen_sep_mem.sh",
+      "scripts/vlsi_mem_gen",
+      "build/rtl/SimTop.sv.conf",
+      "build/rtl"
+    ],
+    "native-compile": [
+      "/usr/bin/make",
+      "emu",
+      "CONFIG=MinimalConfig",
+      "NUM_CORES=1",
+      "EMU_THREADS=1",
+      "JVM_XMX=6G",
+      "JVM_XSS=16m",
+      "OPT_FAST=-O3",
+      "OPT_SLOW=-O0",
+      "EMU_TRACE=0",
+      "WITH_CHISELDB=0",
+      "WITH_CONSTANTIN=0",
+      "WITH_ROLLINGDB=0",
+      "-j2",
+      "SHELL=/usr/bin/bash",
+      "TIME_CMD=/usr/bin/time -avp -o '$(TIMELOG)'",
+      "CXX=/usr/bin/clang++-19",
+      "CC=/usr/bin/clang-19"
+    ]
+  },
+  "probe_command": [
+    "/usr/bin/clang++-19",
+    "-std=c++17",
+    "-O3",
+    "/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/native-clang-probe-05/hello.cpp",
+    "-o",
+    "/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/native-clang-probe-05/hello"
+  ],
+  "compile_exit": 0,
+  "compile_stdout": "",
+  "compile_stderr": "",
+  "run_exit": 0,
+  "run_stdout": "CLANG_CPP_DRIVER_LINK_PASS\n",
+  "run_stderr": "",
+  "source_sha256": "717462952aaacbaa638f91dd343a99daa0905f469a5b647c0bbfb2ae13b015dc",
+  "scope": "Actual installed Clang 19 driver capture, tool verification and C++ std::cout linking; no hardware build or EMU run"
+}

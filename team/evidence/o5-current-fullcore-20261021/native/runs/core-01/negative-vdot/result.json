@@ -1,0 +1,36 @@
+{
+  "name": "negative-vdot",
+  "status": "FAILED",
+  "started": "2026-10-21T13:51:04.025060+08:00",
+  "command": [
+    "timeout",
+    "120m",
+    "/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/build/emu",
+    "-i",
+    "/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/inputs/t12/runs/t11-matrix-canonical/build-0/vdot-exceptions.bin",
+    "--flash=/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/inputs/t12/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+    "--ram-size=128MB",
+    "--diff=/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/inputs/t12/build-evidence/negative-reference.so",
+    "--max-cycles=5000000",
+    "--seed=1"
+  ],
+  "files": {
+    "/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/repo/build/emu": "b2b8f01324613f44f5c2ab9b1f4948f1bbe7db15457383d450608014d5c1ece9",
+    "/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/inputs/t12/nemu/reference/build/riscv64-nemu-interpreter-so": "268cca19012d83f0a3f07e5df20a1e06e3fbce41ac651fc726958d96231e5853",
+    "/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/inputs/t12/build-evidence/negative-reference.so": "6e6dc97e3786ca332fe64392154fe454416f2f636968399048970520ab3c2638",
+    "/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/inputs/t12/repo/team/workloads/hello-vadd/build/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+    "/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/inputs/t12/runs/t11-matrix-canonical/build-0/vdot-exceptions.bin": "8e6b40a390fcf6d84b151db8b1a9390668abaea58bcaa0f71b5225cb368f66ea"
+  },
+  "negative_target": "vdot",
+  "single_core": true,
+  "emu_threads": 1,
+  "exit_code": 1,
+  "raw_logs_sha256": {
+    "stdout.log": "03b647dfa0f5e53fc1f9d2a1aee908e257a86e825bb413f375093c5861aa0f68",
+    "stderr.log": "1f1ff69b82de62b7900bdce9bbb9f4e368f855ab623762c98e0b413a3a7f1190",
+    "run.log": "c8054d63390d4390deb93a8cff9b38b6d44e753ceaa8d77bab7649fe4995c1b7"
+  },
+  "log_format": "separate-streams-v1; derived run.log = stderr.log + stdout.log",
+  "error": "ValueError('negative mismatch must bind injected PC and vector register')",
+  "finished": "2026-10-21T13:56:26.947707+08:00"
+}

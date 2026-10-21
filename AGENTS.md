@@ -1,6 +1,10 @@
+# Current sealed baseline before H1 integration
+
+2026-10-21 本机 O2 基线：Linux LF、126个依赖、3430项输入及新全核构建通过。实际16次启动，选定14项作业；117个唯一矩阵用例/124次执行、5378条正常VDOT提交、bit100拒绝及恢复通过。严格重审为 INCOMPLETE，仅缺 PARTIAL_KILL；固定seed=1补测仍为0。原FAILED和两次INCOMPLETE均保留。该结果属于0484构建，不能用于随后H1整合源码的验收。O1/O2默认关闭，未推送，main不改；T17/人工ACK/新性能与PPA未完成。 See team/docs/o5-current-fullcore-20261021.md. Earlier states below are historical.
+
 # Current scope: Linux LF and current-source O2 G3, 2026-10-21
 
-Continue James_Hotten from 7d0630202. Native Linux LF checkout and 126 pinned dependencies are prepared. Explicit current-inputs-v1 restores/rebuilds missing prerequisites; 3,430 strictly checked input files pass. Three real build attempts are retained, including a kernel-confirmed OOM with no final native exit receipt. A fresh explicit split-v1 recipe separates JVM elaboration and serial firtool. Current full-core build is in progress; EMU regressions have not started. O1/O2 remain default-off; no push, main change, new performance/PPA claim or T17/member ACK. See team/docs/o5-current-fullcore-20261021.md. Earlier scope statements below are historical.
+Continue James_Hotten from 7d0630202. Native Linux LF checkout and 126 pinned dependencies are prepared. Explicit current-inputs-v1 restores/rebuilds missing prerequisites; 3,430 strictly checked input files pass. Four prior build attempts are retained: launcher failures, a kernel-confirmed JVM OOM, and a GCC memory-pressure interruption after 396 objects. Build05 at 3098ceb4e was stopped with a recorded failure after finding Verilator independently selects unbound LINK/AR. Fresh build06 at 0484f1feb uses explicit split-clang-v2 after a real Verilator/PCH/archive/link/run probe passed. LINK/AR/ld, Verilator support and Clang dynamic implementation are bound; preserve all earlier products. Temporary 8 GiB task-local swap must be disabled and removed when work completes. Build06 passed all stages and source/tool verification. Its EMU SHA is b2b8f01324613f44f5c2ab9b1f4948f1bbe7db15457383d450608014d5c1ece9; the current G3 campaign is running. O1/O2 remain default-off; no push, main change, new performance/PPA claim or T17/member ACK. See team/docs/o5-current-fullcore-20261021.md. Earlier scope statements below are historical.
 
 # Previous scope: reproduction readiness, 2026-10-21
 

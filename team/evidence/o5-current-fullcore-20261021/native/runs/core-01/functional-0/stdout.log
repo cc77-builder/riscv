@@ -1,0 +1,46 @@
+emu compiled at Oct 21 2026, 05:37:32
+Using seed = 1
+Using simulated 32768B flash
+use /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/inputs/t12/repo/team/workloads/hello-vadd/build/boot-flash.bin as flash bin
+Using simulated 128MB RAM
+The image is /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/inputs/t12/runs/t11-matrix-canonical/build-0/vdot-exceptions.bin
+The reference model is /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/inputs/t12/nemu/reference/build/riscv64-nemu-interpreter-so
+The first instruction of core 0 has commited. Difftest enabled. 
+[1;34m[src/monitor/image_loader.c:205,load_img] Loading flash image: /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/inputs/t12/repo/team/workloads/hello-vadd/build/boot-flash.bin
+[0m
+[1;34m[src/monitor/image_loader.c:250,load_img] Read 12 bytes from file /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/inputs/t12/repo/team/workloads/hello-vadd/build/boot-flash.bin to 0x0xf0000000[0m
+VDOT_BEGIN contract=vdot-s8x8-r32-v0.1 mode=full
+VDOT_LOG_FORMAT packed-u64-v1
+VDOT_PACKED id=H00-vadd-control result=PASS payload=gNeK0BSAAAEBgIS5gIAIAYCIuYCACAGAgMyBgKCBgICAAQiAAQGAAwGACAEMCoAHAQ4BDAoSgP///////////wEZARkBGQoKCg==
+VDOT_PACKED id=H01-ebreak result=PASS payload=gPOAQIABgAMCgOy2gIAIBIDwtoCACASAgMyBgKCBgICAAYCA/IGAoIGBgIABAYAAAguACAsCAYAHCw4LAgESgP///////////wEZGRkZGQEBAQ==
+VDOT_PACKED id=H02-VS-off result=PASS payload=gPOAQIABgAMCgOy2gIAIBIDwtoCACASAgMCBgKCBgICAAYCA8IGAoIGBgIABgAKAAAsLgAgLAgGABwsOCwIBEoD///////////8BGRkZGRkBAQE=
+VDOT_PACKED id=H03-vstart7 result=PASS payload=gPOAQIABgAMCgOy2gIAIBIDwtoCACASAgMyBgKCBgICAAYCA/IGAoIGBgIABAYAAAguACIAHAgEPCw4PAgEPgP///////////wEZGRkZGQEBAQ==
+VDOT_PACKED id=H04-vill result=PASS payload=gPOAQIABgAMCgOy2gIAIBIDwtoCACASAgMyBgKCBgICAAYCA/IGAoIGBgIABAYAAAoCAgICAgICAgIABCwsCAYAHDQsLAgESgP///////////wEZGRkZGQEBAQ==
+VDOT_PACKED id=H05-vadd-initial result=PASS payload=gNeK0BSAAAEBgIS5gIAIAYCIuYCACAGAgMSBgKCBgICAAYCAzIGAoIGAgIABgAEBCgGACAGAAwqABwEOARAKEoD///////////8BGQEZARkKCgo=
+VDOT_PACKED id=H06-vadd-clean result=PASS payload=gNeK0BSAAAEBgIS5gIAIAYCIuYCACAGAgMiBgKCBgICAAYCAzIGAoIGAgIABgAEBgAIBgAgBgAMKgAcBDgEQChKA////////////ARkBGQEZCgoK
+HARNESS_PACKED id=N01-wrong-pc result=TRAP_PROTOCOL payload=gPOAQIABgAMCgPC2gIAIgOy2gIAIBAWAgMyBgKCBgICAAYCA/IGAoIGBgIABgACAAgIKgAgKCgoKCgoKCgoKgP///////////wEZGRkKCgoKAQ==
+HARNESS_PACKED id=N02-wrong-high-byte result=VECTOR_CHANGED payload=gPOAQIABgAMCgOy2gIAIBIDwtoCACASAgMyBgKCBgICAAYCA/IGAoIGBgIABAYAAAguACAsLCwsLDgsLCwuA////////////ARkZgP///////////gEZGQsLAQ==
+HARNESS_PACKED id=N03-wrong-vs result=VS_CHANGED payload=gPOAQIABgAMCgOy2gIAIBIDwtoCACASAgMyBgKCBgICAAYCA9IGAoIGBgIABAYAAAguACAsLCwsLDgsLCwuA////////////ARkZGRkZCwsB
+HARNESS_SELFTEST_PASS cases=7 negative_controls=3
+VDOT_EXTENSION_BEGIN
+VDOT_PACKED id=D00 result=PASS payload=gIuK0BSAAAEBgMy4gIAIAYDQuICACAGAgMSBgKCBgICAAYCAzIGAoIGAgIABgAEBCgGACAEBAQEBDgEBAQGA////////////ARkBAQEBCgoK
+VDOT_PACKED id=D08 result=PASS payload=gIuK0BSAAAEBgMy4gIAIAYDQuICACAGAgMSBgKCBgICAAYCAzIGAoIGAgIABgAEBCgGACAEBAQEBDgEBAQGA////////////ARkBAQEBCgoK
+VDOT_PACKED id=L01-5 result=PASS payload=gIuK0BSAAAEBgMy4gIAIAYDQuICACAGAgMSBgKCBgICAAYCAzIGAoIGAgIABgAEBCgGACAEBAQEBDgEBAQGA////////////ARmAgPr//w8BGwEKCgo=
+VDOT_PACKED id=L04-10-8-8 result=PASS payload=gIuKkBSAAAEBgNy3gIAIAYDgt4CACAGAgMSBgKCBgICAAYCAzIGAoIGAgIABgAEBCgGACAEBAQEBDgEBAQGA////////////ARkOAQ4BCgoK
+VDOT_PACKED id=L05-0-ff result=PASS payload=gIuK0BSAAAEBgMy4gIAIAYDQuICACAGAgMSBgKCBgICAAYCAzIGAoIGAgIABgAEBCgGACAEBAQEBDgEBAQGA////////////ARmA+P///w8BGwEKCgo=
+VDOT_PACKED id=S01-0-0 result=PASS payload=gIuK0BSAAAEBgMy4gIAIAYDQuICACAGAgMSBgKCBgICAAYCAzIGAoIGAgIABgAEBCgGACAEBAQEBDgEBAQGA////////////ARmAgIAIARsBCgoK
+VDOT_PACKED id=R00000 result=PASS payload=gIuK0BSAAAEBgMy4gIAIAYDQuICACAGAgMSBgKCBgICAAYCAzIGAoIGAgIABgAEBCgGACAEBAQEBDgEBAQGA8b+B4tH608eZAYCu/p+53uXViI0BgMk5ARsBCgoK
+VDOT_PACKED id=R00008 result=PASS payload=gIuK0BSAAAEBgMy4gIAIAYDQuICACAGAgMSBgKCBgICAAYCAzIGAoIGAgIABgAEBCgGACAEBAQEBDgEBAQGAybLakY/OhMkOgIfonMzOtIGfdYDKdwEbAQoKCg==
+VDOT_PACKED id=R00016 result=PASS payload=gIuK0BSAAAEBgMy4gIAIAYDQuICACAGAgMSBgKCBgICAAYCAzIGAoIGAgIABgAEBCgGACAEBAQEBDgEBAQGAhYyS29/Vo93/AYDNvJOiz8T5oNUBgMX+//8PARsBCgoK
+VDOT_PACKED id=R00024 result=PASS payload=gIuK0BSAAAEBgMy4gIAIAYDQuICACAGAgMSBgKCBgICAAYCAzIGAoIGAgIABgAEBCgGACAEBAQEBDgEBAQGA6LuAx+6MxfD9AYCzxcjO8pHpqVuAtun//w8BGwEKCgo=
+VDOT_PACKED id=X01-e16 result=PASS payload=gIuK0BSAAYACAoDMuICACASA0LiAgAgAgIDMgYCggYCAgAGAgPyBgKCBgYCAAQGAAIADgAgNCwsLCw0NCwsLC4D///////////8BGRkZGRkBAQE=
+VDOT_PACKED id=X04-vstart1 result=PASS payload=gIuK0BSAAYACAoDMuICACASA0LiAgAgAgIDMgYCggYCAgAGAgPyBgKCBgYCAAQGAAIADC4AIAQsLCwsOAQsLC4D///////////8BGRkZGRkBAQE=
+VDOT_PACKED id=X08-f29 result=PASS payload=gIuK0JQCgAGAAgKAjLyAgAgEgJC8gIAIAICAzIGAoIGAgIABgID8gYCggYGAgAEBgACAAwuACAsLCwsLDgsLCwuA////////////ARkZGRkZAQEB
+VDOT_PACKED id=X09-v0 result=PASS payload=gIuAwBSAAYACAoCUuICACASAmLiAgAiAAICAzIGAoIGAgIABgID8gYCggYGAgAEBB4ADB4AHBwcHBwcOBwcHB4D///////////8BgKXLlq3atOnSpQEZGhkaAQEB
+VDOT_PACKED id=X10-2-1 result=PASS payload=gIuK0BSAAYACAoDMuICACASA0LiAgAiAAICAzIGAoIGAgIABgID8gYCggYGAgAEBB4ADB4AHBwIBgAUHDgcCARKA1dTW0trK6qqqARkZGRkZAQEB
+VDOT_SUMMARY mode=full contract=vdot-s8x8-r32-v0.1 planned=15 executed=15 passed=15 failed=0 unreachable=0
+Core 0: [32mHIT GOOD TRAP at pc = 0x800023cc
+[0m[35mCore-0 instrCnt = 478593, cycleCnt = 690528, IPC = 0.693083
+[0m[34mSeed=1 Guest cycle spent: 690532 (this will be different from cycleCnt if emu loads a snapshot)
+[0m[34mHost time spent: 528420ms
+[0m

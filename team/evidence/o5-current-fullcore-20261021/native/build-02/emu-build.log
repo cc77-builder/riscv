@@ -1,0 +1,11 @@
+mkdir -p build/rtl
+Wed, 21 Oct 2026 03:53:58 +0000
+time -avp -o ./build/time.log mill -i -Djvm-xmx=12G -Djvm-xss=256m xiangshan.test.runMain top.SimTop    \
+	--target-dir build/rtl --config MinimalConfig --issue E.b --firtool-opt "--repl-seq-mem --repl-seq-mem-file=SimTop.sv.conf"		\
+	--num-cores 1 --dump-fir --target systemverilog --split-verilog --firtool-opt "-O=release --disable-annotation-unknown --lowering-options=explicitBitcast,disallowLocalVariables,disallowPortDeclSharing,locationInfoStyle=none"  --enable-difftest --full-stacktrace
+/usr/bin/bash: line 1: -avp: command not found
+
+real	0m0.208s
+user	0m0.002s
+sys	0m0.016s
+make: *** [Makefile:224: build/rtl/SimTop.sv] Error 127

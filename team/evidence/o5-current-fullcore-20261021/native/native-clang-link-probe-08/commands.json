@@ -1,0 +1,71 @@
+[
+  {
+    "label": "split-clang-v2-generate",
+    "command": [
+      "/usr/bin/verilator",
+      "--cc",
+      "--exe",
+      "--top-module",
+      "Probe",
+      "--Mdir",
+      "/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/native-clang-link-probe-08/split-clang-v2",
+      "-CFLAGS",
+      "-std=c++17",
+      "-o",
+      "/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/native-clang-link-probe-08/split-clang-v2/sim",
+      "/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/native-clang-link-probe-08/Probe.sv",
+      "/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/native-clang-link-probe-08/main.cpp"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "split-clang-v2-make",
+    "command": [
+      "/usr/bin/make",
+      "-f",
+      "VProbe.mk",
+      "VM_PARALLEL_BUILDS=1",
+      "OPT_FAST=-O3",
+      "OPT_SLOW=-O0",
+      "-j1",
+      "SHELL=/usr/bin/bash",
+      "TIME_CMD=/usr/bin/time -avp -o '$(TIMELOG)'",
+      "CXX=/usr/bin/clang++-19",
+      "CC=/usr/bin/clang-19",
+      "LINK=/usr/bin/clang++-19 --ld-path=/usr/bin/x86_64-linux-gnu-ld.bfd",
+      "AR=/usr/bin/x86_64-linux-gnu-ar",
+      "CFG_GCH_IF_CLANG=.gch",
+      "CFG_CXXFLAGS_PCH_I=-include-pch",
+      "PYTHON3=/usr/bin/python3.12",
+      "PERL=/usr/bin/perl"
+    ],
+    "exit_code": 0,
+    "stdout": "/usr/bin/clang++-19  -I.  -MMD -I/usr/share/verilator/include -I/usr/share/verilator/include/vltstd -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -faligned-new -fcf-protection=none -Wno-bool-operation -Wno-overloaded-virtual -Wno-shadow -Wno-sign-compare -Wno-uninitialized -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable     -std=c++17   -O3 -c -o main.o /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/native-clang-link-probe-08/main.cpp\n/usr/bin/clang++-19 -Os  -I.  -MMD -I/usr/share/verilator/include -I/usr/share/verilator/include/vltstd -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -faligned-new -fcf-protection=none -Wno-bool-operation -Wno-overloaded-virtual -Wno-shadow -Wno-sign-compare -Wno-uninitialized -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable     -std=c++17   -c -o verilated.o /usr/share/verilator/include/verilated.cpp\n/usr/bin/clang++-19 -Os  -I.  -MMD -I/usr/share/verilator/include -I/usr/share/verilator/include/vltstd -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -faligned-new -fcf-protection=none -Wno-bool-operation -Wno-overloaded-virtual -Wno-shadow -Wno-sign-compare -Wno-uninitialized -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable     -std=c++17   -c -o verilated_threads.o /usr/share/verilator/include/verilated_threads.cpp\n/usr/bin/clang++-19 -O3  -I.  -MMD -I/usr/share/verilator/include -I/usr/share/verilator/include/vltstd -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -faligned-new -fcf-protection=none -Wno-bool-operation -Wno-overloaded-virtual -Wno-shadow -Wno-sign-compare -Wno-uninitialized -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable     -std=c++17   -x c++-header VProbe__pch.h -o VProbe__pch.h.fast.gch\n/usr/bin/clang++-19 -O3  -I.  -MMD -I/usr/share/verilator/include -I/usr/share/verilator/include/vltstd -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -faligned-new -fcf-protection=none -Wno-bool-operation -Wno-overloaded-virtual -Wno-shadow -Wno-sign-compare -Wno-uninitialized -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable     -std=c++17   -include-pch VProbe__pch.h.fast.gch -c -o VProbe.o VProbe.cpp\n/usr/bin/clang++-19 -O3  -I.  -MMD -I/usr/share/verilator/include -I/usr/share/verilator/include/vltstd -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -faligned-new -fcf-protection=none -Wno-bool-operation -Wno-overloaded-virtual -Wno-shadow -Wno-sign-compare -Wno-uninitialized -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable     -std=c++17   -include-pch VProbe__pch.h.fast.gch -c -o VProbe___024root__DepSet_h569f8d92__0.o VProbe___024root__DepSet_h569f8d92__0.cpp\n/usr/bin/clang++-19 -O3  -I.  -MMD -I/usr/share/verilator/include -I/usr/share/verilator/include/vltstd -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -faligned-new -fcf-protection=none -Wno-bool-operation -Wno-overloaded-virtual -Wno-shadow -Wno-sign-compare -Wno-uninitialized -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable     -std=c++17   -include-pch VProbe__pch.h.fast.gch -c -o VProbe___024root__DepSet_h26d7209c__0.o VProbe___024root__DepSet_h26d7209c__0.cpp\n/usr/bin/clang++-19 -O0  -I.  -MMD -I/usr/share/verilator/include -I/usr/share/verilator/include/vltstd -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -faligned-new -fcf-protection=none -Wno-bool-operation -Wno-overloaded-virtual -Wno-shadow -Wno-sign-compare -Wno-uninitialized -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable     -std=c++17   -x c++-header VProbe__pch.h -o VProbe__pch.h.slow.gch\n/usr/bin/clang++-19 -O0  -I.  -MMD -I/usr/share/verilator/include -I/usr/share/verilator/include/vltstd -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -faligned-new -fcf-protection=none -Wno-bool-operation -Wno-overloaded-virtual -Wno-shadow -Wno-sign-compare -Wno-uninitialized -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable     -std=c++17   -include-pch VProbe__pch.h.slow.gch -c -o VProbe___024root__Slow.o VProbe___024root__Slow.cpp\n/usr/bin/clang++-19 -O0  -I.  -MMD -I/usr/share/verilator/include -I/usr/share/verilator/include/vltstd -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -faligned-new -fcf-protection=none -Wno-bool-operation -Wno-overloaded-virtual -Wno-shadow -Wno-sign-compare -Wno-uninitialized -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable     -std=c++17   -include-pch VProbe__pch.h.slow.gch -c -o VProbe___024root__DepSet_h569f8d92__0__Slow.o VProbe___024root__DepSet_h569f8d92__0__Slow.cpp\n/usr/bin/clang++-19 -O0  -I.  -MMD -I/usr/share/verilator/include -I/usr/share/verilator/include/vltstd -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -faligned-new -fcf-protection=none -Wno-bool-operation -Wno-overloaded-virtual -Wno-shadow -Wno-sign-compare -Wno-uninitialized -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable     -std=c++17   -include-pch VProbe__pch.h.slow.gch -c -o VProbe___024root__DepSet_h26d7209c__0__Slow.o VProbe___024root__DepSet_h26d7209c__0__Slow.cpp\n/usr/bin/clang++-19 -O0  -I.  -MMD -I/usr/share/verilator/include -I/usr/share/verilator/include/vltstd -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -faligned-new -fcf-protection=none -Wno-bool-operation -Wno-overloaded-virtual -Wno-shadow -Wno-sign-compare -Wno-uninitialized -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable     -std=c++17   -include-pch VProbe__pch.h.slow.gch -c -o VProbe__Syms.o VProbe__Syms.cpp\necho \"\" > VProbe__ALL.verilator_deplist.tmp\nArchive /usr/bin/x86_64-linux-gnu-ar -rcs VProbe__ALL.a VProbe.o VProbe___024root__DepSet_h569f8d92__0.o VProbe___024root__DepSet_h26d7209c__0.o VProbe___024root__Slow.o VProbe___024root__DepSet_h569f8d92__0__Slow.o VProbe___024root__DepSet_h26d7209c__0__Slow.o VProbe__Syms.o\n/usr/bin/clang++-19 --ld-path=/usr/bin/x86_64-linux-gnu-ld.bfd     main.o verilated.o verilated_threads.o VProbe__ALL.a    -pthread -lpthread -latomic   -o /home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/native-clang-link-probe-08/split-clang-v2/sim\nrm VProbe__ALL.verilator_deplist.tmp\n",
+    "stderr": ""
+  },
+  {
+    "label": "v2-sim",
+    "command": [
+      "/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/native-clang-link-probe-08/split-clang-v2/sim"
+    ],
+    "exit_code": 0,
+    "stdout": "42\n",
+    "stderr": ""
+  },
+  {
+    "label": "v2-driver-link-selection",
+    "command": [
+      "/usr/bin/clang++-19",
+      "--ld-path=/usr/bin/x86_64-linux-gnu-ld.bfd",
+      "-###",
+      "/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/native-clang-link-probe-08/split-clang-v2/main.o",
+      "-o",
+      "/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/native-clang-link-probe-08/unused"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "Ubuntu clang version 19.1.1 (1ubuntu1~24.04.2)\nTarget: x86_64-pc-linux-gnu\nThread model: posix\nInstalledDir: /usr/lib/llvm-19/bin\n \"/usr/bin/x86_64-linux-gnu-ld.bfd\" \"-z\" \"relro\" \"--hash-style=gnu\" \"--build-id\" \"--eh-frame-hdr\" \"-m\" \"elf_x86_64\" \"-pie\" \"-dynamic-linker\" \"/lib64/ld-linux-x86-64.so.2\" \"-o\" \"/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/native-clang-link-probe-08/unused\" \"/lib/x86_64-linux-gnu/Scrt1.o\" \"/lib/x86_64-linux-gnu/crti.o\" \"/usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o\" \"-L/usr/lib/gcc/x86_64-linux-gnu/13\" \"-L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib64\" \"-L/lib/x86_64-linux-gnu\" \"-L/lib/../lib64\" \"-L/usr/lib/x86_64-linux-gnu\" \"-L/usr/lib/../lib64\" \"-L/lib\" \"-L/usr/lib\" \"/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/native-clang-link-probe-08/split-clang-v2/main.o\" \"-lstdc++\" \"-lm\" \"-lgcc_s\" \"-lgcc\" \"-lc\" \"-lgcc_s\" \"-lgcc\" \"/usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o\" \"/lib/x86_64-linux-gnu/crtn.o\"\n"
+  }
+]
