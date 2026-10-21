@@ -1,0 +1,37 @@
+{
+  "status": "B0_H1_MEASUREMENT_AND_RECHECK_PASS",
+  "pid": 399,
+  "started": "2026-10-21T04:29:59.245405+00:00",
+  "runtime_commit": "f732d92d13fb47fdf9eea46d32c5e77bd4343363",
+  "steps": [
+    {
+      "name": "campaign",
+      "status": "PASS",
+      "started": "2026-10-21T04:29:59.263483+00:00",
+      "command": [
+        "bash",
+        "-c",
+        "source team/scripts/activate.sh\npython3 -B team/optimizations/o2/result-width/h1/performance/compare.py --output /home/riscv/riscv-lab/o2-h1-performance-20261021/campaign-01"
+      ],
+      "pid": 401,
+      "exit_code": 0,
+      "finished": "2026-10-21T05:45:40.805221+00:00"
+    },
+    {
+      "name": "recheck",
+      "status": "PASS",
+      "started": "2026-10-21T05:45:40.812523+00:00",
+      "command": [
+        "bash",
+        "-c",
+        "source team/scripts/activate.sh\npython3 -B team/optimizations/o2/result-width/h1/performance/results.py --campaign /home/riscv/riscv-lab/o2-h1-performance-20261021/campaign-01 --output /home/riscv/riscv-lab/o2-h1-performance-20261021/results-01"
+      ],
+      "pid": 2642,
+      "exit_code": 0,
+      "finished": "2026-10-21T05:46:41.366871+00:00"
+    }
+  ],
+  "cycle_nonregression_pass": true,
+  "exact_measured_cycle_equality": true,
+  "finished": "2026-10-21T05:46:41.370589+00:00"
+}

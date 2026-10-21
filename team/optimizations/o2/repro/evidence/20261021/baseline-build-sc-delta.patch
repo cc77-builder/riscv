@@ -1,0 +1,18 @@
+diff --git a/build.sc b/build.sc
+index bc995f7..ef94780 100644
+--- a/build.sc
++++ b/build.sc
+@@ -282,6 +282,13 @@ object vdotElasticParent extends HasChisel {
+   override def forkArgs = Seq("-Xmx4G", "-Xss8m")
+ }
+ 
++// O4 common production interfaces only: no scoreboard, taps or trace state.
++object vdotCost extends HasChisel {
++  override def sources = T.sources { Seq(PathRef(pwd / "team/optimizations/o4/GenerateVDotCost.scala")) }
++  override def moduleDeps = Seq(xiangshan)
++  override def forkArgs = Seq("-Xmx8G", "-Xss16m")
++}
++
+ object vdotDecode extends HasChisel {
+   override def sources = T.sources { Seq(PathRef(pwd / "team/rtl/vdot/GenerateVDotDecode.scala")) }
+   override def moduleDeps = Seq(xiangshan)
