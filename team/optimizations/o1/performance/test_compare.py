@@ -17,10 +17,11 @@ builder_spec.loader.exec_module(builder)
 
 
 def contract():
-    return dict(schema=1, make_args=list(compare.build_recipe.MAKE_ARGS), environment_sha256="f" * 64,
+    return dict(schema=2, make_args=list(compare.build_recipe.MAKE_ARGS), environment_sha256="f" * 64,
+                launch_metadata={".mill-version": dict(sha256="c" * 64, value="0.12.3")},
                 recipe_sha256="a" * 64, compilers={role: dict(path="/tools with spaces/" + role,
                 sha256="b" * 64, version="test version") for role in
-                ("cxx", "cc", "java", "mill", "verilator", "firtool")})
+                ("cxx", "cc", "java", "mill", "verilator", "verilator_bin", "firtool")})
 
 
 def pins():

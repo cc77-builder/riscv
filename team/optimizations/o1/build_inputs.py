@@ -4,7 +4,7 @@ import hashlib
 import runpy
 import subprocess
 
-HARDWARE = ['src', 'macros', 'scripts', 'build.sc', 'Makefile', 'Makefile.test',
+HARDWARE = ['src', 'macros', 'scripts', 'build.sc', '.mill-version', 'Makefile', 'Makefile.test',
             'team/scripts/activate.sh', 'team/scripts/prepare-core-baseline.py',
             'team/optimizations/o1/build_inputs.py']
 
