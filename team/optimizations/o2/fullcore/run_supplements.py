@@ -30,6 +30,39 @@ JOBS={
         default=DEFAULT_BASE/"control-diagnostic-build-04"),
 }
 EXPECTED_CHECK_STATUS={"diagnostic":"O2_DIAGNOSTIC_PASS","control":"O2_CONTROL_DIAGNOSTIC_PASS"}
+SEED_CONTRACT="explicit-seed-v1"
+
+
+def validate_seed(seed):
+    suite.require(type(seed) is int and 1<=seed<=2147483647,"EMU seed must be a positive signed 32-bit integer")
+    return seed
+
+
+def validate_seed_command(record,runtime):
+    """Keep historical implicit-default commands distinct from explicit seeds."""
+    command=record.get("command")
+    explicit=any(key in value for value in (record,runtime) for key in ("runtime_contract","emu_seed"))
+    size=13 if explicit else 12
+    suite.require(isinstance(command,list) and len(command)==size and
+                  command[0]=="timeout" and command[2:5]==["stdbuf","-o0","-e0"] and
+                  command[6]=="-i" and command[9]=="--ram-size=128MB" and
+                  command[11]=="--max-cycles=5000000","stored run command differs from contract")
+    suite.require(command==runtime.get("command"),"runtime command changed")
+    if not explicit:return None
+    seed=validate_seed(record.get("emu_seed"))
+    suite.require(record.get("runtime_contract")==runtime.get("runtime_contract")==SEED_CONTRACT and
+                  type(runtime.get("emu_seed")) is int and runtime["emu_seed"]==seed and
+                  command[-1]==f"--seed={seed}","explicit seed command/receipt mismatch")
+    return seed
+
+
+def validate_seed_log(text,seed):
+    if seed is None:return
+    validate_seed(seed)
+    plain=re.sub(r'\x1b\[[0-?]*[ -/]*[@-~]','',text)
+    suite.require(re.findall(r'\bSeed=([0-9]+)\b',plain)==[str(seed)] and
+                  len(re.findall(rf'(?m)^Seed={seed} Guest cycle spent: [0-9][^\r\n]*$',plain))==1,
+                  "actual EMU seed missing, duplicated or different")
 
 
 def modules():
@@ -146,9 +179,10 @@ def run_job(name,build,image,manifest,paths,args,pins,receipt,analyze,workload):
     spec=JOBS[name]
     command=["timeout",args.timeout,"stdbuf","-o0","-e0",str(args.emu),"-i",str(image),
              "--flash="+str(paths["flash"]),"--ram-size=128MB","--diff="+str(paths["reference"]),
-             "--max-cycles=5000000"]
+             "--max-cycles=5000000",f"--seed={validate_seed(args.seed)}"]
     record=dict(name=name,kind=spec["kind"],status="RUNNING",started=suite.stamp(),
-                command=command,expected_vdot_commits=spec["commits"],performance_measured=False,
+                command=command,runtime_contract=SEED_CONTRACT,emu_seed=args.seed,
+                expected_vdot_commits=spec["commits"],performance_measured=False,
                 files={str(p):suite.sha(p) for p in [args.emu,paths["reference"],paths["flash"],image]},
                 hardware_pins_sha256=receipt["hardware_pins_sha256"],
                 build_source_commit=pins["source_commit"],input_manifest_sha256=suite.sha(build/"data/manifest.json"))
@@ -174,6 +208,7 @@ def run_job(name,build,image,manifest,paths,args,pins,receipt,analyze,workload):
                       log_format="separate-streams-v1; derived run.log = stderr.log + stdout.log")
         guard()
         text=(directory/"run.log").read_text(encoding="utf-8",errors="strict")
+        validate_seed_log(text,args.seed)
         observation,uart,result=evaluate(text,rc,spec["kind"],manifest,paths["reference"],analyze,workload)
         suite.save(directory/"observation.json",observation)
         suite.save(directory/"functional-result.json",result)
@@ -226,10 +261,7 @@ def recheck_job(directory,analyze=None,workload=None,contract=None):
                  "input_manifest_sha256","archived_manifest_sha256","expected_vdot_commits"]:
         suite.require(record.get(name)==runtime.get(name),"stored runtime identity changed: "+name)
     command=record["command"]
-    suite.require(isinstance(command,list) and len(command)==12 and
-                  command[0]=="timeout" and command[2:5]==["stdbuf","-o0","-e0"] and
-                  command[6]=="-i" and command[9]=="--ram-size=128MB" and
-                  command[11]=="--max-cycles=5000000","stored run command differs from contract")
+    seed=validate_seed_command(record,runtime)
     suite.require(record["files"].get(command[7])==expected_image,"stored input image changed")
     for option,key in [(8,"flash"),(10,"reference")]:
         prefix="--flash=" if key=="flash" else "--diff="
@@ -246,6 +278,7 @@ def recheck_job(directory,analyze=None,workload=None,contract=None):
     suite.require(set(record.get("raw_logs_sha256",{}))=={"stdout.log","stderr.log","run.log"},"missing raw stream identities")
     raw=(directory/"stderr.log").read_bytes()+(directory/"stdout.log").read_bytes()
     suite.require(raw==(directory/"run.log").read_bytes(),"derived transcript is not exact streams")
+    validate_seed_log(raw.decode("utf-8"),seed)
     exit_text=(directory/"exit-code.txt").read_text()
     suite.require(re.fullmatch(r"-?[0-9]+\n",exit_text) is not None,"stored exit code file malformed")
     rc=int(exit_text)
@@ -327,6 +360,12 @@ def recheck_supplements(campaign,expected_pins,expected_emu_sha,analyze=None,wor
     suite.require(driver_paths==expected_driver_paths and len(preflight["driver_files"])==len(expected_driver_paths),
                   "incomplete or unexpected offline checker identities")
     result=json.loads((campaign/"result.json").read_text())
+    explicit=any(key in value for value in (preflight,state,result) for key in ("runtime_contract","emu_seed"))
+    seed=validate_seed(preflight.get("emu_seed")) if explicit else None
+    if explicit:
+        suite.require(all(value.get("runtime_contract")==SEED_CONTRACT and
+                          type(value.get("emu_seed")) is int and value["emu_seed"]==seed
+                          for value in (preflight,state,result)),"campaign seed identity mismatch")
     suite.require(result.get("status")=="O2_SUPPLEMENTS_PASS" and assess(result.get("runs",[])),
                   "stored supplement campaign did not pass")
     suite.require(state.get("status")==result["status"] and
@@ -343,6 +382,8 @@ def recheck_supplements(campaign,expected_pins,expected_emu_sha,analyze=None,wor
         directory=campaign/name
         replay=recheck_job(directory,analyze,workload,contract)
         record=json.loads((directory/"result.json").read_text())
+        suite.require((record.get("runtime_contract"),record.get("emu_seed"))==
+                      ((SEED_CONTRACT,seed) if explicit else (None,None)),"job/campaign seed identity mismatch")
         suite.hardware_guard(pins,Path(record["command"][5]))
         original_build=Path(record["command"][7]).parent
         manifest,original_receipt,_=validate_build(JOBS[name]["kind"],original_build,workload,contract)
@@ -382,12 +423,14 @@ def recheck_campaign(campaign,output,expected_pins,expected_emu_sha,analyze=None
 
 
 def run(args):
+    validate_seed(args.seed)
     suite.require(args.output.is_absolute(),"output must be absolute")
     args.output=args.output.resolve()
     suite.require(not args.output.is_relative_to(ROOT),"output must be outside checkout")
     args.output.mkdir(parents=True,exist_ok=False)
     state=dict(status="PRECHECK_RUNNING",started=suite.stamp(),invocation=sys.argv,
-               performance_measured=False,new_emu_run=True,emu=str(args.emu),jobs=args.jobs)
+               performance_measured=False,new_emu_run=True,emu=str(args.emu),jobs=args.jobs,
+               runtime_contract=SEED_CONTRACT,emu_seed=args.seed)
     suite.save(args.output/"campaign-state.json",state)
     records=[]
     try:
@@ -452,6 +495,7 @@ def run(args):
             suite.require(suite.sha(target)==digest,"portable input snapshot mismatch: "+name)
             portable[name]=dict(archive=archive.as_posix(),sha256=digest)
         receipt=dict(status="O2_SUPPLEMENT_INPUTS_VERIFIED",hardware_pins_sha256=suite.sha(args.hardware_pins),
+                     runtime_contract=SEED_CONTRACT,emu_seed=args.seed,
                      emu_sha256=suite.sha(args.emu),input_files=inputs,driver_files=driver_files,
                      toolchain=toolchain,reference_provenance=reference_provenance,
                      portable_input_files=portable,tool_source_commit=tool_commit,
@@ -475,6 +519,7 @@ def run(args):
         guard.verify_nemu(paths["reference"].parents[1],paths["reference"],"reference")
         passed=assess(records)
         result=dict(status="O2_SUPPLEMENTS_PASS" if passed else "O2_SUPPLEMENTS_FAILED",
+                    runtime_contract=SEED_CONTRACT,emu_seed=args.seed,
                     runs=records,coverage=suite.coverage_union(records),performance_measured=False,
                     started=state["started"],finished=suite.stamp(),new_emu_run=True,
                     hardware_pins_sha256=receipt["hardware_pins_sha256"],emu_sha256=receipt["emu_sha256"],
@@ -502,6 +547,7 @@ def main():
     parser.add_argument("--control-build",type=Path,default=JOBS["o2-control-diagnostic"]["default"])
     parser.add_argument("--jobs",type=int,choices=[1,2],default=2)
     parser.add_argument("--timeout",default="120m")
+    parser.add_argument("--seed",type=int,default=1,help="explicit positive EMU seed, recorded and verified in raw output")
     parser.add_argument("--input-contract",type=Path)
     args=parser.parse_args()
     if args.input_contract is not None:
