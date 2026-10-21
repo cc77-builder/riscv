@@ -62,6 +62,11 @@ def verify_tools(contract, root):
         if "payload_path" in tool:
             require(str(Path(tool["path"]).resolve()) == tool["payload_path"],
                     "native driver payload target changed: " + tool["path"])
+    if "verilator_support" in contract:
+        require(recipe.verilator_support(contract["verilator_support"]["root"]) == contract["verilator_support"],
+                "Verilator runtime/template inventory changed")
+        require(recipe.compiler_runtime(contract["compilers"]) == contract["compiler_runtime"],
+                "native compiler library inventory changed")
     for name, role in (("mill", "mill"), ("java", "java"), ("verilator", "verilator"), ("python3", "python")):
         selected = shutil.which(name)
         require(selected is not None and str(Path(selected).resolve()) == contract["compilers"][role]["path"],

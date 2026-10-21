@@ -30,7 +30,89 @@ def clang_contract():
     return item
 
 
+def linked_clang_contract():
+    item = clang_contract()
+    item.update(profile="split-clang-v2", native_link=dict(recipe.CLANG_LINK),
+        compiler_runtime=dict(roles=list(recipe.NATIVE_RUNTIME_ROLES), files={name: "f" * 64 for name in
+            ("/usr/lib/libclang-cpp.so.19.1", "/usr/lib/libLLVM.so.19.1")}),
+        verilator_support=dict(root="/usr/share/verilator", files={name: "f" * 64 for name in
+            ("include/verilated.mk", "include/verilated.h", "include/verilated.cpp", "bin/verilator_includer")}))
+    for role in ("ar", "ld", "ldd", "perl"):
+        item["compilers"][role] = dict(path="/usr/bin/x86_64-linux-gnu-" + role, sha256="a" * 64, version="GNU fixture")
+    return item
+
+
 class SplitProfile(unittest.TestCase):
+    def test_compiler_runtime_binds_transitive_libraries_and_rejects_missing_resolution(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            binary = root / "compiler"
+            binary.write_bytes(b"fixture compiler")
+            libraries = [root / name for name in ("libclang-cpp.so.19.1", "libLLVM.so.19.1", "libc.so.6", "ld-linux.so.2")]
+            for path in libraries:
+                path.write_bytes(path.name.encode())
+            tools = {role: dict(path=str(binary)) for role in recipe.NATIVE_RUNTIME_ROLES}
+            tools["ldd"] = dict(path="/usr/bin/ldd")
+            output = "\n".join(path.name + " => " + path.as_posix() + " (0x1000)" for path in libraries[:-1])
+            output += "\n" + libraries[-1].as_posix() + " (0x2000)\n"
+            with patch.object(recipe.subprocess, "run", return_value=SimpleNamespace(returncode=0, stdout=output)) as run:
+                before = recipe.compiler_runtime(tools)
+                self.assertEqual(set(before["files"]), {str(path.resolve()) for path in libraries})
+                self.assertEqual(run.call_count, 1)  # Shared driver payload is resolved once.
+                libraries[0].write_bytes(b"same launcher, changed actual compiler")
+                self.assertNotEqual(before, recipe.compiler_runtime(tools))
+            for result in (SimpleNamespace(returncode=0, stdout="libLLVM.so.19.1 => not found\n"),
+                           SimpleNamespace(returncode=0, stdout="linux-vdso.so.1 (0x1234)\n")):
+                with patch.object(recipe.subprocess, "run", return_value=result), self.assertRaises(ValueError):
+                    recipe.compiler_runtime(tools)
+
+    def test_linked_clang_capture_binds_archive_linker_runtime_and_pch(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / ".mill-version").write_bytes(b"0.12.3\n")
+            expected = linked_clang_contract()
+            probe = {name: expected[name] for name in ("compilers", "verilator_support", "compiler_runtime")}
+            with patch.object(recipe.subprocess, "check_output", return_value=json.dumps(probe)):
+                item = recipe.capture(root, "split-clang-v2")
+            recipe.validate(item)
+            self.assertEqual(item["native_link"], recipe.CLANG_LINK)
+            self.assertEqual(item["verilator_support"], expected["verilator_support"])
+            final = split.commands(item)["native-compile"]
+            for value in ("LINK=/usr/bin/clang++-19 --ld-path=/usr/bin/x86_64-linux-gnu-ld",
+                          "AR=/usr/bin/x86_64-linux-gnu-ar", "CFG_GCH_IF_CLANG=.gch", "CFG_CXXFLAGS_PCH_I=-include-pch",
+                          "PYTHON3=/tools/python", "OPT_FAST=-O3", "EMU_TRACE=0"):
+                self.assertIn(value, final)
+            # Existing v1 receipts keep their original command semantics.
+            old = split.commands(clang_contract())["native-compile"]
+            self.assertFalse(any(arg.startswith(("LINK=", "AR=", "CFG_GCH_IF_CLANG=")) for arg in old))
+
+    def test_linked_clang_rejects_missing_or_mixed_runtime_contract(self):
+        for mutate in (lambda c: c.update(profile="split-clang-v1"), lambda c: c.pop("native_link"),
+                       lambda c: c["native_link"].update(pch_suffix=""),
+                       lambda c: c["compilers"].pop("ld"), lambda c: c["compilers"].pop("ar"),
+                       lambda c: c.pop("compiler_runtime"), lambda c: c["compiler_runtime"].update(files={}),
+                       lambda c: c["verilator_support"]["files"].pop("include/verilated.mk"),
+                       lambda c: c["verilator_support"]["files"].update({"../unbound": "f" * 64})):
+            item = linked_clang_contract()
+            mutate(item)
+            with self.assertRaises(ValueError):
+                recipe.make_command(item)
+
+    def test_verilator_support_includes_nested_runtime_and_detects_drift(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "include/vltstd").mkdir(parents=True)
+            (root / "bin").mkdir()
+            for name in ("include/verilated.mk", "include/verilated.h", "include/verilated.cpp",
+                         "include/vltstd/vpi_user.h", "bin/verilator_includer"):
+                (root / name).write_bytes(name.encode())
+            before = recipe.verilator_support(root)
+            self.assertEqual(len(before["files"]), 5)
+            (root / "include/verilated.mk").write_bytes(b"LINK=foreign")
+            self.assertNotEqual(before, recipe.verilator_support(root))
+            (root / "include/new.h").write_bytes(b"new runtime input")
+            self.assertIn("include/new.h", recipe.verilator_support(root)["files"])
+
     @unittest.skipUnless(os.name == "posix", "native POSIX driver symlink contract")
     def test_clang_driver_target_drift_is_rejected_even_with_identical_bytes(self):
         with tempfile.TemporaryDirectory() as tmp:

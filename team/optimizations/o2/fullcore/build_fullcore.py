@@ -76,12 +76,12 @@ def main(out, profile="direct"):
         dependencies, dependency_files = dependency_snapshot()
         save(out / "dependencies.json", dependencies)
         pins = {"source_commit": state["source_commit"], "config": "MinimalConfig",
-                "NUM_CORES": 1, "EMU_THREADS": 1, "JVM_XMX": "6G" if profile in ("split-v1", "split-clang-v1") else "12G", "BUILD_JOBS": 2,
+                "NUM_CORES": 1, "EMU_THREADS": 1, "JVM_XMX": "6G" if profile in build_recipe.SPLIT_PROFILES else "12G", "BUILD_JOBS": 2,
                 **FLAGS, "native_build_contract": contract, "files": dict(sorted(files.items())), "dependency_files": dependency_files,
                 "build_tools": {p.relative_to(ROOT).as_posix(): sha(p) for p in
                     (Path(__file__), Path(live_inputs.__file__), Path(build_recipe.__file__))},
                 "build_script_sha256": sha(Path(__file__)), "source_root": str(ROOT)}
-        if profile in ("split-v1", "split-clang-v1"):
+        if profile in build_recipe.SPLIT_PROFILES:
             pins.update(JVM_XSS="16m", recipe_profile=profile)
             split_driver=Path(build_recipe.__file__).with_name("split_recipe.py")
             pins["build_tools"][split_driver.relative_to(ROOT).as_posix()]=sha(split_driver)
@@ -140,7 +140,7 @@ def main(out, profile="direct"):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--recipe", choices=("direct","split-v1","split-clang-v1"), default="direct",
-                        help="explicit native build profile; split profiles separate phases; split-clang-v1 selects Clang 19")
+    parser.add_argument("--recipe", choices=("direct", *build_recipe.SPLIT_PROFILES), default="direct",
+                        help="explicit native build profile; split-clang-v2 also binds link/archive/runtime and PCH selection")
     args=parser.parse_args()
     raise SystemExit(main(args.output,args.recipe))

@@ -42,6 +42,33 @@ class InventoryTests(unittest.TestCase):
                 del missing_tool["native_build_contract"]["compilers"]["python"]
                 with self.assertRaisesRegex(ValueError, "native tool identity: python"):
                     live_inputs.verify(root, missing_tool)
+                linked = copy.deepcopy(pins)
+                native = linked["native_build_contract"]
+                native.update(profile="split-clang-v2", compiler_commands=dict(recipe.CLANG_COMMANDS),
+                    native_link=dict(recipe.CLANG_LINK),
+                    compiler_runtime=dict(roles=list(recipe.NATIVE_RUNTIME_ROLES), files={
+                        "/lib/libclang-cpp.so.19.1": "a" * 64, "/lib/libLLVM.so.19.1": "a" * 64}),
+                    verilator_support=dict(root="/verilator", files={
+                        name: "a" * 64 for name in ("include/verilated.mk", "include/verilated.h",
+                                                   "include/verilated.cpp", "bin/verilator_includer")}))
+                for role, name in recipe.CLANG_COMMANDS.items():
+                    native["compilers"][role].update(path="/tools/" + name,
+                        payload_path="/tools/clang", version="clang version 19.1.1")
+                for role in ("ar", "ld", "ldd", "perl"):
+                    native["compilers"][role] = dict(path="/tools/" + role, sha256="a" * 64, version="fixture")
+                live_inputs.verify(root, linked)
+                missing_linker = copy.deepcopy(linked)
+                del missing_linker["native_build_contract"]["compilers"]["ld"]
+                with self.assertRaisesRegex(ValueError, "native tool identity: ld"):
+                    live_inputs.verify(root, missing_linker)
+                missing_template = copy.deepcopy(linked)
+                del missing_template["native_build_contract"]["verilator_support"]["files"]["include/verilated.mk"]
+                with self.assertRaisesRegex(ValueError, "incomplete Clang link/runtime contract"):
+                    live_inputs.verify(root, missing_template)
+                missing_implementation = copy.deepcopy(linked)
+                del missing_implementation["native_build_contract"]["compiler_runtime"]["files"]["/lib/libclang-cpp.so.19.1"]
+                with self.assertRaisesRegex(ValueError, "missing native compiler implementation libraries"):
+                    live_inputs.verify(root, missing_implementation)
 
     def test_macro_and_untracked_additions_and_omissions_are_detected(self):
         with tempfile.TemporaryDirectory() as temporary:
