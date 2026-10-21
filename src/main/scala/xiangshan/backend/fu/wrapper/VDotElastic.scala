@@ -40,7 +40,15 @@ class VDotElastic(cfg: FuConfig)(implicit p: Parameters) extends FuncUnit(cfg)
   private val pProducts = Reg(Vec(8, SInt(16.W)))
   private val pCtrl = Reg(chiselTypeOf(io.out.bits.ctrl))
   private val pPerf = Reg(chiselTypeOf(io.out.bits.perfDebugInfo))
-  private val rPacket = Reg(chiselTypeOf(io.out.bits))
+  // H1 stores only the architectural low word; the public result stays 128 bits.
+  // Keep each slot's complete control/perf identity on the same transfer edge.
+  private val rPacket = Reg(new Bundle {
+    val ctrl = chiselTypeOf(io.out.bits.ctrl)
+    val res = new Bundle {
+      val data = UInt(32.W)
+    }
+    val perfDebugInfo = chiselTypeOf(io.out.bits.perfDebugInfo)
+  })
 
   pipelineStatus.pValid := pValid
   pipelineStatus.rValid := rValid
@@ -60,7 +68,10 @@ class VDotElastic(cfg: FuConfig)(implicit p: Parameters) extends FuncUnit(cfg)
   // suppresses every new accept on redirect/reset, including unrelated flush.
   io.in.ready := pReady && !io.flush.valid && !reset.asBool
   io.out.valid := liveR
-  io.out.bits := rPacket
+  io.out.bits.ctrl := rPacket.ctrl
+  io.out.bits.perfDebugInfo := rPacket.perfDebugInfo
+  io.out.bits.res := 0.U.asTypeOf(io.out.bits.res)
+  io.out.bits.res.data := Cat(0.U(96.W), rPacket.res.data)
 
   private val products = Module(new VDotProducts)
   private val reduce = Module(new VDotReduce)
@@ -92,9 +103,8 @@ class VDotElastic(cfg: FuConfig)(implicit p: Parameters) extends FuncUnit(cfg)
     // Reads pre-edge P even when a new request replaces it at this same edge.
     rPacket.ctrl := pCtrl
     rPacket.perfDebugInfo := pPerf
-    rPacket.res := 0.U.asTypeOf(rPacket.res)
     rPacket.res.data := Mux(pCtrl.exceptionVec.get(ExceptionNO.illegalInstr),
-      0.U(128.W), reduce.io.result)
+      0.U(32.W), reduce.io.result(31, 0))
   }
 
   // Read-only handles for the separate G1/G2 observation harness. These carry
