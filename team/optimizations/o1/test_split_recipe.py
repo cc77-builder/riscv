@@ -1,6 +1,7 @@
 """Explicit split profile, process sequencing and failure-preservation checks."""
 import copy
 import json
+import os
 from pathlib import Path
 import tempfile
 from types import SimpleNamespace
@@ -21,6 +22,26 @@ def contract():
 
 
 class SplitProfile(unittest.TestCase):
+    @unittest.skipUnless(os.name == "posix", "native POSIX tool path contract")
+    def test_path_python_cannot_override_bound_mem_generator_interpreter(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);item=contract()
+            (root/".mill-version").write_bytes(b"0.12.3\n")
+            item["launch_metadata"][".mill-version"]["sha256"]=split.sha(root/".mill-version")
+            item["split_script_sha256"]=split.sha(split.__file__)
+            item["recipe_sha256"]=split.sha(recipe.__file__)
+            for name,tool in item["compilers"].items():
+                path=root/name;path.write_bytes(name.encode())
+                tool.update(path=str(path),sha256=split.sha(path))
+            item["mill_launch"]=[item["compilers"][name]["path"] for name in ("sh","mill")]
+            selected={name:item["compilers"][role]["path"] for name,role in
+                      (("mill","mill"),("java","java"),("verilator","verilator"),("python3","python"))}
+            with patch.object(split.shutil,"which",side_effect=selected.get):split.verify_tools(item,root)
+            selected["python3"]=str(root/"foreign-python")
+            with patch.object(split.shutil,"which",side_effect=selected.get), \
+                    self.assertRaisesRegex(ValueError,"activated native tool differs: python3"):
+                split.verify_tools(item,root)
+
     def test_cannot_mix_direct_and_split_contracts(self):
         item = contract()
         recipe.validate(item)

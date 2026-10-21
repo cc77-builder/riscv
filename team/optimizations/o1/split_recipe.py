@@ -59,9 +59,9 @@ def verify_tools(contract, root):
             "Mill launcher metadata changed")
     for tool in contract["compilers"].values():
         require(sha(tool["path"]) == tool["sha256"], "native tool payload changed: " + tool["path"])
-    for name in ("mill", "java", "verilator"):
+    for name, role in (("mill", "mill"), ("java", "java"), ("verilator", "verilator"), ("python3", "python")):
         selected = shutil.which(name)
-        require(selected is not None and str(Path(selected).resolve()) == contract["compilers"][name]["path"],
+        require(selected is not None and str(Path(selected).resolve()) == contract["compilers"][role]["path"],
                 "activated native tool differs: " + name)
 
 

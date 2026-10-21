@@ -47,6 +47,13 @@ def dependency_snapshot():
     return live_inputs.dependency_snapshot(ROOT)
 
 
+def verify_committed_build_tools(root, revision, files):
+    for name, digest in files.items():
+        blob = git("show", revision + ":" + name, repo=root)
+        require(hashlib.sha256(blob).hexdigest() == digest,
+                "build tool differs from committed source: " + name)
+
+
 def main(out, profile="direct"):
     out = out.resolve()
     require(not out.exists(), "output already exists")
@@ -71,13 +78,14 @@ def main(out, profile="direct"):
         pins = {"source_commit": state["source_commit"], "config": "MinimalConfig",
                 "NUM_CORES": 1, "EMU_THREADS": 1, "JVM_XMX": "6G" if profile=="split-v1" else "12G", "BUILD_JOBS": 2,
                 **FLAGS, "native_build_contract": contract, "files": dict(sorted(files.items())), "dependency_files": dependency_files,
-                "build_tools": {str(p.relative_to(ROOT)): sha(p) for p in
+                "build_tools": {p.relative_to(ROOT).as_posix(): sha(p) for p in
                     (Path(__file__), Path(live_inputs.__file__), Path(build_recipe.__file__))},
                 "build_script_sha256": sha(Path(__file__)), "source_root": str(ROOT)}
         if profile=="split-v1":
             pins.update(JVM_XSS="16m", recipe_profile=profile)
             split_driver=Path(build_recipe.__file__).with_name("split_recipe.py")
             pins["build_tools"][split_driver.relative_to(ROOT).as_posix()]=sha(split_driver)
+        verify_committed_build_tools(ROOT, state["source_commit"], pins["build_tools"])
         save(out / "hardware-inputs-before.json", pins)
         activated = "source team/scripts/activate.sh\n"
         tools = {"java": "java -version", "mill": "mill --version", "verilator": "verilator --version",
