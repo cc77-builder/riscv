@@ -19,6 +19,8 @@ MAKE_ARGS = ["CONFIG=MinimalConfig", "NUM_CORES=1", "EMU_THREADS=1", "JVM_XMX=12
              "WITH_CONSTANTIN=0", "WITH_ROLLINGDB=0", "-j2"]
 SPLIT_MAKE_ARGS = [arg if arg != "JVM_XMX=12G" else "JVM_XMX=6G" for arg in MAKE_ARGS]
 SPLIT_MAKE_ARGS.insert(4, "JVM_XSS=16m")
+SPLIT_PROFILES = ("split-v1", "split-clang-v1")
+CLANG_COMMANDS = {"cxx": "clang++-19", "cc": "clang-19"}
 SPLIT_PHASES = [
     dict(name="scala-compile", mill_args=["-i", "-Djvm-xmx=6G", "-Djvm-xss=16m", "xiangshan.test.compile"],
          environment=dict(JAVA_OPTS="-Xmx3g -XX:ActiveProcessorCount=2", JAVA_TOOL_OPTIONS="-XX:ActiveProcessorCount=2")),
@@ -52,19 +54,25 @@ def environment():
 
 def probe_tools(profile="direct"):
     """Resolve compiler payloads, rejecting unbound launcher indirection."""
+    if profile not in ("direct", *SPLIT_PROFILES):
+        raise ValueError("unsupported native recipe profile")
     result = {}
-    selected = [("cxx", "g++", "--version"), ("cc", "gcc", "--version"),
+    clang = profile == "split-clang-v1"
+    selected = [("cxx", "clang++-19" if clang else "g++", "--version"),
+        ("cc", "clang-19" if clang else "gcc", "--version"),
         ("java", "java", "-version"), ("bash", "bash", "--version"),
         ("sh", "/bin/sh", "-c"), ("time", "/usr/bin/time", "--version"), ("mill", "mill", "--version"),
         ("verilator", "verilator", "--version"),
         ("firtool", str(Path.home()/".cache/llvm-firtool/1.62.1/bin/firtool"), "--version")]
-    if profile == "split-v1":
+    if profile in SPLIT_PROFILES:
         selected += [("python", "python3", "--version"), ("make", "make", "--version")]
     for role, command, option in selected:
         path = shutil.which(command)
         if not path:
             raise ValueError("missing compiler " + command)
-        path = Path(path).resolve()
+        # clang++ is commonly a symlink to clang. Preserve the driver basename
+        # for C++ linking, while independently binding its resolved payload.
+        path = Path(path).absolute() if clang and role in CLANG_COMMANDS else Path(path).resolve()
         # The supported Mill 0.12 launcher is itself the executable JAR. A
         # shell wrapper's hash would leave its actual compiler payload unbound.
         if role == "mill" and not zipfile.is_zipfile(path):
@@ -77,6 +85,10 @@ def probe_tools(profile="direct"):
             command.append("printf '%s\\n' 'POSIX shell ENOEXEC fallback'")
         result[role] = dict(path=str(path), sha256=hashlib.sha256(path.read_bytes()).hexdigest(),
                            version=subprocess.check_output(command, text=True, stderr=subprocess.STDOUT))
+        if clang and role in CLANG_COMMANDS:
+            result[role]["payload_path"] = str(path.resolve())
+            if not re.search(r"\bclang version 19\.", result[role]["version"]):
+                raise ValueError("split-clang-v1 requires Clang 19: " + role)
     # Ubuntu's verilator executable is a Perl launcher; normal (non-debug)
     # operation dispatches to its sibling binary. The restricted environment
     # excludes VERILATOR_ROOT/VERILATOR_BIN, so there is no inherited override.
@@ -92,7 +104,7 @@ def probe_tools(profile="direct"):
 def capture(root, profile="direct"):
     # Probe in precisely the environment used by the build; explicitly pass
     # these compiler paths to Make instead of merely recording clang --version.
-    if profile not in ("direct", "split-v1"):
+    if profile not in ("direct", *SPLIT_PROFILES):
         raise ValueError("unsupported native recipe profile")
     probe = ("import json,runpy; helper=runpy.run_path(" + repr(str(Path(__file__).resolve())) +
              "); print(json.dumps(helper['probe_tools'](" + repr(profile) + ")))")
@@ -106,9 +118,11 @@ def capture(root, profile="direct"):
                                                        value=metadata.read_text(encoding="utf-8").strip())},
                 environment_sha256=hashlib.sha256(json.dumps(clean, sort_keys=True).encode()).hexdigest(),
                 recipe_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest())
-    if profile == "split-v1":
+    if profile in SPLIT_PROFILES:
         result.update(schema=3, profile=profile, make_args=list(SPLIT_MAKE_ARGS), phases=copy.deepcopy(SPLIT_PHASES),
                       split_script_sha256=hashlib.sha256(Path(__file__).with_name("split_recipe.py").read_bytes()).hexdigest())
+    if profile == "split-clang-v1":
+        result["compiler_commands"] = dict(CLANG_COMMANDS)
     return result
 
 
@@ -119,12 +133,23 @@ def validate(contract):
         if contract.get("make_args") != MAKE_ARGS or any(name in contract for name in ("profile", "phases", "split_script_sha256")):
             raise ValueError("unsupported native build contract")
     elif contract.get("schema") == 3:
-        if (contract.get("profile") != "split-v1" or contract.get("make_args") != SPLIT_MAKE_ARGS or
+        if (contract.get("profile") not in SPLIT_PROFILES or contract.get("make_args") != SPLIT_MAKE_ARGS or
                 contract.get("phases") != SPLIT_PHASES or
                 not re.fullmatch(r"[0-9a-f]{64}", contract.get("split_script_sha256", ""))):
             raise ValueError("unsupported split native build contract")
     else:
         raise ValueError("unsupported native build contract")
+    if contract.get("profile") == "split-clang-v1":
+        if contract.get("compiler_commands") != CLANG_COMMANDS:
+            raise ValueError("missing Clang 19 driver selection")
+        for role, command in CLANG_COMMANDS.items():
+            tool = contract.get("compilers", {}).get(role, {})
+            if (PurePosixPath(tool.get("path", "")).name != command or
+                    not PurePosixPath(tool.get("payload_path", "")).is_absolute() or
+                    not re.search(r"\bclang version 19\.", tool.get("version", ""))):
+                raise ValueError("split-clang-v1 requires bound Clang 19 driver: " + role)
+    elif "compiler_commands" in contract:
+        raise ValueError("Clang driver selection requires split-clang-v1")
     if not all(re.fullmatch(r"[0-9a-f]{64}", contract.get(key, ""))
                for key in ("environment_sha256", "recipe_sha256")):
         raise ValueError("incomplete native build contract")

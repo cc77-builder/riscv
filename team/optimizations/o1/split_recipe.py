@@ -1,4 +1,4 @@
-"""Execute the explicit split-v1 native recipe, retaining every phase result.
+"""Execute an explicit split native recipe, retaining every phase result.
 
 Scala compilation/elaboration finish before serial FIR lowering begins. This
 entry point only accepts a fresh build/ and never resumes interrupted output.
@@ -52,13 +52,16 @@ def environment(pins):
 
 def verify_tools(contract, root):
     recipe.validate(contract)
-    require(contract.get("profile") == "split-v1", "split executor requires split-v1 contract")
+    require(contract.get("profile") in recipe.SPLIT_PROFILES, "split executor requires split contract")
     require(sha(__file__) == contract["split_script_sha256"], "split executor changed")
     require(sha(recipe.__file__) == contract["recipe_sha256"], "native recipe changed")
     require(sha(root / ".mill-version") == contract["launch_metadata"][".mill-version"]["sha256"],
             "Mill launcher metadata changed")
     for tool in contract["compilers"].values():
         require(sha(tool["path"]) == tool["sha256"], "native tool payload changed: " + tool["path"])
+        if "payload_path" in tool:
+            require(str(Path(tool["path"]).resolve()) == tool["payload_path"],
+                    "native driver payload target changed: " + tool["path"])
     for name, role in (("mill", "mill"), ("java", "java"), ("verilator", "verilator"), ("python3", "python")):
         selected = shutil.which(name)
         require(selected is not None and str(Path(selected).resolve()) == contract["compilers"][role]["path"],
@@ -67,7 +70,7 @@ def verify_tools(contract, root):
 
 def commands(contract):
     recipe.validate(contract)
-    require(contract.get("profile") == "split-v1", "split commands require split-v1 contract")
+    require(contract.get("profile") in recipe.SPLIT_PROFILES, "split commands require split contract")
     phases = contract["phases"]
     tools = contract["compilers"]
     return {
@@ -108,7 +111,7 @@ def run(pins_path, output, root=ROOT):
     require(pins.get("source_root") == str(root), "split pins refer to another checkout")
     pins_sha = sha(pins_path)
     output.mkdir(parents=True)
-    state = dict(status="RUNNING", profile="split-v1", started=now(), phases=[], pins_sha256=pins_sha)
+    state = dict(status="RUNNING", profile=contract["profile"], started=now(), phases=[], pins_sha256=pins_sha)
     save(output / "state.json", state)
     env = environment(pins)
     argv = commands(contract)

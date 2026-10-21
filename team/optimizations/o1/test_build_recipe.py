@@ -20,6 +20,30 @@ def digest(path):
 
 
 class NativePayloads(unittest.TestCase):
+    def test_clang_profile_probes_versioned_drivers_and_binds_payloads(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            tools = self.tools(Path(tmp))
+            for name in ("clang++-19", "clang-19", "python3", "make"):
+                tools[name] = Path(tmp) / name
+                tools[name].write_bytes(("compiler fixture " + name).encode())
+            del tools["g++"], tools["gcc"]
+            calls = []
+            def version(command, **kwargs):
+                calls.append(command)
+                return "Ubuntu clang version 19.1.7\n"
+            with patch.object(recipe.shutil, "which", side_effect=lambda name: str(tools[Path(name).name])), \
+                    patch.object(recipe.subprocess, "check_output", side_effect=version):
+                result = recipe.probe_tools("split-clang-v1")
+            for role, name in recipe.CLANG_COMMANDS.items():
+                self.assertEqual(result[role]["path"], str(tools[name].absolute()))
+                self.assertEqual(result[role]["payload_path"], str(tools[name].resolve()))
+                self.assertEqual(result[role]["sha256"], digest(tools[name]))
+                self.assertIn([str(tools[name].absolute()), "--version"], calls)
+            with patch.object(recipe.shutil, "which", side_effect=lambda name: str(tools[Path(name).name])), \
+                    patch.object(recipe.subprocess, "check_output", return_value="Ubuntu clang version 18.1.8"), \
+                    self.assertRaisesRegex(ValueError, "requires Clang 19"):
+                recipe.probe_tools("split-clang-v1")
+
     def tools(self, folder):
         tools = {name: folder / name for name in
                  ("g++", "gcc", "java", "bash", "sh", "time", "mill", "verilator", "verilator_bin", "firtool")}
