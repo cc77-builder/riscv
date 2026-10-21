@@ -7,6 +7,7 @@ import argparse
 from datetime import datetime, timezone
 import hashlib
 import json
+import shlex
 from pathlib import Path
 import subprocess
 import sys
@@ -63,7 +64,19 @@ def dependency_snapshot():
     return modules, dict(sorted(files.items()))
 
 
-def main(out):
+def profile_flags(profile):
+    require(profile in ("observe", "cost"), "unknown O2 profile")
+    flags = dict(FLAGS)
+    if profile == "cost":
+        for key in ("VDOT_O2_TRACE", "VDOT_O1_TRACE", "VDOT_T12_TRACE", "VDOT_T13_TRACE"):
+            flags[key] = "0"
+    return flags
+
+
+def main(out, profile="observe", firtool_dir=None):
+    flags = profile_flags(profile)
+    firtool_dir = (firtool_dir or Path.home() / ".cache/llvm-firtool/1.62.1/bin").resolve()
+    require((firtool_dir / "firtool").is_file(), "missing configured firtool")
     out = out.resolve()
     require(not out.exists(), "output already exists")
     require(not out.is_relative_to(ROOT), "output must be outside checkout")
@@ -73,7 +86,7 @@ def main(out):
             "untracked hardware inputs must be committed before building")
     out.mkdir(parents=True)
     state = {"status": "CAPTURING", "started_utc": now(), "source_root": str(ROOT),
-             "source_commit": git("rev-parse", "HEAD").decode().strip(), "flags": FLAGS}
+             "source_commit": git("rev-parse", "HEAD").decode().strip(), "profile": profile, "flags": flags}
     save(out / "build-state.json", state)
     try:
         (out / "source-status.txt").write_bytes(git("status", "--short"))
@@ -88,20 +101,20 @@ def main(out):
         save(out / "dependencies.json", dependencies)
         pins = {"source_commit": state["source_commit"], "config": "MinimalConfig",
                 "NUM_CORES": 1, "EMU_THREADS": 1, "JVM_XMX": "12G", "BUILD_JOBS": 2,
-                **FLAGS, "files": dict(sorted(files.items())), "dependency_files": dependency_files,
+                **flags, "profile": profile, "files": dict(sorted(files.items())), "dependency_files": dependency_files,
                 "build_script_sha256": sha(Path(__file__)), "source_root": str(ROOT)}
         save(out / "hardware-inputs-before.json", pins)
         activated = "source team/scripts/activate.sh\n"
         tools = {"java": "java -version", "mill": "mill --version", "verilator": "verilator --version",
                  "clang": "clang++ --version", "make": "make --version", "python": "python3 --version",
-                 "firtool": '\"$HOME/.cache/llvm-firtool/1.62.1/bin/firtool\" --version'}
+                 "firtool": shlex.quote(str(firtool_dir / "firtool")) + " --version"}
         for name, command in tools.items():
             with (out / (name + "-version.log")).open("wb") as log:
                 rc = subprocess.run(["bash", "-c", activated + command], cwd=ROOT,
                                     stdout=log, stderr=subprocess.STDOUT).returncode
             require(rc == 0, "missing tool " + name)
-        shell = activated + "export " + " ".join(k + "=" + v for k, v in FLAGS.items()) + "\n"
-        shell += 'export CHISEL_FIRTOOL_PATH="$HOME/.cache/llvm-firtool/1.62.1/bin"\n'
+        shell = activated + "export " + " ".join(k + "=" + v for k, v in flags.items()) + "\n"
+        shell += "export CHISEL_FIRTOOL_PATH=" + shlex.quote(str(firtool_dir)) + "\n"
         shell += "make emu CONFIG=MinimalConfig NUM_CORES=1 EMU_THREADS=1 JVM_XMX=12G OPT_FAST=-O3 OPT_SLOW=-O0 -j2\n"
         (out / "build-command.sh").write_text(shell, encoding="utf-8")
         state.update(status="BUILDING", build_started_utc=now(), command=["bash", "-c", shell])
@@ -140,4 +153,7 @@ def main(out):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
-    raise SystemExit(main(parser.parse_args().output))
+    parser.add_argument("--profile", choices=["observe", "cost"], default="observe")
+    parser.add_argument("--firtool-dir", type=Path)
+    args = parser.parse_args()
+    raise SystemExit(main(args.output, args.profile, args.firtool_dir))
