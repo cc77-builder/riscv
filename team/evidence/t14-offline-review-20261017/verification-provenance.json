@@ -1,0 +1,42 @@
+{
+  "status": "T14_LINUX_WINDOWS_OFFLINE_MATCH",
+  "date": "2026-10-17",
+  "hardware_rerun": false,
+  "archive_files_verified": 982,
+  "receipts_semantically_equal": true,
+  "archive_manifest_sha256": "a57cda082ea2fef47d31d9173a48d1d41d3d3df4d798df558cb3ee6885841017",
+  "linux_receipt_sha256": "65f7654ee5930e4d7f54a443b93524d84b77fdd17f5a7a0d2f63249f0dec8856",
+  "windows_receipt_sha256": "a948cc29e16a028d39a66704c9893efefbe0226c95062ae5d80ff91ada521f99",
+  "verification_source_sha256": {
+    "team/scripts/verify-t14-archive.py": "71ed508c5b37a3a05a7d1626a6811933ff85152e384820ee86bef260b672b951",
+    "team/scripts/compare-t14.py": "495a1165767a9fb88bf5f6a5161e3e9a1a0e768e69c65fbb655791281f6b12f3",
+    "team/scripts/check-t12-archive.py": "c999932841fdc7889b2883647ae211f5bcae3fbfbb79e824f921bdc6de8b36bd",
+    "team/scripts/check-vdot-regression.py": "c10e914e69b983cf62132516a95e73b8c902380087b8bb098c4fbc2fc3b12f4a",
+    "team/scripts/check-t14-structure.py": "d8dd11bd872b325b50c7b93870ad657184eb273f80a90b75860ae88dcfb4f55e",
+    "team/workloads/vdot-perf/analyze.py": "c589fb77c87b1826e260f4dcd757afd54145e48b653a4f1150681548dce928aa"
+  },
+  "linux_command": [
+    "python3",
+    "-B",
+    "team/scripts/verify-t14-archive.py",
+    "--archive",
+    "team/evidence/t14-optimization-20261016",
+    "--output",
+    "<new-output>"
+  ],
+  "windows_command": [
+    "python",
+    "-B",
+    "team/scripts/verify-t14-archive.py",
+    "--archive",
+    "team/evidence/t14-optimization-20261016",
+    "--output",
+    "<new-output>"
+  ],
+  "linux_python": "Python 3.10.12",
+  "windows_python": "3.13.2 (tags/v3.13.2:4f8bb39, Feb  4 2025, 15:23:48) [MSC v.1942 64 bit (AMD64)]",
+  "original_outputs": {
+    "linux": "/home/riscv/riscv-lab/t14-optimization-20261015/runs/offline-linux-01",
+    "windows": "D:/yanyi/riscv大赛/doc/T14优化/离线复核结果/windows-final-01"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "roots": {
+    "repo": "${REPO_ROOT}",
+    "lab": "${LAB_ROOT}",
+    "xs_env": "${XS_ENV_ROOT}",
+    "system": "/",
+    "java": "${JAVA_HOME}",
+    "firtool": "${FIRTOOL_DIR}"
+  },
+  "locations": {
+    "t12": {
+      "root": "lab",
+      "path": "t12-regression-20261013"
+    },
+    "t14": {
+      "root": "lab",
+      "path": "t14-optimization-20261015"
+    },
+    "dense": {
+      "root": "lab",
+      "path": "t13-performance-20261015/runs/images-v3/performance-d0-s06"
+    },
+    "o3_images": {
+      "root": "lab",
+      "path": "o3-gemv-20261019/images-02"
+    },
+    "cost_work": {
+      "root": "lab",
+      "path": "o4-cost-20261020"
+    },
+    "o2_pins": {
+      "root": "lab",
+      "path": "o2-fullcore-20261019/build-03/hardware-inputs.json"
+    },
+    "o1_pins": {
+      "root": "lab",
+      "path": "o2-performance-20261019/o1-build-01/hardware-inputs.json"
+    },
+    "o2_emu": {
+      "root": "lab",
+      "path": "o2-r0-repro-20261021/baseline-binaries/o2-emu"
+    },
+    "o1_emu": {
+      "root": "lab",
+      "path": "o2-r0-repro-20261021/baseline-binaries/o1-emu"
+    },
+    "g4_images": {
+      "root": "lab",
+      "path": "unified-vdot-benchmark-20261017/runs/ours-images-02"
+    }
+  },
+  "tools": {
+    "java": "${JAVA_HOME}/bin/java",
+    "mill": "/usr/local/bin/mill",
+    "verilator": "/usr/local/bin/verilator",
+    "clang++": "/usr/lib/llvm-19/bin/clang",
+    "make": "/usr/bin/make",
+    "python3": "/usr/bin/python3.10",
+    "riscv64-linux-gnu-gcc": "/usr/bin/riscv64-linux-gnu-gcc-11",
+    "firtool": "${FIRTOOL_DIR}/firtool",
+    "yosys": "${LAB_ROOT}/o4-cost-20261020/tools/root/usr/bin/yosys",
+    "berkeley-abc": "${LAB_ROOT}/o4-cost-20261020/tools/root/usr/bin/berkeley-abc",
+    "sta": "${LAB_ROOT}/o4-cost-20261020/tools/root/usr/bin/sta"
+  }
+}

@@ -1038,6 +1038,14 @@ class NewCSR(implicit val p: Parameters) extends Module
 
 
   // Todo: check IMSIC EX_II and EX_VI
+  if (sys.env.get("VDOT_T13_TRACE").contains("1")) {
+    require(!p(xiangshan.DebugOptionsKey).ResetGen, "T13 trace requires common simulation reset")
+    val t13Cycle = utility.GTimer()
+    when(io.in.fire && ren && (addr === "hc00".U || addr === "hc02".U)) {
+      printf(p"T13_CSR_SAMPLE cycle=${t13Cycle} addr=0x${Hexadecimal(addr)} data=0x${Hexadecimal(rdata)} wen=${wen}\n")
+    }
+  }
+
   private val imsicIllegal = fromAIA.rdata.valid && fromAIA.rdata.bits.illegal
   private val imsic_EX_II = imsicIllegal && !V.asUInt.asBool
   private val imsic_EX_VI = imsicIllegal && V.asUInt.asBool

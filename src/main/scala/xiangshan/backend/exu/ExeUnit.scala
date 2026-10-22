@@ -20,6 +20,7 @@ import org.chipsalliance.cde.config.Parameters
 import chisel3._
 import chisel3.experimental.hierarchy.{Definition, instantiable}
 import chisel3.util._
+import chisel3.util.experimental.BoringUtils.tapAndRead
 import freechips.rocketchip.diplomacy.{LazyModule, LazyModuleImp}
 import utility._
 import xiangshan.backend.fu.{CSRFileIO, FenceIO, FuncUnitInput}
@@ -59,6 +60,19 @@ class ExeUnitImp(
   p: Parameters, exuParams: ExeUnitParams
 ) extends LazyModuleImp(wrapper) with HasXSParameter with HasCriticalErrors {
   private val fuCfgs = exuParams.fuConfigs
+  // Keep all other EXUs and both old vdot modes on the original Scala branch.
+  private val vdotHandoff = fuCfgs.exists(_.fuType == FuType.vdot) &&
+    xiangshan.backend.fu.wrapper.VDotHandoff.enabled
+  private val vdotElastic = fuCfgs.exists(_.fuType == FuType.vdot) &&
+    xiangshan.backend.fu.wrapper.VDotO2.enabled
+  if (vdotElastic) {
+    require(exuParams.name == "VFEX4" && !exuParams.latencyCertain,
+      "O2 elastic dispatch is restricted to the current uncertain-latency VFEX4")
+    require(fuCfgs.size == 3 && fuCfgs.map(_.fuType).toSet == Set(FuType.vdot, FuType.vidiv, FuType.vfdiv),
+      "O2 requires exactly VDot, VIDiv and VFDivSqrt")
+    require(!xiangshan.backend.fu.wrapper.VDotHandoff.traceEnabled,
+      "O2 requires its own observer; the single-outstanding O1 observer is unsupported")
+  }
 
   val io = IO(new ExeUnitIO(exuParams))
 
@@ -67,6 +81,14 @@ class ExeUnitImp(
     val module = cfg.fuGen(p, cfg)
     module
   })
+
+  private val elasticVDot = if (vdotElastic) {
+    Some(funcUnits(fuCfgs.indexWhere(_.fuType == FuType.vdot))
+      .asInstanceOf[xiangshan.backend.fu.wrapper.VDotElastic])
+  } else None
+  private val elasticVDotOccupied = elasticVDot.map { fu =>
+    fu.pipelineStatus.pValid || fu.pipelineStatus.rValid
+  }
 
   if (EnableClockGate) {
     fuCfgs.zip(funcUnits).foreach { case (cfg, fu) =>
@@ -113,6 +135,13 @@ class ExeUnitImp(
         clk_en := true.B
       }
 
+      if (vdotElastic && cfg.fuType == FuType.vdot) {
+        // These are actual, unmasked slot registers. Keep the clearing edge
+        // even when this cycle's redirect kills every slot. Reset also opens
+        // an empty, previously gated FU without relying on clock-test enable.
+        clk_en := elasticVDotOccupied.get || fu.io.in.fire || reset.asBool
+      }
+
       if (cfg.ckAlwaysEn) {
         clk_en := true.B
       }
@@ -124,20 +153,60 @@ class ExeUnitImp(
     }
   }
 
-  val busy = RegInit(false.B)
-  if (exuParams.latencyCertain){
+  // Only DIV uses a single transaction/ROB register in O2. A vdot response
+  // or redirect cannot release another vdot still held by the other slot.
+  private val elasticDivOccupied = if (vdotElastic) {
+    val divUnits = funcUnits.filter(_.cfg.fuType != FuType.vdot)
+    val divBusy = RegInit(false.B)
+    val divAccept = io.in.fire && io.in.bits.fuType =/= FuType.vdot.U
+    val divRobIdx = RegEnable(io.in.bits.robIdx, divAccept)
+    val divOutValid = divUnits.map(_.io.out.valid).reduce(_ || _)
+    val divOutFire = divUnits.map(_.io.out.fire).reduce(_ || _)
+    val divReady = divUnits.map(_.io.in.ready).reduce(_ && _)
+    when(divBusy && divRobIdx.needFlush(io.flush)) {
+      divBusy := false.B
+    }.elsewhen(divOutFire) {
+      divBusy := false.B
+    }.elsewhen(divAccept) {
+      divBusy := true.B
+    }
+    // Existing DIV cancellation need not withdraw out.valid combinationally.
+    // Wait for the physical output to disappear and the actual DIVs to return
+    // ready; neither cancellation nor completion permits same-cycle switching.
+    Some(divBusy || divOutValid || !divReady)
+  } else None
+
+  val busy = if (vdotElastic) {
+    WireDefault(elasticVDotOccupied.get || elasticDivOccupied.get)
+  } else RegInit(false.B)
+  if (vdotElastic) {
+    // busy is derived from the real two-slot state plus independent DIV state.
+  } else if (exuParams.latencyCertain){
     busy := false.B
   }
   else {
     val robIdx = RegEnable(io.in.bits.robIdx, io.in.fire)
-    when(io.in.fire && io.in.bits.robIdx.needFlush(io.flush)) {
-      busy := false.B
-    }.elsewhen(busy && robIdx.needFlush(io.flush)) {
-      busy := false.B
-    }.elsewhen(io.out.fire) {
-      busy := false.B
-    }.elsewhen(io.in.fire) {
-      busy := true.B
+    if (vdotHandoff) {
+      when(io.in.fire && io.in.bits.robIdx.needFlush(io.flush)) {
+        busy := false.B
+      }.elsewhen(busy && robIdx.needFlush(io.flush)) {
+        busy := false.B
+      }.elsewhen(io.in.fire) {
+        // A response and a new request can coincide: the NEW request remains busy.
+        busy := true.B
+      }.elsewhen(io.out.fire) {
+        busy := false.B
+      }
+    } else {
+      when(io.in.fire && io.in.bits.robIdx.needFlush(io.flush)) {
+        busy := false.B
+      }.elsewhen(busy && robIdx.needFlush(io.flush)) {
+        busy := false.B
+      }.elsewhen(io.out.fire) {
+        busy := false.B
+      }.elsewhen(io.in.fire) {
+        busy := true.B
+      }
     }
   }
 
@@ -218,12 +287,263 @@ class ExeUnitImp(
     input.params.fuConfigs.map(_.fuSel(input))
   }
 
-  val in1ToN = Module(new Dispatcher(new ExuInput(exuParams), funcUnits.length, acceptCond))
+  val dispatchedInputs = if (vdotElastic) {
+    // Local selected-ready dispatch: the generic Dispatcher ANDs every ready,
+    // while each valid is independent of that AND. Reusing it here could let
+    // a child accept without the parent accepting when another FU is busy.
+    val sources = Wire(Vec(funcUnits.length, DecoupledIO(new ExuInput(exuParams))))
+    val selected = VecInit(acceptCond(io.in.bits))
+    val newIsVDot = io.in.bits.fuType === FuType.vdot.U
+    val allowInput = !elasticDivOccupied.get &&
+      (newIsVDot || !elasticVDotOccupied.get) &&
+      !io.flush.valid && !reset.asBool
+    val selectedReady = Mux1H(selected, funcUnits.map(_.io.in.ready))
+    io.in.ready := allowInput && selectedReady
+    sources.zipWithIndex.foreach { case (source, i) =>
+      source.bits := io.in.bits
+      source.valid := io.in.valid && allowInput && selected(i)
+    }
+    when(io.in.valid && !reset.asBool) {
+      assert(PopCount(selected) === 1.U, "O2 input must select exactly one VFEX4 FU")
+    }
+    val childFires = funcUnits.map(_.io.in.fire)
+    assert(io.in.fire === childFires.reduce(_ || _),
+      "O2 parent and selected child acceptance disagree")
+    assert(PopCount(childFires) <= 1.U, "O2 dispatched one request to multiple FUs")
+    childFires.zipWithIndex.foreach { case (fire, i) =>
+      when(fire) {
+        assert(io.in.fire && selected(i), "O2 unselected child accepted a request")
+      }
+    }
+    when(io.in.fire && !newIsVDot) {
+      assert(!elasticVDotOccupied.get && !elasticDivOccupied.get,
+        "O2 switched to DIV before the previous FU drained")
+    }
+    assert(PopCount(funcUnits.map(_.io.out.valid)) <= 1.U,
+      "O2 VFEX4 output must remain one-hot")
+    sources
+  } else {
+    val in1ToN = Module(new Dispatcher(new ExuInput(exuParams), funcUnits.length, acceptCond))
 
-  // ExeUnit.in <---> Dispatcher.in
-  in1ToN.io.in.valid := io.in.valid && !busy
-  in1ToN.io.in.bits := io.in.bits
-  io.in.ready := !busy && in1ToN.io.in.ready
+    // ExeUnit.in <---> Dispatcher.in
+    if (vdotHandoff) {
+      require(exuParams.name == "VFEX4" && !exuParams.latencyCertain,
+        "O1 handoff is restricted to the current uncertain-latency VFEX4")
+      require(fuCfgs.count(_.fuType == FuType.vdot) == 1)
+      val vdotIndex = fuCfgs.indexWhere(_.fuType == FuType.vdot)
+      val vdotFu = funcUnits(vdotIndex)
+      val activeIsVDot = RegInit(false.B)
+      when(io.in.fire) { activeIsVDot := io.in.bits.fuType === FuType.vdot.U }
+      val newIsVDot = io.in.bits.fuType === FuType.vdot.U
+      // The shared output remains one-hot; neither div->vdot nor vdot->div overlaps.
+      val handoff = busy && activeIsVDot && newIsVDot && vdotFu.io.out.valid && io.out.ready &&
+        !io.flush.valid && !reset.asBool
+      val allowInput = (!busy || handoff) && !io.flush.valid && !reset.asBool
+      in1ToN.io.in.valid := io.in.valid && allowInput
+      in1ToN.io.in.bits := io.in.bits
+      io.in.ready := allowInput && in1ToN.io.in.ready
+      when(io.in.fire && busy) {
+        assert(handoff && vdotFu.io.out.fire && io.out.fire,
+          "O1 accepted into a busy EXU without retiring the old vdot response")
+      }
+      // Dispatcher ANDs every FU's ready; detect any parent/selected-FU mismatch.
+      assert(vdotFu.io.in.fire === (io.in.fire && newIsVDot))
+    } else {
+      in1ToN.io.in.valid := io.in.valid && !busy
+      in1ToN.io.in.bits := io.in.bits
+      io.in.ready := !busy && in1ToN.io.in.ready
+    }
+    in1ToN.io.out
+  }
+
+  if (sys.env.get("VDOT_T12_TRACE").contains("1") && fuCfgs.contains(xiangshan.backend.fu.FuConfig.VDotCfg)) {
+    // Instantiate outside when: GTimer is a local register, not a global read.
+    require(!p(xiangshan.DebugOptionsKey).ResetGen, "T12 trace requires the common simulation reset")
+    val t12Cycle = GTimer()
+    when(io.in.fire) {
+      printf(p"T12_VFEX4_ACCEPT cycle=${t12Cycle} rob=${io.in.bits.robIdx.flag}:${io.in.bits.robIdx.value} fu=0x${Hexadecimal(io.in.bits.fuType)}\n")
+    }
+    when(io.in.valid && !io.in.ready) {
+      printf(p"T12_VFEX4_WAIT cycle=${t12Cycle} rob=${io.in.bits.robIdx.flag}:${io.in.bits.robIdx.value} fu=0x${Hexadecimal(io.in.bits.fuType)} busy=${busy}\n")
+    }
+  }
+
+  if (xiangshan.backend.fu.wrapper.VDotHandoff.traceEnabled &&
+      fuCfgs.contains(xiangshan.backend.fu.FuConfig.VDotCfg)) {
+    require(exuParams.name == "VFEX4" && !exuParams.latencyCertain,
+      "O1 trace requires the current uncertain-latency VFEX4")
+    require(!p(xiangshan.DebugOptionsKey).ResetGen,
+      "O1 trace requires the common simulation reset")
+    require(fuCfgs.count(_.fuType == FuType.vdot) == 1)
+    val observedVDot = funcUnits(fuCfgs.indexWhere(_.fuType == FuType.vdot))
+      .asInstanceOf[xiangshan.backend.fu.wrapper.VDot]
+    // Every timestamp and sequence register is on the ungated parent clock.
+    // Child I/O is read directly; private expressions are tapped without feedback.
+    val o1Cycle = GTimer()
+    val o1NextSeq = RegInit(0.U(64.W))
+    val o1ActiveVDotSeq = RegInit(0.U(64.W))
+    val o1SchemaPrinted = RegInit(false.B)
+    val o1Killed = tapAndRead(observedVDot.o1ObservedKilled)
+    val o1State = tapAndRead(observedVDot.o1ObservedState)
+    val o1IllegalInput = tapAndRead(observedVDot.o1ObservedIllegalInput)
+    val o1Vl = tapAndRead(observedVDot.o1ObservedVl)
+    val o1In = observedVDot.io.in.bits.ctrl
+    // DataHoldBypass outCtrl exposes the NEW request during a handoff. These
+    // actual registered output fields continue to identify the OLD response.
+    val o1Out = observedVDot.io.out.bits.ctrl
+    val o1Data = observedVDot.io.out.bits.res.data
+    val o1Exception = o1Out.exceptionVec.get.asUInt
+    val o1Illegal = o1Out.exceptionVec.get(xiangshan.ExceptionNO.illegalInstr)
+    when(io.in.fire) { o1NextSeq := o1NextSeq + 1.U }
+    when(observedVDot.io.in.fire) { o1ActiveVDotSeq := o1NextSeq }
+    when(!reset.asBool) {
+      when(!o1SchemaPrinted) {
+        printf(p"O1_SCHEMA version=1 clock=global latency=2 rob_size=${RobSize.U} ftq_size=${FtqSize.U} vlen=${VLEN.U} handoff=${vdotHandoff.B.asUInt}\n")
+        o1SchemaPrinted := true.B
+      }
+      when(io.in.fire) {
+        printf(p"O1_VFEX4_ACCEPT cycle=${o1Cycle} seq=${o1NextSeq} rob=${io.in.bits.robIdx.flag}:${io.in.bits.robIdx.value} fu=0x${Hexadecimal(io.in.bits.fuType)} pdest=${io.in.bits.pdest}\n")
+      }
+      when(io.in.valid && !io.in.ready) {
+        printf(p"O1_VFEX4_WAIT cycle=${o1Cycle} rob=${io.in.bits.robIdx.flag}:${io.in.bits.robIdx.value} fu=0x${Hexadecimal(io.in.bits.fuType)} busy=${busy}\n")
+      }
+      // CtrlBlock registers the ROB redirect once before delivering this flush.
+      // Log both boundaries instead of inferring the parent flush from ROB time.
+      when(io.flush.valid) {
+        printf(p"O1_VFEX4_REDIRECT cycle=${o1Cycle} rob=${io.flush.bits.robIdx.flag}:${io.flush.bits.robIdx.value} self=${io.flush.bits.flushItself()}\n")
+      }
+      when(observedVDot.io.in.fire) {
+        printf(p"O1_ACCEPT cycle=${o1Cycle} seq=${o1NextSeq} rob=${o1In.robIdx.flag}:${o1In.robIdx.value} pdest=${o1In.pdest} vl=${o1Vl} illegal=${o1IllegalInput} vecwen=${o1In.vecWen.get} v0wen=${o1In.v0Wen.get}\n")
+      }
+      when(o1Killed) {
+        printf(p"O1_KILL cycle=${o1Cycle} seq=${o1ActiveVDotSeq} rob=${o1Out.robIdx.flag}:${o1Out.robIdx.value} pdest=${o1Out.pdest} redirect=${io.flush.bits.robIdx.flag}:${io.flush.bits.robIdx.value} self=${io.flush.bits.flushItself()} state=${o1State}\n")
+      }
+      when(observedVDot.io.out.valid && !observedVDot.io.out.ready) {
+        printf(p"O1_STALL cycle=${o1Cycle} seq=${o1ActiveVDotSeq} rob=${o1Out.robIdx.flag}:${o1Out.robIdx.value} pdest=${o1Out.pdest} illegal=${o1Illegal} data=0x${Hexadecimal(o1Data)} vecwen=${o1Out.vecWen.get} v0wen=${o1Out.v0Wen.get} exception=0x${Hexadecimal(o1Exception)}\n")
+      }
+      when(observedVDot.io.out.fire) {
+        printf(p"O1_RESPONSE cycle=${o1Cycle} seq=${o1ActiveVDotSeq} rob=${o1Out.robIdx.flag}:${o1Out.robIdx.value} pdest=${o1Out.pdest} illegal=${o1Illegal} data=0x${Hexadecimal(o1Data)} vecwen=${o1Out.vecWen.get} v0wen=${o1Out.v0Wen.get} exception=0x${Hexadecimal(o1Exception)}\n")
+      }
+      when(observedVDot.io.out.fire && observedVDot.io.in.fire) {
+        printf(p"O1_HANDOFF cycle=${o1Cycle} oldseq=${o1ActiveVDotSeq} newseq=${o1NextSeq} oldrob=${o1Out.robIdx.flag}:${o1Out.robIdx.value} newrob=${o1In.robIdx.flag}:${o1In.robIdx.value} oldpdest=${o1Out.pdest} newpdest=${o1In.pdest} busy=${busy}\n")
+      }
+    }
+  }
+
+  if (xiangshan.backend.fu.wrapper.VDotO2.traceEnabled &&
+      fuCfgs.contains(xiangshan.backend.fu.FuConfig.VDotCfg)) {
+    require(vdotElastic && exuParams.name == "VFEX4" && !exuParams.latencyCertain,
+      "O2 trace requires the elastic, uncertain-latency VFEX4")
+    require(!p(xiangshan.DebugOptionsKey).ResetGen,
+      "O2 trace requires the common simulation reset")
+    val observedVDot = elasticVDot.get
+    // All timestamps, sequence tags and shadow DIV lifecycle are observations
+    // on the ungated parent clock. No trace state drives functional logic.
+    val o2Cycle = GTimer()
+    val o2NextSeq = RegInit(0.U(64.W))
+    val o2PSeq = RegInit(0.U(64.W))
+    val o2RSeq = RegInit(0.U(64.W))
+    val o2SchemaPrinted = RegInit(false.B)
+    val o2P = tapAndRead(observedVDot.o2ObservedPCtrl)
+    val o2PPerf = tapAndRead(observedVDot.o2ObservedPPerf)
+    val o2R = observedVDot.io.out.bits.ctrl
+    val o2PValid = observedVDot.pipelineStatus.pValid
+    val o2RValid = observedVDot.pipelineStatus.rValid
+    val o2KillP = tapAndRead(observedVDot.o2ObservedKillP)
+    val o2KillR = tapAndRead(observedVDot.o2ObservedKillR)
+    val o2Move = tapAndRead(observedVDot.o2ObservedMove)
+    val o2IllegalInput = tapAndRead(observedVDot.o2ObservedIllegalInput)
+    val o2Vl = tapAndRead(observedVDot.o2ObservedVl)
+    val o2In = observedVDot.io.in.bits.ctrl
+    val o2Out = observedVDot.io.out
+    val o2DivAccept = io.in.fire && io.in.bits.fuType =/= FuType.vdot.U
+    val o2DivActive = RegInit(false.B)
+    val o2DivSeq = RegInit(0.U(64.W))
+    val o2DivRob = Reg(chiselTypeOf(io.in.bits.robIdx))
+    val o2DivFu = Reg(chiselTypeOf(io.in.bits.fuType))
+    val o2DivPdest = Reg(chiselTypeOf(io.in.bits.pdest))
+    val o2DivKill = o2DivActive && o2DivRob.needFlush(io.flush) && !reset.asBool
+    val o2DivUnits = funcUnits.filter(_.cfg.fuType != FuType.vdot)
+    val o2DivFire = o2DivUnits.map(_.io.out.fire).reduce(_ || _)
+
+    when(io.in.fire) { o2NextSeq := o2NextSeq + 1.U }
+    when(observedVDot.io.in.fire) { o2PSeq := o2NextSeq }
+    // Old P transfers even when a different new request replaces P this edge.
+    when(o2Move) { o2RSeq := o2PSeq }
+    when(o2DivAccept) {
+      o2DivActive := true.B
+      o2DivSeq := o2NextSeq
+      o2DivRob := io.in.bits.robIdx
+      o2DivFu := io.in.bits.fuType
+      o2DivPdest := io.in.bits.pdest
+    }.elsewhen(o2DivKill || o2DivFire) {
+      o2DivActive := false.B
+    }
+
+    val o2Activity = o2PValid || o2RValid || elasticDivOccupied.get ||
+      io.in.valid || io.flush.valid
+    val o2PreviousActivity = RegNext(o2Activity, false.B)
+    when(reset.asBool && o2SchemaPrinted) {
+      // Runtime reset ends this epoch. G3's complete-run checker rejects
+      // multiple epochs; the initial simulation reset emits no such record.
+      // printf normally suppresses itself during reset; this diagnostic must
+      // use only the explicit outer reset condition to record the old epoch.
+      withReset(false.B) {
+        printf(p"O2_RESET cycle=${o2Cycle} pvalid=${o2PValid} pseq=${o2PSeq} rvalid=${o2RValid} rseq=${o2RSeq} divactive=${o2DivActive} divseq=${o2DivSeq}\n")
+      }
+    }
+    when(!reset.asBool) {
+      when(!o2SchemaPrinted) {
+        printf(p"O2_SCHEMA version=1 clock=global latency=2 slots=2 rob_size=${RobSize.U} ftq_size=${FtqSize.U} vlen=${VLEN.U} vpu_width=${o2In.vpu.get.getWidth.U} perf_width=${observedVDot.io.in.bits.perfDebugInfo.getWidth.U}\n")
+        o2SchemaPrinted := true.B
+      }
+      when(o2Activity || o2PreviousActivity || !o2SchemaPrinted) {
+        printf(p"O2_STATE cycle=${o2Cycle} pvalid=${o2PValid} pseq=${o2PSeq} prob=${o2P.robIdx.flag}:${o2P.robIdx.value} ppdest=${o2P.pdest} rvalid=${o2RValid} rseq=${o2RSeq} rrob=${o2R.robIdx.flag}:${o2R.robIdx.value} rpdest=${o2R.pdest} occupancy=${observedVDot.pipelineStatus.occupancy} invalid=${io.in.valid} inready=${io.in.ready} vready=${observedVDot.io.in.ready} outvalid=${o2Out.valid} outready=${o2Out.ready} move=${o2Move} killp=${o2KillP} killr=${o2KillR} divactive=${o2DivActive} divseq=${o2DivSeq} divoccupied=${elasticDivOccupied.get} busy=${busy}\n")
+      }
+      when(io.in.fire) {
+        printf(p"O2_VFEX4_ACCEPT cycle=${o2Cycle} seq=${o2NextSeq} rob=${io.in.bits.robIdx.flag}:${io.in.bits.robIdx.value} fu=0x${Hexadecimal(io.in.bits.fuType)} pdest=${io.in.bits.pdest}\n")
+      }
+      when(io.in.valid && !io.in.ready) {
+        printf(p"O2_VFEX4_WAIT cycle=${o2Cycle} rob=${io.in.bits.robIdx.flag}:${io.in.bits.robIdx.value} fu=0x${Hexadecimal(io.in.bits.fuType)} busy=${busy}\n")
+      }
+      // The actual VFEX4 flush is a registered stage later than ROB redirect.
+      when(io.flush.valid) {
+        printf(p"O2_VFEX4_REDIRECT cycle=${o2Cycle} rob=${io.flush.bits.robIdx.flag}:${io.flush.bits.robIdx.value} self=${io.flush.bits.flushItself()}\n")
+      }
+      when(observedVDot.io.in.fire) {
+        printf(p"O2_ACCEPT cycle=${o2Cycle} seq=${o2NextSeq} rob=${o2In.robIdx.flag}:${o2In.robIdx.value} pdest=${o2In.pdest} vl=${o2Vl} illegal=${o2IllegalInput} vecwen=${o2In.vecWen.get} v0wen=${o2In.v0Wen.get} vpu=0x${Hexadecimal(o2In.vpu.get.asUInt)} perf=0x${Hexadecimal(observedVDot.io.in.bits.perfDebugInfo.asUInt)} vs1=0x${Hexadecimal(observedVDot.io.in.bits.data.src(0))} vs2=0x${Hexadecimal(observedVDot.io.in.bits.data.src(1))}\n")
+      }
+      when(o2Move) {
+        printf(p"O2_MOVE cycle=${o2Cycle} seq=${o2PSeq} rob=${o2P.robIdx.flag}:${o2P.robIdx.value} pdest=${o2P.pdest} illegal=${o2P.exceptionVec.get(xiangshan.ExceptionNO.illegalInstr)} vecwen=${o2P.vecWen.get} v0wen=${o2P.v0Wen.get} exception=0x${Hexadecimal(o2P.exceptionVec.get.asUInt)} vpu=0x${Hexadecimal(o2P.vpu.get.asUInt)} perf=0x${Hexadecimal(o2PPerf.asUInt)}\n")
+      }
+      when(o2KillP) {
+        printf(p"O2_KILL cycle=${o2Cycle} seq=${o2PSeq} slot=P rob=${o2P.robIdx.flag}:${o2P.robIdx.value} pdest=${o2P.pdest} redirect=${io.flush.bits.robIdx.flag}:${io.flush.bits.robIdx.value} self=${io.flush.bits.flushItself()}\n")
+      }
+      when(o2KillR) {
+        printf(p"O2_KILL cycle=${o2Cycle} seq=${o2RSeq} slot=R rob=${o2R.robIdx.flag}:${o2R.robIdx.value} pdest=${o2R.pdest} redirect=${io.flush.bits.robIdx.flag}:${io.flush.bits.robIdx.value} self=${io.flush.bits.flushItself()}\n")
+      }
+      when(o2Out.valid && !o2Out.ready) {
+        printf(p"O2_STALL cycle=${o2Cycle} seq=${o2RSeq} rob=${o2R.robIdx.flag}:${o2R.robIdx.value} pdest=${o2R.pdest} illegal=${o2R.exceptionVec.get(xiangshan.ExceptionNO.illegalInstr)} data=0x${Hexadecimal(o2Out.bits.res.data)} vecwen=${o2R.vecWen.get} v0wen=${o2R.v0Wen.get} exception=0x${Hexadecimal(o2R.exceptionVec.get.asUInt)} vpu=0x${Hexadecimal(o2R.vpu.get.asUInt)} perf=0x${Hexadecimal(o2Out.bits.perfDebugInfo.asUInt)}\n")
+      }
+      when(o2Out.fire) {
+        printf(p"O2_RESPONSE cycle=${o2Cycle} seq=${o2RSeq} rob=${o2R.robIdx.flag}:${o2R.robIdx.value} pdest=${o2R.pdest} illegal=${o2R.exceptionVec.get(xiangshan.ExceptionNO.illegalInstr)} data=0x${Hexadecimal(o2Out.bits.res.data)} vecwen=${o2R.vecWen.get} v0wen=${o2R.v0Wen.get} exception=0x${Hexadecimal(o2R.exceptionVec.get.asUInt)} vpu=0x${Hexadecimal(o2R.vpu.get.asUInt)} perf=0x${Hexadecimal(o2Out.bits.perfDebugInfo.asUInt)}\n")
+      }
+      when(o2DivAccept) {
+        printf(p"O2_DIV_ACCEPT cycle=${o2Cycle} seq=${o2NextSeq} rob=${io.in.bits.robIdx.flag}:${io.in.bits.robIdx.value} fu=0x${Hexadecimal(io.in.bits.fuType)} pdest=${io.in.bits.pdest}\n")
+      }
+      when(o2DivKill) {
+        printf(p"O2_DIV_KILL cycle=${o2Cycle} seq=${o2DivSeq} rob=${o2DivRob.flag}:${o2DivRob.value} fu=0x${Hexadecimal(o2DivFu)} pdest=${o2DivPdest} redirect=${io.flush.bits.robIdx.flag}:${io.flush.bits.robIdx.value} self=${io.flush.bits.flushItself()}\n")
+      }
+      o2DivUnits.foreach { fu =>
+        val ctrl = fu.io.out.bits.ctrl
+        when(fu.io.out.valid) {
+          // Retain the last DIV seq after logical kill until physical output
+          // disappears. Output identity always comes from the real child.
+          printf(p"O2_DIV_OUTPUT cycle=${o2Cycle} seq=${o2DivSeq} rob=${ctrl.robIdx.flag}:${ctrl.robIdx.value} fu=0x${Hexadecimal(fu.cfg.fuType.U)} pdest=${ctrl.pdest} ready=${fu.io.out.ready} cancelled=${!o2DivActive || o2DivKill}\n")
+        }
+      }
+    }
+  }
 
   def pipelineReg(init: ExuInput, valid: Bool, latency: Int, flush: ValidIO[Redirect]): (Seq[ExuInput], Seq[Bool]) = {
     val validVec = valid +: Seq.fill(latency)(RegInit(false.B))
@@ -240,7 +560,7 @@ class ExeUnitImp(
   val latencyMax = fuCfgs.map(_.latency.latencyVal.getOrElse(0)).max
   val inPipe = pipelineReg(io.in.bits, io.in.valid, latencyMax, io.flush)
   // Dispatcher.out <---> FunctionUnits
-  in1ToN.io.out.zip(funcUnits.map(_.io.in)).foreach {
+  dispatchedInputs.zip(funcUnits.map(_.io.in)).foreach {
     case (source: DecoupledIO[ExuInput], sink: DecoupledIO[FuncUnitInput]) =>
       sink.valid := source.valid
       source.ready := sink.ready

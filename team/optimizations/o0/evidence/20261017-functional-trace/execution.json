@@ -1,0 +1,149 @@
+{
+  "status": "REAL_FUNCTIONAL_TRACE_REPLAY_PASS_THROUGHPUT_NOT_COVERED",
+  "created_utc": "2026-10-17T15:23:41.570077+00:00",
+  "repository": "cc77-builder/riscv",
+  "target_branch": "zjhwork2",
+  "base_commit": "a877e0575ea91392edc7816637e51ae8d1689b36",
+  "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "platform": "Linux-6.18.55-x86_64-with-glibc2.41",
+  "upload": {
+    "name": "stderr.log.gz",
+    "bytes": 109257,
+    "git_blob": "0b3030b5e51d1619b705db1ab73fc2f10805db8e",
+    "stored_sha256": "bdbe9e4f49bc64c9834f900941ea3ba2fef2ce3266e806b9dc4ebf92c7837758",
+    "uncompressed_bytes": 3162615,
+    "uncompressed_lines": 20415,
+    "raw_sha256": "02f07aac406101f92e039322b350581ef61aa4b9826fb1992434eb6a2326522b",
+    "identified_run": "functional-d0-s06-r0",
+    "matches_original_performance_pilot": false
+  },
+  "original_analyzer_execution": {
+    "started_utc": "2026-10-17T15:16:22.526415+00:00",
+    "finished_utc": "2026-10-17T15:16:23.934233+00:00",
+    "command": [
+      "/opt/pyvenv/bin/python3",
+      "-B",
+      "team/optimizations/o0/analyze.py",
+      "--stderr",
+      "/mnt/data/riscv_o0_uploaded/repo/team/evidence/t14-optimization-20261016/fullcore/performance/functional-d0-s06-r0/stderr.log.gz",
+      "--stdout",
+      "/mnt/data/riscv_o0_uploaded/repo/team/evidence/t14-optimization-20261016/fullcore/performance/functional-d0-s06-r0/stdout.log.gz",
+      "--exit-code",
+      "0",
+      "--fu-latency",
+      "2",
+      "--output",
+      "/mnt/data/riscv_o0_uploaded/runs/original-analyzer"
+    ],
+    "cwd": "/mnt/data/riscv_o0_uploaded/repo",
+    "exit_code": 0,
+    "stdout": "{\"status\": \"O0_DIAGNOSTICS_ONLY\", \"counts\": {\"accepted\": 6, \"responded\": 6, \"killed\": 0, \"pending\": 0, \"writeback_stall_events\": 0}}\n",
+    "stderr": ""
+  },
+  "source_bound_replay_execution": {
+    "started_utc": "2026-10-17T15:19:33.228064+00:00",
+    "finished_utc": "2026-10-17T15:19:34.547036+00:00",
+    "command": [
+      "/opt/pyvenv/bin/python3",
+      "-B",
+      "team/optimizations/o0/replay_functional_trace.py",
+      "--stderr",
+      "/mnt/data/stderr.log.gz",
+      "--output",
+      "/mnt/data/riscv_o0_uploaded/runs/functional-trace.json"
+    ],
+    "cwd": "/mnt/data/riscv_o0_uploaded/repo",
+    "exit_code": 0,
+    "stdout": "{\"status\": \"O0_FUNCTIONAL_TRACE_REPLAY_PASS_NOT_THROUGHPUT\", \"matched_vdot_lifetimes\": 6, \"raw_hardware_trace_replayed\": true, \"o0_complete\": false}\n",
+    "stderr": ""
+  },
+  "host_tests": {
+    "started_utc": "2026-10-17T15:20:41.878927+00:00",
+    "finished_utc": "2026-10-17T15:20:47.423311+00:00",
+    "command": [
+      "/opt/pyvenv/bin/python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "team/optimizations/o0",
+      "-p",
+      "test_functional_trace.py",
+      "-v"
+    ],
+    "cwd": "/mnt/data/riscv_o0_uploaded/repo",
+    "exit_code": 0,
+    "tests": 18,
+    "skipped": 0,
+    "scope": "offline real-trace replay, in-memory corruption cases and CLI checks; no new DUT run"
+  },
+  "source_files": {
+    "OPTIMIZATION.md": {
+      "sha256": "69d400e6d229d88eac5f0f1c7ae2b07a3c6d323f97db024c89ae74e156374bc2",
+      "git_blob": "fc79c9500c4253b764ab9755fa19e7a028b308ec"
+    },
+    "team/optimizations/o0/FUNCTIONAL_TRACE.md": {
+      "sha256": "e16f0b3f41d37bd403646389b4df93b72623233cd39831c547a61dfec210a563",
+      "git_blob": "713f2b7cbbaf4238ab4b7eafb6d7fef4c6791119"
+    },
+    "team/optimizations/o0/replay_functional_trace.py": {
+      "sha256": "0d3035f0ca9473c5b4d0918ce09511d2b767692a945f6fdc293b2702e3a1eba4",
+      "git_blob": "6b0866bb242de0eee98f9ac8de4457f806f9e0f3"
+    },
+    "team/optimizations/o0/test_functional_trace.py": {
+      "sha256": "ea7e9d6d4411a4727a4e3b5ff935e0fa974bc4de2d25381292597e3371e1ddaf",
+      "git_blob": "c1f7cb4d5ef93d0bb94b93251596607eebe8cfeb"
+    }
+  },
+  "input_sources": {
+    "stderr": {
+      "path": "team/evidence/t14-optimization-20261016/fullcore/performance/functional-d0-s06-r0/stderr.log.gz",
+      "git_blob": "0b3030b5e51d1619b705db1ab73fc2f10805db8e",
+      "sha256": "bdbe9e4f49bc64c9834f900941ea3ba2fef2ce3266e806b9dc4ebf92c7837758"
+    },
+    "stdout": {
+      "path": "team/evidence/t14-optimization-20261016/fullcore/performance/functional-d0-s06-r0/stdout.log.gz",
+      "git_blob": "e51ef02edb2159a22bcc60236d0c652034736036",
+      "sha256": "0d8134c9e9390a15e83fd1b1d35802387ea9595b525d0c4f33c48aa8d3094cbc"
+    },
+    "result": {
+      "path": "team/evidence/t14-optimization-20261016/fullcore/performance/functional-d0-s06-r0/result.json",
+      "git_blob": "621d7b0a72d65eccf7cff8644e465d59a6d6ef17",
+      "sha256": "9fde6f353e3b502642936c98d4a8def0013c18258f2260273fa7a7b2b5fba2aa"
+    },
+    "analysis": {
+      "path": "team/evidence/t14-optimization-20261016/fullcore/analysis/functional-d0-s06-r0.json",
+      "git_blob": "f3105ae1c70a64359f5dd2344d97c8c9487981c5",
+      "sha256": "4e3fd32b4e459c4560a7366c784beabc9521d9c05bb88d91724e034315c68d92"
+    },
+    "analyzer": {
+      "path": "team/optimizations/o0/analyze.py",
+      "git_blob": "71b7b60ed9a118c71747b49b60b587941e841bff",
+      "sha256": "79b9296a77de84c07c88d11cb57fdcf14cc598912a63f78332cb7b0299f01b7d"
+    },
+    "parser": {
+      "path": "team/scripts/check-vdot-regression.py",
+      "git_blob": "6c2020bbb4ad4877d98c4f6b33acc77c1507cd6c",
+      "sha256": "c10e914e69b983cf62132516a95e73b8c902380087b8bb098c4fbc2fc3b12f4a"
+    }
+  },
+  "evidence_sha256": {
+    "trace-replay.json": "ac8bc724f1c494e1000cb86cb2ec07dcfd4475199a002633f48047924347c482",
+    "lifetime.csv": "57952d04cc3d9908d423bea6127a566529dee9b193d2c0bccb42d20d8dda86d9",
+    "host-tests.log": "585d441c34e43f05a757bb4b2a84bb505072f6fd6f61e8cd23f8ce8075b2f5c4"
+  },
+  "raw_hardware_trace_replayed": true,
+  "o0_complete": false,
+  "o1_implemented": false,
+  "production_rtl_modified": false,
+  "not_run": [
+    "original performance-d0-s06-r0 hardware trace",
+    "dense O0 workload matrix",
+    "new Chisel/Verilator/EMU tests",
+    "O1 parent interface tests",
+    "new speedup measurement",
+    "synthesis/STA/PPA",
+    "human ACK"
+  ]
+}

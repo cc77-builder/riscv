@@ -1,0 +1,78 @@
+{
+  "status": "O2_R1_PROVENANCE_AND_NEGATIVE_CHECK_PASS",
+  "head": "9b6cf074951dbd51e1670c5fbc7111a97c362b3f",
+  "branch": "local/o2-r1-result-width-20261021",
+  "production_src_tree": "32b67d64e84dc81ef00b7d40620a05b73afc9e00",
+  "source_files": [
+    {
+      "path": "src/main/scala/xiangshan/backend/fu/wrapper/VDotElastic.scala",
+      "sha256": "20981203b19e57658c35ee76d134a1aaee918ce4c317d0f139df97c75460491a",
+      "matches_both_O4_generation_commits": true
+    },
+    {
+      "path": "src/main/scala/xiangshan/backend/fu/vector/VDotDatapath.scala",
+      "sha256": "161df70403fd131a3adf445230ed637dc7ad7c619d05c0a890aa8aa1791546d8",
+      "matches_both_O4_generation_commits": true
+    }
+  ],
+  "original_mapped_checks": [
+    {
+      "path": "/home/riscv/riscv-lab/o4-cost-20261020/o1-fu-map-02/mapped.json",
+      "sha256": "d1fb59d28710e84fed555c65fa727e69b0f7c753d90f4c3aeea624eea7fdf888",
+      "equals_sealed_payload": true
+    },
+    {
+      "path": "/home/riscv/riscv-lab/o4-cost-20261020/o2-fu-map-01/mapped.json",
+      "sha256": "403fb37c06fdadc59ffbac807c017a56bbda44fad99ffd83db9778eb4665445a",
+      "equals_sealed_payload": true
+    },
+    {
+      "path": "/home/riscv/riscv-lab/o4-cost-20261020/o1-parent-map-01/mapped.json",
+      "sha256": "50638cb74ca7aaf1049370b79fe4037412a87d870282cc75f2e6c18f33124b33",
+      "equals_sealed_payload": true
+    },
+    {
+      "path": "/home/riscv/riscv-lab/o4-cost-20261020/o2-parent-map-01/mapped.json",
+      "sha256": "11a2cdd7528d92816466eb3657cab76fab8383cb24200f5cfcdcac005c1a7557",
+      "equals_sealed_payload": true
+    }
+  ],
+  "negative_cli_checks": [
+    {
+      "name": "existing-output",
+      "command": [
+        "python3",
+        "-B",
+        "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/result-width/audit.py",
+        "--evidence",
+        "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o4/evidence/20261020-cost",
+        "--output",
+        "/home/riscv/riscv-lab/o2-r1-result-width-20261021/mapping-audit-02.json"
+      ],
+      "exit_code": 1,
+      "expected_failure_observed": true
+    },
+    {
+      "name": "tampered-sealed-library",
+      "command": [
+        "python3",
+        "-B",
+        "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/result-width/audit.py",
+        "--evidence",
+        "/home/riscv/riscv-lab/o2-r1-result-width-20261021/negative-tampered-input",
+        "--output",
+        "/home/riscv/riscv-lab/o2-r1-result-width-20261021/negative-tampered-output.json"
+      ],
+      "exit_code": 1,
+      "expected_failure_observed": true
+    }
+  ],
+  "host_tests_passed": 12,
+  "new_rtl": false,
+  "new_synthesis": false,
+  "new_sta": false,
+  "new_emu": false,
+  "human_ack": false,
+  "r0_lock_unchanged": true,
+  "result_sha256": "dc53c5a717b2c09d4fc3949ce6e47ac110fc6ddbf200ae02b2f31851f4bfa110"
+}

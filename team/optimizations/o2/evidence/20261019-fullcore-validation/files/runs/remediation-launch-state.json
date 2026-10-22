@@ -1,0 +1,47 @@
+{
+  "status": "ALL_COMMANDS_FINISHED",
+  "started": "2026-10-19T08:01:04.109399+00:00",
+  "stages": [
+    {
+      "name": "supplements-02",
+      "command": [
+        "python3",
+        "-B",
+        "team/optimizations/o2/fullcore/run_supplements.py",
+        "--output",
+        "/home/riscv/riscv-lab/o2-fullcore-20261019/supplements-02",
+        "--hardware-pins",
+        "/home/riscv/riscv-lab/o2-fullcore-20261019/build-03/hardware-inputs.json",
+        "--emu",
+        "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/build/emu",
+        "--jobs",
+        "2"
+      ],
+      "started": "2026-10-19T08:01:04.112217+00:00",
+      "status": "EXITED",
+      "exit_code": 0,
+      "finished": "2026-10-19T08:18:07.293144+00:00"
+    },
+    {
+      "name": "recheck-02",
+      "command": [
+        "python3",
+        "-B",
+        "team/optimizations/o2/fullcore/recheck.py",
+        "--campaign",
+        "/home/riscv/riscv-lab/o2-fullcore-20261019/core-02",
+        "--supplements",
+        "/home/riscv/riscv-lab/o2-fullcore-20261019/supplements-02",
+        "--output",
+        "/home/riscv/riscv-lab/o2-fullcore-20261019/recheck-02"
+      ],
+      "started": "2026-10-19T08:18:07.293650+00:00",
+      "status": "EXITED",
+      "exit_code": 0,
+      "finished": "2026-10-19T08:18:38.199163+00:00"
+    }
+  ],
+  "original_core_reused": "core-02",
+  "source_commit": "079351c122e35b77c1a0e01a6c3b60d562eac1cd",
+  "finished": "2026-10-19T08:18:38.200008+00:00"
+}

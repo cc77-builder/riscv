@@ -1,0 +1,104 @@
+{
+  "schema": "o1-negative-abort-source-review-v1",
+  "created_utc": "2026-10-18T07:44:05.049406+00:00",
+  "scope": "source semantics and existing raw logs only; no EMU execution and no source edits",
+  "review_status": "SOURCE_AND_RAW_LOG_SEMANTICS_CONFIRMED",
+  "source_commit": "518c05674d5ecfed04a944cf01c99cea488b6c8a",
+  "sources": [
+    {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/difftest/src/test/csrc/verilator/emu.cpp",
+      "sha256": "18168347ef6f4d9eac108bc74f653aa985a5b7a2ac7744b742dc6afd21a4663b",
+      "role": "STATE_ABORT display reads trap-event PC",
+      "excerpts": [
+        {
+          "start_line": 1002,
+          "end_line": 1013,
+          "text": "void Emulator::display_trapinfo() {\n#ifndef CONFIG_NO_DIFFTEST\n  for (int i = 0; i < NUM_CORES; i++) {\n    printf(\"Core %d: \", i);\n    uint64_t pc = difftest[i]->get_trap_event()->pc;\n    switch (trapCode) {\n      case STATE_GOODTRAP:\n        eprintf(ANSI_COLOR_GREEN \"HIT GOOD TRAP at pc = 0x%\" PRIx64 \"\\n\" ANSI_COLOR_RESET, pc);\n        break;\n      case STATE_BADTRAP: eprintf(ANSI_COLOR_RED \"HIT BAD TRAP at pc = 0x%\" PRIx64 \"\\n\" ANSI_COLOR_RESET, pc); break;\n      case STATE_ABORT: eprintf(ANSI_COLOR_RED \"ABORT at pc = 0x%\" PRIx64 \"\\n\" ANSI_COLOR_RESET, pc); break;\n      case STATE_LIMIT_EXCEEDED:"
+        }
+      ]
+    },
+    {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/difftest/src/test/csrc/difftest/difftest.h",
+      "sha256": "5181ebecd337c199c76c73320828f6eac817a0be96f8943c3ede2e3301ea82dd",
+      "role": "get_trap_event returns dut->trap",
+      "excerpts": [
+        {
+          "start_line": 253,
+          "end_line": 257,
+          "text": "  // Difftest public APIs for dut: called from DPI-C functions (or testbench)\n  // These functions generally do nothing but copy the information to core_state.\n  inline DifftestTrapEvent *get_trap_event() {\n    return &(dut->trap);\n  }"
+        }
+      ]
+    },
+    {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/src/main/scala/xiangshan/backend/rob/Rob.scala",
+      "sha256": "914a80a60091b337c6525d001716e3a04289744d431e5f2bc52fd88f250d2e3f",
+      "role": "DiffTrapEvent PC selects committed XSTrap via trapVec/PriorityMux",
+      "excerpts": [
+        {
+          "start_line": 1625,
+          "end_line": 1641,
+          "text": "    val trapVec = io.commits.commitValid.zip(deqPtrVec).map { case (v, d) =>\n      io.commits.isCommit && v && dt_isXSTrap(d.value)\n    }\n    val hitTrap = trapVec.reduce(_ || _)\n    val difftest = DifftestModule(new DiffTrapEvent, dontCare = true)\n    difftest.coreid := io.hartId\n    difftest.hasTrap := hitTrap\n    difftest.cycleCnt := timer\n    difftest.instrCnt := instrCnt\n    difftest.hasWFI := hasWFI\n\n    if (env.EnableDifftest) {\n      val trapCode = PriorityMux(wdata.zip(trapVec).map(x => x._2 -> x._1))\n      val trapPC = SignExt(PriorityMux(wpc.zip(trapVec).map(x => x._2 -> x._1)), XLEN)\n      difftest.code := trapCode\n      difftest.pc := trapPC\n    }"
+        }
+      ]
+    }
+  ],
+  "corroborating_sources": [
+    {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/difftest/src/test/csrc/difftest/refproxy.cpp",
+      "sha256": "ee37169c2fb0561967fbb6070e783ac179b89c4636635b0b479c1e45e16b6a70",
+      "role": "register mismatch diagnostic uses dut->commit[0].pc",
+      "excerpts": [
+        {
+          "start_line": 214,
+          "end_line": 224,
+          "text": "#define PROXY_COMPARE_AND_DISPLAY(field, field_names)                     \\\n  do {                                                                    \\\n    uint64_t *_ptr_dut = (uint64_t *)(&((dut)->field));                   \\\n    uint64_t *_ptr_ref = (uint64_t *)(&(field));                          \\\n    for (int i = 0; i < sizeof(field) / sizeof(uint64_t); i++) {          \\\n      if (_ptr_dut[i] != _ptr_ref[i]) {                                   \\\n        Info(                                                             \\\n            \"%7s different at pc = 0x%010lx, right= 0x%016lx, \"           \\\n            \"wrong = 0x%016lx\\n\",                                         \\\n            field_names[i], dut->commit[0].pc, _ptr_ref[i], _ptr_dut[i]); \\\n      }                                                                   \\"
+        }
+      ]
+    }
+  ],
+  "raw_stdout": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/runs/o1-fullcore-suite-01/negative-vdot/stdout.log",
+    "sha256": "e86e028ee3b5c33bb249b83f83c449cb228b364575f22a478d4c354eb413386f",
+    "excerpts": [
+      {
+        "line": 204,
+        "raw_text": "v10_high different at pc = 0x0080001bdc, right= 0x0000001000000000, wrong = 0x0000000000000000",
+        "ansi_normalized_text": "v10_high different at pc = 0x0080001bdc, right= 0x0000001000000000, wrong = 0x0000000000000000"
+      },
+      {
+        "line": 205,
+        "raw_text": "Core 0: \u001b[31mABORT at pc = 0x800016b0",
+        "ansi_normalized_text": "Core 0: ABORT at pc = 0x800016b0"
+      }
+    ]
+  },
+  "raw_stderr": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/runs/o1-fullcore-suite-01/negative-vdot/stderr.log",
+    "sha256": "c303e0e2b6d51721e3a25e5d379b9d94dd4d273de77cd1c624a7362314d8a773",
+    "injection_excerpt": {
+      "line": 2923,
+      "raw_text": "DIFFTEST_HIGHBIT_NEGATIVE_INJECTED bit=100 vd=10 pc=0x80001bdc instruction=0x0294050b"
+    }
+  },
+  "observed": {
+    "injection_count": 1,
+    "mismatch_count": 1,
+    "abort_count": 1,
+    "vector_register": 10,
+    "fault_pc": "0x80001bdc",
+    "abort_event_pc": "0x800016b0",
+    "high64_xor": "0x1000000000",
+    "vector_bit": 100,
+    "mismatch_immediately_followed_by_abort_in_raw_stdout": true
+  },
+  "conclusions": [
+    "Injection and mismatch bind the same fault PC and vector register; their high64 XOR is exactly 1<<36 (full vector bit100).",
+    "The sole ABORT line immediately follows the sole mismatch line in the same raw stdout stream.",
+    "display_trapinfo reads dut->trap.pc; RTL supplies the PC selected by trapVec for XSTrap. A DiffTest STATE_ABORT is not an XSTrap guarantee.",
+    "The ABORT event PC must be recorded separately; it is not required to equal the injection/mismatch fault PC and must not be hard-coded.",
+    "For this run fault_pc=0x80001bdc and abort_event_pc=0x800016b0. Their inequality is consistent with the separate source semantics.",
+    "run.log is derived by concatenating all stderr bytes then all stdout bytes. Text position of the injection before mismatch in that derived log is not evidence of real cross-stream global chronology.",
+    "The strict gate can bind unique injection/mismatch markers, PC, register and exact bit difference, and check mismatch-to-ABORT order in raw stdout; cross-stream time must not be inferred.",
+    "This review does not itself validate the forthcoming gate or declare the full O1 suite passed."
+  ]
+}

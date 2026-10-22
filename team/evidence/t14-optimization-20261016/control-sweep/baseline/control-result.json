@@ -1,0 +1,34 @@
+{
+  "status": "T12_CONTROL_REGRESSION_PASS",
+  "clock_mapping": "gated FU ticks anchored one-to-one to parent VFEX4 accepts; checked against surrounding global records",
+  "architectural_checks": "PASS",
+  "coverage": {
+    "accepted_younger_squashed": true,
+    "inflight_fu_killed": true,
+    "shared_vfex4_fu_kinds": true,
+    "shared_vfex4_backpressure": true,
+    "vdot_writeback_backpressure": true,
+    "rob_wrap_repeated": true,
+    "ftq_wrap_repeated": true
+  },
+  "counts": {
+    "REDIRECT": 328,
+    "ENQUEUE": 2238,
+    "ACCEPT": 2228,
+    "VFEX4_ACCEPT": 3175,
+    "RESPONSE": 2222,
+    "VFEX4_WAIT": 6039,
+    "COMMIT": 2157,
+    "FTQ_WRAP": 330,
+    "ROB_WRAP": 298,
+    "STALL": 137,
+    "ACCEPTED_THEN_SQUASHED": 69,
+    "KILL": 6
+  },
+  "vfex4_fu_counts": {
+    "0x800000000": 2228,
+    "0x000400000": 947
+  },
+  "expected_vdot_commits": 2157,
+  "scope": "pinned MinimalConfig M-mode; not virtualization/PPA/performance acceptance"
+}

@@ -1,0 +1,21 @@
+diff --git a/src/main/scala/yunsuan/package.scala b/src/main/scala/yunsuan/package.scala
+index 069366b..b0b9220 100644
+--- a/src/main/scala/yunsuan/package.scala
++++ b/src/main/scala/yunsuan/package.scala
+@@ -397,6 +397,9 @@ package object yunsuan {
+     def vmadd              = LiteralCat(0.U(2.W), INT.S, INT.S, INT.S, FMT.VVV, VimacOpcode.vmadd)  // "b00_111_0_100".U(OpTypeWidth.W) // vmadd   vmadd.vv/vmadd.vx
+     def vnmsub             = LiteralCat(0.U(2.W), INT.S, INT.S, INT.S, FMT.VVV, VimacOpcode.vnmsub) // "b00_111_0_101".U(OpTypeWidth.W) // vnmsub  vnmsub.vv/vnmsub.vx
+     def vsmul              = LiteralCat(0.U(2.W), INT.S, INT.S, INT.X, FMT.VVV, VimacOpcode.vsmul)  // "b00_110_0_110".U(OpTypeWidth.W) // vsmul   vsmul.vv/vsmul.vx
++    // CIE 2026 custom operation.  It is routed through the integer vector MAC
++    // unit, but the wrapper replaces the lane-wise MAC result with a dot sum.
++    def vdot               = LiteralCat(0.U(2.W), INT.S, INT.S, INT.S, FMT.VVV, "b111".U(3.W))
+ 
+     def getOpcode(fuOpType: UInt) : UInt = fuOpType(2, 0)
+     def getFormat(fuOpType: UInt) : UInt = fuOpType(3)
+@@ -607,4 +610,4 @@ object VfcvtType {
+     def fnmacc  = "b0010".U(width.W)
+     def fnmsac  = "b0100".U(width.W)
+   }
+-}
+\ No newline at end of file
++}

@@ -1,0 +1,435 @@
+{
+  "status": "O1_ELABORATION_OPTIONS_PASS",
+  "started_utc": "2026-10-18T04:41:58.899185+00:00",
+  "source_commit": "a572e4d2e572ab4298660013661198e4b233c933",
+  "source_sha256": "68a7a0d8e4d382f94e8136196bdad3148ac02f4f06aa0b09944eee95eee87a56",
+  "bound_files_sha256": {
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/out/xiangshan/compile.dest/classes/xiangshan/backend/fu/wrapper/VDotHandoff.class": "90017e4722db090c14ba7053b21a166d2c3840b8f90c409f62680e8e5ba69319",
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/out/xiangshan/compile.dest/classes/xiangshan/backend/fu/wrapper/VDotHandoff$.class": "14ba2385e7bcdf692b0b529a4349a980c6ba735986af1bcebf115c9e95754b8c",
+    "/home/riscv/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.15/scala-library-2.13.15.jar": "8e4dbc3becf70d59c787118f6ad06fab6790136a0699cd6412bc9da3d336944e",
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/out/xiangshan/compile.json": "5ffa98419a572c75fccee00dc7fd2570e24f6df467e39cbf13a6a48e6d9b2b08",
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/out/xiangshan/compileClasspath.json": "e6c214ba02c20723119042ed64138970707274d20ff712b79a306de639950ade",
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/src/main/scala/xiangshan/backend/fu/wrapper/VDotHandoff.scala": "68a7a0d8e4d382f94e8136196bdad3148ac02f4f06aa0b09944eee95eee87a56",
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o1/fullcore/test_elaboration_options.py": "bc6907b4ac959b311c1a44f1326463d3a827afd0e47163301d151e0c535e97a7"
+  },
+  "helper_sha256": "424805ab3981336e413661887532204161e8428a0082f1e94fb579198e4acaa9",
+  "command": [
+    "/opt/graalvm-jdk-21/bin/java",
+    "-Xmx64m",
+    "-cp",
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/out/xiangshan/compile.dest/classes:/home/riscv/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.15/scala-library-2.13.15.jar",
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/runs/o1-option-probe-01/O1OptionProbe.java"
+  ],
+  "cases": [
+    {
+      "name": "default",
+      "flags": {},
+      "expected": [
+        0,
+        0
+      ],
+      "exit_code": 0,
+      "stdout": "O1_OPTIONS_ALLOW handoff=0 trace=0\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "name": "explicit_zero",
+      "flags": {
+        "VDOT_O1_HANDOFF": "0",
+        "VDOT_T14_FUSED_INPUT": "0",
+        "VDOT_O1_TRACE": "0",
+        "VDOT_T12_TRACE": "0",
+        "VDOT_T13_TRACE": "0"
+      },
+      "expected": [
+        0,
+        0
+      ],
+      "exit_code": 0,
+      "stdout": "O1_OPTIONS_ALLOW handoff=0 trace=0\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "name": "t14",
+      "flags": {
+        "VDOT_T14_FUSED_INPUT": "1"
+      },
+      "expected": [
+        0,
+        0
+      ],
+      "exit_code": 0,
+      "stdout": "O1_OPTIONS_ALLOW handoff=0 trace=0\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "name": "legacy_t12",
+      "flags": {
+        "VDOT_T14_FUSED_INPUT": "1",
+        "VDOT_T12_TRACE": "1"
+      },
+      "expected": [
+        0,
+        0
+      ],
+      "exit_code": 0,
+      "stdout": "O1_OPTIONS_ALLOW handoff=0 trace=0\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "name": "legacy_t13",
+      "flags": {
+        "VDOT_T14_FUSED_INPUT": "1",
+        "VDOT_T13_TRACE": "1"
+      },
+      "expected": [
+        0,
+        0
+      ],
+      "exit_code": 0,
+      "stdout": "O1_OPTIONS_ALLOW handoff=0 trace=0\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "name": "legacy_t12_t13",
+      "flags": {
+        "VDOT_T14_FUSED_INPUT": "1",
+        "VDOT_T12_TRACE": "1",
+        "VDOT_T13_TRACE": "1"
+      },
+      "expected": [
+        0,
+        0
+      ],
+      "exit_code": 0,
+      "stdout": "O1_OPTIONS_ALLOW handoff=0 trace=0\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "name": "o1_handoff_no_trace",
+      "flags": {
+        "VDOT_T14_FUSED_INPUT": "1",
+        "VDOT_O1_HANDOFF": "1"
+      },
+      "expected": [
+        1,
+        0
+      ],
+      "exit_code": 0,
+      "stdout": "O1_OPTIONS_ALLOW handoff=1 trace=0\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "name": "t14_o1_trace",
+      "flags": {
+        "VDOT_T14_FUSED_INPUT": "1",
+        "VDOT_O1_TRACE": "1"
+      },
+      "expected": [
+        0,
+        1
+      ],
+      "exit_code": 0,
+      "stdout": "O1_OPTIONS_ALLOW handoff=0 trace=1\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "name": "t14_o1_trace_t13",
+      "flags": {
+        "VDOT_T14_FUSED_INPUT": "1",
+        "VDOT_O1_TRACE": "1",
+        "VDOT_T13_TRACE": "1"
+      },
+      "expected": [
+        0,
+        1
+      ],
+      "exit_code": 0,
+      "stdout": "O1_OPTIONS_ALLOW handoff=0 trace=1\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "name": "o1_trace",
+      "flags": {
+        "VDOT_T14_FUSED_INPUT": "1",
+        "VDOT_O1_HANDOFF": "1",
+        "VDOT_O1_TRACE": "1"
+      },
+      "expected": [
+        1,
+        1
+      ],
+      "exit_code": 0,
+      "stdout": "O1_OPTIONS_ALLOW handoff=1 trace=1\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "name": "o1_trace_t13",
+      "flags": {
+        "VDOT_T14_FUSED_INPUT": "1",
+        "VDOT_O1_HANDOFF": "1",
+        "VDOT_O1_TRACE": "1",
+        "VDOT_T13_TRACE": "1"
+      },
+      "expected": [
+        1,
+        1
+      ],
+      "exit_code": 0,
+      "stdout": "O1_OPTIONS_ALLOW handoff=1 trace=1\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "name": "o1_t12_no_new_trace",
+      "flags": {
+        "VDOT_T14_FUSED_INPUT": "1",
+        "VDOT_O1_HANDOFF": "1",
+        "VDOT_T12_TRACE": "1"
+      },
+      "expected": "O1 handoff cannot use T12",
+      "exit_code": 10,
+      "stdout": "O1_OPTIONS_REJECT requirement failed: O1 handoff cannot use T12; T13 requires VDOT_O1_TRACE=1 with T12 disabled\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "name": "o1_t13_no_new_trace",
+      "flags": {
+        "VDOT_T14_FUSED_INPUT": "1",
+        "VDOT_O1_HANDOFF": "1",
+        "VDOT_T13_TRACE": "1"
+      },
+      "expected": "T13 requires VDOT_O1_TRACE=1",
+      "exit_code": 10,
+      "stdout": "O1_OPTIONS_REJECT requirement failed: O1 handoff cannot use T12; T13 requires VDOT_O1_TRACE=1 with T12 disabled\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "name": "o1_t12_t13_no_new_trace",
+      "flags": {
+        "VDOT_T14_FUSED_INPUT": "1",
+        "VDOT_O1_HANDOFF": "1",
+        "VDOT_T12_TRACE": "1",
+        "VDOT_T13_TRACE": "1"
+      },
+      "expected": "O1 handoff cannot use T12",
+      "exit_code": 10,
+      "stdout": "O1_OPTIONS_REJECT requirement failed: O1 handoff cannot use T12; T13 requires VDOT_O1_TRACE=1 with T12 disabled\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "name": "o1_trace_t12",
+      "flags": {
+        "VDOT_T14_FUSED_INPUT": "1",
+        "VDOT_O1_HANDOFF": "1",
+        "VDOT_O1_TRACE": "1",
+        "VDOT_T12_TRACE": "1"
+      },
+      "expected": "frozen T12 observer schema",
+      "exit_code": 10,
+      "stdout": "O1_OPTIONS_REJECT requirement failed: VDOT_O1_TRACE cannot be combined with the frozen T12 observer schema\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "name": "o1_trace_t12_t13",
+      "flags": {
+        "VDOT_T14_FUSED_INPUT": "1",
+        "VDOT_O1_HANDOFF": "1",
+        "VDOT_O1_TRACE": "1",
+        "VDOT_T12_TRACE": "1",
+        "VDOT_T13_TRACE": "1"
+      },
+      "expected": "frozen T12 observer schema",
+      "exit_code": 10,
+      "stdout": "O1_OPTIONS_REJECT requirement failed: VDOT_O1_TRACE cannot be combined with the frozen T12 observer schema\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "name": "t14_trace_t12",
+      "flags": {
+        "VDOT_T14_FUSED_INPUT": "1",
+        "VDOT_O1_TRACE": "1",
+        "VDOT_T12_TRACE": "1"
+      },
+      "expected": "frozen T12 observer schema",
+      "exit_code": 10,
+      "stdout": "O1_OPTIONS_REJECT requirement failed: VDOT_O1_TRACE cannot be combined with the frozen T12 observer schema\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "name": "o1_missing_fused",
+      "flags": {
+        "VDOT_O1_HANDOFF": "1"
+      },
+      "expected": "VDOT_O1_HANDOFF=1 requires",
+      "exit_code": 10,
+      "stdout": "O1_OPTIONS_REJECT requirement failed: VDOT_O1_HANDOFF=1 requires VDOT_T14_FUSED_INPUT=1\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "name": "o1_zero_fused",
+      "flags": {
+        "VDOT_T14_FUSED_INPUT": "0",
+        "VDOT_O1_HANDOFF": "1"
+      },
+      "expected": "VDOT_O1_HANDOFF=1 requires",
+      "exit_code": 10,
+      "stdout": "O1_OPTIONS_REJECT requirement failed: VDOT_O1_HANDOFF=1 requires VDOT_T14_FUSED_INPUT=1\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "name": "trace_missing_fused",
+      "flags": {
+        "VDOT_O1_TRACE": "1"
+      },
+      "expected": "VDOT_O1_TRACE=1 requires",
+      "exit_code": 10,
+      "stdout": "O1_OPTIONS_REJECT requirement failed: VDOT_O1_TRACE=1 requires VDOT_T14_FUSED_INPUT=1 (schema v1 latency=2)\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "name": "trace_zero_fused",
+      "flags": {
+        "VDOT_T14_FUSED_INPUT": "0",
+        "VDOT_O1_TRACE": "1"
+      },
+      "expected": "VDOT_O1_TRACE=1 requires",
+      "exit_code": 10,
+      "stdout": "O1_OPTIONS_REJECT requirement failed: VDOT_O1_TRACE=1 requires VDOT_T14_FUSED_INPUT=1 (schema v1 latency=2)\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "name": "trace_invalid_fused",
+      "flags": {
+        "VDOT_T14_FUSED_INPUT": "2",
+        "VDOT_O1_TRACE": "1"
+      },
+      "expected": "VDOT_O1_TRACE=1 requires",
+      "exit_code": 10,
+      "stdout": "O1_OPTIONS_REJECT requirement failed: VDOT_O1_TRACE=1 requires VDOT_T14_FUSED_INPUT=1 (schema v1 latency=2)\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "name": "invalid_trace_two",
+      "flags": {
+        "VDOT_T14_FUSED_INPUT": "1",
+        "VDOT_O1_TRACE": "2"
+      },
+      "expected": "VDOT_O1_TRACE must be 0 or 1",
+      "exit_code": 10,
+      "stdout": "O1_OPTIONS_REJECT VDOT_O1_TRACE must be 0 or 1\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "name": "invalid_trace_empty",
+      "flags": {
+        "VDOT_T14_FUSED_INPUT": "1",
+        "VDOT_O1_TRACE": ""
+      },
+      "expected": "VDOT_O1_TRACE must be 0 or 1",
+      "exit_code": 10,
+      "stdout": "O1_OPTIONS_REJECT VDOT_O1_TRACE must be 0 or 1\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "name": "invalid_trace_text",
+      "flags": {
+        "VDOT_T14_FUSED_INPUT": "1",
+        "VDOT_O1_TRACE": "true"
+      },
+      "expected": "VDOT_O1_TRACE must be 0 or 1",
+      "exit_code": 10,
+      "stdout": "O1_OPTIONS_REJECT VDOT_O1_TRACE must be 0 or 1\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "name": "invalid_trace_negative",
+      "flags": {
+        "VDOT_T14_FUSED_INPUT": "1",
+        "VDOT_O1_TRACE": "-1"
+      },
+      "expected": "VDOT_O1_TRACE must be 0 or 1",
+      "exit_code": 10,
+      "stdout": "O1_OPTIONS_REJECT VDOT_O1_TRACE must be 0 or 1\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "name": "invalid_handoff_two",
+      "flags": {
+        "VDOT_T14_FUSED_INPUT": "1",
+        "VDOT_O1_HANDOFF": "2"
+      },
+      "expected": "VDOT_O1_HANDOFF must be 0 or 1",
+      "exit_code": 10,
+      "stdout": "O1_OPTIONS_REJECT VDOT_O1_HANDOFF must be 0 or 1\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "name": "invalid_handoff_empty",
+      "flags": {
+        "VDOT_T14_FUSED_INPUT": "1",
+        "VDOT_O1_HANDOFF": ""
+      },
+      "expected": "VDOT_O1_HANDOFF must be 0 or 1",
+      "exit_code": 10,
+      "stdout": "O1_OPTIONS_REJECT VDOT_O1_HANDOFF must be 0 or 1\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "name": "invalid_handoff_text",
+      "flags": {
+        "VDOT_T14_FUSED_INPUT": "1",
+        "VDOT_O1_HANDOFF": "true"
+      },
+      "expected": "VDOT_O1_HANDOFF must be 0 or 1",
+      "exit_code": 10,
+      "stdout": "O1_OPTIONS_REJECT VDOT_O1_HANDOFF must be 0 or 1\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "name": "invalid_handoff_negative",
+      "flags": {
+        "VDOT_T14_FUSED_INPUT": "1",
+        "VDOT_O1_HANDOFF": "-1"
+      },
+      "expected": "VDOT_O1_HANDOFF must be 0 or 1",
+      "exit_code": 10,
+      "stdout": "O1_OPTIONS_REJECT VDOT_O1_HANDOFF must be 0 or 1\n",
+      "stderr": "",
+      "passed": true
+    }
+  ],
+  "scope": "actual compiled Scala option methods; no RTL elaboration or hardware execution",
+  "bound_files_unchanged": true,
+  "passed": 30,
+  "total": 30,
+  "finished_utc": "2026-10-18T06:29:33.827381+00:00"
+}

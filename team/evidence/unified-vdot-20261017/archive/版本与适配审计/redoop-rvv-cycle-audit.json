@@ -1,0 +1,665 @@
+{
+  "recorded_at": "2026-10-17T17:00:28.095812+08:00",
+  "scope": "read-only comparison of existing d0 single and batch ELF, hardware RETIRE trace, and frozen source; no new simulation",
+  "variants": {
+    "ours": {
+      "single": {
+        "check_status": "PASS",
+        "build_path": "/home/riscv/riscv-lab/unified-vdot-benchmark-20261017/runs/ours-images-02/performance-d0-s00",
+        "run_path": "/home/riscv/riscv-lab/unified-vdot-benchmark-20261017/runs/ours-suite-02/performance/performance-d0-s00-r0",
+        "rvv_kernel_symbol": "t13_kernel_1",
+        "rvv_kernel_address": "0x80002000",
+        "rvv_kernel_bytes": 732,
+        "rvv_kernel_binary_sha256": "0c691f834e4217e57fa05ed1f9f8cc1e5aba0743d004f7136d1eea65f2f045d8",
+        "body": [
+          "li t6, 1",
+          ".Lloop:",
+          "vwmul.vv v2, v8, v9",
+          "vsetivli zero, 8, e16, m1, tu, mu",
+          "vmv.v.i v10, 0",
+          "vwredsum.vs v10, v2, v10",
+          "vsetivli zero, 8, e8, m1, tu, mu",
+          "addi t5, t5, 1",
+          "addi t6, t6, -1",
+          "bnez t6, .Lloop"
+        ],
+        "samples": [
+          {
+            "repeat": 0,
+            "phase": "first",
+            "cycles": 86,
+            "instret_window_count": 16,
+            "retire_items_start_through_stop": 21,
+            "pc_word_count_sha256": "725360feb57dfa1b417859df45a3de8f3c0061f56d5ffd564920e862cb65adee"
+          },
+          {
+            "repeat": 1,
+            "phase": "warmup",
+            "cycles": 85,
+            "instret_window_count": 16,
+            "retire_items_start_through_stop": 21,
+            "pc_word_count_sha256": "725360feb57dfa1b417859df45a3de8f3c0061f56d5ffd564920e862cb65adee"
+          },
+          {
+            "repeat": 2,
+            "phase": "measured",
+            "cycles": 85,
+            "instret_window_count": 16,
+            "retire_items_start_through_stop": 21,
+            "pc_word_count_sha256": "725360feb57dfa1b417859df45a3de8f3c0061f56d5ffd564920e862cb65adee"
+          },
+          {
+            "repeat": 3,
+            "phase": "measured",
+            "cycles": 85,
+            "instret_window_count": 16,
+            "retire_items_start_through_stop": 21,
+            "pc_word_count_sha256": "725360feb57dfa1b417859df45a3de8f3c0061f56d5ffd564920e862cb65adee"
+          },
+          {
+            "repeat": 4,
+            "phase": "measured",
+            "cycles": 86,
+            "instret_window_count": 16,
+            "retire_items_start_through_stop": 21,
+            "pc_word_count_sha256": "725360feb57dfa1b417859df45a3de8f3c0061f56d5ffd564920e862cb65adee"
+          },
+          {
+            "repeat": 5,
+            "phase": "measured",
+            "cycles": 85,
+            "instret_window_count": 16,
+            "retire_items_start_through_stop": 21,
+            "pc_word_count_sha256": "725360feb57dfa1b417859df45a3de8f3c0061f56d5ffd564920e862cb65adee"
+          }
+        ],
+        "evidence_sha256": {
+          "check.json": "66e6643c44c3482431c7f4ab7dec0eb22064a31ea38f712d779148088fce9866",
+          "stderr.log": "95537eae9b42b8057bf3d34c23c99307452f1a90a53f4415073334c647920fc4"
+        }
+      },
+      "batch": {
+        "check_status": "PASS",
+        "build_path": "/home/riscv/riscv-lab/unified-vdot-benchmark-20261017/runs/ours-images-02/performance-d0-s02",
+        "run_path": "/home/riscv/riscv-lab/unified-vdot-benchmark-20261017/runs/ours-suite-02/performance/performance-d0-s02-r0",
+        "rvv_kernel_symbol": "t13_kernel_1",
+        "rvv_kernel_address": "0x80002000",
+        "rvv_kernel_bytes": 768,
+        "rvv_kernel_binary_sha256": "74bdeec3b1e577dbd2c9767c0cb9326b9b1c842cc211873deeb753e2a8f7b901",
+        "body": [
+          "li t6, 32",
+          ".Lloop:",
+          "vwmul.vv v16, v8, v9",
+          "vwmul.vv v18, v8, v9",
+          "vwmul.vv v20, v8, v9",
+          "vwmul.vv v22, v8, v9",
+          "vsetivli zero, 8, e16, m1, tu, mu",
+          "vmv.v.i v10, 0",
+          "vwredsum.vs v10, v16, v10",
+          "vmv.v.i v11, 0",
+          "vwredsum.vs v11, v18, v11",
+          "vmv.v.i v12, 0",
+          "vwredsum.vs v12, v20, v12",
+          "vmv.v.i v13, 0",
+          "vwredsum.vs v13, v22, v13",
+          "vsetivli zero, 8, e8, m1, tu, mu",
+          "addi t5, t5, 1",
+          "addi t6, t6, -1",
+          "bnez t6, .Lloop"
+        ],
+        "samples": [
+          {
+            "repeat": 0,
+            "phase": "first",
+            "cycles": 712,
+            "instret_window_count": 552,
+            "retire_items_start_through_stop": 557,
+            "pc_word_count_sha256": "92bbd1dc7777408a6bc4d62c7972e8fa55e6499298d1eea3cfb3ba57d8d2bddf"
+          },
+          {
+            "repeat": 1,
+            "phase": "warmup",
+            "cycles": 695,
+            "instret_window_count": 552,
+            "retire_items_start_through_stop": 557,
+            "pc_word_count_sha256": "92bbd1dc7777408a6bc4d62c7972e8fa55e6499298d1eea3cfb3ba57d8d2bddf"
+          },
+          {
+            "repeat": 2,
+            "phase": "measured",
+            "cycles": 678,
+            "instret_window_count": 552,
+            "retire_items_start_through_stop": 557,
+            "pc_word_count_sha256": "92bbd1dc7777408a6bc4d62c7972e8fa55e6499298d1eea3cfb3ba57d8d2bddf"
+          },
+          {
+            "repeat": 3,
+            "phase": "measured",
+            "cycles": 678,
+            "instret_window_count": 552,
+            "retire_items_start_through_stop": 557,
+            "pc_word_count_sha256": "92bbd1dc7777408a6bc4d62c7972e8fa55e6499298d1eea3cfb3ba57d8d2bddf"
+          },
+          {
+            "repeat": 4,
+            "phase": "measured",
+            "cycles": 678,
+            "instret_window_count": 552,
+            "retire_items_start_through_stop": 557,
+            "pc_word_count_sha256": "92bbd1dc7777408a6bc4d62c7972e8fa55e6499298d1eea3cfb3ba57d8d2bddf"
+          },
+          {
+            "repeat": 5,
+            "phase": "measured",
+            "cycles": 678,
+            "instret_window_count": 552,
+            "retire_items_start_through_stop": 557,
+            "pc_word_count_sha256": "92bbd1dc7777408a6bc4d62c7972e8fa55e6499298d1eea3cfb3ba57d8d2bddf"
+          }
+        ],
+        "evidence_sha256": {
+          "check.json": "79c2d893d4427bc6f25f2056e0233323ba418e2f9e33ff6e5176448dfd5985e0",
+          "stderr.log": "831c6592355f365f77c58dad63812b969a104caf0fb40b26d49eb1ce8d140851"
+        }
+      }
+    },
+    "jade": {
+      "single": {
+        "check_status": "PASS",
+        "build_path": "/home/riscv/riscv-lab/unified-vdot-benchmark-20261017/runs/jade-images-02/performance-d0-s00",
+        "run_path": "/home/riscv/riscv-lab/unified-vdot-benchmark-20261017/runs/jade-suite-02/performance/performance-d0-s00-r0",
+        "rvv_kernel_symbol": "t13_kernel_1",
+        "rvv_kernel_address": "0x80002000",
+        "rvv_kernel_bytes": 732,
+        "rvv_kernel_binary_sha256": "0c691f834e4217e57fa05ed1f9f8cc1e5aba0743d004f7136d1eea65f2f045d8",
+        "body": [
+          "li t6, 1",
+          ".Lloop:",
+          "vwmul.vv v2, v8, v9",
+          "vsetivli zero, 8, e16, m1, tu, mu",
+          "vmv.v.i v10, 0",
+          "vwredsum.vs v10, v2, v10",
+          "vsetivli zero, 8, e8, m1, tu, mu",
+          "addi t5, t5, 1",
+          "addi t6, t6, -1",
+          "bnez t6, .Lloop"
+        ],
+        "samples": [
+          {
+            "repeat": 0,
+            "phase": "first",
+            "cycles": 86,
+            "instret_window_count": 16,
+            "retire_items_start_through_stop": 21,
+            "pc_word_count_sha256": "725360feb57dfa1b417859df45a3de8f3c0061f56d5ffd564920e862cb65adee"
+          },
+          {
+            "repeat": 1,
+            "phase": "warmup",
+            "cycles": 85,
+            "instret_window_count": 16,
+            "retire_items_start_through_stop": 21,
+            "pc_word_count_sha256": "725360feb57dfa1b417859df45a3de8f3c0061f56d5ffd564920e862cb65adee"
+          },
+          {
+            "repeat": 2,
+            "phase": "measured",
+            "cycles": 85,
+            "instret_window_count": 16,
+            "retire_items_start_through_stop": 21,
+            "pc_word_count_sha256": "725360feb57dfa1b417859df45a3de8f3c0061f56d5ffd564920e862cb65adee"
+          },
+          {
+            "repeat": 3,
+            "phase": "measured",
+            "cycles": 85,
+            "instret_window_count": 16,
+            "retire_items_start_through_stop": 21,
+            "pc_word_count_sha256": "725360feb57dfa1b417859df45a3de8f3c0061f56d5ffd564920e862cb65adee"
+          },
+          {
+            "repeat": 4,
+            "phase": "measured",
+            "cycles": 86,
+            "instret_window_count": 16,
+            "retire_items_start_through_stop": 21,
+            "pc_word_count_sha256": "725360feb57dfa1b417859df45a3de8f3c0061f56d5ffd564920e862cb65adee"
+          },
+          {
+            "repeat": 5,
+            "phase": "measured",
+            "cycles": 85,
+            "instret_window_count": 16,
+            "retire_items_start_through_stop": 21,
+            "pc_word_count_sha256": "725360feb57dfa1b417859df45a3de8f3c0061f56d5ffd564920e862cb65adee"
+          }
+        ],
+        "evidence_sha256": {
+          "check.json": "9b17304bb097aac65b0fd1e4871775826fd323fae789c3a3a055eb16b44cf04d",
+          "stderr.log": "74a4f6ef3798123457893f757330addf4606ccbbe5ca739c5c6afde49c739c4c"
+        }
+      },
+      "batch": {
+        "check_status": "PASS",
+        "build_path": "/home/riscv/riscv-lab/unified-vdot-benchmark-20261017/runs/jade-images-02/performance-d0-s02",
+        "run_path": "/home/riscv/riscv-lab/unified-vdot-benchmark-20261017/runs/jade-suite-02/performance/performance-d0-s02-r0",
+        "rvv_kernel_symbol": "t13_kernel_1",
+        "rvv_kernel_address": "0x80002000",
+        "rvv_kernel_bytes": 768,
+        "rvv_kernel_binary_sha256": "74bdeec3b1e577dbd2c9767c0cb9326b9b1c842cc211873deeb753e2a8f7b901",
+        "body": [
+          "li t6, 32",
+          ".Lloop:",
+          "vwmul.vv v16, v8, v9",
+          "vwmul.vv v18, v8, v9",
+          "vwmul.vv v20, v8, v9",
+          "vwmul.vv v22, v8, v9",
+          "vsetivli zero, 8, e16, m1, tu, mu",
+          "vmv.v.i v10, 0",
+          "vwredsum.vs v10, v16, v10",
+          "vmv.v.i v11, 0",
+          "vwredsum.vs v11, v18, v11",
+          "vmv.v.i v12, 0",
+          "vwredsum.vs v12, v20, v12",
+          "vmv.v.i v13, 0",
+          "vwredsum.vs v13, v22, v13",
+          "vsetivli zero, 8, e8, m1, tu, mu",
+          "addi t5, t5, 1",
+          "addi t6, t6, -1",
+          "bnez t6, .Lloop"
+        ],
+        "samples": [
+          {
+            "repeat": 0,
+            "phase": "first",
+            "cycles": 712,
+            "instret_window_count": 552,
+            "retire_items_start_through_stop": 557,
+            "pc_word_count_sha256": "92bbd1dc7777408a6bc4d62c7972e8fa55e6499298d1eea3cfb3ba57d8d2bddf"
+          },
+          {
+            "repeat": 1,
+            "phase": "warmup",
+            "cycles": 695,
+            "instret_window_count": 552,
+            "retire_items_start_through_stop": 557,
+            "pc_word_count_sha256": "92bbd1dc7777408a6bc4d62c7972e8fa55e6499298d1eea3cfb3ba57d8d2bddf"
+          },
+          {
+            "repeat": 2,
+            "phase": "measured",
+            "cycles": 678,
+            "instret_window_count": 552,
+            "retire_items_start_through_stop": 557,
+            "pc_word_count_sha256": "92bbd1dc7777408a6bc4d62c7972e8fa55e6499298d1eea3cfb3ba57d8d2bddf"
+          },
+          {
+            "repeat": 3,
+            "phase": "measured",
+            "cycles": 678,
+            "instret_window_count": 552,
+            "retire_items_start_through_stop": 557,
+            "pc_word_count_sha256": "92bbd1dc7777408a6bc4d62c7972e8fa55e6499298d1eea3cfb3ba57d8d2bddf"
+          },
+          {
+            "repeat": 4,
+            "phase": "measured",
+            "cycles": 678,
+            "instret_window_count": 552,
+            "retire_items_start_through_stop": 557,
+            "pc_word_count_sha256": "92bbd1dc7777408a6bc4d62c7972e8fa55e6499298d1eea3cfb3ba57d8d2bddf"
+          },
+          {
+            "repeat": 5,
+            "phase": "measured",
+            "cycles": 678,
+            "instret_window_count": 552,
+            "retire_items_start_through_stop": 557,
+            "pc_word_count_sha256": "92bbd1dc7777408a6bc4d62c7972e8fa55e6499298d1eea3cfb3ba57d8d2bddf"
+          }
+        ],
+        "evidence_sha256": {
+          "check.json": "2a7a02f1f96599ee79e26ba133b50f2ab5d588053a6d4543ea4449da99fa80e3",
+          "stderr.log": "da6592897954e3b52a625a392ab5e8863557393fcb45d56cde57feb8d150e17c"
+        }
+      }
+    },
+    "shishui": {
+      "single": {
+        "check_status": "PASS",
+        "build_path": "/home/riscv/riscv-lab/unified-vdot-benchmark-20261017/runs/shishui-images-02/performance-d0-s00",
+        "run_path": "/home/riscv/riscv-lab/unified-vdot-benchmark-20261017/runs/shishui-suite-02/performance/performance-d0-s00-r0",
+        "rvv_kernel_symbol": "t13_kernel_1",
+        "rvv_kernel_address": "0x80002000",
+        "rvv_kernel_bytes": 732,
+        "rvv_kernel_binary_sha256": "0c691f834e4217e57fa05ed1f9f8cc1e5aba0743d004f7136d1eea65f2f045d8",
+        "body": [
+          "li t6, 1",
+          ".Lloop:",
+          "vwmul.vv v2, v8, v9",
+          "vsetivli zero, 8, e16, m1, tu, mu",
+          "vmv.v.i v10, 0",
+          "vwredsum.vs v10, v2, v10",
+          "vsetivli zero, 8, e8, m1, tu, mu",
+          "addi t5, t5, 1",
+          "addi t6, t6, -1",
+          "bnez t6, .Lloop"
+        ],
+        "samples": [
+          {
+            "repeat": 0,
+            "phase": "first",
+            "cycles": 86,
+            "instret_window_count": 16,
+            "retire_items_start_through_stop": 21,
+            "pc_word_count_sha256": "725360feb57dfa1b417859df45a3de8f3c0061f56d5ffd564920e862cb65adee"
+          },
+          {
+            "repeat": 1,
+            "phase": "warmup",
+            "cycles": 85,
+            "instret_window_count": 16,
+            "retire_items_start_through_stop": 21,
+            "pc_word_count_sha256": "725360feb57dfa1b417859df45a3de8f3c0061f56d5ffd564920e862cb65adee"
+          },
+          {
+            "repeat": 2,
+            "phase": "measured",
+            "cycles": 85,
+            "instret_window_count": 16,
+            "retire_items_start_through_stop": 21,
+            "pc_word_count_sha256": "725360feb57dfa1b417859df45a3de8f3c0061f56d5ffd564920e862cb65adee"
+          },
+          {
+            "repeat": 3,
+            "phase": "measured",
+            "cycles": 85,
+            "instret_window_count": 16,
+            "retire_items_start_through_stop": 21,
+            "pc_word_count_sha256": "725360feb57dfa1b417859df45a3de8f3c0061f56d5ffd564920e862cb65adee"
+          },
+          {
+            "repeat": 4,
+            "phase": "measured",
+            "cycles": 86,
+            "instret_window_count": 16,
+            "retire_items_start_through_stop": 21,
+            "pc_word_count_sha256": "725360feb57dfa1b417859df45a3de8f3c0061f56d5ffd564920e862cb65adee"
+          },
+          {
+            "repeat": 5,
+            "phase": "measured",
+            "cycles": 85,
+            "instret_window_count": 16,
+            "retire_items_start_through_stop": 21,
+            "pc_word_count_sha256": "725360feb57dfa1b417859df45a3de8f3c0061f56d5ffd564920e862cb65adee"
+          }
+        ],
+        "evidence_sha256": {
+          "check.json": "d2486509ce50e2720c5219e6833feb5334bb2316831733a00a8e590696f9f081",
+          "stderr.log": "d0aebf97e98e4414fb95df356e454951e21f1196fce3c872c1fad525f8e1e0b3"
+        }
+      },
+      "batch": {
+        "check_status": "PASS",
+        "build_path": "/home/riscv/riscv-lab/unified-vdot-benchmark-20261017/runs/shishui-images-02/performance-d0-s02",
+        "run_path": "/home/riscv/riscv-lab/unified-vdot-benchmark-20261017/runs/shishui-suite-02/performance/performance-d0-s02-r0",
+        "rvv_kernel_symbol": "t13_kernel_1",
+        "rvv_kernel_address": "0x80002000",
+        "rvv_kernel_bytes": 768,
+        "rvv_kernel_binary_sha256": "74bdeec3b1e577dbd2c9767c0cb9326b9b1c842cc211873deeb753e2a8f7b901",
+        "body": [
+          "li t6, 32",
+          ".Lloop:",
+          "vwmul.vv v16, v8, v9",
+          "vwmul.vv v18, v8, v9",
+          "vwmul.vv v20, v8, v9",
+          "vwmul.vv v22, v8, v9",
+          "vsetivli zero, 8, e16, m1, tu, mu",
+          "vmv.v.i v10, 0",
+          "vwredsum.vs v10, v16, v10",
+          "vmv.v.i v11, 0",
+          "vwredsum.vs v11, v18, v11",
+          "vmv.v.i v12, 0",
+          "vwredsum.vs v12, v20, v12",
+          "vmv.v.i v13, 0",
+          "vwredsum.vs v13, v22, v13",
+          "vsetivli zero, 8, e8, m1, tu, mu",
+          "addi t5, t5, 1",
+          "addi t6, t6, -1",
+          "bnez t6, .Lloop"
+        ],
+        "samples": [
+          {
+            "repeat": 0,
+            "phase": "first",
+            "cycles": 712,
+            "instret_window_count": 552,
+            "retire_items_start_through_stop": 557,
+            "pc_word_count_sha256": "92bbd1dc7777408a6bc4d62c7972e8fa55e6499298d1eea3cfb3ba57d8d2bddf"
+          },
+          {
+            "repeat": 1,
+            "phase": "warmup",
+            "cycles": 696,
+            "instret_window_count": 552,
+            "retire_items_start_through_stop": 557,
+            "pc_word_count_sha256": "92bbd1dc7777408a6bc4d62c7972e8fa55e6499298d1eea3cfb3ba57d8d2bddf"
+          },
+          {
+            "repeat": 2,
+            "phase": "measured",
+            "cycles": 678,
+            "instret_window_count": 552,
+            "retire_items_start_through_stop": 557,
+            "pc_word_count_sha256": "92bbd1dc7777408a6bc4d62c7972e8fa55e6499298d1eea3cfb3ba57d8d2bddf"
+          },
+          {
+            "repeat": 3,
+            "phase": "measured",
+            "cycles": 678,
+            "instret_window_count": 552,
+            "retire_items_start_through_stop": 557,
+            "pc_word_count_sha256": "92bbd1dc7777408a6bc4d62c7972e8fa55e6499298d1eea3cfb3ba57d8d2bddf"
+          },
+          {
+            "repeat": 4,
+            "phase": "measured",
+            "cycles": 678,
+            "instret_window_count": 552,
+            "retire_items_start_through_stop": 557,
+            "pc_word_count_sha256": "92bbd1dc7777408a6bc4d62c7972e8fa55e6499298d1eea3cfb3ba57d8d2bddf"
+          },
+          {
+            "repeat": 5,
+            "phase": "measured",
+            "cycles": 678,
+            "instret_window_count": 552,
+            "retire_items_start_through_stop": 557,
+            "pc_word_count_sha256": "92bbd1dc7777408a6bc4d62c7972e8fa55e6499298d1eea3cfb3ba57d8d2bddf"
+          }
+        ],
+        "evidence_sha256": {
+          "check.json": "4d60abf0c9613d13f778664aaf0e5c56754b04a6fc699652a018cde2e280b9fb",
+          "stderr.log": "811d860915c83aba67e403dbf3e6fb44bbe3b3abfe46fa43e7947ce4073ab0e4"
+        }
+      }
+    },
+    "redoop": {
+      "single": {
+        "check_status": "PASS",
+        "build_path": "/home/riscv/riscv-lab/unified-vdot-benchmark-20261017/runs/redoop-images-02/performance-d0-s00",
+        "run_path": "/home/riscv/riscv-lab/unified-vdot-benchmark-20261017/runs/redoop-suite-02/performance/performance-d0-s00-r0",
+        "rvv_kernel_symbol": "t13_kernel_1",
+        "rvv_kernel_address": "0x80002000",
+        "rvv_kernel_bytes": 732,
+        "rvv_kernel_binary_sha256": "0c691f834e4217e57fa05ed1f9f8cc1e5aba0743d004f7136d1eea65f2f045d8",
+        "body": [
+          "li t6, 1",
+          ".Lloop:",
+          "vwmul.vv v2, v8, v9",
+          "vsetivli zero, 8, e16, m1, tu, mu",
+          "vmv.v.i v10, 0",
+          "vwredsum.vs v10, v2, v10",
+          "vsetivli zero, 8, e8, m1, tu, mu",
+          "addi t5, t5, 1",
+          "addi t6, t6, -1",
+          "bnez t6, .Lloop"
+        ],
+        "samples": [
+          {
+            "repeat": 0,
+            "phase": "first",
+            "cycles": 85,
+            "instret_window_count": 16,
+            "retire_items_start_through_stop": 21,
+            "pc_word_count_sha256": "725360feb57dfa1b417859df45a3de8f3c0061f56d5ffd564920e862cb65adee"
+          },
+          {
+            "repeat": 1,
+            "phase": "warmup",
+            "cycles": 85,
+            "instret_window_count": 16,
+            "retire_items_start_through_stop": 21,
+            "pc_word_count_sha256": "725360feb57dfa1b417859df45a3de8f3c0061f56d5ffd564920e862cb65adee"
+          },
+          {
+            "repeat": 2,
+            "phase": "measured",
+            "cycles": 86,
+            "instret_window_count": 16,
+            "retire_items_start_through_stop": 21,
+            "pc_word_count_sha256": "725360feb57dfa1b417859df45a3de8f3c0061f56d5ffd564920e862cb65adee"
+          },
+          {
+            "repeat": 3,
+            "phase": "measured",
+            "cycles": 86,
+            "instret_window_count": 16,
+            "retire_items_start_through_stop": 21,
+            "pc_word_count_sha256": "725360feb57dfa1b417859df45a3de8f3c0061f56d5ffd564920e862cb65adee"
+          },
+          {
+            "repeat": 4,
+            "phase": "measured",
+            "cycles": 86,
+            "instret_window_count": 16,
+            "retire_items_start_through_stop": 21,
+            "pc_word_count_sha256": "725360feb57dfa1b417859df45a3de8f3c0061f56d5ffd564920e862cb65adee"
+          },
+          {
+            "repeat": 5,
+            "phase": "measured",
+            "cycles": 86,
+            "instret_window_count": 16,
+            "retire_items_start_through_stop": 21,
+            "pc_word_count_sha256": "725360feb57dfa1b417859df45a3de8f3c0061f56d5ffd564920e862cb65adee"
+          }
+        ],
+        "evidence_sha256": {
+          "check.json": "c15d45611e104df5cd939d009d8780a39d6837d972210d1a6ff8209cce972a61",
+          "stderr.log": "4f019684474a5e3243a93190e7607417d43592db551d66fd928cb21e5ac16ed1"
+        }
+      },
+      "batch": {
+        "check_status": "PASS",
+        "build_path": "/home/riscv/riscv-lab/unified-vdot-benchmark-20261017/runs/redoop-images-02/performance-d0-s02",
+        "run_path": "/home/riscv/riscv-lab/unified-vdot-benchmark-20261017/runs/redoop-suite-02/performance/performance-d0-s02-r0",
+        "rvv_kernel_symbol": "t13_kernel_1",
+        "rvv_kernel_address": "0x80002000",
+        "rvv_kernel_bytes": 768,
+        "rvv_kernel_binary_sha256": "74bdeec3b1e577dbd2c9767c0cb9326b9b1c842cc211873deeb753e2a8f7b901",
+        "body": [
+          "li t6, 32",
+          ".Lloop:",
+          "vwmul.vv v16, v8, v9",
+          "vwmul.vv v18, v8, v9",
+          "vwmul.vv v20, v8, v9",
+          "vwmul.vv v22, v8, v9",
+          "vsetivli zero, 8, e16, m1, tu, mu",
+          "vmv.v.i v10, 0",
+          "vwredsum.vs v10, v16, v10",
+          "vmv.v.i v11, 0",
+          "vwredsum.vs v11, v18, v11",
+          "vmv.v.i v12, 0",
+          "vwredsum.vs v12, v20, v12",
+          "vmv.v.i v13, 0",
+          "vwredsum.vs v13, v22, v13",
+          "vsetivli zero, 8, e8, m1, tu, mu",
+          "addi t5, t5, 1",
+          "addi t6, t6, -1",
+          "bnez t6, .Lloop"
+        ],
+        "samples": [
+          {
+            "repeat": 0,
+            "phase": "first",
+            "cycles": 713,
+            "instret_window_count": 552,
+            "retire_items_start_through_stop": 557,
+            "pc_word_count_sha256": "92bbd1dc7777408a6bc4d62c7972e8fa55e6499298d1eea3cfb3ba57d8d2bddf"
+          },
+          {
+            "repeat": 1,
+            "phase": "warmup",
+            "cycles": 741,
+            "instret_window_count": 552,
+            "retire_items_start_through_stop": 557,
+            "pc_word_count_sha256": "92bbd1dc7777408a6bc4d62c7972e8fa55e6499298d1eea3cfb3ba57d8d2bddf"
+          },
+          {
+            "repeat": 2,
+            "phase": "measured",
+            "cycles": 695,
+            "instret_window_count": 552,
+            "retire_items_start_through_stop": 557,
+            "pc_word_count_sha256": "92bbd1dc7777408a6bc4d62c7972e8fa55e6499298d1eea3cfb3ba57d8d2bddf"
+          },
+          {
+            "repeat": 3,
+            "phase": "measured",
+            "cycles": 700,
+            "instret_window_count": 552,
+            "retire_items_start_through_stop": 557,
+            "pc_word_count_sha256": "92bbd1dc7777408a6bc4d62c7972e8fa55e6499298d1eea3cfb3ba57d8d2bddf"
+          },
+          {
+            "repeat": 4,
+            "phase": "measured",
+            "cycles": 695,
+            "instret_window_count": 552,
+            "retire_items_start_through_stop": 557,
+            "pc_word_count_sha256": "92bbd1dc7777408a6bc4d62c7972e8fa55e6499298d1eea3cfb3ba57d8d2bddf"
+          },
+          {
+            "repeat": 5,
+            "phase": "measured",
+            "cycles": 678,
+            "instret_window_count": 552,
+            "retire_items_start_through_stop": 557,
+            "pc_word_count_sha256": "92bbd1dc7777408a6bc4d62c7972e8fa55e6499298d1eea3cfb3ba57d8d2bddf"
+          }
+        ],
+        "evidence_sha256": {
+          "check.json": "256fda9f149ce459346d7a2b980a42875f9230b5c3c91ef8017b8daeb6ea9f80",
+          "stderr.log": "e21431da8746780c5b0b536927bc3f28ff65001209f7dfd2f3e272964588656d"
+        }
+      }
+    }
+  },
+  "source_checks": {
+    "src/main/scala/xiangshan/backend/fu/wrapper/VIMacU.scala": {
+      "equal_to_common_base": true
+    },
+    "src/main/scala/xiangshan/backend/exu/ExeUnitParams.scala": {
+      "equal_to_common_base": true
+    },
+    "src/main/scala/xiangshan/backend/exu/ExeUnit.scala": {
+      "equal_to_common_base": true
+    },
+    "yunsuan/src/main/scala/yunsuan/vector/vectorIMAC/VIMac64b.scala": {
+      "equal_to_common_base": true
+    }
+  },
+  "root_cause": "UNDETERMINED"
+}

@@ -1,0 +1,61 @@
+{
+  "status": "COMPLETED_LOG_INDEPENDENT_AUDIT_PASS",
+  "job": "hello-vadd",
+  "suite_job_status": "HELLO_VADD_PASS",
+  "suite_exit_code": 0,
+  "observation_status": "O1_TRACE_PASS",
+  "require_complete": true,
+  "command": [
+    "/usr/bin/python3",
+    "-B",
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/runs/o1-fullcore-log-audit-01/audit_job.py",
+    "hello-vadd"
+  ],
+  "head": "518c05674d5ecfed04a944cf01c99cea488b6c8a",
+  "checker_path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o1/fullcore/analyze.py",
+  "checker_sha256": "70b9709e02da598b12b72f779bcb4a3dc394b57f7e1589ba388792884fa998dd",
+  "audit_script_sha256": "dd25724b703ab3bfb51ccc3cda6b7c6788b0c5ae7e47ef983781cc61e9bb3f1d",
+  "input_files_sha256": {
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/runs/o1-fullcore-suite-01/hello-vadd/run.log": "c0b0ba6d653c71791c8b36751a938d283ac0bb4d50b4af6d6a5d3e6d1d33f77d",
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/runs/o1-fullcore-suite-01/hello-vadd/stderr.log": "5c8da2c3ffbdd79256eb3e2219eafbb398f2752e85d5fa00cd54bbaaf991eb3a",
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/runs/o1-fullcore-suite-01/hello-vadd/stdout.log": "e2623e294dc5f81836e78789ff73ecfa9f4c53da541821f9102051c4c816081d",
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/runs/o1-fullcore-suite-01/hello-vadd/result.json": "1ab8d95c91fcaea9e7aa0ee6b5d245a0f63113200f06e3580ac39a3a24d93d8e",
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/runs/o1-fullcore-suite-01/hello-vadd/observation.json": "1502a790c2cc4b9845d12ef3ee0a74f39680d4346ed870e6990393bcb17f8588"
+  },
+  "schema": {
+    "version": 1,
+    "clock": "global",
+    "latency": 2,
+    "rob_size": 48,
+    "ftq_size": 8,
+    "vlen": 128,
+    "handoff": 1
+  },
+  "counts": {
+    "VFEX4_ACCEPT": 0,
+    "VFEX4_WAIT": 0,
+    "VFEX4_REDIRECT": 165,
+    "ACCEPT": 0,
+    "RESPONSE": 0,
+    "STALL": 0,
+    "KILL": 0,
+    "HANDOFF": 0,
+    "ENQUEUE": 0,
+    "COMMIT": 0,
+    "REDIRECT": 165,
+    "ACCEPTED_THEN_SQUASHED": 0,
+    "ACCEPTED_YOUNGER_SQUASHED": 0
+  },
+  "original_run_log_crlf_count": 7,
+  "raw_bytes_sha256": "c0b0ba6d653c71791c8b36751a938d283ac0bb4d50b4af6d6a5d3e6d1d33f77d",
+  "analyze_text_sha256_after_read_text": "43125d01c4a314a7146d07fd1e039c65709988db9db284d5b46fa1812107601b",
+  "independent_result_identical_to_suite_observation": true,
+  "raw_decode_and_universal_newline_semantics_identical_except_input_sha256": true,
+  "new_emulator_started_by_audit": false,
+  "entire_suite_complete": false,
+  "limits": [
+    "input_sha256 identifies the exact UTF-8 text argument to analyze; original file bytes remain separately bound by raw SHA256.",
+    "Only the named completed job is audited. A partial negative audit is not a normal-run or full-suite pass.",
+    "No raw log or frozen source file was modified."
+  ]
+}

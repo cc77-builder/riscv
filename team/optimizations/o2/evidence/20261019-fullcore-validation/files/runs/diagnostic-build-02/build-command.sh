@@ -1,0 +1,2 @@
+source /home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/scripts/activate.sh
+make -C /home/riscv/riscv-lab/o2-fullcore-20261019/diagnostic-build-02/source ARCH=riscv64-xs MARCH=rv64gcv O2_DATA=/home/riscv/riscv-lab/o2-fullcore-20261019/diagnostic-build-02/data O2_OBJ_ROOT=/home/riscv/riscv-lab/o2-fullcore-20261019/diagnostic-build-02/objects BINARY=/home/riscv/riscv-lab/o2-fullcore-20261019/diagnostic-build-02/o2-diag -j2

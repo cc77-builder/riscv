@@ -1,0 +1,252 @@
+{
+  "status": "LIVE_PARTIAL_KILL_SURVIVOR_CHECK_PASS",
+  "scope": "One complete observed partial-kill/survivor lifecycle inside an unfinished overall job; not final acceptance.",
+  "partial_cycle": 609217,
+  "state": {
+    "cycle": 609217,
+    "pvalid": 1,
+    "pseq": 1741,
+    "prob": "1:2",
+    "ppdest": 49,
+    "rvalid": 1,
+    "rseq": 1740,
+    "rrob": "0:41",
+    "rpdest": 14,
+    "occupancy": 2,
+    "invalid": 1,
+    "inready": 0,
+    "vready": 0,
+    "outvalid": 1,
+    "outready": 1,
+    "move": 0,
+    "killp": 1,
+    "killr": 0,
+    "divactive": 0,
+    "divseq": 1735,
+    "divoccupied": 0,
+    "busy": 1
+  },
+  "rob_redirect": {
+    "cycle": 609216,
+    "rob": "0:43",
+    "ftq": "1:2",
+    "self": 0
+  },
+  "parent_redirect": {
+    "cycle": 609217,
+    "rob": "0:43",
+    "self": 0
+  },
+  "transactions": {
+    "1740": {
+      "enqueue": {
+        "cycle": 609191,
+        "rob": "0:41",
+        "pc": 2147494264,
+        "ftq": "1:2",
+        "word": 43255819
+      },
+      "accept": {
+        "kind": "ACCEPT",
+        "cycle": 609215,
+        "seq": 1740,
+        "rob": "0:41",
+        "pdest": 14,
+        "vl": 8,
+        "illegal": 0,
+        "vecwen": 1,
+        "v0wen": 0,
+        "vpu": 383123886643719907295546637845863265354179916928647168,
+        "perf": 0,
+        "vs1": 119028979705960025944254757505531291852,
+        "vs2": 59608924825022513208296036725062163694
+      },
+      "lifecycle": [
+        {
+          "kind": "VFEX4_ACCEPT",
+          "cycle": 609215,
+          "seq": 1740,
+          "rob": "0:41",
+          "fu": 34359738368,
+          "pdest": 14
+        },
+        {
+          "kind": "ACCEPT",
+          "cycle": 609215,
+          "seq": 1740,
+          "rob": "0:41",
+          "pdest": 14,
+          "vl": 8,
+          "illegal": 0,
+          "vecwen": 1,
+          "v0wen": 0,
+          "vpu": 383123886643719907295546637845863265354179916928647168,
+          "perf": 0,
+          "vs1": 119028979705960025944254757505531291852,
+          "vs2": 59608924825022513208296036725062163694
+        },
+        {
+          "kind": "MOVE",
+          "cycle": 609216,
+          "seq": 1740,
+          "rob": "0:41",
+          "pdest": 14,
+          "illegal": 0,
+          "vecwen": 1,
+          "v0wen": 0,
+          "exception": 0,
+          "vpu": 383123886643719907295546637845863265354179916928647168,
+          "perf": 0
+        },
+        {
+          "kind": "RESPONSE",
+          "cycle": 609217,
+          "seq": 1740,
+          "rob": "0:41",
+          "pdest": 14,
+          "illegal": 0,
+          "data": 4294960161,
+          "vecwen": 1,
+          "v0wen": 0,
+          "exception": 0,
+          "vpu": 383123886643719907295546637845863265354179916928647168,
+          "perf": 0
+        }
+      ],
+      "commits": [
+        {
+          "cycle": 609283,
+          "rob": "0:41",
+          "pc": 2147494264,
+          "ftq": "1:2"
+        }
+      ]
+    },
+    "1741": {
+      "enqueue": {
+        "cycle": 609196,
+        "rob": "1:2",
+        "pc": 2147494300,
+        "ftq": "1:3",
+        "word": 43256843
+      },
+      "accept": {
+        "kind": "ACCEPT",
+        "cycle": 609216,
+        "seq": 1741,
+        "rob": "1:2",
+        "pdest": 49,
+        "vl": 8,
+        "illegal": 0,
+        "vecwen": 1,
+        "v0wen": 0,
+        "vpu": 383123886643719907295546637845863265354179916928647168,
+        "perf": 0,
+        "vs1": 119028979705960025944254757505531291852,
+        "vs2": 59608924825022513208296036725062163694
+      },
+      "lifecycle": [
+        {
+          "kind": "VFEX4_ACCEPT",
+          "cycle": 609216,
+          "seq": 1741,
+          "rob": "1:2",
+          "fu": 34359738368,
+          "pdest": 49
+        },
+        {
+          "kind": "ACCEPT",
+          "cycle": 609216,
+          "seq": 1741,
+          "rob": "1:2",
+          "pdest": 49,
+          "vl": 8,
+          "illegal": 0,
+          "vecwen": 1,
+          "v0wen": 0,
+          "vpu": 383123886643719907295546637845863265354179916928647168,
+          "perf": 0,
+          "vs1": 119028979705960025944254757505531291852,
+          "vs2": 59608924825022513208296036725062163694
+        },
+        {
+          "kind": "KILL",
+          "cycle": 609217,
+          "seq": 1741,
+          "slot": "P",
+          "rob": "1:2",
+          "pdest": 49,
+          "redirect": "0:43",
+          "self": 0
+        }
+      ],
+      "commits": []
+    }
+  },
+  "survivor_full128": "000000000000000000000000ffffe421",
+  "next_state": {
+    "cycle": 609218,
+    "pvalid": 0,
+    "pseq": 1741,
+    "prob": "1:2",
+    "ppdest": 49,
+    "rvalid": 0,
+    "rseq": 1740,
+    "rrob": "0:41",
+    "rpdest": 14,
+    "occupancy": 0,
+    "invalid": 0,
+    "inready": 1,
+    "vready": 1,
+    "outvalid": 0,
+    "outready": 1,
+    "move": 0,
+    "killp": 0,
+    "killr": 0,
+    "divactive": 0,
+    "divseq": 1735,
+    "divoccupied": 0,
+    "busy": 0
+  },
+  "prefix_counts": {
+    "STATE": 5618,
+    "VFEX4_ACCEPT": 1899,
+    "VFEX4_WAIT": 1406,
+    "VFEX4_REDIRECT": 307,
+    "ACCEPT": 1643,
+    "MOVE": 1615,
+    "RESPONSE": 1590,
+    "STALL": 0,
+    "KILL": 53,
+    "DIV_ACCEPT": 256,
+    "DIV_KILL": 0,
+    "DIV_OUTPUT": 256,
+    "ENQUEUE": 1752,
+    "COMMIT": 1208,
+    "REDIRECT": 307,
+    "MULTI_INFLIGHT": 984,
+    "OVERLAP": 1004,
+    "TRIPLE_OVERLAP": 744,
+    "FULL_STALL": 0,
+    "KILL_P": 28,
+    "KILL_R": 25,
+    "PARTIAL_KILL": 1,
+    "BOTH_KILL": 16,
+    "R_KILL_P_SURVIVES": 0,
+    "P_KILL_R_SURVIVES": 1,
+    "UNRELATED_FLUSH": 0,
+    "ROB_WRAP": 258,
+    "FTQ_WRAP": 151,
+    "DIV_RESPONSE": 256,
+    "ACCEPTED_THEN_SQUASHED": 435,
+    "ACCEPTED_YOUNGER_SQUASHED": 435
+  },
+  "prefix_coverage": {
+    "multi_inflight": true,
+    "triple_overlap": true,
+    "full_stall": false,
+    "kill_p": true,
+    "kill_r": true,
+    "partial_kill": true
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "status": "T14_STRUCTURE_AUDIT_PASS",
+  "source_files": {
+    "old": {
+      "path": "/home/riscv/riscv-lab/t12-regression-20261013/components/fu/rtl/VDotFuTestTop.sv",
+      "sha256": "a95ab1b4abb5dead3a7ae16bc29d90fa6b1c297b5d7106b21e8877ba7c25cc36"
+    },
+    "baseline": {
+      "path": "/home/riscv/riscv-lab/t14-optimization-20261015/runs/fu-baseline-01/rtl/VDotFuTestTop.sv",
+      "sha256": "3c10dfb61f9fe287af18557b205591518b51502c8f925ff66c7eaad674931f01"
+    },
+    "candidate": {
+      "path": "/home/riscv/riscv-lab/t14-optimization-20261015/runs/fu-fused-01/rtl/VDotFuTestTop.sv",
+      "sha256": "7f5abaaf88dfd52c081a5d005387474bff088bf0a5c025dc2e49287c76e72d3d"
+    }
+  },
+  "baseline_logic_text_identical": true,
+  "removed_declared_registers": {
+    "src1Reg": 128,
+    "src2Reg": 128
+  },
+  "baseline_declared_register_bits": 1629,
+  "candidate_declared_register_bits": 1373,
+  "multiplication_operators": 8,
+  "addition_operators": 7,
+  "arithmetic_modules_identical": true,
+  "limitations": "Elaborated SV declarations, including simulation assertions/debug state; not synthesized flops, area, power, Fmax or formal equivalence. Upper unused source bits may be removed by synthesis.",
+  "timing_tradeoff": "Multiplication moves onto the upstream input-to-product-register path; shorter cycle latency does not establish a shorter clock period."
+}

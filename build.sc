@@ -263,6 +263,32 @@ object vdotFu extends HasChisel {
   override def forkArgs = Seq("-Xmx4G", "-Xss8m")
 }
 
+// Real VFEX4 integration test: original ExeUnit, Dispatcher, clock gates and DIV FUs.
+object vdotParent extends HasChisel {
+  override def sources = T.sources { Seq(PathRef(pwd / "team/optimizations/o1/parent/GenerateVDotParent.scala")) }
+  override def moduleDeps = Seq(xiangshan)
+  override def forkArgs = Seq("-Xmx4G", "-Xss8m")
+}
+
+// O2 isolated two-slot elastic FU and real VFEX4 integration, separate from O1 tests.
+object vdotElasticFu extends HasChisel {
+  override def sources = T.sources { Seq(PathRef(pwd / "team/optimizations/o2/fu/GenerateVDotElasticFu.scala")) }
+  override def moduleDeps = Seq(xiangshan)
+  override def forkArgs = Seq("-Xmx4G", "-Xss8m")
+}
+object vdotElasticParent extends HasChisel {
+  override def sources = T.sources { Seq(PathRef(pwd / "team/optimizations/o2/parent/GenerateVDotElasticParent.scala")) }
+  override def moduleDeps = Seq(xiangshan)
+  override def forkArgs = Seq("-Xmx4G", "-Xss8m")
+}
+
+// O4 common production interfaces only: no scoreboard, taps or trace state.
+object vdotCost extends HasChisel {
+  override def sources = T.sources { Seq(PathRef(pwd / "team/optimizations/o4/GenerateVDotCost.scala")) }
+  override def moduleDeps = Seq(xiangshan)
+  override def forkArgs = Seq("-Xmx8G", "-Xss16m")
+}
+
 object vdotDecode extends HasChisel {
   override def sources = T.sources { Seq(PathRef(pwd / "team/rtl/vdot/GenerateVDotDecode.scala")) }
   override def moduleDeps = Seq(xiangshan)
@@ -383,4 +409,16 @@ object xiangshan extends XiangShanModule with HasChisel with ScalafmtModule {
 
     override def forkEnv = Map("PATH" -> envPATH)
   }
+}
+
+// T15 independent parameter experiment; does not change production FU sources.
+object vdotParam extends HasChisel {
+  override def sources = T.sources {
+    Seq(
+      PathRef(pwd / "src/main/scala/xiangshan/backend/fu/vector/VDotDatapath.scala"),
+      PathRef(pwd / "team/rtl/vdot/param/VDotParam.scala"),
+      PathRef(pwd / "team/rtl/vdot/param/GenerateVDotParam.scala"),
+    )
+  }
+  override def forkArgs = Seq("-Xmx2G", "-Xss8m")
 }

@@ -1,0 +1,38 @@
+{
+  "recorded": "2026-10-17T16:41:27.766213+08:00",
+  "benchmark_git_commit": "1b47c72b3ba1edda6c4475050a0f9063dd0b421b",
+  "local_branch": "local/unified-vdot-benchmark-20261017",
+  "no_github_push": true,
+  "emulators": {
+    "ours": {
+      "path": "/home/riscv/riscv-lab/t14-optimization-20261015/repo/build/emu",
+      "sha256": "60521f406816846f8724de13021906a3ebbffa7044f35e6ee93c28bed7bf96b5",
+      "bytes": 71276784
+    },
+    "jade": {
+      "path": "/home/riscv/riscv-lab/unified-vdot-benchmark-20261017/variants/jade/repo/build/emu",
+      "sha256": "9ce7f866a98b6d1d9aec263a6551475868466c4b74426b2222f0c785ec36b687",
+      "bytes": 71055696
+    },
+    "shishui": {
+      "path": "/home/riscv/riscv-lab/unified-vdot-benchmark-20261017/variants/shishui/build/emu",
+      "sha256": "9a9cf30b82f8de9652b4cac93c075dcafd0adae816c864bc2a8faf44f31aa476",
+      "bytes": 70986064
+    },
+    "redoop": {
+      "path": "/home/riscv/riscv-lab/unified-vdot-benchmark-20261017/variants/redoop/build/emu",
+      "sha256": "b38b703ee32e0b73d90c213770cba5e569c84bc22d2da8f86bf7eebfff9fef66",
+      "bytes": 71100816
+    }
+  },
+  "host_parallel_jobs": {
+    "ours": null,
+    "jade": 4,
+    "shishui": 8,
+    "redoop": 8
+  },
+  "target_cores": 1,
+  "target_emu_threads": 1,
+  "counter_source": "RTL target cycles; host parallelism is not target core count",
+  "host_parallel_jobs_note": "Public limits come from recorded orchestration scripts; the completed ours suite metadata did not retain its host job limit. All target EMUs are single-threaded single-core; host elapsed time is not compared."
+}

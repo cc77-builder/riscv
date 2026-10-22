@@ -1,0 +1,13 @@
+O1_PARENT_GROUP_PASS real-ClockGate reset-TE-only idle-gating
+O1_PARENT_GROUP_PASS vdot=10022 full128-three-result-buses stalls=0,1,2,7 identity flags latency-II
+O1_PARENT_GROUP_PASS real-VIDiv div-divu-rem-remu=76 cases overflow-div0; real-VFDiv=9 exact-FP32-DZ-signed-zero
+O1_PARENT_GROUP_PASS all-nine-FU-transitions x three-stalls; only-VDot-VDot-overlap
+O1_PARENT_GROUP_PASS legal-illegal-vdot=96 full-parent-exception-and-write-suppression
+O1_PARENT_GROUP_PASS redirect=432 older-self-younger-wrap x calculate-response-stalled x ready x all-FU-switches
+O1_PARENT_GROUP_PASS reset=27 all-FUs x next-FU x calculate-response-stalled; TE-only-during-reset
+O1_PARENT_GROUP_PASS random-control=20000 seed=0x20261018 transaction-conservation-and-watchdog
+O1_PARENT_GROUP_PASS normal-completion-recovery all-real-FU-clocks-gated-idle
+O1_PARENT_FU kind=0 accepted=11218 responded=11094 killed=109 reset_dropped=15 raw_killed_response=0 latency_min=2 latency_max=2 latency_samples=11158 clock_edges=61319
+O1_PARENT_FU kind=1 accepted=1189 responded=944 killed=223 reset_dropped=22 raw_killed_response=34 latency_min=10 latency_max=14 latency_samples=1018 clock_edges=17995
+O1_PARENT_FU kind=2 accepted=1086 responded=881 killed=182 reset_dropped=23 raw_killed_response=37 latency_min=8 latency_max=8 latency_samples=953 clock_edges=11837
+O1_PARENT_PASS mode=0 cycles=86759 groups=9 accepted=13493 responses=12919 cancelled=514 reset_dropped=60 handoffs=0 stalls=27725 redirects=432 reset_cases=27 idle_clock_samples=12 cancel_idle_clock_on=504 legacy_boundary_valid_suppressed=1009 parent_tested=1 fullcore_tested=0

@@ -1,0 +1,23 @@
+{
+  "source": "2443fb1c101dfc5974ac208275a8b86d68a11e0f",
+  "emu": "/home/riscv/riscv-lab/t14-optimization-20261015/repo/build/emu",
+  "emu_sha256": "60521f406816846f8724de13021906a3ebbffa7044f35e6ee93c28bed7bf96b5",
+  "original_build": {
+    "source": "2443fb1c101dfc5974ac208275a8b86d68a11e0f",
+    "command": [
+      "bash",
+      "-c",
+      "source team/scripts/activate.sh\nexport VDOT_T12_TRACE=1 VDOT_T13_TRACE=1 VDOT_T14_FUSED_INPUT=1\nmake emu CONFIG=MinimalConfig NUM_CORES=1 EMU_THREADS=1 JVM_XMX=12G OPT_FAST=-O3 OPT_SLOW=-O0 -j2"
+    ],
+    "cwd": "/home/riscv/riscv-lab/t14-optimization-20261015/repo",
+    "started": "2026-10-16T00:09:35.193557+08:00",
+    "status": "FINISHED",
+    "changed_hardware_files": [
+      "src/main/scala/xiangshan/backend/fu/wrapper/VDot.scala"
+    ],
+    "exit_code": 0,
+    "finished": "2026-10-16T00:28:46.873649+08:00"
+  },
+  "T15_changes": "independent parameter experiment; no production datapath change",
+  "reason_reused": "Same fixed hardware config and calibrated observers; avoid recompiling identical accepted hardware"
+}

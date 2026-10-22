@@ -1,0 +1,7 @@
+VDOT_FU_GROUP_PASS arithmetic=10022 stalls=0,1,2,7 continuous-valid identity-snapshot latency-II
+VDOT_FU_GROUP_PASS illegal=22 policy-vxrm=16 renamed-VL exception-no-write
+VDOT_FU_GROUP_PASS idle-flush input-not-accepted recovery
+VDOT_FU_GROUP_PASS redirect-matrix=64 MUL-REDUCE-RESP-stalled older-self-wrap handshake-priority
+VDOT_FU_GROUP_PASS reset-phases=4 no-ghost-response recovery
+VDOT_FU_GROUP_PASS random-control cycles=5000 seed=0x20261013 conservation-watchdog
+VDOT_FU_PASS latency=3 min_ii=4 groups=6 cycles=71258 accepted=11245 responded=10960 killed=271 reset_dropped=14 illegal_responses=90 stall_cycles=25700

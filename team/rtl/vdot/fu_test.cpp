@@ -15,7 +15,13 @@
 #include <string>
 #include <vector>
 
+#ifndef VDOT_FU_EXPECTED_LATENCY
+#define VDOT_FU_EXPECTED_LATENCY 3
+#endif
+static_assert(VDOT_FU_EXPECTED_LATENCY == 2 || VDOT_FU_EXPECTED_LATENCY == 3);
+
 namespace {
+constexpr unsigned kResponseLatency = VDOT_FU_EXPECTED_LATENCY;
 using Words = std::array<uint32_t, 4>;
 struct Vector {
   std::string id;
@@ -154,7 +160,7 @@ class Bench {
 
     const bool cancel = pending && should_kill(pending->req, flush);
     const bool expected_ready = !pending && !flush.valid && !reset;
-    const bool expected_valid = pending && cycle >= pending->accepted_cycle + 3 && !cancel && !reset;
+    const bool expected_valid = pending && cycle >= pending->accepted_cycle + kResponseLatency && !cancel && !reset;
     bool actual_valid = dut->io_out_valid;
     if (inject == "cancel-leak" && cancel && !reset && !injected) {
       actual_valid = true;
@@ -218,7 +224,7 @@ class Bench {
     unsigned watchdog = 0;
     while (pending) {
       check(++watchdog <= stalls + 10, "response timeout");
-      const bool mature = cycle >= pending->accepted_cycle + 3;
+      const bool mature = cycle >= pending->accepted_cycle + kResponseLatency;
       const bool ready = !mature || stalls == 0;
       if (mature && stalls) --stalls;
       // Continuously alter unaccepted data to expose failures to snapshot.
@@ -270,13 +276,13 @@ void tests(Bench& b, const std::vector<Vector>& data) {
   while (next < data.size() || b.pending) {
     const Request r = next < data.size() ? request(data[next], unsigned(next)) : noise;
     bool ready = true;
-    if (b.pending && b.cycle >= b.pending->accepted_cycle + 3) {
+    if (b.pending && b.cycle >= b.pending->accepted_cycle + kResponseLatency) {
       ready = held == 0;
       if (held) --held;
     }
     const uint64_t before = b.cycle;
     if (b.step(r, next < data.size(), ready)) {
-      if (next) b.check(before - previous_accept == 4 + stalls[(next - 1) % 4], "initiation interval mismatch");
+      if (next) b.check(before - previous_accept == kResponseLatency + 1 + stalls[(next - 1) % 4], "initiation interval mismatch");
       previous_accept = before;
       held = stalls[next % 4];
       ++next;
@@ -408,7 +414,7 @@ int main(int argc, char** argv) {
     Bench bench(injection);
     tests(bench, data);
     if (!injection.empty()) throw std::runtime_error("fault injection was not rejected");
-    std::cout << "VDOT_FU_PASS groups=" << bench.groups << " cycles=" << bench.cycle
+    std::cout << "VDOT_FU_PASS latency=" << kResponseLatency << " min_ii=" << kResponseLatency + 1 << " groups=" << bench.groups << " cycles=" << bench.cycle
               << " accepted=" << bench.accepted << " responded=" << bench.responded
               << " killed=" << bench.killed << " reset_dropped=" << bench.reset_dropped
               << " illegal_responses=" << bench.illegal_responses << " stall_cycles=" << bench.stall_cycles << '\n';

@@ -1,0 +1,60 @@
+{
+  "status": "FOCUSED_V0_SEMANTIC_CHECK_PASS",
+  "transactions": [
+    {
+      "shard": 2,
+      "case": "L04-0-8-9",
+      "seq": 4,
+      "rob": "1:22",
+      "pdest": 16,
+      "decoded": {
+        "vd": 0,
+        "vs1": 8,
+        "vs2": 9
+      },
+      "write_enables": [
+        0,
+        1
+      ],
+      "full128": "000000000000000000000000fffffff8",
+      "cycles": {
+        "enqueue": 422857,
+        "accept": 422861,
+        "move": 422862,
+        "response": 422863,
+        "commit": 422866
+      }
+    },
+    {
+      "shard": 3,
+      "case": "L04-10-0-9",
+      "seq": 4,
+      "rob": "0:38",
+      "pdest": 143,
+      "decoded": {
+        "vd": 10,
+        "vs1": 0,
+        "vs2": 9
+      },
+      "write_enables": [
+        1,
+        0
+      ],
+      "full128": "000000000000000000000000fffffff8",
+      "cycles": {
+        "enqueue": 423116,
+        "accept": 423120,
+        "move": 423121,
+        "response": 423122,
+        "commit": 423125
+      }
+    }
+  ],
+  "coverage": {
+    "v0_destination": true,
+    "v0_source_vs1": true,
+    "v0_source_vs2": false,
+    "v0_same_register_alias": false
+  },
+  "scope": "functional-0..3 only; no inference about later shards or full G3 completion"
+}

@@ -1476,6 +1476,96 @@ class RobImp(override val wrapper: Rob)(implicit p: Parameters, params: BackendP
     wpc(i) := SignExt(commitDebugUop(i).pc, XLEN)
   }
 
+
+  if (sys.env.get("VDOT_T13_TRACE").contains("1")) {
+    require(!p(xiangshan.DebugOptionsKey).ResetGen, "T13 trace requires common simulation reset")
+    val t13Cycle = GTimer()
+    val t13Active = RegInit(false.B)
+    for (i <- 0 until RenameWidth) {
+      val u = io.enq.req(i).bits
+      val counterRead = u.fuType === FuType.csr.U && (u.instr(31, 20) === "hc00".U || u.instr(31, 20) === "hc02".U)
+      when(canEnqueue(i) && counterRead) {
+        printf(p"T13_COUNTER_ENQUEUE cycle=${t13Cycle} rob=${allocatePtrVec(i).flag}:${allocatePtrVec(i).value} pc=0x${Hexadecimal(u.pc)} word=0x${Hexadecimal(u.instr)} empty=${isEmpty} wait=${u.waitForward} block=${u.blockBackward}\n")
+      }
+    }
+    for (i <- 0 until CommitWidth) {
+      val u = commitDebugUop(i)
+      val committed = io.commits.isCommit && io.commits.commitValid(i)
+      val start = u.instr === "h51300013".U
+      val stop = u.instr === "h51400013".U
+      val counterRead = u.fuType === FuType.csr.U && (u.instr(31, 20) === "hc00".U || u.instr(31, 20) === "hc02".U)
+      when(committed && start) { t13Active := true.B }
+      when(committed && stop) { t13Active := false.B }
+      when(committed && (t13Active || start || counterRead)) {
+        val retired = CommitType.isFused(io.commits.info(i).commitType).asUInt + io.commits.info(i).instrSize
+        printf(p"T13_RETIRE cycle=${t13Cycle} slot=${i.U} rob=${deqPtrVec(i).flag}:${deqPtrVec(i).value} pc=0x${Hexadecimal(u.pc)} word=0x${Hexadecimal(u.instr)} count=${retired} data=0x${Hexadecimal(wdata(i))}\n")
+      }
+    }
+  }
+
+  if (sys.env.get("VDOT_T12_TRACE").contains("1")) {
+    // Instantiate outside when: GTimer is a local register, not a global read.
+    require(!p(xiangshan.DebugOptionsKey).ResetGen, "T12 trace requires the common simulation reset")
+    val t12Cycle = GTimer()
+    for (i <- 0 until RenameWidth) {
+      val u = io.enq.req(i).bits
+      when(canEnqueue(i) && u.fuType === FuType.vdot.U) {
+        printf(p"T12_ENQUEUE cycle=${t12Cycle} rob=${allocatePtrVec(i).flag}:${allocatePtrVec(i).value} pc=0x${Hexadecimal(u.pc)} ftq=${u.ftqPtr.flag}:${u.ftqPtr.value} word=0x${Hexadecimal(u.instr)}\n")
+      }
+    }
+    for (i <- 0 until CommitWidth) {
+      val u = commitDebugUop(i)
+      when(io.commits.isCommit && io.commits.commitValid(i) && u.fuType === FuType.vdot.U) {
+        printf(p"T12_COMMIT cycle=${t12Cycle} rob=${deqPtrVec(i).flag}:${deqPtrVec(i).value} pc=0x${Hexadecimal(u.pc)} ftq=${u.ftqPtr.flag}:${u.ftqPtr.value}\n")
+      }
+    }
+    when(io.redirect.valid) {
+      printf(p"T12_REDIRECT cycle=${t12Cycle} rob=${io.redirect.bits.robIdx.flag}:${io.redirect.bits.robIdx.value} ftq=${io.redirect.bits.ftqIdx.flag}:${io.redirect.bits.ftqIdx.value}\n")
+    }
+  }
+
+  if (xiangshan.backend.fu.wrapper.VDotHandoff.traceEnabled) {
+    require(!p(xiangshan.DebugOptionsKey).ResetGen,
+      "O1 trace requires the common simulation reset")
+    val o1Cycle = GTimer()
+    for (i <- 0 until RenameWidth) {
+      val u = io.enq.req(i).bits
+      when(!reset.asBool && !io.redirect.valid && canEnqueue(i) && u.fuType === FuType.vdot.U) {
+        printf(p"O1_ENQUEUE cycle=${o1Cycle} rob=${allocatePtrVec(i).flag}:${allocatePtrVec(i).value} pc=0x${Hexadecimal(u.pc)} ftq=${u.ftqPtr.flag}:${u.ftqPtr.value} word=0x${Hexadecimal(u.instr)}\n")
+      }
+    }
+    for (i <- 0 until CommitWidth) {
+      val u = commitDebugUop(i)
+      when(!reset.asBool && io.commits.isCommit && io.commits.commitValid(i) && u.fuType === FuType.vdot.U) {
+        printf(p"O1_COMMIT cycle=${o1Cycle} rob=${deqPtrVec(i).flag}:${deqPtrVec(i).value} pc=0x${Hexadecimal(u.pc)} ftq=${u.ftqPtr.flag}:${u.ftqPtr.value}\n")
+      }
+    }
+    when(!reset.asBool && io.redirect.valid) {
+      printf(p"O1_REDIRECT cycle=${o1Cycle} rob=${io.redirect.bits.robIdx.flag}:${io.redirect.bits.robIdx.value} ftq=${io.redirect.bits.ftqIdx.flag}:${io.redirect.bits.ftqIdx.value} self=${io.redirect.bits.flushItself()}\n")
+    }
+  }
+
+  if (xiangshan.backend.fu.wrapper.VDotO2.traceEnabled) {
+    require(!p(xiangshan.DebugOptionsKey).ResetGen,
+      "O2 trace requires the common simulation reset")
+    val o2Cycle = GTimer()
+    for (i <- 0 until RenameWidth) {
+      val u = io.enq.req(i).bits
+      when(!reset.asBool && !io.redirect.valid && canEnqueue(i) && u.fuType === FuType.vdot.U) {
+        printf(p"O2_ENQUEUE cycle=${o2Cycle} rob=${allocatePtrVec(i).flag}:${allocatePtrVec(i).value} pc=0x${Hexadecimal(u.pc)} ftq=${u.ftqPtr.flag}:${u.ftqPtr.value} word=0x${Hexadecimal(u.instr)}\n")
+      }
+    }
+    for (i <- 0 until CommitWidth) {
+      val u = commitDebugUop(i)
+      when(!reset.asBool && io.commits.isCommit && io.commits.commitValid(i) && u.fuType === FuType.vdot.U) {
+        printf(p"O2_COMMIT cycle=${o2Cycle} rob=${deqPtrVec(i).flag}:${deqPtrVec(i).value} pc=0x${Hexadecimal(u.pc)} ftq=${u.ftqPtr.flag}:${u.ftqPtr.value}\n")
+      }
+    }
+    when(!reset.asBool && io.redirect.valid) {
+      printf(p"O2_REDIRECT cycle=${o2Cycle} rob=${io.redirect.bits.robIdx.flag}:${io.redirect.bits.robIdx.value} ftq=${io.redirect.bits.ftqIdx.flag}:${io.redirect.bits.ftqIdx.value} self=${io.redirect.bits.flushItself()}\n")
+    }
+  }
+
   if (env.EnableDifftest || env.AlwaysBasicDiff) {
     // These are the structures used by difftest only and should be optimized after synthesis.
     val dt_eliminatedMove = Mem(RobSize, Bool())

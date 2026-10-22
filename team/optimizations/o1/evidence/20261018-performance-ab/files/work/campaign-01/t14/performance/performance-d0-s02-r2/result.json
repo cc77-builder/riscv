@@ -1,0 +1,425 @@
+{
+  "mode": "t14",
+  "image": "performance-d0-s02",
+  "name": "t14/performance-d0-s02-r2",
+  "stage": "performance",
+  "build": "/home/riscv/riscv-lab/unified-vdot-benchmark-20261017/runs/ours-images-02/performance-d0-s02",
+  "replay": 2,
+  "command": [
+    "timeout",
+    "120m",
+    "stdbuf",
+    "-o0",
+    "-e0",
+    "/home/riscv/riscv-lab/o1-performance-20261018/t14-build-01/products/emu",
+    "-i",
+    "/home/riscv/riscv-lab/unified-vdot-benchmark-20261017/runs/ours-images-02/performance-d0-s02/vdot-perf.bin",
+    "--flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+    "--ram-size=128MB",
+    "--diff=/home/riscv/riscv-lab/t12-regression-20261013/nemu/reference/build/riscv64-nemu-interpreter-so",
+    "--max-cycles=2000000",
+    "--seed=1"
+  ],
+  "cwd": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo",
+  "started_utc": "2026-10-18T13:12:27.974317+00:00",
+  "status": "PAIRED_IMAGE_DIFFTEST_AND_WINDOWS_PASS",
+  "files": {
+    "/home/riscv/riscv-lab/o1-performance-20261018/t14-build-01/products/emu": "081247df2c8220a37ee77be47a2c032bd0da0dba3544cd5e7bf0f63aaad45142",
+    "/home/riscv/riscv-lab/t12-regression-20261013/nemu/reference/build/riscv64-nemu-interpreter-so": "efbed0774addc27eac38af1a19ab5d9c9dd5f179b5015f25ae7b80b966185bd4",
+    "/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+    "/home/riscv/riscv-lab/unified-vdot-benchmark-20261017/runs/ours-images-02/performance-d0-s02/vdot-perf.bin": "c3c4900a7b79b6b63d505ea75660f01bf78b28d9b1736358af4ae3ef171e61cb"
+  },
+  "single_core": true,
+  "emu_threads": 1,
+  "runtime_environment": {
+    "NOOP_HOME": null,
+    "NEMU_HOME": null,
+    "CONSTANTIN_ROOT": null
+  },
+  "exit_code": 0,
+  "raw_sha256": {
+    "stdout.log": "e69301b934b9cd54dedf11d6ff97e16308a7e1e249ece79b4dde0f8ebf7c3926",
+    "stderr.log": "4978628833a5160d5a15e679100ccdf337239f19d31f3cc0f85aad2eeeeef6e2"
+  },
+  "samples": [
+    {
+      "seq": 0,
+      "id": "batch-32-vdot",
+      "scenario": "batch",
+      "method": "vdot",
+      "n": 32,
+      "dots": 128,
+      "phase": "first",
+      "repeat": 0,
+      "dataset": 0,
+      "cycles": 480,
+      "instructions": 232,
+      "counter_values": [
+        14784781538186107314,
+        16270799599946514490,
+        16270799599946514970,
+        14784781538186107546
+      ],
+      "sample_ticks": [
+        10960,
+        10994,
+        11474,
+        11508
+      ],
+      "mode": "t14",
+      "stage": "performance",
+      "replay": 2,
+      "image": "performance-d0-s02",
+      "image_sha256": "c3c4900a7b79b6b63d505ea75660f01bf78b28d9b1736358af4ae3ef171e61cb"
+    },
+    {
+      "seq": 1,
+      "id": "batch-32-rvv",
+      "scenario": "batch",
+      "method": "rvv",
+      "n": 32,
+      "dots": 128,
+      "phase": "first",
+      "repeat": 0,
+      "dataset": 0,
+      "cycles": 712,
+      "instructions": 552,
+      "counter_values": [
+        14784781538186112697,
+        16270799599946525006,
+        16270799599946525718,
+        14784781538186113249
+      ],
+      "sample_ticks": [
+        21476,
+        21510,
+        22222,
+        22256
+      ],
+      "mode": "t14",
+      "stage": "performance",
+      "replay": 2,
+      "image": "performance-d0-s02",
+      "image_sha256": "c3c4900a7b79b6b63d505ea75660f01bf78b28d9b1736358af4ae3ef171e61cb"
+    },
+    {
+      "seq": 2,
+      "id": "batch-32-rvv",
+      "scenario": "batch",
+      "method": "rvv",
+      "n": 32,
+      "dots": 128,
+      "phase": "warmup",
+      "repeat": 1,
+      "dataset": 0,
+      "cycles": 695,
+      "instructions": 552,
+      "counter_values": [
+        14784781538186117162,
+        16270799599946533917,
+        16270799599946534612,
+        14784781538186117714
+      ],
+      "sample_ticks": [
+        30387,
+        30421,
+        31116,
+        31150
+      ],
+      "mode": "t14",
+      "stage": "performance",
+      "replay": 2,
+      "image": "performance-d0-s02",
+      "image_sha256": "c3c4900a7b79b6b63d505ea75660f01bf78b28d9b1736358af4ae3ef171e61cb"
+    },
+    {
+      "seq": 3,
+      "id": "batch-32-vdot",
+      "scenario": "batch",
+      "method": "vdot",
+      "n": 32,
+      "dots": 128,
+      "phase": "warmup",
+      "repeat": 1,
+      "dataset": 0,
+      "cycles": 482,
+      "instructions": 232,
+      "counter_values": [
+        14784781538186120055,
+        16270799599946538741,
+        16270799599946539223,
+        14784781538186120287
+      ],
+      "sample_ticks": [
+        35211,
+        35245,
+        35727,
+        35761
+      ],
+      "mode": "t14",
+      "stage": "performance",
+      "replay": 2,
+      "image": "performance-d0-s02",
+      "image_sha256": "c3c4900a7b79b6b63d505ea75660f01bf78b28d9b1736358af4ae3ef171e61cb"
+    },
+    {
+      "seq": 4,
+      "id": "batch-32-vdot",
+      "scenario": "batch",
+      "method": "vdot",
+      "n": 32,
+      "dots": 128,
+      "phase": "measured",
+      "repeat": 2,
+      "dataset": 0,
+      "cycles": 453,
+      "instructions": 232,
+      "counter_values": [
+        14784781538186122676,
+        16270799599946543278,
+        16270799599946543731,
+        14784781538186122908
+      ],
+      "sample_ticks": [
+        39748,
+        39782,
+        40235,
+        40269
+      ],
+      "mode": "t14",
+      "stage": "performance",
+      "replay": 2,
+      "image": "performance-d0-s02",
+      "image_sha256": "c3c4900a7b79b6b63d505ea75660f01bf78b28d9b1736358af4ae3ef171e61cb"
+    },
+    {
+      "seq": 5,
+      "id": "batch-32-rvv",
+      "scenario": "batch",
+      "method": "rvv",
+      "n": 32,
+      "dots": 128,
+      "phase": "measured",
+      "repeat": 2,
+      "dataset": 0,
+      "cycles": 678,
+      "instructions": 552,
+      "counter_values": [
+        14784781538186125297,
+        16270799599946547758,
+        16270799599946548436,
+        14784781538186125849
+      ],
+      "sample_ticks": [
+        44228,
+        44262,
+        44940,
+        44974
+      ],
+      "mode": "t14",
+      "stage": "performance",
+      "replay": 2,
+      "image": "performance-d0-s02",
+      "image_sha256": "c3c4900a7b79b6b63d505ea75660f01bf78b28d9b1736358af4ae3ef171e61cb"
+    },
+    {
+      "seq": 6,
+      "id": "batch-32-rvv",
+      "scenario": "batch",
+      "method": "rvv",
+      "n": 32,
+      "dots": 128,
+      "phase": "measured",
+      "repeat": 3,
+      "dataset": 0,
+      "cycles": 678,
+      "instructions": 552,
+      "counter_values": [
+        14784781538186128190,
+        16270799599946552449,
+        16270799599946553127,
+        14784781538186128742
+      ],
+      "sample_ticks": [
+        48919,
+        48953,
+        49631,
+        49665
+      ],
+      "mode": "t14",
+      "stage": "performance",
+      "replay": 2,
+      "image": "performance-d0-s02",
+      "image_sha256": "c3c4900a7b79b6b63d505ea75660f01bf78b28d9b1736358af4ae3ef171e61cb"
+    },
+    {
+      "seq": 7,
+      "id": "batch-32-vdot",
+      "scenario": "batch",
+      "method": "vdot",
+      "n": 32,
+      "dots": 128,
+      "phase": "measured",
+      "repeat": 3,
+      "dataset": 0,
+      "cycles": 453,
+      "instructions": 232,
+      "counter_values": [
+        14784781538186131083,
+        16270799599946557124,
+        16270799599946557577,
+        14784781538186131315
+      ],
+      "sample_ticks": [
+        53594,
+        53628,
+        54081,
+        54115
+      ],
+      "mode": "t14",
+      "stage": "performance",
+      "replay": 2,
+      "image": "performance-d0-s02",
+      "image_sha256": "c3c4900a7b79b6b63d505ea75660f01bf78b28d9b1736358af4ae3ef171e61cb"
+    },
+    {
+      "seq": 8,
+      "id": "batch-32-vdot",
+      "scenario": "batch",
+      "method": "vdot",
+      "n": 32,
+      "dots": 128,
+      "phase": "measured",
+      "repeat": 4,
+      "dataset": 0,
+      "cycles": 453,
+      "instructions": 232,
+      "counter_values": [
+        14784781538186133704,
+        16270799599946561596,
+        16270799599946562049,
+        14784781538186133936
+      ],
+      "sample_ticks": [
+        58066,
+        58100,
+        58553,
+        58587
+      ],
+      "mode": "t14",
+      "stage": "performance",
+      "replay": 2,
+      "image": "performance-d0-s02",
+      "image_sha256": "c3c4900a7b79b6b63d505ea75660f01bf78b28d9b1736358af4ae3ef171e61cb"
+    },
+    {
+      "seq": 9,
+      "id": "batch-32-rvv",
+      "scenario": "batch",
+      "method": "rvv",
+      "n": 32,
+      "dots": 128,
+      "phase": "measured",
+      "repeat": 4,
+      "dataset": 0,
+      "cycles": 678,
+      "instructions": 552,
+      "counter_values": [
+        14784781538186136325,
+        16270799599946566075,
+        16270799599946566753,
+        14784781538186136877
+      ],
+      "sample_ticks": [
+        62545,
+        62579,
+        63257,
+        63291
+      ],
+      "mode": "t14",
+      "stage": "performance",
+      "replay": 2,
+      "image": "performance-d0-s02",
+      "image_sha256": "c3c4900a7b79b6b63d505ea75660f01bf78b28d9b1736358af4ae3ef171e61cb"
+    },
+    {
+      "seq": 10,
+      "id": "batch-32-rvv",
+      "scenario": "batch",
+      "method": "rvv",
+      "n": 32,
+      "dots": 128,
+      "phase": "measured",
+      "repeat": 5,
+      "dataset": 0,
+      "cycles": 678,
+      "instructions": 552,
+      "counter_values": [
+        14784781538186139218,
+        16270799599946570770,
+        16270799599946571448,
+        14784781538186139770
+      ],
+      "sample_ticks": [
+        67240,
+        67274,
+        67952,
+        67986
+      ],
+      "mode": "t14",
+      "stage": "performance",
+      "replay": 2,
+      "image": "performance-d0-s02",
+      "image_sha256": "c3c4900a7b79b6b63d505ea75660f01bf78b28d9b1736358af4ae3ef171e61cb"
+    },
+    {
+      "seq": 11,
+      "id": "batch-32-vdot",
+      "scenario": "batch",
+      "method": "vdot",
+      "n": 32,
+      "dots": 128,
+      "phase": "measured",
+      "repeat": 5,
+      "dataset": 0,
+      "cycles": 454,
+      "instructions": 232,
+      "counter_values": [
+        14784781538186142137,
+        16270799599946575564,
+        16270799599946576018,
+        14784781538186142369
+      ],
+      "sample_ticks": [
+        72034,
+        72068,
+        72522,
+        72556
+      ],
+      "mode": "t14",
+      "stage": "performance",
+      "replay": 2,
+      "image": "performance-d0-s02",
+      "image_sha256": "c3c4900a7b79b6b63d505ea75660f01bf78b28d9b1736358af4ae3ef171e61cb"
+    }
+  ],
+  "observation_counts": {
+    "VFEX4_ACCEPT": 768,
+    "VFEX4_WAIT": 1490,
+    "VFEX4_REDIRECT": 410,
+    "ACCEPT": 768,
+    "RESPONSE": 768,
+    "STALL": 0,
+    "KILL": 0,
+    "HANDOFF": 0,
+    "ENQUEUE": 774,
+    "COMMIT": 768,
+    "REDIRECT": 410,
+    "ROB_WRAP": 26,
+    "FTQ_WRAP": 26,
+    "ACCEPTED_THEN_SQUASHED": 0,
+    "ACCEPTED_YOUNGER_SQUASHED": 0
+  },
+  "expected_vdot_commits": 768,
+  "finished_utc": "2026-10-18T13:15:51.905370+00:00"
+}

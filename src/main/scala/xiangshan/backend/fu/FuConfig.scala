@@ -583,7 +583,9 @@ object FuConfig {
   val VDotCfg = FuConfig (
     name = "vdot",
     fuType = FuType.vdot,
-    fuGen = (p: Parameters, cfg: FuConfig) => Module(new VDot(cfg)(p).suggestName("Vdot")),
+    fuGen = (p: Parameters, cfg: FuConfig) =>
+      if (VDotO2.enabled) Module(new VDotElastic(cfg)(p).suggestName("Vdot"))
+      else Module(new VDot(cfg)(p).suggestName("Vdot")),
     srcData = Seq(Seq(VecData(), VecData(), VecData(), V0Data(), VlData())),
     piped = false,
     writeVecRf = true,

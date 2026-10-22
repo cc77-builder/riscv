@@ -1,0 +1,108 @@
+"""Generate the T15 report only after matching Linux and Windows offline gates."""
+import argparse
+import json
+from pathlib import Path
+
+
+def load(path):
+    return json.loads(path.read_bytes())
+
+
+def report(run, linux, windows, output):
+    a,b=load(linux),load(windows)
+    if a!=b or a["status"]!="T15_OFFLINE_RECHECK_PASS":
+        raise ValueError("Linux/Windows offline receipts must agree")
+    state=load(run/"result.json")
+    pins=load(run/"source.json")
+    if state["status"]!="T15_UNIT_CAMPAIGN_PASS" or pins["source_commit"]!=a["source_commit"]:
+        raise ValueError("wrong accepted source")
+    lines=[
+        "# T15：8 对 int16 的独立参数扩展验证", "",
+        "2026-10-17。本轮独立单元参数扩展已通过自动验收，尚未上传 GitHub；团队人工复核待完成。",
+        "",
+        "## 已完成的扩展及边界", "",
+        "将同一套参数化乘法与归约逻辑分别实例化为基本 s8x8/r32 和新增 s16x8/r64。新增配置使用两个完整 128 位输入的 8 对 signed int16，精确求和后写低 64 位补码，目的高 64 位清零。基本配置继续使用低 8 字节、低 32 位结果和高 96 位清零。",
+        "",
+        "最大正和为 8×(-32768)×(-32768)=8,589,934,592=2^33；最小和为 -8,589,672,448。因此 34 位有符号数仍不够，累加需要至少 35 位。新的 64 位结果字段与高 64 位清零分开处理，负数不向整个 128 位目的值符号扩展。",
+        "",
+        "本轮只验证独立算术及实验包装，不新增机器编码、不改变 vl/vtype 合法域、不扩展 NEMU，也没有声称 SEW=16 的 vdot 已在香山全核执行。原生产 src 树、原 FU/译码、NEMU 补丁与 T05 数据保持不变；build.sc 只新增独立目标。",
+        "",
+        "[参数合同](../spec/t15-parameters.md) · [模型与数据](../models/vdot-param/README.md) · [参数 RTL 和测试接口](../rtl/vdot/param/README.md)",
+        "",
+        "## 数值与协议验收", "",
+        "| 项目 | 基本 s8x8/r32 | 扩展 s16x8/r64 |", "|---|---:|---:|",
+    ]
+    baseline,extension=(state['profiles'][name] for name in ('s8x8','s16x8'))
+    for label,key in [('定向输入','directed'),('固定随机输入','random'),('完整 128 位算术用例','vectors'),
+                      ('协议观测周期','cycles'),('接受事务','accepted'),('响应事务','responses'),
+                      ('flush 取消','killed'),('reset 丢弃','reset_dropped'),('输出反压周期','stall_cycles'),
+                      ('随机控制周期','random_control_cycles'),('最早输出有效延迟 / 拍','first_valid_latency'),
+                      ('无取消最小接受间隔 / 拍','minimum_functional_accept_interval')]:
+        lines.append(f"| {label} | {baseline[key]} | {extension[key]} |")
+    lines += ["",
+        "每条定向和随机算术输入都比较组合输出及经过寄存器的完整 128 位输出。基本配置还与原生产 VDotDatapath 的组合结果逐条交叉比较；这是本批向量上的等价性证据，不是形式证明。",
+        "",
+        "94 组扩展定向输入包含正负极值、需要第 33 位结果的正和、负数符号扩展、每个 lane、64 种 lane 对齐/错位、高半寄存器参与及跨字节元素。随机数据由固定 SHA256 命名空间生成。独立 Python 模型 11 项检查、证据检查器 8 项反例测试、原模型 35 项检查均通过。",
+        "",
+        "实验包装在 E0 锁存乘积与 32 位测试 tag，E1 锁存结果，E2 最早响应；单请求在途，不能响应与新接受同拍重叠。输入在忙/反压期间持续改变；输出必须仍绑定已接受输入。显式取消与复位覆盖接受后第 1/2/5 拍，并以 10000 周期随机控制补充；原始记录与 Python 独立重放均满足事务守恒。测试 tag 不是 ROB 指针，flush 也不代表完整处理器重定向/精确异常。",
+        "",
+        "两种配置均成功拒绝结果位 0/33/63/127 和 tag 的受控读回错误；截断向量文件返回输入错误。8 个 Scala 参数负例被明确拒绝，包括结果字段 32/34/129 位、项数 0/3、输入超出 128 位、不支持的元素宽度和容器宽度。错误注入证明检查链能检出这些人为错误，不代表发现了真实 RTL 故障。",
+        "",
+        "## 结构与周期对照", "",
+        "下表来自实际生成的 ParamProducts/ParamReduce/ParamPipe。只统计一个实验管线，排除测试顶层额外的组合副本及原生产对照副本。",
+        "", "| 项目 | 基本配置 | 扩展配置 |", "|---|---:|---:|",
+    ]
+    sa,sb=(a['profiles'][name]['structure'] for name in ('s8x8','s16x8'))
+    for label,key in [('乘法算子数量','multiply_operators'),('每个有符号乘法输入位宽','mathematical_multiplier_input_bits'),
+                      ('乘积位宽','product_bits'),('加法算子数量','add_operators'),('归约层级','reduction_levels'),
+                      ('最终累加位宽','accumulator_bits'),('管线寄存器声明总位数','declared_register_bits')]:
+        lines.append(f"| {label} | {sa[key]} | {sb[key]} |")
+    lines += [
+        "| 归约各级宽度 | 17→18→19 | 33→34→35 |",
+        "| 8 个乘积寄存器声明位数 | 128 | 256 |",
+        "| 最早输出有效 / 最小接受间隔 | 2 / 3 拍 | 2 / 3 拍 |", "",
+        "乘法算子数量相同，但从 8×8 变为 16×16，不能视为原 8 位乘法器免费复用。寄存器声明增加 128 位，仅来自更宽乘积；结果容器仍为 128 位。声明计数不代表综合后的触发器或面积，无用高位和符号重复位可能被优化。",
+        "",
+        "表中的基本配置是新参数化实验单元的 int8 实例，不是原默认 3 拍生产 FU；两种实验实例都使用同一 ParamPipe，原生产默认模式及 T14 优化开关不变。",
+        "",
+        "两种配置的单元周期合同相同，说明在本实验流水组织下没有增加逻辑拍数；没有综合/STA，不能认定仍能达到相同主频。更宽乘法和加法的组合延迟及切换功耗需要另行测量。本轮不报告全核加速比，也不将两套测试总周期相除：扩展有更多定向输入，且测试中人为加入了反压。",
+        "",
+        "## 发现并修复的可移植性问题", "",
+        "初版 unit-01 在 Linux 通过，但 Windows 清单重生成检查失败。原因是生成器用操作系统相关的路径字符串写 original 来源键，Windows 产生反斜杠。修复统一为 POSIX 相对路径；四份数值向量/TSV 逐字节不变，Linux manifest 只更新生成器来源摘要。",
+        "",
+        "正式验收重新执行 unit-02。新的真实两配置测试、Linux 原始/压缩证据重算以及 Windows 离线重算均通过；跨平台回执解析后完全相同。初次失败日志、旧生成器/manifest 和修复说明保留在[复核材料](../evidence/t15-offline-review-20261017/README.md)，没有把初次失败改成成功。",
+        "",
+        "## 固定版本与复现", "",
+        "- 起点：已发布 T14 `6fea2969d05dc4cb168795a60e2e6ee9ca1f9988`。",
+        "- 实际正式验证源码：`"+pins['source_commit']+"`。",
+        "- 原生产源码树：`"+pins['production_src_tree']+"`，与起点完全一致。",
+        "- 本地分支：`local/t15-s16x8-20261017`。",
+        "- 工作区：`/home/riscv/riscv-lab/t15-parameter-extension-20261017/repo`。",
+        "- [实际命令、原始记录及生成 RTL](../evidence/t15-parameters-20261017/README.md)。",
+        "- [Linux/Windows 回执及历史修复记录](../evidence/t15-offline-review-20261017/README.md)。",
+        "",
+        "硬件单元复跑（固定开发环境，先提交源码，输出目录必须不存在）：", "",
+        "```bash",
+        "python3 -B team/scripts/check-vdot-param.py --output /tmp/t15-unit-new",
+        "python3 -B team/scripts/verify-t15.py --run /tmp/t15-unit-new --output /tmp/t15-recheck-new.json",
+        "```", "",
+        "仅重算已保存的证据（Python 3.10+ 标准库）：", "",
+        "```bash",
+        "python3 -B team/scripts/verify-t15.py --run team/evidence/t15-parameters-20261017/run --output /tmp/t15-offline-new.json",
+        "```", "",
+        "Windows 将 python3 换为可用的 Python 命令并换一个新的输出文件路径。复核不执行 DUT，不替代 T17 的新机器完整香山构建与运行。工具实测版本为 Java/GraalVM 21.0.12、Mill 0.12.3、Chisel 6.6.0、firtool 1.62.1、Verilator 5.052、g++ 11.4.0；完整输出在证据中。",
+        "",
+        "## 计划状态和后续边界", "",
+        "T15 的一项参数扩展已在独立单元层完成自动验收，G5 的 T14 优化和 T15 扩展均有代码及证据；团队人工复核仍待完成。下一项为 T16 三阶段报告与答辩材料整合，本轮不自动开始。",
+        "",
+        "A/B 复核位宽、结果布局和实现代价；C 复核原数据不变、完整输出及协议记录。若后续要宣称全核支持 int16，必须另立任务增加明确编码/语义、译码与 FU 配置、NEMU、软件调用、精确异常和完整 DiffTest；不能仅调整 SEW 或更换独立单元即作此宣称。",
+        "",
+    ]
+    output.write_text("\n".join(lines),encoding="utf-8")
+
+
+if __name__=="__main__":
+    parser=argparse.ArgumentParser(description=__doc__)
+    for name in ('run','linux','windows','output'):parser.add_argument('--'+name,type=Path,required=True)
+    args=parser.parse_args()
+    report(args.run,args.linux,args.windows,args.output)

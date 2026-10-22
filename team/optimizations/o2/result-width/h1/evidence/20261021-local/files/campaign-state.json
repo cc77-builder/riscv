@@ -1,0 +1,198 @@
+{
+  "started": "2026-10-21T00:56:47.833210+00:00",
+  "pid": 392,
+  "status": "passed",
+  "steps": [
+    {
+      "name": "model",
+      "command": [
+        "bash",
+        "team/scripts/check-vdot-model.sh"
+      ],
+      "start": "2026-10-21T00:56:47.844674+00:00",
+      "status": "passed",
+      "log": "model.log",
+      "pid": 687,
+      "exit_code": 0,
+      "end": "2026-10-21T00:56:49.501137+00:00"
+    },
+    {
+      "name": "fu",
+      "command": [
+        "python3",
+        "-B",
+        "team/optimizations/o2/run_rtl.py",
+        "fu",
+        "/home/riscv/riscv-lab/o2-h1-result32-20261021/fu-01"
+      ],
+      "start": "2026-10-21T00:56:49.523545+00:00",
+      "status": "passed",
+      "log": "fu.log",
+      "pid": 698,
+      "exit_code": 0,
+      "end": "2026-10-21T00:57:20.927366+00:00"
+    },
+    {
+      "name": "parent",
+      "command": [
+        "python3",
+        "-B",
+        "team/optimizations/o2/run_rtl.py",
+        "parent",
+        "/home/riscv/riscv-lab/o2-h1-result32-20261021/parent-01"
+      ],
+      "start": "2026-10-21T00:57:20.951993+00:00",
+      "status": "passed",
+      "log": "parent.log",
+      "pid": 3240,
+      "exit_code": 0,
+      "end": "2026-10-21T00:58:01.502480+00:00"
+    },
+    {
+      "name": "parent-host",
+      "command": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "team/optimizations/o2/parent",
+        "-v"
+      ],
+      "start": "2026-10-21T00:58:01.527249+00:00",
+      "status": "passed",
+      "log": "parent-host.log",
+      "pid": 6000,
+      "exit_code": 0,
+      "end": "2026-10-21T00:58:01.602012+00:00"
+    },
+    {
+      "name": "parent-replay",
+      "command": [
+        "python3",
+        "-B",
+        "team/optimizations/o2/parent/check_trace.py",
+        "--log",
+        "/home/riscv/riscv-lab/o2-h1-result32-20261021/parent-01/result.log",
+        "--output",
+        "/home/riscv/riscv-lab/o2-h1-result32-20261021/parent-replay.json"
+      ],
+      "start": "2026-10-21T00:58:01.625431+00:00",
+      "status": "passed",
+      "log": "parent-replay.log",
+      "pid": 6001,
+      "exit_code": 0,
+      "end": "2026-10-21T00:58:03.658068+00:00"
+    },
+    {
+      "name": "fu-elaborate",
+      "command": [
+        "python3",
+        "-B",
+        "team/optimizations/o4/elaborate.py",
+        "o2",
+        "fu",
+        "/home/riscv/riscv-lab/o2-h1-result32-20261021/fu-cost-01"
+      ],
+      "start": "2026-10-21T00:58:03.679965+00:00",
+      "status": "passed",
+      "log": "fu-elaborate.log",
+      "pid": 6010,
+      "exit_code": 0,
+      "end": "2026-10-21T00:58:10.539587+00:00"
+    },
+    {
+      "name": "fu-map",
+      "command": [
+        "python3",
+        "-B",
+        "team/optimizations/o4/synthesize.py",
+        "/home/riscv/riscv-lab/o2-h1-result32-20261021/fu-cost-01",
+        "/home/riscv/riscv-lab/o2-h1-result32-20261021/fu-map-01",
+        "--work",
+        "/home/riscv/riscv-lab/o4-cost-20261020"
+      ],
+      "start": "2026-10-21T00:58:10.565656+00:00",
+      "status": "passed",
+      "log": "fu-map.log",
+      "pid": 6556,
+      "exit_code": 0,
+      "end": "2026-10-21T00:58:16.946504+00:00"
+    },
+    {
+      "name": "fu-sta",
+      "command": [
+        "python3",
+        "-B",
+        "team/optimizations/o4/timing.py",
+        "/home/riscv/riscv-lab/o2-h1-result32-20261021/fu-map-01",
+        "/home/riscv/riscv-lab/o2-h1-result32-20261021/fu-sta-01",
+        "--work",
+        "/home/riscv/riscv-lab/o4-cost-20261020"
+      ],
+      "start": "2026-10-21T00:58:16.975014+00:00",
+      "status": "passed",
+      "log": "fu-sta.log",
+      "pid": 6564,
+      "exit_code": 0,
+      "end": "2026-10-21T00:58:21.576187+00:00"
+    },
+    {
+      "name": "parent-elaborate",
+      "command": [
+        "python3",
+        "-B",
+        "team/optimizations/o4/elaborate.py",
+        "o2",
+        "parent",
+        "/home/riscv/riscv-lab/o2-h1-result32-20261021/parent-cost-01"
+      ],
+      "start": "2026-10-21T00:58:21.602165+00:00",
+      "status": "passed",
+      "log": "parent-elaborate.log",
+      "pid": 6603,
+      "exit_code": 0,
+      "end": "2026-10-21T00:58:31.332652+00:00"
+    },
+    {
+      "name": "parent-map",
+      "command": [
+        "python3",
+        "-B",
+        "team/optimizations/o4/synthesize.py",
+        "/home/riscv/riscv-lab/o2-h1-result32-20261021/parent-cost-01",
+        "/home/riscv/riscv-lab/o2-h1-result32-20261021/parent-map-01",
+        "--work",
+        "/home/riscv/riscv-lab/o4-cost-20261020"
+      ],
+      "start": "2026-10-21T00:58:31.354619+00:00",
+      "status": "passed",
+      "log": "parent-map.log",
+      "pid": 7133,
+      "exit_code": 0,
+      "end": "2026-10-21T01:12:34.409589+00:00"
+    },
+    {
+      "name": "parent-sta",
+      "command": [
+        "python3",
+        "-B",
+        "team/optimizations/o4/timing.py",
+        "/home/riscv/riscv-lab/o2-h1-result32-20261021/parent-map-01",
+        "/home/riscv/riscv-lab/o2-h1-result32-20261021/parent-sta-01",
+        "--work",
+        "/home/riscv/riscv-lab/o4-cost-20261020"
+      ],
+      "start": "2026-10-21T01:12:34.436555+00:00",
+      "status": "passed",
+      "log": "parent-sta.log",
+      "pid": 7641,
+      "exit_code": 0,
+      "end": "2026-10-21T01:15:21.556477+00:00"
+    }
+  ],
+  "fullcore_run": false,
+  "source_and_r0_lock_unchanged": true,
+  "finished": "2026-10-21T01:15:21.574167+00:00"
+}
