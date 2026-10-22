@@ -1,0 +1,29 @@
+{
+  "command": [
+    "python3",
+    "-OO",
+    "-B",
+    "-m",
+    "unittest",
+    "test_functional.FunctionalEvidenceTests.test_real_parent_replay",
+    "test_functional.FunctionalEvidenceTests.test_duplicate_field_rejected",
+    "test_functional.FunctionalEvidenceTests.test_expected_negative_marker",
+    "test_functional.FunctionalEvidenceTests.test_wrong_negative_category_rejected",
+    "test_functional.FunctionalEvidenceTests.test_appended_positive_marker_rejected",
+    "test_functional.FunctionalEvidenceTests.test_cycle_gap_rejected",
+    "test_functional.FunctionalEvidenceTests.test_prefix_count_tamper_rejected",
+    "test_functional.FunctionalEvidenceTests.test_same_count_wrong_response_identity_rejected",
+    "-v"
+  ],
+  "exit_code": 0,
+  "tests": 8,
+  "source_log_sha256": "4bae5ad104dedc65e54f243453257445323bf1460ac2bad34a7c1e03af9bfaed",
+  "log_sha256": "81260ce577ddc0147a4f13c5e965e81914a7b822b3343fb85574930208e632df",
+  "not_run": [
+    "test_checker_source_tamper_rejected",
+    "test_artifact_tamper_rejected",
+    "test_negative_exit_zero_rejected",
+    "test_missing_negative_command_rejected"
+  ],
+  "scope": "Frozen cycle parser/identity/conservation tests only; four full source/ELF validation tests require absent original binaries and work roots"
+}

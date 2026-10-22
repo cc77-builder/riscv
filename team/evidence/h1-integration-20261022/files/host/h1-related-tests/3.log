@@ -1,0 +1,38 @@
+test_arbitrary_build_sc_edit_is_rejected (test_repro.R0Guards.test_arbitrary_build_sc_edit_is_rejected) ... ok
+test_build_command_uses_new_pins_and_explicit_profile (test_repro.R0Guards.test_build_command_uses_new_pins_and_explicit_profile) ... ok
+test_builder_rejects_unknown_mode (test_repro.R0Guards.test_builder_rejects_unknown_mode) ... FAIL
+test_dirty_hardware_does_not_start_build (test_repro.R0Guards.test_dirty_hardware_does_not_start_build) ... ok
+test_env_clears_inherited_flags_and_selects_profile (test_repro.R0Guards.test_env_clears_inherited_flags_and_selects_profile) ... ok
+test_existing_build_is_preserved (test_repro.R0Guards.test_existing_build_is_preserved) ... ok
+test_matching_artifact_is_accepted (test_repro.R0Guards.test_matching_artifact_is_accepted) ... ok
+test_member_rejects_absolute_and_parent_traversal (test_repro.R0Guards.test_member_rejects_absolute_and_parent_traversal) ... ok
+test_member_rejects_symlink_escape (test_repro.R0Guards.test_member_rejects_symlink_escape) ... ok
+test_missing_artifact_is_rejected (test_repro.R0Guards.test_missing_artifact_is_rejected) ... ok
+test_profile_builder_matches_observe_and_cost (test_repro.R0Guards.test_profile_builder_matches_observe_and_cost) ... ok
+test_profile_calls_do_not_mutate_defaults (test_repro.R0Guards.test_profile_calls_do_not_mutate_defaults) ... ok
+test_profile_file_mixing_o1_is_rejected (test_repro.R0Guards.test_profile_file_mixing_o1_is_rejected) ... ok
+test_relative_path_is_config_relative (test_repro.R0Guards.test_relative_path_is_config_relative) ... ok
+test_relocated_frozen_wrapper_is_rejected (test_repro.R0Guards.test_relocated_frozen_wrapper_is_rejected) ... ok
+test_tool_probe_uses_checkout_version_selection (test_repro.R0Guards.test_tool_probe_uses_checkout_version_selection) ... ok
+test_tool_wrong_version_is_rejected (test_repro.R0Guards.test_tool_wrong_version_is_rejected) ... ok
+test_unknown_config_overrides_rejected (test_repro.R0Guards.test_unknown_config_overrides_rejected) ... ok
+test_unset_variable_is_actionable (test_repro.R0Guards.test_unset_variable_is_actionable) ... ok
+test_untracked_hardware_is_rejected (test_repro.R0Guards.test_untracked_hardware_is_rejected) ... ok
+test_wrong_emu_bytes_are_rejected (test_repro.R0Guards.test_wrong_emu_bytes_are_rejected) ... ok
+
+======================================================================
+FAIL: test_builder_rejects_unknown_mode (test_repro.R0Guards.test_builder_rejects_unknown_mode)
+----------------------------------------------------------------------
+ValueError: unknown O2 observation profile
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/c/Code/RVInno/riscv/team/optimizations/o2/repro/test_repro.py", line 37, in test_builder_rejects_unknown_mode
+    with self.assertRaisesRegex(ValueError, "unknown O2 profile"):
+AssertionError: "unknown O2 profile" does not match "unknown O2 observation profile"
+
+----------------------------------------------------------------------
+Ran 21 tests in 0.033s
+
+FAILED (failures=1)

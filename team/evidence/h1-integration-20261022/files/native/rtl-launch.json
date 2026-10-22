@@ -1,0 +1,54 @@
+{
+  "status": "PASS",
+  "revision": "658ab8bdf567d3ba96f88aebdb0cea9cfc8daeb7",
+  "started": 1792568690.6679976,
+  "launcher": "/mnt/c/Code/RVInno/riscv/team/out/run-h1-integration21.py",
+  "launcher_sha256": "c784d5f3ca48e6235d8f410834731a06f89d36f4cbc026aa612498278247a5b3",
+  "mill_wrapper": "/home/amesotten/.cache/codex-rvinno/h1-integration-20261021/rtl-tools/mill",
+  "mill_wrapper_sha256": "9a3d137e7b84b1bfd9debe7b17c1b918db4a24c09183cb8d76be26d88e437570",
+  "mill_payload": "/home/amesotten/.cache/codex-rvinno/t06/tools/mill-0.12.3",
+  "mill_payload_sha256": "336346091edc69b248c306ca51aaccb73d888d8bf525ce45e02df89db449b41d",
+  "runs": [
+    {
+      "stage": "fu",
+      "command": [
+        "python3",
+        "-B",
+        "team/optimizations/o2/run_rtl.py",
+        "fu",
+        "/home/amesotten/.cache/codex-rvinno/h1-integration-20261021/fu-01"
+      ],
+      "exit_code": 0,
+      "log": "/home/amesotten/.cache/codex-rvinno/h1-integration-20261021/fu-launch.log",
+      "log_sha256": "a45886b9f1bce3858b944f354ff7cc83015ef9ad63c38d7d31cb4d454fc5771a"
+    },
+    {
+      "stage": "parent",
+      "command": [
+        "python3",
+        "-B",
+        "team/optimizations/o2/run_rtl.py",
+        "parent",
+        "/home/amesotten/.cache/codex-rvinno/h1-integration-20261021/parent-01"
+      ],
+      "exit_code": 0,
+      "log": "/home/amesotten/.cache/codex-rvinno/h1-integration-20261021/parent-launch.log",
+      "log_sha256": "8a74e004183c2ca218d00378dddb27b6d19a9381ea0f5e7e607d5f174cab1ead"
+    },
+    {
+      "stage": "parent-replay",
+      "command": [
+        "python3",
+        "-B",
+        "team/optimizations/o2/parent/check_trace.py",
+        "--log",
+        "/home/amesotten/.cache/codex-rvinno/h1-integration-20261021/parent-01/result.log",
+        "--output",
+        "/home/amesotten/.cache/codex-rvinno/h1-integration-20261021/parent-replay.json"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "finished": 1792569252.5675015,
+  "launcher_and_mill_unchanged": true
+}

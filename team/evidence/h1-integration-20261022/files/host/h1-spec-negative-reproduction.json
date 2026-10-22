@@ -1,0 +1,101 @@
+{
+  "status": "THREE_REAL_OPTIMIZED_REGRESSIONS_REJECTED",
+  "original_commit": "17bab1d6e51692ccf1cc007e1ec73054ceda168e",
+  "original_archive_sha256": "2ad1ada1de25ee4dd21e26b45b44f0831ccc2d25cd2cd0433bf2ad63ea245768",
+  "repaired_archive_sha256": "019dc378bf81fc309b3e45b19a3d0a1b23dd2ee0e05a9fbaa402f1ef40ce216e",
+  "records": [
+    {
+      "fault": "stored_hash",
+      "outcomes": {
+        "original": {
+          "command": [
+            "C:\\ProgramData\\anaconda3\\python.exe",
+            "-OO",
+            "C:\\Users\\JAMESH~1\\AppData\\Local\\Temp\\h1-real-optimized-negative-8k_nfj_j\\old_archive.py",
+            "--verify-only",
+            "--output",
+            "C:\\Users\\JAMESH~1\\AppData\\Local\\Temp\\h1-real-optimized-negative-8k_nfj_j\\stored_hash"
+          ],
+          "exit_code": 0,
+          "stdout": "{\n  \"status\": \"B0_H1_PERFORMANCE_ARCHIVE_BYTES_PASS\",\n  \"files\": 2,\n  \"raw_bytes\": 38,\n  \"stored_bytes\": 58,\n  \"archive_manifest_sha256\": \"c9d7537c7313491a2c5129fdeedc26e54974187409d6158b53819cb99fe3c473\",\n  \"scope\": \"byte preservation only; see independent B0/H1 recheck for the performance verdict\"\n}\n",
+          "stderr": ""
+        },
+        "repaired": {
+          "command": [
+            "C:\\ProgramData\\anaconda3\\python.exe",
+            "-OO",
+            "C:\\Code\\RVInno\\riscv\\team\\optimizations\\o2\\result-width\\h1\\performance\\archive.py",
+            "--verify-only",
+            "--output",
+            "C:\\Users\\JAMESH~1\\AppData\\Local\\Temp\\h1-real-optimized-negative-8k_nfj_j\\stored_hash"
+          ],
+          "exit_code": 1,
+          "stdout": "",
+          "stderr": "Traceback (most recent call last):\n  File \"C:\\Code\\RVInno\\riscv\\team\\optimizations\\o2\\result-width\\h1\\performance\\archive.py\", line 106, in <module>\n    main()\n    ~~~~^^\n  File \"C:\\Code\\RVInno\\riscv\\team\\optimizations\\o2\\result-width\\h1\\performance\\archive.py\", line 103, in main\n    print(json.dumps(verify(args.output) if args.verify_only else create(args.work_root, args.output), indent=2))\n                     ~~~~~~^^^^^^^^^^^^^\n  File \"C:\\Code\\RVInno\\riscv\\team\\optimizations\\o2\\result-width\\h1\\performance\\archive.py\", line 28, in verify\n    archive = Archive(output)\n  File \"C:\\Code\\RVInno\\riscv\\team\\optimizations\\o2\\result-width\\h1\\performance\\portable.py\", line 80, in __init__\n    self.raw(logical)\n    ~~~~~~~~^^^^^^^^^\n  File \"C:\\Code\\RVInno\\riscv\\team\\optimizations\\o2\\result-width\\h1\\performance\\portable.py\", line 102, in raw\n    require(len(stored)==r[\"stored_bytes\"] and digest(stored)==r[\"stored_sha256\"],\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n            \"stored-byte mismatch: \"+logical)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Code\\RVInno\\riscv\\team\\optimizations\\o2\\result-width\\h1\\performance\\portable.py\", line 26, in require\n    raise ValueError(message)\nValueError: stored-byte mismatch: plain.log\n"
+        }
+      }
+    },
+    {
+      "fault": "encoding",
+      "outcomes": {
+        "original": {
+          "command": [
+            "C:\\ProgramData\\anaconda3\\python.exe",
+            "-OO",
+            "C:\\Users\\JAMESH~1\\AppData\\Local\\Temp\\h1-real-optimized-negative-8k_nfj_j\\old_archive.py",
+            "--verify-only",
+            "--output",
+            "C:\\Users\\JAMESH~1\\AppData\\Local\\Temp\\h1-real-optimized-negative-8k_nfj_j\\encoding"
+          ],
+          "exit_code": 0,
+          "stdout": "{\n  \"status\": \"B0_H1_PERFORMANCE_ARCHIVE_BYTES_PASS\",\n  \"files\": 2,\n  \"raw_bytes\": 38,\n  \"stored_bytes\": 58,\n  \"archive_manifest_sha256\": \"10fb9890f2ff13b2a05e77ace16d3f6b8862b4ad87dc60cd5180e8bab06d31ac\",\n  \"scope\": \"byte preservation only; see independent B0/H1 recheck for the performance verdict\"\n}\n",
+          "stderr": ""
+        },
+        "repaired": {
+          "command": [
+            "C:\\ProgramData\\anaconda3\\python.exe",
+            "-OO",
+            "C:\\Code\\RVInno\\riscv\\team\\optimizations\\o2\\result-width\\h1\\performance\\archive.py",
+            "--verify-only",
+            "--output",
+            "C:\\Users\\JAMESH~1\\AppData\\Local\\Temp\\h1-real-optimized-negative-8k_nfj_j\\encoding"
+          ],
+          "exit_code": 1,
+          "stdout": "",
+          "stderr": "Traceback (most recent call last):\n  File \"C:\\Code\\RVInno\\riscv\\team\\optimizations\\o2\\result-width\\h1\\performance\\archive.py\", line 106, in <module>\n    main()\n    ~~~~^^\n  File \"C:\\Code\\RVInno\\riscv\\team\\optimizations\\o2\\result-width\\h1\\performance\\archive.py\", line 103, in main\n    print(json.dumps(verify(args.output) if args.verify_only else create(args.work_root, args.output), indent=2))\n                     ~~~~~~^^^^^^^^^^^^^\n  File \"C:\\Code\\RVInno\\riscv\\team\\optimizations\\o2\\result-width\\h1\\performance\\archive.py\", line 28, in verify\n    archive = Archive(output)\n  File \"C:\\Code\\RVInno\\riscv\\team\\optimizations\\o2\\result-width\\h1\\performance\\portable.py\", line 73, in __init__\n    require(record[\"encoding\"] in (\"identity\",\"gzip\"),\"unknown archive encoding\")\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Code\\RVInno\\riscv\\team\\optimizations\\o2\\result-width\\h1\\performance\\portable.py\", line 26, in require\n    raise ValueError(message)\nValueError: unknown archive encoding\n"
+        }
+      }
+    },
+    {
+      "fault": "path_escape",
+      "outcomes": {
+        "original": {
+          "command": [
+            "C:\\ProgramData\\anaconda3\\python.exe",
+            "-OO",
+            "C:\\Users\\JAMESH~1\\AppData\\Local\\Temp\\h1-real-optimized-negative-8k_nfj_j\\old_archive.py",
+            "--verify-only",
+            "--output",
+            "C:\\Users\\JAMESH~1\\AppData\\Local\\Temp\\h1-real-optimized-negative-8k_nfj_j\\path_escape"
+          ],
+          "exit_code": 0,
+          "stdout": "{\n  \"status\": \"B0_H1_PERFORMANCE_ARCHIVE_BYTES_PASS\",\n  \"files\": 2,\n  \"raw_bytes\": 38,\n  \"stored_bytes\": 58,\n  \"archive_manifest_sha256\": \"03b6901456d4b622491f88621f08245683533f8451f5cf10b8d7473da597476a\",\n  \"scope\": \"byte preservation only; see independent B0/H1 recheck for the performance verdict\"\n}\n",
+          "stderr": ""
+        },
+        "repaired": {
+          "command": [
+            "C:\\ProgramData\\anaconda3\\python.exe",
+            "-OO",
+            "C:\\Code\\RVInno\\riscv\\team\\optimizations\\o2\\result-width\\h1\\performance\\archive.py",
+            "--verify-only",
+            "--output",
+            "C:\\Users\\JAMESH~1\\AppData\\Local\\Temp\\h1-real-optimized-negative-8k_nfj_j\\path_escape"
+          ],
+          "exit_code": 1,
+          "stdout": "",
+          "stderr": "Traceback (most recent call last):\n  File \"C:\\Code\\RVInno\\riscv\\team\\optimizations\\o2\\result-width\\h1\\performance\\archive.py\", line 106, in <module>\n    main()\n    ~~~~^^\n  File \"C:\\Code\\RVInno\\riscv\\team\\optimizations\\o2\\result-width\\h1\\performance\\archive.py\", line 103, in main\n    print(json.dumps(verify(args.output) if args.verify_only else create(args.work_root, args.output), indent=2))\n                     ~~~~~~^^^^^^^^^^^^^\n  File \"C:\\Code\\RVInno\\riscv\\team\\optimizations\\o2\\result-width\\h1\\performance\\archive.py\", line 28, in verify\n    archive = Archive(output)\n  File \"C:\\Code\\RVInno\\riscv\\team\\optimizations\\o2\\result-width\\h1\\performance\\portable.py\", line 69, in __init__\n    stored=safe_relative(record[\"stored\"])\n  File \"C:\\Code\\RVInno\\riscv\\team\\optimizations\\o2\\result-width\\h1\\performance\\portable.py\", line 49, in safe_relative\n    require(not p.is_absolute() and not PureWindowsPath(name).drive and\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n            \"..\" not in p.parts and str(p)==name and \".\" not in p.parts,\"unsafe portable path\")\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Code\\RVInno\\riscv\\team\\optimizations\\o2\\result-width\\h1\\performance\\portable.py\", line 26, in require\n    raise ValueError(message)\nValueError: unsafe portable path\n"
+        }
+      }
+    }
+  ]
+}
