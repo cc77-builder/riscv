@@ -1,2 +1,8 @@
 # Preserve original bytes of qualified evidence and command receipts.
 evidence/** -text
+
+# Frozen R4 payloads retain source/log whitespace; byte and index audits apply.
+evidence/entry-v1/** -text -whitespace
+evidence/entry-probe-v1/** -text -whitespace
+evidence/c-api-v1/** -text -whitespace
+evidence/entry-runtime-v1/** -text -whitespace

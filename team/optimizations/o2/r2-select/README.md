@@ -46,3 +46,7 @@ python3 -B -m unittest discover \
 ```
 
 测试使用真实 S1 v2 归档，在临时输出中导出和篡改副本；不改冻结输入、不启动 EMU。可用 `R2_SELECT_ARCHIVE` 指定同身份的另一归档副本。性能取舍与新执行路径的验证边界以合同为准；原资料入口为 [S1 验证](../r2-vector-accum/VALIDATION.md)和 [S2 固定布局/强 RVV 结果](../r2-safe-tail/FIXED_RESULT.md)。
+
+## 新增：普通 C 调用入口
+
+获选计算 body 另已形成普通 RV64 C ABI 公共函数，使用和复现见 [ENTRY_README.md](ENTRY_README.md)，新调用路径的实际比较、普通 C 功能验证及资格边界见 [ENTRY_RESULT.md](ENTRY_RESULT.md)。上述原镜像 `export/verify/resolve` 语义保持；新入口的证据独立封存。
