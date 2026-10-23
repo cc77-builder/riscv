@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "D:\Projects\competitions\2026-10-CIE-RISCV-XiangShan\working-r2select-20261024-0001\team\optimizations\o2\r2-select\selection.py", line 430, in <module>
+    main()
+    ~~~~^^
+  File "D:\Projects\competitions\2026-10-CIE-RISCV-XiangShan\working-r2select-20261024-0001\team\optimizations\o2\r2-select\selection.py", line 413, in main
+    context = load_context(args.repo, args.archive or args.repo / S1 / "evidence/merged-v2")
+  File "D:\Projects\competitions\2026-10-CIE-RISCV-XiangShan\working-r2select-20261024-0001\team\optimizations\o2\r2-select\selection.py", line 195, in load_context
+    archive = portable.Archive(archive_path)
+  File "D:\Projects\competitions\2026-10-CIE-RISCV-XiangShan\working-r2select-20261024-0001\team\optimizations\o2\fullcore\portable.py", line 79, in __init__
+    self.raw(logical)
+    ~~~~~~~~^^^^^^^^^
+  File "D:\Projects\competitions\2026-10-CIE-RISCV-XiangShan\working-r2select-20261024-0001\team\optimizations\o2\fullcore\portable.py", line 98, in raw
+    stored=p.read_bytes()
+  File "D:\Programs\Python\Python313\Lib\pathlib\_abc.py", line 625, in read_bytes
+    with self.open(mode='rb') as f:
+         ~~~~~~~~~^^^^^^^^^^^
+  File "D:\Programs\Python\Python313\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\Projects\\competitions\\2026-10-CIE-RISCV-XiangShan\\working-r2select-20261024-0001\\team\\optimizations\\o2\\r2-vector-accum\\evidence\\merged-v2\\files\\support\\layout-build-probe-01\\smoke-s0-d0-s05\\objects\\home\\lizufan\\riscv-lab\\r2-s1-20261023-2100\\layout-build-probe-01\\smoke-s0-d0-s05\\data\\kernels.d'
