@@ -1,0 +1,641 @@
+{
+  "status": "HISTORICAL_COVERAGE_DIAGNOSIS",
+  "log": "/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/runs/supplements-01/o2-control-diagnostic/run.log",
+  "log_sha256": "f0a19ec09b27f6a6411c6329d22ae6d66eaa447e3e29e0264f278b94529bde18",
+  "analyzer_sha256": "27d9fe451c035157848625e84c2a229ac1d83073eb56ba3ebc25131e5569d496",
+  "strict_trace_status": "O2_TRACE_PASS",
+  "counts": {
+    "STATE": 5575,
+    "VFEX4_ACCEPT": 1860,
+    "VFEX4_WAIT": 1397,
+    "VFEX4_REDIRECT": 306,
+    "ACCEPT": 1604,
+    "MOVE": 1572,
+    "RESPONSE": 1546,
+    "STALL": 0,
+    "KILL": 58,
+    "DIV_ACCEPT": 256,
+    "DIV_KILL": 0,
+    "DIV_OUTPUT": 256,
+    "ENQUEUE": 1722,
+    "COMMIT": 1208,
+    "REDIRECT": 306,
+    "MULTI_INFLIGHT": 938,
+    "OVERLAP": 979,
+    "TRIPLE_OVERLAP": 710,
+    "FULL_STALL": 0,
+    "KILL_P": 32,
+    "KILL_R": 26,
+    "PARTIAL_KILL": 0,
+    "BOTH_KILL": 18,
+    "R_KILL_P_SURVIVES": 0,
+    "P_KILL_R_SURVIVES": 0,
+    "UNRELATED_FLUSH": 0,
+    "ROB_WRAP": 252,
+    "FTQ_WRAP": 159,
+    "DIV_RESPONSE": 256,
+    "ACCEPTED_THEN_SQUASHED": 396,
+    "ACCEPTED_YOUNGER_SQUASHED": 396
+  },
+  "kill_classification": {
+    "one_slot_occupied": 22,
+    "both_slots_cancelled": 18
+  },
+  "kill_windows": [
+    {
+      "cycle": 10134,
+      "classification": "one_slot_occupied",
+      "occupancy": 1,
+      "p": null,
+      "r": {
+        "seq": 39,
+        "pc": "0x80000328",
+        "group": 0
+      },
+      "killp": 0,
+      "killr": 1
+    },
+    {
+      "cycle": 48786,
+      "classification": "both_slots_cancelled",
+      "occupancy": 2,
+      "p": {
+        "seq": 116,
+        "pc": "0x800005a0",
+        "group": 1
+      },
+      "r": {
+        "seq": 115,
+        "pc": "0x800005a4",
+        "group": 1
+      },
+      "killp": 1,
+      "killr": 1
+    },
+    {
+      "cycle": 49323,
+      "classification": "one_slot_occupied",
+      "occupancy": 1,
+      "p": null,
+      "r": {
+        "seq": 136,
+        "pc": "0x800005b0",
+        "group": 1
+      },
+      "killp": 0,
+      "killr": 1
+    },
+    {
+      "cycle": 86596,
+      "classification": "both_slots_cancelled",
+      "occupancy": 2,
+      "p": {
+        "seq": 218,
+        "pc": "0x80000864",
+        "group": 2
+      },
+      "r": {
+        "seq": 217,
+        "pc": "0x80000860",
+        "group": 2
+      },
+      "killp": 1,
+      "killr": 1
+    },
+    {
+      "cycle": 87790,
+      "classification": "one_slot_occupied",
+      "occupancy": 1,
+      "p": {
+        "seq": 248,
+        "pc": "0x80000860",
+        "group": 2
+      },
+      "r": null,
+      "killp": 1,
+      "killr": 0
+    },
+    {
+      "cycle": 163125,
+      "classification": "one_slot_occupied",
+      "occupancy": 1,
+      "p": {
+        "seq": 416,
+        "pc": "0x80000dec",
+        "group": 4
+      },
+      "r": null,
+      "killp": 1,
+      "killr": 0
+    },
+    {
+      "cycle": 163608,
+      "classification": "both_slots_cancelled",
+      "occupancy": 2,
+      "p": {
+        "seq": 435,
+        "pc": "0x80000df4",
+        "group": 4
+      },
+      "r": {
+        "seq": 434,
+        "pc": "0x80000df0",
+        "group": 4
+      },
+      "killp": 1,
+      "killr": 1
+    },
+    {
+      "cycle": 164294,
+      "classification": "one_slot_occupied",
+      "occupancy": 1,
+      "p": {
+        "seq": 454,
+        "pc": "0x80000df0",
+        "group": 4
+      },
+      "r": null,
+      "killp": 1,
+      "killr": 0
+    },
+    {
+      "cycle": 202104,
+      "classification": "one_slot_occupied",
+      "occupancy": 1,
+      "p": {
+        "seq": 589,
+        "pc": "0x800010c0",
+        "group": 5
+      },
+      "r": null,
+      "killp": 1,
+      "killr": 0
+    },
+    {
+      "cycle": 202815,
+      "classification": "both_slots_cancelled",
+      "occupancy": 2,
+      "p": {
+        "seq": 607,
+        "pc": "0x800010a4",
+        "group": 5
+      },
+      "r": {
+        "seq": 606,
+        "pc": "0x800010a8",
+        "group": 5
+      },
+      "killp": 1,
+      "killr": 1
+    },
+    {
+      "cycle": 237987,
+      "classification": "both_slots_cancelled",
+      "occupancy": 2,
+      "p": {
+        "seq": 647,
+        "pc": "0x80001380",
+        "group": 6
+      },
+      "r": {
+        "seq": 646,
+        "pc": "0x80001370",
+        "group": 6
+      },
+      "killp": 1,
+      "killr": 1
+    },
+    {
+      "cycle": 238767,
+      "classification": "both_slots_cancelled",
+      "occupancy": 2,
+      "p": {
+        "seq": 675,
+        "pc": "0x80001380",
+        "group": 6
+      },
+      "r": {
+        "seq": 674,
+        "pc": "0x80001370",
+        "group": 6
+      },
+      "killp": 1,
+      "killr": 1
+    },
+    {
+      "cycle": 239253,
+      "classification": "one_slot_occupied",
+      "occupancy": 1,
+      "p": null,
+      "r": {
+        "seq": 691,
+        "pc": "0x8000137c",
+        "group": 6
+      },
+      "killp": 0,
+      "killr": 1
+    },
+    {
+      "cycle": 240719,
+      "classification": "one_slot_occupied",
+      "occupancy": 1,
+      "p": null,
+      "r": {
+        "seq": 738,
+        "pc": "0x8000136c",
+        "group": 6
+      },
+      "killp": 0,
+      "killr": 1
+    },
+    {
+      "cycle": 275915,
+      "classification": "one_slot_occupied",
+      "occupancy": 1,
+      "p": {
+        "seq": 783,
+        "pc": "0x80001638",
+        "group": 7
+      },
+      "r": null,
+      "killp": 1,
+      "killr": 0
+    },
+    {
+      "cycle": 276455,
+      "classification": "one_slot_occupied",
+      "occupancy": 1,
+      "p": {
+        "seq": 798,
+        "pc": "0x80001638",
+        "group": 7
+      },
+      "r": null,
+      "killp": 1,
+      "killr": 0
+    },
+    {
+      "cycle": 313096,
+      "classification": "both_slots_cancelled",
+      "occupancy": 2,
+      "p": {
+        "seq": 840,
+        "pc": "0x80001900",
+        "group": 8
+      },
+      "r": {
+        "seq": 839,
+        "pc": "0x800018fc",
+        "group": 8
+      },
+      "killp": 1,
+      "killr": 1
+    },
+    {
+      "cycle": 352457,
+      "classification": "both_slots_cancelled",
+      "occupancy": 2,
+      "p": {
+        "seq": 1032,
+        "pc": "0x80001bb8",
+        "group": 9
+      },
+      "r": {
+        "seq": 1031,
+        "pc": "0x80001bc8",
+        "group": 9
+      },
+      "killp": 1,
+      "killr": 1
+    },
+    {
+      "cycle": 352703,
+      "classification": "one_slot_occupied",
+      "occupancy": 1,
+      "p": null,
+      "r": {
+        "seq": 1037,
+        "pc": "0x80001bb4",
+        "group": 9
+      },
+      "killp": 0,
+      "killr": 1
+    },
+    {
+      "cycle": 353243,
+      "classification": "one_slot_occupied",
+      "occupancy": 1,
+      "p": {
+        "seq": 1053,
+        "pc": "0x80001bc4",
+        "group": 9
+      },
+      "r": null,
+      "killp": 1,
+      "killr": 0
+    },
+    {
+      "cycle": 389271,
+      "classification": "both_slots_cancelled",
+      "occupancy": 2,
+      "p": {
+        "seq": 1123,
+        "pc": "0x80001e90",
+        "group": 10
+      },
+      "r": {
+        "seq": 1122,
+        "pc": "0x80001e8c",
+        "group": 10
+      },
+      "killp": 1,
+      "killr": 1
+    },
+    {
+      "cycle": 389798,
+      "classification": "one_slot_occupied",
+      "occupancy": 1,
+      "p": null,
+      "r": {
+        "seq": 1138,
+        "pc": "0x80001e7c",
+        "group": 10
+      },
+      "killp": 0,
+      "killr": 1
+    },
+    {
+      "cycle": 391386,
+      "classification": "one_slot_occupied",
+      "occupancy": 1,
+      "p": {
+        "seq": 1179,
+        "pc": "0x80001e90",
+        "group": 10
+      },
+      "r": null,
+      "killp": 1,
+      "killr": 0
+    },
+    {
+      "cycle": 427711,
+      "classification": "both_slots_cancelled",
+      "occupancy": 2,
+      "p": {
+        "seq": 1218,
+        "pc": "0x8000215c",
+        "group": 11
+      },
+      "r": {
+        "seq": 1217,
+        "pc": "0x80002158",
+        "group": 11
+      },
+      "killp": 1,
+      "killr": 1
+    },
+    {
+      "cycle": 428520,
+      "classification": "one_slot_occupied",
+      "occupancy": 1,
+      "p": {
+        "seq": 1243,
+        "pc": "0x80002148",
+        "group": 11
+      },
+      "r": null,
+      "killp": 1,
+      "killr": 0
+    },
+    {
+      "cycle": 429073,
+      "classification": "one_slot_occupied",
+      "occupancy": 1,
+      "p": {
+        "seq": 1258,
+        "pc": "0x80002148",
+        "group": 11
+      },
+      "r": null,
+      "killp": 1,
+      "killr": 0
+    },
+    {
+      "cycle": 429890,
+      "classification": "one_slot_occupied",
+      "occupancy": 1,
+      "p": {
+        "seq": 1283,
+        "pc": "0x80002148",
+        "group": 11
+      },
+      "r": null,
+      "killp": 1,
+      "killr": 0
+    },
+    {
+      "cycle": 431493,
+      "classification": "both_slots_cancelled",
+      "occupancy": 2,
+      "p": {
+        "seq": 1332,
+        "pc": "0x80002148",
+        "group": 11
+      },
+      "r": {
+        "seq": 1331,
+        "pc": "0x80002154",
+        "group": 11
+      },
+      "killp": 1,
+      "killr": 1
+    },
+    {
+      "cycle": 466245,
+      "classification": "both_slots_cancelled",
+      "occupancy": 2,
+      "p": {
+        "seq": 1350,
+        "pc": "0x80002410",
+        "group": 12
+      },
+      "r": {
+        "seq": 1349,
+        "pc": "0x80002400",
+        "group": 12
+      },
+      "killp": 1,
+      "killr": 1
+    },
+    {
+      "cycle": 468459,
+      "classification": "one_slot_occupied",
+      "occupancy": 1,
+      "p": {
+        "seq": 1426,
+        "pc": "0x8000240c",
+        "group": 12
+      },
+      "r": null,
+      "killp": 1,
+      "killr": 0
+    },
+    {
+      "cycle": 470096,
+      "classification": "one_slot_occupied",
+      "occupancy": 1,
+      "p": {
+        "seq": 1475,
+        "pc": "0x80002410",
+        "group": 12
+      },
+      "r": null,
+      "killp": 1,
+      "killr": 0
+    },
+    {
+      "cycle": 507275,
+      "classification": "both_slots_cancelled",
+      "occupancy": 2,
+      "p": {
+        "seq": 1523,
+        "pc": "0x800026d8",
+        "group": 13
+      },
+      "r": {
+        "seq": 1522,
+        "pc": "0x800026d4",
+        "group": 13
+      },
+      "killp": 1,
+      "killr": 1
+    },
+    {
+      "cycle": 509223,
+      "classification": "one_slot_occupied",
+      "occupancy": 1,
+      "p": {
+        "seq": 1556,
+        "pc": "0x800026c8",
+        "group": 13
+      },
+      "r": null,
+      "killp": 1,
+      "killr": 0
+    },
+    {
+      "cycle": 509498,
+      "classification": "both_slots_cancelled",
+      "occupancy": 2,
+      "p": {
+        "seq": 1565,
+        "pc": "0x800026dc",
+        "group": 13
+      },
+      "r": {
+        "seq": 1564,
+        "pc": "0x800026d8",
+        "group": 13
+      },
+      "killp": 1,
+      "killr": 1
+    },
+    {
+      "cycle": 547440,
+      "classification": "both_slots_cancelled",
+      "occupancy": 2,
+      "p": {
+        "seq": 1637,
+        "pc": "0x80002994",
+        "group": 14
+      },
+      "r": {
+        "seq": 1636,
+        "pc": "0x8000299c",
+        "group": 14
+      },
+      "killp": 1,
+      "killr": 1
+    },
+    {
+      "cycle": 547721,
+      "classification": "both_slots_cancelled",
+      "occupancy": 2,
+      "p": {
+        "seq": 1645,
+        "pc": "0x800029a0",
+        "group": 14
+      },
+      "r": {
+        "seq": 1644,
+        "pc": "0x8000299c",
+        "group": 14
+      },
+      "killp": 1,
+      "killr": 1
+    },
+    {
+      "cycle": 549711,
+      "classification": "one_slot_occupied",
+      "occupancy": 1,
+      "p": null,
+      "r": {
+        "seq": 1699,
+        "pc": "0x800029a8",
+        "group": 14
+      },
+      "killp": 0,
+      "killr": 1
+    },
+    {
+      "cycle": 549982,
+      "classification": "one_slot_occupied",
+      "occupancy": 1,
+      "p": null,
+      "r": {
+        "seq": 1709,
+        "pc": "0x800029a8",
+        "group": 14
+      },
+      "killp": 0,
+      "killr": 1
+    },
+    {
+      "cycle": 589834,
+      "classification": "both_slots_cancelled",
+      "occupancy": 2,
+      "p": {
+        "seq": 1822,
+        "pc": "0x80002c6c",
+        "group": 15
+      },
+      "r": {
+        "seq": 1821,
+        "pc": "0x80002c68",
+        "group": 15
+      },
+      "killp": 1,
+      "killr": 1
+    },
+    {
+      "cycle": 590416,
+      "classification": "both_slots_cancelled",
+      "occupancy": 2,
+      "p": {
+        "seq": 1839,
+        "pc": "0x80002c58",
+        "group": 15
+      },
+      "r": {
+        "seq": 1838,
+        "pc": "0x80002c54",
+        "group": 15
+      },
+      "killp": 1,
+      "killr": 1
+    }
+  ],
+  "new_emu_runs": 0,
+  "performance_measured": false,
+  "scope": "Old 0484 control trace only; does not certify the new H1 campaign"
+}

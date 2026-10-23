@@ -1,0 +1,50 @@
+{
+  "status": "INPUT_CONTRACT_NEGATIVES_AND_SUPPLEMENT_BUILDS_PASS",
+  "negative_probes": [
+    {
+      "probe": "missing-nemu-source",
+      "status": "EXPECTED_REJECTION",
+      "error": "NEMU source absent from runtime contract: src/base/output.cpp"
+    },
+    {
+      "probe": "missing-matrix-source",
+      "status": "EXPECTED_REJECTION",
+      "error": "matrix input absent from runtime contract: /home/amesotten/.cache/codex-rvinno/merge-reg-20261023/repo/team/workloads/vdot-exceptions/judge.c"
+    },
+    {
+      "probe": "wrong-shard",
+      "status": "EXPECTED_REJECTION",
+      "error": "fresh matrix image mismatch"
+    },
+    {
+      "probe": "missing-am-library",
+      "status": "EXPECTED_REJECTION",
+      "error": "build input not bound by contract: /home/amesotten/.cache/codex-rvinno/merge-reg-20261023/inputs/nexus-am/am/build/am-riscv64-xs.a"
+    },
+    {
+      "probe": "negative-wrong-reference",
+      "status": "EXPECTED_REJECTION",
+      "error": "negative command must bind the exact trusted fixture and linked reference"
+    },
+    {
+      "probe": "wrong-hello-command",
+      "status": "EXPECTED_REJECTION",
+      "error": "hello commands must build the selected images with bound executable tools"
+    }
+  ],
+  "supplements": [
+    {
+      "kind": "diagnostic",
+      "status": "SOURCE_AND_BUILD_VERIFIED",
+      "image_sha256": "dbc9c534f4b6055c10b95136c3f9d8473c48462bda3e59ae48355da518bac24a",
+      "expected_vdot_commits": 1158
+    },
+    {
+      "kind": "control",
+      "status": "SOURCE_AND_BUILD_VERIFIED",
+      "image_sha256": "748ada0b20c1506fa369dd377eaa341fd4e1fe6010281e1c092e5e57d6f905b1",
+      "expected_vdot_commits": 1208
+    }
+  ],
+  "emulators_executed": 0
+}
