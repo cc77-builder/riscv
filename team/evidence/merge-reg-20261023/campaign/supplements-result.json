@@ -1,0 +1,228 @@
+{
+  "status": "O2_SUPPLEMENTS_PASS",
+  "runtime_contract": "explicit-seed-v1",
+  "emu_seed": 1,
+  "runs": [
+    {
+      "name": "o2-diagnostic",
+      "kind": "diagnostic",
+      "status": "O2_SUPPLEMENT_PASS",
+      "started": "2026-10-23T23:55:29.959577+08:00",
+      "command": [
+        "timeout",
+        "120m",
+        "stdbuf",
+        "-o0",
+        "-e0",
+        "/home/amesotten/.cache/codex-rvinno/merge-reg-20261023/repo/build/emu",
+        "-i",
+        "/home/amesotten/.cache/codex-rvinno/merge-reg-20261023/inputs/supplement-diagnostic/o2-diag.bin",
+        "--flash=/home/amesotten/.cache/codex-rvinno/merge-reg-20261023/inputs/t12/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+        "--ram-size=128MB",
+        "--diff=/home/amesotten/.cache/codex-rvinno/merge-reg-20261023/inputs/t12/nemu/reference/build/riscv64-nemu-interpreter-so",
+        "--max-cycles=5000000",
+        "--seed=1"
+      ],
+      "runtime_contract": "explicit-seed-v1",
+      "emu_seed": 1,
+      "expected_vdot_commits": 1158,
+      "performance_measured": false,
+      "files": {
+        "/home/amesotten/.cache/codex-rvinno/merge-reg-20261023/repo/build/emu": "e66a8900eb09dc7f35acfe944c38386046fc8ef481e91792b2501f5cbd9679f5",
+        "/home/amesotten/.cache/codex-rvinno/merge-reg-20261023/inputs/t12/nemu/reference/build/riscv64-nemu-interpreter-so": "a5bff5e7855021a45b2dd0b318ba92243b79526ec9e49240404cb0eebec56220",
+        "/home/amesotten/.cache/codex-rvinno/merge-reg-20261023/inputs/t12/repo/team/workloads/hello-vadd/build/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+        "/home/amesotten/.cache/codex-rvinno/merge-reg-20261023/inputs/supplement-diagnostic/o2-diag.bin": "dbc9c534f4b6055c10b95136c3f9d8473c48462bda3e59ae48355da518bac24a"
+      },
+      "hardware_pins_sha256": "76bf0fb7dfc86f6cf65885f5c43021f1a0ceab46e26bd5cbbf125b8888e06f5a",
+      "build_source_commit": "bc9e5ae469137a64b82744231acae9f9e3fe0359",
+      "input_manifest_sha256": "1f52076f4386beaa9919dd4702498eb9a8dee5b486cd93a2bef95129fde2223f",
+      "input_contract": "/home/amesotten/.cache/codex-rvinno/merge-reg-20261023/inputs/input-contract-v1.json",
+      "input_contract_sha256": "507e98c135d2533cd69fc9fb742093a5aea7501c2dc823e7a5f1b7db448acc61",
+      "archived_manifest_sha256": "1f52076f4386beaa9919dd4702498eb9a8dee5b486cd93a2bef95129fde2223f",
+      "exit_code": 0,
+      "raw_logs_sha256": {
+        "stdout.log": "6943d11eafd885dfa61b83728bbf8775a050739956f4449db23993bbfc863435",
+        "stderr.log": "736eef2e479a92eb7212776e0efa80e825bfca7459d756d9c8415b29d9223e9e",
+        "run.log": "b2771ac52868448b10e3945b48787cbd8eec9aa2154563c03ac182c2e7384262"
+      },
+      "log_format": "separate-streams-v1; derived run.log = stderr.log + stdout.log",
+      "workload_status": "O2_DIAGNOSTIC_PASS",
+      "observation_status": "O2_TRACE_PASS",
+      "observation_counts": {
+        "STATE": 2457,
+        "VFEX4_ACCEPT": 1170,
+        "VFEX4_WAIT": 0,
+        "VFEX4_REDIRECT": 188,
+        "ACCEPT": 1158,
+        "MOVE": 1158,
+        "RESPONSE": 1158,
+        "STALL": 0,
+        "KILL": 0,
+        "DIV_ACCEPT": 12,
+        "DIV_KILL": 0,
+        "DIV_OUTPUT": 12,
+        "ENQUEUE": 1158,
+        "COMMIT": 1158,
+        "REDIRECT": 188,
+        "MULTI_INFLIGHT": 896,
+        "OVERLAP": 778,
+        "TRIPLE_OVERLAP": 773,
+        "FULL_STALL": 0,
+        "KILL_P": 0,
+        "KILL_R": 0,
+        "PARTIAL_KILL": 0,
+        "BOTH_KILL": 0,
+        "R_KILL_P_SURVIVES": 0,
+        "P_KILL_R_SURVIVES": 0,
+        "UNRELATED_FLUSH": 0,
+        "ROB_WRAP": 25,
+        "FTQ_WRAP": 24,
+        "DIV_RESPONSE": 12,
+        "ACCEPTED_THEN_SQUASHED": 0,
+        "ACCEPTED_YOUNGER_SQUASHED": 0
+      },
+      "checked_register_bytes": 5120,
+      "finished": "2026-10-23T23:59:14.453417+08:00"
+    },
+    {
+      "name": "o2-control-diagnostic",
+      "kind": "control",
+      "status": "O2_SUPPLEMENT_PASS",
+      "started": "2026-10-23T23:55:29.959981+08:00",
+      "command": [
+        "timeout",
+        "120m",
+        "stdbuf",
+        "-o0",
+        "-e0",
+        "/home/amesotten/.cache/codex-rvinno/merge-reg-20261023/repo/build/emu",
+        "-i",
+        "/home/amesotten/.cache/codex-rvinno/merge-reg-20261023/inputs/supplement-control/o2-control.bin",
+        "--flash=/home/amesotten/.cache/codex-rvinno/merge-reg-20261023/inputs/t12/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+        "--ram-size=128MB",
+        "--diff=/home/amesotten/.cache/codex-rvinno/merge-reg-20261023/inputs/t12/nemu/reference/build/riscv64-nemu-interpreter-so",
+        "--max-cycles=5000000",
+        "--seed=1"
+      ],
+      "runtime_contract": "explicit-seed-v1",
+      "emu_seed": 1,
+      "expected_vdot_commits": 1208,
+      "performance_measured": false,
+      "files": {
+        "/home/amesotten/.cache/codex-rvinno/merge-reg-20261023/repo/build/emu": "e66a8900eb09dc7f35acfe944c38386046fc8ef481e91792b2501f5cbd9679f5",
+        "/home/amesotten/.cache/codex-rvinno/merge-reg-20261023/inputs/t12/nemu/reference/build/riscv64-nemu-interpreter-so": "a5bff5e7855021a45b2dd0b318ba92243b79526ec9e49240404cb0eebec56220",
+        "/home/amesotten/.cache/codex-rvinno/merge-reg-20261023/inputs/t12/repo/team/workloads/hello-vadd/build/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+        "/home/amesotten/.cache/codex-rvinno/merge-reg-20261023/inputs/supplement-control/o2-control.bin": "748ada0b20c1506fa369dd377eaa341fd4e1fe6010281e1c092e5e57d6f905b1"
+      },
+      "hardware_pins_sha256": "76bf0fb7dfc86f6cf65885f5c43021f1a0ceab46e26bd5cbbf125b8888e06f5a",
+      "build_source_commit": "bc9e5ae469137a64b82744231acae9f9e3fe0359",
+      "input_manifest_sha256": "072f7179f239c0c8d4dac3a4c3b1dda72a16f5b3aca1f70e3a13c21cc841a399",
+      "input_contract": "/home/amesotten/.cache/codex-rvinno/merge-reg-20261023/inputs/input-contract-v1.json",
+      "input_contract_sha256": "507e98c135d2533cd69fc9fb742093a5aea7501c2dc823e7a5f1b7db448acc61",
+      "archived_manifest_sha256": "072f7179f239c0c8d4dac3a4c3b1dda72a16f5b3aca1f70e3a13c21cc841a399",
+      "exit_code": 0,
+      "raw_logs_sha256": {
+        "stdout.log": "c4ea03bd25a2c712ac85eb2b74dd5321ea907eebef12386e50fd898c558a5141",
+        "stderr.log": "3374280a74bdaf9269a6b3fae5f27d118f683e622a033549d92d487e9a94332d",
+        "run.log": "b9ef9abe8fbbc88edc9dc5c3f69145176ff67075b6e812515d3ef8aa5d773d20"
+      },
+      "log_format": "separate-streams-v1; derived run.log = stderr.log + stdout.log",
+      "workload_status": "O2_CONTROL_DIAGNOSTIC_PASS",
+      "observation_status": "O2_TRACE_PASS",
+      "observation_counts": {
+        "STATE": 5575,
+        "VFEX4_ACCEPT": 1860,
+        "VFEX4_WAIT": 1397,
+        "VFEX4_REDIRECT": 306,
+        "ACCEPT": 1604,
+        "MOVE": 1572,
+        "RESPONSE": 1546,
+        "STALL": 0,
+        "KILL": 58,
+        "DIV_ACCEPT": 256,
+        "DIV_KILL": 0,
+        "DIV_OUTPUT": 256,
+        "ENQUEUE": 1722,
+        "COMMIT": 1208,
+        "REDIRECT": 306,
+        "MULTI_INFLIGHT": 938,
+        "OVERLAP": 979,
+        "TRIPLE_OVERLAP": 710,
+        "FULL_STALL": 0,
+        "KILL_P": 32,
+        "KILL_R": 26,
+        "PARTIAL_KILL": 0,
+        "BOTH_KILL": 18,
+        "R_KILL_P_SURVIVES": 0,
+        "P_KILL_R_SURVIVES": 0,
+        "UNRELATED_FLUSH": 0,
+        "ROB_WRAP": 252,
+        "FTQ_WRAP": 159,
+        "DIV_RESPONSE": 256,
+        "ACCEPTED_THEN_SQUASHED": 396,
+        "ACCEPTED_YOUNGER_SQUASHED": 396
+      },
+      "checked_register_bytes": 131072,
+      "finished": "2026-10-24T00:05:46.408006+08:00"
+    }
+  ],
+  "coverage": {
+    "required": [
+      "MULTI_INFLIGHT",
+      "TRIPLE_OVERLAP",
+      "FULL_STALL",
+      "KILL_P",
+      "KILL_R",
+      "PARTIAL_KILL"
+    ],
+    "sources": {
+      "MULTI_INFLIGHT": [
+        {
+          "name": "o2-diagnostic",
+          "count": 896
+        },
+        {
+          "name": "o2-control-diagnostic",
+          "count": 938
+        }
+      ],
+      "TRIPLE_OVERLAP": [
+        {
+          "name": "o2-diagnostic",
+          "count": 773
+        },
+        {
+          "name": "o2-control-diagnostic",
+          "count": 710
+        }
+      ],
+      "FULL_STALL": [],
+      "KILL_P": [
+        {
+          "name": "o2-control-diagnostic",
+          "count": 32
+        }
+      ],
+      "KILL_R": [
+        {
+          "name": "o2-control-diagnostic",
+          "count": 26
+        }
+      ],
+      "PARTIAL_KILL": []
+    },
+    "complete": false,
+    "missing": [
+      "FULL_STALL",
+      "PARTIAL_KILL"
+    ]
+  },
+  "performance_measured": false,
+  "started": "2026-10-23T23:54:00.672855+08:00",
+  "finished": "2026-10-24T00:07:02.018677+08:00",
+  "new_emu_run": true,
+  "hardware_pins_sha256": "76bf0fb7dfc86f6cf65885f5c43021f1a0ceab46e26bd5cbbf125b8888e06f5a",
+  "emu_sha256": "e66a8900eb09dc7f35acfe944c38386046fc8ef481e91792b2501f5cbd9679f5",
+  "build_source_commit": "bc9e5ae469137a64b82744231acae9f9e3fe0359",
+  "scope": "Two supplemental correctness jobs; does not independently certify all G3 gates"
+}
