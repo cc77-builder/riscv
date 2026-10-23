@@ -102,6 +102,7 @@ ABORT 事件报告的 PC 是 `0x80001190`，不把它误作必须相等的故障
 | 完整Linux离线复算 | **PASS**；[架构／计数／轨迹／统计复算](evidence/merged-screen-v1-audit-linux.json)，从封存原文重新检查，不执行新EMU |
 | 原生Windows归档字节 | **PASS**；[Python 3.13.13回执](evidence/merged-screen-v1-bytes-windows.json)，全部962文件的原始和保存字节核验；Windows完整架构复算 **NOT_TESTED** |
 | 可发布Git归档 | **PASS：965文件**（962项内容＋3份归档元数据），清单完整且Git blob逐字节一致；[完整索引门禁](evidence/merged-screen-v1-index-check.json)。新增门禁实际[拒绝漏303文件的初始索引](evidence/merged-screen-v1-index-probe.json)，再仅对这批归档补全暂存；未放宽忽略规则或字节检查 |
+| 发布门禁边界补强 | **PASS：新增8项测试＋2项实际CLI负测**；[测试原文与命令](evidence/merged-screen-v1-index-hardening-tests.json)。独立临时索引中同blob的符号链接模式被拒绝，归档内输出在写入前被拒绝；[965文件复核](evidence/merged-screen-v1-index-hardened-check.json)确认全部为`100644`、stage 0，清单和字节一致。新增EMU为0，原归档不变 |
 | 原B0/H1固定60跑合同 | **BLOCKED**：固定旧EMU实物未恢复；本次不改变旧哈希或旧验收 |
 | MERGE-REG整套、R2-SELECT四尺寸、所选组合回归、T17、PPA | **NOT_TESTED／未完成本轮新验收**；不转移历史PASS |
 
