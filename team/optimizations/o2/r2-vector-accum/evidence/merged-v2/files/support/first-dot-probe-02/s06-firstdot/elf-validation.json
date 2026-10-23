@@ -1,0 +1,154 @@
+{
+  "status": "LINKED_ELF_STATIC_CHECK_PASS_NOT_DIFFTEST",
+  "elf_sha256": "930b367b41df0932b059c7631aa35fc1f9a819c97bf1977406cdc2ac7d06720a",
+  "binary_sha256": "47a84a4419da5b5c5c2b759fccc1cdfe695a9694243741e2555ceeabda0ae4fa",
+  "kernels": [
+    {
+      "code_sha256": "5f4b821a0a339c461616518160d5b11f574626c4bce72ff03dcec7b4d73fc338",
+      "body_sha256": "d5be63d49233aac6401ca171a3d315415a9280fecefeb61e18e6fc67bb8fed3a",
+      "body_start": "0x80002148",
+      "body_end_exclusive": "0x80002340",
+      "body_instructions": 126,
+      "marker_span_instructions": 138,
+      "wrapper_instructions": 12,
+      "counts": {
+        "addi": 13,
+        "addw": 24,
+        "lb": 40,
+        "mulw": 20,
+        "vdot.vv": 4,
+        "vle8.v": 8,
+        "vmv.s.x": 4,
+        "vmv.x.s": 4,
+        "vsetivli": 9
+      }
+    },
+    {
+      "code_sha256": "3e59c5426b58accac91f18fb777739a0c7759b37347c5b84b9b88fb60bb119f5",
+      "body_sha256": "8469f7deb52efcd112db091bfa6ef284e1fd8f3a4018333ae52521b041085a51",
+      "body_start": "0x80004148",
+      "body_end_exclusive": "0x800041f0",
+      "body_instructions": 42,
+      "marker_span_instructions": 54,
+      "wrapper_instructions": 12,
+      "counts": {
+        "addi": 9,
+        "vle8.v": 8,
+        "vmv.v.i": 4,
+        "vsetivli": 13,
+        "vwmul.vv": 4,
+        "vwredsum.vs": 4
+      }
+    },
+    {
+      "code_sha256": "029b8dd1b68167e6d9eff0a464b770586bac5ea1e6f64d95b67bdea265188ddc",
+      "body_sha256": "e113e91d3b35b1d24ce02d3a509f3f1b3380209e9b40e4db690e1c74cb1c7c32",
+      "body_start": "0x80006148",
+      "body_end_exclusive": "0x800062d8",
+      "body_instructions": 100,
+      "marker_span_instructions": 112,
+      "wrapper_instructions": 12,
+      "counts": {
+        "addi": 10,
+        "addw": 24,
+        "lb": 25,
+        "mulw": 20,
+        "vdot.vv": 4,
+        "vle8.v": 5,
+        "vmv.s.x": 4,
+        "vmv.x.s": 4,
+        "vsetivli": 4
+      }
+    },
+    {
+      "code_sha256": "b9866f3bf21025748e396dd1219afb4e27cd868bde067210556703cf821992da",
+      "body_sha256": "713fbf64a070468ba30d9c288bdb53bc9f7d5f9a947b6e39b22e7a6360256bc9",
+      "body_start": "0x80008148",
+      "body_end_exclusive": "0x800081b8",
+      "body_instructions": 28,
+      "marker_span_instructions": 40,
+      "wrapper_instructions": 12,
+      "counts": {
+        "addi": 6,
+        "vle8.v": 5,
+        "vmv.v.i": 4,
+        "vsetivli": 5,
+        "vwmul.vv": 4,
+        "vwredsum.vs": 4
+      }
+    }
+  ],
+  "runtime_executed": false,
+  "finite_model": [
+    {
+      "id": "gemv-4x13-core-basic-vdot",
+      "trials": 9,
+      "rows_checked": 36,
+      "full128": true,
+      "row_bounded_reads": true,
+      "poisoned_initial_registers": true,
+      "counts": {
+        "addi": 13,
+        "addw": 24,
+        "lb": 40,
+        "mulw": 20,
+        "vdot.vv": 4,
+        "vle8.v": 8,
+        "vmv.s.x": 4,
+        "vmv.x.s": 4,
+        "vsetivli": 9
+      }
+    },
+    {
+      "id": "gemv-4x13-core-basic-rvv",
+      "trials": 9,
+      "rows_checked": 36,
+      "full128": true,
+      "row_bounded_reads": true,
+      "poisoned_initial_registers": true,
+      "counts": {
+        "addi": 9,
+        "vle8.v": 8,
+        "vmv.v.i": 4,
+        "vsetivli": 13,
+        "vwmul.vv": 4,
+        "vwredsum.vs": 4
+      }
+    },
+    {
+      "id": "gemv-4x13-core-reuse-vdot",
+      "trials": 9,
+      "rows_checked": 36,
+      "full128": true,
+      "row_bounded_reads": true,
+      "poisoned_initial_registers": true,
+      "counts": {
+        "addi": 10,
+        "addw": 24,
+        "lb": 25,
+        "mulw": 20,
+        "vdot.vv": 4,
+        "vle8.v": 5,
+        "vmv.s.x": 4,
+        "vmv.x.s": 4,
+        "vsetivli": 4
+      }
+    },
+    {
+      "id": "gemv-4x13-core-reuse-rvv",
+      "trials": 9,
+      "rows_checked": 36,
+      "full128": true,
+      "row_bounded_reads": true,
+      "poisoned_initial_registers": true,
+      "counts": {
+        "addi": 6,
+        "vle8.v": 5,
+        "vmv.v.i": 4,
+        "vsetivli": 5,
+        "vwmul.vv": 4,
+        "vwredsum.vs": 4
+      }
+    }
+  ]
+}
