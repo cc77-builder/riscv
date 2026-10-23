@@ -6,6 +6,7 @@
 
 | 要了解什么 | 入口 |
 | --- | --- |
+| 赛题技术要求、完整评分表、官方来源及待确认项 | [赛题要求与评分总览](../赛题要求与评分总览.md) |
 | Agent 开发规则、验证及收尾要求 | [AGENTS.md](../AGENTS.md) |
 | 当前基线、工程达标与持续优化的全部工作包、下一决策 | [当前开发路线](docs/development-route-current.md) |
 | 谁在做什么、保护哪些运行、如何集成 | [协作约定与真实 Issue 状态](docs/collaboration-current.md) |
