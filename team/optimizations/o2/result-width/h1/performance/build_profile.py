@@ -8,6 +8,10 @@ import subprocess
 ROOT = Path(__file__).resolve().parents[6]
 B0_PRODUCTS = Path("/home/riscv/riscv-lab/o2-b0-build-before-h1-20261021")
 H1_PRODUCTS = ROOT / "build"
+DEFAULT_ACCEPTANCE = {
+    "b0": Path("/home/riscv/riscv-lab/o2-fullcore-20261019/recheck-02/result.json"),
+    "h1": Path("/home/riscv/riscv-lab/o2-h1-fullcore-20261021/final-validation.json"),
+}
 VDOT = "src/main/scala/xiangshan/backend/fu/wrapper/VDotElastic.scala"
 SOURCE_COMMITS = {
     "b0": "b218cbc6e6b135e4ff219a902a9284a59d3c82c9",
@@ -36,6 +40,22 @@ def require(ok, message):
 
 def sha(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def verify_accepted_receipts(accepted):
+    """Keep B0/H1 provenance checks even when their storage locations change."""
+    require(set(accepted) == {"b0", "h1"}, "two acceptance receipt paths required")
+    paths = {name: Path(path) for name, path in accepted.items()}
+    require(all(path.is_absolute() for path in paths.values()), "acceptance receipt paths must be absolute")
+    b0 = json.loads(paths["b0"].read_text())
+    h1 = json.loads(paths["h1"].read_text())
+    require(b0["status"] == "O2_G3_OFFLINE_RECHECK_PASS" and b0["g3_complete"]
+            and b0["hardware_pins_sha256"] == PIN_SHA["b0"] and b0["emu_sha256"] == EMU_SHA["b0"],
+            "B0 acceptance mismatch")
+    require(h1["status"] == "H1_FULLCORE_VALIDATION_PASS"
+            and h1["input_receipts"]["build-01/hardware-inputs.json"] == PIN_SHA["h1"]
+            and h1["emu_sha256"] == EMU_SHA["h1"], "H1 acceptance mismatch")
+    return paths
 
 def validate_pair(a, b):
     for key in ("dependency_files", "config", "NUM_CORES", "EMU_THREADS", "JVM_XMX",
@@ -93,7 +113,7 @@ def monitor_effect_check(text):
             "monitor has output or external effect")
     require(set(re.findall(r"\$\w+", clean)) <= {"$fwrite", "$random"}, "unexpected monitor system task")
 
-def build_profile(b0_build, h1_build):
+def build_profile(b0_build, h1_build, *, acceptance_paths=None):
     dirs = {"b0": Path(b0_build), "h1": Path(h1_build)}
     products = {"b0": B0_PRODUCTS, "h1": H1_PRODUCTS}
     files, pins, sources, manifests, commands = {}, {}, {}, {}, {}
@@ -163,18 +183,7 @@ def build_profile(b0_build, h1_build):
         a, b = B0_PRODUCTS / leaf, H1_PRODUCTS / leaf
         require(a.read_bytes() == b.read_bytes(), "runtime auxiliary differs: " + leaf)
         bind(a); bind(b)
-    accepted = {
-        "b0": Path("/home/riscv/riscv-lab/o2-fullcore-20261019/recheck-02/result.json"),
-        "h1": Path("/home/riscv/riscv-lab/o2-h1-fullcore-20261021/final-validation.json"),
-    }
-    b0 = json.loads(accepted["b0"].read_text())
-    h1 = json.loads(accepted["h1"].read_text())
-    require(b0["status"] == "O2_G3_OFFLINE_RECHECK_PASS" and b0["g3_complete"]
-            and b0["hardware_pins_sha256"] == PIN_SHA["b0"] and b0["emu_sha256"] == EMU_SHA["b0"],
-            "B0 acceptance mismatch")
-    require(h1["status"] == "H1_FULLCORE_VALIDATION_PASS"
-            and h1["input_receipts"]["build-01/hardware-inputs.json"] == PIN_SHA["h1"]
-            and h1["emu_sha256"] == EMU_SHA["h1"], "H1 acceptance mismatch")
+    accepted = verify_accepted_receipts(DEFAULT_ACCEPTANCE if acceptance_paths is None else acceptance_paths)
     for p in accepted.values():
         bind(p)
     return files, dict(status="B0_H1_BUILD_PROFILE_PASS",
