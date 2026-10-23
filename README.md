@@ -1,8 +1,8 @@
-# 本队参赛与阶段一材料
+# 香山 vdot 参赛工程
 
-> **团队当前阶段（2026-10-13）：** [T10/T11 首批全核验收](team/docs/t10-t11-acceptance-20261013.md) 与 [Agent 入口](AGENTS.md)。下方香山上游说明不代替本队固定版本的验证边界。
+[Agent 开发指南](AGENTS.md) · [当前完整开发路线](team/docs/development-route-current.md) · [开发计分板](开发计分板.md) · [双人协作与 Issue 入口](team/docs/collaboration-current.md)
 
-团队环境说明、配套脚本、hello/vadd 源码和精简验证日志见 [team/README.md](team/README.md)。香山原始项目说明保留在下方。
+工程路线围绕满足赛题技术要求和持续提高性能展开；比赛材料由成员另行安排。实现、测试、环境与历史证据见[团队工程导航](team/README.md)。当前基线与验收边界由路线和对应证据说明；本页不复制进度。下方保留香山上游说明。
 
 ---
 
