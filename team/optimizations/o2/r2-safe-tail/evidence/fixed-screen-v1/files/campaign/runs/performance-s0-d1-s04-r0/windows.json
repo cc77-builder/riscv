@@ -1,0 +1,613 @@
+{
+  "status": "PASS",
+  "scope": "O3 full GEMV math/state, live DiffTest, original calibrated counters and exact straight-line ELF retirement",
+  "samples": [
+    {
+      "seq": 0,
+      "id": "gemv-16x64-core-basic-vdot",
+      "scenario": "gemv-16x64-core-basic",
+      "method": "vdot",
+      "n": 1024,
+      "dots": 128,
+      "phase": "first",
+      "repeat": 0,
+      "dataset": 1,
+      "cycles": 2884,
+      "instructions": 1225,
+      "counter_values": [
+        14784781538186107304,
+        16270799599946514755,
+        16270799599946517639,
+        14784781538186108529
+      ],
+      "sample_ticks": [
+        11225,
+        11259,
+        14143,
+        14177
+      ]
+    },
+    {
+      "seq": 1,
+      "id": "gemv-16x64-core-basic-rvv",
+      "scenario": "gemv-16x64-core-basic",
+      "method": "rvv",
+      "n": 1024,
+      "dots": 128,
+      "phase": "first",
+      "repeat": 0,
+      "dataset": 1,
+      "cycles": 1659,
+      "instructions": 905,
+      "counter_values": [
+        14784781538186116763,
+        16270799599946532318,
+        16270799599946533977,
+        14784781538186117668
+      ],
+      "sample_ticks": [
+        28788,
+        28822,
+        30481,
+        30515
+      ]
+    },
+    {
+      "seq": 2,
+      "id": "gemv-16x64-core-reuse-vdot",
+      "scenario": "gemv-16x64-core-reuse",
+      "method": "vdot",
+      "n": 1024,
+      "dots": 128,
+      "phase": "first",
+      "repeat": 0,
+      "dataset": 1,
+      "cycles": 1151,
+      "instructions": 789,
+      "counter_values": [
+        14784781538186120746,
+        16270799599946539142,
+        16270799599946540293,
+        14784781538186121535
+      ],
+      "sample_ticks": [
+        35612,
+        35646,
+        36797,
+        36831
+      ]
+    },
+    {
+      "seq": 3,
+      "id": "gemv-16x64-core-reuse-rvv",
+      "scenario": "gemv-16x64-core-reuse",
+      "method": "rvv",
+      "n": 1024,
+      "dots": 128,
+      "phase": "first",
+      "repeat": 0,
+      "dataset": 1,
+      "cycles": 932,
+      "instructions": 585,
+      "counter_values": [
+        14784781538186124613,
+        16270799599946545399,
+        16270799599946546331,
+        14784781538186125198
+      ],
+      "sample_ticks": [
+        41869,
+        41903,
+        42835,
+        42869
+      ]
+    },
+    {
+      "seq": 4,
+      "id": "gemv-16x64-core-reuse-rvv",
+      "scenario": "gemv-16x64-core-reuse",
+      "method": "rvv",
+      "n": 1024,
+      "dots": 128,
+      "phase": "warmup",
+      "repeat": 1,
+      "dataset": 1,
+      "cycles": 828,
+      "instructions": 585,
+      "counter_values": [
+        14784781538186128250,
+        16270799599946551056,
+        16270799599946551884,
+        14784781538186128835
+      ],
+      "sample_ticks": [
+        47526,
+        47560,
+        48388,
+        48422
+      ]
+    },
+    {
+      "seq": 5,
+      "id": "gemv-16x64-core-reuse-vdot",
+      "scenario": "gemv-16x64-core-reuse",
+      "method": "vdot",
+      "n": 1024,
+      "dots": 128,
+      "phase": "warmup",
+      "repeat": 1,
+      "dataset": 1,
+      "cycles": 768,
+      "instructions": 789,
+      "counter_values": [
+        14784781538186131887,
+        16270799599946556251,
+        16270799599946557019,
+        14784781538186132676
+      ],
+      "sample_ticks": [
+        52721,
+        52755,
+        53523,
+        53557
+      ]
+    },
+    {
+      "seq": 6,
+      "id": "gemv-16x64-core-basic-rvv",
+      "scenario": "gemv-16x64-core-basic",
+      "method": "rvv",
+      "n": 1024,
+      "dots": 128,
+      "phase": "warmup",
+      "repeat": 1,
+      "dataset": 1,
+      "cycles": 1380,
+      "instructions": 905,
+      "counter_values": [
+        14784781538186135728,
+        16270799599946561406,
+        16270799599946562786,
+        14784781538186136633
+      ],
+      "sample_ticks": [
+        57876,
+        57910,
+        59290,
+        59324
+      ]
+    },
+    {
+      "seq": 7,
+      "id": "gemv-16x64-core-basic-vdot",
+      "scenario": "gemv-16x64-core-basic",
+      "method": "vdot",
+      "n": 1024,
+      "dots": 128,
+      "phase": "warmup",
+      "repeat": 1,
+      "dataset": 1,
+      "cycles": 2145,
+      "instructions": 1225,
+      "counter_values": [
+        14784781538186139711,
+        16270799599946567277,
+        16270799599946569422,
+        14784781538186140936
+      ],
+      "sample_ticks": [
+        63747,
+        63781,
+        65926,
+        65960
+      ]
+    },
+    {
+      "seq": 8,
+      "id": "gemv-16x64-core-basic-vdot",
+      "scenario": "gemv-16x64-core-basic",
+      "method": "vdot",
+      "n": 1024,
+      "dots": 128,
+      "phase": "measured",
+      "repeat": 2,
+      "dataset": 1,
+      "cycles": 2145,
+      "instructions": 1225,
+      "counter_values": [
+        14784781538186144040,
+        16270799599946573986,
+        16270799599946576131,
+        14784781538186145265
+      ],
+      "sample_ticks": [
+        70456,
+        70490,
+        72635,
+        72669
+      ]
+    },
+    {
+      "seq": 9,
+      "id": "gemv-16x64-core-basic-rvv",
+      "scenario": "gemv-16x64-core-basic",
+      "method": "rvv",
+      "n": 1024,
+      "dots": 128,
+      "phase": "measured",
+      "repeat": 2,
+      "dataset": 1,
+      "cycles": 1378,
+      "instructions": 905,
+      "counter_values": [
+        14784781538186148369,
+        16270799599946580689,
+        16270799599946582067,
+        14784781538186149274
+      ],
+      "sample_ticks": [
+        77159,
+        77193,
+        78571,
+        78605
+      ]
+    },
+    {
+      "seq": 10,
+      "id": "gemv-16x64-core-reuse-vdot",
+      "scenario": "gemv-16x64-core-reuse",
+      "method": "vdot",
+      "n": 1024,
+      "dots": 128,
+      "phase": "measured",
+      "repeat": 2,
+      "dataset": 1,
+      "cycles": 775,
+      "instructions": 789,
+      "counter_values": [
+        14784781538186152352,
+        16270799599946586559,
+        16270799599946587334,
+        14784781538186153141
+      ],
+      "sample_ticks": [
+        83029,
+        83063,
+        83838,
+        83872
+      ]
+    },
+    {
+      "seq": 11,
+      "id": "gemv-16x64-core-reuse-rvv",
+      "scenario": "gemv-16x64-core-reuse",
+      "method": "rvv",
+      "n": 1024,
+      "dots": 128,
+      "phase": "measured",
+      "repeat": 2,
+      "dataset": 1,
+      "cycles": 828,
+      "instructions": 585,
+      "counter_values": [
+        14784781538186156219,
+        16270799599946591840,
+        16270799599946592668,
+        14784781538186156804
+      ],
+      "sample_ticks": [
+        88310,
+        88344,
+        89172,
+        89206
+      ]
+    },
+    {
+      "seq": 12,
+      "id": "gemv-16x64-core-reuse-rvv",
+      "scenario": "gemv-16x64-core-reuse",
+      "method": "rvv",
+      "n": 1024,
+      "dots": 128,
+      "phase": "measured",
+      "repeat": 3,
+      "dataset": 1,
+      "cycles": 826,
+      "instructions": 585,
+      "counter_values": [
+        14784781538186159882,
+        16270799599946597165,
+        16270799599946597991,
+        14784781538186160467
+      ],
+      "sample_ticks": [
+        93635,
+        93669,
+        94495,
+        94529
+      ]
+    },
+    {
+      "seq": 13,
+      "id": "gemv-16x64-core-reuse-vdot",
+      "scenario": "gemv-16x64-core-reuse",
+      "method": "vdot",
+      "n": 1024,
+      "dots": 128,
+      "phase": "measured",
+      "repeat": 3,
+      "dataset": 1,
+      "cycles": 768,
+      "instructions": 789,
+      "counter_values": [
+        14784781538186163545,
+        16270799599946602480,
+        16270799599946603248,
+        14784781538186164334
+      ],
+      "sample_ticks": [
+        98950,
+        98984,
+        99752,
+        99786
+      ]
+    },
+    {
+      "seq": 14,
+      "id": "gemv-16x64-core-basic-rvv",
+      "scenario": "gemv-16x64-core-basic",
+      "method": "rvv",
+      "n": 1024,
+      "dots": 128,
+      "phase": "measured",
+      "repeat": 3,
+      "dataset": 1,
+      "cycles": 1397,
+      "instructions": 905,
+      "counter_values": [
+        14784781538186167412,
+        16270799599946607756,
+        16270799599946609153,
+        14784781538186168317
+      ],
+      "sample_ticks": [
+        104226,
+        104260,
+        105657,
+        105691
+      ]
+    },
+    {
+      "seq": 15,
+      "id": "gemv-16x64-core-basic-vdot",
+      "scenario": "gemv-16x64-core-basic",
+      "method": "vdot",
+      "n": 1024,
+      "dots": 128,
+      "phase": "measured",
+      "repeat": 3,
+      "dataset": 1,
+      "cycles": 2145,
+      "instructions": 1225,
+      "counter_values": [
+        14784781538186171421,
+        16270799599946613734,
+        16270799599946615879,
+        14784781538186172646
+      ],
+      "sample_ticks": [
+        110204,
+        110238,
+        112383,
+        112417
+      ]
+    },
+    {
+      "seq": 16,
+      "id": "gemv-16x64-core-basic-vdot",
+      "scenario": "gemv-16x64-core-basic",
+      "method": "vdot",
+      "n": 1024,
+      "dots": 128,
+      "phase": "measured",
+      "repeat": 4,
+      "dataset": 1,
+      "cycles": 2145,
+      "instructions": 1225,
+      "counter_values": [
+        14784781538186175776,
+        16270799599946620565,
+        16270799599946622710,
+        14784781538186177001
+      ],
+      "sample_ticks": [
+        117035,
+        117069,
+        119214,
+        119248
+      ]
+    },
+    {
+      "seq": 17,
+      "id": "gemv-16x64-core-basic-rvv",
+      "scenario": "gemv-16x64-core-basic",
+      "method": "rvv",
+      "n": 1024,
+      "dots": 128,
+      "phase": "measured",
+      "repeat": 4,
+      "dataset": 1,
+      "cycles": 1374,
+      "instructions": 905,
+      "counter_values": [
+        14784781538186180131,
+        16270799599946627394,
+        16270799599946628768,
+        14784781538186181036
+      ],
+      "sample_ticks": [
+        123864,
+        123898,
+        125272,
+        125306
+      ]
+    },
+    {
+      "seq": 18,
+      "id": "gemv-16x64-core-reuse-vdot",
+      "scenario": "gemv-16x64-core-reuse",
+      "method": "vdot",
+      "n": 1024,
+      "dots": 128,
+      "phase": "measured",
+      "repeat": 4,
+      "dataset": 1,
+      "cycles": 774,
+      "instructions": 789,
+      "counter_values": [
+        14784781538186184140,
+        16270799599946633383,
+        16270799599946634157,
+        14784781538186184929
+      ],
+      "sample_ticks": [
+        129853,
+        129887,
+        130661,
+        130695
+      ]
+    },
+    {
+      "seq": 19,
+      "id": "gemv-16x64-core-reuse-rvv",
+      "scenario": "gemv-16x64-core-reuse",
+      "method": "rvv",
+      "n": 1024,
+      "dots": 128,
+      "phase": "measured",
+      "repeat": 4,
+      "dataset": 1,
+      "cycles": 826,
+      "instructions": 585,
+      "counter_values": [
+        14784781538186188007,
+        16270799599946638638,
+        16270799599946639464,
+        14784781538186188592
+      ],
+      "sample_ticks": [
+        135108,
+        135142,
+        135968,
+        136002
+      ]
+    },
+    {
+      "seq": 20,
+      "id": "gemv-16x64-core-reuse-rvv",
+      "scenario": "gemv-16x64-core-reuse",
+      "method": "rvv",
+      "n": 1024,
+      "dots": 128,
+      "phase": "measured",
+      "repeat": 5,
+      "dataset": 1,
+      "cycles": 827,
+      "instructions": 585,
+      "counter_values": [
+        14784781538186191670,
+        16270799599946643951,
+        16270799599946644778,
+        14784781538186192255
+      ],
+      "sample_ticks": [
+        140421,
+        140455,
+        141282,
+        141316
+      ]
+    },
+    {
+      "seq": 21,
+      "id": "gemv-16x64-core-reuse-vdot",
+      "scenario": "gemv-16x64-core-reuse",
+      "method": "vdot",
+      "n": 1024,
+      "dots": 128,
+      "phase": "measured",
+      "repeat": 5,
+      "dataset": 1,
+      "cycles": 771,
+      "instructions": 789,
+      "counter_values": [
+        14784781538186195333,
+        16270799599946649256,
+        16270799599946650027,
+        14784781538186196122
+      ],
+      "sample_ticks": [
+        145726,
+        145760,
+        146531,
+        146565
+      ]
+    },
+    {
+      "seq": 22,
+      "id": "gemv-16x64-core-basic-rvv",
+      "scenario": "gemv-16x64-core-basic",
+      "method": "rvv",
+      "n": 1024,
+      "dots": 128,
+      "phase": "measured",
+      "repeat": 5,
+      "dataset": 1,
+      "cycles": 1378,
+      "instructions": 905,
+      "counter_values": [
+        14784781538186199200,
+        16270799599946654529,
+        16270799599946655907,
+        14784781538186200105
+      ],
+      "sample_ticks": [
+        150999,
+        151033,
+        152411,
+        152445
+      ]
+    },
+    {
+      "seq": 23,
+      "id": "gemv-16x64-core-basic-vdot",
+      "scenario": "gemv-16x64-core-basic",
+      "method": "vdot",
+      "n": 1024,
+      "dots": 128,
+      "phase": "measured",
+      "repeat": 5,
+      "dataset": 1,
+      "cycles": 2146,
+      "instructions": 1225,
+      "counter_values": [
+        14784781538186203209,
+        16270799599946660507,
+        16270799599946662653,
+        14784781538186204434
+      ],
+      "sample_ticks": [
+        156977,
+        157011,
+        159157,
+        159191
+      ]
+    }
+  ],
+  "raw_sha256": {
+    "stdout.log": "3846669db69315eb53ba04f0431865b6175dcc990a3433bd35d4e664ebca879e",
+    "stderr.log": "9889a638a8a14b7bdd10f1e147678bd6483db9488cca32db91e386eba50b8abc"
+  },
+  "image_sha256": "4c343728d64cb69ca6d91c26feb1d266358fe6e8025b40b17f51d4b7e80c8016",
+  "elf_sha256": "c3d50dece9df8b9adf8e056178b3fbce22504e665efcd84aadb723e076edb1b0",
+  "manifest_sha256": "9004df27ce5cf2c2e450f120df6042d1c0033c7cb2be39d9950d1029e7217410"
+}

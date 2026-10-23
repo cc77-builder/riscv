@@ -1,0 +1,22 @@
+test_actual_compiled_full128_bounds_and_csr (test_rvv_probe.ProbeTests) ... FAIL
+test_actual_complete_pair (test_rvv_probe.ProbeTests) ... ok
+test_binding_restores_original_exact_objects (test_rvv_probe.ProbeTests) ... ok
+test_control_bin_is_exact_fixed_s2 (test_rvv_probe.ProbeTests) ... ok
+test_main_byte_change_rejected (test_rvv_probe.ProbeTests) ... ok
+test_no_dot_metadata_exception (test_rvv_probe.ProbeTests) ... ok
+test_scope_and_variant_cannot_expand_silently (test_rvv_probe.ProbeTests) ... ok
+test_unchanged_manifest_input_required (test_rvv_probe.ProbeTests) ... ok
+test_vdot_body_or_padding_change_rejected (test_rvv_probe.ProbeTests) ... ok
+
+======================================================================
+FAIL: test_actual_compiled_full128_bounds_and_csr (test_rvv_probe.ProbeTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/d/Projects/competitions/2026-10-CIE-RISCV-XiangShan/working-r2s2-audit-20261024-0001/team/optimizations/o2/r2-safe-tail/test_rvv_probe.py", line 58, in test_actual_compiled_full128_bounds_and_csr
+    self.assertEqual(machine.counts.get("vdot.vv", 0), row["dots"])
+AssertionError: 0 != 4
+
+----------------------------------------------------------------------
+Ran 9 tests in 1.161s
+
+FAILED (failures=1)
