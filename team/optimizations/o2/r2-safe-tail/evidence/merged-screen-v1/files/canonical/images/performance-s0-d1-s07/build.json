@@ -1,0 +1,107 @@
+{
+  "kind": "nexus-am-riscv64-xs",
+  "source_base": "24cb8b2e0fa0b17cad65c82246c572347a351d43",
+  "source_commit": "ff58e519091f273c4bc177f5e82cfbbfaf102cc5",
+  "selection": {
+    "suite": "performance",
+    "dataset": 1,
+    "shard": 7,
+    "variant": "s0"
+  },
+  "exit_code": 0,
+  "am_revision": "086a238062fdfb3281b745a537b361983d0154b5",
+  "external_files": {
+    "/home/lizufan/riscv-lab/r2-s2-20261023-1632/deps/nexus-am/am/build/am-riscv64-xs.a": "50443c3abb089f8d8e586d03cabb7770e5ac75738bbc1b44dc8b730ae3e67505",
+    "/home/lizufan/riscv-lab/r2-s2-20261023-1632/deps/nexus-am/libs/klib/build/klib-riscv64-xs.a": "eec19a2a8e55ac89331ad63fba29095f2f76e2fa207ef31c3baa41105eb4bc76"
+  },
+  "commands": [
+    {
+      "command": [
+        "/usr/bin/make",
+        "-C",
+        "/home/lizufan/riscv-lab/r2-s2-20261023-1632/build-01/images/performance-s0-d1-s07/source",
+        "ARCH=riscv64-xs",
+        "MARCH=rv64gcv",
+        "CROSS_COMPILE=/usr/bin/riscv64-linux-gnu-",
+        "T13_DATA=/home/lizufan/riscv-lab/r2-s2-20261023-1632/build-01/images/performance-s0-d1-s07/data",
+        "T13_OBJ_ROOT=/home/lizufan/riscv-lab/r2-s2-20261023-1632/build-01/images/performance-s0-d1-s07/objects",
+        "BINARY=/home/lizufan/riscv-lab/r2-s2-20261023-1632/build-01/images/performance-s0-d1-s07/vdot-perf",
+        "-o",
+        "am",
+        "-o",
+        "klib",
+        "-j1",
+        "image"
+      ],
+      "cwd": "/mnt/d/Projects/competitions/2026-10-CIE-RISCV-XiangShan/working-r2s2-20261023-1632",
+      "started": "2026-10-23T08:40:53.330067+00:00",
+      "exit_code": 0,
+      "process_started": true,
+      "pid": 1706,
+      "finished": "2026-10-23T08:40:53.444872+00:00",
+      "raw_sha256": {
+        "stdout.log": "a0fd623b7a8bdddc15b9b7de3fa4f49edae56ad2bd592cfba46dc6a4983fed9d",
+        "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/riscv64-linux-gnu-gcc",
+        "-march=rv64gcv",
+        "-mabi=lp64d",
+        "-mno-relax",
+        "-c",
+        "/home/lizufan/riscv-lab/r2-s2-20261023-1632/build-01/images/performance-s0-d1-s07/data/kernels.S",
+        "-o",
+        "/home/lizufan/riscv-lab/r2-s2-20261023-1632/build-01/images/performance-s0-d1-s07/kernels-reference.o"
+      ],
+      "cwd": "/mnt/d/Projects/competitions/2026-10-CIE-RISCV-XiangShan/working-r2s2-20261023-1632",
+      "started": "2026-10-23T08:40:53.445395+00:00",
+      "exit_code": 0,
+      "process_started": true,
+      "pid": 1741,
+      "finished": "2026-10-23T08:40:53.453428+00:00",
+      "raw_sha256": {
+        "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "artifacts": {
+    "vdot-perf.elf": "2b87ab3c4105758ee1da949eed1bcf63f11eb49526c5098d03b209da3b149d5c",
+    "vdot-perf.bin": "2a39a77a3cc93245b55a1184a0e592133b9bc9f992b291ed1bfd18a51f488677",
+    "kernels-reference.o": "f9425545fe5cbe46448a45c5d827f5b9537d0270269394f6495f7e0da2342143",
+    "data/manifest.json": "31f7e9d60ab1d9527da1a5c53f1ccaeebbb20f751be9f899e6cca1a8442aaf71"
+  },
+  "toolchain": {
+    "gcc": {
+      "path": "/usr/bin/riscv64-linux-gnu-gcc",
+      "sha256": "0c54895c55568be5b5fee49e2426abcc8fb05ca2c121ca5685dea2cbc24a1c13"
+    },
+    "ld": {
+      "path": "/usr/bin/riscv64-linux-gnu-ld",
+      "sha256": "59db886faf252e5e2fb2e5341fd57c24ddbd216197f69296321fef913e5b64ba"
+    },
+    "ar": {
+      "path": "/usr/bin/riscv64-linux-gnu-ar",
+      "sha256": "7985a5f5a10d03843aa7b296e1652bf5bd9fd5180839c7df9b49ef56738fcc74"
+    },
+    "objcopy": {
+      "path": "/usr/bin/riscv64-linux-gnu-objcopy",
+      "sha256": "48c1d507b5c7b89da9c81349738ee413a522c364a17d416bcfb91e2c8e785006"
+    },
+    "objdump": {
+      "path": "/usr/bin/riscv64-linux-gnu-objdump",
+      "sha256": "07a28885534079b220a44c7f787c0eecdd240fbe95c525b85e88cc7b88b70e82"
+    },
+    "readelf": {
+      "path": "/usr/bin/riscv64-linux-gnu-readelf",
+      "sha256": "2ee6c57f1efa53bda4a784afb82340b2d925383a8892c36df448028645af2d3f"
+    },
+    "make": {
+      "path": "/usr/bin/make",
+      "sha256": "92f646030615cd98490a68a94c0aefd87b552be3158b941c02e43b0bfdb576db"
+    }
+  },
+  "accepted": true
+}

@@ -1,3 +1,5 @@
+> 当前合并版真实结果见 [MERGED_RESULT.md](MERGED_RESULT.md)，新合同和复算入口见 [MERGED_SCREEN.md](MERGED_SCREEN.md)。下面的2026-10-21记录按原日期保留。
+
 > **当前适用范围：** [当前路线](../../../docs/development-route-current.md)决定任务顺序。本文件保存 S2 候选及原时点验证。下文当次分支限制、未推送及下一步说明按原日期阅读；固定输入与技术验收条件仍有效。
 
 # R2-S2：4×13 安全向量尾部候选
