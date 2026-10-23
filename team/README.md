@@ -1,211 +1,30 @@
-> 当前工作（2026-10-21）：已封存本机基线1dc1aca14（G3 INCOMPLETE，缺PARTIAL_KILL），本轮整合zjhwork 17bab1d6e的H1及验证更新。保留两套来源，构建/归档/重放兼容修复见[整合记录](docs/h1-integration-20261021.md)。本地验证结果以该记录为准；O1/O2默认关闭，main和远端不改，历史发布指令不作为本轮授权。
+# 香山 vdot 团队工程入口
 
-> 2026-10-21 本机 O2 基线：Linux LF、126个依赖、3430项输入及新全核构建通过。实际16次启动，选定14项作业；117个唯一矩阵用例/124次执行、5378条正常VDOT提交、bit100拒绝及恢复通过。严格重审为 INCOMPLETE，仅缺 PARTIAL_KILL；固定seed=1补测仍为0。原FAILED和两次INCOMPLETE均保留。该结果属于0484构建，不能用于随后H1整合源码的验收。O1/O2默认关闭，未推送，main不改；T17/人工ACK/新性能与PPA未完成。 [复验记录](docs/o5-current-fullcore-20261021.md)。下方为历史进展。
+本目录保存自定义向量点积的实现配套、测试、优化实验和交付证据。团队集成目标为 cc77-builder/riscv:zufan；各成员独立工作区并行开发，运行与发布按当前协作约定执行。
 
-> 2026-10-21 James_Hotten：[Linux LF及当前源码复验](docs/o5-current-fullcore-20261021.md)。126个依赖和缺失软件输入已准备，3430项输入严格检查通过；真实构建失败记录保留，分阶段全核构建继续执行，G3尚未验收。O1/O2默认关闭，main及远端不改。下方按历史记录阅读。
+## 从这里开始
 
-> 前轮：[同步审查与O5准备](docs/reproduction-readiness-20261021.md)。当时70项已知前提缺失；该状态已由上方新输入准备进展更新。
-
-> James_Hotten 整合范围（2026-10-20）：前一轮 O2/O3 已在 769b3b4b1 验证；本轮另行审查 zjhwork 9b6cf0749 的 O4 更新。O4 原测量未覆盖本地 DIV 取消时钟修复，保持历史来源绑定。O1/O2 默认关闭，main 不改；下方外部分支发布授权仅作历史记录。本轮记录：[O4 整合审查](docs/o4-integration-20261020.md)。
-
-> 2026-10-20 James_Hotten：已整合并审查 O2/O3 的40项新提交，修复取消时钟、来源及验收问题；631项主机检查与新父级验证通过。见[本轮记录](docs/o2-o3-integration-20261020.md)。历史性能保持原版本绑定，O1/O2默认关闭，本次仅本地合并，main不改。
-
-<!-- Imported upstream historical record follows; not current chat authorization. -->
-
-<!-- O2_H1_PUBLICATION_20261021 -->
-
-> 2026-10-21 本批发布：按用户授权将 R0/R1、H1 实现、全核回归及 B0/H1 周期不退化证据交付 GitHub 的 zjhwork。H1 本机验证链完成，96 对正式窗口周期完全一致；R4 独立复现与最终采用待完成。实际发布结果以远端回读回执为准，下文旧发布状态按历史时点阅读。 [发布说明](docs/o2-h1-publication-20261021.md)。
-
-<!-- B0_H1_PERFORMANCE_COMPLETED_20261021 -->
-
-> 2026-10-21：B0/H1 同镜像周期不退化检查完成。36 次新运行、478 个校验窗口、192 个正式窗口组成的 96 对样本逐项周期完全一致；严格原始日志重审和 Linux/Windows 便携复算通过。H1 本轮没有周期提速，保留此前局部面积收益及部分 STA 路径回退的取舍。H1 本机验证链已齐备，R4 独立复现与最终采用仍待完成。本轮未推送 GitHub，未切换默认模式，未自动开始 R2/R4，正式报告后置。 [结果记录](optimizations/o2/result-width/h1/performance/B0_H1_RESULT.md)。下文旧状态按历史时点阅读。
-
-# 当前进度：O2-R1 H1 全核回归通过（2026-10-21）
-
-新 H1 全核构建、14 项作业及严格离线重审通过：13 项正常作业、1 项 bit100 预期拒错与同镜像正常库恢复；117 个唯一功能/异常用例、5,378 条正常 vdot 提交、95 项主机检查和六项两槽覆盖齐全。完整 128 位输出检查保持有效。
-
-结果见[H1 全核回归记录](optimizations/o2/result-width/h1/fullcore/H1_FULLCORE_RESULT.md)。当前源码与 repo/build/emu 均为 H1，硬件固定提交 8b5024f；原 O2 B0 构建完整保留，R0 锁仍绑定 B0。为固定构建身份已有两个普通本地提交，未推送 GitHub。
-
-下一项是 B0/H1 同镜像周期不退化检查；本轮没有新性能 A/B 或加速比。此前局部面积收益及参考时序取舍保持原结论。整项 R1 的后续检查、R4 独立复现与最终采用仍待完成，正式报告继续在工程冻结后编写。下方记录均按各自历史时点阅读。
-
-# 当前进度：O2-R1 H1 局部验证完成（2026-10-21）
-
-H1 已实现低32位保存，完整128位结果、独立FU、真实VFEX4父级与参考面积/时序对照已完成。10,022组唯一向量与4+16项观测值负控通过，II=1、无阻塞2拍保持。完整FU面积降低2.33386%，完整父级降低0.137349%，均少96个DFF。部分时序路径回退，1ns参考目标仍未满足。
-
-见[H1实现与验证结果](optimizations/o2/result-width/h1/H1_RESULT.md)。下一项为H1全核回归及后续同镜像周期检查；整项R1、独立成员复现和最终采用仍待完成。当前源码是H1候选，已有build/emu仍为B0。本轮未提交或推送，未改R0锁与旧封存证据；下方状态按历史时点阅读。
-
-# 当前进度：O2-R1 映射审查通过（2026-10-21）
-
-R0 本机预检已完成；R1 第一关映射审查通过，H1 低32位候选尚待实现，整项 R1 未完成。两份 O2 网表的高96位各占96个独立DFF；对应独占局部成本约占FU的3.0277%、完整VFEX4的0.1879%，不是新实现的净节省。
-
-见[R1审查与候选条件](optimizations/o2/result-width/R1_MAPPING_REVIEW.md)。本轮只做审查与可复算记录，未改生产RTL、默认配置、ISA/NEMU和旧封存证据，未运行新综合/STA/EMU；没有新加速比。12项主机检查及2项真实命令负控通过。本地分支local/o2-r1-result-width-20261021，保留R0未提交材料；未提交或推送，不代签成员ACK。下方按历史时点阅读。
-
-# 当前进度：O2-R0 本机自动验收完成（2026-10-21）
-
-R0 已完成基线固定和本机自动预检（2026-10-21）：100 项主机检查、observe/cost 两种配置、4 项真实命令负控通过。未运行新 EMU 或综合，成员独立复现仍留待 R4/T17。下一项 R1 映射寄存器审查。
-
-见[R0 完成记录](optimizations/o2/repro/R0_STATUS.md)与同目录复现说明。本轮本地保存，未提交或推送，不自动开始 R1，不切换默认模式，不代签成员 ACK。下方按历史时点阅读。
-
-# O2 后续执行计划（2026-10-20，待实施）
-
-当前待办见[O2 后续优化执行计划](optimizations/o2/NEXT_OPTIMIZATION_PLAN.md)。按 R0 基线与复现准备、R1 结果寄存器收窄、R2 应用内核优化、R3 条件审查、R4 完整回归与独立复现、R5 工程冻结推进。R1/R2 局部筛选可以并行，正式报告仍在工程冻结后编写。
-
-本次只保存计划和更新入口，未修改 RTL、运行新测试、提交或推送。下方保留各历史时点的状态，不表示新的执行结果。
-
-# 最新项目状态与本批发布（2026-10-20）
-
-用户授权将当前项目状况保存为Markdown并发布至cc77-builder/riscv的zjhwork。本批包含已有6项O4提交、O2主线选择和状态快照，允许正常快进上传；最终成功与SHA以远端回读为准。
-
-技术主线采用O2，O0–O4已有对应证据；下一步O5/T17及O2减代价审查，G5最终冻结待完成，T16/T18工程冻结后集中开展。源码默认开关未改，人工ACK待实际成员完成。此次仅整理与发布，不重跑已完成工程或改旧封存载荷。
-
-当前入口：[项目当前状况](docs/project-status-20261020.md)。下方“未上传/不push/待做”等按历史时点阅读；原始证据保持生成状态。
-
-# 当前主线：O2 两槽弹性 FU（2026-10-20）
-
-按用户“推荐一版并沿用其继续优化”的要求，后续开发采用O2，O1作为冻结对照与回退。G4 batch周期少39.03%，O3应用仅少0.62%–1.50%；完整FU面积+41.41%、VFEX4父级+1.25%。这是一项开发主线选择，最终参赛采用仍须完成O5/T17及G5。
-
-下一步固定O2复现入口、补齐独立复现，同时审查额外性能字段和控制路径成本；后续每次只实施一个有证据支持的优化。工程冻结后再集中编写T16与准备T18。默认源码开关与旧封存证据保持原状，本次只更新计划，未运行新测试或推送GitHub。
-
-详细依据和执行顺序见[O2主线选择](docs/o2-mainline-decision-20261020.md)。下方保留历史状态与原始计划，不作为当前待办顺序。
-
-# 当前状态：O4结构与参考时序评估完成（本地）
-
-2026-10-20：4项映射/20项STA/140份路径及13项主机检查通过离线复核，结果见optimizations/o4/README.md。
-完整FU面积+41.41%，含完整DIV的真实VFEX4面积+1.25%；两版均未满足1ns参考目标，不宣称整核Fmax/功耗。
-当前local/o4-cost-20261020，本轮不push、不切换默认。下一项O5/T17独立复现，随后G5最终采用；正式T16后置。
-不要重跑已完成O4或改封存证据。下方内容为历史状态/原计划。
-
-# 最新交付：O2与O3成果至zjhwork
-
-2026-10-20用户授权本批普通快进发布，实际成功与SHA以回读为准。[发布范围与下一步](docs/o2-o3-publication-20261020.md) · [O3完整应用结果](workloads/o3-gemv/README.md) · [O1/O2公平性能](optimizations/o2/performance/README.md)
-
-O2 G0–G4及O3已完成。O3共56项合格作业（46复用＋10补跑，另2中断记录保留）、1280校验窗口、768正式性能样本；Linux/Windows离线复算通过。G4独立batch128降低39.03%，O3应用reuse/endtoend降低0.62%–1.50%，适用范围分别报告。
-
-下一项O4结构/时序代价，再推进O5/T17队友干净检出复现与G5最终采用。O2默认关闭，T16报告继续后置。本条更新下方“未上传/待做”等历史状态，不修改密封证据。
-
-# 三人团队：项目计划与开发入口
-
-> 当前整合（2026-10-19）：以最新 zjhwork `cd866d52d` 为基准，并保留 James_Hotten `724fbb12f` 的时钟取消与验收修复。当前状态见[整合与审查记录](docs/o1-latest-integration-20261019.md)。以下全核及性能数字保留原受测版本绑定，不代表合并后源码的新运行；O1默认关闭。
-> **2026-10-19 O2 G1/G2 完成，本地保存。** 两槽弹性 FU 与真实 VFEX4＋DIV＋ClockGate 联调通过，连续流 II=1、无阻塞响应 2 拍；完整数据/身份、反压、精确取消、复位及旧模式兼容性通过，41 项主机测试和独立逐拍核验通过。见 [工程记录](optimizations/o2/IMPLEMENTATION.md) · [证据](optimizations/o2/evidence/20261019-elastic-parent/README.md)。下一步为 G3 观察器适配及全核回归；没有 O2 新整核加速比，默认关闭，未推送 GitHub，下方按历史时点阅读。
-
-> **2026-10-19 O2可行性评估与设计合同完成，本地保存。** [评估与后续步骤](optimizations/o2/README.md) · [设计合同](optimizations/o2/CONTRACT.md) · [旧轨迹分析](optimizations/o2/TRACE_ANALYSIS.md)。推荐下一轮先验证VFEX4两槽弹性原型；本轮未改生产RTL、未运行新EMU、未上传GitHub。O1已有结果继续有效，O2实测收益与最终采用仍待验证，下方状态按历史时点阅读。
-
-> **2026-10-18 O1 成果交付 zjhwork。** 本次包括真实父级联调、全核回归及T14/O1同镜像公平性能比较；batch128周期降低20.02%，相对RVV为1.870×。见 [发布说明](docs/o1-publication-20261018.md)。本条更新下方未上传状态，实际最终版本以远端回读为准；密封证据保持原样，O1默认关闭，未代签人工ACK。
-
-> **T14/O1 同镜像公平性能比较完成，本地保存。** 独立batch128平均周期 453.25→362.50，降低20.02%；O1相对实测RVV为1.870×。36次主运行、478窗口及完整离线复算通过。见 [性能入口](optimizations/o1/performance/README.md) · [证据](optimizations/o1/evidence/20261018-performance-ab/README.md)。O1默认关闭，未推送；PPA/T17/人工ACK仍待完成，正式T16报告后置，下方按历史时点阅读。
-
-> **2026-10-18 O1 全核功能与控制回归、严格离线复核通过，本地保存。** 固定硬件 `18c0ce08`、原检查器 `518c0567` 的十二项运行全部符合预期；门禁集成 `d1100020` 后对未修改原日志重审通过，未新增 EMU 运行。正常提交 3,012 条 vdot；117 个唯一功能用例（80 合法、37 异常）、124 次分片执行、bit100 负控及正常恢复通过。控制程序自身满足八项覆盖，同拍交接 303 次，密集程序另有 725 次。见 [全核工程入口](optimizations/o1/fullcore/README.md)、[严格日志门禁](optimizations/o1/audit/README.md) 和 [完整证据](optimizations/o1/evidence/20261018-fullcore-validation/README.md)。本轮全核覆盖 vdot/VIDiv，未覆盖 VFDiv，取消仅观察到 vdot reduce 阶段；尚无新性能 A/B、PPA、T17 或人工 ACK 结论。O1 默认关闭，本轮不推送，正式 T16 报告继续后置；下方状态为历史记录。
-
-> **2026-10-18 真实 VFEX4 父级联调通过，本地保存。** 真实 VDot/VIDiv/VFDivSqrt、Dispatcher、busy 和门控共同验证；DIV 切换、反压、432 组 redirect、27 组 reset、20000 拍随机控制及七项负控通过。O1 同拍交接 10343 次，父级连续 vdot 接受间隔 2 拍。见 [父级工程记录](optimizations/o1/parent/README.md)、[证据](optimizations/o1/evidence/20261018-parent-validation/README.md) 和 [优化进度](../OPTIMIZATION.md)。本轮未推送；O1 全核回归和新性能测量待做，不能用测试总周期比值声称应用加速。下方父级未验证等状态按历史时点阅读。
-
-> **2026-10-18 O0/O1 本地验证完成，交付目标 zjhwork。** 已复用 zjhwork2 成果并修复环境预检、负控假通过及两处 `FuType.vdot.U` 类型比较。实际源码 `db0408aa42afc13e3ff93e865f26a2d5bfb02c93` 的三模式 FU 验证通过，延迟/最小接受间隔为 3/4、2/3、2/2 拍；O0 113 项、O1 26 项主机检查通过。首轮失败与修复后成功日志均保留，见 [O1 入口](optimizations/o1/README.md)、[本轮证据](optimizations/o1/evidence/20261018-fu-validation/README.md) 和 [优化进度](../OPTIMIZATION.md)。O1 默认关闭，真实父级 elaboration、全核 DiffTest 和新性能测量尚未完成；下一步为真实 VFEX4（含 DIV）父级联调。此条更新本轮目标分支，下方协作与交付记录按各自历史时点阅读。
-
-> **2026-10-17 后续优化安排更新。** 见 [香山 vdot 后续优化方案](香山vdot_后续优化方案_20261017.md)：先完成工程优化、测试回归与独立复现，工程完成并冻结版本后集中编写 T16 报告及答辩材料。开发期间持续保存命令、版本、日志与原始数据，其余优化路线、性能目标和验收要求不变。此安排更新下方历史记录中的 T16 执行顺序。
-
-> **2026-10-17 四项目统一测试交付至 zjhwork。** 同一香山基础版本/MinimalConfig/VLEN128下，四个实现64个全核镜像、860个窗口通过；正式性能样本384个。四路独立点积加速比：本项目1.496×、Jade2.605×、试水2.322×、Redoop＋dot8适配0.929×。见 [完整结果](docs/unified-vdot-comparison-20261017.md)、[程序](workloads/unified-vdot/README.md) 和 [验证归档](evidence/unified-vdot-20261017/README.md)。这是T15后的补充比较，未自动推进T16或新增人工ACK；下方“未上传”等为历史时点快照。
-
-> **T15 成果交付至 zjhwork。** 用户已授权上传成果 `13851b2482603ac9f96c850795c697f4e3a6bf44` 及本次交付入口说明。新增 s16x8/r64 独立参数单元、参考模型、94＋10000 组扩展数据、协议测试和 Linux/Windows 离线核验材料。实际正式验证源码为 `65f6159`，本发布批次只补充说明。见 [T15 报告](docs/t15-parameter-extension.md) 和 [最新计划进度](docs/progress-t15-20261017.md)。下方及密封材料中的“未上传”保留为发布前历史记录；人工复核仍待完成，下一项为 T16。
-
-> **2026-10-17 T15 本地自动验收完成，尚未上传。** 已验证 8 对 int16 的独立参数单元，94 定向＋10000 随机完整结果、单请求协议与跨平台离线复核通过。T14/T15 两项 G5 开发验证已具备，下一项是 T16 材料整合；人工复核待完成。见 [T15 报告](docs/t15-parameter-extension.md) 和 [最新计划进度](docs/progress-t15-20261017.md)。本轮没有扩展全核 ISA。
-
-> **2026-10-17 T14 成果，本次交付目标 zjhwork。** 用户已授权上传已验收成果 `458b7170bfdf41814dac785b41027114bddd512d`；本次另补充进度说明，不改变硬件或测试数据。**技术主线到 T14，处于 G5；下一项为 T15 参数扩展。** 完整状态见 [T00–T18 进度表](docs/progress-20261017.md)。团队人工复核、语义歧义确认及最终比赛交付仍待完成；下方和报告中的“未上传”为发布前历史记录。
-
-> **2026-10-17 T14 本地自动验收完成，尚未上传。** 输入拍锁存乘积使 FU 响应 3→2 拍、最小 II 4→3；完整回归、126 次相同镜像运行、1,404 个性能窗口及 Linux/Windows 离线复核通过。128 次独立点积约 1.29×，256 次依赖链约 1.14×，访存场景收益很小。见 [结果与局限](docs/t14-optimization.md)、[合同](spec/t14-ablation.md)、[外部建议评估](docs/t14-suggestion-review.md) 和 [离线回执](evidence/t14-offline-review-20261017/README.md)。默认基础模式保留，团队人工复核及物理时序评估待完成。
-
-> **T13 交付至 zjhwork。** 用户已明确授权将本轮成果上传到 `cc77-builder/riscv` 的 `zjhwork`。代码、报告和验证证据版本为 `4526d857937def29ea1598a7c878aa539e2ef1f6`，本发布批次只补充入口说明，未改变硬件、工作负载或测量数据。见 [性能报告](docs/t13-performance.md) 和 [离线复核](evidence/t13-offline-review-20261015/README.md)。下方及归档中的“未上传”是发布前快照；队友人工复核仍待完成，不能把上传当作人工验收。
-
-> **2026-10-15 T13 本地自动验收完成，未上传 GitHub。** 固定版本的 RVV/vdot 公平周期对照通过 108 次全核功能调用与 1,404 个性能窗口，3 次重放一致。见 [T13 报告](docs/t13-performance.md)、[测量约定](spec/measurement.md) 和 [离线证据](evidence/t13-performance-20261015/README.md)。T12 已按用户要求发布到 `zjhwork`；T13 位于独立本地分支 `local/t13-performance-20261015`，待队友复核，未代签 ACK。后续可按计划 G5 选择单一优化做 A/B；PPA、虚拟化及人工签字仍未完成。
-
-> **2026-10-14 历史记录：当时本机 T12 自动回归通过，待人工复核/发布。** 11 项全核运行满足预期，控制压力覆盖和原功能矩阵通过。当前成果仅在独立本地分支 `local/t12-regression`；共享远端进度没有随本地结果自动改变。见 [T12 报告](docs/t12-regression.md) 和 [完整证据](evidence/t12-regression-20261014/README.md)。下方 10 月 13 日及更早文字为历史阶段记录。
-
-> **2026-10-13 历史验收：** T10 最小全核接入和 T11 固定功能矩阵已通过，117唯一用例（80合法/37异常）、vdot bit100差分负控及同镜像正常恢复均有完整原始日志。详见 [当前验收报告](docs/t10-t11-acceptance-20261013.md) 和 [证据入口](evidence/t10-t11-fullcore-20261013/README.md)。下方早期“尚未接入/未实现NEMU”等进度是历史快照，以本段链接的分层状态为准；仍未完成全核乱序控制压力、虚拟化、性能及PPA验收。
-
-> **2026-10-13 历史发布状态：已完成合并发布。** 用户确认双方无人开发后，已将验收候选 `734353d01e963610ac864fdddd81e01e91f521fe` 普通快进发布到团队及 Fork 的 zufan，两端 SHA 回读一致。见 [发布记录](merge/2026-10-13-zjhwork-into-zufan.publication.md)；[完整局部验收](merge/2026-10-13-zjhwork-into-zufan.codex-review.md)通过组合 22+10000 组、FU 6 类/71258 周期。后续两人共享 zufan，下一班须核对最终 SHA 并记录 ACK/START。
-
-本队以《香山 vdot 赛题：执行计划》和《香山 vdot 赛题：三人分工与 Git 协作》作为项目计划文档，分别安排里程碑、验收标准和三人职责。成员先阅读两份计划，再按认领的任务推进开发。
-
-本目录同时保存本队在 2026-10-09 完成的环境搭建、hello/vadd 源码和阶段一证据，并提供按当前仓库位置运行的脚本。香山硬件基线为 `16ae9ddcda54fc9a2fddffad73174cf793ac7814`。`zjhwork` 已提供 vdot 数学模型、RTL 接口设计、组合算术和已通过控制测试的 FU 包装层；香山全核接入和 NEMU 扩展尚未实现。计划中的后续任务按实际验收结果更新进度。
-
-| 内容 | 入口 |
+| 要了解什么 | 入口 |
 | --- | --- |
-| T14/O1 同镜像公平性能比较 | [结果与复现](optimizations/o1/performance/README.md) · [证据](optimizations/o1/evidence/20261018-performance-ab/README.md) |
-| O1 全核功能与控制回归、严格离线复核 | [工程记录](optimizations/o1/fullcore/README.md) · [日志门禁](optimizations/o1/audit/README.md) · [证据](optimizations/o1/evidence/20261018-fullcore-validation/README.md) |
-| O1 真实 VFEX4 父级联调 | [工程记录](optimizations/o1/parent/README.md) · [证据](optimizations/o1/evidence/20261018-parent-validation/README.md) |
-| O0/O1 同拍交接开发与三模式 FU 验证 | [工程入口](optimizations/o1/README.md) · [证据](optimizations/o1/evidence/20261018-fu-validation/README.md) · [优化进度](../OPTIMIZATION.md) |
-| 四项目统一测试、公开实现对比与验证记录 | [结果](docs/unified-vdot-comparison-20261017.md) · [程序](workloads/unified-vdot/README.md) · [证据](evidence/unified-vdot-20261017/README.md) |
-| T15 独立参数扩展、验证结果与边界 | [T15 报告](docs/t15-parameter-extension.md) · [参数合同](spec/t15-parameters.md) |
-| T15 原始证据与跨平台核验 | [证据](evidence/t15-parameters-20261017/README.md) · [离线复核](evidence/t15-offline-review-20261017/README.md) |
-| T15 完成后的计划状态 | [最新进度](docs/progress-t15-20261017.md) |
-| T14 单一优化消融、完整数据与局限 | [T14 报告](docs/t14-optimization.md) |
-| T14 原始证据及跨平台核验 | [证据](evidence/t14-optimization-20261016/README.md) · [离线复核](evidence/t14-offline-review-20261017/README.md) |
-| T13 公平周期性能对比、完整数据与局限 | [T13 报告](docs/t13-performance.md) |
-| T13 可搬迁离线复算与原始证据 | [T13 证据包](evidence/t13-performance-20261015/README.md) |
-| 当前协作机制：无 Actions、共享分支交接、Fork 按需同步 | [三人两线协作机制](docs/collaboration-current.md) |
-| 项目计划：阶段目标、执行步骤与验收标准 | [香山 vdot 赛题：执行计划](香山vdot赛题_执行计划.md) |
-| 项目计划：A/B/C 分工、评审与 Git 协作 | [香山 vdot 赛题：三人分工与 Git 协作](香山vdot赛题_三人分工与Git协作.md) |
-| vdot 指令语义、候选编码、测试与待确认问题（第一版草案） | [vdot.vv 规格](spec/vdot.md) |
-| 独立数学模型、定向/随机测试数据及一键检查（T05） | [vdot 模型与数据](models/vdot/README.md) |
-| T05 主机检查结果、数据来源与已知边界 | [模型验证记录](evidence/model-20261012/README.md) |
-| T06 接口草案：VFEX4 接入、逐拍时序、异常与验证矩阵 | [RTL 接口与接入设计](spec/rtl-interface.md) |
-| T07-A 组合算术 RTL、独立构建和一键验证 | [点积算术单元](rtl/vdot/README.md) |
-| 22 组定向 + 10,000 组随机完整 128 位比较结果 | [RTL 算术验证证据](evidence/rtl-datapath-20261012/README.md) |
-| T07-B 真实 FU：反压、取消、身份、异常及一键测试 | [FU 包装层](rtl/vdot/FU.md) |
-| 6 类场景、71,258 周期、事务守恒和预期拒错 | [FU 验证证据](evidence/rtl-fu-20261013/README.md) |
-| WSL、工具版本、安装方法、配套依赖 | [环境说明](docs/environment.md) |
-| 构建和运行命令、启动问题、通过标准 | [阶段一说明](docs/stage1.md) |
-| hello/vadd 测试源码 | [workloads/hello-vadd](workloads/hello-vadd/) |
-| 路径可配置的执行脚本 | [scripts](scripts/) |
-| 昨天的通过日志、配置、反汇编和事件 CSV | [历史证据](evidence/stage1-20261009/) |
-| 今天用仓库内脚本重新运行的验证结果 | [脚本验证记录](evidence/script-check-20261010/README.md) |
-| 源码锁定版本 | [versions.env](versions.env) |
+| 赛题技术要求、完整评分表、官方来源及待确认项 | [赛题要求与评分总览](../赛题要求与评分总览.md) |
+| Agent 开发规则、验证及收尾要求 | [AGENTS.md](../AGENTS.md) |
+| 当前基线、工程达标与持续优化的全部工作包、下一决策 | [当前开发路线](docs/development-route-current.md) |
+| 谁在做什么、保护哪些运行、如何集成 | [协作约定与真实 Issue 状态](docs/collaboration-current.md) |
+| 开发时间、GitHub 身份、成果和路线历史 | [开发计分板](../开发计分板.md) |
+| 工具与依赖、可复现输入 | [环境](docs/environment.md)、[版本清单](versions.env)、[O2 复现入口](optimizations/o2/repro/README.md) |
 
-## 历史开发进度（T07 时点）
+## 按任务阅读
 
-T05 数学模型、T07-A 组合算术和 T07-B 独立 FU 均已有通过证据；T06 人工评审及接入验证仍待完成。FU 在真实香山 Bundle/RobPtr 下通过 10,022 组算术输入、反压、非法配置、取消、复位和随机控制测试。复现运行 `bash team/scripts/check-vdot-fu.sh`；纯算术入口 `bash team/scripts/check-vdot-datapath.sh` 继续保留。下一步按计划推进 NEMU 扩展与 T10 译码/VFEX4 接入，再做全核 DiffTest，见 [RTL 设计第 8 节](spec/rtl-interface.md#8-实施顺序三人交接与完成标准)。
+| 内容 | 工程／证据入口 |
+| --- | --- |
+| 指令语义、编码与未确认问题 | [vdot 规格](spec/vdot.md) |
+| 模型、数据通路、FU 与接口 | [数学模型](models/vdot/README.md)、[算术 RTL](rtl/vdot/README.md)、[FU](rtl/vdot/FU.md)、[接口](spec/rtl-interface.md) |
+| O2／H1 与固定对照 | [O2 导航](optimizations/o2/README.md)、[O1](optimizations/o1/README.md) |
+| S2 筛选与 S1 设计 | [R2 导航](../R2_STATUS.md) |
+| 全核、性能与成本 | [O2 全核](optimizations/o2/fullcore/README.md)、[公平周期](optimizations/o2/performance/README.md)、[GEMV](workloads/o3-gemv/README.md)、[O4](optimizations/o4/README.md) |
+| 参数扩展与边界 | [参数合同](spec/t15-parameters.md)、[T15 结果](docs/t15-parameter-extension.md) |
+| 阶段一、环境和脚本 | [阶段一记录](docs/stage1.md)、[脚本目录](scripts/) |
+| 历史功能与性能结果 | [T10/T11](docs/t10-t11-acceptance-20261013.md)、[T12](docs/t12-regression.md)、[T13](docs/t13-performance.md)、[T14](docs/t14-optimization.md)、[统一比较](docs/unified-vdot-comparison-20261017.md) |
+| 历史汇总和发布 | [2026-10-20 状态快照](docs/project-status-20261020.md)、[H1 发布记录](docs/o2-h1-publication-20261021.md)、[原入口归档](docs/history/entrypoints-before-consolidation-20261023.md) |
 
-## 新成员操作顺序
-
-先接受私有仓库邀请。在 Ubuntu 22.04 / WSL2 的 Linux 文件系统中：
-
-```bash
-# 取得团队代码后核对最终 SHA，记录接收，再开始开发
-git clone --branch zufan --recurse-submodules https://github.com/cc77-builder/riscv.git
-cd riscv
-bash team/scripts/prepare-dependencies.sh
-# 按 docs/environment.md 安装匹配的工具，已有环境可跳过安装
-bash team/scripts/check-environment.sh
-export TEAM_EVIDENCE_DIR="$PWD/team/out/my-stage1"
-bash team/scripts/stage1.sh nemu
-bash team/scripts/stage1.sh emu
-bash team/scripts/stage1.sh workload
-bash team/scripts/stage1.sh run
-```
-
-配套 xs-env 默认位于 `$HOME/riscv-lab/xs-env`。需要放在其他位置时，先 `export TEAM_XS_ENV_ROOT=/你的目录/xs-env`。脚本把当前团队仓库作为 `NOOP_HOME`，配套环境只提供 NEMU、nexus-am、DRAMsim3 及安装工具入口。
-
-历史成员环境路径为 `/home/riscv/riscv-lab/xs-env/XiangShan`，不能假定其他电脑存在同一路径。本次独立本机检出位于 `/home/lizufan/xiangshan-validation-20261013/repo`，只做组合/FU验证，未建立完整 NEMU/全核环境。已有仿真器仅在源码/配置完全对应时复用。
-
-默认采用 MinimalConfig、单核、单仿真线程、JVM 12G、构建并行度 2。`BUILD_JOBS`、`JVM_HEAP` 可显式调整；普通运行不生成波形，使用 `DUMP_WAVE=1 bash team/scripts/stage1.sh run` 可生成 FST。各步骤输出保存到 `team/out/`，不会自动进入 Git。
-
-## Git 协作（2026-10-13 当前约定）
-
-请先阅读 [三人两线协作机制](docs/collaboration-current.md) 和根目录 [AGENTS.md](../AGENTS.md)。目标为 `zufan` 两人共享开发线、`James_Hotten` 另一开发线，`main` 保持稳定；`zjhwork → zufan` 已完成合并发布与局部验收，不自动删旧分支。
-
-两人**独立工作区并行开发/验证**，仅团队共享远端 `zufan` 的 Push 在 START → RELEASE → ACK 协议下错峰进行；所有验收绑定实际 SHA，不强推、不让后续代码静默改变已评审 PR。交接主记录位于团队仓库的一个统一位置，Issue/Discussion 或 Markdown 均可，不强制 Issue。
-
-协作、回归与 Fork 按需同步**均不依赖 GitHub Actions**；源仓库现有 workflow 文件保留作参考。Fork `LiZufan001/riscv` 并非实时自动镜像，正常快进同步前必须比较源/目标分支，不覆盖独有提交。
-
-### 历史说明：旧版单任务功能分支流程（不是当前共享线的默认操作）
-
-**历史用法（合并前记录，不是当前推送指令）：** 从数学模型这一步开始，开发内容曾先提交和推送到 `zjhwork` 分支，暂不合并或推送到 `main`。现有本机仓库使用 `git push team zjhwork`；新克隆仓库使用 `git push origin zjhwork`。其他成员取得本轮内容后，运行 `bash team/scripts/check-vdot-model.sh` 复核。
-
-团队常规协作使用任务分支并通过 Pull Request 合并；该历史阶段以 `zjhwork` 约定为准。需要另开任务分支时，先约定基准分支和合并目标。新成员克隆目录的团队远程是 `origin`；现有本机仿真目录的团队远程是 `team`。
-
-```bash
-git switch -c feat/自己的任务名
-git add 具体文件
-git commit -m "feat: describe the change"
-git push -u origin feat/自己的任务名
-```
-
-在现有本机仿真目录，将最后一行的 `origin` 换为 `team`。NEMU 源码仍是外部配套仓库；后续修改 NEMU 或香山子模块时，需把其提交推送到团队可访问的对应仓库并更新版本引用。
+新机器先按实际任务选择基线和配置、恢复依赖并预检，不默认重跑旧阶段或复用来源不匹配的 EMU。代码进入仓库、单元通过、整核通过、独立成员复现和比赛提交是不同结果。这里只维护导航，新增进度写计分板，路线改变写当前路线，不再向本文件叠加“最新进度”。

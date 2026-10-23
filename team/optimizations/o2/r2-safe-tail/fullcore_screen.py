@@ -6,6 +6,7 @@ come from real subprocess exits and the existing strict trace/checker modules.
 """
 from __future__ import annotations
 import argparse
+import hashlib
 from datetime import datetime, timezone
 import json
 import os
@@ -27,6 +28,11 @@ FLASH='a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994'
 PIN_SHA={'b0':'3752438404f544b9006c52b4234f5f05906b2de0fe4fbfa63c2006a30884dbf9',
          'h1':'39f525c9a9e2a068aee04ef1e08878af3f4056da24115a1236ddacf09b893666'}
 H1DIR=Path('team/optimizations/o2/result-width/h1/performance')
+# Checked-in migration checker remains pinned; all other checkers retain the original Git-blob pin.
+MIGRATED_PROFILE_SHA256='1650856fbe5a6626072ec0e6dfb5dcca86eacdcc805c7d10d542cfcc0f5be5b8'
+MIGRATION_CONTRACT='r2-acceptance-paths-v1'
+DEFAULT_ACCEPTANCE={'b0':Path('/home/riscv/riscv-lab/o2-fullcore-20261019/recheck-02/result.json'),
+                    'h1':Path('/home/riscv/riscv-lab/o2-h1-fullcore-20261021/final-validation.json')}
 CHECKER_PATHS=[g.O3/'check.py',Path('team/workloads/unified-vdot/check.py'),H1DIR/'build_profile.py',
                Path('team/optimizations/o2/fullcore/analyze.py'),
                Path('team/optimizations/o1/audit/runtime_gate.py'),
@@ -41,17 +47,34 @@ def now():
 def read_config(path, repo):
     value=json.loads(Path(path).read_text())
     fields={'am_home','cross_prefix','b0_products','h1_products','b0_build','h1_build','reference','flash'}
-    g.require(set(value)==fields,'unexpected/missing configuration fields')
-    for key in fields-{'cross_prefix'}:
-        value[key]=str(Path(value[key].replace('${REPO}',str(Path(repo).resolve()))).expanduser().resolve())
+    optional={'b0_acceptance','h1_acceptance'}
+    specified=set(value)
+    g.require(fields <= specified and specified <= (fields | optional)
+              and len(specified & optional) in (0, 2),
+              'unexpected/missing configuration fields (acceptance paths must be provided together)')
+    for key in (fields | optional)-{'cross_prefix'}:
+        if key in value:
+            g.require(isinstance(value[key],str) and value[key].strip(), 'invalid path: '+key)
+            value[key]=str(Path(value[key].replace('${REPO}',str(Path(repo).resolve()))).expanduser().resolve())
     return value
+
+
+def acceptance_paths(cfg):
+    return {mode:Path(cfg.get(mode+'_acceptance',DEFAULT_ACCEPTANCE[mode])) for mode in ('b0','h1')}
 
 
 def pinned_modules(repo):
     """Read-only comparison against the inspected source base, not a floating HEAD."""
     for p in CHECKER_PATHS:
-        original=subprocess.check_output(['git','show',g.BASE+':'+str(p)],cwd=repo)
-        g.require((Path(repo)/p).read_bytes()==original,'checker drift: '+str(p))
+        current=(Path(repo)/p).read_bytes()
+        if p == H1DIR/'build_profile.py':
+            # This intentional migration is pinned by its normalized SHA-256.
+            normalized=current.replace(b'\r\n',b'\n')
+            g.require(hashlib.sha256(normalized).hexdigest()==MIGRATED_PROFILE_SHA256,
+                      'migration checker drift: '+str(p))
+        else:
+            original=subprocess.check_output(['git','show',g.BASE+':'+p.as_posix()],cwd=repo)
+            g.require(current==original,'checker drift: '+str(p))
 
 
 def preflight(repo, cfg):
@@ -93,9 +116,8 @@ def preflight(repo, cfg):
         check(actual,runtime_errors)
         if actual.is_file() and selected.is_file() and g.sha(actual)!=g.sha(selected):
             runtime_errors.append('cwd auxiliary mismatch: '+str(actual))
-    # The unchanged provenance checker explicitly binds these historical receipts.
-    for path in ('/home/riscv/riscv-lab/o2-fullcore-20261019/recheck-02/result.json',
-                 '/home/riscv/riscv-lab/o2-h1-fullcore-20261021/final-validation.json'):
+    # Configurable locations, but the existing B0/H1 identities and semantic checks remain mandatory.
+    for path in acceptance_paths(cfg).values():
         check(path,runtime_errors)
     check(cfg['reference'],runtime_errors,REFERENCE);check(cfg['flash'],runtime_errors,FLASH)
     for path in CHECKER_PATHS:check(repo/path,runtime_errors)
@@ -227,7 +249,11 @@ def runtime_profile(repo,cfg):
     pinned_modules(repo)
     profile=g.load('r2_frozen_h1_profile',Path(repo)/H1DIR/'build_profile.py')
     profile.ROOT=Path(repo);profile.B0_PRODUCTS=Path(cfg['b0_products']);profile.H1_PRODUCTS=Path(cfg['h1_products'])
-    files,details=profile.build_profile(Path(cfg['b0_build']),Path(cfg['h1_build']))
+    files,details=profile.build_profile(Path(cfg['b0_build']),Path(cfg['h1_build']),
+                                        acceptance_paths=acceptance_paths(cfg))
+    details.update(r2_migration_contract=MIGRATION_CONTRACT,
+                   migrated_profile_sha256=MIGRATED_PROFILE_SHA256,
+                   acceptance_receipts={m:str(p) for m,p in acceptance_paths(cfg).items()})
     files.update({cfg['reference']:REFERENCE,cfg['flash']:FLASH})
     # Bind both the historical validators and this batch's adapters for every run.
     for relative in CHECKER_PATHS+[g.REL/n for n in ('candidate.py','linked_gate.py','fullcore_screen.py')]:

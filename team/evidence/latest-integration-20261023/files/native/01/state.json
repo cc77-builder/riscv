@@ -1,0 +1,83 @@
+{
+  "status": "FAILED",
+  "frozen_revision": "bca14d45b07ff07a86a7f54bce2b25870e60e2f3",
+  "archive": "/mnt/c/Code/RVInno/riscv/team/optimizations/o2/r2-safe-tail/evidence/merged-screen-v1",
+  "manifest_sha256": "1d42aa417c2793b997fbf1db89f05c1d2a5dcb49644ff14aa29395621bd129ed",
+  "new_emu_runs": 0,
+  "source_checkout": "/mnt/c/Code/RVInno/riscv",
+  "started": "2026-10-23T13:47:29.771073+00:00",
+  "historical_environment_fully_bound": false,
+  "current_source_fullcore_acceptance": false,
+  "steps": [
+    {
+      "name": "clone",
+      "argv": [
+        "git",
+        "clone",
+        "--shared",
+        "--no-checkout",
+        "-c",
+        "core.autocrlf=false",
+        "/mnt/c/Code/RVInno/riscv",
+        "/home/amesotten/.cache/codex-rvinno/s2-replay-20261023-01/frozen-source"
+      ],
+      "cwd": null,
+      "started": "2026-10-23T13:47:29.771660+00:00",
+      "exit_code": 0,
+      "finished": "2026-10-23T13:47:29.945402+00:00"
+    },
+    {
+      "name": "sparse",
+      "argv": [
+        "git",
+        "-C",
+        "/home/amesotten/.cache/codex-rvinno/s2-replay-20261023-01/frozen-source",
+        "sparse-checkout",
+        "set",
+        "--no-cone",
+        "/team/",
+        "!/team/**/evidence/",
+        "!/team/evidence/"
+      ],
+      "cwd": null,
+      "started": "2026-10-23T13:47:29.945616+00:00",
+      "exit_code": 0,
+      "finished": "2026-10-23T13:47:29.949261+00:00"
+    },
+    {
+      "name": "checkout",
+      "argv": [
+        "git",
+        "-C",
+        "/home/amesotten/.cache/codex-rvinno/s2-replay-20261023-01/frozen-source",
+        "checkout",
+        "--detach",
+        "bca14d45b07ff07a86a7f54bce2b25870e60e2f3"
+      ],
+      "cwd": null,
+      "started": "2026-10-23T13:47:29.949419+00:00",
+      "exit_code": 0,
+      "finished": "2026-10-23T13:47:31.886225+00:00"
+    },
+    {
+      "name": "host-tests",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "team/optimizations/o2/r2-safe-tail",
+        "-p",
+        "test_*.py"
+      ],
+      "cwd": "/home/amesotten/.cache/codex-rvinno/s2-replay-20261023-01/frozen-source",
+      "started": "2026-10-23T13:47:31.886492+00:00",
+      "exit_code": 1,
+      "finished": "2026-10-23T13:47:32.412502+00:00"
+    }
+  ],
+  "error": "ValueError('failed step: host-tests; original log preserved')",
+  "finished": "2026-10-23T13:47:32.412779+00:00"
+}

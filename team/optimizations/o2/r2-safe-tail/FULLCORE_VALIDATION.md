@@ -1,9 +1,9 @@
-# S0/S2 ELF 与 B0/H1 筛选入口：本轮停在环境预检
+# S0/S2 ELF 与 B0/H1 筛选合同及历史运行记录
 
 2026-10-21。代码基点 `24cb8b2e0fa0b17cad65c82246c572347a351d43`。
-写入仅限 `cc77-builder/riscv:zjhwork2`；不修改 `zjhwork`、生产 RTL、ISA/NEMU、默认模式或旧封存证据。
+当前执行顺序和目标见[开发路线](../../../docs/development-route-current.md)，并发见[协作约定](../../../docs/collaboration-current.md)。原 zjhwork2 单次写入限制不再适用；以下技术合同仍绑定指定 B0/H1 输入，不修改生产 RTL、ISA/NEMU、默认模式或旧封存证据。
 
-## 实际状态
+## 2026-10-21 历史实际状态
 
 **本轮新增并测试了严格构建/验证入口，但没有完成用户要求的真实 ELF → DiffTest → 周期筛选。**
 
@@ -51,13 +51,13 @@ S0/S2 中 RVV 的函数字节与地址必须相同；16×64 的整个加载镜�
 
 ## 在原完整 Linux/WSL 仓库中执行
 
-先将本批提交更新到本地 `zjhwork2`，在完整仓库根目录运行。不要在旧 campaign 输出目录复用运行。配置模板使用已记录的原路径；路径不同可复制到新配置文件后调整，但二进制/来源身份不允许静默放宽。
+在当前路线确认的独立完整仓库根目录运行，先核对所需候选源码与固定输入身份；不要因旧记录切换到 zjhwork2。不要在旧 campaign 输出目录复用运行。配置模板使用已记录的原路径；跨机器复制到新的本机配置后调整，包含 `b0_acceptance`、`h1_acceptance` 两份历史通过回执的**绝对位置**。它们必须同时配置；旧八字段配置仍按历史绝对路径使用。迁移版检查器由独立 SHA-256 固定，其余旧检查器保持原 Git-blob 锁；回执状态、hardware pins、EMU、正常参考库及原始来源仍逐项校验，不能改散列或降低门禁凑通过。
 
 ```bash
 ENTRY=team/optimizations/o2/r2-safe-tail/fullcore_screen.py
 CONFIG=team/optimizations/o2/r2-safe-tail/runtime.example.json
 
-# 只读预检；失败返回 2，并在 preflight.json 中列出缺项。
+# 输入预检：不构建、不启动 EMU，但会创建新的输出目录并写 state.json/preflight.json；严格只读审查不得运行。
 python3 -B "$ENTRY" --repo "$PWD" --config "$CONFIG" \
   --output "$HOME/riscv-lab/r2-s2-preflight-$(date +%Y%m%d-%H%M%S)" \
   --action preflight
@@ -68,7 +68,15 @@ python3 -B "$ENTRY" --repo "$PWD" --config "$CONFIG" \
   --action all
 ```
 
-`--action build` 只生成并静态检查全部 26 份正式镜像，不运行 EMU；不会将该状态标为运行通过。配置不含任意 shell 命令或关闭差分验证的选项。
+`--action build` 在 `build_ready=true` 时可先生成并静态检查 26 份 ELF，即使 `runtime_ready=false` 也不运行 EMU；真实运行未测。上述 `--action preflight` 仅核查输入并记录回执；`--action all` 必须两项就绪，4 次冒烟通过后才筛选。配置不含任意 shell 命令或关闭差分验证的选项。
+
+### 中断与重复构建限制
+
+当前入口只有 `preflight/build/all`，**没有断点恢复、复用已有构建或仅运行剩余样本的选项**。每次调用要求新的输出目录；先执行 `build` 后再执行 `all`，后者仍会重新构建，不会读取前一次的 26 份 ELF。因此 `build` 适用于独立验证编译/静态门禁或等待运行输入的场景；不要将它误作可被 `all` 直接接续的阶段。
+
+会话中断不等于后台运行结束：先核对 state、日志和真实进程/Worker，仍在运行就继续观察，不能另起同一批次。若已确认进程结束且批次未完成，保留旧输出、失败和全部样本；当前脚本只能在新输出目录重新执行所选 action。正式 `all` 会重新构建并重跑整个批次，不会跳过已通过的冒烟或样本，旧批次部分结果不能拼接冒充本批完整通过。
+
+重新执行前记录中断位置、输入身份和预计重复成本，核对资源及残留运行保护；若本轮预算不适合重跑，记录 BLOCKED/PAUSE 并转做独立工作。断点恢复留待独立实现和验证，本次文档修订没有增加该能力。
 
 原硬件来源检查器仍绑定历史验收回执和生成产物；仅复制两个 EMU 文件不足以通过来源检查。新机器迁移需要恢复这些材料，不通过删除旧检查来解决。源代码、镜像、依赖及运行证据身份全部通过后，才能评价是否采用 S2。
 

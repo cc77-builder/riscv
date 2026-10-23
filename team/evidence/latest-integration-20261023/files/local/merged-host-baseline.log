@@ -1,0 +1,66 @@
+..F.F.E................................E
+======================================================================
+ERROR: setUpClass (test_fullcore_screen.LinkedGateTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Code\RVInno\riscv\team\optimizations\o2\r2-safe-tail\test_fullcore_screen.py", line 70, in setUpClass
+    data=cls.root/'data';candidate.generate(ROOT,data,'s2',0,7,'performance')
+                         ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Code\RVInno\riscv\team\optimizations\o2\r2-safe-tail\candidate.py", line 98, in generate
+    require(blob((repo / renderer).read_bytes()) == PINS[renderer], "renderer drift")
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Code\RVInno\riscv\team\optimizations\o2\r2-safe-tail\candidate.py", line 20, in require
+    raise ValueError(message)
+ValueError: renderer drift
+
+======================================================================
+ERROR: setUpClass (test_safe_tail.SafeTailTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Code\RVInno\riscv\team\optimizations\o2\r2-safe-tail\test_safe_tail.py", line 18, in setUpClass
+    cls.base = candidate.load_base(ROOT)
+               ~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Code\RVInno\riscv\team\optimizations\o2\r2-safe-tail\candidate.py", line 30, in load_base
+    require(blob((repo / path).read_bytes()) == PINS[path], "baseline drift: " + path)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Code\RVInno\riscv\team\optimizations\o2\r2-safe-tail\candidate.py", line 20, in require
+    raise ValueError(message)
+ValueError: baseline drift: team/workloads/o3-gemv/generate.py
+
+======================================================================
+FAIL: test_migrated_checker_pin_is_not_implicitly_disabled (test_acceptance_config.RelocatedAcceptanceTests.test_migrated_checker_pin_is_not_implicitly_disabled)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Code\RVInno\riscv\team\optimizations\o2\r2-safe-tail\test_acceptance_config.py", line 70, in test_migrated_checker_pin_is_not_implicitly_disabled
+    self.assertEqual(hashlib.sha256(body).hexdigest(), r2.MIGRATED_PROFILE_SHA256)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '2206b7215dafe6cb12ba3982a6cf381b8e3ce516edabac4cc42938398dd17f95' != '1650856fbe5a6626072ec0e6dfb5dcca86eacdcc805c7d10d542cfcc0f5be5b8'
+- 2206b7215dafe6cb12ba3982a6cf381b8e3ce516edabac4cc42938398dd17f95
++ 1650856fbe5a6626072ec0e6dfb5dcca86eacdcc805c7d10d542cfcc0f5be5b8
+
+
+======================================================================
+FAIL: test_remapped_paths_are_preserved_in_preflight_contract (test_acceptance_config.RelocatedAcceptanceTests.test_remapped_paths_are_preserved_in_preflight_contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Code\RVInno\riscv\team\optimizations\o2\r2-safe-tail\test_acceptance_config.py", line 43, in test_remapped_paths_are_preserved_in_preflight_contract
+    self.assertEqual(paths, {"b0": Path(a), "h1": Path(b)})
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'b0'[20 chars]ers/JamesHotten/AppData/Local/Temp/tmpom0vlula[102 chars]on')} != {'b0'[20 chars]ers/JAMESH~1/AppData/Local/Temp/tmpom0vlula/co[96 chars]on')}
+- {'b0': WindowsPath('C:/Users/JamesHotten/AppData/Local/Temp/tmpom0vlula/copied-B0.json'),
+?                               ^^^^ ^^^^^
+
++ {'b0': WindowsPath('C:/Users/JAMESH~1/AppData/Local/Temp/tmpom0vlula/copied-B0.json'),
+?                               ^^^^ ^^
+
+-  'h1': WindowsPath('C:/Users/JamesHotten/AppData/Local/Temp/tmpom0vlula/copied-H1.json')}
+?                               ^^^^ ^^^^^
+
++  'h1': WindowsPath('C:/Users/JAMESH~1/AppData/Local/Temp/tmpom0vlula/copied-H1.json')}
+?                               ^^^^ ^^
+
+
+----------------------------------------------------------------------
+Ran 38 tests in 0.096s
+
+FAILED (failures=2, errors=2)

@@ -1,0 +1,168 @@
+{
+  "status": "FROZEN_S2_REPLAY_PASS",
+  "frozen_revision": "bca14d45b07ff07a86a7f54bce2b25870e60e2f3",
+  "archive": "/mnt/c/Code/RVInno/riscv/team/optimizations/o2/r2-safe-tail/evidence/merged-screen-v1",
+  "manifest_sha256": "1d42aa417c2793b997fbf1db89f05c1d2a5dcb49644ff14aa29395621bd129ed",
+  "new_emu_runs": 0,
+  "source_checkout": "/mnt/c/Code/RVInno/riscv",
+  "started": "2026-10-23T13:54:28.036563+00:00",
+  "historical_environment_fully_bound": false,
+  "current_source_fullcore_acceptance": false,
+  "host_tools_sha256": {
+    "/home/amesotten/.cache/codex-rvinno/r2-llvm19-local/bin/clang": "f6d5286a52de10b1e3e8841457c9903a1ea28f222ac0f58cd616697d0dcd9db3",
+    "/home/amesotten/.cache/codex-rvinno/r2-llvm19-local/bin/ld.lld": "7ea5c57a8c0e116cc5b1a7e3596c123e9ac2816fd00c081a4a969b838fe9dbea",
+    "/home/amesotten/.cache/codex-rvinno/r2-llvm19-local/bin/llvm-objcopy": "59030b2614d42224283bc0bb2d17cfcb661f725e4eb685af56d0c1dd68a96c0b"
+  },
+  "environment": {
+    "PATH": "/home/amesotten/.cache/codex-rvinno/r2-llvm19-local/bin:/usr/bin:/bin",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "UTC"
+  },
+  "steps": [
+    {
+      "name": "clone",
+      "argv": [
+        "git",
+        "clone",
+        "--shared",
+        "--no-checkout",
+        "-c",
+        "core.autocrlf=false",
+        "/mnt/c/Code/RVInno/riscv",
+        "/home/amesotten/.cache/codex-rvinno/s2-replay-20261023-03/frozen-source"
+      ],
+      "cwd": null,
+      "started": "2026-10-23T13:54:28.036784+00:00",
+      "exit_code": 0,
+      "finished": "2026-10-23T13:54:28.231892+00:00"
+    },
+    {
+      "name": "sparse",
+      "argv": [
+        "git",
+        "-C",
+        "/home/amesotten/.cache/codex-rvinno/s2-replay-20261023-03/frozen-source",
+        "sparse-checkout",
+        "set",
+        "--no-cone",
+        "/team/",
+        "!/team/**/evidence/",
+        "!/team/evidence/"
+      ],
+      "cwd": null,
+      "started": "2026-10-23T13:54:28.232115+00:00",
+      "exit_code": 0,
+      "finished": "2026-10-23T13:54:28.236472+00:00"
+    },
+    {
+      "name": "checkout",
+      "argv": [
+        "git",
+        "-C",
+        "/home/amesotten/.cache/codex-rvinno/s2-replay-20261023-03/frozen-source",
+        "checkout",
+        "--detach",
+        "bca14d45b07ff07a86a7f54bce2b25870e60e2f3"
+      ],
+      "cwd": null,
+      "started": "2026-10-23T13:54:28.236632+00:00",
+      "exit_code": 0,
+      "finished": "2026-10-23T13:54:29.897671+00:00"
+    },
+    {
+      "name": "fixture-source",
+      "argv": [
+        "git",
+        "-C",
+        "/home/amesotten/.cache/codex-rvinno/s2-replay-20261023-03/frozen-source",
+        "restore",
+        "--source",
+        "bca14d45b07ff07a86a7f54bce2b25870e60e2f3",
+        "--worktree",
+        "--ignore-skip-worktree-bits",
+        "--",
+        "team/evidence/t10-t11-fullcore-20261013/matrix/negative-fixture.c"
+      ],
+      "cwd": null,
+      "started": "2026-10-23T13:54:29.897986+00:00",
+      "exit_code": 0,
+      "finished": "2026-10-23T13:54:29.947507+00:00"
+    },
+    {
+      "name": "tool-version-0",
+      "argv": [
+        "/home/amesotten/.cache/codex-rvinno/r2-llvm19-local/bin/clang",
+        "--version"
+      ],
+      "cwd": null,
+      "started": "2026-10-23T13:54:29.947784+00:00",
+      "exit_code": 0,
+      "finished": "2026-10-23T13:54:30.216048+00:00"
+    },
+    {
+      "name": "tool-version-1",
+      "argv": [
+        "/home/amesotten/.cache/codex-rvinno/r2-llvm19-local/bin/ld.lld",
+        "--version"
+      ],
+      "cwd": null,
+      "started": "2026-10-23T13:54:30.216328+00:00",
+      "exit_code": 0,
+      "finished": "2026-10-23T13:54:30.237357+00:00"
+    },
+    {
+      "name": "tool-version-2",
+      "argv": [
+        "/home/amesotten/.cache/codex-rvinno/r2-llvm19-local/bin/llvm-objcopy",
+        "--version"
+      ],
+      "cwd": null,
+      "started": "2026-10-23T13:54:30.237707+00:00",
+      "exit_code": 0,
+      "finished": "2026-10-23T13:54:30.252602+00:00"
+    },
+    {
+      "name": "host-tests",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "team/optimizations/o2/r2-safe-tail",
+        "-p",
+        "test_*.py"
+      ],
+      "cwd": "/home/amesotten/.cache/codex-rvinno/s2-replay-20261023-03/frozen-source",
+      "started": "2026-10-23T13:54:30.252989+00:00",
+      "exit_code": 0,
+      "finished": "2026-10-23T13:54:32.048994+00:00"
+    },
+    {
+      "name": "architecture-audit",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/amesotten/.cache/codex-rvinno/s2-replay-20261023-03/frozen-source/team/optimizations/o2/r2-safe-tail/merged_evidence.py",
+        "--repo",
+        "/home/amesotten/.cache/codex-rvinno/s2-replay-20261023-03/frozen-source",
+        "--action",
+        "audit",
+        "--archive",
+        "/mnt/c/Code/RVInno/riscv/team/optimizations/o2/r2-safe-tail/evidence/merged-screen-v1",
+        "--output",
+        "/home/amesotten/.cache/codex-rvinno/s2-replay-20261023-03/architecture-audit.json"
+      ],
+      "cwd": "/home/amesotten/.cache/codex-rvinno/s2-replay-20261023-03/frozen-source",
+      "started": "2026-10-23T13:54:32.049671+00:00",
+      "exit_code": 0,
+      "finished": "2026-10-23T13:58:35.361797+00:00"
+    }
+  ],
+  "formal_windows": 384,
+  "normal_runs": 30,
+  "expected_negative_runs": 1,
+  "finished": "2026-10-23T13:58:35.381127+00:00"
+}

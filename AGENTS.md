@@ -1,295 +1,69 @@
-> 当前工作（2026-10-21）：已封存本机基线1dc1aca14（G3 INCOMPLETE，缺PARTIAL_KILL），本轮整合zjhwork 17bab1d6e的H1及验证更新。保留两套来源，构建/归档/重放兼容修复见[整合记录](team/docs/h1-integration-20261021.md)。本地验证结果以该记录为准；O1/O2默认关闭，main和远端不改，历史发布指令不作为本轮授权。
+> 本地 James_Hotten 接续（2026-10-23）：整合上游 bca14d45b；本机 O5 的 PARTIAL_KILL 缺项及 H1 独立 FU/父级实测分别保留，不能挪用上游全核 PASS。详见 [本轮整合记录](team/docs/latest-integration-20261023.md)。O1/O2 默认关闭；本轮仅本地整合与推进，不更改 main 或推送远端。历史指令不是当前发布授权。此前本地指南可由 Git 提交 8f47b0a76 的 AGENTS.md 追溯。
 
-# Current sealed baseline before H1 integration
+# 项目开发指南
 
-2026-10-21 本机 O2 基线：Linux LF、126个依赖、3430项输入及新全核构建通过。实际16次启动，选定14项作业；117个唯一矩阵用例/124次执行、5378条正常VDOT提交、bit100拒绝及恢复通过。严格重审为 INCOMPLETE，仅缺 PARTIAL_KILL；固定seed=1补测仍为0。原FAILED和两次INCOMPLETE均保留。该结果属于0484构建，不能用于随后H1整合源码的验收。O1/O2默认关闭，未推送，main不改；T17/人工ACK/新性能与PPA未完成。 See team/docs/o5-current-fullcore-20261021.md. Earlier states below are historical.
+本项目在香山昆明湖 V2 上实现自定义向量点积指令。工程目标是满足赛题技术要求，并在正确、可复现和公平比较的前提下持续提高性能。比赛报告、PPT、视频、答辩及提交由成员另行安排，不进入 Agent 工程队列；必要的运行说明、验证证据和开发记录照常维护。一般用中文交流。
 
-# Current scope: Linux LF and current-source O2 G3, 2026-10-21
+## 开始工作
 
-Continue James_Hotten from 7d0630202. Native Linux LF checkout and 126 pinned dependencies are prepared. Explicit current-inputs-v1 restores/rebuilds missing prerequisites; 3,430 strictly checked input files pass. Four prior build attempts are retained: launcher failures, a kernel-confirmed JVM OOM, and a GCC memory-pressure interruption after 396 objects. Build05 at 3098ceb4e was stopped with a recorded failure after finding Verilator independently selects unbound LINK/AR. Fresh build06 at 0484f1feb uses explicit split-clang-v2 after a real Verilator/PCH/archive/link/run probe passed. LINK/AR/ld, Verilator support and Clang dynamic implementation are bound; preserve all earlier products. Temporary 8 GiB task-local swap must be disabled and removed when work completes. Build06 passed all stages and source/tool verification. Its EMU SHA is b2b8f01324613f44f5c2ab9b1f4948f1bbe7db15457383d450608014d5c1ece9; the current G3 campaign is running. O1/O2 remain default-off; no push, main change, new performance/PPA claim or T17/member ACK. See team/docs/o5-current-fullcore-20261021.md. Earlier scope statements below are historical.
+1. 确认仓库根、分支、完整 HEAD、远端和已有未提交修改；查真实运行、state、日志及受保护的输入，勿猜目录日期或重跑工作。
+2. 先读[赛题要求与评分总览](赛题要求与评分总览.md)第 1、2、5 节，再从[当前开发路线](team/docs/development-route-current.md)按**当前规划工程包的默认次序**选择；读取[开发计分板](开发计分板.md)的近期接续记录、[协作约定](team/docs/collaboration-current.md)及 Issue 有效活动，避免同包重复或共享生成器、资源冲突。有新实验依据时按路线调整子项，不把当前包数量当成限制。
+3. 已获授权时对准确叶级包发布 WORK 并回读；每位 Agent 默认认领一个主要包，**包内连续开发不逐步骤请求许可**。Issue 未启用时只继续确定不冲突的授权独立工作，不猜队友空闲。
+4. 按既定包完成实现、验证、修订和取舍；有意义成果归入[开发计分板](开发计分板.md)。缺依赖或撞包仅暂停受影响部分，改做其他已规划的就绪包；仅发布到共享 `zufan` 时开启短集成窗口。
 
-# Previous scope: reproduction readiness, 2026-10-21
+## 文档职责与适用范围
 
-Continue James_Hotten from 2157dca6f. Both remote repositories have no unmerged branch heads. Current work repairs live G3 replay and O4 source/tool contracts and adds O5 input readiness. O1/O2 remain default-off; main and remote branches are unchanged. Inputs are NOT_READY: 70 known prerequisites are missing and transitive inventories cannot fully expand. No new EMU, synthesis, STA, performance or T17 acceptance. See team/docs/reproduction-readiness-20261021.md; historical authorizations below are provenance only.
 
-# Current integration scope: James_Hotten, 2026-10-20
+| 内容 | 唯一维护位置 |
+| --- | --- |
+| 通用开发规则、入口 | 本文件 |
+| 赛题原文、完整评分项、官方依据与语义待确认项 | [赛题要求与评分总览](赛题要求与评分总览.md) |
+| 当前基线、全部工程工作包、默认顺序、决策条件 | [当前开发路线](team/docs/development-route-current.md) |
+| 并发规则／实时操作与运行保护 | [协作约定](team/docs/collaboration-current.md)／其指定 Issue |
+| 每轮开发时间、身份、内容、成果及路线变化 | [开发计分板](开发计分板.md) |
+| 语义、实验条件、实际结果与原始证据 | 对应 spec、CONTRACT、结果文件和 evidence |
 
-Integrate the fixed zjhwork snapshot 9b6cf074951dbd51e1670c5fbc7111a97c362b3f (O4) after the reviewed O2/O3 checkpoint 769b3b4b1. O1/O2 remain default-off. Main is excluded. Historical publication instructions below are provenance, not authority for this chat. O4 measurements retain the pre-integration source identity and do not measure the repaired DIV cancellation clock. Current review and validation are recorded separately in team/docs/o4-integration-20261020.md.
+当前工作顺序以当前路线为准，历史计划、旧“当前任务”、单次运行授权、旧分支限制和 ACK 模板不构成新任务指令。技术合同只约束其明确标识的版本、输入和测量条件，更新路线不能降低合同标准；新候选需要变更合同时保留旧合同并明确新身份。README 仅作导航，不再复制进度正文。新增文件前先确认现有位置能否承载。
 
-# Current James_Hotten integration scope (2026-10-20)
+## 工程与验证
 
-Integrate zjhwork 676ec7372 into James_Hotten 6ea846edb. Review O2 elastic RTL,
-observer exclusivity, source/build gates and O3 application evidence. Preserve
-James clock cancellation, frames/events separation and strict native contracts.
-O1 and O2 remain default-off. Main is excluded. Imported publication commands
-and historical task instructions below do not authorize actions in this chat.
-Frozen O2/O3 measurements retain their original source identity; integration
-checks are new evidence, not new full-core performance measurements.
+| 范围 | 入口／重点 |
+| --- | --- |
+| 指令语义与环境 | [vdot 规格](team/spec/vdot.md)、[环境](team/docs/environment.md)、[版本清单](team/versions.env) |
+| 算术／FU | src/main/scala/xiangshan/backend/fu/vector/、wrapper/；team/models/vdot/、team/rtl/vdot/ |
+| 软件／NEMU／优化 | team/workloads/、team/patches/nemu/、team/optimizations/ |
+| 文档改动 | 内容一致、文件链接与历史适用范围；不启动硬件回归 |
+| 模型／生成器／检查器 | 对应主机检查、生成物一致性和必要的真实编译运行 |
+| RTL／执行接口 | FU、真实父级及受影响整核回归；性能候选正确性通过后再公平比较 |
+| 最终组合 | 固定版本与配置、组合回归、干净目录实际复现及稳定入口；注明执行者，不把 Agent 复现写成人工验收 |
 
-Integration validation completed: 631 related host tests, 28 compiled option
-cases, actual red/green O2 parent reproduction (13,515 requests after repair),
-16 O2 observation negatives, three legacy frames modes and four negatives.
-DIV cancellation now releases its clock hold; raw-cycle checks reject idle
-clock leakage. Imported 3,446 evidence blobs and G3/G4/O3 portable replays pass.
-Current O2 native contracts, explicit O3 build/calibration selection, transitive
-checker snapshots and optimized-Python archive gates are repaired. Final tested
-compiler binding covers 439 root inputs and 126 dependencies. Details and limits:
-team/docs/o2-o3-integration-20261020.md. No merged-source EMU/performance/PPA claim.
-Next validation must use fresh current-source full-core builds/calibration;
-historical receipts remain archived and must not receive invented new contracts.
-This task completes a local merge only; main and remote branches stay unchanged.
+在已准备依赖的 Linux/WSL 仓库根运行基础检查：
 
-# Prior task and imported history
+~~~bash
+source team/scripts/activate.sh
+bash team/scripts/check-environment.sh
+bash team/scripts/check-vdot-model.sh
+~~~
 
-# James_Hotten current O1 optimization scope
+RTL、整核、性能和综合使用对应模式的入口与合同。构建开关不能改变已有 EMU。各成员配置 TEAM_XS_ENV_ROOT、JAVA_HOME、工具 PATH 和资源参数；共享文档用工程相对路径或配置变量，个人路径放本地配置和运行记录。
 
-Continue optimization from local merge 77caa4384. Current work and honest
-acceptance boundaries: team/docs/o1-optimization-20261019.md. Implement the
-complete original/lean software-plan runner and same-input native build
-contracts before claiming a new performance A/B. New contract probes, builds
-and resumes use a shared restricted environment. The user now authorizes
-committing and pushing this completed work to origin/James_Hotten only.
-O1 remains off; main is outside this publication scope. The fresh frames full-core build binds
-source pack 21dce14309ebe4d2f5c196d48e36271fb1a7eb1005824dad03df9ba71b5742f0.
-Do not confuse its split-build receipt with the events native-build contract.
-This fresh EMU completed 15 real launches: 14 normal passes and one expected
-bit100 rejection, including the full matrix, same-image recovery, control,
-25 calibrated windows and complete original190/lean199 software plans.
-Raw-log replay and six software-log corruption probes pass; related host checks
-total 383. Evidence: team/evidence/o1-optimization-20261019. The events contract
-full EMU build and baseline/T14/O1 A/B remain unexecuted. Batch measured windows
-420/360/363/360 show long acceptance gaps; keep the slow sample and do not claim
-a causal diagnosis or a new speedup. Validation and evidence sealing preceded
-publication; push completion must be confirmed by reading the remote branch.
-Statements below retain the preceding integration/publication history.
+按影响范围验证，源码、配置和输入仍适用的结果可复用并注明依据。新实验用独立输出，保留失败；记录源码、依赖、配置、镜像、参考模型、命令和退出码。PASS／FAIL／BLOCKED／NOT_TESTED 分开，功能、周期、面积、时序和独立复现分别表述，不把历史或局部 PASS 扩大为新版本完整验收。
 
-<!-- Imported upstream historical record follows; not current chat authorization. -->
+## 并行与集成
 
-<!-- O2_H1_PUBLICATION_20261021 -->
+每人/每 Agent 独立工作区、Git index 和可写输出。**Issue 的 WORK 认领准确叶级任务包**，同包默认冲突，跨包还必须检查冻结生成器、接口、验证输入和重型资源；不需要长期模块独占或全员 ACK。已有运行由 state/日志/进程事实保护，不能随意停止或覆盖他人的输入和证据。
 
-当前用户已明确授权本批普通快进推送至 cc77-builder/riscv:zjhwork，覆盖下方历史不 push 限制；不授权强推、其他分支、R2/R4 自动开展或代签 ACK。先读 team/docs/o2-h1-publication-20261021.md。主流程及交付流程均已完成，不重跑或修改封存载荷。
+固定快照的只读验证与新候选可以并行；包内多步骤研发不重复认领。READY 保留待集成包的认领，DONE/明确释放的 PAUSE 才释放。源码、配置、输入仍适用的验证可复用，但不得把旧 PASS 扩大成新候选的全核或性能结论。
 
-> 2026-10-21 本批发布：按用户授权将 R0/R1、H1 实现、全核回归及 B0/H1 周期不退化证据交付 GitHub 的 zjhwork。H1 本机验证链完成，96 对正式窗口周期完全一致；R4 独立复现与最终采用待完成。实际发布结果以远端回读回执为准，下文旧发布状态按历史时点阅读。 [发布说明](team/docs/o2-h1-publication-20261021.md)。
+仅在已获用户授权且**真正准备推送 `zufan`** 时，通过 Issue 的短暂 INTEGRATE 窗口协调共享分支写入；构建、仿真与冲突修复放在窗口外。发布 INTEGRATE-BEGIN 后按协作约定回读，确认唯一有效发布者；推送前再次核对活动与最新远端，按影响复验，只正常快进，不强推、不丢弃他人历史、不代签人工 ACK。
 
-<!-- B0_H1_PERFORMANCE_COMPLETED_20261021 -->
+## 每次开发结束必须记计分板
 
-> 2026-10-21：B0/H1 同镜像周期不退化检查完成。36 次新运行、478 个校验窗口、192 个正式窗口组成的 96 对样本逐项周期完全一致；严格原始日志重审和 Linux/Windows 便携复算通过。H1 本轮没有周期提速，保留此前局部面积收益及部分 STA 路径回退的取舍。H1 本机验证链已齐备，R4 独立复现与最终采用仍待完成。本轮未推送 GitHub，未切换默认模式，未自动开始 R2/R4，正式报告后置。 [结果记录](team/optimizations/o2/result-width/h1/performance/B0_H1_RESULT.md)。下文旧状态按历史时点阅读。
 
-# 当前任务：B0/H1 同镜像周期不退化检查（2026-10-21）
+每个有实际改动、验证或研究结论的工作单元完成、暂停或取消时，在[开发计分板](开发计分板.md)追加一条：开发起止时间及 UTC 偏移、GitHub 用户名、操作 ID／执行方式、工作包、开发内容与成果、验证及证据／源码身份、路线影响。一次有意义的工作一条，不逐工具调用记账；讨论而无新成果无需重复记录。
 
-用户已明确授权本轮检查，覆盖下方历史不自动性能对照限制。入口 team/optimizations/o2/result-width/h1/performance/CONTRACT.md。本轮复用已验收B0/H1并新跑36项，保留旧构建、R0锁和封存证据；最多两个单线程EMU，不push，不自动R2/默认切换或代签ACK。先查新工作根 /home/riscv/riscv-lab/o2-h1-performance-20261021 的启动回执与state，不重复启动已在运行的任务。
+身份优先使用当前已核实的 GitHub 登录或用户明确提供的账号；Git 作者配置仅作线索，未知写“待核实”，不能猜队友身份。Agent 写“@用户名 / Agent”，不能冒充成员人工验收；同账号多个 Agent 用不同操作 ID。只知道日期就记日期，不补造工时，构建等待不算人工投入。
 
-当前运行固定 f732d92d13fb47fdf9eea46d32c5e77bd4343363。交付监督根 /home/riscv/riscv-lab/o2-h1-performance-delivery-20261021 的 finish.py 已启动，等待主流程通过后自动封存与 Linux/Windows 复算；先查其 state.json，禁止重复启动。正式完成前保持 HEAD 和运行绑定文件不变。
+新对话不能依赖上轮聊天：将下一步具体动作、前置条件及成果位置写入计分板“路线影响／接续”，认领与存活运行按[跨轮接续约定](team/docs/collaboration-current.md#cross-round-handoff)更新 Issue。已有结果和接续线索应在有意义阶段及时落盘，不只留在最终回复；不新增每日记忆目录或第二套任务表。
 
-# 当前进度：O2-R1 H1 全核回归通过（2026-10-21）
-
-新 H1 全核构建、14 项作业及严格离线重审通过：13 项正常作业、1 项 bit100 预期拒错与同镜像正常库恢复；117 个唯一功能/异常用例、5,378 条正常 vdot 提交、95 项主机检查和六项两槽覆盖齐全。完整 128 位输出检查保持有效。
-
-结果见[H1 全核回归记录](team/optimizations/o2/result-width/h1/fullcore/H1_FULLCORE_RESULT.md)。当前源码与 repo/build/emu 均为 H1，硬件固定提交 8b5024f；原 O2 B0 构建完整保留，R0 锁仍绑定 B0。为固定构建身份已有两个普通本地提交，未推送 GitHub。
-
-下一项是 B0/H1 同镜像周期不退化检查；本轮没有新性能 A/B 或加速比。此前局部面积收益及参考时序取舍保持原结论。整项 R1 的后续检查、R4 独立复现与最终采用仍待完成，正式报告继续在工程冻结后编写。下方记录均按各自历史时点阅读。
-
-主流程与交付流程均已完成，不要重复启动 launch.py/finish.py，也不要修改封存载荷。原始工作根 /home/riscv/riscv-lab/o2-h1-fullcore-20261021；交付根 /home/riscv/riscv-lab/o2-h1-fullcore-delivery-20261021。Windows 原生便携复算也已通过。当前分支 local/o2-h1-fullcore-20261021；本轮不自动开展性能 A/B、R2、默认切换或推送，不代签成员 ACK。
-
-# 当前任务：H1 全核构建与 NEMU 差分回归（2026-10-21）
-
-当前主流程源码固定8b5024fcbd96986871cc40ce8c9fb71a67c495eb；launch.py已启动。交付监督根 /home/riscv/riscv-lab/o2-h1-fullcore-delivery-20261021 的 finish.py 等主流程全部通过后自动封存/复制；恢复时检查两个state、launch回执和实际PID，不要重复启动。
-
-用户已明确授权本轮 H1 全核任务并在中断后要求继续，覆盖下方历史不自动全核限制。先读 team/optimizations/o2/result-width/h1/fullcore/CONTRACT.md。工作根 /home/riscv/riscv-lab/o2-h1-fullcore-20261021；当前源码必须保持上一轮H1一致，普通本地提交锁定身份，不push。新EMU独立pins，B0原构建单独保留，不改R0锁或旧封存。沿用14项作业及严格离线重审；一次一个j2/12G重构建，最多2个单线程EMU。不要重复已启动campaign；从state与PID恢复。G4性能/R2/默认切换/人工ACK不自动开展。下方为历史状态。
-
-# 当前进度：O2-R1 H1 局部验证完成（2026-10-21）
-
-H1 已实现低32位保存，完整128位结果、独立FU、真实VFEX4父级与参考面积/时序对照已完成。10,022组唯一向量与4+16项观测值负控通过，II=1、无阻塞2拍保持。完整FU面积降低2.33386%，完整父级降低0.137349%，均少96个DFF。部分时序路径回退，1ns参考目标仍未满足。
-
-见[H1实现与验证结果](team/optimizations/o2/result-width/h1/H1_RESULT.md)。下一项为H1全核回归及后续同镜像周期检查；整项R1、独立成员复现和最终采用仍待完成。当前源码是H1候选，已有build/emu仍为B0。本轮未提交或推送，未改R0锁与旧封存证据；下方状态按历史时点阅读。
-
-# 当前任务：O2-R1 H1 实现与局部验收（2026-10-21）
-
-用户已授权实施低32位保存，并验证完整128位结果、FU/真实父级行为以及面积时序。工作目录/home/riscv/riscv-lab/o2-h1-result32-20261021，本地分支local/o2-r1-result-width-20261021。只改VDotElastic结果存储宽度；不改变ISA/NEMU、默认模式、黄金数据、P/R控制和身份合同。顺序运行一个重构建/综合，保留基点+补丁+逐文件SHA及全部失败。复用原O4工具/参考库和所有5档STA条件。不改R0基线锁或旧封存证据；本轮不push，不自动开始全核/G4/R2或代签人工ACK。下方为历史状态。
-
-# 当前进度：O2-R1 映射审查通过（2026-10-21）
-
-R0 本机预检已完成；R1 第一关映射审查通过，H1 低32位候选尚待实现，整项 R1 未完成。两份 O2 网表的高96位各占96个独立DFF；对应独占局部成本约占FU的3.0277%、完整VFEX4的0.1879%，不是新实现的净节省。
-
-见[R1审查与候选条件](team/optimizations/o2/result-width/R1_MAPPING_REVIEW.md)。本轮只做审查与可复算记录，未改生产RTL、默认配置、ISA/NEMU和旧封存证据，未运行新综合/STA/EMU；没有新加速比。12项主机检查及2项真实命令负控通过。本地分支local/o2-r1-result-width-20261021，保留R0未提交材料；未提交或推送，不代签成员ACK。下方按历史时点阅读。
-
-# 当前进度：O2-R0 本机自动验收完成（2026-10-21）
-
-R0 已完成基线固定和本机自动预检（2026-10-21）：100 项主机检查、observe/cost 两种配置、4 项真实命令负控通过。未运行新 EMU 或综合，成员独立复现仍留待 R4/T17。下一项 R1 映射寄存器审查。
-
-见[R0 完成记录](team/optimizations/o2/repro/R0_STATUS.md)与同目录复现说明。本轮本地保存，未提交或推送，不自动开始 R1，不切换默认模式，不代签成员 ACK。下方按历史时点阅读。
-
-# 最新项目状态与本批发布（2026-10-20）
-
-用户授权将当前项目状况保存为Markdown并发布至cc77-builder/riscv的zjhwork。本批包含已有6项O4提交、O2主线选择和状态快照，允许正常快进上传；最终成功与SHA以远端回读为准。
-
-技术主线采用O2，O0–O4已有对应证据；下一步O5/T17及O2减代价审查，G5最终冻结待完成，T16/T18工程冻结后集中开展。源码默认开关未改，人工ACK待实际成员完成。此次仅整理与发布，不重跑已完成工程或改旧封存载荷。
-
-当前入口：[项目当前状况](team/docs/project-status-20261020.md)。下方“未上传/不push/待做”等按历史时点阅读；原始证据保持生成状态。
-
-# 当前主线：O2 两槽弹性 FU（2026-10-20）
-
-按用户“推荐一版并沿用其继续优化”的要求，后续开发采用O2，O1作为冻结对照与回退。G4 batch周期少39.03%，O3应用仅少0.62%–1.50%；完整FU面积+41.41%、VFEX4父级+1.25%。这是一项开发主线选择，最终参赛采用仍须完成O5/T17及G5。
-
-下一步固定O2复现入口、补齐独立复现，同时审查额外性能字段和控制路径成本；后续每次只实施一个有证据支持的优化。工程冻结后再集中编写T16与准备T18。默认源码开关与旧封存证据保持原状，本次只更新计划，未运行新测试或推送GitHub。
-
-详细依据和执行顺序见[O2主线选择](team/docs/o2-mainline-decision-20261020.md)。下方保留历史状态与原始计划，不作为当前待办顺序。
-
-# 当前状态：O4结构与参考时序评估完成（本地）
-
-2026-10-20：4项映射/20项STA/140份路径及13项主机检查通过离线复核，结果见team/optimizations/o4/README.md。
-完整FU面积+41.41%，含完整DIV的真实VFEX4面积+1.25%；两版均未满足1ns参考目标，不宣称整核Fmax/功耗。
-当前local/o4-cost-20261020，本轮不push、不切换默认。下一项O5/T17独立复现，随后G5最终采用；正式T16后置。
-不要重跑已完成O4或改封存证据。下方内容为历史状态/原计划。
-
-# 当前任务：O4结构与时序代价评估（本地）
-
-2026-10-20用户明确授权O4，覆盖下方历史不自动O4的限制。入口team/optimizations/o4/README.md和CONTRACT.md。
-本轮新增公共生产接口harness及独立综合/STA工具，不改生产src/ISA/NEMU或旧封存证据；不push、不切换默认、不自动O5/G5，正式T16后置。
-工作根/home/riscv/riscv-lab/o4-cost-20261020。失败记录保留；不能把前布局参考库数字当作整核Fmax或实际功耗。
-
-# 当前发布：O2与O3成果交付 zjhwork（2026-10-20）
-
-用户明确要求把当前成果推送GitHub的zjhwork，授权本批正常快进发布到cc77-builder/riscv:zjhwork。
-本条覆盖下方历史“不push/本地保存”限制，不授权其他分支、强推、自动O4/O5/G5、默认模式切换或人工ACK。
-先读team/docs/o2-o3-publication-20261020.md；结果基点db2281b，实际发布结果以远端SHA回读为准。
-G4 batch128降低39.03%；O3全部56项合格作业、1280窗口、768正式样本与Linux/Windows复算通过，35项主机检查通过。
-O3中断恢复与后处理问题均已解决，旧记录按历史时点保留。下一项技术工作O4，随后O5/T17、G5；正式T16继续后置。
-本轮只发布和更新入口，不重复构建、仿真或改封存证据。以下为历史状态。
-
-# O3应用评估：本轮自动测量及Linux严格重审完成
-
-2026-10-19（任务开始日期），local/o3-gemv-20261019。先读team/workloads/o3-gemv/README.md及对应证据入口。56项合格作业（46项原通过复用、10项恢复补跑，另2项中断尝试保留）、1280窗口、768正式窗口及4项确定性重放通过；Windows原生复算状态另见delivery回执。不要重跑完成campaign或改密封证据。本轮本地保存未push，不自动O4/O5/G5或切换默认模式，正式T16后置。以下为历史状态。
-
-# 当前任务：O3中断恢复进行中（2026-10-20，本地）
-
-原campaign-01在46项通过后中断；两项只有部分日志、无真实完成退出，不能宣称仍在跑或已完成。
-当前由resume.py在campaign-02导入46项字节相同证据，仅补跑剩余10项，另2中断尝试保留。
-原始campaign-01、镜像和运行源码不修改。恢复编排99f04b9，原execute源码7a642b6，恢复交付工具8aab2ed。
-当前进度查/home/riscv/riscv-lab/o3-gemv-20261019/campaign-02/state.json；
-恢复启动回执recovery-launch-state.json；新监督根/home/riscv/riscv-lab/o3-gemv-recovery-delivery-20261020。
-finish-recovery.py负责通过后的严格复核、封存、Windows复算和本地交付。不要再启动旧launch.py/finish.py或重跑全部测试。
-本轮不push，不自动O4/O5/G5/默认切换，正式T16后置。以下状态为历史记录。
-
-# 当前任务：O3 GEMV应用测试进行中（本地）
-
-用户2026-10-19明确授权开始O3。工作分支local/o3-gemv-20261019，基点08fc5b4；
-先读team/workloads/o3-gemv/CONTRACT.md及README.md。
-26新镜像已编译/ELF审计，22主机检查通过，4项真实O1/O2冒烟已通过；
-campaign-01正在正式应用测量，不能提前宣称56项/768正式窗口完成。
-运行源码冻结7a642b6，构建软件5fdeba3，后处理工具6df07ca。
-
-原始工作根/home/riscv/riscv-lab/o3-gemv-20261019；
-交付监督根/home/riscv/riscv-lab/o3-gemv-delivery-20261019；
-Windows入口D:/yanyi/riscv大赛/doc/O3应用测试_20261019。
-先查两个state.json和launch-state.json。已经启动的launch.py及finish.py负责继续测量和通过后的严格复核/封存/Windows复算/本地交付；
-不要重启已经在跑或完成的campaign，不覆盖原始日志。失败先读真实stderr/退出码，不能静默剔除样本或直接重跑所有任务。
-
-O1/O2复用G4固定硬件，四尺寸(4,8),(8,32),(16,64),(4,13)，两口径/两软件/两方法/三数据集；
-不改ISA/NEMU/旧基准和旧证据。最多两个单线程EMU。成果先本地保存，不push、不自动O4/O5/G5/默认切换，正式T16后置。
-下文为历史状态。
-
-# 团队 Agent 入口
-
-## 当前状态：O1/O2 G4公平测量完成，本地保存
-
-2026-10-19，local/o2-performance-20261019。先读team/optimizations/o2/performance/README.md及evidence/20261019-performance-ab/README.md。36项真实新运行、478窗口、192正式样本、30主机检查与严格离线重审通过。结果见results-01及final-summary.json；不要重跑完成的campaign或改密封证据。不自动推送/切换默认/G5或代签ACK，正式T16后置。下文保留历史状态。
-
-## 当前任务：O1/O2 同镜像公平性能 G4（已授权，本地）
-
-2026-10-19用户明确要求运行O1/O2公平对比。分支local/o2-performance-20261019，工作根/home/riscv/riscv-lab/o2-performance-20261019，基点07ed301。先读team/optimizations/o2/performance/CONTRACT.md。沿用冻结16镜像及原四场景样本规则，复用G3固定O2 EMU，从同一429硬件文件/依赖重建O1。两模式用各自合法O1/O2观察器、共同T13全局时钟，不改ISA/NEMU/工作负载/黄金数据；只顺序做一个重构建，j2/12G，最多两个单线程EMU。完整保存日志、失败和版本，性能全部实际重跑并离线复算。用户本轮已授权G4，覆盖下文历史未授权G4的限制。不自动推送GitHub、切换默认模式、开展G5或写正式T16报告，不代签人工ACK。
-
-## 当前状态：O2 G3 已通过，本地保存
-
-2026-10-19，local/o2-fullcore-20261019。先读team/optimizations/o2/fullcore/README.md与evidence/20261019-fullcore-validation/README.md。最终合格集合core-02＋supplements-02；recheck-02严格离线重审通过。14项作业满足各自预期，5378正常vdot提交，六项两槽全核覆盖齐全，95主机测试通过；失败尝试保留。不要重跑已完成campaign或改密封证据。G3完成不授权自动G4、push或切换默认模式；没有O2公平性能/PPA/人工ACK，正式T16继续后置。下面各节保留历史时点。
-
-## 当前任务：O2 G3 全核观察器与回归（已授权，本地）
-
-用户于2026-10-19明确要求开始G3。工作分支local/o2-fullcore-20261019，起点901687a；按team/optimizations/o2/CONTRACT.md完成两槽全核观察器、新EMU、hello/vadd、117唯一功能/异常矩阵、T12等价控制、故障参考库和正常恢复。旧G1/G2不自动推进G3的限制现由此授权更新。输出/home/riscv/riscv-lab/o2-fullcore-20261019；旧封存材料保持不变。不推送GitHub、不自动开始G4公平性能、不改变ISA/NEMU/黄金数据，不代签人工ACK。构建前冻结生产源码；只运行一个重构建，默认2编译线程、12G JVM、1个EMU线程。
-
-
-## 当前任务：O2两槽弹性FU与真实父级联调（本地开发）
-
-2026-10-19用户明确授权实现O2隔离FU，然后完成真实VFEX4/DIV/ClockGate父级联调。工作分支local/o2-elastic-parent-20261019，起点7643b8d；合同team/optimizations/o2/CONTRACT.md。G1/G2真实RTL验证及旧模式兼容回归已完成；工程入口team/optimizations/o2/IMPLEMENTATION.md，正式证据evidence/20261019-elastic-parent。下一步为G3；不自动推进全核G3或性能G4，不推送GitHub。保留旧模式及密封证据，独立输出目录/home/riscv/riscv-lab/o2-elastic-parent-20261019。下方评估阶段不实施RTL的限制为历史记录。
-
-## 当前任务：O2可行性评估与设计合同（本地）
-
-2026-10-18开始、2026-10-19续接完成。基点cd866d52，工作分支local/o2-feasibility-20261018；见 [O2入口](team/optimizations/o2/README.md)、[设计合同](team/optimizations/o2/CONTRACT.md) 与 [轨迹分析](team/optimizations/o2/TRACE_ANALYSIS.md)。本轮只审查生产源码、复算旧轨迹并写合同，不实施O2 RTL、不运行新EMU、不推送GitHub。
-
-结论为有条件进入VFEX4两槽弹性候选的隔离FU/真实父级原型；O2采用、II=1、全核性能和PPA仍未验证。O1 batch的1275次busy等待中1266次对应同窗口正常提交请求，9次属于接受前取消；等待不能当可省周期。正式T16报告后置，核心接口人工ACK待成员确认。下方O1发布授权与未上传文字均为对应历史阶段，不自动授权本轮O2发布或后续实现。
-
-## 当前发布：O1 已完成成果交付 zjhwork
-
-# Previous latest O1 integration scope
-
-Current task: integrate latest zjhwork cd866d52d into James_Hotten 724fbb12f.
-Use the latest event observer by default; VDOT_O1_TRACE_PROFILE=frames explicitly
-selects the existing atomic-frame/FTQ/CSR observer. Never emit both protocols.
-Retain clock-cancellation and all four acceptance/provenance gate repairs.
-Imported historical results retain their source bindings; merged RTL needs fresh
-validation. Main is excluded and O1 stays off. Current integration record:
-team/docs/o1-latest-integration-20261019.md. Statements below describe prior work.
-
-Integration validation: 606 host tests, 35 compiled option cases, three frame
-parent modes/four faults, two latest parent modes/seven faults and event-enabled
-parent execution pass. Source and archive identity receipts are preserved in
-team/evidence/o1-latest-integration-20261019. No new full-core run or merged-source
-performance claim. This merge remains local; main and remote refs are unchanged.
-
-The current user authorizes committing and pushing the completed observation
-work to James_Hotten, then synchronizing other branches and reviewing all work
-for correctness, acceptance vulnerabilities, optimization and performance.
-Main is outside this publication scope; O1 remains off by default.
-The zjhwork c3c417a26 FU evidence and stricter negative gate are integrated;
-that branch's historical publication instructions do not replace this scope.
-
-The current request starts optimization on James_Hotten after branch integration
-and review of correctness, acceptance security and performance evidence.
-The previous VFEX1 cleanup/main synchronization finished at e9c70db38;
-its publication record is team/docs/vfex4-main-sync-20261017.md.
-Integration review: team/docs/james-o1-integration-20261018.md.
-Current observation work and evidence: team/docs/o1-complete-20261018.md.
-Earlier schema-1 observation evidence: team/docs/o1-trace-20261018.md.
-Parent clock optimization and earlier evidence: team/docs/o1-parent-20261018.md.
-O0 matrix history: team/docs/o0-progress-20261018.md.
-The historical O0 matrix runner deliberately pins the d3706f0b8 II4 baseline;
-its runs do not imply integrated-source or T14 hardware coverage. The separate
-O1 extended runner binds the current patched source, EMU and observer profile.
-The retired implementation is recoverable from Git, not a second working-tree
-implementation. Recovery and active test entries: team/docs/retired-vfex1.md.
-Prior full-core validation in team/docs/james-fullcore-20261016.md executed against
-d3706f0b8; it is not a new run of the integrated source. Historical instructions
-under team/docs/history describe earlier tasks and do not override current scope.
-
-Production uses VFEX4/VDot with NEMU 1.1.0. T14 input-product fusion is opt-in
-(VDOT_T14_FUSED_INPUT=1); the default remains E3 response / II4.
-T15 is a standalone parameter experiment, not a full-core SEW16 ISA change.
-O0 diagnostics are incomplete. O1 has an opt-in RTL candidate, not accepted
-hardware; VDOT_O1_HANDOFF remains off by default and requires T14 when enabled.
-Three FU and real VFEX4 parent modes have simulation evidence. The parent uses
-production dividers and clock gates; canceled-owner clock holds are cleared in
-all three VFEX4 modes. O1 parent II2 is measured; full-core O1 acceptance remains pending.
-Clock pulse reductions are simulation activity, not measured power or STA/PPA.
-The frozen T12/T13 observers cannot validate O1 overlapping transactions.
-VDOT_O1_TRACE is a separate default-off schema. Atomic ungated EXU frames and
-ROB events are checked with the explicit one-cycle redirect delay. Three real
-parent modes, trace-off RTL byte equivalence, and log corruption checks pass.
-The new source-bound O1 EMU passes hello/vadd, control, 117 unique matrix cases
-(124 executions), real bit100 DiffTest injection and same-image normal recovery.
-The O2 companion preserves schema 1 and adds FTQ identity and CSR ownership,
-sampling and per-commit-slot windows. Control records 2157 VDot commits, 384
-handoffs and 329 FTQ wraps; calibration/batch validate 25 windows and 100 CSR
-samples. All 13 actual launches meet expectations (12 exit 0, one injected exit 1).
-72 host tests and 15 real-log corruption checks pass. Current O1 original/lean
-software-plan runs and full same-source performance A/B remain separate work.
-The observation checkpoint fb1e7bdc8 is pushed to James_Hotten. Both remotes
-were fetched again; all ten actual remote branch tips are already included.
-The four gate defects from team/docs/o1-publication-review-20261018.md are
-repaired; closure and limits: team/docs/o1-gate-fixes-20261018.md. Aggregate
-host checks pass (504), with 13 archived CPU logs rechecked, 24 FTQ mutations,
-15 prior corruption checks and 8 real parent binary replays. No new CPU run
-or performance claim is made. This publication includes the reviewed repairs; production
-RTL and historical evidence bytes are unchanged. O1 remains off by default.
-Preserve archive bytes, source bindings, failure records and fail-closed checks.
-Do not fabricate teammate approval, STA/PPA, performance, virtualization or
-official ISA acceptance. Reports follow engineering completion and version freeze.
+计分板追加本人的记录，保留其他记录；两人并行追加本文件可独立开展，集成时按记录 ID 做保留双方的合并。详细日志留在结果目录，计分板只摘要和链接。只有当前选择、前置或下一动作确实变化才更新路线；规则没变就不改 AGENTS。没有新结论时不复制旧成绩或追加“仍在运行”。提交前后不为补本提交的自引用 SHA 反复造提交，按计分板的版本记录规则执行。
