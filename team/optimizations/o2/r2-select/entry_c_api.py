@@ -247,6 +247,7 @@ def verify_build(repo, build):
 
 
 def build(repo, cfg, out):
+    a.protect_output(repo, cfg, out)
     out.mkdir(parents=True, exist_ok=False)
     generate(repo, out / "source")
     sources = source_files(repo)
@@ -262,11 +263,7 @@ def build(repo, cfg, out):
     g.require(all(tools.values()), "C application toolchain unavailable")
     libraries = [am/"am/build/am-riscv64-xs.a",am/"libs/klib/build/klib-riscv64-xs.a"]
     external = {str(p):g.sha(p) for p in libraries}
-    env = dict(os.environ)
-    for key in ("CFLAGS","CPPFLAGS","CXXFLAGS","ASFLAGS","LDFLAGS","CC_OPT","MAKEFLAGS","MFLAGS","CC","AS","LD",
-                "OBJCOPY","OBJDUMP","ARCH","MARCH","LIBS","PREBUILD"):
-        env.pop(key,None)
-    env.update(AM_HOME=str(am),LINUX_GNU_TOOLCHAIN="1")
+    env = a.build_environment(am, tools)
     commands = [
         ("make-command",[tools["make"],"-C",str(out/"source"),"ARCH=riscv64-xs","MARCH=rv64gcv",
                          "CROSS_COMPILE="+tools["gcc"][:-3],"R4_OBJ_ROOT="+str(out/"objects"),"BINARY="+str(out/"vdot-perf"),
@@ -276,6 +273,7 @@ def build(repo, cfg, out):
     receipt = dict(contract=CONTRACT, build_root=str(out), source_root=str(repo), software_files=sources, source_commit=subprocess.check_output(
                        ["git","rev-parse","HEAD"],cwd=repo,text=True).strip(),
                    am_revision=a.frozen_f.AM_COMMIT, external_files=external,
+                   environment_contract=a.LIVE_CONTRACT, environment=dict(env),
                    toolchain={k:dict(path=p,sha256=g.sha(p)) for k,p in tools.items()}, commands=[], exit_code=None)
     g.save(out/"build.json",receipt)
     try:
@@ -327,6 +325,7 @@ def normal_check(repo, build, run, record):
 
 
 def run(repo,cfg,build_dir,out,operation):
+    a.protect_output(repo,cfg,out,[build_dir])
     out.mkdir(parents=True,exist_ok=False)
     state=dict(status="PREFLIGHT",contract=CONTRACT,operation_id=operation,started=a.frozen_f.now(),
                new_emu_runs=0,active_pid=None,active_result=None,performance_measured=False)
@@ -376,9 +375,8 @@ def run(repo,cfg,build_dir,out,operation):
             progress()
             try:
                 a.frozen_m.verify_files(inputs)
-                env=dict(os.environ)
-                env.pop("XS_NEGATIVE_VECTOR_TARGET",None)
-                if negative: env["XS_NEGATIVE_VECTOR_TARGET"]="vdot"
+                env=a.frozen_m.execution_environment(negative)
+                record.update(environment_contract=a.LIVE_CONTRACT, environment=dict(env))
                 record["environment_overrides"]={"XS_NEGATIVE_VECTOR_TARGET":"vdot" if negative else None}
                 with (directory/"stdout.log").open("wb") as stdout,(directory/"stderr.log").open("wb") as stderr:
                     a.frozen_f.spawn(argv,cwd,stdout,stderr,record,progress,env=env,timeout=7200)

@@ -16,6 +16,28 @@ import entry_candidate as candidate
 import fullcore_screen as frozen_f
 import merged_screen as frozen_m
 
+LIVE_CONTRACT = "r4-explicit-environment-and-output-v2"
+
+
+def protect_output(repo, cfg, out, builds=()):
+    """Reject writes into source/runtime inputs before creating any output."""
+    target = Path(out).resolve()
+    roots = [Path(repo), *map(Path, builds)]
+    roots += [Path(value) if Path(value).is_dir() else Path(value).parent
+              for key, value in cfg.items() if key != "cross_prefix"]
+    g.require(not Path(out).exists() and not Path(out).is_symlink(), "output must be new")
+    g.require(all(not target.is_relative_to(root.resolve()) and
+                  not root.resolve().is_relative_to(target) for root in roots),
+              "output overlaps protected input")
+
+
+def build_environment(am, tools):
+    env = frozen_m.execution_environment()
+    bins = sorted({str(Path(path).resolve().parent) for path in tools.values()})
+    env.update(PATH=":".join(bins + ["/usr/bin", "/bin"]),
+               AM_HOME=str(am), LINUX_GNU_TOOLCHAIN="1")
+    return env
+
 
 def read(path):
     return json.loads(Path(path).read_text())
@@ -58,17 +80,14 @@ def build_one(repo, cfg, out, item, tools):
     am = Path(cfg["am_home"])
     libraries = [am / "am/build/am-riscv64-xs.a", am / "libs/klib/build/klib-riscv64-xs.a"]
     external = {str(p): g.sha(p) for p in libraries}
-    env = dict(os.environ)
-    for key in ("CFLAGS", "CPPFLAGS", "CXXFLAGS", "ASFLAGS", "LDFLAGS", "CC_OPT", "MAKEFLAGS", "MFLAGS",
-                "CC", "AS", "LD", "OBJCOPY", "OBJDUMP", "ARCH", "MARCH", "LIBS", "PREBUILD"):
-        env.pop(key, None)
-    env.update(AM_HOME=str(am), LINUX_GNU_TOOLCHAIN="1")
+    env = build_environment(am, tools)
     prefix = str(Path(tools["gcc"]))[:-3]
     argv = [tools["make"], "-C", str(out / "source"), "ARCH=riscv64-xs", "MARCH=rv64gcv",
             "CROSS_COMPILE=" + prefix, "T13_DATA=" + str(out / "data"),
             "T13_OBJ_ROOT=" + str(out / "objects"), "BINARY=" + str(out / "vdot-perf"),
             "-o", "am", "-o", "klib", "-j1", "image"]
     record = dict(kind="nexus-am-riscv64-xs", contract=candidate.CONTRACT,
+                  environment_contract=LIVE_CONTRACT, environment=dict(env),
                   source_commit=subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=repo, text=True).strip(),
                   selection=item, snapshot_files={p: g.sha(snapshot / p) for p in sorted(g.SOURCES)},
                   am_revision=frozen_f.AM_COMMIT, external_files=external, exit_code=None, commands=[], artifacts={})
@@ -137,6 +156,7 @@ def validate_pairs(images, repo):
 
 
 def build(repo, cfg, out, shards, datasets, jobs):
+    protect_output(repo, cfg, out)
     g.require(1 <= jobs <= 4, "total build worker budget")
     out.mkdir(parents=True, exist_ok=False)
     state = dict(status="BUILDING", contract=candidate.CONTRACT, started=frozen_f.now(), jobs=jobs,
@@ -210,6 +230,7 @@ def summarize(records):
 
 
 def run(repo, cfg, build_dirs, out, operation_id, negative, replay):
+    protect_output(repo, cfg, out, build_dirs)
     out.mkdir(parents=True, exist_ok=False)
     state = dict(status="PREFLIGHT", contract=candidate.CONTRACT, operation_id=operation_id,
                  started=frozen_f.now(), new_emu_runs=0, active_result=None, active_pid=None,

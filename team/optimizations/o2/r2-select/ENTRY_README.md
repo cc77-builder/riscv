@@ -1,5 +1,7 @@
 # R4：可调用 GEMV 候选入口
 
+> James_Hotten 整合说明：以下 v1 命令绑定上游冻结源码。在当前加固分支，直接入口仍会因旧生成器 pins 不符而拒绝，不能改 pins 凑通过；请用 [replay_upstream.py](../fullcore/replay_upstream.py) 的固定 LF 检出复算历史证据并导出选中镜像。当前运行代码补充了显式环境和输出输入隔离，但尚未取得新 R4 全核运行资格。历史快照不用于新的 live 运行。
+
 本入口把既有 S0/S1 GEMV body 导出为普通 RV64 C ABI 叶函数，并对真实调用成本重新测量。性能路径合同见 [ENTRY_CONTRACT.md](ENTRY_CONTRACT.md)，普通C应用功能补充见 [C_API_CONTRACT.md](C_API_CONTRACT.md)，实测采用结果、证据和遗留资格见 [ENTRY_RESULT.md](ENTRY_RESULT.md)。原 [R2-SELECT](README.md) 的原镜像查询/导出仍保持原来的语义。
 
 本交付包含公共汇编及头文件的确定性生成器、实际 C 调用程序、整核运行器和离线证据审计器。默认构建入口尚未切换；公共函数按形状命名，不包含隐藏的运行时 dispatcher。

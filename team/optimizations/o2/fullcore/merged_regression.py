@@ -321,9 +321,8 @@ def execute_pair(ctx, cfg, out, state, persist):
                       negative_target='vdot' if name == 'negative-vdot' else None, auxiliary_files=m.AUX,
                       environment_overrides={'XS_NEGATIVE_VECTOR_TARGET': 'vdot' if name == 'negative-vdot' else None},
                       process_started=False, pid_kind='timeout process-group leader', actual_new_execution=True)
-        env = dict(os.environ); env.pop('XS_NEGATIVE_VECTOR_TARGET', None)
-        if name == 'negative-vdot':
-            env['XS_NEGATIVE_VECTOR_TARGET'] = 'vdot'
+        env = m.execution_environment(name == 'negative-vdot')
+        record.update(environment_contract=m.ENVIRONMENT_CONTRACT, environment=dict(env))
         state['new_emu_launch_attempts'] += 1
         state.update(active_result=str(directory / 'runtime.json'), active_process_group=None)
         def progress():
