@@ -1,0 +1,86 @@
+{
+  "kind": "T17 scoped independent source review",
+  "recorded_utc": "2026-10-24 02:25:15 UTC",
+  "scope": "Read-only local review; all design, source edits and physical execution performed by the primary Agent. Reviews are not runtime or human acceptance.",
+  "reviewers": [
+    {
+      "name": "coordination_review",
+      "reviewed": [
+        "clean_prepare.py",
+        "clean_build.py",
+        "clean_support.py",
+        "clean_profile.py",
+        "CLEAN_CONTRACT.md",
+        "CLEAN_REPRODUCE.md"
+      ],
+      "findings_addressed": [
+        "Preparation/support command provenance is connected by support-proof.json, not inferred from hardware-profile alone.",
+        "Same-host installed-tool/cache scope and actual tool-version recording are explicit.",
+        "Configuration distinguishes six paths from cross_prefix; archive identity original filename/bytes are required."
+      ]
+    },
+    {
+      "name": "t17_gate_review",
+      "reviewed_sha256": {
+        "clean_evidence.py": "bd3878cec30f63394ecbfe9bdd5ad08bbb15be2e04fdd6e439371229ffb8bd75",
+        "clean_fullcore_evidence.py": "20bebd4f5526a3522a09c2324e683d34b55997930c5078e89c3e5d04a6733412",
+        "clean_fullcore.py": "593298f4119d5a8ce8dd925ec5836c70e0d8bf4cbcf7cf0b221570ffc669f1a2"
+      },
+      "findings_addressed": [
+        "All nineteen runtime metadata identities are checked while the executed builder has a single archive original path.",
+        "Campaign identity/controller/config/times and completed-runs index are rechecked.",
+        "Physical audit has exactly fourteen records, compared semantically with fresh raw recomputation.",
+        "Support patch manifest is bound to the selected original runtime input."
+      ]
+    },
+    {
+      "name": "fullcore_inputs",
+      "reviewed": "Frozen runtime APIs, spawn receipt semantics and archive interfaces",
+      "findings_addressed": [
+        "Final raw spawn fields are compared with controller final receipts; late-added fields are not incorrectly required in runtime.json.",
+        "Failure/cancellation may wait for already queued jobs; no automatic resume guarantee is claimed.",
+        "Cross-build comparison keeps 384 formal measured samples separate from 192 replay all-window comparisons."
+      ]
+    }
+  ],
+  "outcome": "No mandatory API/path blocker found in reviewed final audit tools; real physical/archive audits remain required. Documentation fixes applied; no frozen runtime input changed.",
+  "new_emu_runs": 0,
+  "follow_up": {
+    "recorded_utc": "2026-10-24 02:58:58 UTC",
+    "scope": "Read-only source/interface review after fullcore audit success and during serial matrix execution; no new runtime qualification.",
+    "findings_addressed": [
+      "Documentation distinguishes completed fullcore physical/archive audits from pending matrix/C archives, and separates 432 payload files from 434 total fullcore archive files.",
+      "CPU 0-3 examples explicitly require that permitted cpuset; frozen fullcore input definitions and manifest are linked.",
+      "Final matrix/C archive CLI and Windows identity-02.json original filename/byte requirements were checked against frozen interfaces.",
+      "Cross-build comparison was reviewed against actual multi-campaign R4 schema, strongest RVV selection, all-window replay keys and archive audit binding.",
+      "Derived round summary uses fullcore active={} and C/matrix active_pid/active_result; wrappers must exactly equal independently audited runtime states and all three state files are bound to sealed bytes."
+    ],
+    "analysis_sha256": {
+      "reproduction-compare.py": "89c06d813dec749f5b1543ecf1d13173f3e250cd98895bdc0e83e4146ee38d99",
+      "round-summary.py": "b8fec896848f6ad245eb86079a76d1ec9d17ecfe424646c00262b51626c9daaf"
+    },
+    "executed_analysis_at_review": false,
+    "outcome": "No remaining deterministic field/API blocker identified. Actual final analysis, matrix/C audits and Git index checks are separate pending operations."
+  },
+  "transport_and_final_summary_review": {
+    "scope": "Read-only source/docs review; root designed, implemented and executed the fixes. Runtime acceptance is separately evidenced by completed audits.",
+    "reviewers": [
+      "t17_gate_review",
+      "coordination_review",
+      "fullcore_inputs"
+    ],
+    "findings_addressed": [
+      "M01 detached audit can pass; distinguish redundant EMU payload from the confirmed C archive source/build AUX dependency.",
+      "Only exact EMU/global AUX paths are relocated; private cwd AUX and all other payload bytes remain unchanged; frozen raw auditors remain active.",
+      "Reports and final archives are isolated from source/matrix/build/run inputs; intermediate pre-guard packs remain identifiable.",
+      "Final M03/C02 transport identities, three detached guard output SHAs and actual cwd are bound in summary e280691b....",
+      "Documentation distinguishes pack fresh outputs from audit/index existing inputs; expected C rejection is an archive-audit failure."
+    ],
+    "final_sources": {
+      "transport": "df1be9196293bb637d356c9bfe69a991130297e4f9f77e9ce95e02aa06a9b628",
+      "dependency_probe": "57f31bb70dafa3154dc22e09c635dde1f4c140405717d98053d781dc2ca43cd4",
+      "summary": "e280691b4df6d7f7fc89abb65bfb345f91c485f2c1efecc43c1de3ce23d1f7a3"
+    },
+    "boundaries": "Namespace validation alone does not reopen prior archives. Dependency probe is not an OS sandbox and does not fully monitor subprocess internal file access."
+  }
+}

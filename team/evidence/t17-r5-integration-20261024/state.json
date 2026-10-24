@@ -1,0 +1,307 @@
+{
+  "status": "T17_PUBLISHED_ARCHIVES_REPLAY_PASS",
+  "published": "137b44befb041439a018a1079577cc000df1ee03",
+  "base": "34bae6d4acceac939f958199dae53c14bc1f6183",
+  "new_emu_runs": 0,
+  "performance_measured": false,
+  "current_hardware_qualified": false,
+  "steps": [
+    {
+      "name": "published-clone",
+      "command": [
+        "git",
+        "clone",
+        "--shared",
+        "--no-checkout",
+        "-c",
+        "core.autocrlf=false",
+        "/home/amesotten/.cache/codex-rvinno/integration-six-20261024/repo",
+        "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/published"
+      ],
+      "cwd": null,
+      "started": "2026-10-24T05:26:12.678722+00:00",
+      "exit_code": 0,
+      "finished": "2026-10-24T05:26:12.847456+00:00",
+      "log_sha256": "d8910d3e878cfa4c864b8f9467cefb93a5a0c8f0d58acee90f466e25fc18e377"
+    },
+    {
+      "name": "fetch-bundle",
+      "command": [
+        "git",
+        "-C",
+        "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/published",
+        "fetch",
+        "/mnt/c/Code/RVInno/riscv/team/out/t17-r5-upstream24.bundle",
+        "refs/remotes/origin/zufan:refs/remotes/import/zufan"
+      ],
+      "cwd": null,
+      "started": "2026-10-24T05:26:12.848183+00:00",
+      "exit_code": 0,
+      "finished": "2026-10-24T05:26:13.451334+00:00",
+      "log_sha256": "3b3353aa43816a1488f7ae1453bedc4bc41701fce83231b5e6328350ad40082d"
+    },
+    {
+      "name": "published-sparse",
+      "command": [
+        "git",
+        "-C",
+        "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/published",
+        "sparse-checkout",
+        "set",
+        "--no-cone",
+        "/team/",
+        "!/team/evidence/",
+        "!/team/**/evidence/"
+      ],
+      "cwd": null,
+      "started": "2026-10-24T05:26:13.452172+00:00",
+      "exit_code": 0,
+      "finished": "2026-10-24T05:26:13.466630+00:00",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "published-checkout",
+      "command": [
+        "git",
+        "-C",
+        "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/published",
+        "checkout",
+        "--detach",
+        "137b44befb041439a018a1079577cc000df1ee03"
+      ],
+      "cwd": null,
+      "started": "2026-10-24T05:26:13.466881+00:00",
+      "exit_code": 0,
+      "finished": "2026-10-24T05:26:15.634539+00:00",
+      "log_sha256": "5f26398e76d323e68ed4e0163be06abc87582ae61c65e0e2c874061a367cf6fd"
+    },
+    {
+      "name": "restore-evidence",
+      "command": [
+        "git",
+        "-C",
+        "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/published",
+        "restore",
+        "--worktree",
+        "--ignore-skip-worktree-bits",
+        "--",
+        "team/optimizations/o2/repro/evidence/clean-reproduction-v1",
+        "team/optimizations/o2/r2-select/evidence/stable-v1"
+      ],
+      "cwd": null,
+      "started": "2026-10-24T05:26:15.634932+00:00",
+      "exit_code": 0,
+      "finished": "2026-10-24T05:26:16.525776+00:00",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "source-clone",
+      "command": [
+        "git",
+        "clone",
+        "--shared",
+        "--no-checkout",
+        "-c",
+        "core.autocrlf=false",
+        "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/published",
+        "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/source"
+      ],
+      "cwd": null,
+      "started": "2026-10-24T05:26:16.526243+00:00",
+      "exit_code": 0,
+      "finished": "2026-10-24T05:26:16.622465+00:00",
+      "log_sha256": "b355aa1b484cd7a08ddb3408160fa722a9610717d3ba165fb298bc412b0197ed"
+    },
+    {
+      "name": "source-sparse",
+      "command": [
+        "git",
+        "-C",
+        "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/source",
+        "sparse-checkout",
+        "set",
+        "--no-cone",
+        "/team/",
+        "!/team/evidence/",
+        "!/team/**/evidence/"
+      ],
+      "cwd": null,
+      "started": "2026-10-24T05:26:16.623083+00:00",
+      "exit_code": 0,
+      "finished": "2026-10-24T05:26:16.626751+00:00",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "source-checkout",
+      "command": [
+        "git",
+        "-C",
+        "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/source",
+        "checkout",
+        "--detach",
+        "34bae6d4acceac939f958199dae53c14bc1f6183"
+      ],
+      "cwd": null,
+      "started": "2026-10-24T05:26:16.626979+00:00",
+      "exit_code": 0,
+      "finished": "2026-10-24T05:26:17.988486+00:00",
+      "log_sha256": "985b7f9e03aca89039a7963e69849e22e633dedf804af2f1e517b986d6668b8e"
+    },
+    {
+      "name": "restore-frozen-inputs",
+      "command": [
+        "git",
+        "-C",
+        "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/source",
+        "restore",
+        "--worktree",
+        "--ignore-skip-worktree-bits",
+        "--",
+        "team/evidence/t10-t11-fullcore-20261013/matrix/negative-fixture.c",
+        "team/evidence/t13-performance-20261015/images-v3/performance-d0-s06",
+        "team/evidence/t14-optimization-20261016/control-sweep/build/build.json",
+        "team/evidence/t10-t11-fullcore-20261013/parent/cases.jsonl",
+        "team/evidence/t10-t11-fullcore-20261013/parent/exceptions.json"
+      ],
+      "cwd": null,
+      "started": "2026-10-24T05:26:17.988902+00:00",
+      "exit_code": 0,
+      "finished": "2026-10-24T05:26:18.136847+00:00",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "fullcore",
+      "command": [
+        "python3",
+        "-B",
+        "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/published/team/optimizations/o2/repro/evidence/clean-reproduction-v1/analysis/detached-audit.py",
+        "--checkout",
+        "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/source",
+        "--script",
+        "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/source/team/optimizations/o2/repro/clean_fullcore_evidence.py",
+        "--report",
+        "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/fullcore-guard.json",
+        "--deny-root",
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854",
+        "--",
+        "--repo",
+        "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/source",
+        "--action",
+        "audit",
+        "--archive",
+        "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/published/team/optimizations/o2/repro/evidence/clean-reproduction-v1/fullcore-archive",
+        "--output",
+        "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/fullcore.json"
+      ],
+      "cwd": "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/source",
+      "started": "2026-10-24T05:26:18.139031+00:00",
+      "exit_code": 0,
+      "finished": "2026-10-24T05:26:41.126228+00:00",
+      "log_sha256": "de84636bb3f8edb9e789abb42c7567c220bb92960573a4101b2f5729b3a9e06a"
+    },
+    {
+      "name": "matrix",
+      "command": [
+        "python3",
+        "-B",
+        "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/published/team/optimizations/o2/repro/evidence/clean-reproduction-v1/analysis/detached-audit.py",
+        "--checkout",
+        "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/source",
+        "--script",
+        "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/source/team/optimizations/o2/repro/clean_portable_evidence.py",
+        "--report",
+        "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/matrix-guard.json",
+        "--deny-root",
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854",
+        "--",
+        "--repo",
+        "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/source",
+        "--action",
+        "audit-matrix",
+        "--identity",
+        "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/published/team/optimizations/o2/repro/evidence/clean-reproduction-v1/reports/identity-02.json",
+        "--archive",
+        "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/published/team/optimizations/o2/repro/evidence/clean-reproduction-v1/matrix-archive",
+        "--output",
+        "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/matrix.json"
+      ],
+      "cwd": "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/source",
+      "started": "2026-10-24T05:26:41.127445+00:00",
+      "exit_code": 0,
+      "finished": "2026-10-24T05:27:27.723039+00:00",
+      "log_sha256": "cb19cd05bc368e162f7da3ff18fe2d5545855cbd203fe81f8193128a2392b4a6"
+    },
+    {
+      "name": "c",
+      "command": [
+        "python3",
+        "-B",
+        "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/published/team/optimizations/o2/repro/evidence/clean-reproduction-v1/analysis/detached-audit.py",
+        "--checkout",
+        "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/source",
+        "--script",
+        "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/source/team/optimizations/o2/repro/clean_portable_evidence.py",
+        "--report",
+        "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/c-guard.json",
+        "--deny-root",
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854",
+        "--",
+        "--repo",
+        "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/source",
+        "--action",
+        "audit-c",
+        "--identity",
+        "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/published/team/optimizations/o2/repro/evidence/clean-reproduction-v1/reports/identity-02.json",
+        "--archive",
+        "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/published/team/optimizations/o2/repro/evidence/clean-reproduction-v1/c-archive",
+        "--matrix",
+        "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/published/team/optimizations/o2/repro/evidence/clean-reproduction-v1/matrix-archive",
+        "--output",
+        "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/c.json"
+      ],
+      "cwd": "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/source",
+      "started": "2026-10-24T05:27:27.723789+00:00",
+      "exit_code": 0,
+      "finished": "2026-10-24T05:28:21.231942+00:00",
+      "log_sha256": "7d67c75c326a00309cd86f7a0bc5aa17f31c04c6988d6ff7e140541642b37498"
+    },
+    {
+      "name": "stable-build",
+      "command": [
+        "python3",
+        "-B",
+        "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/published/team/optimizations/o2/r2-select/verify_stable.py",
+        "--repo",
+        "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/published",
+        "--output",
+        "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/stable-build"
+      ],
+      "cwd": "/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03/published",
+      "started": "2026-10-24T05:28:21.232370+00:00",
+      "exit_code": 1,
+      "finished": "2026-10-24T05:28:21.706566+00:00",
+      "log_sha256": "b75effbc587433a2bef5343711e2f4cdf34e558f0ad1d2565a219de43442956e"
+    }
+  ],
+  "environment": {
+    "PATH": "/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/tools:/usr/bin:/bin",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "UTC"
+  },
+  "copied_new_tools": {
+    "clean_prepare.py": "8e59850c3edcf1bb26d6914759632bab626e297fc95f071f23b58a313043e561",
+    "clean_build.py": "9038f134e5f811b1e99a13893dc8fce081a96cf9be0ffe5a9f546a70818a2c7e",
+    "clean_support.py": "13d03b2a54c26d192e1757975b7583ba5d41a764e8e732caf5c2bc48d7351566",
+    "clean_profile.py": "1c4c467f43ede68fd30b1063868d8f02d71fbe8a5442f2da180210468db9a642",
+    "clean_entry.py": "6aabb8bbd764d1b7b18b643eaf592efc0a0a1d49e6545842dc7a6b337d39a883",
+    "clean_fullcore.py": "593298f4119d5a8ce8dd925ec5836c70e0d8bf4cbcf7cf0b221570ffc669f1a2",
+    "clean_evidence.py": "bd3878cec30f63394ecbfe9bdd5ad08bbb15be2e04fdd6e439371229ffb8bd75",
+    "clean_fullcore_evidence.py": "20bebd4f5526a3522a09c2324e683d34b55997930c5078e89c3e5d04a6733412",
+    "test_clean_evidence.py": "37602bf02febfe9ec4b93495c5ac867a1ae238a784f3d8e6fb14f21e81bf23ff",
+    "clean_portable_evidence.py": "df1be9196293bb637d356c9bfe69a991130297e4f9f77e9ce95e02aa06a9b628"
+  },
+  "stable_build_pass": false,
+  "scope": "Published T17 evidence replay only; R5 GNU build separate; no local hardware/performance/default adoption.",
+  "finished": "2026-10-24T05:28:21.707905+00:00"
+}

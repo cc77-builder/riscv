@@ -1,0 +1,75 @@
+{
+  "contract": "t17-clean-evidence-v1",
+  "transport_contract": "t17-portable-entry-v2",
+  "identity_sha256": "4a89872d0463163ea0be83f680843352e01354043f5709509d822353221258eb",
+  "hardware_contract": "t17-clean-build-v1",
+  "emu_sha256": "ff840528eb1009e94906eefb3773ca321050f309553543ab26f0db23c410e30f",
+  "audit_source_sha256": "bd3878cec30f63394ecbfe9bdd5ad08bbb15be2e04fdd6e439371229ffb8bd75",
+  "transport_source_sha256": "df1be9196293bb637d356c9bfe69a991130297e4f9f77e9ce95e02aa06a9b628",
+  "historical_fixed_hardware_acceptance": false,
+  "historical_b0_h1_acceptance": false,
+  "whole_suite_acceptance": false,
+  "transport": {
+    "status": "T17_PORTABLE_NAMESPACE_PASS",
+    "contract": "t17-portable-entry-v2",
+    "source_manifest_sha256": "6e4552cd99b44eb7c6b40c5000d9781ac3a2775fcce8fe22fb57f301147f000f",
+    "source_archive": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-pack-source-02",
+    "relocations": {
+      "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu": {
+        "before": {
+          "sha256": "ff840528eb1009e94906eefb3773ca321050f309553543ab26f0db23c410e30f",
+          "archive": "self",
+          "logical": "tools/build/emu"
+        },
+        "after": {
+          "sha256": "ff840528eb1009e94906eefb3773ca321050f309553543ab26f0db23c410e30f",
+          "logical": null,
+          "archive": "external"
+        }
+      },
+      "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/constantin.txt": {
+        "before": {
+          "sha256": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+          "archive": "self",
+          "logical": "tools/build/constantin.txt"
+        },
+        "after": {
+          "sha256": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+          "archive": "matrix",
+          "logical": "hardware/constantin.txt"
+        }
+      },
+      "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/plusArgs": {
+        "before": {
+          "sha256": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+          "archive": "self",
+          "logical": "tools/build/plusArgs"
+        },
+        "after": {
+          "sha256": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+          "archive": "matrix",
+          "logical": "hardware/plusArgs"
+        }
+      }
+    },
+    "runtime_input_hashes_changed": false,
+    "raw_auditor_sources_changed": false
+  },
+  "software_gate_result": {
+    "status": "R4_C_APPLICATION_ARCHIVE_COMPLETE_GIT_INDEX_PASS",
+    "archive": {
+      "files": 115,
+      "raw_bytes": 16928444,
+      "stored_bytes": 1111872,
+      "archive_manifest_sha256": "5a54192270903ae155fa5d372088169f0b4547cce5674863d3401dabda7cf0f1"
+    },
+    "archive_files_in_git_index": 118,
+    "missing": 0,
+    "extra": 0,
+    "git_file_modes": {
+      "100644": 118
+    },
+    "new_emu_runs": 0,
+    "architecture_replayed": false
+  }
+}

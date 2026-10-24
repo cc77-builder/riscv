@@ -1,0 +1,14 @@
+In file included from /home/lizufan/riscv-lab/r5-stable-20261024-1221/verify-01/invalid-configurations/caller.c:1:
+<command-line>: error: invalid suffix "_END" on integer constant
+/home/lizufan/riscv-lab/r5-stable-20261024-1221/snapshot/team/optimizations/o2/r2-select/public/selected_gemv.h:18:62: note: in definition of macro ‘XS_GEMV_DETAIL_VALID_INNER’
+   18 | #define XS_GEMV_DETAIL_VALID_INNER(x) XS_GEMV_DETAIL_VALID_##x##_END
+      |                                                              ^
+/home/lizufan/riscv-lab/r5-stable-20261024-1221/snapshot/team/optimizations/o2/r2-select/public/selected_gemv.h:20:6: note: in expansion of macro ‘XS_GEMV_DETAIL_VALID’
+   20 | #if !XS_GEMV_DETAIL_VALID(XS_GEMV_FORCE_RVV)
+      |      ^~~~~~~~~~~~~~~~~~~~
+/home/lizufan/riscv-lab/r5-stable-20261024-1221/snapshot/team/optimizations/o2/r2-select/public/selected_gemv.h:20:27: note: in expansion of macro ‘XS_GEMV_FORCE_RVV’
+   20 | #if !XS_GEMV_DETAIL_VALID(XS_GEMV_FORCE_RVV)
+      |                           ^~~~~~~~~~~~~~~~~
+/home/lizufan/riscv-lab/r5-stable-20261024-1221/snapshot/team/optimizations/o2/r2-select/public/selected_gemv.h:21:2: error: #error "XS_GEMV_FORCE_RVV must expand to the literal 0 or 1"
+   21 | #error "XS_GEMV_FORCE_RVV must expand to the literal 0 or 1"
+      |  ^~~~~

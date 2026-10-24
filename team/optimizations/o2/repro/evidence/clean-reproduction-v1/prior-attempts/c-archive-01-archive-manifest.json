@@ -1,0 +1,1092 @@
+{
+  "version": 1,
+  "contract": "r4-gemv-c-application-v1",
+  "created_utc": "2026-10-24T04:00:30.253847+00:00",
+  "source_root": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source",
+  "build_root": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-build-01",
+  "run_root": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01",
+  "matrix_manifest_sha256": "a8013eec66d2e2f4829123ab0076595d1a4510311f07a1207a65868a24821033",
+  "files": [
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-build-01/build.json",
+      "stored": "files/build/build.json.gz",
+      "encoding": "gzip",
+      "raw_bytes": 5636,
+      "raw_sha256": "25efd0da16995ea5a5d9d72d2bbfb4b187e42ed785e97bfeb17994b823d09ace",
+      "stored_bytes": 2129,
+      "stored_sha256": "0e54356e0371a38e9366a215611d333668fd92d8f688e59e3abd9da6a8bc06a7"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-build-01/elf-validation.json",
+      "stored": "files/build/elf-validation.json.gz",
+      "encoding": "gzip",
+      "raw_bytes": 5179,
+      "raw_sha256": "7bd44d05c1f31f9b13244c216c6808877114d22a7380948ad9f22048002f19bd",
+      "stored_bytes": 1115,
+      "stored_sha256": "ac0530df7d0b7fcc6b4aa9d14266f3622f208a407d9543ef2c57080f9c8e6f7f"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-build-01/gemv-reference.o",
+      "stored": "files/build/gemv-reference.o.gz",
+      "encoding": "gzip",
+      "raw_bytes": 28152,
+      "raw_sha256": "ecb24b6cde147c5b36f0caf8e5ec2b17451d293de14e2b4e223b14141d3e1aa7",
+      "stored_bytes": 4636,
+      "stored_sha256": "c5627871670d77e9bdbe43cdc560ceb95762c0084e6f163434f09cee60cdeb2d"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-build-01/make-command/command.json",
+      "stored": "files/build/make-command/command.json",
+      "encoding": "identity",
+      "raw_bytes": 883,
+      "raw_sha256": "02c02b4ecf81c26d8fcde165a36798987a3a372e29e1fa7e30abc2d7a3f1f140",
+      "stored_bytes": 883,
+      "stored_sha256": "02c02b4ecf81c26d8fcde165a36798987a3a372e29e1fa7e30abc2d7a3f1f140"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-build-01/make-command/stderr.log",
+      "stored": "files/build/make-command/stderr.log",
+      "encoding": "identity",
+      "raw_bytes": 0,
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_bytes": 0,
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-build-01/make-command/stdout.log",
+      "stored": "files/build/make-command/stdout.log",
+      "encoding": "identity",
+      "raw_bytes": 423,
+      "raw_sha256": "fd72218a8e90e60a52cecf8e5056c294845ce647938bccdba1372ba5a7bc20f8",
+      "stored_bytes": 423,
+      "stored_sha256": "fd72218a8e90e60a52cecf8e5056c294845ce647938bccdba1372ba5a7bc20f8"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-build-01/reference-command/command.json",
+      "stored": "files/build/reference-command/command.json",
+      "encoding": "identity",
+      "raw_bytes": 731,
+      "raw_sha256": "70784b8cf4c4c6e511065346ceed1218c76b632c0f152ccb6aac7444d9305927",
+      "stored_bytes": 731,
+      "stored_sha256": "70784b8cf4c4c6e511065346ceed1218c76b632c0f152ccb6aac7444d9305927"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-build-01/reference-command/stderr.log",
+      "stored": "files/build/reference-command/stderr.log",
+      "encoding": "identity",
+      "raw_bytes": 0,
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_bytes": 0,
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-build-01/reference-command/stdout.log",
+      "stored": "files/build/reference-command/stdout.log",
+      "encoding": "identity",
+      "raw_bytes": 0,
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_bytes": 0,
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-build-01/source/Makefile",
+      "stored": "files/build/source/Makefile",
+      "encoding": "identity",
+      "raw_bytes": 251,
+      "raw_sha256": "1a5819894ceed5ecdeb1aaa398719a3a4da88229c56257faad9e351c467574cd",
+      "stored_bytes": 251,
+      "stored_sha256": "1a5819894ceed5ecdeb1aaa398719a3a4da88229c56257faad9e351c467574cd"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-build-01/source/cases.h",
+      "stored": "files/build/source/cases.h.gz",
+      "encoding": "gzip",
+      "raw_bytes": 23494,
+      "raw_sha256": "dd28439e35c580453cb6e23ffff8ff477824dad98a22cd4d7b8847022d5d99cd",
+      "stored_bytes": 4143,
+      "stored_sha256": "a6fa95107a7c9e1743089f96cf547bf74b9614f173c4c263b7cbc8bcafc3a3f7"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-build-01/source/gemv.S",
+      "stored": "files/build/source/gemv.S.gz",
+      "encoding": "gzip",
+      "raw_bytes": 94870,
+      "raw_sha256": "5c01b4eec12dcb3cc3a62551d7096d43b5f68cea2efec0c8b30b79e8d5e5810c",
+      "stored_bytes": 4826,
+      "stored_sha256": "b6ba9022e4d539f6f5a21a0fd461c2fd60b58e9b35b7a86e70a0d540a0da13bd"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-build-01/source/gemv.h",
+      "stored": "files/build/source/gemv.h.gz",
+      "encoding": "gzip",
+      "raw_bytes": 1075,
+      "raw_sha256": "125ab086c086c2f00517295f7247a26d50900e91681faa6327c8980f48af511f",
+      "stored_bytes": 308,
+      "stored_sha256": "26847d1ff73cc64e3ffd1a192362e5b42cad2aef1a40204ee0d635ce415812ac"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-build-01/source/main.c",
+      "stored": "files/build/source/main.c.gz",
+      "encoding": "gzip",
+      "raw_bytes": 3590,
+      "raw_sha256": "5660c79648244d293bf1c1e0c6460ea0f8dc9771c8068c44a2db9a5aada7bd86",
+      "stored_bytes": 1272,
+      "stored_sha256": "42b8a0343fae7a7be247879be300d83a5afe090e8970032e0e48238ea8315050"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-build-01/source/manifest.json",
+      "stored": "files/build/source/manifest.json.gz",
+      "encoding": "gzip",
+      "raw_bytes": 270520,
+      "raw_sha256": "11421be7e24c902f256dc537db2e24de8a0627234505de3d270b46cc9ea3bd5a",
+      "stored_bytes": 13324,
+      "stored_sha256": "7591bb985182558e8568115c45efabcc2ed9aa9504b7949cfb38e114034ef217"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-build-01/source/repo/team/optimizations/o2/r2-safe-tail/candidate.py",
+      "stored": "files/build/source/repo/team/optimizations/o2/r2-safe-tail/candidate.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 7113,
+      "raw_sha256": "a0e914da892037c70a5bd44b41e9ec04e2b15b0cb957534e1708e4194a87fdeb",
+      "stored_bytes": 2829,
+      "stored_sha256": "02fb7d9c3975b9c0840fa824d5142a1ae312ee1195e3f0cdce3ffa41468eff72"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-build-01/source/repo/team/optimizations/o2/r2-safe-tail/machine_model.py",
+      "stored": "files/build/source/repo/team/optimizations/o2/r2-safe-tail/machine_model.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 8135,
+      "raw_sha256": "8fb2ac208d8db9083464fb839c06b46ec365234d72b819822563830dad90171e",
+      "stored_bytes": 2647,
+      "stored_sha256": "db165af83cfcee0d233dcc281f822f61a4d0b05d0bcaf76b79e03a58114b45c7"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-build-01/source/repo/team/optimizations/o2/r2-select/entry_c_api.py",
+      "stored": "files/build/source/repo/team/optimizations/o2/r2-select/entry_c_api.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 36061,
+      "raw_sha256": "4e1ae340c5b122d09d634631d7fce322ad121838ba9a4affdf193d2a4d9105fd",
+      "stored_bytes": 10449,
+      "stored_sha256": "b3a05fca03d8a48ecb7fa1a80f15d9f6daad246201cb4d7d157631033571ac55"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-build-01/source/repo/team/optimizations/o2/r2-select/entry_candidate.py",
+      "stored": "files/build/source/repo/team/optimizations/o2/r2-select/entry_candidate.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 5308,
+      "raw_sha256": "a19224bb3b659615e3a1ca5c7db1bcb0e6af90649b098f8b39e3af6021d42edf",
+      "stored_bytes": 2276,
+      "stored_sha256": "a16969a2df9b1e1b1228e1aa5eeff2fc202dc08f56fbf54b633d2470cf3476a8"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-build-01/source/repo/team/optimizations/o2/r2-select/entry_experiment.py",
+      "stored": "files/build/source/repo/team/optimizations/o2/r2-select/entry_experiment.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 20824,
+      "raw_sha256": "417b2d8d0b97b293d7db565bfddb39f111756cd23638ddc62c8117997e069b6e",
+      "stored_bytes": 6398,
+      "stored_sha256": "65f54138fff18515ce034427684f340cf3fe4a1580196be95c6014b59579e60d"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-build-01/source/repo/team/optimizations/o2/r2-select/entry_gate.py",
+      "stored": "files/build/source/repo/team/optimizations/o2/r2-select/entry_gate.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 12537,
+      "raw_sha256": "d20e0bd7426ac7a3b56b62d2a9b495b51b9cd6da257e46723eddbbb984de8f11",
+      "stored_bytes": 4450,
+      "stored_sha256": "8b06096f9b2f83ec74ad0420f3e1d5a4b7d0ef35f1464d22304b3f14960e6594"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-build-01/source/repo/team/optimizations/o2/r2-vector-accum/candidate.py",
+      "stored": "files/build/source/repo/team/optimizations/o2/r2-vector-accum/candidate.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 7740,
+      "raw_sha256": "0270736b5c09e160626eb7b32d8e760faa193bf05761fea824a979108c3717b9",
+      "stored_bytes": 2763,
+      "stored_sha256": "995a643a8c6bd910aa228b2609d823a01f150eeaa92d4ae585a5287c2c57baee"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-build-01/source/repo/team/optimizations/o2/r2-vector-accum/gate.py",
+      "stored": "files/build/source/repo/team/optimizations/o2/r2-vector-accum/gate.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 9380,
+      "raw_sha256": "ab07b578f5fe2dc7782ef9af64e722e051363d1dfddfcd0f1939efb209346b6d",
+      "stored_bytes": 3368,
+      "stored_sha256": "62431bfaafa271ff59b53a4c06e30047b43f897ff419dbb4e75e0274a1062cc5"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-build-01/source/repo/team/workloads/o3-gemv/Makefile",
+      "stored": "files/build/source/repo/team/workloads/o3-gemv/Makefile",
+      "encoding": "identity",
+      "raw_bytes": 427,
+      "raw_sha256": "98e7ae3cd127623b741d520c0c9cc93d583d755e573c0db457440376b333c9c2",
+      "stored_bytes": 427,
+      "stored_sha256": "98e7ae3cd127623b741d520c0c9cc93d583d755e573c0db457440376b333c9c2"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-build-01/source/repo/team/workloads/o3-gemv/fixed-layout.ld",
+      "stored": "files/build/source/repo/team/workloads/o3-gemv/fixed-layout.ld",
+      "encoding": "identity",
+      "raw_bytes": 961,
+      "raw_sha256": "fea739d1b0a19fd3254f92e1aa5eefc564eb2fb243dc3519091bfad262363e67",
+      "stored_bytes": 961,
+      "stored_sha256": "fea739d1b0a19fd3254f92e1aa5eefc564eb2fb243dc3519091bfad262363e67"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-build-01/source/repo/team/workloads/o3-gemv/generate.py",
+      "stored": "files/build/source/repo/team/workloads/o3-gemv/generate.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 8658,
+      "raw_sha256": "b0500ec98a3db471f4ed4a9d927fa1854a9a1c2f4c0cbec495fc89918ddf5a57",
+      "stored_bytes": 2974,
+      "stored_sha256": "f8d2975b0f427bd55b1754e0daeb0942f1fb4ad0b49dad109b27af06e74d20f9"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-build-01/source/repo/team/workloads/o3-gemv/main.c",
+      "stored": "files/build/source/repo/team/workloads/o3-gemv/main.c.gz",
+      "encoding": "gzip",
+      "raw_bytes": 6130,
+      "raw_sha256": "21249572ab9ab75c2dfd52b39d1288111c26627df166f80064085a6f2efe7c18",
+      "stored_bytes": 2056,
+      "stored_sha256": "332d8f24b95ef738d58677b41d39a2882cd8c3792a355c7e4f103a92c6b1aab8"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-build-01/source/repo/team/workloads/o3-gemv/model.py",
+      "stored": "files/build/source/repo/team/workloads/o3-gemv/model.py",
+      "encoding": "identity",
+      "raw_bytes": 816,
+      "raw_sha256": "8c150d05a194ad3f529b79e56c1271cb0d5984ab2437aa382626696e659de333",
+      "stored_bytes": 816,
+      "stored_sha256": "8c150d05a194ad3f529b79e56c1271cb0d5984ab2437aa382626696e659de333"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-build-01/source/repo/team/workloads/unified-vdot/generate.py",
+      "stored": "files/build/source/repo/team/workloads/unified-vdot/generate.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 14070,
+      "raw_sha256": "2aee46109a3fa0d5267a784e4ef0845e1e2bf65f012fee89053c799d4df0acb9",
+      "stored_bytes": 4733,
+      "stored_sha256": "c30df421ea6a17dac1b07a5355a5a8f77a2a5dc50ecf2214994976250f79de80"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-build-01/vdot-perf.bin",
+      "stored": "files/build/vdot-perf.bin.gz",
+      "encoding": "gzip",
+      "raw_bytes": 32592,
+      "raw_sha256": "986594704c8b693864d2995896a44d6179f677e25d3ded010d83472f4650e102",
+      "stored_bytes": 11242,
+      "stored_sha256": "755cc0adcf9ff0fcaa794e1762e7df18e05f71b1018fde7275a7c4570c37b4a7"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-build-01/vdot-perf.elf",
+      "stored": "files/build/vdot-perf.elf.gz",
+      "encoding": "gzip",
+      "raw_bytes": 104272,
+      "raw_sha256": "5b6382c84b63ac86ddd5ab9dacf5be4b96680b8937b4c9b94faeb2dd9a415257",
+      "stored_bytes": 31744,
+      "stored_sha256": "f34d5c0a477b3bfc7a9b737118cea42a1c2fc56eafd3f7fff8db22c31e1532c0"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-build-01/vdot-perf.txt",
+      "stored": "files/build/vdot-perf.txt.gz",
+      "encoding": "gzip",
+      "raw_bytes": 317511,
+      "raw_sha256": "aa3051897d48755ce7d72faa1610cfb71fe83e268171ca5ff99d6b3f9b6aaf49",
+      "stored_bytes": 42207,
+      "stored_sha256": "414615d7d0dbb6e07b1b1141fbf2ef7ba8874ebd2d64409368704788d80a63c7"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/completed-runs.json",
+      "stored": "files/run/completed-runs.json.gz",
+      "encoding": "gzip",
+      "raw_bytes": 48290,
+      "raw_sha256": "0fe95880bf68dbe979ac53c0f87a7b0b972072d412b3af37bc6cd2fbef8d6715",
+      "stored_bytes": 5895,
+      "stored_sha256": "dfbe6560b5baeb48902c45cd470d05f4f12df60f0745b994e725dad00a50d7b1"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/configuration.json",
+      "stored": "files/run/configuration.json",
+      "encoding": "identity",
+      "raw_bytes": 875,
+      "raw_sha256": "2748614dacc00c6c3bc11b2d37ea7b96337fe5d67106d3102d8b1fcbb2789291",
+      "stored_bytes": 875,
+      "stored_sha256": "2748614dacc00c6c3bc11b2d37ea7b96337fe5d67106d3102d8b1fcbb2789291"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/hardware-profile.json",
+      "stored": "files/run/hardware-profile.json.gz",
+      "encoding": "gzip",
+      "raw_bytes": 324396,
+      "raw_sha256": "35ac2d74fb8b1eafa6ea991ee7035fdf1ebfc73ce469997a31b8764d1621f527",
+      "stored_bytes": 109195,
+      "stored_sha256": "9b831deb7126511ab95c0bbd1cf18437038465c91c17a3cf84cf1aa13174c654"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/negative-fixture/compile/command.json",
+      "stored": "files/run/negative-fixture/compile/command.json",
+      "encoding": "identity",
+      "raw_bytes": 1014,
+      "raw_sha256": "56e3ee35c767fc7c5aae7c81d25958751641b8aa5a38091549d11bedf41b4a31",
+      "stored_bytes": 1014,
+      "stored_sha256": "56e3ee35c767fc7c5aae7c81d25958751641b8aa5a38091549d11bedf41b4a31"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/negative-fixture/compile/stderr.log",
+      "stored": "files/run/negative-fixture/compile/stderr.log",
+      "encoding": "identity",
+      "raw_bytes": 0,
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_bytes": 0,
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/negative-fixture/compile/stdout.log",
+      "stored": "files/run/negative-fixture/compile/stdout.log",
+      "encoding": "identity",
+      "raw_bytes": 0,
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_bytes": 0,
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/negative-fixture/compiler/command.json",
+      "stored": "files/run/negative-fixture/compiler/command.json",
+      "encoding": "identity",
+      "raw_bytes": 498,
+      "raw_sha256": "6b5665a2d5698af31d5e9a96269998f3bec8d49ff3301459c653367897c8af4b",
+      "stored_bytes": 498,
+      "stored_sha256": "6b5665a2d5698af31d5e9a96269998f3bec8d49ff3301459c653367897c8af4b"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/negative-fixture/compiler/stderr.log",
+      "stored": "files/run/negative-fixture/compiler/stderr.log",
+      "encoding": "identity",
+      "raw_bytes": 0,
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_bytes": 0,
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/negative-fixture/compiler/stdout.log",
+      "stored": "files/run/negative-fixture/compiler/stdout.log",
+      "encoding": "identity",
+      "raw_bytes": 246,
+      "raw_sha256": "9829ba25432aae95cc193accafa14bfab70abb264f797d07c47ba1dcdf4f31a1",
+      "stored_bytes": 246,
+      "stored_sha256": "9829ba25432aae95cc193accafa14bfab70abb264f797d07c47ba1dcdf4f31a1"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/negative-fixture/fixture.json",
+      "stored": "files/run/negative-fixture/fixture.json",
+      "encoding": "identity",
+      "raw_bytes": 1002,
+      "raw_sha256": "100bbe1fe3a39e6bf106bfcfc33c7d0bae104d6b6df951c22ba2b152c60158c9",
+      "stored_bytes": 1002,
+      "stored_sha256": "100bbe1fe3a39e6bf106bfcfc33c7d0bae104d6b6df951c22ba2b152c60158c9"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/negative-fixture/linkage/command.json",
+      "stored": "files/run/negative-fixture/linkage/command.json",
+      "encoding": "identity",
+      "raw_bytes": 598,
+      "raw_sha256": "765130addf1c77ba7b41e0b8f028d3dfbb47466003c920d089f63d488720e059",
+      "stored_bytes": 598,
+      "stored_sha256": "765130addf1c77ba7b41e0b8f028d3dfbb47466003c920d089f63d488720e059"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/negative-fixture/linkage/stderr.log",
+      "stored": "files/run/negative-fixture/linkage/stderr.log",
+      "encoding": "identity",
+      "raw_bytes": 0,
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_bytes": 0,
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/negative-fixture/linkage/stdout.log",
+      "stored": "files/run/negative-fixture/linkage/stdout.log.gz",
+      "encoding": "gzip",
+      "raw_bytes": 1456,
+      "raw_sha256": "98507c13d46b921b3f7f39a17c2c18a40a787bf88cc8559ba96cc8123a2f32ff",
+      "stored_bytes": 498,
+      "stored_sha256": "6fece6071d58843675943673e7902eeafef6d2ade6d17f8e70d68f7d4e9bdf73"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/negative-fixture/negative-fixture.c",
+      "stored": "files/run/negative-fixture/negative-fixture.c.gz",
+      "encoding": "gzip",
+      "raw_bytes": 3297,
+      "raw_sha256": "7b39400d0a566229ce018a8251ead8242b92a3afe05a1aee5711b38809056273",
+      "stored_bytes": 1337,
+      "stored_sha256": "abcd799d2f5227795667e84a0fc5364ce753fefcb47a077df3b9a4563a182a00"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/negative-fixture/negative-reference.so",
+      "stored": "files/run/negative-fixture/negative-reference.so.gz",
+      "encoding": "gzip",
+      "raw_bytes": 16568,
+      "raw_sha256": "c70b0ad5b5a71032e96c3d32bfcdb3e17512eb8617ae85d201bf3fb6a85732e6",
+      "stored_bytes": 3453,
+      "stored_sha256": "261901699e96cd2775960e0bec370b782b6804acde1e1b6bcd06160a243da7fa"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/results.json",
+      "stored": "files/run/results.json.gz",
+      "encoding": "gzip",
+      "raw_bytes": 49709,
+      "raw_sha256": "e68a0647e4140d6364ea8007a25074795f1141554d914cfb6911b11ce2763e22",
+      "stored_bytes": 6092,
+      "stored_sha256": "a16e59267cfb055f7a6d81a416e63c53afaf31ee007514dd1d1a45199ddfbd88"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/runs/negative/cwd/build/constantin.txt",
+      "stored": "files/run/runs/negative/cwd/build/constantin.txt",
+      "encoding": "identity",
+      "raw_bytes": 611,
+      "raw_sha256": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+      "stored_bytes": 611,
+      "stored_sha256": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/runs/negative/cwd/build/plusArgs",
+      "stored": "files/run/runs/negative/cwd/build/plusArgs",
+      "encoding": "identity",
+      "raw_bytes": 155,
+      "raw_sha256": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+      "stored_bytes": 155,
+      "stored_sha256": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/runs/negative/negative.json",
+      "stored": "files/run/runs/negative/negative.json",
+      "encoding": "identity",
+      "raw_bytes": 272,
+      "raw_sha256": "fe455d930b4abcefd96f74cb8e455a092a40955de53584308d9b71da0d351a43",
+      "stored_bytes": 272,
+      "stored_sha256": "fe455d930b4abcefd96f74cb8e455a092a40955de53584308d9b71da0d351a43"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/runs/negative/observation.json",
+      "stored": "files/run/runs/negative/observation.json.gz",
+      "encoding": "gzip",
+      "raw_bytes": 2243,
+      "raw_sha256": "35026b33bade6830c1779d8ebc17bde0fd5f7308877f05f985fddf38caaf501f",
+      "stored_bytes": 1052,
+      "stored_sha256": "a752d1a9501e3d3cbd485b7c1017ae4cf51354c5bdd3b5b8a7602807b463fa1b"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/runs/negative/result.json",
+      "stored": "files/run/runs/negative/result.json.gz",
+      "encoding": "gzip",
+      "raw_bytes": 15088,
+      "raw_sha256": "2315ba094e16518525a99721b01eca96067f3cc468788bda1da888f27b1be38e",
+      "stored_bytes": 4987,
+      "stored_sha256": "79ce3e17850b529253bbe31df02c9aeead501eae1ea210dd9377256ab011bd0a"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/runs/negative/stderr.log",
+      "stored": "files/run/runs/negative/stderr.log.gz",
+      "encoding": "gzip",
+      "raw_bytes": 24030,
+      "raw_sha256": "6d07f3b3b246c93d27f172236a223aa6f8da83fffb08edf9878eee5195e0466a",
+      "stored_bytes": 1433,
+      "stored_sha256": "1a918eb4b91bff59ebda0031b7dad4fe7e7cb209667aace619ef81ec3ba250f3"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/runs/negative/stdout.log",
+      "stored": "files/run/runs/negative/stdout.log.gz",
+      "encoding": "gzip",
+      "raw_bytes": 14602,
+      "raw_sha256": "90a6a61d6d4af0a8e3f33a83437aa64c2002a5cde6cbfe5660022e6ded762f31",
+      "stored_bytes": 3423,
+      "stored_sha256": "36f792de7e49dc07fc74084d3374767d63c1530cedc3e6e94fb6ac0b4d81d69b"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/runs/recovery/cwd/build/constantin.txt",
+      "stored": "files/run/runs/recovery/cwd/build/constantin.txt",
+      "encoding": "identity",
+      "raw_bytes": 611,
+      "raw_sha256": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+      "stored_bytes": 611,
+      "stored_sha256": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/runs/recovery/cwd/build/plusArgs",
+      "stored": "files/run/runs/recovery/cwd/build/plusArgs",
+      "encoding": "identity",
+      "raw_bytes": 155,
+      "raw_sha256": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+      "stored_bytes": 155,
+      "stored_sha256": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/runs/recovery/observation.json",
+      "stored": "files/run/runs/recovery/observation.json.gz",
+      "encoding": "gzip",
+      "raw_bytes": 550197,
+      "raw_sha256": "db638c5b144941422c61ea85a4ad18440c71c65ee31716f6f48d00d4dd146209",
+      "stored_bytes": 37613,
+      "stored_sha256": "0a724a6881dc1d66530a8f7f3f02dde9693e068dd8531f52c792516074251485"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/runs/recovery/result.json",
+      "stored": "files/run/runs/recovery/result.json.gz",
+      "encoding": "gzip",
+      "raw_bytes": 16130,
+      "raw_sha256": "ea4590c8d2ee79b519e95d030da3b54cec6844e3c04d174462fe76fd18cb7581",
+      "stored_bytes": 5019,
+      "stored_sha256": "a18fd096e04466bf07c9b41a869e89022f20189037a020f575bd8a8188457dfc"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/runs/recovery/stderr.log",
+      "stored": "files/run/runs/recovery/stderr.log.gz",
+      "encoding": "gzip",
+      "raw_bytes": 6840828,
+      "raw_sha256": "62c64d2325ee1d2f09eb7cf16f66627c1d5b318d4fd9cd239fe85eaaab10310e",
+      "stored_bytes": 273834,
+      "stored_sha256": "c394846f8da6070d8dd4e0bd5c8a88ebba83afe64d8ba6f07a0b0934284b97d2"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/runs/recovery/stdout.log",
+      "stored": "files/run/runs/recovery/stdout.log.gz",
+      "encoding": "gzip",
+      "raw_bytes": 3281,
+      "raw_sha256": "12d5a2a3081afdf558d0eb0c20cf07e34a138079c09a325ac67f3869983d000f",
+      "stored_bytes": 965,
+      "stored_sha256": "ee3070e2b0f8a2011a1202d62a4d45dbb4f914e1f62835c1c9ac69f72bbb8949"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/runs/recovery/validation.json",
+      "stored": "files/run/runs/recovery/validation.json.gz",
+      "encoding": "gzip",
+      "raw_bytes": 1377,
+      "raw_sha256": "31f1a6104242be63b96e768c77a304d099988b00d96d37ee6c9b7dbe9f20662d",
+      "stored_bytes": 331,
+      "stored_sha256": "4c3de246706de347a186736e617800517a79edcfff8530e9cf97e963d4d4c023"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/runs/replay/cwd/build/constantin.txt",
+      "stored": "files/run/runs/replay/cwd/build/constantin.txt",
+      "encoding": "identity",
+      "raw_bytes": 611,
+      "raw_sha256": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+      "stored_bytes": 611,
+      "stored_sha256": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/runs/replay/cwd/build/plusArgs",
+      "stored": "files/run/runs/replay/cwd/build/plusArgs",
+      "encoding": "identity",
+      "raw_bytes": 155,
+      "raw_sha256": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+      "stored_bytes": 155,
+      "stored_sha256": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/runs/replay/observation.json",
+      "stored": "files/run/runs/replay/observation.json.gz",
+      "encoding": "gzip",
+      "raw_bytes": 550197,
+      "raw_sha256": "58fe9119e69da07c6ad40db03babb38b87e1b15b1a77ca1b9a21dad29400a4e4",
+      "stored_bytes": 37620,
+      "stored_sha256": "66a205efb907edbb825d8b7ccf851e6ea6e38979c940e9101e82be7e0051d694"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/runs/replay/result.json",
+      "stored": "files/run/runs/replay/result.json.gz",
+      "encoding": "gzip",
+      "raw_bytes": 16124,
+      "raw_sha256": "9a9cebfebcef27e1d97b2a61fb9dc72f8175b5a9c638f34446f92603ffc103de",
+      "stored_bytes": 5018,
+      "stored_sha256": "8cb526d204634706badcce8d360740410ff7b3e71171766c954110ab6a783391"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/runs/replay/stderr.log",
+      "stored": "files/run/runs/replay/stderr.log.gz",
+      "encoding": "gzip",
+      "raw_bytes": 6840828,
+      "raw_sha256": "62c64d2325ee1d2f09eb7cf16f66627c1d5b318d4fd9cd239fe85eaaab10310e",
+      "stored_bytes": 273834,
+      "stored_sha256": "c394846f8da6070d8dd4e0bd5c8a88ebba83afe64d8ba6f07a0b0934284b97d2"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/runs/replay/stdout.log",
+      "stored": "files/run/runs/replay/stdout.log.gz",
+      "encoding": "gzip",
+      "raw_bytes": 3281,
+      "raw_sha256": "251ccea461aecb6d84cd781d358f86dd745545591c2e7f537bed9a5abad7c389",
+      "stored_bytes": 967,
+      "stored_sha256": "2f411f3d4fa23ddcfb2f84348163133885b64b54854fa5a72690fae2c28f754c"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/runs/replay/validation.json",
+      "stored": "files/run/runs/replay/validation.json.gz",
+      "encoding": "gzip",
+      "raw_bytes": 1377,
+      "raw_sha256": "31f1a6104242be63b96e768c77a304d099988b00d96d37ee6c9b7dbe9f20662d",
+      "stored_bytes": 331,
+      "stored_sha256": "4c3de246706de347a186736e617800517a79edcfff8530e9cf97e963d4d4c023"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/runtime-inputs.json",
+      "stored": "files/run/runtime-inputs.json.gz",
+      "encoding": "gzip",
+      "raw_bytes": 12716,
+      "raw_sha256": "7c54064b7c5383b8289f66cc98a6c8bc4ca79e7db97970f05f061d5f36d261a2",
+      "stored_bytes": 4218,
+      "stored_sha256": "d1a583e5294c407a57a1aee038b53ca3b034d20b55a66332dd6ad97a441a33d9"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/state.json",
+      "stored": "files/run/state.json",
+      "encoding": "identity",
+      "raw_bytes": 514,
+      "raw_sha256": "c135ef48e66a7a37f9b83850391e70458449d8df80e049c35d9c11bf18d80116",
+      "stored_bytes": 514,
+      "stored_sha256": "c135ef48e66a7a37f9b83850391e70458449d8df80e049c35d9c11bf18d80116"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01/t17-result.json",
+      "stored": "files/run/t17-result.json",
+      "encoding": "identity",
+      "raw_bytes": 894,
+      "raw_sha256": "ec42ed53a968df51d43f37a4b7f8f18f609df30abbdeae0828e4b35901a1cb0e",
+      "stored_bytes": 894,
+      "stored_sha256": "ec42ed53a968df51d43f37a4b7f8f18f609df30abbdeae0828e4b35901a1cb0e"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/evidence/t10-t11-fullcore-20261013/matrix/negative-fixture.c",
+      "stored": "files/tools/team/evidence/t10-t11-fullcore-20261013/matrix/negative-fixture.c.gz",
+      "encoding": "gzip",
+      "raw_bytes": 3297,
+      "raw_sha256": "7b39400d0a566229ce018a8251ead8242b92a3afe05a1aee5711b38809056273",
+      "stored_bytes": 1337,
+      "stored_sha256": "abcd799d2f5227795667e84a0fc5364ce753fefcb47a077df3b9a4563a182a00"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/optimizations/o1/audit/runtime_gate.py",
+      "stored": "files/tools/team/optimizations/o1/audit/runtime_gate.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 6565,
+      "raw_sha256": "80315b278f4dc0168edd33657a07ae648b20f0279fa57a69f35b0f983fa42ea1",
+      "stored_bytes": 2619,
+      "stored_sha256": "65faf60ef64c10b91e69c248400ee37e5efad010d69c405f7777ceb94cce1cca"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/optimizations/o2/fullcore/analyze.py",
+      "stored": "files/tools/team/optimizations/o2/fullcore/analyze.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 27348,
+      "raw_sha256": "27d9fe451c035157848625e84c2a229ac1d83073eb56ba3ebc25131e5569d496",
+      "stored_bytes": 8425,
+      "stored_sha256": "7762c3e8e62e9d06cb45cba9bba19a63026ea0d95e5901e426584ef4e1af5d84"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/optimizations/o2/fullcore/build_fullcore.py",
+      "stored": "files/tools/team/optimizations/o2/fullcore/build_fullcore.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 8013,
+      "raw_sha256": "8a66fb75324ee1834401ec71b5c578141de6268a074253d37eb5494046c932d0",
+      "stored_bytes": 2902,
+      "stored_sha256": "f228420261226f6541851db0cf62627b5847c773437c665569771b68cb54533e"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/optimizations/o2/fullcore/recheck.py",
+      "stored": "files/tools/team/optimizations/o2/fullcore/recheck.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 26565,
+      "raw_sha256": "8cebe76129f86747cdddf87f93f54d4379a8606dd3c1a20d55008361f2f95140",
+      "stored_bytes": 8131,
+      "stored_sha256": "e5f48e1c91c6ca22acd22b38a4ec3d08d5aed805c998ea1aa628aa13ada35998"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/optimizations/o2/fullcore/run_suite.py",
+      "stored": "files/tools/team/optimizations/o2/fullcore/run_suite.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 29778,
+      "raw_sha256": "7bc68d73cd830ceb8fb9aa18469ebe6ff3efcdf56de6922049e05556b0e02475",
+      "stored_bytes": 9054,
+      "stored_sha256": "cbb2e8ad6b1d5d767afc960308a800f4207f041379fed8f94d3dbcd4c39829fe"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/optimizations/o2/fullcore/workloads/check.py",
+      "stored": "files/tools/team/optimizations/o2/fullcore/workloads/check.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 5763,
+      "raw_sha256": "f3eb5592078b71daa35c430b3f5924b271839edc0b85c406a9ac04dd5924611a",
+      "stored_bytes": 1900,
+      "stored_sha256": "1ae2de6bfc8a0b2b6953c256f95c4dfd99ddd01601a4e147ed5ed5c1bc42e2bb"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/optimizations/o2/r2-kernel-audit/audit.py",
+      "stored": "files/tools/team/optimizations/o2/r2-kernel-audit/audit.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 10333,
+      "raw_sha256": "258afeea5f10723c56b50b530ec414462a04740eddfd41123e3eaa13d1c7f262",
+      "stored_bytes": 4170,
+      "stored_sha256": "9210918077b1dba09348dede675438875f61a6c41734abc9e655a0c827d3ca84"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/optimizations/o2/r2-safe-tail/candidate.py",
+      "stored": "files/tools/team/optimizations/o2/r2-safe-tail/candidate.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 7113,
+      "raw_sha256": "a0e914da892037c70a5bd44b41e9ec04e2b15b0cb957534e1708e4194a87fdeb",
+      "stored_bytes": 2829,
+      "stored_sha256": "02fb7d9c3975b9c0840fa824d5142a1ae312ee1195e3f0cdce3ffa41468eff72"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/optimizations/o2/r2-safe-tail/fullcore_screen.py",
+      "stored": "files/tools/team/optimizations/o2/r2-safe-tail/fullcore_screen.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 25567,
+      "raw_sha256": "5f5c719a9a5b675f4de166ca30a3d89bd52c944c667cee302f66da94fa2779f2",
+      "stored_bytes": 8444,
+      "stored_sha256": "7016097cde152950877707eb4f8ef4b2d010a60cdc26bf4ae6424010a1a30c70"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/optimizations/o2/r2-safe-tail/linked_gate.py",
+      "stored": "files/tools/team/optimizations/o2/r2-safe-tail/linked_gate.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 13064,
+      "raw_sha256": "96807465bfd97a483f31ce100e552e2b83c4d0edd59f9bf4d817c66abd80ec1f",
+      "stored_bytes": 4727,
+      "stored_sha256": "931eadff32e708b880d492a15251aad80d7367661cd14e8330bb2afed1c93668"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/optimizations/o2/r2-safe-tail/machine_model.py",
+      "stored": "files/tools/team/optimizations/o2/r2-safe-tail/machine_model.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 8135,
+      "raw_sha256": "8fb2ac208d8db9083464fb839c06b46ec365234d72b819822563830dad90171e",
+      "stored_bytes": 2647,
+      "stored_sha256": "db165af83cfcee0d233dcc281f822f61a4d0b05d0bcaf76b79e03a58114b45c7"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/optimizations/o2/r2-safe-tail/merged_screen.py",
+      "stored": "files/tools/team/optimizations/o2/r2-safe-tail/merged_screen.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 23894,
+      "raw_sha256": "ff75464c5b0f75349fc4321bdd80a7a85985a54ae415ad347c3ce04fdf4bd885",
+      "stored_bytes": 7948,
+      "stored_sha256": "40705bede7894089f3fedb8a981d9a1cc8f9994b4e0e2b362b6328febf9acb1d"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/optimizations/o2/r2-select/C_API_CONTRACT.md",
+      "stored": "files/tools/team/optimizations/o2/r2-select/C_API_CONTRACT.md.gz",
+      "encoding": "gzip",
+      "raw_bytes": 1864,
+      "raw_sha256": "3ee4d6ef0eb03db120319591cf873cc7687be73190fa4a98427159017bc26ef8",
+      "stored_bytes": 1258,
+      "stored_sha256": "366ee0850c0945e58ef5ffd3ba1eb43be2add022fbfb27ad85d43db1fcb1e18b"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/optimizations/o2/r2-select/ENTRY_CONTRACT.md",
+      "stored": "files/tools/team/optimizations/o2/r2-select/ENTRY_CONTRACT.md.gz",
+      "encoding": "gzip",
+      "raw_bytes": 3209,
+      "raw_sha256": "dd76ab992841e7e7b05039b84239ce151085b3d5ad18dfb301cbe5affc168638",
+      "stored_bytes": 2087,
+      "stored_sha256": "9c2167b315cead90f3605f71f648ed63467240f37cd691e83d02282c80d79dda"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/optimizations/o2/r2-select/entry_c_api.py",
+      "stored": "files/tools/team/optimizations/o2/r2-select/entry_c_api.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 36061,
+      "raw_sha256": "4e1ae340c5b122d09d634631d7fce322ad121838ba9a4affdf193d2a4d9105fd",
+      "stored_bytes": 10449,
+      "stored_sha256": "b3a05fca03d8a48ecb7fa1a80f15d9f6daad246201cb4d7d157631033571ac55"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/optimizations/o2/r2-select/entry_c_evidence.py",
+      "stored": "files/tools/team/optimizations/o2/r2-select/entry_c_evidence.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 10464,
+      "raw_sha256": "166186d7e9114729bb042b2cee3e719f6fe56150077aca905b657fe0e703362f",
+      "stored_bytes": 3251,
+      "stored_sha256": "13a85c71e4969b30bf88bc1a5069aed44b86b492a32a73958cfc2bf61ed4751b"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/optimizations/o2/r2-select/entry_candidate.py",
+      "stored": "files/tools/team/optimizations/o2/r2-select/entry_candidate.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 5308,
+      "raw_sha256": "a19224bb3b659615e3a1ca5c7db1bcb0e6af90649b098f8b39e3af6021d42edf",
+      "stored_bytes": 2276,
+      "stored_sha256": "a16969a2df9b1e1b1228e1aa5eeff2fc202dc08f56fbf54b633d2470cf3476a8"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/optimizations/o2/r2-select/entry_experiment.py",
+      "stored": "files/tools/team/optimizations/o2/r2-select/entry_experiment.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 20824,
+      "raw_sha256": "417b2d8d0b97b293d7db565bfddb39f111756cd23638ddc62c8117997e069b6e",
+      "stored_bytes": 6398,
+      "stored_sha256": "65f54138fff18515ce034427684f340cf3fe4a1580196be95c6014b59579e60d"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/optimizations/o2/r2-select/entry_gate.py",
+      "stored": "files/tools/team/optimizations/o2/r2-select/entry_gate.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 12537,
+      "raw_sha256": "d20e0bd7426ac7a3b56b62d2a9b495b51b9cd6da257e46723eddbbb984de8f11",
+      "stored_bytes": 4450,
+      "stored_sha256": "8b06096f9b2f83ec74ad0420f3e1d5a4b7d0ef35f1464d22304b3f14960e6594"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/optimizations/o2/r2-select/public/gemv.S",
+      "stored": "files/tools/team/optimizations/o2/r2-select/public/gemv.S.gz",
+      "encoding": "gzip",
+      "raw_bytes": 94870,
+      "raw_sha256": "5c01b4eec12dcb3cc3a62551d7096d43b5f68cea2efec0c8b30b79e8d5e5810c",
+      "stored_bytes": 4826,
+      "stored_sha256": "b6ba9022e4d539f6f5a21a0fd461c2fd60b58e9b35b7a86e70a0d540a0da13bd"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/optimizations/o2/r2-select/public/gemv.h",
+      "stored": "files/tools/team/optimizations/o2/r2-select/public/gemv.h.gz",
+      "encoding": "gzip",
+      "raw_bytes": 1075,
+      "raw_sha256": "125ab086c086c2f00517295f7247a26d50900e91681faa6327c8980f48af511f",
+      "stored_bytes": 308,
+      "stored_sha256": "26847d1ff73cc64e3ffd1a192362e5b42cad2aef1a40204ee0d635ce415812ac"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/optimizations/o2/r2-select/test_entry_c_api.py",
+      "stored": "files/tools/team/optimizations/o2/r2-select/test_entry_c_api.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 5960,
+      "raw_sha256": "a883061232346e5f2b2d5ee034e2293646eceb1b3177dd15c305c1e6851df6b2",
+      "stored_bytes": 2148,
+      "stored_sha256": "0c91bc0d4b6919ee5a1a479d9c8f2299fa9eb1c44346762fd4b244274f51eb53"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/optimizations/o2/r2-vector-accum/candidate.py",
+      "stored": "files/tools/team/optimizations/o2/r2-vector-accum/candidate.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 7740,
+      "raw_sha256": "0270736b5c09e160626eb7b32d8e760faa193bf05761fea824a979108c3717b9",
+      "stored_bytes": 2763,
+      "stored_sha256": "995a643a8c6bd910aa228b2609d823a01f150eeaa92d4ae585a5287c2c57baee"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/optimizations/o2/r2-vector-accum/gate.py",
+      "stored": "files/tools/team/optimizations/o2/r2-vector-accum/gate.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 9380,
+      "raw_sha256": "ab07b578f5fe2dc7782ef9af64e722e051363d1dfddfcd0f1939efb209346b6d",
+      "stored_bytes": 3368,
+      "stored_sha256": "62431bfaafa271ff59b53a4c06e30047b43f897ff419dbb4e75e0274a1062cc5"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/optimizations/o2/repro/clean_build.py",
+      "stored": "files/tools/team/optimizations/o2/repro/clean_build.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 9254,
+      "raw_sha256": "9038f134e5f811b1e99a13893dc8fce081a96cf9be0ffe5a9f546a70818a2c7e",
+      "stored_bytes": 3565,
+      "stored_sha256": "87f47109926a0a7cf7110e7c5e9b72f7c0b0212846f71f30efea0dc5179c311d"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/optimizations/o2/repro/clean_entry.py",
+      "stored": "files/tools/team/optimizations/o2/repro/clean_entry.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 12721,
+      "raw_sha256": "6aabb8bbd764d1b7b18b643eaf592efc0a0a1d49e6545842dc7a6b337d39a883",
+      "stored_bytes": 3714,
+      "stored_sha256": "9b24020aea859083c5a85980f3a275b23dd9b7849a2f50000cbc732a598a8824"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/optimizations/o2/repro/clean_prepare.py",
+      "stored": "files/tools/team/optimizations/o2/repro/clean_prepare.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 6191,
+      "raw_sha256": "8e59850c3edcf1bb26d6914759632bab626e297fc95f071f23b58a313043e561",
+      "stored_bytes": 2245,
+      "stored_sha256": "9c75b9c4216830e5296712111ce0a9764ab610c01c85fb7a378871526b94a096"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/optimizations/o2/repro/clean_profile.py",
+      "stored": "files/tools/team/optimizations/o2/repro/clean_profile.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 8406,
+      "raw_sha256": "1c4c467f43ede68fd30b1063868d8f02d71fbe8a5442f2da180210468db9a642",
+      "stored_bytes": 3128,
+      "stored_sha256": "3e1b58dd78404e98b21b8198bd7414ff6da20f25b83706e707f1fd1c9b52ec3d"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/optimizations/o2/repro/clean_support.py",
+      "stored": "files/tools/team/optimizations/o2/repro/clean_support.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 6219,
+      "raw_sha256": "13d03b2a54c26d192e1757975b7583ba5d41a764e8e732caf5c2bc48d7351566",
+      "stored_bytes": 2349,
+      "stored_sha256": "e4136876a7343b320ab50f86dc01707d75c39ff3a5f90c1c11f2414efb13d3ab"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/optimizations/o2/result-width/h1/performance/build_profile.py",
+      "stored": "files/tools/team/optimizations/o2/result-width/h1/performance/build_profile.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 11049,
+      "raw_sha256": "1650856fbe5a6626072ec0e6dfb5dcca86eacdcc805c7d10d542cfcc0f5be5b8",
+      "stored_bytes": 4374,
+      "stored_sha256": "845364f8461fce78cf8c9e3d5fffac53d1c6f72cc875b637af1125fe305763fd"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/patches/nemu/manifest.json",
+      "stored": "files/tools/team/patches/nemu/manifest.json.gz",
+      "encoding": "gzip",
+      "raw_bytes": 1062,
+      "raw_sha256": "1fee8f48616d7d09f46fd5924fb677f4a042ab7a6e2098a4af93e5e4e6a495a1",
+      "stored_bytes": 602,
+      "stored_sha256": "c703b704b2b91519bcc720483e7c81b9f59c986e4e7935c6282da9613e4fde7f"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/scripts/artifact_guard.py",
+      "stored": "files/tools/team/scripts/artifact_guard.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 11812,
+      "raw_sha256": "95eabdc0dc6191df4b03062e432ecc38877cc0c9626a81cdd002a4627ab54a85",
+      "stored_bytes": 3942,
+      "stored_sha256": "a3d1fd2c7d910010f8fe6cfb64d434673cbc1562be89e8934b34dcbffcba755c"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/workloads/o3-gemv/Makefile",
+      "stored": "files/tools/team/workloads/o3-gemv/Makefile",
+      "encoding": "identity",
+      "raw_bytes": 427,
+      "raw_sha256": "98e7ae3cd127623b741d520c0c9cc93d583d755e573c0db457440376b333c9c2",
+      "stored_bytes": 427,
+      "stored_sha256": "98e7ae3cd127623b741d520c0c9cc93d583d755e573c0db457440376b333c9c2"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/workloads/o3-gemv/check.py",
+      "stored": "files/tools/team/workloads/o3-gemv/check.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 1759,
+      "raw_sha256": "462c8618e40546ce5ccf04eb4d27f81925c5e3ae7fa3d0d05a46d6feb8091ab7",
+      "stored_bytes": 902,
+      "stored_sha256": "f5aba6d8acb0e2013609e9436f2d41e6919b5a748a79d127b1123be18ef3e782"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/workloads/o3-gemv/fixed-layout.ld",
+      "stored": "files/tools/team/workloads/o3-gemv/fixed-layout.ld",
+      "encoding": "identity",
+      "raw_bytes": 961,
+      "raw_sha256": "fea739d1b0a19fd3254f92e1aa5eefc564eb2fb243dc3519091bfad262363e67",
+      "stored_bytes": 961,
+      "stored_sha256": "fea739d1b0a19fd3254f92e1aa5eefc564eb2fb243dc3519091bfad262363e67"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/workloads/o3-gemv/generate.py",
+      "stored": "files/tools/team/workloads/o3-gemv/generate.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 8658,
+      "raw_sha256": "b0500ec98a3db471f4ed4a9d927fa1854a9a1c2f4c0cbec495fc89918ddf5a57",
+      "stored_bytes": 2974,
+      "stored_sha256": "f8d2975b0f427bd55b1754e0daeb0942f1fb4ad0b49dad109b27af06e74d20f9"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/workloads/o3-gemv/main.c",
+      "stored": "files/tools/team/workloads/o3-gemv/main.c.gz",
+      "encoding": "gzip",
+      "raw_bytes": 6130,
+      "raw_sha256": "21249572ab9ab75c2dfd52b39d1288111c26627df166f80064085a6f2efe7c18",
+      "stored_bytes": 2056,
+      "stored_sha256": "332d8f24b95ef738d58677b41d39a2882cd8c3792a355c7e4f103a92c6b1aab8"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/workloads/o3-gemv/model.py",
+      "stored": "files/tools/team/workloads/o3-gemv/model.py",
+      "encoding": "identity",
+      "raw_bytes": 816,
+      "raw_sha256": "8c150d05a194ad3f529b79e56c1271cb0d5984ab2437aa382626696e659de333",
+      "stored_bytes": 816,
+      "stored_sha256": "8c150d05a194ad3f529b79e56c1271cb0d5984ab2437aa382626696e659de333"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/workloads/unified-vdot/check.py",
+      "stored": "files/tools/team/workloads/unified-vdot/check.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 18758,
+      "raw_sha256": "084bebc22e2f4665e5c7a7797e5cd2a6c73220719b4cf228ce3075ae2446bc66",
+      "stored_bytes": 6419,
+      "stored_sha256": "c57f09f2f3a3eb132466a224707ba33da1a802a2926d72daec0707df1eb4e4dc"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/workloads/unified-vdot/generate.py",
+      "stored": "files/tools/team/workloads/unified-vdot/generate.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 14070,
+      "raw_sha256": "2aee46109a3fa0d5267a784e4ef0845e1e2bf65f012fee89053c799d4df0acb9",
+      "stored_bytes": 4733,
+      "stored_sha256": "c30df421ea6a17dac1b07a5355a5a8f77a2a5dc50ecf2214994976250f79de80"
+    },
+    {
+      "original": "generated:sealed-inputs",
+      "stored": "files/sealed-inputs.json.gz",
+      "encoding": "gzip",
+      "raw_bytes": 22128,
+      "raw_sha256": "31a413dd6395cfc2e52b44c32c0f3101a8480d63949daadaf0e04c17a21fea3a",
+      "stored_bytes": 4857,
+      "stored_sha256": "94e5de8e3924848ec9b869e26670fcdb013e6eb1d9edc2db7f47fd26f6a3ed10"
+    },
+    {
+      "original": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/optimizations/o2/repro/clean_portable_evidence.py",
+      "stored": "files/tools/team/optimizations/o2/repro/clean_portable_evidence.py.gz",
+      "encoding": "gzip",
+      "raw_bytes": 11290,
+      "raw_sha256": "d6a00a20be581db259f4d7b96b5842f0b2917fe69085b68f5867e7f19535dc34",
+      "stored_bytes": 3280,
+      "stored_sha256": "5eaa63ef5f4fc2423642eb77d862e69f012956bb6271bab8e45fe2d3f97afbc6"
+    }
+  ],
+  "scope": "ordinary C functional calls only; common hardware provenance anchored to the R4 matrix archive",
+  "transport": {
+    "contract": "t17-portable-entry-v2",
+    "kind": "c",
+    "source_archive": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-pack-source-01",
+    "source_manifest_sha256": "329e291c1d8e84095e70a7bfa6069a90f5a26f06dcd760f7565eb876b29b2ff6",
+    "source_tool_sha256": "d6a00a20be581db259f4d7b96b5842f0b2917fe69085b68f5867e7f19535dc34",
+    "relocations": {
+      "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu": {
+        "before": {
+          "sha256": "ff840528eb1009e94906eefb3773ca321050f309553543ab26f0db23c410e30f",
+          "archive": "self",
+          "logical": "tools/build/emu"
+        },
+        "after": {
+          "sha256": "ff840528eb1009e94906eefb3773ca321050f309553543ab26f0db23c410e30f",
+          "logical": null,
+          "archive": "external"
+        }
+      },
+      "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/constantin.txt": {
+        "before": {
+          "sha256": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+          "archive": "self",
+          "logical": "tools/build/constantin.txt"
+        },
+        "after": {
+          "sha256": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+          "archive": "matrix",
+          "logical": "hardware/constantin.txt"
+        }
+      },
+      "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/plusArgs": {
+        "before": {
+          "sha256": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+          "archive": "self",
+          "logical": "tools/build/plusArgs"
+        },
+        "after": {
+          "sha256": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+          "archive": "matrix",
+          "logical": "hardware/plusArgs"
+        }
+      }
+    }
+  }
+}

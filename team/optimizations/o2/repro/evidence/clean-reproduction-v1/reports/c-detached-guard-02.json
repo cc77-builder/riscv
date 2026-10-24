@@ -1,0 +1,56 @@
+{
+  "status": "T17_DETACHED_AUDIT_PASS",
+  "started": "2026-10-24T04:04:11.324597+00:00",
+  "finished": "2026-10-24T04:04:51.969477+00:00",
+  "checkout": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/portable-audit/source",
+  "revision": "34bae6d4acceac939f958199dae53c14bc1f6183",
+  "execution_cwd": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/portable-audit/source",
+  "build_present": false,
+  "out_present": false,
+  "script": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/portable-audit/source/team/optimizations/o2/repro/clean_portable_evidence.py",
+  "script_sha256": "df1be9196293bb637d356c9bfe69a991130297e4f9f77e9ce95e02aa06a9b628",
+  "launcher_sha256": "57f31bb70dafa3154dc22e09c635dde1f4c140405717d98053d781dc2ca43cd4",
+  "arguments": [
+    "--repo",
+    "/home/lizufan/riscv-lab/t17-clean-20261024-0854/portable-audit/source",
+    "--identity",
+    "/home/lizufan/riscv-lab/t17-clean-20261024-0854/identity-02.json",
+    "--action",
+    "audit-c",
+    "--archive",
+    "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-archive-02",
+    "--matrix",
+    "/home/lizufan/riscv-lab/t17-clean-20261024-0854/matrix-archive-03",
+    "--output",
+    "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-archive-audit-02.json"
+  ],
+  "denied_roots": [
+    "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02",
+    "/home/lizufan/riscv-lab/t17-clean-20261024-0854/build-01",
+    "/home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01",
+    "/home/lizufan/riscv-lab/t17-clean-20261024-0854/matrix-build-01",
+    "/home/lizufan/riscv-lab/t17-clean-20261024-0854/matrix-run-01",
+    "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-build-01",
+    "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01",
+    "/home/lizufan/riscv-lab/t17-clean-20261024-0854/fullcore-run-01",
+    "/home/lizufan/riscv-lab/t17-clean-20261024-0854/fullcore-audit-01",
+    "/home/riscv/riscv-lab"
+  ],
+  "auditor_output": {
+    "path": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-archive-audit-02.json",
+    "sha256": "d89d26751c2434e33b15f99e4c5f8fed7e54c9cad6dea5f51d3b93bb842f0c94"
+  },
+  "guard_self_test": true,
+  "event_counts": {
+    "open": 22578,
+    "os.listdir": 98,
+    "subprocess.Popen": 42,
+    "os.scandir": 3638
+  },
+  "rejected_runtime_accesses": [],
+  "auditor_succeeded": true,
+  "error": null,
+  "new_emu_runs": 0,
+  "new_nemu_runs": 0,
+  "scope": "Python file/enumeration access and explicit subprocess arguments; not an OS sandbox or clean-machine installation"
+}

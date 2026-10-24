@@ -1,8 +1,8 @@
 # 香山 vdot 工程开发路线：满足赛题技术要求，持续提高性能
 
-> James_Hotten 本地适用边界：已整合上游六提交至 c9132b8d7；上游 6d2/1a23 与本机 bc9e5ae/e66 分别核验。本机现通过[独立G3补充验收](../optimizations/o2/fullcore/g3_supplement/README.md)：原14项完整原流复算保留核心功能、异常、F2v、dense与精确负控恢复门禁，v5另提供5个真实PARTIAL_KILL窗口，六项覆盖闭合。复用15次既有硬件运行，本轮新增EMU为0；原14项INCOMPLETE与v5单项campaign_acceptance=false保持原样，新组合结果有独立合同。停止时序扫描；本项闭合后，下一步核对上游T17/R5交付与本地源码、硬件及软件合同差异，再推进当前来源R2-SELECT/稳定入口的相容集成，不能转借旧性能或T17资格。Issue已获知T17为666fc80、R5完成至137b44b，本机尚未并入；无新增性能/PPA结论，S2不扩大采用。O1/O2默认关闭，main未改。详见[本地整合与定向测试](latest-integration-20261023.md)。
+> James_Hotten 本地适用边界：已整合上游T17/R5至137b44b，保留本地加固实现。上游T17的34bae/ff840、原6d2/1a23与本机bc9/e66分别核验；本机[独立G3补充验收](../optimizations/o2/fullcore/g3_supplement/README.md)已闭合，原14项INCOMPLETE与v5单项campaign_acceptance=false保持原样。新导入T17整核、矩阵、普通C封存已在固定34bae LF检出独立复算通过，17项真实夹具测试通过，新增EMU为0。R5源码及上游资格导入，但本机GNU13整对象检查未通过：机器码段相同、符号表/字符串表/ISA属性不同，不能放宽原GNU11门禁或声称本地R5构建合格。下一步先恢复匹配GNU11工具链完成稳定入口构建复验，或另立工具链兼容合同，再对本机bc9/e66进行必要的当前来源软件验证；不重复不变的硬件矩阵，不转授上游性能/T17。O1/O2默认关闭，main未改。详见[本地整合与定向测试](latest-integration-20261023.md)。
 
-更新：2026-10-24（UTC+08:00）。硬件源码基点：6d2abe403b07c297b8830a7d4f06e370b0a8e070；当前获选软件及普通调用入口见下表与[R4结果](../optimizations/o2/r2-select/ENTRY_RESULT.md)。团队集成分支 cc77-builder/riscv:zufan。实时活动见[协作入口](collaboration-current.md)，每轮成果及路线变化见[开发计分板](../../开发计分板.md)。
+更新：2026-10-24（UTC+08:00）。硬件比较基点：6d2abe403b07c297b8830a7d4f06e370b0a8e070；当前T17新构建源码：34bae6d4acceac939f958199dae53c14bc1f6183；当前获选软件及默认 C 源入口见[稳定使用说明](../optimizations/o2/r2-select/STABLE.md)，底层调用资格见[R4结果](../optimizations/o2/r2-select/ENTRY_RESULT.md)。团队集成分支 cc77-builder/riscv:zufan。实时活动见[协作入口](collaboration-current.md)，每轮成果及路线变化见[开发计分板](../../开发计分板.md)。
 
 本路线只安排工程实现、验证、复现和性能优化。比赛报告、PPT、视频、答辩、平台提交及赛事事务由成员另行安排，不属于 Agent 的工程任务，也不作为工程推进的前置条件。开发只维护必要的运行说明、结果证据和简短计分板记录。
 
@@ -21,6 +21,8 @@
 | S2 | [固定完整布局重测](../optimizations/o2/r2-safe-tail/FIXED_RESULT.md)完成31次整核进程/384正式窗口；K13 reuse/endtoend 210→187周期（−10.952%），basic退化21.117%，16×64整BIN及窗口不变。另5次强RVV探针/32窗口正确性和重放PASS | 同镜像dataset0/endtoend下S2 reuse187对较快RVV175.25，慢6.705%；按停止条件不扩大S2采用矩阵，不冒称强RVV完整12样本资格。保留S1 RVV与S0 vdot回退，旧B0/H1仍BLOCKED |
 | S1 | [独立实现及固定布局主批](../optimizations/o2/r2-vector-accum/VALIDATION.md)完成57次整核进程、768正式窗口，另4次小尺寸进程重放及两项原文重算均PASS；4×8／8×32／16×64的reuse vdot端到端周期下降5.7751%／12.5%／17.1589%，保留同步优化后的更快RVV | K13的S1 vdot退化1.3095%，不采用；保留S0 vdot回退和更快的S1 RVV。单项资格及原镜像选择/导出已闭合；不代表新caller、默认入口、T17或完整应用收益 |
 | R4 调用入口 | [普通RV64 C ABI GEMV入口](../optimizations/o2/r2-select/ENTRY_RESULT.md)完成33次性能进程／384正式窗口／192全窗口重放比较；另3次普通C进程覆盖16公共函数、48个不同case和96正常调用 | 新调用窗中4×8／8×32／16×64选S1 reuse vdot，较最快同入口RVV少9.4667%／2.7431%／7.9859%周期；K13选S1 reuse RVV。只闭合调用入口影响，完整MERGE-REG、T17和默认切换分别验收 |
+| T17 新构建复现 | [同主机干净源码与新身份结果](../optimizations/o2/repro/CLEAN_RESULT.md)通过：145仓库来源、新EMU ff840528/正常参考8af118e5、50次新执行（47正常＋3预期负控）；三类最终归档独立检出原文复算通过 | Agent同机复现，工具/缓存保留；未代签人工ACK或新机器安装。384正式窗口及全部768跨构建对应窗口一致，原始PASS不转移；已作为R5/G5稳定入口的运行资格依据 |
+| R5/G5 稳定入口 | [四形状 C 源默认选择与回退](../optimizations/o2/r2-select/STABLE.md)已固定，新增团队库构建；真实GNU验证三种开关模式/八别名，整库对象等于T17 C02，完整caller/link对象等价，七种非法配置拒绝 | 源码别名不增加ELF符号或运行时分派；新EMU为0，没有新应用周期。默认前三形状vdot、K13 RVV，修改开关须重编译调用端 |
 | R3 | 仍为待调查方向；S1的16×64轨迹显示组内可逐拍接收，响应2周期且无写回阻塞 | 当前优先软件初始化／组间供数的有界假设；不能由轨迹直接归因load或vset，也没有新增RTL收益 |
 
 依据：[历史项目状态](project-status-20261020.md)、[H1 成本与时序](../optimizations/o2/result-width/h1/H1_RESULT.md)、[H1 周期](../optimizations/o2/result-width/h1/performance/B0_H1_RESULT.md)、[R2 入口](../../R2_STATUS.md)。结果绑定各自源码、配置和输入；运行是否结束须读实际 state、日志和进程。
@@ -30,7 +32,7 @@
 在当前用户已授权的工程范围内，**沿当前规划的 14 个工程包及默认次序推进，Agent 无需每一轮重新搜索和规划全部可能方向**。工作包界定做什么、完成条件；Agent 在包内自主决定实现方法、试验和验证顺序。数量不是约束：新证据优先形成现有包的子项，确有独立目标或验收边界时按第 6 节调整工作包。
 
 1. **先接续。** 核实当前 SHA、工作树、真实运行、最新结论和 Issue 有效认领；合格历史结果复用，仍在运行的任务继续观察，不重复启动。进程已结束时先读对应入口的恢复能力；S2 当前不能断点续跑，处理方式见[筛选合同的中断与重复构建限制](../optimizations/o2/r2-safe-tail/FULLCORE_VALIDATION.md#中断与重复构建限制)。
-2. **按序选空闲包并 WORK。** `MERGE-REG` 的[新夹具拒错／正常恢复及相容旧日志复核](../optimizations/o2/fullcore/MERGED_REGRESSION_RESULT.md)已闭合，绑定与R4相同的6d2/1a23硬件。`R2-S2` 已完成固定布局主批和强 RVV 有界取舍：reuse 相对 S0 的收益真实，但未胜过同镜像较快 RVV，当前停止扩大采用。`R2-SELECT` 的[原镜像选择/查询/导出](../optimizations/o2/r2-select/RESULT.md)已完成，`R4/O5` 的[普通调用入口子项](../optimizations/o2/r2-select/ENTRY_RESULT.md)已闭合新路径的性能及普通C使用验证。下一步以已闭合的MERGE-REG及R4固定身份为比较基线，完成T17干净依赖、实际构建与新身份运行复算；不等待firstdot。未来若再改caller/调度或链接布局，仍先在8×32/dataset0/endtoend与最快同入口RVV配对验证，不转借旧窗口PASS。原 B0/H1 固定实物未变化时不重复预检；这不是固定人员分工。若本包已有认领或冲突，按现有表选择下一输入就绪、未占用的**准确叶级包**。按[协作约定](collaboration-current.md)发布 WORK 后回读；不允许同包重复开发，也要检查公共生成器、接口和重型资源。
+2. **按序选空闲包并 WORK。** `MERGE-REG` 的[新夹具拒错／正常恢复及相容旧日志复核](../optimizations/o2/fullcore/MERGED_REGRESSION_RESULT.md)已闭合，绑定与R4相同的6d2/1a23硬件。`R2-S2` 已完成固定布局主批和强 RVV 有界取舍：reuse 相对 S0 的收益真实，但未胜过同镜像较快 RVV，当前停止扩大采用。`R2-SELECT` 的[原镜像选择/查询/导出](../optimizations/o2/r2-select/RESULT.md)已完成，`R4/O5` 的[普通调用入口子项](../optimizations/o2/r2-select/ENTRY_RESULT.md)已闭合新路径的性能及普通C使用验证。T17已按独立新构建身份完成实际复现和50次新运行，R5/G5已形成可使用的稳定C源入口、默认库构建及回退。后续以此版本保底，只有明确的新瓶颈假设才开展有界试验；可按R2-S1既有首块初始化静态原型补新运行合同和同入口强RVV配对，不将静态少指令当收益，不重复已完成的仿真。未来若再改caller/调度或链接布局，仍先在8×32/dataset0/endtoend与最快同入口RVV配对验证，不转借旧窗口PASS。原 B0/H1 固定实物未变化时不重复预检；这不是固定人员分工。若本包已有认领或冲突，按现有表选择下一输入就绪、未占用的**准确叶级包**。按[协作约定](collaboration-current.md)发布 WORK 后回读；不允许同包重复开发，也要检查公共生成器、接口和重型资源。
 3. **包内连续自主工作。** 实现、主机检查、真实验证、定位问题、修订与提交不逐步征求确认。正确性失败优先修复受影响层级；无收益和退化依据第 4 节明确采用、再试一次有依据的修订或关闭。
 4. **仅有理由才换包。** 被认领、依赖缺失、实际资源冲突或技术证据要求调整时，用 PAUSE/UPDATE 记录原因、是否释放及残留保护，改选已规划的独立包。缺什么补 `R0` 的对应子项，不为了填表反复预检，也不转去制作比赛材料。
 5. **区分 R0 / S2 / 新硬件候选。** S2 的 `preflight` 分别报告 `build_ready` 和 `runtime_ready`。仅前者满足，可先 `--action build` 构建并静态检查 26 份 ELF，仍不得声称 EMU 或 DiffTest PASS；只有运行来源和所有固定回执齐备才能 `--action all`。历史 B0 使用其 `repro.py` 与旧版本锁；当前 H1／新 RTL 使用匹配的源码、硬件 pins 与新构建身份，不能拿 B0 锁拒绝新合法构建。
@@ -64,7 +66,7 @@ negative-reference.so 是故障注入夹具，不是正常黄金 NEMU；不能�
 | R3 硬件成本／关键路径优化 | 可并行做 P/R perfDebugInfo 消费者与覆盖分析，定位门控／ready 路径；有真实瓶颈和收益依据才实施一项修改 | 保留接口语义；FU、真实父级、受影响整核／公平周期及同条件综合 STA 通过，或留下不改决定，见[O4](../optimizations/o4/README.md)。新增硬件候选须有同样依据，不能只因表中有名字就开做 |
 | R1-H1b 19 位保存备选 | 默认不开展；32 位 H1 已完成，只有新增映射证据表明继续收窄值得才开启 | 19→32 符号扩展、高 96 位清零及边界正确，并有实际收益；否则关闭，见[H1 合同](../optimizations/o2/result-width/h1/CONTRACT.md) |
 | T15-REPRO 参数扩展复核 | 已有[参数合同](../spec/t15-parameters.md)及[结果](t15-parameter-extension.md)先复用；只在相关实现变化、扩展验收缺项或有优化依据时重开 | 独立 INT16×8／64 位结果扩展在其范围内可复现；不扩大为生产整核支持，不作为默认 INT8 优化的前置 |
-| R2-SELECT 应用与组合取舍 | [原镜像选择、查询与导出](../optimizations/o2/r2-select/RESULT.md)已完成：复算S1 v2完整768窗口/64候选格，每格12窗口；三个整块形状选S1 reuse vdot，K13选较快S1 reuse RVV并保留S0 vdot回退。48份完整原镜像精确导出，Linux/Windows各21项测试通过 | 本次只闭合原镜像数据层，未新增运行时或默认入口；实际export/verify/resolve见[入口](../optimizations/o2/r2-select/README.md)。新caller/dispatcher/合并ELF由R4/O5验证实际新增影响，先测8×32/dataset0/endtoend且强RVV走相同新调用路径；原10.75周期余量只作筛选依据。T17及R5/G5仍须独立闭合，不拼接不相容PASS |
+| R2-SELECT 应用与组合取舍 | [原镜像选择、查询与导出](../optimizations/o2/r2-select/RESULT.md)已完成：复算S1 v2完整768窗口/64候选格，每格12窗口；三个整块形状选S1 reuse vdot，K13选较快S1 reuse RVV并保留S0 vdot回退。48份完整原镜像精确导出，Linux/Windows各21项测试通过 | 本次只闭合原镜像数据层，未新增运行时或默认入口；实际export/verify/resolve见[入口](../optimizations/o2/r2-select/README.md)。新caller/dispatcher/合并ELF由R4/O5验证实际新增影响，先测8×32/dataset0/endtoend且强RVV走相同新调用路径；原10.75周期余量只作筛选依据。T17新身份与R5/G5稳定入口资格独立列明，不拼接不相容PASS |
 
 S2 保持 dot8 合法域，安全读取剩余 5 项、显式补零、恢复 VL=8，全部成本计入窗口；16×64 是不应变化的控制形状。新合并 EMU 不能冒充合同中的 B0/H1。S1 先独立验证，组合收益不能代替单项归因。R3 保留 ROB、pdest、异常、写使能、两槽独立身份、必要观测、II=1、首响应 2 拍、反压／取消与 DIV 互斥；577 位额外信息不是可以直接删除的数量。
 
@@ -72,9 +74,9 @@ S2 保持 dot8 合法域，安全读取剩余 5 项、显式补零、恢复 VL=8
 
 | 工作包 | 当前从哪里开始／前置 | 完成条件与入口 |
 | --- | --- | --- |
-| R4/O5 获选组合回归 | [新普通调用入口](../optimizations/o2/r2-select/ENTRY_RESULT.md)已完成24个性能ELF和1个普通C ELF的影响验证、原始证据复算及公共源码交付；硬件仍为固定6d2/1a23身份 | 调用入口与[MERGE-REG](../optimizations/o2/fullcore/MERGED_REGRESSION_RESULT.md)的功能／异常／控制证据均绑定相同6d2/1a23身份，进入T17；完整全宽结果、差分拒错／恢复、性能及必要成本证据一致，无未解释失败。只复测变化影响，不拼接不相容PASS |
-| T17 干净环境复现 | 获选组合明确后，另一 Agent 或成员在干净目录取得完整依赖，实际构建、运行和复算；输入准备可提前并行 | 源码／依赖／镜像／命令可追溯，结果和差异可解释。注明真实执行者；Agent 复现不冒充成员人工验收，不等待人工签名才继续工程优化 |
-| R5/G5 稳定版本与默认入口 | R4 和 T17 通过，所选范围内必要技术缺项已闭合；按已有授权使默认构建与运行入口指向选中配置，未授权切换时先保留明确候选入口 | 源码、子库／补丁、工具配置、输入和结果身份齐全，入口可运行，回退可取得；形成可供成员使用的稳定工程版本。有新证据可继续下一轮优化，不按旧日期强制终止开发 |
+| R4/O5 获选组合回归 | [新普通调用入口](../optimizations/o2/r2-select/ENTRY_RESULT.md)已完成24个性能ELF和1个普通C ELF的影响验证、原始证据复算及公共源码交付；硬件仍为固定6d2/1a23身份 | 调用入口与[MERGE-REG](../optimizations/o2/fullcore/MERGED_REGRESSION_RESULT.md)的功能／异常／控制证据均绑定相同6d2/1a23身份，新构建已由T17另行验证；完整全宽结果、差分拒错／恢复、性能及必要成本证据一致，无未解释失败。只复测变化影响，不拼接不相容PASS |
+| T17 干净环境复现 | [合同范围已完成](../optimizations/o2/repro/CLEAN_RESULT.md)：同主机独立源码/产物、145仓库来源、实际构建、14整核＋3C＋33矩阵新执行；传输层修正后最终M03/C02与整核包独立原文复算通过 | 源码／依赖／镜像／命令及差异可追溯。执行者为Agent，未取得人工ACK或新机器安装资格；三类归档跨系统字节/索引另核验。R5/G5使用该固定身份，不重复旧运行或改判旧B0/H1 |
+| R5/G5 稳定版本与默认入口 | [当前范围已闭合](../optimizations/o2/r2-select/STABLE.md)：T17固定资格、四形状C别名、默认静态库构建与完整使用/回退导航；原public汇编和头文件保持原字节 | GNU构建出的整个库对象与C02相等，三种配置/八别名的caller和可重定位链接逐字节相等，新增EMU为0。可供成员使用；新caller/布局/应用仍按影响验证，未冒称全赛题、人工ACK或新增ASIC PPA通过 |
 
 ## 4. 每轮实验怎样决定下一步
 

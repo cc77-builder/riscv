@@ -1,3 +1,7 @@
+> **当前 T17 入口：** [干净源码构建与复现合同](CLEAN_CONTRACT.md)、[实际命令](CLEAN_REPRODUCE.md)、[结果与验收范围](CLEAN_RESULT.md)。下文保留历史 B0/R0 入口及其固定身份。
+
+> James_Hotten 合并树保留更严格的 R4 实现，与 T17 固定源码哈希不同。只复算上游证据时使用新增 `replay_t17_stable.py --repo /native/read-only/git-cache --bundle /absolute/upstream.bundle --output /absolute/new-output --tool-bin /absolute/tools`；bundle 由 `git bundle create upstream.bundle origin/zufan` 生成，入口仍固定137b44b发布快照和34bae执行源码，恢复所需固定输入、只复制十份新工具，不改旧锁。可加 `--stable-build` 单独验证R5；其结果读取state中的`stable_build_pass`，不由T17复算PASS推定。该入口的共享对象检出只用于历史原流复算，不是新的干净构建或新机器复现。实际结果及本机GNU13边界见[整合记录](../../../docs/latest-integration-20261023.md#t17r5-更新整合与发布准备2026-10-24)。
+
 > **当前适用范围：** [当前路线](../../../docs/development-route-current.md)决定任务顺序。本入口的 B0 锁和检查只证明所列历史输入，不代表当前合并版或新机器已复现。个人路径是历史示例；先复制配置再按实际来源填写，不能改变运行中的输入。当前缺项和新身份恢复按路线 R0 执行。
 
 # O2 R0：基线固定与复现入口

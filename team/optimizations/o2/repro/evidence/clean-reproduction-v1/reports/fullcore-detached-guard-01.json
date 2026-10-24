@@ -1,0 +1,52 @@
+{
+  "status": "T17_DETACHED_AUDIT_PASS",
+  "started": "2026-10-24T04:02:34.067521+00:00",
+  "finished": "2026-10-24T04:02:52.506833+00:00",
+  "checkout": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/portable-audit/source",
+  "revision": "34bae6d4acceac939f958199dae53c14bc1f6183",
+  "execution_cwd": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/portable-audit/source",
+  "build_present": false,
+  "out_present": false,
+  "script": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/portable-audit/source/team/optimizations/o2/repro/clean_fullcore_evidence.py",
+  "script_sha256": "20bebd4f5526a3522a09c2324e683d34b55997930c5078e89c3e5d04a6733412",
+  "launcher_sha256": "57f31bb70dafa3154dc22e09c635dde1f4c140405717d98053d781dc2ca43cd4",
+  "arguments": [
+    "--repo",
+    "/home/lizufan/riscv-lab/t17-clean-20261024-0854/portable-audit/source",
+    "--action",
+    "audit",
+    "--archive",
+    "/home/lizufan/riscv-lab/t17-clean-20261024-0854/fullcore-archive-01",
+    "--output",
+    "/home/lizufan/riscv-lab/t17-clean-20261024-0854/fullcore-detached-audit-01.json"
+  ],
+  "denied_roots": [
+    "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02",
+    "/home/lizufan/riscv-lab/t17-clean-20261024-0854/build-01",
+    "/home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01",
+    "/home/lizufan/riscv-lab/t17-clean-20261024-0854/matrix-build-01",
+    "/home/lizufan/riscv-lab/t17-clean-20261024-0854/matrix-run-01",
+    "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-build-01",
+    "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-run-01",
+    "/home/lizufan/riscv-lab/t17-clean-20261024-0854/fullcore-run-01",
+    "/home/lizufan/riscv-lab/t17-clean-20261024-0854/fullcore-audit-01",
+    "/home/riscv/riscv-lab"
+  ],
+  "auditor_output": {
+    "path": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/fullcore-detached-audit-01.json",
+    "sha256": "9459a762983bc2038f72531713f87b21ba3a3f83ea69b42256934e11533e784f"
+  },
+  "guard_self_test": true,
+  "event_counts": {
+    "open": 2262,
+    "os.listdir": 9,
+    "os.scandir": 580,
+    "subprocess.Popen": 20
+  },
+  "rejected_runtime_accesses": [],
+  "auditor_succeeded": true,
+  "error": null,
+  "new_emu_runs": 0,
+  "new_nemu_runs": 0,
+  "scope": "Python file/enumeration access and explicit subprocess arguments; not an OS sandbox or clean-machine installation"
+}

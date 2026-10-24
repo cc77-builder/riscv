@@ -1,0 +1,144 @@
+{
+  "contract": "r5-selected-gemv-v1",
+  "operation_id": "20261024-LiZufan001-r5-stable-1221",
+  "qualified_base_commit": "666fc80edebd50f7b3d6fb13cf0eb24d526e02d9",
+  "hardware": {
+    "source_commit": "34bae6d4acceac939f958199dae53c14bc1f6183",
+    "emu_sha256": "ff840528eb1009e94906eefb3773ca321050f309553543ab26f0db23c410e30f",
+    "reference_sha256": "8af118e5519db7ef6001010a2d547707c5d47630412e80abfc3f343bfef987c9"
+  },
+  "library": {
+    "assembly": "team/optimizations/o2/r2-select/public/gemv.S",
+    "header": "team/optimizations/o2/r2-select/public/gemv.h",
+    "selected_header": "team/optimizations/o2/r2-select/public/selected_gemv.h",
+    "makefile": "team/optimizations/o2/r2-select/public/Makefile",
+    "qualified_reference_object": {
+      "logical": "build/gemv-reference.o",
+      "stored": "files/build/gemv-reference.o.gz",
+      "sha256": "ecb24b6cde147c5b36f0caf8e5ec2b17451d293de14e2b4e223b14141d3e1aa7"
+    }
+  },
+  "source_sha256": {
+    "team/optimizations/o2/r2-select/public/gemv.S": "5c01b4eec12dcb3cc3a62551d7096d43b5f68cea2efec0c8b30b79e8d5e5810c",
+    "team/optimizations/o2/r2-select/public/gemv.h": "125ab086c086c2f00517295f7247a26d50900e91681faa6327c8980f48af511f",
+    "team/optimizations/o2/r2-select/public/selected_gemv.h": "18847dcdf84d783b05e3587e93ecee68e36196c54e386adb47fce1a61998e0da",
+    "team/optimizations/o2/r2-select/public/Makefile": "2fe6e62af2dacc006268b3b6709083d5ded3739e765a33cc578f4d1e5adc8872",
+    "team/optimizations/o2/r2-select/verify_stable.py": "826febeddfd84cecb06a49cd3e4156c55219089a2cd326e12e0c0f5ea1bb4b06"
+  },
+  "qualification": {
+    "identity": {
+      "path": "team/optimizations/o2/repro/evidence/clean-reproduction-v1/reports/identity-02.json",
+      "sha256": "4a89872d0463163ea0be83f680843352e01354043f5709509d822353221258eb"
+    },
+    "acceptance": {
+      "path": "team/optimizations/o2/repro/evidence/clean-reproduction-v1/reports/acceptance.json",
+      "sha256": "1b0c02df2591fab4c14e3b75cde86fb2f5716feb56138b4df59c9e63be25afb7"
+    },
+    "matrix_audit": {
+      "path": "team/optimizations/o2/repro/evidence/clean-reproduction-v1/reports/matrix-archive-audit-03.json",
+      "sha256": "81314df64d341ae0109716f539fdea1e5ee797bc9b88e6c23a52fe1af65a8b7e"
+    },
+    "c_audit": {
+      "path": "team/optimizations/o2/repro/evidence/clean-reproduction-v1/reports/c-archive-audit-02.json",
+      "sha256": "d89d26751c2434e33b15f99e4c5f8fed7e54c9cad6dea5f51d3b93bb842f0c94"
+    },
+    "c_manifest": {
+      "path": "team/optimizations/o2/repro/evidence/clean-reproduction-v1/c-archive/archive-manifest.json",
+      "sha256": "5a54192270903ae155fa5d372088169f0b4547cce5674863d3401dabda7cf0f1"
+    }
+  },
+  "selection": [
+    {
+      "shape": [
+        4,
+        8
+      ],
+      "alias": "xs_gemv_4x8",
+      "default_symbol": "r4_gemv_4x8_reuse_vdot",
+      "rvv_symbol": "r4_gemv_4x8_reuse_rvv",
+      "default_cycles": 169.75,
+      "rvv_cycles": 187.5,
+      "samples_per_candidate": 12,
+      "performance_scope": "T17 fixed endtoend-with-c-abi-call windows"
+    },
+    {
+      "shape": [
+        8,
+        32
+      ],
+      "alias": "xs_gemv_8x32",
+      "default_symbol": "r4_gemv_8x32_reuse_vdot",
+      "rvv_symbol": "r4_gemv_8x32_reuse_rvv",
+      "default_cycles": 292.5,
+      "rvv_cycles": 300.75,
+      "samples_per_candidate": 12,
+      "performance_scope": "T17 fixed endtoend-with-c-abi-call windows"
+    },
+    {
+      "shape": [
+        16,
+        64
+      ],
+      "alias": "xs_gemv_16x64",
+      "default_symbol": "r4_gemv_16x64_reuse_vdot",
+      "rvv_symbol": "r4_gemv_16x64_reuse_rvv",
+      "default_cycles": 717.25,
+      "rvv_cycles": 779.5,
+      "samples_per_candidate": 12,
+      "performance_scope": "T17 fixed endtoend-with-c-abi-call windows"
+    },
+    {
+      "shape": [
+        4,
+        13
+      ],
+      "alias": "xs_gemv_4x13",
+      "default_symbol": "r4_gemv_4x13_reuse_rvv",
+      "rvv_symbol": "r4_gemv_4x13_reuse_rvv",
+      "default_cycles": 187,
+      "rvv_cycles": 187,
+      "samples_per_candidate": 12,
+      "performance_scope": "T17 fixed endtoend-with-c-abi-call windows"
+    }
+  ],
+  "interface": {
+    "language": "C",
+    "input": "packed signed INT8 row-major A followed immediately by x",
+    "input_output_disjoint": true,
+    "buffer_alignment_bytes": 16,
+    "output_row_stride_bytes": 16,
+    "output_low_bits": 32,
+    "output_high_96_bits": 0,
+    "vlen_bits": 128,
+    "vs_enabled": true,
+    "source_aliases_only": true,
+    "additional_elf_symbols": false,
+    "runtime_dispatch": false,
+    "force_rvv_values": [
+      0,
+      1
+    ],
+    "recompile_callers_when_selection_changes": true
+  },
+  "build": {
+    "march": "rv64gcv",
+    "mabi": "lp64d",
+    "relax": false,
+    "archive": "libxs_gemv.a",
+    "functions": 16,
+    "entry": "make -C team/optimizations/o2/r2-select/public OUT=/absolute/new/output -j1 all"
+  },
+  "verification": {
+    "entry": "team/optimizations/o2/r2-select/verify_stable.py",
+    "result": "team/optimizations/o2/r2-select/evidence/stable-v1/verify-03/result.json",
+    "additional_emu_runs": 0,
+    "additional_nemu_runs": 0,
+    "new_application_performance_qualified": false,
+    "scope": "GNU source alias and static library build equivalence; entire library object equals qualified C02, including section membership and relocations; T17 runtime results retain their own scope."
+  },
+  "rollback": {
+    "ordinary_c_rvv": "Define XS_GEMV_FORCE_RVV=1 before first include and recompile callers, or use explicit xs_gemv_<shape>_rvv aliases. The static archive still includes unused vdot functions.",
+    "s0_experiments": "Use the frozen ENTRY_README.md generation route with a separate identity; S0 and S1 export the same function names and must not be linked together.",
+    "r2_images": "Use the frozen README.md export route for original experiment ELF/BIN; this is not an ordinary C library substitution."
+  }
+}
