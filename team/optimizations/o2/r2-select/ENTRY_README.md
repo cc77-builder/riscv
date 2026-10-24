@@ -2,7 +2,7 @@
 
 本入口把既有 S0/S1 GEMV body 导出为普通 RV64 C ABI 叶函数，并对真实调用成本重新测量。性能路径合同见 [ENTRY_CONTRACT.md](ENTRY_CONTRACT.md)，普通C应用功能补充见 [C_API_CONTRACT.md](C_API_CONTRACT.md)，实测采用结果、证据和遗留资格见 [ENTRY_RESULT.md](ENTRY_RESULT.md)。原 [R2-SELECT](README.md) 的原镜像查询/导出仍保持原来的语义。
 
-本交付包含公共汇编及头文件的确定性生成器、实际 C 调用程序、整核运行器和离线证据审计器。默认构建入口尚未切换；公共函数按形状命名，不包含隐藏的运行时 dispatcher。
+本交付包含公共汇编及头文件的确定性生成器、实际 C 调用程序、整核运行器和离线证据审计器。此段记录 R4 冻结批次，当时未切换默认入口；当前推荐的稳定 C 源别名、默认库构建、T17 新身份运行及回退见 [STABLE.md](STABLE.md)。下文继续保留原 R4 实验合同与命令，公共函数不包含运行时 dispatcher。
 
 ## 1. 调用接口
 

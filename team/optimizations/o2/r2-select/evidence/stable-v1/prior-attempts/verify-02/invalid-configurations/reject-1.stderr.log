@@ -1,0 +1,26 @@
+In file included from /home/lizufan/riscv-lab/r5-stable-20261024-1221/verify-02/invalid-configurations/caller.c:1:
+/home/lizufan/riscv-lab/r5-stable-20261024-1221/snapshot-02/team/optimizations/o2/r2-select/public/selected_gemv.h:23:14: error: size of array ‘xs_gemv_force_rvv_must_be_literal_0_or_1’ is negative
+   23 | typedef char xs_gemv_force_rvv_must_be_literal_0_or_1[
+      |              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/lizufan/riscv-lab/r5-stable-20261024-1221/snapshot-02/team/optimizations/o2/r2-select/public/selected_gemv.h:18:39: error: pasting "XS_GEMV_DETAIL_VALID_" and "-" does not give a valid preprocessing token
+   18 | #define XS_GEMV_DETAIL_VALID_INNER(x) XS_GEMV_DETAIL_VALID_##x##_END
+      |                                       ^~~~~~~~~~~~~~~~~~~~~
+/home/lizufan/riscv-lab/r5-stable-20261024-1221/snapshot-02/team/optimizations/o2/r2-select/public/selected_gemv.h:19:33: note: in expansion of macro ‘XS_GEMV_DETAIL_VALID_INNER’
+   19 | #define XS_GEMV_DETAIL_VALID(x) XS_GEMV_DETAIL_VALID_INNER(x)
+      |                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/lizufan/riscv-lab/r5-stable-20261024-1221/snapshot-02/team/optimizations/o2/r2-select/public/selected_gemv.h:25:7: note: in expansion of macro ‘XS_GEMV_DETAIL_VALID’
+   25 | #if !(XS_GEMV_DETAIL_VALID(XS_GEMV_FORCE_RVV))
+      |       ^~~~~~~~~~~~~~~~~~~~
+<command-line>: error: invalid suffix "_END" on integer constant
+/home/lizufan/riscv-lab/r5-stable-20261024-1221/snapshot-02/team/optimizations/o2/r2-select/public/selected_gemv.h:18:62: note: in definition of macro ‘XS_GEMV_DETAIL_VALID_INNER’
+   18 | #define XS_GEMV_DETAIL_VALID_INNER(x) XS_GEMV_DETAIL_VALID_##x##_END
+      |                                                              ^
+/home/lizufan/riscv-lab/r5-stable-20261024-1221/snapshot-02/team/optimizations/o2/r2-select/public/selected_gemv.h:25:7: note: in expansion of macro ‘XS_GEMV_DETAIL_VALID’
+   25 | #if !(XS_GEMV_DETAIL_VALID(XS_GEMV_FORCE_RVV))
+      |       ^~~~~~~~~~~~~~~~~~~~
+/home/lizufan/riscv-lab/r5-stable-20261024-1221/snapshot-02/team/optimizations/o2/r2-select/public/selected_gemv.h:25:28: note: in expansion of macro ‘XS_GEMV_FORCE_RVV’
+   25 | #if !(XS_GEMV_DETAIL_VALID(XS_GEMV_FORCE_RVV))
+      |                            ^~~~~~~~~~~~~~~~~
+/home/lizufan/riscv-lab/r5-stable-20261024-1221/snapshot-02/team/optimizations/o2/r2-select/public/selected_gemv.h:26:2: error: #error "XS_GEMV_FORCE_RVV must expand to the literal 0 or 1"
+   26 | #error "XS_GEMV_FORCE_RVV must expand to the literal 0 or 1"
+      |  ^~~~~
