@@ -20,14 +20,14 @@
 
 ```bash
 python3 team/optimizations/o2/r2-first-dot/admit.py --output /absolute/new-output
-python3 -m unittest discover -s team/optimizations/o2/r2-first-dot -p 'test_*.py' -v
+python3 -m unittest discover -s team/optimizations/o2/r2-first-dot -p 'test_admit.py' -v
 ```
 
 归档位于其他只读位置时，准入用 `--archive`，测试用环境变量 `FIRSTDOT_ARCHIVE`。输出保留源身份、原始输入及检查结果；失败单独保存，不能覆盖或续写旧输出。入口不支持 Windows CRLF 源码的精确再生。
 
-## 下一阶段运行合同（待实现/实测）
+## 有界动态运行合同
 
-本次没有运行器或已运行的负控。先绑定本机已核验的 `bc9e5ae4… / e66a8900…` 硬件、正常 NEMU、flash、辅助数据及完整输入合同；不借用上游 `34bae/ff840` 的运行资格。任何输入、生成器、布局或硬件变化均建立新身份，重新核验受影响部分。O1/O2 生产默认仍关闭。
+`runtime.py` 与测试专用 `negative.c` 绑定本机已核验的 `bc9e5ae4… / e66a8900…` 硬件、正常 NEMU、flash、辅助数据及完整输入合同；不借用上游 `34bae/ff840` 的运行资格。该 EMU 是 O2/H1 实验配置、O1 关闭；O1/O2 **生产默认仍关闭**。任何输入、生成器、布局或硬件变化均建立新身份，重新核验受影响部分。
 
 首批固定最多 **5 次串行 EMU**，不扫形状/数据集/布局：
 
@@ -36,8 +36,29 @@ python3 -m unittest discover -s team/optimizations/o2/r2-first-dot -p 'test_*.py
 3. 同硬件/配置/输入条件执行原 S1 控制镜像。
 4. firstdot 与 S1 各重放一次，全部 24 个窗口 cycle/instret 与各自首个正常执行一致。
 
+负控额外记录参考 ABI 的全部 1400 字节，要求异或差异恰好为 byte808/bit0，并再次读取参考模型确认其内部状态未改变；不只检查低32位或一条错误字符串。终止要求 exit1、单次精确高位不一致、唯一 ABORT，以及完整16组/32行提交环中的实际目标。固定版本把 `v0wen` 独立导出，诊断 `wen` 不含它，因此此目标打印 `wen=0`；只对四条精确计数器读指令接受 `(S)`，目标不能跳过。正常运行检查数学、全部向量高位、CSR、实际机器码退休、校准窗口和384次 O2 提交及排空。
+
+当前加固生成器与旧探针的冻结版本不同。运行检出明确覆盖两份已认证的旧生成器以精确复算原镜像，其余运行检查器保留当前版本；覆盖清单纳入证据，不能称为当前干净源码重建。GEMV 的 RVV 每块处理16元素，8×32共16次 widening multiply/reduce；运行器只对此固定形状使用独立几何校验，要求实际退休与精确再生源计数同时等于16，不套用 dot8 微基准的32次规则。
+
 两份首个正常执行合计 **32 个正式窗口**（每镜像四内核×4次，排除 first/warmup）；重放不增加正式样本。basic 留作诊断，主要选择对象为 reuse VDOT；与原 S1 reuse VDOT、两镜像中实际较快的 RVV 做完整 endtoend 配对。已有 8.25 周期余量仅作历史背景，不是新硬件收益。先通过精确负控/恢复及完整原流检查，再计算均值、离散度和相对周期；静态少 32/20 条指令不能算周期改善。
 
 任何准入、负控、恢复或重放失败即停止，不改门槛；无正收益则保留稳定 S1/R5，不扩大矩阵。只有首轮正收益后才安排三数据集及其他形状的采用矩阵，不能用 dataset0 探针替代完整选择资格。
 
-本次实际结果及本机恢复位置见[本地整合记录](../../../docs/latest-integration-20261023.md#gnu11-r5-闭合与-firstdot-准入2026-10-24)。
+### v1 停止与 v2 显式接续
+
+v1 首次预检因旧生成器身份不符停止，实际0次 EMU；隔离源闭包后只运行1次负控，实际触发正确的 v0 bit64 差异，但旧通用诊断解析器不识别计数器 `(S)` 和 v0 `wen=0`，故原状态为 FAILED，未启动正常运行。两个失败输出及原源码保持不变。
+
+`r2-first-dot-8x32-runtime-v2` 使用上述严格解析器。可选 `--negative-parent` 只接受代码内固定 SHA 的这一个 v1 失败输出；重新校验全部输入、进程收据和原始负控日志，再导入其结果，原 FAILED 不改。新输出必须与父目录分离，预算为 **1次真实旧负控＋4次新正常执行＝5次**。不提供任意断点续跑、任意父输出或失败重试模式；后续失败仍立即停止。
+
+运行参数为 `--output`、`--admission`、`--hardware-root`、`--hardware-pins`、`--input-contract`、`--source-base`，均绑定独立 LF 源闭包和认证输入。`audit_runtime.py --run RUN --output NEW_REPORT` 重新计算全部原日志及正式/重放样本，必须导入清单记录的原执行 `runtime.py`；审计器可使用单独的新源码快照。`FIRSTDOT_RUN=RUN python3 -m unittest discover -s team/optimizations/o2/r2-first-dot -p test_runtime.py -v` 对实际证据做拒错测试，不启动 EMU。缺真实夹具直接失败，不静默跳过。
+
+若新审计器与原执行源码分开存放，直接运行新目录下的脚本会导入新 `runtime.py` 并被身份门禁拒绝。将 `EXEC_MODULE` 指向原执行的 `r2-first-dot` 目录、`NEW_AUDITOR` 指向新审计脚本，使用显式导入方式：
+
+```bash
+python3 -c 'import runpy,sys; sys.path.insert(0,sys.argv.pop(1)); runpy.run_path(sys.argv.pop(1),run_name="__main__")' \
+  "$EXEC_MODULE" "$NEW_AUDITOR" --run "$RUN" --output "$NEW_REPORT"
+```
+
+本次实际启动命令和源码哈希保存在运行封存的 `final-raw-audit.json`；不覆盖原执行目录来迁就审计。
+
+本次实际结果及本机恢复位置见[动态验收记录](../../../docs/latest-integration-20261023.md#firstdot-负控恢复与配对性能2026-10-24)；早期静态资格见同文的 GNU11/firstdot 准入节。
