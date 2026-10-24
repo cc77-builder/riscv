@@ -7,13 +7,23 @@ BUILD_JOBS=${BUILD_JOBS:-2}
 JVM_HEAP=${JVM_HEAP:-12G}
 TEAM_ID=${TEAM_ID:-riscv-vdot-team}
 mkdir -p "$TEAM_EVIDENCE_DIR"
+TEAM_EVIDENCE_DIR=$(cd "$TEAM_EVIDENCE_DIR" && pwd)
+# One invocation owns each action's evidence; failed attempts remain intact.
+for existing in "$ACTION.log" "$ACTION.status"; do
+  test ! -e "$TEAM_EVIDENCE_DIR/$existing" || { echo "Evidence already exists: $existing; choose a new directory" >&2; exit 2; }
+done
+mkdir "$TEAM_EVIDENCE_DIR/.$ACTION.claimed" || { echo 'Action already claimed; choose a new evidence directory' >&2; exit 2; }
+TEAM_WORKLOAD=${TEAM_STAGE1_WORKLOAD_DIR:-"$TEAM_EVIDENCE_DIR/workload"}
 exec > >(tee "$TEAM_EVIDENCE_DIR/$ACTION.log") 2>&1
 trap 'rc=$?; printf "exit_code=%s end=%s\n" "$rc" "$(date -Is)" > "$TEAM_EVIDENCE_DIR/$ACTION.status"' EXIT
 PS4='+ ${BASH_SOURCE}:${LINENO}: '
 set -x
 date -Is
-git -C "$NOOP_HOME" rev-parse HEAD
-git -C "$NOOP_HOME" status --short
+if git -C "$NOOP_HOME" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+  git -C "$NOOP_HOME" rev-parse HEAD
+  git -C "$NOOP_HOME" status --short
+fi
+sha256sum "$TEAM_PROJECT_ROOT/team/scripts/stage1.sh" "$TEAM_PROJECT_ROOT/team/workloads/hello-vadd/"{main.c,vadd.S,Makefile,boot-flash.S}
 case "$ACTION" in
   nemu)
     bash "$TEAM_PROJECT_ROOT/team/scripts/lock-nemu-extra-deps.sh"
@@ -32,6 +42,8 @@ case "$ACTION" in
     echo XIANGSHAN_EMU_BUILD_PASS
     ;;
   workload)
+    mkdir "$TEAM_WORKLOAD" || { echo 'Workload directory must be new' >&2; exit 2; }
+    cp "$TEAM_PROJECT_ROOT/team/workloads/hello-vadd/"{main.c,vadd.S,Makefile,boot-flash.S} "$TEAM_WORKLOAD/"
     cd "$TEAM_WORKLOAD"
     export TEAM_ID
     python3 - <<'PY'
@@ -39,7 +51,13 @@ import ipaddress, json, os, subprocess
 from pathlib import Path
 addresses = subprocess.check_output(['hostname', '-I'], text=True).split()
 ipv4 = next((a for a in addresses if ipaddress.ip_address(a).version == 4), 'unavailable')
-Path('identity.h').write_text('#define TEAM_ID ' + json.dumps(os.environ['TEAM_ID']) + '\n#define HOST_IP ' + json.dumps(ipv4) + '\n')
+team = os.environ['TEAM_ID']
+if not team or not team.isprintable():
+    raise SystemExit('TEAM_ID must be nonempty and printable')
+status = 'placeholder' if team == 'riscv-vdot-team' else 'configured'
+identity = dict(team_id=team, host_ip=ipv4, status=status)
+Path('identity.json').write_text(json.dumps(identity, indent=2) + '\n')
+Path('identity.h').write_text('#define TEAM_ID ' + json.dumps(team) + '\n#define HOST_IP ' + json.dumps(ipv4) + '\n#define IDENTITY_STATUS ' + json.dumps(status) + '\n')
 PY
     make ARCH=riscv64-xs MARCH=rv64gcv -j"$BUILD_JOBS"
     riscv64-linux-gnu-gcc -c -march=rv64gc -mabi=lp64d boot-flash.S -o build/boot-flash.o
@@ -50,23 +68,18 @@ PY
     echo WORKLOAD_BUILD_PASS
     ;;
   run)
-    cd "$NOOP_HOME"
-    IMAGE="$TEAM_WORKLOAD/build/hello-vadd-riscv64-xs.bin"
-    FLASH="$TEAM_WORKLOAD/build/boot-flash.bin"
-    test -s "$IMAGE"
-    test -s "$FLASH"
-    test -x build/emu
-    test -s "$NEMU_HOME/build/riscv64-nemu-interpreter-so"
+    EMU=${TEAM_STAGE1_EMU:-"$NOOP_HOME/build/emu"}
+    REF=${TEAM_STAGE1_REF:-"$NEMU_HOME/build/riscv64-nemu-interpreter-so"}
     WAVE_ARGS=()
     if test "${DUMP_WAVE:-0}" = 1; then
-      WAVE_ARGS=(--dump-wave --wave-path="$TEAM_EVIDENCE_DIR/hello-vadd.fst" -b 0 -e 2000000)
+      WAVE_ARGS=(--wave-begin "${WAVE_BEGIN:-0}" --wave-end "${WAVE_END:-${MAX_CYCLES:-2000000}}")
     fi
-    /usr/bin/time -v timeout 20m ./build/emu -i "$IMAGE" --flash="$FLASH" --ram-size=128MB --diff="$NEMU_HOME/build/riscv64-nemu-interpreter-so" --max-cycles=2000000 "${WAVE_ARGS[@]}" > "$TEAM_EVIDENCE_DIR/emulator-output.log" 2>&1
-    python3 "$TEAM_PROJECT_ROOT/team/scripts/summarize-run.py" "$TEAM_EVIDENCE_DIR/emulator-output.log" | tee "$TEAM_EVIDENCE_DIR/run-summary.log"
-    if test "${DUMP_WAVE:-0}" = 1; then
-      test -s "$TEAM_EVIDENCE_DIR/hello-vadd.fst"
-      sha256sum "$TEAM_EVIDENCE_DIR/hello-vadd.fst" > "$TEAM_EVIDENCE_DIR/waveform.sha256"
-    fi
+    python3 "$TEAM_PROJECT_ROOT/team/scripts/stage1-run.py" \
+      --emu "$EMU" --reference "$REF" \
+      --image "$TEAM_WORKLOAD/build/hello-vadd-riscv64-xs.bin" \
+      --flash "$TEAM_WORKLOAD/build/boot-flash.bin" --identity "$TEAM_WORKLOAD/identity.json" \
+      --runtime-home "${TEAM_STAGE1_RUNTIME_HOME:-$NOOP_HOME}" --output "$TEAM_EVIDENCE_DIR/run" \
+      --max-cycles "${MAX_CYCLES:-2000000}" --timeout "${RUN_TIMEOUT:-1200}" "${WAVE_ARGS[@]}"
     ;;
 esac
 echo "STAGE1_ACTION_PASS action=$ACTION evidence=$TEAM_EVIDENCE_DIR"

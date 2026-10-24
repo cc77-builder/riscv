@@ -1,0 +1,129 @@
+{
+  "schema": "hello-vadd-tool-tests-v1",
+  "status": "PASS",
+  "hardware_cases_added": 0,
+  "tool_sources": {
+    "test-stage1-tools.py": "d686057fb076b05b61edb0612210b762ee64f8136b7b431846c27e4d3fa15cb6",
+    "stage1-run.py": "b746697b73ab38b8b4e20d7595155c6653b274a8af021c728fc84148458df55a",
+    "stage1-wave.py": "c6418bc9bf343b414ae8c4b0ee5a48ff12fa617f90a510f12ec1cbfa122b211d",
+    "summarize-run.py": "352d61ad8e135286df0138138369f5bbb146beb38302917e377add04eac40ae5"
+  },
+  "fixture_run_sha256": "871498d7bd09992d28818e26ee0504f404f7bd334bed0baf2392406563892afd",
+  "checks": [
+    {
+      "name": "log_hash_mismatch",
+      "status": "PASS",
+      "observed_rejection": "Log is not the one bound by the execution receipt"
+    },
+    {
+      "name": "wrong_lane",
+      "status": "PASS",
+      "observed_rejection": "Expected exactly one acceptance marker: vadd case=0 output: 9 9 9 9 9 9 9 9 PASS"
+    },
+    {
+      "name": "missing_difftest",
+      "status": "PASS",
+      "observed_rejection": "Expected exactly one acceptance marker: Difftest enabled"
+    },
+    {
+      "name": "truncated_trap",
+      "status": "PASS",
+      "observed_rejection": "Expected exactly one acceptance marker: HIT GOOD TRAP"
+    },
+    {
+      "name": "duplicate_case",
+      "status": "PASS",
+      "observed_rejection": "Unexpected or repeated case output"
+    },
+    {
+      "name": "nonzero_exit",
+      "status": "PASS",
+      "observed_rejection": "Execution did not finish normally with exit code zero"
+    },
+    {
+      "name": "timeout_receipt",
+      "status": "PASS",
+      "observed_rejection": "Execution did not finish normally with exit code zero"
+    },
+    {
+      "name": "changed_image",
+      "status": "PASS",
+      "observed_rejection": "Missing or changed execution inputs"
+    },
+    {
+      "name": "changed_aux",
+      "status": "PASS",
+      "observed_rejection": "Missing or changed runtime auxiliary inputs"
+    },
+    {
+      "name": "failure_in_stderr",
+      "status": "PASS",
+      "observed_rejection": "Failure marker in emulator output"
+    },
+    {
+      "name": "empty_output",
+      "status": "PASS",
+      "runner_status": "CHECK_FAILED"
+    },
+    {
+      "name": "refuse_overwrite",
+      "status": "PASS"
+    },
+    {
+      "name": "missing_wave",
+      "status": "PASS",
+      "runner_status": "WAVE_FAILED"
+    },
+    {
+      "name": "timeout_cleanup",
+      "status": "PASS",
+      "runner_status": "RUN_FAILED"
+    },
+    {
+      "name": "selected_vcd_replay",
+      "status": "PASS",
+      "events": 9
+    },
+    {
+      "name": "wave_missing_half_cycle",
+      "status": "PASS",
+      "observed_rejection": "Incomplete full waveform: timestamps must be contiguous and TOP.clock must alternate"
+    },
+    {
+      "name": "wave_unknown_active_operand",
+      "status": "PASS",
+      "observed_rejection": "Unknown/uninitialized required signal: TOP.SimTop.l_soc.core_with_l2.core.backend.inner_vfExuBlock.exus_2.VialuFix.io_in_bits_data_src_0"
+    },
+    {
+      "name": "wave_missing_commit",
+      "status": "PASS",
+      "observed_rejection": "Expected exactly 3 FU inputs/outputs/vadd commits, got 3/3/2"
+    },
+    {
+      "name": "wave_wrong_writeback",
+      "status": "PASS",
+      "observed_rejection": "Case 0: missing or ambiguous FU output"
+    },
+    {
+      "name": "wave_wrong_destination",
+      "status": "PASS",
+      "observed_rejection": "Case 0: missing or ambiguous delayed DPIC commit"
+    },
+    {
+      "name": "wave_wrong_rob",
+      "status": "PASS",
+      "observed_rejection": "Case 0: missing or ambiguous delayed DPIC commit"
+    },
+    {
+      "name": "wave_wrong_operand",
+      "status": "PASS",
+      "observed_rejection": "Case 0: wrong input lanes"
+    },
+    {
+      "name": "wave_wrong_input_tag",
+      "status": "PASS",
+      "observed_rejection": "Case 0: missing or ambiguous FU output"
+    }
+  ],
+  "fixture_wave_sha256": "f8c077238b7b05a3d00d79bc4c08e07d54c166913bfb84cf5405d330f7f94429"
+}
