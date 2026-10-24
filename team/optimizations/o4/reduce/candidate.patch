@@ -1,0 +1,54 @@
+--- a/src/main/scala/xiangshan/backend/fu/vector/VDotDatapath.scala
++++ b/src/main/scala/xiangshan/backend/fu/vector/VDotDatapath.scala
+@@ -21,9 +21,9 @@
+   }
+ }
+ 
+-/** Balanced, widening signed reduction of eight 16-bit products.
+-  * Only the low 32 bits receive the sign-extended sum; bits 127:32 are zero.
+-  * No mask, tail, old destination, rounding, or saturation is involved.
++/** Carry-save reduction modulo 2^19, followed by one carry-propagating add.
++  * Eight arbitrary signed 16-bit values fit exactly in a signed 19-bit result.
++  * The public low-32 sign extension and high-96 zero contract is unchanged.
+   */
+ class VDotReduce extends RawModule {
+   val io = IO(new Bundle {
+@@ -31,18 +31,27 @@
+     val result = Output(UInt(128.W))
+   })
+ 
+-  private val sums17 = Wire(Vec(4, SInt(17.W)))
+-  private val sums18 = Wire(Vec(2, SInt(18.W)))
+-  private val sum19 = Wire(SInt(19.W))
++  private val width = 19
++  private def compress(a: UInt, b: UInt, c: UInt): Seq[UInt] = {
++    val sum = a ^ b ^ c
++    val majority = (a & b) | (a & c) | (b & c)
++    // The discarded carry is modulo 2^19, not a signed saturating operation.
++    val carry = Cat(majority(width - 2, 0), 0.U(1.W))
++    Seq(sum, carry)
++  }
++  private def layer(terms: Seq[UInt]): Seq[UInt] =
++    terms.grouped(3).flatMap {
++      case Seq(a, b, c) => compress(a, b, c)
++      case remaining => remaining
++    }.toSeq
+ 
+-  for (pair <- 0 until 4) {
+-    sums17(pair) := io.products(2 * pair) +& io.products(2 * pair + 1)
+-  }
+-  for (pair <- 0 until 2) {
+-    sums18(pair) := sums17(2 * pair) +& sums17(2 * pair + 1)
+-  }
+-  sum19 := sums18(0) +& sums18(1)
+-
++  private val terms = io.products.map(x => x.pad(width).asUInt).toSeq
++  private val six = layer(terms)
++  private val four = layer(six)
++  private val three = layer(four)
++  private val two = layer(three)
++  require(two.length == 2)
++  private val sum19 = (two(0) + two(1))(width - 1, 0).asSInt
+   private val result32 = Wire(SInt(32.W))
+   result32 := sum19
+   io.result := Cat(0.U(96.W), result32.asUInt)
