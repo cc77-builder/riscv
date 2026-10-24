@@ -1,0 +1,76 @@
+[
+  {
+    "command": [
+      "git",
+      "clone",
+      "--shared",
+      "--no-checkout",
+      "/home/amesotten/.cache/codex-rvinno/partial-dependency-delay-20261024/repo",
+      "/home/amesotten/.cache/codex-rvinno/partial-dependency-admission-20261024/repo"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "output": "Cloning into '/home/amesotten/.cache/codex-rvinno/partial-dependency-admission-20261024/repo'...\ndone.\n"
+  },
+  {
+    "command": [
+      "git",
+      "config",
+      "core.autocrlf",
+      "false"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/partial-dependency-admission-20261024/repo",
+    "exit_code": 0,
+    "output": ""
+  },
+  {
+    "command": [
+      "git",
+      "config",
+      "core.sparseCheckout",
+      "true"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/partial-dependency-admission-20261024/repo",
+    "exit_code": 0,
+    "output": ""
+  },
+  {
+    "command": [
+      "git",
+      "fetch",
+      "/mnt/c/Code/RVInno/riscv/team/out/partial-v5-source.bundle",
+      "HEAD:refs/remotes/experiment/v5"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/partial-dependency-admission-20261024/repo",
+    "exit_code": 0,
+    "output": "From /mnt/c/Code/RVInno/riscv/team/out/partial-v5-source.bundle\n * [new ref]             HEAD       -> experiment/v5\n"
+  },
+  {
+    "command": [
+      "git",
+      "checkout",
+      "--detach",
+      "refs/remotes/experiment/v5"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/partial-dependency-admission-20261024/repo",
+    "exit_code": 0,
+    "output": "Previous HEAD position was 883124364 test: delay partial-kill VDOT inputs with measured dependency chain\nHEAD is now at a51a7593b test: seal delay miss and target same-FU admission gap\n"
+  },
+  {
+    "command": [
+      "python3",
+      "-OO",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "team/optimizations/o2/fullcore/partial_kill_v5",
+      "-p",
+      "test_*.py"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/partial-dependency-admission-20261024/repo",
+    "exit_code": 0,
+    "output": ".........\n----------------------------------------------------------------------\nRan 9 tests in 0.073s\n\nOK\n"
+  }
+]

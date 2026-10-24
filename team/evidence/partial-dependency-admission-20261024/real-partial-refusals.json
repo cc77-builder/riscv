@@ -1,0 +1,61 @@
+{
+  "status": "REAL_PARTIAL_MUTATIONS_PASS",
+  "raw_sha256": "957af2476d2c4b6d87e1afefab3bdfbd46ab872eeafc8c503965edf9ee5babf2",
+  "target_cycle": 34225,
+  "survivor": {
+    "seq": 15,
+    "rob": "0:3",
+    "pc": "0x800002e0",
+    "word": "0x298880b",
+    "pdest": 30,
+    "accept_cycle": 34223,
+    "outcome": "response",
+    "end_cycle": 34225,
+    "expected_data": "0x00000000000000000000000000000000",
+    "writeback_stall_events": 0,
+    "commit_cycle": 34228,
+    "committed": true
+  },
+  "victim": {
+    "seq": 16,
+    "rob": "0:6",
+    "pc": "0x800002ec",
+    "word": "0x2988a0b",
+    "pdest": 106,
+    "accept_cycle": 34224,
+    "outcome": "kill",
+    "end_cycle": 34225,
+    "expected_data": "0x00000000000000000000000000000000",
+    "writeback_stall_events": 0,
+    "commit_cycle": null,
+    "committed": false
+  },
+  "cases": [
+    {
+      "case": "survivor-bit100",
+      "status": "EXPECTED_REJECTION",
+      "reason": "complete 128-bit result differs from accepted-source oracle"
+    },
+    {
+      "case": "survivor-retirement-missing",
+      "status": "EXPECTED_REJECTION",
+      "reason": "retirement count differs"
+    },
+    {
+      "case": "victim-cancel-missing",
+      "status": "EXPECTED_REJECTION",
+      "reason": "missing or unexpected slot KILL"
+    },
+    {
+      "case": "wrong-victim-slot",
+      "status": "EXPECTED_REJECTION",
+      "reason": "duplicate or wrong killed slot"
+    },
+    {
+      "case": "state-kill-mask",
+      "status": "EXPECTED_REJECTION",
+      "reason": "slot kill differs from independent ROB age"
+    }
+  ],
+  "new_emu_runs": 0
+}
