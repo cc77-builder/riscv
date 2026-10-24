@@ -14,6 +14,8 @@ FAULT_CATEGORIES = {
     "occupancy": "occupancy", "kill_p": "cancel", "kill_r": "cancel",
     "survivor": "cancel", "duplicate": "ghost", "missing": "response",
     "reset": "reset",
+    "perf_input": "perf_input", "perf_swap": "identity",
+    "perf_parent": "perf_parent", "perf_cross": "perf_parent",
 }
 FAULTS = tuple(FAULT_CATEGORIES)
 
@@ -179,7 +181,17 @@ def check_positive(log: str) -> dict:
                           ("parent_tested", 1), ("fullcore_tested", 0), ("performance_measured", 0)):
         if int(summary[key]) != expected:
             raise ValueError(f"final summary mismatch: {key}")
-    if set(per_fu) != {0, 1, 2} or groups != 12 or last_case != "clock-recovery":
+    perf_v2 = summary.get("perf_contract") == "2"
+    if "perf_contract" in summary and not perf_v2:
+        raise ValueError("unknown perf contract")
+    if perf_v2:
+        for key, value in (("perf_bits", 577), ("perf_inputs", accepted),
+                           ("perf_walk_one", 577), ("perf_walk_zero", 577)):
+            if int(summary[key]) != value:
+                raise ValueError(f"incomplete perf v2 summary: {key}")
+        if int(summary["perf_observations"]) < response:
+            raise ValueError("missing parent perf observations")
+    if set(per_fu) != {0, 1, 2} or groups != (13 if perf_v2 else 12) or last_case != "clock-recovery":
         raise ValueError("incomplete directed campaign")
     if len(frozen_accept) != 10022 or frozen_responses != 10022:
         raise ValueError("frozen arithmetic sample count mismatch")

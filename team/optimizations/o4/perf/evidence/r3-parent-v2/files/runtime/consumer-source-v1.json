@@ -1,0 +1,161 @@
+{
+  "base": "5640b7fda828109a875bc4e2dfb9d9a1da0266da",
+  "utility_head": "a8ca0c6564865ee69b564d431ecbc52074ba8060",
+  "sources": {
+    "src/main/scala/xiangshan/Bundle.scala": {
+      "sha256": "f00cbe182a2e767e07161ff8b7f395d3bd806bbb347796548d60e430c0f85d23",
+      "excerpts": [
+        {
+          "first": 237,
+          "last": 249,
+          "text": "class PerfDebugInfo(implicit p: Parameters) extends XSBundle {\n  val eliminatedMove = Bool()\n  // val fetchTime = UInt(XLEN.W)\n  val renameTime = UInt(XLEN.W)\n  val dispatchTime = UInt(XLEN.W)\n  val enqRsTime = UInt(XLEN.W)\n  val selectTime = UInt(XLEN.W)\n  val issueTime = UInt(XLEN.W)\n  val writebackTime = UInt(XLEN.W)\n  // val commitTime = UInt(XLEN.W)\n  val runahead_checkpoint_id = UInt(XLEN.W)\n  val tlbFirstReqTime = UInt(XLEN.W)\n  val tlbRespTime = UInt(XLEN.W) // when getting hit result (including delay in L2TLB hit)"
+        }
+      ]
+    },
+    "src/main/scala/xiangshan/backend/BackendParams.scala": {
+      "sha256": "51dad6e0956c8f760957f404f4df4d32ed91e08318c3843b86fe719567e2357b",
+      "excerpts": [
+        {
+          "first": 35,
+          "last": 44,
+          "text": "case class BackendParams(\n  schdParams : Map[SchedulerType, SchdBlockParams],\n  pregParams : Seq[PregParams],\n  iqWakeUpParams : Seq[WakeUpConfig],\n) {\n\n  def debugEn(implicit p: Parameters): Boolean = p(DebugOptionsKey).EnableDifftest\n\n  def basicDebugEn(implicit p: Parameters): Boolean = p(DebugOptionsKey).AlwaysBasicDiff || debugEn\n"
+        }
+      ]
+    },
+    "src/main/scala/xiangshan/backend/CtrlBlock.scala": {
+      "sha256": "80c873f65548222885fee00e1e4637a604f1c934196af2683cbab2284a7faa6e",
+      "excerpts": [
+        {
+          "first": 120,
+          "last": 139,
+          "text": "  // Redirect will be RegNext at ExuBlocks and IssueBlocks\n  val s2_s4_redirect = RegNextWithEnable(s1_s3_redirect)\n  val s3_s5_redirect = RegNextWithEnable(s2_s4_redirect)\n\n  private val delayedNotFlushedWriteBack = io.fromWB.wbData.map(x => {\n    val valid = x.valid\n    val killedByOlder = x.bits.robIdx.needFlush(Seq(s1_s3_redirect, s2_s4_redirect))\n    val delayed = Wire(Valid(new ExuOutput(x.bits.params)))\n    delayed.valid := GatedValidRegNext(valid && !killedByOlder)\n    delayed.bits := RegEnable(x.bits, x.valid)\n    delayed.bits.debugInfo.writebackTime := GTimer()\n    delayed\n  }).toSeq\n  private val delayedWriteBack = Wire(chiselTypeOf(io.fromWB.wbData))\n  delayedWriteBack.zipWithIndex.map{ case (x,i) =>\n    x.valid := GatedValidRegNext(io.fromWB.wbData(i).valid)\n    x.bits := delayedNotFlushedWriteBack(i).bits\n  }\n  val delayedNotFlushedWriteBackNeedFlush = Wire(Vec(params.allExuParams.filter(_.needExceptionGen).length, Bool()))\n  delayedNotFlushedWriteBackNeedFlush := delayedNotFlushedWriteBack.filter(_.bits.params.needExceptionGen).map{ x =>"
+        }
+      ]
+    },
+    "src/main/scala/xiangshan/backend/datapath/WbArbiter.scala": {
+      "sha256": "da263ea553f27a25cb9fc98c209138dffb700248a6ef5b64104bdc8abb5abbb4",
+      "excerpts": [
+        {
+          "first": 157,
+          "last": 175,
+          "text": "  val intArbiterInputsWire = Wire(chiselTypeOf(fromExu))\n  val intArbiterInputsWireY = intArbiterInputsWire.filter(_.bits.params.writeIntRf)\n  val intArbiterInputsWireN = intArbiterInputsWire.filterNot(_.bits.params.writeIntRf)\n\n  val fpArbiterInputsWire = Wire(chiselTypeOf(fromExu))\n  val fpArbiterInputsWireY = fpArbiterInputsWire.filter(_.bits.params.writeFpRf)\n  val fpArbiterInputsWireN = fpArbiterInputsWire.filterNot(_.bits.params.writeFpRf)\n\n  val vfArbiterInputsWire = Wire(chiselTypeOf(fromExu))\n  val vfArbiterInputsWireY = vfArbiterInputsWire.filter(_.bits.params.writeVfRf)\n  val vfArbiterInputsWireN = vfArbiterInputsWire.filterNot(_.bits.params.writeVfRf)\n\n  val v0ArbiterInputsWire = Wire(chiselTypeOf(fromExu))\n  val v0ArbiterInputsWireY = v0ArbiterInputsWire.filter(_.bits.params.writeV0Rf)\n  val v0ArbiterInputsWireN = v0ArbiterInputsWire.filterNot(_.bits.params.writeV0Rf)\n\n  val vlArbiterInputsWire = Wire(chiselTypeOf(fromExu))\n  val vlArbiterInputsWireY = vlArbiterInputsWire.filter(_.bits.params.writeVlRf)\n  val vlArbiterInputsWireN = vlArbiterInputsWire.filterNot(_.bits.params.writeVlRf)"
+        },
+        {
+          "first": 203,
+          "last": 212,
+          "text": "      intArbiterInput.valid := intWrite\n      intArbiterInput.bits := exuOut.bits\n      fpArbiterInput.valid := fpWrite\n      fpArbiterInput.bits := exuOut.bits\n      vfArbiterInput.valid := vfWrite\n      vfArbiterInput.bits := exuOut.bits\n      v0ArbiterInput.valid := v0Write\n      v0ArbiterInput.bits := exuOut.bits\n      vlArbiterInput.valid := vlWrite\n      vlArbiterInput.bits := exuOut.bits"
+        },
+        {
+          "first": 351,
+          "last": 388,
+          "text": "  private val vfExuInputs = io.fromVfExu.flatten.toSeq\n  private val vfExuWBs = WireInit(MixedVecInit(vfExuInputs))\n  private val memExuInputs = io.fromMemExu.flatten.toSeq\n  private val memExuWBs = WireInit(MixedVecInit(memExuInputs))\n\n  // only fired port can write back to ctrl block\n  (intExuWBs zip intExuInputs).foreach { case (wb, input) => wb.valid := input.fire }\n  (fpExuWBs zip fpExuInputs).foreach { case (wb, input) => wb.valid := input.fire }\n  (vfExuWBs zip vfExuInputs).foreach { case (wb, input) => wb.valid := input.fire }\n  (memExuWBs zip memExuInputs).foreach { case (wb, input) => wb.valid := input.fire }\n\n  // io assign\n  private val toIntPreg: MixedVec[RfWritePortWithConfig] = MixedVecInit(intWbArbiterOut.map(x => x.bits.asIntRfWriteBundle(x.fire)).toSeq)\n  private val toFpPreg: MixedVec[RfWritePortWithConfig] = MixedVecInit(fpWbArbiterOut.map(x => x.bits.asFpRfWriteBundle(x.fire)).toSeq)\n  private val toVfPreg: MixedVec[RfWritePortWithConfig] = MixedVecInit(vfWbArbiterOut.map(x => x.bits.asVfRfWriteBundle(x.fire)).toSeq)\n  private val toV0Preg: MixedVec[RfWritePortWithConfig] = MixedVecInit(v0WbArbiterOut.map(x => x.bits.asV0RfWriteBundle(x.fire)).toSeq)\n  private val toVlPreg: MixedVec[RfWritePortWithConfig] = MixedVecInit(vlWbArbiterOut.map(x => x.bits.asVlRfWriteBundle(x.fire)).toSeq)\n\n  private val wb2Ctrl = intExuWBs ++ fpExuWBs ++ vfExuWBs ++ memExuWBs\n\n  io.toIntPreg := toIntPreg\n  io.toFpPreg := toFpPreg\n  io.toVfPreg := toVfPreg\n  io.toV0Preg := toV0Preg\n  io.toVlPreg := toVlPreg\n  io.toCtrlBlock.writeback.zip(wb2Ctrl).foreach { case (sink, source) =>\n    sink.valid := source.valid\n    sink.bits := source.bits\n    source.ready := true.B\n  }\n\n  // debug\n  if(backendParams.debugEn) {\n    dontTouch(intArbiterInputsWire)\n    dontTouch(fpArbiterInputsWire)\n    dontTouch(vfArbiterInputsWire)\n    dontTouch(v0ArbiterInputsWire)\n    dontTouch(vlArbiterInputsWire)"
+        }
+      ]
+    },
+    "src/main/scala/xiangshan/backend/rob/Rob.scala": {
+      "sha256": "06674f4d8ae95e0517e5bbcfef834f987b1600c528989e5bebca55e8d894d9a2",
+      "excerpts": [
+        {
+          "first": 408,
+          "last": 423,
+          "text": "  for (i <- 0 until RenameWidth) {\n    // we don't check whether io.redirect is valid here since redirect has higher priority\n    when(canEnqueue(i)) {\n      val enqUop = io.enq.req(i).bits\n      val enqIndex = allocatePtrVec(i).value\n      // store uop in data module and debug_microOp Vec\n      debug_microOp(enqIndex) := enqUop\n      debug_microOp(enqIndex).debugInfo.dispatchTime := timer\n      debug_microOp(enqIndex).debugInfo.enqRsTime := timer\n      debug_microOp(enqIndex).debugInfo.selectTime := timer\n      debug_microOp(enqIndex).debugInfo.issueTime := timer\n      debug_microOp(enqIndex).debugInfo.writebackTime := timer\n      debug_microOp(enqIndex).debugInfo.tlbFirstReqTime := timer\n      debug_microOp(enqIndex).debugInfo.tlbRespTime := timer\n      debug_lsInfo(enqIndex) := DebugLsInfo.init\n      debug_lsTopdownInfo(enqIndex) := LsTopdownInfo.init"
+        },
+        {
+          "first": 522,
+          "last": 535,
+          "text": "  /**\n   * Writeback (from execution units)\n   */\n  for (wb <- exuWBs) {\n    val wbIdx = wb.bits.robIdx.value\n    val debug_Uop = debug_microOp(wbIdx)\n    when(wb.valid) {\n      debug_exuData(wbIdx) := wb.bits.data(0)\n      debug_exuDebug(wbIdx) := wb.bits.debug\n      debug_microOp(wbIdx).debugInfo.enqRsTime := wb.bits.debugInfo.enqRsTime\n      debug_microOp(wbIdx).debugInfo.selectTime := wb.bits.debugInfo.selectTime\n      debug_microOp(wbIdx).debugInfo.issueTime := wb.bits.debugInfo.issueTime\n      debug_microOp(wbIdx).debugInfo.writebackTime := wb.bits.debugInfo.writebackTime\n"
+        },
+        {
+          "first": 1374,
+          "last": 1398,
+          "text": "  val dispatchLatency = commitDebugUop.map(uop => uop.debugInfo.dispatchTime - uop.debugInfo.renameTime)\n  val enqRsLatency = commitDebugUop.map(uop => uop.debugInfo.enqRsTime - uop.debugInfo.dispatchTime)\n  val selectLatency = commitDebugUop.map(uop => uop.debugInfo.selectTime - uop.debugInfo.enqRsTime)\n  val issueLatency = commitDebugUop.map(uop => uop.debugInfo.issueTime - uop.debugInfo.selectTime)\n  val executeLatency = commitDebugUop.map(uop => uop.debugInfo.writebackTime - uop.debugInfo.issueTime)\n  val rsFuLatency = commitDebugUop.map(uop => uop.debugInfo.writebackTime - uop.debugInfo.enqRsTime)\n  val commitLatency = commitDebugUop.map(uop => timer - uop.debugInfo.writebackTime)\n\n  def latencySum(cond: Seq[Bool], latency: Seq[UInt]): UInt = {\n    cond.zip(latency).map(x => Mux(x._1, x._2, 0.U)).reduce(_ +& _)\n  }\n\n  for (fuType <- FuType.functionNameMap.keys) {\n    val fuName = FuType.functionNameMap(fuType)\n    val commitIsFuType = io.commits.commitValid.zip(commitDebugUop).map(x => x._1 && x._2.fuType === fuType.U)\n    XSPerfRolling(s\"ipc_futype_${fuName}\", ifCommit(PopCount(commitIsFuType)), 1000, clock, reset)\n    XSPerfAccumulate(s\"${fuName}_instr_cnt\", ifCommit(PopCount(commitIsFuType)))\n    XSPerfAccumulate(s\"${fuName}_latency_dispatch\", ifCommit(latencySum(commitIsFuType, dispatchLatency)))\n    XSPerfAccumulate(s\"${fuName}_latency_enq_rs\", ifCommit(latencySum(commitIsFuType, enqRsLatency)))\n    XSPerfAccumulate(s\"${fuName}_latency_select\", ifCommit(latencySum(commitIsFuType, selectLatency)))\n    XSPerfAccumulate(s\"${fuName}_latency_issue\", ifCommit(latencySum(commitIsFuType, issueLatency)))\n    XSPerfAccumulate(s\"${fuName}_latency_execute\", ifCommit(latencySum(commitIsFuType, executeLatency)))\n    XSPerfAccumulate(s\"${fuName}_latency_enq_rs_execute\", ifCommit(latencySum(commitIsFuType, rsFuLatency)))\n    XSPerfAccumulate(s\"${fuName}_latency_commit\", ifCommit(latencySum(commitIsFuType, commitLatency)))\n  }"
+        },
+        {
+          "first": 1418,
+          "last": 1454,
+          "text": "  if (!env.FPGAPlatform) {\n    val instTableName = \"InstTable\" + p(XSCoreParamsKey).HartId.toString\n    val instSiteName = \"Rob\" + p(XSCoreParamsKey).HartId.toString\n    val debug_instTable = ChiselDB.createTable(instTableName, new InstInfoEntry)\n    for (wb <- exuWBs) {\n      when(wb.valid) {\n        val debug_instData = Wire(new InstInfoEntry)\n        val idx = wb.bits.robIdx.value\n        debug_instData.robIdx := idx\n        debug_instData.dvaddr := wb.bits.debug.vaddr\n        debug_instData.dpaddr := wb.bits.debug.paddr\n        debug_instData.issueTime := wb.bits.debugInfo.issueTime\n        debug_instData.writebackTime := wb.bits.debugInfo.writebackTime\n        debug_instData.dispatchLatency := wb.bits.debugInfo.dispatchTime - wb.bits.debugInfo.renameTime\n        debug_instData.enqRsLatency := wb.bits.debugInfo.enqRsTime - wb.bits.debugInfo.dispatchTime\n        debug_instData.selectLatency := wb.bits.debugInfo.selectTime - wb.bits.debugInfo.enqRsTime\n        debug_instData.issueLatency := wb.bits.debugInfo.issueTime - wb.bits.debugInfo.selectTime\n        debug_instData.executeLatency := wb.bits.debugInfo.writebackTime - wb.bits.debugInfo.issueTime\n        debug_instData.rsFuLatency := wb.bits.debugInfo.writebackTime - wb.bits.debugInfo.enqRsTime\n        debug_instData.tlbLatency := wb.bits.debugInfo.tlbRespTime - wb.bits.debugInfo.tlbFirstReqTime\n        debug_instData.exceptType := Cat(wb.bits.exceptionVec.getOrElse(ExceptionVec(false.B)))\n        debug_instData.lsInfo := debug_lsInfo(idx)\n        // debug_instData.globalID := wb.bits.uop.ctrl.debug_globalID\n        // debug_instData.instType := wb.bits.uop.ctrl.fuType\n        // debug_instData.ivaddr := wb.bits.uop.cf.pc\n        // debug_instData.mdpInfo.ssid := wb.bits.uop.cf.ssid\n        // debug_instData.mdpInfo.waitAllStore := wb.bits.uop.cf.loadWaitStrict && wb.bits.uop.cf.loadWaitBit\n        debug_instTable.log(\n          data = debug_instData,\n          en = wb.valid,\n          site = instSiteName,\n          clock = clock,\n          reset = reset\n        )\n      }\n    }\n  }"
+        },
+        {
+          "first": 1569,
+          "last": 1599,
+          "text": "  if (env.EnableDifftest || env.AlwaysBasicDiff) {\n    // These are the structures used by difftest only and should be optimized after synthesis.\n    val dt_eliminatedMove = Mem(RobSize, Bool())\n    val dt_isRVC = Mem(RobSize, Bool())\n    val dt_exuDebug = Reg(Vec(RobSize, new DebugBundle))\n    for (i <- 0 until RenameWidth) {\n      when(canEnqueue(i)) {\n        dt_eliminatedMove(allocatePtrVec(i).value) := io.enq.req(i).bits.eliminatedMove\n        dt_isRVC(allocatePtrVec(i).value) := io.enq.req(i).bits.preDecodeInfo.isRVC\n      }\n    }\n    for (wb <- exuWBs) {\n      when(wb.valid) {\n        val wbIdx = wb.bits.robIdx.value\n        dt_exuDebug(wbIdx) := wb.bits.debug\n      }\n    }\n    // Always instantiate basic difftest modules.\n    for (i <- 0 until CommitWidth) {\n      val uop = commitDebugUop(i)\n      val commitInfo = io.commits.info(i)\n      val ptr = deqPtrVec(i).value\n      val exuOut = dt_exuDebug(ptr)\n      val eliminatedMove = dt_eliminatedMove(ptr)\n      val isRVC = dt_isRVC(ptr)\n      val instr = uop.instr.asTypeOf(new XSInstBitFields)\n      val isVLoad = instr.isVecLoad\n\n      val difftest = DifftestModule(new DiffInstrCommit(MaxPhyRegs), delay = 3, dontCare = true)\n      val dt_skip = Mux(eliminatedMove, false.B, exuOut.isSkipDiff)\n      difftest.coreid := io.hartId"
+        }
+      ]
+    },
+    "src/main/scala/xiangshan/backend/exu/ExeUnit.scala": {
+      "sha256": "166f70c704cc2ec477d316bc5d3ffb40498118e6f8c1c498209fc4b706070f1e",
+      "excerpts": [
+        {
+          "first": 433,
+          "last": 439,
+          "text": "  if (xiangshan.backend.fu.wrapper.VDotO2.traceEnabled &&\n      fuCfgs.contains(xiangshan.backend.fu.FuConfig.VDotCfg)) {\n    require(vdotElastic && exuParams.name == \"VFEX4\" && !exuParams.latencyCertain,\n      \"O2 trace requires the elastic, uncertain-latency VFEX4\")\n    require(!p(xiangshan.DebugOptionsKey).ResetGen,\n      \"O2 trace requires the common simulation reset\")\n    val observedVDot = elasticVDot.get"
+        },
+        {
+          "first": 513,
+          "last": 529,
+          "text": "      when(observedVDot.io.in.fire) {\n        printf(p\"O2_ACCEPT cycle=${o2Cycle} seq=${o2NextSeq} rob=${o2In.robIdx.flag}:${o2In.robIdx.value} pdest=${o2In.pdest} vl=${o2Vl} illegal=${o2IllegalInput} vecwen=${o2In.vecWen.get} v0wen=${o2In.v0Wen.get} vpu=0x${Hexadecimal(o2In.vpu.get.asUInt)} perf=0x${Hexadecimal(observedVDot.io.in.bits.perfDebugInfo.asUInt)} vs1=0x${Hexadecimal(observedVDot.io.in.bits.data.src(0))} vs2=0x${Hexadecimal(observedVDot.io.in.bits.data.src(1))}\\n\")\n      }\n      when(o2Move) {\n        printf(p\"O2_MOVE cycle=${o2Cycle} seq=${o2PSeq} rob=${o2P.robIdx.flag}:${o2P.robIdx.value} pdest=${o2P.pdest} illegal=${o2P.exceptionVec.get(xiangshan.ExceptionNO.illegalInstr)} vecwen=${o2P.vecWen.get} v0wen=${o2P.v0Wen.get} exception=0x${Hexadecimal(o2P.exceptionVec.get.asUInt)} vpu=0x${Hexadecimal(o2P.vpu.get.asUInt)} perf=0x${Hexadecimal(o2PPerf.asUInt)}\\n\")\n      }\n      when(o2KillP) {\n        printf(p\"O2_KILL cycle=${o2Cycle} seq=${o2PSeq} slot=P rob=${o2P.robIdx.flag}:${o2P.robIdx.value} pdest=${o2P.pdest} redirect=${io.flush.bits.robIdx.flag}:${io.flush.bits.robIdx.value} self=${io.flush.bits.flushItself()}\\n\")\n      }\n      when(o2KillR) {\n        printf(p\"O2_KILL cycle=${o2Cycle} seq=${o2RSeq} slot=R rob=${o2R.robIdx.flag}:${o2R.robIdx.value} pdest=${o2R.pdest} redirect=${io.flush.bits.robIdx.flag}:${io.flush.bits.robIdx.value} self=${io.flush.bits.flushItself()}\\n\")\n      }\n      when(o2Out.valid && !o2Out.ready) {\n        printf(p\"O2_STALL cycle=${o2Cycle} seq=${o2RSeq} rob=${o2R.robIdx.flag}:${o2R.robIdx.value} pdest=${o2R.pdest} illegal=${o2R.exceptionVec.get(xiangshan.ExceptionNO.illegalInstr)} data=0x${Hexadecimal(o2Out.bits.res.data)} vecwen=${o2R.vecWen.get} v0wen=${o2R.v0Wen.get} exception=0x${Hexadecimal(o2R.exceptionVec.get.asUInt)} vpu=0x${Hexadecimal(o2R.vpu.get.asUInt)} perf=0x${Hexadecimal(o2Out.bits.perfDebugInfo.asUInt)}\\n\")\n      }\n      when(o2Out.fire) {\n        printf(p\"O2_RESPONSE cycle=${o2Cycle} seq=${o2RSeq} rob=${o2R.robIdx.flag}:${o2R.robIdx.value} pdest=${o2R.pdest} illegal=${o2R.exceptionVec.get(xiangshan.ExceptionNO.illegalInstr)} data=0x${Hexadecimal(o2Out.bits.res.data)} vecwen=${o2R.vecWen.get} v0wen=${o2R.v0Wen.get} exception=0x${Hexadecimal(o2R.exceptionVec.get.asUInt)} vpu=0x${Hexadecimal(o2R.vpu.get.asUInt)} perf=0x${Hexadecimal(o2Out.bits.perfDebugInfo.asUInt)}\\n\")"
+        },
+        {
+          "first": 724,
+          "last": 727,
+          "text": "  // debug info\n  io.out.bits.debug     := 0.U.asTypeOf(io.out.bits.debug)\n  io.out.bits.debug.isPerfCnt := funcUnits.map(_.io.csrio.map(_.isPerfCnt)).map(_.getOrElse(false.B)).reduce(_ || _)\n  io.out.bits.debugInfo := Mux1H(fuOutValidOH, fuOutBitsVec.map(_.perfDebugInfo))"
+        }
+      ]
+    },
+    "src/main/scala/xiangshan/backend/fu/wrapper/VDotElastic.scala": {
+      "sha256": "93812d4776bdf390d60d4cd47f6fbc80debfff82d8a5e9d1a5676987365658db",
+      "excerpts": [
+        {
+          "first": 38,
+          "last": 51,
+          "text": "  private val pValid = RegInit(false.B)\n  private val rValid = RegInit(false.B)\n  private val pProducts = Reg(Vec(8, SInt(16.W)))\n  private val pCtrl = Reg(chiselTypeOf(io.out.bits.ctrl))\n  private val pPerf = Reg(chiselTypeOf(io.out.bits.perfDebugInfo))\n  // H1 stores only the architectural low word; the public result stays 128 bits.\n  // Keep each slot's complete control/perf identity on the same transfer edge.\n  private val rPacket = Reg(new Bundle {\n    val ctrl = chiselTypeOf(io.out.bits.ctrl)\n    val res = new Bundle {\n      val data = UInt(32.W)\n    }\n    val perfDebugInfo = chiselTypeOf(io.out.bits.perfDebugInfo)\n  })"
+        },
+        {
+          "first": 67,
+          "last": 74,
+          "text": "  // Parent admission is enforced by its atomic child dispatch. The FU also\n  // suppresses every new accept on redirect/reset, including unrelated flush.\n  io.in.ready := pReady && !io.flush.valid && !reset.asBool\n  io.out.valid := liveR\n  io.out.bits.ctrl := rPacket.ctrl\n  io.out.bits.perfDebugInfo := rPacket.perfDebugInfo\n  io.out.bits.res := 0.U.asTypeOf(io.out.bits.res)\n  io.out.bits.res.data := Cat(0.U(96.W), rPacket.res.data)"
+        },
+        {
+          "first": 94,
+          "last": 107,
+          "text": "  pValid := (liveP && !move) || io.in.fire\n  rValid := (liveR && !io.out.fire) || move\n\n  when(io.in.fire) {\n    pProducts := products.io.products\n    pCtrl := acceptedCtrl\n    pPerf := io.in.bits.perfDebugInfo\n  }\n  when(move) {\n    // Reads pre-edge P even when a new request replaces it at this same edge.\n    rPacket.ctrl := pCtrl\n    rPacket.perfDebugInfo := pPerf\n    rPacket.res.data := Mux(pCtrl.exceptionVec.get(ExceptionNO.illegalInstr),\n      0.U(32.W), reduce.io.result(31, 0))"
+        }
+      ]
+    },
+    "src/main/scala/top/ArgParser.scala": {
+      "sha256": "9a681c3a93ffb9a2cc6e57bd38dc274399f6eb3e0a69141006fc2497df29577f",
+      "excerpts": [
+        {
+          "first": 216,
+          "last": 229,
+          "text": "    val newArgs = DifftestModule.parseArgs(args)\n    val config = nextOption(default, newArgs.toList).alter((site, here, up) => {\n      case LogUtilsOptionsKey => LogUtilsOptions(\n        here(DebugOptionsKey).EnableDebug,\n        here(DebugOptionsKey).EnablePerfDebug,\n        here(DebugOptionsKey).FPGAPlatform\n      )\n      case PerfCounterOptionsKey => PerfCounterOptions(\n        here(DebugOptionsKey).EnablePerfDebug && !here(DebugOptionsKey).FPGAPlatform,\n        here(DebugOptionsKey).EnableRollingDB && !here(DebugOptionsKey).FPGAPlatform,\n        XSPerfLevel.withName(here(DebugOptionsKey).PerfLevel),\n        0\n      )\n    })"
+        }
+      ]
+    },
+    "src/main/scala/xiangshan/Parameters.scala": {
+      "sha256": "4ce4019b34a71bbc62c467c4209993e36ad63c29212c56f4bdf5e60faf2db907",
+      "excerpts": [
+        {
+          "first": 553,
+          "last": 569,
+          "text": "case object DebugOptionsKey extends Field[DebugOptions]\n\ncase class DebugOptions\n(\n  FPGAPlatform: Boolean = false,\n  ResetGen: Boolean = false,\n  EnableDifftest: Boolean = false,\n  AlwaysBasicDiff: Boolean = true,\n  EnableDebug: Boolean = false,\n  EnablePerfDebug: Boolean = true,\n  PerfLevel: String = \"VERBOSE\",\n  UseDRAMSim: Boolean = false,\n  EnableConstantin: Boolean = false,\n  EnableChiselDB: Boolean = false,\n  AlwaysBasicDB: Boolean = true,\n  EnableRollingDB: Boolean = false\n)"
+        }
+      ]
+    },
+    "utility/src/main/scala/utility/ChiselDB.scala": {
+      "sha256": "cbaf584fc54ea84b77b8d9f7048b57751fc1301567fe56dafd2b5b7adc4da61c",
+      "excerpts": [
+        {
+          "first": 145,
+          "last": 155,
+          "text": "  def log(data: T, en: Bool, site: String = \"\", clock: Clock, reset: Reset): Unit = {\n    if(!envInFPGA){\n      val writer = Module(new TableWriteHelper[T](tableName, hw, site))\n      val cnt = RegInit(0.U(64.W))\n      cnt := cnt + 1.U\n      writer.io.clock := clock\n      writer.io.reset := reset\n      writer.io.en := en\n      writer.io.stamp := cnt\n      writer.io.data := data\n    }"
+        },
+        {
+          "first": 224,
+          "last": 239,
+          "text": "object ChiselDB {\n\n  private val table_map = scala.collection.mutable.Map[String, Table[_]]()\n  private var enable = false\n\n  def init(enable: Boolean): Unit = {\n    // Not needed at the moment\n    this.enable = enable\n  }\n\n  def createTable[T <: Record](tableName: String, hw: T, basicDB: Boolean = false): Table[T] = {\n    getTable(tableName, hw)\n      .getOrElse({\n        val t = new Table[T](!(basicDB & this.enable), tableName, hw)\n        table_map += (tableName -> t)\n        t"
+        }
+      ]
+    }
+  }
+}

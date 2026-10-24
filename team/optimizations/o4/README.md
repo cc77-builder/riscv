@@ -1,4 +1,8 @@
-# O4结构与时序代价评估：本地完成
+# O4结构与时序代价评估
+
+**当前 R3 子项（2026-10-25）：** [perfDebugInfo 消费者与父级覆盖](perf/RESULT.md)已完成。保持生产完整577位边界，补强独立输入／实际父级出口及逐位验证；没有新整核周期或ASIC测量。[复核证据与命令](perf/evidence/r3-parent-v2/README.md)。
+
+以下为2026-10-20原O4评估的历史边界与结果，后续资格按[当前路线](../../docs/development-route-current.md)读取。
 
 2026-10-20，local/o4-cost-20261020；不push、不切换默认，正式T16继续后置。
 

@@ -75,6 +75,8 @@ class VDotElasticParentTestTop(implicit p: Parameters) extends XSModule {
     val pdest = Input(UInt(exuParams.wbPregIdxWidth.W))
     val write_v0 = Input(Bool())
     val perf_tag = Input(UInt(64.W))
+    // R3 v2: external opaque metadata, independent of the VPU noise tag.
+    val perf_payload = Input(UInt((new PerfDebugInfo).getWidth.W))
     val flush_valid = Input(Bool())
     val flush_flag = Input(Bool())
     val flush_value = Input(UInt(log2Ceil(RobSize).W))
@@ -115,6 +117,7 @@ class VDotElasticParentTestTop(implicit p: Parameters) extends XSModule {
     val out_vpu_full = Output(UInt((new VPUCtrlSignals).getWidth.W))
     val in_perf_full = Output(UInt((new PerfDebugInfo).getWidth.W))
     val out_perf_full = Output(UInt((new PerfDebugInfo).getWidth.W))
+    val parent_perf_full = Output(UInt((new PerfDebugInfo).getWidth.W))
   })
 
   val dut = Module(LazyModule(new ExeUnit(exuParams)).module)
@@ -160,10 +163,8 @@ class VDotElasticParentTestTop(implicit p: Parameters) extends XSModule {
   in.fpu.get.rm := io.fp_rm
   in.fpu.get.wflags := io.fp_wflags
   dut.io.frm.get := io.frm
-  in.perfDebugInfo := Fill((in.perfDebugInfo.getWidth + 63) / 64, io.perf_tag)
-    .asTypeOf(in.perfDebugInfo)
-  in.perfDebugInfo.issueTime := io.perf_tag
-  in.perfDebugInfo.renameTime := io.perf_tag ^ "hf0e1d2c3b4a59687".U
+  require((new PerfDebugInfo).getWidth == 577, "R3 perf v2 requires the reviewed RV64 schema")
+  in.perfDebugInfo := io.perf_payload.asTypeOf(in.perfDebugInfo)
   dut.io.flush.valid := io.flush_valid
   dut.io.flush.bits.robIdx.flag := io.flush_flag
   dut.io.flush.bits.robIdx.value := io.flush_value
@@ -187,6 +188,8 @@ class VDotElasticParentTestTop(implicit p: Parameters) extends XSModule {
   io.out_vxsat := out.vxsat.getOrElse(false.B)
   io.out_perf_tag := out.debugInfo.issueTime
   io.out_rename_tag := out.debugInfo.renameTime
+  // Observe the actual production parent output, in addition to the child tap.
+  io.parent_perf_full := out.debugInfo.asUInt
 
   // tapAndRead adds observation-only wiring; it does not drive the real design.
   private val observed = Seq(FuType.vdot, FuType.vidiv, FuType.vfdiv).map { kind =>

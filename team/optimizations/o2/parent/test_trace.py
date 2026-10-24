@@ -99,6 +99,38 @@ class TraceTests(unittest.TestCase):
         with self.assertRaises(TraceError):
             check_trace(encode(*fixture()))
 
+    def test_perf_v2_summary_uses_explicit_schema(self):
+        rows, fus, final = fixture()
+        final.update(perf_contract=2, perf_bits=577, perf_inputs=4,
+                     perf_observations=5, perf_walk_one=577, perf_walk_zero=577)
+        result = check_trace(encode(rows, fus, final), require_campaign=False)
+        self.assertEqual(result["perf_contract"], 2)
+        self.assertEqual(result["perf_observations_recomputed"], 5)
+        # This deliberately small schema fixture is never a completed campaign.
+        with self.assertRaises(TraceError):
+            check_trace(encode(rows, fus, final))
+
+    def test_perf_v2_observations_are_recomputed(self):
+        rows, fus, final = fixture()
+        final.update(perf_contract=2, perf_bits=577, perf_inputs=4,
+                     perf_observations=4, perf_walk_one=577, perf_walk_zero=577)
+        with self.assertRaisesRegex(TraceError, "incomplete perf v2 summary"):
+            check_trace(encode(rows, fus, final), require_campaign=False)
+
+    def test_perf_unknown_or_incomplete_schema_rejected(self):
+        for changes in (dict(perf_contract=3), dict(perf_bits=576),
+                        dict(perf_extra=0)):
+            rows, fus, final = fixture()
+            final.update(perf_contract=2, perf_bits=577, perf_inputs=4,
+                         perf_observations=5, perf_walk_one=577, perf_walk_zero=577)
+            final.update(changes)
+            with self.subTest(changes=changes), self.assertRaises(TraceError):
+                check_trace(encode(rows, fus, final), require_campaign=False)
+        rows, fus, final = fixture()
+        final["perf_bits"] = 577
+        with self.assertRaises(TraceError):
+            check_trace(encode(rows, fus, final), require_campaign=False)
+
     def test_slot_sequence_swap_rejected(self):
         self.assert_bad_row(3, dict(pseq=1, rseq=2))
 

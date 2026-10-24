@@ -1,6 +1,6 @@
 # 香山 vdot 工程开发路线：满足赛题技术要求，持续提高性能
 
-更新：2026-10-24（UTC+08:00）。硬件比较基点：6d2abe403b07c297b8830a7d4f06e370b0a8e070；当前T17新构建源码：34bae6d4acceac939f958199dae53c14bc1f6183；当前获选软件及默认 C 源入口见[稳定使用说明](../optimizations/o2/r2-select/STABLE.md)，底层调用资格见[R4结果](../optimizations/o2/r2-select/ENTRY_RESULT.md)；可选 firstdot 实现见[其运行结果](../optimizations/o2/r2-vector-accum/FIRSTDOT_RESULT.md)，后续config-reuse选择性优化见[当前S3结果](../optimizations/o2/r2-config-reuse/RUNTIME_RESULT.md)。团队集成分支 cc77-builder/riscv:zufan。实时活动见[协作入口](collaboration-current.md)，每轮成果及路线变化见[开发计分板](../../开发计分板.md)。
+更新：2026-10-25（UTC+08:00）。硬件比较基点：6d2abe403b07c297b8830a7d4f06e370b0a8e070；当前T17新构建源码：34bae6d4acceac939f958199dae53c14bc1f6183；当前获选软件及默认 C 源入口见[稳定使用说明](../optimizations/o2/r2-select/STABLE.md)，底层调用资格见[R4结果](../optimizations/o2/r2-select/ENTRY_RESULT.md)；可选 firstdot 实现见[其运行结果](../optimizations/o2/r2-vector-accum/FIRSTDOT_RESULT.md)，后续config-reuse选择性优化见[当前S3结果](../optimizations/o2/r2-config-reuse/RUNTIME_RESULT.md)。团队集成分支 cc77-builder/riscv:zufan。实时活动见[协作入口](collaboration-current.md)，每轮成果及路线变化见[开发计分板](../../开发计分板.md)。
 
 本路线只安排工程实现、验证、复现和性能优化。比赛报告、PPT、视频、答辩、平台提交及赛事事务由成员另行安排，不属于 Agent 的工程任务，也不作为工程推进的前置条件。开发只维护必要的运行说明、结果证据和简短计分板记录。
 
@@ -23,7 +23,7 @@
 | R5/G5 稳定入口 | [四形状 C 源默认选择与回退](../optimizations/o2/r2-select/STABLE.md)已固定，新增团队库构建；真实GNU验证三种开关模式/八别名，整库对象等于T17 C02，完整caller/link对象等价，七种非法配置拒绝 | 源码别名不增加ELF符号或运行时分派；新EMU为0，没有新应用周期。默认前三形状vdot、K13 RVV，修改开关须重编译调用端 |
 | R2-S1 firstdot | [首块直接初始化实跑](../optimizations/o2/r2-vector-accum/FIRSTDOT_RESULT.md)完成33次性能进程／384正式窗口／192重放比较；另3次普通C进程及独立静态库闭合 | 三个整块reuse vdot较原S1少7.0692%／3.5043%／1.4291%周期，K13仍保留更快RVV；独立firstdot公共符号可选，R5稳定默认未改，不是完整应用收益 |
 | R2-S3 重复向量配置 | [GNU与整核结果](../optimizations/o2/r2-config-reuse/RUNTIME_RESULT.md)完成33次性能进程、384正式窗口、192全窗口重放比较；三个整块reuse/vdot较本轮firstdot少3.0111%／3.2772%／0.6011%周期，另3次普通C进程、独立静态库及另一源码检出原文复算均PASS | 固定调用计划下可选，K13 S3 vdot反而慢0.4890%，保留本轮更快firstdot reuse/RVV；部分相同RVV槽有小幅可重放但未归因差异，不宣称全矩阵无退化。R5默认、完整应用与新PPA边界保持 |
-| R3 | 仍为待调查方向；S3的8×32/d0/reuse/vdot正式窗口两版均为2周期响应、无写回阻塞；候选首接受提前10周期，接受跨度反增2周期 | 当前收益只在固定软件调用窗成立；不能归因load或声称FU吞吐改善。下一项需真实应用开销或硬件瓶颈证据，不为推进编号强改RTL |
+| R3 | [perfDebugInfo子项](../optimizations/o4/perf/RESULT.md)完成：固定消费者／T17生成物／历史映射复核，保持577位完整边界；补强真实父级外部期望与最终出口，13组、20观察负控和577位双扫描通过 | 关闭当前合同下直接删perf字段的假设；未改生产RTL、未新增整核／应用周期／ASIC成绩。既有S3仍为2拍响应且无写回阻塞，后续须有真实应用或硬件瓶颈证据 |
 
 依据：[历史项目状态](project-status-20261020.md)、[H1 成本与时序](../optimizations/o2/result-width/h1/H1_RESULT.md)、[H1 周期](../optimizations/o2/result-width/h1/performance/B0_H1_RESULT.md)、[R2 入口](../../R2_STATUS.md)。结果绑定各自源码、配置和输入；运行是否结束须读实际 state、日志和进程。
 
@@ -63,7 +63,7 @@ negative-reference.so 是故障注入夹具，不是正常黄金 NEMU；不能�
 | R2-S2 安全尾部筛选 | [新固定布局合同与结果](../optimizations/o2/r2-safe-tail/FIXED_RESULT.md)闭合S0→S2单项因果比较；两形状/三数据集/basic-reuse/core-endtoend、负控恢复及重放PASS。另以仅RVV两槽改变的同镜像K13/endtoend探针比较已合格S1 RVV | 当前reuse相对S0少10.952%，却在dataset0探针比强RVV慢6.705%；basic退化，不扩大采用矩阵。该探针为4窗口单元格，不是强RVV全矩阵资格。保留完整原始数据、旧合同/哈希/归档；只有新可检验假设才重开。原[固定B0/H1合同](../optimizations/o2/r2-safe-tail/FULLCORE_VALIDATION.md)仍BLOCKED，不重跑未变缺项，也不以合并EMU替代旧对照或MERGE-REG |
 | R2-S1 向量累加与对等 RVV | 原[S1完整主批](../optimizations/o2/r2-vector-accum/README.md)与新增[firstdot运行子项](../optimizations/o2/r2-vector-accum/FIRSTDOT_RESULT.md)均已闭合；新独立C库保留16函数和全部原始证据 | firstdot三个整块reuse vdot胜过原S1及本轮最快RVV，K13继续用RVV；R5默认不变，可使用独立firstdot入口及明确回退。新caller/布局/应用仍按影响验证，旧静态原型与冻结批次原样保留 |
 | R2-S3 后续应用瓶颈优化 | [重复配置完整运行与C交付](../optimizations/o2/r2-config-reuse/RUNTIME_RESULT.md)已按各自范围闭合；独立config-reuse入口保留16个功能合格函数，前三整块reuse/vdot为本固定计划的选择，K13继续用firstdot reuse/RVV | 原始probe/扩展/C执行无需重复。保留所有未选择格与未归因上下文差异；后续若有真实调用方，先分解打包、搬运、调用与核内成本，再以最快RVV同路径做8×32有界筛选。默认入口、新caller/布局或硬件变化分别按影响验证 |
-| R3 硬件成本／关键路径优化 | 可并行做 P/R perfDebugInfo 消费者与覆盖分析，定位门控／ready 路径；有真实瓶颈和收益依据才实施一项修改 | 保留接口语义；FU、真实父级、受影响整核／公平周期及同条件综合 STA 通过，或留下不改决定，见[O4](../optimizations/o4/README.md)。新增硬件候选须有同样依据，不能只因表中有名字就开做 |
+| R3 硬件成本／关键路径优化 | [P/R perf消费者与覆盖子项](../optimizations/o4/perf/RESULT.md)已闭合，保留生产实现；独立输入、child与最终父级全宽检查和完整原文复核已交付 | 当前合同下不直接裁剪perf；后续改变观察配置／综合顶层或优化门控／ready，先给真实存活逻辑、属于VDot的路径及收益依据，再按影响完成FU／真实父级／整核／公平周期与同条件STA；不复跑已完成子项或按编号强改RTL |
 | R1-H1b 19 位保存备选 | 默认不开展；32 位 H1 已完成，只有新增映射证据表明继续收窄值得才开启 | 19→32 符号扩展、高 96 位清零及边界正确，并有实际收益；否则关闭，见[H1 合同](../optimizations/o2/result-width/h1/CONTRACT.md) |
 | T15-REPRO 参数扩展复核 | 已有[参数合同](../spec/t15-parameters.md)及[结果](t15-parameter-extension.md)先复用；只在相关实现变化、扩展验收缺项或有优化依据时重开 | 独立 INT16×8／64 位结果扩展在其范围内可复现；不扩大为生产整核支持，不作为默认 INT8 优化的前置 |
 | R2-SELECT 应用与组合取舍 | [原镜像选择、查询与导出](../optimizations/o2/r2-select/RESULT.md)已完成：复算S1 v2完整768窗口/64候选格，每格12窗口；三个整块形状选S1 reuse vdot，K13选较快S1 reuse RVV并保留S0 vdot回退。48份完整原镜像精确导出，Linux/Windows各21项测试通过 | 本次只闭合原镜像数据层，未新增运行时或默认入口；实际export/verify/resolve见[入口](../optimizations/o2/r2-select/README.md)。新caller/dispatcher/合并ELF由R4/O5验证实际新增影响，先测8×32/dataset0/endtoend且强RVV走相同新调用路径；原10.75周期余量只作筛选依据。T17新身份与R5/G5稳定入口资格独立列明，不拼接不相容PASS |

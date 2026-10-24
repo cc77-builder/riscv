@@ -1,0 +1,845 @@
+[
+  {
+    "command": [
+      "git",
+      "--version"
+    ],
+    "start": "2026-10-24T16:22:42.145243+00:00",
+    "end": "2026-10-24T16:22:42.152631+00:00",
+    "exit_code": 0,
+    "log": "git-version.log"
+  },
+  {
+    "command": [
+      "java",
+      "-version"
+    ],
+    "start": "2026-10-24T16:22:42.153007+00:00",
+    "end": "2026-10-24T16:22:42.257227+00:00",
+    "exit_code": 0,
+    "log": "java-version.log"
+  },
+  {
+    "command": [
+      "mill",
+      "--version"
+    ],
+    "start": "2026-10-24T16:22:42.257875+00:00",
+    "end": "2026-10-24T16:22:42.744812+00:00",
+    "exit_code": 0,
+    "log": "mill-version.log"
+  },
+  {
+    "command": [
+      "verilator",
+      "--version"
+    ],
+    "start": "2026-10-24T16:22:42.745192+00:00",
+    "end": "2026-10-24T16:22:42.833197+00:00",
+    "exit_code": 0,
+    "log": "verilator-version.log"
+  },
+  {
+    "command": [
+      "g++",
+      "--version"
+    ],
+    "start": "2026-10-24T16:22:42.833495+00:00",
+    "end": "2026-10-24T16:22:42.838085+00:00",
+    "exit_code": 0,
+    "log": "cxx-version.log"
+  },
+  {
+    "command": [
+      "clang++",
+      "--version"
+    ],
+    "start": "2026-10-24T16:22:42.838246+00:00",
+    "end": "2026-10-24T16:22:42.999950+00:00",
+    "exit_code": 0,
+    "log": "clang-version.log"
+  },
+  {
+    "command": [
+      "make",
+      "--version"
+    ],
+    "start": "2026-10-24T16:22:43.000193+00:00",
+    "end": "2026-10-24T16:22:43.002543+00:00",
+    "exit_code": 0,
+    "log": "make-version.log"
+  },
+  {
+    "command": [
+      "/home/lizufan/riscv-tools/firtool-1.62.1/bin/firtool",
+      "--version"
+    ],
+    "start": "2026-10-24T16:22:43.002728+00:00",
+    "end": "2026-10-24T16:22:43.019574+00:00",
+    "exit_code": 0,
+    "log": "firtool-version.log"
+  },
+  {
+    "command": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "start": "2026-10-24T16:22:43.019843+00:00",
+    "end": "2026-10-24T16:22:43.025346+00:00",
+    "exit_code": 0,
+    "log": "source-commit.log"
+  },
+  {
+    "command": [
+      "git",
+      "status",
+      "--short"
+    ],
+    "start": "2026-10-24T16:22:43.025605+00:00",
+    "end": "2026-10-24T16:22:48.087634+00:00",
+    "exit_code": 0,
+    "log": "source-status.log"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--binary",
+      "HEAD"
+    ],
+    "start": "2026-10-24T16:22:48.087929+00:00",
+    "end": "2026-10-24T16:22:48.295266+00:00",
+    "exit_code": 0,
+    "log": "working-tree.patch"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "team/rtl/vdot/prepare_vectors.py",
+      "team/models/vdot/data",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/vectors.tsv"
+    ],
+    "start": "2026-10-24T16:22:49.949706+00:00",
+    "end": "2026-10-24T16:22:50.013828+00:00",
+    "exit_code": 0,
+    "log": "vectors.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "team/optimizations/o2/parent",
+      "-p",
+      "test_*.py",
+      "-v"
+    ],
+    "start": "2026-10-24T16:22:50.014372+00:00",
+    "end": "2026-10-24T16:22:50.085101+00:00",
+    "exit_code": 0,
+    "log": "negative-gate-tests.log"
+  },
+  {
+    "command": [
+      "mill",
+      "-i",
+      "-j",
+      "2",
+      "vdotElasticParent.runMain",
+      "team.vdot.GenerateVDotElasticParent",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl"
+    ],
+    "start": "2026-10-24T16:22:50.085511+00:00",
+    "end": "2026-10-24T16:25:30.513171+00:00",
+    "exit_code": 0,
+    "log": "elaboration.log"
+  },
+  {
+    "command": [
+      "verilator",
+      "--cc",
+      "--exe",
+      "--build",
+      "--assert",
+      "--top-module",
+      "VDotElasticParentTestTop",
+      "--Mdir",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/obj",
+      "-j",
+      "4",
+      "-CFLAGS",
+      "-std=c++17 -O2",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/ByteMaskTailGen.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/CSA3_2.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/CSA3_2_1.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/CSA3_2_124.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/CSA3_2_186.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/CSA3_2_30.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/CSA3_2_5.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/CSA3to2.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/CSA3to2_4.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/ClockGate.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/Conversion.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/Conversion_12.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/Conversion_8.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/ExeUnit.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/I8DivNr4.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/IterBlockI8Nr4.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/IterBlock_v4.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/IterBlock_v4_4.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/IterBlock_v4_6.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/LogPerfEndpoint.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/MaskExtractor.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/Mgu.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/SRT16Divint.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/SRT16Divint_4.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/SRT16Divint_6.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/SRT4qdsCons.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/SelBlock_v4.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/ShiftLeftPriorityWithLZDResult.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/ShiftLeftPriorityWithLZDResult_2.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/ShiftLeftPriorityWithLZDResult_4.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/SignDec.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/SpecBlock_v4.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/UIntToContLow0s.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/UIntToContLow1s.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/VDotElastic.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/VDotElasticParentTestTop.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/VDotProducts.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/VDotReduce.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/VFDivSqrt.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/VIDiv.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/VecDataSplitModule.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/VectorFloatDivider.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/VectorFloatDividerR64.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/VectorIdiv.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/extern_modules.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/fpdiv_r64_block_vector.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/fpsqrt_r16_block.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/fpsqrt_vector_r16.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/lzc.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/lzc_1.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/lzc_2.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/r4_qds.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/r4_qds_cg.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/r4_qds_spec.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/r4_qds_v2.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/rtl/r4_qds_v2_spec.sv",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/source/team/optimizations/o2/parent/parent_test.cpp"
+    ],
+    "start": "2026-10-24T16:25:30.516475+00:00",
+    "end": "2026-10-24T16:25:45.772547+00:00",
+    "exit_code": 0,
+    "log": "verilator.log"
+  },
+  {
+    "command": [
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/obj/VVDotElasticParentTestTop",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/vectors.tsv",
+      "-",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/metadata.log"
+    ],
+    "start": "2026-10-24T16:25:45.773033+00:00",
+    "end": "2026-10-24T16:25:46.055873+00:00",
+    "exit_code": 0,
+    "log": "result.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "team/optimizations/o2/parent/check_negative.py",
+      "--positive",
+      "--return-code",
+      "0",
+      "--log",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/result.log"
+    ],
+    "start": "2026-10-24T16:25:46.112273+00:00",
+    "end": "2026-10-24T16:25:46.700240+00:00",
+    "exit_code": 0,
+    "log": "positive-replay.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "team/optimizations/o4/perf/audit.py",
+      "--control",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/result.log",
+      "--metadata",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/metadata.log",
+      "--output",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/metadata-audit.json"
+    ],
+    "start": "2026-10-24T16:25:46.700590+00:00",
+    "end": "2026-10-24T16:25:49.602500+00:00",
+    "exit_code": 0,
+    "log": "metadata-replay.log"
+  },
+  {
+    "command": [
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/obj/VVDotElasticParentTestTop",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/vectors.tsv",
+      "identity"
+    ],
+    "start": "2026-10-24T16:25:49.602898+00:00",
+    "end": "2026-10-24T16:25:49.617168+00:00",
+    "exit_code": 1,
+    "log": "inject-identity.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/source/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "identity",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/inject-identity.log"
+    ],
+    "start": "2026-10-24T16:25:49.617517+00:00",
+    "end": "2026-10-24T16:25:49.637163+00:00",
+    "exit_code": 0,
+    "log": "check-identity.log"
+  },
+  {
+    "command": [
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/obj/VVDotElasticParentTestTop",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/vectors.tsv",
+      "rob"
+    ],
+    "start": "2026-10-24T16:25:49.637603+00:00",
+    "end": "2026-10-24T16:25:49.650288+00:00",
+    "exit_code": 1,
+    "log": "inject-rob.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/source/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "rob",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/inject-rob.log"
+    ],
+    "start": "2026-10-24T16:25:49.650658+00:00",
+    "end": "2026-10-24T16:25:49.670352+00:00",
+    "exit_code": 0,
+    "log": "check-rob.log"
+  },
+  {
+    "command": [
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/obj/VVDotElasticParentTestTop",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/vectors.tsv",
+      "high"
+    ],
+    "start": "2026-10-24T16:25:49.670750+00:00",
+    "end": "2026-10-24T16:25:49.683602+00:00",
+    "exit_code": 1,
+    "log": "inject-high.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/source/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "high",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/inject-high.log"
+    ],
+    "start": "2026-10-24T16:25:49.683982+00:00",
+    "end": "2026-10-24T16:25:49.704665+00:00",
+    "exit_code": 0,
+    "log": "check-high.log"
+  },
+  {
+    "command": [
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/obj/VVDotElasticParentTestTop",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/vectors.tsv",
+      "metadata"
+    ],
+    "start": "2026-10-24T16:25:49.705278+00:00",
+    "end": "2026-10-24T16:25:49.718365+00:00",
+    "exit_code": 1,
+    "log": "inject-metadata.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/source/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "metadata",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/inject-metadata.log"
+    ],
+    "start": "2026-10-24T16:25:49.718734+00:00",
+    "end": "2026-10-24T16:25:49.738893+00:00",
+    "exit_code": 0,
+    "log": "check-metadata.log"
+  },
+  {
+    "command": [
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/obj/VVDotElasticParentTestTop",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/vectors.tsv",
+      "wen"
+    ],
+    "start": "2026-10-24T16:25:49.739227+00:00",
+    "end": "2026-10-24T16:25:49.752729+00:00",
+    "exit_code": 1,
+    "log": "inject-wen.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/source/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "wen",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/inject-wen.log"
+    ],
+    "start": "2026-10-24T16:25:49.753320+00:00",
+    "end": "2026-10-24T16:25:49.773863+00:00",
+    "exit_code": 0,
+    "log": "check-wen.log"
+  },
+  {
+    "command": [
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/obj/VVDotElasticParentTestTop",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/vectors.tsv",
+      "stall"
+    ],
+    "start": "2026-10-24T16:25:49.774286+00:00",
+    "end": "2026-10-24T16:25:49.824415+00:00",
+    "exit_code": 1,
+    "log": "inject-stall.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/source/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "stall",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/inject-stall.log"
+    ],
+    "start": "2026-10-24T16:25:49.824911+00:00",
+    "end": "2026-10-24T16:25:49.846029+00:00",
+    "exit_code": 0,
+    "log": "check-stall.log"
+  },
+  {
+    "command": [
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/obj/VVDotElasticParentTestTop",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/vectors.tsv",
+      "route"
+    ],
+    "start": "2026-10-24T16:25:49.846413+00:00",
+    "end": "2026-10-24T16:25:49.859326+00:00",
+    "exit_code": 1,
+    "log": "inject-route.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/source/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "route",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/inject-route.log"
+    ],
+    "start": "2026-10-24T16:25:49.860589+00:00",
+    "end": "2026-10-24T16:25:49.881486+00:00",
+    "exit_code": 0,
+    "log": "check-route.log"
+  },
+  {
+    "command": [
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/obj/VVDotElasticParentTestTop",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/vectors.tsv",
+      "double"
+    ],
+    "start": "2026-10-24T16:25:49.881870+00:00",
+    "end": "2026-10-24T16:25:49.895700+00:00",
+    "exit_code": 1,
+    "log": "inject-double.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/source/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "double",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/inject-double.log"
+    ],
+    "start": "2026-10-24T16:25:49.896173+00:00",
+    "end": "2026-10-24T16:25:49.916607+00:00",
+    "exit_code": 0,
+    "log": "check-double.log"
+  },
+  {
+    "command": [
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/obj/VVDotElasticParentTestTop",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/vectors.tsv",
+      "clock"
+    ],
+    "start": "2026-10-24T16:25:49.917161+00:00",
+    "end": "2026-10-24T16:25:49.968213+00:00",
+    "exit_code": 1,
+    "log": "inject-clock.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/source/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "clock",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/inject-clock.log"
+    ],
+    "start": "2026-10-24T16:25:49.968622+00:00",
+    "end": "2026-10-24T16:25:49.990329+00:00",
+    "exit_code": 0,
+    "log": "check-clock.log"
+  },
+  {
+    "command": [
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/obj/VVDotElasticParentTestTop",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/vectors.tsv",
+      "occupancy"
+    ],
+    "start": "2026-10-24T16:25:49.990885+00:00",
+    "end": "2026-10-24T16:25:50.004398+00:00",
+    "exit_code": 1,
+    "log": "inject-occupancy.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/source/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "occupancy",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/inject-occupancy.log"
+    ],
+    "start": "2026-10-24T16:25:50.004856+00:00",
+    "end": "2026-10-24T16:25:50.027217+00:00",
+    "exit_code": 0,
+    "log": "check-occupancy.log"
+  },
+  {
+    "command": [
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/obj/VVDotElasticParentTestTop",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/vectors.tsv",
+      "kill_p"
+    ],
+    "start": "2026-10-24T16:25:50.027945+00:00",
+    "end": "2026-10-24T16:25:50.086484+00:00",
+    "exit_code": 1,
+    "log": "inject-kill_p.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/source/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "kill_p",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/inject-kill_p.log"
+    ],
+    "start": "2026-10-24T16:25:50.086892+00:00",
+    "end": "2026-10-24T16:25:50.108819+00:00",
+    "exit_code": 0,
+    "log": "check-kill_p.log"
+  },
+  {
+    "command": [
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/obj/VVDotElasticParentTestTop",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/vectors.tsv",
+      "kill_r"
+    ],
+    "start": "2026-10-24T16:25:50.109259+00:00",
+    "end": "2026-10-24T16:25:50.172308+00:00",
+    "exit_code": 1,
+    "log": "inject-kill_r.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/source/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "kill_r",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/inject-kill_r.log"
+    ],
+    "start": "2026-10-24T16:25:50.172766+00:00",
+    "end": "2026-10-24T16:25:50.194614+00:00",
+    "exit_code": 0,
+    "log": "check-kill_r.log"
+  },
+  {
+    "command": [
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/obj/VVDotElasticParentTestTop",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/vectors.tsv",
+      "survivor"
+    ],
+    "start": "2026-10-24T16:25:50.195047+00:00",
+    "end": "2026-10-24T16:25:50.253367+00:00",
+    "exit_code": 1,
+    "log": "inject-survivor.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/source/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "survivor",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/inject-survivor.log"
+    ],
+    "start": "2026-10-24T16:25:50.253816+00:00",
+    "end": "2026-10-24T16:25:50.273731+00:00",
+    "exit_code": 0,
+    "log": "check-survivor.log"
+  },
+  {
+    "command": [
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/obj/VVDotElasticParentTestTop",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/vectors.tsv",
+      "duplicate"
+    ],
+    "start": "2026-10-24T16:25:50.274205+00:00",
+    "end": "2026-10-24T16:25:50.324209+00:00",
+    "exit_code": 1,
+    "log": "inject-duplicate.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/source/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "duplicate",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/inject-duplicate.log"
+    ],
+    "start": "2026-10-24T16:25:50.324756+00:00",
+    "end": "2026-10-24T16:25:50.345319+00:00",
+    "exit_code": 0,
+    "log": "check-duplicate.log"
+  },
+  {
+    "command": [
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/obj/VVDotElasticParentTestTop",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/vectors.tsv",
+      "missing"
+    ],
+    "start": "2026-10-24T16:25:50.345719+00:00",
+    "end": "2026-10-24T16:25:50.358470+00:00",
+    "exit_code": 1,
+    "log": "inject-missing.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/source/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "missing",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/inject-missing.log"
+    ],
+    "start": "2026-10-24T16:25:50.358911+00:00",
+    "end": "2026-10-24T16:25:50.380604+00:00",
+    "exit_code": 0,
+    "log": "check-missing.log"
+  },
+  {
+    "command": [
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/obj/VVDotElasticParentTestTop",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/vectors.tsv",
+      "reset"
+    ],
+    "start": "2026-10-24T16:25:50.381081+00:00",
+    "end": "2026-10-24T16:25:50.448025+00:00",
+    "exit_code": 1,
+    "log": "inject-reset.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/source/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "reset",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/inject-reset.log"
+    ],
+    "start": "2026-10-24T16:25:50.448515+00:00",
+    "end": "2026-10-24T16:25:50.468183+00:00",
+    "exit_code": 0,
+    "log": "check-reset.log"
+  },
+  {
+    "command": [
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/obj/VVDotElasticParentTestTop",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/vectors.tsv",
+      "perf_input"
+    ],
+    "start": "2026-10-24T16:25:50.468626+00:00",
+    "end": "2026-10-24T16:25:50.483446+00:00",
+    "exit_code": 1,
+    "log": "inject-perf_input.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/source/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "perf_input",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/inject-perf_input.log"
+    ],
+    "start": "2026-10-24T16:25:50.484064+00:00",
+    "end": "2026-10-24T16:25:50.503805+00:00",
+    "exit_code": 0,
+    "log": "check-perf_input.log"
+  },
+  {
+    "command": [
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/obj/VVDotElasticParentTestTop",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/vectors.tsv",
+      "perf_swap"
+    ],
+    "start": "2026-10-24T16:25:50.504264+00:00",
+    "end": "2026-10-24T16:25:50.517131+00:00",
+    "exit_code": 1,
+    "log": "inject-perf_swap.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/source/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "perf_swap",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/inject-perf_swap.log"
+    ],
+    "start": "2026-10-24T16:25:50.517684+00:00",
+    "end": "2026-10-24T16:25:50.538377+00:00",
+    "exit_code": 0,
+    "log": "check-perf_swap.log"
+  },
+  {
+    "command": [
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/obj/VVDotElasticParentTestTop",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/vectors.tsv",
+      "perf_parent"
+    ],
+    "start": "2026-10-24T16:25:50.539032+00:00",
+    "end": "2026-10-24T16:25:50.552546+00:00",
+    "exit_code": 1,
+    "log": "inject-perf_parent.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/source/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "perf_parent",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/inject-perf_parent.log"
+    ],
+    "start": "2026-10-24T16:25:50.553087+00:00",
+    "end": "2026-10-24T16:25:50.574428+00:00",
+    "exit_code": 0,
+    "log": "check-perf_parent.log"
+  },
+  {
+    "command": [
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/obj/VVDotElasticParentTestTop",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/vectors.tsv",
+      "perf_cross"
+    ],
+    "start": "2026-10-24T16:25:50.574977+00:00",
+    "end": "2026-10-24T16:25:50.587906+00:00",
+    "exit_code": 1,
+    "log": "inject-perf_cross.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/source/team/optimizations/o2/parent/check_negative.py",
+      "--fault",
+      "perf_cross",
+      "--return-code",
+      "1",
+      "--log",
+      "/home/lizufan/riscv-lab/r3-perf-20261025-0001/run-02/inject-perf_cross.log"
+    ],
+    "start": "2026-10-24T16:25:50.588701+00:00",
+    "end": "2026-10-24T16:25:50.608230+00:00",
+    "exit_code": 0,
+    "log": "check-perf_cross.log"
+  }
+]

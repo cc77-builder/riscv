@@ -1,0 +1,490 @@
+diff --git a/team/optimizations/o2/parent/GenerateVDotElasticParent.scala b/team/optimizations/o2/parent/GenerateVDotElasticParent.scala
+index 1d90d6506..b83974832 100644
+--- a/team/optimizations/o2/parent/GenerateVDotElasticParent.scala
++++ b/team/optimizations/o2/parent/GenerateVDotElasticParent.scala
+@@ -75,6 +75,8 @@ class VDotElasticParentTestTop(implicit p: Parameters) extends XSModule {
+     val pdest = Input(UInt(exuParams.wbPregIdxWidth.W))
+     val write_v0 = Input(Bool())
+     val perf_tag = Input(UInt(64.W))
++    // R3 v2: external opaque metadata, independent of the VPU noise tag.
++    val perf_payload = Input(UInt((new PerfDebugInfo).getWidth.W))
+     val flush_valid = Input(Bool())
+     val flush_flag = Input(Bool())
+     val flush_value = Input(UInt(log2Ceil(RobSize).W))
+@@ -115,6 +117,7 @@ class VDotElasticParentTestTop(implicit p: Parameters) extends XSModule {
+     val out_vpu_full = Output(UInt((new VPUCtrlSignals).getWidth.W))
+     val in_perf_full = Output(UInt((new PerfDebugInfo).getWidth.W))
+     val out_perf_full = Output(UInt((new PerfDebugInfo).getWidth.W))
++    val parent_perf_full = Output(UInt((new PerfDebugInfo).getWidth.W))
+   })
+ 
+   val dut = Module(LazyModule(new ExeUnit(exuParams)).module)
+@@ -160,10 +163,8 @@ class VDotElasticParentTestTop(implicit p: Parameters) extends XSModule {
+   in.fpu.get.rm := io.fp_rm
+   in.fpu.get.wflags := io.fp_wflags
+   dut.io.frm.get := io.frm
+-  in.perfDebugInfo := Fill((in.perfDebugInfo.getWidth + 63) / 64, io.perf_tag)
+-    .asTypeOf(in.perfDebugInfo)
+-  in.perfDebugInfo.issueTime := io.perf_tag
+-  in.perfDebugInfo.renameTime := io.perf_tag ^ "hf0e1d2c3b4a59687".U
++  require((new PerfDebugInfo).getWidth == 577, "R3 perf v2 requires the reviewed RV64 schema")
++  in.perfDebugInfo := io.perf_payload.asTypeOf(in.perfDebugInfo)
+   dut.io.flush.valid := io.flush_valid
+   dut.io.flush.bits.robIdx.flag := io.flush_flag
+   dut.io.flush.bits.robIdx.value := io.flush_value
+@@ -187,6 +188,8 @@ class VDotElasticParentTestTop(implicit p: Parameters) extends XSModule {
+   io.out_vxsat := out.vxsat.getOrElse(false.B)
+   io.out_perf_tag := out.debugInfo.issueTime
+   io.out_rename_tag := out.debugInfo.renameTime
++  // Observe the actual production parent output, in addition to the child tap.
++  io.parent_perf_full := out.debugInfo.asUInt
+ 
+   // tapAndRead adds observation-only wiring; it does not drive the real design.
+   private val observed = Seq(FuType.vdot, FuType.vidiv, FuType.vfdiv).map { kind =>
+diff --git a/team/optimizations/o2/parent/check_negative.py b/team/optimizations/o2/parent/check_negative.py
+index 02589df55..9a6e3003e 100644
+--- a/team/optimizations/o2/parent/check_negative.py
++++ b/team/optimizations/o2/parent/check_negative.py
+@@ -14,6 +14,8 @@ FAULT_CATEGORIES = {
+     "occupancy": "occupancy", "kill_p": "cancel", "kill_r": "cancel",
+     "survivor": "cancel", "duplicate": "ghost", "missing": "response",
+     "reset": "reset",
++    "perf_input": "perf_input", "perf_swap": "identity",
++    "perf_parent": "perf_parent", "perf_cross": "perf_parent",
+ }
+ FAULTS = tuple(FAULT_CATEGORIES)
+ 
+@@ -179,7 +181,17 @@ def check_positive(log: str) -> dict:
+                           ("parent_tested", 1), ("fullcore_tested", 0), ("performance_measured", 0)):
+         if int(summary[key]) != expected:
+             raise ValueError(f"final summary mismatch: {key}")
+-    if set(per_fu) != {0, 1, 2} or groups != 12 or last_case != "clock-recovery":
++    perf_v2 = summary.get("perf_contract") == "2"
++    if "perf_contract" in summary and not perf_v2:
++        raise ValueError("unknown perf contract")
++    if perf_v2:
++        for key, value in (("perf_bits", 577), ("perf_inputs", accepted),
++                           ("perf_walk_one", 577), ("perf_walk_zero", 577)):
++            if int(summary[key]) != value:
++                raise ValueError(f"incomplete perf v2 summary: {key}")
++        if int(summary["perf_observations"]) < response:
++            raise ValueError("missing parent perf observations")
++    if set(per_fu) != {0, 1, 2} or groups != (13 if perf_v2 else 12) or last_case != "clock-recovery":
+         raise ValueError("incomplete directed campaign")
+     if len(frozen_accept) != 10022 or frozen_responses != 10022:
+         raise ValueError("frozen arithmetic sample count mismatch")
+diff --git a/team/optimizations/o2/parent/check_trace.py b/team/optimizations/o2/parent/check_trace.py
+index abaf8dcb8..171dd2e0f 100644
+--- a/team/optimizations/o2/parent/check_trace.py
++++ b/team/optimizations/o2/parent/check_trace.py
+@@ -29,6 +29,8 @@ overlaps stalls p_to_r full_cycles full_blocked p_accept_r_blocked
+ r_response_p_survivor kill_p_only kill_r_only kill_both reset_both redirects
+ reset_cases te0_resets empty_te0_resets idle_clock_samples cancel_idle_clock_on
+ parent_tested fullcore_tested performance_measured""".split())
++PERF_PASS_KEYS = set("""perf_contract perf_bits perf_inputs perf_observations
++perf_walk_one perf_walk_zero""".split())
+ TRANSITION_CASES = {f"switch-{old}-{new}-{delay}" for old in range(3)
+                     for new in range(3) for delay in (0, 1, 7)}
+ FU_KEYS = set("""kind accepted responded killed reset_dropped raw_killed_response
+@@ -86,7 +88,10 @@ def check_trace(text, require_campaign=True):
+                     "duplicate/unknown FU summary")
+             summaries[summary["kind"]] = summary
+         elif line.startswith("O2_PARENT_PASS "):
+-            final = fields(line, "O2_PARENT_PASS", PASS_KEYS)
++            extras = PERF_PASS_KEYS if re.search(r"\bperf_contract=", line) else set()
++            final = fields(line, "O2_PARENT_PASS", PASS_KEYS | extras)
++            if extras:
++                require(final["perf_contract"] == 2, "unknown perf contract")
+         else:
+             raise TraceError("unrecognized/error record: " + line[:100])
+     require(rows and final is not None and set(summaries) == {0, 1, 2}, "incomplete evidence")
+@@ -94,7 +99,9 @@ def check_trace(text, require_campaign=True):
+     require(final["schema"] == 1 and final["parent_tested"] == 1 and
+             final["fullcore_tested"] == 0 and final["performance_measured"] == 0,
+             "invalid scope or schema")
++    perf_v2 = final.get("perf_contract") == 2
+     counts = Counter(cycles=len(rows), groups=len(groups))
++    perf_observations = 0
+     per_fu = [Counter(latency_min=9999) for _ in range(3)]
+     live, ended = {}, set()
+     p = r = div = 0
+@@ -171,6 +178,7 @@ def check_trace(text, require_campaign=True):
+             stall = bool(output_mask and not ready_out and not reset and not kr and not kd)
+             require(row["stall"] == stall and row["p_to_r"] == move, "stall/transfer mismatch")
+             if output_mask and not reset:
++                perf_observations += 1
+                 require(owner in live, "output has no owner")
+                 req = live[owner]
+                 if not req["seen"]:
+@@ -282,8 +290,13 @@ def check_trace(text, require_campaign=True):
+     for kind, summary in summaries.items():
+         for name in FU_KEYS - {"kind"}:
+             require(summary[name] == per_fu[kind][name], f"FU {kind} summary mismatch: {name}")
++    if perf_v2:
++        require(final["perf_bits"] == 577 and final["perf_inputs"] == counts["accepted"] and
++                final["perf_observations"] == perf_observations and
++                final["perf_walk_one"] == final["perf_walk_zero"] == 577,
++                "incomplete perf v2 summary")
+     if require_campaign:
+-        require(len(groups) == 12 and transition_cases == TRANSITION_CASES,
++        require(len(groups) == (13 if perf_v2 else 12) and transition_cases == TRANSITION_CASES,
+                 "incomplete directed groups/transitions")
+         require(len(frozen_accept_cycles) == len(frozen_response_latencies) == 10022 and
+                 all(b - a == 1 for a, b in zip(frozen_accept_cycles, frozen_accept_cycles[1:])) and
+@@ -300,7 +313,8 @@ def check_trace(text, require_campaign=True):
+         require(final["idle_clock_samples"] >= 12, "idle-gating coverage missing")
+     return dict(status="O2_PARENT_OFFLINE_TRACE_PASS", cycles=len(rows), groups=len(groups),
+                 recomputed=dict(counts), per_fu=[dict(x) for x in per_fu],
+-                full_campaign_required=require_campaign,
++                full_campaign_required=require_campaign, perf_contract=2 if perf_v2 else 1,
++                perf_observations_recomputed=perf_observations if perf_v2 else None,
+                 side_counters_not_recomputed=["idle_clock_samples", "cancel_idle_clock_on"],
+                 scope="cycle/identity/ROB/control replay only; no RTL execution or payload recheck")
+ 
+diff --git a/team/optimizations/o2/parent/parent_test.cpp b/team/optimizations/o2/parent/parent_test.cpp
+index 693bfa1b3..f0182ec44 100644
+--- a/team/optimizations/o2/parent/parent_test.cpp
++++ b/team/optimizations/o2/parent/parent_test.cpp
+@@ -8,6 +8,7 @@
+ #include <cstdint>
+ #include <fstream>
+ #include <iostream>
++#include <iomanip>
+ #include <limits>
+ #include <memory>
+ #include <optional>
+@@ -18,6 +19,15 @@
+ #include <string>
+ #include <vector>
+ using Words = std::array<uint32_t, 4>;
++using Perf = std::array<uint32_t, 19>; // 577 valid bits; bit 576 is eliminatedMove.
++template <typename T> static std::string perfHex(const T& p) {
++  std::ostringstream out;out<<std::hex<<std::setfill('0');
++  for(auto i=p.rbegin();i!=p.rend();++i)out<<std::setw(8)<<*i;
++  return out.str();
++}
++static uint64_t perf64(const Perf& p,unsigned field) {
++  return uint64_t(p[2*field])|(uint64_t(p[2*field+1])<<32);
++}
+ struct Failure : std::runtime_error {
+   std::string category;
+   Failure(std::string c, std::string detail) : std::runtime_error(detail), category(c) {}
+@@ -32,6 +42,9 @@ struct Req {
+   unsigned rob=0, dest=0, fflags=0;
+   bool vill=false, vm=true, ta=false, ma=false, flag=false, v0=false;
+   uint64_t tag=0;
++  Perf perf{};
++  int walk=-1;
++  bool walkZero=false;
+   bool illegal() const { return kind==0 && (vill || !vm || vl!=8 || sew || lmul || start || op); }
+   uint32_t ctrl() const {
+     return (uint32_t(vill)<<26)|(uint32_t(ma)<<25)|(uint32_t(ta)<<24)|(sew<<22)|
+@@ -73,6 +86,16 @@ static bool killed(const Req& q, Flush f) {
+ static Req identify(Req q, unsigned serial) {
+   q.rob=serial%48; q.flag=(serial/48)%2; q.dest=serial%160; q.v0=serial%2;
+   q.tag=UINT64_C(0xf123456789abcdef)^(UINT64_C(0x100000001)*serial);
++  // SplitMix64 supplies different full-width values for all nine time/checkpoint
++  // fields. This is stimulus, not an arithmetic/RTL oracle.
++  uint64_t seed=UINT64_C(0x2026102500010000)^serial;
++  for(unsigned field=0;field<9;field++){
++    seed+=UINT64_C(0x9e3779b97f4a7c15);uint64_t z=seed;
++    z=(z^(z>>30))*UINT64_C(0xbf58476d1ce4e5b9);
++    z=(z^(z>>27))*UINT64_C(0x94d049bb133111eb);z^=z>>31;
++    q.perf[2*field]=uint32_t(z);q.perf[2*field+1]=uint32_t(z>>32);
++  }
++  q.perf[18]=serial&1;
+   q.ctrlVl=(serial*17)%256; q.vxrm=serial%4;
+   if (q.kind==0) { q.ta=(serial>>1)&1; q.ma=(serial>>2)&1; }
+   return q;
+@@ -132,6 +155,7 @@ class Bench {
+   std::unique_ptr<VerilatedContext> ctx=std::make_unique<VerilatedContext>();
+   std::unique_ptr<VVDotElasticParentTestTop> dut=std::make_unique<VVDotElasticParentTestTop>(ctx.get());
+   bool injected=false;
++  std::ofstream metadata;
+   std::set<uint64_t> live, ended;
+   std::optional<std::pair<uint64_t,std::vector<uint32_t>>> held;
+  public:
+@@ -143,7 +167,14 @@ class Bench {
+   uint64_t pAcceptWhileRBlocked=0,fullBlocked=0,cancelIdleClockOn=0;
+   std::array<uint64_t,3> accepts{},responds{},kills{},drops{},rawKilled{},latMin{9999,9999,9999},latMax{},latSamples{},clockEdges{},waits{};
+   std::array<uint64_t,9> directedPairs{};
+-  explicit Bench(std::string f):fault(std::move(f)) {}
++  uint64_t perfInputs=0,perfObservations=0,walkOnes=0,walkZeroes=0;
++  explicit Bench(std::string f,const std::string& path):fault(std::move(f)) {
++    if(!path.empty()){
++      need(!std::ifstream(path).good(),"input","metadata output already exists");
++      metadata.open(path);need(bool(metadata),"input","cannot create metadata output");
++      metadata<<"R3_PERF schema=1 bits=577\n";
++    }
++  }
+   void check(bool ok,const std::string& category,const std::string& why) const {
+     need(ok,category,"case="+label+" tick="+std::to_string(tick)+" "+why);
+   }
+@@ -155,7 +186,10 @@ class Bench {
+   }
+   void terminal(const Pending& x,unsigned reason) {
+     check(live.erase(x.seq)==1 && ended.insert(x.seq).second,"conservation","duplicate or unknown terminal seq");
+-    if(reason==0){++responses;++responds[x.req.kind];}
++    if(metadata.is_open())metadata<<"E cycle="<<tick<<" seq="<<x.seq<<" reason="<<reason<<'\n';
++    if(reason==0){++responses;++responds[x.req.kind];
++      if(x.req.walk>=0){if(x.req.walkZero)++walkZeroes;else ++walkOnes;}
++    }
+     if(reason==1){++cancels;++kills[x.req.kind];}
+     if(reason==2){++resets;++drops[x.req.kind];}
+   }
+@@ -172,6 +206,7 @@ class Bench {
+     dut->io_frm=0;dut->io_fp_rm=0;dut->io_fp_wflags=q.kind==2;
+     dut->io_rob_flag=q.flag;dut->io_rob_value=q.rob;dut->io_pdest=q.dest;
+     dut->io_write_v0=q.v0;dut->io_perf_tag=q.tag;
++    for(unsigned i=0;i<q.perf.size();i++)dut->io_perf_payload[i]=q.perf[i];
+     dut->io_flush_valid=f.valid;dut->io_flush_flag=f.flag;dut->io_flush_value=f.value;dut->io_flush_self=f.self;
+     dut->eval();ctx->timeInc(1);
+     check(dut->io_fu_clock==0,"clock","gated clock high while parent clock low");
+@@ -232,10 +267,16 @@ class Bench {
+       unsigned dest=dut->io_out_pdest,rob=dut->io_out_rob_value;
+       bool flag=dut->io_out_rob_flag,vw=dut->io_out_vec_wen,z=dut->io_out_v0_wen;
+       auto vpu=snapshot(dut->io_out_vpu_full),perf=snapshot(dut->io_out_perf_full);
++      auto parentPerf=snapshot(dut->io_parent_perf_full);
+       if(selectFault("identity",r&&p))dest=p->req.dest; // observe P identity on the old R response
+       if(selectFault("rob",r&&p)){rob=p->req.rob;flag=p->req.flag;}
+       if(selectFault("high"))actual[3]^=16;
+       if(selectFault("metadata",r&&p))perf.back()^=1;
++      if(selectFault("perf_swap",r&&p)){
++        std::swap(perf[0],perf[2]);std::swap(perf[1],perf[3]);
++      }
++      if(selectFault("perf_parent",r&&p))parentPerf[6]^=1; // writebackTime bit 0
++      if(selectFault("perf_cross",r&&p))parentPerf.assign(p->req.perf.begin(),p->req.perf.end());
+       if(selectFault("wen"))vw=!vw;
+       if(selectFault("stall",held && held->first==old.seq))dest^=1;
+       std::vector<uint32_t> packet(actual.begin(),actual.end());
+@@ -245,19 +286,25 @@ class Bench {
+         unsigned(dut->io_out_exception),unsigned(dut->io_out_fflags),unsigned(dut->io_out_wflags),
+         unsigned(dut->io_out_vxsat),unsigned(dut->io_out_ctrl)});
+       packet.insert(packet.end(),vpu.begin(),vpu.end());packet.insert(packet.end(),perf.begin(),perf.end());
++      packet.insert(packet.end(),parentPerf.begin(),parentPerf.end());
+       if(held && held->first==old.seq && !kr && !kd)check(held->second==packet,"stability","stalled complete response changed");
+       const Words gold=old.req.illegal()?Words{}:old.req.data.gold;
+       check(actual==gold&&vec==gold&&v0==gold,"high","full 128-bit result or writeback replica mismatch");
+       check(dest==old.req.dest&&rob==old.req.rob&&flag==old.req.flag,"identity","response ROB/pdest switched identity");
+       check(vpu==old.vpu && perf==old.perf,"identity","full VPU/perf identity changed across slots");
++      check(parentPerf==old.perf,"perf_parent","actual parent debugInfo differs from accepted request");
++      ++perfObservations;
++      if(metadata.is_open())metadata<<"O cycle="<<tick<<" seq="<<old.seq
++        <<" child="<<perfHex(perf)<<" parent="<<perfHex(parentPerf)<<'\n';
+       check(vw==(!old.req.illegal()&&!old.req.v0)&&z==(!old.req.illegal()&&old.req.v0)&&
+         !dut->io_out_int_wen&&!dut->io_out_fp_wen&&!dut->io_out_vl_wen,"wen","wrong write-enable class");
+       check(dut->io_out_exception==(old.req.illegal()?4U:0U),"exception","wrong exception");
+       check(dut->io_out_fflags==old.req.fflags && bool(dut->io_out_wflags)==(old.req.kind==2)&&
+         !dut->io_out_vxsat,"flags","wrong FP flags/write qualification");
+       check(dut->io_out_ctrl==old.req.ctrl(),"identity","independent vector control oracle mismatch");
+-      check(dut->io_out_perf_tag==old.req.tag &&
+-        dut->io_out_rename_tag==(old.req.tag^UINT64_C(0xf0e1d2c3b4a59687)),"identity","independent debug identity oracle");
++      // Current declaration packs tlbResp first (LSB), issue at word 4, rename at 8.
++      check(dut->io_out_perf_tag==perf64(old.req.perf,4) &&
++        dut->io_out_rename_tag==perf64(old.req.perf,8),"identity","independent named debug field oracle");
+       if(!old.seen){auto latency=tick-old.accepted;latMin[old.req.kind]=std::min(latMin[old.req.kind],latency);
+         latMax[old.req.kind]=std::max(latMax[old.req.kind],latency);++latSamples[old.req.kind];old.seen=true;}
+       if(!ready&&!kr&&!kd){++stalls;held=std::make_pair(old.seq,packet);}else held.reset();
+@@ -265,7 +312,18 @@ class Bench {
+     }else if(reset||kr||kd)held.reset();
+     const unsigned oldOcc=occupancy();
+     const uint64_t pseq=p?p->seq:0,rseq=r?r->seq:0,dseq=div?div->seq:0;
+-    Pending fresh{q,tick,accepted+1,false,snapshot(dut->io_in_vpu_full),snapshot(dut->io_in_perf_full)};
++    auto offeredPerf=snapshot(dut->io_in_perf_full);
++    const std::vector<uint32_t> expectedPerf(q.perf.begin(),q.perf.end());
++    if(selectFault("perf_input",inf))offeredPerf[14]^=1; // dispatchTime at child input
++    if(inf){
++      check(offeredPerf==expectedPerf,"perf_input","parent input route changed external metadata");
++      ++perfInputs;
++      if(metadata.is_open())metadata<<"A cycle="<<tick<<" seq="<<(accepted+1)<<" kind="<<q.kind
++        <<" walk="<<q.walk<<" zero="<<q.walkZero<<" expected="<<perfHex(q.perf)
++        <<" child="<<perfHex(offeredPerf)<<'\n';
++    }
++    // The expected perf comes from the request producer, never from a DUT tap.
++    Pending fresh{q,tick,accepted+1,false,snapshot(dut->io_in_vpu_full),expectedPerf};
+     unsigned requiredClocks=0;
+     if(p||r)requiredClocks|=1;
+     if(div)requiredClocks|=1U<<div->req.kind;
+@@ -351,7 +409,17 @@ class Bench {
+     check(step(b,true,false).in,"ready","pair second acceptance");
+     check(p&&r,"occupancy","pair must fill both slots");
+   }
+-  void finish(){check(!active()&&live.empty(),"test","unfinished transactions");dut->final();}
++  void finish(){
++    check(!active()&&live.empty(),"test","unfinished transactions");
++    check(perfInputs==accepted && perfObservations>=responses,"coverage","metadata observation coverage");
++    check(walkOnes==577 && walkZeroes==577,"coverage","incomplete full-bit metadata sweep");
++    if(metadata.is_open()){
++      metadata<<"END cycles="<<tick<<" accepts="<<perfInputs<<" observations="<<perfObservations
++        <<" one="<<walkOnes<<" zero="<<walkZeroes<<'\n';
++      metadata.flush();need(bool(metadata),"output","metadata write failed");
++    }
++    dut->final();
++  }
+ };
+ static void test(Bench& b,const std::vector<Data>& data){
+   Req noise=sample(data,0,777);unsigned serial=30000;
+@@ -491,6 +559,19 @@ static void test(Bench& b,const std::vector<Data>& data){
+     b.step(q,valid,ready,f,reset,reset&&bool(b.div));
+   }
+   b.drain(noise);b.group("random=20000 seed=0x20261019; bounded-ROB-window; prefix-conservation");
++  b.label="perf-walking";
++  for(unsigned bit=0;bit<577;bit++){
++    Req a=dot(data[bit%data.size()],serial++);
++    Req n=dot(data[(bit+1)%data.size()],serial++);
++    a.perf.fill(0);a.perf[bit/32]=uint32_t(1)<<(bit%32);a.walk=int(bit);
++    n.perf.fill(UINT32_MAX);n.perf[18]=1;
++    n.perf[bit/32]^=uint32_t(1)<<(bit%32);n.walk=int(bit);n.walkZero=true;
++    b.pair(a,n);
++    for(unsigned hold=0;hold<1+bit%3;hold++)
++      b.check(!b.step(noise,true,false).in,"ready","metadata full pair accepted noise");
++    b.drain(noise);
++  }
++  b.group("perf-v2 577-walking-one 577-walking-zero external-input-child-parent; blocked-two-slot-pairs");
+   b.label="clock-recovery";for(unsigned kind=0;kind<3;kind++)b.one(sample(data,kind,serial++));
+   for(unsigned i=0;i<8;i++){auto c=b.step(noise);b.check(c.clocks==0,"clock","normal-completion idle must gate all FUs");++b.idleClockSamples;}
+   b.group("all-real-FU-clocks-gated-after-recovery");
+@@ -502,12 +583,14 @@ static void test(Bench& b,const std::vector<Data>& data){
+   b.finish();
+ }
+ int main(int argc,char** argv){
+-  if(argc<2||argc>3){std::cerr<<"usage: parent_test vectors.tsv [fault]\n";return 2;}
+-  const std::string fault=argc==3?argv[2]:"";
++  if(argc<2||argc>4){std::cerr<<"usage: parent_test vectors.tsv [fault|-] [new-metadata.log]\n";return 2;}
++  const std::string fault=argc>=3&&std::string(argv[2])!="-"?argv[2]:"";
++  const std::string metadata=argc==4?argv[3]:"";
+   try{
+     need(fault.empty()||std::set<std::string>{"identity","rob","high","metadata","wen","stall","route","double",
+-      "clock","occupancy","kill_p","kill_r","survivor","duplicate","missing","reset"}.count(fault),"input","unknown fault");
+-    auto data=load(argv[1]);Bench b(fault);test(b,data);
++      "clock","occupancy","kill_p","kill_r","survivor","duplicate","missing","reset",
++      "perf_input","perf_swap","perf_parent","perf_cross"}.count(fault),"input","unknown fault");
++    auto data=load(argv[1]);Bench b(fault,metadata);test(b,data);
+     if(!fault.empty()){std::cerr<<"O2_PARENT_FAULT_ESCAPED "<<fault<<'\n';return 3;}
+     for(unsigned k=0;k<3;k++)std::cout<<"O2_PARENT_FU kind="<<k<<" accepted="<<b.accepts[k]<<" responded="<<b.responds[k]
+       <<" killed="<<b.kills[k]<<" reset_dropped="<<b.drops[k]<<" raw_killed_response="<<b.rawKilled[k]
+@@ -520,7 +603,10 @@ int main(int argc,char** argv){
+       <<" kill_p_only="<<b.killPOnly<<" kill_r_only="<<b.killROnly<<" kill_both="<<b.killBoth<<" reset_both="<<b.resetBoth
+       <<" redirects="<<b.redirects<<" reset_cases="<<b.resetCases<<" te0_resets="<<b.zeroTeResets
+       <<" empty_te0_resets="<<b.emptyZeroTeResets<<" idle_clock_samples="<<b.idleClockSamples
+-      <<" cancel_idle_clock_on="<<b.cancelIdleClockOn<<" parent_tested=1 fullcore_tested=0 performance_measured=0\n";return 0;
++      <<" cancel_idle_clock_on="<<b.cancelIdleClockOn<<" perf_contract=2 perf_bits=577"
++      <<" perf_inputs="<<b.perfInputs<<" perf_observations="<<b.perfObservations
++      <<" perf_walk_one="<<b.walkOnes<<" perf_walk_zero="<<b.walkZeroes
++      <<" parent_tested=1 fullcore_tested=0 performance_measured=0\n";return 0;
+   }catch(const Failure& e){std::cerr<<"O2_PARENT_FAIL "<<e.category<<'\n';if(fault.empty())std::cerr<<e.what()<<'\n';return 1;}
+   catch(const std::exception& e){std::cerr<<"O2_PARENT_ERROR "<<e.what()<<'\n';return 2;}
+ }
+diff --git a/team/optimizations/o2/parent/test_trace.py b/team/optimizations/o2/parent/test_trace.py
+index 828251626..b68df084a 100644
+--- a/team/optimizations/o2/parent/test_trace.py
++++ b/team/optimizations/o2/parent/test_trace.py
+@@ -99,6 +99,38 @@ class TraceTests(unittest.TestCase):
+         with self.assertRaises(TraceError):
+             check_trace(encode(*fixture()))
+ 
++    def test_perf_v2_summary_uses_explicit_schema(self):
++        rows, fus, final = fixture()
++        final.update(perf_contract=2, perf_bits=577, perf_inputs=4,
++                     perf_observations=5, perf_walk_one=577, perf_walk_zero=577)
++        result = check_trace(encode(rows, fus, final), require_campaign=False)
++        self.assertEqual(result["perf_contract"], 2)
++        self.assertEqual(result["perf_observations_recomputed"], 5)
++        # This deliberately small schema fixture is never a completed campaign.
++        with self.assertRaises(TraceError):
++            check_trace(encode(rows, fus, final))
++
++    def test_perf_v2_observations_are_recomputed(self):
++        rows, fus, final = fixture()
++        final.update(perf_contract=2, perf_bits=577, perf_inputs=4,
++                     perf_observations=4, perf_walk_one=577, perf_walk_zero=577)
++        with self.assertRaisesRegex(TraceError, "incomplete perf v2 summary"):
++            check_trace(encode(rows, fus, final), require_campaign=False)
++
++    def test_perf_unknown_or_incomplete_schema_rejected(self):
++        for changes in (dict(perf_contract=3), dict(perf_bits=576),
++                        dict(perf_extra=0)):
++            rows, fus, final = fixture()
++            final.update(perf_contract=2, perf_bits=577, perf_inputs=4,
++                         perf_observations=5, perf_walk_one=577, perf_walk_zero=577)
++            final.update(changes)
++            with self.subTest(changes=changes), self.assertRaises(TraceError):
++                check_trace(encode(rows, fus, final), require_campaign=False)
++        rows, fus, final = fixture()
++        final["perf_bits"] = 577
++        with self.assertRaises(TraceError):
++            check_trace(encode(rows, fus, final), require_campaign=False)
++
+     def test_slot_sequence_swap_rejected(self):
+         self.assert_bad_row(3, dict(pseq=1, rseq=2))
+ 
+diff --git a/team/optimizations/o2/run_rtl.py b/team/optimizations/o2/run_rtl.py
+index 26f826c14..549acb994 100644
+--- a/team/optimizations/o2/run_rtl.py
++++ b/team/optimizations/o2/run_rtl.py
+@@ -29,7 +29,11 @@ def main():
+     env = dict(item.decode().split("=", 1) for item in activated.split(b"\0") if item)
+     env.update(VDOT_O2_TRACE="0", VDOT_O2_ELASTIC="1", VDOT_T14_FUSED_INPUT="1", VDOT_O1_HANDOFF="0",
+                VDOT_T12_TRACE="0", VDOT_T13_TRACE="0", VDOT_O1_TRACE="0",
+-               JAVA_OPTS="-Xmx12G -Xss16m", BUILD_JOBS="2")
++               JAVA_OPTS=os.environ.get("VDOT_RTL_JAVA_OPTS", "-Xmx12G -Xss16m"),
++               BUILD_JOBS=os.environ.get("VDOT_RTL_JOBS", "2"))
++    jobs = int(env["BUILD_JOBS"])
++    if not 1 <= jobs <= 4:
++        raise RuntimeError("VDOT_RTL_JOBS must be between 1 and 4")
+     env.setdefault("CHISEL_FIRTOOL_PATH", str(Path.home()/".cache/llvm-firtool/1.62.1/bin"))
+     selected = {k: env[k] for k in ("VDOT_O2_TRACE", "VDOT_O2_ELASTIC", "VDOT_T14_FUSED_INPUT", "VDOT_O1_HANDOFF",
+         "VDOT_T12_TRACE", "VDOT_T13_TRACE", "VDOT_O1_TRACE", "JAVA_OPTS", "BUILD_JOBS", "CHISEL_FIRTOOL_PATH", "PATH", "JAVA_HOME")}
+@@ -74,8 +78,8 @@ def main():
+             "build.sc","src","team/scripts/activate.sh","team/rtl/vdot","team/models/vdot",
+             *["team/optimizations/o2/"+stage+"/"+name for name in
+                 (("GenerateVDotElasticFu.scala","fu_test.cpp") if stage=="fu" else
+-                 ("GenerateVDotElasticParent.scala","parent_test.cpp","check_negative.py","test_negative.py"))],
+-            "team/optimizations/o2/run_rtl.py",
++                 ("GenerateVDotElasticParent.scala","parent_test.cpp","check_negative.py","test_negative.py","check_trace.py","test_trace.py"))],
++            "team/optimizations/o2/run_rtl.py", "team/optimizations/o4/perf/audit.py",
+             "team/optimizations/o2/check_negative_fu.py","team/optimizations/o2/test_negative_fu.py"]).split(b"\0")
+         source={s.decode():digest(ROOT/s.decode()) for s in names if s and (ROOT/s.decode()).is_file()}
+         (out/"source.json").write_text(json.dumps(source,indent=2)+"\n")
+@@ -86,11 +90,11 @@ def main():
+         if stage=="fu":
+             run("negative-gate-tests.log",["python3","-B","-m","unittest","discover","-s","team/optimizations/o2","-p","test_negative_fu.py","-v"])
+         else:
+-            run("negative-gate-tests.log",["python3","-B","-m","unittest","discover","-s","team/optimizations/o2/parent","-p","test_negative.py","-v"])
++            run("negative-gate-tests.log",["python3","-B","-m","unittest","discover","-s","team/optimizations/o2/parent","-p","test_*.py","-v"])
+         suffix="Fu" if stage=="fu" else "Parent"
+         top="VDotElastic"+suffix+"TestTop"
+         target="vdotElastic"+suffix
+-        run("elaboration.log",["mill","-i","-j","2",target+".runMain","team.vdot.GenerateVDotElastic"+suffix,out/"rtl"])
++        run("elaboration.log",["mill","-i","-j",str(min(jobs, 2)),target+".runMain","team.vdot.GenerateVDotElastic"+suffix,out/"rtl"])
+         rtl=out/"rtl"
+         sources=sorted({p.resolve() for pattern in ("*.sv","*.v") for p in rtl.rglob(pattern)})
+         if rtl/(top+".sv") not in sources: raise RuntimeError("missing top")
+@@ -108,10 +112,13 @@ def main():
+         (out/"generated-files.json").write_text(json.dumps([
+             dict(path=p.relative_to(out).as_posix(),sha256=digest(p),bytes=p.stat().st_size) for p in generated],indent=2)+"\n")
+         run("verilator.log",["verilator","--cc","--exe","--build","--assert","--top-module",top,
+-            "--Mdir",out/"obj","-j","2","-CFLAGS","-std=c++17 -O2",*sources,
++            "--Mdir",out/"obj","-j",str(jobs),"-CFLAGS","-std=c++17 -O2",*sources,
+             ROOT/"team/optimizations/o2"/stage/(stage+"_test.cpp")])
+         binary=out/"obj"/("V"+top)
+-        run("result.log",[binary,out/"vectors.tsv"])
++        positive_args = [binary, out/"vectors.tsv"]
++        if stage == "parent":
++            positive_args += ["-", out/"metadata.log"]
++        run("result.log", positive_args)
+         text=(out/"result.log").read_text()
+         prefix="O2_"+stage.upper()
+         passes=[line for line in text.splitlines() if line.startswith(prefix+"_PASS")]
+@@ -121,7 +128,10 @@ def main():
+         if stage=="parent":
+             run("positive-replay.log",["python3","-B","team/optimizations/o2/parent/check_negative.py",
+                 "--positive","--return-code","0","--log",out/"result.log"])
+-        faults=("identity","wen","high","cancel") if stage=="fu" else ("identity","rob","high","metadata","wen","stall","route","double","clock","occupancy","kill_p","kill_r","survivor","duplicate","missing","reset")
++            run("metadata-replay.log", ["python3", "-B", "team/optimizations/o4/perf/audit.py",
++                "--control", out/"result.log", "--metadata", out/"metadata.log",
++                "--output", out/"metadata-audit.json"])
++        faults=("identity","wen","high","cancel") if stage=="fu" else ("identity","rob","high","metadata","wen","stall","route","double","clock","occupancy","kill_p","kill_r","survivor","duplicate","missing","reset","perf_input","perf_swap","perf_parent","perf_cross")
+         checker=ROOT/"team/optimizations/o2"/("check_negative_fu.py" if stage=="fu" else "parent/check_negative.py")
+         for fault in faults:
+             log="inject-"+fault+".log"
