@@ -1,0 +1,3752 @@
+{
+  "status": "HOISTED_MATRIX_RECHECK_PASS",
+  "decision": "HOLD_CONTEXT_VARIATION",
+  "cases": [
+    {
+      "label": "b4",
+      "audit": {
+        "status": "CALLER_RAW_EVIDENCE_AUDIT_PASS",
+        "contract": "r2-s3-caller-screen-v2-b4",
+        "image_sha256": "6a5a97eb5d1726a0329cd7dd3087567d451d22e277e968e6efe1f6660c2e051d",
+        "original_emu_runs": 3,
+        "new_emu_runs": 0,
+        "physical_external_inputs_revalidated": false,
+        "windows_per_normal_run": 36,
+        "formal_windows_used": 24,
+        "replay_windows": 36,
+        "ordinary_stack_demo_calls_per_normal_run": 3,
+        "summary": [
+          {
+            "scope": "full",
+            "vdot": {
+              "samples": 12,
+              "total": 16056,
+              "mean": 1338,
+              "minimum": 1330,
+              "median": 1338.5,
+              "maximum": 1348,
+              "instructions": [
+                2503
+              ],
+              "by_dataset": [
+                {
+                  "dataset": 0,
+                  "cycles": [
+                    1332,
+                    1342,
+                    1335,
+                    1342
+                  ]
+                },
+                {
+                  "dataset": 1,
+                  "cycles": [
+                    1330,
+                    1331,
+                    1348,
+                    1342
+                  ]
+                },
+                {
+                  "dataset": 2,
+                  "cycles": [
+                    1335,
+                    1343,
+                    1332,
+                    1344
+                  ]
+                }
+              ]
+            },
+            "rvv": {
+              "samples": 12,
+              "total": 16587,
+              "mean": 1382.25,
+              "minimum": 1372,
+              "median": 1384.5,
+              "maximum": 1390,
+              "instructions": [
+                2451
+              ],
+              "by_dataset": [
+                {
+                  "dataset": 0,
+                  "cycles": [
+                    1387,
+                    1376,
+                    1373,
+                    1388
+                  ]
+                },
+                {
+                  "dataset": 1,
+                  "cycles": [
+                    1372,
+                    1390,
+                    1386,
+                    1387
+                  ]
+                },
+                {
+                  "dataset": 2,
+                  "cycles": [
+                    1384,
+                    1379,
+                    1385,
+                    1380
+                  ]
+                }
+              ]
+            },
+            "primary_metric": true,
+            "identical_code_context_control": false,
+            "reduction_vdot_vs_rvv": 0.03201302224633751
+          }
+        ],
+        "raw_sources_recomputed": true,
+        "stable_default_changed": false,
+        "hardware_changed": false,
+        "screening_scope": "full-only",
+        "caller_variant": "baseline",
+        "selected_rvv": 4,
+        "selected_rvv_symbol": "config_reuse_gemv_8x32_reuse_rvv"
+      },
+      "files": 114,
+      "payload_sha256": "1785aa1d2c0fd8f636d1e63909de9c620e97d76134da7f222ea96e50abae0e8d",
+      "raw_bytes": 33856376
+    },
+    {
+      "label": "h4",
+      "audit": {
+        "status": "CALLER_RAW_EVIDENCE_AUDIT_PASS",
+        "contract": "r2-s3-caller-screen-v2-h4",
+        "image_sha256": "75b0504e717f3c3a78b6e039af6e6aa10fb17bd1d5263a45bcd316870427c866",
+        "original_emu_runs": 3,
+        "new_emu_runs": 0,
+        "physical_external_inputs_revalidated": false,
+        "windows_per_normal_run": 36,
+        "formal_windows_used": 24,
+        "replay_windows": 36,
+        "ordinary_stack_demo_calls_per_normal_run": 3,
+        "summary": [
+          {
+            "scope": "full",
+            "vdot": {
+              "samples": 12,
+              "total": 14453,
+              "mean": 1204.4166666666667,
+              "minimum": 1199,
+              "median": 1203.0,
+              "maximum": 1214,
+              "instructions": [
+                1725
+              ],
+              "by_dataset": [
+                {
+                  "dataset": 0,
+                  "cycles": [
+                    1203,
+                    1210,
+                    1203,
+                    1207
+                  ]
+                },
+                {
+                  "dataset": 1,
+                  "cycles": [
+                    1214,
+                    1201,
+                    1207,
+                    1201
+                  ]
+                },
+                {
+                  "dataset": 2,
+                  "cycles": [
+                    1201,
+                    1199,
+                    1204,
+                    1203
+                  ]
+                }
+              ]
+            },
+            "rvv": {
+              "samples": 12,
+              "total": 14979,
+              "mean": 1248.25,
+              "minimum": 1241,
+              "median": 1246.0,
+              "maximum": 1259,
+              "instructions": [
+                1673
+              ],
+              "by_dataset": [
+                {
+                  "dataset": 0,
+                  "cycles": [
+                    1254,
+                    1245,
+                    1245,
+                    1245
+                  ]
+                },
+                {
+                  "dataset": 1,
+                  "cycles": [
+                    1253,
+                    1259,
+                    1245,
+                    1252
+                  ]
+                },
+                {
+                  "dataset": 2,
+                  "cycles": [
+                    1249,
+                    1244,
+                    1241,
+                    1247
+                  ]
+                }
+              ]
+            },
+            "primary_metric": true,
+            "identical_code_context_control": false,
+            "reduction_vdot_vs_rvv": 0.035115828827024465
+          }
+        ],
+        "raw_sources_recomputed": true,
+        "stable_default_changed": false,
+        "hardware_changed": false,
+        "screening_scope": "full-only",
+        "caller_variant": "hoisted",
+        "selected_rvv": 4,
+        "selected_rvv_symbol": "config_reuse_gemv_8x32_reuse_rvv"
+      },
+      "files": 114,
+      "payload_sha256": "e6d9ce9db281ecd16fc716d3bf6217874cd1dc5c8a610a5a7d75c43807793835",
+      "raw_bytes": 26830026
+    },
+    {
+      "label": "h0",
+      "audit": {
+        "status": "CALLER_RAW_EVIDENCE_AUDIT_PASS",
+        "contract": "r2-s3-caller-screen-v2-h0",
+        "image_sha256": "692e8eac9e0b32cf7871589ca062d757757c51d5a47108a2702e731c8049a614",
+        "original_emu_runs": 3,
+        "new_emu_runs": 0,
+        "physical_external_inputs_revalidated": false,
+        "windows_per_normal_run": 36,
+        "formal_windows_used": 24,
+        "replay_windows": 36,
+        "ordinary_stack_demo_calls_per_normal_run": 3,
+        "summary": [
+          {
+            "scope": "full",
+            "vdot": {
+              "samples": 12,
+              "total": 14633,
+              "mean": 1219.4166666666667,
+              "minimum": 1206,
+              "median": 1220.0,
+              "maximum": 1228,
+              "instructions": [
+                1725
+              ],
+              "by_dataset": [
+                {
+                  "dataset": 0,
+                  "cycles": [
+                    1206,
+                    1217,
+                    1220,
+                    1218
+                  ]
+                },
+                {
+                  "dataset": 1,
+                  "cycles": [
+                    1214,
+                    1224,
+                    1212,
+                    1227
+                  ]
+                },
+                {
+                  "dataset": 2,
+                  "cycles": [
+                    1223,
+                    1224,
+                    1220,
+                    1228
+                  ]
+                }
+              ]
+            },
+            "rvv": {
+              "samples": 12,
+              "total": 17111,
+              "mean": 1425.9166666666667,
+              "minimum": 1414,
+              "median": 1427.0,
+              "maximum": 1442,
+              "instructions": [
+                1826
+              ],
+              "by_dataset": [
+                {
+                  "dataset": 0,
+                  "cycles": [
+                    1442,
+                    1414,
+                    1426,
+                    1423
+                  ]
+                },
+                {
+                  "dataset": 1,
+                  "cycles": [
+                    1432,
+                    1420,
+                    1430,
+                    1428
+                  ]
+                },
+                {
+                  "dataset": 2,
+                  "cycles": [
+                    1424,
+                    1414,
+                    1430,
+                    1428
+                  ]
+                }
+              ]
+            },
+            "primary_metric": true,
+            "identical_code_context_control": false,
+            "reduction_vdot_vs_rvv": 0.14481912220209225
+          }
+        ],
+        "raw_sources_recomputed": true,
+        "stable_default_changed": false,
+        "hardware_changed": false,
+        "screening_scope": "full-only",
+        "caller_variant": "hoisted",
+        "selected_rvv": 0,
+        "selected_rvv_symbol": "r4_gemv_8x32_basic_rvv"
+      },
+      "files": 114,
+      "payload_sha256": "9fa5d028972108120dc2a343b1902238bb9d0b7e907ff5d36b6f572cb107ac56",
+      "raw_bytes": 27425478
+    },
+    {
+      "label": "h1",
+      "audit": {
+        "status": "CALLER_RAW_EVIDENCE_AUDIT_PASS",
+        "contract": "r2-s3-caller-screen-v2-h1",
+        "image_sha256": "c0c362a78329125ce6645b305c9c8287bfba092323e8f30307e51c410509dfa9",
+        "original_emu_runs": 3,
+        "new_emu_runs": 0,
+        "physical_external_inputs_revalidated": false,
+        "windows_per_normal_run": 36,
+        "formal_windows_used": 24,
+        "replay_windows": 36,
+        "ordinary_stack_demo_calls_per_normal_run": 3,
+        "summary": [
+          {
+            "scope": "full",
+            "vdot": {
+              "samples": 12,
+              "total": 14467,
+              "mean": 1205.5833333333333,
+              "minimum": 1200,
+              "median": 1206.0,
+              "maximum": 1212,
+              "instructions": [
+                1725
+              ],
+              "by_dataset": [
+                {
+                  "dataset": 0,
+                  "cycles": [
+                    1205,
+                    1200,
+                    1208,
+                    1202
+                  ]
+                },
+                {
+                  "dataset": 1,
+                  "cycles": [
+                    1205,
+                    1207,
+                    1202,
+                    1208
+                  ]
+                },
+                {
+                  "dataset": 2,
+                  "cycles": [
+                    1212,
+                    1202,
+                    1208,
+                    1208
+                  ]
+                }
+              ]
+            },
+            "rvv": {
+              "samples": 12,
+              "total": 15495,
+              "mean": 1291.25,
+              "minimum": 1286,
+              "median": 1292.0,
+              "maximum": 1301,
+              "instructions": [
+                1746
+              ],
+              "by_dataset": [
+                {
+                  "dataset": 0,
+                  "cycles": [
+                    1292,
+                    1287,
+                    1287,
+                    1301
+                  ]
+                },
+                {
+                  "dataset": 1,
+                  "cycles": [
+                    1295,
+                    1286,
+                    1292,
+                    1292
+                  ]
+                },
+                {
+                  "dataset": 2,
+                  "cycles": [
+                    1293,
+                    1289,
+                    1287,
+                    1294
+                  ]
+                }
+              ]
+            },
+            "primary_metric": true,
+            "identical_code_context_control": false,
+            "reduction_vdot_vs_rvv": 0.06634398192965474
+          }
+        ],
+        "raw_sources_recomputed": true,
+        "stable_default_changed": false,
+        "hardware_changed": false,
+        "screening_scope": "full-only",
+        "caller_variant": "hoisted",
+        "selected_rvv": 1,
+        "selected_rvv_symbol": "r4_gemv_8x32_reuse_rvv"
+      },
+      "files": 114,
+      "payload_sha256": "bd078ca88bc632976134ff765788f9449351fd266164812c8307646243ea5213",
+      "raw_bytes": 27109914
+    },
+    {
+      "label": "h2",
+      "audit": {
+        "status": "CALLER_RAW_EVIDENCE_AUDIT_PASS",
+        "contract": "r2-s3-caller-screen-v2-h2",
+        "image_sha256": "9d0d980e760e0655ad05e72c65f4ce3722a4cb07d889860b7ce389bc83a0aa9d",
+        "original_emu_runs": 3,
+        "new_emu_runs": 0,
+        "physical_external_inputs_revalidated": false,
+        "windows_per_normal_run": 36,
+        "formal_windows_used": 24,
+        "replay_windows": 36,
+        "ordinary_stack_demo_calls_per_normal_run": 3,
+        "summary": [
+          {
+            "scope": "full",
+            "vdot": {
+              "samples": 12,
+              "total": 14642,
+              "mean": 1220.1666666666667,
+              "minimum": 1206,
+              "median": 1220.0,
+              "maximum": 1228,
+              "instructions": [
+                1725
+              ],
+              "by_dataset": [
+                {
+                  "dataset": 0,
+                  "cycles": [
+                    1206,
+                    1219,
+                    1219,
+                    1223
+                  ]
+                },
+                {
+                  "dataset": 1,
+                  "cycles": [
+                    1227,
+                    1218,
+                    1222,
+                    1219
+                  ]
+                },
+                {
+                  "dataset": 2,
+                  "cycles": [
+                    1225,
+                    1221,
+                    1228,
+                    1215
+                  ]
+                }
+              ]
+            },
+            "rvv": {
+              "samples": 12,
+              "total": 15523,
+              "mean": 1293.5833333333333,
+              "minimum": 1288,
+              "median": 1293.0,
+              "maximum": 1309,
+              "instructions": [
+                1730
+              ],
+              "by_dataset": [
+                {
+                  "dataset": 0,
+                  "cycles": [
+                    1309,
+                    1288,
+                    1297,
+                    1293
+                  ]
+                },
+                {
+                  "dataset": 1,
+                  "cycles": [
+                    1293,
+                    1295,
+                    1290,
+                    1290
+                  ]
+                },
+                {
+                  "dataset": 2,
+                  "cycles": [
+                    1289,
+                    1295,
+                    1296,
+                    1288
+                  ]
+                }
+              ]
+            },
+            "primary_metric": true,
+            "identical_code_context_control": false,
+            "reduction_vdot_vs_rvv": 0.0567544933324744
+          }
+        ],
+        "raw_sources_recomputed": true,
+        "stable_default_changed": false,
+        "hardware_changed": false,
+        "screening_scope": "full-only",
+        "caller_variant": "hoisted",
+        "selected_rvv": 2,
+        "selected_rvv_symbol": "config_reuse_gemv_8x32_basic_rvv"
+      },
+      "files": 114,
+      "payload_sha256": "c4f3b0e17fe48d8d45863628b80649778b94dac06c20051e90bb4878c1e34132",
+      "raw_bytes": 27012722
+    },
+    {
+      "label": "h3",
+      "audit": {
+        "status": "CALLER_RAW_EVIDENCE_AUDIT_PASS",
+        "contract": "r2-s3-caller-screen-v2-h3",
+        "image_sha256": "98d67ef2c02c1f5a0d0a1fc9934d5d32f0636604b65ad4ded5141d1dac44e0bc",
+        "original_emu_runs": 3,
+        "new_emu_runs": 0,
+        "physical_external_inputs_revalidated": false,
+        "windows_per_normal_run": 36,
+        "formal_windows_used": 24,
+        "replay_windows": 36,
+        "ordinary_stack_demo_calls_per_normal_run": 3,
+        "summary": [
+          {
+            "scope": "full",
+            "vdot": {
+              "samples": 12,
+              "total": 14615,
+              "mean": 1217.9166666666667,
+              "minimum": 1208,
+              "median": 1218.5,
+              "maximum": 1223,
+              "instructions": [
+                1725
+              ],
+              "by_dataset": [
+                {
+                  "dataset": 0,
+                  "cycles": [
+                    1208,
+                    1213,
+                    1218,
+                    1223
+                  ]
+                },
+                {
+                  "dataset": 1,
+                  "cycles": [
+                    1220,
+                    1222,
+                    1217,
+                    1219
+                  ]
+                },
+                {
+                  "dataset": 2,
+                  "cycles": [
+                    1217,
+                    1220,
+                    1223,
+                    1215
+                  ]
+                }
+              ]
+            },
+            "rvv": {
+              "samples": 12,
+              "total": 14842,
+              "mean": 1236.8333333333333,
+              "minimum": 1228,
+              "median": 1238.0,
+              "maximum": 1249,
+              "instructions": [
+                1674
+              ],
+              "by_dataset": [
+                {
+                  "dataset": 0,
+                  "cycles": [
+                    1249,
+                    1238,
+                    1232,
+                    1240
+                  ]
+                },
+                {
+                  "dataset": 1,
+                  "cycles": [
+                    1229,
+                    1240,
+                    1238,
+                    1233
+                  ]
+                },
+                {
+                  "dataset": 2,
+                  "cycles": [
+                    1238,
+                    1239,
+                    1238,
+                    1228
+                  ]
+                }
+              ]
+            },
+            "primary_metric": true,
+            "identical_code_context_control": false,
+            "reduction_vdot_vs_rvv": 0.015294434712302962
+          }
+        ],
+        "raw_sources_recomputed": true,
+        "stable_default_changed": false,
+        "hardware_changed": false,
+        "screening_scope": "full-only",
+        "caller_variant": "hoisted",
+        "selected_rvv": 3,
+        "selected_rvv_symbol": "firstdot_gemv_8x32_reuse_rvv"
+      },
+      "files": 114,
+      "payload_sha256": "301fe9a141bb4840af9f910edc0eece2370eceaa78484c7e722916d75739fc99",
+      "raw_bytes": 26812377
+    }
+  ],
+  "support_files": 71,
+  "decision_details": {
+    "status": "HOISTED_SCREEN_COMPLETE",
+    "decision": "HOLD_CONTEXT_VARIATION",
+    "stage1": {
+      "status": "HOISTED_STAGE1_COMPLETE",
+      "decision": "CONTINUE_RVV_SCREEN",
+      "comparisons": [
+        {
+          "method": "vdot",
+          "baseline_total": 16056,
+          "candidate_total": 14453,
+          "cycle_reduction": 0.0998380667663179,
+          "by_dataset": [
+            {
+              "dataset": 0,
+              "baseline": 5351,
+              "candidate": 4823
+            },
+            {
+              "dataset": 1,
+              "baseline": 5351,
+              "candidate": 4823
+            },
+            {
+              "dataset": 2,
+              "baseline": 5354,
+              "candidate": 4807
+            }
+          ],
+          "passed": true
+        },
+        {
+          "method": "rvv",
+          "baseline_total": 16587,
+          "candidate_total": 14979,
+          "cycle_reduction": 0.0969433894013384,
+          "by_dataset": [
+            {
+              "dataset": 0,
+              "baseline": 5524,
+              "candidate": 4989
+            },
+            {
+              "dataset": 1,
+              "baseline": 5535,
+              "candidate": 5009
+            },
+            {
+              "dataset": 2,
+              "baseline": 5528,
+              "candidate": 4981
+            }
+          ],
+          "passed": true
+        }
+      ]
+    },
+    "rvv_winner_index": 3,
+    "rvv_winner_symbol": "firstdot_gemv_8x32_reuse_rvv",
+    "selected_method": null,
+    "anchors": [
+      {
+        "dataset": 0,
+        "totals": [
+          4861,
+          4815,
+          4867,
+          4862,
+          4823
+        ],
+        "maximum_ratio": 1.0107995846313604,
+        "passed": false
+      },
+      {
+        "dataset": 1,
+        "totals": [
+          4877,
+          4822,
+          4886,
+          4878,
+          4823
+        ],
+        "maximum_ratio": 1.0132725010369141,
+        "passed": false
+      },
+      {
+        "dataset": 2,
+        "totals": [
+          4895,
+          4830,
+          4889,
+          4875,
+          4807
+        ],
+        "maximum_ratio": 1.0183066361556063,
+        "passed": false
+      }
+    ],
+    "results": {
+      "0": {
+        "scope": "full",
+        "vdot": {
+          "samples": 12,
+          "total": 14633,
+          "mean": 1219.4166666666667,
+          "minimum": 1206,
+          "median": 1220.0,
+          "maximum": 1228,
+          "instructions": [
+            1725
+          ],
+          "by_dataset": [
+            {
+              "dataset": 0,
+              "cycles": [
+                1206,
+                1217,
+                1220,
+                1218
+              ]
+            },
+            {
+              "dataset": 1,
+              "cycles": [
+                1214,
+                1224,
+                1212,
+                1227
+              ]
+            },
+            {
+              "dataset": 2,
+              "cycles": [
+                1223,
+                1224,
+                1220,
+                1228
+              ]
+            }
+          ]
+        },
+        "rvv": {
+          "samples": 12,
+          "total": 17111,
+          "mean": 1425.9166666666667,
+          "minimum": 1414,
+          "median": 1427.0,
+          "maximum": 1442,
+          "instructions": [
+            1826
+          ],
+          "by_dataset": [
+            {
+              "dataset": 0,
+              "cycles": [
+                1442,
+                1414,
+                1426,
+                1423
+              ]
+            },
+            {
+              "dataset": 1,
+              "cycles": [
+                1432,
+                1420,
+                1430,
+                1428
+              ]
+            },
+            {
+              "dataset": 2,
+              "cycles": [
+                1424,
+                1414,
+                1430,
+                1428
+              ]
+            }
+          ]
+        },
+        "primary_metric": true,
+        "identical_code_context_control": false,
+        "reduction_vdot_vs_rvv": 0.14481912220209225
+      },
+      "1": {
+        "scope": "full",
+        "vdot": {
+          "samples": 12,
+          "total": 14467,
+          "mean": 1205.5833333333333,
+          "minimum": 1200,
+          "median": 1206.0,
+          "maximum": 1212,
+          "instructions": [
+            1725
+          ],
+          "by_dataset": [
+            {
+              "dataset": 0,
+              "cycles": [
+                1205,
+                1200,
+                1208,
+                1202
+              ]
+            },
+            {
+              "dataset": 1,
+              "cycles": [
+                1205,
+                1207,
+                1202,
+                1208
+              ]
+            },
+            {
+              "dataset": 2,
+              "cycles": [
+                1212,
+                1202,
+                1208,
+                1208
+              ]
+            }
+          ]
+        },
+        "rvv": {
+          "samples": 12,
+          "total": 15495,
+          "mean": 1291.25,
+          "minimum": 1286,
+          "median": 1292.0,
+          "maximum": 1301,
+          "instructions": [
+            1746
+          ],
+          "by_dataset": [
+            {
+              "dataset": 0,
+              "cycles": [
+                1292,
+                1287,
+                1287,
+                1301
+              ]
+            },
+            {
+              "dataset": 1,
+              "cycles": [
+                1295,
+                1286,
+                1292,
+                1292
+              ]
+            },
+            {
+              "dataset": 2,
+              "cycles": [
+                1293,
+                1289,
+                1287,
+                1294
+              ]
+            }
+          ]
+        },
+        "primary_metric": true,
+        "identical_code_context_control": false,
+        "reduction_vdot_vs_rvv": 0.06634398192965474
+      },
+      "2": {
+        "scope": "full",
+        "vdot": {
+          "samples": 12,
+          "total": 14642,
+          "mean": 1220.1666666666667,
+          "minimum": 1206,
+          "median": 1220.0,
+          "maximum": 1228,
+          "instructions": [
+            1725
+          ],
+          "by_dataset": [
+            {
+              "dataset": 0,
+              "cycles": [
+                1206,
+                1219,
+                1219,
+                1223
+              ]
+            },
+            {
+              "dataset": 1,
+              "cycles": [
+                1227,
+                1218,
+                1222,
+                1219
+              ]
+            },
+            {
+              "dataset": 2,
+              "cycles": [
+                1225,
+                1221,
+                1228,
+                1215
+              ]
+            }
+          ]
+        },
+        "rvv": {
+          "samples": 12,
+          "total": 15523,
+          "mean": 1293.5833333333333,
+          "minimum": 1288,
+          "median": 1293.0,
+          "maximum": 1309,
+          "instructions": [
+            1730
+          ],
+          "by_dataset": [
+            {
+              "dataset": 0,
+              "cycles": [
+                1309,
+                1288,
+                1297,
+                1293
+              ]
+            },
+            {
+              "dataset": 1,
+              "cycles": [
+                1293,
+                1295,
+                1290,
+                1290
+              ]
+            },
+            {
+              "dataset": 2,
+              "cycles": [
+                1289,
+                1295,
+                1296,
+                1288
+              ]
+            }
+          ]
+        },
+        "primary_metric": true,
+        "identical_code_context_control": false,
+        "reduction_vdot_vs_rvv": 0.0567544933324744
+      },
+      "3": {
+        "scope": "full",
+        "vdot": {
+          "samples": 12,
+          "total": 14615,
+          "mean": 1217.9166666666667,
+          "minimum": 1208,
+          "median": 1218.5,
+          "maximum": 1223,
+          "instructions": [
+            1725
+          ],
+          "by_dataset": [
+            {
+              "dataset": 0,
+              "cycles": [
+                1208,
+                1213,
+                1218,
+                1223
+              ]
+            },
+            {
+              "dataset": 1,
+              "cycles": [
+                1220,
+                1222,
+                1217,
+                1219
+              ]
+            },
+            {
+              "dataset": 2,
+              "cycles": [
+                1217,
+                1220,
+                1223,
+                1215
+              ]
+            }
+          ]
+        },
+        "rvv": {
+          "samples": 12,
+          "total": 14842,
+          "mean": 1236.8333333333333,
+          "minimum": 1228,
+          "median": 1238.0,
+          "maximum": 1249,
+          "instructions": [
+            1674
+          ],
+          "by_dataset": [
+            {
+              "dataset": 0,
+              "cycles": [
+                1249,
+                1238,
+                1232,
+                1240
+              ]
+            },
+            {
+              "dataset": 1,
+              "cycles": [
+                1229,
+                1240,
+                1238,
+                1233
+              ]
+            },
+            {
+              "dataset": 2,
+              "cycles": [
+                1238,
+                1239,
+                1238,
+                1228
+              ]
+            }
+          ]
+        },
+        "primary_metric": true,
+        "identical_code_context_control": false,
+        "reduction_vdot_vs_rvv": 0.015294434712302962
+      },
+      "4": {
+        "scope": "full",
+        "vdot": {
+          "samples": 12,
+          "total": 14453,
+          "mean": 1204.4166666666667,
+          "minimum": 1199,
+          "median": 1203.0,
+          "maximum": 1214,
+          "instructions": [
+            1725
+          ],
+          "by_dataset": [
+            {
+              "dataset": 0,
+              "cycles": [
+                1203,
+                1210,
+                1203,
+                1207
+              ]
+            },
+            {
+              "dataset": 1,
+              "cycles": [
+                1214,
+                1201,
+                1207,
+                1201
+              ]
+            },
+            {
+              "dataset": 2,
+              "cycles": [
+                1201,
+                1199,
+                1204,
+                1203
+              ]
+            }
+          ]
+        },
+        "rvv": {
+          "samples": 12,
+          "total": 14979,
+          "mean": 1248.25,
+          "minimum": 1241,
+          "median": 1246.0,
+          "maximum": 1259,
+          "instructions": [
+            1673
+          ],
+          "by_dataset": [
+            {
+              "dataset": 0,
+              "cycles": [
+                1254,
+                1245,
+                1245,
+                1245
+              ]
+            },
+            {
+              "dataset": 1,
+              "cycles": [
+                1253,
+                1259,
+                1245,
+                1252
+              ]
+            },
+            {
+              "dataset": 2,
+              "cycles": [
+                1249,
+                1244,
+                1241,
+                1247
+              ]
+            }
+          ]
+        },
+        "primary_metric": true,
+        "identical_code_context_control": false,
+        "reduction_vdot_vs_rvv": 0.035115828827024465
+      }
+    },
+    "scope": "five byte-distinct qualified RVV classes, 8x32, three fixed datasets, full-only contract",
+    "stable_default_changed": false,
+    "hardware_changed": false,
+    "checker_sha256": "d1ee95c80e5e11e0c63a2bd520b41de8f7fb11c0b094b78d76f4fa858f273399"
+  },
+  "index_sha256": "38c2b5b1613a849272cbe1d5e1e9dd9db2596eef4660a7881a92a56137505173",
+  "verifier_sha256": "d4483a8e6e01c59f8fe2e05ba98c7542a9a77861494ff827805ba92499015a77",
+  "context_observations": {
+    "scope": "post-hoc formal full/vdot global-cycle observations of 32 retired instructions per window; selection rules unchanged",
+    "interpretation": "first ACCEPT means the earliest acceptance among this window's retired vdot instructions, excluding squashed transactions; before/envelope/after partition the full window only when no transaction is outside counter bounds; otherwise values are signed coordinates; not separate pack/core/extract timings or causal attribution",
+    "parser_sha256": "27d9fe451c035157848625e84c2a229ac1d83073eb56ba3ebc25131e5569d496",
+    "cases": {
+      "b4": {
+        "status": "CONTEXT_OBSERVATIONS_AVAILABLE",
+        "recovery": {
+          "status": "CONTEXT_OBSERVATIONS_AVAILABLE",
+          "windows": [
+            {
+              "seq": 4,
+              "dataset": 0,
+              "repeat": 2,
+              "cycles": 1332,
+              "before_first_accept": 1113,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 100,
+              "last_commit_from_start": 1234,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 7,
+              "dataset": 0,
+              "repeat": 3,
+              "cycles": 1342,
+              "before_first_accept": 1123,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 100,
+              "last_commit_from_start": 1244,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 8,
+              "dataset": 0,
+              "repeat": 4,
+              "cycles": 1335,
+              "before_first_accept": 1116,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 100,
+              "last_commit_from_start": 1237,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 11,
+              "dataset": 0,
+              "repeat": 5,
+              "cycles": 1342,
+              "before_first_accept": 1123,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 100,
+              "last_commit_from_start": 1244,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 16,
+              "dataset": 1,
+              "repeat": 2,
+              "cycles": 1330,
+              "before_first_accept": 1110,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 101,
+              "last_commit_from_start": 1231,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 19,
+              "dataset": 1,
+              "repeat": 3,
+              "cycles": 1331,
+              "before_first_accept": 1111,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 101,
+              "last_commit_from_start": 1232,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 20,
+              "dataset": 1,
+              "repeat": 4,
+              "cycles": 1348,
+              "before_first_accept": 1126,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 103,
+              "last_commit_from_start": 1247,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 23,
+              "dataset": 1,
+              "repeat": 5,
+              "cycles": 1342,
+              "before_first_accept": 1123,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 100,
+              "last_commit_from_start": 1244,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 28,
+              "dataset": 2,
+              "repeat": 2,
+              "cycles": 1335,
+              "before_first_accept": 1116,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 100,
+              "last_commit_from_start": 1237,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 31,
+              "dataset": 2,
+              "repeat": 3,
+              "cycles": 1343,
+              "before_first_accept": 1121,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 103,
+              "last_commit_from_start": 1242,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 32,
+              "dataset": 2,
+              "repeat": 4,
+              "cycles": 1332,
+              "before_first_accept": 1113,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 100,
+              "last_commit_from_start": 1234,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 35,
+              "dataset": 2,
+              "repeat": 5,
+              "cycles": 1344,
+              "before_first_accept": 1122,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 103,
+              "last_commit_from_start": 1243,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            }
+          ],
+          "by_dataset": [
+            {
+              "dataset": 0,
+              "cycles": 5351,
+              "before_first_accept": 4475,
+              "response_envelope": 476,
+              "after_last_response": 400
+            },
+            {
+              "dataset": 1,
+              "cycles": 5351,
+              "before_first_accept": 4470,
+              "response_envelope": 476,
+              "after_last_response": 405
+            },
+            {
+              "dataset": 2,
+              "cycles": 5354,
+              "before_first_accept": 4472,
+              "response_envelope": 476,
+              "after_last_response": 406
+            }
+          ]
+        },
+        "replay": {
+          "status": "CONTEXT_OBSERVATIONS_AVAILABLE",
+          "windows": [
+            {
+              "seq": 4,
+              "dataset": 0,
+              "repeat": 2,
+              "cycles": 1332,
+              "before_first_accept": 1113,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 100,
+              "last_commit_from_start": 1234,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 7,
+              "dataset": 0,
+              "repeat": 3,
+              "cycles": 1342,
+              "before_first_accept": 1123,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 100,
+              "last_commit_from_start": 1244,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 8,
+              "dataset": 0,
+              "repeat": 4,
+              "cycles": 1335,
+              "before_first_accept": 1116,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 100,
+              "last_commit_from_start": 1237,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 11,
+              "dataset": 0,
+              "repeat": 5,
+              "cycles": 1342,
+              "before_first_accept": 1123,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 100,
+              "last_commit_from_start": 1244,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 16,
+              "dataset": 1,
+              "repeat": 2,
+              "cycles": 1330,
+              "before_first_accept": 1110,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 101,
+              "last_commit_from_start": 1231,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 19,
+              "dataset": 1,
+              "repeat": 3,
+              "cycles": 1331,
+              "before_first_accept": 1111,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 101,
+              "last_commit_from_start": 1232,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 20,
+              "dataset": 1,
+              "repeat": 4,
+              "cycles": 1348,
+              "before_first_accept": 1126,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 103,
+              "last_commit_from_start": 1247,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 23,
+              "dataset": 1,
+              "repeat": 5,
+              "cycles": 1342,
+              "before_first_accept": 1123,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 100,
+              "last_commit_from_start": 1244,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 28,
+              "dataset": 2,
+              "repeat": 2,
+              "cycles": 1335,
+              "before_first_accept": 1116,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 100,
+              "last_commit_from_start": 1237,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 31,
+              "dataset": 2,
+              "repeat": 3,
+              "cycles": 1343,
+              "before_first_accept": 1121,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 103,
+              "last_commit_from_start": 1242,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 32,
+              "dataset": 2,
+              "repeat": 4,
+              "cycles": 1332,
+              "before_first_accept": 1113,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 100,
+              "last_commit_from_start": 1234,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 35,
+              "dataset": 2,
+              "repeat": 5,
+              "cycles": 1344,
+              "before_first_accept": 1122,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 103,
+              "last_commit_from_start": 1243,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            }
+          ],
+          "by_dataset": [
+            {
+              "dataset": 0,
+              "cycles": 5351,
+              "before_first_accept": 4475,
+              "response_envelope": 476,
+              "after_last_response": 400
+            },
+            {
+              "dataset": 1,
+              "cycles": 5351,
+              "before_first_accept": 4470,
+              "response_envelope": 476,
+              "after_last_response": 405
+            },
+            {
+              "dataset": 2,
+              "cycles": 5354,
+              "before_first_accept": 4472,
+              "response_envelope": 476,
+              "after_last_response": 406
+            }
+          ]
+        },
+        "observations_identical": true
+      },
+      "h4": {
+        "status": "CONTEXT_OBSERVATIONS_AVAILABLE",
+        "recovery": {
+          "status": "CONTEXT_OBSERVATIONS_AVAILABLE",
+          "windows": [
+            {
+              "seq": 4,
+              "dataset": 0,
+              "repeat": 2,
+              "cycles": 1203,
+              "before_first_accept": 996,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1117,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 7,
+              "dataset": 0,
+              "repeat": 3,
+              "cycles": 1210,
+              "before_first_accept": 1003,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1124,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 8,
+              "dataset": 0,
+              "repeat": 4,
+              "cycles": 1203,
+              "before_first_accept": 996,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1117,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 11,
+              "dataset": 0,
+              "repeat": 5,
+              "cycles": 1207,
+              "before_first_accept": 1000,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1121,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 16,
+              "dataset": 1,
+              "repeat": 2,
+              "cycles": 1214,
+              "before_first_accept": 1007,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1128,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 19,
+              "dataset": 1,
+              "repeat": 3,
+              "cycles": 1201,
+              "before_first_accept": 994,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1115,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 20,
+              "dataset": 1,
+              "repeat": 4,
+              "cycles": 1207,
+              "before_first_accept": 1000,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1121,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 23,
+              "dataset": 1,
+              "repeat": 5,
+              "cycles": 1201,
+              "before_first_accept": 994,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1115,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 28,
+              "dataset": 2,
+              "repeat": 2,
+              "cycles": 1201,
+              "before_first_accept": 994,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1115,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 31,
+              "dataset": 2,
+              "repeat": 3,
+              "cycles": 1199,
+              "before_first_accept": 992,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1113,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 32,
+              "dataset": 2,
+              "repeat": 4,
+              "cycles": 1204,
+              "before_first_accept": 997,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1118,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 35,
+              "dataset": 2,
+              "repeat": 5,
+              "cycles": 1203,
+              "before_first_accept": 996,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1117,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            }
+          ],
+          "by_dataset": [
+            {
+              "dataset": 0,
+              "cycles": 4823,
+              "before_first_accept": 3995,
+              "response_envelope": 476,
+              "after_last_response": 352
+            },
+            {
+              "dataset": 1,
+              "cycles": 4823,
+              "before_first_accept": 3995,
+              "response_envelope": 476,
+              "after_last_response": 352
+            },
+            {
+              "dataset": 2,
+              "cycles": 4807,
+              "before_first_accept": 3979,
+              "response_envelope": 476,
+              "after_last_response": 352
+            }
+          ]
+        },
+        "replay": {
+          "status": "CONTEXT_OBSERVATIONS_AVAILABLE",
+          "windows": [
+            {
+              "seq": 4,
+              "dataset": 0,
+              "repeat": 2,
+              "cycles": 1203,
+              "before_first_accept": 996,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1117,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 7,
+              "dataset": 0,
+              "repeat": 3,
+              "cycles": 1210,
+              "before_first_accept": 1003,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1124,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 8,
+              "dataset": 0,
+              "repeat": 4,
+              "cycles": 1203,
+              "before_first_accept": 996,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1117,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 11,
+              "dataset": 0,
+              "repeat": 5,
+              "cycles": 1207,
+              "before_first_accept": 1000,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1121,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 16,
+              "dataset": 1,
+              "repeat": 2,
+              "cycles": 1214,
+              "before_first_accept": 1007,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1128,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 19,
+              "dataset": 1,
+              "repeat": 3,
+              "cycles": 1201,
+              "before_first_accept": 994,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1115,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 20,
+              "dataset": 1,
+              "repeat": 4,
+              "cycles": 1207,
+              "before_first_accept": 1000,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1121,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 23,
+              "dataset": 1,
+              "repeat": 5,
+              "cycles": 1201,
+              "before_first_accept": 994,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1115,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 28,
+              "dataset": 2,
+              "repeat": 2,
+              "cycles": 1201,
+              "before_first_accept": 994,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1115,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 31,
+              "dataset": 2,
+              "repeat": 3,
+              "cycles": 1199,
+              "before_first_accept": 992,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1113,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 32,
+              "dataset": 2,
+              "repeat": 4,
+              "cycles": 1204,
+              "before_first_accept": 997,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1118,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 35,
+              "dataset": 2,
+              "repeat": 5,
+              "cycles": 1203,
+              "before_first_accept": 996,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1117,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            }
+          ],
+          "by_dataset": [
+            {
+              "dataset": 0,
+              "cycles": 4823,
+              "before_first_accept": 3995,
+              "response_envelope": 476,
+              "after_last_response": 352
+            },
+            {
+              "dataset": 1,
+              "cycles": 4823,
+              "before_first_accept": 3995,
+              "response_envelope": 476,
+              "after_last_response": 352
+            },
+            {
+              "dataset": 2,
+              "cycles": 4807,
+              "before_first_accept": 3979,
+              "response_envelope": 476,
+              "after_last_response": 352
+            }
+          ]
+        },
+        "observations_identical": true
+      },
+      "h0": {
+        "status": "CONTEXT_OBSERVATIONS_AVAILABLE",
+        "recovery": {
+          "status": "CONTEXT_OBSERVATIONS_AVAILABLE",
+          "windows": [
+            {
+              "seq": 4,
+              "dataset": 0,
+              "repeat": 2,
+              "cycles": 1206,
+              "before_first_accept": 999,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1120,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 7,
+              "dataset": 0,
+              "repeat": 3,
+              "cycles": 1217,
+              "before_first_accept": 1007,
+              "accept_span": 119,
+              "response_envelope": 121,
+              "after_last_response": 89,
+              "last_commit_from_start": 1130,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 8,
+              "dataset": 0,
+              "repeat": 4,
+              "cycles": 1220,
+              "before_first_accept": 1012,
+              "accept_span": 118,
+              "response_envelope": 120,
+              "after_last_response": 88,
+              "last_commit_from_start": 1134,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 11,
+              "dataset": 0,
+              "repeat": 5,
+              "cycles": 1218,
+              "before_first_accept": 1008,
+              "accept_span": 119,
+              "response_envelope": 121,
+              "after_last_response": 89,
+              "last_commit_from_start": 1131,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 16,
+              "dataset": 1,
+              "repeat": 2,
+              "cycles": 1214,
+              "before_first_accept": 1007,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1128,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 19,
+              "dataset": 1,
+              "repeat": 3,
+              "cycles": 1224,
+              "before_first_accept": 1015,
+              "accept_span": 119,
+              "response_envelope": 121,
+              "after_last_response": 88,
+              "last_commit_from_start": 1139,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 20,
+              "dataset": 1,
+              "repeat": 4,
+              "cycles": 1212,
+              "before_first_accept": 1004,
+              "accept_span": 118,
+              "response_envelope": 120,
+              "after_last_response": 88,
+              "last_commit_from_start": 1126,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 23,
+              "dataset": 1,
+              "repeat": 5,
+              "cycles": 1227,
+              "before_first_accept": 1017,
+              "accept_span": 119,
+              "response_envelope": 121,
+              "after_last_response": 89,
+              "last_commit_from_start": 1140,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 28,
+              "dataset": 2,
+              "repeat": 2,
+              "cycles": 1223,
+              "before_first_accept": 1016,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1137,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 31,
+              "dataset": 2,
+              "repeat": 3,
+              "cycles": 1224,
+              "before_first_accept": 1015,
+              "accept_span": 119,
+              "response_envelope": 121,
+              "after_last_response": 88,
+              "last_commit_from_start": 1139,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 32,
+              "dataset": 2,
+              "repeat": 4,
+              "cycles": 1220,
+              "before_first_accept": 1012,
+              "accept_span": 118,
+              "response_envelope": 120,
+              "after_last_response": 88,
+              "last_commit_from_start": 1135,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 35,
+              "dataset": 2,
+              "repeat": 5,
+              "cycles": 1228,
+              "before_first_accept": 1018,
+              "accept_span": 119,
+              "response_envelope": 121,
+              "after_last_response": 89,
+              "last_commit_from_start": 1141,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            }
+          ],
+          "by_dataset": [
+            {
+              "dataset": 0,
+              "cycles": 4861,
+              "before_first_accept": 4026,
+              "response_envelope": 481,
+              "after_last_response": 354
+            },
+            {
+              "dataset": 1,
+              "cycles": 4877,
+              "before_first_accept": 4043,
+              "response_envelope": 481,
+              "after_last_response": 353
+            },
+            {
+              "dataset": 2,
+              "cycles": 4895,
+              "before_first_accept": 4061,
+              "response_envelope": 481,
+              "after_last_response": 353
+            }
+          ]
+        },
+        "replay": {
+          "status": "CONTEXT_OBSERVATIONS_AVAILABLE",
+          "windows": [
+            {
+              "seq": 4,
+              "dataset": 0,
+              "repeat": 2,
+              "cycles": 1206,
+              "before_first_accept": 999,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1120,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 7,
+              "dataset": 0,
+              "repeat": 3,
+              "cycles": 1217,
+              "before_first_accept": 1007,
+              "accept_span": 119,
+              "response_envelope": 121,
+              "after_last_response": 89,
+              "last_commit_from_start": 1130,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 8,
+              "dataset": 0,
+              "repeat": 4,
+              "cycles": 1220,
+              "before_first_accept": 1012,
+              "accept_span": 118,
+              "response_envelope": 120,
+              "after_last_response": 88,
+              "last_commit_from_start": 1134,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 11,
+              "dataset": 0,
+              "repeat": 5,
+              "cycles": 1218,
+              "before_first_accept": 1008,
+              "accept_span": 119,
+              "response_envelope": 121,
+              "after_last_response": 89,
+              "last_commit_from_start": 1131,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 16,
+              "dataset": 1,
+              "repeat": 2,
+              "cycles": 1214,
+              "before_first_accept": 1007,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1128,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 19,
+              "dataset": 1,
+              "repeat": 3,
+              "cycles": 1224,
+              "before_first_accept": 1015,
+              "accept_span": 119,
+              "response_envelope": 121,
+              "after_last_response": 88,
+              "last_commit_from_start": 1139,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 20,
+              "dataset": 1,
+              "repeat": 4,
+              "cycles": 1212,
+              "before_first_accept": 1004,
+              "accept_span": 118,
+              "response_envelope": 120,
+              "after_last_response": 88,
+              "last_commit_from_start": 1126,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 23,
+              "dataset": 1,
+              "repeat": 5,
+              "cycles": 1227,
+              "before_first_accept": 1017,
+              "accept_span": 119,
+              "response_envelope": 121,
+              "after_last_response": 89,
+              "last_commit_from_start": 1140,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 28,
+              "dataset": 2,
+              "repeat": 2,
+              "cycles": 1223,
+              "before_first_accept": 1016,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1137,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 31,
+              "dataset": 2,
+              "repeat": 3,
+              "cycles": 1224,
+              "before_first_accept": 1015,
+              "accept_span": 119,
+              "response_envelope": 121,
+              "after_last_response": 88,
+              "last_commit_from_start": 1139,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 32,
+              "dataset": 2,
+              "repeat": 4,
+              "cycles": 1220,
+              "before_first_accept": 1012,
+              "accept_span": 118,
+              "response_envelope": 120,
+              "after_last_response": 88,
+              "last_commit_from_start": 1135,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 35,
+              "dataset": 2,
+              "repeat": 5,
+              "cycles": 1228,
+              "before_first_accept": 1018,
+              "accept_span": 119,
+              "response_envelope": 121,
+              "after_last_response": 89,
+              "last_commit_from_start": 1141,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            }
+          ],
+          "by_dataset": [
+            {
+              "dataset": 0,
+              "cycles": 4861,
+              "before_first_accept": 4026,
+              "response_envelope": 481,
+              "after_last_response": 354
+            },
+            {
+              "dataset": 1,
+              "cycles": 4877,
+              "before_first_accept": 4043,
+              "response_envelope": 481,
+              "after_last_response": 353
+            },
+            {
+              "dataset": 2,
+              "cycles": 4895,
+              "before_first_accept": 4061,
+              "response_envelope": 481,
+              "after_last_response": 353
+            }
+          ]
+        },
+        "observations_identical": true
+      },
+      "h1": {
+        "status": "CONTEXT_OBSERVATIONS_AVAILABLE",
+        "recovery": {
+          "status": "CONTEXT_OBSERVATIONS_AVAILABLE",
+          "windows": [
+            {
+              "seq": 4,
+              "dataset": 0,
+              "repeat": 2,
+              "cycles": 1205,
+              "before_first_accept": 998,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1119,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 7,
+              "dataset": 0,
+              "repeat": 3,
+              "cycles": 1200,
+              "before_first_accept": 994,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 87,
+              "last_commit_from_start": 1115,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 8,
+              "dataset": 0,
+              "repeat": 4,
+              "cycles": 1208,
+              "before_first_accept": 1002,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 87,
+              "last_commit_from_start": 1123,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 11,
+              "dataset": 0,
+              "repeat": 5,
+              "cycles": 1202,
+              "before_first_accept": 995,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1116,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 16,
+              "dataset": 1,
+              "repeat": 2,
+              "cycles": 1205,
+              "before_first_accept": 998,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1119,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 19,
+              "dataset": 1,
+              "repeat": 3,
+              "cycles": 1207,
+              "before_first_accept": 1000,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1121,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 20,
+              "dataset": 1,
+              "repeat": 4,
+              "cycles": 1202,
+              "before_first_accept": 996,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 87,
+              "last_commit_from_start": 1117,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 23,
+              "dataset": 1,
+              "repeat": 5,
+              "cycles": 1208,
+              "before_first_accept": 1001,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1122,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 28,
+              "dataset": 2,
+              "repeat": 2,
+              "cycles": 1212,
+              "before_first_accept": 1005,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1126,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 31,
+              "dataset": 2,
+              "repeat": 3,
+              "cycles": 1202,
+              "before_first_accept": 995,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1116,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 32,
+              "dataset": 2,
+              "repeat": 4,
+              "cycles": 1208,
+              "before_first_accept": 1002,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 87,
+              "last_commit_from_start": 1123,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 35,
+              "dataset": 2,
+              "repeat": 5,
+              "cycles": 1208,
+              "before_first_accept": 1001,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1122,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            }
+          ],
+          "by_dataset": [
+            {
+              "dataset": 0,
+              "cycles": 4815,
+              "before_first_accept": 3989,
+              "response_envelope": 476,
+              "after_last_response": 350
+            },
+            {
+              "dataset": 1,
+              "cycles": 4822,
+              "before_first_accept": 3995,
+              "response_envelope": 476,
+              "after_last_response": 351
+            },
+            {
+              "dataset": 2,
+              "cycles": 4830,
+              "before_first_accept": 4003,
+              "response_envelope": 476,
+              "after_last_response": 351
+            }
+          ]
+        },
+        "replay": {
+          "status": "CONTEXT_OBSERVATIONS_AVAILABLE",
+          "windows": [
+            {
+              "seq": 4,
+              "dataset": 0,
+              "repeat": 2,
+              "cycles": 1205,
+              "before_first_accept": 998,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1119,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 7,
+              "dataset": 0,
+              "repeat": 3,
+              "cycles": 1200,
+              "before_first_accept": 994,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 87,
+              "last_commit_from_start": 1115,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 8,
+              "dataset": 0,
+              "repeat": 4,
+              "cycles": 1208,
+              "before_first_accept": 1002,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 87,
+              "last_commit_from_start": 1123,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 11,
+              "dataset": 0,
+              "repeat": 5,
+              "cycles": 1202,
+              "before_first_accept": 995,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1116,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 16,
+              "dataset": 1,
+              "repeat": 2,
+              "cycles": 1205,
+              "before_first_accept": 998,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1119,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 19,
+              "dataset": 1,
+              "repeat": 3,
+              "cycles": 1207,
+              "before_first_accept": 1000,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1121,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 20,
+              "dataset": 1,
+              "repeat": 4,
+              "cycles": 1202,
+              "before_first_accept": 996,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 87,
+              "last_commit_from_start": 1117,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 23,
+              "dataset": 1,
+              "repeat": 5,
+              "cycles": 1208,
+              "before_first_accept": 1001,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1122,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 28,
+              "dataset": 2,
+              "repeat": 2,
+              "cycles": 1212,
+              "before_first_accept": 1005,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1126,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 31,
+              "dataset": 2,
+              "repeat": 3,
+              "cycles": 1202,
+              "before_first_accept": 995,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1116,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 32,
+              "dataset": 2,
+              "repeat": 4,
+              "cycles": 1208,
+              "before_first_accept": 1002,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 87,
+              "last_commit_from_start": 1123,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 35,
+              "dataset": 2,
+              "repeat": 5,
+              "cycles": 1208,
+              "before_first_accept": 1001,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1122,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            }
+          ],
+          "by_dataset": [
+            {
+              "dataset": 0,
+              "cycles": 4815,
+              "before_first_accept": 3989,
+              "response_envelope": 476,
+              "after_last_response": 350
+            },
+            {
+              "dataset": 1,
+              "cycles": 4822,
+              "before_first_accept": 3995,
+              "response_envelope": 476,
+              "after_last_response": 351
+            },
+            {
+              "dataset": 2,
+              "cycles": 4830,
+              "before_first_accept": 4003,
+              "response_envelope": 476,
+              "after_last_response": 351
+            }
+          ]
+        },
+        "observations_identical": true
+      },
+      "h2": {
+        "status": "CONTEXT_OBSERVATIONS_AVAILABLE",
+        "recovery": {
+          "status": "CONTEXT_OBSERVATIONS_AVAILABLE",
+          "windows": [
+            {
+              "seq": 4,
+              "dataset": 0,
+              "repeat": 2,
+              "cycles": 1206,
+              "before_first_accept": 999,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1120,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 7,
+              "dataset": 0,
+              "repeat": 3,
+              "cycles": 1219,
+              "before_first_accept": 1012,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1133,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 8,
+              "dataset": 0,
+              "repeat": 4,
+              "cycles": 1219,
+              "before_first_accept": 1009,
+              "accept_span": 119,
+              "response_envelope": 121,
+              "after_last_response": 89,
+              "last_commit_from_start": 1132,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 11,
+              "dataset": 0,
+              "repeat": 5,
+              "cycles": 1223,
+              "before_first_accept": 1013,
+              "accept_span": 119,
+              "response_envelope": 121,
+              "after_last_response": 89,
+              "last_commit_from_start": 1136,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 16,
+              "dataset": 1,
+              "repeat": 2,
+              "cycles": 1227,
+              "before_first_accept": 1017,
+              "accept_span": 119,
+              "response_envelope": 121,
+              "after_last_response": 89,
+              "last_commit_from_start": 1140,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 19,
+              "dataset": 1,
+              "repeat": 3,
+              "cycles": 1218,
+              "before_first_accept": 1008,
+              "accept_span": 119,
+              "response_envelope": 121,
+              "after_last_response": 89,
+              "last_commit_from_start": 1131,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 20,
+              "dataset": 1,
+              "repeat": 4,
+              "cycles": 1222,
+              "before_first_accept": 1013,
+              "accept_span": 119,
+              "response_envelope": 121,
+              "after_last_response": 88,
+              "last_commit_from_start": 1137,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 23,
+              "dataset": 1,
+              "repeat": 5,
+              "cycles": 1219,
+              "before_first_accept": 1012,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1133,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 28,
+              "dataset": 2,
+              "repeat": 2,
+              "cycles": 1225,
+              "before_first_accept": 1016,
+              "accept_span": 119,
+              "response_envelope": 121,
+              "after_last_response": 88,
+              "last_commit_from_start": 1140,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 31,
+              "dataset": 2,
+              "repeat": 3,
+              "cycles": 1221,
+              "before_first_accept": 1014,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1135,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 32,
+              "dataset": 2,
+              "repeat": 4,
+              "cycles": 1228,
+              "before_first_accept": 1021,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1142,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 35,
+              "dataset": 2,
+              "repeat": 5,
+              "cycles": 1215,
+              "before_first_accept": 1006,
+              "accept_span": 119,
+              "response_envelope": 121,
+              "after_last_response": 88,
+              "last_commit_from_start": 1129,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            }
+          ],
+          "by_dataset": [
+            {
+              "dataset": 0,
+              "cycles": 4867,
+              "before_first_accept": 4033,
+              "response_envelope": 480,
+              "after_last_response": 354
+            },
+            {
+              "dataset": 1,
+              "cycles": 4886,
+              "before_first_accept": 4050,
+              "response_envelope": 482,
+              "after_last_response": 354
+            },
+            {
+              "dataset": 2,
+              "cycles": 4889,
+              "before_first_accept": 4057,
+              "response_envelope": 480,
+              "after_last_response": 352
+            }
+          ]
+        },
+        "replay": {
+          "status": "CONTEXT_OBSERVATIONS_AVAILABLE",
+          "windows": [
+            {
+              "seq": 4,
+              "dataset": 0,
+              "repeat": 2,
+              "cycles": 1206,
+              "before_first_accept": 999,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1120,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 7,
+              "dataset": 0,
+              "repeat": 3,
+              "cycles": 1219,
+              "before_first_accept": 1012,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1133,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 8,
+              "dataset": 0,
+              "repeat": 4,
+              "cycles": 1219,
+              "before_first_accept": 1009,
+              "accept_span": 119,
+              "response_envelope": 121,
+              "after_last_response": 89,
+              "last_commit_from_start": 1132,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 11,
+              "dataset": 0,
+              "repeat": 5,
+              "cycles": 1223,
+              "before_first_accept": 1013,
+              "accept_span": 119,
+              "response_envelope": 121,
+              "after_last_response": 89,
+              "last_commit_from_start": 1136,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 16,
+              "dataset": 1,
+              "repeat": 2,
+              "cycles": 1227,
+              "before_first_accept": 1017,
+              "accept_span": 119,
+              "response_envelope": 121,
+              "after_last_response": 89,
+              "last_commit_from_start": 1140,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 19,
+              "dataset": 1,
+              "repeat": 3,
+              "cycles": 1218,
+              "before_first_accept": 1008,
+              "accept_span": 119,
+              "response_envelope": 121,
+              "after_last_response": 89,
+              "last_commit_from_start": 1131,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 20,
+              "dataset": 1,
+              "repeat": 4,
+              "cycles": 1222,
+              "before_first_accept": 1013,
+              "accept_span": 119,
+              "response_envelope": 121,
+              "after_last_response": 88,
+              "last_commit_from_start": 1137,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 23,
+              "dataset": 1,
+              "repeat": 5,
+              "cycles": 1219,
+              "before_first_accept": 1012,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1133,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 28,
+              "dataset": 2,
+              "repeat": 2,
+              "cycles": 1225,
+              "before_first_accept": 1016,
+              "accept_span": 119,
+              "response_envelope": 121,
+              "after_last_response": 88,
+              "last_commit_from_start": 1140,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 31,
+              "dataset": 2,
+              "repeat": 3,
+              "cycles": 1221,
+              "before_first_accept": 1014,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1135,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 32,
+              "dataset": 2,
+              "repeat": 4,
+              "cycles": 1228,
+              "before_first_accept": 1021,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1142,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 35,
+              "dataset": 2,
+              "repeat": 5,
+              "cycles": 1215,
+              "before_first_accept": 1006,
+              "accept_span": 119,
+              "response_envelope": 121,
+              "after_last_response": 88,
+              "last_commit_from_start": 1129,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            }
+          ],
+          "by_dataset": [
+            {
+              "dataset": 0,
+              "cycles": 4867,
+              "before_first_accept": 4033,
+              "response_envelope": 480,
+              "after_last_response": 354
+            },
+            {
+              "dataset": 1,
+              "cycles": 4886,
+              "before_first_accept": 4050,
+              "response_envelope": 482,
+              "after_last_response": 354
+            },
+            {
+              "dataset": 2,
+              "cycles": 4889,
+              "before_first_accept": 4057,
+              "response_envelope": 480,
+              "after_last_response": 352
+            }
+          ]
+        },
+        "observations_identical": true
+      },
+      "h3": {
+        "status": "CONTEXT_OBSERVATIONS_AVAILABLE",
+        "recovery": {
+          "status": "CONTEXT_OBSERVATIONS_AVAILABLE",
+          "windows": [
+            {
+              "seq": 4,
+              "dataset": 0,
+              "repeat": 2,
+              "cycles": 1208,
+              "before_first_accept": 1001,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1122,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 7,
+              "dataset": 0,
+              "repeat": 3,
+              "cycles": 1213,
+              "before_first_accept": 1006,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1127,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 8,
+              "dataset": 0,
+              "repeat": 4,
+              "cycles": 1218,
+              "before_first_accept": 1008,
+              "accept_span": 119,
+              "response_envelope": 121,
+              "after_last_response": 89,
+              "last_commit_from_start": 1131,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 11,
+              "dataset": 0,
+              "repeat": 5,
+              "cycles": 1223,
+              "before_first_accept": 1013,
+              "accept_span": 119,
+              "response_envelope": 121,
+              "after_last_response": 89,
+              "last_commit_from_start": 1136,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 16,
+              "dataset": 1,
+              "repeat": 2,
+              "cycles": 1220,
+              "before_first_accept": 1010,
+              "accept_span": 119,
+              "response_envelope": 121,
+              "after_last_response": 89,
+              "last_commit_from_start": 1133,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 19,
+              "dataset": 1,
+              "repeat": 3,
+              "cycles": 1222,
+              "before_first_accept": 1012,
+              "accept_span": 119,
+              "response_envelope": 121,
+              "after_last_response": 89,
+              "last_commit_from_start": 1135,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 20,
+              "dataset": 1,
+              "repeat": 4,
+              "cycles": 1217,
+              "before_first_accept": 1010,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1131,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 23,
+              "dataset": 1,
+              "repeat": 5,
+              "cycles": 1219,
+              "before_first_accept": 1012,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1133,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 28,
+              "dataset": 2,
+              "repeat": 2,
+              "cycles": 1217,
+              "before_first_accept": 1010,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1131,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 31,
+              "dataset": 2,
+              "repeat": 3,
+              "cycles": 1220,
+              "before_first_accept": 1013,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1134,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 32,
+              "dataset": 2,
+              "repeat": 4,
+              "cycles": 1223,
+              "before_first_accept": 1016,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1137,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 35,
+              "dataset": 2,
+              "repeat": 5,
+              "cycles": 1215,
+              "before_first_accept": 1006,
+              "accept_span": 119,
+              "response_envelope": 121,
+              "after_last_response": 88,
+              "last_commit_from_start": 1129,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            }
+          ],
+          "by_dataset": [
+            {
+              "dataset": 0,
+              "cycles": 4862,
+              "before_first_accept": 4028,
+              "response_envelope": 480,
+              "after_last_response": 354
+            },
+            {
+              "dataset": 1,
+              "cycles": 4878,
+              "before_first_accept": 4044,
+              "response_envelope": 480,
+              "after_last_response": 354
+            },
+            {
+              "dataset": 2,
+              "cycles": 4875,
+              "before_first_accept": 4045,
+              "response_envelope": 478,
+              "after_last_response": 352
+            }
+          ]
+        },
+        "replay": {
+          "status": "CONTEXT_OBSERVATIONS_AVAILABLE",
+          "windows": [
+            {
+              "seq": 4,
+              "dataset": 0,
+              "repeat": 2,
+              "cycles": 1208,
+              "before_first_accept": 1001,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1122,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 7,
+              "dataset": 0,
+              "repeat": 3,
+              "cycles": 1213,
+              "before_first_accept": 1006,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1127,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 8,
+              "dataset": 0,
+              "repeat": 4,
+              "cycles": 1218,
+              "before_first_accept": 1008,
+              "accept_span": 119,
+              "response_envelope": 121,
+              "after_last_response": 89,
+              "last_commit_from_start": 1131,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 11,
+              "dataset": 0,
+              "repeat": 5,
+              "cycles": 1223,
+              "before_first_accept": 1013,
+              "accept_span": 119,
+              "response_envelope": 121,
+              "after_last_response": 89,
+              "last_commit_from_start": 1136,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 16,
+              "dataset": 1,
+              "repeat": 2,
+              "cycles": 1220,
+              "before_first_accept": 1010,
+              "accept_span": 119,
+              "response_envelope": 121,
+              "after_last_response": 89,
+              "last_commit_from_start": 1133,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 19,
+              "dataset": 1,
+              "repeat": 3,
+              "cycles": 1222,
+              "before_first_accept": 1012,
+              "accept_span": 119,
+              "response_envelope": 121,
+              "after_last_response": 89,
+              "last_commit_from_start": 1135,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 20,
+              "dataset": 1,
+              "repeat": 4,
+              "cycles": 1217,
+              "before_first_accept": 1010,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1131,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 23,
+              "dataset": 1,
+              "repeat": 5,
+              "cycles": 1219,
+              "before_first_accept": 1012,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1133,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 28,
+              "dataset": 2,
+              "repeat": 2,
+              "cycles": 1217,
+              "before_first_accept": 1010,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1131,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 31,
+              "dataset": 2,
+              "repeat": 3,
+              "cycles": 1220,
+              "before_first_accept": 1013,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1134,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 32,
+              "dataset": 2,
+              "repeat": 4,
+              "cycles": 1223,
+              "before_first_accept": 1016,
+              "accept_span": 117,
+              "response_envelope": 119,
+              "after_last_response": 88,
+              "last_commit_from_start": 1137,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            },
+            {
+              "seq": 35,
+              "dataset": 2,
+              "repeat": 5,
+              "cycles": 1215,
+              "before_first_accept": 1006,
+              "accept_span": 119,
+              "response_envelope": 121,
+              "after_last_response": 88,
+              "last_commit_from_start": 1129,
+              "transactions_outside_counter_bounds": 0,
+              "response_latency_histogram": {
+                "2": 32
+              }
+            }
+          ],
+          "by_dataset": [
+            {
+              "dataset": 0,
+              "cycles": 4862,
+              "before_first_accept": 4028,
+              "response_envelope": 480,
+              "after_last_response": 354
+            },
+            {
+              "dataset": 1,
+              "cycles": 4878,
+              "before_first_accept": 4044,
+              "response_envelope": 480,
+              "after_last_response": 354
+            },
+            {
+              "dataset": 2,
+              "cycles": 4875,
+              "before_first_accept": 4045,
+              "response_envelope": 478,
+              "after_last_response": 352
+            }
+          ]
+        },
+        "observations_identical": true
+      }
+    }
+  },
+  "new_emu_runs": 0,
+  "original_emu_runs": 18,
+  "physical_external_inputs_revalidated": false
+}
