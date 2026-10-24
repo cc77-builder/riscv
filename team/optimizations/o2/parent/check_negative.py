@@ -41,6 +41,10 @@ def _fields(line: str) -> dict[str, str]:
 
 def check_positive(log: str) -> dict:
     """Recompute exact two-slot transitions and per-seq conservation from events."""
+    # Keep one strict clock/ROB replay contract for both positive entry points.
+    # The legacy transaction replay below remains an independent cross-check.
+    from check_trace import check_trace
+    strict = check_trace(log)
     live = {}
     ended = set()
     p = r = div = 0
@@ -179,7 +183,7 @@ def check_positive(log: str) -> dict:
                           ("parent_tested", 1), ("fullcore_tested", 0), ("performance_measured", 0)):
         if int(summary[key]) != expected:
             raise ValueError(f"final summary mismatch: {key}")
-    if set(per_fu) != {0, 1, 2} or groups != 12 or last_case != "clock-recovery":
+    if set(per_fu) != {0, 1, 2} or groups != 13 or last_case != "clock-recovery":
         raise ValueError("incomplete directed campaign")
     if len(frozen_accept) != 10022 or frozen_responses != 10022:
         raise ValueError("frozen arithmetic sample count mismatch")
@@ -187,7 +191,8 @@ def check_positive(log: str) -> dict:
         raise ValueError("frozen acceptance interval !=1")
     return {"status": "O2_PARENT_OFFLINE_REPLAY_PASS", "cycles": cycle, "accepted": accepted,
             "responses": response, "cancelled": cancel, "reset_dropped": reset_drop,
-            "frozen_vectors": 10022, "ii1_intervals": 10021, "fullcore_tested": False}
+            "frozen_vectors": 10022, "ii1_intervals": 10021, "fullcore_tested": False,
+            "strict_clock_replay": strict["status"]}
 
 
 def main() -> int:

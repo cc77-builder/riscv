@@ -52,7 +52,7 @@ def fixture():
                redirect=1, redirect_rob=30, self=1, kill_div=1, clocks=2,
                block_reason="redirect", accepted_total=4, responses_total=1,
                cancels_total=2, resets_total=1),
-        record(11, clocks=2, accepted_total=4, responses_total=1,
+        record(11, clocks=0, accepted_total=4, responses_total=1,
                cancels_total=2, resets_total=1),
         record(12, reset=1, ready=0, child_ready=6, clocks=3,
                block_reason="reset", accepted_total=4, responses_total=1,
@@ -64,7 +64,7 @@ def fixture():
     per_fu[0].update(accepted=3, responded=1, killed=1, reset_dropped=1,
                      latency_min=2, latency_max=2, latency_samples=1, clock_edges=8)
     per_fu[1].update(accepted=1, killed=1, raw_killed_response=1,
-                     latency_min=2, latency_max=2, latency_samples=1, clock_edges=7)
+                     latency_min=2, latency_max=2, latency_samples=1, clock_edges=6)
     per_fu[2].update(clock_edges=1)
     final = {key: 0 for key in PASS_KEYS}
     final.update(schema=1, cycles=13, accepted=4, responses=1, cancelled=2,
@@ -72,6 +72,20 @@ def fixture():
                  full_cycles=2, full_blocked=1, kill_p_only=1,
                  te0_resets=2, empty_te0_resets=1, parent_tested=1)
     return rows, per_fu, final
+
+
+def cancel_window_fixture():
+    rows, fus, final = fixture()
+    # Preserve the cancelling edge and require the immediately following three
+    # parent edges to be off. The final reset remains outside this window.
+    rows[10]["case"] = "DIV-cancel-fixture"
+    rows[11]["case"] = "DIV-cancel-fixture"
+    rows[12:12] = [copy.deepcopy(rows[11]), copy.deepcopy(rows[11])]
+    for cycle, row in enumerate(rows):
+        row["cycle"] = cycle
+    final["cycles"] = len(rows)
+    final["redirects"] = 1
+    return rows, fus, final
 
 
 def encode(rows, per_fu, final):
@@ -122,6 +136,66 @@ class TraceTests(unittest.TestCase):
 
     def test_missing_active_clock_rejected(self):
         self.assert_bad_row(3, dict(clocks=0))
+
+    def test_idle_div_clock_rejected_even_with_consistent_total(self):
+        rows, fus, final = fixture()
+        rows[11]["clocks"] = 2
+        fus[1]["clock_edges"] += 1
+        with self.assertRaisesRegex(TraceError, "idle FU retained clock"):
+            check_trace(encode(rows, fus, final), require_campaign=False)
+
+    def test_immediate_three_cycle_cancel_window_is_recomputed(self):
+        result = check_trace(encode(*cancel_window_fixture()), require_campaign=False)
+        self.assertEqual(result["cancel_idle_cases"], {1: 1})
+        self.assertEqual(result["cancel_idle_samples"], {1: 3})
+        self.assertEqual(result["recomputed"]["cancel_idle_clock_on"], 0)
+        self.assertEqual(result["side_counters_not_recomputed"], [])
+
+    def test_first_post_cancel_clock_has_no_grace_period(self):
+        rows, fus, final = cancel_window_fixture()
+        rows[11]["clocks"] = 2
+        fus[1]["clock_edges"] += 1
+        with self.assertRaisesRegex(TraceError, "immediate idle sample"):
+            check_trace(encode(rows, fus, final), require_campaign=False)
+
+    def test_each_post_cancel_sample_is_checked(self):
+        for cycle in (12, 13):
+            with self.subTest(cycle=cycle):
+                rows, fus, final = cancel_window_fixture()
+                rows[cycle]["clocks"] = 2
+                fus[1]["clock_edges"] += 1
+                with self.assertRaisesRegex(TraceError, "immediate idle sample"):
+                    check_trace(encode(rows, fus, final), require_campaign=False)
+
+    def test_post_cancel_window_cannot_be_cut_short_by_reset(self):
+        rows, fus, final = cancel_window_fixture()
+        rows[12].update(reset=1, te=1, clocks=7)
+        with self.assertRaisesRegex(TraceError, "missing immediate post-cancel"):
+            check_trace(encode(rows, fus, final), require_campaign=False)
+
+    def test_known_div_rob_label_cannot_replace_different_relation(self):
+        rows, fus, final = fixture()
+        rows[10]["case"] = "DIV-ROB-k1-r0-p0"
+        with self.assertRaisesRegex(TraceError, "differs from contract"):
+            check_trace(encode(rows, fus, final), require_campaign=False)
+
+    def test_nonzero_cancel_idle_summary_cannot_claim_pass(self):
+        rows, fus, final = fixture()
+        final["cancel_idle_clock_on"] = 1
+        with self.assertRaisesRegex(TraceError, "cancel-idle clock summary"):
+            check_trace(encode(rows, fus, final), require_campaign=False)
+
+    def test_false_idle_sample_count_rejected(self):
+        rows, fus, final = fixture()
+        final["idle_clock_samples"] = 12
+        with self.assertRaisesRegex(TraceError, "idle-clock sample summary"):
+            check_trace(encode(rows, fus, final), require_campaign=False)
+
+    def test_unknown_div_rob_case_rejected(self):
+        rows, fus, final = fixture()
+        rows[10]["case"] = "DIV-ROB-k9-r0-p0"
+        with self.assertRaisesRegex(TraceError, "directed DIV ROB case"):
+            check_trace(encode(rows, fus, final), require_campaign=False)
 
     def test_missing_empty_reset_clock_rejected(self):
         self.assert_bad_row(12, dict(clocks=2))
