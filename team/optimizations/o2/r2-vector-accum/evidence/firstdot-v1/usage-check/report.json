@@ -1,0 +1,87 @@
+{
+  "status": "FIRSTDOT_README_EXAMPLE_COMPILE_LINK_AND_SOURCE_REBUILD_PASS",
+  "created": "2026-10-24T08:47:06.618435+00:00",
+  "readme_sha256": "9a36ada73895a1e8cc609e706acf508e809dbf93f4dc00cee426e4b0297a6962",
+  "example_source_sha256": "fda1c714fb37c03f7efed84c9ab064a5b3caa5a7db858b36e305ed09be4b7eb4",
+  "qualified_object_sha256": "b65d4ca4faf3550ad2e95d3fb7d1d452923b71ae50776420bfcd679d098238af",
+  "public_functions": 16,
+  "linked_leaves_identical": true,
+  "undefined_symbols": [],
+  "commands": [
+    {
+      "argv": [
+        "/usr/bin/riscv64-linux-gnu-gcc",
+        "-march=rv64gcv",
+        "-mabi=lp64d",
+        "-mno-relax",
+        "-c",
+        "/home/lizufan/riscv-lab/r2s1-firstdot-20261024-1458/source/team/optimizations/o2/r2-vector-accum/firstdot/public/gemv.S",
+        "-o",
+        "/home/lizufan/riscv-lab/r2s1-firstdot-20261024-1458/usage-check-02/rebuilt-gemv.o"
+      ],
+      "cwd": "/home/lizufan/riscv-lab/r2s1-firstdot-20261024-1458/source",
+      "started": "2026-10-24T08:47:06.536929+00:00",
+      "finished": "2026-10-24T08:47:06.583124+00:00",
+      "exit_code": 0,
+      "stdout": "/home/lizufan/riscv-lab/r2s1-firstdot-20261024-1458/usage-check-02/source-rebuild.stdout.log",
+      "stderr": "/home/lizufan/riscv-lab/r2s1-firstdot-20261024-1458/usage-check-02/source-rebuild.stderr.log"
+    },
+    {
+      "argv": [
+        "/usr/bin/riscv64-linux-gnu-gcc",
+        "-std=c11",
+        "-march=rv64gcv",
+        "-mabi=lp64d",
+        "-mno-relax",
+        "-ffreestanding",
+        "-O2",
+        "-I/home/lizufan/riscv-lab/r2s1-firstdot-20261024-1458/source/team/optimizations/o2/r2-vector-accum/firstdot/public",
+        "-c",
+        "/home/lizufan/riscv-lab/r2s1-firstdot-20261024-1458/usage-check-02/app.c",
+        "-o",
+        "/home/lizufan/riscv-lab/r2s1-firstdot-20261024-1458/usage-check-02/app.o"
+      ],
+      "cwd": "/home/lizufan/riscv-lab/r2s1-firstdot-20261024-1458/source",
+      "started": "2026-10-24T08:47:06.583640+00:00",
+      "finished": "2026-10-24T08:47:06.603018+00:00",
+      "exit_code": 0,
+      "stdout": "/home/lizufan/riscv-lab/r2s1-firstdot-20261024-1458/usage-check-02/example-compile.stdout.log",
+      "stderr": "/home/lizufan/riscv-lab/r2s1-firstdot-20261024-1458/usage-check-02/example-compile.stderr.log"
+    },
+    {
+      "argv": [
+        "/usr/bin/riscv64-linux-gnu-ld",
+        "-r",
+        "--no-relax",
+        "/home/lizufan/riscv-lab/r2s1-firstdot-20261024-1458/usage-check-02/app.o",
+        "/home/lizufan/riscv-lab/r2s1-firstdot-20261024-1458/library-01/libfirstdot_gemv.a",
+        "-o",
+        "/home/lizufan/riscv-lab/r2s1-firstdot-20261024-1458/usage-check-02/app-firstdot.o"
+      ],
+      "cwd": "/home/lizufan/riscv-lab/r2s1-firstdot-20261024-1458/source",
+      "started": "2026-10-24T08:47:06.603203+00:00",
+      "finished": "2026-10-24T08:47:06.605461+00:00",
+      "exit_code": 0,
+      "stdout": "/home/lizufan/riscv-lab/r2s1-firstdot-20261024-1458/usage-check-02/example-link.stdout.log",
+      "stderr": "/home/lizufan/riscv-lab/r2s1-firstdot-20261024-1458/usage-check-02/example-link.stderr.log"
+    }
+  ],
+  "new_emu_runs": 0,
+  "example_executed": false,
+  "performance_measured": false,
+  "artifacts": {
+    "rebuilt-gemv.o": "b65d4ca4faf3550ad2e95d3fb7d1d452923b71ae50776420bfcd679d098238af",
+    "app.c": "fda1c714fb37c03f7efed84c9ab064a5b3caa5a7db858b36e305ed09be4b7eb4",
+    "example-link.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "example-link-driver.json": "acbee72ec6526c290dea24159c72d6ff446e793e2870b5cbf3f9c4f3ea5b8dd5",
+    "source-rebuild-driver.json": "db68e5fd934799fc173943a17c637a33a8e19dbdc216e222a66c9c513ed4518d",
+    "example-compile.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app.o": "caeffbf9539a282f14048eef24fa29464e7d33ed9eb63d5c192064dc3d92b5a2",
+    "example-compile.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source-rebuild.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app-firstdot.o": "82d2a30ad8b42b767f88701a92366f6fd2bb5cc290134686581b449fc9134bb3",
+    "example-link.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source-rebuild.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "example-compile-driver.json": "cbfd208025a6ee0eb8827230c90abab136be6f59ec6c8fc553b9b794bb040855"
+  }
+}

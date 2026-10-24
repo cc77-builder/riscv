@@ -1,0 +1,24 @@
+{
+  "time": "2026-10-24T07:12:33.150750+00:00",
+  "cpu": [
+    "    PID    PPID %CPU %MEM COMMAND         COMMAND",
+    "      1       0  7.5  0.0 systemd         /sbin/init",
+    "    194       1  2.5  0.1 networkd-dispat /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers",
+    "    197       1  2.5  0.2 snapd           /usr/lib/snapd/snapd",
+    "     58       1  2.0  0.0 systemd-journal /lib/systemd/systemd-journald",
+    "    332       1  2.0  0.0 systemd         /lib/systemd/systemd --user",
+    "     83       1  1.5  0.0 systemd-udevd   /lib/systemd/systemd-udevd",
+    "    222       1  1.5  0.1 unattended-upgr /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal",
+    "    299     298  1.0  0.0 python3         python3 -c import pathlib,subprocess,json,datetime root=pathlib.Path(\"/home/lizufan/riscv-lab/r2s1-firstdot-20261024-1458\") src=root/'source' cmd=['taskset','-c','0-3','python3','-B',str(src/'team/optimizations/o2/r2-vector-accum/test_firstdot.py'),'--repo',str(src),'--build',str(root/'build-probe-01'),'--output',str(root/'host-03.json')] p=subprocess.run(cmd,cwd=src,text=True,capture_output=True) v=dict(argv=cmd,exit_code=p.returncode,stdout=p.stdout,stderr=p.stderr,finished=datetime.datetime.now(datetime.timezone.utc).isoformat()) (root/'host-03-driver.json').write_text(json.dumps(v,indent=2)+'\\n') print(json.dumps(v),flush=True) if p.returncode:raise SystemExit(p.returncode) v=dict(time=datetime.datetime.now(datetime.timezone.utc).isoformat(),cpu=subprocess.check_output(['ps','-eo','pid,ppid,pcpu,pmem,comm,args','--sort=-pcpu'],text=True).splitlines()[:18],memory=subprocess.check_output(['free','-m'],text=True)) (root/'resource-preflight-01.json').write_text(json.dumps(v,indent=2)+'\\n') print(json.dumps(v),flush=True) ",
+    "    149       1  0.5  0.0 systemd-resolve /lib/systemd/systemd-resolved",
+    "    150       1  0.5  0.0 systemd-timesyn /lib/systemd/systemd-timesyncd",
+    "    198       1  0.5  0.0 systemd-logind  /lib/systemd/systemd-logind",
+    "    268       1  0.5  0.0 systemd-timedat /lib/systemd/systemd-timedated",
+    "      2       1  0.0  0.0 init-systemd(Ub /init",
+    "      7       2  0.0  0.0 init            plan9 --control-socket 7 --log-level 4 --server-fd 8 --pipe-fd 10 --log-truncate",
+    "     89      83  0.0  0.0 systemd-udevd   /lib/systemd/systemd-udevd",
+    "     90      83  0.0  0.0 systemd-udevd   /lib/systemd/systemd-udevd",
+    "     91      83  0.0  0.0 systemd-udevd   /lib/systemd/systemd-udevd"
+  ],
+  "memory": "               total        used        free      shared  buff/cache   available\nMem:           15717         448       14818           3         450       15070\nSwap:           4096           0        4096\n"
+}
