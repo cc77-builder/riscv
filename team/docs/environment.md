@@ -19,6 +19,16 @@
 
 **来源与限制：** 2026-10-24 R4 调用入口发布前，一次从 WSL 跨到 Windows 工作树的最终检查在约 300 秒超时，确认未提交、无残留进程和索引锁后，使用 Windows 原生 Git 完成剩余检查与提交（[原始发布检查](../optimizations/o2/r2-select/evidence/entry-runtime-v1/publication-check.json)、[Issue 记录](https://github.com/cc77-builder/riscv/issues/2#issuecomment-6376672788)）。两次执行并非严格的同命令 A/B 基准，不能据此宣称任意 Git 操作有固定加速比例。若某任务实测另一种放置更合理，可保留证据后调整；正确性与可复现性优先。
 
+## 2026-10-25 空间整理与保全接续
+
+本轮只清理明确结束任务的 1,038 项精确缓存／生成中间文件，原分配量 1.2696 GiB；26,064 项保护文件前后 SHA 相同。T17 生成 C++ 的原字节压缩保存在独立恢复根，原再生成超时证据保留，不记作重建 PASS。最终 EMU、参考、flash、AM 交付库、Git 供体链、冻结输入／波形和失败证据保留。不要直接运行会连最终 EMU 一起删除的官方清理目标。
+
+七个历史审计检出共 5.7577 GiB 已做完整工作树／Git／元数据归档和实际恢复验证；**原七目录尚未退役**。原件清单、独立恢复入口、运行回执、有限 Git 换行状态差异以及 Windows 外部收拢的独立复核，见[空间清理与恢复记录](../evidence/environment-space-20261025/README.md)。三个物理恢复根必须保留；仓库证据包不包含其全部大恢复载荷。删除源码副本需要具体保留形式的决定和执行前重新核验，不由 DONE 自动授权。
+
+恢复检查还发现原 `team/** text eol=lf` 会转换一份冻结 gzip 和一份 CRLF CSV。本轮为两份精确证据路径增加 `-text` 规则，工作树和 staged 属性均核对，原载荷／索引 blob 不变；不批量 renormalize 历史证据。
+
+22:59 UTC 实测 Linux 已用 42.2188 GiB，VHDX 长度及宿主 API 报告为 51.4883 GiB；删除 Linux 文件没有自动使 VHDX 长度缩小。当前 `C:\Users\LiZufan\.wslconfig` 不存在，Linux `MemTotal` 16,094,264 KiB、swap 4,194,304 KiB。下节 20 GB／16 GB 是 2026-10-09 历史配置，不能当作现状或未经请求直接重新设置。本轮未 shutdown、改 swap、trim 或压缩 VHDX。
+
 ## WSL 内存
 
 在 Windows 的 `%UserProfile%\.wslconfig` 中设置：
