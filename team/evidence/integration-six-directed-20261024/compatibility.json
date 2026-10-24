@@ -1,0 +1,152 @@
+{
+  "status": "UPSTREAM_SIX_COMPATIBILITY_REPLAY_PASS",
+  "revision": "c9132b8d7f284ad7e76550315214b5b2ca431f79",
+  "environment": {
+    "PATH": "/home/amesotten/.cache/codex-rvinno/o5-fullcore-20261021/tools:/usr/bin:/bin",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "UTC"
+  },
+  "steps": [
+    {
+      "name": "clone",
+      "command": [
+        "git",
+        "clone",
+        "--shared",
+        "--no-checkout",
+        "-c",
+        "core.autocrlf=false",
+        "/home/amesotten/.cache/codex-rvinno/integration-six-20261024/repo",
+        "/home/amesotten/.cache/codex-rvinno/integration-six-20261024/replay-01/source"
+      ],
+      "cwd": null,
+      "started": "2026-10-24T03:51:27.011150+00:00",
+      "exit_code": 0,
+      "finished": "2026-10-24T03:51:27.140712+00:00",
+      "log_sha256": "d051860cc34a40668b39b0f72838ffd8372c26a2c0022371102493ed3b7bd106"
+    },
+    {
+      "name": "sparse",
+      "command": [
+        "git",
+        "-C",
+        "/home/amesotten/.cache/codex-rvinno/integration-six-20261024/replay-01/source",
+        "sparse-checkout",
+        "set",
+        "--no-cone",
+        "/team/",
+        "!/team/evidence/",
+        "!/team/**/evidence/"
+      ],
+      "cwd": null,
+      "started": "2026-10-24T03:51:27.141564+00:00",
+      "exit_code": 0,
+      "finished": "2026-10-24T03:51:27.147099+00:00",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "checkout",
+      "command": [
+        "git",
+        "-C",
+        "/home/amesotten/.cache/codex-rvinno/integration-six-20261024/replay-01/source",
+        "checkout",
+        "--detach",
+        "c9132b8d7f284ad7e76550315214b5b2ca431f79"
+      ],
+      "cwd": null,
+      "started": "2026-10-24T03:51:27.147375+00:00",
+      "exit_code": 0,
+      "finished": "2026-10-24T03:51:29.197326+00:00",
+      "log_sha256": "1d11fdda271c053c7331039e931daccb30f0b0d8c9814a62f4e623744193a391"
+    },
+    {
+      "name": "evidence",
+      "command": [
+        "git",
+        "-C",
+        "/home/amesotten/.cache/codex-rvinno/integration-six-20261024/replay-01/source",
+        "restore",
+        "--worktree",
+        "--ignore-skip-worktree-bits",
+        "--",
+        "team/optimizations/o2/fullcore/evidence",
+        "team/optimizations/o2/r2-select/evidence",
+        "team/optimizations/o2/r2-vector-accum/evidence",
+        "team/evidence/t10-t11-fullcore-20261013/matrix/negative-fixture.c"
+      ],
+      "cwd": null,
+      "started": "2026-10-24T03:51:29.198094+00:00",
+      "exit_code": 0,
+      "finished": "2026-10-24T03:51:31.044524+00:00",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "merge-audit",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/amesotten/.cache/codex-rvinno/integration-six-20261024/replay-01/source/team/optimizations/o2/fullcore/merged_regression_evidence.py",
+        "audit",
+        "--archive",
+        "/home/amesotten/.cache/codex-rvinno/integration-six-20261024/replay-01/source/team/optimizations/o2/fullcore/evidence/merged-regression-v1/archive",
+        "--output",
+        "/home/amesotten/.cache/codex-rvinno/integration-six-20261024/replay-01/merge-audit.json"
+      ],
+      "cwd": "/home/amesotten/.cache/codex-rvinno/integration-six-20261024/replay-01/source",
+      "started": "2026-10-24T03:51:31.044950+00:00",
+      "exit_code": 0,
+      "finished": "2026-10-24T03:51:52.749296+00:00",
+      "log_sha256": "291353e942176700c52eec4dc19232edc33c73a7f8d9e9f21c0609ed441202fe"
+    },
+    {
+      "name": "selection-export",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/amesotten/.cache/codex-rvinno/integration-six-20261024/replay-01/source/team/optimizations/o2/r2-select/selection.py",
+        "--repo",
+        "/home/amesotten/.cache/codex-rvinno/integration-six-20261024/replay-01/source",
+        "--action",
+        "export",
+        "--bundle",
+        "/home/amesotten/.cache/codex-rvinno/integration-six-20261024/replay-01/selected-images",
+        "--report",
+        "/home/amesotten/.cache/codex-rvinno/integration-six-20261024/replay-01/selection-export.json"
+      ],
+      "cwd": "/home/amesotten/.cache/codex-rvinno/integration-six-20261024/replay-01/source",
+      "started": "2026-10-24T03:51:52.749847+00:00",
+      "exit_code": 0,
+      "finished": "2026-10-24T03:51:57.128848+00:00",
+      "log_sha256": "e66b383fd0e5e273053984122e22c4c08199a9a62899b5eeab0aa3d5f71381ba"
+    },
+    {
+      "name": "c-and-matrix-audit",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/amesotten/.cache/codex-rvinno/integration-six-20261024/replay-01/source/team/optimizations/o2/r2-select/entry_c_evidence.py",
+        "--repo",
+        "/home/amesotten/.cache/codex-rvinno/integration-six-20261024/replay-01/source",
+        "--action",
+        "audit",
+        "--archive",
+        "/home/amesotten/.cache/codex-rvinno/integration-six-20261024/replay-01/source/team/optimizations/o2/r2-select/evidence/c-api-v1",
+        "--matrix",
+        "/home/amesotten/.cache/codex-rvinno/integration-six-20261024/replay-01/source/team/optimizations/o2/r2-select/evidence/entry-v1",
+        "--output",
+        "/home/amesotten/.cache/codex-rvinno/integration-six-20261024/replay-01/c-and-matrix-audit.json"
+      ],
+      "cwd": "/home/amesotten/.cache/codex-rvinno/integration-six-20261024/replay-01/source",
+      "started": "2026-10-24T03:51:57.129358+00:00",
+      "exit_code": 0,
+      "finished": "2026-10-24T03:52:45.233796+00:00",
+      "log_sha256": "373f287ed728c84077c007449492e0b3f11868ed327d5050b8d73cce940d1328"
+    }
+  ],
+  "new_emu_runs": 0,
+  "current_hardware_qualified": false,
+  "historical_environment_fully_bound": false,
+  "finished": "2026-10-24T03:52:45.234210+00:00"
+}

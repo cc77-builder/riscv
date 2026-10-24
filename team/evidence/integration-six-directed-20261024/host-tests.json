@@ -1,0 +1,50 @@
+[
+  {
+    "name": "fullcore",
+    "command": [
+      "python3",
+      "-OO",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "team/optimizations/o2/fullcore",
+      "-p",
+      "test_*.py"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "partial",
+    "command": [
+      "python3",
+      "-OO",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "team/optimizations/o2/fullcore/partial_kill",
+      "-p",
+      "test_*.py"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "live-guards",
+    "command": [
+      "python3",
+      "-OO",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "team/optimizations/o2/r2-select",
+      "-p",
+      "test_live_guards.py"
+    ],
+    "exit_code": 0
+  }
+]

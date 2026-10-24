@@ -20,3 +20,5 @@ python3 -B team/optimizations/o2/fullcore/partial_kill/run.py \
 运行源码必须已提交；实际构建源码、生成语料、ELF/BIN、原始双流、命令、完整环境、退出码及来源记录保留在输出。新运行前后核验原硬件依赖与参考模型，不改原构建树。O1/O2 的生产默认开关保持关闭；测试使用已有明确启用 O2 观测的实验 EMU。
 
 主机测试：`python3 -B -m unittest discover -s team/optimizations/o2/fullcore/partial_kill -p 'test_*.py'`。模拟 UART 的单元测试只核查拒错逻辑，不提供硬件覆盖。
+
+实测已完成：128试验、640退休、全宽/CSR/严格轨迹通过，PARTIAL_KILL=0、STALL=0；不继续扩大相同扫描，G3仍未闭合。证据与下一候选依据见[整合记录](../../../../docs/latest-integration-20261023.md#定向-v2-实测终态与取舍)和[封存清单](../../../../evidence/integration-six-directed-20261024/manifest.json)。
