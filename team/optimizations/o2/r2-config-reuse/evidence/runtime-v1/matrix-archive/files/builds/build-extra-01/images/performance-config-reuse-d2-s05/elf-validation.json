@@ -1,0 +1,106 @@
+{
+  "status": "S3_LINKED_CALLABLE_MODEL_PASS_NOT_DIFFTEST",
+  "kernels": [
+    {
+      "id": "gemv-16x64-endtoend-basic-vdot",
+      "api_symbol": "r4_gemv_16x64_basic_vdot",
+      "api_pc": 2147492580,
+      "api_sha256": "0bca11ba99695b90c726b5be678ecc904067a3861940ebd1423a7fb9cfcfd732",
+      "body_instructions": 1013,
+      "invocation_instructions": 1020,
+      "entry_overhead_instructions": 7,
+      "counts": {
+        "addi": 274,
+        "csrwi": 2,
+        "vadd.vv": 112,
+        "vdot.vv": 128,
+        "vle8.v": 256,
+        "vs1r.v": 16,
+        "vsetivli": 225
+      },
+      "semantics": {
+        "trials": 9,
+        "full128": true,
+        "bounded_reads": true,
+        "poisoned_initial_registers": true
+      }
+    },
+    {
+      "id": "gemv-16x64-endtoend-basic-rvv",
+      "api_symbol": "r4_gemv_16x64_basic_rvv",
+      "api_pc": 2147500772,
+      "api_sha256": "6120d030ff0554a290808e8c558c37574126e484c16b921e349801f2049efc80",
+      "body_instructions": 582,
+      "invocation_instructions": 589,
+      "entry_overhead_instructions": 7,
+      "counts": {
+        "addi": 146,
+        "csrwi": 2,
+        "vle8.v": 128,
+        "vmv.v.i": 16,
+        "vs1r.v": 16,
+        "vsetivli": 146,
+        "vwmul.vv": 64,
+        "vwredsum.vs": 64
+      },
+      "semantics": {
+        "trials": 9,
+        "full128": true,
+        "bounded_reads": true,
+        "poisoned_initial_registers": true
+      }
+    },
+    {
+      "id": "gemv-16x64-endtoend-reuse-vdot",
+      "api_symbol": "r4_gemv_16x64_reuse_vdot",
+      "api_pc": 2147508964,
+      "api_sha256": "fa182f5acbbeac8edd3db7efb729c242f77d83786435713861b5f29b6a2d3e57",
+      "body_instructions": 605,
+      "invocation_instructions": 612,
+      "entry_overhead_instructions": 7,
+      "counts": {
+        "addi": 154,
+        "csrwi": 2,
+        "vadd.vv": 112,
+        "vdot.vv": 128,
+        "vle8.v": 136,
+        "vs1r.v": 16,
+        "vsetivli": 57
+      },
+      "semantics": {
+        "trials": 9,
+        "full128": true,
+        "bounded_reads": true,
+        "poisoned_initial_registers": true
+      }
+    },
+    {
+      "id": "gemv-16x64-endtoend-reuse-rvv",
+      "api_symbol": "r4_gemv_16x64_reuse_rvv",
+      "api_pc": 2147517156,
+      "api_sha256": "902d7053a5d589be80cd29ad6426c3bcbc81a11f79d92e30385b0b328dd3a4d5",
+      "body_instructions": 355,
+      "invocation_instructions": 362,
+      "entry_overhead_instructions": 7,
+      "counts": {
+        "addi": 86,
+        "csrwi": 2,
+        "vle8.v": 68,
+        "vmv.v.i": 16,
+        "vs1r.v": 16,
+        "vsetivli": 39,
+        "vwmul.vv": 64,
+        "vwredsum.vs": 64
+      },
+      "semantics": {
+        "trials": 9,
+        "full128": true,
+        "bounded_reads": true,
+        "poisoned_initial_registers": true
+      }
+    }
+  ],
+  "elf_sha256": "b3e91a57c5015a3f325eb12b78b0e024499ca09fc2eb2fd4453d371bc9c7aff9",
+  "image_sha256": "3b07acbb0e40a29842b198376e6ab689806ab17fbf3a3c4e453b36fd176a57bd",
+  "contract": "r2-s3-config-reuse-runtime-v1"
+}

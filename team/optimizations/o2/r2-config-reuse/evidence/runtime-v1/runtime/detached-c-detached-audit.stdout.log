@@ -1,0 +1,77 @@
+{
+  "status": "S3_C_APPLICATION_ARCHIVE_RAW_AUDIT_PASS",
+  "contract": "r2-s3-config-reuse-c-application-v1",
+  "proof": {
+    "contract": "r2-s3-config-reuse-c-application-v1",
+    "distinct_cases": 48,
+    "public_functions": 16,
+    "normal_case_executions": 96,
+    "original_emu_processes": 3,
+    "expected_negative_runs": 1,
+    "ordinary_c_caller_executed": true,
+    "performance_measured": false,
+    "whole_suite_acceptance": false,
+    "physical_external_inputs_revalidated": false,
+    "new_emu_runs": 0,
+    "new_nemu_runs": 0,
+    "status": "R4_C_APPLICATION_ARCHIVE_RAW_AUDIT_PASS",
+    "archive": {
+      "files": 137,
+      "raw_bytes": 17542224,
+      "stored_bytes": 1226531,
+      "archive_manifest_sha256": "4e872d8aeb752145127fa8221a60098de6be1b7f110a858402ec0b428e776604"
+    },
+    "matrix_manifest_sha256": "0310fa0f2b3edc2851bb4e16d95b4ee994822ac911c2e448c905d194f9406be2",
+    "matrix_status": "S3_ARCHIVE_ARCHITECTURE_COUNTER_TRACE_PASS"
+  }
+}
+{
+  "status": "T17_DETACHED_AUDIT_PASS",
+  "started": "2026-10-24T12:04:18.822348+00:00",
+  "finished": "2026-10-24T12:05:01.170889+00:00",
+  "checkout": "/home/lizufan/riscv-lab/r2s3-runtime-detached-20261024-1818/source",
+  "revision": "43e562d5e174763d9469b6c1c2124df0d60dc576",
+  "execution_cwd": "/home/lizufan/riscv-lab/r2s3-runtime-detached-20261024-1818/source",
+  "build_present": false,
+  "out_present": false,
+  "script": "/home/lizufan/riscv-lab/r2s3-runtime-detached-20261024-1818/source/team/optimizations/o2/r2-config-reuse/c_evidence.py",
+  "script_sha256": "43e8afdab72ed2bae124806cd27b19d57af974407ebeda84fb03d01e913411b6",
+  "launcher_sha256": "57f31bb70dafa3154dc22e09c635dde1f4c140405717d98053d781dc2ca43cd4",
+  "arguments": [
+    "--repo",
+    "/home/lizufan/riscv-lab/r2s3-runtime-detached-20261024-1818/source",
+    "--identity",
+    "/home/lizufan/riscv-lab/r2s3-runtime-detached-20261024-1818/source/team/optimizations/o2/repro/evidence/clean-reproduction-v1/reports/identity-02.json",
+    "--matrix",
+    "/home/lizufan/riscv-lab/r2s3-runtime-detached-20261024-1818/source/team/optimizations/o2/r2-config-reuse/evidence/runtime-v1/matrix-archive",
+    "--action",
+    "audit",
+    "--archive",
+    "/home/lizufan/riscv-lab/r2s3-runtime-detached-20261024-1818/source/team/optimizations/o2/r2-config-reuse/evidence/runtime-v1/c-archive",
+    "--output",
+    "/home/lizufan/riscv-lab/r2s3-runtime-detached-20261024-1818/reports/c-detached-audit.json"
+  ],
+  "denied_roots": [
+    "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818",
+    "/home/lizufan/riscv-lab/t17-clean-20261024-0854",
+    "/home/lizufan/riscv-lab/r2s1-firstdot-20261024-1458",
+    "/home/riscv/riscv-lab/t12-regression-20261013"
+  ],
+  "auditor_output": {
+    "path": "/home/lizufan/riscv-lab/r2s3-runtime-detached-20261024-1818/reports/c-detached-audit.json",
+    "sha256": "6c76ec251d539dfd7bfef24e12b709d6f9f5ea3015a58a461fddc497d5b452cd"
+  },
+  "guard_self_test": true,
+  "event_counts": {
+    "open": 28413,
+    "os.listdir": 100,
+    "subprocess.Popen": 36,
+    "os.scandir": 3928
+  },
+  "rejected_runtime_accesses": [],
+  "auditor_succeeded": true,
+  "error": null,
+  "new_emu_runs": 0,
+  "new_nemu_runs": 0,
+  "scope": "Python file/enumeration access and explicit subprocess arguments; not an OS sandbox or clean-machine installation"
+}

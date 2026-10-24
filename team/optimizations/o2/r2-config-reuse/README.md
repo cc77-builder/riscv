@@ -1,8 +1,8 @@
 # R2-S3：重复向量配置候选
 
-本目录交付 firstdot 之后的独立软件候选。**当前只完成状态证明、真实LLVM汇编及编译后主机模型检查；尚不能作为新的稳定库或性能获选版本。**
+本目录保留 firstdot 之后的重复配置删除候选及原主机证明，并提供独立 GNU/整核验证、普通 C 入口和可选静态库。**当前运行资格与四形状采用决定见 [RUNTIME_RESULT.md](RUNTIME_RESULT.md)，实际使用、复算及回退见 [RUNTIME_README.md](RUNTIME_README.md)。**
 
-结论和实测边界见 [RESULT.md](RESULT.md)，删除规则、初始状态、反例及整核进入条件见 [CONTRACT.md](CONTRACT.md)。稳定使用继续从 [R5入口](../r2-select/STABLE.md) 或已合格的 [firstdot库](../r2-vector-accum/FIRSTDOT_README.md) 进入。
+下面保留原主机阶段的生成与检查入口。该阶段的历史结论见 [RESULT.md](RESULT.md)，删除规则、初始状态和反例见 [CONTRACT.md](CONTRACT.md)；新增运行及C边界分别见 [运行合同](RUNTIME_CONTRACT.md) 和 [C合同](C_CONTRACT.md)。[R5稳定入口](../r2-select/STABLE.md) 与 [firstdot库](../r2-vector-accum/FIRSTDOT_README.md) 继续保留。
 
 ## 生成可比较源码
 
@@ -21,11 +21,11 @@ python3 "$repo/team/optimizations/o2/r2-config-reuse/candidate.py" \
 
 shard 1/3/5/7 分别对应4×8、8×32、16×64、4×13；仅生成原C ABI endtoend边界。vdot/RVV、basic/reuse均在每个图内。`kernels.S/cases.h/gemv.S/gemv.h`复用原wrapper与输入布局，manifest明确`runtime_qualified=false`，并逐项记录删除位置及其支配配置。
 
-这些生成物仍使用原harness内部符号，供验证适配。它们不是新增的合格公共库，没有安装、默认切换或稳定ABI发布入口。不能把新manifest传给冻结firstdot运行器后忽略身份拒绝。
+这些生成物仍使用原harness内部符号，供验证适配，不能直接充当合格公共库。普通C公共源由本轮独立运行适配导出，使用不同命名空间；不能把本生成器的新manifest传给冻结firstdot运行器后忽略身份拒绝。
 
 ## 重做本阶段主机验证
 
-本轮实际环境为Linux、Python3.12.14、LLVM20.1.2动态库。代码使用标准库，通过LLVM C API调用RISC-V汇编后端；不需要安装Python第三方包。本轮没有安装或修改用户本机工具。
+原主机阶段实际环境为Linux、Python3.12.14、LLVM20.1.2动态库。代码使用标准库，通过LLVM C API调用RISC-V汇编后端；不需要安装Python第三方包。该主机阶段没有安装或修改用户本机工具。
 
 ```bash
 python3 "$repo/team/optimizations/o2/r2-config-reuse/check.py" \
@@ -55,8 +55,8 @@ python3 -m unittest discover \
 
 ## 接续与回退
 
-下一执行者先读协作Issue，核实实际工作区和运行，再认领R2-S3。本轮没有访问Windows来源树，不能凭本结果推断其HEAD或空闲状态。
+原主机阶段、GNU适配、固定布局性能矩阵和普通C交付的证据分开保存，不将历史主机PASS当作实跑资格。当前源码/工作区/真实进程与发布状态见 [运行定位](evidence/runtime-v1/runtime/locations.json) 和 [Issue #2](https://github.com/cc77-builder/riscv/issues/2)。
 
-整核阶段还需独立身份的GNU/nexus-AM构建及验证适配、固定完整加载布局、真实负控/同BIN恢复、同入口强RVV与重放。先做8×32/dataset0的有界筛选，有明确周期收益再扩大，详见合同第4节。
+已完成的探针和矩阵不需要重复启动。新caller、布局、工具链或应用需要按变化影响验证；继续优化时先提出有数据依据的假设，以最快合格RVV走相同调用路径进行有界比较。不能把固定GEMV函数窗口的收益当作完整应用或硬件PPA收益。
 
-本候选没有接入任何默认入口，因此保留现有R5和firstdot版本即可继续正常使用；不需要撤销硬件或回滚稳定库。
+本候选使用独立 `config_reuse_gemv_*` 入口，原R5默认和firstdot公共库保留。回退通过选择原入口并重新编译调用端完成，具体命令见 [使用与回退](RUNTIME_README.md#5-回退)。
