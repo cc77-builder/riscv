@@ -1,0 +1,1038 @@
+{
+  "schema": "xiangshan.issue2.comments.archive.v1",
+  "repository": "cc77-builder/riscv",
+  "issue_number": 2,
+  "captured_utc": "2026-10-24T12:43:46.5766027Z",
+  "issue_title": "[协作] zufan 双人 Agent：任务认领、运行保护与集成窗口",
+  "issue_body": "本 Issue 是 `cc77-builder/riscv:zufan` 的双人 Agent 协调入口。\n\n**启用状态：已启用，规则已推送到团队分支。当前认领、运行保护和发布窗口以最新实际事件为准。** 成员开始或恢复工作时，先核对已有任务、未结束发布窗口及受保护运行；不要根据空白记录或远端静止猜测队友空闲。\n\n当前仓库入口：[AGENTS.md](https://github.com/cc77-builder/riscv/blob/zufan/AGENTS.md)、[开发路线](https://github.com/cc77-builder/riscv/blob/zufan/team/docs/development-route-current.md)、[协作约定](https://github.com/cc77-builder/riscv/blob/zufan/team/docs/collaboration-current.md)、[开发计分板](https://github.com/cc77-builder/riscv/blob/zufan/%E5%BC%80%E5%8F%91%E8%AE%A1%E5%88%86%E6%9D%BF.md)。规则只在仓库协作入口维护，Issue 用于实际事件；下面保留登记模板，不复制工程路线和实验日志。工程目标为满足赛题技术要求并持续提高性能，比赛材料与赛事提交由成员另行安排。\n\n本 Issue 平时只记录**哪个 Agent 认领了哪个准确叶级任务包**及与他人的实际冲突；只有准备向 `zufan` 推送才登记短暂集成窗口。普通包内步骤不需重复登记。\n\n## WORK：开始认领\n\n```text\nWORK | <唯一操作ID> | <工作包ID，如 R2-S2> | @<真实GitHub账号>/Agent | <含时区时间>\n基点：<完整SHA>；工作区/本地分支：<标识>\n范围：<拟改文件、公共生成器/接口、共享输入>\n运行/资源：<实际任务ID、输出目录、同机重任务；无则写无>\n```\n\n发布后**重新读取**有效认领和最新活动；同包竞争以较小 GitHub 评论ID的有效 WORK 优先，后来者避让或协商拆包。Issue 非原子锁，不凭旧评论或无评论证明资源空闲。不同包仍检查共享生成器与构建输入。\n\n## UPDATE / READY / DONE / PAUSE / CANCEL\n\n```text\n<事件> | <同一操作ID> | <包ID> | <含时区时间>\n成果/变化：<简述；实际提交SHA；测试级别和证据链接>\n认领：<保留/释放>；受保护运行：<继续/终结/未知，含任务ID>\n```\n\nREADY 仍保留认领等待集成；DONE/CANCEL 结束认领；PAUSE 必须明确是否释放，未知运行保持保护。不用每日心跳、不用全员 ACK。\n\n交接复用 UPDATE：原执行者或获用户明确授权的实际成员写明旧操作ID、接手者、成果、认领释放/转交及残留运行；接手方 WORK 引用该事件。接管不自动停止进程或解除输入保护。\n\n## INTEGRATE：只在推送时\n\n```text\nINTEGRATE-BEGIN | <操作ID> | @<发布者> | <时间>\n目标：cc77-builder/riscv:zufan；预期远端SHA：<完整SHA>\n待推候选：<SHA、变更范围>；验证与剩余问题：<链接>\n```\n\n```text\nINTEGRATE-END / INTEGRATE-ABORT | <同一操作ID> | <时间>\n远端当前SHA：<完整SHA>；是否实际推送：<事实或待核实>\n验证结果/在途任务：<证据链接>；窗口：<释放/待核实>\n```\n\n发布 INTEGRATE-BEGIN 后立即回读全部有效窗口和相关活动，确认自己是唯一有效发布者；推送前再回读并核对远端。对同一目标同时申请时，较小评论ID的有效 BEGIN 优先，后来者用 ABORT 退出自己的申请。已有窗口、首次同步未完成或状态不明时先核实，不凭超时抢占。\n\n长构建与冲突修复在窗口外。仅经当前用户授权、核对最新远端、验证影响后正常快进推送；禁止强推及代签。长时间失联或未回复不视为窗口/包自动释放。\n\n评论积累后可写 SNAPSHOT，标明覆盖到的评论ID/链接，列齐全部未释放认领（含 READY、PAUSE 保留）、全部未结束或待核实的运行保护、全部未结束窗口，并链接最后有效事件。即使任务已 DONE/CANCEL/释放认领，残留运行仍保留。恢复时读完整摘要及后续评论；摘要有缺项或冲突就回读原事件，遗漏不等于释放。无需第二套实时状态表。\n\r\n",
+  "captured_issue_count": 114,
+  "comment_count": 114,
+  "comments": [
+    {
+      "id": 6359269495,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T06:52:00Z",
+      "updated_at": "2026-10-23T06:52:00Z",
+      "body": "WORK | 20261023-LiZufan001-collab-final-01 | 用户指定协作维护/集成准备 | @LiZufan001 / Agent | 2026-10-23T06:51:58.000Z\n\n本地修订已完成，本条登记当前的提交与发布准备，不补造早先的认领。\n\n- 基点：`6d2abe403b07c297b8830a7d4f06e370b0a8e070`；工作区标识 `working-zufan-full-20261022`，本地分支 `zufan`。\n- 本轮修改范围：AGENTS、当前路线、协作约定、现有 Issue 模板、S2 验证说明和开发计分板，共 6 份现有文档；不占 S1/S2 实现包。\n- 提交准备同时保留此前已有的文档归档与 S2 配置迁移改动；本轮未改运行脚本，未新增仓库文件。\n- 验证：124 份文档文件链接/锚点、Git 静态检查及原脚本/历史文件哈希检查 PASS。真实双 Agent 试运行、EMU/DiffTest/PPA 未运行。\n- 本操作没有后台构建、仿真、受保护运行或共享分支发布窗口；其他成员已有活动仍待本人核实。\n- 用户已授权本地修订及提交、推送或发布 Issue。此时尚未推送；首次同步待完成，不据新 Issue 的空白记录假定队友空闲。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6359269495",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6359269495"
+    },
+    {
+      "id": 6359331181,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T06:56:14Z",
+      "updated_at": "2026-10-23T06:56:14Z",
+      "body": "READY | 20261023-LiZufan001-collab-final-01 | 用户指定协作维护/集成准备 | 2026-10-23T06:56:12Z\n\n本地已完成两项提交，工作区干净：\n- `c95ece60883ee02be5992484246b5e930e998de0`：单独提交本轮开始前已有的 S2 回执配置迁移及测试，4 个文件。本轮没有修改其内容。\n- `cd1be4d0bceb7927fdd5a60508493d00fa341e36`：既有文档整理与本轮修订，25 份文档；本轮只修改其中 6 份现有文档，未新增仓库文件。旧入口归档及历史记录原文保留。\n\n验证：124 份活动文档的本地文件链接/锚点 PASS；活动文件 Git 静态检查 PASS；归档的 6 处既有 Markdown 两空格硬换行原样保留并单独核对；原运行脚本、配置、测试和历史文件的哈希保持。计分板历史行保持，本轮记录已写入。真实双 Agent 试运行、EMU/DiffTest/PPA 未运行。\n\n本地候选：`cd1be4d0bceb7927fdd5a60508493d00fa341e36`；刚核对的 origin/zufan：`6d2abe403b07c297b8830a7d4f06e370b0a8e070`，尚未推送。首次成员活动同步仍待真实参与者确认，不代签。\n认领：保留此次文档候选待集成；不占 R2-S1/R2-S2 工程包。受保护运行：本操作无；集成窗口：未开启，不阻止他人本地开发。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6359331181",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6359331181"
+    },
+    {
+      "id": 6359368478,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T06:58:48Z",
+      "updated_at": "2026-10-23T06:58:48Z",
+      "body": "INTEGRATE-BEGIN | 20261023-LiZufan001-collab-final-01 | @LiZufan001 / Agent | 2026-10-23T06:58:47Z\n\n目标：cc77-builder/riscv:zufan\n预期远端：`6d2abe403b07c297b8830a7d4f06e370b0a8e070`\n待推候选：`cd1be4d0bceb7927fdd5a60508493d00fa341e36`（含前置 `c95ece60883ee02be5992484246b5e930e998de0`）\n范围与验证：[READY](https://github.com/cc77-builder/riscv/issues/2#issuecomment-6359331181)。工作区干净，候选包含当前远端历史；只做正常快进推送。本操作无构建、仿真或受保护运行。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6359368478",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6359368478"
+    },
+    {
+      "id": 6359384803,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T06:59:56Z",
+      "updated_at": "2026-10-23T06:59:56Z",
+      "body": "INTEGRATE-END | 20261023-LiZufan001-collab-final-01 | 2026-10-23T06:59:54Z\n\n已正常快进推送，且从远端回读确认 `zufan` 为 `cd1be4d0bceb7927fdd5a60508493d00fa341e36`。\n- [S2 配置迁移既有改动](https://github.com/cc77-builder/riscv/commit/c95ece60883ee02be5992484246b5e930e998de0)\n- [文档与协作修订](https://github.com/cc77-builder/riscv/commit/cd1be4d0bceb7927fdd5a60508493d00fa341e36)\n\n验证范围沿用 READY；本次没有新增硬件或真实双 Agent 试运行结果。窗口：释放。\n\nDONE | 20261023-LiZufan001-collab-final-01 | 用户指定协作维护/集成准备 | 2026-10-23T06:59:54Z\n此次文档候选已交付，认领释放；本操作无残留运行或输入保护，不占任何工程实现包。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6359384803",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6359384803"
+    },
+    {
+      "id": 6359753602,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T07:24:37Z",
+      "updated_at": "2026-10-23T07:24:37Z",
+      "body": "WORK | 20261023-LiZufan001-requirements-prompt-01 | 用户指定赛题资料与跨轮接续说明 | @LiZufan001 / Agent | 2026-10-23T07:23:08Z\n基点 cd1be4d0bceb7927fdd5a60508493d00fa341e36；工作区 working-zufan-full-20261022 / zufan。\n范围：赛题截图转录及官方来源、AGENTS/README/路线导航、现有协作与计分板的跨轮交接说明；长期提示词作为本地配置草稿交付。不改工程脚本，不占 S1/S2；无后台运行或资源占用。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6359753602",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6359753602"
+    },
+    {
+      "id": 6360087195,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T07:45:30Z",
+      "updated_at": "2026-10-23T07:45:30Z",
+      "body": "READY | 20261023-LiZufan001-requirements-prompt-01 | @LiZufan001 / Agent | 2026-10-23 07:45:29 UTC\n\n候选 `ff58e519091f273c4bc177f5e82cfbbfaf102cc5`：新增根目录赛题要求与评分总览及三张原图，更新现有导航、跨轮接续与计分板；.gitattributes 仅为这三张 PNG 禁用文本转换。代码、运行脚本及历史记录保留。个人长期提示词另作本地文件交付，未改 PPA 配置、未触发投递。\n验证 PASS：7 份文档的 127 处本地链接／锚点；9 项评分合计 100；三张截图的源文件、工作树及 Git 暂存字节相同；5 份历史文件、4 条原计分板记录、上游 README 保留；Git 静态检查。硬件和双 Agent／PPA 长时试运行 NOT_TESTED。本操作无后台运行、输入保护或资源占用，不占工程实现包。\n\nINTEGRATE-BEGIN | 20261023-LiZufan001-requirements-prompt-01 | 2026-10-23 07:45:29 UTC\n目标 `cc77-builder/riscv:zufan`；预期远端 `cd1be4d0bceb7927fdd5a60508493d00fa341e36`；候选为上列 SHA。工作树干净，沿用用户既有发布授权；回读后仅正常快进推送。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6360087195",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6360087195"
+    },
+    {
+      "id": 6360100011,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T07:46:18Z",
+      "updated_at": "2026-10-23T07:47:36Z",
+      "body": "INTEGRATE-END | 20261023-LiZufan001-requirements-prompt-01 | 状态核对：2026-10-23 07:47:34 UTC\n\n已正常快进推送并回读确认 `zufan` 为 [ff58e519091f273c4bc177f5e82cfbbfaf102cc5](https://github.com/cc77-builder/riscv/commit/ff58e519091f273c4bc177f5e82cfbbfaf102cc5)。验证范围见 [READY](https://github.com/cc77-builder/riscv/issues/2#issuecomment-6360087195)。发布窗口释放。\n\nDONE | 20261023-LiZufan001-requirements-prompt-01\n本操作认领释放，无残留运行或输入保护。后续从根目录《赛题要求与评分总览》第 1/2/5 节、开发计分板和当前路线恢复工程；先核对实时认领与输入，再接续 R2-S2 或其他就绪独立包。本轮只交付要求索引与接续机制，没有新增硬件或性能结论。个人 PPA 提示词已在本地准备，未写入运行配置、未触发投递。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6360100011",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6360100011"
+    },
+    {
+      "id": 6360932650,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T08:37:02Z",
+      "updated_at": "2026-10-23T08:37:02Z",
+      "body": "WORK | 20261023-LiZufan001-r2s2-screen-1632 | R2-S2 | @LiZufan001 / Agent | 2026-10-23T16:35:00+08:00\n\n基点：`ff58e519091f273c4bc177f5e82cfbbfaf102cc5`；已核实来源工作区 `working-zufan-full-20261022` / `zufan`，干净，远端 origin 为本仓库。拟从该基点创建独立工作树 `working-r2s2-20261023-1632` / `work/r2s2-20261023-1632`，不共用他人的可写 index/输出。\n\n范围：`team/optimizations/o2/r2-safe-tail/` 的真实 ELF 构建、固定 B0/H1 输入检查、筛选入口及必要修复；相关测试/本地配置、结果与计分板。不改冻结的 candidate.py 语义、旧固定哈希或黄金数据；如发现必须调整身份，先保留旧合同并说明具体依据。\n\n目标：先判断 build_ready/runtime_ready，完成输入就绪部分的真实验证；正确性通过才进行公平周期筛选。\n\n运行/资源：此时无本操作后台任务；已实查 WSL Ubuntu-22.04 为 Stopped，未发现香山构建/EMU进程。仍将核对现有 state/日志及输入来源，再创建独立输出并启动重任务。Issue 原七条事件已完整阅读，两个旧操作均 DONE，无未结束窗口或已登记运行保护。只读复核代理不写文件、不认领其他包。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6360932650",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6360932650"
+    },
+    {
+      "id": 6360999289,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T08:41:00Z",
+      "updated_at": "2026-10-23T08:41:00Z",
+      "body": "UPDATE | 20261023-LiZufan001-r2s2-screen-1632 | R2-S2 | 2026-10-23 08:40:59 UTC\n\n独立工作区已创建并核实干净：`D:\\Projects\\competitions\\2026-10-CIE-RISCV-XiangShan\\working-r2s2-20261023-1632`，本地分支 `work/r2s2-20261023-1632`，基点仍为 `ff58e519091f273c4bc177f5e82cfbbfaf102cc5`。初次检出因 Windows 长路径中止，已在本独立副本启用原仓库同样的 core.longpaths 并补全检出；指定来源工作树未修改。\n\n输入事实：原 B0/H1 两个固定 EMU 与完整 generated-artifacts 实体在本机定向查找未找到；正常 NEMU/flash 与 GNU 工具存在。新合并 EMU 不替换旧 pins。先执行 `--action build` 的真实 26 ELF，旧 B0/H1 runtime 标为 BLOCKED。\n\n当前仅一项本操作构建：ChatPC PowerShell operation `903c2e31920b019807df1be742830a5d.fa9359745a34a8077b2bc44517396b50`；从固定 nexus-am 提交创建独立依赖并串行构建，不写共享 AM。输入工作区为上列独立副本；独立依赖/配置/日志/输出位于 `/home/lizufan/riscv-lab/r2-s2-20261023-1632`，真实 state 入口 `build-01/state.json`。此阶段不启动 EMU，不修改冻结 candidate.py。认领保留，发布窗口未开启。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6360999289",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6360999289"
+    },
+    {
+      "id": 6361035292,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T08:43:09Z",
+      "updated_at": "2026-10-23T08:43:09Z",
+      "body": "UPDATE | 20261023-LiZufan001-r2s2-screen-1632 | R2-S2 | 2026-10-23 08:43:08 UTC\n\n阶段成果：独立依赖构建与 `--action build` 已退出 0；`/home/lizufan/riscv-lab/r2-s2-20261023-1632/build-01/state.json` 为 `CANONICAL_ELFS_STATIC_PASS_RUNTIME_NOT_RUN`，26 ELF、0 EMU。原 WORK 中的时间为分钟级记录；实际本轮开始时间已由时钟记录为 2026-10-23T16:32:30+08:00，具体事件时间以 GitHub 为准。\n\n证据驱动的包内子项：旧 B0/H1 产物缺失，保留原入口/pins/合同。新增合并版单硬件 S0/S2 筛选：使用已实查构建源 `6d2abe403b07c297b8830a7d4f06e370b0a8e070`、EMU `1a23dbab5f919da0fb06873c5a4db3ce5fec9eea7dfb98860cdd5fa2b062ec63`、pins `2c580afa6095cda5e9d1680b7e91939b6f182b21c47357c77402c2d6b09d0a2c`。该实物有429源码、21236依赖、1672生成物和正常回归/补充记录；历史缺故障库的总验收边界仍保留。\n\n拟新增独立入口及其合同/测试，复用完整结果、机器码/CSR窗口和O2事务门禁；先S0/S2冒烟及新身份真实bit100负控/正常恢复，再做该硬件的24正式+4重放。只得出单硬件软件效应，不冒充旧B0/H1 60跑或合并整体验收。原candidate.py、旧固定哈希和黄金数据保持。\n\n范围新增：只读保护 `/home/lizufan/riscv-lab/xiangshan` 及其 `build/`、`/home/lizufan/riscv-lab/fullcore-6d2abe403-20261023-01/build-02`；新可写输入与输出仍在本独立工作区和上述r2-s2实验目录。此时无活跃构建/EMU，正式启动前再核对。认领保留，无集成窗口。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6361035292",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6361035292"
+    },
+    {
+      "id": 6361212458,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T08:53:39Z",
+      "updated_at": "2026-10-23T08:53:39Z",
+      "body": "UPDATE | 20261023-LiZufan001-r2s2-screen-1632 | R2-S2 | 2026-10-23 08:53:38 UTC\n\n独立新入口 `team/optimizations/o2/r2-safe-tail/merged_screen.py` 当前 SHA256 `ff75464c5b0f75349fc4321bdd80a7a85985a54ae415ad347c3ce04fdf4bd885`；原目录测试共71项通过，完整实物预检为 MERGED_SCREEN_PREFLIGHT_PASS（26 ELF、0 EMU）。实际构建脚本为外部 tools-attempt02/build_fullcore_local.py，已核对仅ROOT和资源参数差异，并按pins同时锁住原/实际两个脚本身份。\n\n已启动串行新合同运行：ChatPC operation `903c2e31920b019807df1be742830a5d.82d8b9bb1a558cc12e24b172fe4fa0e9`，Windows worker PID 339800；运行定位 `/home/lizufan/riscv-lab/r2-s2-20261023-1632/merged-run-01/state.json`，active_result / active_pid实时记录真正的EMU，driver日志在同级 merged-run-01.driver.*.log。先bit100预期拒错→同镜像正常恢复→S0冒烟，全过才24正式+4重放；1个EMU资源槽，不并行重任务。\n\n输入保护扩展：独立克隆内该运行入口及其runtime-inputs.json列出的源码/checker、/home/lizufan/riscv-lab/r2-s2-20261023-1632/build-01和独立deps/nexus-am、正常NEMU/flash；另继续保护此前登记的合并源码/build及build-02和实际外部builder。正在运行时这些输入不写入。新文档/独立离线复核可继续开发。认领保留；没有集成窗口；不替换旧B0/H1身份。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6361212458",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6361212458"
+    },
+    {
+      "id": 6361474916,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T09:08:57Z",
+      "updated_at": "2026-10-23T09:08:57Z",
+      "body": "UPDATE | 20261023-LiZufan001-r2s2-screen-1632 | R2-S2 | 2026-10-23 09:08:57 UTC\n\n真实阶段门禁已通过：bit100夹具新二进制SHA256 `6e8b3488bb4cc516f05a7aa81c40b9d5e66085e275d4fbe27da85f05748b9a5f`；S2负控exit=1，唯一vd20/PC 0x8000116c/word 0x03880a0b高位拒错及部分O2轨迹通过。随后同BIN的S2正常恢复exit=0，再S0 smoke exit=0，均通过完整ELF/黄金值/CSR/退休窗口/O2排空检查。原始记录在 `/home/lizufan/riscv-lab/r2-s2-20261023-1632/merged-run-01/runs/`。\n\n正式矩阵正在串行运行，当前state记录9次实际启动、7次正常已完成；尚未完成的矩阵不宣称最终PASS。已完成dataset0/16×64 core的S0/S2正式控制逐窗口cycles/instret/seq一致。下一步继续原31跑计划，再做封存及独立离线复算；运行输入保护和认领保持，无集成窗口。\n\n独立离线证据工具草稿正在隔离审查；不会修改当前运行入口及其输入。ChatPC本轮运行操作仍活跃，文档等未绑定输入的改动也暂存，待该资源锁释放后再转入独立克隆。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6361474916",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6361474916"
+    },
+    {
+      "id": 6362262393,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T09:54:45Z",
+      "updated_at": "2026-10-23T09:54:45Z",
+      "body": "UPDATE | 20261023-LiZufan001-r2s2-screen-1632 | R2-S2 | 2026-10-23 09:54 UTC\n\n原运行已于 09:52:38 UTC 正常完成：`merged-run-01/state.json` 为 `R2_S2_MERGED_SOFTWARE_SCREEN_PASS`，31 次实际 EMU（30 正常＋1 预期拒错）、384 正式窗口、4 次逐窗口重放，失败/未完成数 0；active_pid=null，旧 Python PID 406 已不存在，原 ChatPC operation 已 succeeded/exit0/cleanup_complete。此前长运行输入保护不再因活跃 EMU 占用；原输出与固定输入继续保持不变以供封存，认领保留。\n\n当前正在执行新增离线证据工具的实际 80 项主机测试（PASS）、封存和完整 Linux 架构/计数/事务复算，operation `903c2e31920b019807df1be742830a5d.8ee6a919467686c6502c03f0368d248a`；不启动新 EMU。归档目标为独立工作区 `team/optimizations/o2/r2-safe-tail/evidence/merged-screen-v1/`。范围增加仅该归档的 .gitattributes 原字节保护规则；原固定源码、黄金数据和旧合同保持。\n\n完整正式矩阵：4×13 reuse/endtoend 209.5→187.25 cycles，basic 246→298；最快 RVV=190。最终采用边界和可携带证据将在复算完成后发布，不冒充原 B0/H1 或 MERGE-REG 整套验收。无集成窗口。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6362262393",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6362262393"
+    },
+    {
+      "id": 6362508143,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T10:09:02Z",
+      "updated_at": "2026-10-23T10:09:02Z",
+      "body": "READY | 20261023-LiZufan001-r2s2-screen-1632 | R2-S2 | @LiZufan001 / Agent | 2026-10-23T10:08:52Z\n\n候选 `d5967731fad46e2f40527add35da1b0984bd17a4`，独立工作区 `working-r2s2-20261023-1632`，工作树干净。新增合并版单硬件运行/封存/原文复算/完整Git索引门禁，保留26 ELF和31实际运行的962项证据内容；共965个归档文件和元数据均已逐字节核对Git索引。现有candidate.py、黄金值、生产RTL及旧固定合同不改。\n\n验证 PASS：80项主机测试；30正常DiffTest＋1精确bit100拒错/同镜像恢复；384正式窗口、4次重放；完整Linux原文架构/计数/O2复算；Windows全部归档字节；6文档65处原链接及新索引回执链接检查，Git静态检查。新增索引门禁实测拒绝初始漏303文件，再补全通过。最终结果、合同、计分板和具体接续已入候选提交。\n取舍：4×13/reuse endtoend −10.621%，对较快RVV仅1.014686×；basic +21.138%保留S0，S2限定reuse进入R2-SELECT。原B0/H1 BLOCKED；MERGE-REG/T17/PPA不转移PASS。\n全部本操作EMU和离线复核已结束，退出0、清理完成，无残留受保护活跃运行；认领保留待发布。\n\nINTEGRATE-BEGIN | 20261023-LiZufan001-r2s2-screen-1632 | 2026-10-23T10:08:52Z\n目标 `cc77-builder/riscv:zufan`；刚实查预期远端 `ff58e519091f273c4bc177f5e82cfbbfaf102cc5`；候选 `d5967731fad46e2f40527add35da1b0984bd17a4`。已完整回读Issue，无其他未结束窗口。窗口仅用于正常快进推送，发布前再次回读及核对远端，不进行构建/仿真。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6362508143",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6362508143"
+    },
+    {
+      "id": 6362530683,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T10:10:21Z",
+      "updated_at": "2026-10-23T10:10:21Z",
+      "body": "INTEGRATE-END | 20261023-LiZufan001-r2s2-screen-1632 | 2026-10-23T10:09:53Z\n\n已正常快进推送并从远端回读确认 `zufan` 为 [d5967731fad46e2f40527add35da1b0984bd17a4](https://github.com/cc77-builder/riscv/commit/d5967731fad46e2f40527add35da1b0984bd17a4)。工作树干净；[结果与接续](https://github.com/cc77-builder/riscv/blob/d5967731fad46e2f40527add35da1b0984bd17a4/team/optimizations/o2/r2-safe-tail/MERGED_RESULT.md)、[复算合同](https://github.com/cc77-builder/riscv/blob/d5967731fad46e2f40527add35da1b0984bd17a4/team/optimizations/o2/r2-safe-tail/MERGED_SCREEN.md)、计分板及完整965文件归档均已交付。窗口释放。\n\nDONE | 20261023-LiZufan001-r2s2-screen-1632 | R2-S2合并版单硬件子项\n限定reuse进入选型，basic保留S0；原B0/H1缺实物继续BLOCKED。停止本操作写入并释放R2-S2认领；全部EMU、离线审计和发布worker均已结束，无本操作存活受保护运行。旧输出及证据继续保留，不表示授权删除。下一步按路线另行认领MERGE-REG新夹具子项，使用新的操作ID，先复核实际活动及旧证据来源；不延续占用S2。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6362530683",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6362530683"
+    },
+    {
+      "id": 6362551652,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T10:11:34Z",
+      "updated_at": "2026-10-23T10:11:34Z",
+      "body": "WORK | 20261023-LiZufan001-r2s2-index-1810 | R2-S2／归档索引门禁补强 | @LiZufan001 / Agent | 2026-10-23T10:10Z（分钟级）\n\n接前操作DONE #issuecomment-6362530683。提交后收到只读审查的两项具体边界：新索引门禁尚未检查Git文件模式；CLI允许把审计输出写入归档内部、使已检查清单随后失配。当前965文件尚无证据显示受影响，先核对实际模式；这不否定已完成的性能/架构结果。\n\n基点 `d5967731fad46e2f40527add35da1b0984bd17a4`，沿用本Agent独立工作区 `working-r2s2-20261023-1632`，当前干净、无其他writer/index。只修改 `r2-safe-tail/merged_index.py`，新增其针对性负测和新索引复核回执，更新必要说明及计分板。禁止改运行入口、原归档字节、黄金值和旧检查器；0新EMU，现有运行全部终止，无在途资源保护或窗口。\n\n先完成这一有限修正并释放S2，再按路线另认领MERGE-REG；此WORK不占后者。新证据来自同一主Agent的只读审查子任务，不冒充成员ACK或独立复现。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6362551652",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6362551652"
+    },
+    {
+      "id": 6362634114,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T10:16:16Z",
+      "updated_at": "2026-10-23T10:16:16Z",
+      "body": "READY | 20261023-LiZufan001-r2s2-index-1810 | R2-S2发布门禁 | @LiZufan001 / Agent | 2026-10-23T10:16:10Z\n\n候选 `bca14d45b07ff07a86a7f54bce2b25870e60e2f3`，独立工作区干净。仅7项归属文件：门禁、8项针对性测试、两份新实际回执、合同/结果说明和计分板。实际965归档文件均stage0/100644、清单完整且Git blob逐字节一致；独立临时Git index的同blob符号链接及归档内输出均被CLI拒绝。运行入口、原归档、旧黄金值保持，0新EMU。只读复核无新增确定问题，非成员ACK。Git静态/新增链接检查PASS；没有运行保护或后台worker。\n\nINTEGRATE-BEGIN | 20261023-LiZufan001-r2s2-index-1810 | 2026-10-23T10:16:10Z\n目标 `cc77-builder/riscv:zufan`；刚核实预期远端 `d5967731fad46e2f40527add35da1b0984bd17a4`；候选如上。Issue完整历史及最新事件已回读，无其他未结束窗口。仅正常快进，推送前再次回读和核对远端。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6362634114",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6362634114"
+    },
+    {
+      "id": 6362642115,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T10:16:44Z",
+      "updated_at": "2026-10-23T10:16:44Z",
+      "body": "INTEGRATE-END | 20261023-LiZufan001-r2s2-index-1810 | 2026-10-23T10:16:38Z\n\n已正常快进推送并从远端回读确认 `zufan` 为 [bca14d45b07ff07a86a7f54bce2b25870e60e2f3](https://github.com/cc77-builder/riscv/commit/bca14d45b07ff07a86a7f54bce2b25870e60e2f3)。工作树干净，测试/索引回执与计分板已提交，发布worker退出0且清理完成；窗口释放。\n\nDONE | 20261023-LiZufan001-r2s2-index-1810 | R2-S2发布门禁子项\n停止本操作写入，释放R2-S2认领；无存活受保护运行。两项边界已修正，965文件实测未受错误模式影响，S2既有性能/架构结论不变。接续动作仍为MERGE-REG新夹具子项，另用新操作ID认领；具体任务/条件已写入结果与计分板。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6362642115",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6362642115"
+    },
+    {
+      "id": 6362647193,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T10:17:03Z",
+      "updated_at": "2026-10-23T10:17:03Z",
+      "body": "WORK | 20261023-LiZufan001-merge-reg-1816 | MERGE-REG／合并基线新夹具子项 | @LiZufan001 / Agent | 2026-10-23 10:17:01 UTC\n\n接S2结果及DONE #issuecomment-6362530683、门禁DONE #issuecomment-6362642115。基点 `bca14d45b07ff07a86a7f54bce2b25870e60e2f3`，沿用本Agent独立工作区 `working-r2s2-20261023-1632` / `work/r2s2-20261023-1632`，实际工作树干净、独立index；此时仅认领MERGE-REG此子项，不占S1/S2。\n\n范围：新增独立合并版回归controller/测试/合同/证据及必要入口、计分板。先核实 `/home/lizufan/riscv-lab/fullcore-6d2abe403-20261023-01` 内旧四并行normal及adopted来源、两条supplement，保持旧脚本/合同/输入/输出不变；固定同一6d2源码、1a23EMU及新6e8夹具。计划复用10条normal（hello、functional1..7、control、dense）和2条supplement原文，新增matrix0负控→新的同镜像正常functional0恢复，精确12core＋2supp。所有实际新增尝试计数，不能以旧functional0代替恢复。\n\n旧9b3夹具、B0/H1合同仍BLOCKED；这不验收S2组合、四尺寸选型、T17或PPA。来源/正确性不成立则按具体缺项停住或最小补测，不放宽旧检查器。\n\n此时无本操作运行，上一发布worker已结束，Issue无其他有效认领/窗口；不因空闲推断未知进程已退出。先实查进程、资源和输入，新任务使用独立输出、单EMU资源槽，启动时另记保护及state定位。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6362647193",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6362647193"
+    },
+    {
+      "id": 6362808161,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T10:26:39Z",
+      "updated_at": "2026-10-23T10:26:39Z",
+      "body": "UPDATE | 20261023-LiZufan001-merge-reg-1816 | MERGE-REG | 2026-10-23T10:26Z（分钟级）\n\n已核对三层adopted来源、三个外部适配driver及两个scheduler的实际差异/哈希；最早批次RUNNING是已明确退休的旧调度状态，当前未见相关进程。新controller已完成只读复核：修正辅助文件为已验证的cwd/build布局，active_result指向持续存在runtime.json。实际WSL的10项针对性主机测试PASS；冻结controller SHA256 `b082d34f9e7eed5d56296aacf4a707358cab3c370ae301bf9a4a82174af122a5`，尚未启动新EMU。\n\n即将按新合同在 `/home/lizufan/riscv-lab/merge-reg-20261023-1816/run-01` 运行，先全部复用原文/来源审计，再串行新matrix0负控→正常恢复，1个EMU槽。配置 `runtime.local.json`；state含active_result/active_process_group及实际启动数，活动PID明确为timeout进程组首进程，可沿子进程定位EMU。运行不支持断点续跑。\n\n从本次启动至明确结束保护：本Agent独立克隆中的controller及其runtime-inputs列出的固定checkers；合并硬件源码/build、原build-02/外部builder；旧legacy_base各选定raw/source/输入；S2 negative-fixture；正常NEMU/flash/原canonical matrix及O2补充输入。上述输入不写入，输出独立；文档/独立证据工具暂存在隔离草稿，待运行结束再写回。无集成窗口。实际worker启动后补定位。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6362808161",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6362808161"
+    },
+    {
+      "id": 6362813293,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T10:26:58Z",
+      "updated_at": "2026-10-23T10:26:58Z",
+      "body": "UPDATE | 20261023-LiZufan001-merge-reg-1816 | 2026-10-23T10:26:40Z\n\n已启动新run-01。ChatPC operation `716a6ee805ae260048ab831b3dbbd5fe.e4bc5d5fd28823835211cbe40ffeb4dc`，Windows worker PID `325876`；Linux driver PID/实际argv在 `/home/lizufan/riscv-lab/merge-reg-20261023-1816/run-01.launch.json`，主状态在 `run-01/state.json`，driver原始输出在同级 `run-01.driver.stdout.log` / `.stderr.log`。启动前实查无同机EMU/构建占用；先复用审计，随后唯一串行pair。阶段尚未结束，不宣称整套PASS。上一条输入保护保持，无发布窗口。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6362813293",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6362813293"
+    },
+    {
+      "id": 6365532900,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T13:04:13Z",
+      "updated_at": "2026-10-23T13:04:13Z",
+      "body": "WORK | 20261023-LiZufan001-r2s1-2100 | R2-S1 向量累加与对等 RVV | @LiZufan001 / Agent\n\n本轮真实开始：2026-10-23T21:00:41+08:00。已完整读取21条Issue事件。MERGE-REG旧操作20261023-LiZufan001-merge-reg-1816仍有效、无明确交接；本轮不接管。其ChatPC worker实查succeeded/exit0/cleanup_complete，结束10:40:21Z；这只证明该worker退出，不替旧Agent释放认领或修改其保护记录。\n\n指定来源工作区working-zufan-full-20261022 / zufan已核实干净，HEAD ff58e519091f273c4bc177f5e82cfbbfaf102cc5，origin为本仓库；远端zufan刚核实bca14d45b07ff07a86a7f54bce2b25870e60e2f3。拟从指定来源建立独立克隆working-r2s1-20261023-2100 / work/r2s1-20261023-2100，再同步至该远端基点，独立index/输出。\n\n范围：新增独立team/optimizations/o2/r2-vector-accum/模块，实现S1及RVV种子累加，必要测试/合同/运行与结果证据；按实际结论更新现有入口和计分板。只读复用O3生成器、模型、原S0及S1寄存器审查；不修改冻结candidate.py、旧合同/黄金值/固定哈希、RTL/NEMU、他人工作区或运行输出。先核对INT32/全128位结果、寄存器/CSR/无spill，再在匹配合并EMU上筛选，保留较快合格RVV；不把S2收益或历史PASS转给S1。\n\n资源：此时WSL Ubuntu-22.04实查Stopped，无本操作后台任务/运行保护/集成窗口。使用独立AM/输出，重运行前重新核实Issue与进程；最多单EMU串行，不占用MERGE-REG构建或输出。本轮仅认领R2-S1。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6365532900",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6365532900"
+    },
+    {
+      "id": 6366003932,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T13:28:28Z",
+      "updated_at": "2026-10-23T13:28:28Z",
+      "body": "UPDATE | 20261023-LiZufan001-r2s1-2100 | R2-S1 源码与实际汇编阶段\n\n已建立独立完整克隆 working-r2s1-20261023-2100 / work/r2s1-20261023-2100，基点 bca14d45b07ff07a86a7f54bce2b25870e60e2f3；指定原工作树未改。新模块 team/optimizations/o2/r2-vector-accum/：candidate SHA256 c22d72bc779acd5bf255b70285461738cfe9659ecf9ab9fa0a3a1b495c105ed3，gate b42d58f65022a1885eca010c034a1885d7cb8208d1e7f8fdced21084866588ee，experiment 23aecfb75863ad503ccef4d3b54e2702c6555a8a20918a8282b79999cdd36d1b。冻结旧 S0/S2、黄金值及原运行检查器未改。\n\nWSL 独立输出 /home/lizufan/riscv-lab/r2-s1-20261023-2100；私有 AM 固定 086a238062fdfb3281b745a537b361983d0154b5，从已有固定依赖本地克隆并复制两份相同哈希预构建库，来源见 dependency-setup.json。host-tests-02.json / stderr.log：实际 GNU 汇编13项测试PASS（32组合×3数据集，32组合×2极值，8类指令负测，以及S0一致性/构建身份漂移）。首轮测试脚本列表拼接错误保留在 host-tests.*，不是硬件失败。\n\n下一步构建52份真实AM镜像 build-01，再在同一 6d2abe403 / EMU 1a23dbab… 的合并硬件上执行新的配对S0/S1。双方统一8KiB函数槽并校验地址相同，因此不复用旧S2周期。总计划57次串行EMU（新负控1、正常smoke4、正式48、replay4），768正式窗口；实际进程启动后另记运行保护。此刻无本操作EMU；Linux实查无其他EMU/综合/构建重进程，旧MERGE-REG认领保持原状。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6366003932",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6366003932"
+    },
+    {
+      "id": 6366058264,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T13:31:10Z",
+      "updated_at": "2026-10-23T13:31:10Z",
+      "body": "UPDATE | 20261023-LiZufan001-r2s1-2100 | R2-S1 运行输入保护 / run-01\n\n52个规范AM镜像 build-01 于2026-10-23T13:29:27Z完成，状态 S1_52_CANONICAL_ELFS_STATIC_PASS_RUNTIME_NOT_RUN；26对地址/布局/数学输入及跨镜像构建身份通过。完整硬件运行尚未验收。\n\n现在启动串行57次EMU计划，ChatPC操作 716a6ee805ae260048ab831b3dbbd5fe.c9e1708f196bf887ffa1c99b41bb3512（已准备，执行后以真实receipt/state为准）。WSL /home/lizufan/riscv-lab/r2-s1-20261023-2100/run-01/state.json；外层 run-01-driver.json / stdout.log / stderr.log。当前源码 candidate c22d72bc…、gate b42d58f6…不变；experiment补入canonical_build定位与build根索引封口，当前SHA256 c475e5fddc20fda8322f3cc78fd1f664c772656f9a3b97529523df0f94b02254。\n\n输入保护：本独立克隆的S1运行源码与runtime-inputs清单、build-01全部镜像/收据/快照、私有deps/nexus-am；只读使用既有 /home/lizufan/riscv-lab/xiangshan 的6d2abe403硬件及fullcore-6d2abe403-20261023-01/build-02/实际builder、固定normal NEMU及flash。运行未结束前不改其来源/配置/产物；不触及旧MERGE-REG工作树/输出或释放其认领。刚核实无其他EMU/综合重进程，WSL可用内存15076MiB。本轮最多单EMU，未开启集成窗口。\n\n归档器将在独立scratch准备，待运行结束后加入新模块；不改受保护源码。此脚本无断点恢复，发现中断先读取state/进程，不复用输出重启。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6366058264",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6366058264"
+    },
+    {
+      "id": 6366524025,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T13:54:14Z",
+      "updated_at": "2026-10-23T13:54:14Z",
+      "body": "UPDATE | 20261023-LiZufan001-r2s1-2100 | R2-S1 / run-01 公平布局失败，停止本操作批次\n\n新增非内核字节一致性检查 FAIL：build-01 的四个内核入口虽相同，首对 smoke-s05 的 .text 总长分别48304/43824，main 地址0x8000bcb0/0x8000ab30；四个8KiB槽以外仍有9797字节差异。cases.h 哈希完全相同。真实对象含8条 R_RISCV_ALIGN，尾部剩余padding与orphan .text.startup/AM代码地址随候选长度变化。已有正确性PASS不等于公平性能PASS；本批次不用于S1收益采用。\n\n定位证据：/home/lizufan/riscv-lab/r2-s1-20261023-2100/pair-layout-diagnostic-01.json，build-01各原始ELF/对象/命令。2026-10-23T13:53:30Z实查run-01已启动17次EMU、controller PID369，active EMU832，所有已完成normal仍通过原严格门禁。\n\n现在仅向本操作、argv逐项核实的controller发送SIGINT；已读spawn/execute异常路径，会终止其独立EMU进程组、写FAILED/finished并退出，保留原输出。实际结束及清理完成前仍保护所有输入。未停止MERGE-REG或他人进程。修复将先验证非内核全BIN一致，使用新build/run输出和新源码身份；原build-01/run-01永不覆盖、不当作续跑。R2-S1认领保留，无集成窗口。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6366524025",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6366524025"
+    },
+    {
+      "id": 6366544203,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T13:55:14Z",
+      "updated_at": "2026-10-23T13:55:14Z",
+      "body": "UPDATE | 20261023-LiZufan001-r2s1-2100 | run-01 已停止 / 输入保护收束\n\nrun-01 controller于2026-10-23T13:54:15.953255+00:00写FAILED/KeyboardInterrupt/active_pid=null；driver exit=-2；ChatPC job failed/exit1且cleanup_complete=true。13:54:52Z进一步核实PID369与最后EMU832均不存在。实际17次启动：已完成结果原样保留，最后一次被本操作中断，不算PASS。\n\n已先冻结原S1完整源码到 /home/lizufan/riscv-lab/r2-s1-20261023-2100/run-01-source/，逐文件SHA及完整结束定位在 run-01-stop-confirmation.json。build-01/run-01及诊断均保留为布局失败证据、不再写入；本操作的活动运行保护解除，可以在独立工作区修订新版本。共享硬件与旧MERGE-REG保护不受影响。\n\n最小GNU探针 layout-probe-01 已证实：加入显式 .option norelax 后，S0/S1对象.text均恰好32768字节且无任何重定位，旧对象分别90112/81920字节、均含8条R_RISCV_ALIGN。下一步把修正纳入新候选身份并增加非内核全BIN/段地址一致性硬门禁，完成52镜像静态验证后再用全新run-02执行，不复用旧周期。认领保留、无窗口。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6366544203",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6366544203"
+    },
+    {
+      "id": 6366621623,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T13:59:10Z",
+      "updated_at": "2026-10-23T13:59:10Z",
+      "body": "UPDATE | 20261023-LiZufan001-r2s1-2100 | v2 公平布局通过 / run-02 输入保护\n\n新合同 r2-s1-merged-software-screen-v2-fixed-layout。candidate SHA256 0270736b5c09e160626eb7b32d8e760faa193bf05761fea824a979108c3717b9；gate ab07b578f5fe2dc7782ef9af64e722e051363d1dfddfcd0f1939efb209346b6d；experiment 75a26c36531b547ecb09c5ff19ecef1b338622779aedb2099f7775efd74cb7dd。仅新S1模块修正norelax及加强门禁，冻结旧S0/S2源码/检查器/黄金值/链接脚本均未改。\n\nhost-tests-03：19项实际GNU/模型测试PASS。layout-build-probe-01：先16×64及4×13真实AM两对，main均0x8000a000，槽外BIN完全同。build-02于13:58:02.225717Z完成52镜像，26对全部ALLOC段地址/大小/flags/对齐及四个8KiB槽外所有加载字节相同；reference.text固定32768且无重定位。仍是静态PASS，整核尚未验收。\n\n现在执行新57次串行EMU计划（1负控+4正常smoke+48正式+4replay），不复用run-01周期。ChatPC操作 716a6ee805ae260048ab831b3dbbd5fe.8a2be27f5710ca21f6ada377fc677e4f。实际定位 /home/lizufan/riscv-lab/r2-s1-20261023-2100/run-02/state.json、run-02-driver.json/stdout.log/stderr.log。启动前脚本再核实没有其他EMU/重构建。\n\n从启动到明确结束，保护本独立克隆S1运行源码/runtime-inputs、build-02全部镜像/收据/快照、私有AM及同一6d2硬件/1a23EMU/build元数据、normal NEMU/flash。归档器/结果文档继续只在隔离scratch准备。旧build-01/run-01保持封存；他人认领/保护不变。此脚本无断点恢复；无发布窗口。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6366621623",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6366621623"
+    },
+    {
+      "id": 6367265269,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T14:29:43Z",
+      "updated_at": "2026-10-23T14:29:43Z",
+      "body": "UPDATE | 20261023-LiZufan001-r2s1-2100 | R2-S1 发现的历史 S2 布局边界 | 2026-10-23 14:29:42 UTC\n\n只读检查既有 S2 归档 merged-screen-v1，manifest SHA256 1d42aa417c2793b997fbf1db89f05c1d2a5dcb49644ff14aa29395621bd129ed；93份被使用的payload逐项核对raw/stored哈希。没有修改旧归档、冻结代码、黄金值或旧PASS。\n\n实际13对ELF/BIN结果：16×64的6对整BIN完全相同；4×13的6对正式及1对smoke存在加载布局差异。core的main为0x80005f14/0x8000500c（S2移-3848字节，.text 24340/20492）；endtoend为0x80005ee4/0x80005fdc（+248字节，.text 24292/24540）。四个4KiB内核入口均一致，按各自manifest辨认的RVV内核indices[1,3]地址/完整机器码均相同，但槽外加载字节不同。cases.h另有合法的vdot预期计数4→8差异，不能误称全部非内核输入相同。\n\n证据：/home/lizufan/riscv-lab/r2-s1-20261023-2100/historical-s2-layout-review.json，SHA256 7145b7bb89eb5ad880d3d94c89f6c9edbe5e44ba95b087566f5ed14f3a31aee7。该检查不归因具体周期差，不撤销旧原合同下的功能/退休/负控PASS；但旧4×13 reuse endtoend -10.621%应保留为历史观察，不能直接作为R2-SELECT采用依据。需要在固定完整布局、明确只允许预期计数元数据差异的新比较合同下重新测量S0/S2；不修改旧合同来追认公平性。\n\n本轮继续R2-S1 run-02，已用更强布局门禁重建S0/S1，活动输入保护沿用6366621623。此为S1公平性复核引出的路线限制，不接管R2-S2或MERGE-REG认领，不增加主包或发布窗口。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6367265269",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6367265269"
+    },
+    {
+      "id": 6367718806,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T14:51:54Z",
+      "updated_at": "2026-10-23T14:51:54Z",
+      "body": "UPDATE | 20261023-LiZufan001-r2s1-2100 | R2-S1 审计入口与可恢复源码检查点 | 2026-10-23 14:51:54 UTC\n\nrun-02仍按6366621623的状态文件运行和保护，完整57次验收尚未结束；没有开启发布窗口，也没有接管MERGE-REG。本轮继续写入自己的隔离草稿，未作交接或停止声明。\n\n已创建独立Linux完整检出 /home/lizufan/riscv-lab/r2-s1-20261023-2100/replay-checkout-01（本地clone --no-hardlinks、独立index，base bca14d45…）。其本模块6份Python文件是本轮审计/测试的持久检查点：candidate/gate/experiment与运行冻结SHA完全同；evidence.py SHA256 2d07f72b78314a0775694c12124f793d452bb9a752ae722d6cc1c6182048c5fd，test_candidate.py 79f808cefc706076767ecb569235a6bb2e782534fb44151a6f26468e30f419ae，test_evidence.py fc9259da4490527b2f1c22525c047fca2f1f299dd34bc79ef90d31124daa97f1。README/VALIDATION工程草稿也已保存于该检出；正式Windows工作区的活动输入未改。\n\n14:42Z已实际通过19项GNU/模型+19项证据测试，无skip，源码哈希/命令/PID/原日志见同结果根 relocated-host-tests-01/result.json。14:43Z又在新路径执行104份真实build命令、3份fixture命令身份核对，以及s00/dataset0一对已完成normal的原文重算；见relocated-audit-precheck-01.json。这些是指定范围的PASS，未冒充完整归档或硬件T17。Git暂存字节检查已加在独立S1入口，固定复用旧helper，拒绝遗漏/旧blob/非法metadata，不修改原S2检查器。\n\n针对上一条历史S2布局问题，layout-s2-feasibility-probe-01实际构建4份K13/core、endtoend的S0/S2 AM ELF：固定8KiB+norelax后main全为0x8000a000且字节同，完整RVV槽同；vdot槽外仅cases[0/2].dots两个字节4→8，准确BIN偏移0x120024/0x1208c4。四份静态ELF/9组有限模型PASS，无新EMU或S2采用；原生成器不改，探针保存原汇编/manifest及明确的新探针合同。这只是本次公平性调查的可行性证据，正式S2新合同和全矩阵重测仍待后续包。\n\n静态指令解释证据已保存static-instruction-accounting.json（真实ELF32个core主体），4×13 S1 vdot增加8/5条，其他整块尺寸与RVV均减少；不把指令数当周期。下一步仍是等待本操作已在执行的全矩阵和replay完成，核实真实结束后封存、全量原文复算、暂存字节审核及按短窗口发布。当前无新增主要包认领。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6367718806",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6367718806"
+    },
+    {
+      "id": 6368022166,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T15:07:04Z",
+      "updated_at": "2026-10-23T15:07:04Z",
+      "body": "UPDATE | 20261023-LiZufan001-r2s1-2100 | 首块初始化子项的实际编译与有限模型探针 | 2026-10-23 15:06:50 UTC\n\nrun-02仍在6366621623所列保护下运行；15:00:54Z实际观察为37次启动，35 normal已完成、1预期负控完成、1活动normal，正式shards0～4各6次已完成。此处不声明整批通过，未开启集成窗口。\n\n本操作继续在同一R2-S1包内检验一个有源码依据的后续假设：首个vdot全128位写入输出，可省去组首清零和首块相加。本人编写first_dot_probe.py，SHA256 a2651f699509a1224773afe34b2c92648543a03ff5f25cbfd170fa03299b6a32；源文件已保存在独立Linux检出replay-checkout-01的team/optimizations/o2/r2-vector-accum/。只通过进程内私有renderer替换明确匹配的内核体，不改当前candidate/gate/experiment。新探针合同r2-s1-first-dot-initialization-probe-v1，runtime_qualified=false。\n\n实际15:05:24.953116～15:05:27.830298+00:00完成16份真实AM ELF、8对完整布局、64个内核体各9组有限模型检查，状态FIRST_DOT_16_AM_ELFS_MODEL_AND_PAIR_LAYOUT_PASS_NOT_RUNTIME。8份S1对照BIN与build-02对应dataset0规范镜像完全一致；配对非内核字节、cases.h及RVV两个完整8KiB槽同。带毒初值、全128位、CSR、行边界及实际机器指令差额通过。四形状basic/reuse精确少16/10、32/20、64/40、16/10条，K13尾项后的e32提取配置保留。没有新EMU/NEMU、周期或运行采用结论。\n\n持久输出：/home/lizufan/riscv-lab/r2-s1-20261023-2100/first-dot-probe-01/state.json及完整源码快照/32份构建命令，外层first-dot-probe-01-driver.json和stdout/stderr；该短任务exit0且cleanup_complete=true。后续若推进，需独立的精确再生/运行合同及实际目的寄存器负控恢复，然后与原S1及最快合格RVV做完整配对测量，不能转借当前run-02的动态PASS。目前仍先完成正在运行的固定布局全矩阵和归档闭环，不认领第二个主要包。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6368022166",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6368022166"
+    },
+    {
+      "id": 6368968004,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T15:53:39Z",
+      "updated_at": "2026-10-23T15:53:39Z",
+      "body": "UPDATE | 20261023-LiZufan001-r2s1-2100 | run-02 主批自然完成；转入小尺寸补充 replay 与归档 | 2026-10-23 15:53:38 UTC\n\n本操作持有的 R2-S1 主批 run-02 已自然完成：R2_S1_MERGED_SOFTWARE_SCREEN_PASS；实际 2026-10-23T13:59:13.409730+00:00 至 2026-10-23T15:47:56.865774+00:00，57 次启动、56 normal、1 预期负控、768 正式窗口、4 次原计划 replay。外层 ChatPC 716a6ee805ae260048ab831b3dbbd5fe.8a2be27f5710ca21f6ada377fc677e4f succeeded/exit0/cleanup_complete=true。15:48:45.677873+00:00 实查 controller/driver PID 372/296 已不存在，EMU 进程为空；不再把这项主批列为活动运行。\n\n结果及完成证明：/home/lizufan/riscv-lab/r2-s1-20261023-2100/run-02/{state,results}.json、run-02-driver.json、run-02-completion.json。state SHA256 ee0a47aeb848b5d65a733b21adbaef85e1ecad722f037b516a724494816be337；results d1328a7c708055b5ef9e9dacff1d50e3fe507ef79dce39991e0414842a69700e。6366621623 中本操作针对这次活动进程的输入保护结束，已有源码和原始输出继续原样保留；不解除其他操作的保护。\n\n完整 endtoend/reuse 配对均值：4×8 vdot 164.5→155；8×32 318→278.25；16×64 846.5→701.25；K13 210→212.75。前三者相对同布局 S0 改善，K13 退化不采用。最快合格 RVV 为对应 S1 reuse 的 175/289/768.25/175。完整主批归档重算尚未完成，不据此宣布 T17、独立成员 ACK 或默认分支采用。\n\n原57次合同的4次 replay仅覆盖dataset0的16×64/K13端到端。将以新合同 r2-s1-small-endtoend-replay-v1、独立输出 replay-small-01 补4×8/8×32的S0/S1各一次新进程，要求全部24窗口逐一一致，新增正式样本数为0；原57次结果不改。新增入口 complete_replay.py SHA256 f68fe2978248776ba6556fe15d941fb32df02a5ceeb20247424fd08374babba7，完成预检后另登记运行保护再启动。\n\nR2-S1认领继续，仅在 working-r2s1-20261023-2100 / work/r2s1-20261023-2100 开发，未提交/推送/开启窗口。MERGE-REG旧认领及其保护仍由原执行者处理。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6368968004",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6368968004"
+    },
+    {
+      "id": 6369030087,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T15:56:38Z",
+      "updated_at": "2026-10-23T15:56:38Z",
+      "body": "UPDATE | 20261023-LiZufan001-r2s1-2100 | 四次小尺寸补充 replay 的输入保护 | 2026-10-23 15:56:37 UTC\n\n主批57次已自然完成，见6368968004。补充入口与4份原规范ELF、2对完整布局检查通过；两个拒错检查实际确认未完成父批次、不同source_root均在创建输出前拒绝。预检记录 /home/lizufan/riscv-lab/r2-s1-20261023-2100/small-replay-precheck-03/result.json 引用02中已完成的ELF/布局检查；02的测试driver曾误捕获异常类型，真实FAILED保留，03仅补正确ValueError拒错检查，不放宽任何门禁。此前预检启动01被平台cancelled且未创建输出，原回执和缺失检查保存在 small-replay-precheck-launch-01.json；原因未报告，不将其记作运行失败或PASS。\n\n准备立即从原 working-r2s1-20261023-2100 执行 complete_replay.py --action run，独立输出 /home/lizufan/riscv-lab/r2-s1-20261023-2100/replay-small-01，driver定位 replay-small-01-driver/result.json。只选 performance-{s0,s1}-d0-s{01,03} 四个原镜像，串行单EMU；新合同 r2-s1-small-endtoend-replay-v1，4个新进程、96个匹配窗口、新增正式窗口0。旧57次campaign完全保留。\n\n保护范围：本工作区 candidate.py/gate.py/experiment.py 的原v2字节，新增 complete_replay.py=f68fe2978248776ba6556fe15d941fb32df02a5ceeb20247424fd08374babba7、evidence.py=2d07f72b78314a0775694c12124f793d452bb9a752ae722d6cc1c6182048c5fd；run-02 的state/results/configuration/runtime-inputs与四个规范build-02镜像；原配置及其绑定的硬件EMU/源码/依赖/生成物、正常NEMU、flash、私有AM库和冻结旧检查器。只读复用既有实体，不改其他操作受保护输入；新增输出保留独立。\n\n启动前将再次实际核查无冲突EMU/重构建；运行后按真实state、PID及外层回执收束，不能按预计时间解除保护。认领仍仅R2-S1；未提交/推送或开启窗口。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6369030087",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6369030087"
+    },
+    {
+      "id": 6369192350,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T16:04:57Z",
+      "updated_at": "2026-10-23T16:04:57Z",
+      "body": "WORK | 20261024-LiZufan001-r2s2-fixed-0001 | R2-S2／固定完整布局重新筛选 | @LiZufan001 / Agent | 2026-10-24T00:04:14+08:00\n\n本轮实际开始2026-10-24T00:01:02+08:00。已完整读取32条原事件，S2旧操作已DONE；R2-S1 20261023-LiZufan001-r2s1-2100仍有效且6369030087保护补充replay，MERGE-REG旧认领未交接，本操作均不接管。\n\n指定来源working-zufan-full-20261022 / zufan核实干净，HEAD ff58e519091f273c4bc177f5e82cfbbfaf102cc5、origin为本仓库；远端zufan核实bca14d45b07ff07a86a7f54bce2b25870e60e2f3。拟从该来源创建独立完整clone D:\\Projects\\competitions\\2026-10-CIE-RISCV-XiangShan\\working-r2s2-fixed-20261024-0001 / work/r2s2-fixed-20261024-0001，并同步至远端基点，独立index与输出。\n\n依据6367265269、6367718806的真实槽外布局差异和静态可行性，新增S2固定完整布局合同与独立适配/运行/审计子项；保留原candidate.py、固定检查器、旧归档/黄金数据/合同/RTL/NEMU。范围限team/optimizations/o2/r2-safe-tail/的新入口、测试、证据与结果说明，必要时准确更新当前路线/计分板，不改S1模块或任何他人工作区。假设：排除布局混杂后安全尾部reuse仍有可重放端到端收益；以同硬件同布局S0及较快合格RVV比较，否则关闭该采用建议。\n\n先在独立输出完成GNU/模型/全ALLOC与非内核字节门禁，预期计数元数据只允许按字段精确界定的差异，再做新镜像拒错恢复和正式配对。此时无本操作后台运行或发布窗口；S1补跑仍在活跃，先轻量静态工作，EMU前重新核查Issue/真实进程与内存，不争用其可写资源。新实验位置将记录在独立结果根/home/lizufan/riscv-lab/r2-s2-fixed-20261024-0001。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6369192350",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6369192350"
+    },
+    {
+      "id": 6369287032,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T16:09:27Z",
+      "updated_at": "2026-10-23T16:09:27Z",
+      "body": "UPDATE | 20261023-LiZufan001-r2s1-2100 | 小尺寸补充 replay 完成，收束本操作运行保护 | 2026-10-23 16:09:26 UTC\n\nreplay-small-01 已自然完成，状态 R2_S1_SMALL_ENDTOEND_REPLAY_PASS；实际 2026-10-23T15:56:57.677592+00:00 至 16:06:42.804126+00:00。4次正常EMU，96个完整窗口签名逐项等于原主批，additional_formal_windows=0；主批仍为57次/768正式窗口。外层 716a6ee805ae260048ab831b3dbbd5fe.638cb34848effc9eec18bc1be32be557 succeeded/exit0/cleanup_complete=true。\n\n16:08:31.100356+00:00 按真实进程身份核对 driver/controller及四个EMU均已退出，当前EMU列表为空。完成证明与原外层回执保存在 /home/lizufan/riscv-lab/r2-s1-20261023-2100/replay-small-01-completion.json；state SHA256 ceb97953915963f401c5dd4f479d348635f083fc44d2ff8028613ee5ea31a6ac，results 5a98cf21c999a543b7bd22b95ee2501a7a23912ddbc4a26a6c33be798e8f8ece。首次完成检查曾因WSL把旧driver PID299复用于/bin/login而拒绝，原失败回执另存；未误停该登录进程，随后核对身份及自然退出记录完成收束。\n\n本操作6369030087所列活动运行保护结束，既有源码/镜像/日志保持原字节。run-01/run-02/replay-small-01均无本操作活跃EMU；不解除MERGE-REG原执行者的保护或认领。接下来只做封存、另一完整Linux检出的两项原始证据重算、Windows字节与实际Git index检查，再提交和正常FF发布。本包认领仍保留，尚未开启集成窗口。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6369287032",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6369287032"
+    },
+    {
+      "id": 6369565659,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T16:23:32Z",
+      "updated_at": "2026-10-23T16:23:32Z",
+      "body": "UPDATE | 20261024-LiZufan001-r2s2-fixed-0001 | 固定完整布局验证通过，启动新合同 S2 重测 | 2026-10-23 16:23 UTC\n\n接续 WORK #issuecomment-6369192350；未接管 R2-S1 或 MERGE-REG。隔离检出 working-r2s2-fixed-20261024-0001（来源 bca14d45b07ff07a86a7f54bce2b25870e60e2f3），分支 work/r2s2-fixed-20261024-0001。\n\n新版 fixed_layout.py SHA256 92e025d334c71c3720a92beb4f92314fbe8fabc3c5722b8a733f1cb6c0f7bc29；fixed_screen.py 958dcb5303f09ddcf9ebf2f3a8e1225b5541d76f3f86a4aabf9c540ed9757e1d。旧 candidate/linked_gate/fullcore_screen/merged_screen 与旧结果均原字节保留。新合同 r2-s2-fixed-layout-screen-v1，以 .option norelax + 8192-byte kernel slots 固定完整布局；13对验证 main、全部ALLOC/program headers、槽外所有加载字节及整个RVV槽，仅K13两个预定义uint32 dots字段允许4→8；16x64整BIN相同。补了真实构建命令/原文回执与独立reference完整槽校验。\n\n结果根 /home/lizufan/riscv-lab/r2-s2-fixed-20261024-0001：tests-02-command 20项真实GNU/AM测试PASS（8ELF、288机器码输入检查），build-02 26ELF/13对PASS，preflight-02硬件/参考模型输入身份PASS，均0EMU。build-01/minimal-build-01是较早适配器来源，保留历史、不算最终来源。采用标准不变：须通过新31次运行/384正式窗口、同镜像精确replay、最快合格RVV公平比较，才讨论采用；旧K13百分比暂不作采用依据。\n\n现在保护 run-01 及其 runtime-fixed.local.json、build-02、上述2个新运行入口与 runtime-inputs.json列出的旧checker/硬件/参考输入。运行输出 run-01/state.json、run-01/runs/*/result.json 与 run-01-command/command.json；外层操作 716a6ee805ae260048ab831b3dbbd5fe.92d6af248f3010c7880ed010aaddce39。串行EMU，不支持断点续跑；失败或聊天结束不得自动重启/改输入。启动器会再次检查无其它EMU及至少6GiB可用内存，检查不满足则退出并保留回执。硬件仍为6d2abe403.../EMU1a23dbab...单点软件screen，不算B0/H1、MERGE-REG、T17或PPA验收。\n\n本操作仍在写入独立的事后封存审计入口和说明（不属于冻结运行输入）；当前没有集成窗口。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6369565659",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6369565659"
+    },
+    {
+      "id": 6369748495,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T16:32:52Z",
+      "updated_at": "2026-10-23T16:32:52Z",
+      "body": "UPDATE | 20261024-LiZufan001-r2s2-fixed-0001 | 长运行期间本机工具通道边界\n\n关联运行保护6369565659。实际启动检查 2026-10-23T16:23:40.592709+00:00，controller PID320，无其它EMU，可用内存15360208KiB；外层716a6ee805ae260048ab831b3dbbd5fe.92d6af248f3010c7880ed010aaddce39仍为running。\n\nChatPC capabilities显示该长命令持有mutation channel。运行后尝试追加事后审计文件及另一个只读PowerShell观察均返回INVALID_ARGUMENT；原文件操作回执仍reserved、目标文件未出现，未重试、未启动替代Worker、未修改/终止当前运行。普通文件只读工具仍可用。本操作现在仅在临时编辑区准备事后审计代码/合同，待运行自然结束后再转入本操作独立检出；冻结输入保持。若其它操作遇到本机通道占用，请不要因此推断本运行已退出，仍按真实回执及保护处理。\n\n这条是工具并发边界更新，不是新认领、交接、取消运行或集成窗口。尚未给出整批运行PASS或性能结论。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6369748495",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6369748495"
+    },
+    {
+      "id": 6369768812,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T16:33:56Z",
+      "updated_at": "2026-10-23T16:33:56Z",
+      "body": "READY | 20261023-LiZufan001-r2s1-2100 | R2-S1 | @LiZufan001 / Agent | 2026-10-23 16:33:55 UTC\n\n候选提交 ec221262ae29522dd9d1a2be7240b405cc23a549，父提交 bca14d45b07ff07a86a7f54bce2b25870e60e2f3；独立 working-r2s1-20261023-2100 / work/r2s1-20261023-2100，提交后工作树干净。范围仅新增 team/optimizations/o2/r2-vector-accum、当前路线及计分板一条记录；未改原来源工作树、旧S0/S2/RTL/NEMU/他人输入。此时没有集成窗口，认领保留。\n\n已通过：19 GNU/模型＋19证据测试、52 AM ELF/26完整布局对、57次规范主批/768正式窗口、另4次补充replay/96签名（新增正式样本0）、独立Linux完整主审计与补充审计、Windows完整归档字节及2797封存文件实际index、31外置报告/日志逐blob交付。manifest a1af4314c83b29d97b58b7ae9fe65dbc96bb3d050530d2fe7378c022b9415d73。Git whitespace检查为FAIL：仅candidate.py:143、experiment.py:318、gate.py:172的EOF空行，保留实测源码哈希，完整诊断已记录。v1布局失败、Windows长路径失败及各次真实失败均保留；没有把总78次EMU统称PASS。\n\n三个整块reuse/endtoend vdot为164.5→155、318→278.25、846.5→701.25周期；K13为210→212.75，不采用S1 vdot。最快合格RVV为175/289/768.25/175；当前可进行已合格S0/S1的R2-SELECT，新入口仍须验证受影响布局/完整窗口。旧S2 K13收益仅作历史观察，firstdot只通过16 ELF/模型/布局，不是运行收益。B0/H1原BLOCKED、MERGE-REG/R4/T17/PPA不转移PASS。\n\n结果、命令、源码身份、运行定位、下一动作已写入本模块VALIDATION.md、README.md及根开发计分板；封存和外置报告均在evidence。主批与小补充全部自然结束，保护收束见6368968004、6369287032；本操作没有活动EMU或受保护运行。\n\n已读并保留并发S2新WORK6369192350与运行保护6369565659；也不解除MERGE-REG的6362808161/6362813293。S2采用比较需保留当前更快RVV；若跨批复用周期须证明完整布局/合同/运行身份可比，仅同8KiB槽不足。后续同一PPA轮可从本模块最终first_dot_probe.py/first-dot-probe-02接续，必须新认领、独立合同和实际目的寄存器拒错恢复。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6369768812",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6369768812"
+    },
+    {
+      "id": 6369779869,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T16:34:29Z",
+      "updated_at": "2026-10-23T16:34:29Z",
+      "body": "INTEGRATE-BEGIN | 20261023-LiZufan001-r2s1-2100 | @LiZufan001 / Agent | 2026-10-23 16:34:29 UTC\n\n目标 https://github.com/cc77-builder/riscv.git 的 refs/heads/zufan；预期远端 bca14d45b07ff07a86a7f54bce2b25870e60e2f3，候选 ec221262ae29522dd9d1a2be7240b405cc23a549，直接父子快进。READY与完整验证/已知格式FAIL见6369768812；主要实现、实测、审计和本地提交均已在窗口外完成。只计划正常 git push origin HEAD:refs/heads/zufan，不强推、不部署、不长构建。\n\n已完整读取截至6369768812的37条活动；没有其他未结束发布窗口。新S26369192350/6369565659/6369748495及MERGE-REG6362647193/6362808161/6362813293认领与保护均保留；本操作不写入这些工作区或运行输入。00:34:15+08实际核对唯一push URL正确、远端仍为上述预期SHA。\n\n发布后立即回读；推送前再次回读活动并核对远端，若发生竞争或远端变化则ABORT到窗口外处理。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6369779869",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6369779869"
+    },
+    {
+      "id": 6369809761,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T16:36:00Z",
+      "updated_at": "2026-10-23T16:36:00Z",
+      "body": "INTEGRATE-END | 20261023-LiZufan001-r2s1-2100 | 2026-10-23 16:36:00 UTC\n\n已按BEGIN6369779869正常快进推送并回读远端：refs/heads/zufan = [ec221262ae29522dd9d1a2be7240b405cc23a549](https://github.com/cc77-builder/riscv/commit/ec221262ae29522dd9d1a2be7240b405cc23a549)，父提交bca14d45b07ff07a86a7f54bce2b25870e60e2f3保留。实际push 2026-10-23T16:35:02.782860～16:35:11.258866+00:00，exit0；本地工作树干净。外层716a6ee805ae260048ab831b3dbbd5fe.877150635bcf0ba7f34a8b19ffd47068 succeeded/exit0/cleanup_complete=true。窗口释放；没有强推、部署或在窗口中运行长构建。\n\n验证与限制保持READY6369768812及提交内原始证据的范围；已知3处EOF格式FAIL也原样记录，不由发布状态转为PASS。提交内可直接读取[结果与接续](https://github.com/cc77-builder/riscv/blob/ec221262ae29522dd9d1a2be7240b405cc23a549/team/optimizations/o2/r2-vector-accum/VALIDATION.md)、[合同与命令](https://github.com/cc77-builder/riscv/blob/ec221262ae29522dd9d1a2be7240b405cc23a549/team/optimizations/o2/r2-vector-accum/README.md)、根开发计分板和当前路线。\n\nDONE | 20261023-LiZufan001-r2s1-2100 | R2-S1\n\n本操作停止源码、结果和仓库写入，释放R2-S1认领。全部本操作EMU、审计与提交/推送worker已结束；活动输入保护已分别在6366544203、6368968004、6369287032收束，没有本操作存活受保护运行。源码、镜像和失败证据仍须保留；DONE不授权删除，也不解除其他操作的保护。\n\n后续成果交给同一PPA项目的下一轮：先从计分板此ID和VALIDATION的“接续条件与具体下一动作”恢复，再以新操作ID认领。现有合格S0/S1已可做R2-SELECT；firstdot最终入口0bb3de…/first-dot-probe-02可继续独立正式合同、实际目的寄存器负控→恢复和公平完整窗口测量。S2固定布局方向已由6369192350认领并受6369565659/6369748495保护，不接管、不修改其输入；MERGE-REG旧认领及待核实保护也保持。后续发布须保留双方路线/计分板记录，不能覆盖本提交。\n\n本轮实际开始2026-10-23 13:00:41 UTC（21:00:41+08），本次交付收束2026-10-23 16:36:00 UTC；实际历时3小时35分19秒，超过120分钟努力目标。计分板记录工程/交付检查截至16:32:31 UTC，之后为本地提交和本次短发布；不把历时冒充人工工时。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6369809761",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6369809761"
+    },
+    {
+      "id": 6369823982,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T16:36:46Z",
+      "updated_at": "2026-10-23T16:36:46Z",
+      "body": "SNAPSHOT | 完整活动摘要 | 覆盖至 [6369809761](https://github.com/cc77-builder/riscv/issues/2#issuecomment-6369809761)（原39条事件） | 2026-10-23 16:36:45 UTC\n\n本摘要由20261023-LiZufan001-r2s1-2100整理全部原事件；只汇总既有事实，不代签其他执行者的DONE/ACK。之后的新事件继续生效，有矛盾或缺项时回读原文。\n\n## 全部未释放认领：2项\n\n1. **MERGE-REG／合并基线新夹具子项**，操作20261023-LiZufan001-merge-reg-1816，@LiZufan001 / 另一Agent。有效[WORK6362647193](https://github.com/cc77-builder/riscv/issues/2#issuecomment-6362647193)，最后执行者事件[6362813293](https://github.com/cc77-builder/riscv/issues/2#issuecomment-6362813293)；没有READY/DONE/释放或明确跨轮移交。工作区working-r2s2-20261023-1632，分支work/r2s2-20261023-1632，基点bca14d45b07ff07a86a7f54bce2b25870e60e2f3。不能因同账号、后来会话或日志无增长接管。\n2. **R2-S2／固定完整布局重新筛选**，操作20261024-LiZufan001-r2s2-fixed-0001，@LiZufan001 / 并发Agent。有效[WORK6369192350](https://github.com/cc77-builder/riscv/issues/2#issuecomment-6369192350)，运行保护[6369565659](https://github.com/cc77-builder/riscv/issues/2#issuecomment-6369565659)，最后通道边界UPDATE[6369748495](https://github.com/cc77-builder/riscv/issues/2#issuecomment-6369748495)。独立working-r2s2-fixed-20261024-0001 / work/r2s2-fixed-20261024-0001，来源同bca基点；该执行者仍在推进本包，未交接或释放。\n\n## 全部未结束或待核实的运行保护：2项\n\n- **MERGE-REG**：保护原文[6362808161](https://github.com/cc77-builder/riscv/issues/2#issuecomment-6362808161)。结果根/home/lizufan/riscv-lab/merge-reg-20261023-1816，run-01/state.json、run-01.launch.json、run-01.driver.stdout.log/.stderr.log；外层716a6ee805ae260048ab831b3dbbd5fe.e4bc5d5fd28823835211cbe40ffeb4dc。原执行者尚未明确收束，恢复须同时核查真实Worker/argv/state及输入身份；本摘要不把待核实保护解除，也不授权重启或停止。受保护范围仍为原controller及runtime-inputs中的checkers、合并硬件/build、旧原始来源、夹具、NEMU/flash与规范镜像。\n- **R2-S2 fixed**：保护原文6369565659；/home/lizufan/riscv-lab/r2-s2-fixed-20261024-0001/run-01/state.json、run-01/runs/*/result.json、run-01-command/command.json；外层716a6ee805ae260048ab831b3dbbd5fe.92d6af248f3010c7880ed010aaddce39。执行者最新事件报告running、controller PID320及mutation-channel占用；普通只读可用，部分新shell/写入INVALID_ARGUMENT，未据此重启或终止。保护runtime-fixed.local.json、build-02、fixed_layout.py/fixed_screen.py及runtime-inputs中的旧checker/硬件/参考输入。必须核对真实身份，不以本摘要发布时间推断进程当前状态；不支持断点续跑。\n\n## 全部未结束集成窗口：无\n\nS1窗口BEGIN6369779869已由END6369809761释放；远端最后实查为ec221262ae29522dd9d1a2be7240b405cc23a549。未来发布先重新核对最新Issue/远端，并保留双方源码、路线和计分板。\n\n## 已关闭操作与交接导航\n\n- 协作文档6359384803、要求入口6360100011、旧S2筛选6362530683、S2索引补强6362642115均已END/DONE且无遗留运行。\n- 本轮S1操作20261023-LiZufan001-r2s1-2100已在6369809761 END/DONE，停止仓库写入、释放认领；v1/main/small三项运行保护分别由6366544203、6368968004、6369287032结束，所有本操作Worker结束。提交ec221262ae29522dd9d1a2be7240b405cc23a549；[结果与下一动作](https://github.com/cc77-builder/riscv/blob/ec221262ae29522dd9d1a2be7240b405cc23a549/team/optimizations/o2/r2-vector-accum/VALIDATION.md)及根计分板已持久化。旧S2 K13性能采用建议已因布局混杂暂缓；更快RVV和S1三整块候选进入现有选择。下一轮可另认领R2-SELECT或R2-S1 firstdot子项；不得接管以上两项有效认领。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6369823982",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6369823982"
+    },
+    {
+      "id": 6369903714,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T16:40:59Z",
+      "updated_at": "2026-10-23T16:40:59Z",
+      "body": "UPDATE | 20261024-LiZufan001-r2s2-fixed-0001 | 同包独立审计检出与接续定位\n\n已核实S1正常发布/DONE6369809761及完整SNAPSHOT6369823982，远端ec221262ae29522dd9d1a2be7240b405cc23a549；保留其全部源码、路线和计分板。为不写入本操作仍受保护的 live 检出，新建同仓库独立审计/交付检出：\nD:\\Projects\\competitions\\2026-10-CIE-RISCV-XiangShan\\working-r2s2-audit-20261024-0001\n分支 work/r2s2-audit-20261024-0001，HEAD ec221262ae29522dd9d1a2be7240b405cc23a549，origin仍为获准team仓库。来源先由指定原根克隆验证，再fetch目标zufan；独立Git/index。克隆外层0e052e2212fc91e7ff680a3fc6ecd869已exit0/cleanup_complete；原根仍未改写。\n\n同一R2-S2认领内的新增fixed_evidence.py、针对性归档测试及FIXED_LAYOUT.md在该审计检出继续准备，live fixed_layout/fixed_screen保持已公布哈希。当前受保护run-01、其配置、build-02及原运行源码位置仍是6369565659所列，不切换运行输入，不新增第二个主要工作包。\n\n原merged_evidence.pack按live repo归属封存checker，因此实际pack会在原live检出运行；另一检出只执行移位审计/交付，不能通过更换repo参数伪造来源。最终收束与推送前会将新证据及代码身份一起持久化并给出准确承载位置。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6369903714",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6369903714"
+    },
+    {
+      "id": 6370187012,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T16:56:01Z",
+      "updated_at": "2026-10-23T16:56:01Z",
+      "body": "UPDATE | 20261024-LiZufan001-r2s2-fixed-0001 | 强 RVV 统一对照子项\n\n依据 ec221262 当前路线及 S1 DONE6369809761，现有 fixed-layout 31-run 即使完成也只闭合新同布局 S0→S2 单项，不能用 S1 另一合同的 175 周期拼接 S2/RVV 最终比值。同一 R2-S2 认领内继续补强 RVV 公平比较，范围新增本模块独立 bridge 生成/校验/运行/归档入口及针对性测试；只读引用已发布 S1 candidate 0270736b5c09e160626eb7b32d8e760faa193bf05761fea824a979108c3717b9，不改 S1/S2 冻结源码或现有 run-01 输入。\n\n开发仍在 6369903714 的独立审计检出；后续实验使用新的独立输出，先做精确生成与模型/布局门禁。主批运行期间不并行启动第二个 EMU；统一 RVV 实测前再核对实际进程、资源和保护。当前旧 run-01 保护继续有效，MERGE-REG 的认领及保护不变。该子项解决 S2 的现有准入前置，不另占 R2-SELECT。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6370187012",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6370187012"
+    },
+    {
+      "id": 6370700093,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T17:23:16Z",
+      "updated_at": "2026-10-23T17:23:16Z",
+      "body": "UPDATE | 20261024-LiZufan001-r2s2-fixed-0001 | 强 RVV 探针静态阶段完成\n\n同包 rvv_probe.py SHA256 035a0020733e00a6bded6921e7ee78afe2522f0ccb78c3680d89ac13bc38db6a；仍在6369903714的 audit 检出，基点ec221262。新输出根 /home/lizufan/riscv-lab/r2-s2-rvv-probe-20261024-0001，配置runtime-02.local.json，canonical build-02。独立私有AM由已释放S1的固定AM复制，提交086a238062fdfb3281b745a537b361983d0154b5、两个库哈希与主批相同，没有修改共享AM。\n\nPASS（静态/模型）：最终源码在原生Linux独立检出执行9项测试、56机器码试验；两份真实AM canonical ELF/1完整布局对，零元数据例外。rvv0 BIN与独立新编译fixed S2一致；与主批原BIN的直接关联待主批结束后核验。此前测试误把RVV逻辑dots当custom退休数，原始FAIL和源码保留在tests-01-command/tests-01-source，修正后PASS在tests-02/03-command；未改黄金值或候选。\n\n范围仅dataset0/K13/endtoend，rvv1=S2 vdot+已合格S1 RVV。尚未启动新EMU；计划5进程（1负控、4正常含2重放），32正式窗口，每单元格4，不能冒称12窗口或SELECT资格。若主批S2无端到端收益则不启动；若探针仍不胜更快RVV则不扩大采用。合同见本模块RVV_PROBE.md。\n\n17:16的源码准备命令因其后git status超时而exit1；已通过独立只读命令核实：3个待拷文件SHA正确，preparation-identity.json实际保存，未遗留git进程。该失败不算测试PASS。17:22:59Z实查主批controller394、EMU1973，原run-01及6369565659保护继续有效，未重启、未停止；不占第二个主要工作包。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6370700093",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6370700093"
+    },
+    {
+      "id": 6370742682,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T17:25:29Z",
+      "updated_at": "2026-10-23T17:25:29Z",
+      "body": "UPDATE | 20261024-LiZufan001-r2s2-fixed-0001 | 主批完成；启动强 RVV 有界探针前保护\n\n6369565659 的 fixed run-01 已自然完成：外层92d6af248f3010c7880ed010aaddce39于2026-10-23T17:23:19.794Z exit0/cleanup_complete；内部state为R2_S2_FIXED_LAYOUT_SOFTWARE_SCREEN_PASS，31实际EMU、30正常+1预期负控、384正式窗口、0失败/未完。17:24:56Z再次核对无活跃controller/EMU，active_pid/result均null，固定源码哈希未变。该项运行保护结束；原输入与原始结果继续保留，R2-S2认领未释放。MERGE-REG他人保护不变。\n\n固定布局结果：K13 reuse endtoend 210→187周期（12样本/格，约-10.95%），core165→143；basic端到端246.25→298.25，不能采用basic；16×64整BIN一致且全部窗口对照一致。完整结果SHA e991cf7650ceac7bde5a871c207a461f05996341dc1626e5903a0629b42c8ef5。仅对原RVV比较，尚未具备较快RVV的最终选择资格。\n\n现按6370187012/6370700093启动同包probe run-01，输出根/home/lizufan/riscv-lab/r2-s2-rvv-probe-20261024-0001；保护audit检出的rvv_probe.py（035a0020...）、fixed_layout（92e025d3...）、fixed_screen（958dcb53...）、其冻结checker/S1/S2源、runtime-02.local.json、build-02、私有AM及runtime-inputs记录的硬件/NEMU/flash。使用相同固定硬件6d2abe403/EMU1a23dbab，最多单个EMU串行。预计5进程（1负控、4正常含2replay）、32正式窗口；无断点恢复，不得覆盖输出或改变输入。\n\n主批S2-d0-s07与probe rvv0的实际1250336字节BIN完全一致，SHA均d196c0ab19b2f6581b0246a84f57653197a270e267032b349ad07f410d14738c，关系已保存main-image-relationship.json。新比较只据rvv1同镜像数值作继续/停止决定。主批封存从原live检出执行，独立复算使用已准备的native检出；不启动第二个重任务。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6370742682",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6370742682"
+    },
+    {
+      "id": 6370761462,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T17:26:29Z",
+      "updated_at": "2026-10-23T17:26:29Z",
+      "body": "UPDATE | 20261024-LiZufan001-r2s2-fixed-0001 | 强 RVV 探针已启动定位\n\n对应保护6370742682：外层operation_id=716a6ee805ae260048ab831b3dbbd5fe.3fabdd837f2eb4f610a34b4165279ff2，2026-10-23T17:25:59.318Z启动，Windows进程360396、Worker337240。实际资源/控制器检查写于probe根run-01.launch.json，状态run-01/state.json，原始外层命令run-01-command/command.json及stdout.log/stderr.log。当前running，不支持续跑；未完成前不修改audit运行检出、配置、build-02或受保护输入。主批原live检出只用于事后封存，不再启动EMU。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6370761462",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6370761462"
+    },
+    {
+      "id": 6370860206,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T17:31:49Z",
+      "updated_at": "2026-10-23T17:31:49Z",
+      "body": "UPDATE | 20261024-LiZufan001-r2s2-fixed-0001 | 主批封存与独立复算完成\n\n固定布局主批已从原live检出封存到/home/lizufan/riscv-lab/r2-s2-fixed-20261024-0001/archive-01。991个payload，原277369094字节/封存56153666字节；manifest SHA256 ffbab60af26f77854d3d5847a11ed992e4599e1d9e21edcb3eca2a6e35b32df0。pack-01.json/pack-01-command保留真实命令，13对完整布局PASS。\n\n独立原生Linux检出/home/lizufan/riscv-lab/r2-s2-fixed-audit-20261024-0001/replay-checkout-01（ec221262+精确新增源码副本）从该封存执行完整原文重算PASS：30正常/1负控、384正式窗口、4 replay、13对布局，0新增EMU/NEMU。报告fixed-main-audit-linux.json SHA256 110072fd0e1117757558fcfdbc445345e44e4a7863a6fe337c261fb47852ed60；10项归档负测全PASS、无skip，命令fixed-evidence-tests-01-command。此为独立检出离线复算，不能冒称干净构建T17或成员人工验收。\n\n192个FU诊断窗口响应均2周期、0写回stall。K13 reuse端到端退休124→90、周期210→187；basic退休153→125却周期246.25→298.25，确认不能以少指令替代性能取舍。具体区间诊断保存fixed-diagnostics.json，不作逐指令因果归因。\n\n强RVV probe仍按6370742682/6370761462保护执行中；本操作继续写入事后证据与结果，未释放认领。最终交付检出等probe结束后再集成上述归档，当前没有发布窗口或推送。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6370860206",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6370860206"
+    },
+    {
+      "id": 6370922490,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T17:35:14Z",
+      "updated_at": "2026-10-23T17:35:14Z",
+      "body": "UPDATE | 20261024-LiZufan001-r2s2-fixed-0001 | 强 RVV 探针完成；关闭 S2 扩大采用假设\n\n6370742682/6370761462 的 probe run-01 已自然完成，外层3fabdd837f2eb4f610a34b4165279ff2 exit0/cleanup_complete；内部运行2026-10-23T17:26:02.623205+00:00～17:32:59.074281+00:00。状态R2_STRONG_RVV_DATASET0_ENDTOEND_PROBE_PASS，5实际EMU（4正常含2replay+1预期负控）、32正式窗口、0失败/未完。17:34:42Z实查无活跃controller/EMU，源码035a0020...未变；该项运行保护结束。原始输出继续保留。MERGE-REG他人认领/保护不由本事件改变。\n\nrvv1同镜像K13/endtoend：reuse S2 vdot总748/4=187，较快RVV总701/4=175.25周期，S2约慢6.70%；basic为298.25对216。rvv0两格为vdot298.25/187、原RVV320/190.25。两个variant的vdot数值均保留，不能只报旧RVV比较。results SHA256 cd032cbfbc84b3c66af68379ee8cea981afa232a1b1da343f26600840ddbdba9。\n\n按事先停止条件，不继续扩大S2采用矩阵，不声称已完成强RVV的三数据集/两scope/SELECT资格。固定布局S0→S2 reuse的真实-10.952%保留，K13默认选择仍依据已合格S1 RVV，S0 vdot留作回退。下一项有依据的方向是现有S0/S1的R2-SELECT及新入口影响验证；本包封存、复算和发布尚在继续，认领暂保留，不同时认领SELECT。\n\n事后一次观察命令误把Path传入completed(state)而失败，未改源码或运行数据、未启动EMU；已解析state后正确完成，失败原收据保存postrun-inspection-failure.json。不能将该命令失败写成主批或probe的硬件失败。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6370922490",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6370922490"
+    },
+    {
+      "id": 6371231553,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T17:51:08Z",
+      "updated_at": "2026-10-23T17:51:08Z",
+      "body": "READY | 20261024-LiZufan001-r2s2-fixed-0001 | R2-S2 固定布局与强 RVV 取舍已完成，等待短集成窗口\n\n候选提交 fdef4e45dcfab46ee85ca6d3574fb8e8d33943bd，父提交 ec221262ae29522dd9d1a2be7240b405cc23a549；独立交付检出仍为6369903714中的 working-r2s2-audit-20261024-0001 / work/r2s2-audit-20261024-0001。原指定根未改动，保留全部 S1 成果。仅本操作9份Python入口/测试、3份新合同/结果、现有路线/README/历史结果前言/本人计分板行，以及精确归档与回执；1253文件，工作树已干净。\n\n实际验证：主批31实际EMU（30正常+1预期负控）/384正式窗口；探针5实际EMU（4正常含2重放+1预期负控）/32正式窗口。最终静态20项/288机器码试验、探针9项/56试验；兼容88项；独立原生Linux完整原文审计及10+5归档负测均PASS，无skip。Windows实际Git索引994+204文件逐blob相同；9份源码固定哈希、101个文件链接和其余54文件逐blob检查PASS。publication-check SHA256 8d8de70c968482c83f103ecebd0741fda09f1369e61f36f5788835b61246fdcc；原EOF文本检查FAIL及修正原因也保留其中，不隐去失败。\n\n取舍：固定完整布局的K13 reuse端到端210→187（-10.952%），basic退化；同镜像较快RVV175.25，S2慢6.705%。按预定条件停止扩大S2采用；不推断未执行强RVV全矩阵，不把本次离线复算写成T17/PPA或人工ACK。结果/接续：team/optimizations/o2/r2-safe-tail/FIXED_RESULT.md；两个封存 fixed-screen-v1、rvv-probe-v1；根计分板与路线已更新到S0/S1选择。\n\n本操作两个EMU campaign已自然结束，运行保护已在6370742682/6370922490解除，无在途重任务。认领仍保留至发布DONE；MERGE-REG原认领/待核实保护不变。提交回执 /home/lizufan/riscv-lab/r2-s2-fixed-audit-20261024-0001/publication-01/result.json。尚未推送，尚未开启发布窗口。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6371231553",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6371231553"
+    },
+    {
+      "id": 6371235874,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T17:51:21Z",
+      "updated_at": "2026-10-23T17:51:21Z",
+      "body": "INTEGRATE-BEGIN | 20261024-LiZufan001-r2s2-fixed-0001 | cc77-builder/riscv:zufan\n\n依据READY6371231553，预期远端 ec221262ae29522dd9d1a2be7240b405cc23a549，候选 fdef4e45dcfab46ee85ca6d3574fb8e8d33943bd，单父正常快进。已重读完整SNAPSHOT6369823982及之后全部事件，未发现其它未结束窗口；刚实查远端仍为上述SHA。主要验证及提交均在窗口外完成；本窗口仅核验、正常推送和回读，不构建、不仿真、不部署。\n\n发布后立即回读确认唯一有效窗口，再核对远端后执行。若远端变化或存在更早有效窗口则ABORT，保留本地成果。MERGE-REG认领/保护不变；R2-S2认领待END/DONE释放。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6371235874",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6371235874"
+    },
+    {
+      "id": 6371258334,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T17:52:32Z",
+      "updated_at": "2026-10-23T17:52:32Z",
+      "body": "INTEGRATE-END / DONE | 20261024-LiZufan001-r2s2-fixed-0001 | R2-S2 交付并释放\n\nBEGIN6371235874已正常结束。2026-10-23T17:51:57Z完成普通快进推送 ec221262ae29522dd9d1a2be7240b405cc23a549 → **fdef4e45dcfab46ee85ca6d3574fb8e8d33943bd**；git ls-remote与GitHub API均实查一致，独立交付工作树干净。没有强推、部署或赛事提交。推送外层f73718d928f2c08be3a9fdd15ea60601 exit0/cleanup_complete；原始提交/推送收据在 /home/lizufan/riscv-lab/r2-s2-fixed-audit-20261024-0001/publication-01。\n\n[结果、失败定位与具体下一动作](https://github.com/cc77-builder/riscv/blob/fdef4e45dcfab46ee85ca6d3574fb8e8d33943bd/team/optimizations/o2/r2-safe-tail/FIXED_RESULT.md)，以及根计分板和当前路线已随同提交。采用判断/分层验证见READY6371231553：S2 reuse相对S0的固定布局收益成立，但本探针的更快RVV胜出，停止扩大S2采用。原始主批/探针、独立审计和拒错证据全部保留，未把有界探针冒称全矩阵/T17/PPA。\n\n本操作停止写入，R2-S2认领释放；两项本操作EMU运行均自然结束，保护已结束，无继续存活的本操作Worker。旧live、audit及native检出/输出均保留可定位。MERGE-REG操作20261023-LiZufan001-merge-reg-1816的认领与待核实保护仍按6362647193/6362808161/6362813293有效，本事件不改变它。\n\n后续接续已有输入就绪的R2-SELECT：从已发布S1 v2完整12窗口矩阵提取四尺寸选择，保留较快RVV和S0回退；新统一调用/链接入口须新验收，先以8×32/dataset0/endtoend有界验证入口影响。本Agent如继续，将重新核实Issue并使用新的操作ID/WORK，不延用本认领。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6371258334",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6371258334"
+    },
+    {
+      "id": 6371287631,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T17:54:04Z",
+      "updated_at": "2026-10-23T17:54:04Z",
+      "body": "WORK | 20261024-LiZufan001-r2select-0001 | R2-SELECT／合格原镜像选择与可复算导出 | @LiZufan001 / 本轮主Agent\n\n接续本Agent的S2 END/DONE6371258334及fdef4e45dcfab46ee85ca6d3574fb8e8d33943bd已持久化下一动作。已读最新完整摘要及后续事件；MERGE-REG仍由原执行者认领，本包未见有效WORK，无未结束集成窗口。\n\n将从已核实、干净的 working-r2s2-audit-20261024-0001（来源已由指定原根验证）建立独立工作树：\nD:\\Projects\\competitions\\2026-10-CIE-RISCV-XiangShan\\working-r2select-20261024-0001\n分支 work/r2-select-20261024-0001，基点 fdef4e45dcfab46ee85ca6d3574fb8e8d33943bd；独立工作树与Git index。原指定根和所有既有运行输入不写入。\n\n范围：新增 team/optimizations/o2/r2-select/ 内的选择/提取入口、针对性测试、合同/结果与必要证据，按结果追加本人计分板并局部更新路线。只读复用 S1 merged-v2、candidate/gate/experiment/evidence/complete_replay；不改冻结候选、黄金数据、旧检查器、S1/S2归档或RTL。\n\n待验证假设：S1完整四尺寸/两scope/三dataset矩阵可严格重算为最优合格选择，并将选择项/最快合格RVV/S0回退绑定到各自原ELF/BIN和完整12窗口；当前缺少该合同的可复用导出入口。先做原始日志审计、选择与导出负测和实际字节核验，避免重跑已有有效EMU。新工具不把原镜像映射宣称为统一调度器、新链接或完整应用性能。若引入新的运行入口，另在本包UPDATE明确其输入和最小8×32/d0/endtoend试验后再实测。\n\n当前新增重任务/运行保护：无。新独立结果根 /home/lizufan/riscv-lab/r2-select-20261024-0001；最多四核主机检查，不启动并行EMU。原MERGE-REG认领/待核实保护不变。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6371287631",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6371287631"
+    },
+    {
+      "id": 6371905568,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T18:26:14Z",
+      "updated_at": "2026-10-23T18:26:14Z",
+      "body": "UPDATE | 20261024-LiZufan001-r2select-0001 | R2-SELECT 原镜像选择/导出验证完成 | @LiZufan001 / Agent\n\n已完成独立 selection.py export/verify/resolve：复算已合格 S1 v2 的完整 768 正式窗口、64 候选单元格（每格12窗口），8项shape/scope选择。三个整块形状选S1 reuse vdot，K13选最快S1 reuse RVV；全部候选、最快RVV与S0 vdot回退保留。实际导出48份完整原镜像、1296载荷/101861823字节；原4case调用计划不变。\n\n最终源码 selection.py SHA256 8230162c9f28356614cefb0b22a5f88efc1dbcfff66eb7b216853e1bec43f60b，test_selection.py 824b64302d6caa32bdc7252f388fc33030c67902ef991ca12dc80a8ea8ded5c7。Linux独立完整检出和原生Windows各21项测试PASS；Windows通过真实WSL UNC路径校验和查询最终bundle-02。初次Windows长路径失败（52文件仍存在且精确哈希匹配）、包装负测捕获错误异常类型及原版本收据均保留；冻结源/原归档未改。\n\n成果：WORK所列独立工作区的 team/optimizations/o2/r2-select/RESULT.md、CONTRACT.md、README.md、evidence/selection-v1/。原始完整输出 /home/lizufan/riscv-lab/r2-select-20261024-0001/bundle-02；源码身份、两检出、输出及最终进程收据可从 evidence/selection-v1/runtime/locations.json 定位。主机验证最终外层 operation 716a6ee805ae260048ab831b3dbbd5fe.439a8adf2a4c807f0aa85c032b51c903，exit0且cleanup_complete。\n\n新增EMU/NEMU为0，architecture_recomputed=false，复用原S1资格并核验归档/报告/加载源身份；没有新dispatcher、默认切换、T17或PPA资格。下一项按路线进入R4/O5实际入口影响闭合；若新caller/新ELF，先8×32/d0/endtoend，强RVV也走相同新入口及计时边界实测，旧10.75周期余量只决定试验顺序。\n\n当前继续本包交付/索引检查，认领保留；尚未开启集成窗口。无本包活跃运行或新增输入保护；MERGE-REG既有认领及待核实保护不变。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6371905568",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6371905568"
+    },
+    {
+      "id": 6371995878,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T18:31:04Z",
+      "updated_at": "2026-10-23T18:31:04Z",
+      "body": "READY | 20261024-LiZufan001-r2select-0001 | R2-SELECT 原镜像选择/导出 | @LiZufan001 / Agent\n\n候选提交 ac2f4082a6a4710dca6a739f66d6fa77c49552b8，父提交 fdef4e45dcfab46ee85ca6d3574fb8e8d33943bd；独立工作区 working-r2select-20261024-0001、分支 work/r2-select-20261024-0001，提交后干净。范围仅新增r2-select模块/证据及本包路线、计分板；冻结S1/S2、RTL、原指定根均未改。\n\n验证：最终Linux/Windows各21项测试，原镜像48份/1296载荷完整校验与实际查询PASS；全768正式窗口、64候选格的选择身份一致。113个待交付文件逐Git blob与工作树原字节一致，87个本地文档链接/锚点PASS。首次发布检查发现两份Windows原始JSON被根属性换行规范化，已用本模块evidence/** -text保留原字节，并在独立publication-02重新按同一门禁通过；原失败/诊断入库。最终publication-check SHA256 7321d2839cf9188325bdc014edfaf50341891c71729e52c0d687fdf4b50e24f8。\n\n结果/命令/下一步：team/optimizations/o2/r2-select/RESULT.md、README.md；实物与检出见 evidence/selection-v1/runtime/locations.json；发布执行回执 /home/lizufan/riscv-lab/r2-select-20261024-0001/publication-02/candidate.json。\n\n本包无在途任务和运行保护；新增EMU/NEMU为0，原架构资格仅精确复用，没有新caller、默认切换、T17或PPA资格。下一项R4/O5实际入口影响闭合已写入计分板/路线。认领保留等待短窗口发布；MERGE-REG既有认领及待核实保护不变。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6371995878",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6371995878"
+    },
+    {
+      "id": 6372003305,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T18:31:27Z",
+      "updated_at": "2026-10-23T18:31:27Z",
+      "body": "INTEGRATE-BEGIN | 20261024-LiZufan001-r2select-0001 | cc77-builder/riscv:zufan\n\n@LiZufan001 / Agent；当前用户明确授权修改/提交/推送至 https://github.com/cc77-builder/riscv.git 的 zufan，不部署。\n\n预期远端 fdef4e45dcfab46ee85ca6d3574fb8e8d33943bd；候选 ac2f4082a6a4710dca6a739f66d6fa77c49552b8，为其直接子提交。READY6371995878列出的实现、双平台21项测试、113文件逐blob、87链接检查已完成；独立工作区干净，无长构建/仿真或在途任务。\n\n已读完整摘要6369823982及其后所有有效事件，未见未结束窗口；MERGE-REG认领及待核实保护保留。本窗口只做发布前再次回读、核对远端、正常FF推送与回读验证；远端变化或窗口竞争即停止发布并ABORT，禁止强推。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6372003305",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6372003305"
+    },
+    {
+      "id": 6372029127,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T18:32:50Z",
+      "updated_at": "2026-10-23T18:32:50Z",
+      "body": "INTEGRATE-END / DONE | 20261024-LiZufan001-r2select-0001 | R2-SELECT 原镜像选择/导出已交付并释放\n\nBEGIN6372003305已完成：普通快进将 cc77-builder/riscv:zufan 从 fdef4e45dcfab46ee85ca6d3574fb8e8d33943bd 推至 ac2f4082a6a4710dca6a739f66d6fa77c49552b8。native Git ls-remote及GitHub API均回读一致，工作区干净，无force/no deploy。发布外层716a6ee805ae260048ab831b3dbbd5fe.b6c22f9101008142385d2a04fc686abf，2026-10-23T18:32:04.0079576Z结束、exit0、cleanup_complete。发布原始回执位于 /home/lizufan/riscv-lab/r2-select-20261024-0001/publication-02/push-result.json。\n\n交付：[RESULT](https://github.com/cc77-builder/riscv/blob/ac2f4082a6a4710dca6a739f66d6fa77c49552b8/team/optimizations/o2/r2-select/RESULT.md)、[可执行命令](https://github.com/cc77-builder/riscv/blob/ac2f4082a6a4710dca6a739f66d6fa77c49552b8/team/optimizations/o2/r2-select/README.md)、[运行/检出定位](https://github.com/cc77-builder/riscv/blob/ac2f4082a6a4710dca6a739f66d6fa77c49552b8/team/optimizations/o2/r2-select/evidence/selection-v1/runtime/locations.json)、根计分板与当前路线。本包Linux/Windows各21测试及113文件逐blob/87链接检查PASS；新EMU/NEMU为0，架构资格仅复用原S1精确报告，未产生新caller/默认/T17/PPA资格。\n\n现已停止本包源码/证据写入，释放R2-SELECT认领与本集成窗口；无本包活跃Worker或运行保护。前一R2-S2操作已由6371258334单独DONE且无遗留运行。MERGE-REG原操作20261023-LiZufan001-merge-reg-1816的认领及待核实运行保护完整保留，不借本DONE解除。\n\n同一PPA项目下一轮可用新操作ID按本事件和已入库RESULT末节接续R4/O5：先resolve 8×32/d0/endtoend获选与最快RVV原身份，固定实际调用路径。若引入新caller/ELF，先独立合同/负控恢复/重放，强RVV同新入口/计时边界实测；原10.75周期余量只作顺序依据，失去收益则保留原工具/RVV，通过后扩大受影响范围再T17→R5/G5。若R4被占用，按已写路线选未冲突firstdot运行合同或R3只读分析。此交接不授权停止任何既有受保护运行。\n\n本包开始2026-10-23T17:54:04Z；工程/验证截止已记计分板，发布收束截至2026-10-23T18:32:32Z（UTC+00；本地均加08:00）。本轮主Agent实际从2026-10-23T16:01:02Z持续完成S2与本包，已超过120分钟努力目标，尚进行最后只读交付核对与完整活动摘要。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6372029127",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6372029127"
+    },
+    {
+      "id": 6372071080,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T18:35:10Z",
+      "updated_at": "2026-10-23T18:35:10Z",
+      "body": "SNAPSHOT | 完整活动摘要 | 覆盖至 [6372029127](https://github.com/cc77-builder/riscv/issues/2#issuecomment-6372029127) | 2026-10-23 18:34:06 UTC\n\n由20261024-LiZufan001-r2select-0001汇总上一完整摘要6369823982及其后全部事件；回读MERGE-REG原WORK/保护/执行者事件。之后的新事件继续生效；本摘要不代签其他执行者DONE/ACK。\n\n## 全部未释放认领：1项\n\n**MERGE-REG／合并基线新夹具子项**：20261023-LiZufan001-merge-reg-1816，@LiZufan001 / 另一Agent。有效[WORK6362647193](https://github.com/cc77-builder/riscv/issues/2#issuecomment-6362647193)，最后执行者事件[6362813293](https://github.com/cc77-builder/riscv/issues/2#issuecomment-6362813293)；没有DONE/明确释放或跨轮移交。working-r2s2-20261023-1632 / work/r2s2-20261023-1632，基点bca14d45b07ff07a86a7f54bce2b25870e60e2f3。不得因同账号、新对话或无新日志接管。\n\n## 全部未结束或待核实运行保护：1项\n\n**MERGE-REG** 原保护[6362808161](https://github.com/cc77-builder/riscv/issues/2#issuecomment-6362808161)仍保留。结果根 /home/lizufan/riscv-lab/merge-reg-20261023-1816；run-01/state.json、run-01.launch.json、run-01.driver.stdout.log/.stderr.log；外层716a6ee805ae260048ab831b3dbbd5fe.e4bc5d5fd28823835211cbe40ffeb4dc，原登记Windows worker PID325876。controller SHA256 b082d34f9e7eed5d56296aacf4a707358cab3c370ae301bf9a4a82174af122a5。恢复须核实当前Worker/argv/state及输入身份；原记录PID不是当前存活结论，不支持断点续跑。\n\n保护原controller与runtime-inputs所列checkers、合并硬件/build及外部builder、旧legacy原文/来源/输入、S2 negative-fixture、正常NEMU/flash及原canonical matrix/O2补充输入。未获得原执行者真实收束，不解除，也不授权停止/重启。此次仅核查本Agent运行标识无匹配进程，不用于推断MERGE-REG状态。\n\n## 全部未结束集成窗口：无\n\nS2 BEGIN6371235874→[END/DONE6371258334](https://github.com/cc77-builder/riscv/issues/2#issuecomment-6371258334)；SELECT BEGIN6372003305→[END/DONE6372029127](https://github.com/cc77-builder/riscv/issues/2#issuecomment-6372029127)均已关闭。远端最后由native Git ls-remote和GitHub API核实为ac2f4082a6a4710dca6a739f66d6fa77c49552b8，正常FF，未部署。未来发布重新检查活动和远端。\n\n## 本轮关闭操作与可执行接续\n\n- R2-S2操作20261024-LiZufan001-r2s2-fixed-0001已交付fdef4e45dcfab46ee85ca6d3574fb8e8d33943bd。31次主批/384窗口确认reuse真收益，另5次强RVV探针/32窗口确认当前S2未胜强RVV，停止扩大采用；主批和probe运行分别由6370742682、6370922490实际结束并解除本操作保护。已停止写入、释放认领，无遗留运行。[固定布局及强RVV结果](https://github.com/cc77-builder/riscv/blob/ac2f4082a6a4710dca6a739f66d6fa77c49552b8/team/optimizations/o2/r2-safe-tail/FIXED_RESULT.md)。\n- R2-SELECT操作20261024-LiZufan001-r2select-0001已交付ac2f4082a6a4710dca6a739f66d6fa77c49552b8。原镜像export/verify/resolve与双平台21项测试通过；新EMU/NEMU为0，原架构资格仅精确复用，不给新caller/默认/T17/PPA背书。已停止源码/证据写入并释放认领，无活跃Worker/输入保护。[结果与具体下一步](https://github.com/cc77-builder/riscv/blob/ac2f4082a6a4710dca6a739f66d6fa77c49552b8/team/optimizations/o2/r2-select/RESULT.md)、[实际命令](https://github.com/cc77-builder/riscv/blob/ac2f4082a6a4710dca6a739f66d6fa77c49552b8/team/optimizations/o2/r2-select/README.md)、[两检出/输出定位](https://github.com/cc77-builder/riscv/blob/ac2f4082a6a4710dca6a739f66d6fa77c49552b8/team/optimizations/o2/r2-select/evidence/selection-v1/runtime/locations.json)。\n- 下一轮新操作ID引用SELECT DONE，先按Issue认领R4/O5实际入口影响闭合：resolve 8×32/d0/endtoend的获选/最快RVV原身份；新caller/ELF先独立合同、真实负控恢复、重放及同新入口/计时边界强RVV对照，原10.75周期余量只作试验顺序依据。失败保留现有原镜像工具/RVV，通过才扩大范围，再T17→R5/G5。若被占用，按既有路线选未冲突firstdot运行合同或R3只读分析。不接管上述MERGE-REG。\n\n最终只读复核：指定原根working-zufan-full-20261022仍为zufan / ff58e519091f273c4bc177f5e82cfbbfaf102cc5且干净；本轮独立S2审计检出fdef4e45、SELECT工作树ac2f4082均干净，远端均为授权仓库。原根未被本Agent更新，成果通过Issue和远端可发现；下一轮不要把原根旧HEAD误作最新交付。只读外层716a6ee805ae260048ab831b3dbbd5fe.1a073cd440f490ec83df98d5a2e134e0于18:33:42.4479818Z exit0/cleanup_complete，本Agent三个实验根及本包无匹配活跃进程。\n\n本轮工程/交付记录从2026-10-23T16:01:02Z至本次收尾统计2026-10-23T18:34:06Z，即2026-10-24 00:01:02～02:34:06（UTC+08:00），实际历时153分04秒，达到120分钟努力目标；这是会话历时，不计作人工工时。两项主要包按序认领、逐个释放，未以等待或重复有效实验凑时。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6372071080",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6372071080"
+    },
+    {
+      "id": 6373761981,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T20:09:46Z",
+      "updated_at": "2026-10-23T20:09:46Z",
+      "body": "UPDATE | 20261023-LiZufan001-merge-reg-1816 | MERGE-REG | 2026-10-23 20:09:46 UTC\n\n由 @LiZufan001 / 本轮接续 Agent 依据本轮用户明确跨轮授权发布，非原执行者历史确认。旧认领转交新操作 20261024-LiZufan001-merge-reg-resume-0354，由随后 WORK 接续。\n\n本轮实查：原工作区 working-r2s2-20261023-1632 / work/r2s2-20261023-1632 / bca14d45b07ff07a86a7f54bce2b25870e60e2f3，仅3份未跟踪成果（merged_regression.py、test_merged_regression.py、MERGED_REGRESSION.md）；controller SHA256 b082d34f9e7eed5d56296aacf4a707358cab3c370ae301bf9a4a82174af122a5一致，原件保留。成果根 /home/lizufan/riscv-lab/merge-reg-20261023-1816。\n原外层716a6ee805ae260048ab831b3dbbd5fe.e4bc5d5fd28823835211cbe40ffeb4dc为succeeded/exit0/cleanup_complete，结束2026-10-23T10:40:21.8205559Z；Windows原worker/child均无，Linux无匹配controller/工作区/EMU/build冲突进程。run-01/state.json为O2_MERGED_REGRESSION_NEW_FIXTURE_PASS，两次实际启动，active_result/active_process_group均null；launch/stdout/stderr哈希相符。本次只读回执716a6ee805ae260048ab831b3dbbd5fe.89205bd71453b93a04c3572b30f5f0e6于20:08:48.1046944Z exit0/cleanup_complete。\n\n原运行已真实终结，运行期保护转为不可变证据保留；本次不停止/重启任何原进程，不覆盖原证据。先原址完整物理输入及14项raw审计，随后独立工作区封存/必要复算/交付，旧9b3/B0-H1缺项保留。当前远端ac2f4082a6a4710dca6a739f66d6fa77c49552b8，无未结束集成窗口。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6373761981",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6373761981"
+    },
+    {
+      "id": 6373765605,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T20:10:00Z",
+      "updated_at": "2026-10-23T20:10:00Z",
+      "body": "WORK | 20261024-LiZufan001-merge-reg-resume-0354 | MERGE-REG／合并基线新夹具交付 | @LiZufan001 / 本轮Agent | 2026-10-23 20:09:59 UTC\n\n引用用户明确授权交接 UPDATE6373761981。来源入口已核实为 working-zufan-full-20261022 / zufan / ff58e519091f273c4bc177f5e82cfbbfaf102cc5、origin为授权团队仓库、干净。原成果基点bca14d45及原3份未提交文件保持；本轮交付基于已核实远端 ac2f4082a6a4710dca6a739f66d6fa77c49552b8，拟建立独立 D:\\Projects\\competitions\\2026-10-CIE-RISCV-XiangShan\\working-merge-reg-20261024-0354 / work/merge-reg-20261024-0354，从已核实本地对象复用并检查来源祖先，不写其他工作树/index。\n\n范围：原controller原址只读audit；新独立封存/可移植复算与必要测试、MERGED_REGRESSION结果/入口、根计分板及路线结论。官方权威程序、旧冻结checker/合同、原输入/证据不变。仅在真实审计发现缺项时补最小必要验证；不重跑已合格完整矩阵。\n运行/资源：当前无新增EMU或重构建；原外层已终结。本轮审计输出使用 /home/lizufan/riscv-lab/merge-reg-resume-20261024-0354，原物理输入在审计期间只读保护，worker启动后补实际定位。总CPU预算≤4，当前先1审计槽；辅助Agent仅只读审查。无集成窗口，交付就绪后按规则正常FF发布。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6373765605",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6373765605"
+    },
+    {
+      "id": 6373780014,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T20:10:51Z",
+      "updated_at": "2026-10-23T20:10:51Z",
+      "body": "UPDATE | 20261024-LiZufan001-merge-reg-resume-0354 | MERGE-REG 原址实物审计 | 2026-10-24T04:10:38+08:00\n\n已启动原冻结controller的 --action audit，仅1个Python审计槽、无新EMU/NEMU。外层716a6ee805ae260048ab831b3dbbd5fe.5e6f02b117ae6372f42a7e77cb6dfad5，worker PID363056。新输出 /home/lizufan/riscv-lab/merge-reg-resume-20261024-0354/physical-audit-01；同级physical-audit-01.launch.json及.stdout.log/.stderr.log提供实际Linux PID、命令、状态/退出码。\n\n本次审计期间原controller、run-01、legacy来源链、固定硬件/build、NEMU/flash/workload/fixture保持只读保护。保留原路径审计，不复制改路径冒充原实物audit；本轮新文件仅在独立交付区和新输出根。无共享发布窗口。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6373780014",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6373780014"
+    },
+    {
+      "id": 6373907520,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T20:18:20Z",
+      "updated_at": "2026-10-23T20:18:20Z",
+      "body": "UPDATE | 20261024-LiZufan001-merge-reg-resume-0354 | MERGE-REG 实物审计完成 | 2026-10-23 20:20 UTC\n\n原址 physical-audit-01 已真实完成 O2_MERGED_REGRESSION_RAW_AUDIT_PASS；外层716a6ee805ae260048ab831b3dbbd5fe.5e6f02b117ae6372f42a7e77cb6dfad5 succeeded/exit0/cleanup_complete，launch结束2026-10-23T20:11:07.457277Z，原controller未变，新EMU/NEMU为0。审计result SHA256 57737f9450f74bd76250ad30abcf9eb200894757501d46712b2c7d02521029b9。14项原始记录重算一致，硬件源/依赖/生成物及NEMU实物链复核通过。UPDATE6373780014登记的本次运行已终结，解除其运行期保护；原证据继续不可变保留。\n\n独立交付工作区已建立于working-merge-reg-20261024-0354 / work/merge-reg-20261024-0354，基点ac2f4082a6a4710dca6a739f66d6fa77c49552b8，3份原成果逐字节复制。本轮正补独立归档、离线架构/覆盖复算和必要拒绝测试，不改原controller、官方程序或旧冻结合同。物理审计与可移植日志审计分别标识，不宣称clean rebuild、性能或S2组合验收。认领继续，无集成窗口。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6373907520",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6373907520"
+    },
+    {
+      "id": 6374492049,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T20:51:38Z",
+      "updated_at": "2026-10-23T20:51:38Z",
+      "body": "WORK | 20261024-LiZufan001-r4-entry-0442 | R4/O5／获选 GEMV 可调用入口影响验证 | @LiZufan001 / 本轮主 Agent | 2026-10-24T04:44:00+08:00\n\n来源入口已实查 working-zufan-full-20261022 / zufan / ff58e519091f273c4bc177f5e82cfbbfaf102cc5，干净且远端正确；实时 ls-remote 为 ac2f4082a6a4710dca6a739f66d6fa77c49552b8。引用 R2-SELECT DONE6372029127，拟以已核实来源建立独立 working-r4-entry-20261024-0442 / work/r4-entry-20261024-0442，基于最新团队提交并校验来源祖先。\n\n范围：team/optimizations/o2/r2-select 下独立可调用内核/运行入口、独立新合同及必要检查、结果与证据；根计分板及确有变化的路线。先检查现有软件/硬件身份与调用成本，以8×32/d0/endtoend为最小试验；同新入口的强RVV、真实负控拒错/正常恢复、重放和完整布局可比性通过且有收益才扩大。原 selection.py、S1/S2生成器、官方程序、RTL、旧合同/证据保持。\n\nMERGE-REG由另一操作6373765605持有，本操作不接管、不写其工作树/输入/成果。当前新运行无；已实查WSL当时Stopped、无本工程重任务，启动前再核实。新输出拟 /home/lizufan/riscv-lab/r4-entry-20261024-0442；总CPU≤4，按其他Agent实占调整，性能EMU顺序执行。核心判断与实现由本Pro完成，辅助Agent只读复核。无集成窗口，交付就绪后按现有规则正常FF发布。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6374492049",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6374492049"
+    },
+    {
+      "id": 6374734681,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T21:06:10Z",
+      "updated_at": "2026-10-23T21:06:10Z",
+      "body": "UPDATE | 20261024-LiZufan001-r4-entry-0442 | R4 最小整核试验启动准备 | 2026-10-23T21:06:00Z\n\n独立 Windows/native 工作区均基于 ac2f4082a6a4710dca6a739f66d6fa77c49552b8。新 contract r4-gemv-c-abi-entry-v1，8×32/d0 的 S0/S1 两份实际 ELF 已通过完整固定布局、独立 GNU 公共函数字节/模型及11项拒绝测试；新EMU目前0。build-probe-01 为实际构建，原生成器/官方程序/硬件不变。测试首个外层因 WSL 命令变量传递失败、未运行测试；修正启动命令后的 dc32bd988211b5de0900d67c0ed71306 已 exit0/cleanup_complete。\n\n即将顺序启动5个新EMU：真实vdot差分负例→同BIN正常恢复、另一正常镜像、两镜像全部窗口重放。输出 /home/lizufan/riscv-lab/r4-entry-20261024-0442/run-probe-01；同根 build-probe-01、repo新entry三文件及配置冻结；既有硬件/build/reference/flash/AM保持只读。当前实际进程检查无本工程EMU/构建冲突，Issue未见新增有效活动；使用单EMU槽，总CPU≤4。启动后补实际worker定位。认领6374492049继续，无集成窗口。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6374734681",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6374734681"
+    },
+    {
+      "id": 6374743458,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T21:06:41Z",
+      "updated_at": "2026-10-23T21:06:41Z",
+      "body": "UPDATE | 20261024-LiZufan001-r4-entry-0442 | R4 probe 实际运行定位 | 2026-10-23T21:06:13Z\n\nUPDATE6374734681所述试验已启动，外层716a6ee805ae260048ab831b3dbbd5fe.ea1dc97df1bf12712729fa1407fc607a，Windows worker PID366268、child PID293700；当前running，非完成结论。实际控制器 /home/lizufan/riscv-lab/r4-entry-20261024-0442/repo/team/optimizations/o2/r2-select/entry_experiment.py SHA256 417b2d8d0b97b293d7db565bfddb39f111756cd23638ddc62c8117997e069b6e。run-probe-01/state.json记录active_pid/result及真实启动数，run-probe-01.driver.log与runs/*/result.json/raw日志保留退出状态；禁止盲目重启/覆盖输出。单EMU顺序执行，前述冻结输入保护持续。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6374743458",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6374743458"
+    },
+    {
+      "id": 6374884499,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T21:15:27Z",
+      "updated_at": "2026-10-23T21:15:27Z",
+      "body": "UPDATE | 20261024-LiZufan001-r4-entry-0442 | 最小新入口试验PASS，按条件扩大 | 2026-10-23T21:15:00Z\n\nrun-probe-01 实际完成5个EMU进程：1个预期bit100拒错（实际vd20/PC0x80002314）、同BIN正常恢复、S0正常、S0/S1两次全窗口重放；正式32窗口、重放48窗口三元组一致。外层ea1dc97df1bf12712729fa1407fc607a succeeded/exit0/cleanup_complete，21:14:20.6475977Z结束；state无active_pid/result。解除该次运行期保护，原输出与源码身份作为不可变证据保留。\n\n8×32/d0同新入口：S1 reuse vdot均值292.5周期；四种RVV中最快为S1 reuse 300.75周期，少2.7431%，每格4正式窗口。不是三数据集或完整应用资格。按WORK预定条件扩大剩余22个ELF/正式运行，补其余6份dataset0重放；已经合格的probe正式样本不重复计数。扩展使用原entry源码身份、独立build-rest-shapes-01/build-rest-datasets-01和run-extension-01。先至多4个独立编译槽，随后单EMU顺序，当前Issue未见其他重任务/窗口；MERGE-REG认领继续保留。本包新增独立entry_evidence.py用于probe+扩展原始证据复算，不改旧检查器。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6374884499",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6374884499"
+    },
+    {
+      "id": 6374922907,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T21:17:51Z",
+      "updated_at": "2026-10-23T21:17:51Z",
+      "body": "UPDATE | 20261024-LiZufan001-r4-entry-0442 | R4 扩展实际启动 | 2026-10-23T21:17:28Z\n\n剩余18+4份ELF已真实四槽构建/独立模型/完整布局PASS，构建HEAD与probe同为ac2f4082，核心三文件不变。第一次扩展构建外层7a93044d83d7ae1e80dcd135600f479b于88ms取消、无输出；只读edf5b1a2b3f20b9aa6bb5d3350b27955确认两个目标目录均不存在且无残留EMU/build后，才由新外层4e10bed399240788c2106f4dd6cd98b6完成，exit0/cleanup_complete；原probe未重跑。\n\n扩展run-extension-01已实际启动，外层716a6ee805ae260048ab831b3dbbd5fe.6ad97f4802e31164a056f6ea1420cca0，worker363932、child353736。同输出根state.json记录Linux active_pid/result，driver.log与逐运行原文保留。预定22正式正常+6重放，单EMU顺序；本campaign独立状态应保留PARTIAL，完整资格由独立复算结合probe的负控/恢复/8×32 d0重放给出，不把PARTIAL单独当全集PASS。保护新run/两build、固定3份entry源码及共享只读硬件/reference/AM，其他Agent原认领不变，无集成窗口。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6374922907",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6374922907"
+    },
+    {
+      "id": 6375781428,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T22:13:08Z",
+      "updated_at": "2026-10-23T22:13:08Z",
+      "body": "UPDATE | 20261024-LiZufan001-r4-entry-0442 | R4 性能扩展完成，进入普通 C 使用验证 | 2026-10-23T22:13:00Z\n\nrun-extension-01 实际完成22正式+6重放，352正式窗口；state于22:12:48.743793Z结束，active_pid/result为空，实查无残留EMU。局部R4_CALLABLE_ENTRY_PARTIAL_PASS原样保留；与probe合计24正式镜像、8重放、1负控，共33次EMU/384正式窗口/192全窗口签名比较。解除6374922907所登记扩展的运行期保护，原实验和3份核心源文件继续冻结保存；完整离线聚合审计尚待执行。\n\n新调用窗口的S1 reuse vdot相对同入口最快RVV：4×8/8×32/16×64少9.4667%/2.7431%/7.9859%；4×13仍选S1 reuse RVV。下一步在同一已认领模块增加独立r4-gemv-c-application-v1普通C程序，真实调用16公共函数×3数据集，另行负控→恢复→功能重放，不产生性能样本。核心entry_c_api.py SHA256 4e1ae340c5b122d09d634631d7fce322ad121838ba9a4affdf193d2a4d9105fd；新public源码/合同/审计均不改官方程序或旧证据。当前先并行1构建槽+1离线审计槽；C实跑启动后补实际worker与输入保护。Issue刚回读无新增活动，MERGE-REG原认领保留，无集成窗口。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6375781428",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6375781428"
+    },
+    {
+      "id": 6375822989,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T22:16:07Z",
+      "updated_at": "2026-10-23T22:16:07Z",
+      "body": "UPDATE | 20261024-LiZufan001-r4-entry-0442 | 普通 C 实跑与性能原文审计已启动 | 2026-10-23T22:15:44Z\n\nbuild-c-api-01 真实GNU/AM构建和全部8项C接口测试PASS；archive-probe-01的6项实际档案/重新封存语义拒绝测试PASS。准备外层8d06d02f62875964d96a7df7573ae408已exit0/cleanup_complete，未新增EMU。\n\n新外层716a6ee805ae260048ab831b3dbbd5fe.7eb5906e8118fbafaf045d37ceb3c1eb，worker365876、child345068，当前running。输出 /home/lizufan/riscv-lab/r4-entry-20261024-0442/run-c-api-01，state.json及runs/*/result.json记录真实Linux PID/状态；同级run-c-api-01.json/.stdout.log/.stderr.log为外层命令回执。预定3个顺序EMU：真实vdot bit100拒错→同BIN新进程48case恢复→48case功能重放，不作性能测量。保护新C核心4e1ae340、build-c-api-01、runtime.json及沿用的只读硬件/NEMU/AM/flash，性能原始输入继续不可变保存。\n\n并行的另一槽只封存/复算已完成33进程性能矩阵，输出repo/team/optimizations/o2/r2-select/evidence/entry-v1及entry-v1-audit-linux.json；源码与输出独立，峰值按2槽安排，总CPU≤4。无新硬件构建、无部署、无集成窗口；MERGE-REG原有效认领不变。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6375822989",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6375822989"
+    },
+    {
+      "id": 6376175807,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T22:41:33Z",
+      "updated_at": "2026-10-23T22:41:33Z",
+      "body": "UPDATE 20261024-LiZufan001-r4-entry-0442 / R4/O5 调用入口子项\n\n普通C真实负控→同BIN正常恢复→功能重放已结束：外层 716a6ee805ae260048ab831b3dbbd5fe.7eb5906e8118fbafaf045d37ceb3c1eb 在 2026-10-23 22:40:35 UTC 回执 succeeded/exit0/cleanup_complete。16公共函数、48不同case、96次正常case执行；加性能33次，本轮36次EMU，C不产生性能样本。解除该C运行期保护；源码、镜像、输入身份和原始证据继续不可变保留。\n\n性能完整档案原文复算已PASS（24正式+8重放+1负控，384正式窗口/192全窗口比较）。当前只做C归档及离线复算，外层 ac0be527107352d3be9c4560e894a461，worker296284/child372444；无新EMU。另一审查Agent的独立部分检出已准备（共享Git对象，非T17），其离线审计待实际结果。总CPU≤4。\n\n仍保留本叶级认领；尚无集成窗口。MERGE-REG原有效认领未接管。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6376175807",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6376175807"
+    },
+    {
+      "id": 6376672788,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T23:18:56Z",
+      "updated_at": "2026-10-23T23:18:56Z",
+      "body": "READY | 20261024-LiZufan001-r4-entry-0442 | R4/O5 调用入口子项 | 2026-10-23T23:18:40Z\n\n候选提交：0cc45ab2de4af9d1a4ca49c84a16637ccf2e6c34，基点/刚实查远端 ac2f4082a6a4710dca6a739f66d6fa77c49552b8。工作区 working-r4-entry-20261024-0442，分支 work/r4-entry-20261024-0442，工作树干净。范围仅 r2-select 新调用入口/公共 S1 汇编与头文件/普通 C 验证/冻结证据，以及路线和计分板；官方程序、旧合同、RTL与源入口工作区未改。\n\n实际验收：25项主机测试；性能33个EMU（24正式+8重放+1负控），384正式窗口、192全窗口重放比较；普通C另外3个EMU，16函数/48不同case/96正常case执行，每个正常进程1008条vdot提交；全128位bit100负控后同BIN恢复通过。完整矩阵、C原文审计均PASS；三份档案1695文件完整Git索引/字节检查PASS。最终13份冻结源码、72份非档案暂存blob、61处文档链接和修改范围检查PASS；来源入口仍ff58e519且干净。\n\n收束：C归档外层 ac0be527107352d3be9c4560e894a461、复制/完整索引、跨目录审计与比较均 succeeded/exit0/cleanup_complete。跨目录原文复算由主Agent实际执行，使用部分检出/共享对象，报告完全一致；不计另一执行者T17。审查Agent只读审阅已结束。最终检查旧外层 13dd6c9bbc03f8fa49f96459549f9f61.525839de469878a20e846d1d1508a430 在300s超时；实查无遗留进程/锁、未提交后改用原生Windows Git，外层 db0db98edc250b8c86d9eb03e1453561 实际6.355s成功完成检查及提交。失败和恢复事实保存在 publication-check.json。当前无构建、EMU或离线审计在途，解除本包剩余运行保护，冻结输入/证据保留。\n\n采用结论：4×8、8×32、16×64 的 S1 reuse vdot 相对同入口最快RVV少9.4667%、2.7431%、7.9859%周期；4×13保留更快RVV。只闭合该调用入口范围，不宣称完整应用加速、MERGE-REG/T17/默认入口/PPA完成。完整说明见 team/optimizations/o2/r2-select/ENTRY_RESULT.md 与 ENTRY_README.md。\n\n本叶级认领仍保留，准备按短暂集成窗口正常FF发布；本评论不占集成窗口。MERGE-REG操作20261024-LiZufan001-merge-reg-resume-0354的有效认领保持不变。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6376672788",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6376672788"
+    },
+    {
+      "id": 6376679445,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T23:19:29Z",
+      "updated_at": "2026-10-23T23:19:29Z",
+      "body": "INTEGRATE-BEGIN | 20261024-LiZufan001-r4-entry-0442 | 2026-10-23T23:19:22Z\n\n仅发布 READY6376672788 已完成验证的 R4/O5 调用入口候选 0cc45ab2de4af9d1a4ca49c84a16637ccf2e6c34；预期远端 zufan=ac2f4082a6a4710dca6a739f66d6fa77c49552b8。窗口前已完成提交、主要验证和干净工作树检查，无构建/EMU在途；刚回读69条评论无其他有效集成窗口。本窗口只做再次回读/远端核对、正常快进推送及远端验证；若远端或有效窗口变化，停止并ABORT，不在窗口内长时间重验。MERGE-REG原认领不变。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6376679445",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6376679445"
+    },
+    {
+      "id": 6376690241,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T23:20:23Z",
+      "updated_at": "2026-10-23T23:20:23Z",
+      "body": "INTEGRATE-END | 20261024-LiZufan001-r4-entry-0442 | 2026-10-23T23:20:06Z\n\n已按 BEGIN6376679445 正常快进推送 zufan：ac2f4082a6a4710dca6a739f66d6fa77c49552b8 → 0cc45ab2de4af9d1a4ca49c84a16637ccf2e6c34。推送外层 13dd6c9bbc03f8fa49f96459549f9f61.c7c55e92c23619f28a8f1f03ad3f21de 实际 succeeded/exit0/cleanup_complete，23:19:52.7034941 UTC 结束；推送后 git ls-remote 核实远端为完整候选 SHA，工作树干净，无强推。集成窗口现已关闭。\n\nDONE | 20261024-LiZufan001-r4-entry-0442 | R4/O5 调用入口子项\n\n本叶级包完成并释放认领，无构建/EMU/离线审计/发布任务在途；冻结源码、镜像和原始记录继续不可变保存。另一操作 MERGE-REG 的有效认领未接管、未释放。\n\n交付：[提交](https://github.com/cc77-builder/riscv/commit/0cc45ab2de4af9d1a4ca49c84a16637ccf2e6c34)，team/optimizations/o2/r2-select/{ENTRY_RESULT.md,ENTRY_README.md,public/gemv.S,public/gemv.h,evidence/}；路线和开发计分板已同步。实际25项测试、36次EMU（性能33/C功能3）、384正式窗口、192全窗口重放比较、1695归档文件完整索引审计均已列明；最终发布检查另记录13份冻结源码、72份非档案blob和61处文档链接。\n\n本轮从20:42:15 UTC开始，至本次发布收束约2小时38分。接续应先审查相容MERGE-REG证据，再完成另一执行者的完整T17和默认入口资格；本包不替代这些步骤，也不声明完整应用或ASIC PPA提升。8×32新入口优势仅8.25周期，应优先守住同入口最快RVV配对；4×13保留RVV。原指定来源工作区仍ff58e519且干净，独立工作区 working-r4-entry-20261024-0442 及原生输出 /home/lizufan/riscv-lab/r4-entry-20261024-0442 保留。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6376690241",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6376690241"
+    },
+    {
+      "id": 6377001583,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T23:45:56Z",
+      "updated_at": "2026-10-23T23:45:56Z",
+      "body": "INTEGRATE-BEGIN | 20261024-LiZufan001-native-fs-docs | @LiZufan001 / Agent | 2026-10-23T23:45:53.778Z\n\n目标：cc77-builder/riscv:zufan；预期远端完整 SHA：0cc45ab2de4af9d1a4ca49c84a16637ccf2e6c34。\n本次为用户明确授权的任务包外小范围文档修订，不认领、不接管 MERGE-REG。候选：34bae6d4acceac939f958199dae53c14bc1f6183；独立工作区 working-docs-native-20261024 / work/docs-native-20261024，当前干净。\n变更仅：AGENTS.md、team/docs/environment.md、开发计分板.md；记录 Windows 工作树原生 Git／WSL 原生构建、证据身份核验和 R4 实践边界。香山 PPA 专属提示词已另外通过配置接口保存，非 Git 文件。\n本地验证：Windows 原生 Git diff --check、三文件改动范围、相对证据链接存在及文档标记核对 PASS；硬件构建、EMU 与 ASIC PPA 本轮 NOT_TESTED（文档无 RTL 变更）。\n本窗口仅作实际活动回读、远端 SHA 再核实、非强制快进推送和回读确认；窗口外无本轮仿真/构建/运行保护。MERGE-REG 原有效认领和保护保持不变。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6377001583",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6377001583"
+    },
+    {
+      "id": 6377022872,
+      "author": "LiZufan001",
+      "created_at": "2026-10-23T23:47:33Z",
+      "updated_at": "2026-10-23T23:47:33Z",
+      "body": "INTEGRATE-END / DONE | 20261024-LiZufan001-native-fs-docs | 2026-10-23T23:47:31.220Z\n\n已正常快进推送 cc77-builder/riscv:zufan：0cc45ab2de4af9d1a4ca49c84a16637ccf2e6c34 → 34bae6d4acceac939f958199dae53c14bc1f6183，未强推。Windows 原生 Git 外层回执 13dd6c9bbc03f8fa49f96459549f9f61.c93235722faf5b45b5165007c343bcae succeeded / exit=0 / cleanup_complete=true；push 后 native ls-remote 与 GitHub 分支 API 均核实为候选 SHA，独立工作区干净，原来源工作区也仍干净。\n实际提交仅 AGENTS.md、team/docs/environment.md、开发计分板.md 三份文档；git diff --check、范围及 R4 相对证据链接 PASS；没有运行构建、仿真、EMU 或 ASIC PPA。香山 PPA 专属提示词已单独保存并验证，其余 PPA 配置不变。\n这是用户授权的任务包外文档维护，无既存 WORK 包需要释放；本次集成窗口已关闭，没有遗留进程或发布任务。MERGE-REG 的原有效认领、独立运行与证据保护保持不变。提交：https://github.com/cc77-builder/riscv/commit/34bae6d4acceac939f958199dae53c14bc1f6183",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6377022872",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6377022872"
+    },
+    {
+      "id": 6377866038,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T00:59:57Z",
+      "updated_at": "2026-10-24T00:59:57Z",
+      "body": "WORK | 20261024-LiZufan001-t17-clean-0854 | T17／当前获选硬件与GEMV入口的干净依赖、构建和复现 | @LiZufan001 / Agent | 2026-10-24T08:58:00+08:00\n\n来源入口已核实：working-zufan-full-20261022 / zufan / ff58e519091f273c4bc177f5e82cfbbfaf102cc5，origin为授权团队仓库，工作区干净。交付基点采用刚核实的远端34bae6d4acceac939f958199dae53c14bc1f6183；拟建立独立 working-t17-clean-20261024-0854 / work/t17-clean-20261024-0854 与 /home/lizufan/riscv-lab/t17-clean-20261024-0854。\n\n范围：恢复当前6d2硬件实际构建来源及完整递归依赖，团队自研复现工具/合同/证据；新干净目录实际构建与匹配验证，随后按证据判定T17范围。只读复用R4调用入口及冻结输入，原B0锁/官方程序/其他工作区和证据不修改；必要摘要更新计分板与路线。完整MERGE-REG仍由20261024-LiZufan001-merge-reg-resume-0354持有，本轮不接管、不代其交付。\n\n运行/资源：尚未启动构建/EMU。实查WSL起初Stopped，启动后无EMU/构建/审计进程；本轮总体≤4 CPU，独立输出，性能测量串行。准备先核对来源与资源，重任务前再核对活动并登记具体回执。无集成窗口。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6377866038",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6377866038"
+    },
+    {
+      "id": 6377944157,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T01:07:07Z",
+      "updated_at": "2026-10-24T01:07:07Z",
+      "body": "UPDATE | 20261024-LiZufan001-merge-reg-resume-0354 | MERGE-REG 明确交接 | 2026-10-24T09:07:00+08:00\n\n由 @LiZufan001 / 本轮Agent依据用户本对话刚通过ChatPC定向引导明确要求“本轮同时完成MERGE-REG并释放”发布，不冒充原执行者确认。旧认领转交新操作20261024-LiZufan001-merge-close-0854。\n\n本轮实查旧独立工作区 working-merge-reg-20261024-0354 / ac2f4082a6a4710dca6a739f66d6fa77c49552b8，origin为团队仓库；4份未跟踪成果 MERGED_REGRESSION.md、merged_regression.py、merged_regression_evidence.py、test_merged_regression.py 原件保留。WSL此前Stopped，启动后无旧controller/EMU/归档实际进程；旧输出现有physical-audit-01、archive-01/02以及三次未通过离线审计回执，尚未把它们写作完成。原证据保持不变，本轮只补实际缺项。\n\nWORK | 20261024-LiZufan001-merge-close-0854 | MERGE-REG／现有归档收尾与交付 | @LiZufan001 / Agent | 2026-10-24T09:07:00+08:00\n\n引用本条明确交接；使用本轮独立 working-t17-clean-20261024-0854 / work/t17-clean-20261024-0854，基点34bae6d4acceac939f958199dae53c14bc1f6183。范围仅原4文件的独立副本、必要离线复算修复/测试、不可变证据交付、结果/计分板/路线；不重复已合格EMU、不改官方程序或旧冻结输入。旧工作树不写入。\n本轮按用户最新要求同时推进T17；总CPU≤4，先安排干净构建与轻量只读审查，重型审计避开4核构建。无新增MERGE-REG运行，无集成窗口。完成真实验证、FF发布后DONE释放，绝不以旧进程结束代替验收。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6377944157",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6377944157"
+    },
+    {
+      "id": 6378013092,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T01:13:34Z",
+      "updated_at": "2026-10-24T01:13:34Z",
+      "body": "UPDATE — WORK/T17 clean reproduction\n\noperation_id: `20261024-LiZufan001-t17-clean-0854`\n\n干净源码准备已完成：独立 WSL 原生目录 `~/riscv-lab/t17-clean-20261024-0854/clean-02`，主源码基于 `34bae6d4acceac939f958199dae53c14bc1f6183`；由 Git objects 恢复 126 个硬件子模块（全部 133 个独立仓库），未复制既有 build/out。硬件输入 429 项与依赖 21236 项与冻结 6d2 基线逐项一致。属于同机缓存源码/既有工具链下的 clean rebuild，不宣称全新主机安装。\n\n现有构建保护：`build-01`，ChatPC receipt `1bcd341bbd2162e3d9e297ccd2678ca0.d8bab757394ed8c7645c78e546f974db`，2026-10-24 09:09:15 +08 开始；CPU affinity 0–3、make -j4、Java ActiveProcessorCount=4 / 8G heap。仅本轮此重构建在跑。勿清理/修改该源码树硬件、子模块或构建输出。新 EMU 尚未产出或验证。\n\nMERGE-REG 已按明确授权接续，原 campaign 与 physical audit 未修改；正在完成独立归档复核。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6378013092",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6378013092"
+    },
+    {
+      "id": 6378122662,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T01:23:56Z",
+      "updated_at": "2026-10-24T01:23:56Z",
+      "body": "UPDATE | 20261024-LiZufan001-merge-close-0854 / 20261024-LiZufan001-t17-clean-0854\n\nMERGE-REG 原 archive-02 已完整离线复算 PASS：12 core + 2 supplements，13 完整正常轨迹与 1 预期负控，六个 O2 覆盖齐全。本轮新增 EMU/NEMU=0。原 manifest `42fa2d85ee4eeb6aec0e58ade9d49ddbd98285836052577e0ba03f2d8c6423ba` 不变；新审计工具 `c8215d93...` 仅修复两次输入采集的 JSON 对象键顺序比较，15 项主机测试通过。独立离线检出 `~/riscv-lab/t17-clean-20261024-0854/merge-review/source`，审计 receipt `1bcd341bbd2162e3d9e297ccd2678ca0.684840daa3474e38be5c38f9d6c49a20` succeeded/exit0/cleanup_complete。正在准备源码、原封归档、失败记录与完整 Git index 检查后发布，认领尚未释放。\n\nT17 已进入 Verilator/C++ 构建阶段。将并行准备并构建独立 support-01 的团队既有 NEMU 扩展及干净 AM 库，所有 Linux 构建／审计均限制在同一 CPU affinity 0–3 集合内，重任务总物理预算不超过四核；新软件输入与输出独立，不修改旧参考库或官方程序。性能 EMU 尚未启动。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6378122662",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6378122662"
+    },
+    {
+      "id": 6378326176,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T01:43:44Z",
+      "updated_at": "2026-10-24T01:43:44Z",
+      "body": "READY | 20261024-LiZufan001-merge-close-0854 | MERGE-REG | 2026-10-24T09:44:00+08:00\n\n候选 c9132b8d7f284ad7e76550315214b5b2ca431f79，预期远端/基点34bae6d4acceac939f958199dae53c14bc1f6183。独立 working-t17-clean-20261024-0854 / work/t17-clean-20261024-0854；600个提交文件仅MERGE控制器/审计工具/测试/证据/文档及路线计分板，T17五文件未暂存，不混入本提交。\n\n实际验证：冻结controller b082d34f…不变；最终审计器69216d4a…实际15项测试及原archive-02全量复算PASS（receipt ecddb0ff1cfe22f438b8052a5c4a5728，exit0/cleanup_complete）；12 core+2 supplements、13正常+1预期负控、六项O2覆盖。原558 payload+2根文件的560归档原封保留；完整交付599个暂存blob逐字节核验，再单独核验新生成publication-check.json，共600文件。提交外层e5e9f5a878258b5dd1e7cba4c3306005 succeeded/exit0/cleanup_complete。修复过的Windows参数长度与计分板混合换行问题均保存失败回执；冻结输入未改。MERGE本轮新EMU/NEMU=0。\n\n本包无在途运行，保留认领待短窗口FF发布。独立T17运行保护仍有效：新EMU ff840528…、新参考8af118e5…已完成干净构建；identity-02冻结五适配器与新硬件合同，C运行c-run-01 / receipt dfba13ba3e73f0bca873930a9d35168b 09:38:58+08启动，目前仍在运行。它位于原生clean-02与外置输出，不受本MERGE发布修改。T17不随MERGE释放。\n\n交付说明 team/optimizations/o2/fullcore/MERGED_REGRESSION_RESULT.md；本结论不替代T17、默认入口、完整应用性能或ASIC PPA。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6378326176",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6378326176"
+    },
+    {
+      "id": 6378326394,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T01:43:45Z",
+      "updated_at": "2026-10-24T01:43:45Z",
+      "body": "INTEGRATE-BEGIN | 20261024-LiZufan001-merge-close-0854 | 2026-10-24T09:44:15+08:00\n\n仅发布已READY的MERGE-REG候选c9132b8d7f284ad7e76550315214b5b2ca431f79到cc77-builder/riscv:zufan，预期远端34bae6d4acceac939f958199dae53c14bc1f6183。主要验证、600文件范围及字节检查、提交已全部完成；刚读Issue无其他未关闭窗口。本窗口只回读活动、再次核对远端、正常快进推送并验证；若远端变化或有更早有效窗口则ABORT。\n\nT17独立C仿真继续使用冻结原生输入；不在窗口内等待该仿真或开展长验证。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6378326394",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6378326394"
+    },
+    {
+      "id": 6378336424,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T01:44:44Z",
+      "updated_at": "2026-10-24T01:44:44Z",
+      "body": "INTEGRATE-END | 20261024-LiZufan001-merge-close-0854 | 2026-10-24T01:44:27Z\n\n按BEGIN6378326394正常快进发布成功：zufan 34bae6d4acceac939f958199dae53c14bc1f6183 → c9132b8d7f284ad7e76550315214b5b2ca431f79。推送receipt 1bcd341bbd2162e3d9e297ccd2678ca0.c8fe3c57d112301f523147440f12612f，实际01:44:05.3074901 UTC结束，succeeded/exit0/cleanup_complete；原生git ls-remote与GitHub分支API均核实完整新SHA。无强推，本集成窗口关闭。\n\nDONE | 20261024-LiZufan001-merge-close-0854 | MERGE-REG\n\n用户授权接续的MERGE-REG已实际完成并交付，现释放新旧转交链中的本包认领；无MERGE在途运行。证据、原旧工作区和冻结输入保留。交付：https://github.com/cc77-builder/riscv/commit/c9132b8d7f284ad7e76550315214b5b2ca431f79 ，模块MERGED_REGRESSION_RESULT.md，原始archive-02与最终原文复算报告均已入库；15项测试、14项选择集、560归档文件/600总交付文件检查PASS，本轮MERGE新EMU=0。\n\n另一个有效认领20261024-LiZufan001-t17-clean-0854继续；c-run-01实际仿真和受保护原生源码/新EMU/新参考不随本次DONE释放。独立工作区仅有五份T17未跟踪源码，MERGE已提交文件无残留修改。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6378336424",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6378336424"
+    },
+    {
+      "id": 6378400977,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T01:51:00Z",
+      "updated_at": "2026-10-24T01:51:00Z",
+      "body": "UPDATE | 20261024-LiZufan001-t17-clean-0854 | 新EMU整核复现准备\n\n新EMUFF840528…/正常参考8af118e5…的C运行当前只有一个活跃EMU（负控已预期拒错，正常恢复在途）。即将启动独立fullcore-run-01，采用新合同t17-fresh-fullcore-v1，12 core+2 supplement全部新执行；复用冻结镜像和原始数学/架构/trace判定器，不复用旧运行PASS，不改变旧FROZEN常量或官方程序。\n\n新团队runner clean_fullcore.py 单独身份，原生clean-02/source中的既有五适配器/identity-02仍冻结。各job独立cwd和AUX，hello先行，negative-vdot→functional-0同worker保序；最多3个整核worker，加串行C当前1进程，总CPU affinity均0–3，最多四核。新输出 ~/riscv-lab/t17-clean-20261024-0854/fullcore-run-01，运行输入和输出继续保护。性能测量在这些正确性任务全部结束后单独串行进行。无集成窗口。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6378400977",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6378400977"
+    },
+    {
+      "id": 6378895446,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T02:43:42Z",
+      "updated_at": "2026-10-24T02:43:42Z",
+      "body": "UPDATE | 20261024-LiZufan001-t17-clean-0854 | 正确性闭合，进入串行性能复现\n\n新 ff840528… EMU / 8af118e5… 正常参考的 fullcore-run-01 已实际完成14次新执行：12 core+2 supplement，13正常+1预期拒错，117唯一/124执行case、六项O2覆盖齐全；没有复用旧执行PASS。外层897c9d2d…已succeeded/exit0/cleanup_complete。独立物理审计5dce9c5f…及封存原文复算34e3ebda…均完成；最终审计器20bebd4f…，fullcore归档manifest f6f45c7a99e3004d4e98b1a622a8b7c6f1e7c249f5a2fb47328a59d81c020719（432载荷+2根文件）。C调用3次实跑及物理原文审计也通过：16函数/48不同case/96正常case执行，每个正常进程1008条vdot提交。\n\n现准备 matrix-run-01 / operation 20261024-LiZufan001-t17-clean-0854-matrix。冻结同一identity-02/五适配器、新EMU/正常参考、matrix-build-01的24个ELF；24份实际BIN与旧R4封存逐字节相同。将先保存无其他重型构建/EMU的进程事实，再按原R4顺序串行执行24正式+8replay+1负控，保留最快合格同入口RVV。CPU affinity仍0–3，总预算≤4；性能期间不并行重型构建、仿真或归档审计。\n\n所有原生输入/输出继续保护：~/riscv-lab/t17-clean-20261024-0854。T17尚未宣告整体PASS；尚待本次性能、矩阵/C封存复算及发布验证。无集成窗口。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6378895446",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6378895446"
+    },
+    {
+      "id": 6378912183,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T02:45:34Z",
+      "updated_at": "2026-10-24T02:45:34Z",
+      "body": "UPDATE | 20261024-LiZufan001-t17-clean-0854 | 性能实际启动回执\n\nmatrix-run-01 已于 2026-10-24T02:44:24.4027617Z 通过ChatPC启动，receipt 1bcd341bbd2162e3d9e297ccd2678ca0.52643e3ea54017cde13b2eb6ce1d736f，刚回读仍running。原生输出 ~/riscv-lab/t17-clean-20261024-0854/matrix-run-01，父目录保存 performance-resource-before.json 与 stdout/stderr。启动检查未见其他Windows/Linux构建或EMU进程；C、fullcore及fullcore原文审计均已终结。输入和预算按上一UPDATE6378895446继续保护，串行33进程；此回执不构成运行完成或性能PASS。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6378912183",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6378912183"
+    },
+    {
+      "id": 6379403756,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T03:38:38Z",
+      "updated_at": "2026-10-24T03:38:38Z",
+      "body": "UPDATE | 20261024-LiZufan001-t17-clean-0854 | 正式矩阵完成，重放在途 | 2026-10-24T03:38Z\n\nmatrix-run-01 的24个正式正常记录／384个measured窗口已完成，现按冻结顺序串行进行8次全窗口replay；原host receipt 1bcd341bbd2162e3d9e297ccd2678ca0.52643e3ea54017cde13b2eb6ce1d736f 刚查询仍running。正式统计的四形状均值与旧R4一致，但尚未宣告完整矩阵或T17 PASS，仍须全部192 replay比较、最终输入复核及矩阵/C封存原文复算。\n\n受保护输入、CPU affinity 0–3和性能期间不并行重型任务的约束不变。无集成窗口；完成后再做跨系统完整字节／Git index检查并READY。现有MERGE-REG已发布并释放，T17认领继续保留。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6379403756",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6379403756"
+    },
+    {
+      "id": 6379567040,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T03:57:19Z",
+      "updated_at": "2026-10-24T03:57:19Z",
+      "body": "UPDATE | 20261024-LiZufan001-t17-clean-0854 | 实际运行完成，收尾归档检查\n\nmatrix-run-01 已于 2026-10-24T03:44:56.886673Z 完成，原 host receipt 52643e3ea54017cde13b2eb6ce1d736f 已 succeeded/exit0/cleanup_complete。33 次新执行（24 正式、8 replay、1 预期负控），384 正式窗口与 192 replay 比较 PASS；合计本包 fullcore14+C3+matrix33=50 次新EMU，47正常+3负控。性能期间串行，前后进程检查均无其他重型构建/EMU。\n\n初始矩阵封存与原文审计通过，但发现冻结打包器把源码树内的build/emu误列为tools载荷（71,178,528原始字节），与排除声明不一致；C打包器相同路径逻辑会令可移植审计依赖本地build目录。将保留matrix-archive-01与旧报告，新增团队transport工具/新归档身份修正精确EMU及全局AUX归属，冻结运行适配器、原判定器和50次运行记录全部保持原样。独立无build/out检出已启动归档复审，不新增EMU。尚未宣告T17总PASS或发布READY；认领和原生证据保护保持，无集成窗口。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6379567040",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6379567040"
+    },
+    {
+      "id": 6379771507,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T04:18:55Z",
+      "updated_at": "2026-10-24T04:18:55Z",
+      "body": "READY | 20261024-LiZufan001-t17-clean-0854 | T17 | 2026-10-24T04:18Z\n\n候选666fc80edebd50f7b3d6fb13cf0eb24d526e02d9；预期远端/父提交c9132b8d7f284ad7e76550315214b5b2ca431f79。独立working-t17-clean-20261024-0854 / work/t17-clean-20261024-0854，提交后工作树干净。\n\n实际同机干净源码/产物重建完成：145仓库来源，新EMU ff840528…、正常参考8af118e5…；50次新EMU（14整核+3C+33矩阵，47正常+3预期负控）。117唯一/124整核case、六项O2覆盖、16公共函数/48不同C case/96正常case执行，384正式性能窗及192replay比较PASS。与旧R4比较24加载镜像及全部768对应窗口cycle/instruction相同；未转移历史运行PASS。\n\n最终整核/M03/C02三类归档在无build/out独立检出中以原rawauditor复算通过，Python访问限制与输出SHA绑定；不是OS沙箱或新机器安装。原M01可独立复算但误封冗余EMU；原C staging真实因缺build/constantin.txt拒绝。新增传输v2只修正精确EMU/global AUX归属，原九工具、identity和运行记录不改。原失败及中间版本保留，0次EMU重跑。\n\nWindows原生Git核验1932归档文件（434+1380+118），完整2083交付文件逐blob一致，再单独核验publication-check.json，共2084文件；报告SHA e94ffbf767904ef7654ebd243ba81760a571b699c8e60f54e9c22bc5b5ede5e7。17原审计夹具测试PASS，discover的17SKIP未计PASS。普通长路径失败改扩展前缀后通过；最后一次报告读取包装因默认GBK失败，改从UTF-8原始bytes解码后原件未变、自身核验及提交成功（receipt2308299725dfc6316608689154f9b26a，exit0/cleanup_complete；原失败814cd52ae4236269b81bf06df6c849a3可定位）。\n\n交付入口team/optimizations/o2/repro/CLEAN_RESULT.md / CLEAN_REPRODUCE.md。所有新EMU已终结，无在途任务；原生历史输入/证据保留。仅T17工程与文档/证据，无官方程序修改或部署。等待短窗口正常FF发布；认领尚未释放。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6379771507",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6379771507"
+    },
+    {
+      "id": 6379772905,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T04:19:03Z",
+      "updated_at": "2026-10-24T04:19:03Z",
+      "body": "INTEGRATE-BEGIN | 20261024-LiZufan001-t17-clean-0854 | 2026-10-24T04:19Z\n\n仅发布READY6379771507的T17候选666fc80edebd50f7b3d6fb13cf0eb24d526e02d9到cc77-builder/riscv:zufan，预期远端c9132b8d7f284ad7e76550315214b5b2ca431f79。全部主要验证、1932归档/2084交付文件字节检查和本地提交均完成，无在途构建/EMU。刚读Issue无其他未结束集成窗口。\n\n本窗口只回读最新活动、确认唯一有效发布者、再次核对远端并正常FF推送/读回；远端变化或更早有效窗口则ABORT。原始源码和历史证据继续保留，不进行长测试或修改其他包。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6379772905",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6379772905"
+    },
+    {
+      "id": 6379784798,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T04:20:21Z",
+      "updated_at": "2026-10-24T04:20:21Z",
+      "body": "INTEGRATE-END | 20261024-LiZufan001-t17-clean-0854 | 2026-10-24T04:20:11Z\n\n按BEGIN6379772905正常FF发布成功：zufan c9132b8d7f284ad7e76550315214b5b2ca431f79 → 666fc80edebd50f7b3d6fb13cf0eb24d526e02d9。push receipt 1bcd341bbd2162e3d9e297ccd2678ca0.34cabd015bc9d941ef5af82c7598ad20 已succeeded/exit0/cleanup_complete，实际04:19:30.7172728Z结束；原生git ls-remote与GitHub分支API均回读完整新SHA。无强推，本窗口关闭。\n\nDONE | 20261024-LiZufan001-t17-clean-0854 | T17\n\n同主机干净源码/产物新身份复现已交付，释放本包认领。50次新EMU验收及三类最终归档原文复算完成；1932档案文件/2084总交付文件按READY回执核验。无在途构建/EMU，原生旧输入和原始证据保留为不可变历史，不再有活跃运行占用。\n\n交付：https://github.com/cc77-builder/riscv/commit/666fc80edebd50f7b3d6fb13cf0eb24d526e02d9 ，team/optimizations/o2/repro/CLEAN_RESULT.md / CLEAN_REPRODUCE.md / evidence/clean-reproduction-v1。未代签人工ACK，未验证新机器安装、完整LLM或新增ASIC PPA；旧B0/H1/9b3不改判。下一候选工作为R5/G5稳定入口与回退，须另行核实认领。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6379784798",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6379784798"
+    },
+    {
+      "id": 6379790691,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T04:21:02Z",
+      "updated_at": "2026-10-24T04:21:02Z",
+      "body": "WORK | 20261024-LiZufan001-r5-stable-1221 | R5/G5 稳定入口与回退 | @LiZufan001 / Agent\n\n接续已DONE的T17（6379784798），基点/远端666fc80edebd50f7b3d6fb13cf0eb24d526e02d9；沿用独立working-t17-clean-20261024-0854 / work/t17-clean-20261024-0854，当前干净。Issue已回读，无R5/G5有效认领或在途运行/窗口。\n\n本包范围：在team/optimizations/o2/r2-select新增稳定选择清单、使用/回退说明和独立的编译期默认符号别名头文件；对已验证public/gemv.S、gemv.h及全部旧合同/生成器保持原字节。三个整块默认S1 reuse vdot，4×13默认较快S1 reuse RVV；四形状保留S1 RVV回退。默认构建/运行导航引用T17确定配置与复现入口，不修改官方顶层构建或增加运行时dispatcher。\n\n验证按变化范围：真实GNU预处理/编译/可重定位链接，确认别名与显式已验证函数名产生相同代码/重定位，公共库符号和源码身份正确；不把新调用示例当新性能测量。新增EMU预计0，必要时发现影响再扩大。写入范围限本包新增文件、ENTRY_README导航、team/README、路线和计分板；结果独立保存。最多4核，已有T17原生树/归档作为只读历史，新的编译检查使用独立输出目录。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6379790691",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6379790691"
+    },
+    {
+      "id": 6379982873,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T04:42:29Z",
+      "updated_at": "2026-10-24T04:42:29Z",
+      "body": "READY | 20261024-LiZufan001-r5-stable-1221 | R5/G5 | @LiZufan001 / Agent\n\n候选 137b44befb041439a018a1079577cc000df1ee03（父 666fc80edebd50f7b3d6fb13cf0eb24d526e02d9），独立发布工作区干净。固定三个整块S1 reuse vdot、K13 S1 reuse RVV的C源别名/默认库构建及回退；原public/gemv.S、gemv.h、旧合同/生成器/RTL/官方程序未改。\n\n最终verify-03实际GNU PASS：整个28152字节库对象等于T17 C02；未设置/0/1三模式各八别名，完整caller.o和ld-r产物与显式原函数调用逐字节相同；七种非法配置拒绝。新增EMU/NEMU为0，没有新应用周期结论。首轮宏表达式校验缺口及随后库全对象门禁补强前的源码/结果保留。\n\n交付检查：471原生证据文件逐字节复制；6文档/150文件链接/4 Python AST通过；493 staged文件1,681,202 bytes全blob一致，publication-check.json另验，最终494文件。发布检查SHA 04cfbb47edca49a5ef5dc1d404b4e4d5ee11da2a00a65b3a064669b8542e8e33，verify-03结果SHA 1a0320cd5524e14cdf815eb385ae6e3918397b33c52df23cb443a3e69d75d826。commit receipt 1bcd341bbd2162e3d9e297ccd2678ca0.677b13a5d73db83ad8366aa381a0f323 succeeded/exit0/cleanup_complete。无在途重任务。\n\n入口：team/optimizations/o2/r2-select/STABLE.md / STABLE_MANIFEST.json / evidence/stable-v1；路线、计分板及原R4导航已同步。认领保留至正常FF发布；下一步仅短集成窗口，不启动新仿真。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6379982873",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6379982873"
+    },
+    {
+      "id": 6379985000,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T04:42:45Z",
+      "updated_at": "2026-10-24T04:42:45Z",
+      "body": "INTEGRATE-BEGIN | 20261024-LiZufan001-r5-stable-1221 | 2026-10-24 04:42:44 UTC\n\n目标 cc77-builder/riscv:zufan；预期远端 666fc80edebd50f7b3d6fb13cf0eb24d526e02d9，候选 137b44befb041439a018a1079577cc000df1ee03，正常FF。READY6379982873已回读；当前无其他未结束窗口或新冲突。主要验证及494文件交付检查已在窗口外完成，无在途构建/EMU。本窗口仅执行最终远端/活动核对及推送；出现远端变化即退出窗口重新准备，不强推。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6379985000",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6379985000"
+    },
+    {
+      "id": 6379997726,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T04:44:13Z",
+      "updated_at": "2026-10-24T04:44:13Z",
+      "body": "INTEGRATE-END | 20261024-LiZufan001-r5-stable-1221 | 2026-10-24 04:44:12 UTC\n\n按BEGIN6379985000正常FF成功：zufan 666fc80edebd50f7b3d6fb13cf0eb24d526e02d9 → 137b44befb041439a018a1079577cc000df1ee03。push receipt 1bcd341bbd2162e3d9e297ccd2678ca0.8de278c47353c18526c39967286f2af1 已succeeded/exit0/cleanup_complete，实际04:43:20.9985174Z结束；Windows原生git ls-remote和GitHub分支API均回读完整新SHA。没有强推，本窗口关闭。\n\nDONE | 20261024-LiZufan001-r5-stable-1221 | R5/G5\n\n稳定C源默认选择、静态库构建、运行导航与回退已交付，释放本包认领。最终GNU整对象/调用映射验收及494文件交付检查见READY6379982873；新增EMU/NEMU为0，没有新增应用性能或ASIC PPA结论。无在途构建/EMU，R5独立快照/所有尝试及T17历史输入保留，不再占用活跃运行资源。\n\n交付：https://github.com/cc77-builder/riscv/commit/137b44befb041439a018a1079577cc000df1ee03 ，team/optimizations/o2/r2-select/STABLE.md / STABLE_MANIFEST.json / evidence/stable-v1。R4→T17→R5/G5当前四形状C使用范围闭环完成；实际运行/人工ACK/新机器/全赛题边界保持。后续可按R2-S1现有首块初始化静态原型建立独立新运行合同，先验证目的改变的负控恢复并在8×32同入口与强RVV配对；不是新的认领或必做扩大矩阵。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6379997726",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6379997726"
+    },
+    {
+      "id": 6381201185,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T07:00:48Z",
+      "updated_at": "2026-10-24T07:00:48Z",
+      "body": "WORK | 20261024-LiZufan001-r2s1-firstdot-1458 | R2-S1／首块直接初始化运行资格与同入口筛选 | @LiZufan001 / Agent | 2026-10-24T15:01:00+08:00\n\n已核实来源 working-zufan-full-20261022 / zufan / ff58e519091f273c4bc177f5e82cfbbfaf102cc5，origin为团队仓库，工作树干净；远端基点137b44befb041439a018a1079577cc000df1ee03。拟建独立 working-firstdot-20261024-1458 / work/r2s1-firstdot-20261024-1458，原生输出 ~/riscv-lab/r2s1-firstdot-20261024-1458。\n\n接续R5 DONE6379997726后的现有R2-S1子项，新增独立运行合同/适配器，将已通过静态检查的firstdot变换放入同C ABI调用窗口；保留旧candidate/gate/entry/运行合同/公共稳定入口全部原字节。先真实负控（实际新rd/PC/word、高bit100）→同BIN正常恢复，再以8×32/dataset0/endtoend对原S1和最快合格同入口RVV做配对及重放；达到明确停止/采用条件才扩大，绝不以少指令直接判收益。\n\n拟改范围：team/optimizations/o2/r2-vector-accum下本子项新增模块、合同、必要测试与证据，相关路线/计分板摘要。只读复用T17新EMU/正常参考/AM/flash及团队动态负控夹具，不改官方权威程序、RTL、旧冻结输入或稳定默认选择。核心设计和实现由本轮Pro完成，不委托本地Codex代写。\n\n已读完整有效事件，MERGE-REG、R4、T17、R5均明确DONE，无未结束窗口；WSL刚启动实查无EMU/构建。尚无本操作运行。总体≤4核；独立构建可并行，性能串行且避开其他重任务；重任务前再核对真实活动。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6381201185",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6381201185"
+    },
+    {
+      "id": 6381311702,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T07:12:58Z",
+      "updated_at": "2026-10-24T07:12:58Z",
+      "body": "UPDATE | 20261024-LiZufan001-r2s1-firstdot-1458 | R2-S1 | 最小整核筛选启动前\n\n独立 Windows/Linux 源均137b44befb041439a018a1079577cc000df1ee03；firstdot核心源码SHA：candidate79c1c808ac7e46560ed470028fb50487b31da478e43d9f1d83d770f089cc285d，gate fc11387899bab8b2d1ecfa074edfb52e939c15869032b4457043acf288564b3b，experiment90ade1455659db25c4b3fabe3f79f75cb65f84f340ba3d8c62c4b6422e49b560。\n\nbuild-probe-01 的8×32/d0两个ELF已GNU/模型/布局PASS，S1 BIN/内核与公共对象等于T17封存物；32变换对照、24串并行确定性、7项边界/源码/产物拒绝PASS。构建receipt 1bcd341bbd2162e3d9e297ccd2678ca0.5c3d25a759230ab81db59622dbac31d2 与host03 receipt 1bcd341bbd2162e3d9e297ccd2678ca0.d6a7ece1a593d6b473be0faddb35f622 均已succeeded/exit0/cleanup_complete。\n\n拟执行唯一receipt 1bcd341bbd2162e3d9e297ccd2678ca0.3e5076d620ea46567b507b081718a399，~/riscv-lab/r2s1-firstdot-20261024-1458/run-probe-01/state.json及根driver/log为真实状态入口；计划5次EMU：新vd0/word0x0388000b/bit100负控→同BIN恢复→S1正式→双变体全窗口重放。只读T17 identity-02/hardware clean-02/build-01/normal ref/AM/flash和matrix-build-01；上述输入及本轮source/build-probe-01在运行期间保护。\n\nIssue已回读无新冲突；实际WSL资源检查无EMU/编译任务、可用约14.7GiB。taskset0-3，EMU串行、不并行其他重任务。物理T17身份运行前后核验，若失配停止；当前尚无新增性能结论。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6381311702",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6381311702"
+    },
+    {
+      "id": 6381410987,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T07:23:48Z",
+      "updated_at": "2026-10-24T07:23:48Z",
+      "body": "UPDATE | 20261024-LiZufan001-r2s1-firstdot-1458 | R2-S1 | probe合格，扩大剩余矩阵\n\nrun-probe-01 5次EMU已全部完成；receipt 1bcd341bbd2162e3d9e297ccd2678ca0.3e5076d620ea46567b507b081718a399 succeeded/exit0/cleanup_complete。实际新负控vd0 / PC0x8000230c / word0x0388000b / bit100，退出1；随后同BIN/新PID恢复与S1正式均PASS，两变体48个完整窗口cycles/instret重放一致。正式8×32/d0/reuse：firstdot282.25周期/182指令，S1 292.5/202，最快RVV300.75/124；分别少3.5043%和6.1513%周期。仅固定完整C调用窗口，未扩大为完整应用。\n\nprobe-archive-01已封存219文件，原38,579,589字节/存5,004,081字节，manifest SHA3d2381aad71671b03ecb5ac3250db093df3b7bbf1ca987a1c23f98073d6d5f91；原文离线重算PASS，4种重签名语义篡改均拒绝。构建剩余4+18图已GNU/模型/固定布局/封存S1字节对照PASS；setup receipt 1bcd341bbd2162e3d9e297ccd2678ca0.0a474b07ef1b3a1f01a7bea2ce99c1c1 succeeded/exit0/cleanup_complete。三核心仍为UPDATE6381311702的同一SHA。\n\n拟启动唯一receipt 1bcd341bbd2162e3d9e297ccd2678ca0.6e9b90d681422846487ff57a0bb7dc6f，run-extension-01/state.json与根driver/stdout/stderr为状态入口。只运行剩余22正式+6个d0重放；旧probe不重跑，合并后24正式+8重放+1负控=33EMU。taskset0-3、EMU串行，启动前再次ps核对；期间不做其他重任务。保持T17/本轮source三核心及3个build输入保护；稳定公共入口不改。拟在完整矩阵确认后补独立命名firstdot C库的普通C调用资格（复用原48case检查器），仍不切换R5默认。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6381410987",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6381410987"
+    },
+    {
+      "id": 6381905914,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T08:17:48Z",
+      "updated_at": "2026-10-24T08:17:48Z",
+      "body": "UPDATE | 20261024-LiZufan001-r2s1-firstdot-1458 | R2-S1 | 完整矩阵封存，进入普通C资格\n\nrun-extension-01 已结束：22正式+6重放，receipt 1bcd341bbd2162e3d9e297ccd2678ca0.6e9b90d681422846487ff57a0bb7dc6f succeeded/exit0/cleanup_complete；与probe合并33次EMU，24正式图、384测量窗口、8重放/192全窗口比较。矩阵原文审计PASS；1467载荷/253252835原字节/17634226存储字节，manifest 0c8d3159c91aa3c934c7bfb7f2640906844246e812c0b5bfc556cdfb86d0d3b4。\n\nfirstdot reuse相对S1 reuse：4×8 169.75→157.75，8×32 292.5→282.25，16×64 717.25→707，K13 219.75→204.5周期。最快合格RVV分别187.5、300.75、778.75（本轮firstdot侧RVV）、187；K13仍采用稳定RVV。仅固定C ABI调用窗，不是完整应用/ASIC收益，R5默认不变。\n\nC build-01 已GNU/模型PASS：16函数/48case/1008 dots，BIN cdd69b1447aa295e93325dd645d180d95e88f6692af728374dd344659e32ad8e；48次公共leaf与三数据集机器码对照通过。封存/诊断/Cbuild receipt 1bcd341bbd2162e3d9e297ccd2678ca0.a04e3fbdc5b88da25d876c8a0f4c16fb succeeded/exit0/cleanup_complete。\n\n拟执行唯一C receipt 1bcd341bbd2162e3d9e297ccd2678ca0.d71c5d5929394594a751dfb2c5ab5fcc；原生根仍 r2s1-firstdot-20261024-1458，状态入口 c-run-01/state.json、c-run-01-driver.json/外层日志，计划3进程：真实新C PC/vd0/bit100负控→同BIN恢复→正常重放。只读保护T17原身份/硬件/正常参考/AM/flash及本轮source、matrix-archive-01、c-build-01；taskset0-3，串行EMU，启动前实查活动。C API SHA073d6dab0e6c172ea295392a34e39091950ba373f6f1280ac5f53881b532a6e7，C证据器e943b2b7495c0ddf92a81d08f996e82048f99b0d8e406ce9993b4d05556b461e；不改旧门禁/官方程序/RTL。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6381905914",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6381905914"
+    },
+    {
+      "id": 6382306221,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T09:02:57Z",
+      "updated_at": "2026-10-24T09:02:57Z",
+      "body": "READY | 20261024-LiZufan001-r2s1-firstdot-1458 | R2-S1 | @LiZufan001 / Agent\n\n候选 c362ca74194f238afe7a84247ccd3e1cb7da36d2（父137b44befb041439a018a1079577cc000df1ee03）已提交，独立工作树干净，尚未推送。范围为r2-vector-accum下新增firstdot模块/合同/独立公共C库/封存原文，以及该模块导航、路线和计分板；旧冻结代码、官方程序、RTL及R5默认保持。原指定来源工作区仍干净、HEAD仍ff58e519091f273c4bc177f5e82cfbbfaf102cc5。\n\nPASS：33性能EMU、384正式窗口、192全窗口重放比较；另3普通C进程，16函数/48不同case/96正常调用。合计36进程（34正常、2预期负控），新vd0/bit100负控及同BIN恢复均通过。三个整块reuse较S1少7.0692%/3.5043%/1.4291%调用窗周期，K13仍选更快RVV；不是完整应用或ASIC收益。\n\nC原文与矩阵在独立无build/out的基点＋明确候选快照中受限复算，C报告与原件同为e178c590836330e9ed29b6b083527422c5d544e2dbde01b911c0e4978e2644cc；静态库完整成员/16叶函数及文档示例GNU编译链接和源重建PASS。独立Agent只读审查无阻断，不代签人工ACK。\n\n交付检查：1984项跨系统传递逐字节一致；原生Windows Git核验2003项准确库存、索引和文件字节（仅原计分板CRLF按原Git LF形式验证），随后两份回执单独核验并暂存，共2005项；diff --check退出0。7文档/138本地链接/4锚点与旧计分板原文保留PASS。索引receipt 1bcd341bbd2162e3d9e297ccd2678ca0.204a22d57995f2088df89b3099f8bcf7、commit receipt 1bcd341bbd2162e3d9e297ccd2678ca0.43d2959196905445e1544ff7efeecc56 均succeeded/exit0/cleanup_complete。\n\n所有run state已finished、active_pid/result为空，无在途EMU/构建。保留本包READY认领等待短窗口；无活跃运行资源占用，原实物与所有失败尝试留存。详情与接续：FIRSTDOT_RESULT.md、FIRSTDOT_README.md、evidence/firstdot-v1/runtime/locations.json。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6382306221",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6382306221"
+    },
+    {
+      "id": 6382311219,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T09:03:30Z",
+      "updated_at": "2026-10-24T09:03:30Z",
+      "body": "INTEGRATE-BEGIN | 20261024-LiZufan001-r2s1-firstdot-1458 | @LiZufan001 / Agent | 2026-10-24 09:03 UTC\n\n目标 cc77-builder/riscv:zufan；预期远端137b44befb041439a018a1079577cc000df1ee03；候选c362ca74194f238afe7a84247ccd3e1cb7da36d2，正常FF。READY6382306221已回读，最新Issue无其他未结束窗口或新冲突，GitHub分支API与原生Git刚核实同一远端。\n\n主要验证、2005项交付核验与提交均在窗口外完成，无在途EMU/构建。本窗口只作最终活动/远端回读、正常快进推送及确认；远端变化或发现冲突即退出窗口重新准备，不强推。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6382311219",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6382311219"
+    },
+    {
+      "id": 6382326888,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T09:05:14Z",
+      "updated_at": "2026-10-24T09:05:14Z",
+      "body": "INTEGRATE-END | 20261024-LiZufan001-r2s1-firstdot-1458 | 2026-10-24 09:04:49 UTC 核对\n\n按BEGIN6382311219正常快进成功：zufan 137b44befb041439a018a1079577cc000df1ee03 → c362ca74194f238afe7a84247ccd3e1cb7da36d2。push receipt 1bcd341bbd2162e3d9e297ccd2678ca0.18c9d0c4e3dd9be1688dce3831b20680 succeeded/exit0/cleanup_complete，实际09:04:06.6467778 UTC完成；Windows原生git ls-remote及GitHub分支API均回读新完整SHA，已发布FIRSTDOT_RESULT原文与本地最终稿完全相同。没有强推，发布窗口关闭。\n\nDONE | 20261024-LiZufan001-r2s1-firstdot-1458 | R2-S1\n\n首块初始化运行子项及独立C库已交付，释放本包认领；主要资格与2005项交付检查见READY6382306221。全部36次EMU已结束，无在途构建/EMU或本轮活跃运行保护；原实物、冻结源码、失败尝试和原始证据保留。本轮停止代码/证据写入。\n\n提交：https://github.com/cc77-builder/riscv/commit/c362ca74194f238afe7a84247ccd3e1cb7da36d2\n结果：team/optimizations/o2/r2-vector-accum/FIRSTDOT_RESULT.md\n使用、库与回退：同目录FIRSTDOT_README.md\n跨轮定位：同目录evidence/firstdot-v1/runtime/locations.json；独立Windows工作区working-firstdot-20261024-1458，已提交干净。原来源working-zufan-full-20261022保持原样。\n\n三个整块firstdot可显式选用，K13仍保留更快RVV，R5默认不变。下一轮先读计分板、路线和本Issue；可用新操作ID按实际就绪情况认领R2-S3重复配置子项，先证明状态语义并对等优化RVV，再做8×32/d0有界筛选；不是要求重跑已完成36次EMU。没有代签人工ACK或宣称完整应用/新机器安装/新ASIC PPA/全赛题验收。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6382326888",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6382326888"
+    },
+    {
+      "id": 6382378789,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T09:10:56Z",
+      "updated_at": "2026-10-24T09:10:56Z",
+      "body": "WORK | 20261024-LiZufan001-r2s3-config-proof-1708 | R2-S3 | @LiZufan001 / Agent | 2026-10-24T17:10:03+08:00\n\n基点：c362ca74194f238afe7a84247ccd3e1cb7da36d2，GitHub分支API已核实；独立云端工作区 r2s3-config-proof-1708。ChatPC首次conversation_announce返回 user rejected MCP tool call，本轮未访问指定Windows来源目录，不把远端等同于本机状态，不重试或换通道访问本机。\n\n范围：重复向量配置子项的状态语义证明、独立候选与可完成的主机/编译检查；拟新增 team/optimizations/o2/r2-config-reuse/，只读引用固定firstdot/S1与团队模型。对vdot和RVV应用同一规则，保留所有冻结源、官方程序、RTL和稳定默认。按实际结果记录后续整核资格缺项，不从静态删指令数推算周期。\n\n运行/资源：目前无后台任务；仅云端独立输出，最多四核，不占Windows/WSL、EMU或既有构建目录。本机运行状态未核实。认领前已按全部99条Issue事件确认无有效同包认领/窗口；发布后再次回读。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6382378789",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6382378789"
+    },
+    {
+      "id": 6382510905,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T09:24:00Z",
+      "updated_at": "2026-10-24T09:24:00Z",
+      "body": "UPDATE | 20261024-LiZufan001-r2s3-config-proof-1708 | R2-S3 | 2026-10-24T17:23:23+08:00\n\n主机阶段候选已实现并完成最终host-02：17项状态/输出保护测试；24串行＋24并行生成一致，12份firstdot基线源逐字节复现；48个真实LLVM20.1.2对象、48对leaf、16种函数及3744次既有模型执行PASS。基线leaf与已封存GNU对象逐字节相同；候选只删除批准配置word，wrapper旧leaf范围外字节保持，完整模型整数/向量寄存器、CSR、结果/访存一致，两项坏机器码拒绝。8×32/reuse分别删vdot7条、RVV1条，仅静态事实，不是周期收益。\n\n已修复并实测验证器前置拒绝后的failure.txt写入风险；独立只读审查含最终增量无阻断。canonical result SHA dffcbb95483df77a3581ee148b8a078034d954d7113c0a93102cf053696a10a9；最终/初轮原始输出合并1006载荷归档，逐字节封存核验PASS。仍为ET_REL主机资格，GNU/nexus-AM链接、EMU/NEMU/DiffTest、周期均未运行。ChatPC首次调用拒绝仍未重试，本机状态未知；未占用本机资源。\n\n正在整理同目录合同/结果/复现入口和计分板，准备在短窗口发布。认领保留；所有本轮云端构建/模型进程已结束，无后台任务。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6382510905",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6382510905"
+    },
+    {
+      "id": 6382589505,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T09:32:18Z",
+      "updated_at": "2026-10-24T09:32:18Z",
+      "body": "READY | 20261024-LiZufan001-r2s3-config-proof-1708 | R2-S3 | 2026-10-24 09:32:17 UTC\n\n候选提交：43e562d5e174763d9469b6c1c2124df0d60dc576（父 c362ca74194f238afe7a84247ccd3e1cb7da36d2）。\nhttps://github.com/cc77-builder/riscv/commit/43e562d5e174763d9469b6c1c2124df0d60dc576\n\n本阶段交付重复vsetivli保守删除候选、合同、真实LLVM构建/模型检查及全部原始证据。17项检查、48对象/48对编译后leaf、3744次模型执行PASS；1006载荷归档，基线与冻结GNU锚相同。最终只读代码/文档审查无阻断。新EMU/NEMU=0、GNU/nexus-AM可执行链接/实时DiffTest/周期/PPA未验证；没有切换稳定入口或改官方文件。\n\n远端候选diff已核实：仅新增team/optimizations/o2/r2-config-reuse/的16文件和更新路线/计分板2文件；18个Git blob与本地字节一致，旧记录/冻结源保持。Git比较为ahead 1/behind 0。关键结果已按候选SHA回读一致。\n\nChatPC首次拒绝仍未重试；用户Windows来源和物理运行状态未知。所有本轮云端构建/测试已返回，无在途重任务或新增本机保护；R2-S3认领保留，等待短暂集成窗口。结果与接续：team/optimizations/o2/r2-config-reuse/RESULT.md；本机阻断/定位：同目录evidence/host-v1/review-and-runtime.json。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6382589505",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6382589505"
+    },
+    {
+      "id": 6382591756,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T09:32:34Z",
+      "updated_at": "2026-10-24T09:32:34Z",
+      "body": "INTEGRATE-BEGIN | 20261024-LiZufan001-r2s3-config-proof-1708 | 2026-10-24 09:32:33 UTC\n\n目标：cc77-builder/riscv:zufan。预期远端：c362ca74194f238afe7a84247ccd3e1cb7da36d2；候选：43e562d5e174763d9469b6c1c2124df0d60dc576，直接单父子提交。READY6382589505，18文件范围和全部blob身份已核实；仅主机阶段资格，详见READY。\n\n刚回读本Issue全部102条及分支API，无其他有效窗口或本次范围冲突。将在发布后立即再读事件/HEAD，确认唯一窗口后，以expected_sha校验、force=false正常快进更新。没有长构建或仿真进入本窗口；Windows访问仍未进行。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6382591756",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6382591756"
+    },
+    {
+      "id": 6382601348,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T09:33:38Z",
+      "updated_at": "2026-10-24T09:33:38Z",
+      "body": "INTEGRATE-END | 20261024-LiZufan001-r2s3-config-proof-1708 | 2026-10-24 09:33:37 UTC\n\nBEGIN6382591756窗口内正常快进成功：zufan c362ca74194f238afe7a84247ccd3e1cb7da36d2 → 43e562d5e174763d9469b6c1c2124df0d60dc576。GitHub Git-data更新使用expected_sha与force=false，返回success；发布前两次回读窗口/HEAD，发布后分支API回读新SHA，16个模块文件及路线/计分板共18文件的远端Git blob均与本地相符。共享发布窗口关闭，无强推、部署或本机工作树操作。\n\nPAUSE | 20261024-LiZufan001-r2s3-config-proof-1708 | R2-S3 | 认领释放\n\n主机状态证明、候选实现、真实LLVM汇编和模型阶段已交付，整核/性能阶段未执行。全部本轮云端进程已返回，无在途构建/EMU/NEMU，无新增本机运行保护；本轮停止代码/证据写入。ChatPC首次调用被拒绝、未重试，本机实际状态未验证，不能由此判断用户Windows空闲。\n\n提交：https://github.com/cc77-builder/riscv/commit/43e562d5e174763d9469b6c1c2124df0d60dc576\n结果/接续：team/optimizations/o2/r2-config-reuse/RESULT.md\n复现/合同：同目录README.md、CONTRACT.md\n最终证据：同目录evidence/host-v1/（canonical host-02；1006载荷原始归档及各SHA清单）\n运行/阻断定位：同目录evidence/host-v1/review-and-runtime.json；云端独立部分源码快照 /workspace/scratch/2147290815ad/r2s3-config-proof-1708，不是完整clone，也不是Windows来源。\n\n交给同一PPA项目下一轮：先读计分板与本Issue，用新操作ID认领并核实实际工作区/资源；复用已完成主机阶段，补独立GNU/nexus-AM及整核身份适配，固定完整加载布局、新负控/同BIN恢复，再做8×32/dataset0与firstdot及最快同入口RVV的公平调用窗/重放。有收益才扩大，无收益关闭该假设。不转移历史PASS、不用删指令数预测周期；R5默认与已合格firstdot公共库保持。\n\n本轮开始09:08:22 UTC，主要工程/主机验证至09:28:44 UTC，发布收束为本评论时间；未达到120分钟。后续必要EMU与本机核验受实际访问拒绝阻断，已完成可独立推进的主机阶段，不以空等或重复测试补足时长。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6382601348",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6382601348"
+    },
+    {
+      "id": 6383044839,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T10:21:35Z",
+      "updated_at": "2026-10-24T10:21:35Z",
+      "body": "WORK | 20261024-LiZufan001-r2s3-runtime-1818 | R2-S3／重复配置整核适配与有界筛选 | @LiZufan001 / Agent | 2026-10-24T18:21:30+08:00\n\n接续明确释放的6382601348；基点为当前远端43e562d5e174763d9469b6c1c2124df0d60dc576。指定Windows来源已实际核实：working-zufan-full-20261022 / zufan / ff58e519091f273c4bc177f5e82cfbbfaf102cc5，原生Git、远端cc77-builder/riscv、工作树干净。本轮拟用独立working-r2s3-runtime-20261024-1818 / work/r2s3-runtime-20261024-1818及WSL原生r2s3-runtime-20261024-1818；不移动原来源HEAD或其index。\n\n范围：在team/optimizations/o2/r2-config-reuse/新增独立GNU/nexus-AM构建、运行门禁、证据与使用适配；复用已证明候选、固定firstdot/S1、T17硬件和参考模型。旧生成器/合同/归档、RTL、官方权威代码及R5稳定默认保持原样。先8×32/dataset0配对firstdot、config-reuse和最快同入口RVV，完整布局、新PC bit100负控/同BIN恢复、所有窗口与独立重放；只有符合既定收益条件才扩大。\n\n运行/资源：本轮尚无构建或EMU；实际WSL已检查无项目重进程，firstdot三个state均finished且active_pid=null。最多四核总预算；独立构建可并行，性能EMU串行，同机重任务启动前再查。T17和历史输入只读复用，新构建/日志输出分目录。核心判断与源码由本轮主Agent实现，独立审查仅只读。发布后回读认领与窗口，确认后开始。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6383044839",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6383044839"
+    },
+    {
+      "id": 6383132445,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T10:30:56Z",
+      "updated_at": "2026-10-24T10:30:56Z",
+      "body": "UPDATE | 20261024-LiZufan001-r2s3-runtime-1818 | R2-S3 | 最小整核筛选启动前\n\n独立Windows/WSL源码已在43e562d5e174763d9469b6c1c2124df0d60dc576建立，源码入口未改。新增3份运行适配+独立合同，主Agent实现、只读审查无阻断；GNU/nexus-AM build-probe-02两图已PASS，firstdot整BIN/独立wrapper与public对象等于封存锚，S1两个完整RVV槽保持，候选仅删除证明批准的vset机器字，完整布局/ABI/9输入模型通过。\n\n受保护输入：WSL /home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source 的runtime_candidate.py(7d98abce…),runtime_gate.py(5a9be8bf…),runtime_experiment.py(56c25151…)与旧固定依赖；build-probe-02两图；T17原物理硬件/AM/正常参考/flash；firstdot原归档只读。新输出 run-probe-01。准备5次串行EMU，taskset 0-3，最多4核：config-reuse bit100负控→同BIN恢复→firstdot正式→双图重放；实际PC按新ELF路径核验。本次没有并发重构建。\n\n准备失败已保留：Windows首次检出长路径失败在本轮新目录局部core.longpaths修复；build-probe-01调用的跨shell $PWD参数未通过源根门禁，未创建build目录/未启动编译，改为已核实绝对路径后build-probe-02通过。没有重跑EMU、修改冻结输入或放宽门禁。后续先据8×32/d0实测决定是否扩大。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6383132445",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6383132445"
+    },
+    {
+      "id": 6383215408,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T10:40:13Z",
+      "updated_at": "2026-10-24T10:40:13Z",
+      "body": "UPDATE | 20261024-LiZufan001-r2s3-runtime-1818 | R2-S3 | 探针完成，进入既定条件扩展\n\nrun-probe-01 已在 2026-10-24 10:38:29 UTC 完成：5 次串行 EMU、32 正式窗口、48 全窗口重放比较；新 PC 0x80002308/vd0/bit100 负控捕获、同 BIN 正常恢复、完整128位/CSR/退休/O2和重放PASS，active_pid=null。8×32/d0 reuse vdot：config-reuse 273 周期，当前 firstdot 282.25，当前最快 RVV为同样配置删除的reuse RVV 299；分别少3.2772%和8.6957%，四格没有未解释退化，达到事先RUNTIME_CONTRACT筛选条件。\n\n源三文件仍按此前SHA冻结，正在完成12项真实GNU产物拒错测试及probe归档原文复算。接着在同一独立WSL根新增 build-extra-01（1/5/7三shard×三dataset，18图）和 build-middle-01（shard3 dataset1/2，4图），run-extend-01仅运行这22图与6次dataset0重放；复用本次probe2图/重放，避免重复EMU。构建最多四核，性能串行且不并发重构建；新扩展批单独为PARTIAL，完整资格由probe+扩展聚合审计决定。\n\n本包范围内随后仅在完整矩阵与当前候选字节锚通过后适配独立普通C及可选静态库。原C入口、firstdot/R5默认、RTL及官方程序不动。当前Issue回读未见新增冲突；Windows/WSL工作区和全部旧输入保护保持，新增证据工具不改已冻结运行输入。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6383215408",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6383215408"
+    },
+    {
+      "id": 6383388586,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T10:59:47Z",
+      "updated_at": "2026-10-24T10:59:47Z",
+      "body": "UPDATE | 20261024-LiZufan001-r2s3-runtime-1818 | R2-S3 | 中间成果落盘 / 长运行保护保持\n\nprobe 的12项真实GNU产物拒错与236载荷原文审计已PASS（manifest 281c16eed98ba5306932dfa24150703ba335d290bc106594c3b25a1c0b01fc9f）。run-extend-01仍在运行，当前已回执10个正常进程PASS；不要重复启动或解除其输入保护。所有22新图GNU/模型已通过，性能仍串行、无并发重构建。\n\n普通C/库初稿及只读审查修复已保存到 Windows execution-r2s3-runtime-20261024-1818/pending-01/，manifest.json给出8文件SHA。尚未安装进运行源码、未构建C、未启动C进程、无C资格。后续处理脚本 post-matrix-01.py / post-c-01.py 同在执行目录，均有完成状态/新输出前置检查；前者只在扩展结束后进行拒错测试/完整矩阵封存及C主机检查，不自动启动EMU或作采用决定。运行核心三文件与旧依赖保持原SHA。\n\n本包仍由本操作认领，不是交接/释放。Windows工作区 working-r2s3-runtime-20261024-1818、WSL /home/lizufan/riscv-lab/r2s3-runtime-20261024-1818 和先前固定T17输入继续保护。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6383388586",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6383388586"
+    },
+    {
+      "id": 6383733356,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T11:37:18Z",
+      "updated_at": "2026-10-24T11:37:18Z",
+      "body": "UPDATE | 20261024-LiZufan001-r2s3-runtime-1818 | R2-S3 | 完整矩阵完成，普通C实跑前\n\nprobe+extension完整原文审计PASS：24正式图、33新进程、384正式窗口、192全窗口重放比较；matrix manifest 0310fa0f2b3edc2851bb4e16d95b4ee994822ac911c2e448c905d194f9406be2。12项GNU门禁及5种重哈希坏归档/归档内输出拒绝通过。前三整块reuse/vdot较firstdot少3.0111%/3.2772%/0.6011%；K13 S3 vdot205.5慢于204.5，保留本轮最快firstdot/RVV187。零删除RVV完整槽相同而有小幅可重放周期差异，已做12窗上下文核对，保留未归因边界，不宣称全矩阵无退化。\n\nc-build-01实际GNU/模型通过：16函数、48 case、每正常程序1008 vdot；BIN b399ae6116c32a2e4a40359e39a65f26f2d0db5893c6c2d48df259e0913e8317，公共leaf与当前矩阵48次字节锚定。准备新c-run-01的3次串行EMU（当前C ELF PC负控→同BIN恢复→功能重放），taskset 0-3、总预算四核。尚无C运行资格。\n\n受保护输入为本轮native/source运行核心、已安装pending-02的C适配（source-delta-03列8文件SHA）、c-build-01与矩阵归档、原T17物理依赖。源码核心和官方程序不改；public尚未导出，R5默认不变。MCP长C任务改用独立execution目录作执行cwd，保护同一原生WSL输入，不占用Windows Git工作区的长写锁。最新Issue108条无新增冲突，发布后再次回读再启动。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6383733356",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6383733356"
+    },
+    {
+      "id": 6384113320,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T12:18:03Z",
+      "updated_at": "2026-10-24T12:18:03Z",
+      "body": "READY | `20261024-LiZufan001-r2s3-runtime-1818` | @LiZufan001 / Pro Agent\n\nR2-S3 重复配置 GNU／整核运行与普通 C 交付已完成，候选提交 `e4cabff10fb3b950eab77cc6293d7f070814c188`，父提交 `43e562d5e174763d9469b6c1c2124df0d60dc576`。工作区仍为 `working-r2s3-runtime-20261024-1818`，实际位置见候选内 `evidence/runtime-v1/runtime/locations.json`。\n\n- 新增独立运行适配、归档审计、16函数可选C库、使用/回退；更新模块结果、路线和计分板。官方程序、旧冻结实验、RTL和R5默认未改。\n- 36次新EMU（34正常＋2预期负控）；384正式窗口、192次dataset0全窗口重放比较；普通C 48不同case／96正常调用。GNU、DiffTest/O2、原文审计、独立源码检出受限复算和库/示例GNU链接均通过，无在途EMU或构建。\n- 固定调用计划下三个整块reuse/vdot较本轮firstdot少3.0111%／3.2772%／0.6011%；K13不采用S3 vdot，保留更快firstdot/RVV。相同RVV槽的小幅未归因差异如实保留，不作全矩阵无退化或完整应用/PPA结论。\n- 最终2165文件（2164项身份核验＋回执自身独立核验）跨系统/暂存原字节一致。默认 `git diff --cached --check` 保留FAIL：仅冻结 `test_c_api.py:135` 的EOF空行；新发布检查器精确绑定SHA/blob/唯一诊断，明确接受这一格式例外，原失败与旧检查器保留。\n\n当前远端仍为 `43e562d5e174763d9469b6c1c2124df0d60dc576`；原生Windows Git只读push预检通过。尚未开启集成窗口。所有原始运行输入和证据继续只读保留，认领保留至正常FF交付后的DONE。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6384113320",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6384113320"
+    },
+    {
+      "id": 6384121313,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T12:18:53Z",
+      "updated_at": "2026-10-24T12:18:53Z",
+      "body": "INTEGRATE-BEGIN | `20261024-LiZufan001-r2s3-runtime-1818`\n\n目标：`cc77-builder/riscv:zufan`。预期远端 `43e562d5e174763d9469b6c1c2124df0d60dc576`；候选 `e4cabff10fb3b950eab77cc6293d7f070814c188`。\n\n实现、36次实际EMU、原文/独立检出审计、2165文件交付核验及本地提交均已完成；唯一冻结EOF格式例外已明示，详见 READY #issuecomment-6384113320 和候选结果页。无在途构建或仿真。此窗口仅执行正常FF推送及远端SHA核验，不强推、不部署。发布后立即回读窗口和活动，推送前再次回读并核对远端。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6384121313",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6384121313"
+    },
+    {
+      "id": 6384134604,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T12:20:18Z",
+      "updated_at": "2026-10-24T12:20:18Z",
+      "body": "INTEGRATE-END | `20261024-LiZufan001-r2s3-runtime-1818`\n\n正常FF推送完成：`43e562d5e174763d9469b6c1c2124df0d60dc576` → [`e4cabff10fb3b950eab77cc6293d7f070814c188`](https://github.com/cc77-builder/riscv/commit/e4cabff10fb3b950eab77cc6293d7f070814c188)。原生Windows Git推送后 `ls-remote` 与GitHub分支API均确认实际远端为该提交，本地工作树干净；未强推、未部署。\n\n最终2165文件包含2164项已核对库存和单独核验的报告自身；归档清单闭合、字节/暂存身份一致。默认whitespace的唯一冻结EOF例外与实际FAIL已明确保留。[完整结果](https://github.com/cc77-builder/riscv/blob/e4cabff10fb3b950eab77cc6293d7f070814c188/team/optimizations/o2/r2-config-reuse/RUNTIME_RESULT.md)。本集成窗口关闭；任务释放另见紧接的DONE。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6384134604",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6384134604"
+    },
+    {
+      "id": 6384135090,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T12:20:21Z",
+      "updated_at": "2026-10-24T12:20:21Z",
+      "body": "DONE | `20261024-LiZufan001-r2s3-runtime-1818` | R2-S3 重复配置 GNU／整核／普通C子项\n\n已交付到 `zufan`，提交 `e4cabff10fb3b950eab77cc6293d7f070814c188`。本操作停止写入并释放认领，交接给同一PPA项目下一轮。33性能＋3普通C进程均已结束，state的active_pid/active_result为空；无在途构建、仿真或发布任务。历史输入、原始输出、失败记录和三类封存归档继续只读保留。\n\n[结果与边界](https://github.com/cc77-builder/riscv/blob/e4cabff10fb3b950eab77cc6293d7f070814c188/team/optimizations/o2/r2-config-reuse/RUNTIME_RESULT.md) · [实际使用/复算/回退](https://github.com/cc77-builder/riscv/blob/e4cabff10fb3b950eab77cc6293d7f070814c188/team/optimizations/o2/r2-config-reuse/RUNTIME_README.md) · [工作区与运行定位](https://github.com/cc77-builder/riscv/blob/e4cabff10fb3b950eab77cc6293d7f070814c188/team/optimizations/o2/r2-config-reuse/evidence/runtime-v1/runtime/locations.json)。\n\n下一轮无需重跑本轮36进程。先按当前路线和新Issue活动恢复事实；三个整块的固定调用窗可选config-reuse，K13仍用本轮更快firstdot/RVV。后续以实际调用方的打包/搬运/调用成本及强RVV同路径测量提出有界假设，不由删指令数或本轮FU记录直接开新RTL任务。原R5默认、官方程序及旧冻结实验保持。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6384135090",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6384135090"
+    },
+    {
+      "id": 6384214655,
+      "author": "LiZufan001",
+      "created_at": "2026-10-24T12:28:42Z",
+      "updated_at": "2026-10-24T12:28:42Z",
+      "body": "WORK | 20261024-LiZufan001-r2s3-caller-2025 | R2-S3／8×32普通C调用方成本与实际运行 | @LiZufan001 / Pro Agent | 2026-10-24T20:29:00+08:00\n\n接续已释放的 #issuecomment-6384135090，基点 e4cabff10fb3b950eab77cc6293d7f070814c188。指定来源 working-zufan-full-20261022 实查 ff58e519091f273c4bc177f5e82cfbbfaf102cc5、干净，保持原样；拟建独立 working-r2s3-caller-20261024-2025 / work/r2s3-caller-20261024-2025 与 WSL 原生 r2s3-caller-20261024-2025。\n\n范围：已有RUNTIME_README的gemv8(a,x,y)实际消费示例尚仅编译链接；在 r2-config-reuse 内新增独立caller子模块/合同/运行与成本证据，令config-reuse vdot和最快合格RVV走相同打包、调用、提取路径。先8×32/dataset0最小运行/重放，按证据决定有界改进，不重跑旧36进程。既有public/冻结生成器、RTL、官方程序与R5默认保持。必要时更新模块说明、当前路线及计分板。\n\n主Agent完成设计实现，协作Agent仅只读审查。当前尚无本操作运行；新构建总预算最多4核，性能测量串行且不与重构建竞争。启动前核对真实进程和物理T17身份，独立输入/输出；发布后回读认领，未开启集成窗口。",
+      "html_url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6384214655",
+      "api_url": "https://api.github.com/repos/cc77-builder/riscv/issues/comments/6384214655"
+    }
+  ]
+}
