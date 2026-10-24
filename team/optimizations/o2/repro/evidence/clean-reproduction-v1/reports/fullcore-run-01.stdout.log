@@ -1,0 +1,122 @@
+hello-vadd HELLO_VADD_PASS
+negative-vdot EXPECTED_VDOT_HIGHBIT_REJECTION
+functional-1 VDOT_MATRIX_SHARD_PASS
+functional-2 VDOT_MATRIX_SHARD_PASS
+functional-0 VDOT_MATRIX_SHARD_PASS
+functional-4 VDOT_MATRIX_SHARD_PASS
+functional-3 VDOT_MATRIX_SHARD_PASS
+functional-5 VDOT_MATRIX_SHARD_PASS
+control O2_CONTROL_LEGACY_PASS
+dense-batch128 O2_DENSE_ELASTIC_AND_WINDOWS_PASS
+functional-7 VDOT_MATRIX_SHARD_PASS
+functional-6 VDOT_MATRIX_SHARD_PASS
+o2-diagnostic O2_SUPPLEMENT_PASS
+o2-control-diagnostic O2_SUPPLEMENT_PASS
+{
+  "status": "T17_FRESH_FULLCORE_PASS",
+  "contract": "t17-fresh-fullcore-v1",
+  "hardware_contract": "t17-clean-build-v1",
+  "source_commit": "34bae6d4acceac939f958199dae53c14bc1f6183",
+  "emu_sha256": "ff840528eb1009e94906eefb3773ca321050f309553543ab26f0db23c410e30f",
+  "reference_sha256": "8af118e5519db7ef6001010a2d547707c5d47630412e80abfc3f343bfef987c9",
+  "negative_sha256": "c70b0ad5b5a71032e96c3d32bfcdb3e17512eb8617ae85d201bf3fb6a85732e6",
+  "new_emu_runs": 14,
+  "reused_execution_verdicts": 0,
+  "selected_jobs": 14,
+  "matrix_unique": 117,
+  "matrix_executed": 124,
+  "normal_reference_recovery": true,
+  "suite_coverage": {
+    "required": [
+      "MULTI_INFLIGHT",
+      "TRIPLE_OVERLAP",
+      "FULL_STALL",
+      "KILL_P",
+      "KILL_R",
+      "PARTIAL_KILL"
+    ],
+    "sources": {
+      "MULTI_INFLIGHT": [
+        {
+          "name": "control",
+          "count": 284
+        },
+        {
+          "name": "dense-batch128",
+          "count": 668
+        },
+        {
+          "name": "o2-diagnostic",
+          "count": 893
+        },
+        {
+          "name": "o2-control-diagnostic",
+          "count": 984
+        }
+      ],
+      "TRIPLE_OVERLAP": [
+        {
+          "name": "control",
+          "count": 57
+        },
+        {
+          "name": "dense-batch128",
+          "count": 564
+        },
+        {
+          "name": "o2-diagnostic",
+          "count": 768
+        },
+        {
+          "name": "o2-control-diagnostic",
+          "count": 744
+        }
+      ],
+      "FULL_STALL": [
+        {
+          "name": "control",
+          "count": 13
+        }
+      ],
+      "KILL_P": [
+        {
+          "name": "control",
+          "count": 3
+        },
+        {
+          "name": "dense-batch128",
+          "count": 6
+        },
+        {
+          "name": "o2-control-diagnostic",
+          "count": 28
+        }
+      ],
+      "KILL_R": [
+        {
+          "name": "control",
+          "count": 2
+        },
+        {
+          "name": "dense-batch128",
+          "count": 2
+        },
+        {
+          "name": "o2-control-diagnostic",
+          "count": 25
+        }
+      ],
+      "PARTIAL_KILL": [
+        {
+          "name": "o2-control-diagnostic",
+          "count": 1
+        }
+      ]
+    },
+    "complete": true,
+    "missing": []
+  },
+  "historical_fixed_hardware_acceptance": false,
+  "historical_fixed_negative_acceptance": false,
+  "performance_measured": false
+}

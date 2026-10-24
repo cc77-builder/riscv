@@ -1,0 +1,137 @@
+{
+  "scope": "Completed fullcore execution, physical and portable audits, and byte-exact cross-system copy; performance remains separate and running",
+  "records": {
+    "fullcore_run": {
+      "expires_at": "2026-11-23T01:51:16.3288309Z",
+      "kind": "shell",
+      "operation_id": "1bcd341bbd2162e3d9e297ccd2678ca0.897c9d2d49d5e3cbf1ec09e837d2a7a7",
+      "shell": {
+        "durable_logs": true,
+        "execution_environment": "windows_native",
+        "execution_sha256": "22eeb8743e8fd90e1a42616d89585b3f91e9bcc96d4a09f527d6ea914443401c",
+        "operation_id": "1bcd341bbd2162e3d9e297ccd2678ca0.897c9d2d49d5e3cbf1ec09e837d2a7a7",
+        "output_withheld": false,
+        "result": {
+          "cancelled": false,
+          "cleanup_complete": true,
+          "duration_ms": 2688282,
+          "exit_code": 0,
+          "peak_job_commit_bytes": 34922496,
+          "peak_process_commit_bytes": 27131904,
+          "process_id": 376748,
+          "stderr": "w\u0000s\u0000l\u0000:\u0000 \u0000�hKm0R \u0000l\u0000o\u0000c\u0000a\u0000l\u0000h\u0000o\u0000s\u0000t\u0000 \u0000�N\u0006tM�n\f�FO*g\\�P0R \u0000W\u0000S\u0000L\u0000\u00020N\u0000A\u0000T\u0000 \u0000!j\u000f_\u000bN�v \u0000W\u0000S\u0000L\u0000 \u0000\rN/e\u0001c \u0000l\u0000o\u0000c\u0000a\u0000l\u0000h\u0000o\u0000s\u0000t\u0000 \u0000�N\u0006t\u00020\r\u0000\n\u0000",
+          "stderr_truncated": false,
+          "stdout": "{\"source_sha256\": \"593298f4119d5a8ce8dd925ec5836c70e0d8bf4cbcf7cf0b221570ffc669f1a2\", \"existing_emu\": [[\"2210\", \"/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu\"]], \"new_workers\": 3}\n",
+          "stdout_truncated": false,
+          "timed_out": false,
+          "total_processes": 6
+        },
+        "script_sha256": "faea62495a06f34976c46064522403d9782136518741214c42293f958e838507",
+        "started_at": "2026-10-24T01:51:16.3843382Z",
+        "status": "succeeded",
+        "updated_at": "2026-10-24T02:36:04.7046992Z",
+        "worker_pid": 356552
+      },
+      "status": "succeeded"
+    },
+    "fullcore_physical_audit": {
+      "expires_at": "2026-11-23T02:37:13.9191683Z",
+      "kind": "shell",
+      "operation_id": "1bcd341bbd2162e3d9e297ccd2678ca0.5dce9c5f3eebf911b223d91e9caae34e",
+      "shell": {
+        "durable_logs": true,
+        "execution_environment": "windows_native",
+        "execution_sha256": "6d7004a9cd531582153162ecc0f3dda6f0fde4134b127a9579ce957fde534cc2",
+        "operation_id": "1bcd341bbd2162e3d9e297ccd2678ca0.5dce9c5f3eebf911b223d91e9caae34e",
+        "output_withheld": false,
+        "result": {
+          "cancelled": false,
+          "cleanup_complete": true,
+          "duration_ms": 29741,
+          "exit_code": 0,
+          "peak_job_commit_bytes": 35176448,
+          "peak_process_commit_bytes": 26886144,
+          "process_id": 363600,
+          "stderr": "w\u0000s\u0000l\u0000:\u0000 \u0000�hKm0R \u0000l\u0000o\u0000c\u0000a\u0000l\u0000h\u0000o\u0000s\u0000t\u0000 \u0000�N\u0006tM�n\f�FO*g\\�P0R \u0000W\u0000S\u0000L\u0000\u00020N\u0000A\u0000T\u0000 \u0000!j\u000f_\u000bN�v \u0000W\u0000S\u0000L\u0000 \u0000\rN/e\u0001c \u0000l\u0000o\u0000c\u0000a\u0000l\u0000h\u0000o\u0000s\u0000t\u0000 \u0000�N\u0006t\u00020\r\u0000\n\u0000",
+          "stderr_truncated": false,
+          "stdout": "{\"status\": \"T17_FRESH_FULLCORE_PASS\", \"contract\": \"t17-fresh-fullcore-v1\", \"hardware_contract\": \"t17-clean-build-v1\", \"source_commit\": \"34bae6d4acceac939f958199dae53c14bc1f6183\", \"emu_sha256\": \"ff840528eb1009e94906eefb3773ca321050f309553543ab26f0db23c410e30f\", \"reference_sha256\": \"8af118e5519db7ef6001010a2d547707c5d47630412e80abfc3f343bfef987c9\", \"negative_sha256\": \"c70b0ad5b5a71032e96c3d32bfcdb3e17512eb8617ae85d201bf3fb6a85732e6\", \"new_emu_runs\": 14, \"reused_execution_verdicts\": 0, \"selected_jobs\": 14, \"matrix_unique\": 117, \"matrix_executed\": 124, \"normal_reference_recovery\": true, \"suite_coverage\": {\"required\": [\"MULTI_INFLIGHT\", \"TRIPLE_OVERLAP\", \"FULL_STALL\", \"KILL_P\", \"KILL_R\", \"PARTIAL_KILL\"], \"sources\": {\"MULTI_INFLIGHT\": [{\"name\": \"control\", \"count\": 284}, {\"name\": \"dense-batch128\", \"count\": 668}, {\"name\": \"o2-diagnostic\", \"count\": 893}, {\"name\": \"o2-control-diagnostic\", \"count\": 984}], \"TRIPLE_OVERLAP\": [{\"name\": \"control\", \"count\": 57}, {\"name\": \"dense-batch128\", \"count\": 564}, {\"name\": \"o2-diagnostic\", \"count\": 768}, {\"name\": \"o2-control-diagnostic\", \"count\": 744}], \"FULL_STALL\": [{\"name\": \"control\", \"count\": 13}], \"KILL_P\": [{\"name\": \"control\", \"count\": 3}, {\"name\": \"dense-batch128\", \"count\": 6}, {\"name\": \"o2-control-diagnostic\", \"count\": 28}], \"KILL_R\": [{\"name\": \"control\", \"count\": 2}, {\"name\": \"dense-batch128\", \"count\": 2}, {\"name\": \"o2-control-diagnostic\", \"count\": 25}], \"PARTIAL_KILL\": [{\"name\": \"o2-control-diagnostic\", \"count\": 1}]}, \"complete\": true, \"missing\": []}, \"historical_fixed_hardware_acceptance\": false, \"historical_fixed_negative_acceptance\": false, \"performance_measured\": false, \"started\": \"2026-10-24T01:51:18.870345+00:00\", \"finished\": \"2026-10-24T02:36:06.319013+00:00\", \"controller_sha256\": \"593298f4119d5a8ce8dd925ec5836c70e0d8bf4cbcf7cf0b221570ffc669f1a2\", \"identity_sha256\": \"4a89872d0463163ea0be83f680843352e01354043f5709509d822353221258eb\"}\n",
+          "stdout_truncated": false,
+          "timed_out": false,
+          "total_processes": 6
+        },
+        "script_sha256": "1f8653fef7702694160f19259bc084b9c752f364c7a6977cbec3c8445bd6ccbd",
+        "started_at": "2026-10-24T02:37:13.9711034Z",
+        "status": "succeeded",
+        "updated_at": "2026-10-24T02:37:43.7530251Z",
+        "worker_pid": 378744
+      },
+      "status": "succeeded"
+    },
+    "fullcore_pack_archive_audit": {
+      "expires_at": "2026-11-23T02:40:30.9745159Z",
+      "kind": "shell",
+      "operation_id": "1bcd341bbd2162e3d9e297ccd2678ca0.34e3ebdafac66212bd49fcbe2e92e880",
+      "shell": {
+        "durable_logs": true,
+        "execution_environment": "windows_native",
+        "execution_sha256": "447cd1e5f73d36edbe7bcccea7f92a4824ff92b85665be7e8c76f87d9cffe237",
+        "operation_id": "1bcd341bbd2162e3d9e297ccd2678ca0.34e3ebdafac66212bd49fcbe2e92e880",
+        "output_withheld": false,
+        "result": {
+          "cancelled": false,
+          "cleanup_complete": true,
+          "duration_ms": 23945,
+          "exit_code": 0,
+          "peak_job_commit_bytes": 34689024,
+          "peak_process_commit_bytes": 26673152,
+          "process_id": 324804,
+          "stderr": "w\u0000s\u0000l\u0000:\u0000 \u0000�hKm0R \u0000l\u0000o\u0000c\u0000a\u0000l\u0000h\u0000o\u0000s\u0000t\u0000 \u0000�N\u0006tM�n\f�FO*g\\�P0R \u0000W\u0000S\u0000L\u0000\u00020N\u0000A\u0000T\u0000 \u0000!j\u000f_\u000bN�v \u0000W\u0000S\u0000L\u0000 \u0000\rN/e\u0001c \u0000l\u0000o\u0000c\u0000a\u0000l\u0000h\u0000o\u0000s\u0000t\u0000 \u0000�N\u0006t\u00020\r\u0000\n\u0000",
+          "stderr_truncated": false,
+          "stdout": "{\"file\": \"audit-controller.json\", \"summary\": {\"contract\": \"t17-fullcore-evidence-v1\", \"audit_source_sha256\": \"20bebd4f5526a3522a09c2324e683d34b55997930c5078e89c3e5d04a6733412\", \"controller_sha256\": \"593298f4119d5a8ce8dd925ec5836c70e0d8bf4cbcf7cf0b221570ffc669f1a2\", \"source_campaign\": \"/home/lizufan/riscv-lab/t17-clean-20261024-0854/fullcore-run-01\", \"source_result_sha256\": \"9f43f2910ee93847f04fcabee02f75d690f0bffcc0fd4b1f6df1683430542231\", \"raw_audit_sha256\": \"1ae7451cb4f5c8d615be5edfea36d8793578b12f0f821da2b3a5b6cd77859b0a\", \"process_bindings_sha256\": \"6e17cd1eae6e524ef13c48c9053032362aba7d7b66e5e23f579de95e71ed533a\"}}\n{\"file\": \"process-bindings.json\", \"summary\": {\"status\": \"T17_FULLCORE_SPAWN_BINDINGS_PASS\", \"source_new_emu_runs\": 14, \"peak_overlapping_process_intervals\": 3, \"jobs\": 3}}\n",
+          "stdout_truncated": false,
+          "timed_out": false,
+          "total_processes": 6
+        },
+        "script_sha256": "aa6230d90e087e3c9bddee032f4630f45856ba8e2076af4d2ed3dcfed3b05481",
+        "started_at": "2026-10-24T02:40:31.0196396Z",
+        "status": "succeeded",
+        "updated_at": "2026-10-24T02:40:55.0025269Z",
+        "worker_pid": 327212
+      },
+      "status": "succeeded"
+    },
+    "fullcore_transfer": {
+      "expires_at": "2026-11-23T02:42:23.3530567Z",
+      "kind": "shell",
+      "operation_id": "1bcd341bbd2162e3d9e297ccd2678ca0.b2dce54fc2a551e9cd7164637e25c955",
+      "shell": {
+        "durable_logs": true,
+        "execution_environment": "windows_native",
+        "execution_sha256": "86025f0b5e6c5b64655bbe534ee49fa4e5d5bee29758ee2640d2a8c3a9fef341",
+        "operation_id": "1bcd341bbd2162e3d9e297ccd2678ca0.b2dce54fc2a551e9cd7164637e25c955",
+        "output_withheld": false,
+        "result": {
+          "cancelled": false,
+          "cleanup_complete": true,
+          "duration_ms": 8316,
+          "exit_code": 0,
+          "peak_job_commit_bytes": 34803712,
+          "peak_process_commit_bytes": 26513408,
+          "process_id": 368952,
+          "stderr": "w\u0000s\u0000l\u0000:\u0000 \u0000�hKm0R \u0000l\u0000o\u0000c\u0000a\u0000l\u0000h\u0000o\u0000s\u0000t\u0000 \u0000�N\u0006tM�n\f�FO*g\\�P0R \u0000W\u0000S\u0000L\u0000\u00020N\u0000A\u0000T\u0000 \u0000!j\u000f_\u000bN�v \u0000W\u0000S\u0000L\u0000 \u0000\rN/e\u0001c \u0000l\u0000o\u0000c\u0000a\u0000l\u0000h\u0000o\u0000s\u0000t\u0000 \u0000�N\u0006t\u00020\r\u0000\n\u0000",
+          "stderr_truncated": false,
+          "stdout": "{\"file\": \"fullcore-pack-01.json\", \"value\": {\"status\": \"T17_FULLCORE_ARCHIVE_BYTES_PASS\", \"files\": 432, \"raw_bytes\": 203184356, \"stored_bytes\": 13066329, \"archive_manifest_sha256\": \"f6f45c7a99e3004d4e98b1a622a8b7c6f1e7c249f5a2fb47328a59d81c020719\", \"new_emu_runs\": 0}}\n{\"file\": \"fullcore-archive-audit-01.json\", \"value\": {\"status\": \"T17_FULLCORE_ARCHIVE_RAW_AUDIT_PASS\", \"contract\": \"t17-fullcore-evidence-v1\", \"archive\": {\"files\": 432, \"raw_bytes\": 203184356, \"stored_bytes\": 13066329, \"archive_manifest_sha256\": \"f6f45c7a99e3004d4e98b1a622a8b7c6f1e7c249f5a2fb47328a59d81c020719\"}, \"audit_source_sha256\": \"20bebd4f5526a3522a09c2324e683d34b55997930c5078e89c3e5d04a6733412\", \"source_new_emu_runs\": 14, \"new_emu_runs\": 0, \"complete_normal_traces\": 13, \"expected_negative_traces\": 1, \"matrix_unique\": 117, \"matrix_executed\": 124, \"normal_reference_recovery\": true, \"suite_coverage\": {\"required\": [\"MULTI_INFLIGHT\", \"TRIPLE_OVERLAP\", \"FULL_STALL\", \"KILL_P\", \"KILL_R\", \"PARTIAL_KILL\"], \"sources\": {\"MULTI_INFLIGHT\": [{\"name\": \"control\", \"count\": 284}, {\"name\": \"dense-batch128\", \"count\": 668}, {\"name\": \"o2-diagnostic\", \"count\": 893}, {\"name\": \"o2-control-diagnostic\", \"count\": 984}], \"TRIPLE_OVERLAP\": [{\"name\": \"control\", \"count\": 57}, {\"name\": \"dense-batch128\", \"count\": 564}, {\"name\": \"o2-diagnostic\", \"count\": 768}, {\"name\": \"o2-control-diagnostic\", \"count\": 744}], \"FULL_STALL\": [{\"name\": \"control\", \"count\": 13}], \"KILL_P\": [{\"name\": \"control\", \"count\": 3}, {\"name\": \"dense-batch128\", \"count\": 6}, {\"name\": \"o2-control-diagnostic\", \"count\": 28}], \"KILL_R\": [{\"name\": \"control\", \"count\": 2}, {\"name\": \"dense-batch128\", \"count\": 2}, {\"name\": \"o2-control-diagnostic\", \"count\": 25}], \"PARTIAL_KILL\": [{\"name\": \"o2-control-diagnostic\", \"count\": 1}]}, \"complete\": true, \"missing\": []}, \"physical_external_inputs_revalidated\": false, \"historical_fixed_hardware_acceptance\": false, \"performance_measured\": false}}\n{\"status\": \"T17_FULLCORE_ARCHIVE_BYTE_EXACT_TRANSFER_PASS\", \"source\": \"/home/lizufan/riscv-lab/t17-clean-20261024-0854/fullcore-archive-01\", \"count\": 434, \"stored_bytes\": 13260473}\n",
+          "stdout_truncated": false,
+          "timed_out": false,
+          "total_processes": 6
+        },
+        "script_sha256": "04a4a9516645d5061b57f565a7e3cd2e89d4c1bd06aa74916a2ed9a507210dd1",
+        "started_at": "2026-10-24T02:42:23.4483804Z",
+        "status": "succeeded",
+        "updated_at": "2026-10-24T02:42:31.8048616Z",
+        "worker_pid": 347476
+      },
+      "status": "succeeded"
+    }
+  }
+}

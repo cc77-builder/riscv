@@ -1,0 +1,555 @@
+{
+  "status": "T17_FULLCORE_SPAWN_BINDINGS_PASS",
+  "source_new_emu_runs": 14,
+  "peak_overlapping_process_intervals": 3,
+  "jobs": 3,
+  "records": {
+    "control": {
+      "name": "control",
+      "started": "2026-10-24T02:19:12.171952+00:00",
+      "command": [
+        "timeout",
+        "120m",
+        "stdbuf",
+        "-o0",
+        "-e0",
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu",
+        "-i",
+        "/home/riscv/riscv-lab/t14-optimization-20261015/runs/control-sweep-02/vdot-regression.bin",
+        "--flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+        "--ram-size=128MB",
+        "--diff=/home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so",
+        "--max-cycles=5000000"
+      ],
+      "files": {
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu": "ff840528eb1009e94906eefb3773ca321050f309553543ab26f0db23c410e30f",
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so": "8af118e5519db7ef6001010a2d547707c5d47630412e80abfc3f343bfef987c9",
+        "/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+        "/home/riscv/riscv-lab/t14-optimization-20261015/runs/control-sweep-02/vdot-regression.bin": "b447c98209f5074072d7e36c77e63e92f8bd51a2cc05e2dbe7cfe857f4d37df7"
+      },
+      "negative_target": null,
+      "cwd": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/fullcore-run-01/runs/control/cwd",
+      "auxiliary_files": {
+        "constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+        "plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff"
+      },
+      "environment_overrides": {
+        "XS_NEGATIVE_VECTOR_TARGET": null
+      },
+      "process_started": true,
+      "pid": 8116,
+      "pid_kind": "timeout process-group leader",
+      "actual_new_execution": true,
+      "performance_measured": false,
+      "exit_code": 0
+    },
+    "dense-batch128": {
+      "name": "dense-batch128",
+      "started": "2026-10-24T02:25:07.059864+00:00",
+      "command": [
+        "timeout",
+        "120m",
+        "stdbuf",
+        "-o0",
+        "-e0",
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu",
+        "-i",
+        "/home/riscv/riscv-lab/t13-performance-20261015/runs/images-v3/performance-d0-s06/vdot-perf.bin",
+        "--flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+        "--ram-size=128MB",
+        "--diff=/home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so",
+        "--max-cycles=5000000"
+      ],
+      "files": {
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu": "ff840528eb1009e94906eefb3773ca321050f309553543ab26f0db23c410e30f",
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so": "8af118e5519db7ef6001010a2d547707c5d47630412e80abfc3f343bfef987c9",
+        "/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+        "/home/riscv/riscv-lab/t13-performance-20261015/runs/images-v3/performance-d0-s06/vdot-perf.bin": "e79d8881d35ef3f27efb6fbb4c27705da3c61078f99e155a69026622e89730cc"
+      },
+      "negative_target": null,
+      "cwd": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/fullcore-run-01/runs/dense-batch128/cwd",
+      "auxiliary_files": {
+        "constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+        "plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff"
+      },
+      "environment_overrides": {
+        "XS_NEGATIVE_VECTOR_TARGET": null
+      },
+      "process_started": true,
+      "pid": 8344,
+      "pid_kind": "timeout process-group leader",
+      "actual_new_execution": true,
+      "performance_measured": false,
+      "exit_code": 0
+    },
+    "functional-0": {
+      "name": "functional-0",
+      "started": "2026-10-24T01:56:45.625381+00:00",
+      "command": [
+        "timeout",
+        "120m",
+        "stdbuf",
+        "-o0",
+        "-e0",
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu",
+        "-i",
+        "/home/riscv/riscv-lab/t12-regression-20261013/runs/t11-matrix-canonical/build-0/vdot-exceptions.bin",
+        "--flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+        "--ram-size=128MB",
+        "--diff=/home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so",
+        "--max-cycles=5000000"
+      ],
+      "files": {
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu": "ff840528eb1009e94906eefb3773ca321050f309553543ab26f0db23c410e30f",
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so": "8af118e5519db7ef6001010a2d547707c5d47630412e80abfc3f343bfef987c9",
+        "/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+        "/home/riscv/riscv-lab/t12-regression-20261013/runs/t11-matrix-canonical/build-0/vdot-exceptions.bin": "b8b7e1a7032070bdfdfc2a747ab6453011ea9959ebd5ac52ca21b439d4d113b3"
+      },
+      "negative_target": null,
+      "cwd": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/fullcore-run-01/runs/functional-0/cwd",
+      "auxiliary_files": {
+        "constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+        "plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff"
+      },
+      "environment_overrides": {
+        "XS_NEGATIVE_VECTOR_TARGET": null
+      },
+      "process_started": true,
+      "pid": 4616,
+      "pid_kind": "timeout process-group leader",
+      "actual_new_execution": true,
+      "performance_measured": false,
+      "exit_code": 0
+    },
+    "functional-1": {
+      "name": "functional-1",
+      "started": "2026-10-24T01:52:04.690252+00:00",
+      "command": [
+        "timeout",
+        "120m",
+        "stdbuf",
+        "-o0",
+        "-e0",
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu",
+        "-i",
+        "/home/riscv/riscv-lab/t12-regression-20261013/runs/t11-matrix-canonical/build-1/vdot-exceptions.bin",
+        "--flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+        "--ram-size=128MB",
+        "--diff=/home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so",
+        "--max-cycles=5000000"
+      ],
+      "files": {
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu": "ff840528eb1009e94906eefb3773ca321050f309553543ab26f0db23c410e30f",
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so": "8af118e5519db7ef6001010a2d547707c5d47630412e80abfc3f343bfef987c9",
+        "/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+        "/home/riscv/riscv-lab/t12-regression-20261013/runs/t11-matrix-canonical/build-1/vdot-exceptions.bin": "00329be8408c06da9511a5557bf9aab9239e4dce6b1d65fec6bee7734bea5b88"
+      },
+      "negative_target": null,
+      "cwd": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/fullcore-run-01/runs/functional-1/cwd",
+      "auxiliary_files": {
+        "constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+        "plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff"
+      },
+      "environment_overrides": {
+        "XS_NEGATIVE_VECTOR_TARGET": null
+      },
+      "process_started": true,
+      "pid": 4119,
+      "pid_kind": "timeout process-group leader",
+      "actual_new_execution": true,
+      "performance_measured": false,
+      "exit_code": 0
+    },
+    "functional-2": {
+      "name": "functional-2",
+      "started": "2026-10-24T01:52:04.690400+00:00",
+      "command": [
+        "timeout",
+        "120m",
+        "stdbuf",
+        "-o0",
+        "-e0",
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu",
+        "-i",
+        "/home/riscv/riscv-lab/t12-regression-20261013/runs/t11-matrix-canonical/build-2/vdot-exceptions.bin",
+        "--flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+        "--ram-size=128MB",
+        "--diff=/home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so",
+        "--max-cycles=5000000"
+      ],
+      "files": {
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu": "ff840528eb1009e94906eefb3773ca321050f309553543ab26f0db23c410e30f",
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so": "8af118e5519db7ef6001010a2d547707c5d47630412e80abfc3f343bfef987c9",
+        "/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+        "/home/riscv/riscv-lab/t12-regression-20261013/runs/t11-matrix-canonical/build-2/vdot-exceptions.bin": "a5e6663a9e2cb7348a3bcd2f719ba802c7d5af173f371e9278ec2435a8478923"
+      },
+      "negative_target": null,
+      "cwd": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/fullcore-run-01/runs/functional-2/cwd",
+      "auxiliary_files": {
+        "constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+        "plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff"
+      },
+      "environment_overrides": {
+        "XS_NEGATIVE_VECTOR_TARGET": null
+      },
+      "process_started": true,
+      "pid": 4122,
+      "pid_kind": "timeout process-group leader",
+      "actual_new_execution": true,
+      "performance_measured": false,
+      "exit_code": 0
+    },
+    "functional-3": {
+      "name": "functional-3",
+      "started": "2026-10-24T02:03:52.202769+00:00",
+      "command": [
+        "timeout",
+        "120m",
+        "stdbuf",
+        "-o0",
+        "-e0",
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu",
+        "-i",
+        "/home/riscv/riscv-lab/t12-regression-20261013/runs/t11-matrix-canonical/build-3/vdot-exceptions.bin",
+        "--flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+        "--ram-size=128MB",
+        "--diff=/home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so",
+        "--max-cycles=5000000"
+      ],
+      "files": {
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu": "ff840528eb1009e94906eefb3773ca321050f309553543ab26f0db23c410e30f",
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so": "8af118e5519db7ef6001010a2d547707c5d47630412e80abfc3f343bfef987c9",
+        "/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+        "/home/riscv/riscv-lab/t12-regression-20261013/runs/t11-matrix-canonical/build-3/vdot-exceptions.bin": "fd877e6cad537b709984101efd1f56ad1e783cd1740a51e699244c85e73e2f98"
+      },
+      "negative_target": null,
+      "cwd": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/fullcore-run-01/runs/functional-3/cwd",
+      "auxiliary_files": {
+        "constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+        "plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff"
+      },
+      "environment_overrides": {
+        "XS_NEGATIVE_VECTOR_TARGET": null
+      },
+      "process_started": true,
+      "pid": 5092,
+      "pid_kind": "timeout process-group leader",
+      "actual_new_execution": true,
+      "performance_measured": false,
+      "exit_code": 0
+    },
+    "functional-4": {
+      "name": "functional-4",
+      "started": "2026-10-24T02:03:54.459451+00:00",
+      "command": [
+        "timeout",
+        "120m",
+        "stdbuf",
+        "-o0",
+        "-e0",
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu",
+        "-i",
+        "/home/riscv/riscv-lab/t12-regression-20261013/runs/t11-matrix-canonical/build-4/vdot-exceptions.bin",
+        "--flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+        "--ram-size=128MB",
+        "--diff=/home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so",
+        "--max-cycles=5000000"
+      ],
+      "files": {
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu": "ff840528eb1009e94906eefb3773ca321050f309553543ab26f0db23c410e30f",
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so": "8af118e5519db7ef6001010a2d547707c5d47630412e80abfc3f343bfef987c9",
+        "/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+        "/home/riscv/riscv-lab/t12-regression-20261013/runs/t11-matrix-canonical/build-4/vdot-exceptions.bin": "7e7904987ba2dedb488b9db0a0d27a9d5a234d31d34be56ac5dfe33196a303dc"
+      },
+      "negative_target": null,
+      "cwd": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/fullcore-run-01/runs/functional-4/cwd",
+      "auxiliary_files": {
+        "constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+        "plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff"
+      },
+      "environment_overrides": {
+        "XS_NEGATIVE_VECTOR_TARGET": null
+      },
+      "process_started": true,
+      "pid": 5097,
+      "pid_kind": "timeout process-group leader",
+      "actual_new_execution": true,
+      "performance_measured": false,
+      "exit_code": 0
+    },
+    "functional-5": {
+      "name": "functional-5",
+      "started": "2026-10-24T02:08:11.121624+00:00",
+      "command": [
+        "timeout",
+        "120m",
+        "stdbuf",
+        "-o0",
+        "-e0",
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu",
+        "-i",
+        "/home/riscv/riscv-lab/t12-regression-20261013/runs/t11-matrix-canonical/build-5/vdot-exceptions.bin",
+        "--flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+        "--ram-size=128MB",
+        "--diff=/home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so",
+        "--max-cycles=5000000"
+      ],
+      "files": {
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu": "ff840528eb1009e94906eefb3773ca321050f309553543ab26f0db23c410e30f",
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so": "8af118e5519db7ef6001010a2d547707c5d47630412e80abfc3f343bfef987c9",
+        "/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+        "/home/riscv/riscv-lab/t12-regression-20261013/runs/t11-matrix-canonical/build-5/vdot-exceptions.bin": "1b86f711b441e10c219c0c5a4be43f7d679a108e9fa48a06bb6971aa3b09449b"
+      },
+      "negative_target": null,
+      "cwd": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/fullcore-run-01/runs/functional-5/cwd",
+      "auxiliary_files": {
+        "constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+        "plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff"
+      },
+      "environment_overrides": {
+        "XS_NEGATIVE_VECTOR_TARGET": null
+      },
+      "process_started": true,
+      "pid": 7896,
+      "pid_kind": "timeout process-group leader",
+      "actual_new_execution": true,
+      "performance_measured": false,
+      "exit_code": 0
+    },
+    "functional-6": {
+      "name": "functional-6",
+      "started": "2026-10-24T02:15:25.444074+00:00",
+      "command": [
+        "timeout",
+        "120m",
+        "stdbuf",
+        "-o0",
+        "-e0",
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu",
+        "-i",
+        "/home/riscv/riscv-lab/t12-regression-20261013/runs/t11-matrix-canonical/build-6/vdot-exceptions.bin",
+        "--flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+        "--ram-size=128MB",
+        "--diff=/home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so",
+        "--max-cycles=5000000"
+      ],
+      "files": {
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu": "ff840528eb1009e94906eefb3773ca321050f309553543ab26f0db23c410e30f",
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so": "8af118e5519db7ef6001010a2d547707c5d47630412e80abfc3f343bfef987c9",
+        "/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+        "/home/riscv/riscv-lab/t12-regression-20261013/runs/t11-matrix-canonical/build-6/vdot-exceptions.bin": "b91c6aa3e3bfba647c94073a52a2ff2e60d92707b361c87643a68d71b9c0d538"
+      },
+      "negative_target": null,
+      "cwd": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/fullcore-run-01/runs/functional-6/cwd",
+      "auxiliary_files": {
+        "constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+        "plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff"
+      },
+      "environment_overrides": {
+        "XS_NEGATIVE_VECTOR_TARGET": null
+      },
+      "process_started": true,
+      "pid": 7951,
+      "pid_kind": "timeout process-group leader",
+      "actual_new_execution": true,
+      "performance_measured": false,
+      "exit_code": 0
+    },
+    "functional-7": {
+      "name": "functional-7",
+      "started": "2026-10-24T02:15:27.998938+00:00",
+      "command": [
+        "timeout",
+        "120m",
+        "stdbuf",
+        "-o0",
+        "-e0",
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu",
+        "-i",
+        "/home/riscv/riscv-lab/t12-regression-20261013/runs/t11-matrix-canonical/build-7/vdot-exceptions.bin",
+        "--flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+        "--ram-size=128MB",
+        "--diff=/home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so",
+        "--max-cycles=5000000"
+      ],
+      "files": {
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu": "ff840528eb1009e94906eefb3773ca321050f309553543ab26f0db23c410e30f",
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so": "8af118e5519db7ef6001010a2d547707c5d47630412e80abfc3f343bfef987c9",
+        "/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+        "/home/riscv/riscv-lab/t12-regression-20261013/runs/t11-matrix-canonical/build-7/vdot-exceptions.bin": "66589580f960d5cd484812d2908ed676fc569a021fff809d76a7a35fd499755b"
+      },
+      "negative_target": null,
+      "cwd": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/fullcore-run-01/runs/functional-7/cwd",
+      "auxiliary_files": {
+        "constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+        "plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff"
+      },
+      "environment_overrides": {
+        "XS_NEGATIVE_VECTOR_TARGET": null
+      },
+      "process_started": true,
+      "pid": 7956,
+      "pid_kind": "timeout process-group leader",
+      "actual_new_execution": true,
+      "performance_measured": false,
+      "exit_code": 0
+    },
+    "hello-vadd": {
+      "name": "hello-vadd",
+      "started": "2026-10-24T01:51:23.973685+00:00",
+      "command": [
+        "timeout",
+        "120m",
+        "stdbuf",
+        "-o0",
+        "-e0",
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu",
+        "-i",
+        "/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/hello-vadd-riscv64-xs.bin",
+        "--flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+        "--ram-size=128MB",
+        "--diff=/home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so",
+        "--max-cycles=5000000"
+      ],
+      "files": {
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu": "ff840528eb1009e94906eefb3773ca321050f309553543ab26f0db23c410e30f",
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so": "8af118e5519db7ef6001010a2d547707c5d47630412e80abfc3f343bfef987c9",
+        "/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+        "/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/hello-vadd-riscv64-xs.bin": "45d47558d3be5909aec37a4a2e1f51111a6019000dd58fe915f3a19390e5c33f"
+      },
+      "negative_target": null,
+      "cwd": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/fullcore-run-01/runs/hello-vadd/cwd",
+      "auxiliary_files": {
+        "constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+        "plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff"
+      },
+      "environment_overrides": {
+        "XS_NEGATIVE_VECTOR_TARGET": null
+      },
+      "process_started": true,
+      "pid": 4111,
+      "pid_kind": "timeout process-group leader",
+      "actual_new_execution": true,
+      "performance_measured": false,
+      "exit_code": 0
+    },
+    "negative-vdot": {
+      "name": "negative-vdot",
+      "started": "2026-10-24T01:52:04.689878+00:00",
+      "command": [
+        "timeout",
+        "120m",
+        "stdbuf",
+        "-o0",
+        "-e0",
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu",
+        "-i",
+        "/home/riscv/riscv-lab/t12-regression-20261013/runs/t11-matrix-canonical/build-0/vdot-exceptions.bin",
+        "--flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+        "--ram-size=128MB",
+        "--diff=/home/lizufan/riscv-lab/t17-clean-20261024-0854/fullcore-run-01/negative-fixture/negative-reference.so",
+        "--max-cycles=5000000"
+      ],
+      "files": {
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu": "ff840528eb1009e94906eefb3773ca321050f309553543ab26f0db23c410e30f",
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so": "8af118e5519db7ef6001010a2d547707c5d47630412e80abfc3f343bfef987c9",
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/fullcore-run-01/negative-fixture/negative-reference.so": "c70b0ad5b5a71032e96c3d32bfcdb3e17512eb8617ae85d201bf3fb6a85732e6",
+        "/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+        "/home/riscv/riscv-lab/t12-regression-20261013/runs/t11-matrix-canonical/build-0/vdot-exceptions.bin": "b8b7e1a7032070bdfdfc2a747ab6453011ea9959ebd5ac52ca21b439d4d113b3"
+      },
+      "negative_target": "vdot",
+      "cwd": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/fullcore-run-01/runs/negative-vdot/cwd",
+      "auxiliary_files": {
+        "constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+        "plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff"
+      },
+      "environment_overrides": {
+        "XS_NEGATIVE_VECTOR_TARGET": "vdot"
+      },
+      "process_started": true,
+      "pid": 4121,
+      "pid_kind": "timeout process-group leader",
+      "actual_new_execution": true,
+      "performance_measured": false,
+      "exit_code": 1
+    },
+    "o2-control-diagnostic": {
+      "name": "o2-control-diagnostic",
+      "started": "2026-10-24T02:26:42.418439+00:00",
+      "command": [
+        "timeout",
+        "120m",
+        "stdbuf",
+        "-o0",
+        "-e0",
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu",
+        "-i",
+        "/home/riscv/riscv-lab/o2-fullcore-20261019/control-diagnostic-build-04/o2-control.bin",
+        "--flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+        "--ram-size=128MB",
+        "--diff=/home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so",
+        "--max-cycles=5000000"
+      ],
+      "files": {
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu": "ff840528eb1009e94906eefb3773ca321050f309553543ab26f0db23c410e30f",
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so": "8af118e5519db7ef6001010a2d547707c5d47630412e80abfc3f343bfef987c9",
+        "/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+        "/home/riscv/riscv-lab/o2-fullcore-20261019/control-diagnostic-build-04/o2-control.bin": "45cdf2a6cb6848b3bcb56d860c36bc26a975a8aa96bfe1411d33dce6036bd305"
+      },
+      "negative_target": null,
+      "cwd": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/fullcore-run-01/runs/o2-control-diagnostic/cwd",
+      "auxiliary_files": {
+        "constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+        "plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff"
+      },
+      "environment_overrides": {
+        "XS_NEGATIVE_VECTOR_TARGET": null
+      },
+      "process_started": true,
+      "pid": 8370,
+      "pid_kind": "timeout process-group leader",
+      "actual_new_execution": true,
+      "performance_measured": false,
+      "exit_code": 0
+    },
+    "o2-diagnostic": {
+      "name": "o2-diagnostic",
+      "started": "2026-10-24T02:26:12.804269+00:00",
+      "command": [
+        "timeout",
+        "120m",
+        "stdbuf",
+        "-o0",
+        "-e0",
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu",
+        "-i",
+        "/home/riscv/riscv-lab/o2-fullcore-20261019/diagnostic-build-03/o2-diag.bin",
+        "--flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+        "--ram-size=128MB",
+        "--diff=/home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so",
+        "--max-cycles=5000000"
+      ],
+      "files": {
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu": "ff840528eb1009e94906eefb3773ca321050f309553543ab26f0db23c410e30f",
+        "/home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so": "8af118e5519db7ef6001010a2d547707c5d47630412e80abfc3f343bfef987c9",
+        "/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+        "/home/riscv/riscv-lab/o2-fullcore-20261019/diagnostic-build-03/o2-diag.bin": "56915e3aaca02e02597c207de07ac18352ab53b6d06c4cb92a18fcddea1da4d4"
+      },
+      "negative_target": null,
+      "cwd": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/fullcore-run-01/runs/o2-diagnostic/cwd",
+      "auxiliary_files": {
+        "constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+        "plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff"
+      },
+      "environment_overrides": {
+        "XS_NEGATIVE_VECTOR_TARGET": null
+      },
+      "process_started": true,
+      "pid": 8362,
+      "pid_kind": "timeout process-group leader",
+      "actual_new_execution": true,
+      "performance_measured": false,
+      "exit_code": 0
+    }
+  }
+}

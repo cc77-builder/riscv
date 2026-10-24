@@ -1,0 +1,798 @@
+{
+  "status": "T17_CLEAN_REPRODUCTION_PASS",
+  "contract": "t17-clean-build-v1",
+  "scope": "Same-host Agent clean-source rebuild and new-identity execution under CLEAN_CONTRACT.md; derived binding of completed independent audits.",
+  "created_utc": "2026-10-24T04:06:13.006622+00:00",
+  "summary_source_sha256": "e280691b4df6d7f7fc89abb65bfb345f91c485f2c1efecc43c1de3ce23d1f7a3",
+  "identity_sha256": "4a89872d0463163ea0be83f680843352e01354043f5709509d822353221258eb",
+  "emu_sha256": "ff840528eb1009e94906eefb3773ca321050f309553543ab26f0db23c410e30f",
+  "reference_sha256": "8af118e5519db7ef6001010a2d547707c5d47630412e80abfc3f343bfef987c9",
+  "source_commit": "34bae6d4acceac939f958199dae53c14bc1f6183",
+  "new_execution_counts": {
+    "fullcore": 14,
+    "ordinary_c": 3,
+    "matrix": 33,
+    "total": 50,
+    "complete_normal": 47,
+    "expected_negative": 3
+  },
+  "audit_new_emu_runs": 0,
+  "fullcore": {
+    "unique_cases": 117,
+    "case_executions": 124,
+    "o2_coverage": {
+      "required": [
+        "MULTI_INFLIGHT",
+        "TRIPLE_OVERLAP",
+        "FULL_STALL",
+        "KILL_P",
+        "KILL_R",
+        "PARTIAL_KILL"
+      ],
+      "sources": {
+        "MULTI_INFLIGHT": [
+          {
+            "name": "control",
+            "count": 284
+          },
+          {
+            "name": "dense-batch128",
+            "count": 668
+          },
+          {
+            "name": "o2-diagnostic",
+            "count": 893
+          },
+          {
+            "name": "o2-control-diagnostic",
+            "count": 984
+          }
+        ],
+        "TRIPLE_OVERLAP": [
+          {
+            "name": "control",
+            "count": 57
+          },
+          {
+            "name": "dense-batch128",
+            "count": 564
+          },
+          {
+            "name": "o2-diagnostic",
+            "count": 768
+          },
+          {
+            "name": "o2-control-diagnostic",
+            "count": 744
+          }
+        ],
+        "FULL_STALL": [
+          {
+            "name": "control",
+            "count": 13
+          }
+        ],
+        "KILL_P": [
+          {
+            "name": "control",
+            "count": 3
+          },
+          {
+            "name": "dense-batch128",
+            "count": 6
+          },
+          {
+            "name": "o2-control-diagnostic",
+            "count": 28
+          }
+        ],
+        "KILL_R": [
+          {
+            "name": "control",
+            "count": 2
+          },
+          {
+            "name": "dense-batch128",
+            "count": 2
+          },
+          {
+            "name": "o2-control-diagnostic",
+            "count": 25
+          }
+        ],
+        "PARTIAL_KILL": [
+          {
+            "name": "o2-control-diagnostic",
+            "count": 1
+          }
+        ]
+      },
+      "complete": true,
+      "missing": []
+    }
+  },
+  "ordinary_c": {
+    "public_functions": 16,
+    "distinct_cases": 48,
+    "normal_case_executions": 96
+  },
+  "performance": {
+    "formal_windows": 384,
+    "all_window_replay_comparisons": 192,
+    "scope": "Fixed GEMV benchmark invocation endtoend windows",
+    "rows": [
+      {
+        "shard": 1,
+        "shape": [
+          4,
+          8
+        ],
+        "datasets": [
+          0,
+          1,
+          2
+        ],
+        "scope": "endtoend-with-c-abi-call",
+        "candidates": [
+          {
+            "variant": "s0",
+            "software": "basic",
+            "method": "vdot",
+            "samples": 12,
+            "total": 2598,
+            "mean": 216.5,
+            "minimum": 214,
+            "maximum": 219,
+            "instructions": [
+              80
+            ]
+          },
+          {
+            "variant": "s0",
+            "software": "basic",
+            "method": "rvv",
+            "samples": 12,
+            "total": 3939,
+            "mean": 328.25,
+            "minimum": 328,
+            "maximum": 329,
+            "instructions": [
+              96
+            ]
+          },
+          {
+            "variant": "s0",
+            "software": "reuse",
+            "method": "vdot",
+            "samples": 12,
+            "total": 2142,
+            "mean": 178.5,
+            "minimum": 178,
+            "maximum": 179,
+            "instructions": [
+              66
+            ]
+          },
+          {
+            "variant": "s0",
+            "software": "reuse",
+            "method": "rvv",
+            "samples": 12,
+            "total": 2448,
+            "mean": 204,
+            "minimum": 202,
+            "maximum": 206,
+            "instructions": [
+              76
+            ]
+          },
+          {
+            "variant": "s1",
+            "software": "basic",
+            "method": "vdot",
+            "samples": 12,
+            "total": 2481,
+            "mean": 206.75,
+            "minimum": 204,
+            "maximum": 209,
+            "instructions": [
+              68
+            ]
+          },
+          {
+            "variant": "s1",
+            "software": "basic",
+            "method": "rvv",
+            "samples": 12,
+            "total": 2703,
+            "mean": 225.25,
+            "minimum": 225,
+            "maximum": 226,
+            "instructions": [
+              68
+            ]
+          },
+          {
+            "variant": "s1",
+            "software": "reuse",
+            "method": "vdot",
+            "samples": 12,
+            "total": 2037,
+            "mean": 169.75,
+            "minimum": 169,
+            "maximum": 170,
+            "instructions": [
+              54
+            ]
+          },
+          {
+            "variant": "s1",
+            "software": "reuse",
+            "method": "rvv",
+            "samples": 12,
+            "total": 2250,
+            "mean": 187.5,
+            "minimum": 184,
+            "maximum": 190,
+            "instructions": [
+              54
+            ]
+          }
+        ],
+        "fastest_rvv": {
+          "variant": "s1",
+          "software": "reuse",
+          "method": "rvv",
+          "samples": 12,
+          "total": 2250,
+          "mean": 187.5,
+          "minimum": 184,
+          "maximum": 190,
+          "instructions": [
+            54
+          ]
+        },
+        "s1_reuse_vdot": {
+          "variant": "s1",
+          "software": "reuse",
+          "method": "vdot",
+          "samples": 12,
+          "total": 2037,
+          "mean": 169.75,
+          "minimum": 169,
+          "maximum": 170,
+          "instructions": [
+            54
+          ]
+        },
+        "fastest_rvv_over_s1_reuse": 1.1045655375552283,
+        "s1_reuse_beats_fastest_rvv": true
+      },
+      {
+        "shard": 3,
+        "shape": [
+          8,
+          32
+        ],
+        "datasets": [
+          0,
+          1,
+          2
+        ],
+        "scope": "endtoend-with-c-abi-call",
+        "candidates": [
+          {
+            "variant": "s0",
+            "software": "basic",
+            "method": "vdot",
+            "samples": 12,
+            "total": 7905,
+            "mean": 658.75,
+            "minimum": 656,
+            "maximum": 661,
+            "instructions": [
+              356
+            ]
+          },
+          {
+            "variant": "s0",
+            "software": "basic",
+            "method": "rvv",
+            "samples": 12,
+            "total": 5871,
+            "mean": 489.25,
+            "minimum": 484,
+            "maximum": 492,
+            "instructions": [
+              276
+            ]
+          },
+          {
+            "variant": "s0",
+            "software": "reuse",
+            "method": "vdot",
+            "samples": 12,
+            "total": 4026,
+            "mean": 335.5,
+            "minimum": 334,
+            "maximum": 337,
+            "instructions": [
+              250
+            ]
+          },
+          {
+            "variant": "s0",
+            "software": "reuse",
+            "method": "rvv",
+            "samples": 12,
+            "total": 4128,
+            "mean": 344,
+            "minimum": 341,
+            "maximum": 347,
+            "instructions": [
+              196
+            ]
+          },
+          {
+            "variant": "s1",
+            "software": "basic",
+            "method": "vdot",
+            "samples": 12,
+            "total": 7782,
+            "mean": 648.5,
+            "minimum": 646,
+            "maximum": 651,
+            "instructions": [
+              308
+            ]
+          },
+          {
+            "variant": "s1",
+            "software": "basic",
+            "method": "rvv",
+            "samples": 12,
+            "total": 4272,
+            "mean": 356,
+            "minimum": 356,
+            "maximum": 356,
+            "instructions": [
+              180
+            ]
+          },
+          {
+            "variant": "s1",
+            "software": "reuse",
+            "method": "vdot",
+            "samples": 12,
+            "total": 3510,
+            "mean": 292.5,
+            "minimum": 291,
+            "maximum": 294,
+            "instructions": [
+              202
+            ]
+          },
+          {
+            "variant": "s1",
+            "software": "reuse",
+            "method": "rvv",
+            "samples": 12,
+            "total": 3609,
+            "mean": 300.75,
+            "minimum": 298,
+            "maximum": 303,
+            "instructions": [
+              124
+            ]
+          }
+        ],
+        "fastest_rvv": {
+          "variant": "s1",
+          "software": "reuse",
+          "method": "rvv",
+          "samples": 12,
+          "total": 3609,
+          "mean": 300.75,
+          "minimum": 298,
+          "maximum": 303,
+          "instructions": [
+            124
+          ]
+        },
+        "s1_reuse_vdot": {
+          "variant": "s1",
+          "software": "reuse",
+          "method": "vdot",
+          "samples": 12,
+          "total": 3510,
+          "mean": 292.5,
+          "minimum": 291,
+          "maximum": 294,
+          "instructions": [
+            202
+          ]
+        },
+        "fastest_rvv_over_s1_reuse": 1.028205128205128,
+        "s1_reuse_beats_fastest_rvv": true
+      },
+      {
+        "shard": 5,
+        "shape": [
+          16,
+          64
+        ],
+        "datasets": [
+          0,
+          1,
+          2
+        ],
+        "scope": "endtoend-with-c-abi-call",
+        "candidates": [
+          {
+            "variant": "s0",
+            "software": "basic",
+            "method": "vdot",
+            "samples": 12,
+            "total": 26715,
+            "mean": 2226.25,
+            "minimum": 2223,
+            "maximum": 2230,
+            "instructions": [
+              1268
+            ]
+          },
+          {
+            "variant": "s0",
+            "software": "basic",
+            "method": "rvv",
+            "samples": 12,
+            "total": 17526,
+            "mean": 1460.5,
+            "minimum": 1454,
+            "maximum": 1478,
+            "instructions": [
+              948
+            ]
+          },
+          {
+            "variant": "s0",
+            "software": "reuse",
+            "method": "vdot",
+            "samples": 12,
+            "total": 10320,
+            "mean": 860,
+            "minimum": 859,
+            "maximum": 861,
+            "instructions": [
+              832
+            ]
+          },
+          {
+            "variant": "s0",
+            "software": "reuse",
+            "method": "rvv",
+            "samples": 12,
+            "total": 10917,
+            "mean": 909.75,
+            "minimum": 906,
+            "maximum": 914,
+            "instructions": [
+              628
+            ]
+          },
+          {
+            "variant": "s1",
+            "software": "basic",
+            "method": "vdot",
+            "samples": 12,
+            "total": 26598,
+            "mean": 2216.5,
+            "minimum": 2214,
+            "maximum": 2219,
+            "instructions": [
+              1108
+            ]
+          },
+          {
+            "variant": "s1",
+            "software": "basic",
+            "method": "rvv",
+            "samples": 12,
+            "total": 11901,
+            "mean": 991.75,
+            "minimum": 991,
+            "maximum": 993,
+            "instructions": [
+              596
+            ]
+          },
+          {
+            "variant": "s1",
+            "software": "reuse",
+            "method": "vdot",
+            "samples": 12,
+            "total": 8607,
+            "mean": 717.25,
+            "minimum": 714,
+            "maximum": 720,
+            "instructions": [
+              672
+            ]
+          },
+          {
+            "variant": "s1",
+            "software": "reuse",
+            "method": "rvv",
+            "samples": 12,
+            "total": 9354,
+            "mean": 779.5,
+            "minimum": 777,
+            "maximum": 783,
+            "instructions": [
+              372
+            ]
+          }
+        ],
+        "fastest_rvv": {
+          "variant": "s1",
+          "software": "reuse",
+          "method": "rvv",
+          "samples": 12,
+          "total": 9354,
+          "mean": 779.5,
+          "minimum": 777,
+          "maximum": 783,
+          "instructions": [
+            372
+          ]
+        },
+        "s1_reuse_vdot": {
+          "variant": "s1",
+          "software": "reuse",
+          "method": "vdot",
+          "samples": 12,
+          "total": 8607,
+          "mean": 717.25,
+          "minimum": 714,
+          "maximum": 720,
+          "instructions": [
+            672
+          ]
+        },
+        "fastest_rvv_over_s1_reuse": 1.0867898222377135,
+        "s1_reuse_beats_fastest_rvv": true
+      },
+      {
+        "shard": 7,
+        "shape": [
+          4,
+          13
+        ],
+        "datasets": [
+          0,
+          1,
+          2
+        ],
+        "scope": "endtoend-with-c-abi-call",
+        "candidates": [
+          {
+            "variant": "s0",
+            "software": "basic",
+            "method": "vdot",
+            "samples": 12,
+            "total": 3006,
+            "mean": 250.5,
+            "minimum": 248,
+            "maximum": 253,
+            "instructions": [
+              160
+            ]
+          },
+          {
+            "variant": "s0",
+            "software": "basic",
+            "method": "rvv",
+            "samples": 12,
+            "total": 3993,
+            "mean": 332.75,
+            "minimum": 332,
+            "maximum": 333,
+            "instructions": [
+              96
+            ]
+          },
+          {
+            "variant": "s0",
+            "software": "reuse",
+            "method": "vdot",
+            "samples": 12,
+            "total": 2631,
+            "mean": 219.25,
+            "minimum": 219,
+            "maximum": 220,
+            "instructions": [
+              131
+            ]
+          },
+          {
+            "variant": "s0",
+            "software": "reuse",
+            "method": "rvv",
+            "samples": 12,
+            "total": 2448,
+            "mean": 204,
+            "minimum": 201,
+            "maximum": 207,
+            "instructions": [
+              76
+            ]
+          },
+          {
+            "variant": "s1",
+            "software": "basic",
+            "method": "vdot",
+            "samples": 12,
+            "total": 3048,
+            "mean": 254,
+            "minimum": 251,
+            "maximum": 257,
+            "instructions": [
+              168
+            ]
+          },
+          {
+            "variant": "s1",
+            "software": "basic",
+            "method": "rvv",
+            "samples": 12,
+            "total": 2760,
+            "mean": 230,
+            "minimum": 230,
+            "maximum": 230,
+            "instructions": [
+              68
+            ]
+          },
+          {
+            "variant": "s1",
+            "software": "reuse",
+            "method": "vdot",
+            "samples": 12,
+            "total": 2637,
+            "mean": 219.75,
+            "minimum": 219,
+            "maximum": 220,
+            "instructions": [
+              136
+            ]
+          },
+          {
+            "variant": "s1",
+            "software": "reuse",
+            "method": "rvv",
+            "samples": 12,
+            "total": 2244,
+            "mean": 187,
+            "minimum": 184,
+            "maximum": 189,
+            "instructions": [
+              54
+            ]
+          }
+        ],
+        "fastest_rvv": {
+          "variant": "s1",
+          "software": "reuse",
+          "method": "rvv",
+          "samples": 12,
+          "total": 2244,
+          "mean": 187,
+          "minimum": 184,
+          "maximum": 189,
+          "instructions": [
+            54
+          ]
+        },
+        "s1_reuse_vdot": {
+          "variant": "s1",
+          "software": "reuse",
+          "method": "vdot",
+          "samples": 12,
+          "total": 2637,
+          "mean": 219.75,
+          "minimum": 219,
+          "maximum": 220,
+          "instructions": [
+            136
+          ]
+        },
+        "fastest_rvv_over_s1_reuse": 0.850967007963595,
+        "s1_reuse_beats_fastest_rvv": false
+      }
+    ],
+    "resource_snapshot_scope": "Linux engineering build/simulator process names; not a machine-wide CPU profiler"
+  },
+  "archives": {
+    "fullcore": {
+      "files": 432,
+      "raw_bytes": 203184356,
+      "stored_bytes": 13066329,
+      "archive_manifest_sha256": "f6f45c7a99e3004d4e98b1a622a8b7c6f1e7c249f5a2fb47328a59d81c020719"
+    },
+    "matrix": {
+      "files": 1377,
+      "raw_bytes": 256971458,
+      "stored_bytes": 17752535,
+      "archive_manifest_sha256": "bc766760a098f5d775615a9ec8e383920914f502a10b480ccce1ad4b188092d7"
+    },
+    "ordinary_c": {
+      "files": 115,
+      "raw_bytes": 16928444,
+      "stored_bytes": 1111872,
+      "archive_manifest_sha256": "5a54192270903ae155fa5d372088169f0b4547cce5674863d3401dabda7cf0f1"
+    }
+  },
+  "detached_raw_audits": {
+    "fullcore": {
+      "report_sha256": "ff009446685db4e413dff7984a8a2c61370c571acb0c8f400f8ee199c6594ba5",
+      "auditor_output": {
+        "path": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/fullcore-detached-audit-01.json",
+        "sha256": "9459a762983bc2038f72531713f87b21ba3a3f83ea69b42256934e11533e784f"
+      },
+      "script_sha256": "20bebd4f5526a3522a09c2324e683d34b55997930c5078e89c3e5d04a6733412",
+      "launcher_sha256": "57f31bb70dafa3154dc22e09c635dde1f4c140405717d98053d781dc2ca43cd4",
+      "scope": "Python file/enumeration access and explicit subprocess arguments; not an OS sandbox or clean-machine installation"
+    },
+    "matrix": {
+      "report_sha256": "acf0123caf5acdf859f7e0202d68875b337f0804bb4e56218b54304789df1da3",
+      "auditor_output": {
+        "path": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/matrix-archive-audit-03.json",
+        "sha256": "81314df64d341ae0109716f539fdea1e5ee797bc9b88e6c23a52fe1af65a8b7e"
+      },
+      "script_sha256": "df1be9196293bb637d356c9bfe69a991130297e4f9f77e9ce95e02aa06a9b628",
+      "launcher_sha256": "57f31bb70dafa3154dc22e09c635dde1f4c140405717d98053d781dc2ca43cd4",
+      "scope": "Python file/enumeration access and explicit subprocess arguments; not an OS sandbox or clean-machine installation"
+    },
+    "ordinary_c": {
+      "report_sha256": "46e910f50d0fb5eaa0e1e202164c0cefbcd4c107faf27bd0163281b3af401093",
+      "auditor_output": {
+        "path": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/c-archive-audit-02.json",
+        "sha256": "d89d26751c2434e33b15f99e4c5f8fed7e54c9cad6dea5f51d3b93bb842f0c94"
+      },
+      "script_sha256": "df1be9196293bb637d356c9bfe69a991130297e4f9f77e9ce95e02aa06a9b628",
+      "launcher_sha256": "57f31bb70dafa3154dc22e09c635dde1f4c140405717d98053d781dc2ca43cd4",
+      "scope": "Python file/enumeration access and explicit subprocess arguments; not an OS sandbox or clean-machine installation"
+    }
+  },
+  "transport_contract": "t17-portable-entry-v2",
+  "transport_source_sha256": "df1be9196293bb637d356c9bfe69a991130297e4f9f77e9ce95e02aa06a9b628",
+  "input_sha256": {
+    "identity-02.json": "4a89872d0463163ea0be83f680843352e01354043f5709509d822353221258eb",
+    "fullcore-run-01/results.json": "9f43f2910ee93847f04fcabee02f75d690f0bffcc0fd4b1f6df1683430542231",
+    "fullcore-run-01/state.json": "c3f1faf2952be5e0ef128ff2705a6f07ec44dff64b3b13733c03d8868c4850cb",
+    "fullcore-audit-01/results.json": "1ae7451cb4f5c8d615be5edfea36d8793578b12f0f821da2b3a5b6cd77859b0a",
+    "fullcore-detached-audit-01.json": "9459a762983bc2038f72531713f87b21ba3a3f83ea69b42256934e11533e784f",
+    "c-run-01/t17-result.json": "ec42ed53a968df51d43f37a4b7f8f18f609df30abbdeae0828e4b35901a1cb0e",
+    "matrix-run-01/t17-result.json": "ec9b335b2dfbc3659e40fcbd2322b82bff06c450bc799822c9687eb9dd534457",
+    "c-audit-01.json": "6d83a2c1253d073457257bf8208c62dabe69b73a2ba8052a6b7b83429718ae7c",
+    "c-archive-audit-02.json": "d89d26751c2434e33b15f99e4c5f8fed7e54c9cad6dea5f51d3b93bb842f0c94",
+    "matrix-archive-audit-03.json": "81314df64d341ae0109716f539fdea1e5ee797bc9b88e6c23a52fe1af65a8b7e",
+    "c-run-01/state.json": "c135ef48e66a7a37f9b83850391e70458449d8df80e049c35d9c11bf18d80116",
+    "matrix-run-01/state.json": "eabf79f996c347374caeca52347c38f37087c23451e3e1a1f8ef5cdf529b2d9b",
+    "fullcore-archive-01/archive-manifest.json": "f6f45c7a99e3004d4e98b1a622a8b7c6f1e7c249f5a2fb47328a59d81c020719",
+    "matrix-archive-03/archive-manifest.json": "bc766760a098f5d775615a9ec8e383920914f502a10b480ccce1ad4b188092d7",
+    "c-archive-02/archive-manifest.json": "5a54192270903ae155fa5d372088169f0b4547cce5674863d3401dabda7cf0f1",
+    "support-proof.json": "9a7469aa5b452fb67e1b0d39574a71c771f0c9f2af0d120ff3bb0d4a7e29e0e7",
+    "fullcore-detached-guard-01.json": "ff009446685db4e413dff7984a8a2c61370c571acb0c8f400f8ee199c6594ba5",
+    "matrix-detached-guard-03.json": "acf0123caf5acdf859f7e0202d68875b337f0804bb4e56218b54304789df1da3",
+    "c-detached-guard-02.json": "46e910f50d0fb5eaa0e1e202164c0cefbcd4c107faf27bd0163281b3af401093",
+    "reproduction-comparison.json": "855fed55cb3f429e32e28371dac72f60cd82c9d2a656306c71d6d6e2c670d8e5",
+    "performance-resource-before.json": "5b947828d3a9a286fbc3d953366a5cb1a4d36a0addaec55b5c96c18d4536dab5",
+    "performance-resource-after.json": "aeb73af02b9c2855b176b7eb8dffe1dc07ab44f1393af6b7188b22dbd72c1903"
+  },
+  "human_ack": false,
+  "new_machine_installation_qualified": false,
+  "historical_runtime_pass_inherited": false,
+  "all_contest_requirements_accepted": false,
+  "publication_and_git_index_verification": "separate required delivery checks"
+}

@@ -1,0 +1,34 @@
+{
+  "expires_at": "2026-11-23T04:13:02.796563Z",
+  "kind": "shell",
+  "operation_id": "1bcd341bbd2162e3d9e297ccd2678ca0.28df5497a1cf35e3119255592355cad4",
+  "shell": {
+    "code": "nonzero_exit",
+    "durable_logs": true,
+    "execution_environment": "windows_native",
+    "execution_sha256": "52cca3f5a5cafde97c034e1c6945878b70d6deab6f361e8cf7efa5bb9013de29",
+    "operation_id": "1bcd341bbd2162e3d9e297ccd2678ca0.28df5497a1cf35e3119255592355cad4",
+    "output_withheld": false,
+    "result": {
+      "cancelled": false,
+      "cleanup_complete": true,
+      "duration_ms": 6887,
+      "exit_code": 1,
+      "peak_job_commit_bytes": 111960064,
+      "peak_process_commit_bytes": 56459264,
+      "process_id": 345700,
+      "stderr": "warning: in the working copy of '开发计分板.md', LF will be replaced by CRLF the next time Git touches it\nTraceback (most recent call last):\r\n  File \"D:\\Projects\\competitions\\2026-10-CIE-RISCV-XiangShan\\working-t17-clean-20261024-0854\\team\\optimizations\\o2\\repro\\clean_portable_evidence.py\", line 204, in <module>\r\n    print(json.dumps(main(parser.parse_args()), indent=2))\r\n                     ~~~~^^^^^^^^^^^^^^^^^^^^^\r\n  File \"D:\\Projects\\competitions\\2026-10-CIE-RISCV-XiangShan\\working-t17-clean-20261024-0854\\team\\optimizations\\o2\\repro\\clean_portable_evidence.py\", line 170, in main\r\n    base.archive_identity(repo, archive, args.identity.resolve(), identity)\r\n    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\r\n  File \"D:\\Projects\\competitions\\2026-10-CIE-RISCV-XiangShan\\working-t17-clean-20261024-0854\\team\\optimizations\\o2\\repro\\clean_evidence.py\", line 149, in archive_identity\r\n    sealed = portable.Archive(archive)\r\n  File \"D:\\Projects\\competitions\\2026-10-CIE-RISCV-XiangShan\\working-t17-clean-20261024-0854\\team\\optimizations\\o2\\fullcore\\portable.py\", line 79, in __init__\r\n    self.raw(logical)\r\n    ~~~~~~~~^^^^^^^^^\r\n  File \"D:\\Projects\\competitions\\2026-10-CIE-RISCV-XiangShan\\working-t17-clean-20261024-0854\\team\\optimizations\\o2\\fullcore\\portable.py\", line 98, in raw\r\n    stored=p.read_bytes()\r\n  File \"D:\\Programs\\Python\\Python313\\Lib\\pathlib\\_abc.py\", line 625, in read_bytes\r\n    with self.open(mode='rb') as f:\r\n         ~~~~~~~~~^^^^^^^^^^^\r\n  File \"D:\\Programs\\Python\\Python313\\Lib\\pathlib\\_local.py\", line 537, in open\r\n    return io.open(self, mode, buffering, encoding, errors, newline)\r\n           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\r\nFileNotFoundError: [Errno 2] No such file or directory: 'D:\\\\Projects\\\\competitions\\\\2026-10-CIE-RISCV-XiangShan\\\\working-t17-clean-20261024-0854\\\\team\\\\optimizations\\\\o2\\\\repro\\\\evidence\\\\clean-reproduction-v1\\\\matrix-archive\\\\files\\\\builds\\\\matrix-build-01\\\\images\\\\performance-s0-d0-s01\\\\source\\\\repo\\\\team\\\\optimizations\\\\o2\\\\r2-safe-tail\\\\candidate.py.gz'\r\n",
+      "stderr_truncated": false,
+      "stdout": "{\r\n  \"status\": \"T17_FULLCORE_COMPLETE_GIT_INDEX_PASS\",\r\n  \"archive\": {\r\n    \"files\": 432,\r\n    \"raw_bytes\": 203184356,\r\n    \"stored_bytes\": 13066329,\r\n    \"archive_manifest_sha256\": \"f6f45c7a99e3004d4e98b1a622a8b7c6f1e7c249f5a2fb47328a59d81c020719\"\r\n  },\r\n  \"archive_files_in_git_index\": 434,\r\n  \"missing\": 0,\r\n  \"extra\": 0,\r\n  \"new_emu_runs\": 0\r\n}\r\n",
+      "stdout_truncated": false,
+      "timed_out": false,
+      "total_processes": 64
+    },
+    "script_sha256": "00d54a0c9b17bc6463a8938cd2343426bd31102605b860d86ccd43515e71a944",
+    "started_at": "2026-10-24T04:13:02.8413896Z",
+    "status": "failed",
+    "updated_at": "2026-10-24T04:13:09.8022084Z",
+    "worker_pid": 384988
+  },
+  "status": "failed"
+}
