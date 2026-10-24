@@ -1,6 +1,6 @@
 # 香山 vdot 工程开发路线：满足赛题技术要求，持续提高性能
 
-> James_Hotten 本地适用边界：已整合 bca14d45b，并完成其 S2 证据复算；当前 bc9e5ae 全核已完成 14 次真实运行和独立复核，核心／补充功能通过，G3 仅缺 PARTIAL_KILL。下一项是 MERGE-REG 的独立版本部分取消定向语料，不能重复原语料／种子或挪用 FU/父级覆盖；闭合后推进当前来源 R2-SELECT。详见[当前全核终态与接续](latest-integration-20261023.md#merge-reg-current-fullcore)。O1/O2 默认关闭，main及远端未更改。以下团队基点与历史结果仍保留原适用范围。
+> James_Hotten 本地适用边界：已整合 bca14d45b，前轮成果 b806ce9c9 已推送。当前 bc9e5ae 全核仍缺 PARTIAL_KILL；追加 seed=2 的两项补测通过，但严格轨迹仍为零部分取消，不继续无依据搜索种子。已抓取 zufan 新增六提交至 c9132b8d7，尚待相容审查与合并；其固定布局／强 RVV 报告已停止扩大 S2 采用，不能继续按旧 S2 数字推进。先审查整合这些成果及冻结合同，再结合本机取消时序诊断准备独立版本最小语料；上游 PASS 不转移到本机。详见[本轮诊断、实验与接续](latest-integration-20261023.md#partial-kill-probe-20261024)。O1/O2 默认关闭，main 未改。以下团队基点与历史结果仍保留原适用范围。
 
 更新：2026-10-23。核查源码基点：6d2abe403b07c297b8830a7d4f06e370b0a8e070，团队集成分支 cc77-builder/riscv:zufan。实时活动见[协作入口](collaboration-current.md)，每轮成果及路线变化见[开发计分板](../../开发计分板.md)。
 

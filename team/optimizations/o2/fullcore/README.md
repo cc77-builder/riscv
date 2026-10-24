@@ -1,5 +1,7 @@
 > H1整合构建：`--recipe`选择编译流程，`--profile observe|cost`独立选择观察开关，`--firtool-dir`显式目录进入严格工具合同。G3需observe；cost不能冒充覆盖验证。见[整合记录](../../../docs/h1-integration-20261021.md)。
 
+取消窗口诊断：`python3 -B team/optimizations/o2/fullcore/diagnose_kills.py /absolute/run.log --output /absolute/new-diagnosis.json`。先执行完整严格轨迹审计，再区分单槽取消、双槽同时取消和部分取消；按 ROB 的每次分配关联 PC、全宽期望值、响应／取消和退休，支持同周期退休后复用及回绕。输出必须不存在，也支持 `.gz` 原始日志。此工具不替代工作负载、DiffTest、硬件身份或 G3 验收；合成测试不计入硬件覆盖。
+
 > 当前基线已封存：G3 INCOMPLETE，仅缺PARTIAL_KILL。seed=1补测未改变该结论。见[最终记录](../../../docs/o5-current-fullcore-20261021.md)。下方执行中措辞为历史阶段。
 
 # 当前源码复验（2026-10-21）
