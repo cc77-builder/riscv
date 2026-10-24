@@ -1,0 +1,117 @@
+{
+  "status": "R4_LINKED_CALLABLE_AND_COMPILED_MODEL_PASS_NOT_DIFFTEST",
+  "kernels": [
+    {
+      "id": "gemv-4x13-endtoend-basic-vdot",
+      "api_symbol": "r4_gemv_4x13_basic_vdot",
+      "api_pc": 2147492580,
+      "api_sha256": "833ed563bfe6d37c82da682d0104e9c4ba991f0d1b7acd19c7f8a487af597be9",
+      "body_instructions": 154,
+      "invocation_instructions": 161,
+      "entry_overhead_instructions": 7,
+      "counts": {
+        "addi": 18,
+        "addw": 24,
+        "csrwi": 2,
+        "lb": 40,
+        "mulw": 20,
+        "vadd.vv": 4,
+        "vdot.vv": 4,
+        "vle8.v": 8,
+        "vmv.s.x": 4,
+        "vmv.v.i": 4,
+        "vmv.x.s": 4,
+        "vs1r.v": 4,
+        "vsetivli": 18
+      },
+      "semantics": {
+        "trials": 9,
+        "full128": true,
+        "bounded_reads": true,
+        "poisoned_initial_registers": true
+      }
+    },
+    {
+      "id": "gemv-4x13-endtoend-basic-rvv",
+      "api_symbol": "r4_gemv_4x13_basic_rvv",
+      "api_pc": 2147500772,
+      "api_sha256": "1c5acbe10427ce28bf36c8de45cf23d184661ef380adb8a44da4321e852722f3",
+      "body_instructions": 54,
+      "invocation_instructions": 61,
+      "entry_overhead_instructions": 7,
+      "counts": {
+        "addi": 14,
+        "csrwi": 2,
+        "vle8.v": 8,
+        "vmv.v.i": 4,
+        "vs1r.v": 4,
+        "vsetivli": 14,
+        "vwmul.vv": 4,
+        "vwredsum.vs": 4
+      },
+      "semantics": {
+        "trials": 9,
+        "full128": true,
+        "bounded_reads": true,
+        "poisoned_initial_registers": true
+      }
+    },
+    {
+      "id": "gemv-4x13-endtoend-reuse-vdot",
+      "api_symbol": "r4_gemv_4x13_reuse_vdot",
+      "api_pc": 2147508964,
+      "api_sha256": "f02983c42650fccdadd23a8463dd57b050dce467aefb6cb907b30aefa43fd7bd",
+      "body_instructions": 122,
+      "invocation_instructions": 129,
+      "entry_overhead_instructions": 7,
+      "counts": {
+        "addi": 15,
+        "addw": 24,
+        "csrwi": 2,
+        "lb": 25,
+        "mulw": 20,
+        "vadd.vv": 4,
+        "vdot.vv": 4,
+        "vle8.v": 5,
+        "vmv.s.x": 4,
+        "vmv.v.i": 4,
+        "vmv.x.s": 4,
+        "vs1r.v": 4,
+        "vsetivli": 7
+      },
+      "semantics": {
+        "trials": 9,
+        "full128": true,
+        "bounded_reads": true,
+        "poisoned_initial_registers": true
+      }
+    },
+    {
+      "id": "gemv-4x13-endtoend-reuse-rvv",
+      "api_symbol": "r4_gemv_4x13_reuse_rvv",
+      "api_pc": 2147517156,
+      "api_sha256": "ab8769ad4a5d514afc967087152fef342e51637532ba063426a0de4ae1d19572",
+      "body_instructions": 40,
+      "invocation_instructions": 47,
+      "entry_overhead_instructions": 7,
+      "counts": {
+        "addi": 11,
+        "csrwi": 2,
+        "vle8.v": 5,
+        "vmv.v.i": 4,
+        "vs1r.v": 4,
+        "vsetivli": 6,
+        "vwmul.vv": 4,
+        "vwredsum.vs": 4
+      },
+      "semantics": {
+        "trials": 9,
+        "full128": true,
+        "bounded_reads": true,
+        "poisoned_initial_registers": true
+      }
+    }
+  ],
+  "elf_sha256": "b262607af8d844886a3ba5448b2834287a982136694d3ca493bc3eed6990ff15",
+  "image_sha256": "ac8c7813729aa8df803b318494ffc49056af5b02972bb94245ef973d07a30933"
+}

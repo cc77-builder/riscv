@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/usr/bin/python3",
+    "-B",
+    "-c",
+    "from pathlib import Path; import unittest, fixed_evidence as fe; repo=Path('/mnt/d/Projects/competitions/2026-10-CIE-RISCV-XiangShan/working-r2s2-audit-20261024-0001'); old=fe.m.CONTRACT\nwith fe.l.bindings(repo):\n assert fe.m.CONTRACT==fe.l.CONTRACT\nassert fe.m.CONTRACT==old\nsuite=unittest.defaultTestLoader.loadTestsFromNames(['test_safe_tail', 'test_fullcore_screen', 'test_merged_screen', 'test_merged_evidence', 'test_merged_index', 'test_acceptance_config'])\nresult=unittest.TextTestRunner(verbosity=2).run(suite)\nraise SystemExit(0 if result.wasSuccessful() and not result.skipped else 1)"
+  ],
+  "cwd": "/mnt/d/Projects/competitions/2026-10-CIE-RISCV-XiangShan/working-r2s2-audit-20261024-0001/team/optimizations/o2/r2-safe-tail",
+  "started": "2026-10-23T16:43:13.708296+00:00",
+  "exit_code": 0,
+  "process_started": true,
+  "pid": 682,
+  "finished": "2026-10-23T16:43:15.827008+00:00",
+  "raw_sha256": {
+    "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr.log": "1140085021d19ac0ad87379368f6a474a712ce6168390a0f09caf7c38894d3c2"
+  }
+}

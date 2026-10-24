@@ -1,0 +1,109 @@
+{
+  "kind": "nexus-am-riscv64-xs",
+  "source_base": "24cb8b2e0fa0b17cad65c82246c572347a351d43",
+  "layout_contract": "r2-s2-8192-norelax-exact-metadata-v1",
+  "source_root": "/mnt/d/Projects/competitions/2026-10-CIE-RISCV-XiangShan/working-r2s2-fixed-20261024-0001",
+  "source_commit": "bca14d45b07ff07a86a7f54bce2b25870e60e2f3",
+  "selection": {
+    "suite": "performance",
+    "dataset": 1,
+    "shard": 5,
+    "variant": "s2"
+  },
+  "exit_code": 0,
+  "am_revision": "086a238062fdfb3281b745a537b361983d0154b5",
+  "external_files": {
+    "/home/lizufan/riscv-lab/r2-s2-fixed-20261024-0001/deps/nexus-am/am/build/am-riscv64-xs.a": "50443c3abb089f8d8e586d03cabb7770e5ac75738bbc1b44dc8b730ae3e67505",
+    "/home/lizufan/riscv-lab/r2-s2-fixed-20261024-0001/deps/nexus-am/libs/klib/build/klib-riscv64-xs.a": "eec19a2a8e55ac89331ad63fba29095f2f76e2fa207ef31c3baa41105eb4bc76"
+  },
+  "commands": [
+    {
+      "command": [
+        "/usr/bin/make",
+        "-C",
+        "/home/lizufan/riscv-lab/r2-s2-fixed-20261024-0001/build-02/images/performance-s2-d1-s05/source",
+        "ARCH=riscv64-xs",
+        "MARCH=rv64gcv",
+        "CROSS_COMPILE=/usr/bin/riscv64-linux-gnu-",
+        "T13_DATA=/home/lizufan/riscv-lab/r2-s2-fixed-20261024-0001/build-02/images/performance-s2-d1-s05/data",
+        "T13_OBJ_ROOT=/home/lizufan/riscv-lab/r2-s2-fixed-20261024-0001/build-02/images/performance-s2-d1-s05/objects",
+        "BINARY=/home/lizufan/riscv-lab/r2-s2-fixed-20261024-0001/build-02/images/performance-s2-d1-s05/vdot-perf",
+        "-o",
+        "am",
+        "-o",
+        "klib",
+        "-j1",
+        "image"
+      ],
+      "cwd": "/mnt/d/Projects/competitions/2026-10-CIE-RISCV-XiangShan/working-r2s2-fixed-20261024-0001",
+      "started": "2026-10-23T16:21:54.258083+00:00",
+      "exit_code": 0,
+      "process_started": true,
+      "pid": 1124,
+      "finished": "2026-10-23T16:21:54.372736+00:00",
+      "raw_sha256": {
+        "stdout.log": "fbb92d9d75e7604f852374e606a1d1457d33fa76a7918da78f3b8976178819b1",
+        "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/riscv64-linux-gnu-gcc",
+        "-march=rv64gcv",
+        "-mabi=lp64d",
+        "-mno-relax",
+        "-c",
+        "/home/lizufan/riscv-lab/r2-s2-fixed-20261024-0001/build-02/images/performance-s2-d1-s05/data/kernels.S",
+        "-o",
+        "/home/lizufan/riscv-lab/r2-s2-fixed-20261024-0001/build-02/images/performance-s2-d1-s05/kernels-reference.o"
+      ],
+      "cwd": "/mnt/d/Projects/competitions/2026-10-CIE-RISCV-XiangShan/working-r2s2-fixed-20261024-0001",
+      "started": "2026-10-23T16:21:54.374023+00:00",
+      "exit_code": 0,
+      "process_started": true,
+      "pid": 1159,
+      "finished": "2026-10-23T16:21:54.390486+00:00",
+      "raw_sha256": {
+        "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "artifacts": {
+    "vdot-perf.elf": "9f0e9b923fda331e7c3dc1c6ac44bdf9d2a3aae09815a19622303eb92bfa4a82",
+    "vdot-perf.bin": "1daf3e566674b5b5c9d5528e79b9c486c0391564607d9ede104f0ef1ef1d8cf0",
+    "kernels-reference.o": "6874a6db620b5a13797cd1e725d8eb5c814ccc70d3dc7d26da08e0aa8004e317",
+    "data/manifest.json": "ea2a7207ea586d1fe0e322100a8bd597a7ff0260335e064da82ec09482286e36"
+  },
+  "toolchain": {
+    "gcc": {
+      "path": "/usr/bin/riscv64-linux-gnu-gcc",
+      "sha256": "0c54895c55568be5b5fee49e2426abcc8fb05ca2c121ca5685dea2cbc24a1c13"
+    },
+    "ld": {
+      "path": "/usr/bin/riscv64-linux-gnu-ld",
+      "sha256": "59db886faf252e5e2fb2e5341fd57c24ddbd216197f69296321fef913e5b64ba"
+    },
+    "ar": {
+      "path": "/usr/bin/riscv64-linux-gnu-ar",
+      "sha256": "7985a5f5a10d03843aa7b296e1652bf5bd9fd5180839c7df9b49ef56738fcc74"
+    },
+    "objcopy": {
+      "path": "/usr/bin/riscv64-linux-gnu-objcopy",
+      "sha256": "48c1d507b5c7b89da9c81349738ee413a522c364a17d416bcfb91e2c8e785006"
+    },
+    "objdump": {
+      "path": "/usr/bin/riscv64-linux-gnu-objdump",
+      "sha256": "07a28885534079b220a44c7f787c0eecdd240fbe95c525b85e88cc7b88b70e82"
+    },
+    "readelf": {
+      "path": "/usr/bin/riscv64-linux-gnu-readelf",
+      "sha256": "2ee6c57f1efa53bda4a784afb82340b2d925383a8892c36df448028645af2d3f"
+    },
+    "make": {
+      "path": "/usr/bin/make",
+      "sha256": "92f646030615cd98490a68a94c0aefd87b552be3158b941c02e43b0bfdb576db"
+    }
+  },
+  "accepted": true
+}

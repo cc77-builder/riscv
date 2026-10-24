@@ -4,6 +4,21 @@
 
 2026-10-09 在个人电脑完成验证：Windows + WSL2，Ubuntu 22.04.5 x86_64，Ryzen 7 7840H（8 核 / 16 线程），物理内存约 27.7 GiB。WSL 内存上限 20 GB、swap 16 GB。本记录描述实际已验证环境，不代表所有电脑必须使用相同内存或用户名。
 
+## Windows/WSL 原生文件系统与工具分工（工程实践）
+
+此处是工程执行的默认选择，不改变任务包、验证合同或资源预算，也不把原生工具选择本身视为功能、性能或 T17 验收。
+
+| 源码／工作树和任务 | 默认执行位置 | 注意事项 |
+| --- | --- | --- |
+| Windows NTFS（如 `D:\...`）工作树上的 Git status/diff、完整索引检查、commit/push | **Windows 原生 Git**，直接使用 Windows 路径 | 避免经 `/mnt/d` 跨文件系统遍历大型 Git 工作树；发布仍遵守 Issue 短集成窗口、远端核对和快进规则 |
+| Linux/WSL 原生目录（如 `/home/...`）中的 Git | **Linux 原生 Git** | 不因“统一用 Windows Git”而倒置跨文件系统访问 |
+| Chisel/Scala、硬件生成、RISC-V 工具链编译、EMU/NEMU、波形／综合时序等重型任务 | **Linux/WSL 原生文件系统**，使用 Linux 工具 | 以当前工作包的固定工具和真实硬件／软件输入为准；受总体 CPU、内存和其他 Agent 的资源保护约束 |
+| Windows 工作树与 Linux 运行目录之间的源码、二进制及证据交换 | 独立检出或固定快照，并在目标环境核验 | 记录完整 HEAD、未提交差异／源码快照、外部依赖和关键文件 SHA-256；不可直接把另一个工作树的 PASS 当作本次 PASS |
+
+执行前先确认实际仓库根、工作树位置、分支、完整 HEAD、Git common-dir、未提交改动和正在使用的输入／输出；选择**与工作树所在文件系统一致**的 Git。需要 Linux 构建时在原生目录准备独立源码与输出，核对身份后执行已有合同；不要仅为省一次复制就反复扫描 Windows 挂载目录。回写报告、准备提交时由目标 Windows 工作树使用原生 Git 检查实际落盘字节与索引，必要时按实验合同核对 Linux 运行快照。多个 Agent 不共用可写工作树或 Git index，既有运行和冻结证据保持受保护。
+
+**来源与限制：** 2026-10-24 R4 调用入口发布前，一次从 WSL 跨到 Windows 工作树的最终检查在约 300 秒超时，确认未提交、无残留进程和索引锁后，使用 Windows 原生 Git 完成剩余检查与提交（[原始发布检查](../optimizations/o2/r2-select/evidence/entry-runtime-v1/publication-check.json)、[Issue 记录](https://github.com/cc77-builder/riscv/issues/2#issuecomment-6376672788)）。两次执行并非严格的同命令 A/B 基准，不能据此宣称任意 Git 操作有固定加速比例。若某任务实测另一种放置更合理，可保留证据后调整；正确性与可复现性优先。
+
 ## WSL 内存
 
 在 Windows 的 `%UserProfile%\.wslconfig` 中设置：

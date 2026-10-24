@@ -1,0 +1,32 @@
+{
+  "receipt": {
+    "code": "nonzero_exit",
+    "durable_logs": true,
+    "execution_environment": "windows_native",
+    "execution_sha256": "2292fa8a84fa362c4f5b99e9cd35fdfe1f6934ce3e157706721d3fdf064b23f1",
+    "operation_id": "716a6ee805ae260048ab831b3dbbd5fe.7e5beed9297e571b9c7b487ec5f5d400",
+    "output_withheld": false,
+    "result": {
+      "cancelled": false,
+      "cleanup_complete": true,
+      "duration_ms": 2040,
+      "exit_code": 1,
+      "peak_job_commit_bytes": 37687296,
+      "peak_process_commit_bytes": 28557312,
+      "process_id": 357808,
+      "stderr": "w\u0000s\u0000l\u0000:\u0000 \u0000�hKm0R \u0000l\u0000o\u0000c\u0000a\u0000l\u0000h\u0000o\u0000s\u0000t\u0000 \u0000�N\u0006tM�n\f�FO*g\\�P0R \u0000W\u0000S\u0000L\u0000\u00020N\u0000A\u0000T\u0000 \u0000!j\u000f_\u000bN�v \u0000W\u0000S\u0000L\u0000 \u0000\rN/e\u0001c \u0000l\u0000o\u0000c\u0000a\u0000l\u0000h\u0000o\u0000s\u0000t\u0000 \u0000�N\u0006t\u00020\r\u0000\n\u0000Traceback (most recent call last):\n  File \"<stdin>\", line 6, in <module>\n  File \"/mnt/d/Projects/competitions/2026-10-CIE-RISCV-XiangShan/working-r2s2-audit-20261024-0001/team/optimizations/o2/r2-safe-tail/rvv_probe_evidence.py\", line 30, in completed\n    g.require(state.get(\"contract\") == p.CONTRACT and state.get(\"status\") == p.PASS and\nAttributeError: 'PosixPath' object has no attribute 'get'\nProbe completion observation failed\r\n",
+      "stderr_truncated": false,
+      "stdout": "",
+      "stdout_truncated": false,
+      "timed_out": false,
+      "total_processes": 6
+    },
+    "script_sha256": "6359653ce79fa8a71d8f164745d5f5d6c1bb43b64643cb9408a9d2a82d99a8ed",
+    "started_at": "2026-10-23T17:34:05.0816099Z",
+    "status": "failed",
+    "updated_at": "2026-10-23T17:34:07.167965Z",
+    "worker_pid": 347608
+  },
+  "diagnosis": "Post-run inspection command passed a Path to completed(state), which expects parsed state. Failure occurred before output writing. Runtime campaign and evidence checker source unchanged.",
+  "recovery": "Parse run-01/state.json, call completed(state), then inspect. Do not restart EMU."
+}
