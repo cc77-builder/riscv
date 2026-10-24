@@ -1,3 +1,5 @@
+> 2026-10-24：本用户工作分支为zjhwork，已评审并本地整合zufan/c9132b8d（包含zjhwork2）；James_Hotten独立RTL修复暂缓。[分支进度、验证与接续](docs/branch-integration-20261024.md)。实际发布以远端回读为准。
+
 # 香山 vdot 团队工程入口
 
 本目录保存自定义向量点积的实现配套、测试、优化实验和交付证据。团队集成目标为 cc77-builder/riscv:zufan；各成员独立工作区并行开发，运行与发布按当前协作约定执行。
