@@ -54,6 +54,9 @@ def replay(out):
         suite.require(path in receipt['files'],'runtime input lacks pre-execution digest')
     verify_files(receipt['files'])
     for name,digest in receipt['artifacts'].items():suite.require(sha(out/name)==digest,'output artifact changed: '+name)
+    generated,_=generator.corpus()
+    for name,body in generated.items():
+        suite.require((out/'data'/name).read_bytes()==body.encode(),'generated corpus differs: '+name)
     raw=(out/'run/stderr.log').read_bytes()+(out/'run/stdout.log').read_bytes()
     suite.require(raw==(out/'run/run.log').read_bytes(),'raw streams differ from derived log')
     result=checker.check(raw,receipt['runtime']['exit_code'],json.loads((out/'data/manifest.json').read_text()),receipt['reference'])
@@ -126,6 +129,7 @@ def run(args):
         suite.verify_committed_drivers({p:h for p,h in files.items() if Path(p).is_relative_to(ROOT)},root=ROOT)
         data=generator.emit(out/'data');source=out/'source';source.mkdir()
         for name in ('main.c','Makefile'):shutil.copyfile(HERE/name,source/name)
+        for path in list((out/'data').iterdir())+list(source.iterdir()):files[str(path)]=sha(path)
         tools={name:shutil.which(name,path=str(args.tool_bin)+':/usr/bin:/bin') for name in
                ('make','riscv64-linux-gnu-gcc','riscv64-linux-gnu-objdump','riscv64-linux-gnu-nm',
                 'riscv64-linux-gnu-as','riscv64-linux-gnu-ld','riscv64-linux-gnu-ar','riscv64-linux-gnu-objcopy')}
