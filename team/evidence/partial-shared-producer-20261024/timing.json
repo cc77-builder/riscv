@@ -1,0 +1,634 @@
+{
+  "raw_sha256": "645855ce46c5774e22b1017c8da3e3b22acf187fcad08e0a8f2611bc5fb6b703",
+  "counts": {
+    "STATE": 415,
+    "VFEX4_ACCEPT": 136,
+    "VFEX4_WAIT": 0,
+    "VFEX4_REDIRECT": 50,
+    "ACCEPT": 120,
+    "MOVE": 120,
+    "RESPONSE": 115,
+    "STALL": 0,
+    "KILL": 5,
+    "DIV_ACCEPT": 16,
+    "DIV_KILL": 0,
+    "DIV_OUTPUT": 16,
+    "ENQUEUE": 120,
+    "COMMIT": 80,
+    "REDIRECT": 50,
+    "MULTI_INFLIGHT": 100,
+    "OVERLAP": 87,
+    "TRIPLE_OVERLAP": 87,
+    "FULL_STALL": 0,
+    "KILL_P": 0,
+    "KILL_R": 5,
+    "PARTIAL_KILL": 0,
+    "BOTH_KILL": 0,
+    "R_KILL_P_SURVIVES": 0,
+    "P_KILL_R_SURVIVES": 0,
+    "UNRELATED_FLUSH": 0,
+    "ROB_WRAP": 15,
+    "FTQ_WRAP": 4,
+    "DIV_RESPONSE": 16,
+    "ACCEPTED_THEN_SQUASHED": 40,
+    "ACCEPTED_YOUNGER_SQUASHED": 40
+  },
+  "older_transactions": [
+    {
+      "seq": 1,
+      "rob": "0:45",
+      "allocation": 33958,
+      "accept": 33977,
+      "end": 33979,
+      "outcome": "response",
+      "commits": [
+        34011
+      ],
+      "predecessor_div": {
+        "cycle": 33965,
+        "seq": 0,
+        "rob": "0:44",
+        "fu": 4194304,
+        "pdest": 110
+      },
+      "div_outputs": [
+        {
+          "cycle": 33972,
+          "seq": 0,
+          "rob": "0:44",
+          "fu": 4194304,
+          "pdest": 110,
+          "ready": 1,
+          "cancelled": 0
+        }
+      ],
+      "associated_kill_redirects": [],
+      "redirect_minus_response": [],
+      "div_output_to_accept": [
+        5
+      ]
+    },
+    {
+      "seq": 11,
+      "rob": "1:46",
+      "allocation": 34195,
+      "accept": 34213,
+      "end": 34215,
+      "outcome": "response",
+      "commits": [
+        34217
+      ],
+      "predecessor_div": {
+        "cycle": 34201,
+        "seq": 10,
+        "rob": "1:45",
+        "fu": 4194304,
+        "pdest": 100
+      },
+      "div_outputs": [
+        {
+          "cycle": 34208,
+          "seq": 10,
+          "rob": "1:45",
+          "fu": 4194304,
+          "pdest": 100,
+          "ready": 1,
+          "cancelled": 0
+        }
+      ],
+      "associated_kill_redirects": [
+        {
+          "cycle": 34223,
+          "rob": "0:0",
+          "self": 0
+        }
+      ],
+      "redirect_minus_response": [
+        8
+      ],
+      "div_output_to_accept": [
+        5
+      ]
+    },
+    {
+      "seq": 21,
+      "rob": "0:40",
+      "allocation": 34433,
+      "accept": 34451,
+      "end": 34453,
+      "outcome": "response",
+      "commits": [
+        34455
+      ],
+      "predecessor_div": {
+        "cycle": 34439,
+        "seq": 20,
+        "rob": "0:39",
+        "fu": 4194304,
+        "pdest": 82
+      },
+      "div_outputs": [
+        {
+          "cycle": 34446,
+          "seq": 20,
+          "rob": "0:39",
+          "fu": 4194304,
+          "pdest": 82,
+          "ready": 1,
+          "cancelled": 0
+        }
+      ],
+      "associated_kill_redirects": [],
+      "redirect_minus_response": [],
+      "div_output_to_accept": [
+        5
+      ]
+    },
+    {
+      "seq": 31,
+      "rob": "1:42",
+      "allocation": 34665,
+      "accept": 34683,
+      "end": 34685,
+      "outcome": "response",
+      "commits": [
+        34687
+      ],
+      "predecessor_div": {
+        "cycle": 34671,
+        "seq": 30,
+        "rob": "1:41",
+        "fu": 4194304,
+        "pdest": 72
+      },
+      "div_outputs": [
+        {
+          "cycle": 34678,
+          "seq": 30,
+          "rob": "1:41",
+          "fu": 4194304,
+          "pdest": 72,
+          "ready": 1,
+          "cancelled": 0
+        }
+      ],
+      "associated_kill_redirects": [],
+      "redirect_minus_response": [],
+      "div_output_to_accept": [
+        5
+      ]
+    },
+    {
+      "seq": 41,
+      "rob": "0:44",
+      "allocation": 34861,
+      "accept": 34879,
+      "end": 34881,
+      "outcome": "response",
+      "commits": [
+        34911
+      ],
+      "predecessor_div": {
+        "cycle": 34867,
+        "seq": 40,
+        "rob": "0:43",
+        "fu": 4194304,
+        "pdest": 62
+      },
+      "div_outputs": [
+        {
+          "cycle": 34874,
+          "seq": 40,
+          "rob": "0:43",
+          "fu": 4194304,
+          "pdest": 62,
+          "ready": 1,
+          "cancelled": 0
+        }
+      ],
+      "associated_kill_redirects": [],
+      "redirect_minus_response": [],
+      "div_output_to_accept": [
+        5
+      ]
+    },
+    {
+      "seq": 51,
+      "rob": "1:46",
+      "allocation": 35081,
+      "accept": 35099,
+      "end": 35101,
+      "outcome": "response",
+      "commits": [
+        35103
+      ],
+      "predecessor_div": {
+        "cycle": 35087,
+        "seq": 50,
+        "rob": "1:45",
+        "fu": 4194304,
+        "pdest": 52
+      },
+      "div_outputs": [
+        {
+          "cycle": 35094,
+          "seq": 50,
+          "rob": "1:45",
+          "fu": 4194304,
+          "pdest": 52,
+          "ready": 1,
+          "cancelled": 0
+        }
+      ],
+      "associated_kill_redirects": [
+        {
+          "cycle": 35109,
+          "rob": "0:0",
+          "self": 0
+        }
+      ],
+      "redirect_minus_response": [
+        8
+      ],
+      "div_output_to_accept": [
+        5
+      ]
+    },
+    {
+      "seq": 61,
+      "rob": "0:40",
+      "allocation": 35303,
+      "accept": 35321,
+      "end": 35323,
+      "outcome": "response",
+      "commits": [
+        35325
+      ],
+      "predecessor_div": {
+        "cycle": 35309,
+        "seq": 60,
+        "rob": "0:39",
+        "fu": 4194304,
+        "pdest": 150
+      },
+      "div_outputs": [
+        {
+          "cycle": 35316,
+          "seq": 60,
+          "rob": "0:39",
+          "fu": 4194304,
+          "pdest": 150,
+          "ready": 1,
+          "cancelled": 0
+        }
+      ],
+      "associated_kill_redirects": [
+        {
+          "cycle": 35331,
+          "rob": "0:42",
+          "self": 0
+        }
+      ],
+      "redirect_minus_response": [
+        8
+      ],
+      "div_output_to_accept": [
+        5
+      ]
+    },
+    {
+      "seq": 71,
+      "rob": "1:34",
+      "allocation": 35526,
+      "accept": 35544,
+      "end": 35546,
+      "outcome": "response",
+      "commits": [
+        35548
+      ],
+      "predecessor_div": {
+        "cycle": 35532,
+        "seq": 70,
+        "rob": "1:33",
+        "fu": 4194304,
+        "pdest": 133
+      },
+      "div_outputs": [
+        {
+          "cycle": 35539,
+          "seq": 70,
+          "rob": "1:33",
+          "fu": 4194304,
+          "pdest": 133,
+          "ready": 1,
+          "cancelled": 0
+        }
+      ],
+      "associated_kill_redirects": [],
+      "redirect_minus_response": [],
+      "div_output_to_accept": [
+        5
+      ]
+    },
+    {
+      "seq": 73,
+      "rob": "0:29",
+      "allocation": 35720,
+      "accept": 35738,
+      "end": 35740,
+      "outcome": "response",
+      "commits": [
+        35742
+      ],
+      "predecessor_div": {
+        "cycle": 35726,
+        "seq": 72,
+        "rob": "0:28",
+        "fu": 4194304,
+        "pdest": 99
+      },
+      "div_outputs": [
+        {
+          "cycle": 35733,
+          "seq": 72,
+          "rob": "0:28",
+          "fu": 4194304,
+          "pdest": 99,
+          "ready": 1,
+          "cancelled": 0
+        }
+      ],
+      "associated_kill_redirects": [],
+      "redirect_minus_response": [],
+      "div_output_to_accept": [
+        5
+      ]
+    },
+    {
+      "seq": 75,
+      "rob": "1:23",
+      "allocation": 35914,
+      "accept": 35932,
+      "end": 35934,
+      "outcome": "response",
+      "commits": [
+        35936
+      ],
+      "predecessor_div": {
+        "cycle": 35920,
+        "seq": 74,
+        "rob": "1:22",
+        "fu": 4194304,
+        "pdest": 15
+      },
+      "div_outputs": [
+        {
+          "cycle": 35927,
+          "seq": 74,
+          "rob": "1:22",
+          "fu": 4194304,
+          "pdest": 15,
+          "ready": 1,
+          "cancelled": 0
+        }
+      ],
+      "associated_kill_redirects": [],
+      "redirect_minus_response": [],
+      "div_output_to_accept": [
+        5
+      ]
+    },
+    {
+      "seq": 85,
+      "rob": "0:25",
+      "allocation": 36145,
+      "accept": 36163,
+      "end": 36165,
+      "outcome": "response",
+      "commits": [
+        36167
+      ],
+      "predecessor_div": {
+        "cycle": 36151,
+        "seq": 84,
+        "rob": "0:24",
+        "fu": 4194304,
+        "pdest": 83
+      },
+      "div_outputs": [
+        {
+          "cycle": 36158,
+          "seq": 84,
+          "rob": "0:24",
+          "fu": 4194304,
+          "pdest": 83,
+          "ready": 1,
+          "cancelled": 0
+        }
+      ],
+      "associated_kill_redirects": [],
+      "redirect_minus_response": [],
+      "div_output_to_accept": [
+        5
+      ]
+    },
+    {
+      "seq": 95,
+      "rob": "1:27",
+      "allocation": 36376,
+      "accept": 36394,
+      "end": 36396,
+      "outcome": "response",
+      "commits": [
+        36398
+      ],
+      "predecessor_div": {
+        "cycle": 36382,
+        "seq": 94,
+        "rob": "1:26",
+        "fu": 4194304,
+        "pdest": 17
+      },
+      "div_outputs": [
+        {
+          "cycle": 36389,
+          "seq": 94,
+          "rob": "1:26",
+          "fu": 4194304,
+          "pdest": 17,
+          "ready": 1,
+          "cancelled": 0
+        }
+      ],
+      "associated_kill_redirects": [],
+      "redirect_minus_response": [],
+      "div_output_to_accept": [
+        5
+      ]
+    },
+    {
+      "seq": 105,
+      "rob": "0:29",
+      "allocation": 36607,
+      "accept": 36625,
+      "end": 36627,
+      "outcome": "response",
+      "commits": [
+        36629
+      ],
+      "predecessor_div": {
+        "cycle": 36613,
+        "seq": 104,
+        "rob": "0:28",
+        "fu": 4194304,
+        "pdest": 117
+      },
+      "div_outputs": [
+        {
+          "cycle": 36620,
+          "seq": 104,
+          "rob": "0:28",
+          "fu": 4194304,
+          "pdest": 117,
+          "ready": 1,
+          "cancelled": 0
+        }
+      ],
+      "associated_kill_redirects": [],
+      "redirect_minus_response": [],
+      "div_output_to_accept": [
+        5
+      ]
+    },
+    {
+      "seq": 115,
+      "rob": "1:31",
+      "allocation": 36804,
+      "accept": 36822,
+      "end": 36824,
+      "outcome": "response",
+      "commits": [
+        36826
+      ],
+      "predecessor_div": {
+        "cycle": 36810,
+        "seq": 114,
+        "rob": "1:30",
+        "fu": 4194304,
+        "pdest": 22
+      },
+      "div_outputs": [
+        {
+          "cycle": 36817,
+          "seq": 114,
+          "rob": "1:30",
+          "fu": 4194304,
+          "pdest": 22,
+          "ready": 1,
+          "cancelled": 0
+        }
+      ],
+      "associated_kill_redirects": [
+        {
+          "cycle": 36832,
+          "rob": "1:33",
+          "self": 0
+        }
+      ],
+      "redirect_minus_response": [
+        8
+      ],
+      "div_output_to_accept": [
+        5
+      ]
+    },
+    {
+      "seq": 125,
+      "rob": "0:25",
+      "allocation": 37026,
+      "accept": 37044,
+      "end": 37046,
+      "outcome": "response",
+      "commits": [
+        37048
+      ],
+      "predecessor_div": {
+        "cycle": 37032,
+        "seq": 124,
+        "rob": "0:24",
+        "fu": 4194304,
+        "pdest": 11
+      },
+      "div_outputs": [
+        {
+          "cycle": 37039,
+          "seq": 124,
+          "rob": "0:24",
+          "fu": 4194304,
+          "pdest": 11,
+          "ready": 1,
+          "cancelled": 0
+        }
+      ],
+      "associated_kill_redirects": [],
+      "redirect_minus_response": [],
+      "div_output_to_accept": [
+        5
+      ]
+    },
+    {
+      "seq": 127,
+      "rob": "1:20",
+      "allocation": 37220,
+      "accept": 37238,
+      "end": 37240,
+      "outcome": "response",
+      "commits": [
+        37242
+      ],
+      "predecessor_div": {
+        "cycle": 37226,
+        "seq": 126,
+        "rob": "1:19",
+        "fu": 4194304,
+        "pdest": 138
+      },
+      "div_outputs": [
+        {
+          "cycle": 37233,
+          "seq": 126,
+          "rob": "1:19",
+          "fu": 4194304,
+          "pdest": 138,
+          "ready": 1,
+          "cancelled": 0
+        }
+      ],
+      "associated_kill_redirects": [
+        {
+          "cycle": 37248,
+          "rob": "1:22",
+          "self": 0
+        }
+      ],
+      "redirect_minus_response": [
+        8
+      ],
+      "div_output_to_accept": [
+        5
+      ]
+    }
+  ],
+  "symbols": {
+    "partial_0": "0x800001c0",
+    "partial_0_end": "0x80000418",
+    "partial_branch": "0x800002e0",
+    "partial_div": "0x800002d4",
+    "partial_extract": "0x800002dc",
+    "partial_old": "0x800002d8",
+    "partial_young": "0x800002e4"
+  },
+  "scope": "Strict full trace; producer association uses predecessor ROB. Redirects require actual VDOT cancellation before the next older-PC allocation plus static +2 ROB. Scalar enqueue and operand-ready events are not instrumented; no direct scheduler-ready claim.",
+  "new_emu_runs": 0,
+  "performance_measured": false
+}

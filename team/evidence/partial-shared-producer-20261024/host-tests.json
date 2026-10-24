@@ -1,0 +1,76 @@
+[
+  {
+    "command": [
+      "git",
+      "clone",
+      "--shared",
+      "--no-checkout",
+      "/home/amesotten/.cache/codex-rvinno/integration-six-20261024/repo",
+      "/home/amesotten/.cache/codex-rvinno/partial-shared-producer-20261024/repo"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "output": "Cloning into '/home/amesotten/.cache/codex-rvinno/partial-shared-producer-20261024/repo'...\ndone.\n"
+  },
+  {
+    "command": [
+      "git",
+      "config",
+      "core.autocrlf",
+      "false"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/partial-shared-producer-20261024/repo",
+    "exit_code": 0,
+    "output": ""
+  },
+  {
+    "command": [
+      "git",
+      "config",
+      "core.sparseCheckout",
+      "true"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/partial-shared-producer-20261024/repo",
+    "exit_code": 0,
+    "output": ""
+  },
+  {
+    "command": [
+      "git",
+      "fetch",
+      "/mnt/c/Code/RVInno/riscv/team/out/partial-v3-source.bundle",
+      "HEAD:refs/remotes/experiment/v3"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/partial-shared-producer-20261024/repo",
+    "exit_code": 0,
+    "output": "From /mnt/c/Code/RVInno/riscv/team/out/partial-v3-source.bundle\n * [new ref]             HEAD       -> experiment/v3\n"
+  },
+  {
+    "command": [
+      "git",
+      "checkout",
+      "--detach",
+      "refs/remotes/experiment/v3"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/partial-shared-producer-20261024/repo",
+    "exit_code": 0,
+    "output": "Previous HEAD position was 030ac13a8 test: bind directed generated sources before compilation\nHEAD is now at 153f164a7 test: add shared-producer partial-kill directed candidate\n"
+  },
+  {
+    "command": [
+      "python3",
+      "-OO",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "team/optimizations/o2/fullcore/partial_kill_v3",
+      "-p",
+      "test_*.py"
+    ],
+    "cwd": "/home/amesotten/.cache/codex-rvinno/partial-shared-producer-20261024/repo",
+    "exit_code": 0,
+    "output": "........\n----------------------------------------------------------------------\nRan 8 tests in 0.066s\n\nOK\n"
+  }
+]
