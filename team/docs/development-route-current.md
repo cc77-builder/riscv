@@ -1,6 +1,6 @@
 # 香山 vdot 工程开发路线：满足赛题技术要求，持续提高性能
 
-> James_Hotten 本地适用边界：已整合上游六提交至 c9132b8d7；上游 6d2/1a23 证据与本机 bc9e5ae/e66 分别核验。本机 v5 定向测试已通过 PARTIAL_KILL：5个同周期双槽窗口中旧v16保留并退休、年轻v20取消且不退休；16次试验、112条退休、8192字节及CSR通过。实际7拍依赖接收间隔加1拍同单元接收间隔补上v3的8拍差；v4跨单元链增加13拍的未命中结果保留，停止同类扫描。下一步以独立版本的补充验收入口纳入v5及同一硬件原campaign的有效证据，复核完整覆盖与负控来源；未变化的原始流只读复用，不重跑旧矩阵，不修改冻结合同。在补充验收闭合前，原完整G3仍INCOMPLETE，v5的campaign_acceptance为false。新T17交付666fc80仅从Issue获知，尚未并入或授予本机资格。S2不扩大采用。O1/O2默认关闭，main未改。详见[本地整合与定向测试](latest-integration-20261023.md)。
+> James_Hotten 本地适用边界：已整合上游六提交至 c9132b8d7；上游 6d2/1a23 与本机 bc9e5ae/e66 分别核验。本机现通过[独立G3补充验收](../optimizations/o2/fullcore/g3_supplement/README.md)：原14项完整原流复算保留核心功能、异常、F2v、dense与精确负控恢复门禁，v5另提供5个真实PARTIAL_KILL窗口，六项覆盖闭合。复用15次既有硬件运行，本轮新增EMU为0；原14项INCOMPLETE与v5单项campaign_acceptance=false保持原样，新组合结果有独立合同。停止时序扫描；本项闭合后，下一步核对上游T17/R5交付与本地源码、硬件及软件合同差异，再推进当前来源R2-SELECT/稳定入口的相容集成，不能转借旧性能或T17资格。Issue已获知T17为666fc80、R5完成至137b44b，本机尚未并入；无新增性能/PPA结论，S2不扩大采用。O1/O2默认关闭，main未改。详见[本地整合与定向测试](latest-integration-20261023.md)。
 
 更新：2026-10-24（UTC+08:00）。硬件源码基点：6d2abe403b07c297b8830a7d4f06e370b0a8e070；当前获选软件及普通调用入口见下表与[R4结果](../optimizations/o2/r2-select/ENTRY_RESULT.md)。团队集成分支 cc77-builder/riscv:zufan。实时活动见[协作入口](collaboration-current.md)，每轮成果及路线变化见[开发计分板](../../开发计分板.md)。
 

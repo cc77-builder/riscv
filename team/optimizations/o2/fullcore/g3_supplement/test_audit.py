@@ -106,6 +106,29 @@ class SupplementTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'unrecognized'):
                 audit.Capsule(directory, 'partial')
 
+    def test_recognized_manifest_rejects_corrupt_payload_before_replay(self):
+        with tempfile.TemporaryDirectory() as directory:
+            relative = audit.CAPSULES['partial'][0]
+            folder = Path(directory) / relative
+            folder.mkdir(parents=True)
+            manifest = (EVIDENCE / relative / 'manifest.json').read_bytes()
+            (folder / 'manifest.json').write_bytes(manifest)
+            first = json.loads(manifest)['payloads'][0]['path']
+            (folder / first).write_bytes(b'changed evidence')
+            with self.assertRaisesRegex(ValueError, 'payload drift'):
+                audit.Capsule(directory, 'partial')
+
+    def test_native_source_must_equal_archived_bytes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            source = Path(directory) / 'run.log'
+            source.write_bytes(b'original')
+            capsule = object.__new__(audit.Capsule)
+            capsule.rows = {'run/run.log': dict(source=str(source), sha256=audit.digest(b'original'))}
+            self.assertEqual(capsule.native(('run/',)), 1)
+            source.write_bytes(b'altered')
+            with self.assertRaisesRegex(ValueError, 'native/archive mismatch'):
+                capsule.native(('run/',))
+
 
 if __name__ == '__main__':
     unittest.main()
