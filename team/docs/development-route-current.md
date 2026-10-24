@@ -1,6 +1,6 @@
 # 香山 vdot 工程开发路线：满足赛题技术要求，持续提高性能
 
-> James_Hotten 本地适用边界：已整合上游T17/R5至137b44b，保留本地加固实现。上游T17的34bae/ff840、原6d2/1a23与本机bc9/e66分别核验；本机[独立G3补充验收](../optimizations/o2/fullcore/g3_supplement/README.md)已闭合，原14项INCOMPLETE与v5单项campaign_acceptance=false保持原样。新导入T17整核、矩阵、普通C封存已在固定34bae LF检出独立复算通过，17项真实夹具测试通过，新增EMU为0。R5源码及上游资格导入，但本机GNU13整对象检查未通过：机器码段相同、符号表/字符串表/ISA属性不同，不能放宽原GNU11门禁或声称本地R5构建合格。下一步先恢复匹配GNU11工具链完成稳定入口构建复验，或另立工具链兼容合同，再对本机bc9/e66进行必要的当前来源软件验证；不重复不变的硬件矩阵，不转授上游性能/T17。O1/O2默认关闭，main未改。详见[本地整合与定向测试](latest-integration-20261023.md)。
+> James_Hotten 本地适用边界：已整合上游T17/R5至137b44b，保留本地加固实现。上游T17的34bae/ff840、原6d2/1a23与本机bc9/e66分别核验；本机[独立G3补充验收](../optimizations/o2/fullcore/g3_supplement/README.md)已闭合，原14项INCOMPLETE与v5单项campaign_acceptance=false保持原样。T17三类封存原文复算及17项真实夹具测试已通过。本机已在项目缓存恢复GNU11.4/Binutils2.38，R5原整对象、三模式及七拒错门禁全部通过；旧GNU13失败保留，未放宽pins。新[firstdot独立准入](../optimizations/o2/r2-first-dot/README.md)复用8×32/dataset0/endtoend两镜像，精确再生、ELF/模型、配对布局及11项拒错测试通过，首条实际目标为v0；本轮新编译探针/EMU/NEMU为0，尚无动态/性能资格。下一步实现并执行本机bc9/e66上的firstdot bit64精确负控、同BIN正常恢复、S1/最快RVV配对及重放（首批最多5次EMU），有正收益后才扩矩阵；不重复旧硬件矩阵、不转授上游性能/T17。O1/O2默认关闭，main未改。详见[本轮接续](latest-integration-20261023.md#gnu11-r5-闭合与-firstdot-准入2026-10-24)。
 
 更新：2026-10-24（UTC+08:00）。硬件比较基点：6d2abe403b07c297b8830a7d4f06e370b0a8e070；当前T17新构建源码：34bae6d4acceac939f958199dae53c14bc1f6183；当前获选软件及默认 C 源入口见[稳定使用说明](../optimizations/o2/r2-select/STABLE.md)，底层调用资格见[R4结果](../optimizations/o2/r2-select/ENTRY_RESULT.md)。团队集成分支 cc77-builder/riscv:zufan。实时活动见[协作入口](collaboration-current.md)，每轮成果及路线变化见[开发计分板](../../开发计分板.md)。
 

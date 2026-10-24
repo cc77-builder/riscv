@@ -360,3 +360,49 @@ R5另在本机GNU GCC13.3/Binutils工具链真实构建，冻结检查器退出1
 保存三次准备/复算记录、原始失败、17项测试、GNU失败构建及ELF诊断、分支/导入核验和新入口源码。
 原生最终输出为`/home/amesotten/.cache/codex-rvinno/t17-r5-integration-20261024-03`。
 O1/O2默认关闭，本机bc9/e66 G3资格保留，无新增性能/PPA/新机器资格；本轮发布只推进James_Hotten。
+
+## GNU11 R5 闭合与 firstdot 准入（2026-10-24）
+
+本轮在 `James_Hotten` 的 `f280ce5b14c6c26c9cb5506d68cf9afbdd95c71d` 上推进优化前置及新候选准入，未改 main、未推送远端。上述 GNU13 失败是历史真实结果，保持原样；本节新增的成功只绑定恢复后的工具链。
+
+### 项目缓存恢复匹配工具链
+
+在 Ubuntu-HDL 用户缓存 `/home/amesotten/.cache/codex-rvinno/gnu11-jammy-20261024` 中，用独立 apt sources/lists 读取 Ubuntu Jammy main/universe 与 updates，通过系统 Ubuntu archive keyring 校验两个 InRelease；随后核对签名中的 Packages 索引 SHA 和四个软件包的版本、大小、SHA256。仅下载并解包到 `prefix/`，没有系统安装、没有全局 PATH 修改。系统 `/usr/bin/riscv64-linux-gnu-gcc` 仍为 13.3.0。
+
+| 包 | 固定版本 | DEB SHA256 |
+| --- | --- | --- |
+| gcc-11-riscv64-linux-gnu | 11.4.0-1ubuntu1~22.04cross1 | `003092733a93b1fb1d0ba5d7edb652dc953842fa474c2bc74613f545ecaf282d` |
+| cpp-11-riscv64-linux-gnu | 11.4.0-1ubuntu1~22.04cross1 | `447d6ab39ecea1f22cc38267db6d148cce2702d07e0d071e5448bfae5118b1e3` |
+| libgcc-11-dev-riscv64-cross | 11.4.0-1ubuntu1~22.04cross1 | `e195d73bb131b690560b4ab550942e53d25c0255e0b980028a4879ab51c02d2f` |
+| binutils-riscv64-linux-gnu | 2.38-4ubuntu2.12 | `b20f8bdabeff0a43fba1efdc8b1c1d359d93e8a135d11041fd90ed945c23e866` |
+
+包路径及下载地址见封存 `gnu11/packages.json`，来源是签名 Ubuntu 镜像 `mirrors.ustc.edu.cn/ubuntu`。恢复脚本、包元数据、签名验证、索引成员核对和实际工具/共享库哈希一并保留。DEB 与完整 apt 索引留在原生缓存，不再复制进 Git；本次不是完整独立 sysroot 安装或新机器 T17。
+
+解包后，`prefix/usr/bin/riscv64-linux-gnu-gcc` 是指向 `riscv64-linux-gnu-gcc-11` 的本地相对链接。初次探测 as 因未指定私有共享库搜索路径失败，原 `tool-resolution.json` 保留；后续仅给这次命令设置 `LD_LIBRARY_PATH=prefix/usr/lib/x86_64-linux-gnu`。实际 GCC 解析的 as、ld、cc1 均位于私有 prefix，动态依赖也已逐一核对，没有悄悄使用系统 Binutils2.42。其余宿主共享库继续使用本机版本，见 `provenance-02/host-dependencies.json`。来源核对首次假定 apt 保存 `.lz4` 索引而提前停止，保留 `provenance/` 部分输出；实际索引为未压缩 Packages，修正后在独立 `provenance-02/` 完成验证。
+
+### R5 原门禁完整通过
+
+在原固定 `137b44b` LF 发布快照上执行未修改的 `verify_stable.py`，fresh 输出 `gnu11-jammy-20261024/stable-build-01`，实际 exit0：
+
+- `R5_STABLE_SOURCE_ALIAS_BUILD_PASS`，`gemv.o` **28152 字节**，SHA `ecb24b6cde147c5b36f0caf8e5ec2b17451d293de14e2b4e223b14141d3e1aa7`；整对象与 C02 原资格完全相同。
+- 三种配置（默认、FORCE_RVV=0/1）的八个别名与显式调用，完整 caller/linked 对象一致，16 个函数及归档成员一致，无未解析符号；七种错误配置实际拒绝。
+- 工具为 GCC11.4.0、Binutils2.38、Make4.3；原 source pins、STABLE_MANIFEST 和 whole-object 判据没有修改。当前分支的对应源码按 LF 核对与已验快照相同。
+- 新增 EMU/NEMU 为 0，无当前应用周期或硬件资格扩张。GNU13 的旧失败仍是失败，不由新工具链成功覆盖。
+
+接续运行时显式指定私有 `--cross-prefix`，并为该进程设置上述库路径；完整实际命令、环境及时间在封存 `gnu11/verify-command.json`。不要修改机器全局工具链，也不要覆盖 `stable-build-01`。
+
+### firstdot 独立静态准入与审查
+
+新入口 [admit.py](../optimizations/o2/r2-first-dot/admit.py) 及[合同/接续条件](../optimizations/o2/r2-first-dot/README.md)只准入已有 `first-dot-probe-02` 的两份 8×32/dataset0/endtoend 镜像，未重建旧探针或重跑原完整矩阵。最终真实输出：
+
+`/home/amesotten/.cache/codex-rvinno/firstdot-admission-20261024/run-02/state.json`
+
+状态 `FIRST_DOT_8X32_STATIC_ADMISSION_PASS_NOT_EXECUTED`。核验 66 个原路径、原构建命令与日志、精确再生、ELF/独立对象/无重定位、完整 ALLOC 布局及两个 RVV 槽；8 个内核各 9 组有限模型输入通过。S1 控制 BIN 与旧合格 canonical 镜像相同。basic/reuse 静态分别少 32/20 条指令，但没有新的周期结论。
+
+实际首条目标：S1 `pc=0x80002170 / rd=v20`；firstdot `pc=0x80002168 / rd=v0`。新负控计划针对 v0 的 bit64，旧 v20 断言不能复用。`run-01` 是补强构建收据检查前的准入结果，源码哈希与最终入口不同；以 `run-02` 为最终结果，旧输出保留。
+
+最终 **11 项真实夹具测试全部通过**，包含重哈希 manifest、汇编、源库存、原构建日志、RVV/非内核加载字节、归档损坏及路径拒绝。规范轴、需求轴独立审查各 **0 个已确认问题**，且只读核对了最终源码与实际回执。没有把旧 PASS 或指令减少当成动态验收。
+
+本轮成果封存于 [gnu11-firstdot-20261024](../evidence/gnu11-firstdot-20261024/manifest.json)，包含两次准入、最终测试、原始两镜像输入、R5 实际对象/构建命令、工具来源、源码快照和辅助脚本。原生 Linux 当前源码位于同级 `firstdot-admission-20261024/source`；运行输入不改写，下一轮用新输出。
+
+下一步按新合同实现 **最多5次串行 EMU**：firstdot v0/bit64 精确负控→同 BIN 正常恢复→原 S1 对照→各自重放一次，绑定本机 bc9/e66 全套输入。先检查数学、全宽 CSR/退休/O2 原流，再比较 reuse VDOT 与实际最快 RVV。仅正收益后扩三数据集/其他形状；首次失败即停止，不扫参数或弱化门禁。该动态运行器和5次运行本轮尚未实现/执行，32 个正式窗口及性能资格仍待验收。O1/O2生产默认关闭。
