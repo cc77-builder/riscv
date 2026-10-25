@@ -1,0 +1,67 @@
+{
+  "contract": "r2-s3-split-input-8x32-v2",
+  "scope": "host C harness only; three ISA statements replaced; no leaf/timer execution",
+  "source_sha256": "b939e145aac25789ff8af3ce656317820d885d60a1f6201f4ac4cf7311552aeb",
+  "checker_sha256": "5bc904bf4c919c7d8ff25002a4c2ad8796f0382bee5ebd8bebd657e5fafd4faa",
+  "host_source_sha256": "97816a21583b3cee37b26b331f6d4afc80517c325bbc5e6bd2cfab30ff3ed6a6",
+  "inputs": {
+    "caller.h": "8f8ebbdfc64f506549b8fcb91700fc80dd91b1fd0a5be64aaed504ebcfa0c38e",
+    "split.h": "94ccdc8e6212c0c0d7ef0e8795c8edcdc9a02e173802bea18965bbce5e01e222",
+    "data.h": "8a5d5c250b9a34c6fd0139dce5658663d02462c236f6ee52010766d0a25db766"
+  },
+  "command": [
+    "/usr/bin/gcc",
+    "-std=gnu11",
+    "-O2",
+    "-Wall",
+    "-Werror",
+    "-Wstrict-aliasing=2",
+    "-fstrict-aliasing",
+    "-fno-tree-vectorize",
+    "-fno-tree-slp-vectorize",
+    "-fno-tree-loop-distribute-patterns",
+    "host.c",
+    "-o",
+    "harness-check"
+  ],
+  "compiler_sha256": "821af3c74506283c179ca413bb33e6b528805a4dd8a5c09df125e5ad560a9e89",
+  "new_emu_runs": 0,
+  "compile": {
+    "exit_code": 0,
+    "command": [
+      "/usr/bin/gcc",
+      "-std=gnu11",
+      "-O2",
+      "-Wall",
+      "-Werror",
+      "-Wstrict-aliasing=2",
+      "-fstrict-aliasing",
+      "-fno-tree-vectorize",
+      "-fno-tree-slp-vectorize",
+      "-fno-tree-loop-distribute-patterns",
+      "host.c",
+      "-o",
+      "harness-check"
+    ]
+  },
+  "execute": {
+    "exit_code": 0,
+    "command": [
+      "/home/lizufan/riscv-lab/r2s3-split-20261025-0716/harness-check-01/harness-check"
+    ]
+  },
+  "status": "SPLIT_C_HARNESS_BYTE_FAULTS_PASS",
+  "cases": 42,
+  "byte_faults": 54432,
+  "byte_fault_bit": 0,
+  "cache_hit_reset_cases": 21,
+  "csr_faults": 168,
+  "controls": 6,
+  "compiler_version": "gcc (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+  "raw_sha256": {
+    "compile-stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "compile-stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "execute-stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "execute-stdout.log": "5e08878cc2201be5a0bba30033dde8cc15572d65adc8e077f81a3372b40b0402"
+  }
+}

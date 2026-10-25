@@ -1,0 +1,129 @@
+{
+  "run_v1": {
+    "expires_at": "2026-11-23T23:34:01.0339257Z",
+    "kind": "shell",
+    "operation_id": "1bcd341bbd2162e3d9e297ccd2678ca0.0d85897dcad608d2a638ef32a901bab2",
+    "shell": {
+      "code": "nonzero_exit",
+      "durable_logs": true,
+      "execution_environment": "windows_native",
+      "execution_sha256": "36718af8b97039e5fb20327803637af9c2545e39a31ca29caeee7647fbc83254",
+      "operation_id": "1bcd341bbd2162e3d9e297ccd2678ca0.0d85897dcad608d2a638ef32a901bab2",
+      "output_withheld": false,
+      "result": {
+        "cancelled": false,
+        "cleanup_complete": true,
+        "duration_ms": 2416006,
+        "exit_code": 1,
+        "peak_job_commit_bytes": 36974592,
+        "peak_process_commit_bytes": 28651520,
+        "process_id": 377756,
+        "stderr": "w\u0000s\u0000l\u0000:\u0000 \u0000�hKm0R \u0000l\u0000o\u0000c\u0000a\u0000l\u0000h\u0000o\u0000s\u0000t\u0000 \u0000�N\u0006tM�n\f�FO*g\\�P0R \u0000W\u0000S\u0000L\u0000\u00020N\u0000A\u0000T\u0000 \u0000!j\u000f_\u000bN�v \u0000W\u0000S\u0000L\u0000 \u0000\rN/e\u0001c \u0000l\u0000o\u0000c\u0000a\u0000l\u0000h\u0000o\u0000s\u0000t\u0000 \u0000�N\u0006t\u00020\r\u0000\n\u0000Traceback (most recent call last):\n  File \"/home/lizufan/riscv-lab/r2s3-split-20261025-0716/source/team/optimizations/o2/r2-config-reuse/caller/split/run.py\", line 333, in <module>\n    if __name__=='__main__':main()\n  File \"/home/lizufan/riscv-lab/r2s3-split-20261025-0716/source/team/optimizations/o2/r2-config-reuse/caller/split/run.py\", line 323, in main\n    result=run(repo,identity,args.build.resolve(),out,args.operation_id)\n  File \"/home/lizufan/riscv-lab/r2s3-split-20261025-0716/source/team/optimizations/o2/r2-config-reuse/caller/split/run.py\", line 283, in run\n    result=normal(repo,build_dir,dest,rec)\n  File \"/home/lizufan/riscv-lab/r2s3-split-20261025-0716/source/team/optimizations/o2/r2-config-reuse/caller/split/run.py\", line 186, in normal\n    for stream in (stdout,stderr):gate.validate_failure_markers(stream);fatal.reject_fatal_output(stream)\n  File \"/home/lizufan/riscv-lab/r2s3-split-20261025-0716/source/team/optimizations/o1/audit/runtime_gate.py\", line 56, in validate_failure_markers\n    require(COMMON_FAILURES.search(plain) is None and\n  File \"/home/lizufan/riscv-lab/r2s3-split-20261025-0716/source/team/optimizations/o1/audit/runtime_gate.py\", line 32, in require\n    raise ValueError(message)\nValueError: runtime failure marker\nsplit run-01 failed: 1\r\n",
+        "stderr_truncated": false,
+        "stdout": "negative EXPECTED_VDOT_HIGHBIT_REJECTION\n",
+        "stdout_truncated": false,
+        "timed_out": false,
+        "total_processes": 6
+      },
+      "script_sha256": "261b9780a34654fcdad90e371ecb9c45069bad6ba30a73952634c189e8a5fec0",
+      "started_at": "2026-10-24T23:34:01.0763319Z",
+      "status": "failed",
+      "updated_at": "2026-10-25T00:14:17.1196763Z",
+      "worker_pid": 362896
+    },
+    "status": "failed"
+  },
+  "build_v2": {
+    "durable_logs": true,
+    "execution_environment": "windows_native",
+    "execution_sha256": "52855973563ceebe5112f6c569345b80a5342b1d4f130ef6ff08fd98318598ff",
+    "operation_id": "1bcd341bbd2162e3d9e297ccd2678ca0.1d83ab644879b795ee9b720668b27008",
+    "output_withheld": false,
+    "result": {
+      "cancelled": false,
+      "cleanup_complete": true,
+      "duration_ms": 2910,
+      "exit_code": 0,
+      "peak_job_commit_bytes": 40288256,
+      "peak_process_commit_bytes": 30662656,
+      "process_id": 365224,
+      "stderr": "w\u0000s\u0000l\u0000:\u0000 \u0000�hKm0R \u0000l\u0000o\u0000c\u0000a\u0000l\u0000h\u0000o\u0000s\u0000t\u0000 \u0000�N\u0006tM�n\f�FO*g\\�P0R \u0000W\u0000S\u0000L\u0000\u00020N\u0000A\u0000T\u0000 \u0000!j\u000f_\u000bN�v \u0000W\u0000S\u0000L\u0000 \u0000\rN/e\u0001c \u0000l\u0000o\u0000c\u0000a\u0000l\u0000h\u0000o\u0000s\u0000t\u0000 \u0000�N\u0006t\u00020\r\u0000\n\u0000",
+      "stderr_truncated": false,
+      "stdout": "{\"argv\": [\"python3\", \"-B\", \"/home/lizufan/riscv-lab/r2s3-split-20261025-0716/source-v2/team/optimizations/o2/r2-config-reuse/caller/split/run.py\", \"--repo\", \"/home/lizufan/riscv-lab/r2s3-split-20261025-0716/source-v2\", \"--action\", \"build\", \"--output\", \"/home/lizufan/riscv-lab/r2s3-split-20261025-0716/build-04\"], \"started\": \"2026-10-25T00:15:15.722032+00:00\", \"cpu_affinity\": [0, 1, 2, 3], \"exit_code\": 0, \"finished\": \"2026-10-25T00:15:16.261950+00:00\"}\n{\"argv\": [\"python3\", \"-B\", \"/home/lizufan/riscv-lab/r2s3-split-20261025-0716/source-v2/team/optimizations/o2/r2-config-reuse/caller/split/harness_check.py\", \"--build\", \"/home/lizufan/riscv-lab/r2s3-split-20261025-0716/build-04\", \"--output\", \"/home/lizufan/riscv-lab/r2s3-split-20261025-0716/harness-check-01\"], \"started\": \"2026-10-25T00:15:16.262156+00:00\", \"cpu_affinity\": [0, 1, 2, 3], \"exit_code\": 0, \"finished\": \"2026-10-25T00:15:16.496183+00:00\"}\n{\"build_exit\": 0, \"artifacts\": {\"vdot-perf.elf\": \"f8e89f20f4924512ba3010e399b7cc2511b1f186873017a8224fd85aa36d11e2\", \"vdot-perf.bin\": \"2f94ede51e1c555aa7eceb777b4d2ab859418828d56705783ab72b4bcdb57aed\", \"gemv-reference.o\": \"f8bc13daeead98a414f313600a5778c96ac95a66b5bcb5c714ea3b98e0d25ab3\"}, \"static_status\": \"SPLIT_ELF_ADDRESS_AND_CALL_PATH_PASS\", \"windows\": 252, \"harness\": {\"contract\": \"r2-s3-split-input-8x32-v2\", \"scope\": \"host C harness only; three ISA statements replaced; no leaf/timer execution\", \"source_sha256\": \"b939e145aac25789ff8af3ce656317820d885d60a1f6201f4ac4cf7311552aeb\", \"checker_sha256\": \"5bc904bf4c919c7d8ff25002a4c2ad8796f0382bee5ebd8bebd657e5fafd4faa\", \"host_source_sha256\": \"97816a21583b3cee37b26b331f6d4afc80517c325bbc5e6bd2cfab30ff3ed6a6\", \"inputs\": {\"caller.h\": \"8f8ebbdfc64f506549b8fcb91700fc80dd91b1fd0a5be64aaed504ebcfa0c38e\", \"split.h\": \"94ccdc8e6212c0c0d7ef0e8795c8edcdc9a02e173802bea18965bbce5e01e222\", \"data.h\": \"8a5d5c250b9a34c6fd0139dce5658663d02462c236f6ee52010766d0a25db766\"}, \"command\": [\"/usr/bin/gcc\", \"-std=gnu11\", \"-O2\", \"-Wall\", \"-Werror\", \"-Wstrict-aliasing=2\", \"-fstrict-aliasing\", \"-fno-tree-vectorize\", \"-fno-tree-slp-vectorize\", \"-fno-tree-loop-distribute-patterns\", \"host.c\", \"-o\", \"harness-check\"], \"compiler_sha256\": \"821af3c74506283c179ca413bb33e6b528805a4dd8a5c09df125e5ad560a9e89\", \"new_emu_runs\": 0, \"compile\": {\"exit_code\": 0, \"command\": [\"/usr/bin/gcc\", \"-std=gnu11\", \"-O2\", \"-Wall\", \"-Werror\", \"-Wstrict-aliasing=2\", \"-fstrict-aliasing\", \"-fno-tree-vectorize\", \"-fno-tree-slp-vectorize\", \"-fno-tree-loop-distribute-patterns\", \"host.c\", \"-o\", \"harness-check\"]}, \"execute\": {\"exit_code\": 0, \"command\": [\"/home/lizufan/riscv-lab/r2s3-split-20261025-0716/harness-check-01/harness-check\"]}, \"status\": \"SPLIT_C_HARNESS_BYTE_FAULTS_PASS\", \"cases\": 42, \"byte_faults\": 54432, \"byte_fault_bit\": 0, \"cache_hit_reset_cases\": 21, \"csr_faults\": 168, \"controls\": 6, \"compiler_version\": \"gcc (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0\", \"raw_sha256\": {\"compile-stderr.log\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\", \"compile-stdout.log\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\", \"execute-stderr.log\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\", \"execute-stdout.log\": \"5e08878cc2201be5a0bba30033dde8cc15572d65adc8e077f81a3372b40b0402\"}}}\n",
+      "stdout_truncated": false,
+      "timed_out": false,
+      "total_processes": 6
+    },
+    "script_sha256": "ee2685126534040c38a81adba71440588f7964a97171bbb5e7254ffa6028bdc7",
+    "started_at": "2026-10-25T00:15:12.9671161Z",
+    "status": "succeeded",
+    "updated_at": "2026-10-25T00:15:15.9179033Z",
+    "worker_pid": 227212
+  },
+  "run_v2": {
+    "expires_at": "2026-11-24T00:15:41.2190266Z",
+    "kind": "shell",
+    "operation_id": "1bcd341bbd2162e3d9e297ccd2678ca0.17c12b10369d5af794226c1cd427b15d",
+    "shell": {
+      "durable_logs": true,
+      "execution_environment": "windows_native",
+      "execution_sha256": "18d4916fa05288ea9fe30b01b1e1f8cda31b6e66840649a4830be90263e14163",
+      "operation_id": "1bcd341bbd2162e3d9e297ccd2678ca0.17c12b10369d5af794226c1cd427b15d",
+      "output_withheld": false,
+      "result": {
+        "cancelled": false,
+        "cleanup_complete": true,
+        "duration_ms": 2422694,
+        "exit_code": 0,
+        "peak_job_commit_bytes": 39583744,
+        "peak_process_commit_bytes": 30117888,
+        "process_id": 360316,
+        "stderr": "w\u0000s\u0000l\u0000:\u0000 \u0000�hKm0R \u0000l\u0000o\u0000c\u0000a\u0000l\u0000h\u0000o\u0000s\u0000t\u0000 \u0000�N\u0006tM�n\f�FO*g\\�P0R \u0000W\u0000S\u0000L\u0000\u00020N\u0000A\u0000T\u0000 \u0000!j\u000f_\u000bN�v \u0000W\u0000S\u0000L\u0000 \u0000\rN/e\u0001c \u0000l\u0000o\u0000c\u0000a\u0000l\u0000h\u0000o\u0000s\u0000t\u0000 \u0000�N\u0006t\u00020\r\u0000\n\u0000",
+        "stderr_truncated": false,
+        "stdout": "negative EXPECTED_VDOT_HIGHBIT_REJECTION\nrecovery SPLIT_DIFFTEST_COUNTER_PATH_PASS\nreplay SPLIT_DIFFTEST_COUNTER_PATH_PASS\n{\n  \"contract\": \"r2-s3-split-input-8x32-v2\",\n  \"status\": \"SPLIT_CAMPAIGN_PASS\",\n  \"operation_id\": \"20261025-LiZufan001-r2s3-split-0716-v2\",\n  \"started\": \"2026-10-25T00:15:48.521413+00:00\",\n  \"new_emu_runs\": 3,\n  \"active_pid\": null,\n  \"active_result\": null,\n  \"finished\": \"2026-10-25T00:56:04.640450+00:00\"\n}\n",
+        "stdout_truncated": false,
+        "timed_out": false,
+        "total_processes": 6
+      },
+      "script_sha256": "d6dafb9cd8393095ff3d773282b55bf75b61382426debd1aca00fe368639898c",
+      "started_at": "2026-10-25T00:15:41.2537557Z",
+      "status": "succeeded",
+      "updated_at": "2026-10-25T00:56:03.990624Z",
+      "worker_pid": 329140
+    },
+    "status": "succeeded"
+  },
+  "postverify_v2": {
+    "expires_at": "2026-11-24T00:56:21.3235257Z",
+    "kind": "shell",
+    "operation_id": "1bcd341bbd2162e3d9e297ccd2678ca0.100dd290f961e43b79ff3a890ddf114f",
+    "shell": {
+      "durable_logs": true,
+      "execution_environment": "windows_native",
+      "execution_sha256": "f1e24240a62d932973a74946b60b9c6328989949f897dc3f1d49ad2ffd72ebfa",
+      "operation_id": "1bcd341bbd2162e3d9e297ccd2678ca0.100dd290f961e43b79ff3a890ddf114f",
+      "output_withheld": false,
+      "result": {
+        "cancelled": false,
+        "cleanup_complete": true,
+        "duration_ms": 42306,
+        "exit_code": 0,
+        "peak_job_commit_bytes": 37068800,
+        "peak_process_commit_bytes": 28938240,
+        "process_id": 111860,
+        "stderr": "w\u0000s\u0000l\u0000:\u0000 \u0000�hKm0R \u0000l\u0000o\u0000c\u0000a\u0000l\u0000h\u0000o\u0000s\u0000t\u0000 \u0000�N\u0006tM�n\f�FO*g\\�P0R \u0000W\u0000S\u0000L\u0000\u00020N\u0000A\u0000T\u0000 \u0000!j\u000f_\u000bN�v \u0000W\u0000S\u0000L\u0000 \u0000\rN/e\u0001c \u0000l\u0000o\u0000c\u0000a\u0000l\u0000h\u0000o\u0000s\u0000t\u0000 \u0000�N\u0006t\u00020\r\u0000\n\u0000",
+        "stderr_truncated": false,
+        "stdout": "library-v2-01 0\nfailed-v1-archive-01 0\nmutations-v2-01 0\narchive-v2-01 0\narchive-audit-v2-01 0\n{\n  \"started\": \"2026-10-25T00:56:24.404786+00:00\",\n  \"cpu_affinity\": [\n    0,\n    1,\n    2,\n    3\n  ],\n  \"new_emu_runs\": 0,\n  \"records\": [\n    {\n      \"argv\": [\n        \"taskset\",\n        \"-c\",\n        \"1\",\n        \"python3\",\n        \"-B\",\n        \"/home/lizufan/riscv-lab/r2s3-split-20261025-0716/source-v2/team/optimizations/o2/r2-config-reuse/caller/split/library.py\",\n        \"--qualified-build\",\n        \"/home/lizufan/riscv-lab/r2s3-split-20261025-0716/build-04\",\n        \"--output\",\n        \"/home/lizufan/riscv-lab/r2s3-split-20261025-0716/library-v2-01\"\n      ],\n      \"cpu\": 1,\n      \"started\": \"2026-10-25T00:56:24.408204+00:00\",\n      \"exit_code\": 0,\n      \"finished\": \"2026-10-25T00:56:25.013235+00:00\",\n      \"logs\": {\n        \"stdout\": \"41b41243d29a2801006869a13099f21d89112cbabef89b1d2212b5a1b5fd258a\",\n        \"stderr\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\"\n      }\n    },\n    {\n      \"argv\": [\n        \"taskset\",\n        \"-c\",\n        \"2\",\n        \"python3\",\n        \"-B\",\n        \"/mnt/d/Projects/competitions/2026-10-CIE-RISCV-XiangShan/monitor-r2s3-split-20261025-0716/preserve_failed_v1.py\",\n        \"--root\",\n        \"/home/lizufan/riscv-lab/r2s3-split-20261025-0716\",\n        \"--output\",\n        \"/home/lizufan/riscv-lab/r2s3-split-20261025-0716/failed-v1-archive-01\"\n      ],\n      \"cpu\": 2,\n      \"started\": \"2026-10-25T00:56:24.408368+00:00\",\n      \"exit_code\": 0,\n      \"finished\": \"2026-10-25T00:56:25.241581+00:00\",\n      \"logs\": {\n        \"stdout\": \"1379c9514078ac9d3fc52725e73c94d1c43da21612175137603edaa7f5a4bc27\",\n        \"stderr\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\"\n      }\n    },\n    {\n      \"argv\": [\n        \"taskset\",\n        \"-c\",\n        \"0\",\n        \"python3\",\n        \"-B\",\n        \"/home/lizufan/riscv-lab/r2s3-split-20261025-0716/source-v2/team/optimizations/o2/r2-config-reuse/caller/split/mutations.py\",\n        \"--build\",\n        \"/home/lizufan/riscv-lab/r2s3-split-20261025-0716/build-04\",\n        \"--run\",\n        \"/home/lizufan/riscv-lab/r2s3-split-20261025-0716/run-02\",\n        \"--output\",\n        \"/home/lizufan/riscv-lab/r2s3-split-20261025-0716/mutations-v2-01.json\"\n      ],\n      \"cpu\": 0,\n      \"started\": \"2026-10-25T00:56:24.407214+00:00\",\n      \"exit_code\": 0,\n      \"finished\": \"2026-10-25T00:56:40.517752+00:00\",\n      \"logs\": {\n        \"stdout\": \"2d0e4e7400250b5718687e04365bc7c70f7ad319f44ed8d8e58550822bd38683\",\n        \"stderr\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\"\n      }\n    },\n    {\n      \"argv\": [\n        \"taskset\",\n        \"-c\",\n        \"3\",\n        \"python3\",\n        \"-B\",\n        \"/home/lizufan/riscv-lab/r2s3-split-20261025-0716/source-v2/team/optimizations/o2/r2-config-reuse/caller/split/archive.py\",\n        \"--action\",\n        \"pack\",\n        \"--build\",\n        \"/home/lizufan/riscv-lab/r2s3-split-20261025-0716/build-04\",\n        \"--run\",\n        \"/home/lizufan/riscv-lab/r2s3-split-20261025-0716/run-02\",\n        \"--output\",\n        \"/home/lizufan/riscv-lab/r2s3-split-20261025-0716/archive-v2-01\"\n      ],\n      \"cpu\": 3,\n      \"started\": \"2026-10-25T00:56:24.415193+00:00\",\n      \"exit_code\": 0,\n      \"finished\": \"2026-10-25T00:56:44.222261+00:00\",\n      \"logs\": {\n        \"stdout\": \"93395e689f37aec61d586da8f4a8731b56a1cd011bf44c2062efcd59192c42d4\",\n        \"stderr\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\"\n      }\n    },\n    {\n      \"argv\": [\n        \"taskset\",\n        \"-c\",\n        \"3\",\n        \"python3\",\n        \"-B\",\n        \"/home/lizufan/riscv-lab/r2s3-split-20261025-0716/source-v2/team/optimizations/o2/r2-config-reuse/caller/split/archive.py\",\n        \"--action\",\n        \"audit-archive\",\n        \"--archive\",\n        \"/home/lizufan/riscv-lab/r2s3-split-20261025-0716/archive-v2-01\",\n        \"--output\",\n        \"/home/lizufan/riscv-lab/r2s3-split-20261025-0716/archive-audit-v2-01.json\"\n      ],\n      \"cpu\": 3,\n      \"started\": \"2026-10-25T00:56:44.222523+00:00\",\n      \"exit_code\": 0,\n      \"finished\": \"2026-10-25T00:57:04.293092+00:00\",\n      \"logs\": {\n        \"stdout\": \"06006077baa42a02bdaf94f67b0c2e4895c9797bf6a146d3d4435eec74c11cbc\",\n        \"stderr\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\"\n      }\n    }\n  ],\n  \"failures\": [],\n  \"finished\": \"2026-10-25T00:57:04.293739+00:00\",\n  \"status\": \"POSTVERIFY_PASS\"\n}\n",
+        "stdout_truncated": false,
+        "timed_out": false,
+        "total_processes": 6
+      },
+      "script_sha256": "f626653d95480cb1d379d5e4f104b918a07ef4fba19509d1b8c55312036a9dc5",
+      "started_at": "2026-10-25T00:56:21.3592645Z",
+      "status": "succeeded",
+      "updated_at": "2026-10-25T00:57:03.705396Z",
+      "worker_pid": 280380
+    },
+    "status": "succeeded"
+  }
+}
