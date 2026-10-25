@@ -1,0 +1,137 @@
+{
+  "status": "ACC8_TARGET_ARCHIVE_FRESH_SOURCE_AUDIT_PASS",
+  "contract": "r2-s3-runq-q288-acc8-target-v1",
+  "image_sha256": "64724626a9d5f4fd4953ddef4620cd0e8f90380451d6f4671345cd688caf0536",
+  "original_emu_runs": 3,
+  "new_emu_runs": 0,
+  "physical_external_inputs_revalidated": false,
+  "windows_per_normal_run": 11,
+  "formal_method_windows": 0,
+  "formal_anchor_windows": 0,
+  "replay_windows": 11,
+  "functional_calls_per_normal_run": 10,
+  "judge_fault_controls": 6,
+  "selection": {
+    "decision": "TARGET_FUNCTIONAL_AND_COST_DIAGNOSTIC_PASS",
+    "observations": [
+      {
+        "seq": 1,
+        "variant": "original",
+        "leaf": "split_gemv_8x32_vdot",
+        "dataset": 0,
+        "cycles": 122917,
+        "instructions": 92219
+      },
+      {
+        "seq": 2,
+        "variant": "original",
+        "leaf": "split_gemv_8x32_rvv4",
+        "dataset": 0,
+        "cycles": 109549,
+        "instructions": 75371
+      },
+      {
+        "seq": 3,
+        "variant": "acc8",
+        "leaf": "split_gemv_8x32_vdot",
+        "dataset": 0,
+        "cycles": 92138,
+        "instructions": 72865
+      },
+      {
+        "seq": 4,
+        "variant": "acc8",
+        "leaf": "split_gemv_8x32_rvv4",
+        "dataset": 0,
+        "cycles": 85785,
+        "instructions": 56017
+      },
+      {
+        "seq": 5,
+        "variant": "acc8",
+        "leaf": "split_gemv_8x32_vdot",
+        "dataset": 1,
+        "cycles": 89263,
+        "instructions": 72865
+      },
+      {
+        "seq": 6,
+        "variant": "acc8",
+        "leaf": "split_gemv_8x32_rvv4",
+        "dataset": 1,
+        "cycles": 85467,
+        "instructions": 56017
+      },
+      {
+        "seq": 7,
+        "variant": "acc8",
+        "leaf": "split_gemv_8x32_vdot",
+        "dataset": 0,
+        "cycles": 88879,
+        "instructions": 72865
+      },
+      {
+        "seq": 8,
+        "variant": "acc8",
+        "leaf": "split_gemv_8x32_rvv4",
+        "dataset": 0,
+        "cycles": 84809,
+        "instructions": 56017
+      },
+      {
+        "seq": 9,
+        "variant": "acc8",
+        "leaf": "split_gemv_8x32_vdot",
+        "dataset": 2,
+        "cycles": 88801,
+        "instructions": 72865
+      },
+      {
+        "seq": 10,
+        "variant": "acc8",
+        "leaf": "split_gemv_8x32_rvv4",
+        "dataset": 2,
+        "cycles": 84956,
+        "instructions": 56017
+      }
+    ],
+    "instruction_differences": {
+      "vdot": 19354,
+      "rvv4": 19354
+    },
+    "pack_cycles": 308734,
+    "pack_instructions": 430220,
+    "performance_qualified": false,
+    "selected_method": null,
+    "stable_default_changed": false,
+    "statistical_scope": "fixed order; unequal call histories; replay is not an extra sample",
+    "application_scope": "synthetic prequantized Q; no full-model/token claim"
+  },
+  "raw_sources_recomputed": true,
+  "stable_default_changed": false,
+  "hardware_changed": false,
+  "pack_windows": 1,
+  "cost_observation_windows": 10,
+  "full_q_calls_per_normal_run": 10,
+  "integer_leaf_calls_per_normal_run": 3240,
+  "probe_dots_per_normal_run": 1,
+  "committed_vdot_per_normal_run": 51841,
+  "performance_qualified": false,
+  "audit_tool_sources": {
+    "team/optimizations/o2/r2-config-reuse/caller/fixed-weight/archive.py": "2d7f69fc4b99d2f83ee276c7acc24f9a8db16e21b3a0521b7102aecd6cbba578",
+    "team/optimizations/o2/r2-config-reuse/caller/split/archive.py": "85d9823ef722e72310293d20eb731bd167804b9bd8c69e0ba0062ea16ca93990",
+    "team/optimizations/o2/repro/evidence/clean-reproduction-v1/analysis/detached-audit.py": "57f31bb70dafa3154dc22e09c635dde1f4c140405717d98053d781dc2ca43cd4",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/acc8/target/archive.py": "714117576633538bbd8dc6057ba29582a6a9208f30adefb5f1d1498cf518112d"
+  },
+  "archive_manifest_sha256": "850c6a2fbcc705f2c94e5f11964fe459eeefaa7303511802b48b98e8c3247f6d",
+  "command_sha256": "5720b9d201100c5d729aaa1cbd9847a38545d2148243ef626b5378e8b757b706",
+  "files": 153,
+  "raw_bytes": 484251933,
+  "stored_bytes": 35746587,
+  "fresh_python_process": true,
+  "full_git_history_required_by_child": false,
+  "source_checkout_required_by_launcher": true,
+  "archived_original_git_objects": 19,
+  "dependency_probe_sha256": "ccdb01888065f08ca8599b0ab4888323172163fa3691d7233e6b205e2de5e5cf",
+  "dependency_scope": "Python filesystem/enumeration and explicit subprocess paths; not an OS sandbox"
+}
