@@ -53,9 +53,11 @@ def guarded(n,offset=0):
 def guards(ptr,n):
     return C.string_at(ptr-16,16)==b'\xd1'*16 and C.string_at(ptr+n,16)==b'\xd1'*16
 
-def native(out):
+def native(out, wrapper_source=None):
     out.mkdir(parents=True,exist_ok=False)
-    for n in ('q288.c','q288.h','oracle.c'):shutil.copyfile(HERE/n,out/n)
+    for n in ('q288.c','q288.h','oracle.c'):
+        source=Path(wrapper_source) if n=='q288.c' and wrapper_source is not None else HERE/n
+        shutil.copyfile(source,out/n)
     shutil.copyfile(HERE.parent/'caller.h',out/'caller.h')
     shutil.copyfile(HERE.parent/'split/split.h',out/'split.h')
     (out/'host-shim.c').write_text(SHIM)
@@ -122,8 +124,8 @@ def native(out):
                 library_sha256=sha((out/'consumer.so').read_bytes()),native_leaf='scalar test stub; not an RTL claim')
     (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');return result
 
-def elf_controls(repo,build,out):
-    run=load('runq_control_engine',HERE/'run.py')
+def elf_controls(repo,build,out,engine=None):
+    run=engine or load('runq_control_engine',HERE/'run.py')
     blob=(build/'vdot-perf.elf').read_bytes();elf=run.g.ELF(blob)
     fixture=gen.fixtures();manifest=json.loads((build/'source/manifest.json').read_text());row=manifest['rows'][0]
     _,detail=run.traced.path(elf,row,fixture)

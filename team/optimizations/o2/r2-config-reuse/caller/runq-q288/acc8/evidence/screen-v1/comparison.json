@@ -1,0 +1,1619 @@
+{
+  "status": "ACC8_STATIC_SCREEN_PASS",
+  "contract": "r2-s3-runq-q288-acc8-screen-v1",
+  "baseline_elf_sha256": "7f2c3d6de93f979cc252379a8fe2147e0d7ff121b0a38151f4604ee832884f26",
+  "candidate_elf_sha256": "8fcb7bb4fda1ce7dcc2cf4c41f83bfed3733cee363df2cf2a3d760a737103888",
+  "comparisons": [
+    {
+      "id": 0,
+      "leaf": "split_gemv_8x32_vdot",
+      "before": {
+        "instructions": 92224,
+        "branches": 3240,
+        "calls": {
+          "q288_full": 1,
+          "split_gemv_8x32_vdot": 324
+        },
+        "vdot": 10368,
+        "pack_bytes": 0,
+        "output_bytes": 1152,
+        "fp_operations": {
+          "convert": 2592,
+          "mul": 5184,
+          "add": 2592
+        },
+        "leaf_calls": 324,
+        "weight_scale_load_sites": [
+          2147485996
+        ],
+        "exact_tile_group_arguments": true,
+        "exact_scale_footprints": true,
+        "footprint_sha256": "28c171b50c3bd4cc2198c2f150c68de6ef3148f94c019366ba6ff36e2b935af4",
+        "actual_vl_eew_checked": true,
+        "fp_values": "unknown; checked by independent oracle and DiffTest",
+        "cost_profile": {
+          "instructions_by_function": {
+            "split_measure": 16,
+            "q288_full": 39072,
+            "split_gemv_8x32_vdot": 53136
+          },
+          "opcodes": {
+            "0x13": 27660,
+            "0xf": 6,
+            "0x73": 652,
+            "0x67": 650,
+            "0x3": 2756,
+            "0x23": 161,
+            "0x37": 1,
+            "0x27": 5473,
+            "0x53": 10404,
+            "0x57": 11988,
+            "0x7": 17461,
+            "0xb": 10368,
+            "0x3b": 324,
+            "0x33": 396,
+            "0x6f": 324,
+            "0x63": 3240,
+            "0x1b": 360
+          },
+          "stack_accesses": {
+            "store": 2754,
+            "fstore": 2593,
+            "load": 3038,
+            "fload": 2881
+          },
+          "stack_access_bytes": {
+            "store": 11664,
+            "fstore": 10376,
+            "load": 12784,
+            "fload": 11528
+          },
+          "wrapper_code_bytes": 408,
+          "stack_peak_bytes": 192,
+          "scale_order": "row",
+          "cycles_measured": false
+        }
+      },
+      "after": {
+        "instructions": 72870,
+        "branches": 360,
+        "calls": {
+          "q288_full": 1,
+          "split_gemv_8x32_vdot": 324
+        },
+        "vdot": 10368,
+        "pack_bytes": 0,
+        "output_bytes": 1152,
+        "fp_operations": {
+          "convert": 2592,
+          "mul": 5184,
+          "add": 2592
+        },
+        "leaf_calls": 324,
+        "weight_scale_load_sites": [
+          2147486024,
+          2147486028,
+          2147486032,
+          2147486036,
+          2147486040,
+          2147486044,
+          2147486048,
+          2147486052
+        ],
+        "exact_tile_group_arguments": true,
+        "exact_scale_footprints": true,
+        "footprint_sha256": "489eb86567624ea7307547c7e28b2e0ee870e9e0d788b522f05856c6228b5449",
+        "actual_vl_eew_checked": true,
+        "fp_values": "unknown; checked by independent oracle and DiffTest",
+        "cost_profile": {
+          "instructions_by_function": {
+            "split_measure": 16,
+            "q288_full": 19718,
+            "split_gemv_8x32_vdot": 53136
+          },
+          "opcodes": {
+            "0x13": 17938,
+            "0xf": 6,
+            "0x73": 652,
+            "0x67": 650,
+            "0x3": 2684,
+            "0x23": 15,
+            "0x37": 3,
+            "0x27": 2888,
+            "0x33": 74,
+            "0x53": 10656,
+            "0x57": 11988,
+            "0x7": 14588,
+            "0xb": 10368,
+            "0x63": 360
+          },
+          "stack_accesses": {
+            "store": 23,
+            "fstore": 8,
+            "load": 93,
+            "fload": 8
+          },
+          "stack_access_bytes": {
+            "store": 184,
+            "fstore": 64,
+            "load": 744,
+            "fload": 64
+          },
+          "wrapper_code_bytes": 576,
+          "stack_peak_bytes": 192,
+          "scale_order": "group",
+          "cycles_measured": false
+        }
+      },
+      "instruction_reduction": 0.20985860513532273
+    },
+    {
+      "id": 1,
+      "leaf": "split_gemv_8x32_rvv0",
+      "before": {
+        "instructions": 124948,
+        "branches": 3240,
+        "calls": {
+          "q288_full": 1,
+          "split_gemv_8x32_rvv0": 324
+        },
+        "vdot": 0,
+        "pack_bytes": 0,
+        "output_bytes": 1152,
+        "fp_operations": {
+          "convert": 2592,
+          "mul": 5184,
+          "add": 2592
+        },
+        "leaf_calls": 324,
+        "weight_scale_load_sites": [
+          2147485996
+        ],
+        "exact_tile_group_arguments": true,
+        "exact_scale_footprints": true,
+        "footprint_sha256": "8fb88d45488f9a4eca9a6c89f899788b7b6cf2ed97d6ecda41e557afad5d5156",
+        "actual_vl_eew_checked": true,
+        "fp_values": "unknown; checked by independent oracle and DiffTest",
+        "cost_profile": {
+          "instructions_by_function": {
+            "split_measure": 16,
+            "q288_full": 39072,
+            "split_gemv_8x32_rvv0": 85860
+          },
+          "opcodes": {
+            "0x13": 28956,
+            "0xf": 6,
+            "0x73": 652,
+            "0x67": 650,
+            "0x3": 2756,
+            "0x23": 161,
+            "0x37": 1,
+            "0x27": 5473,
+            "0x53": 10404,
+            "0x57": 49896,
+            "0x7": 16165,
+            "0x3b": 5508,
+            "0x33": 396,
+            "0x6f": 324,
+            "0x63": 3240,
+            "0x1b": 360
+          },
+          "stack_accesses": {
+            "store": 2754,
+            "fstore": 2593,
+            "load": 3038,
+            "fload": 2881
+          },
+          "stack_access_bytes": {
+            "store": 11664,
+            "fstore": 10376,
+            "load": 12784,
+            "fload": 11528
+          },
+          "wrapper_code_bytes": 408,
+          "stack_peak_bytes": 192,
+          "scale_order": "row",
+          "cycles_measured": false
+        }
+      },
+      "after": {
+        "instructions": 105594,
+        "branches": 360,
+        "calls": {
+          "q288_full": 1,
+          "split_gemv_8x32_rvv0": 324
+        },
+        "vdot": 0,
+        "pack_bytes": 0,
+        "output_bytes": 1152,
+        "fp_operations": {
+          "convert": 2592,
+          "mul": 5184,
+          "add": 2592
+        },
+        "leaf_calls": 324,
+        "weight_scale_load_sites": [
+          2147486024,
+          2147486028,
+          2147486032,
+          2147486036,
+          2147486040,
+          2147486044,
+          2147486048,
+          2147486052
+        ],
+        "exact_tile_group_arguments": true,
+        "exact_scale_footprints": true,
+        "footprint_sha256": "c43b4b948e5d06f5f24d19664ee7e578c19477f94fc1df5416d388f9608a2f62",
+        "actual_vl_eew_checked": true,
+        "fp_values": "unknown; checked by independent oracle and DiffTest",
+        "cost_profile": {
+          "instructions_by_function": {
+            "split_measure": 16,
+            "q288_full": 19718,
+            "split_gemv_8x32_rvv0": 85860
+          },
+          "opcodes": {
+            "0x13": 19234,
+            "0xf": 6,
+            "0x73": 652,
+            "0x67": 650,
+            "0x3": 2684,
+            "0x23": 15,
+            "0x37": 3,
+            "0x27": 2888,
+            "0x33": 74,
+            "0x53": 10656,
+            "0x57": 49896,
+            "0x7": 13292,
+            "0x3b": 5184,
+            "0x63": 360
+          },
+          "stack_accesses": {
+            "store": 23,
+            "fstore": 8,
+            "load": 93,
+            "fload": 8
+          },
+          "stack_access_bytes": {
+            "store": 184,
+            "fstore": 64,
+            "load": 744,
+            "fload": 64
+          },
+          "wrapper_code_bytes": 576,
+          "stack_peak_bytes": 192,
+          "scale_order": "group",
+          "cycles_measured": false
+        }
+      },
+      "instruction_reduction": 0.15489643691775778
+    },
+    {
+      "id": 2,
+      "leaf": "split_gemv_8x32_rvv1",
+      "before": {
+        "instructions": 99028,
+        "branches": 3240,
+        "calls": {
+          "q288_full": 1,
+          "split_gemv_8x32_rvv1": 324
+        },
+        "vdot": 0,
+        "pack_bytes": 0,
+        "output_bytes": 1152,
+        "fp_operations": {
+          "convert": 2592,
+          "mul": 5184,
+          "add": 2592
+        },
+        "leaf_calls": 324,
+        "weight_scale_load_sites": [
+          2147485996
+        ],
+        "exact_tile_group_arguments": true,
+        "exact_scale_footprints": true,
+        "footprint_sha256": "02766b77c3423f7bdf709118d03934359113fb963585c8cbbe039e10c8808971",
+        "actual_vl_eew_checked": true,
+        "fp_values": "unknown; checked by independent oracle and DiffTest",
+        "cost_profile": {
+          "instructions_by_function": {
+            "split_measure": 16,
+            "q288_full": 39072,
+            "split_gemv_8x32_rvv1": 59940
+          },
+          "opcodes": {
+            "0x13": 24420,
+            "0xf": 6,
+            "0x73": 652,
+            "0x67": 650,
+            "0x3": 2756,
+            "0x23": 161,
+            "0x37": 1,
+            "0x27": 5473,
+            "0x53": 10404,
+            "0x57": 33048,
+            "0x7": 11629,
+            "0x3b": 5508,
+            "0x33": 396,
+            "0x6f": 324,
+            "0x63": 3240,
+            "0x1b": 360
+          },
+          "stack_accesses": {
+            "store": 2754,
+            "fstore": 2593,
+            "load": 3038,
+            "fload": 2881
+          },
+          "stack_access_bytes": {
+            "store": 11664,
+            "fstore": 10376,
+            "load": 12784,
+            "fload": 11528
+          },
+          "wrapper_code_bytes": 408,
+          "stack_peak_bytes": 192,
+          "scale_order": "row",
+          "cycles_measured": false
+        }
+      },
+      "after": {
+        "instructions": 79674,
+        "branches": 360,
+        "calls": {
+          "q288_full": 1,
+          "split_gemv_8x32_rvv1": 324
+        },
+        "vdot": 0,
+        "pack_bytes": 0,
+        "output_bytes": 1152,
+        "fp_operations": {
+          "convert": 2592,
+          "mul": 5184,
+          "add": 2592
+        },
+        "leaf_calls": 324,
+        "weight_scale_load_sites": [
+          2147486024,
+          2147486028,
+          2147486032,
+          2147486036,
+          2147486040,
+          2147486044,
+          2147486048,
+          2147486052
+        ],
+        "exact_tile_group_arguments": true,
+        "exact_scale_footprints": true,
+        "footprint_sha256": "5aa9c2d9ac144defd13b538fc38132455245d72115defb819ea418dccfb5c5ca",
+        "actual_vl_eew_checked": true,
+        "fp_values": "unknown; checked by independent oracle and DiffTest",
+        "cost_profile": {
+          "instructions_by_function": {
+            "split_measure": 16,
+            "q288_full": 19718,
+            "split_gemv_8x32_rvv1": 59940
+          },
+          "opcodes": {
+            "0x13": 14698,
+            "0xf": 6,
+            "0x73": 652,
+            "0x67": 650,
+            "0x3": 2684,
+            "0x23": 15,
+            "0x37": 3,
+            "0x27": 2888,
+            "0x33": 74,
+            "0x53": 10656,
+            "0x57": 33048,
+            "0x7": 8756,
+            "0x3b": 5184,
+            "0x63": 360
+          },
+          "stack_accesses": {
+            "store": 23,
+            "fstore": 8,
+            "load": 93,
+            "fload": 8
+          },
+          "stack_access_bytes": {
+            "store": 184,
+            "fstore": 64,
+            "load": 744,
+            "fload": 64
+          },
+          "wrapper_code_bytes": 576,
+          "stack_peak_bytes": 192,
+          "scale_order": "group",
+          "cycles_measured": false
+        }
+      },
+      "instruction_reduction": 0.1954396736276609
+    },
+    {
+      "id": 3,
+      "leaf": "split_gemv_8x32_rvv2",
+      "before": {
+        "instructions": 93844,
+        "branches": 3240,
+        "calls": {
+          "q288_full": 1,
+          "split_gemv_8x32_rvv2": 324
+        },
+        "vdot": 0,
+        "pack_bytes": 0,
+        "output_bytes": 1152,
+        "fp_operations": {
+          "convert": 2592,
+          "mul": 5184,
+          "add": 2592
+        },
+        "leaf_calls": 324,
+        "weight_scale_load_sites": [
+          2147485996
+        ],
+        "exact_tile_group_arguments": true,
+        "exact_scale_footprints": true,
+        "footprint_sha256": "8fb88d45488f9a4eca9a6c89f899788b7b6cf2ed97d6ecda41e557afad5d5156",
+        "actual_vl_eew_checked": true,
+        "fp_values": "unknown; checked by independent oracle and DiffTest",
+        "cost_profile": {
+          "instructions_by_function": {
+            "split_measure": 16,
+            "q288_full": 39072,
+            "split_gemv_8x32_rvv2": 54756
+          },
+          "opcodes": {
+            "0x13": 26364,
+            "0xf": 6,
+            "0x73": 652,
+            "0x67": 650,
+            "0x3": 2756,
+            "0x23": 161,
+            "0x37": 1,
+            "0x27": 5473,
+            "0x53": 10404,
+            "0x57": 26568,
+            "0x7": 16165,
+            "0x3b": 324,
+            "0x33": 396,
+            "0x6f": 324,
+            "0x63": 3240,
+            "0x1b": 360
+          },
+          "stack_accesses": {
+            "store": 2754,
+            "fstore": 2593,
+            "load": 3038,
+            "fload": 2881
+          },
+          "stack_access_bytes": {
+            "store": 11664,
+            "fstore": 10376,
+            "load": 12784,
+            "fload": 11528
+          },
+          "wrapper_code_bytes": 408,
+          "stack_peak_bytes": 192,
+          "scale_order": "row",
+          "cycles_measured": false
+        }
+      },
+      "after": {
+        "instructions": 74490,
+        "branches": 360,
+        "calls": {
+          "q288_full": 1,
+          "split_gemv_8x32_rvv2": 324
+        },
+        "vdot": 0,
+        "pack_bytes": 0,
+        "output_bytes": 1152,
+        "fp_operations": {
+          "convert": 2592,
+          "mul": 5184,
+          "add": 2592
+        },
+        "leaf_calls": 324,
+        "weight_scale_load_sites": [
+          2147486024,
+          2147486028,
+          2147486032,
+          2147486036,
+          2147486040,
+          2147486044,
+          2147486048,
+          2147486052
+        ],
+        "exact_tile_group_arguments": true,
+        "exact_scale_footprints": true,
+        "footprint_sha256": "c43b4b948e5d06f5f24d19664ee7e578c19477f94fc1df5416d388f9608a2f62",
+        "actual_vl_eew_checked": true,
+        "fp_values": "unknown; checked by independent oracle and DiffTest",
+        "cost_profile": {
+          "instructions_by_function": {
+            "split_measure": 16,
+            "q288_full": 19718,
+            "split_gemv_8x32_rvv2": 54756
+          },
+          "opcodes": {
+            "0x13": 16642,
+            "0xf": 6,
+            "0x73": 652,
+            "0x67": 650,
+            "0x3": 2684,
+            "0x23": 15,
+            "0x37": 3,
+            "0x27": 2888,
+            "0x33": 74,
+            "0x53": 10656,
+            "0x57": 26568,
+            "0x7": 13292,
+            "0x63": 360
+          },
+          "stack_accesses": {
+            "store": 23,
+            "fstore": 8,
+            "load": 93,
+            "fload": 8
+          },
+          "stack_access_bytes": {
+            "store": 184,
+            "fstore": 64,
+            "load": 744,
+            "fload": 64
+          },
+          "wrapper_code_bytes": 576,
+          "stack_peak_bytes": 192,
+          "scale_order": "group",
+          "cycles_measured": false
+        }
+      },
+      "instruction_reduction": 0.2062358808234943
+    },
+    {
+      "id": 4,
+      "leaf": "split_gemv_8x32_rvv3",
+      "before": {
+        "instructions": 75700,
+        "branches": 3240,
+        "calls": {
+          "q288_full": 1,
+          "split_gemv_8x32_rvv3": 324
+        },
+        "vdot": 0,
+        "pack_bytes": 0,
+        "output_bytes": 1152,
+        "fp_operations": {
+          "convert": 2592,
+          "mul": 5184,
+          "add": 2592
+        },
+        "leaf_calls": 324,
+        "weight_scale_load_sites": [
+          2147485996
+        ],
+        "exact_tile_group_arguments": true,
+        "exact_scale_footprints": true,
+        "footprint_sha256": "02766b77c3423f7bdf709118d03934359113fb963585c8cbbe039e10c8808971",
+        "actual_vl_eew_checked": true,
+        "fp_values": "unknown; checked by independent oracle and DiffTest",
+        "cost_profile": {
+          "instructions_by_function": {
+            "split_measure": 16,
+            "q288_full": 39072,
+            "split_gemv_8x32_rvv3": 36612
+          },
+          "opcodes": {
+            "0x13": 21828,
+            "0xf": 6,
+            "0x73": 652,
+            "0x67": 650,
+            "0x3": 2756,
+            "0x23": 161,
+            "0x37": 1,
+            "0x27": 5473,
+            "0x53": 10404,
+            "0x57": 17496,
+            "0x7": 11629,
+            "0x3b": 324,
+            "0x33": 396,
+            "0x6f": 324,
+            "0x63": 3240,
+            "0x1b": 360
+          },
+          "stack_accesses": {
+            "store": 2754,
+            "fstore": 2593,
+            "load": 3038,
+            "fload": 2881
+          },
+          "stack_access_bytes": {
+            "store": 11664,
+            "fstore": 10376,
+            "load": 12784,
+            "fload": 11528
+          },
+          "wrapper_code_bytes": 408,
+          "stack_peak_bytes": 192,
+          "scale_order": "row",
+          "cycles_measured": false
+        }
+      },
+      "after": {
+        "instructions": 56346,
+        "branches": 360,
+        "calls": {
+          "q288_full": 1,
+          "split_gemv_8x32_rvv3": 324
+        },
+        "vdot": 0,
+        "pack_bytes": 0,
+        "output_bytes": 1152,
+        "fp_operations": {
+          "convert": 2592,
+          "mul": 5184,
+          "add": 2592
+        },
+        "leaf_calls": 324,
+        "weight_scale_load_sites": [
+          2147486024,
+          2147486028,
+          2147486032,
+          2147486036,
+          2147486040,
+          2147486044,
+          2147486048,
+          2147486052
+        ],
+        "exact_tile_group_arguments": true,
+        "exact_scale_footprints": true,
+        "footprint_sha256": "5aa9c2d9ac144defd13b538fc38132455245d72115defb819ea418dccfb5c5ca",
+        "actual_vl_eew_checked": true,
+        "fp_values": "unknown; checked by independent oracle and DiffTest",
+        "cost_profile": {
+          "instructions_by_function": {
+            "split_measure": 16,
+            "q288_full": 19718,
+            "split_gemv_8x32_rvv3": 36612
+          },
+          "opcodes": {
+            "0x13": 12106,
+            "0xf": 6,
+            "0x73": 652,
+            "0x67": 650,
+            "0x3": 2684,
+            "0x23": 15,
+            "0x37": 3,
+            "0x27": 2888,
+            "0x33": 74,
+            "0x53": 10656,
+            "0x57": 17496,
+            "0x7": 8756,
+            "0x63": 360
+          },
+          "stack_accesses": {
+            "store": 23,
+            "fstore": 8,
+            "load": 93,
+            "fload": 8
+          },
+          "stack_access_bytes": {
+            "store": 184,
+            "fstore": 64,
+            "load": 744,
+            "fload": 64
+          },
+          "wrapper_code_bytes": 576,
+          "stack_peak_bytes": 192,
+          "scale_order": "group",
+          "cycles_measured": false
+        }
+      },
+      "instruction_reduction": 0.255667107001321
+    },
+    {
+      "id": 5,
+      "leaf": "split_gemv_8x32_rvv4",
+      "before": {
+        "instructions": 75376,
+        "branches": 3240,
+        "calls": {
+          "q288_full": 1,
+          "split_gemv_8x32_rvv4": 324
+        },
+        "vdot": 0,
+        "pack_bytes": 0,
+        "output_bytes": 1152,
+        "fp_operations": {
+          "convert": 2592,
+          "mul": 5184,
+          "add": 2592
+        },
+        "leaf_calls": 324,
+        "weight_scale_load_sites": [
+          2147485996
+        ],
+        "exact_tile_group_arguments": true,
+        "exact_scale_footprints": true,
+        "footprint_sha256": "02766b77c3423f7bdf709118d03934359113fb963585c8cbbe039e10c8808971",
+        "actual_vl_eew_checked": true,
+        "fp_values": "unknown; checked by independent oracle and DiffTest",
+        "cost_profile": {
+          "instructions_by_function": {
+            "split_measure": 16,
+            "q288_full": 39072,
+            "split_gemv_8x32_rvv4": 36288
+          },
+          "opcodes": {
+            "0x13": 21828,
+            "0xf": 6,
+            "0x73": 652,
+            "0x67": 650,
+            "0x3": 2756,
+            "0x23": 161,
+            "0x37": 1,
+            "0x27": 5473,
+            "0x53": 10404,
+            "0x57": 17172,
+            "0x7": 11629,
+            "0x3b": 324,
+            "0x33": 396,
+            "0x6f": 324,
+            "0x63": 3240,
+            "0x1b": 360
+          },
+          "stack_accesses": {
+            "store": 2754,
+            "fstore": 2593,
+            "load": 3038,
+            "fload": 2881
+          },
+          "stack_access_bytes": {
+            "store": 11664,
+            "fstore": 10376,
+            "load": 12784,
+            "fload": 11528
+          },
+          "wrapper_code_bytes": 408,
+          "stack_peak_bytes": 192,
+          "scale_order": "row",
+          "cycles_measured": false
+        }
+      },
+      "after": {
+        "instructions": 56022,
+        "branches": 360,
+        "calls": {
+          "q288_full": 1,
+          "split_gemv_8x32_rvv4": 324
+        },
+        "vdot": 0,
+        "pack_bytes": 0,
+        "output_bytes": 1152,
+        "fp_operations": {
+          "convert": 2592,
+          "mul": 5184,
+          "add": 2592
+        },
+        "leaf_calls": 324,
+        "weight_scale_load_sites": [
+          2147486024,
+          2147486028,
+          2147486032,
+          2147486036,
+          2147486040,
+          2147486044,
+          2147486048,
+          2147486052
+        ],
+        "exact_tile_group_arguments": true,
+        "exact_scale_footprints": true,
+        "footprint_sha256": "5aa9c2d9ac144defd13b538fc38132455245d72115defb819ea418dccfb5c5ca",
+        "actual_vl_eew_checked": true,
+        "fp_values": "unknown; checked by independent oracle and DiffTest",
+        "cost_profile": {
+          "instructions_by_function": {
+            "split_measure": 16,
+            "q288_full": 19718,
+            "split_gemv_8x32_rvv4": 36288
+          },
+          "opcodes": {
+            "0x13": 12106,
+            "0xf": 6,
+            "0x73": 652,
+            "0x67": 650,
+            "0x3": 2684,
+            "0x23": 15,
+            "0x37": 3,
+            "0x27": 2888,
+            "0x33": 74,
+            "0x53": 10656,
+            "0x57": 17172,
+            "0x7": 8756,
+            "0x63": 360
+          },
+          "stack_accesses": {
+            "store": 23,
+            "fstore": 8,
+            "load": 93,
+            "fload": 8
+          },
+          "stack_access_bytes": {
+            "store": 184,
+            "fstore": 64,
+            "load": 744,
+            "fload": 64
+          },
+          "wrapper_code_bytes": 576,
+          "stack_peak_bytes": 192,
+          "scale_order": "group",
+          "cycles_measured": false
+        }
+      },
+      "instruction_reduction": 0.2567660793886648
+    }
+  ],
+  "verification": {
+    "status": "RUNQ_Q288_ELF_ADDRESS_AND_CALL_PATH_PASS",
+    "contract": "r2-s3-runq-q288-acc8-screen-v1",
+    "image_sha256": "ee19bba14a0b28967581473d444fa362eb874fef522f796a166f8b279d8d2ce9",
+    "certificates": [
+      {
+        "old": "config_reuse_gemv_8x32_reuse_vdot",
+        "new": "split_gemv_8x32_vdot",
+        "bytes": 656,
+        "old_sha256": "3bca83077ccd7529ff6f80c9002441c99d27d3113aa8b10769ad26f3c4e9c64d",
+        "new_sha256": "3c0a2c78c5f3f7ae9ca09ad74ab7e63fa9df936eea1059850ae55cf1eedc624b",
+        "changed_words": [
+          0,
+          1,
+          5,
+          7,
+          9,
+          11
+        ],
+        "x_address_words": 4,
+        "vector_load_bytes": 8,
+        "arithmetic_csr_and_stores_exact": true
+      },
+      {
+        "old": "r4_gemv_8x32_basic_rvv",
+        "new": "split_gemv_8x32_rvv0",
+        "bytes": 1060,
+        "old_sha256": "6f7c75562128eecc42c54ef840d0a6d04bd9446a4703e595ee61ffa432b5ecbe",
+        "new_sha256": "b17cf05f583cdfe98080cf329ee22b6ce7250d1f029bcc1604b774403006c1b5",
+        "changed_words": [
+          0,
+          1,
+          7,
+          20,
+          37,
+          50,
+          67,
+          80,
+          97,
+          110,
+          127,
+          140,
+          157,
+          170,
+          187,
+          200,
+          217,
+          230
+        ],
+        "x_address_words": 16,
+        "vector_load_bytes": 16,
+        "arithmetic_csr_and_stores_exact": true
+      },
+      {
+        "old": "r4_gemv_8x32_reuse_rvv",
+        "new": "split_gemv_8x32_rvv1",
+        "bytes": 740,
+        "old_sha256": "20ee57db9abe4bf501608dc6680ff9ccc39c7ccd5fcadb637026da20edc2afc4",
+        "new_sha256": "b1d6b2d13452386e7aeaf62937e58eca4780d3a6c72c22bcd7cf8cc1bd35dd9f",
+        "changed_words": [
+          0,
+          1,
+          6,
+          9
+        ],
+        "x_address_words": 2,
+        "vector_load_bytes": 16,
+        "arithmetic_csr_and_stores_exact": true
+      },
+      {
+        "old": "config_reuse_gemv_8x32_basic_rvv",
+        "new": "split_gemv_8x32_rvv2",
+        "bytes": 676,
+        "old_sha256": "c33e1fb01a939cf68d4a867a5daf6b5fe4dc7bf9536d644808949ef555052def",
+        "new_sha256": "308e724cf6fe6eac3a38dff3c1cd8c4cf373aad8ec97faf752917e18c749b585",
+        "changed_words": [
+          0,
+          1,
+          8,
+          16,
+          26,
+          34,
+          44,
+          52,
+          62,
+          70,
+          80,
+          88,
+          98,
+          106,
+          116,
+          124,
+          134,
+          142
+        ],
+        "x_address_words": 16,
+        "vector_load_bytes": 16,
+        "arithmetic_csr_and_stores_exact": true
+      },
+      {
+        "old": "firstdot_gemv_8x32_reuse_rvv",
+        "new": "split_gemv_8x32_rvv3",
+        "bytes": 452,
+        "old_sha256": "f304ee128fbac736755d1fe7d03b6d8e8f6ea30e625dc1937f379445e6c23137",
+        "new_sha256": "2e977143be3bfde28a8c1b824686f8265fd41484931d05715ecf44d3596377d6",
+        "changed_words": [
+          0,
+          1,
+          6,
+          9
+        ],
+        "x_address_words": 2,
+        "vector_load_bytes": 16,
+        "arithmetic_csr_and_stores_exact": true
+      },
+      {
+        "old": "config_reuse_gemv_8x32_reuse_rvv",
+        "new": "split_gemv_8x32_rvv4",
+        "bytes": 448,
+        "old_sha256": "ea86a50cd67113246dae98ef7ce8db4e0d1383f453d889c6aad6cf2579857513",
+        "new_sha256": "8842f65de742638a3d8c28e4bea273acf6841c4aab6819f282017803d0b6f59c",
+        "changed_words": [
+          0,
+          1,
+          6,
+          8
+        ],
+        "x_address_words": 2,
+        "vector_load_bytes": 16,
+        "arithmetic_csr_and_stores_exact": true
+      }
+    ],
+    "paths": {
+      "0": {
+        "instructions": 72870,
+        "branches": 360,
+        "calls": {
+          "q288_full": 1,
+          "split_gemv_8x32_vdot": 324
+        },
+        "vdot": 10368,
+        "pack_bytes": 0,
+        "output_bytes": 1152,
+        "fp_operations": {
+          "convert": 2592,
+          "mul": 5184,
+          "add": 2592
+        },
+        "leaf_calls": 324,
+        "weight_scale_load_sites": [
+          2147486024,
+          2147486028,
+          2147486032,
+          2147486036,
+          2147486040,
+          2147486044,
+          2147486048,
+          2147486052
+        ],
+        "exact_tile_group_arguments": true,
+        "exact_scale_footprints": true,
+        "footprint_sha256": "489eb86567624ea7307547c7e28b2e0ee870e9e0d788b522f05856c6228b5449",
+        "actual_vl_eew_checked": true,
+        "fp_values": "unknown; checked by independent oracle and DiffTest",
+        "cost_profile": {
+          "instructions_by_function": {
+            "split_measure": 16,
+            "q288_full": 19718,
+            "split_gemv_8x32_vdot": 53136
+          },
+          "opcodes": {
+            "0x13": 17938,
+            "0xf": 6,
+            "0x73": 652,
+            "0x67": 650,
+            "0x3": 2684,
+            "0x23": 15,
+            "0x37": 3,
+            "0x27": 2888,
+            "0x33": 74,
+            "0x53": 10656,
+            "0x57": 11988,
+            "0x7": 14588,
+            "0xb": 10368,
+            "0x63": 360
+          },
+          "stack_accesses": {
+            "store": 23,
+            "fstore": 8,
+            "load": 93,
+            "fload": 8
+          },
+          "stack_access_bytes": {
+            "store": 184,
+            "fstore": 64,
+            "load": 744,
+            "fload": 64
+          },
+          "wrapper_code_bytes": 576,
+          "stack_peak_bytes": 192,
+          "scale_order": "group",
+          "cycles_measured": false
+        },
+        "path_sha256": "f90bfb60a54801ce24486c835d75d52bec8b6f223784f54816d1397f6fba1c46"
+      },
+      "1": {
+        "instructions": 105594,
+        "branches": 360,
+        "calls": {
+          "q288_full": 1,
+          "split_gemv_8x32_rvv0": 324
+        },
+        "vdot": 0,
+        "pack_bytes": 0,
+        "output_bytes": 1152,
+        "fp_operations": {
+          "convert": 2592,
+          "mul": 5184,
+          "add": 2592
+        },
+        "leaf_calls": 324,
+        "weight_scale_load_sites": [
+          2147486024,
+          2147486028,
+          2147486032,
+          2147486036,
+          2147486040,
+          2147486044,
+          2147486048,
+          2147486052
+        ],
+        "exact_tile_group_arguments": true,
+        "exact_scale_footprints": true,
+        "footprint_sha256": "c43b4b948e5d06f5f24d19664ee7e578c19477f94fc1df5416d388f9608a2f62",
+        "actual_vl_eew_checked": true,
+        "fp_values": "unknown; checked by independent oracle and DiffTest",
+        "cost_profile": {
+          "instructions_by_function": {
+            "split_measure": 16,
+            "q288_full": 19718,
+            "split_gemv_8x32_rvv0": 85860
+          },
+          "opcodes": {
+            "0x13": 19234,
+            "0xf": 6,
+            "0x73": 652,
+            "0x67": 650,
+            "0x3": 2684,
+            "0x23": 15,
+            "0x37": 3,
+            "0x27": 2888,
+            "0x33": 74,
+            "0x53": 10656,
+            "0x57": 49896,
+            "0x7": 13292,
+            "0x3b": 5184,
+            "0x63": 360
+          },
+          "stack_accesses": {
+            "store": 23,
+            "fstore": 8,
+            "load": 93,
+            "fload": 8
+          },
+          "stack_access_bytes": {
+            "store": 184,
+            "fstore": 64,
+            "load": 744,
+            "fload": 64
+          },
+          "wrapper_code_bytes": 576,
+          "stack_peak_bytes": 192,
+          "scale_order": "group",
+          "cycles_measured": false
+        },
+        "path_sha256": "8e27e7d685f91fcfdcbf83a4120530f4ed435b2a589ce58dac05a27361cceb64"
+      },
+      "2": {
+        "instructions": 79674,
+        "branches": 360,
+        "calls": {
+          "q288_full": 1,
+          "split_gemv_8x32_rvv1": 324
+        },
+        "vdot": 0,
+        "pack_bytes": 0,
+        "output_bytes": 1152,
+        "fp_operations": {
+          "convert": 2592,
+          "mul": 5184,
+          "add": 2592
+        },
+        "leaf_calls": 324,
+        "weight_scale_load_sites": [
+          2147486024,
+          2147486028,
+          2147486032,
+          2147486036,
+          2147486040,
+          2147486044,
+          2147486048,
+          2147486052
+        ],
+        "exact_tile_group_arguments": true,
+        "exact_scale_footprints": true,
+        "footprint_sha256": "5aa9c2d9ac144defd13b538fc38132455245d72115defb819ea418dccfb5c5ca",
+        "actual_vl_eew_checked": true,
+        "fp_values": "unknown; checked by independent oracle and DiffTest",
+        "cost_profile": {
+          "instructions_by_function": {
+            "split_measure": 16,
+            "q288_full": 19718,
+            "split_gemv_8x32_rvv1": 59940
+          },
+          "opcodes": {
+            "0x13": 14698,
+            "0xf": 6,
+            "0x73": 652,
+            "0x67": 650,
+            "0x3": 2684,
+            "0x23": 15,
+            "0x37": 3,
+            "0x27": 2888,
+            "0x33": 74,
+            "0x53": 10656,
+            "0x57": 33048,
+            "0x7": 8756,
+            "0x3b": 5184,
+            "0x63": 360
+          },
+          "stack_accesses": {
+            "store": 23,
+            "fstore": 8,
+            "load": 93,
+            "fload": 8
+          },
+          "stack_access_bytes": {
+            "store": 184,
+            "fstore": 64,
+            "load": 744,
+            "fload": 64
+          },
+          "wrapper_code_bytes": 576,
+          "stack_peak_bytes": 192,
+          "scale_order": "group",
+          "cycles_measured": false
+        },
+        "path_sha256": "562f4ffc366620f399667cd53c7ef5cf9ea228a1644d4642a0a942f3aa6bac4b"
+      },
+      "3": {
+        "instructions": 74490,
+        "branches": 360,
+        "calls": {
+          "q288_full": 1,
+          "split_gemv_8x32_rvv2": 324
+        },
+        "vdot": 0,
+        "pack_bytes": 0,
+        "output_bytes": 1152,
+        "fp_operations": {
+          "convert": 2592,
+          "mul": 5184,
+          "add": 2592
+        },
+        "leaf_calls": 324,
+        "weight_scale_load_sites": [
+          2147486024,
+          2147486028,
+          2147486032,
+          2147486036,
+          2147486040,
+          2147486044,
+          2147486048,
+          2147486052
+        ],
+        "exact_tile_group_arguments": true,
+        "exact_scale_footprints": true,
+        "footprint_sha256": "c43b4b948e5d06f5f24d19664ee7e578c19477f94fc1df5416d388f9608a2f62",
+        "actual_vl_eew_checked": true,
+        "fp_values": "unknown; checked by independent oracle and DiffTest",
+        "cost_profile": {
+          "instructions_by_function": {
+            "split_measure": 16,
+            "q288_full": 19718,
+            "split_gemv_8x32_rvv2": 54756
+          },
+          "opcodes": {
+            "0x13": 16642,
+            "0xf": 6,
+            "0x73": 652,
+            "0x67": 650,
+            "0x3": 2684,
+            "0x23": 15,
+            "0x37": 3,
+            "0x27": 2888,
+            "0x33": 74,
+            "0x53": 10656,
+            "0x57": 26568,
+            "0x7": 13292,
+            "0x63": 360
+          },
+          "stack_accesses": {
+            "store": 23,
+            "fstore": 8,
+            "load": 93,
+            "fload": 8
+          },
+          "stack_access_bytes": {
+            "store": 184,
+            "fstore": 64,
+            "load": 744,
+            "fload": 64
+          },
+          "wrapper_code_bytes": 576,
+          "stack_peak_bytes": 192,
+          "scale_order": "group",
+          "cycles_measured": false
+        },
+        "path_sha256": "3bdb28846f351c4fa572e56b2b45cc15c20ac5f2e65f73996e698d27ea7832d9"
+      },
+      "4": {
+        "instructions": 56346,
+        "branches": 360,
+        "calls": {
+          "q288_full": 1,
+          "split_gemv_8x32_rvv3": 324
+        },
+        "vdot": 0,
+        "pack_bytes": 0,
+        "output_bytes": 1152,
+        "fp_operations": {
+          "convert": 2592,
+          "mul": 5184,
+          "add": 2592
+        },
+        "leaf_calls": 324,
+        "weight_scale_load_sites": [
+          2147486024,
+          2147486028,
+          2147486032,
+          2147486036,
+          2147486040,
+          2147486044,
+          2147486048,
+          2147486052
+        ],
+        "exact_tile_group_arguments": true,
+        "exact_scale_footprints": true,
+        "footprint_sha256": "5aa9c2d9ac144defd13b538fc38132455245d72115defb819ea418dccfb5c5ca",
+        "actual_vl_eew_checked": true,
+        "fp_values": "unknown; checked by independent oracle and DiffTest",
+        "cost_profile": {
+          "instructions_by_function": {
+            "split_measure": 16,
+            "q288_full": 19718,
+            "split_gemv_8x32_rvv3": 36612
+          },
+          "opcodes": {
+            "0x13": 12106,
+            "0xf": 6,
+            "0x73": 652,
+            "0x67": 650,
+            "0x3": 2684,
+            "0x23": 15,
+            "0x37": 3,
+            "0x27": 2888,
+            "0x33": 74,
+            "0x53": 10656,
+            "0x57": 17496,
+            "0x7": 8756,
+            "0x63": 360
+          },
+          "stack_accesses": {
+            "store": 23,
+            "fstore": 8,
+            "load": 93,
+            "fload": 8
+          },
+          "stack_access_bytes": {
+            "store": 184,
+            "fstore": 64,
+            "load": 744,
+            "fload": 64
+          },
+          "wrapper_code_bytes": 576,
+          "stack_peak_bytes": 192,
+          "scale_order": "group",
+          "cycles_measured": false
+        },
+        "path_sha256": "0988b2b8becc4229db3a4b096903e53912547349ddc74acda9fb71636ca1be3c"
+      },
+      "5": {
+        "instructions": 56022,
+        "branches": 360,
+        "calls": {
+          "q288_full": 1,
+          "split_gemv_8x32_rvv4": 324
+        },
+        "vdot": 0,
+        "pack_bytes": 0,
+        "output_bytes": 1152,
+        "fp_operations": {
+          "convert": 2592,
+          "mul": 5184,
+          "add": 2592
+        },
+        "leaf_calls": 324,
+        "weight_scale_load_sites": [
+          2147486024,
+          2147486028,
+          2147486032,
+          2147486036,
+          2147486040,
+          2147486044,
+          2147486048,
+          2147486052
+        ],
+        "exact_tile_group_arguments": true,
+        "exact_scale_footprints": true,
+        "footprint_sha256": "5aa9c2d9ac144defd13b538fc38132455245d72115defb819ea418dccfb5c5ca",
+        "actual_vl_eew_checked": true,
+        "fp_values": "unknown; checked by independent oracle and DiffTest",
+        "cost_profile": {
+          "instructions_by_function": {
+            "split_measure": 16,
+            "q288_full": 19718,
+            "split_gemv_8x32_rvv4": 36288
+          },
+          "opcodes": {
+            "0x13": 12106,
+            "0xf": 6,
+            "0x73": 652,
+            "0x67": 650,
+            "0x3": 2684,
+            "0x23": 15,
+            "0x37": 3,
+            "0x27": 2888,
+            "0x33": 74,
+            "0x53": 10656,
+            "0x57": 17172,
+            "0x7": 8756,
+            "0x63": 360
+          },
+          "stack_accesses": {
+            "store": 23,
+            "fstore": 8,
+            "load": 93,
+            "fload": 8
+          },
+          "stack_access_bytes": {
+            "store": 184,
+            "fstore": 64,
+            "load": 744,
+            "fload": 64
+          },
+          "wrapper_code_bytes": 576,
+          "stack_peak_bytes": 192,
+          "scale_order": "group",
+          "cycles_measured": false
+        },
+        "path_sha256": "18ebbabcc113f5e02ac8ca03e8a53b5505aa6b2e81851f21a5fab48edef61ecf"
+      },
+      "6": {
+        "instructions": 430225,
+        "branches": 85896,
+        "calls": {
+          "q288_pack": 1
+        },
+        "vdot": 0,
+        "pack_bytes": 82944,
+        "output_bytes": 82944,
+        "fp_operations": {},
+        "leaf_calls": 0,
+        "weight_scale_load_sites": [],
+        "exact_tile_group_arguments": true,
+        "exact_scale_footprints": true,
+        "footprint_sha256": "2a71b7e0505034f0ad11e3e8772d68532472a0be2897fc48b4c261b72e34f07b",
+        "actual_vl_eew_checked": true,
+        "fp_values": "unknown; checked by independent oracle and DiffTest",
+        "cost_profile": {
+          "instructions_by_function": {
+            "split_measure": 16,
+            "q288_pack": 430209
+          },
+          "opcodes": {
+            "0x13": 177310,
+            "0xf": 6,
+            "0x73": 4,
+            "0x67": 2,
+            "0x3": 82946,
+            "0x37": 1,
+            "0x1b": 720,
+            "0x33": 396,
+            "0x23": 82944,
+            "0x63": 85896
+          },
+          "stack_accesses": {},
+          "stack_access_bytes": {},
+          "wrapper_code_bytes": 132,
+          "stack_peak_bytes": 0,
+          "scale_order": "group",
+          "cycles_measured": false
+        },
+        "path_sha256": "8293bff563d2ab6e7e2385abd605b39c370efd155d428d998bdf2f660ee2fad8"
+      }
+    },
+    "windows": 17,
+    "actual_c_compilation": {
+      "main": [
+        "/usr/bin/riscv64-linux-gnu-gcc",
+        "-std=gnu11",
+        "-ffreestanding",
+        "-fno-tree-vectorize",
+        "-fno-tree-slp-vectorize",
+        "-fno-tree-loop-distribute-patterns",
+        "-fno-ipa-cp",
+        "-fno-ipa-icf",
+        "-fno-optimize-sibling-calls",
+        "-fno-lto",
+        "-mno-relax",
+        "-mabi=lp64d",
+        "-ffp-contract=off",
+        "-fno-fast-math",
+        "-fno-pic",
+        "-march=rv64gv",
+        "-mcmodel=medany",
+        "-static",
+        "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/am/src/nemu/include",
+        "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/am/src/xs/include",
+        "-DISA_H=\"riscv.h\"",
+        "-O2",
+        "-MMD",
+        "-Wall",
+        "-Werror",
+        "-ggdb",
+        "-I/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/runq-q288-acc8-20261026-0528/build-01/source",
+        "-I/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/runq-q288-acc8-20261026-0528/build-01/source/include/",
+        "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/libs/klib/include/",
+        "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/am/",
+        "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/am/include",
+        "-D__ISA__=\"riscv64\"",
+        "-D__ISA_RISCV64__",
+        "-D__PLATFORM__=\"xs\"",
+        "-D__PLATFORM_XS__",
+        "-D__ARCH__=riscv64-xs",
+        "-D__ARCH_RISCV64_XS",
+        "-DARCH_H=\"arch/riscv64-xs.h\"",
+        "-fno-asynchronous-unwind-tables",
+        "-fno-builtin",
+        "-fno-stack-protector",
+        "-Wno-main",
+        "-c",
+        "-o",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/runq-q288-acc8-20261026-0528/build-01/objects/main.o",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/runq-q288-acc8-20261026-0528/build-01/source/main.c"
+      ],
+      "q288": [
+        "/usr/bin/riscv64-linux-gnu-gcc",
+        "-std=gnu11",
+        "-ffreestanding",
+        "-fno-tree-vectorize",
+        "-fno-tree-slp-vectorize",
+        "-fno-tree-loop-distribute-patterns",
+        "-fno-ipa-cp",
+        "-fno-ipa-icf",
+        "-fno-optimize-sibling-calls",
+        "-fno-lto",
+        "-mno-relax",
+        "-mabi=lp64d",
+        "-ffp-contract=off",
+        "-fno-fast-math",
+        "-fno-pic",
+        "-march=rv64gv",
+        "-mcmodel=medany",
+        "-static",
+        "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/am/src/nemu/include",
+        "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/am/src/xs/include",
+        "-DISA_H=\"riscv.h\"",
+        "-O2",
+        "-MMD",
+        "-Wall",
+        "-Werror",
+        "-ggdb",
+        "-I/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/runq-q288-acc8-20261026-0528/build-01/source",
+        "-I/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/runq-q288-acc8-20261026-0528/build-01/source/include/",
+        "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/libs/klib/include/",
+        "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/am/",
+        "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/am/include",
+        "-D__ISA__=\"riscv64\"",
+        "-D__ISA_RISCV64__",
+        "-D__PLATFORM__=\"xs\"",
+        "-D__PLATFORM_XS__",
+        "-D__ARCH__=riscv64-xs",
+        "-D__ARCH_RISCV64_XS",
+        "-DARCH_H=\"arch/riscv64-xs.h\"",
+        "-fno-asynchronous-unwind-tables",
+        "-fno-builtin",
+        "-fno-stack-protector",
+        "-Wno-main",
+        "-c",
+        "-o",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/runq-q288-acc8-20261026-0528/build-01/objects/q288.o",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/runq-q288-acc8-20261026-0528/build-01/source/q288.c"
+      ],
+      "oracle": [
+        "/usr/bin/riscv64-linux-gnu-gcc",
+        "-std=gnu11",
+        "-ffreestanding",
+        "-fno-tree-vectorize",
+        "-fno-tree-slp-vectorize",
+        "-fno-tree-loop-distribute-patterns",
+        "-fno-ipa-cp",
+        "-fno-ipa-icf",
+        "-fno-optimize-sibling-calls",
+        "-fno-lto",
+        "-mno-relax",
+        "-mabi=lp64d",
+        "-ffp-contract=off",
+        "-fno-fast-math",
+        "-fno-pic",
+        "-march=rv64gv",
+        "-mcmodel=medany",
+        "-static",
+        "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/am/src/nemu/include",
+        "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/am/src/xs/include",
+        "-DISA_H=\"riscv.h\"",
+        "-O2",
+        "-MMD",
+        "-Wall",
+        "-Werror",
+        "-ggdb",
+        "-I/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/runq-q288-acc8-20261026-0528/build-01/source",
+        "-I/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/runq-q288-acc8-20261026-0528/build-01/source/include/",
+        "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/libs/klib/include/",
+        "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/am/",
+        "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/am/include",
+        "-D__ISA__=\"riscv64\"",
+        "-D__ISA_RISCV64__",
+        "-D__PLATFORM__=\"xs\"",
+        "-D__PLATFORM_XS__",
+        "-D__ARCH__=riscv64-xs",
+        "-D__ARCH_RISCV64_XS",
+        "-DARCH_H=\"arch/riscv64-xs.h\"",
+        "-fno-asynchronous-unwind-tables",
+        "-fno-builtin",
+        "-fno-stack-protector",
+        "-Wno-main",
+        "-c",
+        "-o",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/runq-q288-acc8-20261026-0528/build-01/objects/oracle.o",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/runq-q288-acc8-20261026-0528/build-01/source/oracle.c"
+      ]
+    },
+    "source_scope": "full 288x288 Q; strict grouped FP; one-time weight pack separately timed",
+    "runtime_not_run": true
+  },
+  "gate": "each full Q path >=5% fewer instructions; only eight FP ABI loads/stores",
+  "new_emu_runs": 0,
+  "target_runtime_qualified": false,
+  "application_performance_qualified": false,
+  "decision": "candidate for a new bounded target contract; not a deployed default"
+}

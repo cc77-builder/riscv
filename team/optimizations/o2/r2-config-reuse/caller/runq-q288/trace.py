@@ -20,7 +20,8 @@ def signed(value, bits):
     value &= (1 << bits) - 1
     return value - (1 << bits) if value >> (bits - 1) else value
 
-def path(elf, row, fixture, dataset=0):
+def path(elf, row, fixture, dataset=0, *, scale_order='row', profile=False):
+    need(scale_order in ('row','group'), 'explicit scale load order contract')
     mode, method = row["kind"], row["method"]
     timer, leaf, wrapper = "split_measure", row["leaf"], row["wrapper"]
     allowed = (timer, wrapper) if mode == 'pack' else (timer, wrapper, leaf)
@@ -52,6 +53,7 @@ def path(elf, row, fixture, dataset=0):
     seed(slots, bytes([0xa6])*128); seed(y,bytes([0xa6])*1152)
     stack_top = 0x87fff000
     initial_sp = stack_top - 48
+    lowest_sp = initial_sp
     registers = [None] * 32
     registers[0], registers[2] = 0, initial_sp
     registers[8], registers[9] = ctx, metrics
@@ -64,6 +66,7 @@ def path(elf, row, fixture, dataset=0):
     fp_counts = Counter()
     weight_scale_load_sites=set()
     weight_scale_reads=0
+    weight_scale_group_seen=set()
     input_scale_reads=0
     leaf_arguments = []
     def known(value, why):
@@ -159,6 +162,11 @@ def path(elf, row, fixture, dataset=0):
                 calls.append(pc+4); entered[owners[target]]+=1
                 if mode=='Q' and target==addr(leaf):
                     index=len(leaf_arguments)
+                    if scale_order=='group':
+                        need(weight_scale_reads==8*index and input_scale_reads==index and
+                             (index==0 or len(weight_scale_group_seen)==8),
+                             'complete scale group before next leaf')
+                        weight_scale_group_seen.clear()
                     args=(registers[10],registers[11],registers[12])
                     need(index<324 and args==(a+256*index,b+32*(index%9),slots), 'exact tile/group leaf arguments')
                     leaf_arguments.append(args)
@@ -182,9 +190,15 @@ def path(elf, row, fixture, dataset=0):
                 accesses.append(('fload',address,n))
                 if ws<=address<ws+10368:
                     index=len(leaf_arguments)-1
-                    need(index>=0 and weight_scale_reads//8==index and n==4 and
-                         address==ws+4*((8*(index//9)+weight_scale_reads%8)*9+index%9),
-                         'exact weight scale index after its tile/group leaf')
+                    common=index>=0 and weight_scale_reads//8==index and n==4
+                    if scale_order=='row':
+                        need(common and address==ws+4*((8*(index//9)+weight_scale_reads%8)*9+index%9),
+                             'exact weight scale index after its tile/group leaf')
+                    else:
+                        expected={ws+4*((8*(index//9)+r)*9+index%9) for r in range(8)}
+                        need(common and address in expected and address not in weight_scale_group_seen,
+                             'exact weight scale index after its tile/group leaf')
+                        weight_scale_group_seen.add(address)
                     weight_scale_reads+=1;weight_scale_load_sites.add(pc)
                 if xs<=address<xs+36:
                     index=len(leaf_arguments)-1
@@ -242,6 +256,7 @@ def path(elf, row, fixture, dataset=0):
         else: raise ValueError(f"unsupported caller opcode {w:08x} at {pc:08x}")
         if sets and rd: registers[rd] = value
         registers[0]=0
+        lowest_sp=min(lowest_sp,known(registers[2],'stack depth'))
         pc=next_pc
     else: raise ValueError("caller path exceeded finite budget")
     need(not calls and registers[2]==initial_sp and all(registers[i]==v for i,v in preserved.items()),'caller stack/register balance')
@@ -259,6 +274,9 @@ def path(elf, row, fixture, dataset=0):
     need(covered('load',weight,82944)==(wanted(82944) if mode=='pack' else Counter()),'raw weight scalar reads')
     need(covered('store',a,82944)==(wanted(82944) if mode=='pack' else Counter()),'exact one-time pack footprint')
     if mode=='Q':
+        if scale_order=='group':
+            need(weight_scale_reads==2592 and input_scale_reads==324 and len(weight_scale_group_seen)==8,
+                 'complete final scale group')
         need(covered('load',a,82944)==Counter() and covered('load',b,288)==Counter(),'no scalar quantized input copies')
         need(covered('vload',a,82944)==wanted(82944),'complete packed weight vector reads')
         multiplicity=8 if row['algorithm'] in (1,3) else 1
@@ -273,10 +291,24 @@ def path(elf, row, fixture, dataset=0):
     need([w for _,w in result if w in COUNTERS]==list(COUNTERS),"counter order")
     dots=sum(w&0xfe00707f==0x0200000b for _,w in result)
     need(dots==(10368 if method=='vdot' else 0),'custom instruction count')
-    return result,dict(instructions=len(result),branches=branches,calls=dict(entered),vdot=dots,
+    detail=dict(instructions=len(result),branches=branches,calls=dict(entered),vdot=dots,
                        pack_bytes=82944 if mode=='pack' else 0,output_bytes=1152 if mode=='Q' else 82944,
                        fp_operations=dict(fp_counts),leaf_calls=len(leaf_arguments),
                        weight_scale_load_sites=sorted(weight_scale_load_sites),
                        exact_tile_group_arguments=True,exact_scale_footprints=True,
                        footprint_sha256=hashlib.sha256(repr(accesses).encode()).hexdigest(),
                        actual_vl_eew_checked=True,fp_values='unknown; checked by independent oracle and DiffTest')
+    if profile:
+        stack_accesses=Counter(kind for kind,address,n in accesses
+                               if initial_sp-4096<=address and address+n<=stack_top)
+        detail['cost_profile']=dict(
+            instructions_by_function=dict(Counter(owners[pc] for pc,_ in result)),
+            opcodes=dict(Counter(hex(w&127) for _,w in result)),
+            stack_accesses=dict(stack_accesses),
+            stack_access_bytes=dict(Counter({kind:sum(n for k,address,n in accesses
+                if k==kind and initial_sp-4096<=address and address+n<=stack_top)
+                for kind in stack_accesses})),
+            wrapper_code_bytes=elf.symbols[wrapper][1],
+            stack_peak_bytes=initial_sp-lowest_sp,
+            scale_order=scale_order,cycles_measured=False)
+    return result,detail

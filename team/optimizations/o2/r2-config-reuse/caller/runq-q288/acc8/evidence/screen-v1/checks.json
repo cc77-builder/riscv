@@ -1,0 +1,634 @@
+{
+  "status": "PASS",
+  "jobs": [
+    {
+      "name": "elf-01",
+      "command": [
+        "python3",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/r2-config-reuse/caller/runq-q288/acc8/screen.py",
+        "--action",
+        "elf",
+        "--build",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/runq-q288-acc8-20261026-0528/build-01",
+        "--output",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/runq-q288-acc8-20261026-0528/elf-01"
+      ],
+      "cwd": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+      "started": "2026-10-25T21:27:26.319819+00:00",
+      "exit_code": 0,
+      "finished": "2026-10-25T21:27:27.012557+00:00",
+      "stderr": ""
+    },
+    {
+      "name": "comparison-01",
+      "command": [
+        "python3",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/r2-config-reuse/caller/runq-q288/acc8/screen.py",
+        "--action",
+        "compare",
+        "--build",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/runq-q288-acc8-20261026-0528/build-01",
+        "--baseline-build",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/runq-q288-20261026-0219/build-04",
+        "--output",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/runq-q288-acc8-20261026-0528/comparison-01.json"
+      ],
+      "cwd": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+      "started": "2026-10-25T21:27:26.319881+00:00",
+      "exit_code": 0,
+      "finished": "2026-10-25T21:27:30.900812+00:00",
+      "stderr": ""
+    }
+  ],
+  "new_emu_runs": 0,
+  "comparison_status": "ACC8_STATIC_SCREEN_PASS",
+  "candidate_elf_sha256": "8fcb7bb4fda1ce7dcc2cf4c41f83bfed3733cee363df2cf2a3d760a737103888",
+  "comparisons": [
+    {
+      "id": 0,
+      "leaf": "split_gemv_8x32_vdot",
+      "old_instructions": 92224,
+      "new_instructions": 72870,
+      "instruction_reduction": 0.20985860513532273,
+      "old_branches": 3240,
+      "new_branches": 360,
+      "old_profile": {
+        "instructions_by_function": {
+          "split_measure": 16,
+          "q288_full": 39072,
+          "split_gemv_8x32_vdot": 53136
+        },
+        "opcodes": {
+          "0x13": 27660,
+          "0xf": 6,
+          "0x73": 652,
+          "0x67": 650,
+          "0x3": 2756,
+          "0x23": 161,
+          "0x37": 1,
+          "0x27": 5473,
+          "0x53": 10404,
+          "0x57": 11988,
+          "0x7": 17461,
+          "0xb": 10368,
+          "0x3b": 324,
+          "0x33": 396,
+          "0x6f": 324,
+          "0x63": 3240,
+          "0x1b": 360
+        },
+        "stack_accesses": {
+          "store": 2754,
+          "fstore": 2593,
+          "load": 3038,
+          "fload": 2881
+        },
+        "stack_access_bytes": {
+          "store": 11664,
+          "fstore": 10376,
+          "load": 12784,
+          "fload": 11528
+        },
+        "wrapper_code_bytes": 408,
+        "stack_peak_bytes": 192,
+        "scale_order": "row",
+        "cycles_measured": false
+      },
+      "new_profile": {
+        "instructions_by_function": {
+          "split_measure": 16,
+          "q288_full": 19718,
+          "split_gemv_8x32_vdot": 53136
+        },
+        "opcodes": {
+          "0x13": 17938,
+          "0xf": 6,
+          "0x73": 652,
+          "0x67": 650,
+          "0x3": 2684,
+          "0x23": 15,
+          "0x37": 3,
+          "0x27": 2888,
+          "0x33": 74,
+          "0x53": 10656,
+          "0x57": 11988,
+          "0x7": 14588,
+          "0xb": 10368,
+          "0x63": 360
+        },
+        "stack_accesses": {
+          "store": 23,
+          "fstore": 8,
+          "load": 93,
+          "fload": 8
+        },
+        "stack_access_bytes": {
+          "store": 184,
+          "fstore": 64,
+          "load": 744,
+          "fload": 64
+        },
+        "wrapper_code_bytes": 576,
+        "stack_peak_bytes": 192,
+        "scale_order": "group",
+        "cycles_measured": false
+      }
+    },
+    {
+      "id": 1,
+      "leaf": "split_gemv_8x32_rvv0",
+      "old_instructions": 124948,
+      "new_instructions": 105594,
+      "instruction_reduction": 0.15489643691775778,
+      "old_branches": 3240,
+      "new_branches": 360,
+      "old_profile": {
+        "instructions_by_function": {
+          "split_measure": 16,
+          "q288_full": 39072,
+          "split_gemv_8x32_rvv0": 85860
+        },
+        "opcodes": {
+          "0x13": 28956,
+          "0xf": 6,
+          "0x73": 652,
+          "0x67": 650,
+          "0x3": 2756,
+          "0x23": 161,
+          "0x37": 1,
+          "0x27": 5473,
+          "0x53": 10404,
+          "0x57": 49896,
+          "0x7": 16165,
+          "0x3b": 5508,
+          "0x33": 396,
+          "0x6f": 324,
+          "0x63": 3240,
+          "0x1b": 360
+        },
+        "stack_accesses": {
+          "store": 2754,
+          "fstore": 2593,
+          "load": 3038,
+          "fload": 2881
+        },
+        "stack_access_bytes": {
+          "store": 11664,
+          "fstore": 10376,
+          "load": 12784,
+          "fload": 11528
+        },
+        "wrapper_code_bytes": 408,
+        "stack_peak_bytes": 192,
+        "scale_order": "row",
+        "cycles_measured": false
+      },
+      "new_profile": {
+        "instructions_by_function": {
+          "split_measure": 16,
+          "q288_full": 19718,
+          "split_gemv_8x32_rvv0": 85860
+        },
+        "opcodes": {
+          "0x13": 19234,
+          "0xf": 6,
+          "0x73": 652,
+          "0x67": 650,
+          "0x3": 2684,
+          "0x23": 15,
+          "0x37": 3,
+          "0x27": 2888,
+          "0x33": 74,
+          "0x53": 10656,
+          "0x57": 49896,
+          "0x7": 13292,
+          "0x3b": 5184,
+          "0x63": 360
+        },
+        "stack_accesses": {
+          "store": 23,
+          "fstore": 8,
+          "load": 93,
+          "fload": 8
+        },
+        "stack_access_bytes": {
+          "store": 184,
+          "fstore": 64,
+          "load": 744,
+          "fload": 64
+        },
+        "wrapper_code_bytes": 576,
+        "stack_peak_bytes": 192,
+        "scale_order": "group",
+        "cycles_measured": false
+      }
+    },
+    {
+      "id": 2,
+      "leaf": "split_gemv_8x32_rvv1",
+      "old_instructions": 99028,
+      "new_instructions": 79674,
+      "instruction_reduction": 0.1954396736276609,
+      "old_branches": 3240,
+      "new_branches": 360,
+      "old_profile": {
+        "instructions_by_function": {
+          "split_measure": 16,
+          "q288_full": 39072,
+          "split_gemv_8x32_rvv1": 59940
+        },
+        "opcodes": {
+          "0x13": 24420,
+          "0xf": 6,
+          "0x73": 652,
+          "0x67": 650,
+          "0x3": 2756,
+          "0x23": 161,
+          "0x37": 1,
+          "0x27": 5473,
+          "0x53": 10404,
+          "0x57": 33048,
+          "0x7": 11629,
+          "0x3b": 5508,
+          "0x33": 396,
+          "0x6f": 324,
+          "0x63": 3240,
+          "0x1b": 360
+        },
+        "stack_accesses": {
+          "store": 2754,
+          "fstore": 2593,
+          "load": 3038,
+          "fload": 2881
+        },
+        "stack_access_bytes": {
+          "store": 11664,
+          "fstore": 10376,
+          "load": 12784,
+          "fload": 11528
+        },
+        "wrapper_code_bytes": 408,
+        "stack_peak_bytes": 192,
+        "scale_order": "row",
+        "cycles_measured": false
+      },
+      "new_profile": {
+        "instructions_by_function": {
+          "split_measure": 16,
+          "q288_full": 19718,
+          "split_gemv_8x32_rvv1": 59940
+        },
+        "opcodes": {
+          "0x13": 14698,
+          "0xf": 6,
+          "0x73": 652,
+          "0x67": 650,
+          "0x3": 2684,
+          "0x23": 15,
+          "0x37": 3,
+          "0x27": 2888,
+          "0x33": 74,
+          "0x53": 10656,
+          "0x57": 33048,
+          "0x7": 8756,
+          "0x3b": 5184,
+          "0x63": 360
+        },
+        "stack_accesses": {
+          "store": 23,
+          "fstore": 8,
+          "load": 93,
+          "fload": 8
+        },
+        "stack_access_bytes": {
+          "store": 184,
+          "fstore": 64,
+          "load": 744,
+          "fload": 64
+        },
+        "wrapper_code_bytes": 576,
+        "stack_peak_bytes": 192,
+        "scale_order": "group",
+        "cycles_measured": false
+      }
+    },
+    {
+      "id": 3,
+      "leaf": "split_gemv_8x32_rvv2",
+      "old_instructions": 93844,
+      "new_instructions": 74490,
+      "instruction_reduction": 0.2062358808234943,
+      "old_branches": 3240,
+      "new_branches": 360,
+      "old_profile": {
+        "instructions_by_function": {
+          "split_measure": 16,
+          "q288_full": 39072,
+          "split_gemv_8x32_rvv2": 54756
+        },
+        "opcodes": {
+          "0x13": 26364,
+          "0xf": 6,
+          "0x73": 652,
+          "0x67": 650,
+          "0x3": 2756,
+          "0x23": 161,
+          "0x37": 1,
+          "0x27": 5473,
+          "0x53": 10404,
+          "0x57": 26568,
+          "0x7": 16165,
+          "0x3b": 324,
+          "0x33": 396,
+          "0x6f": 324,
+          "0x63": 3240,
+          "0x1b": 360
+        },
+        "stack_accesses": {
+          "store": 2754,
+          "fstore": 2593,
+          "load": 3038,
+          "fload": 2881
+        },
+        "stack_access_bytes": {
+          "store": 11664,
+          "fstore": 10376,
+          "load": 12784,
+          "fload": 11528
+        },
+        "wrapper_code_bytes": 408,
+        "stack_peak_bytes": 192,
+        "scale_order": "row",
+        "cycles_measured": false
+      },
+      "new_profile": {
+        "instructions_by_function": {
+          "split_measure": 16,
+          "q288_full": 19718,
+          "split_gemv_8x32_rvv2": 54756
+        },
+        "opcodes": {
+          "0x13": 16642,
+          "0xf": 6,
+          "0x73": 652,
+          "0x67": 650,
+          "0x3": 2684,
+          "0x23": 15,
+          "0x37": 3,
+          "0x27": 2888,
+          "0x33": 74,
+          "0x53": 10656,
+          "0x57": 26568,
+          "0x7": 13292,
+          "0x63": 360
+        },
+        "stack_accesses": {
+          "store": 23,
+          "fstore": 8,
+          "load": 93,
+          "fload": 8
+        },
+        "stack_access_bytes": {
+          "store": 184,
+          "fstore": 64,
+          "load": 744,
+          "fload": 64
+        },
+        "wrapper_code_bytes": 576,
+        "stack_peak_bytes": 192,
+        "scale_order": "group",
+        "cycles_measured": false
+      }
+    },
+    {
+      "id": 4,
+      "leaf": "split_gemv_8x32_rvv3",
+      "old_instructions": 75700,
+      "new_instructions": 56346,
+      "instruction_reduction": 0.255667107001321,
+      "old_branches": 3240,
+      "new_branches": 360,
+      "old_profile": {
+        "instructions_by_function": {
+          "split_measure": 16,
+          "q288_full": 39072,
+          "split_gemv_8x32_rvv3": 36612
+        },
+        "opcodes": {
+          "0x13": 21828,
+          "0xf": 6,
+          "0x73": 652,
+          "0x67": 650,
+          "0x3": 2756,
+          "0x23": 161,
+          "0x37": 1,
+          "0x27": 5473,
+          "0x53": 10404,
+          "0x57": 17496,
+          "0x7": 11629,
+          "0x3b": 324,
+          "0x33": 396,
+          "0x6f": 324,
+          "0x63": 3240,
+          "0x1b": 360
+        },
+        "stack_accesses": {
+          "store": 2754,
+          "fstore": 2593,
+          "load": 3038,
+          "fload": 2881
+        },
+        "stack_access_bytes": {
+          "store": 11664,
+          "fstore": 10376,
+          "load": 12784,
+          "fload": 11528
+        },
+        "wrapper_code_bytes": 408,
+        "stack_peak_bytes": 192,
+        "scale_order": "row",
+        "cycles_measured": false
+      },
+      "new_profile": {
+        "instructions_by_function": {
+          "split_measure": 16,
+          "q288_full": 19718,
+          "split_gemv_8x32_rvv3": 36612
+        },
+        "opcodes": {
+          "0x13": 12106,
+          "0xf": 6,
+          "0x73": 652,
+          "0x67": 650,
+          "0x3": 2684,
+          "0x23": 15,
+          "0x37": 3,
+          "0x27": 2888,
+          "0x33": 74,
+          "0x53": 10656,
+          "0x57": 17496,
+          "0x7": 8756,
+          "0x63": 360
+        },
+        "stack_accesses": {
+          "store": 23,
+          "fstore": 8,
+          "load": 93,
+          "fload": 8
+        },
+        "stack_access_bytes": {
+          "store": 184,
+          "fstore": 64,
+          "load": 744,
+          "fload": 64
+        },
+        "wrapper_code_bytes": 576,
+        "stack_peak_bytes": 192,
+        "scale_order": "group",
+        "cycles_measured": false
+      }
+    },
+    {
+      "id": 5,
+      "leaf": "split_gemv_8x32_rvv4",
+      "old_instructions": 75376,
+      "new_instructions": 56022,
+      "instruction_reduction": 0.2567660793886648,
+      "old_branches": 3240,
+      "new_branches": 360,
+      "old_profile": {
+        "instructions_by_function": {
+          "split_measure": 16,
+          "q288_full": 39072,
+          "split_gemv_8x32_rvv4": 36288
+        },
+        "opcodes": {
+          "0x13": 21828,
+          "0xf": 6,
+          "0x73": 652,
+          "0x67": 650,
+          "0x3": 2756,
+          "0x23": 161,
+          "0x37": 1,
+          "0x27": 5473,
+          "0x53": 10404,
+          "0x57": 17172,
+          "0x7": 11629,
+          "0x3b": 324,
+          "0x33": 396,
+          "0x6f": 324,
+          "0x63": 3240,
+          "0x1b": 360
+        },
+        "stack_accesses": {
+          "store": 2754,
+          "fstore": 2593,
+          "load": 3038,
+          "fload": 2881
+        },
+        "stack_access_bytes": {
+          "store": 11664,
+          "fstore": 10376,
+          "load": 12784,
+          "fload": 11528
+        },
+        "wrapper_code_bytes": 408,
+        "stack_peak_bytes": 192,
+        "scale_order": "row",
+        "cycles_measured": false
+      },
+      "new_profile": {
+        "instructions_by_function": {
+          "split_measure": 16,
+          "q288_full": 19718,
+          "split_gemv_8x32_rvv4": 36288
+        },
+        "opcodes": {
+          "0x13": 12106,
+          "0xf": 6,
+          "0x73": 652,
+          "0x67": 650,
+          "0x3": 2684,
+          "0x23": 15,
+          "0x37": 3,
+          "0x27": 2888,
+          "0x33": 74,
+          "0x53": 10656,
+          "0x57": 17172,
+          "0x7": 8756,
+          "0x63": 360
+        },
+        "stack_accesses": {
+          "store": 23,
+          "fstore": 8,
+          "load": 93,
+          "fload": 8
+        },
+        "stack_access_bytes": {
+          "store": 184,
+          "fstore": 64,
+          "load": 744,
+          "fload": 64
+        },
+        "wrapper_code_bytes": 576,
+        "stack_peak_bytes": 192,
+        "scale_order": "group",
+        "cycles_measured": false
+      }
+    }
+  ],
+  "rejections": {
+    "status": "ACC8_ACTUAL_ELF_REJECTIONS_PASS",
+    "contract": "r2-s3-runq-q288-acc8-screen-v1",
+    "existing": {
+      "status": "RUNQ_ACTUAL_ELF_REJECTION_PASS",
+      "base_elf_sha256": "8fcb7bb4fda1ce7dcc2cf4c41f83bfed3733cee363df2cf2a3d760a737103888",
+      "controls": [
+        {
+          "name": "signed-conversion",
+          "offset": 6504,
+          "pc": 2147486056,
+          "original_word": "0xd00e70d3",
+          "mutated_word": "0xd01e70d3",
+          "mutated_elf_sha256": "3fbd48a45d4897c3d61580257205b0a43a2a3cb297ccb11f2166b27f5e002455",
+          "error": "signed fcvt.s.w required"
+        },
+        {
+          "name": "multiply-to-add",
+          "offset": 6536,
+          "pc": 2147486088,
+          "original_word": "0x1110f0d3",
+          "mutated_word": "0x110f0d3",
+          "mutated_elf_sha256": "2996ad6e8729b46501ab9bfd889a5805b4a4ac8708eb4af41ecfb96b78eb2f57",
+          "error": "strict FP operation cardinality"
+        },
+        {
+          "name": "wrong-scale-index",
+          "offset": 6472,
+          "pc": 2147486024,
+          "original_word": "0xfc42787",
+          "mutated_word": "0x10042787",
+          "mutated_elf_sha256": "0506e865c58d12489f2fcda64bcd86218cded5bd3e5c6ea14a84aa253f2cc83a",
+          "error": "exact weight scale index after its tile/group leaf"
+        },
+        {
+          "name": "wrong-panel-step",
+          "offset": 6572,
+          "pc": 2147486124,
+          "original_word": "0x10090913",
+          "mutated_word": "0x10890913",
+          "mutated_elf_sha256": "10cfd081cfdf2ab26330fbc6d5614a6469abd4fcd98b32bc156c69a71857f3b6",
+          "error": "exact tile/group leaf arguments"
+        }
+      ]
+    },
+    "fp_restore": {
+      "pc": 2147486308,
+      "original_word": "0x4813407",
+      "mutated_word": "0x4013407",
+      "error": "FP callee-saved registers balanced",
+      "mutated_elf_sha256": "55991a356cde62d44533fc046553f749f8169c6bea43ce0e5f2e524ff3e59785"
+    },
+    "new_emu_runs": 0
+  }
+}

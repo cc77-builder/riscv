@@ -1,0 +1,54 @@
+{
+  "status": "ACC8_ACTUAL_ELF_REJECTIONS_PASS",
+  "contract": "r2-s3-runq-q288-acc8-screen-v1",
+  "existing": {
+    "status": "RUNQ_ACTUAL_ELF_REJECTION_PASS",
+    "base_elf_sha256": "8fcb7bb4fda1ce7dcc2cf4c41f83bfed3733cee363df2cf2a3d760a737103888",
+    "controls": [
+      {
+        "name": "signed-conversion",
+        "offset": 6504,
+        "pc": 2147486056,
+        "original_word": "0xd00e70d3",
+        "mutated_word": "0xd01e70d3",
+        "mutated_elf_sha256": "3fbd48a45d4897c3d61580257205b0a43a2a3cb297ccb11f2166b27f5e002455",
+        "error": "signed fcvt.s.w required"
+      },
+      {
+        "name": "multiply-to-add",
+        "offset": 6536,
+        "pc": 2147486088,
+        "original_word": "0x1110f0d3",
+        "mutated_word": "0x110f0d3",
+        "mutated_elf_sha256": "2996ad6e8729b46501ab9bfd889a5805b4a4ac8708eb4af41ecfb96b78eb2f57",
+        "error": "strict FP operation cardinality"
+      },
+      {
+        "name": "wrong-scale-index",
+        "offset": 6472,
+        "pc": 2147486024,
+        "original_word": "0xfc42787",
+        "mutated_word": "0x10042787",
+        "mutated_elf_sha256": "0506e865c58d12489f2fcda64bcd86218cded5bd3e5c6ea14a84aa253f2cc83a",
+        "error": "exact weight scale index after its tile/group leaf"
+      },
+      {
+        "name": "wrong-panel-step",
+        "offset": 6572,
+        "pc": 2147486124,
+        "original_word": "0x10090913",
+        "mutated_word": "0x10890913",
+        "mutated_elf_sha256": "10cfd081cfdf2ab26330fbc6d5614a6469abd4fcd98b32bc156c69a71857f3b6",
+        "error": "exact tile/group leaf arguments"
+      }
+    ]
+  },
+  "fp_restore": {
+    "pc": 2147486308,
+    "original_word": "0x4813407",
+    "mutated_word": "0x4013407",
+    "error": "FP callee-saved registers balanced",
+    "mutated_elf_sha256": "55991a356cde62d44533fc046553f749f8169c6bea43ce0e5f2e524ff3e59785"
+  },
+  "new_emu_runs": 0
+}
