@@ -1,0 +1,88 @@
+{
+  "status": "FIXED_WEIGHT_TARGETED_NEGATIVES_PASS",
+  "contract": "r2-s3-fixed-weight-8x32-v1",
+  "new_emu_runs": 0,
+  "checks": [
+    {
+      "name": "split-stale-x",
+      "rejected": true,
+      "reason": "split step arguments/stale x/output stride",
+      "n1_passed": true,
+      "n4_rejected": true,
+      "before": "02098993",
+      "after": "00098993"
+    },
+    {
+      "name": "split-slot-overwrite",
+      "rejected": true,
+      "reason": "split step arguments/stale x/output stride",
+      "n1_passed": true,
+      "n4_rejected": true,
+      "before": "08048493",
+      "after": "00048493"
+    },
+    {
+      "name": "split-tight-y-overlap",
+      "rejected": true,
+      "reason": "all intermediate tight outputs",
+      "n1_passed": true,
+      "n4_rejected": true,
+      "before": "00591713",
+      "after": "00491713"
+    },
+    {
+      "name": "packed-stale-x",
+      "rejected": true,
+      "reason": "packed A/x content at actual leaf call",
+      "n1_passed": true,
+      "n4_rejected": true,
+      "before": "02040413",
+      "after": "00040413"
+    },
+    {
+      "name": "omit-fourth-step-count3",
+      "rejected": true,
+      "reason": "stream call cardinality"
+    },
+    {
+      "name": "half-weight-preparation",
+      "rejected": true,
+      "reason": "packed A/x content at actual leaf call"
+    },
+    {
+      "name": "arithmetic-source-bit",
+      "rejected": true,
+      "reason": "unapproved split machine word change"
+    },
+    {
+      "name": "discarded-packed-read",
+      "rejected": true,
+      "reason": "split scalar load intersects old packed input"
+    },
+    {
+      "name": "integer-boundaries-and-independent-N-selection",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "name": "integer-boundaries-and-independent-N-selection",
+      "count": 4,
+      "passed": true
+    },
+    {
+      "name": "different-fastest-rvv-by-count",
+      "passed": true
+    },
+    {
+      "name": "raw-counter-rob-flag",
+      "rejected": true,
+      "reason": "counter identity mismatch"
+    }
+  ],
+  "image_sha256": "ec41c369d718a30b8b82edad5adea06c52366b44dadcf19f137bf78deb6fa22c",
+  "manifest_sha256": "4f8a7d1479922417d143d34e5e0de9be9559d7d82bdb1f793bb351723e12d68b",
+  "source_sha256": "cac31a8a1c6b3766e0635aa8b5281357bf00260eddc65495349e404d772fec6b",
+  "normal_validation_sha256": "3be011d9dfe3de805c3ab8e2b9fac84826f1b329454c9bdc7864052c522aa8c3",
+  "committed_vdot": 15104,
+  "scope": "address/control/identity rejection and integer boundaries; vector values require independent oracle"
+}
