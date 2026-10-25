@@ -2,6 +2,7 @@
 #include "data.h"
 extern void _putc(char);
 extern void split_measure(void *, struct caller_measurement *, uintptr_t);
+extern void q_fault_probe(const int8_t *, const int8_t *, struct caller_slot *);
 struct guarded_packed { uint64_t head[2]; int8_t value[82944]; uint64_t tail[2]; };
 struct guarded_slots { uint64_t head[2]; struct caller_slot value[8]; uint64_t tail[2]; };
 union float_words { float value[288]; uint32_t bits[288]; };
@@ -98,13 +99,14 @@ static unsigned full(unsigned d,unsigned method) {
 int main(void) {
     __asm__ volatile("csrs mstatus,%0"::"r"((uint64_t)0x6600):"memory");
     text("Q_BEGIN contract=" Q_CONTRACT " windows=17\n");
-    /* Early negative-DiffTest probe uses only the first panel. The one full
-     * packing window below still writes all 82,944 bytes exactly once. */
+    /* One isolated custom instruction binds the unchanged fault fixture to
+     * the actual first vdot and to its complete architectural result. */
     prepare(0,0);
-    for(unsigned r=0;r<8;++r) for(unsigned k=0;k<32;++k)
-        q_packed.value[r*32+k]=q_weights[r*288+k];
-    split_entries[0](q_packed.value,q_inputs[0],q_slots.value);
-    if(leaf_judge(0,0,0)) return fail("early_leaf",1);
+    q_fault_probe(q_weights,q_inputs[0],q_slots.value);
+    int32_t probe_expected=0;
+    for(unsigned k=0;k<8;++k) probe_expected+=(int32_t)q_weights[k]*q_inputs[0][k];
+    if(q_slots.value[0].value!=probe_expected || guards()) return fail("early_probe",1);
+    for(unsigned j=0;j<3;++j) if(q_slots.value[0].high[j]) return fail("early_probe_high",j);
     q_pack_context=(struct q288_pack_context){q_weights,q_packed.value};
     state(); split_measure(&q_pack_context,&q_measurement,(uintptr_t)&q288_pack);
     q_samples[0]=q_measurement;
@@ -147,6 +149,6 @@ int main(void) {
         text("QW ");number(i);_putc(' ');number(q_samples[i].cycles);_putc(' ');
         number(q_samples[i].instructions);_putc('\n');
     }
-    text("Q_END windows=17 full_calls=46 leaf_calls=15229 failures=0\n");
+    text("Q_END windows=17 full_calls=46 leaf_calls=15228 probe_dots=1 failures=0\n");
     return 0;
 }

@@ -10,6 +10,7 @@ import shlex
 import struct
 import sys
 import tempfile
+from types import SimpleNamespace
 
 HERE=Path(__file__).resolve().parent
 ROOT=HERE.parents[5]
@@ -91,6 +92,8 @@ def verification(repo,build):
     executable=g.load('split_executable',repo/'team/optimizations/o2/r2-select/entry_c_api.py')
     executable.executable(elf)
     g.require(elf.binary()==(build/'vdot-perf.bin').read_bytes(),'ELF/BIN mismatch')
+    g.require(elf.symbol_data('q_fault_probe')==struct.pack('<11I',*gen.PROBE_WORDS),
+              'isolated fault probe exact words')
     g.require(g.sha(build/'gemv-reference.o')==old.OBJECT_SHA,'old full reference object differs')
     refs=[g.ELF((build/'gemv-reference.o').read_bytes()),
           g.ELF(gen.raw(repo,str(gen.S0/'gemv-reference.o.gz'))),
@@ -194,7 +197,7 @@ def normal(repo,build,run,receipt):
         sample['kind']=manifest['rows'][step['index']]['kind']
     expected=[f"Q_BEGIN contract={CONTRACT} windows=17",'Q_FUNCTIONAL calls=8 controls=6 groups=2592','Q_WARMUP calls=6']
     expected += [f"QW {s['seq']} {s['cycles']} {s['instructions']}" for s in samples]
-    expected += ['Q_END windows=17 full_calls=46 leaf_calls=15229 failures=0']
+    expected += ['Q_END windows=17 full_calls=46 leaf_calls=15228 probe_dots=1 failures=0']
     actual=[line for line in plain.splitlines() if line.startswith(('Q_','QW '))]
     g.require(actual==expected and plain.count('HIT GOOD TRAP')==1,'raw UART/counter/oracle evidence differs')
     analysis=observer.analyze(stderr+stdout)
@@ -212,7 +215,8 @@ def build(repo,identity,out):
 
 def run(repo,identity,build_dir,out,operation):
     with adapt(up,CONTRACT=CONTRACT,MAX_CYCLES=MAX_CYCLES,GENERATED=GENERATED,
-               sources=sources,verification=verification,gen=gen,normal=normal):
+               sources=sources,verification=verification,
+               gen=SimpleNamespace(NEW=('q_fault_probe',)),normal=normal):
         return up.run(repo,identity,build_dir,out,operation)
 
 

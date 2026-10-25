@@ -13,7 +13,7 @@ split = importlib.util.module_from_spec(spec); spec.loader.exec_module(split)
 CONFIG, S0, FIRST = split.CONFIG, split.S0, split.FIRST
 INPUT_PINS, LEAVES, NEW = split.INPUT_PINS, split.LEAVES, split.NEW
 raw, function, relocate, machine_certificate = split.raw, split.function, split.relocate, split.machine_certificate
-CONTRACT = 'r2-s3-runq-q288-v1'
+CONTRACT = 'r2-s3-runq-q288-v2'
 BASE = '3182e945df59dd5183b22e06103556496c6b1695'
 CONSUMER = '350e04fe35433e6d2941dce5a1f53308f87058eb'
 MAX_CYCLES = 30000000
@@ -65,6 +65,15 @@ endif
 include $(AM_HOME)/Makefile.app
 '''
 
+# Ordinary FENCE is noSpec/blockBack/flushPipe in the pinned T17 decode.
+# Keep every operand/state setup before the first fence: the sole vdot then
+# occupies its own commit group, as required by the frozen negative gate.
+PROBE_WORDS = (0x00805073,0xc0047057,0x02050807,0x02058c07,
+               0x0ff0000f,0x0388000b,0x0ff0000f,0xc0087057,
+               0x02060027,0xc0047057,0x00008067)
+PROBE = '.balign 4\n.global q_fault_probe\n.type q_fault_probe,@function\nq_fault_probe:\n'+''.join(
+    f'  .word 0x{word:08x}\n' for word in PROBE_WORDS)+'.size q_fault_probe,.-q_fault_probe\n'
+
 def generate(repo, out):
     out = Path(out); out.mkdir(parents=True, exist_ok=False)
     for name,pin in INPUT_PINS.items(): split.need(digest(raw(repo,name)) == pin, 'qualified input '+name)
@@ -73,7 +82,7 @@ def generate(repo, out):
     first = raw(repo,FIRST/'firstdot/public/gemv.S').decode()
     texts = [function(s0 if i in (1,2) else first if i == 4 else config, row[0]) for i,row in enumerate(LEAVES)]
     (out/'gemv.S').write_text(config)
-    (out/'kernels.S').write_text('.option norvc\n.option norelax\n.text\n'+''.join(relocate(text,row[0],NEW[i],row[3]) for i,(text,row) in enumerate(zip(texts,LEAVES))))
+    (out/'kernels.S').write_text('.option norvc\n.option norelax\n.text\n'+''.join(relocate(text,row[0],NEW[i],row[3]) for i,(text,row) in enumerate(zip(texts,LEAVES)))+PROBE)
     for name in ('q288.h','q288.c','oracle.c','main.c'): shutil.copyfile(HERE/name,out/name)
     shutil.copyfile(repo/CONFIG/'caller/caller.h',out/'caller.h')
     shutil.copyfile(HERE.parent/'split/split.h',out/'split.h')
@@ -118,8 +127,8 @@ def generate(repo, out):
         golden_y_bits=data['golden'],fixture_sha256=hashes,fp_contract='off',rounding='RNE',
         fma_witness=dict(row=0,strict_bits=0,fused_bits=0xa3800000),
         functional_calls=8,warmup_calls=6,conditioning_calls=16,full_q_calls=46,
-        integer_sweep_leaf_calls=324,early_probe_leaf_calls=1,all_leaf_calls=15229,
-        expected_dots=82976,custom_mask=0xfe00707f,custom_match=0x0200000b,
+        integer_sweep_leaf_calls=324,early_probe_leaf_calls=0,early_probe_dots=1,all_leaf_calls=15228,
+        expected_dots=82945,custom_mask=0xfe00707f,custom_match=0x0200000b,
         formal_method_windows=12,formal_anchor_windows=4,pack_windows=1,
         max_cycles=MAX_CYCLES,extra_weight_storage_bytes=82944,
         synthetic_inputs=True,actual_model_checkpoint=False,includes_quantization=False,
