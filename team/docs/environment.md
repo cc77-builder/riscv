@@ -19,6 +19,23 @@
 
 **来源与限制：** 2026-10-24 R4 调用入口发布前，一次从 WSL 跨到 Windows 工作树的最终检查在约 300 秒超时，确认未提交、无残留进程和索引锁后，使用 Windows 原生 Git 完成剩余检查与提交（[原始发布检查](../optimizations/o2/r2-select/evidence/entry-runtime-v1/publication-check.json)、[Issue 记录](https://github.com/cc77-builder/riscv/issues/2#issuecomment-6376672788)）。两次执行并非严格的同命令 A/B 基准，不能据此宣称任意 Git 操作有固定加速比例。若某任务实测另一种放置更合理，可保留证据后调整；正确性与可复现性优先。
 
+
+<a id="native-source-store"></a>
+
+## 固定原生源码供体与新任务检出
+
+新任务可使用 [prepare-native-source.py](../scripts/prepare-native-source.py) 创建固定自包含裸仓，再从它创建独立 `.git`、独立 index 的原生工作区。2026-10-25 已在本机验证固定 `cd4463660686079d365705bfd8f37a86c73161d4` 的供体、12 项真实 Git 用例、实际 T17/R4 源码绑定及后继提交增量接续；具体位置、输入 SHA、命令和边界见[源码供体结果](../evidence/native-source-store-20261025/README.md)。
+
+```bash
+python3 -B /path/to/current-team-checkout/team/scripts/prepare-native-source.py checkout \
+  --store /absolute/native/path/fixed-store \
+  --mode shared --output /absolute/native/path/new-task --threads 2
+```
+
+输出必须是新目录，源码在 `new-task/source`。`shared`直接依赖固定供体，供体需保留且不更新；`independent`复制完整可达历史，可独立迁移。每个任务直接从固定供体创建，不再从上轮实验检出延长共享链。新检出没有默认远端；需要后继提交时，将经过校验的增量 bundle 显式导入新工作区自身的对象库，另外记录完整 HEAD/tree 和验证结果，不向供体 fetch/push。最初创建状态不覆盖导入后的新源码。
+
+本入口只处理已提交的 superproject 历史，不初始化子模块、不复制脏改动或工具／二进制输入，不转授 T17/EMU/性能资格。原七层供体链及其冻结／失败证据仍保留；本次新能力不授权清理旧目录，也不要求重建已满足当前合同的环境。
+
 ## 2026-10-25 空间整理与保全接续
 
 本轮只清理明确结束任务的 1,038 项精确缓存／生成中间文件，原分配量 1.2696 GiB；26,064 项保护文件前后 SHA 相同。T17 生成 C++ 的原字节压缩保存在独立恢复根，原再生成超时证据保留，不记作重建 PASS。最终 EMU、参考、flash、AM 交付库、Git 供体链、冻结输入／波形和失败证据保留。不要直接运行会连最终 EMU 一起删除的官方清理目标。
