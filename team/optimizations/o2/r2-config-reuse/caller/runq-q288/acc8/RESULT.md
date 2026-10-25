@@ -68,6 +68,8 @@ FP栈字节是指令地址访问量，不是DRAM或cache事务。profile中的`l
 
 [归档清单](evidence/screen-v1/manifest.json)、[原始ZIP](evidence/screen-v1/raw.zip)、[主机结果](evidence/screen-v1/host.json)、[ELF拒错](evidence/screen-v1/elf-rejections.json)、[最终作业回执](evidence/screen-v1/checks.json)。ZIP SHA-256：`b3fc245f9f2f5a63e6ce1e65cf984ca44c5df15910d995f6f65d7e3add247cac`。
 
+发布前发现根目录 team/** text 规则使首次本地Git入库将ZIP的CRLF字节规范化，blob由857,730变成857,720 B。已新增模块级 *.zip binary，按未变化的原件重新入库，并从Git index读回全部172成员核对原始哈希；[字节检查回执](evidence/screen-v1/git-byte-check.json)保留前后身份。最初本地提交 a3a2151acd42f2196fa1dd39f3528a56337c7b42 是中间检查点，正确归档由后续修复提交承载；原件、清单和验证结果未改。Git bundle格式通过不能代替载荷字节检查。
+
 ZIP包含原/新ELF与BIN、原构建记录、完整新源码快照、对象、实际命令/stdout/stderr、单对象探索、正/负host动态库及源码、逐叶路径比较和封存脚本。ELF负控在内存中施加，记录完整基准ELF和修改坐标/word/哈希，可确定性重建，不伪称保留了未落盘的mutant文件。Python缓存不属于证据载荷。
 
 在已有依赖就绪的原生工作区运行，所有输出必须为仓库外新路径。`ACC8_OUT`父目录先建立；`verify`和`compare`的output是文件，其他动作的output为新目录。
