@@ -1,0 +1,277 @@
+{
+  "status": "R5_FIRSTDOT_STABLE_SOURCE_PACKAGE_PASS",
+  "contract": "r5-selected-firstdot-gemv-v2",
+  "started": "2026-10-25T17:08:41.703568+00:00",
+  "finished": "2026-10-25T17:09:20.670065+00:00",
+  "manifest_sha256": "8feaa3a6e19c7bc5dcc77ccf0d262523d4f1d014c7c591ef123ed2084f0f5b40",
+  "verifier_sha256": "2a3ced33e2b3aa7fa131507a220f5aa56fff65cc0e71d20bec0e8674763073ca",
+  "input_sha256": {
+    "team/optimizations/o2/r2-select/FIRSTDOT_STABLE_CONTRACT.md": "3a118555f67f220c97057c70825fbc227c18cbed94f7c21597cc539eaef91027",
+    "team/optimizations/o2/r2-select/STABLE_MANIFEST.json": "c55c71293b41c45eae86f651376ace2205eff5df6376074935f46f5ff9d5c8a8",
+    "team/optimizations/o2/r2-select/public/Makefile": "2fe6e62af2dacc006268b3b6709083d5ded3739e765a33cc578f4d1e5adc8872",
+    "team/optimizations/o2/r2-select/public/firstdot/Makefile": "64842cf15a02772a68ca92125c7dd73a599ca75bcd5ce7f8b5e2d0b6e5efc3d7",
+    "team/optimizations/o2/r2-select/public/firstdot/example.c": "167bfbf2fa25251e843f279f70dd6eec83c46cd311daabaddc120fa281a30a53",
+    "team/optimizations/o2/r2-select/public/firstdot/selected_gemv.h": "e3da1db8527b1e5f00527a8d60b20e9c4311994979121fd58c019ba023d4ca3e",
+    "team/optimizations/o2/r2-select/public/gemv.S": "5c01b4eec12dcb3cc3a62551d7096d43b5f68cea2efec0c8b30b79e8d5e5810c",
+    "team/optimizations/o2/r2-select/public/gemv.h": "125ab086c086c2f00517295f7247a26d50900e91681faa6327c8980f48af511f",
+    "team/optimizations/o2/r2-select/public/selected_gemv.h": "18847dcdf84d783b05e3587e93ecee68e36196c54e386adb47fce1a61998e0da",
+    "team/optimizations/o2/r2-select/verify_firstdot_stable.py": "2a3ced33e2b3aa7fa131507a220f5aa56fff65cc0e71d20bec0e8674763073ca",
+    "team/optimizations/o2/r2-select/verify_stable.py": "826febeddfd84cecb06a49cd3e4156c55219089a2cd326e12e0c0f5ea1bb4b06",
+    "team/optimizations/o2/r2-vector-accum/evidence/firstdot-v1/c-archive/archive-manifest.json": "47859f1c12d5311ef554803c6976c8699ebafc164e2bdd876cfd0c6a6f2a2ec1",
+    "team/optimizations/o2/r2-vector-accum/evidence/firstdot-v1/library/library.json": "749d19cd9a772abb174500d8c8553d6f87ad675d7bcde6fc632829c75ea2dad5",
+    "team/optimizations/o2/r2-vector-accum/evidence/firstdot-v1/matrix-archive/archive-manifest.json": "0c8d3159c91aa3c934c7bfb7f2640906844246e812c0b5bfc556cdfb86d0d3b4",
+    "team/optimizations/o2/r2-vector-accum/evidence/firstdot-v1/reports/c-audit-01.json": "e178c590836330e9ed29b6b083527422c5d544e2dbde01b911c0e4978e2644cc",
+    "team/optimizations/o2/r2-vector-accum/evidence/firstdot-v1/reports/matrix-audit-01.json": "bd515ccff25f1922b9ee7b6c83a853daf0edd95634ad51b244ae8a4ae6e9fd2e",
+    "team/optimizations/o2/r2-vector-accum/firstdot/public/gemv.S": "1e1aa8ca665559efa6acab2648f4614c6121422aaf400d78c192e6accad5da47",
+    "team/optimizations/o2/r2-vector-accum/firstdot/public/gemv.h": "8ff3e08d098f000962beeaf898730939ee83bd4ea8eaf9be1c03c80f93c9db83",
+    "team/optimizations/o2/r2-vector-accum/firstdot_c_evidence.py": "e943b2b7495c0ddf92a81d08f996e82048f99b0d8e406ce9993b4d05556b461e",
+    "team/optimizations/o2/r2-vector-accum/firstdot_library.py": "352feda875d9403a59c5824e8e315a561e7ac695cf57971d85a1669ff9246a8a",
+    "team/optimizations/o2/repro/evidence/clean-reproduction-v1/reports/identity-02.json": "4a89872d0463163ea0be83f680843352e01354043f5709509d822353221258eb"
+  },
+  "selection": [
+    {
+      "shape": [
+        4,
+        8
+      ],
+      "alias": "xs_gemv_4x8",
+      "default_symbol": "firstdot_gemv_4x8_reuse_vdot",
+      "rvv_symbol": "firstdot_gemv_4x8_reuse_rvv",
+      "default_total": 1893,
+      "default_mean": 157.75,
+      "deployed_rvv_total": 2253,
+      "deployed_rvv_mean": 187.75,
+      "fastest_qualified_rvv": [
+        {
+          "variant": "s1",
+          "software": "reuse",
+          "total": 2250,
+          "mean": 187.5
+        }
+      ],
+      "samples_per_candidate": 12,
+      "performance_scope": "historical firstdot endtoend-with-c-abi-call windows"
+    },
+    {
+      "shape": [
+        8,
+        32
+      ],
+      "alias": "xs_gemv_8x32",
+      "default_symbol": "firstdot_gemv_8x32_reuse_vdot",
+      "rvv_symbol": "firstdot_gemv_8x32_reuse_rvv",
+      "default_total": 3387,
+      "default_mean": 282.25,
+      "deployed_rvv_total": 3609,
+      "deployed_rvv_mean": 300.75,
+      "fastest_qualified_rvv": [
+        {
+          "variant": "s1",
+          "software": "reuse",
+          "total": 3609,
+          "mean": 300.75
+        },
+        {
+          "variant": "firstdot",
+          "software": "reuse",
+          "total": 3609,
+          "mean": 300.75
+        }
+      ],
+      "samples_per_candidate": 12,
+      "performance_scope": "historical firstdot endtoend-with-c-abi-call windows"
+    },
+    {
+      "shape": [
+        16,
+        64
+      ],
+      "alias": "xs_gemv_16x64",
+      "default_symbol": "firstdot_gemv_16x64_reuse_vdot",
+      "rvv_symbol": "firstdot_gemv_16x64_reuse_rvv",
+      "default_total": 8484,
+      "default_mean": 707,
+      "deployed_rvv_total": 9345,
+      "deployed_rvv_mean": 778.75,
+      "fastest_qualified_rvv": [
+        {
+          "variant": "firstdot",
+          "software": "reuse",
+          "total": 9345,
+          "mean": 778.75
+        }
+      ],
+      "samples_per_candidate": 12,
+      "performance_scope": "historical firstdot endtoend-with-c-abi-call windows"
+    },
+    {
+      "shape": [
+        4,
+        13
+      ],
+      "alias": "xs_gemv_4x13",
+      "default_symbol": "firstdot_gemv_4x13_reuse_rvv",
+      "rvv_symbol": "firstdot_gemv_4x13_reuse_rvv",
+      "default_total": 2244,
+      "default_mean": 187,
+      "deployed_rvv_total": 2244,
+      "deployed_rvv_mean": 187,
+      "fastest_qualified_rvv": [
+        {
+          "variant": "s1",
+          "software": "reuse",
+          "total": 2244,
+          "mean": 187
+        },
+        {
+          "variant": "firstdot",
+          "software": "reuse",
+          "total": 2244,
+          "mean": 187
+        }
+      ],
+      "samples_per_candidate": 12,
+      "performance_scope": "historical firstdot endtoend-with-c-abi-call windows"
+    }
+  ],
+  "qualified_object_sha256": "b65d4ca4faf3550ad2e95d3fb7d1d452923b71ae50776420bfcd679d098238af",
+  "library_object_sha256": "b65d4ca4faf3550ad2e95d3fb7d1d452923b71ae50776420bfcd679d098238af",
+  "library_archive_sha256": "9e12de07d363a2627d7d33cff401da257c30487d59b3a3f7029bb3a262fbd33e",
+  "whole_library_object_identical": true,
+  "public_functions": 16,
+  "modes": [
+    {
+      "force_rvv": null,
+      "aliases": 8,
+      "targets": [
+        "firstdot_gemv_16x64_reuse_rvv",
+        "firstdot_gemv_16x64_reuse_vdot",
+        "firstdot_gemv_4x13_reuse_rvv",
+        "firstdot_gemv_4x8_reuse_rvv",
+        "firstdot_gemv_4x8_reuse_vdot",
+        "firstdot_gemv_8x32_reuse_rvv",
+        "firstdot_gemv_8x32_reuse_vdot"
+      ],
+      "caller_sha256": "731e14fdf675d47f0ab87e9d4ea6bff4fbd4ec07d5808d5b2e9d81863e7ec538",
+      "linked_sha256": "9baf3dbde75b47b962575f9266118fc89d4d4f8d02ea5d083db125d086aebf63",
+      "whole_objects_identical": true
+    },
+    {
+      "force_rvv": 0,
+      "aliases": 8,
+      "targets": [
+        "firstdot_gemv_16x64_reuse_rvv",
+        "firstdot_gemv_16x64_reuse_vdot",
+        "firstdot_gemv_4x13_reuse_rvv",
+        "firstdot_gemv_4x8_reuse_rvv",
+        "firstdot_gemv_4x8_reuse_vdot",
+        "firstdot_gemv_8x32_reuse_rvv",
+        "firstdot_gemv_8x32_reuse_vdot"
+      ],
+      "caller_sha256": "731e14fdf675d47f0ab87e9d4ea6bff4fbd4ec07d5808d5b2e9d81863e7ec538",
+      "linked_sha256": "9baf3dbde75b47b962575f9266118fc89d4d4f8d02ea5d083db125d086aebf63",
+      "whole_objects_identical": true
+    },
+    {
+      "force_rvv": 1,
+      "aliases": 8,
+      "targets": [
+        "firstdot_gemv_16x64_reuse_rvv",
+        "firstdot_gemv_4x13_reuse_rvv",
+        "firstdot_gemv_4x8_reuse_rvv",
+        "firstdot_gemv_8x32_reuse_rvv"
+      ],
+      "caller_sha256": "f1f8ad845aa15eb80df02775eb615fe2030ddfda7a7e6949f86eb3005ae041af",
+      "linked_sha256": "b622dd64116fbc567d0f1f5d0b8773ff665a97308abb20643e0a530d3fc1954a",
+      "whole_objects_identical": true
+    }
+  ],
+  "invalid_configurations_rejected": [
+    "2",
+    "-1",
+    "true",
+    "0+1",
+    "true && true",
+    "0||1",
+    "00"
+  ],
+  "header_cases": {
+    "expanded-zero": true,
+    "expanded-one": true,
+    "repeat-v2": true,
+    "v1-before-v2": false,
+    "v2-before-v1": true
+  },
+  "semantic_negative_controls": [
+    {
+      "name": "rehash-wrong-fallback-mean",
+      "error": "manifest choices differ from raw qualified comparison",
+      "artifact_sha256": {
+        "wrong-fallback-manifest.json": "58739227b25eed5d79b0b33a68c0e3c94ea525b6410d14f6365cbead4d571102"
+      }
+    },
+    {
+      "name": "rehash-wrong-alias-target",
+      "error": "alias/explicit whole objects differ",
+      "artifact_sha256": {
+        "selected_gemv.h": "b6f38fd7e379a36f36505b3bdd743255b667889f5df71e1214becbace3147d82",
+        "caller.o": "4f6214ae5771046ee4602feb450d838f974ad126d8721d6f29925c8459471d30"
+      }
+    },
+    {
+      "name": "rehash-wrong-complete-object",
+      "error": "package archive member inventory/bytes",
+      "artifact_sha256": {
+        "wrong.a": "91cea26ca3a7e5fc65bb3d16bd64bef5f24aba9ebb1ef8fefddb357b54afd86f"
+      }
+    }
+  ],
+  "missing_header_compile_rejected": true,
+  "wrong_library_unresolved_symbols_detected": true,
+  "relocated_sdk_whole_consumer_identical": true,
+  "rollback_status": "R5_STABLE_SOURCE_ALIAS_BUILD_PASS",
+  "tools": {
+    "gcc": {
+      "path": "/usr/bin/riscv64-linux-gnu-gcc",
+      "sha256": "0c54895c55568be5b5fee49e2426abcc8fb05ca2c121ca5685dea2cbc24a1c13",
+      "version": "riscv64-linux-gnu-gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0"
+    },
+    "ar": {
+      "path": "/usr/bin/riscv64-linux-gnu-ar",
+      "sha256": "7985a5f5a10d03843aa7b296e1652bf5bd9fd5180839c7df9b49ef56738fcc74",
+      "version": "GNU ar (GNU Binutils for Ubuntu) 2.38"
+    },
+    "ld": {
+      "path": "/usr/bin/riscv64-linux-gnu-ld",
+      "sha256": "59db886faf252e5e2fb2e5341fd57c24ddbd216197f69296321fef913e5b64ba",
+      "version": "GNU ld (GNU Binutils for Ubuntu) 2.38"
+    },
+    "nm": {
+      "path": "/usr/bin/riscv64-linux-gnu-nm",
+      "sha256": "3f6c21492177e99a2a6db48d530d5ec310ed058c679bc71a743f80c86cb87b56",
+      "version": "GNU nm (GNU Binutils for Ubuntu) 2.38"
+    },
+    "readelf": {
+      "path": "/usr/bin/riscv64-linux-gnu-readelf",
+      "sha256": "2ee6c57f1efa53bda4a784afb82340b2d925383a8892c36df448028645af2d3f",
+      "version": "GNU readelf (GNU Binutils for Ubuntu) 2.38"
+    },
+    "make": {
+      "path": "/usr/bin/make",
+      "sha256": "92f646030615cd98490a68a94c0aefd87b552be3158b941c02e43b0bfdb576db",
+      "version": "GNU Make 4.3"
+    }
+  },
+  "cpu_affinity": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "parallel_workers": 2,
+  "raw_matrix_audit_calls": 1,
+  "new_emu_runs": 0,
+  "new_nemu_runs": 0,
+  "new_application_performance_qualified": false,
+  "scope": "V2 source selection and library packaging equivalence; original firstdot runtime qualification only"
+}

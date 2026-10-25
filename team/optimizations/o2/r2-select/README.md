@@ -50,3 +50,7 @@ python3 -B -m unittest discover \
 ## 新增：普通 C 调用入口
 
 获选计算 body 另已形成普通 RV64 C ABI 公共函数，使用和复现见 [ENTRY_README.md](ENTRY_README.md)，新调用路径的实际比较、普通 C 功能验证及资格边界见 [ENTRY_RESULT.md](ENTRY_RESULT.md)。上述原镜像 `export/verify/resolve` 语义保持；新入口的证据独立封存。
+
+## 稳定源码包与回退
+
+新接入推荐采用 [firstdot V2稳定源包](FIRSTDOT_STABLE.md)：四形状普通C源别名、单完整对象静态库及可独立搬移的双头文件。已验证原firstdot机器码、实际GNU调用等价和冻结[V1回退](STABLE.md)；原镜像查询/导出及既有V1使用不自动切换。新增调用者和应用仍须按实际影响验证。

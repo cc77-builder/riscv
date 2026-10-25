@@ -1,6 +1,6 @@
 # 香山 vdot 工程开发路线：满足赛题技术要求，持续提高性能
 
-更新：2026-10-25（UTC+08:00）。硬件比较基点：6d2abe403b07c297b8830a7d4f06e370b0a8e070；当前T17新构建源码：34bae6d4acceac939f958199dae53c14bc1f6183；当前获选软件及默认 C 源入口见[稳定使用说明](../optimizations/o2/r2-select/STABLE.md)，底层调用资格见[R4结果](../optimizations/o2/r2-select/ENTRY_RESULT.md)；可选 firstdot 实现见[其运行结果](../optimizations/o2/r2-vector-accum/FIRSTDOT_RESULT.md)，后续config-reuse选择性优化见[当前S3结果](../optimizations/o2/r2-config-reuse/RUNTIME_RESULT.md)。团队集成分支 cc77-builder/riscv:zufan。实时活动见[协作入口](collaboration-current.md)，每轮成果及路线变化见[开发计分板](../../开发计分板.md)。
+更新：2026-10-26（UTC+08:00）。硬件比较基点：6d2abe403b07c297b8830a7d4f06e370b0a8e070；当前T17新构建源码：34bae6d4acceac939f958199dae53c14bc1f6183；当前推荐采用的稳定 C 源包为[firstdot V2](../optimizations/o2/r2-select/FIRSTDOT_STABLE.md)，冻结[V1与回退](../optimizations/o2/r2-select/STABLE.md)保留；底层资格分别见[firstdot运行结果](../optimizations/o2/r2-vector-accum/FIRSTDOT_RESULT.md)及[R4结果](../optimizations/o2/r2-select/ENTRY_RESULT.md)，后续config-reuse选择性优化见[当前S3结果](../optimizations/o2/r2-config-reuse/RUNTIME_RESULT.md)。团队集成分支 cc77-builder/riscv:zufan。实时活动见[协作入口](collaboration-current.md)，每轮成果及路线变化见[开发计分板](../../开发计分板.md)。
 
 本路线只安排工程实现、验证、复现和性能优化。比赛报告、PPT、视频、答辩、平台提交及赛事事务由成员另行安排，不属于 Agent 的工程任务，也不作为工程推进的前置条件。开发只维护必要的运行说明、结果证据和简短计分板记录。
 
@@ -20,8 +20,8 @@
 | S1 | [独立实现及固定布局主批](../optimizations/o2/r2-vector-accum/VALIDATION.md)完成57次整核进程、768正式窗口，另4次小尺寸进程重放及两项原文重算均PASS；4×8／8×32／16×64的reuse vdot端到端周期下降5.7751%／12.5%／17.1589%，保留同步优化后的更快RVV | K13的S1 vdot退化1.3095%，不采用；保留S0 vdot回退和更快的S1 RVV。单项资格及原镜像选择/导出已闭合；不代表新caller、默认入口、T17或完整应用收益 |
 | R4 调用入口 | [普通RV64 C ABI GEMV入口](../optimizations/o2/r2-select/ENTRY_RESULT.md)完成33次性能进程／384正式窗口／192全窗口重放比较；另3次普通C进程覆盖16公共函数、48个不同case和96正常调用 | 新调用窗中4×8／8×32／16×64选S1 reuse vdot，较最快同入口RVV少9.4667%／2.7431%／7.9859%周期；K13选S1 reuse RVV。只闭合调用入口影响，完整MERGE-REG、T17和默认切换分别验收 |
 | T17 新构建复现 | [同主机干净源码与新身份结果](../optimizations/o2/repro/CLEAN_RESULT.md)通过：145仓库来源、新EMU ff840528/正常参考8af118e5、50次新执行（47正常＋3预期负控）；三类最终归档独立检出原文复算通过 | Agent同机复现，工具/缓存保留；未代签人工ACK或新机器安装。384正式窗口及全部768跨构建对应窗口一致，原始PASS不转移；已作为R5/G5稳定入口的运行资格依据 |
-| R5/G5 稳定入口 | [四形状 C 源默认选择与回退](../optimizations/o2/r2-select/STABLE.md)已固定，新增团队库构建；真实GNU验证三种开关模式/八别名，整库对象等于T17 C02，完整caller/link对象等价，七种非法配置拒绝 | 源码别名不增加ELF符号或运行时分派；新EMU为0，没有新应用周期。默认前三形状vdot、K13 RVV，修改开关须重编译调用端 |
-| R2-S1 firstdot | [首块直接初始化实跑](../optimizations/o2/r2-vector-accum/FIRSTDOT_RESULT.md)完成33次性能进程／384正式窗口／192重放比较；另3次普通C进程及独立静态库闭合 | 三个整块reuse vdot较原S1少7.0692%／3.5043%／1.4291%周期，K13仍保留更快RVV；独立firstdot公共符号可选，R5稳定默认未改，不是完整应用收益 |
+| R5/G5 稳定入口 | [firstdot V2源包](../optimizations/o2/r2-select/FIRSTDOT_STABLE.md)已闭合：四形状8别名、单完整对象库和可独立搬移的两头文件；原文矩阵/C资格重算、实际GNU三模式/8别名/完整对象等价及错选择/错别名/错对象拒错通过，冻结V1回退实跑通过 | V2默认前三形状firstdot vdot、K13 firstdot RVV；公平比较仍保留同轮最快合格RVV。现有V1不自动迁移，变版本/开关须完整重编译；新增EMU为0，无新应用周期或PPA资格 |
+| R2-S1 firstdot | [首块直接初始化实跑](../optimizations/o2/r2-vector-accum/FIRSTDOT_RESULT.md)完成33次性能进程／384正式窗口／192重放比较；另3次普通C进程及独立静态库闭合 | 三个整块reuse vdot较原S1少7.0692%／3.5043%／1.4291%周期，K13仍保留更快RVV；已由R5 V2提供版本明确的推荐源入口，原V1保留；这些仍是历史固定调用窗数据，不是完整应用收益 |
 | R2-S3 重复向量配置 | [GNU与整核结果](../optimizations/o2/r2-config-reuse/RUNTIME_RESULT.md)完成33次性能进程、384正式窗口、192全窗口重放比较；三个整块reuse/vdot较本轮firstdot少3.0111%／3.2772%／0.6011%周期，另3次普通C进程、独立静态库及另一源码检出原文复算均PASS | 固定调用计划下可选，K13 S3 vdot反而慢0.4890%，保留本轮更快firstdot reuse/RVV；部分相同RVV槽有小幅可重放但未归因差异，不宣称全矩阵无退化。R5默认、完整应用与新PPA边界保持 |
 | R2-S3 caller | [基础8×32普通C完整调用](../optimizations/o2/r2-config-reuse/caller/RESULT.md)的144/96窗口已闭合；[hoisted/强RVV筛选](../optimizations/o2/r2-config-reuse/caller/hoisted/RESULT.md)完成新匹配基线和五类RVV、18次新EMU及整组原文复算 | 指针缓存对匹配vdot/RVV完整调用分别少9.9838%/9.6943%周期；共同vdot跨镜像锚点超过事前1%门槛，HOLD_CONTEXT_VARIATION；[原文诊断](../optimizations/o2/r2-config-reuse/caller/hoisted/CONTEXT_RESULT.md)已补充退休与共同间接调用重定向的连续性关联，不发布最优内核或更改R5默认。仅新caller_full在固定8×32范围有运行资格，不扩展为LLM收益 |
 | R2-S3 前序干预 | [单镜像固定目标干预](../optimizations/o2/r2-config-reuse/caller/hoisted/intervention/RESULT.md)完成3次EMU、每正常进程40窗/640提交、20项检查及隔离检出原文复算；正式A/B均0/8连续origin、总周期9611/9613 | 按事前规则为MIXED，未重现旧正式连续origin模式；1拍间隙随块内位置出现且不增加对应目标周期。本计划收束，旧HOLD和R5保持，不选核、不扩大矩阵；下一步仍需实际消费者输入。 |
@@ -80,7 +80,7 @@ S2 保持 dot8 合法域，安全读取剩余 5 项、显式补零、恢复 VL=8
 | --- | --- | --- |
 | R4/O5 获选组合回归 | [新普通调用入口](../optimizations/o2/r2-select/ENTRY_RESULT.md)已完成24个性能ELF和1个普通C ELF的影响验证、原始证据复算及公共源码交付；硬件仍为固定6d2/1a23身份 | 调用入口与[MERGE-REG](../optimizations/o2/fullcore/MERGED_REGRESSION_RESULT.md)的功能／异常／控制证据均绑定相同6d2/1a23身份，新构建已由T17另行验证；完整全宽结果、差分拒错／恢复、性能及必要成本证据一致，无未解释失败。只复测变化影响，不拼接不相容PASS |
 | T17 干净环境复现 | [合同范围已完成](../optimizations/o2/repro/CLEAN_RESULT.md)：同主机独立源码/产物、145仓库来源、实际构建、14整核＋3C＋33矩阵新执行；传输层修正后最终M03/C02与整核包独立原文复算通过 | 源码／依赖／镜像／命令及差异可追溯。执行者为Agent，未取得人工ACK或新机器安装资格；三类归档跨系统字节/索引另核验。R5/G5使用该固定身份，不重复旧运行或改判旧B0/H1 |
-| R5/G5 稳定版本与默认入口 | [当前范围已闭合](../optimizations/o2/r2-select/STABLE.md)：T17固定资格、四形状C别名、默认静态库构建与完整使用/回退导航；原public汇编和头文件保持原字节 | GNU构建出的整个库对象与C02相等，三种配置/八别名的caller和可重定位链接逐字节相等，新增EMU为0。可供成员使用；新caller/布局/应用仍按影响验证，未冒称全赛题、人工ACK或新增ASIC PPA通过 |
+| R5/G5 稳定版本与默认入口 | [firstdot V2范围已闭合](../optimizations/o2/r2-select/FIRSTDOT_STABLE.md)：固定firstdot普通C资格、四形状C别名、可搬移静态库/双头文件及完整迁移说明；原firstdot源码和V1执行输入保持原字节 | GNU完整库对象与合格firstdot相等，三模式/八别名caller及可重定位link逐字节相等，搬移SDK与V1回退实跑通过；新增EMU为0。新caller/布局/应用仍按影响验证，未冒称全赛题、人工ACK或新增ASIC PPA通过 |
 
 ## 4. 每轮实验怎样决定下一步
 

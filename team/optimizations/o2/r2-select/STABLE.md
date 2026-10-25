@@ -1,5 +1,9 @@
 # R5/G5：稳定 GEMV C 源入口与回退
 
+> 本页保留合同 `r5-selected-gemv-v1` 的原使用与回退说明。新接入推荐采用
+> [firstdot V2稳定源包](FIRSTDOT_STABLE.md)；V2有独立构建入口，现有V1调用者
+> 不会自动切换。本文下方的“当前／默认”均限于V1合同。
+
 操作 `20261024-LiZufan001-r5-stable-1221`，合同 `r5-selected-gemv-v1`。本页固定当前四种形状的普通 C 源入口、库构建和回退方式。机器可读选择及文件身份见 [STABLE_MANIFEST.json](STABLE_MANIFEST.json)，实际 GNU 验证见 [verify-03/result.json](evidence/stable-v1/verify-03/result.json)。
 
 资格基点为已发布的 T17 提交 `666fc80edebd50f7b3d6fb13cf0eb24d526e02d9`；其真实硬件构建源码为 `34bae6d4acceac939f958199dae53c14bc1f6183`。两者分别表示证据交付版本和硬件源码身份，不能互换。硬件、参考模型、AM、配置及依赖的完整关联继续以 [T17 结果](../repro/CLEAN_RESULT.md)、[identity-02](../repro/evidence/clean-reproduction-v1/reports/identity-02.json) 为准。
