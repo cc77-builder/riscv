@@ -24,6 +24,7 @@ REL = Path("team/optimizations/o2/r2-select")
 S1 = Path("team/optimizations/o2/r2-vector-accum")
 EVIDENCE = S1 / "evidence/firstdot-v1"
 CONTRACT = "r5-selected-firstdot-gemv-v2"
+IDENTITY = Path("team/optimizations/o2/repro/evidence/clean-reproduction-v1/reports/identity-02.json")
 SHAPES = ((4, 8), (8, 32), (16, 64), (4, 13))
 MATRIX_SHA = "0c8d3159c91aa3c934c7bfb7f2640906844246e812c0b5bfc556cdfb86d0d3b4"
 C_SHA = "47859f1c12d5311ef554803c6976c8699ebafc164e2bdd876cfd0c6a6f2a2ec1"
@@ -38,7 +39,7 @@ REQUIRED_INPUTS = {
 } | {str(EVIDENCE / name) for name in (
     "matrix-archive/archive-manifest.json", "c-archive/archive-manifest.json", "library/library.json",
     "reports/c-audit-01.json", "reports/matrix-audit-01.json")
-} | {"team/optimizations/o2/repro/evidence/clean-reproduction-v1/reports/identity-02.json"}
+} | {str(IDENTITY)}
 
 
 def require(condition, message):
@@ -60,6 +61,15 @@ def save(path, value):
 
 def now():
     return datetime.now(timezone.utc).isoformat()
+
+
+def hardware_identity(manifest, identity):
+    """Bind the public hardware claim to the already hash-pinned T17 identity."""
+    expected = dict(source_commit=identity["source_commit"],
+                    emu_sha256=identity["hardware_profile"]["emu_sha256"],
+                    reference_sha256=identity["reference_sha256"])
+    require(manifest.get("hardware") == expected, "V2 manifest T17 hardware identity")
+    return expected
 
 
 def selection(matrix):
@@ -108,7 +118,7 @@ def raw_qualification(repo, output):
     sys.path.insert(0, str(repo / S1))
     import firstdot_c_evidence as ce
     import firstdot_library as library
-    identity_path = repo / "team/optimizations/o2/repro/evidence/clean-reproduction-v1/reports/identity-02.json"
+    identity_path = repo / IDENTITY
     identity = ce.a.parent_identity(repo, identity_path)
     matrix = repo / EVIDENCE / "matrix-archive"
     c_archive = repo / EVIDENCE / "c-archive"
@@ -182,6 +192,7 @@ def verify(args, output, started):
         actual = (repo / path).resolve()
         require(actual.is_relative_to(repo) and not (repo / path).is_symlink() and sha(actual) == digest,
                 "source/evidence pin: " + path)
+    hardware = hardware_identity(manifest, read(repo / IDENTITY))
     matrix, qualified, library_module = raw_qualification(repo, output)
     rows = selection(matrix)
     require(rows == manifest["selection"], "manifest choices differ from raw qualified comparison")
@@ -342,6 +353,7 @@ def verify(args, output, started):
     require(sha(manifest_path) == manifest_hash and all(sha(repo / p) == h for p, h in pins.items()), "inputs changed during qualification")
     result = dict(status="R5_FIRSTDOT_STABLE_SOURCE_PACKAGE_PASS", contract=CONTRACT, started=started, finished=now(),
         manifest_sha256=manifest_hash, verifier_sha256=sha(__file__), input_sha256=pins, selection=rows,
+        hardware=hardware, manifest_hardware_bound_to_pinned_identity=True,
         qualified_object_sha256=OBJECT_SHA, library_object_sha256=sha(package / "gemv.o"), library_archive_sha256=sha(archive),
         whole_library_object_identical=True, public_functions=16, modes=modes, invalid_configurations_rejected=invalid,
         header_cases={name: accepted for name, (_, accepted) in header_cases.items()},

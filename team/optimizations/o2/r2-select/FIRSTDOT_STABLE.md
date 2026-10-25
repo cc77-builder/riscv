@@ -168,3 +168,8 @@ python3 -B "$REPO/team/optimizations/o2/r2-select/verify_firstdot_stable.py" \
 底层函数运行资格引用firstdot的33次性能进程及3次普通C进程；本轮新增
 EMU/NEMU均为0。V2交付的是源入口、可重建包和明确回退，不把可重定位
 链接相等扩大为新的最终ELF运行、任意应用性能或成员人工验收。
+
+
+### 2026-10-26 身份校验补充
+
+当前验证器还把清单 hardware 三字段与固定 T17 身份逐项绑定；伪造或缺失字段在构建前拒绝。真实篡改复现、7项CLI拒错及合法全量回归见[修复证据](evidence/firstdot-identity-20261026/README.md)。此修复不改变已合格机器码、选择或运行资格。
