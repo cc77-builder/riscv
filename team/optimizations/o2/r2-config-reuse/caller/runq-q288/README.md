@@ -1,6 +1,6 @@
 # llama2.c 量化 Q 投影调用适配器
 
-当前新增的普通 C 调用与回退从 [完整 Q 融合入口](fused/README.md) 进入。固定目标计划已经完成完整运行、独立重放与原文审计；性能选择和范围见 [融合目标结果](fused/target/RESULT.md)。R5 稳定默认不会自动切换。
+当前普通 C 调用、单一去重汇编导出和回退从 [phased/TA入口](fused/phased/README.md) 进入。本批显式选择TA入口 `q288_tail_vdot`；具体选择和资格见 [TA目标结果](fused/phased/tail/target/RESULT.md) 与 [phased目标结果](fused/phased/target/RESULT.md)。R5 稳定默认不会自动切换。
 
 | 独立阶段 | 已完成结果 | 资格边界 |
 |---|---|---|
@@ -9,7 +9,9 @@
 | [完整 Q 融合](fused/target/RESULT.md) | 五路同 ELF、两个反序块、全部四锚点通过；本计划显式选择 fused-vdot | 相对最快纳入 RVV 保守少 6.844186% 周期；仅预打包、一次同方法 selfwarm 后的完整 Q |
 | [完整上游 forward 观察](forward-host/RESULT.md) | 6 次宿主完整 forward、72 位置/矩阵捕获、两融合 ELF 模型数值接续 | 确定性未训练权重；未把候选替换进完整模型，未测 token 性能 |
 | [融合剩余成本](fused/target/COST.md) | 原归档12窗与41,472笔计时custom事务身份、11项控制及新进程复算闭合 | 两FV窗无FU额外驻留/出口背压；接口上游间隔不可直接归因vset，无新性能资格 |
-| [phased 排程](fused/phased/RESULT.md) | 一版实际 GNU/有限模型和新源静态复现 | 当前仍静态资格；新成本证据支持一次独立目标对照，尚无新的目标结果 |
+| [phased 排程](fused/phased/target/RESULT.md) / [成本坐标](fused/phased/target/COST.md) | 真实目标负控/恢复/重放、完整原文封存和隔离新源复算闭合 | 该phased计划选PV；局部等待指标不作单一因果归因 |
+| [两位TA](fused/phased/tail/target/RESULT.md) | 真实GNU、任意尾值非干扰、目标三进程与封存闭合 | 本批显式选择TA入口 `q288_tail_vdot`；范围和门槛见原结果 |
+| [普通C去重入口](fused/phased/README.md) | phased/tail两变体真实GNU最终链接，实际调用及全部完整函数字节相同 | 链接核验没有新增新ELF运行/性能或R5默认资格 |
 
 研究依据与条件探索见 [RESEARCH.md](RESEARCH.md)。新的完整 Q 使用 288×288、GS32 的原严格分组 FP32 语义，量化输入和尺度由消费者提供；固定上游、来源和许可保持。
 
