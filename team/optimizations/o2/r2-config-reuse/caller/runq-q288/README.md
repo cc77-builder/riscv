@@ -8,7 +8,8 @@
 | [acc8 第一阶段](acc8/RESULT.md) / [目标第二阶段](acc8/target/RESULT.md) | 八累加器驻留，真实目标负控/恢复/重放及新源复算闭合 | 诊断合同没有共同预热/性能锚点，不授予公平加速 |
 | [完整 Q 融合](fused/target/RESULT.md) | 五路同 ELF、两个反序块、全部四锚点通过；本计划显式选择 fused-vdot | 相对最快纳入 RVV 保守少 6.844186% 周期；仅预打包、一次同方法 selfwarm 后的完整 Q |
 | [完整上游 forward 观察](forward-host/RESULT.md) | 6 次宿主完整 forward、72 位置/矩阵捕获、两融合 ELF 模型数值接续 | 确定性未训练权重；未把候选替换进完整模型，未测 token 性能 |
-| [phased 排程](fused/phased/RESULT.md) | 一版实际 GNU/有限模型和新源静态复现 | 仅静态候选，本轮不自动追加目标批 |
+| [融合剩余成本](fused/target/COST.md) | 原归档12窗与41,472笔计时custom事务身份、11项控制及新进程复算闭合 | 两FV窗无FU额外驻留/出口背压；接口上游间隔不可直接归因vset，无新性能资格 |
+| [phased 排程](fused/phased/RESULT.md) | 一版实际 GNU/有限模型和新源静态复现 | 当前仍静态资格；新成本证据支持一次独立目标对照，尚无新的目标结果 |
 
 研究依据与条件探索见 [RESEARCH.md](RESEARCH.md)。新的完整 Q 使用 288×288、GS32 的原严格分组 FP32 语义，量化输入和尺度由消费者提供；固定上游、来源和许可保持。
 

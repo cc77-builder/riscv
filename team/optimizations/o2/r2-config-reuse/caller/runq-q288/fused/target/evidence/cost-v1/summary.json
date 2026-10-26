@@ -1,0 +1,1758 @@
+{
+  "diagnostics": {
+    "archive_pins": {
+      "archive-manifest.json": "446a6cfb3e4f8ebc55ed2deb555bd46556a73c8c5912a5b5a8e3cfbee156c1c9",
+      "original-audit.json": "92483cb201c667a80da2e806fbc658ae8994eaa81f78efb8bdd086efaed1a60c",
+      "payload.zip": "de3afffda86d1db7981d793d17f180b6af879582530d0979fe313bea00170b6c"
+    },
+    "context_helper_sha256": "e65e4a6056c9059af4a407445e3485256fbd976ad3778a7c24655cb08753015b",
+    "contract": "r2-s3-runq-q288-fused-cost-v1",
+    "frozen_sources_unchanged": true,
+    "hardware_changed": false,
+    "hardware_observation_binding": {
+      "emu_sha256": "ff840528eb1009e94906eefb3773ca321050f309553543ab26f0db23c410e30f",
+      "observation_flags": {
+        "NUM_CORES": 1,
+        "VDOT_O2_TRACE": "1",
+        "VDOT_T13_TRACE": "1"
+      },
+      "observer_source_path": "src/main/scala/xiangshan/backend/exu/ExeUnit.scala",
+      "observer_source_sha256": "166f70c704cc2ec477d316bc5d3ffb40498118e6f8c1c498209fc4b706070f1e",
+      "original_build_and_run_provenance_reused": true,
+      "physical_external_inputs_revalidated": false,
+      "pins_raw_sha256": "7c42a8130e71b39e8f5ca08d7d662a85ac58f677040c6293d38007b007ac0dcc",
+      "pins_stored_sha256": "614c959f8bc71e11858a35c65b3f0e07eda358cdee5f8643463892e6c312773a",
+      "scope": "absence of STATE implies empty P/R, no DIV occupancy, no parent valid or flush; not outready or whole-core idle",
+      "silence_semantics_bound": true,
+      "source_commit": "34bae6d4acceac939f958199dae53c14bc1f6183"
+    },
+    "new_emu_runs": 0,
+    "new_performance_qualification": false,
+    "scope": "fixed synthetic prepacked Q only; FU boundary observations and retirement coordinates",
+    "selected_input_sha256": {
+      "build/build.json": "3d7ca7a6e56d8d07df052265e68bb7acfd490506e37922685e3cc0e12c05ed86",
+      "build/elf-validation.json": "ef2429403754c10e0fb88f6ee906122b6b7e2f73619e1a2114206eb3d4f28405",
+      "build/source/manifest.json": "2da98de33a86398496e310f5b8da83c5763202de68953d5dd46f954d06c1b1a0",
+      "build/vdot-perf.elf": "e45105a5cd57289cfc5e031fc34ab86d799b02ba575438376e3df55662fbc801",
+      "run/hardware-profile.json": "35ac2d74fb8b1eafa6ea991ee7035fdf1ebfc73ce469997a31b8764d1621f527",
+      "run/parent-identity.json": "4a89872d0463163ea0be83f680843352e01354043f5709509d822353221258eb",
+      "run/runs/recovery/result.json": "c1a62606221594782932047d687f3c9ea440eddeccf6e8c9442dc1f8a1daaf8b",
+      "run/runs/recovery/validation.json": "357fe838e7bcccbfcaaab4340cbff48f39dee731142d300ee1c21a831564e4cb",
+      "run/runs/replay/result.json": "08860e166097288ae5fc8c36903b49f286a264149853c457bba358bb6d926dbf",
+      "run/runs/replay/validation.json": "357fe838e7bcccbfcaaab4340cbff48f39dee731142d300ee1c21a831564e4cb",
+      "run/runtime-inputs.json": "82a695dac787b508796a17bd797d52034abd77f54ff35a23eba1590833284044"
+    },
+    "source_files_checked": 98,
+    "stable_default_changed": false,
+    "status": "Q288_COST_DIAGNOSTIC_PASS",
+    "trace_identity": {
+      "full_event_counts": {
+        "ACCEPT": 103681,
+        "COMMIT": 103681,
+        "ENQUEUE": 103681,
+        "MOVE": 103681,
+        "REDIRECT": 6076,
+        "RESPONSE": 103681,
+        "SCHEMA": 1,
+        "STATE": 238182,
+        "VFEX4_ACCEPT": 103681,
+        "VFEX4_REDIRECT": 6076,
+        "VFEX4_WAIT": 4
+      },
+      "replay_input_identical": true,
+      "replay_interpretation": "same deterministic input bytes; no new target run or independent sample",
+      "schema": {
+        "clock": "global",
+        "ftq_size": 8,
+        "latency": 2,
+        "perf_width": 577,
+        "rob_size": 48,
+        "slots": 2,
+        "version": 1,
+        "vlen": 128,
+        "vpu_width": 195
+      },
+      "stderr_bytes": 288416760,
+      "stderr_sha256": "ae64e3e4c85af646beb977e9f78a8116a6c3d7a918cec899cb5c9588aeb7030a"
+    },
+    "unavailable_causality": [
+      "load/cache source readiness",
+      "vset dependency stall",
+      "FP issue/completion",
+      "exclusive instruction-class cycles",
+      "token/full-model/quality/ASIC"
+    ],
+    "windows": [
+      {
+        "block": 0,
+        "cycles": 88453,
+        "fu": {
+          "accept_to_response": {
+            "count": 0,
+            "histogram": {}
+          },
+          "accepted_time_order_gap": {
+            "count": 0,
+            "histogram": {}
+          },
+          "all_kill_events": 0,
+          "all_output_stall_cycles": 0,
+          "boundary_crossings": 0,
+          "consecutive_accept_run_lengths": {
+            "count": 0,
+            "histogram": {}
+          },
+          "div_accepts": 0,
+          "enqueue_before_start": 0,
+          "enqueue_to_accept": {
+            "count": 0,
+            "histogram": {}
+          },
+          "measured_cycles": 88453,
+          "observed_occupancy": {
+            "0": 662,
+            "1": 0,
+            "2": 0
+          },
+          "observed_state_cycles": 662,
+          "other_accepts": 0,
+          "parent_wait_events": 0,
+          "pending_and_ready_without_request_observed": 0,
+          "pending_and_ready_without_request_proven": 0,
+          "pending_during_silence": 0,
+          "pending_in_source_bound_empty_domain": 0,
+          "pending_target_union_cycles": 0,
+          "response_to_commit": {
+            "count": 0,
+            "histogram": {}
+          },
+          "scope": "VFEX4 VDot/DIV boundary only; response-to-commit is retirement delay, not writeback stall",
+          "silent_domain_proven": true,
+          "target_accepts_per_cycle": 0.0,
+          "target_output_stall_events": 0,
+          "target_transactions": 0,
+          "total_occupancy": {
+            "0": 88453,
+            "1": 0,
+            "2": 0
+          },
+          "triple_overlap_cycles": 0,
+          "unobserved_cycles": 87791
+        },
+        "group_retirement_envelope": {
+          "count": 324,
+          "histogram": {
+            "224": 2,
+            "231": 1,
+            "232": 2,
+            "233": 1,
+            "235": 3,
+            "236": 1,
+            "239": 2,
+            "240": 1,
+            "243": 232,
+            "244": 79
+          },
+          "maximum": 244,
+          "mean": 242.86111111111111,
+          "minimum": 224,
+          "p50": 243,
+          "p90": 244,
+          "p99": 244
+        },
+        "instructions": 56017,
+        "label": "acc8-rvv4",
+        "role": "anchor_start_method",
+        "sample_ticks": [
+          409069,
+          409103,
+          497556,
+          497590
+        ],
+        "seq": 0,
+        "transactions_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "block": 0,
+        "cycles": 82314,
+        "fu": {
+          "accept_to_response": {
+            "count": 10368,
+            "histogram": {
+              "2": 10368
+            },
+            "maximum": 2,
+            "mean": 2.0,
+            "minimum": 2,
+            "p50": 2,
+            "p90": 2,
+            "p99": 2
+          },
+          "accepted_time_order_gap": {
+            "count": 10367,
+            "histogram": {
+              "1": 5117,
+              "11": 980,
+              "110": 2,
+              "112": 1,
+              "113": 1,
+              "117": 4,
+              "12": 15,
+              "120": 15,
+              "121": 20,
+              "122": 26,
+              "123": 78,
+              "124": 7,
+              "125": 25,
+              "126": 9,
+              "127": 6,
+              "128": 23,
+              "129": 11,
+              "13": 942,
+              "130": 10,
+              "131": 7,
+              "132": 7,
+              "133": 18,
+              "134": 12,
+              "135": 12,
+              "136": 14,
+              "137": 3,
+              "138": 4,
+              "139": 3,
+              "14": 1,
+              "140": 1,
+              "141": 2,
+              "143": 2,
+              "15": 2,
+              "17": 2,
+              "2": 2617,
+              "22": 159,
+              "24": 152,
+              "3": 6,
+              "4": 4,
+              "5": 5,
+              "6": 16,
+              "7": 9,
+              "8": 17
+            },
+            "maximum": 143,
+            "mean": 7.913668370791936,
+            "minimum": 1,
+            "p50": 2,
+            "p90": 13,
+            "p99": 129
+          },
+          "all_kill_events": 0,
+          "all_output_stall_cycles": 0,
+          "boundary_crossings": 0,
+          "consecutive_accept_run_lengths": {
+            "count": 5251,
+            "histogram": {
+              "1": 2632,
+              "2": 1368,
+              "3": 4,
+              "4": 1247
+            },
+            "maximum": 4,
+            "mean": 1.9744810512283375,
+            "minimum": 1,
+            "p50": 1,
+            "p90": 4,
+            "p99": 4
+          },
+          "div_accepts": 0,
+          "enqueue_before_start": 0,
+          "enqueue_to_accept": {
+            "count": 10368,
+            "histogram": {
+              "14": 1,
+              "15": 2,
+              "17": 1,
+              "18": 10,
+              "19": 26,
+              "20": 27,
+              "21": 14,
+              "22": 7,
+              "24": 6,
+              "25": 8,
+              "26": 650,
+              "27": 324,
+              "28": 316,
+              "29": 3223,
+              "30": 2722,
+              "31": 335,
+              "32": 166,
+              "33": 4,
+              "34": 2,
+              "35": 2,
+              "36": 134,
+              "37": 864,
+              "38": 167,
+              "39": 265,
+              "40": 256,
+              "41": 836
+            },
+            "maximum": 41,
+            "mean": 31.408757716049383,
+            "minimum": 14,
+            "p50": 30,
+            "p90": 40,
+            "p99": 41
+          },
+          "measured_cycles": 82314,
+          "observed_occupancy": {
+            "0": 5928,
+            "1": 10502,
+            "2": 5117
+          },
+          "observed_state_cycles": 21547,
+          "other_accepts": 0,
+          "parent_wait_events": 0,
+          "pending_and_ready_without_request_observed": 9541,
+          "pending_and_ready_without_request_proven": 9541,
+          "pending_during_silence": 30894,
+          "pending_in_source_bound_empty_domain": 30894,
+          "pending_target_union_cycles": 50479,
+          "response_to_commit": {
+            "count": 10368,
+            "histogram": {
+              "10": 2,
+              "11": 10,
+              "12": 7,
+              "13": 5,
+              "14": 1,
+              "2": 10173,
+              "3": 109,
+              "4": 6,
+              "6": 8,
+              "7": 14,
+              "8": 21,
+              "9": 12
+            },
+            "maximum": 14,
+            "mean": 2.0652006172839505,
+            "minimum": 2,
+            "p50": 2,
+            "p90": 2,
+            "p99": 3
+          },
+          "scope": "VFEX4 VDot/DIV boundary only; response-to-commit is retirement delay, not writeback stall",
+          "silent_domain_proven": true,
+          "target_accepts_per_cycle": 0.12595670238355566,
+          "target_output_stall_events": 0,
+          "target_transactions": 10368,
+          "time_envelope": {
+            "after_last_response": 139,
+            "before_first_accept": 132,
+            "first_accept_to_last_response": 82043,
+            "scope": "additive wall-clock envelope; middle includes overlapping non-vdot work"
+          },
+          "total_occupancy": {
+            "0": 66695,
+            "1": 10502,
+            "2": 5117
+          },
+          "triple_overlap_cycles": 2498,
+          "unobserved_cycles": 60767
+        },
+        "group_retirement_envelope": {
+          "count": 324,
+          "histogram": {
+            "203": 3,
+            "204": 1,
+            "205": 1,
+            "209": 1,
+            "212": 1,
+            "213": 87,
+            "214": 69,
+            "215": 118,
+            "216": 43
+          },
+          "maximum": 216,
+          "mean": 214.179012345679,
+          "minimum": 203,
+          "p50": 214,
+          "p90": 216,
+          "p99": 216
+        },
+        "instructions": 72865,
+        "label": "acc8-vdot",
+        "role": "method",
+        "sample_ticks": [
+          587839,
+          587873,
+          670187,
+          670221
+        ],
+        "seq": 1,
+        "transactions_sha256": "ff8056ccfddfdec082647e677ff28905cabae76fa399d3b55b77654a6b404cf0"
+      },
+      {
+        "block": 0,
+        "cycles": 90567,
+        "fu": {
+          "accept_to_response": {
+            "count": 0,
+            "histogram": {}
+          },
+          "accepted_time_order_gap": {
+            "count": 0,
+            "histogram": {}
+          },
+          "all_kill_events": 0,
+          "all_output_stall_cycles": 0,
+          "boundary_crossings": 0,
+          "consecutive_accept_run_lengths": {
+            "count": 0,
+            "histogram": {}
+          },
+          "div_accepts": 0,
+          "enqueue_before_start": 0,
+          "enqueue_to_accept": {
+            "count": 0,
+            "histogram": {}
+          },
+          "measured_cycles": 90567,
+          "observed_occupancy": {
+            "0": 662,
+            "1": 0,
+            "2": 0
+          },
+          "observed_state_cycles": 662,
+          "other_accepts": 0,
+          "parent_wait_events": 0,
+          "pending_and_ready_without_request_observed": 0,
+          "pending_and_ready_without_request_proven": 0,
+          "pending_during_silence": 0,
+          "pending_in_source_bound_empty_domain": 0,
+          "pending_target_union_cycles": 0,
+          "response_to_commit": {
+            "count": 0,
+            "histogram": {}
+          },
+          "scope": "VFEX4 VDot/DIV boundary only; response-to-commit is retirement delay, not writeback stall",
+          "silent_domain_proven": true,
+          "target_accepts_per_cycle": 0.0,
+          "target_output_stall_events": 0,
+          "target_transactions": 0,
+          "total_occupancy": {
+            "0": 90567,
+            "1": 0,
+            "2": 0
+          },
+          "triple_overlap_cycles": 0,
+          "unobserved_cycles": 89905
+        },
+        "group_retirement_envelope": {
+          "count": 324,
+          "histogram": {
+            "226": 1,
+            "227": 1,
+            "233": 1,
+            "234": 2,
+            "235": 1,
+            "237": 1,
+            "238": 3,
+            "241": 3,
+            "245": 179,
+            "246": 132
+          },
+          "maximum": 246,
+          "mean": 245.03086419753086,
+          "minimum": 226,
+          "p50": 245,
+          "p90": 246,
+          "p99": 246
+        },
+        "instructions": 56341,
+        "label": "acc8-rvv3",
+        "role": "method",
+        "sample_ticks": [
+          768696,
+          768730,
+          859297,
+          859331
+        ],
+        "seq": 2,
+        "transactions_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "block": 0,
+        "cycles": 62691,
+        "fu": {
+          "accept_to_response": {
+            "count": 10368,
+            "histogram": {
+              "2": 10368
+            },
+            "maximum": 2,
+            "mean": 2.0,
+            "minimum": 2,
+            "p50": 2,
+            "p90": 2,
+            "p99": 2
+          },
+          "accepted_time_order_gap": {
+            "count": 10367,
+            "histogram": {
+              "1": 5645,
+              "10": 89,
+              "11": 283,
+              "12": 230,
+              "13": 719,
+              "14": 11,
+              "15": 31,
+              "16": 10,
+              "17": 22,
+              "18": 9,
+              "19": 16,
+              "2": 482,
+              "21": 15,
+              "23": 211,
+              "24": 89,
+              "25": 11,
+              "26": 14,
+              "27": 137,
+              "28": 47,
+              "3": 235,
+              "32": 1,
+              "33": 3,
+              "34": 1,
+              "35": 35,
+              "36": 1,
+              "4": 657,
+              "42": 1,
+              "43": 1,
+              "44": 252,
+              "45": 3,
+              "46": 7,
+              "48": 11,
+              "49": 34,
+              "5": 588,
+              "50": 3,
+              "51": 3,
+              "52": 1,
+              "53": 1,
+              "54": 1,
+              "6": 288,
+              "64": 1,
+              "7": 35,
+              "8": 97,
+              "9": 36
+            },
+            "maximum": 64,
+            "mean": 6.020835342915019,
+            "minimum": 1,
+            "p50": 1,
+            "p90": 13,
+            "p99": 44
+          },
+          "all_kill_events": 0,
+          "all_output_stall_cycles": 0,
+          "boundary_crossings": 0,
+          "consecutive_accept_run_lengths": {
+            "count": 4723,
+            "histogram": {
+              "1": 1901,
+              "2": 1084,
+              "3": 653,
+              "4": 1085
+            },
+            "maximum": 4,
+            "mean": 2.1952149057802246,
+            "minimum": 1,
+            "p50": 2,
+            "p90": 4,
+            "p99": 4
+          },
+          "div_accepts": 0,
+          "enqueue_before_start": 0,
+          "enqueue_to_accept": {
+            "count": 10368,
+            "histogram": {
+              "10": 2,
+              "11": 14,
+              "12": 52,
+              "13": 30,
+              "14": 9,
+              "15": 86,
+              "16": 192,
+              "17": 276,
+              "18": 34,
+              "19": 1347,
+              "20": 793,
+              "21": 402,
+              "22": 273,
+              "23": 35,
+              "24": 265,
+              "25": 74,
+              "26": 634,
+              "27": 39,
+              "28": 294,
+              "29": 219,
+              "30": 2372,
+              "31": 568,
+              "32": 309,
+              "33": 152,
+              "34": 254,
+              "35": 22,
+              "36": 827,
+              "37": 50,
+              "38": 27,
+              "39": 37,
+              "4": 120,
+              "40": 141,
+              "41": 250,
+              "42": 2,
+              "5": 8,
+              "6": 2,
+              "7": 31,
+              "8": 109,
+              "9": 17
+            },
+            "maximum": 42,
+            "mean": 26.324556327160494,
+            "minimum": 4,
+            "p50": 29,
+            "p90": 36,
+            "p99": 41
+          },
+          "measured_cycles": 62691,
+          "observed_occupancy": {
+            "0": 8259,
+            "1": 9446,
+            "2": 5645
+          },
+          "observed_state_cycles": 23350,
+          "other_accepts": 0,
+          "parent_wait_events": 0,
+          "pending_and_ready_without_request_observed": 11125,
+          "pending_and_ready_without_request_proven": 11125,
+          "pending_during_silence": 31014,
+          "pending_in_source_bound_empty_domain": 31014,
+          "pending_target_union_cycles": 51873,
+          "response_to_commit": {
+            "count": 10368,
+            "histogram": {
+              "10": 248,
+              "11": 200,
+              "12": 26,
+              "13": 11,
+              "14": 59,
+              "15": 181,
+              "16": 29,
+              "17": 16,
+              "18": 3,
+              "19": 88,
+              "2": 8363,
+              "20": 133,
+              "21": 12,
+              "22": 3,
+              "23": 4,
+              "24": 40,
+              "25": 35,
+              "28": 5,
+              "29": 43,
+              "3": 183,
+              "30": 21,
+              "31": 2,
+              "33": 1,
+              "4": 154,
+              "5": 217,
+              "6": 92,
+              "7": 56,
+              "8": 61,
+              "9": 82
+            },
+            "maximum": 33,
+            "mean": 3.790605709876543,
+            "minimum": 2,
+            "p50": 2,
+            "p90": 10,
+            "p99": 25
+          },
+          "scope": "VFEX4 VDot/DIV boundary only; response-to-commit is retirement delay, not writeback stall",
+          "silent_domain_proven": true,
+          "target_accepts_per_cycle": 0.16538259080250753,
+          "target_output_stall_events": 0,
+          "target_transactions": 10368,
+          "time_envelope": {
+            "after_last_response": 148,
+            "before_first_accept": 123,
+            "first_accept_to_last_response": 62420,
+            "scope": "additive wall-clock envelope; middle includes overlapping non-vdot work"
+          },
+          "total_occupancy": {
+            "0": 47600,
+            "1": 9446,
+            "2": 5645
+          },
+          "triple_overlap_cycles": 2823,
+          "unobserved_cycles": 39341
+        },
+        "group_retirement_envelope": {
+          "count": 324,
+          "histogram": {
+            "128": 1,
+            "136": 1,
+            "137": 107,
+            "138": 145,
+            "139": 34,
+            "140": 8,
+            "141": 10,
+            "142": 3,
+            "143": 1,
+            "144": 1,
+            "145": 5,
+            "146": 1,
+            "147": 4,
+            "149": 1,
+            "151": 1,
+            "167": 1
+          },
+          "maximum": 167,
+          "mean": 138.35802469135803,
+          "minimum": 128,
+          "p50": 138,
+          "p90": 140,
+          "p99": 147
+        },
+        "instructions": 52529,
+        "label": "fused-vdot",
+        "role": "method",
+        "sample_ticks": [
+          929864,
+          929898,
+          992589,
+          992623
+        ],
+        "seq": 3,
+        "transactions_sha256": "ef99aa08c599b511d4af40c72bc1ef43c1db5a7c34772f0cd15ce6c1f6564393"
+      },
+      {
+        "block": 0,
+        "cycles": 67298,
+        "fu": {
+          "accept_to_response": {
+            "count": 0,
+            "histogram": {}
+          },
+          "accepted_time_order_gap": {
+            "count": 0,
+            "histogram": {}
+          },
+          "all_kill_events": 0,
+          "all_output_stall_cycles": 0,
+          "boundary_crossings": 0,
+          "consecutive_accept_run_lengths": {
+            "count": 0,
+            "histogram": {}
+          },
+          "div_accepts": 0,
+          "enqueue_before_start": 0,
+          "enqueue_to_accept": {
+            "count": 0,
+            "histogram": {}
+          },
+          "measured_cycles": 67298,
+          "observed_occupancy": {
+            "0": 10,
+            "1": 0,
+            "2": 0
+          },
+          "observed_state_cycles": 10,
+          "other_accepts": 0,
+          "parent_wait_events": 0,
+          "pending_and_ready_without_request_observed": 0,
+          "pending_and_ready_without_request_proven": 0,
+          "pending_during_silence": 0,
+          "pending_in_source_bound_empty_domain": 0,
+          "pending_target_union_cycles": 0,
+          "response_to_commit": {
+            "count": 0,
+            "histogram": {}
+          },
+          "scope": "VFEX4 VDot/DIV boundary only; response-to-commit is retirement delay, not writeback stall",
+          "silent_domain_proven": true,
+          "target_accepts_per_cycle": 0.0,
+          "target_output_stall_events": 0,
+          "target_transactions": 0,
+          "total_occupancy": {
+            "0": 67298,
+            "1": 0,
+            "2": 0
+          },
+          "triple_overlap_cycles": 0,
+          "unobserved_cycles": 67288
+        },
+        "group_retirement_envelope": {
+          "count": 324,
+          "histogram": {
+            "130": 1,
+            "132": 3,
+            "136": 1,
+            "138": 28,
+            "139": 5,
+            "140": 104,
+            "141": 73,
+            "142": 1,
+            "144": 17,
+            "145": 22,
+            "146": 20,
+            "147": 12,
+            "149": 24,
+            "150": 12,
+            "195": 1
+          },
+          "maximum": 195,
+          "mean": 142.31172839506172,
+          "minimum": 130,
+          "p50": 141,
+          "p90": 149,
+          "p99": 150
+        },
+        "instructions": 35681,
+        "label": "fused-rvv4",
+        "role": "method",
+        "sample_ticks": [
+          1067678,
+          1067712,
+          1135010,
+          1135044
+        ],
+        "seq": 4,
+        "transactions_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "block": 0,
+        "cycles": 88456,
+        "fu": {
+          "accept_to_response": {
+            "count": 0,
+            "histogram": {}
+          },
+          "accepted_time_order_gap": {
+            "count": 0,
+            "histogram": {}
+          },
+          "all_kill_events": 0,
+          "all_output_stall_cycles": 0,
+          "boundary_crossings": 0,
+          "consecutive_accept_run_lengths": {
+            "count": 0,
+            "histogram": {}
+          },
+          "div_accepts": 0,
+          "enqueue_before_start": 0,
+          "enqueue_to_accept": {
+            "count": 0,
+            "histogram": {}
+          },
+          "measured_cycles": 88456,
+          "observed_occupancy": {
+            "0": 666,
+            "1": 0,
+            "2": 0
+          },
+          "observed_state_cycles": 666,
+          "other_accepts": 0,
+          "parent_wait_events": 0,
+          "pending_and_ready_without_request_observed": 0,
+          "pending_and_ready_without_request_proven": 0,
+          "pending_during_silence": 0,
+          "pending_in_source_bound_empty_domain": 0,
+          "pending_target_union_cycles": 0,
+          "response_to_commit": {
+            "count": 0,
+            "histogram": {}
+          },
+          "scope": "VFEX4 VDot/DIV boundary only; response-to-commit is retirement delay, not writeback stall",
+          "silent_domain_proven": true,
+          "target_accepts_per_cycle": 0.0,
+          "target_output_stall_events": 0,
+          "target_transactions": 0,
+          "total_occupancy": {
+            "0": 88456,
+            "1": 0,
+            "2": 0
+          },
+          "triple_overlap_cycles": 0,
+          "unobserved_cycles": 87790
+        },
+        "group_retirement_envelope": {
+          "count": 324,
+          "histogram": {
+            "224": 2,
+            "231": 1,
+            "232": 3,
+            "235": 4,
+            "236": 1,
+            "239": 2,
+            "240": 1,
+            "243": 231,
+            "244": 79
+          },
+          "maximum": 244,
+          "mean": 242.83333333333334,
+          "minimum": 224,
+          "p50": 243,
+          "p90": 244,
+          "p99": 244
+        },
+        "instructions": 56017,
+        "label": "acc8-rvv4",
+        "role": "anchor_end",
+        "sample_ticks": [
+          1231251,
+          1231285,
+          1319741,
+          1319775
+        ],
+        "seq": 5,
+        "transactions_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "block": 1,
+        "cycles": 88420,
+        "fu": {
+          "accept_to_response": {
+            "count": 0,
+            "histogram": {}
+          },
+          "accepted_time_order_gap": {
+            "count": 0,
+            "histogram": {}
+          },
+          "all_kill_events": 0,
+          "all_output_stall_cycles": 0,
+          "boundary_crossings": 0,
+          "consecutive_accept_run_lengths": {
+            "count": 0,
+            "histogram": {}
+          },
+          "div_accepts": 0,
+          "enqueue_before_start": 0,
+          "enqueue_to_accept": {
+            "count": 0,
+            "histogram": {}
+          },
+          "measured_cycles": 88420,
+          "observed_occupancy": {
+            "0": 662,
+            "1": 0,
+            "2": 0
+          },
+          "observed_state_cycles": 662,
+          "other_accepts": 0,
+          "parent_wait_events": 0,
+          "pending_and_ready_without_request_observed": 0,
+          "pending_and_ready_without_request_proven": 0,
+          "pending_during_silence": 0,
+          "pending_in_source_bound_empty_domain": 0,
+          "pending_target_union_cycles": 0,
+          "response_to_commit": {
+            "count": 0,
+            "histogram": {}
+          },
+          "scope": "VFEX4 VDot/DIV boundary only; response-to-commit is retirement delay, not writeback stall",
+          "silent_domain_proven": true,
+          "target_accepts_per_cycle": 0.0,
+          "target_output_stall_events": 0,
+          "target_transactions": 0,
+          "total_occupancy": {
+            "0": 88420,
+            "1": 0,
+            "2": 0
+          },
+          "triple_overlap_cycles": 0,
+          "unobserved_cycles": 87758
+        },
+        "group_retirement_envelope": {
+          "count": 324,
+          "histogram": {
+            "224": 1,
+            "225": 1,
+            "232": 4,
+            "235": 5,
+            "239": 2,
+            "240": 1,
+            "243": 232,
+            "244": 78
+          },
+          "maximum": 244,
+          "mean": 242.83333333333334,
+          "minimum": 224,
+          "p50": 243,
+          "p90": 244,
+          "p99": 244
+        },
+        "instructions": 56017,
+        "label": "acc8-rvv4",
+        "role": "anchor_start_method",
+        "sample_ticks": [
+          1415947,
+          1415981,
+          1504401,
+          1504435
+        ],
+        "seq": 6,
+        "transactions_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "block": 1,
+        "cycles": 67311,
+        "fu": {
+          "accept_to_response": {
+            "count": 0,
+            "histogram": {}
+          },
+          "accepted_time_order_gap": {
+            "count": 0,
+            "histogram": {}
+          },
+          "all_kill_events": 0,
+          "all_output_stall_cycles": 0,
+          "boundary_crossings": 0,
+          "consecutive_accept_run_lengths": {
+            "count": 0,
+            "histogram": {}
+          },
+          "div_accepts": 0,
+          "enqueue_before_start": 0,
+          "enqueue_to_accept": {
+            "count": 0,
+            "histogram": {}
+          },
+          "measured_cycles": 67311,
+          "observed_occupancy": {
+            "0": 10,
+            "1": 0,
+            "2": 0
+          },
+          "observed_state_cycles": 10,
+          "other_accepts": 0,
+          "parent_wait_events": 0,
+          "pending_and_ready_without_request_observed": 0,
+          "pending_and_ready_without_request_proven": 0,
+          "pending_during_silence": 0,
+          "pending_in_source_bound_empty_domain": 0,
+          "pending_target_union_cycles": 0,
+          "response_to_commit": {
+            "count": 0,
+            "histogram": {}
+          },
+          "scope": "VFEX4 VDot/DIV boundary only; response-to-commit is retirement delay, not writeback stall",
+          "silent_domain_proven": true,
+          "target_accepts_per_cycle": 0.0,
+          "target_output_stall_events": 0,
+          "target_transactions": 0,
+          "total_occupancy": {
+            "0": 67311,
+            "1": 0,
+            "2": 0
+          },
+          "triple_overlap_cycles": 0,
+          "unobserved_cycles": 67301
+        },
+        "group_retirement_envelope": {
+          "count": 324,
+          "histogram": {
+            "129": 1,
+            "132": 2,
+            "133": 1,
+            "136": 1,
+            "137": 1,
+            "138": 27,
+            "139": 5,
+            "140": 99,
+            "141": 79,
+            "142": 1,
+            "144": 19,
+            "145": 18,
+            "146": 19,
+            "147": 14,
+            "149": 25,
+            "150": 11,
+            "194": 1
+          },
+          "maximum": 194,
+          "mean": 142.30864197530863,
+          "minimum": 129,
+          "p50": 141,
+          "p90": 149,
+          "p99": 150
+        },
+        "instructions": 35681,
+        "label": "fused-rvv4",
+        "role": "method",
+        "sample_ticks": [
+          1579464,
+          1579498,
+          1646809,
+          1646843
+        ],
+        "seq": 7,
+        "transactions_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "block": 1,
+        "cycles": 62692,
+        "fu": {
+          "accept_to_response": {
+            "count": 10368,
+            "histogram": {
+              "2": 10368
+            },
+            "maximum": 2,
+            "mean": 2.0,
+            "minimum": 2,
+            "p50": 2,
+            "p90": 2,
+            "p99": 2
+          },
+          "accepted_time_order_gap": {
+            "count": 10367,
+            "histogram": {
+              "1": 5638,
+              "10": 92,
+              "11": 286,
+              "12": 236,
+              "13": 722,
+              "14": 7,
+              "15": 34,
+              "16": 7,
+              "17": 22,
+              "18": 12,
+              "19": 12,
+              "2": 506,
+              "21": 15,
+              "23": 209,
+              "24": 90,
+              "25": 12,
+              "26": 19,
+              "27": 134,
+              "28": 46,
+              "3": 228,
+              "32": 1,
+              "33": 3,
+              "34": 1,
+              "35": 33,
+              "36": 4,
+              "4": 649,
+              "42": 1,
+              "43": 1,
+              "44": 252,
+              "45": 2,
+              "46": 6,
+              "47": 3,
+              "48": 8,
+              "49": 35,
+              "5": 601,
+              "50": 5,
+              "51": 4,
+              "53": 1,
+              "54": 1,
+              "6": 278,
+              "7": 32,
+              "8": 87,
+              "9": 32
+            },
+            "maximum": 54,
+            "mean": 6.020931802835921,
+            "minimum": 1,
+            "p50": 1,
+            "p90": 13,
+            "p99": 44
+          },
+          "all_kill_events": 0,
+          "all_output_stall_cycles": 0,
+          "boundary_crossings": 0,
+          "consecutive_accept_run_lengths": {
+            "count": 4730,
+            "histogram": {
+              "1": 1914,
+              "2": 1085,
+              "3": 640,
+              "4": 1091
+            },
+            "maximum": 4,
+            "mean": 2.1919661733615223,
+            "minimum": 1,
+            "p50": 2,
+            "p90": 4,
+            "p99": 4
+          },
+          "div_accepts": 0,
+          "enqueue_before_start": 0,
+          "enqueue_to_accept": {
+            "count": 10368,
+            "histogram": {
+              "10": 5,
+              "11": 13,
+              "12": 53,
+              "13": 35,
+              "14": 10,
+              "15": 83,
+              "16": 192,
+              "17": 267,
+              "18": 40,
+              "19": 1328,
+              "20": 779,
+              "21": 414,
+              "22": 284,
+              "23": 39,
+              "24": 264,
+              "25": 73,
+              "26": 609,
+              "27": 48,
+              "28": 312,
+              "29": 235,
+              "30": 2342,
+              "31": 567,
+              "32": 305,
+              "33": 148,
+              "34": 266,
+              "35": 29,
+              "36": 810,
+              "37": 52,
+              "38": 29,
+              "39": 28,
+              "4": 123,
+              "40": 146,
+              "41": 263,
+              "42": 5,
+              "5": 9,
+              "6": 5,
+              "7": 24,
+              "8": 116,
+              "9": 18
+            },
+            "maximum": 42,
+            "mean": 26.328028549382715,
+            "minimum": 4,
+            "p50": 29,
+            "p90": 36,
+            "p99": 41
+          },
+          "measured_cycles": 62692,
+          "observed_occupancy": {
+            "0": 8230,
+            "1": 9460,
+            "2": 5638
+          },
+          "observed_state_cycles": 23328,
+          "other_accepts": 0,
+          "parent_wait_events": 0,
+          "pending_and_ready_without_request_observed": 11101,
+          "pending_and_ready_without_request_proven": 11101,
+          "pending_during_silence": 31044,
+          "pending_in_source_bound_empty_domain": 31044,
+          "pending_target_union_cycles": 51882,
+          "response_to_commit": {
+            "count": 10368,
+            "histogram": {
+              "10": 256,
+              "11": 192,
+              "12": 27,
+              "13": 13,
+              "14": 51,
+              "15": 188,
+              "16": 32,
+              "17": 13,
+              "18": 4,
+              "19": 85,
+              "2": 8378,
+              "20": 135,
+              "21": 8,
+              "22": 3,
+              "23": 8,
+              "24": 36,
+              "25": 39,
+              "28": 3,
+              "29": 46,
+              "3": 165,
+              "30": 22,
+              "31": 2,
+              "33": 1,
+              "4": 147,
+              "5": 219,
+              "6": 102,
+              "7": 53,
+              "8": 60,
+              "9": 80
+            },
+            "maximum": 33,
+            "mean": 3.796875,
+            "minimum": 2,
+            "p50": 2,
+            "p90": 10,
+            "p99": 25
+          },
+          "scope": "VFEX4 VDot/DIV boundary only; response-to-commit is retirement delay, not writeback stall",
+          "silent_domain_proven": true,
+          "target_accepts_per_cycle": 0.16537995278504433,
+          "target_output_stall_events": 0,
+          "target_transactions": 10368,
+          "time_envelope": {
+            "after_last_response": 148,
+            "before_first_accept": 123,
+            "first_accept_to_last_response": 62421,
+            "scope": "additive wall-clock envelope; middle includes overlapping non-vdot work"
+          },
+          "total_occupancy": {
+            "0": 47594,
+            "1": 9460,
+            "2": 5638
+          },
+          "triple_overlap_cycles": 2822,
+          "unobserved_cycles": 39364
+        },
+        "group_retirement_envelope": {
+          "count": 324,
+          "histogram": {
+            "128": 1,
+            "136": 1,
+            "137": 109,
+            "138": 143,
+            "139": 32,
+            "140": 11,
+            "141": 14,
+            "144": 1,
+            "145": 2,
+            "146": 2,
+            "147": 4,
+            "148": 1,
+            "150": 2,
+            "167": 1
+          },
+          "maximum": 167,
+          "mean": 138.3395061728395,
+          "minimum": 128,
+          "p50": 138,
+          "p90": 140,
+          "p99": 148
+        },
+        "instructions": 52529,
+        "label": "fused-vdot",
+        "role": "method",
+        "sample_ticks": [
+          1717260,
+          1717294,
+          1779986,
+          1780020
+        ],
+        "seq": 8,
+        "transactions_sha256": "9cb8c8b6d06bb1af50609db421650fd1b3ffbc86af6a1f68d3be70995f7ae83c"
+      },
+      {
+        "block": 1,
+        "cycles": 90629,
+        "fu": {
+          "accept_to_response": {
+            "count": 0,
+            "histogram": {}
+          },
+          "accepted_time_order_gap": {
+            "count": 0,
+            "histogram": {}
+          },
+          "all_kill_events": 0,
+          "all_output_stall_cycles": 0,
+          "boundary_crossings": 0,
+          "consecutive_accept_run_lengths": {
+            "count": 0,
+            "histogram": {}
+          },
+          "div_accepts": 0,
+          "enqueue_before_start": 0,
+          "enqueue_to_accept": {
+            "count": 0,
+            "histogram": {}
+          },
+          "measured_cycles": 90629,
+          "observed_occupancy": {
+            "0": 668,
+            "1": 0,
+            "2": 0
+          },
+          "observed_state_cycles": 668,
+          "other_accepts": 0,
+          "parent_wait_events": 0,
+          "pending_and_ready_without_request_observed": 0,
+          "pending_and_ready_without_request_proven": 0,
+          "pending_during_silence": 0,
+          "pending_in_source_bound_empty_domain": 0,
+          "pending_target_union_cycles": 0,
+          "response_to_commit": {
+            "count": 0,
+            "histogram": {}
+          },
+          "scope": "VFEX4 VDot/DIV boundary only; response-to-commit is retirement delay, not writeback stall",
+          "silent_domain_proven": true,
+          "target_accepts_per_cycle": 0.0,
+          "target_output_stall_events": 0,
+          "target_transactions": 0,
+          "total_occupancy": {
+            "0": 90629,
+            "1": 0,
+            "2": 0
+          },
+          "triple_overlap_cycles": 0,
+          "unobserved_cycles": 89961
+        },
+        "group_retirement_envelope": {
+          "count": 324,
+          "histogram": {
+            "226": 1,
+            "227": 1,
+            "233": 1,
+            "234": 2,
+            "235": 1,
+            "237": 2,
+            "238": 3,
+            "241": 3,
+            "245": 179,
+            "246": 131
+          },
+          "maximum": 246,
+          "mean": 245.0030864197531,
+          "minimum": 226,
+          "p50": 245,
+          "p90": 246,
+          "p99": 246
+        },
+        "instructions": 56341,
+        "label": "acc8-rvv3",
+        "role": "method",
+        "sample_ticks": [
+          1878452,
+          1878486,
+          1969115,
+          1969149
+        ],
+        "seq": 9,
+        "transactions_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "block": 1,
+        "cycles": 82270,
+        "fu": {
+          "accept_to_response": {
+            "count": 10368,
+            "histogram": {
+              "2": 10368
+            },
+            "maximum": 2,
+            "mean": 2.0,
+            "minimum": 2,
+            "p50": 2,
+            "p90": 2,
+            "p99": 2
+          },
+          "accepted_time_order_gap": {
+            "count": 10367,
+            "histogram": {
+              "1": 4997,
+              "11": 1026,
+              "110": 1,
+              "111": 1,
+              "112": 3,
+              "114": 1,
+              "117": 1,
+              "118": 2,
+              "119": 1,
+              "12": 16,
+              "120": 17,
+              "121": 18,
+              "122": 28,
+              "123": 77,
+              "124": 7,
+              "125": 21,
+              "126": 9,
+              "127": 9,
+              "128": 26,
+              "129": 10,
+              "13": 893,
+              "130": 11,
+              "131": 7,
+              "132": 7,
+              "133": 15,
+              "134": 15,
+              "135": 9,
+              "136": 17,
+              "137": 2,
+              "138": 2,
+              "139": 4,
+              "14": 1,
+              "141": 1,
+              "143": 1,
+              "15": 2,
+              "17": 3,
+              "2": 2729,
+              "22": 165,
+              "24": 145,
+              "3": 8,
+              "4": 5,
+              "5": 6,
+              "6": 18,
+              "7": 9,
+              "8": 21
+            },
+            "maximum": 143,
+            "mean": 7.908652454904987,
+            "minimum": 1,
+            "p50": 2,
+            "p90": 13,
+            "p99": 128
+          },
+          "all_kill_events": 0,
+          "all_output_stall_cycles": 0,
+          "boundary_crossings": 0,
+          "consecutive_accept_run_lengths": {
+            "count": 5371,
+            "histogram": {
+              "1": 2744,
+              "2": 1440,
+              "3": 4,
+              "4": 1183
+            },
+            "maximum": 4,
+            "mean": 1.9303667845838763,
+            "minimum": 1,
+            "p50": 1,
+            "p90": 4,
+            "p99": 4
+          },
+          "div_accepts": 0,
+          "enqueue_before_start": 0,
+          "enqueue_to_accept": {
+            "count": 10368,
+            "histogram": {
+              "14": 1,
+              "15": 2,
+              "16": 1,
+              "18": 13,
+              "19": 32,
+              "20": 27,
+              "21": 13,
+              "22": 7,
+              "24": 8,
+              "25": 20,
+              "26": 607,
+              "27": 338,
+              "28": 335,
+              "29": 3221,
+              "30": 2697,
+              "31": 345,
+              "32": 173,
+              "33": 4,
+              "34": 6,
+              "36": 156,
+              "37": 837,
+              "38": 169,
+              "39": 280,
+              "40": 261,
+              "41": 815
+            },
+            "maximum": 41,
+            "mean": 31.396315586419753,
+            "minimum": 14,
+            "p50": 30,
+            "p90": 40,
+            "p99": 41
+          },
+          "measured_cycles": 82270,
+          "observed_occupancy": {
+            "0": 5941,
+            "1": 10742,
+            "2": 4997
+          },
+          "observed_state_cycles": 21680,
+          "other_accepts": 0,
+          "parent_wait_events": 1,
+          "pending_and_ready_without_request_observed": 9674,
+          "pending_and_ready_without_request_proven": 9674,
+          "pending_during_silence": 30773,
+          "pending_in_source_bound_empty_domain": 30773,
+          "pending_target_union_cycles": 50492,
+          "response_to_commit": {
+            "count": 10368,
+            "histogram": {
+              "10": 2,
+              "11": 11,
+              "12": 7,
+              "13": 6,
+              "2": 10145,
+              "3": 119,
+              "4": 12,
+              "5": 3,
+              "6": 13,
+              "7": 10,
+              "8": 30,
+              "9": 10
+            },
+            "maximum": 13,
+            "mean": 2.072820216049383,
+            "minimum": 2,
+            "p50": 2,
+            "p90": 2,
+            "p99": 4
+          },
+          "scope": "VFEX4 VDot/DIV boundary only; response-to-commit is retirement delay, not writeback stall",
+          "silent_domain_proven": true,
+          "target_accepts_per_cycle": 0.12602406709614683,
+          "target_output_stall_events": 0,
+          "target_transactions": 10368,
+          "time_envelope": {
+            "after_last_response": 137,
+            "before_first_accept": 142,
+            "first_accept_to_last_response": 81991,
+            "scope": "additive wall-clock envelope; middle includes overlapping non-vdot work"
+          },
+          "total_occupancy": {
+            "0": 66531,
+            "1": 10742,
+            "2": 4997
+          },
+          "triple_overlap_cycles": 2370,
+          "unobserved_cycles": 60590
+        },
+        "group_retirement_envelope": {
+          "count": 324,
+          "histogram": {
+            "203": 2,
+            "204": 3,
+            "208": 1,
+            "212": 1,
+            "213": 78,
+            "214": 73,
+            "215": 118,
+            "216": 47,
+            "217": 1
+          },
+          "maximum": 217,
+          "mean": 214.23765432098764,
+          "minimum": 203,
+          "p50": 215,
+          "p90": 216,
+          "p99": 216
+        },
+        "instructions": 72865,
+        "label": "acc8-vdot",
+        "role": "method",
+        "sample_ticks": [
+          2059246,
+          2059280,
+          2141550,
+          2141584
+        ],
+        "seq": 10,
+        "transactions_sha256": "69e76d9d3c5d21972c7e2e1c51842d8296b8507966068ca985636be5e9948fd5"
+      },
+      {
+        "block": 1,
+        "cycles": 88396,
+        "fu": {
+          "accept_to_response": {
+            "count": 0,
+            "histogram": {}
+          },
+          "accepted_time_order_gap": {
+            "count": 0,
+            "histogram": {}
+          },
+          "all_kill_events": 0,
+          "all_output_stall_cycles": 0,
+          "boundary_crossings": 0,
+          "consecutive_accept_run_lengths": {
+            "count": 0,
+            "histogram": {}
+          },
+          "div_accepts": 0,
+          "enqueue_before_start": 0,
+          "enqueue_to_accept": {
+            "count": 0,
+            "histogram": {}
+          },
+          "measured_cycles": 88396,
+          "observed_occupancy": {
+            "0": 656,
+            "1": 0,
+            "2": 0
+          },
+          "observed_state_cycles": 656,
+          "other_accepts": 0,
+          "parent_wait_events": 0,
+          "pending_and_ready_without_request_observed": 0,
+          "pending_and_ready_without_request_proven": 0,
+          "pending_during_silence": 0,
+          "pending_in_source_bound_empty_domain": 0,
+          "pending_target_union_cycles": 0,
+          "response_to_commit": {
+            "count": 0,
+            "histogram": {}
+          },
+          "scope": "VFEX4 VDot/DIV boundary only; response-to-commit is retirement delay, not writeback stall",
+          "silent_domain_proven": true,
+          "target_accepts_per_cycle": 0.0,
+          "target_output_stall_events": 0,
+          "target_transactions": 0,
+          "total_occupancy": {
+            "0": 88396,
+            "1": 0,
+            "2": 0
+          },
+          "triple_overlap_cycles": 0,
+          "unobserved_cycles": 87740
+        },
+        "group_retirement_envelope": {
+          "count": 324,
+          "histogram": {
+            "225": 2,
+            "231": 1,
+            "232": 1,
+            "233": 2,
+            "235": 5,
+            "236": 1,
+            "239": 3,
+            "243": 233,
+            "244": 76
+          },
+          "maximum": 244,
+          "mean": 242.80864197530863,
+          "minimum": 225,
+          "p50": 243,
+          "p90": 244,
+          "p99": 244
+        },
+        "instructions": 56017,
+        "label": "acc8-rvv4",
+        "role": "anchor_end",
+        "sample_ticks": [
+          2237727,
+          2237761,
+          2326157,
+          2326191
+        ],
+        "seq": 11,
+        "transactions_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      }
+    ]
+  },
+  "reproduction": {
+    "status": "Q288_COST_FRESH_PROCESS_REPRODUCTION_PASS",
+    "new_emu_runs": 0,
+    "source_file": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/fullq-fused-cost-20261026-1225/source-01/cost.py",
+    "source_sha256": "322f27b809f0b89da67beee35443225363d58c875617db93bf8161ebebfe50b7",
+    "all_result_fields_equal_except_elapsed_seconds": true,
+    "groups_sha256": "f458cf86e538155237895a4b1ec4ab7bdb5e5fd5813774941b463d444c0f283b",
+    "controls_sha256": "c535ddf9176296d7f2a0c13eace321bc7bc8426ad887f1edfd401febbb0bba7d",
+    "preflight_failure_before_analyzer_retained": true,
+    "finished": "2026-10-26T12:39:51.207334+08:00"
+  },
+  "archive": {
+    "format": "q288-cost-evidence-v1",
+    "archive_sha256": "4f26812ba7190eff2c2d722775e429269e9d8b4a8d225345da518d52ca302602",
+    "archive_bytes": 345780
+  }
+}
