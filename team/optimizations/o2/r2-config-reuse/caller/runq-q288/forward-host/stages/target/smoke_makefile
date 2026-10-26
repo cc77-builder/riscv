@@ -1,0 +1,12 @@
+NAME = forward-math-smoke
+SRCS = math_smoke.c math_eval.c guard_control.c tls_main.S
+INC_DIR += $(CURDIR)
+CFLAGS += -ffreestanding -fno-builtin -fno-fast-math -ffp-contract=off
+CFLAGS += -fno-tree-vectorize -fno-tree-slp-vectorize -fno-tree-loop-distribute-patterns
+CFLAGS += -fno-ipa-cp -fno-ipa-icf -fno-optimize-sibling-calls -fno-lto -mno-relax -mabi=lp64d
+CFLAGS += -fno-stack-protector
+DST_DIR := $(MATH_OBJ_ROOT)
+include $(AM_HOME)/Makefile.app
+$(DST_DIR)/guard_control.o: CFLAGS += -fstack-protector-all
+LDFLAGS += -static --no-relax --emit-relocs -Map=$(BINARY).map
+LINK_FILES += $(MATH_ARCHIVE)
