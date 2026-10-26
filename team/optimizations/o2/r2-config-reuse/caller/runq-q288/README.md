@@ -1,6 +1,8 @@
 # llama2.c 量化 Q 投影调用适配器
 
-当前普通 C 调用、单一去重汇编导出和回退从 [phased/TA入口](fused/phased/README.md) 进入。本批显式选择TA入口 `q288_tail_vdot`；具体选择和资格见 [TA目标结果](fused/phased/tail/target/RESULT.md) 与 [phased目标结果](fused/phased/target/RESULT.md)。R5 稳定默认不会自动切换。
+实际状态接续与包含量化的调用从[活动 forward / FP32→QKV 入口](forward-host/active/README.md)进入：独立消费者使用候选输出推进完整状态；新目标合同在真实激活、共同量化器和相同最终ELF中比较TA与强FR，按事前规则显式选TA。选择、原值和范围见[QKV目标结果](forward-host/active/target/RESULT.md)。
+
+已量化单投影、去重汇编与PV/TA/FV/FR回退继续从[phased/TA入口](fused/phased/README.md)进入；旧[TA目标](fused/phased/tail/target/RESULT.md)与[phased目标](fused/phased/target/RESULT.md)保留各自资格。R5稳定默认沿用现有版本。
 
 | 独立阶段 | 已完成结果 | 资格边界 |
 |---|---|---|
@@ -12,6 +14,8 @@
 | [phased 排程](fused/phased/target/RESULT.md) / [成本坐标](fused/phased/target/COST.md) | 真实目标负控/恢复/重放、完整原文封存和隔离新源复算闭合 | 该phased计划选PV；局部等待指标不作单一因果归因 |
 | [两位TA](fused/phased/tail/target/RESULT.md) | 真实GNU、任意尾值非干扰、目标三进程与封存闭合 | 本批显式选择TA入口 `q288_tail_vdot`；范围和门槛见原结果 |
 | [普通C去重入口](fused/phased/README.md) | phased/tail两变体真实GNU最终链接，实际调用及全部完整函数字节相同 | 链接核验没有新增新ELF运行/性能或R5默认资格 |
+| [活动完整 forward](forward-host/active/RESULT.md) | 三独立状态、3位置完整logits/KV逐位接续，实际TA/FR ELF输出驱动后续状态；K/V消费前污染与漏写拒错，封存新源复验通过 | 未训练确定性权重；宿主/有限模型执行，不是目标完整token |
+| [实际FP32→QKV](forward-host/active/target/RESULT.md) | 新ELF同输入、共同量化器、6窗/4FR锚点、真实负控/恢复/独立重放与封存复算；普通C两变体GNU链接 | 本计划TA保守少3.4731903%周期，显式保留FR；含量化/三投影，预打包，不含完整token/质量/ASIC |
 
 研究依据与条件探索见 [RESEARCH.md](RESEARCH.md)。新的完整 Q 使用 288×288、GS32 的原严格分组 FP32 语义，量化输入和尺度由消费者提供；固定上游、来源和许可保持。
 
@@ -60,3 +64,4 @@ python3 "$MODULE/run.py" --repo "$PWD" --action run --build "$OUT/build" \
 build输出的 `source/q288.c`、`source/q288.h`、`source/caller.h`、`source/split.h`、`source/kernels.S`可以组成实际消费者调用模块；`oracle.c`、`main.c`、`data.h`与定时器用于工程验收。复用叶体逐机器字对照原资格对象，实际消费者只链接所需模块，无需把未使用的旧完整库强行保留在ELF。
 
 固定输入为合成数据；公开源、派生形状与GS的依据、FP规则、全量次数及选择限制均在合同中。它解决的是可复现消费者工程输入与调用语义，未新增真实检查点、完整token性能或人工验收资格。
+
