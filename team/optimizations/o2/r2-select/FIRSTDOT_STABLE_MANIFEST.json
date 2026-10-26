@@ -1,0 +1,165 @@
+{
+  "contract": "r5-selected-firstdot-gemv-v2",
+  "operation_id": "20261026-LiZufan001-r5-firstdot-0056",
+  "api_version": 2,
+  "source_base_commit": "a9455e08c06a39be24957d71ef1c905b666a1bc3",
+  "input_sha256": {
+    "team/optimizations/o2/r2-select/FIRSTDOT_STABLE_CONTRACT.md": "3a118555f67f220c97057c70825fbc227c18cbed94f7c21597cc539eaef91027",
+    "team/optimizations/o2/r2-select/STABLE_MANIFEST.json": "c55c71293b41c45eae86f651376ace2205eff5df6376074935f46f5ff9d5c8a8",
+    "team/optimizations/o2/r2-select/public/Makefile": "2fe6e62af2dacc006268b3b6709083d5ded3739e765a33cc578f4d1e5adc8872",
+    "team/optimizations/o2/r2-select/public/firstdot/Makefile": "64842cf15a02772a68ca92125c7dd73a599ca75bcd5ce7f8b5e2d0b6e5efc3d7",
+    "team/optimizations/o2/r2-select/public/firstdot/example.c": "167bfbf2fa25251e843f279f70dd6eec83c46cd311daabaddc120fa281a30a53",
+    "team/optimizations/o2/r2-select/public/firstdot/selected_gemv.h": "e3da1db8527b1e5f00527a8d60b20e9c4311994979121fd58c019ba023d4ca3e",
+    "team/optimizations/o2/r2-select/public/gemv.S": "5c01b4eec12dcb3cc3a62551d7096d43b5f68cea2efec0c8b30b79e8d5e5810c",
+    "team/optimizations/o2/r2-select/public/gemv.h": "125ab086c086c2f00517295f7247a26d50900e91681faa6327c8980f48af511f",
+    "team/optimizations/o2/r2-select/public/selected_gemv.h": "18847dcdf84d783b05e3587e93ecee68e36196c54e386adb47fce1a61998e0da",
+    "team/optimizations/o2/r2-select/verify_firstdot_stable.py": "16219aecb343677802dedff2491d0c7cedbfe0f400ebbc14bfa32a1ae1f1bf84",
+    "team/optimizations/o2/r2-select/verify_stable.py": "826febeddfd84cecb06a49cd3e4156c55219089a2cd326e12e0c0f5ea1bb4b06",
+    "team/optimizations/o2/r2-vector-accum/evidence/firstdot-v1/c-archive/archive-manifest.json": "47859f1c12d5311ef554803c6976c8699ebafc164e2bdd876cfd0c6a6f2a2ec1",
+    "team/optimizations/o2/r2-vector-accum/evidence/firstdot-v1/library/library.json": "749d19cd9a772abb174500d8c8553d6f87ad675d7bcde6fc632829c75ea2dad5",
+    "team/optimizations/o2/r2-vector-accum/evidence/firstdot-v1/matrix-archive/archive-manifest.json": "0c8d3159c91aa3c934c7bfb7f2640906844246e812c0b5bfc556cdfb86d0d3b4",
+    "team/optimizations/o2/r2-vector-accum/evidence/firstdot-v1/reports/c-audit-01.json": "e178c590836330e9ed29b6b083527422c5d544e2dbde01b911c0e4978e2644cc",
+    "team/optimizations/o2/r2-vector-accum/evidence/firstdot-v1/reports/matrix-audit-01.json": "bd515ccff25f1922b9ee7b6c83a853daf0edd95634ad51b244ae8a4ae6e9fd2e",
+    "team/optimizations/o2/r2-vector-accum/firstdot/public/gemv.S": "1e1aa8ca665559efa6acab2648f4614c6121422aaf400d78c192e6accad5da47",
+    "team/optimizations/o2/r2-vector-accum/firstdot/public/gemv.h": "8ff3e08d098f000962beeaf898730939ee83bd4ea8eaf9be1c03c80f93c9db83",
+    "team/optimizations/o2/r2-vector-accum/firstdot_c_evidence.py": "e943b2b7495c0ddf92a81d08f996e82048f99b0d8e406ce9993b4d05556b461e",
+    "team/optimizations/o2/r2-vector-accum/firstdot_library.py": "352feda875d9403a59c5824e8e315a561e7ac695cf57971d85a1669ff9246a8a",
+    "team/optimizations/o2/repro/evidence/clean-reproduction-v1/reports/identity-02.json": "4a89872d0463163ea0be83f680843352e01354043f5709509d822353221258eb"
+  },
+  "selection": [
+    {
+      "shape": [
+        4,
+        8
+      ],
+      "alias": "xs_gemv_4x8",
+      "default_symbol": "firstdot_gemv_4x8_reuse_vdot",
+      "rvv_symbol": "firstdot_gemv_4x8_reuse_rvv",
+      "default_total": 1893,
+      "default_mean": 157.75,
+      "deployed_rvv_total": 2253,
+      "deployed_rvv_mean": 187.75,
+      "fastest_qualified_rvv": [
+        {
+          "variant": "s1",
+          "software": "reuse",
+          "total": 2250,
+          "mean": 187.5
+        }
+      ],
+      "samples_per_candidate": 12,
+      "performance_scope": "historical firstdot endtoend-with-c-abi-call windows"
+    },
+    {
+      "shape": [
+        8,
+        32
+      ],
+      "alias": "xs_gemv_8x32",
+      "default_symbol": "firstdot_gemv_8x32_reuse_vdot",
+      "rvv_symbol": "firstdot_gemv_8x32_reuse_rvv",
+      "default_total": 3387,
+      "default_mean": 282.25,
+      "deployed_rvv_total": 3609,
+      "deployed_rvv_mean": 300.75,
+      "fastest_qualified_rvv": [
+        {
+          "variant": "s1",
+          "software": "reuse",
+          "total": 3609,
+          "mean": 300.75
+        },
+        {
+          "variant": "firstdot",
+          "software": "reuse",
+          "total": 3609,
+          "mean": 300.75
+        }
+      ],
+      "samples_per_candidate": 12,
+      "performance_scope": "historical firstdot endtoend-with-c-abi-call windows"
+    },
+    {
+      "shape": [
+        16,
+        64
+      ],
+      "alias": "xs_gemv_16x64",
+      "default_symbol": "firstdot_gemv_16x64_reuse_vdot",
+      "rvv_symbol": "firstdot_gemv_16x64_reuse_rvv",
+      "default_total": 8484,
+      "default_mean": 707,
+      "deployed_rvv_total": 9345,
+      "deployed_rvv_mean": 778.75,
+      "fastest_qualified_rvv": [
+        {
+          "variant": "firstdot",
+          "software": "reuse",
+          "total": 9345,
+          "mean": 778.75
+        }
+      ],
+      "samples_per_candidate": 12,
+      "performance_scope": "historical firstdot endtoend-with-c-abi-call windows"
+    },
+    {
+      "shape": [
+        4,
+        13
+      ],
+      "alias": "xs_gemv_4x13",
+      "default_symbol": "firstdot_gemv_4x13_reuse_rvv",
+      "rvv_symbol": "firstdot_gemv_4x13_reuse_rvv",
+      "default_total": 2244,
+      "default_mean": 187,
+      "deployed_rvv_total": 2244,
+      "deployed_rvv_mean": 187,
+      "fastest_qualified_rvv": [
+        {
+          "variant": "s1",
+          "software": "reuse",
+          "total": 2244,
+          "mean": 187
+        },
+        {
+          "variant": "firstdot",
+          "software": "reuse",
+          "total": 2244,
+          "mean": 187
+        }
+      ],
+      "samples_per_candidate": 12,
+      "performance_scope": "historical firstdot endtoend-with-c-abi-call windows"
+    }
+  ],
+  "hardware": {
+    "source_commit": "34bae6d4acceac939f958199dae53c14bc1f6183",
+    "emu_sha256": "ff840528eb1009e94906eefb3773ca321050f309553543ab26f0db23c410e30f",
+    "reference_sha256": "8af118e5519db7ef6001010a2d547707c5d47630412e80abfc3f343bfef987c9"
+  },
+  "package": {
+    "archive": "libxs_gemv_firstdot.a",
+    "headers": [
+      "include/selected_gemv.h",
+      "include/firstdot_gemv.h"
+    ],
+    "object_sha256": "b65d4ca4faf3550ad2e95d3fb7d1d452923b71ae50776420bfcd679d098238af",
+    "public_functions": 16,
+    "source_aliases": 8,
+    "runtime_dispatch": false,
+    "additional_elf_symbols": false,
+    "force_rvv_values": [
+      0,
+      1
+    ]
+  },
+  "qualification": {
+    "matrix_manifest_sha256": "0c8d3159c91aa3c934c7bfb7f2640906844246e812c0b5bfc556cdfb86d0d3b4",
+    "c_manifest_sha256": "47859f1c12d5311ef554803c6976c8699ebafc164e2bdd876cfd0c6a6f2a2ec1",
+    "basis": "Firstdot original 33 performance + 3 ordinary C processes; re-audited raw evidence",
+    "new_emu_runs": 0,
+    "new_nemu_runs": 0,
+    "new_application_performance_qualified": false
+  },
+  "rollback": "Rebuild callers with the frozen V1 public include directory and libxs_gemv.a; do not mix versions accidentally"
+}
