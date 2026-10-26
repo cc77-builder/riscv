@@ -1,0 +1,642 @@
+{
+  "schema": "q288-tail-agnostic-hardware-source-review-v1",
+  "reviewer": "/root/coordination_audit",
+  "reviewed_utc": "2026-10-26 05:45:11 UTC",
+  "repository": "cc77-builder/riscv",
+  "source_commit": "34bae6d4acceac939f958199dae53c14bc1f6183",
+  "archive_identity": {
+    "hardware_inputs_uncompressed_sha256": "7c42a8130e71b39e8f5ca08d7d662a85ac58f677040c6293d38007b007ac0dcc",
+    "path": "team/optimizations/o2/repro/evidence/clean-reproduction-v1/matrix-archive/files/hardware/hardware-inputs.json.gz",
+    "emu_sha256": "ff840528eb1009e94906eefb3773ca321050f309553543ab26f0db23c410e30f",
+    "configuration": "MinimalConfig",
+    "num_cores": 1,
+    "emu_threads": 1,
+    "actual_pin_matching_owner": "/root",
+    "actual_pin_matching_scope": [
+      "src/main/scala/xiangshan/backend/decode/DecodeUnitComp.scala",
+      "src/main/scala/xiangshan/backend/dispatch/NewDispatch.scala",
+      "src/main/scala/xiangshan/backend/issue/EntryBundles.scala",
+      "src/main/scala/xiangshan/backend/issue/IssueQueue.scala",
+      "src/main/scala/xiangshan/backend/datapath/DataPath.scala",
+      "src/main/scala/xiangshan/Parameters.scala",
+      "src/main/scala/top/Configs.scala",
+      "src/main/scala/xiangshan/backend/Backend.scala",
+      "src/main/scala/xiangshan/backend/exu/ExeUnitParams.scala",
+      "src/main/scala/xiangshan/backend/issue/IssueBlockParams.scala",
+      "src/main/scala/xiangshan/backend/decode/DecodeUnit.scala"
+    ],
+    "unmatched_supporting_source_scope": [
+      "src/main/scala/xiangshan/backend/decode/VecDecoder.scala",
+      "src/main/scala/xiangshan/backend/datapath/DataSource.scala",
+      "src/main/scala/xiangshan/backend/fu/Vsetu.scala",
+      "src/main/scala/xiangshan/backend/fu/wrapper/VSet.scala",
+      "src/main/scala/xiangshan/backend/datapath/VldMergeUnit.scala",
+      "src/main/scala/xiangshan/backend/fu/vector/Mgu.scala",
+      "src/main/scala/xiangshan/backend/fu/vector/ByteMaskTailGen.scala"
+    ]
+  },
+  "hash_method": "SHA256 over exact UTF-8 file bytes returned at fixed commit; SHA1 of 'blob '+byte_length+'\\0'+bytes independently recomputed and matched each GitHub blob ID. No newline normalization.",
+  "status": "SOURCE_STRUCTURAL_PRECONDITION_CONFIRMED_NOT_RUNTIME_QUALIFICATION",
+  "preconditions": [
+    "ordinary unmasked vle8.v, not indexed or fault-only-first",
+    "VLEN=128, SEW=8, LMUL=1, requested VL=8",
+    "vm=1, vma=0, vstart=0",
+    "vta toggles only the two integer-core phase configurations",
+    "all agnostic high bytes remain outside all effective consumers",
+    "corresponding renamed VL has become known and nonzero"
+  ],
+  "conclusion": {
+    "ordinary_load_early_old_vd_wait_elimination": true,
+    "ordinary_load_late_old_vd_wait_elimination": true,
+    "ordinary_load_old_vd_rf_request_suppressed_when_elimination_applies": true,
+    "not_merely_final_merge_change": true,
+    "rename_old_mapping_lookup_removed": false,
+    "physical_destination_allocation_removed": false,
+    "custom_vdot_already_has_no_old_vd_source": true,
+    "actual_cycle_benefit_proven": false,
+    "target_runtime_qualified": false,
+    "new_emu_runs": 0
+  },
+  "conditions": {
+    "ignore_tail": "vl_is_vlmax && (vm != 0 || vma) && !is_write_part_vd",
+    "ignore_whole": "(vm != 0 || vma) && vta",
+    "early_ignore_old_vd": "old_vd_is_vector_source && renamed_vl_ready && vl_nonzero && !is_depend_old_vd && (ignore_tail || ignore_whole)",
+    "late_ignore_old_vd": "old_vd_is_vector_source && matching_renamed_vl_nonzero_wakeup && !is_depend_old_vd && (ignore_tail || ignore_whole)",
+    "example": {
+      "vl": 8,
+      "vlmax": 16,
+      "ignore_tail": false,
+      "tu_ignore_whole": false,
+      "ta_ignore_whole": true
+    }
+  },
+  "actual_minimal_config_branch": {
+    "vector_memory_units": [
+      "VLSU0",
+      "VLSU1"
+    ],
+    "iq_wakeup_sink_present": false,
+    "has_iq_wakeup": false,
+    "selected_late_data_source_branch": "EntryBundles.scala lines 346-351: generic else",
+    "selected_assignment": "ignoreOldVd -> DataSource.imm",
+    "not_selected_branch": "EntryBundles.scala lines 337-344: inMemSchd && readVfRf && hasIQWakeUp",
+    "earlier_caution_correction": "The memory-with-IQ-wakeup branch lacks an explicit ignoreOldVd->imm case, but this branch is not elaborated for the reviewed MinimalConfig; do not report it as a T17 limitation."
+  },
+  "rf_endpoint": {
+    "source_type": "SrcType.no",
+    "data_source": "DataSource.imm = 0b0100",
+    "read_reg": "value(3) = 0",
+    "arbiter_valid": "inRFReadReq.valid && allDataSources(...).readReg"
+  },
+  "merge_semantics_fixed_commit": {
+    "active_bytes": "0..7 contain loaded bytes",
+    "tail_bytes": "8..15 become 0xff in the normal TA path of this implementation",
+    "load_split_or_merge_removed": false,
+    "archive_pin_status": "VldMergeUnit/Mgu/ByteMaskTailGen are fixed-commit supporting evidence, not independently matched physical T17 pins by this review."
+  },
+  "limits": [
+    "VL unknown or zero does not qualify for old-vd elimination.",
+    "Nonzero vstart, indexed/fault-only-first loads, or another isDependOldVd cause block the route.",
+    "Masked vm=0/vma=0 can retain an old-destination dependency.",
+    "Custom vdot was already a full-register overwrite and retains a renamed VL source.",
+    "No claim of fewer instructions/uops, fewer memory bytes, removed merge stages, reduced fixed load latency, or lower physical register allocation.",
+    "An old destination that is already ready, address/VL/data wait, issue selection, memory effects, or other constraints may leave cycles unchanged.",
+    "Existing custom ENQUEUE/ACCEPT/RESPONSE logs do not directly count ordinary-load ignoreOldVd events; retirement gaps are not causal cycle shares.",
+    "No build, simulation, physical netlist probing, or TA runtime performance qualification was performed in this review."
+  ],
+  "files": [
+    {
+      "id": "DecodeComp",
+      "path": "src/main/scala/xiangshan/backend/decode/DecodeUnitComp.scala",
+      "source_commit": "34bae6d4acceac939f958199dae53c14bc1f6183",
+      "url": "https://github.com/cc77-builder/riscv/blob/34bae6d4acceac939f958199dae53c14bc1f6183/src/main/scala/xiangshan/backend/decode/DecodeUnitComp.scala",
+      "sha256": "fd94a3008053b6bdf54da23adb5a7bced34bd6a74be42a5322c3b13f7be4b618",
+      "git_blob_sha1": "9e0d142476fe09958ba949aacc1076ed3f6bdd51",
+      "git_blob_recomputed_match": true,
+      "actual_t17_pin_match": true,
+      "actual_t17_pin_match_basis": "Root independently compared the archived hardware-inputs.json pins against physical source; this review compared the fixed-commit GitHub byte SHA256. Root reported exact match.",
+      "line_ranges": [
+        [
+          356,
+          371
+        ],
+        [
+          1754,
+          1778
+        ]
+      ],
+      "role": "old-vd logical source for ordinary load; custom full-register overwrite has no old-vd source"
+    },
+    {
+      "id": "Dispatch",
+      "path": "src/main/scala/xiangshan/backend/dispatch/NewDispatch.scala",
+      "source_commit": "34bae6d4acceac939f958199dae53c14bc1f6183",
+      "url": "https://github.com/cc77-builder/riscv/blob/34bae6d4acceac939f958199dae53c14bc1f6183/src/main/scala/xiangshan/backend/dispatch/NewDispatch.scala",
+      "sha256": "aaae74122031c4c091f566b9e73a83c5e6e249a58d7f305a3551d0d0ae73ac36",
+      "git_blob_sha1": "c3842b62e31f7a34a36179b7514070ed90e2a9d1",
+      "git_blob_recomputed_match": true,
+      "actual_t17_pin_match": true,
+      "actual_t17_pin_match_basis": "Root independently compared the archived hardware-inputs.json pins against physical source; this review compared the fixed-commit GitHub byte SHA256. Root reported exact match.",
+      "line_ranges": [
+        [
+          310,
+          330
+        ],
+        [
+          449,
+          450
+        ]
+      ],
+      "role": "early VL metadata and old-vd source readiness elimination"
+    },
+    {
+      "id": "EntryBundles",
+      "path": "src/main/scala/xiangshan/backend/issue/EntryBundles.scala",
+      "source_commit": "34bae6d4acceac939f958199dae53c14bc1f6183",
+      "url": "https://github.com/cc77-builder/riscv/blob/34bae6d4acceac939f958199dae53c14bc1f6183/src/main/scala/xiangshan/backend/issue/EntryBundles.scala",
+      "sha256": "6e825d2d085f144cff72d498c1482a48314134915ffa4ba242b8b5516c3f27a8",
+      "git_blob_sha1": "af64892bf18f9dc6c5992b7922a4b8a697a488e7",
+      "git_blob_recomputed_match": true,
+      "actual_t17_pin_match": true,
+      "actual_t17_pin_match_basis": "Root independently compared the archived hardware-inputs.json pins against physical source; this review compared the fixed-commit GitHub byte SHA256. Root reported exact match.",
+      "line_ranges": [
+        [
+          295,
+          352
+        ]
+      ],
+      "role": "late VL wakeup elimination and configuration-dependent data source update"
+    },
+    {
+      "id": "IssueQueue",
+      "path": "src/main/scala/xiangshan/backend/issue/IssueQueue.scala",
+      "source_commit": "34bae6d4acceac939f958199dae53c14bc1f6183",
+      "url": "https://github.com/cc77-builder/riscv/blob/34bae6d4acceac939f958199dae53c14bc1f6183/src/main/scala/xiangshan/backend/issue/IssueQueue.scala",
+      "sha256": "d20799fa417b89ede9e5573a313e91217064fe30da139a45637c01f995260ae7",
+      "git_blob_sha1": "6e33e89ac8b2f32c7b1031924348bfb08129702a",
+      "git_blob_recomputed_match": true,
+      "actual_t17_pin_match": true,
+      "actual_t17_pin_match_basis": "Root independently compared the archived hardware-inputs.json pins against physical source; this review compared the fixed-commit GitHub byte SHA256. Root reported exact match.",
+      "line_ranges": [
+        [
+          303,
+          324
+        ],
+        [
+          774,
+          788
+        ]
+      ],
+      "role": "srcType.no maps to DataSource.imm; final issue source propagation"
+    },
+    {
+      "id": "DataPath",
+      "path": "src/main/scala/xiangshan/backend/datapath/DataPath.scala",
+      "source_commit": "34bae6d4acceac939f958199dae53c14bc1f6183",
+      "url": "https://github.com/cc77-builder/riscv/blob/34bae6d4acceac939f958199dae53c14bc1f6183/src/main/scala/xiangshan/backend/datapath/DataPath.scala",
+      "sha256": "838eefec28b52827de0f0f0be6dbf33726e9e69518711138054cdf670aacac8f",
+      "git_blob_sha1": "b7cb67ee20cdff03ec1313337ae5c9c5af83aee4",
+      "git_blob_recomputed_match": true,
+      "actual_t17_pin_match": true,
+      "actual_t17_pin_match_basis": "Root independently compared the archived hardware-inputs.json pins against physical source; this review compared the fixed-commit GitHub byte SHA256. Root reported exact match.",
+      "line_ranges": [
+        [
+          136,
+          148
+        ]
+      ],
+      "role": "vector RF request valid gated by data source readReg"
+    },
+    {
+      "id": "Params",
+      "path": "src/main/scala/xiangshan/Parameters.scala",
+      "source_commit": "34bae6d4acceac939f958199dae53c14bc1f6183",
+      "url": "https://github.com/cc77-builder/riscv/blob/34bae6d4acceac939f958199dae53c14bc1f6183/src/main/scala/xiangshan/Parameters.scala",
+      "sha256": "4ce4019b34a71bbc62c467c4209993e36ad63c29212c56f4bdf5e60faf2db907",
+      "git_blob_sha1": "0abf4a0c5fb3a0f498cc4ba33c5f2bd143190886",
+      "git_blob_recomputed_match": true,
+      "actual_t17_pin_match": true,
+      "actual_t17_pin_match_basis": "Root independently compared the archived hardware-inputs.json pins against physical source; this review compared the fixed-commit GitHub byte SHA256. Root reported exact match.",
+      "line_ranges": [
+        [
+          61,
+          62
+        ],
+        [
+          486,
+          491
+        ],
+        [
+          508,
+          519
+        ]
+      ],
+      "role": "VLEN=128; VLSU0/1 issue blocks; no matching IQ wakeup sink"
+    },
+    {
+      "id": "Configs",
+      "path": "src/main/scala/top/Configs.scala",
+      "source_commit": "34bae6d4acceac939f958199dae53c14bc1f6183",
+      "url": "https://github.com/cc77-builder/riscv/blob/34bae6d4acceac939f958199dae53c14bc1f6183/src/main/scala/top/Configs.scala",
+      "sha256": "febd1212adf7b3c7069f378c0f54373e40ade36ee902e0d1cf63503c300d6fd2",
+      "git_blob_sha1": "125bbfe28b7d6f94c5008d69b675a18313f97e1b",
+      "git_blob_recomputed_match": true,
+      "actual_t17_pin_match": true,
+      "actual_t17_pin_match_basis": "Root independently compared the archived hardware-inputs.json pins against physical source; this review compared the fixed-commit GitHub byte SHA256. Root reported exact match.",
+      "line_ranges": [
+        [
+          40,
+          46
+        ],
+        [
+          67,
+          242
+        ]
+      ],
+      "role": "MinimalConfig inherits the relevant XSCoreParameters and does not override IQ wakeups"
+    },
+    {
+      "id": "Backend",
+      "path": "src/main/scala/xiangshan/backend/Backend.scala",
+      "source_commit": "34bae6d4acceac939f958199dae53c14bc1f6183",
+      "url": "https://github.com/cc77-builder/riscv/blob/34bae6d4acceac939f958199dae53c14bc1f6183/src/main/scala/xiangshan/backend/Backend.scala",
+      "sha256": "346c2677150a5a64e8e865b9ec3929dcfbdcfb43697c04b468e1bccc2bd812d7",
+      "git_blob_sha1": "d301285fded394606ca04608384e0bd360cf2809",
+      "git_blob_recomputed_match": true,
+      "actual_t17_pin_match": true,
+      "actual_t17_pin_match_basis": "Root independently compared the archived hardware-inputs.json pins against physical source; this review compared the fixed-commit GitHub byte SHA256. Root reported exact match.",
+      "line_ranges": [
+        [
+          99,
+          102
+        ]
+      ],
+      "role": "bind configured IQ wakeup pairs to every execution unit"
+    },
+    {
+      "id": "ExeParams",
+      "path": "src/main/scala/xiangshan/backend/exu/ExeUnitParams.scala",
+      "source_commit": "34bae6d4acceac939f958199dae53c14bc1f6183",
+      "url": "https://github.com/cc77-builder/riscv/blob/34bae6d4acceac939f958199dae53c14bc1f6183/src/main/scala/xiangshan/backend/exu/ExeUnitParams.scala",
+      "sha256": "e0f58b000c93ef969634b783ed0e7ffdb11634dc1c90518eb15c9fd92d308c8c",
+      "git_blob_sha1": "dad2bf93bba26cd8fdc2a5463610a57ba0a5561e",
+      "git_blob_recomputed_match": true,
+      "actual_t17_pin_match": true,
+      "actual_t17_pin_match_basis": "Root independently compared the archived hardware-inputs.json pins against physical source; this review compared the fixed-commit GitHub byte SHA256. Root reported exact match.",
+      "line_ranges": [
+        [
+          323,
+          325
+        ]
+      ],
+      "role": "IQ sink filtering by exact execution-unit name"
+    },
+    {
+      "id": "IssueParams",
+      "path": "src/main/scala/xiangshan/backend/issue/IssueBlockParams.scala",
+      "source_commit": "34bae6d4acceac939f958199dae53c14bc1f6183",
+      "url": "https://github.com/cc77-builder/riscv/blob/34bae6d4acceac939f958199dae53c14bc1f6183/src/main/scala/xiangshan/backend/issue/IssueBlockParams.scala",
+      "sha256": "c41af5d79c2dbb225f58361859d57d1637bde756d247d3af0323a073fffa1bcc",
+      "git_blob_sha1": "6ccd9546f3e4a43b835a68e0405678685eca9526",
+      "git_blob_recomputed_match": true,
+      "actual_t17_pin_match": true,
+      "actual_t17_pin_match_basis": "Root independently compared the archived hardware-inputs.json pins against physical source; this review compared the fixed-commit GitHub byte SHA256. Root reported exact match.",
+      "line_ranges": [
+        [
+          240,
+          244
+        ],
+        [
+          258,
+          269
+        ]
+      ],
+      "role": "derive hasIQWakeUp from execution-unit sink pairs"
+    },
+    {
+      "id": "DecodeUnit",
+      "path": "src/main/scala/xiangshan/backend/decode/DecodeUnit.scala",
+      "source_commit": "34bae6d4acceac939f958199dae53c14bc1f6183",
+      "url": "https://github.com/cc77-builder/riscv/blob/34bae6d4acceac939f958199dae53c14bc1f6183/src/main/scala/xiangshan/backend/decode/DecodeUnit.scala",
+      "sha256": "4da8dc343ac8d0afc557270655b2cdad52ea645149ad87835aa9c5776a284134",
+      "git_blob_sha1": "a0bcda5a1b737b189f8fdafa232350ea822826a3",
+      "git_blob_recomputed_match": true,
+      "actual_t17_pin_match": true,
+      "actual_t17_pin_match_basis": "Root independently compared the archived hardware-inputs.json pins against physical source; this review compared the fixed-commit GitHub byte SHA256. Root reported exact match.",
+      "line_ranges": [
+        [
+          1046,
+          1064
+        ],
+        [
+          1073,
+          1078
+        ]
+      ],
+      "role": "load semantic dependency flags; custom-specific removal of old-vd"
+    },
+    {
+      "id": "VecDecoder",
+      "path": "src/main/scala/xiangshan/backend/decode/VecDecoder.scala",
+      "source_commit": "34bae6d4acceac939f958199dae53c14bc1f6183",
+      "url": "https://github.com/cc77-builder/riscv/blob/34bae6d4acceac939f958199dae53c14bc1f6183/src/main/scala/xiangshan/backend/decode/VecDecoder.scala",
+      "sha256": "2ae12df34733075ab01fb012cb3a889ca36bb1cdde5e53ce72c9460e784cb3df",
+      "git_blob_sha1": "8a2aac15aef278dae3d7d4f93521b2b2a0579690",
+      "git_blob_recomputed_match": true,
+      "actual_t17_pin_match": false,
+      "actual_t17_pin_match_basis": "Not compared to the archived T17 physical-source pin by this review; fixed-commit source evidence only.",
+      "line_ranges": [
+        [
+          167,
+          175
+        ],
+        [
+          758,
+          758
+        ]
+      ],
+      "role": "ordinary VLE8 decode retains a vector old-destination source"
+    },
+    {
+      "id": "DataSource",
+      "path": "src/main/scala/xiangshan/backend/datapath/DataSource.scala",
+      "source_commit": "34bae6d4acceac939f958199dae53c14bc1f6183",
+      "url": "https://github.com/cc77-builder/riscv/blob/34bae6d4acceac939f958199dae53c14bc1f6183/src/main/scala/xiangshan/backend/datapath/DataSource.scala",
+      "sha256": "bf8aee12abbb7c98b013190168832bb3e611875abcfb0043c9cb191b4c7b8745",
+      "git_blob_sha1": "b72a56ba6302d377cf52880ced8702c4af476665",
+      "git_blob_recomputed_match": true,
+      "actual_t17_pin_match": false,
+      "actual_t17_pin_match_basis": "Not compared to the archived T17 physical-source pin by this review; fixed-commit source evidence only.",
+      "line_ranges": [
+        [
+          5,
+          10
+        ],
+        [
+          28,
+          46
+        ]
+      ],
+      "role": "imm=0100 has readReg bit clear"
+    },
+    {
+      "id": "Vsetu",
+      "path": "src/main/scala/xiangshan/backend/fu/Vsetu.scala",
+      "source_commit": "34bae6d4acceac939f958199dae53c14bc1f6183",
+      "url": "https://github.com/cc77-builder/riscv/blob/34bae6d4acceac939f958199dae53c14bc1f6183/src/main/scala/xiangshan/backend/fu/Vsetu.scala",
+      "sha256": "65f9b7b8a022342e0c71664f622ddd91b503acb8695cdde53499e45f12c584aa",
+      "git_blob_sha1": "232aaad54919c37ba6c4333b89cefecaa1248622",
+      "git_blob_recomputed_match": true,
+      "actual_t17_pin_match": false,
+      "actual_t17_pin_match_basis": "Not compared to the archived T17 physical-source pin by this review; fixed-commit source evidence only.",
+      "line_ranges": [
+        [
+          65,
+          91
+        ],
+        [
+          102,
+          111
+        ]
+      ],
+      "role": "e8 m1 VLMAX=16 and requested AVL=8 yields VL=8"
+    },
+    {
+      "id": "VSet",
+      "path": "src/main/scala/xiangshan/backend/fu/wrapper/VSet.scala",
+      "source_commit": "34bae6d4acceac939f958199dae53c14bc1f6183",
+      "url": "https://github.com/cc77-builder/riscv/blob/34bae6d4acceac939f958199dae53c14bc1f6183/src/main/scala/xiangshan/backend/fu/wrapper/VSet.scala",
+      "sha256": "033ef52ff4061d365ac95fce95ab715b1a87586b1a78ac136b3d2df9d1c48d0f",
+      "git_blob_sha1": "7be2ed4cdf347939444493dd9ae2d182541f8fcc",
+      "git_blob_recomputed_match": true,
+      "actual_t17_pin_match": false,
+      "actual_t17_pin_match_basis": "Not compared to the archived T17 physical-source pin by this review; fixed-commit source evidence only.",
+      "line_ranges": [
+        [
+          72,
+          83
+        ]
+      ],
+      "role": "writeback VL flags derive from actual VL and VLMAX"
+    },
+    {
+      "id": "VldMerge",
+      "path": "src/main/scala/xiangshan/backend/datapath/VldMergeUnit.scala",
+      "source_commit": "34bae6d4acceac939f958199dae53c14bc1f6183",
+      "url": "https://github.com/cc77-builder/riscv/blob/34bae6d4acceac939f958199dae53c14bc1f6183/src/main/scala/xiangshan/backend/datapath/VldMergeUnit.scala",
+      "sha256": "3f53b9c9a9d173e38e62ee78202e25736622bc09445eac3bdfefb37b0b784a13",
+      "git_blob_sha1": "40fc0cee5787a5ac39f3a8737d52cc4d4bead81f",
+      "git_blob_recomputed_match": true,
+      "actual_t17_pin_match": false,
+      "actual_t17_pin_match_basis": "Not compared to the archived T17 physical-source pin by this review; fixed-commit source evidence only.",
+      "line_ranges": [
+        [
+          25,
+          39
+        ],
+        [
+          43,
+          49
+        ]
+      ],
+      "role": "final load merge receives vta; old data already present in merged result"
+    },
+    {
+      "id": "Mgu",
+      "path": "src/main/scala/xiangshan/backend/fu/vector/Mgu.scala",
+      "source_commit": "34bae6d4acceac939f958199dae53c14bc1f6183",
+      "url": "https://github.com/cc77-builder/riscv/blob/34bae6d4acceac939f958199dae53c14bc1f6183/src/main/scala/xiangshan/backend/fu/vector/Mgu.scala",
+      "sha256": "fce24fd96869d2c6df7b4bdcff2669db0de0d53647ef46f38b80e18d7c41bdcc",
+      "git_blob_sha1": "37e7b829eaa478ed3c38a431ce207c37230d324c",
+      "git_blob_recomputed_match": true,
+      "actual_t17_pin_match": false,
+      "actual_t17_pin_match_basis": "Not compared to the archived T17 physical-source pin by this review; fixed-commit source evidence only.",
+      "line_ranges": [
+        [
+          89,
+          93
+        ],
+        [
+          164,
+          166
+        ]
+      ],
+      "role": "active bytes select new data and agnostic bytes select ones"
+    },
+    {
+      "id": "ByteMask",
+      "path": "src/main/scala/xiangshan/backend/fu/vector/ByteMaskTailGen.scala",
+      "source_commit": "34bae6d4acceac939f958199dae53c14bc1f6183",
+      "url": "https://github.com/cc77-builder/riscv/blob/34bae6d4acceac939f958199dae53c14bc1f6183/src/main/scala/xiangshan/backend/fu/vector/ByteMaskTailGen.scala",
+      "sha256": "d70f22913c2c5e80ae4659ba4efae06cce4810a91acd4f021d2679f98e44bb05",
+      "git_blob_sha1": "31e5cbbec0817bb6621b161a53d96bb857881499",
+      "git_blob_recomputed_match": true,
+      "actual_t17_pin_match": false,
+      "actual_t17_pin_match_basis": "Not compared to the archived T17 physical-source pin by this review; fixed-commit source evidence only.",
+      "line_ranges": [
+        [
+          61,
+          79
+        ]
+      ],
+      "role": "tail-agnostic byte mask generated from vta"
+    }
+  ],
+  "evidence": [
+    {
+      "claim": "plain load old-destination source is explicit; custom is separate",
+      "snippets": [
+        {
+          "file_id": "DecodeComp",
+          "line_start": 356,
+          "line_end": 369,
+          "text": "    is(UopSplitType.VEC_VDOT) {\n      csBundle(0).lsrc(0) := src1\n      csBundle(0).lsrc(1) := src2\n      csBundle(0).ldest := dest\n      csBundle(0).srcType(0) := SrcType.vp\n      csBundle(0).srcType(1) := SrcType.vp\n      csBundle(0).srcType(2) := SrcType.no\n      csBundle(0).srcType(3) := SrcType.no\n      csBundle(0).srcType(4) := SrcType.vp\n      csBundle(0).lsrc(4) := Vl_IDX.U\n      csBundle(0).uopIdx := 0.U\n      csBundle(0).vpu.vuopIdx := 0.U\n      csBundle(0).vpu.isDependOldVd := false.B\n      csBundle(0).vpu.isWritePartVd := false.B"
+        },
+        {
+          "file_id": "DecodeComp",
+          "line_start": 1769,
+          "line_end": 1775,
+          "text": "      for (i <- 0 until MAX_VLMUL) {\n        csBundle(i + 1).srcType(0) := SrcType.vp\n        csBundle(i + 1).lsrc(0) := VECTOR_TMP_REG_LMUL.U\n        csBundle(i + 1).lsrc(2) := dest + i.U // old vd\n        csBundle(i + 1).ldest := dest + i.U\n        csBundle(i + 1).uopIdx := i.U\n        csBundle(i + 1).vlsInstr := true.B"
+        }
+      ]
+    },
+    {
+      "claim": "decode dependency flags admit this plain e8/m1/vstart0 load",
+      "snippets": [
+        {
+          "file_id": "DecodeUnit",
+          "line_start": 1046,
+          "line_end": 1059,
+          "text": "  val isVload = FuType.isVLoad(decodedInst.fuType)\n  val isVlx = isVload && (decodedInst.fuOpType === VlduType.vloxe || decodedInst.fuOpType === VlduType.vluxe)\n  val isVle = isVload && (decodedInst.fuOpType === VlduType.vle || decodedInst.fuOpType === VlduType.vleff || decodedInst.fuOpType === VlduType.vlse)\n  val isVlm = isVload && (decodedInst.fuOpType === VlduType.vlm)\n  val isFof = isVload && (decodedInst.fuOpType === VlduType.vleff)\n  val isWritePartVd = decodedInst.uopSplitType === UopSplitType.VEC_VRED || decodedInst.uopSplitType === UopSplitType.VEC_0XV || decodedInst.uopSplitType === UopSplitType.VEC_VWW\n  val isVma = vmaInsts.map(_ === inst.ALL).reduce(_ || _)\n  val emulIsFrac = Cat(~decodedInst.vpu.vlmul(2), decodedInst.vpu.vlmul(1, 0)) +& decodedInst.vpu.veew < 4.U +& decodedInst.vpu.vsew\n  val vstartIsNotZero = io.enq.vstart =/= 0.U\n  decodedInst.vpu.isNarrow := isNarrow\n  decodedInst.vpu.isDstMask := isDstMask\n  decodedInst.vpu.isOpMask := isOpMask\n  decodedInst.vpu.isDependOldVd := !inst.isVDot && (isVppu || isVecOPF || isVStore || (isDstMask && !isOpMask) || isNarrow || isVlx || isVma || isFof || vstartIsNotZero)\n  decodedInst.vpu.isWritePartVd := isWritePartVd || isVlm || isVle && emulIsFrac"
+        }
+      ]
+    },
+    {
+      "claim": "dispatch eliminates both source wait and source register classification",
+      "snippets": [
+        {
+          "file_id": "Dispatch",
+          "line_start": 324,
+          "line_end": 330,
+          "text": "    val vlIsVlmax = vlBusyTable.io_vl_read.vlReadInfo(i).is_vlmax\n    val vlIsNonZero = vlBusyTable.io_vl_read.vlReadInfo(i).is_nonzero\n    val ignoreTail = vlIsVlmax && (vm =/= 0.U || vma) && !isWritePartVd\n    val ignoreWhole = (vm =/= 0.U || vma) && vta\n    val ignoreOldVd = vlBusyTable.io.read(i).resp && vlIsNonZero && !isDependOldVd && (ignoreTail || ignoreWhole)\n    ignoreOldVdVec(i) := readEn && ignoreOldVd\n    allSrcState(i)(j)(k) := readEn && (busyTables(k).io.read(readidx).resp || ignoreOldVd) || SrcType.isImm(fromRename(i).bits.srcType(j))"
+        },
+        {
+          "file_id": "Dispatch",
+          "line_start": 449,
+          "line_end": 450,
+          "text": "    // update src type if eliminate old vd\n    fromRenameUpdate(i).bits.srcType(numRegSrcVf - 1) := Mux(ignoreOldVdVec(i), SrcType.no, fromRename(i).bits.srcType(numRegSrcVf - 1))"
+        }
+      ]
+    },
+    {
+      "claim": "late VL wakeup eliminates old-destination dependency",
+      "snippets": [
+        {
+          "file_id": "EntryBundles",
+          "line_start": 307,
+          "line_end": 310,
+          "text": "      val vlIsVlmax = (vlFromIntIsVlmax && vlWakeUpByIntWb) || (vlFromVfIsVlmax && vlWakeUpByVfWb)\n      val vlIsNonZero = (!vlFromIntIsZero && vlWakeUpByIntWb) || (!vlFromVfIsZero && vlWakeUpByVfWb)\n      val ignoreTail = vlIsVlmax && (vm =/= 0.U || vma) && !isWritePartVd\n      val ignoreWhole = (vm =/= 0.U || vma) && vta"
+        },
+        {
+          "file_id": "EntryBundles",
+          "line_start": 319,
+          "line_end": 326,
+          "text": "        ignoreOldVd := srcIsVec && vlIsNonZero && !isDependOldVd && (ignoreTail || ignoreWhole)\n      } else {\n        ignoreOldVd := false.B\n      }\n\n      srcStatusNext.psrc                              := srcStatus.psrc\n      srcStatusNext.srcType                           := Mux(ignoreOldVd, SrcType.no, srcStatus.srcType)\n      srcStatusNext.srcState                          := srcStatus.srcState & !srcLoadCancel | wakeupByWB | wakeupByIQ | ignoreOldVd"
+        },
+        {
+          "file_id": "EntryBundles",
+          "line_start": 346,
+          "line_end": 351,
+          "text": "                                                          else {\n                                                            MuxCase(srcStatus.dataSources.value, Seq(\n                                                              ignoreOldVd                        -> DataSource.imm,\n                                                              wakeupByIQ                         -> DataSource.bypass,\n                                                              srcStatus.dataSources.readBypass   -> DataSource.reg,\n                                                            ))"
+        }
+      ]
+    },
+    {
+      "claim": "actual MinimalConfig vector memory queue has no IQ wakeup sink",
+      "snippets": [
+        {
+          "file_id": "Params",
+          "line_start": 486,
+          "line_end": 491,
+          "text": "      IssueBlockParams(Seq(\n        ExeUnitParams(\"VLSU0\", Seq(VlduCfg, VstuCfg, VseglduSeg, VsegstuCfg), Seq(VfWB(4, 0), V0WB(4, 0), VlWB(port = 2, 0)), Seq(Seq(VfRD(6, 0)), Seq(VfRD(7, 0)), Seq(VfRD(8, 0)), Seq(V0RD(2, 0)), Seq(VlRD(2, 0)))),\n      ), numEntries = 16, numEnq = 2, numComp = 12),\n      IssueBlockParams(Seq(\n        ExeUnitParams(\"VLSU1\", Seq(VlduCfg, VstuCfg), Seq(VfWB(5, 0), V0WB(5, 0), VlWB(port = 3, 0)), Seq(Seq(VfRD(9, 0)), Seq(VfRD(10, 0)), Seq(VfRD(11, 0)), Seq(V0RD(3, 0)), Seq(VlRD(3, 0)))),\n      ), numEntries = 16, numEnq = 2, numComp = 12),"
+        },
+        {
+          "file_id": "Params",
+          "line_start": 508,
+          "line_end": 519,
+          "text": "  def iqWakeUpParams = {\n    Seq(\n      WakeUpConfig(\n        Seq(\"ALU0\", \"ALU1\", \"ALU2\", \"ALU3\", \"LDU0\", \"LDU1\", \"LDU2\") ->\n        Seq(\"ALU0\", \"BJU0\", \"ALU1\", \"BJU1\", \"ALU2\", \"BJU2\", \"ALU3\", \"BJU3\", \"LDU0\", \"LDU1\", \"LDU2\", \"STA0\", \"STA1\", \"STD0\", \"STD1\")\n      ),\n      // TODO: add load -> fp slow wakeup\n      WakeUpConfig(\n        Seq(\"FEX0\", \"FEX2\", \"FEX4\") ->\n        Seq(\"FEX0\", \"FEX1\", \"FEX2\", \"FEX3\", \"FEX4\")\n      ),\n    ).flatten"
+        },
+        {
+          "file_id": "ExeParams",
+          "line_start": 323,
+          "line_end": 325,
+          "text": "  def updateIQWakeUpConfigs(cfgs: Seq[WakeUpConfig]) = {\n    this.iqWakeUpSourcePairs = cfgs.filter(_.source.name == this.name)\n    this.iqWakeUpSinkPairs = cfgs.filter(_.sink.name == this.name)"
+        },
+        {
+          "file_id": "IssueParams",
+          "line_start": 240,
+          "line_end": 244,
+          "text": "  def wakeUpInExuSources: Seq[WakeUpSource] = {\n    exuBlockParams\n      .flatMap(_.iqWakeUpSinkPairs)\n      .map(_.source)\n      .distinctBy(_.name)"
+        },
+        {
+          "file_id": "IssueParams",
+          "line_start": 258,
+          "line_end": 269,
+          "text": "  def numWakeupToIQ: Int = wakeUpInExuSources.size\n\n  def numWakeupFromIQ: Int = wakeUpInExuSources.size\n\n  def numAllWakeUp: Int = numWakeupFromWB + numWakeupFromIQ + numWakeupFromOthers\n\n  def numWakeupFromWB = {\n    val pregSet = this.pregReadSet\n    pregSet.map(cfg => backendParam.getRfWriteSize(cfg)).sum\n  }\n\n  def hasIQWakeUp: Boolean = numWakeupFromIQ > 0 && numRegSrc > 0"
+        }
+      ]
+    },
+    {
+      "claim": "early path sets DataSource.imm and read-port endpoint suppresses RF request",
+      "snippets": [
+        {
+          "file_id": "IssueQueue",
+          "line_start": 314,
+          "line_end": 319,
+          "text": "        enq.bits.status.srcStatus(j).dataSources.value          := (if (j < 3) {\n                                                                      MuxCase(DataSource.reg, Seq(\n                                                                        (SrcType.isXp(s0_enqBits(enqIdx).srcType(j)) && (s0_enqBits(enqIdx).psrc(j) === 0.U)) -> DataSource.zero,\n                                                                        SrcType.isNotReg(s0_enqBits(enqIdx).srcType(j))                                       -> DataSource.imm,\n                                                                        (SrcType.isVp(s0_enqBits(enqIdx).srcType(j)) && (s0_enqBits(enqIdx).psrc(j) === 0.U)) -> DataSource.v0,\n                                                                      ))"
+        },
+        {
+          "file_id": "DataSource",
+          "line_start": 5,
+          "line_end": 10,
+          "text": "class DataSource extends Bundle {\n  val value = UInt(4.W)\n\n  def readReg: Bool = value(3)\n\n  def readRegOH: Bool = value === DataSource.reg"
+        },
+        {
+          "file_id": "DataSource",
+          "line_start": 44,
+          "line_end": 46,
+          "text": "  def bypass2: UInt = \"b0011\".U\n\n  def imm: UInt = \"b0100\".U"
+        },
+        {
+          "file_id": "DataPath",
+          "line_start": 136,
+          "line_end": 148,
+          "text": "  vfRFReadArbiter.io.in.zip(vfRFReadReq).zipWithIndex.foreach { case ((arbInSeq2, inRFReadReqSeq2), iqIdx) =>\n    arbInSeq2.zip(inRFReadReqSeq2).zipWithIndex.foreach { case ((arbInSeq, inRFReadReqSeq), exuIdx) =>\n      val srcIndices: Seq[Int] = VecRegSrcDataSet.flatMap(data => fromIQ(iqIdx)(exuIdx).bits.exuParams.getRfReadSrcIdx(data)).toSeq.sorted\n      for (srcIdx <- 0 until fromIQ(iqIdx)(exuIdx).bits.exuParams.numRegSrc) {\n        if (srcIndices.contains(srcIdx) && inRFReadReqSeq.isDefinedAt(srcIdx)) {\n          arbInSeq(srcIdx).valid := inRFReadReqSeq(srcIdx).valid && allDataSources(iqIdx)(exuIdx)(srcIdx).readReg\n          arbInSeq(srcIdx).bits.addr := inRFReadReqSeq(srcIdx).bits.addr\n        } else {\n          arbInSeq(srcIdx).valid := false.B\n          arbInSeq(srcIdx).bits.addr := 0.U\n        }\n      }\n    }"
+        }
+      ]
+    },
+    {
+      "claim": "fixed-commit normal load tail merge writes ones for TA",
+      "snippets": [
+        {
+          "file_id": "VldMerge",
+          "line_start": 25,
+          "line_end": 34,
+          "text": "  mgu.io.in.vd := wbReg.bits.data(0)\n  // oldVd is contained in data and is already masked with new data\n  mgu.io.in.oldVd := wbReg.bits.data(0)\n  mgu.io.in.mask := Mux(wbReg.bits.vls.get.vpu.vm, Fill(VLEN, 1.U(1.W)), wbReg.bits.vls.get.vpu.vmask)\n  mgu.io.in.info.valid := wbReg.valid\n  mgu.io.in.info.ta := wbReg.bits.vls.get.isMasked || wbReg.bits.vls.get.vpu.vta\n  mgu.io.in.info.ma := wbReg.bits.vls.get.vpu.vma\n  mgu.io.in.info.vl := wbReg.bits.vls.get.vpu.vl\n  mgu.io.in.info.vstart := wbReg.bits.vls.get.vpu.vstart\n  mgu.io.in.info.eew := wbReg.bits.vls.get.vpu.veew"
+        },
+        {
+          "file_id": "ByteMask",
+          "line_start": 74,
+          "line_end": 79,
+          "text": "  private val maskAgnosticEn = Mux(io.in.vma, maskOffEn, 0.U) & bodyEnInVd\n\n  private val tailAgnosticEn = Mux(io.in.vta, tailEnInVd, 0.U)\n\n  private val activeEn = Mux(io.in.begin >= io.in.end, 0.U(numBytes.W), bodyEnInVd & maskEn)\n  private val agnosticEn = Mux(io.in.begin >= io.in.end, 0.U(numBytes.W), maskAgnosticEn | tailAgnosticEn)"
+        },
+        {
+          "file_id": "Mgu",
+          "line_start": 89,
+          "line_end": 93,
+          "text": "  for (i <- 0 until numBytes) {\n    resVecByte(i) := MuxCase(oldVdVecByte(i), Seq(\n      activeEn(i) -> vdVecByte(i),\n      agnosticEn(i) -> byte1s,\n    ))"
+        }
+      ]
+    }
+  ]
+}
