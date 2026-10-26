@@ -1,0 +1,158 @@
+{
+  "status": "TAIL_TARGET_RAW_EVIDENCE_AUDIT_PASS",
+  "contract": "r2-s3-runq-q288-tail-agnostic-target-v1",
+  "image_sha256": "9c4fe592b18336546abee6f8f024beb752141079604edfdd2ced846fa11571a0",
+  "original_emu_runs": 3,
+  "new_emu_runs": 0,
+  "physical_external_inputs_revalidated": false,
+  "windows_per_normal_run": 8,
+  "formal_method_windows": 8,
+  "formal_anchor_windows": 4,
+  "replay_windows": 8,
+  "functional_calls_per_normal_run": 22,
+  "judge_fault_controls": 5,
+  "selection": {
+    "decision": "TAIL_PREFERRED_IN_FIXED_PLAN",
+    "methods": [
+      {
+        "id": 0,
+        "label": "phased-vdot",
+        "wrapper": "q288_phased_vdot",
+        "leaf": "split_gemv_8x32_vdot",
+        "cycles": [
+          63036,
+          63086
+        ],
+        "instructions": [
+          49613,
+          49613
+        ],
+        "mean_cycles": 63061.0
+      },
+      {
+        "id": 1,
+        "label": "tail-vdot",
+        "wrapper": "q288_tail_vdot",
+        "leaf": "split_gemv_8x32_vdot",
+        "cycles": [
+          55396,
+          55385
+        ],
+        "instructions": [
+          49613,
+          49613
+        ],
+        "mean_cycles": 55390.5
+      },
+      {
+        "id": 2,
+        "label": "fused-rvv4",
+        "wrapper": "q288_fused_rvv4",
+        "leaf": "split_gemv_8x32_rvv4",
+        "cycles": [
+          62733,
+          62740,
+          62715,
+          62722
+        ],
+        "instructions": [
+          35681,
+          35681,
+          35681,
+          35681
+        ],
+        "mean_cycles": 62727.5
+      }
+    ],
+    "anchors": [
+      62733,
+      62740,
+      62715,
+      62722
+    ],
+    "anchor_gate": true,
+    "software_comparisons": [
+      {
+        "comparison": "tail-vs-current-phased-vdot",
+        "candidate": 1,
+        "baseline": 0,
+        "blocks": [
+          {
+            "block": 0,
+            "worst_candidate": 55396,
+            "best_baseline": 63036,
+            "reduction": 0.12120058379338794,
+            "passed": true
+          },
+          {
+            "block": 1,
+            "worst_candidate": 55385,
+            "best_baseline": 63086,
+            "reduction": 0.1220714580097011,
+            "passed": true
+          }
+        ],
+        "worst_candidate": 55396,
+        "best_baseline": 63036,
+        "reduction": 0.12120058379338794,
+        "separation_gate": true,
+        "qualified": true
+      },
+      {
+        "comparison": "tail-vs-named-fused-rvv4",
+        "candidate": 1,
+        "baseline": 2,
+        "blocks": [
+          {
+            "block": 0,
+            "worst_candidate": 55396,
+            "best_baseline": 62733,
+            "reduction": 0.11695598807645102,
+            "passed": true
+          },
+          {
+            "block": 1,
+            "worst_candidate": 55385,
+            "best_baseline": 62715,
+            "reduction": 0.1168779398867894,
+            "passed": true
+          }
+        ],
+        "worst_candidate": 55396,
+        "best_baseline": 62715,
+        "reduction": 0.11670254325121576,
+        "separation_gate": true,
+        "qualified": true
+      }
+    ],
+    "tail_promoted": true,
+    "selected_id": 1,
+    "selected_method": "q288_tail_vdot",
+    "selected_label": "tail-vdot",
+    "selected_leaf": "split_gemv_8x32_vdot",
+    "comparison_gate_pass": true,
+    "stable_default_changed": false,
+    "pack_included": false,
+    "hardware_changed": false,
+    "statistical_scope": "two fixed reverse-order PV/TV observations; all four FR points; replay not an extra sample",
+    "application_scope": "synthetic prepacked Q, same-method selfwarm, named FR only; no token/full-model/ASIC claim"
+  },
+  "raw_sources_recomputed": true,
+  "stable_default_changed": false,
+  "hardware_changed": false,
+  "warm_calls_per_normal_run": 8,
+  "extra_functional_calls": 6,
+  "method_anchor_overlap_windows": 4,
+  "pack_windows": 0,
+  "integer_leaf_calls_per_normal_run": 0,
+  "inline_calls_per_normal_run": 22,
+  "probe_dots_per_normal_run": 1,
+  "committed_vdot_per_normal_run": 124417,
+  "audit_tool_sources": {
+    "team/optimizations/o2/r2-config-reuse/caller/fixed-weight/archive.py": "2d7f69fc4b99d2f83ee276c7acc24f9a8db16e21b3a0521b7102aecd6cbba578",
+    "team/optimizations/o2/r2-config-reuse/caller/split/archive.py": "85d9823ef722e72310293d20eb731bd167804b9bd8c69e0ba0062ea16ca93990",
+    "team/optimizations/o2/repro/evidence/clean-reproduction-v1/analysis/detached-audit.py": "57f31bb70dafa3154dc22e09c635dde1f4c140405717d98053d781dc2ca43cd4",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/fused/phased/tail/target/archive.py": "ee95fcf094a1af5541dc2eb3578275535e2426f19c9326403151efdc8e2e165e",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/fused/target/host_audit.py": "0fa2f707274aa90a8e45839966e0caf849a2d80ec370292ffee75020d9239d91"
+  }
+}

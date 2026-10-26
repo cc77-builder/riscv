@@ -1,0 +1,375 @@
+{
+  "status": "TAIL_TARGET_ORIGINAL_EVIDENCE_CLOSED",
+  "source_freeze_commit": "a9583d1c0f30565c97a85775b489f1466fa34cad",
+  "source_head_at_delivery": "a27da8264180d2450b0c4637a56900752beec85f",
+  "closure": {
+    "status": "TAIL_TARGET_RAW_ARCHIVE_FRESH_SOURCE_CLOSED",
+    "started": "2026-10-26T15:04:56.504340+08:00",
+    "launcher_sha256": "c58f02e6221e296c8f4750d243faa49a46ae7bc7a040b4c0a83b9aae4dd02097",
+    "head": "a9583d1c0f30565c97a85775b489f1466fa34cad",
+    "build": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/fullq-tail-target-20261026-1400/build-01",
+    "campaign": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/fullq-tail-target-20261026-1400/campaign-01",
+    "source_files": 115,
+    "supplementary_auditors": {
+      "team/optimizations/o2/r2-config-reuse/caller/fixed-weight/archive.py": "2d7f69fc4b99d2f83ee276c7acc24f9a8db16e21b3a0521b7102aecd6cbba578",
+      "team/optimizations/o2/r2-config-reuse/caller/split/archive.py": "85d9823ef722e72310293d20eb731bd167804b9bd8c69e0ba0062ea16ca93990",
+      "team/optimizations/o2/repro/evidence/clean-reproduction-v1/analysis/detached-audit.py": "57f31bb70dafa3154dc22e09c635dde1f4c140405717d98053d781dc2ca43cd4",
+      "team/optimizations/o2/r2-config-reuse/caller/runq-q288/fused/phased/tail/target/archive.py": "ee95fcf094a1af5541dc2eb3578275535e2426f19c9326403151efdc8e2e165e",
+      "team/optimizations/o2/r2-config-reuse/caller/runq-q288/fused/target/host_audit.py": "0fa2f707274aa90a8e45839966e0caf849a2d80ec370292ffee75020d9239d91"
+    },
+    "distinct_source_and_auditor_files": 116,
+    "preparation_sha256": "f2ddda671886b67bcb2e8b25cacda199a5db49ff45601fd9162ea748db011330",
+    "validation_sha256": "5f0d0a7a707ca30400326635ff9bf623fd2ea02bc6da9d7e3b45b0c5f7cf3504",
+    "new_emu_runs": 0,
+    "cpu_affinity": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "packed": {
+      "status": "TAIL_TARGET_EVIDENCE_PACKED",
+      "files": 180,
+      "raw_bytes": 635964897,
+      "stored_bytes": 43372520,
+      "archive_manifest_sha256": "317bbefffddba9c0bd6d50ca1e796d619332e569840a4622b25220c5baa5c002"
+    },
+    "finished": "2026-10-26T15:10:49.915763+08:00",
+    "fresh_source": {
+      "status": "TAIL_TARGET_ARCHIVE_FRESH_SOURCE_AUDIT_PASS",
+      "contract": "r2-s3-runq-q288-tail-agnostic-target-v1",
+      "image_sha256": "9c4fe592b18336546abee6f8f024beb752141079604edfdd2ced846fa11571a0",
+      "original_emu_runs": 3,
+      "new_emu_runs": 0,
+      "physical_external_inputs_revalidated": false,
+      "windows_per_normal_run": 8,
+      "formal_method_windows": 8,
+      "formal_anchor_windows": 4,
+      "replay_windows": 8,
+      "functional_calls_per_normal_run": 22,
+      "judge_fault_controls": 5,
+      "selection": {
+        "decision": "TAIL_PREFERRED_IN_FIXED_PLAN",
+        "methods": [
+          {
+            "id": 0,
+            "label": "phased-vdot",
+            "wrapper": "q288_phased_vdot",
+            "leaf": "split_gemv_8x32_vdot",
+            "cycles": [
+              63036,
+              63086
+            ],
+            "instructions": [
+              49613,
+              49613
+            ],
+            "mean_cycles": 63061.0
+          },
+          {
+            "id": 1,
+            "label": "tail-vdot",
+            "wrapper": "q288_tail_vdot",
+            "leaf": "split_gemv_8x32_vdot",
+            "cycles": [
+              55396,
+              55385
+            ],
+            "instructions": [
+              49613,
+              49613
+            ],
+            "mean_cycles": 55390.5
+          },
+          {
+            "id": 2,
+            "label": "fused-rvv4",
+            "wrapper": "q288_fused_rvv4",
+            "leaf": "split_gemv_8x32_rvv4",
+            "cycles": [
+              62733,
+              62740,
+              62715,
+              62722
+            ],
+            "instructions": [
+              35681,
+              35681,
+              35681,
+              35681
+            ],
+            "mean_cycles": 62727.5
+          }
+        ],
+        "anchors": [
+          62733,
+          62740,
+          62715,
+          62722
+        ],
+        "anchor_gate": true,
+        "software_comparisons": [
+          {
+            "comparison": "tail-vs-current-phased-vdot",
+            "candidate": 1,
+            "baseline": 0,
+            "blocks": [
+              {
+                "block": 0,
+                "worst_candidate": 55396,
+                "best_baseline": 63036,
+                "reduction": 0.12120058379338794,
+                "passed": true
+              },
+              {
+                "block": 1,
+                "worst_candidate": 55385,
+                "best_baseline": 63086,
+                "reduction": 0.1220714580097011,
+                "passed": true
+              }
+            ],
+            "worst_candidate": 55396,
+            "best_baseline": 63036,
+            "reduction": 0.12120058379338794,
+            "separation_gate": true,
+            "qualified": true
+          },
+          {
+            "comparison": "tail-vs-named-fused-rvv4",
+            "candidate": 1,
+            "baseline": 2,
+            "blocks": [
+              {
+                "block": 0,
+                "worst_candidate": 55396,
+                "best_baseline": 62733,
+                "reduction": 0.11695598807645102,
+                "passed": true
+              },
+              {
+                "block": 1,
+                "worst_candidate": 55385,
+                "best_baseline": 62715,
+                "reduction": 0.1168779398867894,
+                "passed": true
+              }
+            ],
+            "worst_candidate": 55396,
+            "best_baseline": 62715,
+            "reduction": 0.11670254325121576,
+            "separation_gate": true,
+            "qualified": true
+          }
+        ],
+        "tail_promoted": true,
+        "selected_id": 1,
+        "selected_method": "q288_tail_vdot",
+        "selected_label": "tail-vdot",
+        "selected_leaf": "split_gemv_8x32_vdot",
+        "comparison_gate_pass": true,
+        "stable_default_changed": false,
+        "pack_included": false,
+        "hardware_changed": false,
+        "statistical_scope": "two fixed reverse-order PV/TV observations; all four FR points; replay not an extra sample",
+        "application_scope": "synthetic prepacked Q, same-method selfwarm, named FR only; no token/full-model/ASIC claim"
+      },
+      "raw_sources_recomputed": true,
+      "stable_default_changed": false,
+      "hardware_changed": false,
+      "warm_calls_per_normal_run": 8,
+      "extra_functional_calls": 6,
+      "method_anchor_overlap_windows": 4,
+      "pack_windows": 0,
+      "integer_leaf_calls_per_normal_run": 0,
+      "inline_calls_per_normal_run": 22,
+      "probe_dots_per_normal_run": 1,
+      "committed_vdot_per_normal_run": 124417,
+      "audit_tool_sources": {
+        "team/optimizations/o2/r2-config-reuse/caller/fixed-weight/archive.py": "2d7f69fc4b99d2f83ee276c7acc24f9a8db16e21b3a0521b7102aecd6cbba578",
+        "team/optimizations/o2/r2-config-reuse/caller/split/archive.py": "85d9823ef722e72310293d20eb731bd167804b9bd8c69e0ba0062ea16ca93990",
+        "team/optimizations/o2/repro/evidence/clean-reproduction-v1/analysis/detached-audit.py": "57f31bb70dafa3154dc22e09c635dde1f4c140405717d98053d781dc2ca43cd4",
+        "team/optimizations/o2/r2-config-reuse/caller/runq-q288/fused/phased/tail/target/archive.py": "ee95fcf094a1af5541dc2eb3578275535e2426f19c9326403151efdc8e2e165e",
+        "team/optimizations/o2/r2-config-reuse/caller/runq-q288/fused/target/host_audit.py": "0fa2f707274aa90a8e45839966e0caf849a2d80ec370292ffee75020d9239d91"
+      },
+      "archive_manifest_sha256": "317bbefffddba9c0bd6d50ca1e796d619332e569840a4622b25220c5baa5c002",
+      "command_sha256": "16f28d737f602c1001a4677ea7555f29c297df94013fa69c83c32c0bb0ea0393",
+      "files": 180,
+      "raw_bytes": 635964897,
+      "stored_bytes": 43372520,
+      "fresh_python_process": true,
+      "full_git_history_required_by_child": false,
+      "source_checkout_required_by_launcher": true,
+      "archived_original_git_objects": 19,
+      "dependency_probe_sha256": "9031e9f61d304a14ce2a00a2fca563219e19dd1c5db52de2b72de5324c99d820",
+      "dependency_scope": "Python filesystem/enumeration and explicit subprocess paths; not an OS sandbox",
+      "host_budget_receipt_sha256": "c989ca6a032cebfd4808a5122095dce576d26b5f3c78d3c651b737bd2d250bbd",
+      "effective_host_timeout": 900
+    },
+    "archive_files": {
+      "payload.zip": "2f9edc316c60ab0069a02c59873c2d08a9be9c8d908d233922e2b4923b2e6062",
+      "archive-manifest.json": "317bbefffddba9c0bd6d50ca1e796d619332e569840a4622b25220c5baa5c002",
+      "original-audit.json": "a28a383b09dbe590a521d3291a46ee328afe37d64f4bdb46648dfe80f4daf7c3"
+    },
+    "fresh_source_result_sha256": "359d7f70b6e08fbea87ac0d7e52584dcaccc2623e8ca39ce971beff7a949695a",
+    "frozen_sources_unchanged": true
+  },
+  "selection": {
+    "decision": "TAIL_PREFERRED_IN_FIXED_PLAN",
+    "methods": [
+      {
+        "id": 0,
+        "label": "phased-vdot",
+        "wrapper": "q288_phased_vdot",
+        "leaf": "split_gemv_8x32_vdot",
+        "cycles": [
+          63036,
+          63086
+        ],
+        "instructions": [
+          49613,
+          49613
+        ],
+        "mean_cycles": 63061.0
+      },
+      {
+        "id": 1,
+        "label": "tail-vdot",
+        "wrapper": "q288_tail_vdot",
+        "leaf": "split_gemv_8x32_vdot",
+        "cycles": [
+          55396,
+          55385
+        ],
+        "instructions": [
+          49613,
+          49613
+        ],
+        "mean_cycles": 55390.5
+      },
+      {
+        "id": 2,
+        "label": "fused-rvv4",
+        "wrapper": "q288_fused_rvv4",
+        "leaf": "split_gemv_8x32_rvv4",
+        "cycles": [
+          62733,
+          62740,
+          62715,
+          62722
+        ],
+        "instructions": [
+          35681,
+          35681,
+          35681,
+          35681
+        ],
+        "mean_cycles": 62727.5
+      }
+    ],
+    "anchors": [
+      62733,
+      62740,
+      62715,
+      62722
+    ],
+    "anchor_gate": true,
+    "software_comparisons": [
+      {
+        "comparison": "tail-vs-current-phased-vdot",
+        "candidate": 1,
+        "baseline": 0,
+        "blocks": [
+          {
+            "block": 0,
+            "worst_candidate": 55396,
+            "best_baseline": 63036,
+            "reduction": 0.12120058379338794,
+            "passed": true
+          },
+          {
+            "block": 1,
+            "worst_candidate": 55385,
+            "best_baseline": 63086,
+            "reduction": 0.1220714580097011,
+            "passed": true
+          }
+        ],
+        "worst_candidate": 55396,
+        "best_baseline": 63036,
+        "reduction": 0.12120058379338794,
+        "separation_gate": true,
+        "qualified": true
+      },
+      {
+        "comparison": "tail-vs-named-fused-rvv4",
+        "candidate": 1,
+        "baseline": 2,
+        "blocks": [
+          {
+            "block": 0,
+            "worst_candidate": 55396,
+            "best_baseline": 62733,
+            "reduction": 0.11695598807645102,
+            "passed": true
+          },
+          {
+            "block": 1,
+            "worst_candidate": 55385,
+            "best_baseline": 62715,
+            "reduction": 0.1168779398867894,
+            "passed": true
+          }
+        ],
+        "worst_candidate": 55396,
+        "best_baseline": 62715,
+        "reduction": 0.11670254325121576,
+        "separation_gate": true,
+        "qualified": true
+      }
+    ],
+    "tail_promoted": true,
+    "selected_id": 1,
+    "selected_method": "q288_tail_vdot",
+    "selected_label": "tail-vdot",
+    "selected_leaf": "split_gemv_8x32_vdot",
+    "comparison_gate_pass": true,
+    "stable_default_changed": false,
+    "pack_included": false,
+    "hardware_changed": false,
+    "statistical_scope": "two fixed reverse-order PV/TV observations; all four FR points; replay not an extra sample",
+    "application_scope": "synthetic prepacked Q, same-method selfwarm, named FR only; no token/full-model/ASIC claim"
+  },
+  "validation_sha256": "5f0d0a7a707ca30400326635ff9bf623fd2ea02bc6da9d7e3b45b0c5f7cf3504",
+  "stderr": [
+    {
+      "name": "recovery",
+      "bytes": 314432802,
+      "sha256": "27674edd47d516d5439beb580f74ebb9fe4f9856dd82c60ad9259b31694dfa5a"
+    },
+    {
+      "name": "replay",
+      "bytes": 314432802,
+      "sha256": "27674edd47d516d5439beb580f74ebb9fe4f9856dd82c60ad9259b31694dfa5a"
+    }
+  ],
+  "static_result_sha256": "f6a50e1697fb950eb9c8840c8dfdc67ffe68806324ec24c7f1c0c07d2bc4916e",
+  "target_controls_sha256": "fd0fb21e1a5106bfe7b87b201b0a44c3cb97d74679b96c078bd646a8588ea4ff",
+  "cross_image_context_sha256": "18de728fc80d73df23e21662ea68f5e625a39a272f6c06c136a44325e6c5d261",
+  "cross_image_performance_portability_established": false,
+  "elf_sha256": "610c499f46f1fe73074f626d8990bdcbdbc5f78c30ce8fc4a835495b0e392faa",
+  "bin_sha256": "9c4fe592b18336546abee6f8f024beb752141079604edfdd2ced846fa11571a0",
+  "source_files_unchanged": 115,
+  "supplementary_auditors": 5,
+  "distinct_source_and_auditor_files": 116,
+  "support_sha256": "2e4d6202d874776c67cb5cdf0934bf3882776c1601eed3186e5a2c09ebd6bf97",
+  "support_members": 70,
+  "history_objects": 19,
+  "history_pack_sha256": "845534a2a6b0a7d1c88b6b9b011b4686740fcb762156c9af5063ef63801db915",
+  "frozen_sources_unchanged": true,
+  "all_original_and_failed_evidence_retained": true,
+  "original_campaign_new_emu_runs": 3,
+  "delivery_new_emu_runs": 0,
+  "hardware_changed": false,
+  "stable_default_changed": false
+}
