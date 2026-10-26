@@ -1,0 +1,370 @@
+{
+  "status": "PHASED_TARGET_ORIGINAL_EVIDENCE_CLOSED",
+  "source_freeze_commit": "34092ebcf579a5de76e70cadfb6a5333173891ae",
+  "source_head_at_delivery": "b049415d7e206712e0a43d17bb90cfbde7e3fc16",
+  "closure": {
+    "status": "PHASED_TARGET_RAW_ARCHIVE_FRESH_SOURCE_CLOSED",
+    "started": "2026-10-26T14:03:55.874124+08:00",
+    "launcher_sha256": "a2834d05613032619b19c4647023f840f1052795c8ff851c4a0ed31c625860de",
+    "source_freeze_commit": "34092ebcf579a5de76e70cadfb6a5333173891ae",
+    "original_failed_receipt_sha256": "3d57611a88608f59b3441b68f4f0925faa7539d0ae460726ac17b2fca84c1416",
+    "diagnosis_sha256": "3177acb5882a4e3002d9dd536b5ba3b455ffa372d712123d238fcfbb069c8dc7",
+    "new_emu_runs": 0,
+    "source_files": 106,
+    "auditor_commit": "b049415d7e206712e0a43d17bb90cfbde7e3fc16",
+    "supplementary_auditors": {
+      "team/optimizations/o2/r2-config-reuse/caller/fixed-weight/archive.py": "2d7f69fc4b99d2f83ee276c7acc24f9a8db16e21b3a0521b7102aecd6cbba578",
+      "team/optimizations/o2/r2-config-reuse/caller/split/archive.py": "85d9823ef722e72310293d20eb731bd167804b9bd8c69e0ba0062ea16ca93990",
+      "team/optimizations/o2/repro/evidence/clean-reproduction-v1/analysis/detached-audit.py": "57f31bb70dafa3154dc22e09c635dde1f4c140405717d98053d781dc2ca43cd4",
+      "team/optimizations/o2/r2-config-reuse/caller/runq-q288/fused/phased/target/archive.py": "9107271e4d16dc0a3b0ae23478037612b403b71837be9c835f2d2d35f4635557",
+      "team/optimizations/o2/r2-config-reuse/caller/runq-q288/fused/target/host_audit.py": "0fa2f707274aa90a8e45839966e0caf849a2d80ec370292ffee75020d9239d91",
+      "team/optimizations/o2/r2-config-reuse/caller/runq-q288/fused/phased/target/archive_json.py": "d1359825a72350f41718d382132f20ca2a4f68464df1a8d8d72a27878722660a",
+      "team/optimizations/o2/r2-config-reuse/caller/runq-q288/fused/phased/target/ARCHIVE-JSON-CONTRACT.md": "c7bdb9ad066b597a702f15e3cc4791313b9f9a21d681451a66538487ddfcff80"
+    },
+    "packed": {
+      "status": "PHASED_TARGET_EVIDENCE_PACKED",
+      "files": 171,
+      "raw_bytes": 615329232,
+      "stored_bytes": 42860576,
+      "archive_manifest_sha256": "c5c3bf351cca7bc546086a295f894d0fee2e8045100eb7709fbd415a2cf74d43"
+    },
+    "finished": "2026-10-26T14:09:41.359798+08:00",
+    "fresh_source": {
+      "status": "PHASED_TARGET_ARCHIVE_FRESH_SOURCE_AUDIT_PASS",
+      "contract": "r2-s3-runq-q288-phased-target-v1",
+      "image_sha256": "73bc3a0e8b6d172cb427b09c2f6ff5ca2e0b56c0e0c1617b426cdc20bf84342d",
+      "original_emu_runs": 3,
+      "new_emu_runs": 0,
+      "physical_external_inputs_revalidated": false,
+      "windows_per_normal_run": 8,
+      "formal_method_windows": 8,
+      "formal_anchor_windows": 4,
+      "replay_windows": 8,
+      "functional_calls_per_normal_run": 22,
+      "judge_fault_controls": 5,
+      "selection": {
+        "decision": "PHASED_PREFERRED_IN_FIXED_PLAN",
+        "methods": [
+          {
+            "id": 0,
+            "label": "fused-vdot",
+            "wrapper": "q288_fused_vdot",
+            "leaf": "split_gemv_8x32_vdot",
+            "cycles": [
+              62742,
+              62716
+            ],
+            "instructions": [
+              52529,
+              52529
+            ],
+            "mean_cycles": 62729.0
+          },
+          {
+            "id": 1,
+            "label": "phased-vdot",
+            "wrapper": "q288_phased_vdot",
+            "leaf": "split_gemv_8x32_vdot",
+            "cycles": [
+              60314,
+              60336
+            ],
+            "instructions": [
+              49613,
+              49613
+            ],
+            "mean_cycles": 60325.0
+          },
+          {
+            "id": 2,
+            "label": "fused-rvv4",
+            "wrapper": "q288_fused_rvv4",
+            "leaf": "split_gemv_8x32_rvv4",
+            "cycles": [
+              67292,
+              67311,
+              67300,
+              67293
+            ],
+            "instructions": [
+              35681,
+              35681,
+              35681,
+              35681
+            ],
+            "mean_cycles": 67299.0
+          }
+        ],
+        "anchors": [
+          67292,
+          67311,
+          67300,
+          67293
+        ],
+        "anchor_gate": true,
+        "software_comparisons": [
+          {
+            "comparison": "phased-vs-current-fused-vdot",
+            "candidate": 1,
+            "baseline": 0,
+            "blocks": [
+              {
+                "block": 0,
+                "worst_candidate": 60314,
+                "best_baseline": 62742,
+                "reduction": 0.03869816072168564,
+                "passed": true
+              },
+              {
+                "block": 1,
+                "worst_candidate": 60336,
+                "best_baseline": 62716,
+                "reduction": 0.037948848778621036,
+                "passed": true
+              }
+            ],
+            "worst_candidate": 60336,
+            "best_baseline": 62716,
+            "reduction": 0.037948848778621036,
+            "separation_gate": true,
+            "qualified": true
+          },
+          {
+            "comparison": "phased-vs-named-fused-rvv4",
+            "candidate": 1,
+            "baseline": 2,
+            "blocks": [
+              {
+                "block": 0,
+                "worst_candidate": 60314,
+                "best_baseline": 67292,
+                "reduction": 0.10369731914640667,
+                "passed": true
+              },
+              {
+                "block": 1,
+                "worst_candidate": 60336,
+                "best_baseline": 67293,
+                "reduction": 0.10338371004413538,
+                "passed": true
+              }
+            ],
+            "worst_candidate": 60336,
+            "best_baseline": 67292,
+            "reduction": 0.1033703857813707,
+            "separation_gate": true,
+            "qualified": true
+          }
+        ],
+        "phased_promoted": true,
+        "selected_id": 1,
+        "selected_method": "q288_phased_vdot",
+        "selected_label": "phased-vdot",
+        "selected_leaf": "split_gemv_8x32_vdot",
+        "comparison_gate_pass": true,
+        "stable_default_changed": false,
+        "pack_included": false,
+        "hardware_changed": false,
+        "statistical_scope": "two fixed reverse-order FV/PV observations; all four FR points; replay not an extra sample",
+        "application_scope": "synthetic prepacked Q, same-method selfwarm, named FR only; no token/full-model/ASIC claim"
+      },
+      "raw_sources_recomputed": true,
+      "stable_default_changed": false,
+      "hardware_changed": false,
+      "warm_calls_per_normal_run": 8,
+      "extra_functional_calls": 6,
+      "method_anchor_overlap_windows": 4,
+      "pack_windows": 0,
+      "integer_leaf_calls_per_normal_run": 0,
+      "inline_calls_per_normal_run": 22,
+      "probe_dots_per_normal_run": 1,
+      "committed_vdot_per_normal_run": 124417,
+      "audit_tool_sources": {
+        "team/optimizations/o2/r2-config-reuse/caller/fixed-weight/archive.py": "2d7f69fc4b99d2f83ee276c7acc24f9a8db16e21b3a0521b7102aecd6cbba578",
+        "team/optimizations/o2/r2-config-reuse/caller/split/archive.py": "85d9823ef722e72310293d20eb731bd167804b9bd8c69e0ba0062ea16ca93990",
+        "team/optimizations/o2/repro/evidence/clean-reproduction-v1/analysis/detached-audit.py": "57f31bb70dafa3154dc22e09c635dde1f4c140405717d98053d781dc2ca43cd4",
+        "team/optimizations/o2/r2-config-reuse/caller/runq-q288/fused/phased/target/archive.py": "9107271e4d16dc0a3b0ae23478037612b403b71837be9c835f2d2d35f4635557",
+        "team/optimizations/o2/r2-config-reuse/caller/runq-q288/fused/target/host_audit.py": "0fa2f707274aa90a8e45839966e0caf849a2d80ec370292ffee75020d9239d91",
+        "team/optimizations/o2/r2-config-reuse/caller/runq-q288/fused/phased/target/archive_json.py": "d1359825a72350f41718d382132f20ca2a4f68464df1a8d8d72a27878722660a",
+        "team/optimizations/o2/r2-config-reuse/caller/runq-q288/fused/phased/target/ARCHIVE-JSON-CONTRACT.md": "c7bdb9ad066b597a702f15e3cc4791313b9f9a21d681451a66538487ddfcff80"
+      },
+      "archive_manifest_sha256": "c5c3bf351cca7bc546086a295f894d0fee2e8045100eb7709fbd415a2cf74d43",
+      "command_sha256": "671e822c96bf62fbab1b1507f4a644cfd29e4014ed3dfaf2c0e9c7b19dd8a2ea",
+      "files": 171,
+      "raw_bytes": 615329232,
+      "stored_bytes": 42860576,
+      "fresh_python_process": true,
+      "full_git_history_required_by_child": false,
+      "source_checkout_required_by_launcher": true,
+      "archived_original_git_objects": 19,
+      "dependency_probe_sha256": "70fc8da1a9d914c5787e6bb04d3828c69e1fa6ae593d721ae770a6436a673428",
+      "dependency_scope": "Python filesystem/enumeration and explicit subprocess paths; not an OS sandbox",
+      "host_budget_receipt_sha256": "9815693b4388f2e3f56132911750495e9d80dc046bbc848becb670138f42a20f",
+      "effective_host_timeout": 900
+    },
+    "archive_files": {
+      "payload.zip": "4f585031c9b621da75e192f82557972b06cad3c46f401931318cc2e4ebc6efc5",
+      "archive-manifest.json": "c5c3bf351cca7bc546086a295f894d0fee2e8045100eb7709fbd415a2cf74d43",
+      "original-audit.json": "3beb1c3e0d1e0b20e0adcc24aae9520bf8017d1fadedc1d10a7f95042947adae"
+    },
+    "fresh_source_result_sha256": "4ef24d0d072f91c8aeaad3abf0cfafefe23edf6862b9c69c5bce898cf62ca663",
+    "frozen_sources_unchanged": true
+  },
+  "selection": {
+    "decision": "PHASED_PREFERRED_IN_FIXED_PLAN",
+    "methods": [
+      {
+        "id": 0,
+        "label": "fused-vdot",
+        "wrapper": "q288_fused_vdot",
+        "leaf": "split_gemv_8x32_vdot",
+        "cycles": [
+          62742,
+          62716
+        ],
+        "instructions": [
+          52529,
+          52529
+        ],
+        "mean_cycles": 62729.0
+      },
+      {
+        "id": 1,
+        "label": "phased-vdot",
+        "wrapper": "q288_phased_vdot",
+        "leaf": "split_gemv_8x32_vdot",
+        "cycles": [
+          60314,
+          60336
+        ],
+        "instructions": [
+          49613,
+          49613
+        ],
+        "mean_cycles": 60325.0
+      },
+      {
+        "id": 2,
+        "label": "fused-rvv4",
+        "wrapper": "q288_fused_rvv4",
+        "leaf": "split_gemv_8x32_rvv4",
+        "cycles": [
+          67292,
+          67311,
+          67300,
+          67293
+        ],
+        "instructions": [
+          35681,
+          35681,
+          35681,
+          35681
+        ],
+        "mean_cycles": 67299.0
+      }
+    ],
+    "anchors": [
+      67292,
+      67311,
+      67300,
+      67293
+    ],
+    "anchor_gate": true,
+    "software_comparisons": [
+      {
+        "comparison": "phased-vs-current-fused-vdot",
+        "candidate": 1,
+        "baseline": 0,
+        "blocks": [
+          {
+            "block": 0,
+            "worst_candidate": 60314,
+            "best_baseline": 62742,
+            "reduction": 0.03869816072168564,
+            "passed": true
+          },
+          {
+            "block": 1,
+            "worst_candidate": 60336,
+            "best_baseline": 62716,
+            "reduction": 0.037948848778621036,
+            "passed": true
+          }
+        ],
+        "worst_candidate": 60336,
+        "best_baseline": 62716,
+        "reduction": 0.037948848778621036,
+        "separation_gate": true,
+        "qualified": true
+      },
+      {
+        "comparison": "phased-vs-named-fused-rvv4",
+        "candidate": 1,
+        "baseline": 2,
+        "blocks": [
+          {
+            "block": 0,
+            "worst_candidate": 60314,
+            "best_baseline": 67292,
+            "reduction": 0.10369731914640667,
+            "passed": true
+          },
+          {
+            "block": 1,
+            "worst_candidate": 60336,
+            "best_baseline": 67293,
+            "reduction": 0.10338371004413538,
+            "passed": true
+          }
+        ],
+        "worst_candidate": 60336,
+        "best_baseline": 67292,
+        "reduction": 0.1033703857813707,
+        "separation_gate": true,
+        "qualified": true
+      }
+    ],
+    "phased_promoted": true,
+    "selected_id": 1,
+    "selected_method": "q288_phased_vdot",
+    "selected_label": "phased-vdot",
+    "selected_leaf": "split_gemv_8x32_vdot",
+    "comparison_gate_pass": true,
+    "stable_default_changed": false,
+    "pack_included": false,
+    "hardware_changed": false,
+    "statistical_scope": "two fixed reverse-order FV/PV observations; all four FR points; replay not an extra sample",
+    "application_scope": "synthetic prepacked Q, same-method selfwarm, named FR only; no token/full-model/ASIC claim"
+  },
+  "validation_sha256": "5328911d37d789aad23885766ca29dd8eb8566828d39b6a36397fac54bf0e8c7",
+  "stderr": [
+    {
+      "name": "recovery",
+      "bytes": 304166013,
+      "sha256": "8006c9d0d1e59614b005916168d85b8d5e2ccba8a29ad2a0aca8982c2f15096c"
+    },
+    {
+      "name": "replay",
+      "bytes": 304166013,
+      "sha256": "8006c9d0d1e59614b005916168d85b8d5e2ccba8a29ad2a0aca8982c2f15096c"
+    }
+  ],
+  "support_sha256": "fac54f1214a7f49faa998726703604da6717a4b4ad793f67fd469cf567e72088",
+  "support_members": 335,
+  "history_objects": 19,
+  "history_pack_sha256": "845534a2a6b0a7d1c88b6b9b011b4686740fcb762156c9af5063ef63801db915",
+  "normal_totals": {
+    "recovery": {
+      "guest_cycles": 1600448,
+      "retired": 1120378
+    },
+    "replay": {
+      "guest_cycles": 1600448,
+      "retired": 1120378
+    }
+  },
+  "frozen_sources_unchanged": true,
+  "source_files_unchanged": 106,
+  "old_failed_evidence_retained": true,
+  "new_emu_runs": 3
+}
