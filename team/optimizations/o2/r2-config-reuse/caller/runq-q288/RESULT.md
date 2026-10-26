@@ -1,6 +1,6 @@
 # runq Q288：实现与中断验证记录
 
-状态：**INTERRUPTED_BY_USER_DISK_RECOVERY_PRIORITY / NOT_QUALIFIED_COMPLETE_EMU**。本模块是可继续审查的实验实现，尚未取得完整目标正确性或消费者性能资格。
+历史 v1/v2 状态：**INTERRUPTED_BY_USER_DISK_RECOVERY_PRIORITY / NOT_QUALIFIED_COMPLETE_EMU**。本页只记录这一原合同。后续已用独立身份完成 [acc8 目标第二阶段](acc8/target/RESULT.md) 和 [融合目标比较](fused/target/RESULT.md)；新结果不追认本页旧中断批次。
 
 工作单元：`20261026-LiZufan001-runq-q288-0219`；实现/实跑为 2026-10-26 02:19～03:06（UTC+08:00），原字节封存于 04:00:57。v1 实现 `1632fc66fcf8685af29ea3d1998f37fa8fc4569d`，v2 实现 `835448de73da46a8302351b93cdb399ff598fc85`；封存与文档提交不改变这两个实现身份。
 
@@ -43,4 +43,4 @@
 /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/runq-q288-20261026-0219
 ```
 
-本工作单元随状态交付暂停并释放认领。后续应先判断该合成 Q 投影是否值得继续投入整核时间；若确需继续，使用新 campaign 身份，重新核实冻结输入和资源保护，完成正常恢复与独立重放后才讨论性能选择。保留当前失败状态，不覆盖旧目录，不把下一轮自动续跑设为前置任务。
+原 v2 正常批及原目录保持中断原文，不续写或改判。后续采用新的 acc8 target-v1 和 fused target-v1 完成对应验证，详情从本页开头进入；不把新候选的 PASS、计数或性能填回旧计划。账号级认领和发布状态只在协调 Issue #2 维护。

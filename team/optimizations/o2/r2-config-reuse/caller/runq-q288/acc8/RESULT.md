@@ -1,5 +1,7 @@
 # acc8 第一阶段结果：共同消费者开销静态筛选通过
 
+阶段说明：本页保留第一阶段静态证据；后续 [目标第二阶段](target/RESULT.md) 已完成真实负控、正常恢复、独立重放及隔离新源复算。下文“新增EMU为0/目标未验证”仅指当时静态阶段，不是当前全部成果状态。
+
 结论：**`ACC8_STATIC_SCREEN_PASS`**。这是本机逐位数值、真实GNU编译及完整ELF路径的结果；新增EMU为0，目标周期、完整目标DiffTest和应用性能仍未验证。稳定firstdot V2、原Q288包装、六个整数叶和官方程序未因本候选改变。
 
 合同：[r2-s3-runq-q288-acc8-screen-v1](CONTRACT.md)。研究动机与下一阶段条件见[研究方案](../RESEARCH.md)。本次完整检查实际执行于2026-10-26 05:26:58～05:27:30（UTC+08:00），此前05:23的单对象探索只确认驻留机制；输出目录中的0528是标识，不当作实际开始时间。
@@ -86,4 +88,4 @@ python3 "$ACC8_MODULE/screen.py" --action compare --build "$ACC8_OUT/build" \
 
 `ACC8_BASELINE_BUILD`至少包含归档`baseline/vdot-perf.elf`，哈希被固定检查。候选build/verify还需要原合同规定的固定T17/AM身份和GNU工具；不声称ZIP自带全部硬件环境或新机器安装资格。父生成器仍保留其旧46-Q计划元数据，但本screen没有EMU动作，本阶段一条也未执行。
 
-下一步只按[研究方案A](../RESEARCH.md#5-有条件的后续研究方案)另立有界目标合同；若实测收益不足、共同锚点不稳或强RVV消除优势，按预定停止条件记录，不把本静态PASS提升为默认采用。
+后续已经按独立合同完成[acc8目标第二阶段](target/RESULT.md)，其诊断窗口仍不授予公平加速；新的[完整Q融合目标比较](../fused/target/RESULT.md)另有共同selfwarm、全部锚点和强RVV。各阶段的真实输入、镜像及资格分别保留，不把本静态PASS提升为默认采用。
