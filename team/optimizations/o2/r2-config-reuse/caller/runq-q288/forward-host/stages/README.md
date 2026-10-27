@@ -10,9 +10,10 @@
 | [三消费者合同](projection/CONTRACT.md) / [原生结果](NATIVE_RESULT.md) | 原 scalar、强 FR、TA；37 张 K288/172Q/13 尾块，6 张 K768 W2 仍 scalar。 |
 | [RoPE 目标合同](rope/CONTRACT.md) / [计时范围](NATIVE_RESULT.md) | 固定 p2 六层合并、自预热、准备计入的局部目标边界。 |
 | [投影目标合同](projection/target/CONTRACT.md) / [目标结果](projection/target/RESULT.md) | 真实 p2、层索引5的完整 W1 与 classifier 最后320行，强 FR/TA 同 buffer 比较。 |
+| [纯 forward 入口](consumer/README.md) / [结果](consumer/RESULT.md) | 五方法含强 FR/TA+RoPE-cache 的独立三位置完整参考、共享对象 API/目标包装、30万cycle部分目标探测及低内存 O2 审计。 |
 | [研究与决策](RESEARCH.md) | 固定公开源、实际算术反例及严格 RVV 后续候选的条件。 |
 
-完整参考消费者中的 RoPE-cache 与 TA/FR 是两份独立实验，没有授予 TA+RoPE-cache 组合资格。完整目标 forward/token、训练模型质量和新 ASIC PPA 尚未验证。
+前序 full/projection 的 RoPE-cache 与 TA/FR 是两份独立实验；新增 [consumer](consumer/RESULT.md) 已单独闭合五方法组合的三位置完整参考，计算核心不含逐矩阵 oracle。其完整目标 forward/token、训练模型质量和新 ASIC PPA 仍未验证，30万cycle成本探测保留 partial 状态。
 
 ## 宿主重新执行
 
