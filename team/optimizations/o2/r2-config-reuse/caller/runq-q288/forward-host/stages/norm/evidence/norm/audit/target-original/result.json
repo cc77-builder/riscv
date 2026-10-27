@@ -1,0 +1,241 @@
+{
+  "status": "FROZEN_NORM_EVIDENCE_RECHECK_PASS",
+  "campaign": "target-original",
+  "checks": {
+    "negative": {
+      "status": "EXPECTED_NORM_APPLICATION_REJECTION",
+      "mode": 1,
+      "samples": [],
+      "transcript": [
+        "NORM_BEGIN real=39 synthetic=9 size=288 control=1",
+        "NORM_REJECT case=38 method=1 name=result byte=1151"
+      ],
+      "protocol": {
+        "status": "O2_TRACE_PASS",
+        "schema": {
+          "version": 1,
+          "clock": "global",
+          "latency": 2,
+          "slots": 2,
+          "rob_size": 48,
+          "ftq_size": 8,
+          "vlen": 128,
+          "vpu_width": 195,
+          "perf_width": 577
+        },
+        "counts": {
+          "STATE": 388,
+          "VFEX4_ACCEPT": 0,
+          "VFEX4_WAIT": 0,
+          "VFEX4_REDIRECT": 200,
+          "ACCEPT": 0,
+          "MOVE": 0,
+          "RESPONSE": 0,
+          "STALL": 0,
+          "KILL": 0,
+          "DIV_ACCEPT": 0,
+          "DIV_KILL": 0,
+          "DIV_OUTPUT": 0,
+          "ENQUEUE": 0,
+          "COMMIT": 0,
+          "REDIRECT": 200,
+          "MULTI_INFLIGHT": 0,
+          "OVERLAP": 0,
+          "TRIPLE_OVERLAP": 0,
+          "FULL_STALL": 0,
+          "KILL_P": 0,
+          "KILL_R": 0,
+          "PARTIAL_KILL": 0,
+          "BOTH_KILL": 0,
+          "R_KILL_P_SURVIVES": 0,
+          "P_KILL_R_SURVIVES": 0,
+          "UNRELATED_FLUSH": 0,
+          "ROB_WRAP": 0,
+          "FTQ_WRAP": 0,
+          "DIV_RESPONSE": 0,
+          "ACCEPTED_THEN_SQUASHED": 0,
+          "ACCEPTED_YOUNGER_SQUASHED": 0
+        },
+        "vfex4_fu_counts": {},
+        "pending_count": 0,
+        "pending_div_count": 0,
+        "unfinished_rob_count": 0,
+        "transaction_count": 0,
+        "transaction_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "storage": {
+          "max_live_rob": 0,
+          "max_pending_transactions": 0,
+          "max_cycle_records": 3
+        },
+        "o2_coverage": {
+          "multi_inflight": false,
+          "triple_overlap": false,
+          "full_stall": false,
+          "kill_p": false,
+          "kill_r": false,
+          "partial_kill": false
+        },
+        "response_latency_histogram": {},
+        "observed_accept_gap_histogram": {},
+        "clock_mapping": "direct ungated VFEX4/ROB global cycle; independent P/R transition audit",
+        "scope": "trace and accepted-source full128 arithmetic audit; ISA legality/architectural state require workload and DiffTest",
+        "runtime_reset_audited": false,
+        "performance_measured": false
+      },
+      "custom_count": 0,
+      "trap_pc": "0x8000033c",
+      "counter_audit": {
+        "status": "FENCED_COUNTER_SAMPLE_RETIRE_PASS",
+        "windows": 0,
+        "reads": 0,
+        "deltas": [],
+        "records": [],
+        "full_retirement_window_audited": false
+      },
+      "full_forward_performance_qualified": false,
+      "full_retirement_window_audited": false
+    },
+    "normal": {
+      "status": "ORIGINAL_FAILED_PROCESS_STILL_REJECTED",
+      "partial_stdout_samples": [
+        [
+          "0",
+          "0",
+          "51538",
+          "53188",
+          "1",
+          "e8d94ebe570b175c"
+        ],
+        [
+          "1",
+          "1",
+          "23774",
+          "20989",
+          "1",
+          "e8d94ebe570b175c"
+        ],
+        [
+          "2",
+          "1",
+          "23662",
+          "20989",
+          "1",
+          "e8d94ebe570b175c"
+        ],
+        [
+          "3",
+          "0",
+          "50008",
+          "53188",
+          "1",
+          "e8d94ebe570b175c"
+        ]
+      ],
+      "scalar_span_lower_bound": 0.030595104783234683,
+      "complete_target_qualified": false,
+      "timed_out": true
+    },
+    "replay": {
+      "status": "ORIGINAL_FAILED_PROCESS_STILL_REJECTED",
+      "partial_stdout_samples": [
+        [
+          "0",
+          "0",
+          "51538",
+          "53188",
+          "1",
+          "e8d94ebe570b175c"
+        ],
+        [
+          "1",
+          "1",
+          "23774",
+          "20989",
+          "1",
+          "e8d94ebe570b175c"
+        ],
+        [
+          "2",
+          "1",
+          "23662",
+          "20989",
+          "1",
+          "e8d94ebe570b175c"
+        ],
+        [
+          "3",
+          "0",
+          "50008",
+          "53188",
+          "1",
+          "e8d94ebe570b175c"
+        ]
+      ],
+      "scalar_span_lower_bound": 0.030595104783234683,
+      "complete_target_qualified": false,
+      "timed_out": false
+    }
+  },
+  "imported_source_files": {
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/norm/run.py": "77fe20c798bcd5025810f5e7f97efa171935fc37fc43fff39e44d6dd6293bb53",
+    "team/optimizations/o2/fullcore/analyze.py": "27d9fe451c035157848625e84c2a229ac1d83073eb56ba3ebc25131e5569d496",
+    "team/optimizations/o2/fullcore/recheck.py": "8cebe76129f86747cdddf87f93f54d4379a8606dd3c1a20d55008361f2f95140",
+    "team/optimizations/o1/audit/runtime_gate.py": "80315b278f4dc0168edd33657a07ae648b20f0279fa57a69f35b0f983fa42ea1",
+    "team/optimizations/o2/fullcore/run_suite.py": "7bc68d73cd830ceb8fb9aa18469ebe6ff3efcdf56de6922049e05556b0e02475",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/consumer/stream_audit.py": "3f72629ea0ccc30779883f9e696e21c4d92d33aa2406b67df02ab2212d9382cf",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/projection/target/run.py": "35bcaef3443b17cfaaa8fbd3bf0149d090b67425d89ccb8d88b6063121cb598a",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/target/run_smoke.py": "775155d433c49888294fa0a202716c305e1f8ded87a81009587d74ee9bb15e87",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/check.py": "0c81b6620b2c417ef73a251899bbe3af0ec4749832dd76ad2631b3e6fbd1386f",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/generate.py": "cac40ad6f5fc66d5c793683bf54fb3e411f7490c25468bc24c7bfc8be406e1e7",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/target/build_smoke.py": "e5ced03f98b3d9cfa318fc60881879cf42649a9546fb34261986149710373b69",
+    "team/optimizations/o2/r2-safe-tail/linked_gate.py": "96807465bfd97a483f31ce100e552e2b83c4d0edd59f9bf4d817c66abd80ec1f",
+    "team/optimizations/o2/r2-config-reuse/runtime_experiment.py": "56c25151b591d98a87a16f6cedb8afa65dbadde8ff0cca88b5113e2157e798f3",
+    "team/optimizations/o2/repro/clean_entry.py": "6aabb8bbd764d1b7b18b643eaf592efc0a0a1d49e6545842dc7a6b337d39a883",
+    "team/optimizations/o2/r2-select/entry_gate.py": "d20e0bd7426ac7a3b56b62d2a9b495b51b9cd6da257e46723eddbbb984de8f11",
+    "team/optimizations/o2/r2-select/entry_candidate.py": "a19224bb3b659615e3a1ca5c7db1bcb0e6af90649b098f8b39e3af6021d42edf",
+    "team/optimizations/o2/r2-vector-accum/gate.py": "ab07b578f5fe2dc7782ef9af64e722e051363d1dfddfcd0f1939efb209346b6d",
+    "team/optimizations/o2/r2-safe-tail/machine_model.py": "8fb2ac208d8db9083464fb839c06b46ec365234d72b819822563830dad90171e",
+    "team/optimizations/o2/r2-select/entry_c_evidence.py": "166186d7e9114729bb042b2cee3e719f6fe56150077aca905b657fe0e703362f",
+    "team/optimizations/o2/r2-select/entry_experiment.py": "417b2d8d0b97b293d7db565bfddb39f111756cd23638ddc62c8117997e069b6e",
+    "team/optimizations/o2/r2-safe-tail/merged_screen.py": "ff75464c5b0f75349fc4321bdd80a7a85985a54ae415ad347c3ce04fdf4bd885",
+    "team/optimizations/o2/r2-safe-tail/fullcore_screen.py": "5f5c719a9a5b675f4de166ca30a3d89bd52c944c667cee302f66da94fa2779f2",
+    "team/optimizations/o2/r2-select/entry_c_api.py": "4e1ae340c5b122d09d634631d7fce322ad121838ba9a4affdf193d2a4d9105fd",
+    "team/optimizations/o2/r2-select/entry_evidence.py": "039f81a2c7e216514c94939b8807647787c4b046413a48fb4c7e33293c027db3",
+    "team/optimizations/o2/repro/clean_profile.py": "1c4c467f43ede68fd30b1063868d8f02d71fbe8a5442f2da180210468db9a642",
+    "team/optimizations/o2/r2-config-reuse/runtime_candidate.py": "7d98abce6aaad40639c935e49b6d5c6f6663d992d8227d62b3d804ae4118f2a6",
+    "team/optimizations/o2/r2-config-reuse/candidate.py": "e1ec595c78f3c14314c1d4dc1cc9f49650929e77275ba38241bce541481b15f7",
+    "team/optimizations/o2/r2-config-reuse/runtime_gate.py": "5a9be8bf244a35a878964b0716ee32ed9a3faed16fd3da7938ed30f511d5d72c",
+    "team/optimizations/o2/r2-vector-accum/firstdot_gate.py": "fc11387899bab8b2d1ecfa074edfb52e939c15869032b4457043acf288564b3b",
+    "team/optimizations/o2/r2-vector-accum/firstdot_candidate.py": "79c1c808ac7e46560ed470028fb50487b31da478e43d9f1d83d770f089cc285d",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/projection/target/build.py": "9e4dc2e0fb2b2331d8c8ce7e3be6997441bc0c3031fd716c3586935d2f1efcc0",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/projection/build.py": "9e9e5014d03dc8904354cf1cb9a292c0329c4c5452b37dc4cd86762e7bc31428",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/full/build.py": "d52451331b02c42a3921651feec3b4d1d57ce20b396f63ddf0bdd8a452856890",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/norm/build.py": "53da4ad9d9aff07ad655beec55f8fa6dfaa2726a4a77d9e3ca1d62160d7f9e02",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/norm/generate.py": "0b91d846903573e0c57fd9915b73a7c53423128d042e3797b98a683513f4b7dc",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/norm/reference.py": "e95ac2debd0e2d63e7d955d85b0446aa9dc0a47bbcbe1935206e9c11a6750e0d",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/consumer/run.py": "ae60bd91ce0bf7c55c7833cc4ebe0b66ffff2082bedc7a99ba98af5a32bade5a",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/full/run.py": "bee89ca4424110f244560b1ab0529c80fd4e9736dd274c49690026754dbf8475",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/consumer/build.py": "ad7a056eb9ceb1e07eeeae1e19cc452d742fdaf7b710a6be00043c86587b99e1"
+  },
+  "extra": {
+    "historical_process_receipts": {
+      "cases": [
+        "negative",
+        "normal",
+        "replay"
+      ],
+      "unique_processes": 3,
+      "terminal_status": "FAILED",
+      "pids": {
+        "negative": 1316,
+        "normal": 1332,
+        "replay": 1333
+      }
+    },
+    "historical_input_files_bound": 143
+  },
+  "seconds": 3.8608122389999835,
+  "new_reference_runs": 0,
+  "new_emu_runs": 0,
+  "physical_runtime_identity_rechecked": false
+}
