@@ -1,0 +1,77 @@
+{
+  "status": "S3_PUBLICATION_FAILURE_RETAINED_AND_PREPARATION_CHECKED",
+  "operation_id": "20261024-LiZufan001-r2s3-runtime-1818",
+  "default_whitespace_result": "FAIL; not relabelled as PASS",
+  "failed_original_publication": {
+    "status": "failed",
+    "operation_id": "1bcd341bbd2162e3d9e297ccd2678ca0.9dd88d57c67433973cf6153d37992d9b",
+    "script_sha256": "2918100ea3922f4b8c70cce4c388d645e243a5f044225363dcc48a5ce1fdb272",
+    "execution_sha256": "cc5ac749a4be47d3f8db8a9140e9ecc2296abeada5b2488c8b1362250a9a1238",
+    "started_at": "2026-10-24T12:09:26.3556242Z",
+    "updated_at": "2026-10-24T12:09:35.380811Z",
+    "result": {
+      "exit_code": 1,
+      "stdout": "{\"status\": \"S3_DOCUMENT_FILE_TARGETS_PASS\", \"files\": 5, \"relative_targets\": 58, \"pending_exact_publication_report\": 1, \"anchor_validation\": \"not claimed by this file-existence check\", \"missing\": []}\n",
+      "stderr": "w\u0000s\u0000l\u0000:\u0000 \u0000�hKm0R \u0000l\u0000o\u0000c\u0000a\u0000l\u0000h\u0000o\u0000s\u0000t\u0000 \u0000�N\u0006tM�n\f�FO*g\\�P0R \u0000W\u0000S\u0000L\u0000\u00020N\u0000A\u0000T\u0000 \u0000!j\u000f_\u000bN�v \u0000W\u0000S\u0000L\u0000 \u0000\rN/e\u0001c \u0000l\u0000o\u0000c\u0000a\u0000l\u0000h\u0000o\u0000s\u0000t\u0000 \u0000�N\u0006t\u00020\r\u0000\n\u0000/bin/bash: line 1: ..: command not found\nStaged whitespace check failed: team/optimizations/o2/r2-config-reuse/test_c_api.py:135: new blank line at EOF.\r\n",
+      "cancelled": false,
+      "timed_out": false
+    }
+  },
+  "readonly_diagnosis": {
+    "status": "failed",
+    "operation_id": "1bcd341bbd2162e3d9e297ccd2678ca0.7d665296dfa18007bfab60969796e961",
+    "script_sha256": "fd5e265538351da6e72064c2bd3f1ed685b0a8b6e4655bf54d1849547b1afcfb",
+    "execution_sha256": "5095b18d5dacfa317f67f08435e2fd2d6b6c52161a76c0ff343ab361d0c254a0",
+    "started_at": "2026-10-24T12:12:18.744764Z",
+    "updated_at": "2026-10-24T12:12:19.7991799Z",
+    "result": {
+      "exit_code": 2,
+      "stdout": "{\r\n  \"relevant_config\": [\r\n    {\r\n      \"key\": \"diff.astextplain.textconv\",\r\n      \"value_is_dotdot\": false,\r\n      \"value_length\": 11,\r\n      \"safe_path_value\": null\r\n    },\r\n    {\r\n      \"key\": \"filter.lfs.clean\",\r\n      \"value_is_dotdot\": false,\r\n      \"value_length\": 19,\r\n      \"safe_path_value\": null\r\n    },\r\n    {\r\n      \"key\": \"filter.lfs.smudge\",\r\n      \"value_is_dotdot\": false,\r\n      \"value_length\": 20,\r\n      \"safe_path_value\": null\r\n    },\r\n    {\r\n      \"key\": \"filter.lfs.required\",\r\n      \"value_is_dotdot\": false,\r\n      \"value_length\": 4,\r\n      \"safe_path_value\": null\r\n    }\r\n  ],\r\n  \"git_external_diff_present\": false,\r\n  \"git_external_diff_is_dotdot\": false,\r\n  \"diff_check_exit\": 2,\r\n  \"diff_check_output\": [\r\n    \"team/optimizations/o2/r2-config-reuse/test_c_api.py:135: new blank line at EOF.\"\r\n  ],\r\n  \"test_source_sha256\": \"3fd521655f776c752c5006551c544639ecab14aff85108f4965e0d60630552d7\",\r\n  \"trailing_bytes\": [\r\n    41,\r\n    41,\r\n    10,\r\n    10\r\n  ],\r\n  \"publication_report_exists\": false\r\n}\r\n",
+      "stderr": "",
+      "cancelled": false,
+      "timed_out": false
+    }
+  },
+  "readonly_diagnosis_exit_scope": "The shell retained the last native Git exit code 2 while printing its complete diagnostic result; it did not edit source.",
+  "corrected_preparation": {
+    "status": "succeeded",
+    "operation_id": "1bcd341bbd2162e3d9e297ccd2678ca0.b355ea1ffafaa68df27ccd4baca3762a",
+    "script_sha256": "a7717614fb134fd2ff106af1952d61e54456dd1da2350ca9a8f17935dd2eaa41",
+    "execution_sha256": "3558768ec15fcb88c74f4c7addcd9ad9861e213a272a077efcc6fed6358da9d0",
+    "started_at": "2026-10-24T12:14:44.9276771Z",
+    "updated_at": "2026-10-24T12:14:48.8608148Z",
+    "result": {
+      "exit_code": 0,
+      "stdout": "{\"status\": \"S3_CORRECTED_PUBLICATION_PREPARATION_PASS\", \"sealed_execution_source_hashes_unchanged\": true, \"new_checker_sha256\": \"1535041590cc3e1d1532d76fe64d5973d7cd4d66ce663a9c1459845636cb3f32\", \"result_before\": \"77c9fe248e6899a4c7a21642aa16b32ddc61e3a47d45fb2ee6a14c4d270e687d\", \"result_after\": \"bd10621db3bfb38744b90ebe8a838f52e34f9ed483e39d81a8a23886059dc51e\", \"file_target_check\": {\"files\": 5, \"relative_targets\": 59, \"pending_exact_metadata\": 2, \"missing\": []}, \"literal_shell_backticks_in_doc_check\": false}\n",
+      "stderr": "w\u0000s\u0000l\u0000:\u0000 \u0000�hKm0R \u0000l\u0000o\u0000c\u0000a\u0000l\u0000h\u0000o\u0000s\u0000t\u0000 \u0000�N\u0006tM�n\f�FO*g\\�P0R \u0000W\u0000S\u0000L\u0000\u00020N\u0000A\u0000T\u0000 \u0000!j\u000f_\u000bN�v \u0000W\u0000S\u0000L\u0000 \u0000\rN/e\u0001c \u0000l\u0000o\u0000c\u0000a\u0000l\u0000h\u0000o\u0000s\u0000t\u0000 \u0000�N\u0006t\u00020\r\u0000\n\u0000",
+      "cancelled": false,
+      "timed_out": false
+    }
+  },
+  "unrelated_shell_diagnostic": {
+    "original": "/bin/bash: line 1: ..: command not found",
+    "separate_from_whitespace_exception": true,
+    "new_document_check_without_literal_shell_backticks_succeeded": true,
+    "new_wrapper_contains_bash_error": false,
+    "causal_attribution": "The one-off document check was reissued without literal shell backticks and completed cleanly apart from the existing WSL localhost/proxy warning. Exact original shell parsing cause is not asserted."
+  },
+  "sealed_source": {
+    "path": "team/optimizations/o2/r2-config-reuse/test_c_api.py",
+    "sha256": "3fd521655f776c752c5006551c544639ecab14aff85108f4965e0d60630552d7",
+    "line": 135,
+    "kept_unchanged": true,
+    "exactly_two_final_lf": true
+  },
+  "policy": {
+    "checker02_sha256": "47b6016480945bccba2547b8c6dd0f1f7d23c63459c91b19b5490c4b6600c2e4",
+    "checker03_sha256": "1535041590cc3e1d1532d76fe64d5973d7cd4d66ce663a9c1459845636cb3f32",
+    "only_expected_exit_code": 2,
+    "only_expected_diagnostic": "team/optimizations/o2/r2-config-reuse/test_c_api.py:135: new blank line at EOF.",
+    "stderr_must_be_empty": true,
+    "staged_blob_must_equal_raw_pinned_file": true,
+    "no_git_global_or_attribute_change": true,
+    "other_differences_rejected": true
+  },
+  "scope": "Later publication metadata only. Previous detached C/matrix audit did not run checker03. Current runtime sources and all sealed archive payloads remain unchanged.",
+  "new_emu_runs": 0
+}

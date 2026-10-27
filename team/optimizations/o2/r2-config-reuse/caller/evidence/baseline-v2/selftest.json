@@ -1,0 +1,47 @@
+{
+  "status": "CALLER_REJECTION_TESTS_PASS",
+  "contract": "r2-s3-caller-8x32-v2",
+  "build_sha256": "3dbc40ee97a9582220821f5a8cf72beee451ca6ce75d3bd23f640dd9e7906b32",
+  "selftest_sha256": "9cc03b5cd20b5b229554fbec80887dbc8db3638a392000cf3370ddb3f439aede",
+  "positive_image": "00047f4cff5eac4784ffdf28cc7baf9b12e0c0f94e3be1f49e07145398e028f5",
+  "cases": [
+    {
+      "name": "unused-public-leaf",
+      "status": "EXPECTED_REJECTION",
+      "gate": "caller changed qualified leaf: config_reuse_gemv_4x13_basic_vdot"
+    },
+    {
+      "name": "self-consistent-wrong-build-command",
+      "status": "EXPECTED_REJECTION",
+      "gate": "caller command/log identity"
+    },
+    {
+      "name": "caller-only-conflicting-lto",
+      "status": "EXPECTED_REJECTION",
+      "gate": "conflicting actual C option: caller"
+    },
+    {
+      "name": "missing-real-pack-store",
+      "status": "EXPECTED_REJECTION",
+      "gate": "compiled pack write coverage"
+    },
+    {
+      "name": "unbounded-real-c-loop",
+      "status": "EXPECTED_REJECTION",
+      "gate": "caller path exceeded finite budget"
+    },
+    {
+      "name": "counter-rob-mismatch",
+      "status": "EXPECTED_REJECTION",
+      "gate": "counter identity mismatch"
+    },
+    {
+      "name": "call-hidden-by-rob-compression",
+      "status": "EXPECTED_REJECTION",
+      "gate": "control hidden in ROB compression"
+    }
+  ],
+  "rejected": 7,
+  "new_emu_runs": 0,
+  "original_evidence_modified": false
+}

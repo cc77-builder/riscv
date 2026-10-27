@@ -1,0 +1,2206 @@
+{
+  "status": "SPLIT_ELF_ADDRESS_AND_CALL_PATH_PASS",
+  "contract": "r2-s3-split-input-8x32-v2",
+  "image_sha256": "2f94ede51e1c555aa7eceb777b4d2ab859418828d56705783ab72b4bcdb57aed",
+  "certificates": [
+    {
+      "old": "config_reuse_gemv_8x32_reuse_vdot",
+      "new": "split_gemv_8x32_vdot",
+      "bytes": 656,
+      "old_sha256": "3bca83077ccd7529ff6f80c9002441c99d27d3113aa8b10769ad26f3c4e9c64d",
+      "new_sha256": "3c0a2c78c5f3f7ae9ca09ad74ab7e63fa9df936eea1059850ae55cf1eedc624b",
+      "changed_words": [
+        0,
+        1,
+        5,
+        7,
+        9,
+        11
+      ],
+      "x_address_words": 4,
+      "vector_load_bytes": 8,
+      "arithmetic_csr_and_stores_exact": true
+    },
+    {
+      "old": "r4_gemv_8x32_basic_rvv",
+      "new": "split_gemv_8x32_rvv0",
+      "bytes": 1060,
+      "old_sha256": "6f7c75562128eecc42c54ef840d0a6d04bd9446a4703e595ee61ffa432b5ecbe",
+      "new_sha256": "b17cf05f583cdfe98080cf329ee22b6ce7250d1f029bcc1604b774403006c1b5",
+      "changed_words": [
+        0,
+        1,
+        7,
+        20,
+        37,
+        50,
+        67,
+        80,
+        97,
+        110,
+        127,
+        140,
+        157,
+        170,
+        187,
+        200,
+        217,
+        230
+      ],
+      "x_address_words": 16,
+      "vector_load_bytes": 16,
+      "arithmetic_csr_and_stores_exact": true
+    },
+    {
+      "old": "r4_gemv_8x32_reuse_rvv",
+      "new": "split_gemv_8x32_rvv1",
+      "bytes": 740,
+      "old_sha256": "20ee57db9abe4bf501608dc6680ff9ccc39c7ccd5fcadb637026da20edc2afc4",
+      "new_sha256": "b1d6b2d13452386e7aeaf62937e58eca4780d3a6c72c22bcd7cf8cc1bd35dd9f",
+      "changed_words": [
+        0,
+        1,
+        6,
+        9
+      ],
+      "x_address_words": 2,
+      "vector_load_bytes": 16,
+      "arithmetic_csr_and_stores_exact": true
+    },
+    {
+      "old": "config_reuse_gemv_8x32_basic_rvv",
+      "new": "split_gemv_8x32_rvv2",
+      "bytes": 676,
+      "old_sha256": "c33e1fb01a939cf68d4a867a5daf6b5fe4dc7bf9536d644808949ef555052def",
+      "new_sha256": "308e724cf6fe6eac3a38dff3c1cd8c4cf373aad8ec97faf752917e18c749b585",
+      "changed_words": [
+        0,
+        1,
+        8,
+        16,
+        26,
+        34,
+        44,
+        52,
+        62,
+        70,
+        80,
+        88,
+        98,
+        106,
+        116,
+        124,
+        134,
+        142
+      ],
+      "x_address_words": 16,
+      "vector_load_bytes": 16,
+      "arithmetic_csr_and_stores_exact": true
+    },
+    {
+      "old": "firstdot_gemv_8x32_reuse_rvv",
+      "new": "split_gemv_8x32_rvv3",
+      "bytes": 452,
+      "old_sha256": "f304ee128fbac736755d1fe7d03b6d8e8f6ea30e625dc1937f379445e6c23137",
+      "new_sha256": "2e977143be3bfde28a8c1b824686f8265fd41484931d05715ecf44d3596377d6",
+      "changed_words": [
+        0,
+        1,
+        6,
+        9
+      ],
+      "x_address_words": 2,
+      "vector_load_bytes": 16,
+      "arithmetic_csr_and_stores_exact": true
+    },
+    {
+      "old": "config_reuse_gemv_8x32_reuse_rvv",
+      "new": "split_gemv_8x32_rvv4",
+      "bytes": 448,
+      "old_sha256": "ea86a50cd67113246dae98ef7ce8db4e0d1383f453d889c6aad6cf2579857513",
+      "new_sha256": "8842f65de742638a3d8c28e4bea273acf6841c4aab6819f282017803d0b6f59c",
+      "changed_words": [
+        0,
+        1,
+        6,
+        8
+      ],
+      "x_address_words": 2,
+      "vector_load_bytes": 16,
+      "arithmetic_csr_and_stores_exact": true
+    }
+  ],
+  "paths": {
+    "0": {
+      "instructions": 1729,
+      "branches": 304,
+      "calls": {
+        "caller_full": 1,
+        "config_reuse_gemv_8x32_reuse_vdot": 1
+      },
+      "vdot": 32,
+      "pack_bytes": 288,
+      "output_bytes": 32,
+      "vector_reads": [
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 8
+        },
+        {
+          "region": "X",
+          "offset": 8,
+          "bytes": 8
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 8
+        },
+        {
+          "region": "X",
+          "offset": 24,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 0,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 32,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 64,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 96,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 8,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 40,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 72,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 104,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 16,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 48,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 80,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 112,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 24,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 56,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 88,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 120,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 128,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 160,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 192,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 224,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 136,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 168,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 200,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 232,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 144,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 176,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 208,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 240,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 152,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 184,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 216,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 248,
+          "bytes": 8
+        }
+      ],
+      "actual_vl_eew_checked": true,
+      "split_packed_region_untouched": false,
+      "path_sha256": "90b65c330113a8a5aa0c29558b4b98609aeecc032fb29c5bdf24a42a76edf608"
+    },
+    "1": {
+      "instructions": 1830,
+      "branches": 304,
+      "calls": {
+        "caller_full": 1,
+        "r4_gemv_8x32_basic_rvv": 1
+      },
+      "vdot": 0,
+      "pack_bytes": 288,
+      "output_bytes": 32,
+      "vector_reads": [
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 32,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 48,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 64,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 80,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 96,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 112,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 128,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 144,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 160,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 176,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 192,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 208,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 224,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 240,
+          "bytes": 16
+        }
+      ],
+      "actual_vl_eew_checked": true,
+      "split_packed_region_untouched": false,
+      "path_sha256": "3a7c7f964877e451f4c39a00abfc8fb9def2fd3f8cde98296585b4d06b76fc7f"
+    },
+    "2": {
+      "instructions": 1750,
+      "branches": 304,
+      "calls": {
+        "caller_full": 1,
+        "r4_gemv_8x32_reuse_rvv": 1
+      },
+      "vdot": 0,
+      "pack_bytes": 288,
+      "output_bytes": 32,
+      "vector_reads": [
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 32,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 64,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 96,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 48,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 80,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 112,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 128,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 160,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 192,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 224,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 144,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 176,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 208,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 240,
+          "bytes": 16
+        }
+      ],
+      "actual_vl_eew_checked": true,
+      "split_packed_region_untouched": false,
+      "path_sha256": "7b301eb2eb443c93b9033b9b359072deb93ce95a7280a87a10ded2bfa7580ba8"
+    },
+    "3": {
+      "instructions": 1734,
+      "branches": 304,
+      "calls": {
+        "caller_full": 1,
+        "config_reuse_gemv_8x32_basic_rvv": 1
+      },
+      "vdot": 0,
+      "pack_bytes": 288,
+      "output_bytes": 32,
+      "vector_reads": [
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 32,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 48,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 64,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 80,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 96,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 112,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 128,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 144,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 160,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 176,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 192,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 208,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 224,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 240,
+          "bytes": 16
+        }
+      ],
+      "actual_vl_eew_checked": true,
+      "split_packed_region_untouched": false,
+      "path_sha256": "2927c0a34435a14eff1ce185683039b2263e5bc9a893505a6965f54a2b0f0a51"
+    },
+    "4": {
+      "instructions": 1678,
+      "branches": 304,
+      "calls": {
+        "caller_full": 1,
+        "firstdot_gemv_8x32_reuse_rvv": 1
+      },
+      "vdot": 0,
+      "pack_bytes": 288,
+      "output_bytes": 32,
+      "vector_reads": [
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 32,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 64,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 96,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 48,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 80,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 112,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 128,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 160,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 192,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 224,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 144,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 176,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 208,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 240,
+          "bytes": 16
+        }
+      ],
+      "actual_vl_eew_checked": true,
+      "split_packed_region_untouched": false,
+      "path_sha256": "3e9a5b69a8863f1b7d14df777238340271874b92a5d96e60aba20e58bb28e5b8"
+    },
+    "5": {
+      "instructions": 1677,
+      "branches": 304,
+      "calls": {
+        "caller_full": 1,
+        "config_reuse_gemv_8x32_reuse_rvv": 1
+      },
+      "vdot": 0,
+      "pack_bytes": 288,
+      "output_bytes": 32,
+      "vector_reads": [
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 32,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 64,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 96,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 48,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 80,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 112,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 128,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 160,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 192,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 224,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 144,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 176,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 208,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 240,
+          "bytes": 16
+        }
+      ],
+      "actual_vl_eew_checked": true,
+      "split_packed_region_untouched": false,
+      "path_sha256": "55dd9c4acf306e7e808ef7d973a9c8b6baf4596239d7e82d24da0475eff3d393"
+    },
+    "6": {
+      "instructions": 240,
+      "branches": 8,
+      "calls": {
+        "split_full": 1,
+        "split_gemv_8x32_vdot": 1
+      },
+      "vdot": 32,
+      "pack_bytes": 0,
+      "output_bytes": 32,
+      "vector_reads": [
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 8
+        },
+        {
+          "region": "X",
+          "offset": 8,
+          "bytes": 8
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 8
+        },
+        {
+          "region": "X",
+          "offset": 24,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 0,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 32,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 64,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 96,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 8,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 40,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 72,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 104,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 16,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 48,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 80,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 112,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 24,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 56,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 88,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 120,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 128,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 160,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 192,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 224,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 136,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 168,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 200,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 232,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 144,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 176,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 208,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 240,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 152,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 184,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 216,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 248,
+          "bytes": 8
+        }
+      ],
+      "actual_vl_eew_checked": true,
+      "split_packed_region_untouched": true,
+      "path_sha256": "6f6565a3ffbaecfacc74235280027330a27be103a657c4033d33c09b07f89fa7"
+    },
+    "7": {
+      "instructions": 341,
+      "branches": 8,
+      "calls": {
+        "split_full": 1,
+        "split_gemv_8x32_rvv0": 1
+      },
+      "vdot": 0,
+      "pack_bytes": 0,
+      "output_bytes": 32,
+      "vector_reads": [
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 32,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 48,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 64,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 80,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 96,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 112,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 128,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 144,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 160,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 176,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 192,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 208,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 224,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 240,
+          "bytes": 16
+        }
+      ],
+      "actual_vl_eew_checked": true,
+      "split_packed_region_untouched": true,
+      "path_sha256": "0d4916a275b9ee5bae2313d9d836d757ebd503afc641bee412d82955b855f9a9"
+    },
+    "8": {
+      "instructions": 261,
+      "branches": 8,
+      "calls": {
+        "split_full": 1,
+        "split_gemv_8x32_rvv1": 1
+      },
+      "vdot": 0,
+      "pack_bytes": 0,
+      "output_bytes": 32,
+      "vector_reads": [
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 32,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 64,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 96,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 48,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 80,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 112,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 128,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 160,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 192,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 224,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 144,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 176,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 208,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 240,
+          "bytes": 16
+        }
+      ],
+      "actual_vl_eew_checked": true,
+      "split_packed_region_untouched": true,
+      "path_sha256": "e52f1ffd9587ea3ed4f282a2464b0e3b08c1abd463862240c835a6065f69024e"
+    },
+    "9": {
+      "instructions": 245,
+      "branches": 8,
+      "calls": {
+        "split_full": 1,
+        "split_gemv_8x32_rvv2": 1
+      },
+      "vdot": 0,
+      "pack_bytes": 0,
+      "output_bytes": 32,
+      "vector_reads": [
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 32,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 48,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 64,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 80,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 96,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 112,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 128,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 144,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 160,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 176,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 192,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 208,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 224,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 240,
+          "bytes": 16
+        }
+      ],
+      "actual_vl_eew_checked": true,
+      "split_packed_region_untouched": true,
+      "path_sha256": "e04d91dc2f71678ccc5ecc108b6de00a49467f8bb6872d8618dd9a8ba865dcc9"
+    },
+    "10": {
+      "instructions": 189,
+      "branches": 8,
+      "calls": {
+        "split_full": 1,
+        "split_gemv_8x32_rvv3": 1
+      },
+      "vdot": 0,
+      "pack_bytes": 0,
+      "output_bytes": 32,
+      "vector_reads": [
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 32,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 64,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 96,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 48,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 80,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 112,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 128,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 160,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 192,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 224,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 144,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 176,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 208,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 240,
+          "bytes": 16
+        }
+      ],
+      "actual_vl_eew_checked": true,
+      "split_packed_region_untouched": true,
+      "path_sha256": "c374ece67c0a6b3aca3914b70c496180ffd36eec3fa883fe63f91f51621dc796"
+    },
+    "11": {
+      "instructions": 188,
+      "branches": 8,
+      "calls": {
+        "split_full": 1,
+        "split_gemv_8x32_rvv4": 1
+      },
+      "vdot": 0,
+      "pack_bytes": 0,
+      "output_bytes": 32,
+      "vector_reads": [
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 0,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 32,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 64,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 96,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 16,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 48,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 80,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 112,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 128,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 160,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 192,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 224,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 144,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 176,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 208,
+          "bytes": 16
+        },
+        {
+          "region": "A",
+          "offset": 240,
+          "bytes": 16
+        }
+      ],
+      "actual_vl_eew_checked": true,
+      "split_packed_region_untouched": true,
+      "path_sha256": "9a196d9eeefde4690e81d3440d0575b4faa6efa46270f1994952740f2f775e96"
+    },
+    "12": {
+      "instructions": 240,
+      "branches": 8,
+      "calls": {
+        "split_full": 1,
+        "split_gemv_8x32_vdot": 1
+      },
+      "vdot": 32,
+      "pack_bytes": 0,
+      "output_bytes": 32,
+      "vector_reads": [
+        {
+          "region": "X",
+          "offset": 0,
+          "bytes": 8
+        },
+        {
+          "region": "X",
+          "offset": 8,
+          "bytes": 8
+        },
+        {
+          "region": "X",
+          "offset": 16,
+          "bytes": 8
+        },
+        {
+          "region": "X",
+          "offset": 24,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 0,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 32,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 64,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 96,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 8,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 40,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 72,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 104,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 16,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 48,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 80,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 112,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 24,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 56,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 88,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 120,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 128,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 160,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 192,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 224,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 136,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 168,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 200,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 232,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 144,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 176,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 208,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 240,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 152,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 184,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 216,
+          "bytes": 8
+        },
+        {
+          "region": "A",
+          "offset": 248,
+          "bytes": 8
+        }
+      ],
+      "actual_vl_eew_checked": true,
+      "split_packed_region_untouched": true,
+      "path_sha256": "6f6565a3ffbaecfacc74235280027330a27be103a657c4033d33c09b07f89fa7"
+    }
+  },
+  "windows": 252,
+  "actual_c_compilation": {
+    "main": [
+      "/usr/bin/riscv64-linux-gnu-gcc",
+      "-std=gnu11",
+      "-ffreestanding",
+      "-fno-tree-vectorize",
+      "-fno-tree-slp-vectorize",
+      "-fno-tree-loop-distribute-patterns",
+      "-fno-ipa-cp",
+      "-fno-ipa-icf",
+      "-fno-optimize-sibling-calls",
+      "-fno-lto",
+      "-mno-relax",
+      "-mabi=lp64d",
+      "-fno-pic",
+      "-march=rv64gv",
+      "-mcmodel=medany",
+      "-static",
+      "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/am/src/nemu/include",
+      "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/am/src/xs/include",
+      "-DISA_H=\"riscv.h\"",
+      "-O2",
+      "-MMD",
+      "-Wall",
+      "-Werror",
+      "-ggdb",
+      "-I/home/lizufan/riscv-lab/r2s3-split-20261025-0716/build-04/source",
+      "-I/home/lizufan/riscv-lab/r2s3-split-20261025-0716/build-04/source/include/",
+      "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/libs/klib/include/",
+      "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/am/",
+      "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/am/include",
+      "-D__ISA__=\"riscv64\"",
+      "-D__ISA_RISCV64__",
+      "-D__PLATFORM__=\"xs\"",
+      "-D__PLATFORM_XS__",
+      "-D__ARCH__=riscv64-xs",
+      "-D__ARCH_RISCV64_XS",
+      "-DARCH_H=\"arch/riscv64-xs.h\"",
+      "-fno-asynchronous-unwind-tables",
+      "-fno-builtin",
+      "-fno-stack-protector",
+      "-Wno-main",
+      "-c",
+      "-o",
+      "/home/lizufan/riscv-lab/r2s3-split-20261025-0716/build-04/objects/main.o",
+      "/home/lizufan/riscv-lab/r2s3-split-20261025-0716/build-04/source/main.c"
+    ],
+    "caller": [
+      "/usr/bin/riscv64-linux-gnu-gcc",
+      "-std=gnu11",
+      "-ffreestanding",
+      "-fno-tree-vectorize",
+      "-fno-tree-slp-vectorize",
+      "-fno-tree-loop-distribute-patterns",
+      "-fno-ipa-cp",
+      "-fno-ipa-icf",
+      "-fno-optimize-sibling-calls",
+      "-fno-lto",
+      "-mno-relax",
+      "-mabi=lp64d",
+      "-fno-pic",
+      "-march=rv64gv",
+      "-mcmodel=medany",
+      "-static",
+      "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/am/src/nemu/include",
+      "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/am/src/xs/include",
+      "-DISA_H=\"riscv.h\"",
+      "-O2",
+      "-MMD",
+      "-Wall",
+      "-Werror",
+      "-ggdb",
+      "-I/home/lizufan/riscv-lab/r2s3-split-20261025-0716/build-04/source",
+      "-I/home/lizufan/riscv-lab/r2s3-split-20261025-0716/build-04/source/include/",
+      "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/libs/klib/include/",
+      "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/am/",
+      "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/am/include",
+      "-D__ISA__=\"riscv64\"",
+      "-D__ISA_RISCV64__",
+      "-D__PLATFORM__=\"xs\"",
+      "-D__PLATFORM_XS__",
+      "-D__ARCH__=riscv64-xs",
+      "-D__ARCH_RISCV64_XS",
+      "-DARCH_H=\"arch/riscv64-xs.h\"",
+      "-fno-asynchronous-unwind-tables",
+      "-fno-builtin",
+      "-fno-stack-protector",
+      "-Wno-main",
+      "-c",
+      "-o",
+      "/home/lizufan/riscv-lab/r2s3-split-20261025-0716/build-04/objects/caller.o",
+      "/home/lizufan/riscv-lab/r2s3-split-20261025-0716/build-04/source/caller.c"
+    ],
+    "split": [
+      "/usr/bin/riscv64-linux-gnu-gcc",
+      "-std=gnu11",
+      "-ffreestanding",
+      "-fno-tree-vectorize",
+      "-fno-tree-slp-vectorize",
+      "-fno-tree-loop-distribute-patterns",
+      "-fno-ipa-cp",
+      "-fno-ipa-icf",
+      "-fno-optimize-sibling-calls",
+      "-fno-lto",
+      "-mno-relax",
+      "-mabi=lp64d",
+      "-fno-pic",
+      "-march=rv64gv",
+      "-mcmodel=medany",
+      "-static",
+      "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/am/src/nemu/include",
+      "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/am/src/xs/include",
+      "-DISA_H=\"riscv.h\"",
+      "-O2",
+      "-MMD",
+      "-Wall",
+      "-Werror",
+      "-ggdb",
+      "-I/home/lizufan/riscv-lab/r2s3-split-20261025-0716/build-04/source",
+      "-I/home/lizufan/riscv-lab/r2s3-split-20261025-0716/build-04/source/include/",
+      "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/libs/klib/include/",
+      "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/am/",
+      "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/am/include",
+      "-D__ISA__=\"riscv64\"",
+      "-D__ISA_RISCV64__",
+      "-D__PLATFORM__=\"xs\"",
+      "-D__PLATFORM_XS__",
+      "-D__ARCH__=riscv64-xs",
+      "-D__ARCH_RISCV64_XS",
+      "-DARCH_H=\"arch/riscv64-xs.h\"",
+      "-fno-asynchronous-unwind-tables",
+      "-fno-builtin",
+      "-fno-stack-protector",
+      "-Wno-main",
+      "-c",
+      "-o",
+      "/home/lizufan/riscv-lab/r2s3-split-20261025-0716/build-04/objects/split.o",
+      "/home/lizufan/riscv-lab/r2s3-split-20261025-0716/build-04/source/split.c"
+    ]
+  },
+  "source_scope": "new ABI; fixed arithmetic machine words; actual input footprints",
+  "runtime_not_run": true
+}

@@ -1,0 +1,403 @@
+{
+  "status": "ACTUAL_QKV_DIFFTEST_AND_COMPLETE_PLAN_PASS",
+  "contract": "r2-s3-runq-active-qkv-target-v1",
+  "windows": 6,
+  "boundary_calls": 14,
+  "full_q_calls": 42,
+  "projection_outputs": 12096,
+  "quantizer_probes": 3,
+  "judge_fault_controls": 6,
+  "committed_vdot": 155521,
+  "timed_vdot": 62208,
+  "custom_phases": [
+    {
+      "seq": 0,
+      "stage": 0,
+      "arm": 0,
+      "dataset": 1,
+      "vdot_count": 31104,
+      "first_commit_index": 1
+    },
+    {
+      "seq": 1,
+      "stage": 0,
+      "arm": 1,
+      "dataset": 1,
+      "vdot_count": 0,
+      "first_commit_index": 31105
+    },
+    {
+      "seq": 2,
+      "stage": 1,
+      "arm": 1,
+      "dataset": 0,
+      "vdot_count": 0,
+      "first_commit_index": 31105
+    },
+    {
+      "seq": 3,
+      "stage": 2,
+      "arm": 1,
+      "dataset": 0,
+      "vdot_count": 0,
+      "first_commit_index": 31105
+    },
+    {
+      "seq": 4,
+      "stage": 1,
+      "arm": 0,
+      "dataset": 0,
+      "vdot_count": 31104,
+      "first_commit_index": 31105
+    },
+    {
+      "seq": 5,
+      "stage": 2,
+      "arm": 0,
+      "dataset": 0,
+      "vdot_count": 31104,
+      "first_commit_index": 62209
+    },
+    {
+      "seq": 6,
+      "stage": 1,
+      "arm": 1,
+      "dataset": 0,
+      "vdot_count": 0,
+      "first_commit_index": 93313
+    },
+    {
+      "seq": 7,
+      "stage": 2,
+      "arm": 1,
+      "dataset": 0,
+      "vdot_count": 0,
+      "first_commit_index": 93313
+    },
+    {
+      "seq": 8,
+      "stage": 1,
+      "arm": 1,
+      "dataset": 0,
+      "vdot_count": 0,
+      "first_commit_index": 93313
+    },
+    {
+      "seq": 9,
+      "stage": 2,
+      "arm": 1,
+      "dataset": 0,
+      "vdot_count": 0,
+      "first_commit_index": 93313
+    },
+    {
+      "seq": 10,
+      "stage": 1,
+      "arm": 0,
+      "dataset": 0,
+      "vdot_count": 31104,
+      "first_commit_index": 93313
+    },
+    {
+      "seq": 11,
+      "stage": 2,
+      "arm": 0,
+      "dataset": 0,
+      "vdot_count": 31104,
+      "first_commit_index": 124417
+    },
+    {
+      "seq": 12,
+      "stage": 1,
+      "arm": 1,
+      "dataset": 0,
+      "vdot_count": 0,
+      "first_commit_index": 155521
+    },
+    {
+      "seq": 13,
+      "stage": 2,
+      "arm": 1,
+      "dataset": 0,
+      "vdot_count": 0,
+      "first_commit_index": 155521
+    }
+  ],
+  "all_stage_custom_pc_sha256": "eaa328860c062bc5aa63039f0e4fbf1131c915ec533c9a0c65d55ca0debd6bb5",
+  "counter_enqueues": 24,
+  "csr_samples": 24,
+  "samples": [
+    {
+      "seq": 0,
+      "id": 1,
+      "scenario": "actual-fp32-shared-quantization-qkv",
+      "method": "rvv",
+      "n": 1,
+      "dots": 0,
+      "phase": "measured",
+      "repeat": 0,
+      "dataset": 0,
+      "cycles": 254894,
+      "instructions": 110575,
+      "counter_values": [
+        14784781538186625232,
+        16270799599947406760,
+        16270799599947661654,
+        14784781538186735807
+      ],
+      "sample_ticks": [
+        903230,
+        903264,
+        1158158,
+        1158192
+      ],
+      "block": 0,
+      "role": "anchor_start",
+      "kind": "QKV",
+      "variant": "fused-rvv4",
+      "label": "FR-QKV",
+      "kernel": "q288_fused_rvv4"
+    },
+    {
+      "seq": 1,
+      "id": 0,
+      "scenario": "actual-fp32-shared-quantization-qkv",
+      "method": "vdot",
+      "n": 1,
+      "dots": 31104,
+      "phase": "measured",
+      "repeat": 0,
+      "dataset": 0,
+      "cycles": 245820,
+      "instructions": 152371,
+      "counter_values": [
+        14784781538186926609,
+        16270799599947940425,
+        16270799599948186245,
+        14784781538187078980
+      ],
+      "sample_ticks": [
+        1436895,
+        1436929,
+        1682749,
+        1682783
+      ],
+      "block": 0,
+      "role": "candidate",
+      "kind": "QKV",
+      "variant": "tail",
+      "label": "TA-QKV",
+      "kernel": "q288_tail_vdot"
+    },
+    {
+      "seq": 2,
+      "id": 1,
+      "scenario": "actual-fp32-shared-quantization-qkv",
+      "method": "rvv",
+      "n": 1,
+      "dots": 0,
+      "phase": "measured",
+      "repeat": 0,
+      "dataset": 0,
+      "cycles": 254777,
+      "instructions": 110575,
+      "counter_values": [
+        14784781538187227986,
+        16270799599948474354,
+        16270799599948729131,
+        14784781538187338561
+      ],
+      "sample_ticks": [
+        1970824,
+        1970858,
+        2225635,
+        2225669
+      ],
+      "block": 0,
+      "role": "anchor_end",
+      "kind": "QKV",
+      "variant": "fused-rvv4",
+      "label": "FR-QKV",
+      "kernel": "q288_fused_rvv4"
+    },
+    {
+      "seq": 3,
+      "id": 1,
+      "scenario": "actual-fp32-shared-quantization-qkv",
+      "method": "rvv",
+      "n": 1,
+      "dots": 0,
+      "phase": "measured",
+      "repeat": 1,
+      "dataset": 0,
+      "cycles": 255241,
+      "instructions": 110575,
+      "counter_values": [
+        14784781538187487567,
+        16270799599949017674,
+        16270799599949272915,
+        14784781538187598142
+      ],
+      "sample_ticks": [
+        2514144,
+        2514178,
+        2769419,
+        2769453
+      ],
+      "block": 1,
+      "role": "anchor_start",
+      "kind": "QKV",
+      "variant": "fused-rvv4",
+      "label": "FR-QKV",
+      "kernel": "q288_fused_rvv4"
+    },
+    {
+      "seq": 4,
+      "id": 0,
+      "scenario": "actual-fp32-shared-quantization-qkv",
+      "method": "vdot",
+      "n": 1,
+      "dots": 31104,
+      "phase": "measured",
+      "repeat": 1,
+      "dataset": 0,
+      "cycles": 245569,
+      "instructions": 152371,
+      "counter_values": [
+        14784781538187788944,
+        16270799599949551561,
+        16270799599949797130,
+        14784781538187941315
+      ],
+      "sample_ticks": [
+        3048031,
+        3048065,
+        3293634,
+        3293668
+      ],
+      "block": 1,
+      "role": "candidate",
+      "kind": "QKV",
+      "variant": "tail",
+      "label": "TA-QKV",
+      "kernel": "q288_tail_vdot"
+    },
+    {
+      "seq": 5,
+      "id": 1,
+      "scenario": "actual-fp32-shared-quantization-qkv",
+      "method": "rvv",
+      "n": 1,
+      "dots": 0,
+      "phase": "measured",
+      "repeat": 1,
+      "dataset": 0,
+      "cycles": 254665,
+      "instructions": 110575,
+      "counter_values": [
+        14784781538188090321,
+        16270799599950084896,
+        16270799599950339561,
+        14784781538188200896
+      ],
+      "sample_ticks": [
+        3581366,
+        3581400,
+        3836065,
+        3836099
+      ],
+      "block": 1,
+      "role": "anchor_end",
+      "kind": "QKV",
+      "variant": "fused-rvv4",
+      "label": "FR-QKV",
+      "kernel": "q288_fused_rvv4"
+    }
+  ],
+  "selection": {
+    "decision": "TA_QKV_PREFERRED",
+    "methods": [
+      {
+        "id": 0,
+        "label": "TA-QKV",
+        "kernel": "q288_tail_vdot",
+        "cycles": [
+          245820,
+          245569
+        ],
+        "instructions": [
+          152371,
+          152371
+        ],
+        "mean_cycles": 245694.5
+      },
+      {
+        "id": 1,
+        "label": "FR-QKV",
+        "kernel": "q288_fused_rvv4",
+        "cycles": [
+          254894,
+          254777,
+          255241,
+          254665
+        ],
+        "instructions": [
+          110575,
+          110575,
+          110575,
+          110575
+        ],
+        "mean_cycles": 254894.25
+      }
+    ],
+    "anchors": [
+      254894,
+      254777,
+      255241,
+      254665
+    ],
+    "anchor_gate": true,
+    "separation_gate": true,
+    "selected_id": 0,
+    "selected_method": "q288_tail_vdot",
+    "worst_ta": 245820,
+    "best_fr": 254665,
+    "reduction": 0.03473190269569826,
+    "blocks": [
+      {
+        "block": 0,
+        "ta": [
+          245820
+        ],
+        "fr": [
+          254894,
+          254777
+        ],
+        "reduction": 0.03515623466796458
+      },
+      {
+        "block": 1,
+        "ta": [
+          245569
+        ],
+        "fr": [
+          255241,
+          254665
+        ],
+        "reduction": 0.035717511240256794
+      }
+    ],
+    "qualified": true,
+    "hardware_changed": false,
+    "stable_default_changed": false,
+    "pack_included": false,
+    "includes_quantization": true,
+    "application_scope": "one fixed ELF, actual layer0 pos0, prepacked FP32-to-QKV, shared scalar quantizer",
+    "full_forward_qualified": false,
+    "trained_model_quality_qualified": false,
+    "replay_is_additional_sample": false
+  },
+  "hardware_changed": false,
+  "stable_default_changed": false,
+  "replay_and_archive_required_for_completion": true
+}

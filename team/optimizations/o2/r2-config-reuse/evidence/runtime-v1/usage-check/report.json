@@ -1,0 +1,103 @@
+{
+  "status": "S3_README_EXAMPLE_COMPILE_LINK_AND_SOURCE_REBUILD_PASS",
+  "contract": "r2-s3-config-reuse-c-application-v1",
+  "source_sha256": "f776afde092364c6e42cca34c5ccc7c1e63052dd814b8877a834643e22207ec2",
+  "readme_sha256": "636e981fae30210f49b57e4f65ae31a0918098a84d6d200523538096492a0e94",
+  "public_header_sha256": "d6cbdadb8ed601e1ccd4d308970111588c5fe7e10098b821625630e2b5360be9",
+  "public_header_identical": true,
+  "example_source_sha256": "771cb2234851986e6e7f5258a208bc0f681240c22d4266dabbdc83ddcca02b66",
+  "qualified_object_sha256": "f8bc13daeead98a414f313600a5778c96ac95a66b5bcb5c714ea3b98e0d25ab3",
+  "public_functions": 16,
+  "linked_leaves_identical": true,
+  "undefined_symbols": [],
+  "commands": [
+    {
+      "command": [
+        "/usr/bin/riscv64-linux-gnu-gcc",
+        "-march=rv64gcv",
+        "-mabi=lp64d",
+        "-mno-relax",
+        "-c",
+        "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/optimizations/o2/r2-config-reuse/public/gemv.S",
+        "-o",
+        "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/usage-check-01/rebuilt-gemv.o"
+      ],
+      "cwd": "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source",
+      "started": "2026-10-24T12:02:52.699200+00:00",
+      "exit_code": 0,
+      "process_started": true,
+      "pid": 2287,
+      "finished": "2026-10-24T12:02:52.715358+00:00",
+      "raw_sha256": {
+        "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/riscv64-linux-gnu-gcc",
+        "-std=c11",
+        "-march=rv64gcv",
+        "-mabi=lp64d",
+        "-mno-relax",
+        "-ffreestanding",
+        "-O2",
+        "-I/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/optimizations/o2/r2-config-reuse/public",
+        "-c",
+        "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/usage-check-01/app.c",
+        "-o",
+        "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/usage-check-01/app.o"
+      ],
+      "cwd": "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source",
+      "started": "2026-10-24T12:02:52.715939+00:00",
+      "exit_code": 0,
+      "process_started": true,
+      "pid": 2290,
+      "finished": "2026-10-24T12:02:52.731924+00:00",
+      "raw_sha256": {
+        "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/riscv64-linux-gnu-ld",
+        "-r",
+        "--no-relax",
+        "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/usage-check-01/app.o",
+        "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/library-01/libconfig_reuse_gemv.a",
+        "-o",
+        "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/usage-check-01/app-config-reuse.o"
+      ],
+      "cwd": "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source",
+      "started": "2026-10-24T12:02:52.732368+00:00",
+      "exit_code": 0,
+      "process_started": true,
+      "pid": 2293,
+      "finished": "2026-10-24T12:02:52.736135+00:00",
+      "raw_sha256": {
+        "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "new_emu_runs": 0,
+  "example_executed": false,
+  "performance_measured": false,
+  "stable_default_changed": false,
+  "artifacts": {
+    "app-config-reuse.o": "65ef5fa9b171886c8aa3d4daa6b9c1f76a5cd50235c64dec86bac3791b5acad5",
+    "app.c": "771cb2234851986e6e7f5258a208bc0f681240c22d4266dabbdc83ddcca02b66",
+    "app.o": "20aeb37b0bec7c260b9a3f12da6dcf75944ee63427e8c27a6ffc5d000ad3118a",
+    "example-compile/command.json": "a1b164f94a7a90832d6ee82d59566124a722f40964503014c726303966b7ec41",
+    "example-compile/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "example-compile/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "example-link/command.json": "00e6e6748646b45529279fbc91c0ac7bba0967dc2d35adc170b8fd1d5bac0186",
+    "example-link/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "example-link/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "rebuilt-gemv.o": "f8bc13daeead98a414f313600a5778c96ac95a66b5bcb5c714ea3b98e0d25ab3",
+    "source-rebuild/command.json": "663178947e705152951686271a77f4753e6608df4b6d045ba51320d873353319",
+    "source-rebuild/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source-rebuild/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

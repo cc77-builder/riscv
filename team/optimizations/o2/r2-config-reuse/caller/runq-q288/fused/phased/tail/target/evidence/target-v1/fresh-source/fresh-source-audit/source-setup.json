@@ -1,0 +1,44 @@
+[
+  {
+    "command": [
+      "/usr/bin/git",
+      "init",
+      "-q",
+      "--template=",
+      "--object-format=sha1",
+      "/tmp/fixed-weight-closure-audit-ld8yulcu/source"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "",
+    "input_sha256": null
+  },
+  {
+    "command": [
+      "/usr/bin/git",
+      "-C",
+      "/tmp/fixed-weight-closure-audit-ld8yulcu/source",
+      "index-pack",
+      "--stdin"
+    ],
+    "exit_code": 0,
+    "stdout": "pack\t200a51e877066410399bcd031e40135e3e76da9b\n",
+    "stderr": "",
+    "input_sha256": "845534a2a6b0a7d1c88b6b9b011b4686740fcb762156c9af5063ef63801db915"
+  },
+  {
+    "command": [
+      "/usr/bin/git",
+      "-C",
+      "/tmp/fixed-weight-closure-audit-ld8yulcu/source",
+      "update-ref",
+      "--no-deref",
+      "HEAD",
+      "24cb8b2e0fa0b17cad65c82246c572347a351d43"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "",
+    "input_sha256": null
+  }
+]

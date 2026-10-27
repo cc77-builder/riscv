@@ -1,0 +1,44 @@
+emu compiled at Oct 24 2026, 09:22:45
+Using seed = 1
+Using simulated 32768B flash
+use /home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin as flash bin
+Using simulated 128MB RAM
+The image is /home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/build-middle-01/images/performance-firstdot-d1-s03/vdot-perf.bin
+The reference model is /home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so
+The first instruction of core 0 has commited. Difftest enabled. 
+[1;34m[src/monitor/image_loader.c:205,load_img] Loading flash image: /home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin
+[0m
+[1;34m[src/monitor/image_loader.c:250,load_img] Read 12 bytes from file /home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin to 0x0xf0000000[0m
+T13_BEGIN suite=performance dataset=1 plan=24 contract=r4-gemv-c-abi-entry-v1
+T13_CONTROLS detected=6 expected=6
+T13_SCRATCH_CONTROL allowed=1
+T13_P seq=0 c=835 i=276
+T13_P seq=1 c=407 i=180
+T13_P seq=2 c=338 i=182
+T13_P seq=3 c=303 i=124
+T13_P seq=4 c=301 i=124
+T13_P seq=5 c=282 i=182
+T13_P seq=6 c=356 i=180
+T13_P seq=7 c=648 i=276
+T13_P seq=8 c=643 i=276
+T13_P seq=9 c=356 i=180
+T13_P seq=10 c=282 i=182
+T13_P seq=11 c=303 i=124
+T13_P seq=12 c=298 i=124
+T13_P seq=13 c=283 i=182
+T13_P seq=14 c=356 i=180
+T13_P seq=15 c=648 i=276
+T13_P seq=16 c=643 i=276
+T13_P seq=17 c=356 i=180
+T13_P seq=18 c=282 i=182
+T13_P seq=19 c=303 i=124
+T13_P seq=20 c=299 i=124
+T13_P seq=21 c=282 i=182
+T13_P seq=22 c=356 i=180
+T13_P seq=23 c=648 i=276
+T13_SUMMARY executed=24 failures=0 scratch_control=1
+Core 0: [32mHIT GOOD TRAP at pc = 0x8000a530
+[0m[35mCore-0 instrCnt = 75431, cycleCnt = 138596, IPC = 0.544251
+[0m[34mSeed=1 Guest cycle spent: 138600 (this will be different from cycleCnt if emu loads a snapshot)
+[0m[34mHost time spent: 103614ms
+[0m

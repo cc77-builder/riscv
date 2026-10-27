@@ -1,0 +1,285 @@
+{
+  "status": "SPLIT_GNU_LIBRARY_AND_CONSUMER_LINK_PASS",
+  "contract": "r2-s3-split-input-8x32-v2",
+  "started": "2026-10-25T00:56:24.679116+00:00",
+  "qualified_image_sha256": "2f94ede51e1c555aa7eceb777b4d2ab859418828d56705783ab72b4bcdb57aed",
+  "qualified_build_sha256": "e959bcb2f3de29bc1515b9f0fb4ad5d6b37873aa083c3d524d759c6903e1e03e",
+  "sources": {
+    "split.h": "94ccdc8e6212c0c0d7ef0e8795c8edcdc9a02e173802bea18965bbce5e01e222",
+    "caller.h": "8f8ebbdfc64f506549b8fcb91700fc80dd91b1fd0a5be64aaed504ebcfa0c38e",
+    "split.c": "607026fc8e1c96adc60b6e5c762954a91f963eb589c51655024a8a6b99783a52",
+    "kernels.S": "381a2a71c76defee1deb4299229d4e478ab514963638210f14bc2454e071c41f",
+    "example.c": "7d9dd06267abe141c144a21fd9ca30450b514698cab94894dd483c538da48606"
+  },
+  "commands": [
+    {
+      "command": [
+        "/usr/bin/riscv64-linux-gnu-gcc",
+        "-std=gnu11",
+        "-O2",
+        "-ffreestanding",
+        "-fno-tree-vectorize",
+        "-fno-tree-slp-vectorize",
+        "-fno-tree-loop-distribute-patterns",
+        "-fno-ipa-cp",
+        "-fno-ipa-icf",
+        "-fno-optimize-sibling-calls",
+        "-fno-lto",
+        "-mno-relax",
+        "-mabi=lp64d",
+        "-fno-pic",
+        "-march=rv64gv",
+        "-mcmodel=medany",
+        "-static",
+        "-Wall",
+        "-Werror",
+        "-fno-asynchronous-unwind-tables",
+        "-fno-builtin",
+        "-fno-stack-protector",
+        "-c",
+        "split.c",
+        "-o",
+        "split.o"
+      ],
+      "cwd": "/home/lizufan/riscv-lab/r2s3-split-20261025-0716/library-v2-01",
+      "started": "2026-10-25T00:56:24.679680+00:00",
+      "exit_code": 0,
+      "process_started": true,
+      "pid": 403,
+      "finished": "2026-10-25T00:56:24.795171+00:00",
+      "raw_sha256": {
+        "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/riscv64-linux-gnu-gcc",
+        "-march=rv64gv",
+        "-mabi=lp64d",
+        "-mno-relax",
+        "-c",
+        "kernels.S",
+        "-o",
+        "kernels.o"
+      ],
+      "cwd": "/home/lizufan/riscv-lab/r2s3-split-20261025-0716/library-v2-01",
+      "started": "2026-10-25T00:56:24.795487+00:00",
+      "exit_code": 0,
+      "process_started": true,
+      "pid": 412,
+      "finished": "2026-10-25T00:56:24.802185+00:00",
+      "raw_sha256": {
+        "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/riscv64-linux-gnu-ar",
+        "rcsD",
+        "libxs_split_8x32.a",
+        "split.o",
+        "kernels.o"
+      ],
+      "cwd": "/home/lizufan/riscv-lab/r2s3-split-20261025-0716/library-v2-01",
+      "started": "2026-10-25T00:56:24.802486+00:00",
+      "exit_code": 0,
+      "process_started": true,
+      "pid": 415,
+      "finished": "2026-10-25T00:56:24.967592+00:00",
+      "raw_sha256": {
+        "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/riscv64-linux-gnu-ar",
+        "t",
+        "libxs_split_8x32.a"
+      ],
+      "cwd": "/home/lizufan/riscv-lab/r2s3-split-20261025-0716/library-v2-01",
+      "started": "2026-10-25T00:56:24.967979+00:00",
+      "exit_code": 0,
+      "process_started": true,
+      "pid": 416,
+      "finished": "2026-10-25T00:56:24.969201+00:00",
+      "raw_sha256": {
+        "stdout.log": "9ca245d98a525c7f4b53a26330897ed936e2d0c7335ab4943419a60ae5e7190f",
+        "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/riscv64-linux-gnu-ar",
+        "p",
+        "libxs_split_8x32.a",
+        "split.o"
+      ],
+      "cwd": "/home/lizufan/riscv-lab/r2s3-split-20261025-0716/library-v2-01",
+      "started": "2026-10-25T00:56:24.969486+00:00",
+      "exit_code": 0,
+      "process_started": true,
+      "pid": 417,
+      "finished": "2026-10-25T00:56:24.970295+00:00",
+      "raw_sha256": {
+        "stdout.log": "66c208b036d62e0cfec5e0088ffc7a6e0d9b22464e4e428cbe748d1305858a31",
+        "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/riscv64-linux-gnu-ar",
+        "p",
+        "libxs_split_8x32.a",
+        "kernels.o"
+      ],
+      "cwd": "/home/lizufan/riscv-lab/r2s3-split-20261025-0716/library-v2-01",
+      "started": "2026-10-25T00:56:24.970540+00:00",
+      "exit_code": 0,
+      "process_started": true,
+      "pid": 418,
+      "finished": "2026-10-25T00:56:24.971637+00:00",
+      "raw_sha256": {
+        "stdout.log": "7566543a24c33e54a3e9acac725ad9cdec4ea8ecbf5a9b263ba6e4cea153bd80",
+        "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/riscv64-linux-gnu-gcc",
+        "-std=gnu11",
+        "-O2",
+        "-ffreestanding",
+        "-fno-tree-vectorize",
+        "-fno-tree-slp-vectorize",
+        "-fno-tree-loop-distribute-patterns",
+        "-fno-ipa-cp",
+        "-fno-ipa-icf",
+        "-fno-optimize-sibling-calls",
+        "-fno-lto",
+        "-mno-relax",
+        "-mabi=lp64d",
+        "-fno-pic",
+        "-march=rv64gv",
+        "-mcmodel=medany",
+        "-static",
+        "-Wall",
+        "-Werror",
+        "-fno-asynchronous-unwind-tables",
+        "-fno-builtin",
+        "-fno-stack-protector",
+        "-c",
+        "example.c",
+        "-o",
+        "example.o"
+      ],
+      "cwd": "/home/lizufan/riscv-lab/r2s3-split-20261025-0716/library-v2-01",
+      "started": "2026-10-25T00:56:24.971864+00:00",
+      "exit_code": 0,
+      "process_started": true,
+      "pid": 419,
+      "finished": "2026-10-25T00:56:24.980430+00:00",
+      "raw_sha256": {
+        "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/riscv64-linux-gnu-ld",
+        "-r",
+        "-o",
+        "example-linked.o",
+        "example.o",
+        "libxs_split_8x32.a"
+      ],
+      "cwd": "/home/lizufan/riscv-lab/r2s3-split-20261025-0716/library-v2-01",
+      "started": "2026-10-25T00:56:24.980733+00:00",
+      "exit_code": 0,
+      "process_started": true,
+      "pid": 422,
+      "finished": "2026-10-25T00:56:24.982837+00:00",
+      "raw_sha256": {
+        "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/riscv64-linux-gnu-nm",
+        "-u",
+        "example-linked.o"
+      ],
+      "cwd": "/home/lizufan/riscv-lab/r2s3-split-20261025-0716/library-v2-01",
+      "started": "2026-10-25T00:56:24.983184+00:00",
+      "exit_code": 0,
+      "process_started": true,
+      "pid": 423,
+      "finished": "2026-10-25T00:56:25.001502+00:00",
+      "raw_sha256": {
+        "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "new_emu_runs": 0,
+  "functions": {
+    "split_full": {
+      "bytes": 100,
+      "sha256": "a808e3732e09f325618e814cc9f9625739bbfe9f51f9a9d56d22eb1e8bf2b7cd"
+    },
+    "split_gemv_8x32_vdot": {
+      "bytes": 656,
+      "sha256": "3c0a2c78c5f3f7ae9ca09ad74ab7e63fa9df936eea1059850ae55cf1eedc624b"
+    },
+    "split_gemv_8x32_rvv0": {
+      "bytes": 1060,
+      "sha256": "b17cf05f583cdfe98080cf329ee22b6ce7250d1f029bcc1604b774403006c1b5"
+    },
+    "split_gemv_8x32_rvv1": {
+      "bytes": 740,
+      "sha256": "b1d6b2d13452386e7aeaf62937e58eca4780d3a6c72c22bcd7cf8cc1bd35dd9f"
+    },
+    "split_gemv_8x32_rvv2": {
+      "bytes": 676,
+      "sha256": "308e724cf6fe6eac3a38dff3c1cd8c4cf373aad8ec97faf752917e18c749b585"
+    },
+    "split_gemv_8x32_rvv3": {
+      "bytes": 452,
+      "sha256": "2e977143be3bfde28a8c1b824686f8265fd41484931d05715ecf44d3596377d6"
+    },
+    "split_gemv_8x32_rvv4": {
+      "bytes": 448,
+      "sha256": "8842f65de742638a3d8c28e4bea273acf6841c4aab6819f282017803d0b6f59c"
+    }
+  },
+  "artifacts": {
+    "split.o": "66c208b036d62e0cfec5e0088ffc7a6e0d9b22464e4e428cbe748d1305858a31",
+    "kernels.o": "7566543a24c33e54a3e9acac725ad9cdec4ea8ecbf5a9b263ba6e4cea153bd80",
+    "libxs_split_8x32.a": "bb68b92d0080b28242a74c5f3d7b0c6cf28ff474764e23c4f446ba186e239b33",
+    "example.o": "5c5accb29b1bc100baf61ab8d9f0974f4355e9583182502019e02150efc2af9b",
+    "example-linked.o": "e87b3d3649e4d606e612c8f73ede28913fa08879bd61fc4fb5f09057b8255850"
+  },
+  "toolchain": {
+    "gcc": {
+      "path": "/usr/bin/riscv64-linux-gnu-gcc",
+      "sha256": "0c54895c55568be5b5fee49e2426abcc8fb05ca2c121ca5685dea2cbc24a1c13"
+    },
+    "ar": {
+      "path": "/usr/bin/riscv64-linux-gnu-ar",
+      "sha256": "7985a5f5a10d03843aa7b296e1652bf5bd9fd5180839c7df9b49ef56738fcc74"
+    },
+    "ld": {
+      "path": "/usr/bin/riscv64-linux-gnu-ld",
+      "sha256": "59db886faf252e5e2fb2e5341fd57c24ddbd216197f69296321fef913e5b64ba"
+    }
+  },
+  "nm": {
+    "path": "/usr/bin/riscv64-linux-gnu-nm",
+    "sha256": "3f6c21492177e99a2a6db48d530d5ec310ed058c679bc71a743f80c86cb87b56"
+  },
+  "example_scope": "GNU C11 compile and relocatable link; not a new runtime experiment",
+  "finished": "2026-10-25T00:56:25.003724+00:00"
+}

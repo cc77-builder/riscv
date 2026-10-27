@@ -1,0 +1,16 @@
+COMMAND exit=0 log=git-version.log git --version
+COMMAND exit=0 log=java-version.log java -version
+Traceback (most recent call last):
+  File "/home/lizufan/riscv-lab/r3-perf-20261025-0001/source/team/optimizations/o2/run_rtl.py", line 151, in <module>
+    if __name__=="__main__": main()
+  File "/home/lizufan/riscv-lab/r3-perf-20261025-0001/source/team/optimizations/o2/run_rtl.py", line 73, in main
+    }.items(): run(name+"-version.log",args)
+  File "/home/lizufan/riscv-lab/r3-perf-20261025-0001/source/team/optimizations/o2/run_rtl.py", line 45, in run
+    proc = subprocess.run(list(map(str,args)), env=env, stdout=stream, stderr=subprocess.STDOUT)
+  File "/usr/lib/python3.10/subprocess.py", line 503, in run
+    with Popen(*popenargs, **kwargs) as process:
+  File "/usr/lib/python3.10/subprocess.py", line 971, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.10/subprocess.py", line 1863, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+OSError: [Errno 8] Exec format error: 'mill'

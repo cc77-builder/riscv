@@ -1,0 +1,107 @@
+{
+  "status": "CALLER_RAW_EVIDENCE_AUDIT_PASS",
+  "contract": "r2-s3-caller-screen-v2-h1",
+  "image_sha256": "c0c362a78329125ce6645b305c9c8287bfba092323e8f30307e51c410509dfa9",
+  "original_emu_runs": 3,
+  "new_emu_runs": 0,
+  "physical_external_inputs_revalidated": false,
+  "windows_per_normal_run": 36,
+  "formal_windows_used": 24,
+  "replay_windows": 36,
+  "ordinary_stack_demo_calls_per_normal_run": 3,
+  "summary": [
+    {
+      "scope": "full",
+      "vdot": {
+        "samples": 12,
+        "total": 14467,
+        "mean": 1205.5833333333333,
+        "minimum": 1200,
+        "median": 1206.0,
+        "maximum": 1212,
+        "instructions": [
+          1725
+        ],
+        "by_dataset": [
+          {
+            "dataset": 0,
+            "cycles": [
+              1205,
+              1200,
+              1208,
+              1202
+            ]
+          },
+          {
+            "dataset": 1,
+            "cycles": [
+              1205,
+              1207,
+              1202,
+              1208
+            ]
+          },
+          {
+            "dataset": 2,
+            "cycles": [
+              1212,
+              1202,
+              1208,
+              1208
+            ]
+          }
+        ]
+      },
+      "rvv": {
+        "samples": 12,
+        "total": 15495,
+        "mean": 1291.25,
+        "minimum": 1286,
+        "median": 1292.0,
+        "maximum": 1301,
+        "instructions": [
+          1746
+        ],
+        "by_dataset": [
+          {
+            "dataset": 0,
+            "cycles": [
+              1292,
+              1287,
+              1287,
+              1301
+            ]
+          },
+          {
+            "dataset": 1,
+            "cycles": [
+              1295,
+              1286,
+              1292,
+              1292
+            ]
+          },
+          {
+            "dataset": 2,
+            "cycles": [
+              1293,
+              1289,
+              1287,
+              1294
+            ]
+          }
+        ]
+      },
+      "primary_metric": true,
+      "identical_code_context_control": false,
+      "reduction_vdot_vs_rvv": 0.06634398192965474
+    }
+  ],
+  "raw_sources_recomputed": true,
+  "stable_default_changed": false,
+  "hardware_changed": false,
+  "screening_scope": "full-only",
+  "caller_variant": "hoisted",
+  "selected_rvv": 1,
+  "selected_rvv_symbol": "r4_gemv_8x32_reuse_rvv"
+}

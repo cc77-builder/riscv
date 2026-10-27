@@ -29,6 +29,8 @@ overlaps stalls p_to_r full_cycles full_blocked p_accept_r_blocked
 r_response_p_survivor kill_p_only kill_r_only kill_both reset_both redirects
 reset_cases te0_resets empty_te0_resets idle_clock_samples cancel_idle_clock_on
 parent_tested fullcore_tested performance_measured""".split())
+PERF_PASS_KEYS = set("""perf_contract perf_bits perf_inputs perf_observations
+perf_walk_one perf_walk_zero""".split())
 TRANSITION_CASES = {f"switch-{old}-{new}-{delay}" for old in range(3)
                     for new in range(3) for delay in (0, 1, 7)}
 FU_KEYS = set("""kind accepted responded killed reset_dropped raw_killed_response
@@ -86,7 +88,10 @@ def check_trace(text, require_campaign=True):
                     "duplicate/unknown FU summary")
             summaries[summary["kind"]] = summary
         elif line.startswith("O2_PARENT_PASS "):
-            final = fields(line, "O2_PARENT_PASS", PASS_KEYS)
+            extras = PERF_PASS_KEYS if re.search(r"\bperf_contract=", line) else set()
+            final = fields(line, "O2_PARENT_PASS", PASS_KEYS | extras)
+            if extras:
+                require(final["perf_contract"] == 2, "unknown perf contract")
         else:
             raise TraceError("unrecognized/error record: " + line[:100])
     require(rows and final is not None and set(summaries) == {0, 1, 2}, "incomplete evidence")
@@ -94,7 +99,9 @@ def check_trace(text, require_campaign=True):
     require(final["schema"] == 1 and final["parent_tested"] == 1 and
             final["fullcore_tested"] == 0 and final["performance_measured"] == 0,
             "invalid scope or schema")
+    perf_v2 = final.get("perf_contract") == 2
     counts = Counter(cycles=len(rows), groups=len(groups))
+    perf_observations = 0
     per_fu = [Counter(latency_min=9999) for _ in range(3)]
     live, ended = {}, set()
     p = r = div = 0
@@ -171,6 +178,7 @@ def check_trace(text, require_campaign=True):
             stall = bool(output_mask and not ready_out and not reset and not kr and not kd)
             require(row["stall"] == stall and row["p_to_r"] == move, "stall/transfer mismatch")
             if output_mask and not reset:
+                perf_observations += 1
                 require(owner in live, "output has no owner")
                 req = live[owner]
                 if not req["seen"]:
@@ -284,8 +292,13 @@ def check_trace(text, require_campaign=True):
     for kind, summary in summaries.items():
         for name in FU_KEYS - {"kind"}:
             require(summary[name] == per_fu[kind][name], f"FU {kind} summary mismatch: {name}")
+    if perf_v2:
+        require(final["perf_bits"] == 577 and final["perf_inputs"] == counts["accepted"] and
+                final["perf_observations"] == perf_observations and
+                final["perf_walk_one"] == final["perf_walk_zero"] == 577,
+                "incomplete perf v2 summary")
     if require_campaign:
-        require(len(groups) == 12 and transition_cases == TRANSITION_CASES,
+        require(len(groups) == (13 if perf_v2 else 12) and transition_cases == TRANSITION_CASES,
                 "incomplete directed groups/transitions")
         require(len(frozen_accept_cycles) == len(frozen_response_latencies) == 10022 and
                 all(b - a == 1 for a, b in zip(frozen_accept_cycles, frozen_accept_cycles[1:])) and
@@ -302,7 +315,8 @@ def check_trace(text, require_campaign=True):
         require(final["idle_clock_samples"] >= 12, "idle-gating coverage missing")
     return dict(status="O2_PARENT_OFFLINE_TRACE_PASS", cycles=len(rows), groups=len(groups),
                 recomputed=dict(counts), per_fu=[dict(x) for x in per_fu],
-                full_campaign_required=require_campaign,
+                full_campaign_required=require_campaign, perf_contract=2 if perf_v2 else 1,
+                perf_observations_recomputed=perf_observations if perf_v2 else None,
                 side_counters_not_recomputed=["idle_clock_samples", "cancel_idle_clock_on"],
                 scope="cycle/identity/ROB/control replay only; no RTL execution or payload recheck")
 

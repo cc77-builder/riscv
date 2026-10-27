@@ -1,0 +1,205 @@
+{
+  "status": "FIXED_C_LIFECYCLE_AND_BYTE_FAULTS_PASS",
+  "contract": "r2-s3-fixed-weight-8x32-v1",
+  "scope": "host lifecycle/actual C judge; scalar leaf and CSR shims; no ISA/timing claim",
+  "checker_sha256": "a66ee75df39ac56233decb4071d2812c017cc4d273d052ae008677390d39e070",
+  "host_source_sha256": "a00fcf569f5213d689ffed4fa237ff90e2ef9b3d6423d13510e2e5957fe0004b",
+  "inputs": {
+    "caller.h": "8f8ebbdfc64f506549b8fcb91700fc80dd91b1fd0a5be64aaed504ebcfa0c38e",
+    "split.h": "94ccdc8e6212c0c0d7ef0e8795c8edcdc9a02e173802bea18965bbce5e01e222",
+    "fixed.h": "bc0f0711e88b82c69e41e6fcde8f9a4db55e5ebfb110bc94cc3d73e723b6d01b",
+    "data.h": "49503aff4fd604254e15f9db9532b2c08827daac155353b72271c1611467590e",
+    "main.c": "4bd9f99678be170e70663abd767f508b6afa9675daac743c241fc2bd4b4a2857",
+    "fixed.c": "c4c2765969e000f5474f0ba930516e95eec6b2b64df504bd304f94571a4c5f82"
+  },
+  "qualified_build_sha256": "4bb8959fc1b3eb94640b9d7b5222920ddbde8332f9401c6bbad2c15765d7eca4",
+  "qualified_image_sha256": "ec41c369d718a30b8b82edad5adea06c52366b44dadcf19f137bf78deb6fa22c",
+  "manifest_sha256": "4f8a7d1479922417d143d34e5e0de9be9559d7d82bdb1f793bb351723e12d68b",
+  "compiler": {
+    "path": "/usr/bin/gcc",
+    "sha256": "6117c52522997d2aaccb2b52b3c6bf42c0a6c5edb1d718431fed6b2fc5fec234"
+  },
+  "commands": [
+    {
+      "label": "compile",
+      "command": [
+        "/usr/bin/gcc",
+        "-std=gnu11",
+        "-O2",
+        "-Wall",
+        "-Werror",
+        "-Wstrict-aliasing=2",
+        "-fstrict-aliasing",
+        "-fno-tree-vectorize",
+        "-fno-tree-slp-vectorize",
+        "-fno-tree-loop-distribute-patterns",
+        "host.c",
+        "fixed.c",
+        "-o",
+        "harness-check"
+      ],
+      "exit_code": 0
+    },
+    {
+      "label": "execute",
+      "command": [
+        "/workspace/scratch/b5e95d218967/offline-01/host-02/harness-check"
+      ],
+      "exit_code": 0
+    },
+    {
+      "label": "stale-x-compile",
+      "command": [
+        "/usr/bin/gcc",
+        "-std=gnu11",
+        "-O2",
+        "-Wall",
+        "-Werror",
+        "-Wstrict-aliasing=2",
+        "-fstrict-aliasing",
+        "-fno-tree-vectorize",
+        "-fno-tree-slp-vectorize",
+        "-fno-tree-loop-distribute-patterns",
+        "host.c",
+        "mutated-stale-x.c",
+        "-o",
+        "stale-x"
+      ],
+      "exit_code": 0
+    },
+    {
+      "label": "stale-x-execute",
+      "command": [
+        "/workspace/scratch/b5e95d218967/offline-01/host-02/stale-x"
+      ],
+      "exit_code": 1
+    },
+    {
+      "label": "slot-overwrite-compile",
+      "command": [
+        "/usr/bin/gcc",
+        "-std=gnu11",
+        "-O2",
+        "-Wall",
+        "-Werror",
+        "-Wstrict-aliasing=2",
+        "-fstrict-aliasing",
+        "-fno-tree-vectorize",
+        "-fno-tree-slp-vectorize",
+        "-fno-tree-loop-distribute-patterns",
+        "host.c",
+        "mutated-slot-overwrite.c",
+        "-o",
+        "slot-overwrite"
+      ],
+      "exit_code": 0
+    },
+    {
+      "label": "slot-overwrite-execute",
+      "command": [
+        "/workspace/scratch/b5e95d218967/offline-01/host-02/slot-overwrite"
+      ],
+      "exit_code": 1
+    },
+    {
+      "label": "omit-final-step-compile",
+      "command": [
+        "/usr/bin/gcc",
+        "-std=gnu11",
+        "-O2",
+        "-Wall",
+        "-Werror",
+        "-Wstrict-aliasing=2",
+        "-fstrict-aliasing",
+        "-fno-tree-vectorize",
+        "-fno-tree-slp-vectorize",
+        "-fno-tree-loop-distribute-patterns",
+        "host.c",
+        "mutated-omit-final-step.c",
+        "-o",
+        "omit-final-step"
+      ],
+      "exit_code": 0
+    },
+    {
+      "label": "omit-final-step-execute",
+      "command": [
+        "/workspace/scratch/b5e95d218967/offline-01/host-02/omit-final-step"
+      ],
+      "exit_code": 1
+    },
+    {
+      "label": "wrong-step-values-compile",
+      "command": [
+        "/usr/bin/gcc",
+        "-std=gnu11",
+        "-O2",
+        "-Wall",
+        "-Werror",
+        "-Wstrict-aliasing=2",
+        "-fstrict-aliasing",
+        "-fno-tree-vectorize",
+        "-fno-tree-slp-vectorize",
+        "-fno-tree-loop-distribute-patterns",
+        "host.c",
+        "mutated-wrong-step-values.c",
+        "-o",
+        "wrong-step-values"
+      ],
+      "exit_code": 0
+    },
+    {
+      "label": "wrong-step-values-execute",
+      "command": [
+        "/workspace/scratch/b5e95d218967/offline-01/host-02/wrong-step-values"
+      ],
+      "exit_code": 1
+    }
+  ],
+  "new_emu_runs": 0,
+  "cases": 504,
+  "byte_faults": 177408,
+  "byte_fault_bit": 0,
+  "csr_faults": 336,
+  "controls": 8,
+  "lifecycle_mutants": [
+    "stale-x",
+    "slot-overwrite",
+    "omit-final-step",
+    "wrong-step-values"
+  ],
+  "fault_scope": "84 kind-0 cases, bit0 at each of 2112 bytes; four simulated CSR words; all 504 wrapper cases use scalar stubs",
+  "artifacts": {
+    "harness-check": "ff57e936fface7e683ff5873bee060d8428215f9fc0d9bdb5ef6b2883ebbf129",
+    "stale-x": "d7d85eb31d7cc388b3627fe9976e70806f1130df2695112dcbda8003d67d61ee",
+    "slot-overwrite": "6cfa9816ed7fc8725a7b40e47b5376bb497532118106a03ba31d1bbe0b778af9",
+    "omit-final-step": "e43b7e819f843c87d8655245f661a0c973b498403b2b4eff630b0eb1f9a87f23",
+    "wrong-step-values": "f5504893249b85a7aa54834b9be2d8aa145cf83ad79a2885de70607ddce5b1ae",
+    "mutated-stale-x.c": "f0a3763c07be32aa879dc3ab0ebd02f192b774da645ff374ebb08c012cc71997",
+    "mutated-slot-overwrite.c": "da2f7e002b8b33369591b50933608e9b129deff0ce99f70115a1778dc1321a99",
+    "mutated-omit-final-step.c": "7c1cba6db5ee9a6990b068b8cfbe86723fae121d35d8a0ba5a3527ffc698f03a",
+    "mutated-wrong-step-values.c": "2468383fb45ccfc4b092276694a8990470189e9e45ab551410f0fc33c01e348f"
+  },
+  "raw_sha256": {
+    "compile-stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "compile-stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "execute-stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "execute-stdout.log": "865df681112c302f6e72d46f6555d89450092c6f8229e21c865d4c62b65aff27",
+    "omit-final-step-compile-stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "omit-final-step-compile-stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "omit-final-step-execute-stderr.log": "dafe4da446cc2c3865d9a0183d9969620bc37d091914a6c1b16ec79c3b221b29",
+    "omit-final-step-execute-stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "slot-overwrite-compile-stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "slot-overwrite-compile-stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "slot-overwrite-execute-stderr.log": "760ef5a0ffce3b1427f6211c0f7199f9affaf70d26e8a8740a997e8a6dc3bc8f",
+    "slot-overwrite-execute-stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stale-x-compile-stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stale-x-compile-stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stale-x-execute-stderr.log": "27144eee5c6833bb3ef7f85eba8a6a7fbace2299ff99e5ee3f8cef9209c942cf",
+    "stale-x-execute-stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "wrong-step-values-compile-stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "wrong-step-values-compile-stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "wrong-step-values-execute-stderr.log": "eb8f9071532717fc9813240dbaa6d4523ace3553c78bada5a8264e04acbf8a67",
+    "wrong-step-values-execute-stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

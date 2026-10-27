@@ -1,0 +1,688 @@
+formal-performance-firstdot-d0-s01 R2_DIFFTEST_WINDOWS_AND_O2_PROTOCOL_PASS
+formal-performance-s1-d0-s01 R2_DIFFTEST_WINDOWS_AND_O2_PROTOCOL_PASS
+formal-performance-s1-d1-s01 R2_DIFFTEST_WINDOWS_AND_O2_PROTOCOL_PASS
+formal-performance-firstdot-d1-s01 R2_DIFFTEST_WINDOWS_AND_O2_PROTOCOL_PASS
+formal-performance-firstdot-d2-s01 R2_DIFFTEST_WINDOWS_AND_O2_PROTOCOL_PASS
+formal-performance-s1-d2-s01 R2_DIFFTEST_WINDOWS_AND_O2_PROTOCOL_PASS
+formal-performance-s1-d1-s03 R2_DIFFTEST_WINDOWS_AND_O2_PROTOCOL_PASS
+formal-performance-firstdot-d1-s03 R2_DIFFTEST_WINDOWS_AND_O2_PROTOCOL_PASS
+formal-performance-firstdot-d2-s03 R2_DIFFTEST_WINDOWS_AND_O2_PROTOCOL_PASS
+formal-performance-s1-d2-s03 R2_DIFFTEST_WINDOWS_AND_O2_PROTOCOL_PASS
+formal-performance-firstdot-d0-s05 R2_DIFFTEST_WINDOWS_AND_O2_PROTOCOL_PASS
+formal-performance-s1-d0-s05 R2_DIFFTEST_WINDOWS_AND_O2_PROTOCOL_PASS
+formal-performance-s1-d1-s05 R2_DIFFTEST_WINDOWS_AND_O2_PROTOCOL_PASS
+formal-performance-firstdot-d1-s05 R2_DIFFTEST_WINDOWS_AND_O2_PROTOCOL_PASS
+formal-performance-firstdot-d2-s05 R2_DIFFTEST_WINDOWS_AND_O2_PROTOCOL_PASS
+formal-performance-s1-d2-s05 R2_DIFFTEST_WINDOWS_AND_O2_PROTOCOL_PASS
+formal-performance-firstdot-d0-s07 R2_DIFFTEST_WINDOWS_AND_O2_PROTOCOL_PASS
+formal-performance-s1-d0-s07 R2_DIFFTEST_WINDOWS_AND_O2_PROTOCOL_PASS
+formal-performance-s1-d1-s07 R2_DIFFTEST_WINDOWS_AND_O2_PROTOCOL_PASS
+formal-performance-firstdot-d1-s07 R2_DIFFTEST_WINDOWS_AND_O2_PROTOCOL_PASS
+formal-performance-firstdot-d2-s07 R2_DIFFTEST_WINDOWS_AND_O2_PROTOCOL_PASS
+formal-performance-s1-d2-s07 R2_DIFFTEST_WINDOWS_AND_O2_PROTOCOL_PASS
+replay-performance-firstdot-d0-s01 R2_DIFFTEST_WINDOWS_AND_O2_PROTOCOL_PASS
+replay-performance-firstdot-d0-s05 R2_DIFFTEST_WINDOWS_AND_O2_PROTOCOL_PASS
+replay-performance-firstdot-d0-s07 R2_DIFFTEST_WINDOWS_AND_O2_PROTOCOL_PASS
+replay-performance-s1-d0-s01 R2_DIFFTEST_WINDOWS_AND_O2_PROTOCOL_PASS
+replay-performance-s1-d0-s05 R2_DIFFTEST_WINDOWS_AND_O2_PROTOCOL_PASS
+replay-performance-s1-d0-s07 R2_DIFFTEST_WINDOWS_AND_O2_PROTOCOL_PASS
+{
+  "status": "FIRSTDOT_PARTIAL_PASS",
+  "contract": "r2-s1-firstdot-c-abi-v1",
+  "parent_identity_sha256": "4a89872d0463163ea0be83f680843352e01354043f5709509d822353221258eb",
+  "negative": null,
+  "qualification": {
+    "negative_and_recovery": false,
+    "all_window_replay": false,
+    "stable_default_changed": false,
+    "hardware_changed": false,
+    "full_matrix": false,
+    "historical_pass_reused": false
+  },
+  "rows": [
+    {
+      "shard": 1,
+      "shape": [
+        4,
+        8
+      ],
+      "datasets": [
+        0,
+        1,
+        2
+      ],
+      "scope": "endtoend-with-c-abi-call",
+      "candidates": [
+        {
+          "variant": "s1",
+          "software": "basic",
+          "method": "vdot",
+          "samples": 12,
+          "total": 2481,
+          "mean": 206.75,
+          "minimum": 204,
+          "maximum": 209,
+          "instructions": [
+            68
+          ]
+        },
+        {
+          "variant": "s1",
+          "software": "basic",
+          "method": "rvv",
+          "samples": 12,
+          "total": 2703,
+          "mean": 225.25,
+          "minimum": 225,
+          "maximum": 226,
+          "instructions": [
+            68
+          ]
+        },
+        {
+          "variant": "s1",
+          "software": "reuse",
+          "method": "vdot",
+          "samples": 12,
+          "total": 2037,
+          "mean": 169.75,
+          "minimum": 169,
+          "maximum": 170,
+          "instructions": [
+            54
+          ]
+        },
+        {
+          "variant": "s1",
+          "software": "reuse",
+          "method": "rvv",
+          "samples": 12,
+          "total": 2250,
+          "mean": 187.5,
+          "minimum": 184,
+          "maximum": 190,
+          "instructions": [
+            54
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "basic",
+          "method": "vdot",
+          "samples": 12,
+          "total": 2370,
+          "mean": 197.5,
+          "minimum": 195,
+          "maximum": 200,
+          "instructions": [
+            52
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "basic",
+          "method": "rvv",
+          "samples": 12,
+          "total": 2703,
+          "mean": 225.25,
+          "minimum": 225,
+          "maximum": 226,
+          "instructions": [
+            68
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "reuse",
+          "method": "vdot",
+          "samples": 12,
+          "total": 1893,
+          "mean": 157.75,
+          "minimum": 157,
+          "maximum": 158,
+          "instructions": [
+            44
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "reuse",
+          "method": "rvv",
+          "samples": 12,
+          "total": 2253,
+          "mean": 187.75,
+          "minimum": 185,
+          "maximum": 190,
+          "instructions": [
+            54
+          ]
+        }
+      ],
+      "fastest_rvv": {
+        "variant": "s1",
+        "software": "reuse",
+        "method": "rvv",
+        "samples": 12,
+        "total": 2250,
+        "mean": 187.5,
+        "minimum": 184,
+        "maximum": 190,
+        "instructions": [
+          54
+        ]
+      },
+      "firstdot_reuse_vdot": {
+        "variant": "firstdot",
+        "software": "reuse",
+        "method": "vdot",
+        "samples": 12,
+        "total": 1893,
+        "mean": 157.75,
+        "minimum": 157,
+        "maximum": 158,
+        "instructions": [
+          44
+        ]
+      },
+      "s1_reuse_vdot": {
+        "variant": "s1",
+        "software": "reuse",
+        "method": "vdot",
+        "samples": 12,
+        "total": 2037,
+        "mean": 169.75,
+        "minimum": 169,
+        "maximum": 170,
+        "instructions": [
+          54
+        ]
+      },
+      "reduction_vs_s1": 0.07069219440353458,
+      "reduction_vs_rvv": 0.15866666666666662,
+      "firstdot_beats_s1_and_rvv": true
+    },
+    {
+      "shard": 3,
+      "shape": [
+        8,
+        32
+      ],
+      "datasets": [
+        1,
+        2
+      ],
+      "scope": "endtoend-with-c-abi-call",
+      "candidates": [
+        {
+          "variant": "s1",
+          "software": "basic",
+          "method": "vdot",
+          "samples": 8,
+          "total": 5188,
+          "mean": 648.5,
+          "minimum": 646,
+          "maximum": 651,
+          "instructions": [
+            308
+          ]
+        },
+        {
+          "variant": "s1",
+          "software": "basic",
+          "method": "rvv",
+          "samples": 8,
+          "total": 2848,
+          "mean": 356,
+          "minimum": 356,
+          "maximum": 356,
+          "instructions": [
+            180
+          ]
+        },
+        {
+          "variant": "s1",
+          "software": "reuse",
+          "method": "vdot",
+          "samples": 8,
+          "total": 2340,
+          "mean": 292.5,
+          "minimum": 291,
+          "maximum": 294,
+          "instructions": [
+            202
+          ]
+        },
+        {
+          "variant": "s1",
+          "software": "reuse",
+          "method": "rvv",
+          "samples": 8,
+          "total": 2406,
+          "mean": 300.75,
+          "minimum": 298,
+          "maximum": 303,
+          "instructions": [
+            124
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "basic",
+          "method": "vdot",
+          "samples": 8,
+          "total": 5164,
+          "mean": 645.5,
+          "minimum": 643,
+          "maximum": 648,
+          "instructions": [
+            276
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "basic",
+          "method": "rvv",
+          "samples": 8,
+          "total": 2848,
+          "mean": 356,
+          "minimum": 356,
+          "maximum": 356,
+          "instructions": [
+            180
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "reuse",
+          "method": "vdot",
+          "samples": 8,
+          "total": 2258,
+          "mean": 282.25,
+          "minimum": 282,
+          "maximum": 283,
+          "instructions": [
+            182
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "reuse",
+          "method": "rvv",
+          "samples": 8,
+          "total": 2406,
+          "mean": 300.75,
+          "minimum": 298,
+          "maximum": 303,
+          "instructions": [
+            124
+          ]
+        }
+      ],
+      "fastest_rvv": {
+        "variant": "s1",
+        "software": "reuse",
+        "method": "rvv",
+        "samples": 8,
+        "total": 2406,
+        "mean": 300.75,
+        "minimum": 298,
+        "maximum": 303,
+        "instructions": [
+          124
+        ]
+      },
+      "firstdot_reuse_vdot": {
+        "variant": "firstdot",
+        "software": "reuse",
+        "method": "vdot",
+        "samples": 8,
+        "total": 2258,
+        "mean": 282.25,
+        "minimum": 282,
+        "maximum": 283,
+        "instructions": [
+          182
+        ]
+      },
+      "s1_reuse_vdot": {
+        "variant": "s1",
+        "software": "reuse",
+        "method": "vdot",
+        "samples": 8,
+        "total": 2340,
+        "mean": 292.5,
+        "minimum": 291,
+        "maximum": 294,
+        "instructions": [
+          202
+        ]
+      },
+      "reduction_vs_s1": 0.03504273504273503,
+      "reduction_vs_rvv": 0.06151288445552783,
+      "firstdot_beats_s1_and_rvv": true
+    },
+    {
+      "shard": 5,
+      "shape": [
+        16,
+        64
+      ],
+      "datasets": [
+        0,
+        1,
+        2
+      ],
+      "scope": "endtoend-with-c-abi-call",
+      "candidates": [
+        {
+          "variant": "s1",
+          "software": "basic",
+          "method": "vdot",
+          "samples": 12,
+          "total": 26598,
+          "mean": 2216.5,
+          "minimum": 2214,
+          "maximum": 2219,
+          "instructions": [
+            1108
+          ]
+        },
+        {
+          "variant": "s1",
+          "software": "basic",
+          "method": "rvv",
+          "samples": 12,
+          "total": 11901,
+          "mean": 991.75,
+          "minimum": 991,
+          "maximum": 993,
+          "instructions": [
+            596
+          ]
+        },
+        {
+          "variant": "s1",
+          "software": "reuse",
+          "method": "vdot",
+          "samples": 12,
+          "total": 8607,
+          "mean": 717.25,
+          "minimum": 714,
+          "maximum": 720,
+          "instructions": [
+            672
+          ]
+        },
+        {
+          "variant": "s1",
+          "software": "reuse",
+          "method": "rvv",
+          "samples": 12,
+          "total": 9354,
+          "mean": 779.5,
+          "minimum": 777,
+          "maximum": 783,
+          "instructions": [
+            372
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "basic",
+          "method": "vdot",
+          "samples": 12,
+          "total": 26556,
+          "mean": 2213,
+          "minimum": 2211,
+          "maximum": 2215,
+          "instructions": [
+            1044
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "basic",
+          "method": "rvv",
+          "samples": 12,
+          "total": 11880,
+          "mean": 990,
+          "minimum": 989,
+          "maximum": 991,
+          "instructions": [
+            596
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "reuse",
+          "method": "vdot",
+          "samples": 12,
+          "total": 8484,
+          "mean": 707,
+          "minimum": 707,
+          "maximum": 707,
+          "instructions": [
+            632
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "reuse",
+          "method": "rvv",
+          "samples": 12,
+          "total": 9345,
+          "mean": 778.75,
+          "minimum": 776,
+          "maximum": 781,
+          "instructions": [
+            372
+          ]
+        }
+      ],
+      "fastest_rvv": {
+        "variant": "firstdot",
+        "software": "reuse",
+        "method": "rvv",
+        "samples": 12,
+        "total": 9345,
+        "mean": 778.75,
+        "minimum": 776,
+        "maximum": 781,
+        "instructions": [
+          372
+        ]
+      },
+      "firstdot_reuse_vdot": {
+        "variant": "firstdot",
+        "software": "reuse",
+        "method": "vdot",
+        "samples": 12,
+        "total": 8484,
+        "mean": 707,
+        "minimum": 707,
+        "maximum": 707,
+        "instructions": [
+          632
+        ]
+      },
+      "s1_reuse_vdot": {
+        "variant": "s1",
+        "software": "reuse",
+        "method": "vdot",
+        "samples": 12,
+        "total": 8607,
+        "mean": 717.25,
+        "minimum": 714,
+        "maximum": 720,
+        "instructions": [
+          672
+        ]
+      },
+      "reduction_vs_s1": 0.014290693621470951,
+      "reduction_vs_rvv": 0.09213483146067414,
+      "firstdot_beats_s1_and_rvv": true
+    },
+    {
+      "shard": 7,
+      "shape": [
+        4,
+        13
+      ],
+      "datasets": [
+        0,
+        1,
+        2
+      ],
+      "scope": "endtoend-with-c-abi-call",
+      "candidates": [
+        {
+          "variant": "s1",
+          "software": "basic",
+          "method": "vdot",
+          "samples": 12,
+          "total": 3048,
+          "mean": 254,
+          "minimum": 251,
+          "maximum": 257,
+          "instructions": [
+            168
+          ]
+        },
+        {
+          "variant": "s1",
+          "software": "basic",
+          "method": "rvv",
+          "samples": 12,
+          "total": 2760,
+          "mean": 230,
+          "minimum": 230,
+          "maximum": 230,
+          "instructions": [
+            68
+          ]
+        },
+        {
+          "variant": "s1",
+          "software": "reuse",
+          "method": "vdot",
+          "samples": 12,
+          "total": 2637,
+          "mean": 219.75,
+          "minimum": 219,
+          "maximum": 220,
+          "instructions": [
+            136
+          ]
+        },
+        {
+          "variant": "s1",
+          "software": "reuse",
+          "method": "rvv",
+          "samples": 12,
+          "total": 2244,
+          "mean": 187,
+          "minimum": 184,
+          "maximum": 189,
+          "instructions": [
+            54
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "basic",
+          "method": "vdot",
+          "samples": 12,
+          "total": 2799,
+          "mean": 233.25,
+          "minimum": 230,
+          "maximum": 237,
+          "instructions": [
+            152
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "basic",
+          "method": "rvv",
+          "samples": 12,
+          "total": 2766,
+          "mean": 230.5,
+          "minimum": 230,
+          "maximum": 231,
+          "instructions": [
+            68
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "reuse",
+          "method": "vdot",
+          "samples": 12,
+          "total": 2454,
+          "mean": 204.5,
+          "minimum": 204,
+          "maximum": 205,
+          "instructions": [
+            126
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "reuse",
+          "method": "rvv",
+          "samples": 12,
+          "total": 2244,
+          "mean": 187,
+          "minimum": 184,
+          "maximum": 190,
+          "instructions": [
+            54
+          ]
+        }
+      ],
+      "fastest_rvv": {
+        "variant": "s1",
+        "software": "reuse",
+        "method": "rvv",
+        "samples": 12,
+        "total": 2244,
+        "mean": 187,
+        "minimum": 184,
+        "maximum": 189,
+        "instructions": [
+          54
+        ]
+      },
+      "firstdot_reuse_vdot": {
+        "variant": "firstdot",
+        "software": "reuse",
+        "method": "vdot",
+        "samples": 12,
+        "total": 2454,
+        "mean": 204.5,
+        "minimum": 204,
+        "maximum": 205,
+        "instructions": [
+          126
+        ]
+      },
+      "s1_reuse_vdot": {
+        "variant": "s1",
+        "software": "reuse",
+        "method": "vdot",
+        "samples": 12,
+        "total": 2637,
+        "mean": 219.75,
+        "minimum": 219,
+        "maximum": 220,
+        "instructions": [
+          136
+        ]
+      },
+      "reduction_vs_s1": 0.06939704209328779,
+      "reduction_vs_rvv": -0.09358288770053469,
+      "firstdot_beats_s1_and_rvv": false
+    }
+  ],
+  "measured_windows": 352
+}

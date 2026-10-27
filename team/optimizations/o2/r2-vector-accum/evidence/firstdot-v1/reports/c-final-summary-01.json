@@ -1,0 +1,134 @@
+{
+  "c_state": {
+    "status": "R4_C_APPLICATION_CALLS_PASS",
+    "contract": "r2-s1-firstdot-c-application-v1",
+    "operation_id": "20261024-LiZufan001-r2s1-firstdot-1458-c01",
+    "started": "2026-10-24T08:18:12.224564+00:00",
+    "new_emu_runs": 3,
+    "active_pid": null,
+    "active_result": null,
+    "performance_measured": false,
+    "distinct_cases": 48,
+    "public_functions": 16,
+    "normal_case_executions": 96,
+    "expected_negative_runs": 1,
+    "normal_runs": 2,
+    "whole_suite_acceptance": false,
+    "finished": "2026-10-24T08:41:37.697470+00:00"
+  },
+  "qualification": {
+    "status": "FIRSTDOT_C_APPLICATION_CALLS_PASS",
+    "contract": "r2-s1-firstdot-c-application-v1",
+    "parent_identity_sha256": "4a89872d0463163ea0be83f680843352e01354043f5709509d822353221258eb",
+    "ordinary_c_cases": 48,
+    "normal_case_executions": 96,
+    "new_emu_runs": 3,
+    "performance_measured": false,
+    "stable_default_changed": false
+  },
+  "c_audit": {
+    "status": "FIRSTDOT_C_APPLICATION_ARCHIVE_RAW_AUDIT_PASS",
+    "contract": "r2-s1-firstdot-c-application-v1",
+    "proof": {
+      "contract": "r2-s1-firstdot-c-application-v1",
+      "distinct_cases": 48,
+      "public_functions": 16,
+      "normal_case_executions": 96,
+      "original_emu_processes": 3,
+      "expected_negative_runs": 1,
+      "ordinary_c_caller_executed": true,
+      "performance_measured": false,
+      "whole_suite_acceptance": false,
+      "physical_external_inputs_revalidated": false,
+      "new_emu_runs": 0,
+      "new_nemu_runs": 0,
+      "status": "R4_C_APPLICATION_ARCHIVE_RAW_AUDIT_PASS",
+      "archive": {
+        "files": 129,
+        "raw_bytes": 17493608,
+        "stored_bytes": 1185337,
+        "archive_manifest_sha256": "47859f1c12d5311ef554803c6976c8699ebafc164e2bdd876cfd0c6a6f2a2ec1"
+      },
+      "matrix_manifest_sha256": "0c8d3159c91aa3c934c7bfb7f2640906844246e812c0b5bfc556cdfb86d0d3b4",
+      "matrix_status": "FIRSTDOT_ARCHIVE_ARCHITECTURE_COUNTER_TRACE_PASS"
+    }
+  },
+  "library": {
+    "status": "FIRSTDOT_LIBRARY_OBJECT_AND_CONSUMER_PASS",
+    "archive_sha256": "9e12de07d363a2627d7d33cff401da257c30487d59b3a3f7029bb3a262fbd33e",
+    "object_sha256": "b65d4ca4faf3550ad2e95d3fb7d1d452923b71ae50776420bfcd679d098238af",
+    "header_sha256": "8ff3e08d098f000962beeaf898730939ee83bd4ea8eaf9be1c03c80f93c9db83",
+    "public_functions": 16,
+    "archive_member_bytes": 27416,
+    "linked_leaf_bytes_identical": true,
+    "new_emu_runs": 0,
+    "linked_c_entry_relocations": 16,
+    "performance_remeasured": false,
+    "stable_default_changed": false
+  },
+  "host": {
+    "status": "FIRSTDOT_C_ADAPTER_HOST_PASS",
+    "unchanged_c_harness": true,
+    "unchanged_makefile": true,
+    "private_generation_repeat_identical": true,
+    "public_functions": 16,
+    "scalar_oracle_cases": 48,
+    "matrix_row_matches": 16,
+    "old_symbol_collisions": 0,
+    "foreign_profile_rejected": "ordinary C physical T17 identity differs",
+    "false_qualification_rejected": "firstdot C qualification differs",
+    "new_emu_runs": 0,
+    "library": {
+      "status": "FIRSTDOT_LIBRARY_REJECTION_PASS",
+      "good": {
+        "status": "FIRSTDOT_LIBRARY_OBJECT_AND_CONSUMER_PASS",
+        "archive_sha256": "9e12de07d363a2627d7d33cff401da257c30487d59b3a3f7029bb3a262fbd33e",
+        "object_sha256": "b65d4ca4faf3550ad2e95d3fb7d1d452923b71ae50776420bfcd679d098238af",
+        "header_sha256": "8ff3e08d098f000962beeaf898730939ee83bd4ea8eaf9be1c03c80f93c9db83",
+        "public_functions": 16,
+        "archive_member_bytes": 27416,
+        "linked_leaf_bytes_identical": true,
+        "new_emu_runs": 0,
+        "linked_c_entry_relocations": 16,
+        "performance_remeasured": false,
+        "stable_default_changed": false
+      },
+      "rehashed_corruptions": [
+        {
+          "case": "missing-consumer",
+          "reason": "linked C consumer or complete entry table missing"
+        },
+        {
+          "case": "wrong-member",
+          "reason": "library member differs from qualified object"
+        },
+        {
+          "case": "missing-artifact",
+          "reason": "library artifact inventory differs"
+        },
+        {
+          "case": "wrong-table-reference",
+          "reason": "consumer does not reference all qualified entries in order"
+        }
+      ]
+    }
+  },
+  "negative": {
+    "vd": 0,
+    "pc": "0x800003d8",
+    "word": "0x0388000b",
+    "bit": 100,
+    "abort_event_pc": "0x80000400",
+    "abort_count": 1,
+    "fault_pc_binding": "injection PC equals mismatch PC",
+    "abort_pc_scope": "recorded XSTrap event field; not required to equal mismatch PC"
+  },
+  "hashes": {
+    "c-audit-01.json": "e178c590836330e9ed29b6b083527422c5d544e2dbde01b911c0e4978e2644cc",
+    "c-archive-01/archive-manifest.json": "47859f1c12d5311ef554803c6976c8699ebafc164e2bdd876cfd0c6a6f2a2ec1",
+    "library-01/library.json": "749d19cd9a772abb174500d8c8553d6f87ad675d7bcde6fc632829c75ea2dad5",
+    "library-01/library-check.json": "6aa14b86568680aff25267dc54efcfb5792b7a09ff461f7f9336bacd21908052",
+    "c-library-host-01.json": "26c1ccfed91de605288c2726edd1794ff3dd897fe280bcf82c9dd325259632dc",
+    "usage-check-02/report.json": "ecd27da2e5f36c8f8875dfb09d74150fcf7a5274e403a1a0199c8a29138e4af1"
+  }
+}

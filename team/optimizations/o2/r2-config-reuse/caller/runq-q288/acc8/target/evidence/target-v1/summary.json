@@ -1,0 +1,606 @@
+{
+  "status": "ACC8_TARGET_VALIDATED_ARCHIVED_AND_REPRODUCED",
+  "contract": "r2-s3-runq-q288-acc8-target-v1",
+  "runtime_source_commit": "8fa52a3def10bcce9bfae7a0bc874f3bbdbcb0ad",
+  "source_files": 88,
+  "elf_sha256": "b169979ed8c4b27b3dcd45e64b5c8c8455be701f990035a66bb454bf8081ec9f",
+  "image_sha256": "64724626a9d5f4fd4953ddef4620cd0e8f90380451d6f4671345cd688caf0536",
+  "campaign": {
+    "contract": "r2-s3-runq-q288-acc8-target-v1",
+    "status": "SPLIT_CAMPAIGN_PASS",
+    "operation_id": "20261026-LiZufan001-acc8-target-v1-0629",
+    "started": "2026-10-25T22:29:32.502520+00:00",
+    "new_emu_runs": 3,
+    "active_pid": null,
+    "active_result": null,
+    "finished": "2026-10-25T23:35:17.226387+00:00"
+  },
+  "validation": {
+    "status": "TARGET_FUNCTIONAL_AND_COST_DIAGNOSTIC_PASS",
+    "contract": "r2-s3-runq-q288-acc8-target-v1",
+    "windows": 11,
+    "functional_calls": 10,
+    "timed_q_calls": 10,
+    "judge_fault_controls": 6,
+    "committed_vdot": 51841,
+    "counter_enqueues": 44,
+    "csr_samples": 44,
+    "samples": [
+      {
+        "seq": 0,
+        "id": 4,
+        "scenario": "acc8-target-pack",
+        "method": "pack",
+        "n": 1,
+        "dots": 0,
+        "phase": "setup",
+        "repeat": 0,
+        "dataset": 0,
+        "cycles": 308734,
+        "instructions": 430220,
+        "counter_values": [
+          14784781538186107390,
+          16270799599946513678,
+          16270799599946822412,
+          14784781538186537610
+        ],
+        "sample_ticks": [
+          10148,
+          10182,
+          318916,
+          318950
+        ],
+        "block": -1,
+        "role": "pack",
+        "kind": "pack",
+        "variant": "shared",
+        "leaf": null
+      },
+      {
+        "seq": 1,
+        "id": 0,
+        "scenario": "acc8-target-cost-observation",
+        "method": "vdot",
+        "n": 1,
+        "dots": 10368,
+        "phase": "measured",
+        "repeat": 0,
+        "dataset": 0,
+        "cycles": 122917,
+        "instructions": 92219,
+        "counter_values": [
+          14784781538187647429,
+          16270799599947365714,
+          16270799599947488631,
+          14784781538187739648
+        ],
+        "sample_ticks": [
+          862184,
+          862218,
+          985135,
+          985169
+        ],
+        "block": 0,
+        "role": "functional_cost_observation",
+        "kind": "Q",
+        "variant": "original",
+        "leaf": "split_gemv_8x32_vdot"
+      },
+      {
+        "seq": 2,
+        "id": 1,
+        "scenario": "acc8-target-cost-observation",
+        "method": "rvv",
+        "n": 1,
+        "dots": 0,
+        "phase": "measured",
+        "repeat": 1,
+        "dataset": 0,
+        "cycles": 109549,
+        "instructions": 75371,
+        "counter_values": [
+          14784781538187758887,
+          16270799599947502474,
+          16270799599947612023,
+          14784781538187834258
+        ],
+        "sample_ticks": [
+          998944,
+          998978,
+          1108527,
+          1108561
+        ],
+        "block": 0,
+        "role": "functional_cost_observation",
+        "kind": "Q",
+        "variant": "original",
+        "leaf": "split_gemv_8x32_rvv4"
+      },
+      {
+        "seq": 3,
+        "id": 2,
+        "scenario": "acc8-target-cost-observation",
+        "method": "vdot",
+        "n": 1,
+        "dots": 10368,
+        "phase": "measured",
+        "repeat": 2,
+        "dataset": 0,
+        "cycles": 92138,
+        "instructions": 72865,
+        "counter_values": [
+          14784781538187839862,
+          16270799599947616310,
+          16270799599947708448,
+          14784781538187912727
+        ],
+        "sample_ticks": [
+          1112780,
+          1112814,
+          1204952,
+          1204986
+        ],
+        "block": 0,
+        "role": "functional_cost_observation",
+        "kind": "Q",
+        "variant": "acc8",
+        "leaf": "split_gemv_8x32_vdot"
+      },
+      {
+        "seq": 4,
+        "id": 3,
+        "scenario": "acc8-target-cost-observation",
+        "method": "rvv",
+        "n": 1,
+        "dots": 0,
+        "phase": "measured",
+        "repeat": 3,
+        "dataset": 0,
+        "cycles": 85785,
+        "instructions": 56017,
+        "counter_values": [
+          14784781538187918331,
+          16270799599947712567,
+          16270799599947798352,
+          14784781538187974348
+        ],
+        "sample_ticks": [
+          1209037,
+          1209071,
+          1294856,
+          1294890
+        ],
+        "block": 0,
+        "role": "functional_cost_observation",
+        "kind": "Q",
+        "variant": "acc8",
+        "leaf": "split_gemv_8x32_rvv4"
+      },
+      {
+        "seq": 5,
+        "id": 2,
+        "scenario": "acc8-target-cost-observation",
+        "method": "vdot",
+        "n": 1,
+        "dots": 10368,
+        "phase": "measured",
+        "repeat": 4,
+        "dataset": 1,
+        "cycles": 89263,
+        "instructions": 72865,
+        "counter_values": [
+          14784781538187979952,
+          16270799599947802473,
+          16270799599947891736,
+          14784781538188052817
+        ],
+        "sample_ticks": [
+          1298943,
+          1298977,
+          1388240,
+          1388274
+        ],
+        "block": 0,
+        "role": "functional_cost_observation",
+        "kind": "Q",
+        "variant": "acc8",
+        "leaf": "split_gemv_8x32_vdot"
+      },
+      {
+        "seq": 6,
+        "id": 3,
+        "scenario": "acc8-target-cost-observation",
+        "method": "rvv",
+        "n": 1,
+        "dots": 0,
+        "phase": "measured",
+        "repeat": 5,
+        "dataset": 1,
+        "cycles": 85467,
+        "instructions": 56017,
+        "counter_values": [
+          14784781538188058421,
+          16270799599947896863,
+          16270799599947982330,
+          14784781538188114438
+        ],
+        "sample_ticks": [
+          1393333,
+          1393367,
+          1478834,
+          1478868
+        ],
+        "block": 0,
+        "role": "functional_cost_observation",
+        "kind": "Q",
+        "variant": "acc8",
+        "leaf": "split_gemv_8x32_rvv4"
+      },
+      {
+        "seq": 7,
+        "id": 2,
+        "scenario": "acc8-target-cost-observation",
+        "method": "vdot",
+        "n": 1,
+        "dots": 10368,
+        "phase": "measured",
+        "repeat": 6,
+        "dataset": 0,
+        "cycles": 88879,
+        "instructions": 72865,
+        "counter_values": [
+          14784781538188120042,
+          16270799599947986483,
+          16270799599948075362,
+          14784781538188192907
+        ],
+        "sample_ticks": [
+          1482953,
+          1482987,
+          1571866,
+          1571900
+        ],
+        "block": 0,
+        "role": "functional_cost_observation",
+        "kind": "Q",
+        "variant": "acc8",
+        "leaf": "split_gemv_8x32_vdot"
+      },
+      {
+        "seq": 8,
+        "id": 3,
+        "scenario": "acc8-target-cost-observation",
+        "method": "rvv",
+        "n": 1,
+        "dots": 0,
+        "phase": "measured",
+        "repeat": 7,
+        "dataset": 0,
+        "cycles": 84809,
+        "instructions": 56017,
+        "counter_values": [
+          14784781538188198511,
+          16270799599948079400,
+          16270799599948164209,
+          14784781538188254528
+        ],
+        "sample_ticks": [
+          1575870,
+          1575904,
+          1660713,
+          1660747
+        ],
+        "block": 0,
+        "role": "functional_cost_observation",
+        "kind": "Q",
+        "variant": "acc8",
+        "leaf": "split_gemv_8x32_rvv4"
+      },
+      {
+        "seq": 9,
+        "id": 2,
+        "scenario": "acc8-target-cost-observation",
+        "method": "vdot",
+        "n": 1,
+        "dots": 10368,
+        "phase": "measured",
+        "repeat": 8,
+        "dataset": 2,
+        "cycles": 88801,
+        "instructions": 72865,
+        "counter_values": [
+          14784781538188260132,
+          16270799599948168348,
+          16270799599948257149,
+          14784781538188332997
+        ],
+        "sample_ticks": [
+          1664818,
+          1664852,
+          1753653,
+          1753687
+        ],
+        "block": 0,
+        "role": "functional_cost_observation",
+        "kind": "Q",
+        "variant": "acc8",
+        "leaf": "split_gemv_8x32_vdot"
+      },
+      {
+        "seq": 10,
+        "id": 3,
+        "scenario": "acc8-target-cost-observation",
+        "method": "rvv",
+        "n": 1,
+        "dots": 0,
+        "phase": "measured",
+        "repeat": 9,
+        "dataset": 2,
+        "cycles": 84956,
+        "instructions": 56017,
+        "counter_values": [
+          14784781538188338601,
+          16270799599948262092,
+          16270799599948347048,
+          14784781538188394618
+        ],
+        "sample_ticks": [
+          1758562,
+          1758596,
+          1843552,
+          1843586
+        ],
+        "block": 0,
+        "role": "functional_cost_observation",
+        "kind": "Q",
+        "variant": "acc8",
+        "leaf": "split_gemv_8x32_rvv4"
+      }
+    ],
+    "selection": {
+      "decision": "TARGET_FUNCTIONAL_AND_COST_DIAGNOSTIC_PASS",
+      "observations": [
+        {
+          "seq": 1,
+          "variant": "original",
+          "leaf": "split_gemv_8x32_vdot",
+          "dataset": 0,
+          "cycles": 122917,
+          "instructions": 92219
+        },
+        {
+          "seq": 2,
+          "variant": "original",
+          "leaf": "split_gemv_8x32_rvv4",
+          "dataset": 0,
+          "cycles": 109549,
+          "instructions": 75371
+        },
+        {
+          "seq": 3,
+          "variant": "acc8",
+          "leaf": "split_gemv_8x32_vdot",
+          "dataset": 0,
+          "cycles": 92138,
+          "instructions": 72865
+        },
+        {
+          "seq": 4,
+          "variant": "acc8",
+          "leaf": "split_gemv_8x32_rvv4",
+          "dataset": 0,
+          "cycles": 85785,
+          "instructions": 56017
+        },
+        {
+          "seq": 5,
+          "variant": "acc8",
+          "leaf": "split_gemv_8x32_vdot",
+          "dataset": 1,
+          "cycles": 89263,
+          "instructions": 72865
+        },
+        {
+          "seq": 6,
+          "variant": "acc8",
+          "leaf": "split_gemv_8x32_rvv4",
+          "dataset": 1,
+          "cycles": 85467,
+          "instructions": 56017
+        },
+        {
+          "seq": 7,
+          "variant": "acc8",
+          "leaf": "split_gemv_8x32_vdot",
+          "dataset": 0,
+          "cycles": 88879,
+          "instructions": 72865
+        },
+        {
+          "seq": 8,
+          "variant": "acc8",
+          "leaf": "split_gemv_8x32_rvv4",
+          "dataset": 0,
+          "cycles": 84809,
+          "instructions": 56017
+        },
+        {
+          "seq": 9,
+          "variant": "acc8",
+          "leaf": "split_gemv_8x32_vdot",
+          "dataset": 2,
+          "cycles": 88801,
+          "instructions": 72865
+        },
+        {
+          "seq": 10,
+          "variant": "acc8",
+          "leaf": "split_gemv_8x32_rvv4",
+          "dataset": 2,
+          "cycles": 84956,
+          "instructions": 56017
+        }
+      ],
+      "instruction_differences": {
+        "vdot": 19354,
+        "rvv4": 19354
+      },
+      "pack_cycles": 308734,
+      "pack_instructions": 430220,
+      "performance_qualified": false,
+      "selected_method": null,
+      "stable_default_changed": false,
+      "statistical_scope": "fixed order; unequal call histories; replay is not an extra sample",
+      "application_scope": "synthetic prequantized Q; no full-model/token claim"
+    },
+    "hardware_changed": false,
+    "stable_default_changed": false,
+    "performance_qualified": false
+  },
+  "archive_sha256": "460cda46b955ece108ec1e8c100646efcbe212e70a9f7bad8f51c219d8d23e08",
+  "archive_bytes": 35746587,
+  "archive_members": 153,
+  "raw_bytes": 484251933,
+  "fresh_source_audit": {
+    "status": "ACC8_TARGET_ARCHIVE_FRESH_SOURCE_AUDIT_PASS",
+    "contract": "r2-s3-runq-q288-acc8-target-v1",
+    "image_sha256": "64724626a9d5f4fd4953ddef4620cd0e8f90380451d6f4671345cd688caf0536",
+    "original_emu_runs": 3,
+    "new_emu_runs": 0,
+    "physical_external_inputs_revalidated": false,
+    "windows_per_normal_run": 11,
+    "formal_method_windows": 0,
+    "formal_anchor_windows": 0,
+    "replay_windows": 11,
+    "functional_calls_per_normal_run": 10,
+    "judge_fault_controls": 6,
+    "selection": {
+      "decision": "TARGET_FUNCTIONAL_AND_COST_DIAGNOSTIC_PASS",
+      "observations": [
+        {
+          "seq": 1,
+          "variant": "original",
+          "leaf": "split_gemv_8x32_vdot",
+          "dataset": 0,
+          "cycles": 122917,
+          "instructions": 92219
+        },
+        {
+          "seq": 2,
+          "variant": "original",
+          "leaf": "split_gemv_8x32_rvv4",
+          "dataset": 0,
+          "cycles": 109549,
+          "instructions": 75371
+        },
+        {
+          "seq": 3,
+          "variant": "acc8",
+          "leaf": "split_gemv_8x32_vdot",
+          "dataset": 0,
+          "cycles": 92138,
+          "instructions": 72865
+        },
+        {
+          "seq": 4,
+          "variant": "acc8",
+          "leaf": "split_gemv_8x32_rvv4",
+          "dataset": 0,
+          "cycles": 85785,
+          "instructions": 56017
+        },
+        {
+          "seq": 5,
+          "variant": "acc8",
+          "leaf": "split_gemv_8x32_vdot",
+          "dataset": 1,
+          "cycles": 89263,
+          "instructions": 72865
+        },
+        {
+          "seq": 6,
+          "variant": "acc8",
+          "leaf": "split_gemv_8x32_rvv4",
+          "dataset": 1,
+          "cycles": 85467,
+          "instructions": 56017
+        },
+        {
+          "seq": 7,
+          "variant": "acc8",
+          "leaf": "split_gemv_8x32_vdot",
+          "dataset": 0,
+          "cycles": 88879,
+          "instructions": 72865
+        },
+        {
+          "seq": 8,
+          "variant": "acc8",
+          "leaf": "split_gemv_8x32_rvv4",
+          "dataset": 0,
+          "cycles": 84809,
+          "instructions": 56017
+        },
+        {
+          "seq": 9,
+          "variant": "acc8",
+          "leaf": "split_gemv_8x32_vdot",
+          "dataset": 2,
+          "cycles": 88801,
+          "instructions": 72865
+        },
+        {
+          "seq": 10,
+          "variant": "acc8",
+          "leaf": "split_gemv_8x32_rvv4",
+          "dataset": 2,
+          "cycles": 84956,
+          "instructions": 56017
+        }
+      ],
+      "instruction_differences": {
+        "vdot": 19354,
+        "rvv4": 19354
+      },
+      "pack_cycles": 308734,
+      "pack_instructions": 430220,
+      "performance_qualified": false,
+      "selected_method": null,
+      "stable_default_changed": false,
+      "statistical_scope": "fixed order; unequal call histories; replay is not an extra sample",
+      "application_scope": "synthetic prequantized Q; no full-model/token claim"
+    },
+    "raw_sources_recomputed": true,
+    "stable_default_changed": false,
+    "hardware_changed": false,
+    "pack_windows": 1,
+    "cost_observation_windows": 10,
+    "full_q_calls_per_normal_run": 10,
+    "integer_leaf_calls_per_normal_run": 3240,
+    "probe_dots_per_normal_run": 1,
+    "committed_vdot_per_normal_run": 51841,
+    "performance_qualified": false,
+    "audit_tool_sources": {
+      "team/optimizations/o2/r2-config-reuse/caller/fixed-weight/archive.py": "2d7f69fc4b99d2f83ee276c7acc24f9a8db16e21b3a0521b7102aecd6cbba578",
+      "team/optimizations/o2/r2-config-reuse/caller/split/archive.py": "85d9823ef722e72310293d20eb731bd167804b9bd8c69e0ba0062ea16ca93990",
+      "team/optimizations/o2/repro/evidence/clean-reproduction-v1/analysis/detached-audit.py": "57f31bb70dafa3154dc22e09c635dde1f4c140405717d98053d781dc2ca43cd4",
+      "team/optimizations/o2/r2-config-reuse/caller/runq-q288/acc8/target/archive.py": "714117576633538bbd8dc6057ba29582a6a9208f30adefb5f1d1498cf518112d"
+    },
+    "archive_manifest_sha256": "850c6a2fbcc705f2c94e5f11964fe459eeefaa7303511802b48b98e8c3247f6d",
+    "command_sha256": "5720b9d201100c5d729aaa1cbd9847a38545d2148243ef626b5378e8b757b706",
+    "files": 153,
+    "raw_bytes": 484251933,
+    "stored_bytes": 35746587,
+    "fresh_python_process": true,
+    "full_git_history_required_by_child": false,
+    "source_checkout_required_by_launcher": true,
+    "archived_original_git_objects": 19,
+    "dependency_probe_sha256": "ccdb01888065f08ca8599b0ab4888323172163fa3691d7233e6b205e2de5e5cf",
+    "dependency_scope": "Python filesystem/enumeration and explicit subprocess paths; not an OS sandbox"
+  },
+  "support_sha256": "51f0e3d6cf75764a1819896d11e5cd1b0004dbd75d9c36c8ac330962539dbcb2",
+  "support_members": 21,
+  "performance_qualified": false,
+  "hardware_changed": false,
+  "stable_default_changed": false
+}

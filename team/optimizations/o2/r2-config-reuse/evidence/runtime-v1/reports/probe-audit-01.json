@@ -1,0 +1,551 @@
+{
+  "status": "S3_ARCHIVE_ARCHITECTURE_COUNTER_TRACE_PASS",
+  "contract": "r2-s3-config-reuse-runtime-v1",
+  "qualification_scope": "probe",
+  "archive": {
+    "files": 236,
+    "raw_bytes": 38789918,
+    "stored_bytes": 5073145,
+    "archive_manifest_sha256": "281c16eed98ba5306932dfa24150703ba335d290bc106594c3b25a1c0b01fc9f"
+  },
+  "formal_images": 2,
+  "replay_images": 2,
+  "expected_negative_runs": 1,
+  "original_emu_processes": 5,
+  "measured_windows": 32,
+  "all_window_replay_comparisons": 48,
+  "new_emu_runs": 0,
+  "new_nemu_runs": 0,
+  "physical_external_inputs_revalidated": false,
+  "hardware_changed": false,
+  "stable_default_changed": false,
+  "whole_suite_acceptance": false,
+  "rows": [
+    {
+      "shard": 3,
+      "shape": [
+        8,
+        32
+      ],
+      "datasets": [
+        0
+      ],
+      "scope": "endtoend-with-c-abi-call",
+      "candidates": [
+        {
+          "variant": "firstdot",
+          "software": "basic",
+          "method": "vdot",
+          "samples": 4,
+          "total": 2582,
+          "mean": 645.5,
+          "minimum": 643,
+          "maximum": 648,
+          "instructions": [
+            276
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "basic",
+          "method": "rvv",
+          "samples": 4,
+          "total": 1424,
+          "mean": 356,
+          "minimum": 356,
+          "maximum": 356,
+          "instructions": [
+            180
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "reuse",
+          "method": "vdot",
+          "samples": 4,
+          "total": 1129,
+          "mean": 282.25,
+          "minimum": 282,
+          "maximum": 283,
+          "instructions": [
+            182
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "reuse",
+          "method": "rvv",
+          "samples": 4,
+          "total": 1203,
+          "mean": 300.75,
+          "minimum": 298,
+          "maximum": 303,
+          "instructions": [
+            124
+          ]
+        },
+        {
+          "variant": "config-reuse",
+          "software": "basic",
+          "method": "vdot",
+          "samples": 4,
+          "total": 2575,
+          "mean": 643.75,
+          "minimum": 641,
+          "maximum": 646,
+          "instructions": [
+            267
+          ]
+        },
+        {
+          "variant": "config-reuse",
+          "software": "basic",
+          "method": "rvv",
+          "samples": 4,
+          "total": 1424,
+          "mean": 356,
+          "minimum": 356,
+          "maximum": 356,
+          "instructions": [
+            180
+          ]
+        },
+        {
+          "variant": "config-reuse",
+          "software": "reuse",
+          "method": "vdot",
+          "samples": 4,
+          "total": 1092,
+          "mean": 273,
+          "minimum": 273,
+          "maximum": 273,
+          "instructions": [
+            175
+          ]
+        },
+        {
+          "variant": "config-reuse",
+          "software": "reuse",
+          "method": "rvv",
+          "samples": 4,
+          "total": 1196,
+          "mean": 299,
+          "minimum": 296,
+          "maximum": 302,
+          "instructions": [
+            123
+          ]
+        }
+      ],
+      "fastest_rvv": {
+        "variant": "config-reuse",
+        "software": "reuse",
+        "method": "rvv",
+        "samples": 4,
+        "total": 1196,
+        "mean": 299,
+        "minimum": 296,
+        "maximum": 302,
+        "instructions": [
+          123
+        ]
+      },
+      "config_reuse_vdot": {
+        "variant": "config-reuse",
+        "software": "reuse",
+        "method": "vdot",
+        "samples": 4,
+        "total": 1092,
+        "mean": 273,
+        "minimum": 273,
+        "maximum": 273,
+        "instructions": [
+          175
+        ]
+      },
+      "firstdot_reuse_vdot": {
+        "variant": "firstdot",
+        "software": "reuse",
+        "method": "vdot",
+        "samples": 4,
+        "total": 1129,
+        "mean": 282.25,
+        "minimum": 282,
+        "maximum": 283,
+        "instructions": [
+          182
+        ]
+      },
+      "reduction_vs_firstdot": 0.03277236492471214,
+      "reduction_vs_rvv": 0.08695652173913049,
+      "config_reuse_beats_firstdot_and_rvv": true
+    }
+  ],
+  "fu_window_diagnostics": [
+    {
+      "variant": "firstdot",
+      "shard": 3,
+      "software": "basic",
+      "dataset": 0,
+      "repeat": 2,
+      "seq": 8,
+      "cycles": 643,
+      "instructions": 276,
+      "dots": 32,
+      "accepted_in_cycle_interval": 32,
+      "response_latency_histogram": {
+        "2": 32
+      },
+      "writeback_stall_events": 0,
+      "accept_gap_histogram": {
+        "16": 31
+      },
+      "accept_span_cycles": 496,
+      "first_accept_after_start": 87,
+      "last_response_before_stop": 58
+    },
+    {
+      "variant": "firstdot",
+      "shard": 3,
+      "software": "reuse",
+      "dataset": 0,
+      "repeat": 2,
+      "seq": 10,
+      "cycles": 282,
+      "instructions": 182,
+      "dots": 32,
+      "accepted_in_cycle_interval": 32,
+      "response_latency_histogram": {
+        "2": 32
+      },
+      "writeback_stall_events": 0,
+      "accept_gap_histogram": {
+        "1": 24,
+        "13": 7
+      },
+      "accept_span_cycles": 115,
+      "first_accept_after_start": 103,
+      "last_response_before_stop": 62
+    },
+    {
+      "variant": "firstdot",
+      "shard": 3,
+      "software": "reuse",
+      "dataset": 0,
+      "repeat": 3,
+      "seq": 13,
+      "cycles": 283,
+      "instructions": 182,
+      "dots": 32,
+      "accepted_in_cycle_interval": 32,
+      "response_latency_histogram": {
+        "2": 32
+      },
+      "writeback_stall_events": 0,
+      "accept_gap_histogram": {
+        "1": 24,
+        "13": 7
+      },
+      "accept_span_cycles": 115,
+      "first_accept_after_start": 103,
+      "last_response_before_stop": 63
+    },
+    {
+      "variant": "firstdot",
+      "shard": 3,
+      "software": "basic",
+      "dataset": 0,
+      "repeat": 3,
+      "seq": 15,
+      "cycles": 648,
+      "instructions": 276,
+      "dots": 32,
+      "accepted_in_cycle_interval": 32,
+      "response_latency_histogram": {
+        "2": 32
+      },
+      "writeback_stall_events": 0,
+      "accept_gap_histogram": {
+        "16": 31
+      },
+      "accept_span_cycles": 496,
+      "first_accept_after_start": 92,
+      "last_response_before_stop": 58
+    },
+    {
+      "variant": "firstdot",
+      "shard": 3,
+      "software": "basic",
+      "dataset": 0,
+      "repeat": 4,
+      "seq": 16,
+      "cycles": 643,
+      "instructions": 276,
+      "dots": 32,
+      "accepted_in_cycle_interval": 32,
+      "response_latency_histogram": {
+        "2": 32
+      },
+      "writeback_stall_events": 0,
+      "accept_gap_histogram": {
+        "16": 31
+      },
+      "accept_span_cycles": 496,
+      "first_accept_after_start": 87,
+      "last_response_before_stop": 58
+    },
+    {
+      "variant": "firstdot",
+      "shard": 3,
+      "software": "reuse",
+      "dataset": 0,
+      "repeat": 4,
+      "seq": 18,
+      "cycles": 282,
+      "instructions": 182,
+      "dots": 32,
+      "accepted_in_cycle_interval": 32,
+      "response_latency_histogram": {
+        "2": 32
+      },
+      "writeback_stall_events": 0,
+      "accept_gap_histogram": {
+        "1": 24,
+        "13": 7
+      },
+      "accept_span_cycles": 115,
+      "first_accept_after_start": 103,
+      "last_response_before_stop": 62
+    },
+    {
+      "variant": "firstdot",
+      "shard": 3,
+      "software": "reuse",
+      "dataset": 0,
+      "repeat": 5,
+      "seq": 21,
+      "cycles": 282,
+      "instructions": 182,
+      "dots": 32,
+      "accepted_in_cycle_interval": 32,
+      "response_latency_histogram": {
+        "2": 32
+      },
+      "writeback_stall_events": 0,
+      "accept_gap_histogram": {
+        "1": 24,
+        "13": 7
+      },
+      "accept_span_cycles": 115,
+      "first_accept_after_start": 103,
+      "last_response_before_stop": 62
+    },
+    {
+      "variant": "firstdot",
+      "shard": 3,
+      "software": "basic",
+      "dataset": 0,
+      "repeat": 5,
+      "seq": 23,
+      "cycles": 648,
+      "instructions": 276,
+      "dots": 32,
+      "accepted_in_cycle_interval": 32,
+      "response_latency_histogram": {
+        "2": 32
+      },
+      "writeback_stall_events": 0,
+      "accept_gap_histogram": {
+        "16": 31
+      },
+      "accept_span_cycles": 496,
+      "first_accept_after_start": 92,
+      "last_response_before_stop": 58
+    },
+    {
+      "variant": "config-reuse",
+      "shard": 3,
+      "software": "basic",
+      "dataset": 0,
+      "repeat": 2,
+      "seq": 8,
+      "cycles": 641,
+      "instructions": 267,
+      "dots": 32,
+      "accepted_in_cycle_interval": 32,
+      "response_latency_histogram": {
+        "2": 32
+      },
+      "writeback_stall_events": 0,
+      "accept_gap_histogram": {
+        "16": 31
+      },
+      "accept_span_cycles": 496,
+      "first_accept_after_start": 85,
+      "last_response_before_stop": 58
+    },
+    {
+      "variant": "config-reuse",
+      "shard": 3,
+      "software": "reuse",
+      "dataset": 0,
+      "repeat": 2,
+      "seq": 10,
+      "cycles": 273,
+      "instructions": 175,
+      "dots": 32,
+      "accepted_in_cycle_interval": 32,
+      "response_latency_histogram": {
+        "2": 32
+      },
+      "writeback_stall_events": 0,
+      "accept_gap_histogram": {
+        "1": 15,
+        "2": 9,
+        "12": 7
+      },
+      "accept_span_cycles": 117,
+      "first_accept_after_start": 93,
+      "last_response_before_stop": 61
+    },
+    {
+      "variant": "config-reuse",
+      "shard": 3,
+      "software": "reuse",
+      "dataset": 0,
+      "repeat": 3,
+      "seq": 13,
+      "cycles": 273,
+      "instructions": 175,
+      "dots": 32,
+      "accepted_in_cycle_interval": 32,
+      "response_latency_histogram": {
+        "2": 32
+      },
+      "writeback_stall_events": 0,
+      "accept_gap_histogram": {
+        "1": 15,
+        "2": 9,
+        "12": 7
+      },
+      "accept_span_cycles": 117,
+      "first_accept_after_start": 93,
+      "last_response_before_stop": 61
+    },
+    {
+      "variant": "config-reuse",
+      "shard": 3,
+      "software": "basic",
+      "dataset": 0,
+      "repeat": 3,
+      "seq": 15,
+      "cycles": 646,
+      "instructions": 267,
+      "dots": 32,
+      "accepted_in_cycle_interval": 32,
+      "response_latency_histogram": {
+        "2": 32
+      },
+      "writeback_stall_events": 0,
+      "accept_gap_histogram": {
+        "16": 31
+      },
+      "accept_span_cycles": 496,
+      "first_accept_after_start": 90,
+      "last_response_before_stop": 58
+    },
+    {
+      "variant": "config-reuse",
+      "shard": 3,
+      "software": "basic",
+      "dataset": 0,
+      "repeat": 4,
+      "seq": 16,
+      "cycles": 642,
+      "instructions": 267,
+      "dots": 32,
+      "accepted_in_cycle_interval": 32,
+      "response_latency_histogram": {
+        "2": 32
+      },
+      "writeback_stall_events": 0,
+      "accept_gap_histogram": {
+        "16": 31
+      },
+      "accept_span_cycles": 496,
+      "first_accept_after_start": 86,
+      "last_response_before_stop": 58
+    },
+    {
+      "variant": "config-reuse",
+      "shard": 3,
+      "software": "reuse",
+      "dataset": 0,
+      "repeat": 4,
+      "seq": 18,
+      "cycles": 273,
+      "instructions": 175,
+      "dots": 32,
+      "accepted_in_cycle_interval": 32,
+      "response_latency_histogram": {
+        "2": 32
+      },
+      "writeback_stall_events": 0,
+      "accept_gap_histogram": {
+        "1": 15,
+        "2": 9,
+        "12": 7
+      },
+      "accept_span_cycles": 117,
+      "first_accept_after_start": 93,
+      "last_response_before_stop": 61
+    },
+    {
+      "variant": "config-reuse",
+      "shard": 3,
+      "software": "reuse",
+      "dataset": 0,
+      "repeat": 5,
+      "seq": 21,
+      "cycles": 273,
+      "instructions": 175,
+      "dots": 32,
+      "accepted_in_cycle_interval": 32,
+      "response_latency_histogram": {
+        "2": 32
+      },
+      "writeback_stall_events": 0,
+      "accept_gap_histogram": {
+        "1": 15,
+        "2": 9,
+        "12": 7
+      },
+      "accept_span_cycles": 117,
+      "first_accept_after_start": 93,
+      "last_response_before_stop": 61
+    },
+    {
+      "variant": "config-reuse",
+      "shard": 3,
+      "software": "basic",
+      "dataset": 0,
+      "repeat": 5,
+      "seq": 23,
+      "cycles": 646,
+      "instructions": 267,
+      "dots": 32,
+      "accepted_in_cycle_interval": 32,
+      "response_latency_histogram": {
+        "2": 32
+      },
+      "writeback_stall_events": 0,
+      "accept_gap_histogram": {
+        "16": 31
+      },
+      "accept_span_cycles": 496,
+      "first_accept_after_start": 90,
+      "last_response_before_stop": 58
+    }
+  ],
+  "scope": "sealed ELF/compiled model/full128/CSR/C-ABI retirement/counters/O2/negative/recovery/replay; fixed GEMV invocation"
+}

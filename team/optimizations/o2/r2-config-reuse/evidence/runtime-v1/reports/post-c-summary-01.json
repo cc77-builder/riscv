@@ -1,0 +1,143 @@
+{
+  "status": "S3_C_PUBLIC_LIBRARY_AND_USAGE_QUALIFIED",
+  "created": "2026-10-24T12:02:52.742901+00:00",
+  "c_state": {
+    "status": "R4_C_APPLICATION_CALLS_PASS",
+    "contract": "r2-s3-config-reuse-c-application-v1",
+    "operation_id": "20261024-LiZufan001-r2s3-runtime-1818",
+    "started": "2026-10-24T11:37:58.755644+00:00",
+    "new_emu_runs": 3,
+    "active_pid": null,
+    "active_result": null,
+    "performance_measured": false,
+    "distinct_cases": 48,
+    "public_functions": 16,
+    "normal_case_executions": 96,
+    "expected_negative_runs": 1,
+    "normal_runs": 2,
+    "whole_suite_acceptance": false,
+    "finished": "2026-10-24T12:01:24.201685+00:00"
+  },
+  "qualification": {
+    "status": "S3_C_APPLICATION_CALLS_PASS",
+    "contract": "r2-s3-config-reuse-c-application-v1",
+    "parent_identity_sha256": "4a89872d0463163ea0be83f680843352e01354043f5709509d822353221258eb",
+    "ordinary_c_cases": 48,
+    "normal_case_executions": 96,
+    "new_emu_runs": 3,
+    "performance_measured": false,
+    "stable_default_changed": false
+  },
+  "c_archive_audit_execution": "library.build -> frozen C archive audit -> current matrix and C raw audit",
+  "c_audit": {
+    "status": "S3_C_APPLICATION_ARCHIVE_RAW_AUDIT_PASS",
+    "contract": "r2-s3-config-reuse-c-application-v1",
+    "proof": {
+      "contract": "r2-s3-config-reuse-c-application-v1",
+      "distinct_cases": 48,
+      "public_functions": 16,
+      "normal_case_executions": 96,
+      "original_emu_processes": 3,
+      "expected_negative_runs": 1,
+      "ordinary_c_caller_executed": true,
+      "performance_measured": false,
+      "whole_suite_acceptance": false,
+      "physical_external_inputs_revalidated": false,
+      "new_emu_runs": 0,
+      "new_nemu_runs": 0,
+      "status": "R4_C_APPLICATION_ARCHIVE_RAW_AUDIT_PASS",
+      "archive": {
+        "files": 137,
+        "raw_bytes": 17542224,
+        "stored_bytes": 1226531,
+        "archive_manifest_sha256": "4e872d8aeb752145127fa8221a60098de6be1b7f110a858402ec0b428e776604"
+      },
+      "matrix_manifest_sha256": "0310fa0f2b3edc2851bb4e16d95b4ee994822ac911c2e448c905d194f9406be2",
+      "matrix_status": "S3_ARCHIVE_ARCHITECTURE_COUNTER_TRACE_PASS"
+    }
+  },
+  "library": {
+    "status": "S3_LIBRARY_OBJECT_AND_CONSUMER_PASS",
+    "archive_sha256": "92c8941d440f55b1ebf824b0a937a17648f4a769dfe62de6a53b47054369dc28",
+    "object_sha256": "f8bc13daeead98a414f313600a5778c96ac95a66b5bcb5c714ea3b98e0d25ab3",
+    "header_sha256": "d6cbdadb8ed601e1ccd4d308970111588c5fe7e10098b821625630e2b5360be9",
+    "public_functions": 16,
+    "archive_member_bytes": 27160,
+    "linked_leaf_bytes_identical": true,
+    "new_emu_runs": 0,
+    "linked_c_entry_relocations": 16,
+    "performance_remeasured": false,
+    "stable_default_changed": false
+  },
+  "host": {
+    "status": "S3_C_ADAPTER_HOST_PASS",
+    "unchanged_c_harness": true,
+    "unchanged_makefile": true,
+    "private_generation_repeat_identical": true,
+    "public_functions": 16,
+    "scalar_oracle_cases": 48,
+    "matrix_row_matches": 16,
+    "old_symbol_collisions": 0,
+    "foreign_profile_rejected": "ordinary C physical T17 identity differs",
+    "false_qualification_rejected": "config-reuse C qualification differs",
+    "old_firstdot_matrix_rejected": "full config-reuse matrix required",
+    "new_emu_runs": 0,
+    "library": {
+      "status": "S3_LIBRARY_REJECTION_PASS",
+      "good": {
+        "status": "S3_LIBRARY_OBJECT_AND_CONSUMER_PASS",
+        "archive_sha256": "92c8941d440f55b1ebf824b0a937a17648f4a769dfe62de6a53b47054369dc28",
+        "object_sha256": "f8bc13daeead98a414f313600a5778c96ac95a66b5bcb5c714ea3b98e0d25ab3",
+        "header_sha256": "d6cbdadb8ed601e1ccd4d308970111588c5fe7e10098b821625630e2b5360be9",
+        "public_functions": 16,
+        "archive_member_bytes": 27160,
+        "linked_leaf_bytes_identical": true,
+        "new_emu_runs": 0,
+        "linked_c_entry_relocations": 16,
+        "performance_remeasured": false,
+        "stable_default_changed": false
+      },
+      "rehashed_corruptions": [
+        {
+          "case": "missing-consumer",
+          "reason": "linked C consumer or complete entry table missing"
+        },
+        {
+          "case": "wrong-member",
+          "reason": "library member differs from qualified object"
+        },
+        {
+          "case": "missing-artifact",
+          "reason": "library artifact inventory differs"
+        },
+        {
+          "case": "wrong-table-reference",
+          "reason": "consumer does not reference all qualified entries in order"
+        }
+      ]
+    }
+  },
+  "negative": {
+    "vd": 0,
+    "pc": "0x800003d4",
+    "word": "0x0388000b",
+    "bit": 100,
+    "abort_event_pc": "0x800003f8",
+    "abort_count": 1,
+    "fault_pc_binding": "injection PC equals mismatch PC",
+    "abort_pc_scope": "recorded XSTrap event field; not required to equal mismatch PC"
+  },
+  "artifacts": {
+    "c-audit-01.json": "6c76ec251d539dfd7bfef24e12b709d6f9f5ea3015a58a461fddc497d5b452cd",
+    "c-archive-01/archive-manifest.json": "4e872d8aeb752145127fa8221a60098de6be1b7f110a858402ec0b428e776604",
+    "library-01/library.json": "d28ccb28eb061d96d93593375cdce067c21f6225cee976d92b33776c46a07d53",
+    "library-01/library-check.json": "66e05a4203461bfeb1fc757b18ee2acc36ea4b645ca9b251ab1c1ac5e59e128d",
+    "c-library-host-01.json": "edd175434e18ac5c7bef8c47b739402d7088bb296de8bb680c2b44153d6a38a6",
+    "usage-check-01/report.json": "70bf691da0e66b8308b0a0b7d34950bb6479ca80662077c847f336655b90d000"
+  },
+  "new_emu_runs": 0,
+  "c_original_emu_processes": 3,
+  "stable_default_changed": false,
+  "full_application_performance_measured": false,
+  "new_asic_ppa": false
+}

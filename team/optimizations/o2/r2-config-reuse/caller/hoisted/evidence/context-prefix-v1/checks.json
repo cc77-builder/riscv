@@ -1,0 +1,506 @@
+{
+  "accepted": 7,
+  "analyzer_sha256": "e65e4a6056c9059af4a407445e3485256fbd976ad3778a7c24655cb08753015b",
+  "checks": [
+    {
+      "detail": null,
+      "expectation": "accept",
+      "name": "real_recovery_replay",
+      "scope": "sealed real fixture",
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "all_retirement_milestones_within_samples": true,
+        "before_first_accept_delta": 0,
+        "changed_retirement_gaps": 0,
+        "coordinate_segments": [
+          {
+            "delta": 0,
+            "end": "wrapper_entry",
+            "left_coordinate_gap": 41,
+            "right_coordinate_gap": 41,
+            "start": "csr_sample_start"
+          },
+          {
+            "delta": 0,
+            "end": "loop_1_last_branch",
+            "left_coordinate_gap": 774,
+            "right_coordinate_gap": 774,
+            "start": "wrapper_entry"
+          },
+          {
+            "delta": 0,
+            "end": "loop_2_last_branch",
+            "left_coordinate_gap": 16,
+            "right_coordinate_gap": 16,
+            "start": "loop_1_last_branch"
+          },
+          {
+            "delta": 0,
+            "end": "loop_3_last_branch",
+            "left_coordinate_gap": 105,
+            "right_coordinate_gap": 105,
+            "start": "loop_2_last_branch"
+          },
+          {
+            "delta": 0,
+            "end": "leaf_call",
+            "left_coordinate_gap": 12,
+            "right_coordinate_gap": 12,
+            "start": "loop_3_last_branch"
+          },
+          {
+            "delta": 0,
+            "end": "leaf_entry",
+            "left_coordinate_gap": 0,
+            "right_coordinate_gap": 0,
+            "start": "leaf_call"
+          },
+          {
+            "delta": 0,
+            "end": "leaf_return",
+            "left_coordinate_gap": 193,
+            "right_coordinate_gap": 193,
+            "start": "leaf_entry"
+          },
+          {
+            "delta": 0,
+            "end": "loop_4_last_branch",
+            "left_coordinate_gap": 23,
+            "right_coordinate_gap": 23,
+            "start": "leaf_return"
+          },
+          {
+            "delta": 0,
+            "end": "wrapper_return",
+            "left_coordinate_gap": 1,
+            "right_coordinate_gap": 1,
+            "start": "loop_4_last_branch"
+          },
+          {
+            "delta": 0,
+            "end": "csr_sample_end",
+            "left_coordinate_gap": 41,
+            "right_coordinate_gap": 41,
+            "start": "wrapper_return"
+          }
+        ],
+        "cycle_delta": 0,
+        "differing_measured_positions": 0,
+        "differing_positions": 0,
+        "first_changed_gap": null,
+        "first_different_measured_retirement_coordinate": null,
+        "first_different_retirement_coordinate": null,
+        "instruction_delta": 0,
+        "largest_gap_changes": [],
+        "left": {
+          "cycles": 1206,
+          "dataset": 0,
+          "label": "h0",
+          "order": "vdot_then_rvv",
+          "repeat": 2,
+          "seq": 4
+        },
+        "right": {
+          "cycles": 1206,
+          "dataset": 0,
+          "label": "h0",
+          "order": "vdot_then_rvv",
+          "repeat": 2,
+          "seq": 4
+        }
+      },
+      "expectation": "accept",
+      "name": "identical_coordinates_and_complete_partition",
+      "scope": "sealed real fixture",
+      "status": "PASS"
+    },
+    {
+      "expectation": "reject",
+      "name": "same_total_replay_coordinate_drift",
+      "reason": "per-position recovery/replay diagnostic differs: h0",
+      "scope": "in-memory mutation of real fixture",
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "all_retirement_milestones_within_samples": true,
+        "before_first_accept_delta": 0,
+        "changed_retirement_gaps": 1,
+        "coordinate_segments": [
+          {
+            "delta": 0,
+            "end": "wrapper_entry",
+            "left_coordinate_gap": 41,
+            "right_coordinate_gap": 41,
+            "start": "csr_sample_start"
+          },
+          {
+            "delta": 0,
+            "end": "loop_1_last_branch",
+            "left_coordinate_gap": 774,
+            "right_coordinate_gap": 774,
+            "start": "wrapper_entry"
+          },
+          {
+            "delta": 0,
+            "end": "loop_2_last_branch",
+            "left_coordinate_gap": 16,
+            "right_coordinate_gap": 16,
+            "start": "loop_1_last_branch"
+          },
+          {
+            "delta": 0,
+            "end": "loop_3_last_branch",
+            "left_coordinate_gap": 105,
+            "right_coordinate_gap": 105,
+            "start": "loop_2_last_branch"
+          },
+          {
+            "delta": 0,
+            "end": "leaf_call",
+            "left_coordinate_gap": 12,
+            "right_coordinate_gap": 12,
+            "start": "loop_3_last_branch"
+          },
+          {
+            "delta": 0,
+            "end": "leaf_entry",
+            "left_coordinate_gap": 0,
+            "right_coordinate_gap": 0,
+            "start": "leaf_call"
+          },
+          {
+            "delta": 0,
+            "end": "leaf_return",
+            "left_coordinate_gap": 193,
+            "right_coordinate_gap": 193,
+            "start": "leaf_entry"
+          },
+          {
+            "delta": 0,
+            "end": "loop_4_last_branch",
+            "left_coordinate_gap": 23,
+            "right_coordinate_gap": 23,
+            "start": "leaf_return"
+          },
+          {
+            "delta": 0,
+            "end": "wrapper_return",
+            "left_coordinate_gap": 1,
+            "right_coordinate_gap": 1,
+            "start": "loop_4_last_branch"
+          },
+          {
+            "delta": 0,
+            "end": "csr_sample_end",
+            "left_coordinate_gap": 41,
+            "right_coordinate_gap": 41,
+            "start": "wrapper_return"
+          }
+        ],
+        "cycle_delta": 0,
+        "differing_measured_positions": 0,
+        "differing_positions": 1,
+        "first_changed_gap": {
+          "delta": 1,
+          "left_gap": 17,
+          "left_group": 1,
+          "occurrence": 0,
+          "pc": 2147486060,
+          "position": 1,
+          "right_gap": 18,
+          "right_group": 1
+        },
+        "first_different_measured_retirement_coordinate": null,
+        "first_different_retirement_coordinate": {
+          "left_group_count": 1,
+          "left_tick": -65,
+          "left_within_sample": false,
+          "occurrence": 0,
+          "pc": 2147486056,
+          "position": 0,
+          "right_group_count": 1,
+          "right_tick": -66,
+          "right_within_sample": false,
+          "word": 1362100243
+        },
+        "instruction_delta": 0,
+        "largest_gap_changes": [
+          {
+            "delta": 1,
+            "left_gap": 17,
+            "left_group": 1,
+            "occurrence": 0,
+            "pc": 2147486060,
+            "position": 1,
+            "right_gap": 18,
+            "right_group": 1
+          }
+        ],
+        "left": {
+          "cycles": 1206,
+          "dataset": 0,
+          "label": "h0",
+          "order": "vdot_then_rvv",
+          "repeat": 2,
+          "seq": 4
+        },
+        "right": {
+          "cycles": 1206,
+          "dataset": 0,
+          "label": "h0",
+          "order": "vdot_then_rvv",
+          "repeat": 2,
+          "seq": 4
+        }
+      },
+      "expectation": "accept",
+      "name": "pre_sample_difference_is_distinguished",
+      "scope": "sealed real fixture",
+      "status": "PASS"
+    },
+    {
+      "expectation": "reject",
+      "name": "leaf_entry_without_real_call",
+      "reason": "leaf entry lacks individually retired caller call",
+      "scope": "in-memory mutation of real fixture",
+      "status": "PASS"
+    },
+    {
+      "expectation": "reject",
+      "name": "duplicate_retirement_coordinate",
+      "reason": "retirement slot order/duplicate",
+      "scope": "in-memory mutation of real fixture",
+      "status": "PASS"
+    },
+    {
+      "expectation": "reject",
+      "name": "same_cycle_retirement_ROB_alias",
+      "reason": "duplicate same-cycle retirement ROB",
+      "scope": "in-memory mutation of real fixture",
+      "status": "PASS"
+    },
+    {
+      "expectation": "reject",
+      "name": "wrong_dynamic_path_pc",
+      "reason": "retirement path/coverage",
+      "scope": "in-memory mutation of real fixture",
+      "status": "PASS"
+    },
+    {
+      "expectation": "reject",
+      "name": "compressed_group_hides_custom",
+      "reason": "control/custom hidden in retirement group",
+      "scope": "in-memory mutation of real fixture",
+      "status": "PASS"
+    },
+    {
+      "expectation": "reject",
+      "name": "CSR_tick_drift_without_value_change",
+      "reason": "cycle CSR/global clock disagreement",
+      "scope": "in-memory mutation of real fixture",
+      "status": "PASS"
+    },
+    {
+      "expectation": "reject",
+      "name": "retired_ROB_flag_mismatch",
+      "reason": "T13/O2 commit mismatch",
+      "scope": "in-memory mutation of real fixture",
+      "status": "PASS"
+    },
+    {
+      "expectation": "reject",
+      "name": "response_physical_destination_mismatch",
+      "reason": "committed response identity/order",
+      "scope": "local binding only",
+      "status": "PASS"
+    },
+    {
+      "expectation": "reject",
+      "name": "commit_allocation_FTQ_mismatch",
+      "reason": "commit allocation mismatch",
+      "scope": "local binding only",
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "real_reallocation": false
+      },
+      "expectation": "accept",
+      "name": "same_cycle_ROB_reallocation_uses_old_generation",
+      "scope": "local binding only",
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "first_accept": -1,
+        "transactions": 32
+      },
+      "expectation": "accept",
+      "name": "signed_transaction_coordinates_preserved",
+      "scope": "local shifted coordinate origin",
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "candidates": [
+          {
+            "intervening_flushing_redirects": [],
+            "intervening_retirements": [],
+            "observed_continuity": true,
+            "parent_paired": true,
+            "redirect_ftq": "1:4",
+            "redirect_tick": 943,
+            "redirect_to_call_retire": 4,
+            "redirect_to_leaf_retire": 13,
+            "rob": [
+              0,
+              34
+            ],
+            "self": 0
+          }
+        ],
+        "origin": {
+          "intervening_flushing_redirects": [],
+          "intervening_retirements": [],
+          "observed_continuity": true,
+          "parent_paired": true,
+          "redirect_ftq": "1:4",
+          "redirect_tick": 943,
+          "redirect_to_call_retire": 4,
+          "redirect_to_leaf_retire": 13,
+          "rob": [
+            0,
+            34
+          ],
+          "self": 0
+        },
+        "scope": "same complete ROB pointer within a fully observed retirement window, paired parent redirect, and no intervening retirement or flushing redirect; origin liveness relies on the pinned RTL redirect/ROB semantics, not a directly logged scalar allocation generation",
+        "status": "UNIQUE_CONTINUOUS_ORIGIN"
+      },
+      "expectation": "accept",
+      "name": "real_scalar_redirect_continuity",
+      "scope": "sealed real fixture",
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "candidates": [],
+        "origin": null,
+        "scope": "same complete ROB pointer within a fully observed retirement window, paired parent redirect, and no intervening retirement or flushing redirect; origin liveness relies on the pinned RTL redirect/ROB semantics, not a directly logged scalar allocation generation",
+        "status": "NO_CONTINUOUS_ORIGIN"
+      },
+      "expectation": "accept",
+      "name": "no_redirect_is_reported_without_invented_origin",
+      "scope": "sealed real fixture",
+      "status": "PASS"
+    },
+    {
+      "expectation": "reject",
+      "name": "scalar_origin_missing_parent_pair",
+      "reason": "scalar origin continuity not established",
+      "scope": "local association only",
+      "status": "PASS"
+    },
+    {
+      "expectation": "reject",
+      "name": "self_flushed_origin_not_reused_as_call",
+      "reason": "scalar origin continuity not established",
+      "scope": "local association only",
+      "status": "PASS"
+    },
+    {
+      "expectation": "reject",
+      "name": "intervening_same_ROB_retirement_breaks_origin",
+      "reason": "scalar origin continuity not established",
+      "scope": "local association only",
+      "status": "PASS"
+    },
+    {
+      "expectation": "reject",
+      "name": "same_cycle_call_ROB_alias",
+      "reason": "ambiguous scalar call retirement identity",
+      "scope": "local association only",
+      "status": "PASS"
+    },
+    {
+      "expectation": "reject",
+      "name": "older_flush_breaks_scalar_origin",
+      "reason": "scalar origin continuity not established",
+      "scope": "local association only",
+      "status": "PASS"
+    },
+    {
+      "expectation": "reject",
+      "name": "scalar_origin_full_ROB_flag_required",
+      "reason": "scalar origin continuity not established",
+      "scope": "local association only",
+      "status": "PASS"
+    },
+    {
+      "expectation": "reject",
+      "name": "scalar_retirement_on_redirect_cycle",
+      "reason": "retirement on ROB redirect cycle",
+      "scope": "local association only",
+      "status": "PASS"
+    },
+    {
+      "expectation": "reject",
+      "name": "changed_index_bytes",
+      "reason": "qualified screen index changed",
+      "scope": "new temporary fixture",
+      "status": "PASS"
+    },
+    {
+      "expectation": "reject",
+      "name": "linked_campaign_directory",
+      "reason": "linked evidence path",
+      "scope": "new temporary fixture",
+      "status": "PASS"
+    },
+    {
+      "expectation": "reject",
+      "name": "linked_ancestor_directory",
+      "reason": "linked evidence path",
+      "scope": "new temporary fixture",
+      "status": "PASS"
+    }
+  ],
+  "checks_sha256": "a115979833184235dbf07da6ea9a2a05edff1b590a36196ee4db7132b7e4f473",
+  "fixture": {
+    "archive_manifest_sha256": "2766bb276223acbd5fc30852a9561d25a800bcbe2137cd65d1839336080e0a07",
+    "archive_sha256": "9fa5d028972108120dc2a343b1902238bb9d0b7e907ff5d36b6f572cb107ac56",
+    "image_sha256": "692e8eac9e0b32cf7871589ca062d757757c51d5a47108a2702e731c8049a614",
+    "input_sha256": {
+      "build/build.json": "e50865d7307150cc1965a86ad17b6b31b7501dacdf31be0c379f299176627ddc",
+      "build/elf-validation.json": "ec9e9138e31a3232a7f472d611dbf2de64eae6d0e847bcd38b62ecf5f359e41c",
+      "build/source/caller.c": "141d1789e5cf8e55ba5463e1ed246868bc94bdeee3daf9006f6f0e134fb6e75b",
+      "build/source/main.c": "4e0deddc05f083a4d8494a27e8e15755bde3da576fe2b64ea47d46a0506733e7",
+      "build/source/manifest.json": "acaba74791de592209d9a9723f925b9ef4d575f51be86ce463947b55fe9ee026",
+      "build/source/repo/team/optimizations/o2/fullcore/analyze.py": "27d9fe451c035157848625e84c2a229ac1d83073eb56ba3ebc25131e5569d496",
+      "build/source/repo/team/optimizations/o2/r2-config-reuse/caller/pathcheck.py": "87e11075f1d84946277cf4d24914944ec9793cfffcc2bfab5a2cc8592c44f1b8",
+      "build/source/repo/team/workloads/unified-vdot/check.py": "084bebc22e2f4665e5c7a7797e5cd2a6c73220719b4cf228ce3075ae2446bc66",
+      "build/vdot-perf.bin": "692e8eac9e0b32cf7871589ca062d757757c51d5a47108a2702e731c8049a614",
+      "build/vdot-perf.elf": "cd196253e68c7c313b01c56163809ce7d3e8c9edbdcd8233bfa3427a3eec6731",
+      "run/runs/recovery/result.json": "f3b34cdbd97586ac313901a520fb3048c2b7d48fef523015ed19ef26a710f3c3",
+      "run/runs/recovery/stderr.log": "80375c0faac44534a5216a734bbf8a5ed803b023deaf780ed7b910425951f63d",
+      "run/runs/recovery/stdout.log": "85e3bd9552b8e5231d91b31d120aea880ab1e78a7d0b19b1ac11eebf61b5009a",
+      "run/runs/recovery/validation.json": "cbca6f33d0e930cfbdc96dce5624e4fc829f2a68bffc5f600be3b93042df512e",
+      "run/runs/replay/result.json": "1fb7e5563f8b500c039ec8a2cd94448b6d07b26d4e6a257b37aa49d6ce4595ea",
+      "run/runs/replay/stderr.log": "80375c0faac44534a5216a734bbf8a5ed803b023deaf780ed7b910425951f63d",
+      "run/runs/replay/stdout.log": "16b87cffef6c2cae215c427f0edab82765cfd863a4e936e6bba2ca99cd9112c8",
+      "run/runs/replay/validation.json": "cbca6f33d0e930cfbdc96dce5624e4fc829f2a68bffc5f600be3b93042df512e"
+    },
+    "label": "h0",
+    "prior_audit_sha256": "85bc00c1acb7ca39a6e4943e4a548551df8b59e97e09b18e84b3319959db9fdf",
+    "verified_members": 114,
+    "verified_raw_bytes": 27425478
+  },
+  "input_index_sha256": "38c2b5b1613a849272cbe1d5e1e9dd9db2596eef4660a7881a92a56137505173",
+  "limits": "negative semantic fixtures are synthetic, not additional physical EMU evidence",
+  "new_emu_runs": 0,
+  "rejected": 20,
+  "status": "HOISTED_CONTEXT_CHECKS_PASS"
+}

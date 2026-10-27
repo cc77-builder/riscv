@@ -1,0 +1,267 @@
+{
+  "status": "FUSED_TARGET_ORIGINAL_EVIDENCE_CLOSED",
+  "source_head_at_delivery": "b463aa799b206357bc8a3eda3d5746fe5aa185e1",
+  "target_source_commit": "151481e916bfed0fc23b0223ee04b2085d18e25e",
+  "closure": {
+    "status": "FUSED_TARGET_RAW_ARCHIVE_FRESH_SOURCE_CLOSED",
+    "started": "2026-10-26T00:46:11.381735+00:00",
+    "contract": "r2-s3-runq-q288-fused-target-v1",
+    "commands": [
+      {
+        "name": "pack",
+        "command": [
+          "/usr/bin/python3",
+          "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/r2-config-reuse/caller/runq-q288/fused/target/archive.py",
+          "--action",
+          "pack",
+          "--build",
+          "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/fullq-fused-target-20261026-0715/build-02",
+          "--run",
+          "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/fullq-fused-target-20261026-0715/campaign-01",
+          "--output",
+          "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/fullq-fused-target-20261026-0715/evidence-pack-01"
+        ],
+        "started": "2026-10-26T00:46:11.384874+00:00",
+        "status": "PASS",
+        "host_timeout_seconds": 1800,
+        "pid": 374,
+        "exit_code": 0,
+        "finished": "2026-10-26T00:48:52.057479+00:00",
+        "raw_sha256": {
+          "stdout": "e3ab595cde7abe3c11c8683dfe98d14dcf1688454f7bf497f223aaeda68c55f5",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "name": "fresh-source",
+        "command": [
+          "/usr/bin/python3",
+          "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/r2-config-reuse/caller/runq-q288/fused/target/host_audit.py",
+          "--action",
+          "audit",
+          "--repo",
+          "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+          "--archive",
+          "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/fullq-fused-target-20261026-0715/evidence-pack-01",
+          "--output",
+          "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/fullq-fused-target-20261026-0715/host-audit-01"
+        ],
+        "started": "2026-10-26T00:48:52.060259+00:00",
+        "status": "PASS",
+        "host_timeout_seconds": 1800,
+        "pid": 444,
+        "exit_code": 0,
+        "finished": "2026-10-26T00:51:31.026356+00:00",
+        "raw_sha256": {
+          "stdout": "791957438b1c03e1341907843f3e066714a0867b70638c6e0b748c53c7ca775c",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    ],
+    "new_emu_runs": 0,
+    "outer_command_host_seconds": 1800,
+    "inner_fresh_audit_host_seconds": 900,
+    "source_files_protected": 98,
+    "cpu_affinity": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "finished": "2026-10-26T00:51:31.029034+00:00",
+    "archive_sha256": "de3afffda86d1db7981d793d17f180b6af879582530d0979fe313bea00170b6c",
+    "archive_bytes": 44193367,
+    "archive_members": 163,
+    "raw_bytes": 583743922,
+    "audit_status": "FUSED_TARGET_ARCHIVE_FRESH_SOURCE_AUDIT_PASS",
+    "resource_adapter_status": "FROZEN_FUSED_AUDIT_WITH_DURABLE_HOST_BUDGET_PASS",
+    "frozen_sources_unchanged": true
+  },
+  "selection": {
+    "decision": "VDOT_PREFERRED_IN_FIXED_PLAN",
+    "methods": [
+      {
+        "id": 0,
+        "label": "acc8-vdot",
+        "wrapper": "q288_full",
+        "leaf": "split_gemv_8x32_vdot",
+        "cycles": [
+          82314,
+          82270
+        ],
+        "instructions": [
+          72865,
+          72865
+        ],
+        "mean_cycles": 82292.0
+      },
+      {
+        "id": 1,
+        "label": "acc8-rvv3",
+        "wrapper": "q288_full",
+        "leaf": "split_gemv_8x32_rvv3",
+        "cycles": [
+          90567,
+          90629
+        ],
+        "instructions": [
+          56341,
+          56341
+        ],
+        "mean_cycles": 90598.0
+      },
+      {
+        "id": 2,
+        "label": "acc8-rvv4",
+        "wrapper": "q288_full",
+        "leaf": "split_gemv_8x32_rvv4",
+        "cycles": [
+          88453,
+          88456,
+          88420,
+          88396
+        ],
+        "instructions": [
+          56017,
+          56017,
+          56017,
+          56017
+        ],
+        "mean_cycles": 88431.25
+      },
+      {
+        "id": 3,
+        "label": "fused-vdot",
+        "wrapper": "q288_fused_vdot",
+        "leaf": "split_gemv_8x32_vdot",
+        "cycles": [
+          62691,
+          62692
+        ],
+        "instructions": [
+          52529,
+          52529
+        ],
+        "mean_cycles": 62691.5
+      },
+      {
+        "id": 4,
+        "label": "fused-rvv4",
+        "wrapper": "q288_fused_rvv4",
+        "leaf": "split_gemv_8x32_rvv4",
+        "cycles": [
+          67298,
+          67311
+        ],
+        "instructions": [
+          35681,
+          35681
+        ],
+        "mean_cycles": 67304.5
+      }
+    ],
+    "anchors": [
+      88453,
+      88456,
+      88420,
+      88396
+    ],
+    "anchor_gate": true,
+    "software_comparisons": [
+      {
+        "comparison": "vdot-software-fusion",
+        "candidate": 3,
+        "baseline": 0,
+        "blocks": [
+          {
+            "block": 0,
+            "candidate": 62691,
+            "baseline_best": 82314,
+            "reduction": 0.2383920110795248,
+            "passed": true
+          },
+          {
+            "block": 1,
+            "candidate": 62692,
+            "baseline_best": 82270,
+            "reduction": 0.23797252947611525,
+            "passed": true
+          }
+        ],
+        "worst_candidate": 62692,
+        "best_baseline": 82270,
+        "worst_to_best_reduction": 0.23797252947611525,
+        "separation_gate": true,
+        "qualified": true
+      },
+      {
+        "comparison": "rvv4-software-fusion",
+        "candidate": 4,
+        "baseline": 2,
+        "blocks": [
+          {
+            "block": 0,
+            "candidate": 67298,
+            "baseline_best": 88453,
+            "reduction": 0.2391665630334754,
+            "passed": true
+          },
+          {
+            "block": 1,
+            "candidate": 67311,
+            "baseline_best": 88396,
+            "reduction": 0.23852889271007738,
+            "passed": true
+          }
+        ],
+        "worst_candidate": 67311,
+        "best_baseline": 88396,
+        "worst_to_best_reduction": 0.23852889271007738,
+        "separation_gate": true,
+        "qualified": true
+      }
+    ],
+    "fused_vdot_vs_all_rvv": {
+      "worst_fused_vdot": 62692,
+      "best_any_rvv": 67298,
+      "reduction": 0.06844185562721028,
+      "separation_gate": true,
+      "qualified": true
+    },
+    "selected_id": 3,
+    "selected_label": "fused-vdot",
+    "selected_method": "q288_fused_vdot",
+    "selected_leaf": "split_gemv_8x32_vdot",
+    "eligible_vdot_ids": [
+      3
+    ],
+    "comparison_gate_pass": true,
+    "stable_default_changed": false,
+    "pack_included": false,
+    "hardware_changed": false,
+    "statistical_scope": "two fixed reverse-order method observations; all four AR4 points; replay is not an extra sample",
+    "application_scope": "synthetic prepacked Q, one same-method selfwarm; only the named three-RVV set; no token/full-model claim"
+  },
+  "validation_sha256": "357fe838e7bcccbfcaaab4340cbff48f39dee731142d300ee1c21a831564e4cb",
+  "stderr": [
+    {
+      "name": "recovery",
+      "bytes": 288416760,
+      "sha256": "ae64e3e4c85af646beb977e9f78a8116a6c3d7a918cec899cb5c9588aeb7030a"
+    },
+    {
+      "name": "replay",
+      "bytes": 288416760,
+      "sha256": "ae64e3e4c85af646beb977e9f78a8116a6c3d7a918cec899cb5c9588aeb7030a"
+    }
+  ],
+  "support_sha256": "dc08f857c3217da5f6d64fca3e204a6f7bfa76f43e5f6f24fd1c9c78a3f9be04",
+  "support_members": 171,
+  "history_objects": 19,
+  "history_pack_sha256": "845534a2a6b0a7d1c88b6b9b011b4686740fcb762156c9af5063ef63801db915",
+  "normal_totals": {
+    "guest_cycles": 2410050,
+    "retired": 1682220
+  },
+  "frozen_sources_unchanged": true
+}

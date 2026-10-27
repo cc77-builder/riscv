@@ -1,0 +1,310 @@
+negative-config-reuse-8x32 EXPECTED_VDOT_HIGHBIT_REJECTION
+recovery-config-reuse-8x32 R2_DIFFTEST_WINDOWS_AND_O2_PROTOCOL_PASS
+formal-performance-firstdot-d0-s03 R2_DIFFTEST_WINDOWS_AND_O2_PROTOCOL_PASS
+replay-performance-config-reuse-d0-s03 R2_DIFFTEST_WINDOWS_AND_O2_PROTOCOL_PASS
+replay-performance-firstdot-d0-s03 R2_DIFFTEST_WINDOWS_AND_O2_PROTOCOL_PASS
+{
+  "status": "S3_PAIRED_C_ABI_SCREEN_PASS",
+  "contract": "r2-s3-config-reuse-runtime-v1",
+  "parent_identity_sha256": "4a89872d0463163ea0be83f680843352e01354043f5709509d822353221258eb",
+  "negative": {
+    "suite": "performance",
+    "shard": 3,
+    "dataset": 0,
+    "variant": "config-reuse",
+    "name": "performance-config-reuse-d0-s03",
+    "path": "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/build-probe-02/images/performance-config-reuse-d0-s03",
+    "image_sha256": "88ef79c5747016cc50b353bf2eeb53de8c91ba3e8a4adc30ac7c607b9b4f65fd",
+    "contract": "r2-s3-config-reuse-runtime-v1",
+    "mode": "merged",
+    "replay": 0,
+    "negative": true,
+    "command": [
+      "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu",
+      "-i",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/build-probe-02/images/performance-config-reuse-d0-s03/vdot-perf.bin",
+      "--flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+      "--ram-size=128MB",
+      "--diff=/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/run-probe-01/negative-fixture/negative-reference.so",
+      "--max-cycles=2000000",
+      "--seed=1"
+    ],
+    "cwd": "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/run-probe-01/runs/negative-config-reuse-8x32/cwd",
+    "files": {
+      "/home/lizufan/riscv-lab/t17-clean-20261024-0854/build-01/hardware-inputs.json": "7c42a8130e71b39e8f5ca08d7d662a85ac58f677040c6293d38007b007ac0dcc",
+      "/home/lizufan/riscv-lab/t17-clean-20261024-0854/build-01/hardware-inputs-before.json": "68ea5dda66e3f36bdbe4336f06d50e61a651984213293c930a5a9987ce07903b",
+      "/home/lizufan/riscv-lab/t17-clean-20261024-0854/build-01/generated-artifacts.json": "008a71c86f2f110376aebec9e2052eb81569eba6149fbe9df282c7839d7f5a41",
+      "/home/lizufan/riscv-lab/t17-clean-20261024-0854/build-01/build-state.json": "2d284bd2e1800ef1dee56e41f5a5f44f35739695b05312d94ffd3b514af2c36a",
+      "/home/lizufan/riscv-lab/t17-clean-20261024-0854/build-01/dependencies.json": "564b9534ef059f544c564d6a491cca32cd34e8b3ba0f7868c3de401e2bd547d8",
+      "/home/lizufan/riscv-lab/t17-clean-20261024-0854/build-01/build-command.sh": "fea1dd529464a07aba5f0c99c57fd6b7987ce66b9758b2778622c3273d938d07",
+      "/home/lizufan/riscv-lab/t17-clean-20261024-0854/build-01/emu-build.log": "7a735de54bbc652378a23bd46789d17d12b19a0ed1aeb02b2963cb2187deb253",
+      "/home/lizufan/riscv-lab/t17-clean-20261024-0854/build-01/source-status.txt": "f25d0f4f02c9b317c8efb2e86610867608562708bc696c8a06b9b1d8323dc618",
+      "/home/lizufan/riscv-lab/t17-clean-20261024-0854/build-01/working-tree.patch": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "/home/lizufan/riscv-lab/t17-clean-20261024-0854/build-01/java-version.log": "5157fc80c2b1904606b0668b959604ac1266f20c8089e3e235d26ab755c73ead",
+      "/home/lizufan/riscv-lab/t17-clean-20261024-0854/build-01/python-version.log": "f6b75e07f1488db28a89724a522725e3e01af3dc78f6fd365f17eb4059e41056",
+      "/home/lizufan/riscv-lab/t17-clean-20261024-0854/build-01/make-version.log": "8ee498ee2fc27e8dcdf99191b454077df95e3840d841ec94321748b6d7f36819",
+      "/home/lizufan/riscv-lab/t17-clean-20261024-0854/build-01/mill-version.log": "c62d357a27590ad6c8cfc7f87f5fee65896adf266c4ce221cc39f04ab6a9ea23",
+      "/home/lizufan/riscv-lab/t17-clean-20261024-0854/build-01/firtool-version.log": "314271dc6f68632027c0711da7f96100db18723d94d80a16ad9d82cdd2e0377f",
+      "/home/lizufan/riscv-lab/t17-clean-20261024-0854/build-01/clang-version.log": "8c803e6e30d91b83ca5df33fb58fc74c2021c3845b36ad4c22fb7fd8d94ee919",
+      "/home/lizufan/riscv-lab/t17-clean-20261024-0854/build-01/verilator-version.log": "110d748d8e6eca23b22ad7bf766d1d1fcf69c45731c3260fc80857cdd2d62576",
+      "/home/lizufan/riscv-lab/t17-clean-20261024-0854/build-01/executed-builder.py": "9038f134e5f811b1e99a13893dc8fce081a96cf9be0ffe5a9f546a70818a2c7e",
+      "/home/lizufan/riscv-lab/t17-clean-20261024-0854/build-01/baseline-hardware-inputs.json": "2c580afa6095cda5e9d1680b7e91939b6f182b21c47357c77402c2d6b09d0a2c",
+      "/home/lizufan/riscv-lab/t17-clean-20261024-0854/build-01/effective-environment.json": "5b73c768ab6fcada5ae9e5b019c2f451c795853700cc63fd66f9926ffaf98237",
+      "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+      "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+      "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu": "ff840528eb1009e94906eefb3773ca321050f309553543ab26f0db23c410e30f",
+      "/home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so": "8af118e5519db7ef6001010a2d547707c5d47630412e80abfc3f343bfef987c9",
+      "/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+      "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/optimizations/o2/fullcore/build_fullcore.py": "8a66fb75324ee1834401ec71b5c578141de6268a074253d37eb5494046c932d0",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/optimizations/o2/r2-kernel-audit/audit.py": "258afeea5f10723c56b50b530ec414462a04740eddfd41123e3eaa13d1c7f262",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/workloads/unified-vdot/generate.py": "2aee46109a3fa0d5267a784e4ef0845e1e2bf65f012fee89053c799d4df0acb9",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/optimizations/o2/r2-safe-tail/fullcore_screen.py": "5f5c719a9a5b675f4de166ca30a3d89bd52c944c667cee302f66da94fa2779f2",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/optimizations/o2/r2-safe-tail/merged_screen.py": "ff75464c5b0f75349fc4321bdd80a7a85985a54ae415ad347c3ce04fdf4bd885",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/patches/nemu/manifest.json": "1fee8f48616d7d09f46fd5924fb677f4a042ab7a6e2098a4af93e5e4e6a495a1",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/workloads/o3-gemv/fixed-layout.ld": "fea739d1b0a19fd3254f92e1aa5eefc564eb2fb243dc3519091bfad262363e67",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/workloads/unified-vdot/check.py": "084bebc22e2f4665e5c7a7797e5cd2a6c73220719b4cf228ce3075ae2446bc66",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/workloads/o3-gemv/Makefile": "98e7ae3cd127623b741d520c0c9cc93d583d755e573c0db457440376b333c9c2",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/workloads/o3-gemv/main.c": "21249572ab9ab75c2dfd52b39d1288111c26627df166f80064085a6f2efe7c18",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/optimizations/o2/fullcore/workloads/check.py": "f3eb5592078b71daa35c430b3f5924b271839edc0b85c406a9ac04dd5924611a",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/optimizations/o2/fullcore/run_suite.py": "7bc68d73cd830ceb8fb9aa18469ebe6ff3efcdf56de6922049e05556b0e02475",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/optimizations/o2/r2-safe-tail/linked_gate.py": "96807465bfd97a483f31ce100e552e2b83c4d0edd59f9bf4d817c66abd80ec1f",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/optimizations/o2/fullcore/recheck.py": "8cebe76129f86747cdddf87f93f54d4379a8606dd3c1a20d55008361f2f95140",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/optimizations/o1/audit/runtime_gate.py": "80315b278f4dc0168edd33657a07ae648b20f0279fa57a69f35b0f983fa42ea1",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/optimizations/o2/result-width/h1/performance/build_profile.py": "1650856fbe5a6626072ec0e6dfb5dcca86eacdcc805c7d10d542cfcc0f5be5b8",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/workloads/o3-gemv/check.py": "462c8618e40546ce5ccf04eb4d27f81925c5e3ae7fa3d0d05a46d6feb8091ab7",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/evidence/t10-t11-fullcore-20261013/matrix/negative-fixture.c": "7b39400d0a566229ce018a8251ead8242b92a3afe05a1aee5711b38809056273",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/optimizations/o2/r2-safe-tail/candidate.py": "a0e914da892037c70a5bd44b41e9ec04e2b15b0cb957534e1708e4194a87fdeb",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/optimizations/o2/fullcore/analyze.py": "27d9fe451c035157848625e84c2a229ac1d83073eb56ba3ebc25131e5569d496",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/workloads/o3-gemv/model.py": "8c150d05a194ad3f529b79e56c1271cb0d5984ab2437aa382626696e659de333",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/scripts/artifact_guard.py": "95eabdc0dc6191df4b03062e432ecc38877cc0c9626a81cdd002a4627ab54a85",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/workloads/o3-gemv/generate.py": "b0500ec98a3db471f4ed4a9d927fa1854a9a1c2f4c0cbec495fc89918ddf5a57",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/optimizations/o2/r2-vector-accum/firstdot_gate.py": "fc11387899bab8b2d1ecfa074edfb52e939c15869032b4457043acf288564b3b",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/optimizations/o2/r2-config-reuse/runtime_candidate.py": "7d98abce6aaad40639c935e49b6d5c6f6663d992d8227d62b3d804ae4118f2a6",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/optimizations/o2/repro/clean_entry.py": "6aabb8bbd764d1b7b18b643eaf592efc0a0a1d49e6545842dc7a6b337d39a883",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/optimizations/o2/r2-vector-accum/firstdot_experiment.py": "90ade1455659db25c4b3fabe3f79f75cb65f84f340ba3d8c62c4b6422e49b560",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/optimizations/o2/r2-select/entry_experiment.py": "417b2d8d0b97b293d7db565bfddb39f111756cd23638ddc62c8117997e069b6e",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/optimizations/o2/r2-vector-accum/candidate.py": "0270736b5c09e160626eb7b32d8e760faa193bf05761fea824a979108c3717b9",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/optimizations/o2/r2-vector-accum/firstdot_candidate.py": "79c1c808ac7e46560ed470028fb50487b31da478e43d9f1d83d770f089cc285d",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/optimizations/o2/r2-config-reuse/runtime_gate.py": "5a9be8bf244a35a878964b0716ee32ed9a3faed16fd3da7938ed30f511d5d72c",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/optimizations/o2/r2-select/entry_gate.py": "d20e0bd7426ac7a3b56b62d2a9b495b51b9cd6da257e46723eddbbb984de8f11",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/optimizations/o2/r2-config-reuse/runtime_experiment.py": "56c25151b591d98a87a16f6cedb8afa65dbadde8ff0cca88b5113e2157e798f3",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/optimizations/o2/r2-safe-tail/machine_model.py": "8fb2ac208d8db9083464fb839c06b46ec365234d72b819822563830dad90171e",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/optimizations/o2/r2-select/entry_candidate.py": "a19224bb3b659615e3a1ca5c7db1bcb0e6af90649b098f8b39e3af6021d42edf",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/optimizations/o2/r2-config-reuse/candidate.py": "e1ec595c78f3c14314c1d4dc1cc9f49650929e77275ba38241bce541481b15f7",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/optimizations/o2/repro/clean_profile.py": "1c4c467f43ede68fd30b1063868d8f02d71fbe8a5442f2da180210468db9a642",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/optimizations/o2/r2-vector-accum/gate.py": "ab07b578f5fe2dc7782ef9af64e722e051363d1dfddfcd0f1939efb209346b6d",
+      "/home/lizufan/riscv-lab/r2s1-firstdot-20261024-1458/run-probe-01/parent-identity.json": "4a89872d0463163ea0be83f680843352e01354043f5709509d822353221258eb",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/optimizations/o2/r2-vector-accum/evidence/firstdot-v1/matrix-archive/archive-manifest.json": "0c8d3159c91aa3c934c7bfb7f2640906844246e812c0b5bfc556cdfb86d0d3b4",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/build-probe-02/state.json": "2c295ca400f4fe15012602b7717608232ce8483ab0dfe22e1cbaf258d720d461",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/build-probe-02/images.json": "938e6a9b10989f50648ae7104043d4cfeed872cd889d0927dc14010694c79fa7",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/build-probe-02/pairs.json": "2ac89a047201e52f2228ff53bed9a224376d6d4c5fc3d5a14a7268002c426e9e",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/build-probe-02/baseline-identity.json": "8cb22d6b482f0e8880f033996f8d332f94851ad860c50e6d130a935b5ca0836a",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/build-probe-02/images/performance-config-reuse-d0-s03/build.json": "1808bde5c61f567bab8588698c33ea49b5c033db639e00a473e0002879381765",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/build-probe-02/images/performance-config-reuse-d0-s03/data/manifest.json": "e08ede760c970199af7c7c3a6443931fb451b9e954ce352c77128c4e67871982",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/build-probe-02/images/performance-firstdot-d0-s03/build.json": "2bc7bbafa82c1deb3bad6eb2c021cd951e731e9f05ee6a6712a19588cbd03eb9",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/build-probe-02/images/performance-firstdot-d0-s03/data/manifest.json": "459570ecbf397ac6403e9b206549fe49b636c02f567ed65b81dc72057c3d95e9",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/optimizations/o2/r2-vector-accum/evidence/firstdot-v1/matrix-archive/files/builds/build-probe-01/images/performance-firstdot-d0-s03/vdot-perf.bin.gz": "72679ec210bd8003db114a17ca6da0af0fd14b41086e6eb2060481e784f26251",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/optimizations/o2/r2-vector-accum/evidence/firstdot-v1/matrix-archive/files/builds/build-probe-01/images/performance-firstdot-d0-s03/kernels-reference.o.gz": "a911d80e4cba0971bd7b9bab7f8132e6ae14dbed82f69fea51e94cdea318b522",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/optimizations/o2/r2-vector-accum/evidence/firstdot-v1/matrix-archive/files/builds/build-probe-01/images/performance-firstdot-d0-s03/gemv-reference.o.gz": "f6d08094013df7459c88fa98a91a479ec788325c10295f1bd1056b5befa51674",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/optimizations/o2/r2-vector-accum/evidence/firstdot-v1/matrix-archive/files/builds/build-probe-01/images/performance-s1-d0-s03/vdot-perf.bin.gz": "4cdea9632512ce13c73886c15704b11cf802588399849f8624b26486a2d9151c",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/run-probe-01/runs/negative-config-reuse-8x32/cwd/build/constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/run-probe-01/runs/negative-config-reuse-8x32/cwd/build/plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/build-probe-02/images/performance-config-reuse-d0-s03/vdot-perf.bin": "88ef79c5747016cc50b353bf2eeb53de8c91ba3e8a4adc30ac7c607b9b4f65fd",
+      "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/run-probe-01/negative-fixture/negative-reference.so": "c70b0ad5b5a71032e96c3d32bfcdb3e17512eb8617ae85d201bf3fb6a85732e6"
+    },
+    "reference": "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/run-probe-01/negative-fixture/negative-reference.so",
+    "exit_code": 1,
+    "process_started": true,
+    "status": "EXPECTED_VDOT_HIGHBIT_REJECTION",
+    "started": "2026-10-24T10:31:13.929265+00:00",
+    "environment_overrides": {
+      "XS_NEGATIVE_VECTOR_TARGET": "vdot"
+    },
+    "pid": 1303,
+    "raw_sha256": {
+      "stdout.log": "2ea85ba9a280abf6696b190c825ab01c8936102ab32d398db76972b2474ca460",
+      "stderr.log": "de50aae2e4f6bd4b19eadcd09e298fda5d6eee2ba02794538729d7227acd2f0b"
+    },
+    "negative_details": {
+      "vd": 0,
+      "pc": "0x80002308",
+      "word": "0x0388000b",
+      "bit": 100,
+      "abort_event_pc": "0x8000232c",
+      "abort_count": 1,
+      "fault_pc_binding": "injection PC equals mismatch PC",
+      "abort_pc_scope": "recorded XSTrap event field; not required to equal mismatch PC"
+    },
+    "finished": "2026-10-24T10:31:22.853642+00:00"
+  },
+  "qualification": {
+    "negative_and_recovery": true,
+    "all_window_replay": true,
+    "stable_default_changed": false,
+    "hardware_changed": false,
+    "full_matrix": false,
+    "historical_pass_reused": false
+  },
+  "rows": [
+    {
+      "shard": 3,
+      "shape": [
+        8,
+        32
+      ],
+      "datasets": [
+        0
+      ],
+      "scope": "endtoend-with-c-abi-call",
+      "candidates": [
+        {
+          "variant": "firstdot",
+          "software": "basic",
+          "method": "vdot",
+          "samples": 4,
+          "total": 2582,
+          "mean": 645.5,
+          "minimum": 643,
+          "maximum": 648,
+          "instructions": [
+            276
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "basic",
+          "method": "rvv",
+          "samples": 4,
+          "total": 1424,
+          "mean": 356,
+          "minimum": 356,
+          "maximum": 356,
+          "instructions": [
+            180
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "reuse",
+          "method": "vdot",
+          "samples": 4,
+          "total": 1129,
+          "mean": 282.25,
+          "minimum": 282,
+          "maximum": 283,
+          "instructions": [
+            182
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "reuse",
+          "method": "rvv",
+          "samples": 4,
+          "total": 1203,
+          "mean": 300.75,
+          "minimum": 298,
+          "maximum": 303,
+          "instructions": [
+            124
+          ]
+        },
+        {
+          "variant": "config-reuse",
+          "software": "basic",
+          "method": "vdot",
+          "samples": 4,
+          "total": 2575,
+          "mean": 643.75,
+          "minimum": 641,
+          "maximum": 646,
+          "instructions": [
+            267
+          ]
+        },
+        {
+          "variant": "config-reuse",
+          "software": "basic",
+          "method": "rvv",
+          "samples": 4,
+          "total": 1424,
+          "mean": 356,
+          "minimum": 356,
+          "maximum": 356,
+          "instructions": [
+            180
+          ]
+        },
+        {
+          "variant": "config-reuse",
+          "software": "reuse",
+          "method": "vdot",
+          "samples": 4,
+          "total": 1092,
+          "mean": 273,
+          "minimum": 273,
+          "maximum": 273,
+          "instructions": [
+            175
+          ]
+        },
+        {
+          "variant": "config-reuse",
+          "software": "reuse",
+          "method": "rvv",
+          "samples": 4,
+          "total": 1196,
+          "mean": 299,
+          "minimum": 296,
+          "maximum": 302,
+          "instructions": [
+            123
+          ]
+        }
+      ],
+      "fastest_rvv": {
+        "variant": "config-reuse",
+        "software": "reuse",
+        "method": "rvv",
+        "samples": 4,
+        "total": 1196,
+        "mean": 299,
+        "minimum": 296,
+        "maximum": 302,
+        "instructions": [
+          123
+        ]
+      },
+      "config_reuse_vdot": {
+        "variant": "config-reuse",
+        "software": "reuse",
+        "method": "vdot",
+        "samples": 4,
+        "total": 1092,
+        "mean": 273,
+        "minimum": 273,
+        "maximum": 273,
+        "instructions": [
+          175
+        ]
+      },
+      "firstdot_reuse_vdot": {
+        "variant": "firstdot",
+        "software": "reuse",
+        "method": "vdot",
+        "samples": 4,
+        "total": 1129,
+        "mean": 282.25,
+        "minimum": 282,
+        "maximum": 283,
+        "instructions": [
+          182
+        ]
+      },
+      "reduction_vs_firstdot": 0.03277236492471214,
+      "reduction_vs_rvv": 0.08695652173913049,
+      "config_reuse_beats_firstdot_and_rvv": true
+    }
+  ],
+  "measured_windows": 32
+}

@@ -31,7 +31,11 @@ def main():
     env = dict(item.decode().split("=", 1) for item in activated.split(b"\0") if item)
     env.update(VDOT_O2_TRACE="0", VDOT_O2_ELASTIC="1", VDOT_T14_FUSED_INPUT="1", VDOT_O1_HANDOFF="0",
                VDOT_T12_TRACE="0", VDOT_T13_TRACE="0", VDOT_O1_TRACE="0",
-               JAVA_OPTS="-Xmx12G -Xss16m", BUILD_JOBS="2")
+               JAVA_OPTS=os.environ.get("VDOT_RTL_JAVA_OPTS", "-Xmx12G -Xss16m"),
+               BUILD_JOBS=os.environ.get("VDOT_RTL_JOBS", "2"))
+    jobs = int(env["BUILD_JOBS"])
+    if not 1 <= jobs <= 4:
+        raise RuntimeError("VDOT_RTL_JOBS must be between 1 and 4")
     env.setdefault("CHISEL_FIRTOOL_PATH", str(Path.home()/".cache/llvm-firtool/1.62.1/bin"))
     selected = {k: env[k] for k in ("VDOT_O2_TRACE", "VDOT_O2_ELASTIC", "VDOT_T14_FUSED_INPUT", "VDOT_O1_HANDOFF",
         "VDOT_T12_TRACE", "VDOT_T13_TRACE", "VDOT_O1_TRACE", "JAVA_OPTS", "BUILD_JOBS", "CHISEL_FIRTOOL_PATH", "PATH", "JAVA_HOME")}
@@ -76,8 +80,8 @@ def main():
             "build.sc","src","team/scripts/activate.sh","team/rtl/vdot","team/models/vdot",
             *["team/optimizations/o2/"+stage+"/"+name for name in
                 (("GenerateVDotElasticFu.scala","fu_test.cpp") if stage=="fu" else
-                 ("GenerateVDotElasticParent.scala","parent_test.cpp","check_negative.py","test_negative.py"))],
-            "team/optimizations/o2/run_rtl.py",
+                 ("GenerateVDotElasticParent.scala","parent_test.cpp","check_negative.py","test_negative.py","check_trace.py","test_trace.py"))],
+            "team/optimizations/o2/run_rtl.py", "team/optimizations/o4/perf/audit.py",
             "team/optimizations/o2/check_negative_fu.py","team/optimizations/o2/test_negative_fu.py"]).split(b"\0")
         source={s.decode():digest(ROOT/s.decode()) for s in names if s and (ROOT/s.decode()).is_file()}
         compiler_inputs = hardware_files(ROOT)
@@ -91,11 +95,11 @@ def main():
         if stage=="fu":
             run("negative-gate-tests.log",["python3","-B","-m","unittest","discover","-s","team/optimizations/o2","-p","test_negative_fu.py","-v"])
         else:
-            run("negative-gate-tests.log",["python3","-B","-m","unittest","discover","-s","team/optimizations/o2/parent","-p","test_negative.py","-v"])
+            run("negative-gate-tests.log",["python3","-B","-m","unittest","discover","-s","team/optimizations/o2/parent","-p","test_*.py","-v"])
         suffix="Fu" if stage=="fu" else "Parent"
         top="VDotElastic"+suffix+"TestTop"
         target="vdotElastic"+suffix
-        run("elaboration.log",["mill","-i","-j","2",target+".runMain","team.vdot.GenerateVDotElastic"+suffix,out/"rtl"])
+        run("elaboration.log",["mill","-i","-j",str(min(jobs, 2)),target+".runMain","team.vdot.GenerateVDotElastic"+suffix,out/"rtl"])
         rtl=out/"rtl"
         sources=sorted({p.resolve() for pattern in ("*.sv","*.v") for p in rtl.rglob(pattern)})
         if rtl/(top+".sv") not in sources: raise RuntimeError("missing top")
@@ -128,10 +132,13 @@ def main():
             lint_args = [waiver]
         run("lint.log", ["verilator", "--lint-only", "--assert", "--top-module", top, *lint_args, *sources])
         run("verilator.log",["verilator","--cc","--exe","--build","--assert","--top-module",top,
-            "--Mdir",out/"obj","-j","2","-CFLAGS","-std=c++17 -O2",*lint_args,*sources,
+            "--Mdir",out/"obj","-j",str(jobs),"-CFLAGS","-std=c++17 -O2",*lint_args,*sources,
             ROOT/"team/optimizations/o2"/stage/(stage+"_test.cpp")])
         binary=out/"obj"/("V"+top)
-        run("result.log",[binary,out/"vectors.tsv"])
+        positive_args = [binary, out/"vectors.tsv"]
+        if stage == "parent":
+            positive_args += ["-", out/"metadata.log"]
+        run("result.log", positive_args)
         text=(out/"result.log").read_text()
         prefix="O2_"+stage.upper()
         passes=[line for line in text.splitlines() if line.startswith(prefix+"_PASS")]
@@ -141,7 +148,10 @@ def main():
         if stage=="parent":
             run("positive-replay.log",["python3","-B","team/optimizations/o2/parent/check_negative.py",
                 "--positive","--return-code","0","--log",out/"result.log"])
-        faults=("identity","wen","high","cancel") if stage=="fu" else ("identity","rob","high","metadata","wen","stall","route","double","clock","occupancy","kill_p","kill_r","survivor","duplicate","missing","reset")
+            run("metadata-replay.log", ["python3", "-B", "team/optimizations/o4/perf/audit.py",
+                "--control", out/"result.log", "--metadata", out/"metadata.log",
+                "--output", out/"metadata-audit.json"])
+        faults=("identity","wen","high","cancel") if stage=="fu" else ("identity","rob","high","metadata","wen","stall","route","double","clock","occupancy","kill_p","kill_r","survivor","duplicate","missing","reset","perf_input","perf_swap","perf_parent","perf_cross")
         checker=ROOT/"team/optimizations/o2"/("check_negative_fu.py" if stage=="fu" else "parent/check_negative.py")
         for fault in faults:
             log="inject-"+fault+".log"

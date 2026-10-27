@@ -1,0 +1,77 @@
+{
+  "schema": "hello-vadd-tool-tests-v1",
+  "status": "PASS",
+  "hardware_cases_added": 0,
+  "fixture_run_sha256": "080299257ed10284c8d4b429033021a06180be5c9c787756ba645f94a8f76474",
+  "checks": [
+    {
+      "name": "log_hash_mismatch",
+      "status": "PASS",
+      "observed_rejection": "Log is not the one bound by the execution receipt"
+    },
+    {
+      "name": "wrong_lane",
+      "status": "PASS",
+      "observed_rejection": "Expected exactly one acceptance marker: vadd case=0 output: 9 9 9 9 9 9 9 9 PASS"
+    },
+    {
+      "name": "missing_difftest",
+      "status": "PASS",
+      "observed_rejection": "Expected exactly one acceptance marker: Difftest enabled"
+    },
+    {
+      "name": "truncated_trap",
+      "status": "PASS",
+      "observed_rejection": "Expected exactly one acceptance marker: HIT GOOD TRAP"
+    },
+    {
+      "name": "duplicate_case",
+      "status": "PASS",
+      "observed_rejection": "Unexpected or repeated case output"
+    },
+    {
+      "name": "nonzero_exit",
+      "status": "PASS",
+      "observed_rejection": "Execution did not finish normally with exit code zero"
+    },
+    {
+      "name": "timeout_receipt",
+      "status": "PASS",
+      "observed_rejection": "Execution did not finish normally with exit code zero"
+    },
+    {
+      "name": "changed_image",
+      "status": "PASS",
+      "observed_rejection": "Missing or changed execution inputs"
+    },
+    {
+      "name": "changed_aux",
+      "status": "PASS",
+      "observed_rejection": "Missing or changed runtime auxiliary inputs"
+    },
+    {
+      "name": "failure_in_stderr",
+      "status": "PASS",
+      "observed_rejection": "Failure marker in emulator output"
+    },
+    {
+      "name": "empty_output",
+      "status": "PASS",
+      "runner_status": "CHECK_FAILED"
+    },
+    {
+      "name": "refuse_overwrite",
+      "status": "PASS"
+    },
+    {
+      "name": "missing_wave",
+      "status": "PASS",
+      "runner_status": "WAVE_FAILED"
+    },
+    {
+      "name": "timeout_cleanup",
+      "status": "PASS",
+      "runner_status": "RUN_FAILED"
+    }
+  ]
+}

@@ -1,3 +1,5 @@
+> 已封存的本地8×32/dataset0探针（2026-10-27）：其bc9/e66身份与原始合同继续保留用于追溯，不再作为活动开发队列。上游已完成独立完整矩阵及[firstdot V2源包](../r2-select/FIRSTDOT_STABLE.md)；后续按[当前路线](../../../docs/development-route-current.md)执行，不重复本页五次运行或旧dataset扩展计划。
+
 # First-dot：8×32 首块初始化优化
 
 合同：`r2-first-dot-8x32-admission-v1`。本模块是独立接续，保留 S1、R5、旧探针及其资格。

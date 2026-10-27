@@ -1,0 +1,673 @@
+{"label": "probe-evidence-tests-01", "command": ["/usr/bin/python3", "-B", "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/optimizations/o2/r2-config-reuse/test_runtime_evidence.py", "--repo", "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source", "--archive", "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/probe-archive-01", "--output", "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/probe-evidence-tests-01.json"], "cwd": "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source", "started": "2026-10-24T11:33:43.603525+00:00", "finished": "2026-10-24T11:33:58.039977+00:00", "exit_code": 0, "raw_sha256": {"stdout.log": "3961acfa0d7820ebe7867df6c06db478cbd01b80201edbf1b852c6c3ec477d8f", "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}, "stdout_tail": "{\n  \"status\": \"S3_RUNTIME_EVIDENCE_REJECTIONS_PASS\",\n  \"source_sha256\": \"8816576f8ab212daea0dbc599b697730fa49562f9b157ba33abdbf0eb17ec0fd\",\n  \"reference_manifest_sha256\": \"281c16eed98ba5306932dfa24150703ba335d290bc106594c3b25a1c0b01fc9f\",\n  \"valid_archive_pass\": \"S3_ARCHIVE_ARCHITECTURE_COUNTER_TRACE_PASS\",\n  \"coherently_rehashed_cases\": [\n    {\n      \"case\": \"probe-promoted-to-matrix\",\n      \"self_consistent_bytes_pass\": \"S3_ARCHIVE_BYTES_PASS\",\n      \"rejection\": \"archive cohort differs\"\n    },\n    {\n      \"case\": \"forged-fastest-rvv-summary\",\n      \"self_consistent_bytes_pass\": \"S3_ARCHIVE_BYTES_PASS\",\n      \"rejection\": \"cached statistics differ\"\n    },\n    {\n      \"case\": \"changed-sealed-baseline-payload\",\n      \"self_consistent_bytes_pass\": \"S3_ARCHIVE_BYTES_PASS\",\n      \"rejection\": \"sealed association\"\n    },\n    {\n      \"case\": \"missing-baseline-runtime-input\",\n      \"self_consistent_bytes_pass\": \"S3_ARCHIVE_BYTES_PASS\",\n      \"rejection\": \"runtime input inventory differs\"\n    },\n    {\n      \"case\": \"overlapping-normal-replay\",\n      \"self_consistent_bytes_pass\": \"S3_ARCHIVE_BYTES_PASS\",\n      \"rejection\": \"execution order differs\"\n    }\n  ],\n  \"cli_archive_output_rejected_without_write\": true,\n  \"new_emu_runs\": 0,\n  \"new_compilations\": 0\n}\n", "stderr_tail": ""}
+{"label": "matrix-pack-01", "command": ["/usr/bin/python3", "-B", "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/optimizations/o2/r2-config-reuse/runtime_evidence.py", "--repo", "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source", "--action", "pack", "--identity", "/home/lizufan/riscv-lab/r2s1-firstdot-20261024-1458/run-probe-01/parent-identity.json", "--run", "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/run-probe-01", "--run", "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/run-extend-01", "--scope", "matrix", "--support", "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/runtime-gate-tests-01.json", "--support", "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/probe-evidence-tests-01.json", "--support", "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/optimizations/o2/r2-config-reuse/test_runtime_evidence.py", "--support", "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source-delta-01.json", "--support", "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source-delta-02.json", "--archive", "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/matrix-archive-01"], "cwd": "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source", "started": "2026-10-24T11:33:58.040329+00:00", "finished": "2026-10-24T11:34:04.030091+00:00", "exit_code": 0, "raw_sha256": {"stdout.log": "fa5dd2e06518f2e18ffac242365edcbab6db76acbb0abd1029f915994dc98f44", "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}, "stdout_tail": "{\n  \"status\": \"S3_ARCHIVE_BYTES_PASS\",\n  \"files\": 1616,\n  \"raw_bytes\": 256851979,\n  \"stored_bytes\": 18531089,\n  \"archive_manifest_sha256\": \"0310fa0f2b3edc2851bb4e16d95b4ee994822ac911c2e448c905d194f9406be2\"\n}\n", "stderr_tail": ""}
+{"label": "matrix-audit-01", "command": ["/usr/bin/python3", "-B", "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/optimizations/o2/r2-config-reuse/runtime_evidence.py", "--repo", "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source", "--action", "audit", "--archive", "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/matrix-archive-01", "--output", "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/matrix-audit-01.json"], "cwd": "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source", "started": "2026-10-24T11:34:04.030391+00:00", "finished": "2026-10-24T11:34:38.761762+00:00", "exit_code": 0, "raw_sha256": {"stdout.log": "4a588e81416643682e5fe394e2e5fa604d27d902569e58b3c5e8f14723ae2c55", "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}, "stdout_tail": "{\n  \"status\": \"S3_ARCHIVE_ARCHITECTURE_COUNTER_TRACE_PASS\",\n  \"contract\": \"r2-s3-config-reuse-runtime-v1\",\n  \"qualification_scope\": \"matrix\",\n  \"archive\": {\n    \"files\": 1616,\n    \"raw_bytes\": 256851979,\n    \"stored_bytes\": 18531089,\n    \"archive_manifest_sha256\": \"0310fa0f2b3edc2851bb4e16d95b4ee994822ac911c2e448c905d194f9406be2\"\n  },\n  \"formal_images\": 24,\n  \"replay_images\": 8,\n  \"expected_negative_runs\": 1,\n  \"original_emu_processes\": 33,\n  \"measured_windows\": 384,\n  \"all_window_replay_comparisons\": 192,\n  \"new_emu_runs\": 0,\n  \"new_nemu_runs\": 0,\n  \"physical_external_inputs_revalidated\": false,\n  \"hardware_changed\": false,\n  \"stable_default_changed\": false,\n  \"whole_suite_acceptance\": false,\n  \"scope\": \"sealed ELF/compiled model/full128/CSR/C-ABI retirement/counters/O2/negative/recovery/replay; fixed GEMV invocation\"\n}\n", "stderr_tail": ""}
+{"label": "c-host-01", "command": ["/usr/bin/python3", "-B", "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source/team/optimizations/o2/r2-config-reuse/test_c_api.py", "--repo", "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source", "--identity", "/home/lizufan/riscv-lab/r2s1-firstdot-20261024-1458/run-probe-01/parent-identity.json", "--output", "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/c-host-01.json"], "cwd": "/home/lizufan/riscv-lab/r2s3-runtime-20261024-1818/source", "started": "2026-10-24T11:34:38.762050+00:00", "finished": "2026-10-24T11:34:39.898219+00:00", "exit_code": 0, "raw_sha256": {"stdout.log": "cb56e829bcdec1241c5f97f70674677314968cd76cada4d47b56d42ecbabf5ed", "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}, "stdout_tail": "{\n  \"status\": \"S3_C_ADAPTER_HOST_PASS\",\n  \"unchanged_c_harness\": true,\n  \"unchanged_makefile\": true,\n  \"private_generation_repeat_identical\": true,\n  \"public_functions\": 16,\n  \"scalar_oracle_cases\": 48,\n  \"matrix_row_matches\": 16,\n  \"old_symbol_collisions\": 0,\n  \"foreign_profile_rejected\": \"ordinary C physical T17 identity differs\",\n  \"false_qualification_rejected\": \"config-reuse C qualification differs\",\n  \"old_firstdot_matrix_rejected\": \"full config-reuse matrix required\",\n  \"new_emu_runs\": 0\n}\n", "stderr_tail": ""}
+{
+  "status": "S3_MATRIX_AUDITED_C_ADAPTER_HOST_READY",
+  "created": "2026-10-24T11:34:39.899373+00:00",
+  "matrix_sha256": "6e95d536e510788f56cc625db40b9205ba4a3294836fc92809f927ec51fcb22f",
+  "matrix_manifest_sha256": "0310fa0f2b3edc2851bb4e16d95b4ee994822ac911c2e448c905d194f9406be2",
+  "rows": [
+    {
+      "shard": 1,
+      "shape": [
+        4,
+        8
+      ],
+      "datasets": [
+        0,
+        1,
+        2
+      ],
+      "scope": "endtoend-with-c-abi-call",
+      "candidates": [
+        {
+          "variant": "firstdot",
+          "software": "basic",
+          "method": "vdot",
+          "samples": 12,
+          "total": 2370,
+          "mean": 197.5,
+          "minimum": 195,
+          "maximum": 200,
+          "instructions": [
+            52
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "basic",
+          "method": "rvv",
+          "samples": 12,
+          "total": 2703,
+          "mean": 225.25,
+          "minimum": 225,
+          "maximum": 226,
+          "instructions": [
+            68
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "reuse",
+          "method": "vdot",
+          "samples": 12,
+          "total": 1893,
+          "mean": 157.75,
+          "minimum": 157,
+          "maximum": 158,
+          "instructions": [
+            44
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "reuse",
+          "method": "rvv",
+          "samples": 12,
+          "total": 2253,
+          "mean": 187.75,
+          "minimum": 185,
+          "maximum": 190,
+          "instructions": [
+            54
+          ]
+        },
+        {
+          "variant": "config-reuse",
+          "software": "basic",
+          "method": "vdot",
+          "samples": 12,
+          "total": 2346,
+          "mean": 195.5,
+          "minimum": 193,
+          "maximum": 198,
+          "instructions": [
+            47
+          ]
+        },
+        {
+          "variant": "config-reuse",
+          "software": "basic",
+          "method": "rvv",
+          "samples": 12,
+          "total": 2703,
+          "mean": 225.25,
+          "minimum": 225,
+          "maximum": 226,
+          "instructions": [
+            68
+          ]
+        },
+        {
+          "variant": "config-reuse",
+          "software": "reuse",
+          "method": "vdot",
+          "samples": 12,
+          "total": 1836,
+          "mean": 153,
+          "minimum": 153,
+          "maximum": 153,
+          "instructions": [
+            41
+          ]
+        },
+        {
+          "variant": "config-reuse",
+          "software": "reuse",
+          "method": "rvv",
+          "samples": 12,
+          "total": 2220,
+          "mean": 185,
+          "minimum": 183,
+          "maximum": 187,
+          "instructions": [
+            53
+          ]
+        }
+      ],
+      "fastest_rvv": {
+        "variant": "config-reuse",
+        "software": "reuse",
+        "method": "rvv",
+        "samples": 12,
+        "total": 2220,
+        "mean": 185,
+        "minimum": 183,
+        "maximum": 187,
+        "instructions": [
+          53
+        ]
+      },
+      "config_reuse_vdot": {
+        "variant": "config-reuse",
+        "software": "reuse",
+        "method": "vdot",
+        "samples": 12,
+        "total": 1836,
+        "mean": 153,
+        "minimum": 153,
+        "maximum": 153,
+        "instructions": [
+          41
+        ]
+      },
+      "firstdot_reuse_vdot": {
+        "variant": "firstdot",
+        "software": "reuse",
+        "method": "vdot",
+        "samples": 12,
+        "total": 1893,
+        "mean": 157.75,
+        "minimum": 157,
+        "maximum": 158,
+        "instructions": [
+          44
+        ]
+      },
+      "reduction_vs_firstdot": 0.030110935023771823,
+      "reduction_vs_rvv": 0.17297297297297298,
+      "config_reuse_beats_firstdot_and_rvv": true
+    },
+    {
+      "shard": 3,
+      "shape": [
+        8,
+        32
+      ],
+      "datasets": [
+        0,
+        1,
+        2
+      ],
+      "scope": "endtoend-with-c-abi-call",
+      "candidates": [
+        {
+          "variant": "firstdot",
+          "software": "basic",
+          "method": "vdot",
+          "samples": 12,
+          "total": 7746,
+          "mean": 645.5,
+          "minimum": 643,
+          "maximum": 648,
+          "instructions": [
+            276
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "basic",
+          "method": "rvv",
+          "samples": 12,
+          "total": 4272,
+          "mean": 356,
+          "minimum": 356,
+          "maximum": 356,
+          "instructions": [
+            180
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "reuse",
+          "method": "vdot",
+          "samples": 12,
+          "total": 3387,
+          "mean": 282.25,
+          "minimum": 282,
+          "maximum": 283,
+          "instructions": [
+            182
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "reuse",
+          "method": "rvv",
+          "samples": 12,
+          "total": 3609,
+          "mean": 300.75,
+          "minimum": 298,
+          "maximum": 303,
+          "instructions": [
+            124
+          ]
+        },
+        {
+          "variant": "config-reuse",
+          "software": "basic",
+          "method": "vdot",
+          "samples": 12,
+          "total": 7725,
+          "mean": 643.75,
+          "minimum": 641,
+          "maximum": 646,
+          "instructions": [
+            267
+          ]
+        },
+        {
+          "variant": "config-reuse",
+          "software": "basic",
+          "method": "rvv",
+          "samples": 12,
+          "total": 4272,
+          "mean": 356,
+          "minimum": 356,
+          "maximum": 356,
+          "instructions": [
+            180
+          ]
+        },
+        {
+          "variant": "config-reuse",
+          "software": "reuse",
+          "method": "vdot",
+          "samples": 12,
+          "total": 3276,
+          "mean": 273,
+          "minimum": 273,
+          "maximum": 273,
+          "instructions": [
+            175
+          ]
+        },
+        {
+          "variant": "config-reuse",
+          "software": "reuse",
+          "method": "rvv",
+          "samples": 12,
+          "total": 3588,
+          "mean": 299,
+          "minimum": 296,
+          "maximum": 302,
+          "instructions": [
+            123
+          ]
+        }
+      ],
+      "fastest_rvv": {
+        "variant": "config-reuse",
+        "software": "reuse",
+        "method": "rvv",
+        "samples": 12,
+        "total": 3588,
+        "mean": 299,
+        "minimum": 296,
+        "maximum": 302,
+        "instructions": [
+          123
+        ]
+      },
+      "config_reuse_vdot": {
+        "variant": "config-reuse",
+        "software": "reuse",
+        "method": "vdot",
+        "samples": 12,
+        "total": 3276,
+        "mean": 273,
+        "minimum": 273,
+        "maximum": 273,
+        "instructions": [
+          175
+        ]
+      },
+      "firstdot_reuse_vdot": {
+        "variant": "firstdot",
+        "software": "reuse",
+        "method": "vdot",
+        "samples": 12,
+        "total": 3387,
+        "mean": 282.25,
+        "minimum": 282,
+        "maximum": 283,
+        "instructions": [
+          182
+        ]
+      },
+      "reduction_vs_firstdot": 0.03277236492471214,
+      "reduction_vs_rvv": 0.08695652173913049,
+      "config_reuse_beats_firstdot_and_rvv": true
+    },
+    {
+      "shard": 5,
+      "shape": [
+        16,
+        64
+      ],
+      "datasets": [
+        0,
+        1,
+        2
+      ],
+      "scope": "endtoend-with-c-abi-call",
+      "candidates": [
+        {
+          "variant": "firstdot",
+          "software": "basic",
+          "method": "vdot",
+          "samples": 12,
+          "total": 26556,
+          "mean": 2213,
+          "minimum": 2211,
+          "maximum": 2215,
+          "instructions": [
+            1044
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "basic",
+          "method": "rvv",
+          "samples": 12,
+          "total": 11880,
+          "mean": 990,
+          "minimum": 989,
+          "maximum": 991,
+          "instructions": [
+            596
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "reuse",
+          "method": "vdot",
+          "samples": 12,
+          "total": 8484,
+          "mean": 707,
+          "minimum": 707,
+          "maximum": 707,
+          "instructions": [
+            632
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "reuse",
+          "method": "rvv",
+          "samples": 12,
+          "total": 9345,
+          "mean": 778.75,
+          "minimum": 776,
+          "maximum": 781,
+          "instructions": [
+            372
+          ]
+        },
+        {
+          "variant": "config-reuse",
+          "software": "basic",
+          "method": "vdot",
+          "samples": 12,
+          "total": 26532,
+          "mean": 2211,
+          "minimum": 2208,
+          "maximum": 2213,
+          "instructions": [
+            1027
+          ]
+        },
+        {
+          "variant": "config-reuse",
+          "software": "basic",
+          "method": "rvv",
+          "samples": 12,
+          "total": 11892,
+          "mean": 991,
+          "minimum": 987,
+          "maximum": 993,
+          "instructions": [
+            596
+          ]
+        },
+        {
+          "variant": "config-reuse",
+          "software": "reuse",
+          "method": "vdot",
+          "samples": 12,
+          "total": 8433,
+          "mean": 702.75,
+          "minimum": 702,
+          "maximum": 703,
+          "instructions": [
+            619
+          ]
+        },
+        {
+          "variant": "config-reuse",
+          "software": "reuse",
+          "method": "rvv",
+          "samples": 12,
+          "total": 9276,
+          "mean": 773,
+          "minimum": 770,
+          "maximum": 775,
+          "instructions": [
+            369
+          ]
+        }
+      ],
+      "fastest_rvv": {
+        "variant": "config-reuse",
+        "software": "reuse",
+        "method": "rvv",
+        "samples": 12,
+        "total": 9276,
+        "mean": 773,
+        "minimum": 770,
+        "maximum": 775,
+        "instructions": [
+          369
+        ]
+      },
+      "config_reuse_vdot": {
+        "variant": "config-reuse",
+        "software": "reuse",
+        "method": "vdot",
+        "samples": 12,
+        "total": 8433,
+        "mean": 702.75,
+        "minimum": 702,
+        "maximum": 703,
+        "instructions": [
+          619
+        ]
+      },
+      "firstdot_reuse_vdot": {
+        "variant": "firstdot",
+        "software": "reuse",
+        "method": "vdot",
+        "samples": 12,
+        "total": 8484,
+        "mean": 707,
+        "minimum": 707,
+        "maximum": 707,
+        "instructions": [
+          632
+        ]
+      },
+      "reduction_vs_firstdot": 0.006011315417255969,
+      "reduction_vs_rvv": 0.0908796895213454,
+      "config_reuse_beats_firstdot_and_rvv": true
+    },
+    {
+      "shard": 7,
+      "shape": [
+        4,
+        13
+      ],
+      "datasets": [
+        0,
+        1,
+        2
+      ],
+      "scope": "endtoend-with-c-abi-call",
+      "candidates": [
+        {
+          "variant": "firstdot",
+          "software": "basic",
+          "method": "vdot",
+          "samples": 12,
+          "total": 2799,
+          "mean": 233.25,
+          "minimum": 230,
+          "maximum": 237,
+          "instructions": [
+            152
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "basic",
+          "method": "rvv",
+          "samples": 12,
+          "total": 2766,
+          "mean": 230.5,
+          "minimum": 230,
+          "maximum": 231,
+          "instructions": [
+            68
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "reuse",
+          "method": "vdot",
+          "samples": 12,
+          "total": 2454,
+          "mean": 204.5,
+          "minimum": 204,
+          "maximum": 205,
+          "instructions": [
+            126
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "reuse",
+          "method": "rvv",
+          "samples": 12,
+          "total": 2244,
+          "mean": 187,
+          "minimum": 184,
+          "maximum": 190,
+          "instructions": [
+            54
+          ]
+        },
+        {
+          "variant": "config-reuse",
+          "software": "basic",
+          "method": "vdot",
+          "samples": 12,
+          "total": 2802,
+          "mean": 233.5,
+          "minimum": 231,
+          "maximum": 236,
+          "instructions": [
+            151
+          ]
+        },
+        {
+          "variant": "config-reuse",
+          "software": "basic",
+          "method": "rvv",
+          "samples": 12,
+          "total": 2763,
+          "mean": 230.25,
+          "minimum": 230,
+          "maximum": 231,
+          "instructions": [
+            68
+          ]
+        },
+        {
+          "variant": "config-reuse",
+          "software": "reuse",
+          "method": "vdot",
+          "samples": 12,
+          "total": 2466,
+          "mean": 205.5,
+          "minimum": 205,
+          "maximum": 206,
+          "instructions": [
+            124
+          ]
+        },
+        {
+          "variant": "config-reuse",
+          "software": "reuse",
+          "method": "rvv",
+          "samples": 12,
+          "total": 2247,
+          "mean": 187.25,
+          "minimum": 185,
+          "maximum": 189,
+          "instructions": [
+            54
+          ]
+        }
+      ],
+      "fastest_rvv": {
+        "variant": "firstdot",
+        "software": "reuse",
+        "method": "rvv",
+        "samples": 12,
+        "total": 2244,
+        "mean": 187,
+        "minimum": 184,
+        "maximum": 190,
+        "instructions": [
+          54
+        ]
+      },
+      "config_reuse_vdot": {
+        "variant": "config-reuse",
+        "software": "reuse",
+        "method": "vdot",
+        "samples": 12,
+        "total": 2466,
+        "mean": 205.5,
+        "minimum": 205,
+        "maximum": 206,
+        "instructions": [
+          124
+        ]
+      },
+      "firstdot_reuse_vdot": {
+        "variant": "firstdot",
+        "software": "reuse",
+        "method": "vdot",
+        "samples": 12,
+        "total": 2454,
+        "mean": 204.5,
+        "minimum": 204,
+        "maximum": 205,
+        "instructions": [
+          126
+        ]
+      },
+      "reduction_vs_firstdot": -0.004889975550122161,
+      "reduction_vs_rvv": -0.09893048128342241,
+      "config_reuse_beats_firstdot_and_rvv": false
+    }
+  ],
+  "c_host": {
+    "status": "S3_C_ADAPTER_HOST_PASS",
+    "unchanged_c_harness": true,
+    "unchanged_makefile": true,
+    "private_generation_repeat_identical": true,
+    "public_functions": 16,
+    "scalar_oracle_cases": 48,
+    "matrix_row_matches": 16,
+    "old_symbol_collisions": 0,
+    "foreign_profile_rejected": "ordinary C physical T17 identity differs",
+    "false_qualification_rejected": "config-reuse C qualification differs",
+    "old_firstdot_matrix_rejected": "full config-reuse matrix required",
+    "new_emu_runs": 0
+  },
+  "new_emu_runs": 0,
+  "c_runtime_qualified": false,
+  "stable_default_changed": false
+}

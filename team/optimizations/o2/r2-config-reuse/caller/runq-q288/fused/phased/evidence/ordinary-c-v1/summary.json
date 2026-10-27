@@ -1,0 +1,145 @@
+{
+  "status": "Q288_ORDINARY_C_TWO_VARIANT_DELIVERY_PASS",
+  "started": "2026-10-26T15:13:22.910376+08:00",
+  "finished": "2026-10-26T15:13:29.848616+08:00",
+  "runtime_closures": {
+    "tail": {
+      "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/fullq-tail-target-20261026-1400/archive-driver-01.json",
+      "sha256": "9e1d6e23853e5536e0f7dc7ef5f1e5d9cb435d2f21c30e2e3128aa3e3233d3e8",
+      "fresh_source_result_sha256": "359d7f70b6e08fbea87ac0d7e52584dcaccc2623e8ca39ce971beff7a949695a"
+    },
+    "phased": {
+      "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/fullq-phased-target-20261026-1255/archive-driver-02.json",
+      "sha256": "7289ccac077065f155a86f0beb4658d1b22f6c28d62284c865d612de7739223c",
+      "fresh_source_result_sha256": "4ef24d0d072f91c8aeaad3abf0cfafefe23edf6862b9c69c5bce898cf62ca663"
+    }
+  },
+  "source_sha256": {
+    "phased.h": "5cf482b2bdc28064d159b80e15f9378d11e58f5554a3709d6b571e89e27b58e6",
+    "tail/tail.h": "58dc14820405a977aed3cbbabba93ea2fbed44569d380bfb695a833234190690",
+    "export.py": "93cb16041eac56dc612932d24ede61954346fb6e4a26be5d5b3a1284882fbdf0",
+    "example.c": "ba38d3ad27ec4b6dce3183b7ec2680aa8615b8e55f125e7f5ca2bcdfd5953ea3",
+    "c_api_check.py": "b1fb0e0b76af961b56864bacb11953d2a670ddbff53718422b4ac1258669d719",
+    "README.md": "b23f38ec05de4cce1f0ff0a7cfcae66943b01207503b830208e7309303fb6e21"
+  },
+  "archive_sha256": "f8405c4aee6fb478d58ab7de6be69f5a076edf1aba8e77436df3ca43fe1012b2",
+  "archive_members": 79,
+  "original_bytes": 200873,
+  "variants": {
+    "tail": {
+      "status": "Q288_ORDINARY_C_FINAL_LINK_AND_TARGET_BYTES_PASS",
+      "consumer_elf_sha256": "136f24bcedf6fafe4d5c9379f8b4cbae2e7fb370ae640cd787465e2f05481dd4",
+      "target_elf_sha256": "610c499f46f1fe73074f626d8990bdcbdbc5f78c30ce8fc4a835495b0e392faa",
+      "exported_symbols": [
+        "q288_fused_vdot",
+        "q288_fused_rvv4",
+        "q288_phased_vdot",
+        "q288_tail_vdot"
+      ],
+      "function_sha256": {
+        "q288_fused_vdot": "9a155c33b9f27ca04d68ab3e0d883d6819876db6dc1c5d6f55ba9a3faa435648",
+        "q288_fused_rvv4": "66a12c0ec3cb7c0d1cdceadf04e4c658607438d83a2a958892100422343117ab",
+        "q288_phased_vdot": "78893b4754e0e1f5b0d2599d29e9ad50ff675cae088797ea7207eedfd5b78d9b",
+        "q288_tail_vdot": "b318b99344d0ceabb2a5cab6ce671ab2bfcb189e4aacc9ffccb18488165971f3"
+      },
+      "actual_C_calls": {
+        "q288_api_pack": {
+          "target": "q288_pack",
+          "target_address": 2147483724,
+          "caller_sha256": "d38739018d0a688160d5e06edc2b8b6732b4f0dcc0f4a768f57aced14c3ec8fd"
+        },
+        "q288_api_phased": {
+          "target": "q288_phased_vdot",
+          "target_address": 2147485760,
+          "caller_sha256": "3d35c26ce5cb69644c1bb3dd2e34df8080f7ed53dcede38886a93ddfe174762a"
+        },
+        "q288_api_fused": {
+          "target": "q288_fused_vdot",
+          "target_address": 2147484288,
+          "caller_sha256": "4910d6054fd959269b4e15042422fd221e40243c5b81b077eab4239537f11079"
+        },
+        "q288_api_rvv4": {
+          "target": "q288_fused_rvv4",
+          "target_address": 2147485120,
+          "caller_sha256": "111d23176ec5d93a417a0386f8071908526307737e4f24b5aed9a9bae9c7a62d"
+        },
+        "q288_api_tail": {
+          "target": "q288_tail_vdot",
+          "target_address": 2147486528,
+          "caller_sha256": "c8052bce7a2b5cb312d033b949d1b279f702692a2cce235202bd73ce39694e5b"
+        }
+      },
+      "qualified_runtime_sources_checked": 115,
+      "call_decoder_controls": {
+        "status": "CALL_DECODER_CONTROLS_PASS",
+        "cases": [
+          "auipc_forward",
+          "auipc_backward",
+          "jal_forward",
+          "jal_backward",
+          "auipc_x0_not_a_pc_relative_call"
+        ]
+      },
+      "cached_result_representation_adapter": null
+    },
+    "phased": {
+      "status": "Q288_ORDINARY_C_FINAL_LINK_AND_TARGET_BYTES_PASS",
+      "consumer_elf_sha256": "87cf54257ad55442e63bf5f8985d3895857c328691224b08c553ec33ee783e13",
+      "target_elf_sha256": "bcbe7088f3548813d8ea24fd3a71ce5cb268e7074e7573bb74680d641e5a33b4",
+      "exported_symbols": [
+        "q288_fused_vdot",
+        "q288_fused_rvv4",
+        "q288_phased_vdot"
+      ],
+      "function_sha256": {
+        "q288_fused_vdot": "9a155c33b9f27ca04d68ab3e0d883d6819876db6dc1c5d6f55ba9a3faa435648",
+        "q288_fused_rvv4": "66a12c0ec3cb7c0d1cdceadf04e4c658607438d83a2a958892100422343117ab",
+        "q288_phased_vdot": "78893b4754e0e1f5b0d2599d29e9ad50ff675cae088797ea7207eedfd5b78d9b"
+      },
+      "actual_C_calls": {
+        "q288_api_pack": {
+          "target": "q288_pack",
+          "target_address": 2147483716,
+          "caller_sha256": "ae94d195afc0b7e4e7f38533380eabb3b583cad1f032ea2eb72625aae7030280"
+        },
+        "q288_api_phased": {
+          "target": "q288_phased_vdot",
+          "target_address": 2147485760,
+          "caller_sha256": "3d35c26ce5cb69644c1bb3dd2e34df8080f7ed53dcede38886a93ddfe174762a"
+        },
+        "q288_api_fused": {
+          "target": "q288_fused_vdot",
+          "target_address": 2147484288,
+          "caller_sha256": "4910d6054fd959269b4e15042422fd221e40243c5b81b077eab4239537f11079"
+        },
+        "q288_api_rvv4": {
+          "target": "q288_fused_rvv4",
+          "target_address": 2147485120,
+          "caller_sha256": "111d23176ec5d93a417a0386f8071908526307737e4f24b5aed9a9bae9c7a62d"
+        }
+      },
+      "qualified_runtime_sources_checked": 106,
+      "call_decoder_controls": {
+        "status": "CALL_DECODER_CONTROLS_PASS",
+        "cases": [
+          "auipc_forward",
+          "auipc_backward",
+          "jal_forward",
+          "jal_backward",
+          "auipc_x0_not_a_pc_relative_call"
+        ]
+      },
+      "cached_result_representation_adapter": {
+        "path": "team/optimizations/o2/r2-config-reuse/caller/runq-q288/fused/phased/target/archive_json.py",
+        "sha256": "d1359825a72350f41718d382132f20ca2a4f68464df1a8d8d72a27878722660a",
+        "field": "phased_certificate.mode_phases",
+        "purpose": "exact four frozen tuples to JSON arrays only"
+      }
+    }
+  },
+  "new_emu_runs": 0,
+  "new_target_runtime_qualification": false,
+  "new_performance_qualification": false,
+  "stable_default_changed": false,
+  "frozen_sources_unchanged": true
+}

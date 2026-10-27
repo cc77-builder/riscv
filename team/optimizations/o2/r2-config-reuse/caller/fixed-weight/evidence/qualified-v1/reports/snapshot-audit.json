@@ -1,0 +1,1424 @@
+{
+  "status": "FIXED_WEIGHT_ARCHIVE_FRESH_SOURCE_AUDIT_PASS",
+  "contract": "r2-s3-fixed-weight-8x32-v1",
+  "image_sha256": "ec41c369d718a30b8b82edad5adea06c52366b44dadcf19f137bf78deb6fa22c",
+  "original_emu_runs": 3,
+  "new_emu_runs": 0,
+  "physical_external_inputs_revalidated": false,
+  "windows_per_normal_run": 504,
+  "formal_method_windows": 288,
+  "formal_anchor_windows": 48,
+  "replay_windows": 504,
+  "functional_calls_per_normal_run": 168,
+  "judge_fault_controls": 8,
+  "selection": {
+    "by_count": {
+      "1": {
+        "interface_qualified": true,
+        "pairs": [
+          {
+            "algorithm": 0,
+            "reduction": 0.7066400177659338,
+            "by_dataset": [
+              0.7063791953767504,
+              0.7067702552719202,
+              0.7067702552719202
+            ],
+            "passed": true
+          },
+          {
+            "algorithm": 1,
+            "reduction": 0.5922887106724244,
+            "by_dataset": [
+              0.5942909760589319,
+              0.5912801484230056,
+              0.5912801484230056
+            ],
+            "passed": true
+          },
+          {
+            "algorithm": 2,
+            "reduction": 0.6618477213272752,
+            "by_dataset": [
+              0.664756446991404,
+              0.6603734439834025,
+              0.6603734439834025
+            ],
+            "passed": true
+          },
+          {
+            "algorithm": 3,
+            "reduction": 0.6536508372220697,
+            "by_dataset": [
+              0.6549815498154982,
+              0.6529812255003095,
+              0.6529812255003095
+            ],
+            "passed": true
+          },
+          {
+            "algorithm": 4,
+            "reduction": 0.6810108303249097,
+            "by_dataset": [
+              0.6811091854419411,
+              0.6809616634178037,
+              0.6809616634178037
+            ],
+            "passed": true
+          },
+          {
+            "algorithm": 5,
+            "reduction": 0.6954662104362703,
+            "by_dataset": [
+              0.6954662104362703,
+              0.6954662104362703,
+              0.6954662104362703
+            ],
+            "passed": true
+          }
+        ],
+        "methods": [
+          {
+            "id": 0,
+            "mode": "packed",
+            "algorithm": 0,
+            "leaf": "config_reuse_gemv_8x32_reuse_vdot",
+            "total": 13509,
+            "mean": 1125.75,
+            "by_dataset": [
+              4499,
+              4505,
+              4505
+            ],
+            "by_order": [
+              6760,
+              6749
+            ],
+            "by_dataset_order": [
+              2272,
+              2227,
+              2244,
+              2261,
+              2244,
+              2261
+            ],
+            "cycles": [
+              1136,
+              1115,
+              1136,
+              1112,
+              1108,
+              1112,
+              1136,
+              1149,
+              1108,
+              1112,
+              1136,
+              1149
+            ],
+            "instructions": [
+              1706
+            ],
+            "mean_per_vector_including_setup": 1125.75
+          },
+          {
+            "id": 1,
+            "mode": "packed",
+            "algorithm": 1,
+            "leaf": "r4_gemv_8x32_basic_rvv",
+            "total": 16210,
+            "mean": 1350.8333333333333,
+            "by_dataset": [
+              5430,
+              5390,
+              5390
+            ],
+            "by_order": [
+              8092,
+              8118
+            ],
+            "by_dataset_order": [
+              2700,
+              2730,
+              2696,
+              2694,
+              2696,
+              2694
+            ],
+            "cycles": [
+              1369,
+              1367,
+              1331,
+              1363,
+              1327,
+              1363,
+              1369,
+              1331,
+              1327,
+              1363,
+              1369,
+              1331
+            ],
+            "instructions": [
+              1807
+            ],
+            "mean_per_vector_including_setup": 1350.8333333333333
+          },
+          {
+            "id": 2,
+            "mode": "packed",
+            "algorithm": 2,
+            "leaf": "r4_gemv_8x32_reuse_rvv",
+            "total": 14526,
+            "mean": 1210.5,
+            "by_dataset": [
+              4886,
+              4820,
+              4820
+            ],
+            "by_order": [
+              7260,
+              7266
+            ],
+            "by_dataset_order": [
+              2444,
+              2442,
+              2408,
+              2412,
+              2408,
+              2412
+            ],
+            "cycles": [
+              1223,
+              1222,
+              1221,
+              1220,
+              1188,
+              1220,
+              1220,
+              1192,
+              1188,
+              1220,
+              1220,
+              1192
+            ],
+            "instructions": [
+              1727
+            ],
+            "mean_per_vector_including_setup": 1210.5
+          },
+          {
+            "id": 3,
+            "mode": "packed",
+            "algorithm": 3,
+            "leaf": "config_reuse_gemv_8x32_basic_rvv",
+            "total": 14572,
+            "mean": 1214.3333333333333,
+            "by_dataset": [
+              4878,
+              4847,
+              4847
+            ],
+            "by_order": [
+              7220,
+              7352
+            ],
+            "by_dataset_order": [
+              2404,
+              2474,
+              2408,
+              2439,
+              2408,
+              2439
+            ],
+            "cycles": [
+              1205,
+              1237,
+              1199,
+              1237,
+              1207,
+              1237,
+              1201,
+              1202,
+              1207,
+              1237,
+              1201,
+              1202
+            ],
+            "instructions": [
+              1711
+            ],
+            "mean_per_vector_including_setup": 1214.3333333333333
+          },
+          {
+            "id": 4,
+            "mode": "packed",
+            "algorithm": 4,
+            "leaf": "firstdot_gemv_8x32_reuse_rvv",
+            "total": 13850,
+            "mean": 1154.1666666666667,
+            "by_dataset": [
+              4616,
+              4617,
+              4617
+            ],
+            "by_order": [
+              6980,
+              6870
+            ],
+            "by_dataset_order": [
+              2326,
+              2290,
+              2327,
+              2290,
+              2327,
+              2290
+            ],
+            "cycles": [
+              1146,
+              1145,
+              1180,
+              1145,
+              1180,
+              1145,
+              1147,
+              1145,
+              1180,
+              1145,
+              1147,
+              1145
+            ],
+            "instructions": [
+              1655
+            ],
+            "mean_per_vector_including_setup": 1154.1666666666667
+          },
+          {
+            "id": 5,
+            "mode": "packed",
+            "algorithm": 5,
+            "leaf": "config_reuse_gemv_8x32_reuse_rvv",
+            "total": 14028,
+            "mean": 1169,
+            "by_dataset": [
+              4676,
+              4676,
+              4676
+            ],
+            "by_order": [
+              7050,
+              6978
+            ],
+            "by_dataset_order": [
+              2350,
+              2326,
+              2350,
+              2326,
+              2350,
+              2326
+            ],
+            "cycles": [
+              1175,
+              1163,
+              1175,
+              1163,
+              1175,
+              1163,
+              1175,
+              1163,
+              1175,
+              1163,
+              1175,
+              1163
+            ],
+            "instructions": [
+              1654
+            ],
+            "mean_per_vector_including_setup": 1169.0
+          },
+          {
+            "id": 6,
+            "mode": "split",
+            "algorithm": 0,
+            "leaf": "split_gemv_8x32_vdot",
+            "total": 3963,
+            "mean": 330.25,
+            "by_dataset": [
+              1321,
+              1321,
+              1321
+            ],
+            "by_order": [
+              1944,
+              2019
+            ],
+            "by_dataset_order": [
+              648,
+              673,
+              648,
+              673,
+              648,
+              673
+            ],
+            "cycles": [
+              324,
+              336,
+              324,
+              337,
+              324,
+              337,
+              324,
+              336,
+              324,
+              337,
+              324,
+              336
+            ],
+            "instructions": [
+              257
+            ],
+            "mean_per_vector_including_setup": 330.25
+          },
+          {
+            "id": 7,
+            "mode": "split",
+            "algorithm": 1,
+            "leaf": "split_gemv_8x32_rvv0",
+            "total": 6609,
+            "mean": 550.75,
+            "by_dataset": [
+              2203,
+              2203,
+              2203
+            ],
+            "by_order": [
+              3333,
+              3276
+            ],
+            "by_dataset_order": [
+              1111,
+              1092,
+              1111,
+              1092,
+              1111,
+              1092
+            ],
+            "cycles": [
+              555,
+              546,
+              556,
+              546,
+              556,
+              546,
+              555,
+              546,
+              556,
+              546,
+              555,
+              546
+            ],
+            "instructions": [
+              358
+            ],
+            "mean_per_vector_including_setup": 550.75
+          },
+          {
+            "id": 8,
+            "mode": "split",
+            "algorithm": 2,
+            "leaf": "split_gemv_8x32_rvv1",
+            "total": 4912,
+            "mean": 409.3333333333333,
+            "by_dataset": [
+              1638,
+              1637,
+              1637
+            ],
+            "by_order": [
+              2457,
+              2455
+            ],
+            "by_dataset_order": [
+              819,
+              819,
+              819,
+              818,
+              819,
+              818
+            ],
+            "cycles": [
+              409,
+              410,
+              410,
+              409,
+              410,
+              409,
+              409,
+              409,
+              410,
+              409,
+              409,
+              409
+            ],
+            "instructions": [
+              278
+            ],
+            "mean_per_vector_including_setup": 409.3333333333333
+          },
+          {
+            "id": 9,
+            "mode": "split",
+            "algorithm": 3,
+            "leaf": "split_gemv_8x32_rvv2",
+            "total": 5047,
+            "mean": 420.5833333333333,
+            "by_dataset": [
+              1683,
+              1682,
+              1682
+            ],
+            "by_order": [
+              2520,
+              2527
+            ],
+            "by_dataset_order": [
+              840,
+              843,
+              840,
+              842,
+              840,
+              842
+            ],
+            "cycles": [
+              420,
+              422,
+              420,
+              421,
+              420,
+              421,
+              420,
+              421,
+              420,
+              421,
+              420,
+              421
+            ],
+            "instructions": [
+              262
+            ],
+            "mean_per_vector_including_setup": 420.5833333333333
+          },
+          {
+            "id": 10,
+            "mode": "split",
+            "algorithm": 4,
+            "leaf": "split_gemv_8x32_rvv3",
+            "total": 4418,
+            "mean": 368.1666666666667,
+            "by_dataset": [
+              1472,
+              1473,
+              1473
+            ],
+            "by_order": [
+              2210,
+              2208
+            ],
+            "by_dataset_order": [
+              736,
+              736,
+              737,
+              736,
+              737,
+              736
+            ],
+            "cycles": [
+              368,
+              368,
+              368,
+              368,
+              368,
+              368,
+              369,
+              368,
+              368,
+              368,
+              369,
+              368
+            ],
+            "instructions": [
+              206
+            ],
+            "mean_per_vector_including_setup": 368.1666666666667
+          },
+          {
+            "id": 11,
+            "mode": "split",
+            "algorithm": 5,
+            "leaf": "split_gemv_8x32_rvv4",
+            "total": 4272,
+            "mean": 356,
+            "by_dataset": [
+              1424,
+              1424,
+              1424
+            ],
+            "by_order": [
+              2190,
+              2082
+            ],
+            "by_dataset_order": [
+              730,
+              694,
+              730,
+              694,
+              730,
+              694
+            ],
+            "cycles": [
+              365,
+              347,
+              365,
+              347,
+              365,
+              347,
+              365,
+              347,
+              365,
+              347,
+              365,
+              347
+            ],
+            "instructions": [
+              205
+            ],
+            "mean_per_vector_including_setup": 356.0
+          }
+        ],
+        "anchors": [
+          {
+            "dataset": 0,
+            "groups": [
+              {
+                "order": 0,
+                "position": "start",
+                "total": 684
+              },
+              {
+                "order": 0,
+                "position": "end",
+                "total": 644
+              },
+              {
+                "order": 1,
+                "position": "start",
+                "total": 687
+              },
+              {
+                "order": 1,
+                "position": "end",
+                "total": 648
+              }
+            ],
+            "variation": 0.06677018633540377,
+            "passed": false
+          },
+          {
+            "dataset": 1,
+            "groups": [
+              {
+                "order": 0,
+                "position": "start",
+                "total": 684
+              },
+              {
+                "order": 0,
+                "position": "end",
+                "total": 646
+              },
+              {
+                "order": 1,
+                "position": "start",
+                "total": 684
+              },
+              {
+                "order": 1,
+                "position": "end",
+                "total": 647
+              }
+            ],
+            "variation": 0.05882352941176472,
+            "passed": false
+          },
+          {
+            "dataset": 2,
+            "groups": [
+              {
+                "order": 0,
+                "position": "start",
+                "total": 684
+              },
+              {
+                "order": 0,
+                "position": "end",
+                "total": 646
+              },
+              {
+                "order": 1,
+                "position": "start",
+                "total": 684
+              },
+              {
+                "order": 1,
+                "position": "end",
+                "total": 647
+              }
+            ],
+            "variation": 0.05882352941176472,
+            "passed": false
+          }
+        ],
+        "decision": "HOLD_CONTEXT_VARIATION",
+        "observed_lowest_rvv": "split_gemv_8x32_rvv4",
+        "vdot_reduction_by_dataset": [
+          0.0723314606741573,
+          0.0723314606741573,
+          0.0723314606741573
+        ],
+        "vdot_reduction_by_order": [
+          0.11232876712328765,
+          0.030259365994236287
+        ],
+        "selected_method": null,
+        "vdot_reduction_by_dataset_order": [
+          0.11232876712328765,
+          0.030259365994236287,
+          0.11232876712328765,
+          0.030259365994236287,
+          0.11232876712328765,
+          0.030259365994236287
+        ],
+        "stable_default_changed": false,
+        "count": 1,
+        "primary": false,
+        "mean_cycles_includes_weight_setup": true
+      },
+      "4": {
+        "interface_qualified": true,
+        "pairs": [
+          {
+            "algorithm": 0,
+            "reduction": 0.5098864448503136,
+            "by_dataset": [
+              0.5094114843936145,
+              0.5085755121486422,
+              0.5116722248689852
+            ],
+            "passed": true
+          },
+          {
+            "algorithm": 1,
+            "reduction": 0.3534665498431362,
+            "by_dataset": [
+              0.3479366155410558,
+              0.3562340966921119,
+              0.3562340966921119
+            ],
+            "passed": true
+          },
+          {
+            "algorithm": 2,
+            "reduction": 0.4445802059696282,
+            "by_dataset": [
+              0.44182636925332497,
+              0.44595726853791373,
+              0.44595726853791373
+            ],
+            "passed": true
+          },
+          {
+            "algorithm": 3,
+            "reduction": 0.4408821727588319,
+            "by_dataset": [
+              0.4400735669766016,
+              0.4412575278146371,
+              0.44131455399061037
+            ],
+            "passed": true
+          },
+          {
+            "algorithm": 4,
+            "reduction": 0.48943820224719103,
+            "by_dataset": [
+              0.48943820224719103,
+              0.48943820224719103,
+              0.48943820224719103
+            ],
+            "passed": true
+          },
+          {
+            "algorithm": 5,
+            "reduction": 0.48118766999093376,
+            "by_dataset": [
+              0.4816409791477788,
+              0.48096101541251135,
+              0.48096101541251135
+            ],
+            "passed": true
+          }
+        ],
+        "methods": [
+          {
+            "id": 0,
+            "mode": "packed",
+            "algorithm": 0,
+            "leaf": "config_reuse_gemv_8x32_reuse_vdot",
+            "total": 25186,
+            "mean": 2098.8333333333335,
+            "by_dataset": [
+              8394,
+              8396,
+              8396
+            ],
+            "by_order": [
+              12388,
+              12798
+            ],
+            "by_dataset_order": [
+              4128,
+              4266,
+              4130,
+              4266,
+              4130,
+              4266
+            ],
+            "cycles": [
+              2063,
+              2133,
+              2065,
+              2133,
+              2065,
+              2133,
+              2065,
+              2133,
+              2065,
+              2133,
+              2065,
+              2133
+            ],
+            "instructions": [
+              2834
+            ],
+            "mean_per_vector_including_setup": 524.7083333333334
+          },
+          {
+            "id": 1,
+            "mode": "packed",
+            "algorithm": 1,
+            "leaf": "r4_gemv_8x32_basic_rvv",
+            "total": 35381,
+            "mean": 2948.4166666666665,
+            "by_dataset": [
+              11801,
+              11790,
+              11790
+            ],
+            "by_order": [
+              17831,
+              17550
+            ],
+            "by_dataset_order": [
+              5951,
+              5850,
+              5940,
+              5850,
+              5940,
+              5850
+            ],
+            "cycles": [
+              2981,
+              2925,
+              2970,
+              2925,
+              2970,
+              2925,
+              2970,
+              2925,
+              2970,
+              2925,
+              2970,
+              2925
+            ],
+            "instructions": [
+              3238
+            ],
+            "mean_per_vector_including_setup": 737.1041666666666
+          },
+          {
+            "id": 2,
+            "mode": "packed",
+            "algorithm": 2,
+            "leaf": "r4_gemv_8x32_reuse_rvv",
+            "total": 28645,
+            "mean": 2387.0833333333335,
+            "by_dataset": [
+              9549,
+              9548,
+              9548
+            ],
+            "by_order": [
+              14191,
+              14454
+            ],
+            "by_dataset_order": [
+              4731,
+              4818,
+              4730,
+              4818,
+              4730,
+              4818
+            ],
+            "cycles": [
+              2366,
+              2409,
+              2365,
+              2409,
+              2365,
+              2409,
+              2365,
+              2409,
+              2365,
+              2409,
+              2365,
+              2409
+            ],
+            "instructions": [
+              2918
+            ],
+            "mean_per_vector_including_setup": 596.7708333333334
+          },
+          {
+            "id": 3,
+            "mode": "packed",
+            "algorithm": 3,
+            "leaf": "config_reuse_gemv_8x32_basic_rvv",
+            "total": 29382,
+            "mean": 2448.5,
+            "by_dataset": [
+              9787,
+              9797,
+              9798
+            ],
+            "by_order": [
+              14844,
+              14538
+            ],
+            "by_dataset_order": [
+              4941,
+              4846,
+              4951,
+              4846,
+              4952,
+              4846
+            ],
+            "cycles": [
+              2465,
+              2423,
+              2476,
+              2423,
+              2476,
+              2423,
+              2475,
+              2423,
+              2476,
+              2423,
+              2476,
+              2423
+            ],
+            "instructions": [
+              2854
+            ],
+            "mean_per_vector_including_setup": 612.125
+          },
+          {
+            "id": 4,
+            "mode": "packed",
+            "algorithm": 4,
+            "leaf": "firstdot_gemv_8x32_reuse_rvv",
+            "total": 26700,
+            "mean": 2225,
+            "by_dataset": [
+              8900,
+              8900,
+              8900
+            ],
+            "by_order": [
+              13242,
+              13458
+            ],
+            "by_dataset_order": [
+              4414,
+              4486,
+              4414,
+              4486,
+              4414,
+              4486
+            ],
+            "cycles": [
+              2207,
+              2243,
+              2207,
+              2243,
+              2207,
+              2243,
+              2207,
+              2243,
+              2207,
+              2243,
+              2207,
+              2243
+            ],
+            "instructions": [
+              2630
+            ],
+            "mean_per_vector_including_setup": 556.25
+          },
+          {
+            "id": 5,
+            "mode": "packed",
+            "algorithm": 5,
+            "leaf": "config_reuse_gemv_8x32_reuse_rvv",
+            "total": 26472,
+            "mean": 2206,
+            "by_dataset": [
+              8824,
+              8824,
+              8824
+            ],
+            "by_order": [
+              13428,
+              13044
+            ],
+            "by_dataset_order": [
+              4476,
+              4348,
+              4476,
+              4348,
+              4476,
+              4348
+            ],
+            "cycles": [
+              2238,
+              2174,
+              2238,
+              2174,
+              2238,
+              2174,
+              2238,
+              2174,
+              2238,
+              2174,
+              2238,
+              2174
+            ],
+            "instructions": [
+              2626
+            ],
+            "mean_per_vector_including_setup": 551.5
+          },
+          {
+            "id": 6,
+            "mode": "split",
+            "algorithm": 0,
+            "leaf": "split_gemv_8x32_vdot",
+            "total": 12344,
+            "mean": 1028.6666666666667,
+            "by_dataset": [
+              4118,
+              4126,
+              4100
+            ],
+            "by_order": [
+              6242,
+              6102
+            ],
+            "by_dataset_order": [
+              2084,
+              2034,
+              2092,
+              2034,
+              2066,
+              2034
+            ],
+            "cycles": [
+              1042,
+              1017,
+              1042,
+              1017,
+              1046,
+              1017,
+              1046,
+              1017,
+              1033,
+              1017,
+              1033,
+              1017
+            ],
+            "instructions": [
+              905
+            ],
+            "mean_per_vector_including_setup": 257.1666666666667
+          },
+          {
+            "id": 7,
+            "mode": "split",
+            "algorithm": 1,
+            "leaf": "split_gemv_8x32_rvv0",
+            "total": 22875,
+            "mean": 1906.25,
+            "by_dataset": [
+              7695,
+              7590,
+              7590
+            ],
+            "by_order": [
+              11397,
+              11478
+            ],
+            "by_dataset_order": [
+              3869,
+              3826,
+              3764,
+              3826,
+              3764,
+              3826
+            ],
+            "cycles": [
+              1926,
+              1913,
+              1943,
+              1913,
+              1882,
+              1913,
+              1882,
+              1913,
+              1882,
+              1913,
+              1882,
+              1913
+            ],
+            "instructions": [
+              1309
+            ],
+            "mean_per_vector_including_setup": 476.5625
+          },
+          {
+            "id": 8,
+            "mode": "split",
+            "algorithm": 2,
+            "leaf": "split_gemv_8x32_rvv1",
+            "total": 15910,
+            "mean": 1325.8333333333333,
+            "by_dataset": [
+              5330,
+              5290,
+              5290
+            ],
+            "by_order": [
+              7942,
+              7968
+            ],
+            "by_dataset_order": [
+              2674,
+              2656,
+              2634,
+              2656,
+              2634,
+              2656
+            ],
+            "cycles": [
+              1343,
+              1328,
+              1331,
+              1328,
+              1317,
+              1328,
+              1317,
+              1328,
+              1317,
+              1328,
+              1317,
+              1328
+            ],
+            "instructions": [
+              989
+            ],
+            "mean_per_vector_including_setup": 331.4583333333333
+          },
+          {
+            "id": 9,
+            "mode": "split",
+            "algorithm": 3,
+            "leaf": "split_gemv_8x32_rvv2",
+            "total": 16428,
+            "mean": 1369,
+            "by_dataset": [
+              5480,
+              5474,
+              5474
+            ],
+            "by_order": [
+              8136,
+              8292
+            ],
+            "by_dataset_order": [
+              2712,
+              2768,
+              2712,
+              2762,
+              2712,
+              2762
+            ],
+            "cycles": [
+              1356,
+              1384,
+              1356,
+              1384,
+              1356,
+              1381,
+              1356,
+              1381,
+              1356,
+              1381,
+              1356,
+              1381
+            ],
+            "instructions": [
+              925
+            ],
+            "mean_per_vector_including_setup": 342.25
+          },
+          {
+            "id": 10,
+            "mode": "split",
+            "algorithm": 4,
+            "leaf": "split_gemv_8x32_rvv3",
+            "total": 13632,
+            "mean": 1136,
+            "by_dataset": [
+              4544,
+              4544,
+              4544
+            ],
+            "by_order": [
+              6846,
+              6786
+            ],
+            "by_dataset_order": [
+              2282,
+              2262,
+              2282,
+              2262,
+              2282,
+              2262
+            ],
+            "cycles": [
+              1141,
+              1131,
+              1141,
+              1131,
+              1141,
+              1131,
+              1141,
+              1131,
+              1141,
+              1131,
+              1141,
+              1131
+            ],
+            "instructions": [
+              701
+            ],
+            "mean_per_vector_including_setup": 284.0
+          },
+          {
+            "id": 11,
+            "mode": "split",
+            "algorithm": 5,
+            "leaf": "split_gemv_8x32_rvv4",
+            "total": 13734,
+            "mean": 1144.5,
+            "by_dataset": [
+              4574,
+              4580,
+              4580
+            ],
+            "by_order": [
+              6930,
+              6804
+            ],
+            "by_dataset_order": [
+              2310,
+              2264,
+              2310,
+              2270,
+              2310,
+              2270
+            ],
+            "cycles": [
+              1155,
+              1132,
+              1155,
+              1132,
+              1155,
+              1135,
+              1155,
+              1135,
+              1155,
+              1135,
+              1155,
+              1135
+            ],
+            "instructions": [
+              697
+            ],
+            "mean_per_vector_including_setup": 286.125
+          }
+        ],
+        "anchors": [
+          {
+            "dataset": 0,
+            "groups": [
+              {
+                "order": 0,
+                "position": "start",
+                "total": 2098
+              },
+              {
+                "order": 0,
+                "position": "end",
+                "total": 2056
+              },
+              {
+                "order": 1,
+                "position": "start",
+                "total": 2102
+              },
+              {
+                "order": 1,
+                "position": "end",
+                "total": 2064
+              }
+            ],
+            "variation": 0.02237354085603105,
+            "passed": false
+          },
+          {
+            "dataset": 1,
+            "groups": [
+              {
+                "order": 0,
+                "position": "start",
+                "total": 2102
+              },
+              {
+                "order": 0,
+                "position": "end",
+                "total": 2056
+              },
+              {
+                "order": 1,
+                "position": "start",
+                "total": 2102
+              },
+              {
+                "order": 1,
+                "position": "end",
+                "total": 2064
+              }
+            ],
+            "variation": 0.02237354085603105,
+            "passed": false
+          },
+          {
+            "dataset": 2,
+            "groups": [
+              {
+                "order": 0,
+                "position": "start",
+                "total": 2102
+              },
+              {
+                "order": 0,
+                "position": "end",
+                "total": 2056
+              },
+              {
+                "order": 1,
+                "position": "start",
+                "total": 2102
+              },
+              {
+                "order": 1,
+                "position": "end",
+                "total": 2064
+              }
+            ],
+            "variation": 0.02237354085603105,
+            "passed": false
+          }
+        ],
+        "decision": "HOLD_CONTEXT_VARIATION",
+        "observed_lowest_rvv": "split_gemv_8x32_rvv3",
+        "vdot_reduction_by_dataset": [
+          0.09375,
+          0.09198943661971826,
+          0.09771126760563376
+        ],
+        "vdot_reduction_by_order": [
+          0.08822670172363423,
+          0.10079575596816981
+        ],
+        "selected_method": null,
+        "vdot_reduction_by_dataset_order": [
+          0.08676599474145485,
+          0.10079575596816981,
+          0.08326029798422441,
+          0.10079575596816981,
+          0.09465381244522353,
+          0.10079575596816981
+        ],
+        "stable_default_changed": false,
+        "count": 4,
+        "primary": true,
+        "mean_cycles_includes_weight_setup": true
+      }
+    },
+    "primary_count": 4,
+    "decision": "HOLD_CONTEXT_VARIATION",
+    "interface_qualified": true,
+    "selected_method": null,
+    "stable_default_changed": false,
+    "application_scope": "bounded fixed-A stream example, not an LLM"
+  },
+  "raw_sources_recomputed": true,
+  "stable_default_changed": false,
+  "hardware_changed": false,
+  "committed_vdot_per_normal_run": 15104,
+  "audit_tool_sources": {
+    "team/optimizations/o2/r2-config-reuse/caller/fixed-weight/archive.py": "2d7f69fc4b99d2f83ee276c7acc24f9a8db16e21b3a0521b7102aecd6cbba578",
+    "team/optimizations/o2/r2-config-reuse/caller/split/archive.py": "85d9823ef722e72310293d20eb731bd167804b9bd8c69e0ba0062ea16ca93990",
+    "team/optimizations/o2/repro/evidence/clean-reproduction-v1/analysis/detached-audit.py": "57f31bb70dafa3154dc22e09c635dde1f4c140405717d98053d781dc2ca43cd4"
+  },
+  "archive_manifest_sha256": "1f1eed374d90be234aeae75b284099db8461ec80fbdb1ab1dd733f218f5f4f2b",
+  "command_sha256": "7f1d0163607c43af337aaacdffb0d764565b2f79018119fb2d05dcc60bec2450",
+  "files": 140,
+  "raw_bytes": 250071548,
+  "stored_bytes": 17287829,
+  "fresh_python_process": true,
+  "full_git_history_required_by_child": false,
+  "source_checkout_required_by_launcher": true,
+  "archived_original_git_objects": 19,
+  "dependency_probe_sha256": "b31b837408da32d6eb63db70e64d718037899681a977e53bebcae6c596dfe95e",
+  "dependency_scope": "Python filesystem/enumeration and explicit subprocess paths; not an OS sandbox"
+}

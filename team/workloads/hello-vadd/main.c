@@ -11,8 +11,8 @@ static const uint8_t inputs[3][2][8] = {
 };
 
 int main(void) {
-  printf("hello xiangshan, 我是%s, IPaddress=%s\n", TEAM_ID, HOST_IP);
-  printf("identity_status=placeholder; IPaddress is WSL host IPv4\n");
+  printf("hello xiangshan, I am %s, IP address=%s\n", TEAM_ID, HOST_IP);
+  printf("identity_status=%s; IP address is build-host IPv4\n", IDENTITY_STATUS);
   unsigned long vlbytes;
   __asm__ volatile("li t0, 0x200; csrs mstatus, t0; csrwi vstart, 0; csrwi vcsr, 0; csrr %0, vlenb"
                    : "=r"(vlbytes) : : "t0", "memory");

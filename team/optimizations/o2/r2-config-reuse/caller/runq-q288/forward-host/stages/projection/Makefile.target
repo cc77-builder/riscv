@@ -1,0 +1,15 @@
+NAME = forward-projection
+SRCS = main.c entry.S fixture.S fused.S q288.c
+INC_DIR += $(CURDIR)
+CFLAGS += -std=gnu11 -ffreestanding -fno-builtin -ffp-contract=off -fno-fast-math -fno-lto
+CFLAGS += -fno-tree-vectorize -fno-tree-slp-vectorize -fno-tree-loop-distribute-patterns
+CFLAGS += -fno-ipa-cp -fno-ipa-icf -mno-relax -mabi=lp64d -fno-stack-protector
+CFLAGS += -ffunction-sections -fdata-sections -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=0
+CFLAGS += -Wno-error=unknown-pragmas -Wno-error=unused-variable -Wno-error=unused-function -Wno-error=maybe-uninitialized
+CFLAGS += -DFULL_ERRNO_OFFSET=$(FULL_ERRNO_OFFSET)
+ifneq ($(FORWARD_OBJ_ROOT),)
+DST_DIR := $(FORWARD_OBJ_ROOT)
+endif
+include $(AM_HOME)/Makefile.app
+LDFLAGS += -static --no-relax --emit-relocs -Map=$(BINARY).map
+LINK_FILES += $(MATH_ARCHIVE)

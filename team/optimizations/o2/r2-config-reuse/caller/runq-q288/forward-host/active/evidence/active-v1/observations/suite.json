@@ -1,0 +1,358 @@
+{
+  "status": "ACTIVE_FORWARD_AND_PROPAGATION_CONTROLS_PASS",
+  "contract": "r2-s3-runq-active-forward-v1",
+  "source_files": {
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/generate.py": "e2862fb802754c473a0c9cb8a949b30ed55eaee647aae9ef7e1d566168122987",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/oracle.c": "6e72ed5b4e6b4ea804d34212e9e84d9001207eea076a26a8a835f2a1c29f9dec",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/q288.h": "f8e4df00dba860487c168f6990edbf2dc8814291b825d30762c7ecad61821cc2",
+    "team/optimizations/o2/r2-config-reuse/caller/caller.h": "8f8ebbdfc64f506549b8fcb91700fc80dd91b1fd0a5be64aaed504ebcfa0c38e",
+    "team/optimizations/o2/r2-config-reuse/caller/split/split.h": "94ccdc8e6212c0c0d7ef0e8795c8edcdc9a02e173802bea18965bbce5e01e222",
+    "team/optimizations/o2/r2-config-reuse/public/gemv.S": "9b8e03d1827ad70105d11566b635c49900c495b3fad6e871a8e25d9fc414a6d2",
+    "team/optimizations/o2/r2-safe-tail/machine_model.py": "8fb2ac208d8db9083464fb839c06b46ec365234d72b819822563830dad90171e",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/fused/generate.py": "b1d127cfc60d9b3fe942b90fd8a1faa0800726d56b081ebd183ca4e611c9a77b",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/fused/model.py": "703667b537c652b22a7dd82f8e3d3a7a42e965d7b5df7d4627b78e0d7358cc82",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/fused/screen.py": "39bfbe63942d15ad5bee4e32e08153c2edf56cc8ce2058f74c199550f16cf5ae",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/fused/phased/candidate.py": "2b487c60b53e25dbc04eba4c2eac4bd175e1573837863194de463d6a27df2399",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/fused/phased/screen.py": "8537f85027ccc9164229c10a400a7d996d42c6711d30dc869835e5eb71a88fd9",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/fused/phased/CONTRACT.md": "142f536df62d5d9a873732397e2a6725a409f069eae97dbbdfef2554aa417fd2",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/fused/phased/tail/candidate.py": "3a75e09640fdf789c11cf8a9050cd716ca3fde12732cb500f3f123adb0b50697",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/fused/phased/tail/taint.py": "8ff10a01f32be5a37afec3498cbfb387bed242b0f65289013b42771078c61152",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/fused/phased/tail/screen.py": "4ca2b31c0d5ee20104c46dd6b99796c248991ac39c0d8e93337a7d1ee328a38b",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/fused/phased/tail/CONTRACT.md": "ae9d5e7059cf9049aa8a61fa2909c5e35ed68d2f262422e25672711c8da2e668",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/observe.c": "92bd2986e8bca35dc2ed30d0338eac2a0c96ef6a54d766835c793ad6fb9e8236",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/upstream/runq.c": "ba9cc681afca79f994f815dfeffc4a61c5b3ca8c5d4d4dcb75c8d375856ba548",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/upstream/LICENSE": "e87b912002f04cdfa837eaf7f70548ab79b9cb62a285495edf575f3da875aec4",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/acc8/q288.c": "f0c557cb837ac05ff713b0eaadb7949b3ba623ae54fe1c02aedcd4220f5bf8d1",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/active/active.c": "ffbd57059987977d704767f8f87f4b1f1d98b1e479a053026f95f449076236f3",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/active/check.py": "90cf98d1e6554324c373870a3c5178d659add80c57a461ba8ea72a040e20230e",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/active/CONTRACT.md": "e4ff7b3a96fbe589220603709e1ec72eb13cf059f8bd4f5e1f3ba94ac28e0283"
+  },
+  "elf_sha256": "610c499f46f1fe73074f626d8990bdcbdbc5f78c30ce8fc4a835495b0e392faa",
+  "elf_origin": {
+    "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/r2-config-reuse/caller/runq-q288/fused/phased/tail/target/evidence/target-v1/archive/payload.zip",
+    "member": "build/vdot-perf.elf",
+    "archive_sha256": "2f9edc316c60ab0069a02c59873c2d08a9be9c8d908d233922e2b4923b2e6062"
+  },
+  "host_library_sha256": "0e4b248611c0d57f3c4fcb2a0d3e60f3a6a012dfe7252a86c345e8968dbe0f2a",
+  "host_compiler_sha256": "821af3c74506283c179ca413bb33e6b528805a4dd8a5c09df125e5ad560a9e89",
+  "dynamic_libraries": {
+    "/usr/lib/x86_64-linux-gnu/libm.so.6": "3dd5511ae94785c9f921429b0f2b2f7aabb461b6f0e6de6dfdbef15f24bdfee6",
+    "/usr/lib/x86_64-linux-gnu/libc.so.6": "b2cf6c33b74d2f22543b7a469a75b538911e690f769d0b238843a49465b83793",
+    "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2": "41daf7836f7fce21a40ca63a00c5caf21b05a35a76ccc075d86f1716212cdf01"
+  },
+  "platform": "Linux-6.6.114.1-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+  "python": "3.10.12",
+  "cpu_affinity": [
+    0
+  ],
+  "results": [
+    {
+      "status": "ACTIVE_FORWARD_PASS",
+      "contract": "r2-s3-runq-active-forward-v1",
+      "control": 0,
+      "actual_elf_model_calls": 144,
+      "independent_run_states": 3,
+      "comparisons": [
+        {
+          "position": 0,
+          "method": 0,
+          "logits_equal": true,
+          "key_equal": true,
+          "value_equal": true
+        },
+        {
+          "position": 0,
+          "method": 1,
+          "logits_equal": true,
+          "key_equal": true,
+          "value_equal": true
+        },
+        {
+          "position": 1,
+          "method": 0,
+          "logits_equal": true,
+          "key_equal": true,
+          "value_equal": true
+        },
+        {
+          "position": 1,
+          "method": 1,
+          "logits_equal": true,
+          "key_equal": true,
+          "value_equal": true
+        },
+        {
+          "position": 2,
+          "method": 0,
+          "logits_equal": true,
+          "key_equal": true,
+          "value_equal": true
+        },
+        {
+          "position": 2,
+          "method": 1,
+          "logits_equal": true,
+          "key_equal": true,
+          "value_equal": true
+        }
+      ],
+      "actual_candidate_output_drives_forward": true,
+      "target_emu_runs": 0,
+      "performance_qualified": false,
+      "trained_model_quality_qualified": false
+    },
+    {
+      "status": "ACTIVE_PROPAGATION_NEGATIVE_PASS",
+      "contract": "r2-s3-runq-active-forward-v1",
+      "control": 1,
+      "actual_elf_model_calls": 72,
+      "independent_run_states": 2,
+      "comparisons": [
+        {
+          "position": 0,
+          "method": 0,
+          "logits_equal": true,
+          "key_equal": false,
+          "value_equal": true
+        },
+        {
+          "position": 1,
+          "method": 0,
+          "logits_equal": false,
+          "key_equal": false,
+          "value_equal": false
+        },
+        {
+          "position": 2,
+          "method": 0,
+          "logits_equal": false,
+          "key_equal": false,
+          "value_equal": false
+        }
+      ],
+      "actual_candidate_output_drives_forward": true,
+      "target_emu_runs": 0,
+      "performance_qualified": false,
+      "trained_model_quality_qualified": false
+    },
+    {
+      "status": "ACTIVE_PROPAGATION_NEGATIVE_PASS",
+      "contract": "r2-s3-runq-active-forward-v1",
+      "control": 2,
+      "actual_elf_model_calls": 72,
+      "independent_run_states": 2,
+      "comparisons": [
+        {
+          "position": 0,
+          "method": 0,
+          "logits_equal": false,
+          "key_equal": false,
+          "value_equal": false
+        },
+        {
+          "position": 1,
+          "method": 0,
+          "logits_equal": false,
+          "key_equal": false,
+          "value_equal": false
+        },
+        {
+          "position": 2,
+          "method": 0,
+          "logits_equal": false,
+          "key_equal": false,
+          "value_equal": false
+        }
+      ],
+      "actual_candidate_output_drives_forward": true,
+      "target_emu_runs": 0,
+      "performance_qualified": false,
+      "trained_model_quality_qualified": false
+    },
+    {
+      "control": 3,
+      "status": "OMITTED_WRITE_REJECTED",
+      "exit_code": 2
+    }
+  ],
+  "commands": [
+    {
+      "argv": [
+        "/usr/bin/gcc",
+        "-std=gnu11",
+        "-O2",
+        "-ffp-contract=off",
+        "-fno-fast-math",
+        "-fexcess-precision=standard",
+        "-fno-tree-vectorize",
+        "-fno-tree-slp-vectorize",
+        "-fno-inline",
+        "-fno-ipa-cp",
+        "-fno-ipa-sra",
+        "-fno-ipa-icf",
+        "-fno-lto",
+        "-fPIC",
+        "-Wno-unknown-pragmas",
+        "-I/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/r2-config-reuse/caller/runq-q288",
+        "-I/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/r2-config-reuse/caller",
+        "-I/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/r2-config-reuse/caller/split",
+        "-finstrument-functions",
+        "-c",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/active/active.c",
+        "-o",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/active-consumer-20261026-1933/check-03/active.o"
+      ],
+      "status": "exited",
+      "timeout_seconds": 120,
+      "started_unix": 1793015159.1582317,
+      "exit_code": 0,
+      "elapsed_seconds": 0.4168093204498291
+    },
+    {
+      "argv": [
+        "/usr/bin/gcc",
+        "-std=gnu11",
+        "-O2",
+        "-ffp-contract=off",
+        "-fno-fast-math",
+        "-fexcess-precision=standard",
+        "-fno-tree-vectorize",
+        "-fno-tree-slp-vectorize",
+        "-fno-inline",
+        "-fno-ipa-cp",
+        "-fno-ipa-sra",
+        "-fno-ipa-icf",
+        "-fno-lto",
+        "-fPIC",
+        "-Wno-unknown-pragmas",
+        "-I/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/r2-config-reuse/caller/runq-q288",
+        "-I/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/r2-config-reuse/caller",
+        "-I/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/r2-config-reuse/caller/split",
+        "-c",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/r2-config-reuse/caller/runq-q288/acc8/q288.c",
+        "-o",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/active-consumer-20261026-1933/check-03/acc8.o"
+      ],
+      "status": "exited",
+      "timeout_seconds": 120,
+      "started_unix": 1793015159.575479,
+      "exit_code": 0,
+      "elapsed_seconds": 0.03294849395751953
+    },
+    {
+      "argv": [
+        "/usr/bin/gcc",
+        "-shared",
+        "-Wl,--build-id=none,-Bsymbolic",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/active-consumer-20261026-1933/check-03/active.o",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/active-consumer-20261026-1933/check-03/acc8.o",
+        "-lm",
+        "-o",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/active-consumer-20261026-1933/check-03/active.so"
+      ],
+      "status": "exited",
+      "timeout_seconds": 120,
+      "started_unix": 1793015159.6086032,
+      "exit_code": 0,
+      "elapsed_seconds": 0.11553311347961426
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/active/check.py",
+        "--repo",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+        "--library",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/active-consumer-20261026-1933/check-03/active.so",
+        "--elf",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/active-consumer-20261026-1933/check-03/qualified-tail.elf",
+        "--output",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/active-consumer-20261026-1933/check-03/normal",
+        "--worker",
+        "0"
+      ],
+      "status": "exited",
+      "timeout_seconds": 1800,
+      "started_unix": 1793015159.7324142,
+      "exit_code": 0,
+      "elapsed_seconds": 44.60065937042236
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/active/check.py",
+        "--repo",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+        "--library",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/active-consumer-20261026-1933/check-03/active.so",
+        "--elf",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/active-consumer-20261026-1933/check-03/qualified-tail.elf",
+        "--output",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/active-consumer-20261026-1933/check-03/corrupt-k",
+        "--worker",
+        "1"
+      ],
+      "status": "exited",
+      "timeout_seconds": 1800,
+      "started_unix": 1793015204.3334022,
+      "exit_code": 0,
+      "elapsed_seconds": 22.92345404624939
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/active/check.py",
+        "--repo",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+        "--library",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/active-consumer-20261026-1933/check-03/active.so",
+        "--elf",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/active-consumer-20261026-1933/check-03/qualified-tail.elf",
+        "--output",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/active-consumer-20261026-1933/check-03/corrupt-v",
+        "--worker",
+        "2"
+      ],
+      "status": "exited",
+      "timeout_seconds": 1800,
+      "started_unix": 1793015227.2571347,
+      "exit_code": 0,
+      "elapsed_seconds": 23.177491664886475
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/active/check.py",
+        "--repo",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+        "--library",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/active-consumer-20261026-1933/check-03/active.so",
+        "--elf",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/active-consumer-20261026-1933/check-03/qualified-tail.elf",
+        "--output",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/active-consumer-20261026-1933/check-03/omit-output",
+        "--worker",
+        "3"
+      ],
+      "status": "exited",
+      "timeout_seconds": 1800,
+      "started_unix": 1793015250.4349015,
+      "exit_code": 2,
+      "elapsed_seconds": 0.16649270057678223
+    }
+  ],
+  "positive_model_calls": 144,
+  "negative_model_calls": 144,
+  "states_in_positive": 3,
+  "candidate_uses_own_inputs": true,
+  "reference_unchanged": true,
+  "persistent_packs": 24,
+  "pack_bytes": 1990656,
+  "target_emu_runs": 0,
+  "performance_qualified": false,
+  "trained_model_quality_qualified": false
+}

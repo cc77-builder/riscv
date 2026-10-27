@@ -1,0 +1,98 @@
+{
+  "operation": "20261025-LiZufan001-context-delivery-1432",
+  "method": "independent Linux snapshot reconstructed through authenticated read-only APIs",
+  "python": "3.12.14",
+  "zlib": "1.3.2",
+  "platform": "Linux-6.18.55-x86_64-with-glibc2.39",
+  "source_sha256": {
+    "context_prefix.py": "e65e4a6056c9059af4a407445e3485256fbd976ad3778a7c24655cb08753015b",
+    "context_checks.py": "a115979833184235dbf07da6ea9a2a05edff1b590a36196ee4db7132b7e4f473"
+  },
+  "input_sha256": {
+    "index.json": "38c2b5b1613a849272cbe1d5e1e9dd9db2596eef4660a7881a92a56137505173",
+    "b4/original-audit.json": "ab24e3296c6152ce9a9e13e28ffd67631c6d9bd8a9cc1be53d23022d2b03ee8a",
+    "b4/payload.zip": "1785aa1d2c0fd8f636d1e63909de9c620e97d76134da7f222ea96e50abae0e8d",
+    "b4/archive-manifest.json": "b25335dd653e9bfe9c458f9588d82e08df06030e21aec845fdd7d474e5d1c862",
+    "h4/original-audit.json": "314a899d5e196856c77562a78188de39861e1c2e5cf0c9196b3631621be75d25",
+    "h4/payload.zip": "e6d9ce9db281ecd16fc716d3bf6217874cd1dc5c8a610a5a7d75c43807793835",
+    "h4/archive-manifest.json": "169808340aac2a9b3943a334b1d2eb31c3fbc2143ffbf5691cbe1ea836269390",
+    "h2/original-audit.json": "6d0817c48963b6cbe5fa57d98dabad952212486ac1192ad0d33d9c54f3941643",
+    "h2/payload.zip": "c4f3b0e17fe48d8d45863628b80649778b94dac06c20051e90bb4878c1e34132",
+    "h2/archive-manifest.json": "c810331f2daffddfcfab836569ea3613f0470c3c7ffe5db3a077369d0c9013be",
+    "h1/original-audit.json": "8163137625756f3601e8da9e2ae97c60986a637620775096a0f303fb21a9d876",
+    "h1/payload.zip": "bd078ca88bc632976134ff765788f9449351fd266164812c8307646243ea5213",
+    "h1/archive-manifest.json": "17bb9f7bbe8a908e04f243105c99178c2ebd052dca66e61cfa64c86c731ea9e6",
+    "h3/original-audit.json": "720ca97def20aa85cdf4a3fe89b97f4884c5e39906ded9c0e950b3239ddab0a0",
+    "h3/payload.zip": "301fe9a141bb4840af9f910edc0eece2370eceaa78484c7e722916d75739fc99",
+    "h3/archive-manifest.json": "60a7b965a5e7c8e6ec2dee5ba0550c5e0cbe512551f7131e9f7729786f7250d8",
+    "h0/original-audit.json": "85bc00c1acb7ca39a6e4943e4a548551df8b59e97e09b18e84b3319959db9fdf",
+    "h0/payload.zip": "9fa5d028972108120dc2a343b1902238bb9d0b7e907ff5d36b6f572cb107ac56",
+    "h0/archive-manifest.json": "2766bb276223acbd5fc30852a9561d25a800bcbe2137cd65d1839336080e0a07"
+  },
+  "inputs_unchanged": true,
+  "new_emu_runs": 0,
+  "jobs": [
+    {
+      "name": "diagnostic",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-B",
+        "/workspace/scratch/8badfa91c8fb/xiangshan-round-20261025-1432/team/optimizations/o2/r2-config-reuse/caller/hoisted/context_prefix.py",
+        "--evidence",
+        "/workspace/scratch/8badfa91c8fb/xiangshan-round-20261025-1432/team/optimizations/o2/r2-config-reuse/caller/hoisted/evidence/screen-v2",
+        "--output",
+        "/workspace/scratch/8badfa91c8fb/xiangshan-round-20261025-1432/independent-01/diagnostic"
+      ],
+      "start": "2026-10-25T06:42:20.807877+00:00",
+      "affinity": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "end": "2026-10-25T06:42:50.861557+00:00",
+      "exit_code": 0,
+      "stdout": {
+        "path": "diagnostic.stdout.log",
+        "bytes": 792,
+        "sha256": "8611d04e7ba8d089db8390ebde3bde63cc7d72549e3793f0d2bbe189cfb780ff"
+      },
+      "stderr": {
+        "path": "diagnostic.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "checks",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-B",
+        "/workspace/scratch/8badfa91c8fb/xiangshan-round-20261025-1432/team/optimizations/o2/r2-config-reuse/caller/hoisted/context_checks.py",
+        "--evidence",
+        "/workspace/scratch/8badfa91c8fb/xiangshan-round-20261025-1432/team/optimizations/o2/r2-config-reuse/caller/hoisted/evidence/screen-v2",
+        "--output",
+        "/workspace/scratch/8badfa91c8fb/xiangshan-round-20261025-1432/independent-01/checks.json"
+      ],
+      "start": "2026-10-25T06:42:20.808088+00:00",
+      "affinity": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "end": "2026-10-25T06:42:26.868083+00:00",
+      "exit_code": 0,
+      "stdout": {
+        "path": "checks.stdout.log",
+        "bytes": 92,
+        "sha256": "8924f5773e8454f8324b715be56f370e64bf08fc31bc83d71b16a522aba93b40"
+      },
+      "stderr": {
+        "path": "checks.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ]
+}

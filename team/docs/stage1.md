@@ -1,10 +1,82 @@
-> **当前适用范围：** [当前路线](development-route-current.md)决定任务顺序。以下为 2026-10-09 阶段一记录与复现命令，“尚未实现 vdot”只描述当时。当前技术缺项见路线 T04，比赛材料由成员另行安排；只有需要补证且输入匹配时才新跑，不把旧阶段结果当最终组合验收。
+# hello/vadd 运行与调试链
 
-# 阶段一：hello/vadd 构建、运行和证据
+## 当前入口（2026-10-25）
+
+本轮 T04 的验收约束见 [CONTRACT](../evidence/stage1-current-20261025/CONTRACT.md)，实际运行、源码身份、原始日志和波形结果见 [RESULT](../evidence/stage1-current-20261025/RESULT.md)。当前实现使用英文 `hello xiangshan, I am ...`，并如实区分已配置身份和默认占位身份；显示的是**构建宿主 IPv4**。
+
+当前入口适用于团队 hello/vadd 三组 8-bit 用例。优先复用来源清楚的合格模型，按修改影响重建；改变构建开关不会使已有 EMU 自动拥有波形能力。该包不包含比赛报告、录屏、赛事提交，也不替代 vdot 或最终组合回归。
+
+### 复用合格模型构建并运行软件
+
+在 Linux 原生目录的团队源码根执行，下列路径变量由执行者配置。输出目录应位于仓库外；同一 action 及 run 输出拒绝覆盖，失败后换新目录。
+
+```bash
+export TEAM_XS_ENV_ROOT=/path/to/isolated/xs-env
+export TEAM_STAGE1_EMU=/path/to/qualified/source/build/emu
+export TEAM_STAGE1_REF=/path/to/qualified/riscv64-nemu-interpreter-so
+export TEAM_STAGE1_RUNTIME_HOME=/path/to/qualified/source
+export TEAM_ID=your_confirmed_personal_or_team_id
+export STAGE1_ROOT=/path/to/new/stage1-run
+
+TEAM_EVIDENCE_DIR="$STAGE1_ROOT/build" BUILD_JOBS=1 \
+  bash team/scripts/stage1.sh workload
+export TEAM_STAGE1_WORKLOAD_DIR="$STAGE1_ROOT/build/workload"
+TEAM_EVIDENCE_DIR="$STAGE1_ROOT/normal" \
+  bash team/scripts/stage1.sh run
+```
+
+`TEAM_STAGE1_RUNTIME_HOME/build` 需要该模型配套的 `constantin.txt` 与 `plusArgs`。运行器将二者复制进本次 `run/work/build`，在隔离 cwd 下设置 `NOOP_HOME`，并记录前后哈希。工作负载的 `identity.h`、`identity.json`、对象文件及镜像都在新输出目录，不修改团队源目录。
+
+每次 `run/` 保存实际 command、PID、CPU affinity、起止/超时/退出码、输入身份和 stdout/stderr 哈希到 `run.json`；完整串口输出与模拟器 stderr 分开保留，`run-summary.log` 从实际日志提取。不得仅凭打印了 PASS 或 shell 管道退出成功就认定执行合格。
+
+### 波形与复核
+
+波形模型必须实际以 `EMU_TRACE=fst` 编译。本轮保留 T17 原始 RTL，复制其冻结输入后直接调用未修改的 DiffTest Makefile；精确复制列表、构建参数、工具版本和失败尝试见新证据目录。新 FST EMU 是独立身份，本轮用同一新 BIN 和普通参考实际重验，不能继承生产模型的其他验收。
+
+设置新的 `TEAM_STAGE1_EMU`、匹配的 `TEAM_STAGE1_RUNTIME_HOME` 后：
+
+```bash
+TEAM_EVIDENCE_DIR="$STAGE1_ROOT/trace" DUMP_WAVE=1 \
+  WAVE_BEGIN=10000 WAVE_END=44000 MAX_CYCLES=2000000 \
+  bash team/scripts/stage1.sh run
+python3 team/scripts/stage1-wave.py \
+  --fst "$STAGE1_ROOT/trace/run/hello-vadd.fst" \
+  --receipt "$STAGE1_ROOT/trace/run/run.json" \
+  --disassembly "$STAGE1_ROOT/build/disassembly.txt" \
+  --output "$STAGE1_ROOT/wave"
+```
+
+上述窗口针对本轮实际镜像；更换程序后应重新定位，不能假设所有程序的三次 vadd 都落在同一范围。新入口使用官方 `--dump-wave-full` 保留时钟两相。`-b/-e` 按 trap cycleCnt 筛选，不等同于 FST 时间戳。
+
+提取依赖已安装的 GTKWave `fst2vcd` / `vcd2fst`，流式读取完整原始 FST，输出 `wave.json`、`cases.csv`、`selected.vcd` 与 `selected.fst`。后两者只保留验证所需信号，可直接在 GTKWave 中打开。原始 FST 不修改，哈希与运行 receipt 绑定。
+
+提取器以实际时钟沿前的稳定低相值检查三组操作数、完整 ROB tag/pdest、写回值及延迟 DPIC 提交；具体层级和采样合同绑定本轮 T17 MinimalConfig。DPIC 提交有三级观察延迟，事件间隔不是执行单元固有延迟。未知值、缺帧、错误或歧义关联均拒绝；不会把非空波形文件直接判为事件通过。
+
+### 检查器的有限反例测试
+
+```bash
+python3 team/tests/test-stage1-tools.py \
+  --run "$STAGE1_ROOT/normal/run" \
+  --wave "$STAGE1_ROOT/wave/wave.json" \
+  --output "$STAGE1_ROOT/tool-tests"
+```
+
+该入口使用实际 PASS 的日志与事件表作为基准，构造错误/缺失信息来验证拒错，并用明确标识 MOCK 的进程检查超时、空输出和防覆盖。它不增加硬件用例数。单独重算一次执行日志时必须同时传入 receipt 与 stderr：
+
+```bash
+python3 team/scripts/summarize-run.py \
+  "$STAGE1_ROOT/normal/run/emulator-output.log" \
+  --receipt "$STAGE1_ROOT/normal/run/run.json" \
+  --stderr "$STAGE1_ROOT/normal/run/emulator-stderr.log"
+```
+
+## 2026-10-09 历史记录（按原版本适用）
+
+以下保留早期阶段证据、旧构建条件和当时结论；旧提取脚本没有在本轮主机找到，不将旧 CSV 或旧 PASS 当作新模型结果。需要原样复现旧合同应使用它记录的源码版本。当前使用以上入口。
 
 2026-10-09 已完成 NEMU 参考库、香山 MinimalConfig 仿真器和 hello/vadd 裸机测试程序构建。香山 + NEMU DiffTest 运行通过：3 组用例 / 24 个元素、GOOD TRAP、退出码 0。尚未实现 vdot。
 
-## 按顺序运行
+### 按顺序运行
 
 完成 [环境准备](environment.md) 后，在团队仓库根目录执行：
 
@@ -24,13 +96,13 @@ bash team/scripts/stage1.sh run
 
 各步骤保留命令、日志、产物 SHA-256 和 `*.status`（含退出码）。普通运行的完整输出为 `emulator-output.log`，精简输出为 `run-summary.log`；精简日志从真实输出提取，不伪造通过信息。
 
-## 启动 flash 必须一致
+### 启动 flash 必须一致
 
 固定 DiffTest 的默认启动 flash 有 3 条指令，固定 NEMU 的默认启动代码有 6 条。直接省略 `--flash` 曾在 PC=`0x10000004` 出现整数寄存器不一致，尚未运行到用户程序。
 
 本队以 [boot-flash.S](../workloads/hello-vadd/boot-flash.S) 生成共同的 12 字节启动镜像，显式向仿真器传入 `--flash`，两端读取同一文件。运行脚本同时指定 `--ram-size=128MB` 和从固定 NEMU 源码构建的 `--diff` 参考库；不通过关闭协同验证回避问题。
 
-## 程序覆盖和通过标准
+### 程序覆盖和通过标准
 
 独立汇编函数 [vadd.S](../workloads/hello-vadd/vadd.S) 实际执行 `vsetivli`、两个 `vle8.v`、`vadd.vv`、`vse8.v`。C 程序初始化向量状态，核对 VLEN=128、VL=8，再按元素与标量参考值比较。SEW=8、LMUL=1，有效 8 个元素；不要求尾部元素清零。
 
@@ -42,7 +114,7 @@ bash team/scripts/stage1.sh run
 
 必须同时满足：`HELLO_VADD_PASS cases=3 lanes=24`、`HIT GOOD TRAP`、DiffTest 启用、运行退出码 0。vadd 的模 256 加法规则不等于未来 vdot 的宽位累加规则。
 
-## 昨天的实际结果
+### 昨天的实际结果
 
 成功运行时间为 2026-10-09 20:55:26—21:00:28（北京时间）。原始 [通过摘要](../evidence/stage1-20261009/hello-vadd-summary.log) 包含团队占位标识与当时 WSL IP，作为历史记录保留；新机器输出不同 IP 是正常现象。
 
@@ -60,7 +132,7 @@ bash team/scripts/stage1.sh run
 
 事件原表：[提交 CSV](../evidence/stage1-20261009/vadd-commit-events.csv)、[运算单元 CSV](../evidence/stage1-20261009/vector-fix-alu-events.csv)。这些周期差是接口采样事件间隔，不直接定义执行单元固有延迟。源码分析路线为取指/解码 → 重命名与调度 → 向量加载 → 整数向量运算及写回 → ROB 提交 → DiffTest 比较架构状态。
 
-## 归档范围
+### 归档范围
 
 仓库保留源码、精简真实日志、配置、版本清单、反汇编和 CSV；完整 FST、完整 VCD、仿真器、参考库和测试二进制保留在原本机归档。Git 内的 `SHA256SUMS` 只覆盖本目录实际提交的历史材料，可在 `team/evidence/stage1-20261009` 执行 `sha256sum -c SHA256SUMS`。
 

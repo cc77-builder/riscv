@@ -1,0 +1,36 @@
+{
+  "status": "S3_RUNTIME_EVIDENCE_REJECTIONS_PASS",
+  "source_sha256": "8816576f8ab212daea0dbc599b697730fa49562f9b157ba33abdbf0eb17ec0fd",
+  "reference_manifest_sha256": "281c16eed98ba5306932dfa24150703ba335d290bc106594c3b25a1c0b01fc9f",
+  "valid_archive_pass": "S3_ARCHIVE_ARCHITECTURE_COUNTER_TRACE_PASS",
+  "coherently_rehashed_cases": [
+    {
+      "case": "probe-promoted-to-matrix",
+      "self_consistent_bytes_pass": "S3_ARCHIVE_BYTES_PASS",
+      "rejection": "archive cohort differs"
+    },
+    {
+      "case": "forged-fastest-rvv-summary",
+      "self_consistent_bytes_pass": "S3_ARCHIVE_BYTES_PASS",
+      "rejection": "cached statistics differ"
+    },
+    {
+      "case": "changed-sealed-baseline-payload",
+      "self_consistent_bytes_pass": "S3_ARCHIVE_BYTES_PASS",
+      "rejection": "sealed association"
+    },
+    {
+      "case": "missing-baseline-runtime-input",
+      "self_consistent_bytes_pass": "S3_ARCHIVE_BYTES_PASS",
+      "rejection": "runtime input inventory differs"
+    },
+    {
+      "case": "overlapping-normal-replay",
+      "self_consistent_bytes_pass": "S3_ARCHIVE_BYTES_PASS",
+      "rejection": "execution order differs"
+    }
+  ],
+  "cli_archive_output_rejected_without_write": true,
+  "new_emu_runs": 0,
+  "new_compilations": 0
+}

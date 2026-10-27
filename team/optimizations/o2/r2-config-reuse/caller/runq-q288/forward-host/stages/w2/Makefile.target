@@ -1,0 +1,12 @@
+NAME = real-w2
+SRCS = main.c entry.S scalar.c w2.S fixture.S
+INC_DIR += $(CURDIR)
+CFLAGS += -ffreestanding -fno-builtin -fno-fast-math -ffp-contract=off
+CFLAGS += -fno-tree-vectorize -fno-tree-slp-vectorize -fno-tree-loop-distribute-patterns
+CFLAGS += -fno-ipa-cp -fno-ipa-icf -fno-optimize-sibling-calls -fno-lto -mno-relax -mabi=lp64d
+CFLAGS += -fno-stack-protector
+CFLAGS += -ffunction-sections -fdata-sections -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=0
+CFLAGS += -Wno-error=unknown-pragmas -Wno-error=unused-variable -Wno-error=unused-function -Wno-error=maybe-uninitialized
+DST_DIR := $(W2_OBJ_ROOT)
+include $(AM_HOME)/Makefile.app
+LDFLAGS += -static --no-relax --emit-relocs -Map=$(BINARY).map
