@@ -4,6 +4,7 @@
 
 | 内容 | 入口 |
 | --- | --- |
+| 2026-10-28 公开项目、分支对比与后续建议（只读研究，未启动新实验） | [对比与优化计划](team/docs/public-vdot-review-and-plan-20261028.md) |
 | O2、H1、全核及成本证据 | [O2 导航](team/optimizations/o2/README.md) |
 | S2／S1 软件候选 | [R2 导航](R2_STATUS.md) |
 | 原 O2 设计论证与技术计划 | [技术参考入口](team/optimizations/o2/NEXT_OPTIMIZATION_PLAN.md) |
