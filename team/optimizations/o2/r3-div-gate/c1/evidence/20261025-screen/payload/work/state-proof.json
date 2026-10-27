@@ -1,0 +1,208 @@
+{
+  "status": "C1_ABSTRACT_STATE_EQUIVALENCE_PASS",
+  "proof": {
+    "pass_": true,
+    "reachable_states": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        1,
+        0
+      ],
+      [
+        1,
+        1,
+        0,
+        1
+      ]
+    ],
+    "transitions": 1920,
+    "coverage": [
+      "accept_0",
+      "accept_1",
+      "complete_and_cancel",
+      "lingering_output",
+      "matching_cancel",
+      "output_stall",
+      "reset_and_cancel",
+      "unrelated_redirect"
+    ]
+  },
+  "negative_controls": {
+    "early_cancel_clock": {
+      "pass_": false,
+      "state": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "event": [
+        -1,
+        -1,
+        false,
+        2,
+        false,
+        false,
+        false
+      ],
+      "detail": {
+        "accept": -1,
+        "kill": true,
+        "old_clock": [
+          true,
+          false
+        ],
+        "new_clock": [
+          false,
+          false
+        ],
+        "reference_holds": [
+          0,
+          0
+        ],
+        "candidate_holds": [
+          false,
+          false
+        ]
+      },
+      "transitions": 593
+    },
+    "unrelated_cancel": {
+      "pass_": false,
+      "state": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "event": [
+        -1,
+        -1,
+        false,
+        1,
+        false,
+        false,
+        false
+      ],
+      "detail": {
+        "accept": -1,
+        "kill": false,
+        "old_clock": [
+          true,
+          false
+        ],
+        "new_clock": [
+          true,
+          false
+        ],
+        "reference_holds": [
+          1,
+          0
+        ],
+        "candidate_holds": [
+          false,
+          false
+        ]
+      },
+      "transitions": 585
+    },
+    "omit_cancel": {
+      "pass_": false,
+      "state": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "event": [
+        -1,
+        -1,
+        false,
+        2,
+        false,
+        false,
+        false
+      ],
+      "detail": {
+        "accept": -1,
+        "kill": true,
+        "old_clock": [
+          true,
+          false
+        ],
+        "new_clock": [
+          true,
+          false
+        ],
+        "reference_holds": [
+          0,
+          0
+        ],
+        "candidate_holds": [
+          true,
+          false
+        ]
+      },
+      "transitions": 593
+    },
+    "wrong_owner": {
+      "pass_": false,
+      "state": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "event": [
+        0,
+        -1,
+        false,
+        0,
+        true,
+        false,
+        false
+      ],
+      "detail": {
+        "accept": 0,
+        "kill": false,
+        "old_clock": [
+          true,
+          false
+        ],
+        "new_clock": [
+          true,
+          false
+        ],
+        "reference_holds": [
+          1,
+          0
+        ],
+        "candidate_holds": [
+          false,
+          true
+        ]
+      },
+      "transitions": 149
+    }
+  },
+  "rob_relations_checked": 18240,
+  "assumptions": [
+    "No acceptance during reset/redirect, occupied DIV, visible DIV output, unready DIVs or VDot occupancy.",
+    "One selected DIV; while busy only the recorded owner can produce an output.",
+    "ROB age comparisons are within the non-ambiguous half ring."
+  ],
+  "scope": "Exhaustive inductive abstract transition check; not an RTL formal equivalence proof or fullcore qualification"
+}

@@ -1,0 +1,64 @@
+{
+  "status": "FP_G0_CONTROL_ABSTRACTION_PASS",
+  "elapsed_seconds": 0.06983771300002672,
+  "models": {
+    "sync": {
+      "reached": 38,
+      "transitions": 11184,
+      "coverage": {
+        "accept_transitions": 80,
+        "active_te0_reset_transitions": 2160,
+        "cancel_transitions": 3456,
+        "sqrt_lane_state_skew_states": 8,
+        "lane_finish_skew_states": 12,
+        "complete_transitions": 480,
+        "div_lane_state_skew_states": 12
+      }
+    },
+    "async": {
+      "reached": 38,
+      "transitions": 11184,
+      "coverage": {
+        "accept_transitions": 80,
+        "active_te0_reset_transitions": 2160,
+        "cancel_transitions": 3456,
+        "sqrt_lane_state_skew_states": 8,
+        "lane_finish_skew_states": 12,
+        "complete_transitions": 480,
+        "div_lane_state_skew_states": 12
+      }
+    }
+  },
+  "negatives": [
+    {
+      "name": "cancel_edge_suppressed",
+      "depth": 2,
+      "violation": "parent_idle_with_child_not_ready"
+    },
+    {
+      "name": "reset_hold_suppressed",
+      "depth": 2,
+      "violation": "parent_idle_with_child_not_ready"
+    },
+    {
+      "name": "child_cancel_missing",
+      "depth": 2,
+      "violation": "parent_idle_with_child_not_ready"
+    },
+    {
+      "name": "wrong_child_identity",
+      "depth": 2,
+      "violation": "parent_idle_with_child_not_ready"
+    },
+    {
+      "name": "premature_any_lane_release",
+      "depth": 3,
+      "violation": "parent_idle_with_child_not_ready"
+    },
+    {
+      "name": "no_bootstrap",
+      "depth": 0,
+      "violation": "parent_idle_with_child_not_ready"
+    }
+  ]
+}

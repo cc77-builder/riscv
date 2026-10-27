@@ -1,0 +1,44 @@
+{
+  "status": "R3_DFF_MAPPING_DELTA_REVIEW_PASS",
+  "before_dffs": 17171,
+  "after_dffs": 17172,
+  "new_cells": [
+    {
+      "cell": "$auto$simplemap.cc:420:simplemap_dff$137888",
+      "nets": [
+        "dut.Vidiv.vidiv._16bit_divide_3.Bypass_final_rem_plus_d_reg[2]"
+      ]
+    }
+  ],
+  "before_target": {
+    "bit": 241702,
+    "drivers": [],
+    "sinks": []
+  },
+  "after_target": {
+    "bit": 60640,
+    "drivers": [
+      {
+        "cell": "$auto$simplemap.cc:420:simplemap_dff$137888",
+        "type": "DFF_X1",
+        "pin": "Q"
+      }
+    ],
+    "sinks": [
+      {
+        "cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$534616",
+        "type": "MUX2_X1",
+        "pin": "A"
+      },
+      {
+        "cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$593534",
+        "type": "NOR2_X1",
+        "pin": "A1"
+      }
+    ]
+  },
+  "split_groups": [],
+  "merged_groups": [],
+  "vdot_metadata_storage_unchanged": true,
+  "interpretation": "One existing integer-DIV remainder register bit is retained by the new whole-parent synthesis; old mapped net has no driver/sinks. No new RTL register declaration or VDot state bit."
+}

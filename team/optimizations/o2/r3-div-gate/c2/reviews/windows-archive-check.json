@@ -1,0 +1,272 @@
+{
+  "status": "C2_ARCHIVE_REPLAY_PASS",
+  "platform": "win32",
+  "python": "3.13.2 (tags/v3.13.2:4f8bb39, Feb  4 2025, 15:23:48) [MSC v.1942 64 bit (AMD64)]",
+  "files": 375,
+  "raw_bytes": 32771655,
+  "stored_bytes": 5218859,
+  "manifest_sha256": "5fe7ea1cd978cf14ef371380a51e64d942673e1c62c7ac3748698418237b1428",
+  "replays": [
+    {
+      "command": [
+        "<extracted>\\source\\fixture\\team\\optimizations\\o2\\parent\\check_trace.py",
+        "--log",
+        "<extracted>\\work\\parent-01\\result.log"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "6b7075fc33b1b17d082e61310c9cde7d0ddcd388480f86e358552542594fc069",
+      "result": {
+        "cancel_idle_cases": {
+          "1": 24,
+          "2": 24
+        },
+        "cancel_idle_samples": {
+          "1": 72,
+          "2": 72
+        },
+        "checker_sha256": "38f253b279ad911bd7fadd56f5d1c8e048b1bb7604ef47f942a2149b9ce37582",
+        "cycles": 35075,
+        "div_reset_overlap_kinds": [
+          1,
+          2
+        ],
+        "div_rob_cases": 28,
+        "full_campaign_required": true,
+        "groups": 13,
+        "log_sha256": "a38e8d806dc84c46b16af6f3c17323ee5f404ba3eb221d94fa15e127bf22ee6d",
+        "per_fu": [
+          {
+            "accepted": 11867,
+            "clock_edges": 14978,
+            "killed": 164,
+            "latency_max": 25,
+            "latency_min": 2,
+            "latency_samples": 11755,
+            "reset_dropped": 11,
+            "responded": 11692,
+            "waits": 3472
+          },
+          {
+            "accepted": 886,
+            "clock_edges": 11408,
+            "killed": 140,
+            "latency_max": 14,
+            "latency_min": 10,
+            "latency_samples": 750,
+            "raw_killed_response": 13,
+            "reset_dropped": 29,
+            "responded": 717,
+            "waits": 4148
+          },
+          {
+            "accepted": 858,
+            "clock_edges": 7781,
+            "killed": 122,
+            "latency_max": 8,
+            "latency_min": 8,
+            "latency_samples": 748,
+            "raw_killed_response": 15,
+            "reset_dropped": 23,
+            "responded": 713,
+            "waits": 4282
+          }
+        ],
+        "recomputed": {
+          "accepted": 13611,
+          "cancel_idle_clock_on": 0,
+          "cancelled": 426,
+          "cycles": 35075,
+          "empty_te0_resets": 21,
+          "full_blocked": 545,
+          "full_cycles": 11255,
+          "groups": 13,
+          "kill_both": 38,
+          "kill_p_only": 41,
+          "kill_r_only": 47,
+          "overlaps": 10494,
+          "p_accept_r_blocked": 102,
+          "p_to_r": 11782,
+          "r_response_p_survivor": 338,
+          "redirects": 156,
+          "reset_both": 2,
+          "reset_cases": 20,
+          "reset_dropped": 63,
+          "responses": 13122,
+          "stalls": 2051,
+          "te0_resets": 30
+        },
+        "scope": "cycle/identity/ROB/control replay only; no RTL execution or payload recheck",
+        "scope_note": "strict idle gating; cancel edge remains required; legacy DIV reset uses TE",
+        "side_counters_not_recomputed": [],
+        "status": "O2_PARENT_OFFLINE_TRACE_PASS"
+      }
+    },
+    {
+      "command": [
+        "<extracted>\\source\\c2\\parent\\check_c2_parent.py",
+        "--log",
+        "<extracted>\\work\\supplement-01\\result.log",
+        "--parent-dir",
+        "<extracted>\\source\\fixture\\team\\optimizations\\o2\\parent"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "d7539e153c9955531f58e62ee506d44180cd802a2f477f52b41f79615f4ad7e7",
+      "result": {
+        "status": "C2_PARENT_SUPPLEMENT_PASS",
+        "replay": {
+          "status": "O2_PARENT_OFFLINE_TRACE_PASS",
+          "cycles": 2959,
+          "groups": 6,
+          "recomputed": {
+            "cycles": 2959,
+            "groups": 6,
+            "full_cycles": 0,
+            "full_blocked": 0,
+            "p_accept_r_blocked": 0,
+            "r_response_p_survivor": 0,
+            "kill_p_only": 0,
+            "kill_r_only": 0,
+            "kill_both": 0,
+            "reset_both": 0,
+            "overlaps": 0,
+            "stalls": 310,
+            "p_to_r": 36,
+            "te0_resets": 40,
+            "empty_te0_resets": 22,
+            "redirects": 0,
+            "reset_cases": 0,
+            "accepted": 213,
+            "responses": 141,
+            "cancelled": 54,
+            "reset_dropped": 18
+          },
+          "per_fu": [
+            {
+              "latency_min": 2,
+              "clock_edges": 158,
+              "accepted": 36,
+              "latency_max": 2,
+              "latency_samples": 36,
+              "responded": 36,
+              "waits": 152
+            },
+            {
+              "latency_min": 10,
+              "clock_edges": 495,
+              "accepted": 34,
+              "latency_max": 14,
+              "latency_samples": 32,
+              "responded": 28,
+              "waits": 103,
+              "reset_dropped": 6
+            },
+            {
+              "latency_min": 8,
+              "clock_edges": 2001,
+              "accepted": 143,
+              "latency_max": 15,
+              "latency_samples": 112,
+              "responded": 77,
+              "killed": 54,
+              "waits": 151,
+              "raw_killed_response": 12,
+              "reset_dropped": 12
+            }
+          ],
+          "full_campaign_required": false,
+          "cancel_idle_cases": {},
+          "cancel_idle_samples": {},
+          "div_rob_cases": 0,
+          "div_reset_overlap_kinds": [],
+          "side_counters_not_recomputed": [],
+          "scope_note": "strict idle gating; cancel edge remains required; legacy DIV reset uses TE",
+          "scope": "cycle/identity/ROB/control replay only; no RTL execution or payload recheck"
+        },
+        "counts": {
+          "idle_ready_checks": 620
+        },
+        "normal_sqrt_cases": 15,
+        "sqrt_cancel_cases": 48,
+        "te0_reset_cases": 20,
+        "sqrt_rob_cases": 14,
+        "sqrt_switch_cases": 18,
+        "real_lane_skew_cycles": {
+          "2": 56,
+          "1": 27
+        },
+        "real_lane_skew_cancel_cases": {
+          "2": 6,
+          "1": 6
+        },
+        "immediate_cancel_idle_samples": 162,
+        "scope": "real parent supplemental control and exact directed SQRT; no fullcore/PPA",
+        "log_sha256": "16a019e1ad87e87988a23b9bd6357caf0fe1298034a45438e1faf665725414ea",
+        "checker_sha256": "c07c98f6f7aec3eb5bd8253bbb7327177c8a6be1830b4139b0bdf43585274746"
+      }
+    },
+    {
+      "command": [
+        "<extracted>\\source\\c2\\parent\\negative_c2_parent.py",
+        "--log",
+        "<extracted>\\work\\supplement-01\\result.log",
+        "--parent-dir",
+        "<extracted>\\source\\fixture\\team\\optimizations\\o2\\parent",
+        "--output",
+        "<extracted>\\negative-replay.json"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "396f169f851fb525eb4be112479a34189e597fa7f7ce36da1b73c0b6ebea8d2f",
+      "result": {
+        "status": "C2_PARENT_SUPPLEMENT_NEGATIVE_PASS",
+        "source_log_sha256": "16a019e1ad87e87988a23b9bd6357caf0fe1298034a45438e1faf665725414ea",
+        "count": 7,
+        "records": [
+          {
+            "mutation": "div-busy-owner",
+            "detected": true,
+            "reason": "busy register disagrees with accepted identity",
+            "mutated_sha256": "6f762dd8683aa91e22e18e301c0d1b0b01f67f8a28ed7f058e3083c66963e00a"
+          },
+          {
+            "mutation": "early-lane-join",
+            "detected": true,
+            "reason": "two-lane finish join mismatch",
+            "mutated_sha256": "d8a6a55201faac79475ce935ef141826881a3781b1664a04aa7ed3c6c37e1f25"
+          },
+          {
+            "mutation": "sqrt-opcode",
+            "detected": true,
+            "reason": "live SQRT opcode changed",
+            "mutated_sha256": "47d741527895e976c4a77481d19e95ac258bd51d753a2ceece0ca2059e8cd6ba"
+          },
+          {
+            "mutation": "te0-reset-mislabeled",
+            "detected": true,
+            "reason": "PASS summary mismatch: te0_resets",
+            "mutated_sha256": "f0466bffaedb992cb692e1046340c75703f792b923a41f09e6055f8056c27df6"
+          },
+          {
+            "mutation": "idle-extra-clock",
+            "detected": true,
+            "reason": "cycle 2956: idle FU retained clock after cancellation/completion",
+            "mutated_sha256": "2afec50b30604c52479c2225fe54a5c71376871c9045055ee6183e858ce5da97"
+          },
+          {
+            "mutation": "missing-aux",
+            "detected": true,
+            "reason": "missing/late lane observation",
+            "mutated_sha256": "888be6831a35b47774a59e9e54067d54a65c12431d8c85cf7b1180367cc1b323"
+          },
+          {
+            "mutation": "erase-lane-skew",
+            "detected": true,
+            "reason": "skew-phase cancel not at real skew",
+            "mutated_sha256": "fb87c88f577e8af2ab849c18ba99bc369baa062230c98227e781ea62129d8c0c"
+          }
+        ],
+        "scope": "offline observation mutations only; not RTL mutation coverage"
+      }
+    }
+  ],
+  "scope": "Sealed bytes plus frozen control/coverage/negative replay. No new RTL, payload arithmetic execution, fullcore or PPA."
+}

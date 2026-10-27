@@ -1,0 +1,1031 @@
+{
+  "status": "EXPANDED_MATRIX_LOCAL_RAW_AUDIT_PASS",
+  "contract": "zjhwork-clean-config-reuse-4shape-3dataset-matrix-v1",
+  "campaign": "/home/riscv/riscv-lab/software-import-20261026/config-reuse-expanded-01/run-01",
+  "build": "/home/riscv/riscv-lab/software-import-20261026/config-reuse-expanded-01/build-01",
+  "new_emu_runs": 0,
+  "new_nemu_runs": 0,
+  "actual_target_processes": 33,
+  "normal_processes": 32,
+  "formal_windows": 384,
+  "normal_all_windows": 768,
+  "replay_window_pairs": 192,
+  "baseline_firstdot_windows": 288,
+  "firstdot_controls": [
+    {
+      "name": "performance-firstdot-d0-s01",
+      "windows": 24,
+      "equal": true
+    },
+    {
+      "name": "performance-firstdot-d1-s01",
+      "windows": 24,
+      "equal": true
+    },
+    {
+      "name": "performance-firstdot-d2-s01",
+      "windows": 24,
+      "equal": true
+    },
+    {
+      "name": "performance-firstdot-d0-s03",
+      "windows": 24,
+      "equal": true
+    },
+    {
+      "name": "performance-firstdot-d1-s03",
+      "windows": 24,
+      "equal": true
+    },
+    {
+      "name": "performance-firstdot-d2-s03",
+      "windows": 24,
+      "equal": true
+    },
+    {
+      "name": "performance-firstdot-d0-s05",
+      "windows": 24,
+      "equal": true
+    },
+    {
+      "name": "performance-firstdot-d1-s05",
+      "windows": 24,
+      "equal": true
+    },
+    {
+      "name": "performance-firstdot-d2-s05",
+      "windows": 24,
+      "equal": true
+    },
+    {
+      "name": "performance-firstdot-d0-s07",
+      "windows": 24,
+      "equal": true
+    },
+    {
+      "name": "performance-firstdot-d1-s07",
+      "windows": 24,
+      "equal": true
+    },
+    {
+      "name": "performance-firstdot-d2-s07",
+      "windows": 24,
+      "equal": true
+    }
+  ],
+  "replay_controls": [
+    {
+      "name": "performance-config-reuse-d0-s01",
+      "equal": true,
+      "windows": 24
+    },
+    {
+      "name": "performance-firstdot-d0-s01",
+      "equal": true,
+      "windows": 24
+    },
+    {
+      "name": "performance-config-reuse-d0-s03",
+      "equal": true,
+      "windows": 24
+    },
+    {
+      "name": "performance-firstdot-d0-s03",
+      "equal": true,
+      "windows": 24
+    },
+    {
+      "name": "performance-config-reuse-d0-s05",
+      "equal": true,
+      "windows": 24
+    },
+    {
+      "name": "performance-firstdot-d0-s05",
+      "equal": true,
+      "windows": 24
+    },
+    {
+      "name": "performance-config-reuse-d0-s07",
+      "equal": true,
+      "windows": 24
+    },
+    {
+      "name": "performance-firstdot-d0-s07",
+      "equal": true,
+      "windows": 24
+    }
+  ],
+  "all_window_replay": true,
+  "decisions": {
+    "4x8": {
+      "decision": "INCONCLUSIVE",
+      "candidate_total": 1836,
+      "firstdot_total": 1893,
+      "fastest_current_rvv_total": 2220,
+      "reduction_vs_firstdot": 0.030110935023771823,
+      "reduction_vs_fastest_rvv": 0.17297297297297298,
+      "unexplained_controls": [
+        "dataset0: unchanged basic RVV six-window differs",
+        "dataset1: unchanged basic RVV six-window differs",
+        "dataset2: unchanged basic RVV six-window differs"
+      ],
+      "samples_per_cell": 12,
+      "default_changed": false,
+      "dataset_decisions": {
+        "0": {
+          "decision": "PERFORMANCE_CANDIDATE",
+          "candidate_total": 612,
+          "firstdot_total": 631,
+          "fastest_current_rvv_total": 740,
+          "reduction_vs_firstdot": 0.030110935023771823,
+          "reduction_vs_fastest_rvv": 0.17297297297297298,
+          "unexplained_controls": [],
+          "samples_per_cell": 4,
+          "default_changed": false
+        },
+        "1": {
+          "decision": "PERFORMANCE_CANDIDATE",
+          "candidate_total": 612,
+          "firstdot_total": 631,
+          "fastest_current_rvv_total": 740,
+          "reduction_vs_firstdot": 0.030110935023771823,
+          "reduction_vs_fastest_rvv": 0.17297297297297298,
+          "unexplained_controls": [],
+          "samples_per_cell": 4,
+          "default_changed": false
+        },
+        "2": {
+          "decision": "PERFORMANCE_CANDIDATE",
+          "candidate_total": 612,
+          "firstdot_total": 631,
+          "fastest_current_rvv_total": 740,
+          "reduction_vs_firstdot": 0.030110935023771823,
+          "reduction_vs_fastest_rvv": 0.17297297297297298,
+          "unexplained_controls": [],
+          "samples_per_cell": 4,
+          "default_changed": false
+        }
+      },
+      "threshold": "strictly below both baselines in aggregate AND each dataset; no percentage threshold",
+      "measurement_scope": "one shape across three datasets",
+      "ordinary_public_C_application": "NOT_TESTED",
+      "stable_default_changed": false
+    },
+    "8x32": {
+      "decision": "PERFORMANCE_CANDIDATE",
+      "candidate_total": 3276,
+      "firstdot_total": 3387,
+      "fastest_current_rvv_total": 3588,
+      "reduction_vs_firstdot": 0.03277236492471214,
+      "reduction_vs_fastest_rvv": 0.08695652173913049,
+      "unexplained_controls": [],
+      "samples_per_cell": 12,
+      "default_changed": false,
+      "dataset_decisions": {
+        "0": {
+          "decision": "PERFORMANCE_CANDIDATE",
+          "candidate_total": 1092,
+          "firstdot_total": 1129,
+          "fastest_current_rvv_total": 1196,
+          "reduction_vs_firstdot": 0.03277236492471214,
+          "reduction_vs_fastest_rvv": 0.08695652173913049,
+          "unexplained_controls": [],
+          "samples_per_cell": 4,
+          "default_changed": false
+        },
+        "1": {
+          "decision": "PERFORMANCE_CANDIDATE",
+          "candidate_total": 1092,
+          "firstdot_total": 1129,
+          "fastest_current_rvv_total": 1196,
+          "reduction_vs_firstdot": 0.03277236492471214,
+          "reduction_vs_fastest_rvv": 0.08695652173913049,
+          "unexplained_controls": [],
+          "samples_per_cell": 4,
+          "default_changed": false
+        },
+        "2": {
+          "decision": "PERFORMANCE_CANDIDATE",
+          "candidate_total": 1092,
+          "firstdot_total": 1129,
+          "fastest_current_rvv_total": 1196,
+          "reduction_vs_firstdot": 0.03277236492471214,
+          "reduction_vs_fastest_rvv": 0.08695652173913049,
+          "unexplained_controls": [],
+          "samples_per_cell": 4,
+          "default_changed": false
+        }
+      },
+      "threshold": "strictly below both baselines in aggregate AND each dataset; no percentage threshold",
+      "measurement_scope": "one shape across three datasets",
+      "ordinary_public_C_application": "NOT_TESTED",
+      "stable_default_changed": false
+    },
+    "16x64": {
+      "decision": "INCONCLUSIVE",
+      "candidate_total": 8433,
+      "firstdot_total": 8484,
+      "fastest_current_rvv_total": 9276,
+      "reduction_vs_firstdot": 0.006011315417255969,
+      "reduction_vs_fastest_rvv": 0.0908796895213454,
+      "unexplained_controls": [
+        "dataset0: unchanged basic RVV six-window differs",
+        "dataset1: unchanged basic RVV six-window differs",
+        "dataset2: unchanged basic RVV six-window differs",
+        "unexplained paired cell regression: basic/rvv",
+        "dataset0: unexplained paired cell regression: basic/rvv",
+        "dataset1: unexplained paired cell regression: basic/rvv",
+        "dataset2: unexplained paired cell regression: basic/rvv"
+      ],
+      "samples_per_cell": 12,
+      "default_changed": false,
+      "dataset_decisions": {
+        "0": {
+          "decision": "INCONCLUSIVE",
+          "candidate_total": 2811,
+          "firstdot_total": 2828,
+          "fastest_current_rvv_total": 3092,
+          "reduction_vs_firstdot": 0.006011315417255969,
+          "reduction_vs_fastest_rvv": 0.0908796895213454,
+          "unexplained_controls": [
+            "unexplained paired cell regression: basic/rvv"
+          ],
+          "samples_per_cell": 4,
+          "default_changed": false
+        },
+        "1": {
+          "decision": "INCONCLUSIVE",
+          "candidate_total": 2811,
+          "firstdot_total": 2828,
+          "fastest_current_rvv_total": 3092,
+          "reduction_vs_firstdot": 0.006011315417255969,
+          "reduction_vs_fastest_rvv": 0.0908796895213454,
+          "unexplained_controls": [
+            "unexplained paired cell regression: basic/rvv"
+          ],
+          "samples_per_cell": 4,
+          "default_changed": false
+        },
+        "2": {
+          "decision": "INCONCLUSIVE",
+          "candidate_total": 2811,
+          "firstdot_total": 2828,
+          "fastest_current_rvv_total": 3092,
+          "reduction_vs_firstdot": 0.006011315417255969,
+          "reduction_vs_fastest_rvv": 0.0908796895213454,
+          "unexplained_controls": [
+            "unexplained paired cell regression: basic/rvv"
+          ],
+          "samples_per_cell": 4,
+          "default_changed": false
+        }
+      },
+      "threshold": "strictly below both baselines in aggregate AND each dataset; no percentage threshold",
+      "measurement_scope": "one shape across three datasets",
+      "ordinary_public_C_application": "NOT_TESTED",
+      "stable_default_changed": false
+    },
+    "4x13": {
+      "decision": "INCONCLUSIVE",
+      "candidate_total": 2466,
+      "firstdot_total": 2454,
+      "fastest_current_rvv_total": 2244,
+      "reduction_vs_firstdot": -0.004889975550122161,
+      "reduction_vs_fastest_rvv": -0.09893048128342241,
+      "unexplained_controls": [
+        "dataset0: unchanged basic RVV six-window differs",
+        "dataset0: unchanged reuse RVV six-window differs",
+        "dataset1: unchanged basic RVV six-window differs",
+        "dataset1: unchanged reuse RVV six-window differs",
+        "dataset2: unchanged basic RVV six-window differs",
+        "dataset2: unchanged reuse RVV six-window differs",
+        "unexplained paired cell regression: basic/vdot",
+        "unexplained paired cell regression: reuse/rvv",
+        "dataset0: unexplained paired cell regression: basic/vdot",
+        "dataset0: unexplained paired cell regression: reuse/rvv",
+        "dataset1: unexplained paired cell regression: basic/vdot",
+        "dataset1: unexplained paired cell regression: reuse/rvv",
+        "dataset2: unexplained paired cell regression: basic/vdot",
+        "dataset2: unexplained paired cell regression: reuse/rvv"
+      ],
+      "samples_per_cell": 12,
+      "default_changed": false,
+      "dataset_decisions": {
+        "0": {
+          "decision": "INCONCLUSIVE",
+          "candidate_total": 822,
+          "firstdot_total": 818,
+          "fastest_current_rvv_total": 748,
+          "reduction_vs_firstdot": -0.004889975550122161,
+          "reduction_vs_fastest_rvv": -0.09893048128342241,
+          "unexplained_controls": [
+            "unexplained paired cell regression: basic/vdot",
+            "unexplained paired cell regression: reuse/rvv"
+          ],
+          "samples_per_cell": 4,
+          "default_changed": false
+        },
+        "1": {
+          "decision": "INCONCLUSIVE",
+          "candidate_total": 822,
+          "firstdot_total": 818,
+          "fastest_current_rvv_total": 748,
+          "reduction_vs_firstdot": -0.004889975550122161,
+          "reduction_vs_fastest_rvv": -0.09893048128342241,
+          "unexplained_controls": [
+            "unexplained paired cell regression: basic/vdot",
+            "unexplained paired cell regression: reuse/rvv"
+          ],
+          "samples_per_cell": 4,
+          "default_changed": false
+        },
+        "2": {
+          "decision": "INCONCLUSIVE",
+          "candidate_total": 822,
+          "firstdot_total": 818,
+          "fastest_current_rvv_total": 748,
+          "reduction_vs_firstdot": -0.004889975550122161,
+          "reduction_vs_fastest_rvv": -0.09893048128342241,
+          "unexplained_controls": [
+            "unexplained paired cell regression: basic/vdot",
+            "unexplained paired cell regression: reuse/rvv"
+          ],
+          "samples_per_cell": 4,
+          "default_changed": false
+        }
+      },
+      "threshold": "strictly below both baselines in aggregate AND each dataset; no percentage threshold",
+      "measurement_scope": "one shape across three datasets",
+      "ordinary_public_C_application": "NOT_TESTED",
+      "stable_default_changed": false
+    }
+  },
+  "timing": {
+    "status": "MONOTONIC_PROCESS_CAPACITY_PASS",
+    "boot_id": "774a3fc0-1e08-4cf8-ad3e-9b90626e2fc2",
+    "process_count": 33,
+    "peak_process_envelopes": 4,
+    "worker_budget": 4,
+    "phase_barriers": true,
+    "evidence_scope": "conservative Popen/wait brackets; not instantaneous CPU utilisation",
+    "utc_used_for_ordering": false
+  },
+  "functional_status": "FUNCTIONAL_PASS",
+  "complete_runtime_input_closure": true,
+  "private_process_inputs_verified": true,
+  "campaign_evidence_unchanged": true,
+  "campaign_evidence_sha256": {
+    "completed-runs.json": "c3e6c38204b978c54f1a347d857b5ac12a9b606b6c122931feebb8431c0c2e39",
+    "configuration.json": "11e5032e795baf6ce1881ced9e7a7d0540f787b4d6d468936a0ec0480cdfec67",
+    "hardware-profile.json": "c4385ab4bad19c2eb1ec1055063d30c2e10e454c61cbe66a280d8270e20632b9",
+    "negative-fixture/compile/command.json": "cade277190d43a80f7642dffe276e383af539cf75e2d9aafad8c025b4f7fe78b",
+    "negative-fixture/compile/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "negative-fixture/compile/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "negative-fixture/compiler/command.json": "b6291d189950205616e3ccb2a4b00652c9cecb44ec3812fbaf5c1aa4017da894",
+    "negative-fixture/compiler/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "negative-fixture/compiler/stdout.log": "9829ba25432aae95cc193accafa14bfab70abb264f797d07c47ba1dcdf4f31a1",
+    "negative-fixture/fixture.json": "1f5f94ae53476ef45be46af9cf333231ee9fee901b867b9f28744373a8277e2b",
+    "negative-fixture/linkage/command.json": "a439c13cbfefe33b70dbc0bf4e83c096d73c1c5ad51a3502407f1ce83eb3dc40",
+    "negative-fixture/linkage/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "negative-fixture/linkage/stdout.log": "ecc6b4dc377520d749f1a89d06b438da18c5ff8a9646821dad34cd0217ae36ae",
+    "negative-fixture/negative-fixture.c": "7b39400d0a566229ce018a8251ead8242b92a3afe05a1aee5711b38809056273",
+    "negative-fixture/negative-reference.so": "8a8eb72ea44e88c551fc23ba5c659bfc23854db6c67c105e285d813f96aa8405",
+    "parent-identity.json": "3b9d9332720b6d21a52c979d84c3398bf9c3070812094da29431575a4e7a7451",
+    "results.json": "71e066eea1d1688d943c9a4039e6f3fa51c3e651bcb803e5a8b7835ad4fd0adf",
+    "run-plan.json": "919dfe05c3bf97e31cf239c0c067ddf2b50dccc5e7d0ff31049de3b262e73d5f",
+    "runs/formal-performance-config-reuse-d0-s01/cwd/build/constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+    "runs/formal-performance-config-reuse-d0-s01/cwd/build/plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+    "runs/formal-performance-config-reuse-d0-s01/observation.json": "9067e812207d82b19cf7524b9315dfa29f1d9a49b1354bea9db3726d85f235d4",
+    "runs/formal-performance-config-reuse-d0-s01/result.json": "277a28a3208610cc8a0004575a3cc75919bdcfaf572a05a6a3bed29146a735be",
+    "runs/formal-performance-config-reuse-d0-s01/stderr.log": "315de3f1db2955506f954f60bb978a41f854ad5ea591a91ca0dc04513458e18c",
+    "runs/formal-performance-config-reuse-d0-s01/stdout.log": "cd5f421661bc443f31bf50f34335edd975814e5a777da5c6baf384208ab0dc54",
+    "runs/formal-performance-config-reuse-d0-s01/windows.json": "dc7c55b6869f5d8d092c5ca6aa31ee6a4890ba2a3dbf76d3f8a5d8d86c53bb33",
+    "runs/formal-performance-config-reuse-d0-s05/cwd/build/constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+    "runs/formal-performance-config-reuse-d0-s05/cwd/build/plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+    "runs/formal-performance-config-reuse-d0-s05/observation.json": "8c9b565bc1066adc9ffc038200f9e0396b49508f2cf466ad2b5efa0cc2c66142",
+    "runs/formal-performance-config-reuse-d0-s05/result.json": "e796a9bc0f16b8949d415173a07073c11109583bb7c3fcf3477f5bf6d7643e0a",
+    "runs/formal-performance-config-reuse-d0-s05/stderr.log": "6dbfb83a086b8cfeacad443885207fe43fd01820beb56db28f2625711dc0dd8b",
+    "runs/formal-performance-config-reuse-d0-s05/stdout.log": "06f9a09e0099ccf3ee690ff1d472d6cd49ea130fb9e5946171059393d6563707",
+    "runs/formal-performance-config-reuse-d0-s05/windows.json": "aef6bba7d4b6c6ca25f51290bf7927b27297cdda30b268c831d6b97a6b9594ba",
+    "runs/formal-performance-config-reuse-d0-s07/cwd/build/constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+    "runs/formal-performance-config-reuse-d0-s07/cwd/build/plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+    "runs/formal-performance-config-reuse-d0-s07/observation.json": "715e0471fbcb843a82120802cb8d12ff081e2a55b1d74097a358590c70a83a34",
+    "runs/formal-performance-config-reuse-d0-s07/result.json": "23c4dfc9d7dbc5622e907ffaaf357eb9eb90bd4865f36b7344d97b457b19934c",
+    "runs/formal-performance-config-reuse-d0-s07/stderr.log": "05cda4a078951bee0f530f17dfb30825733e30ea6caa968c870da314da5bc377",
+    "runs/formal-performance-config-reuse-d0-s07/stdout.log": "12aa4b374e829c484dc6e3bd0b064b6d6f4ed802d70f9ebe3c9d1e0db914dc31",
+    "runs/formal-performance-config-reuse-d0-s07/windows.json": "556555c062e538659c21d1a77d4ac28d4a10b12346b2213d37a5843a8b3f0ecd",
+    "runs/formal-performance-config-reuse-d1-s01/cwd/build/constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+    "runs/formal-performance-config-reuse-d1-s01/cwd/build/plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+    "runs/formal-performance-config-reuse-d1-s01/observation.json": "177ce878ee4290283d0393612a254d9c39a91bbe5c7318b58a728fedc4e26030",
+    "runs/formal-performance-config-reuse-d1-s01/result.json": "b1cd54b966d82d224fd5432dd163ac5a9a0d8598e270b79e80138e247f35700e",
+    "runs/formal-performance-config-reuse-d1-s01/stderr.log": "e55cea6b4758fd9453d07145022fcb71a66467c1157770037785de891dd2cf5c",
+    "runs/formal-performance-config-reuse-d1-s01/stdout.log": "44ecc226fbf3f03a655ba1561b912477f52a1dd8c79e8a0181bb085d039f0315",
+    "runs/formal-performance-config-reuse-d1-s01/windows.json": "6bf5bfdf5b51d6a10a732508176ff9b3dd4ab421edf074cd9502a457ace15fa1",
+    "runs/formal-performance-config-reuse-d1-s03/cwd/build/constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+    "runs/formal-performance-config-reuse-d1-s03/cwd/build/plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+    "runs/formal-performance-config-reuse-d1-s03/observation.json": "0dac86ca481c98f5919cf8432bf87a9785fee83e6dc2b5e0429404111636c186",
+    "runs/formal-performance-config-reuse-d1-s03/result.json": "5b0f851a32f4072c48b85bec2d161a4ad2f62ba1f3900c98dfa1014fa36cb74d",
+    "runs/formal-performance-config-reuse-d1-s03/stderr.log": "8031dbedf01fb965732f6b2447f1403e9257ce1f197ad984fe586175b06ae4b1",
+    "runs/formal-performance-config-reuse-d1-s03/stdout.log": "f95abaffdf6b99d4b9be648e0dd07a5ca190facfa96dd07211c4fb0e2bd680f1",
+    "runs/formal-performance-config-reuse-d1-s03/windows.json": "664bbeebd0e4e74d5269a08a7dcea433dd6f6c62788d44fc0b5a5d1b66ae2b35",
+    "runs/formal-performance-config-reuse-d1-s05/cwd/build/constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+    "runs/formal-performance-config-reuse-d1-s05/cwd/build/plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+    "runs/formal-performance-config-reuse-d1-s05/observation.json": "5a1bf3b5abe673b1dc3db62a7471c5dcc704a74faca846fa618b736eac007283",
+    "runs/formal-performance-config-reuse-d1-s05/result.json": "a451b0c13140af06a376f7d25cdd8dcefdb55e766b2e213f2e36047d5ff54cd8",
+    "runs/formal-performance-config-reuse-d1-s05/stderr.log": "6baead79ffc7a983fa63c717367ccefe68af4b0f2b08542b3fd4f09442ea9659",
+    "runs/formal-performance-config-reuse-d1-s05/stdout.log": "51c2f53006e22a40dbf229b75437f8b8adc1b888c5bbf3f82ef9b19f63f61211",
+    "runs/formal-performance-config-reuse-d1-s05/windows.json": "dcceb8616d9de5cd4733a9b19e3ac21488109c99f323f1907b39c3f1b047545e",
+    "runs/formal-performance-config-reuse-d1-s07/cwd/build/constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+    "runs/formal-performance-config-reuse-d1-s07/cwd/build/plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+    "runs/formal-performance-config-reuse-d1-s07/observation.json": "41b443a25f6f43c8476008d1929fd789feff11364ac3f93060f18b55bd160c73",
+    "runs/formal-performance-config-reuse-d1-s07/result.json": "34c1ea4ff24e607d7cbb54b12b17a30ba02da76cf1e4a2577e6f8c673c249c55",
+    "runs/formal-performance-config-reuse-d1-s07/stderr.log": "8c401044012edbf6d89b829e22e9fb7c630fa896040198820697c7e48801a2f6",
+    "runs/formal-performance-config-reuse-d1-s07/stdout.log": "69c5133702f5683339e4ca4837e92b584aa61ce82ab10324e9e5be956981bab8",
+    "runs/formal-performance-config-reuse-d1-s07/windows.json": "82be5a1a5df73ede0880e048eaa810eb88f62c3a31b289e96b4504cb10664773",
+    "runs/formal-performance-config-reuse-d2-s01/cwd/build/constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+    "runs/formal-performance-config-reuse-d2-s01/cwd/build/plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+    "runs/formal-performance-config-reuse-d2-s01/observation.json": "eb60cf3cac969117f3b5b42b4a900d78ea2051fd2355a8e3d7483d428b2ba602",
+    "runs/formal-performance-config-reuse-d2-s01/result.json": "abd6af61f63ac61543de63ab8fdd943adb38a20de5d0901ef3d97b015f7dccea",
+    "runs/formal-performance-config-reuse-d2-s01/stderr.log": "7fa6d78605a02a5eaf02d4392a7e29daaffdfe2249e86bc2066739fac808042b",
+    "runs/formal-performance-config-reuse-d2-s01/stdout.log": "d0e3086ca0603f1483d73bc1c8c11acb9ffc2c64cae8c282ecaa73f8438f7bc6",
+    "runs/formal-performance-config-reuse-d2-s01/windows.json": "7c64fbb6b11927e486f31a35dbb70bbc5e46eeea6434776244ae6b66a7a706b3",
+    "runs/formal-performance-config-reuse-d2-s03/cwd/build/constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+    "runs/formal-performance-config-reuse-d2-s03/cwd/build/plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+    "runs/formal-performance-config-reuse-d2-s03/observation.json": "3bd0f1c83da53c4ea865def1dbb4a2e8c832b42b86421c8b15357d6e89dc1d61",
+    "runs/formal-performance-config-reuse-d2-s03/result.json": "d9feb707769da8fc0dc6a663369e37ea18c909d5c5f326facd3c9d50d6677d38",
+    "runs/formal-performance-config-reuse-d2-s03/stderr.log": "9ca00f252e124a9a49f24bbb75fd2d08dff151bb319bfc91ad097d6bec7c6b7a",
+    "runs/formal-performance-config-reuse-d2-s03/stdout.log": "9ea58885d2e1b4c036de115de14f9a892f34eeb69524e8f4a089ba3fba24c82b",
+    "runs/formal-performance-config-reuse-d2-s03/windows.json": "a7baa9450aa7a5774cf4b1beebd87b09cef08eeacd55452384a70dfcf173838b",
+    "runs/formal-performance-config-reuse-d2-s05/cwd/build/constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+    "runs/formal-performance-config-reuse-d2-s05/cwd/build/plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+    "runs/formal-performance-config-reuse-d2-s05/observation.json": "61e497146fb98998f1b1950fb47198e3c45b80d77c5813e3bc8206e417a10c67",
+    "runs/formal-performance-config-reuse-d2-s05/result.json": "30a13351170fccd6f8631af9b60d125a7aa841c57d90fad4026278479563d2c6",
+    "runs/formal-performance-config-reuse-d2-s05/stderr.log": "7009935d5751c8ea6a98d42906ec3e7af0eee56ddf57225320471565828129d7",
+    "runs/formal-performance-config-reuse-d2-s05/stdout.log": "c883d45445c72ef222970b680b66092d54d740f678809854e046e1bf053b896e",
+    "runs/formal-performance-config-reuse-d2-s05/windows.json": "b02d95edfbb178ce1c71c477085d9bbeadcb8d8932dc005c14315244112573c5",
+    "runs/formal-performance-config-reuse-d2-s07/cwd/build/constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+    "runs/formal-performance-config-reuse-d2-s07/cwd/build/plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+    "runs/formal-performance-config-reuse-d2-s07/observation.json": "bdf29605fd70a0c8f94406161acc9896cdcefe5b9cd8b19861c7e0c1be370db3",
+    "runs/formal-performance-config-reuse-d2-s07/result.json": "d9ad14e37979fa29af75345aeee032c4a673acd3e27f61b60031b4b78b2e0874",
+    "runs/formal-performance-config-reuse-d2-s07/stderr.log": "477686d1506f0a3b4acd4a3a0d3d8ca07a9d0a9ddd89ed2429c34c64f1df7638",
+    "runs/formal-performance-config-reuse-d2-s07/stdout.log": "714e63e2dad797a9328f2e2fe46a64b18b14653af003d77ddb49c98cbed6fd0a",
+    "runs/formal-performance-config-reuse-d2-s07/windows.json": "26f1d118d7ec041188de54d606b1f2162f6c4814725ad97054d2df0aa45dff7e",
+    "runs/formal-performance-firstdot-d0-s01/cwd/build/constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+    "runs/formal-performance-firstdot-d0-s01/cwd/build/plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+    "runs/formal-performance-firstdot-d0-s01/observation.json": "48ccd33c328f4ea6dc934b1e282f19a145fd97b895f03280f88604162dbc9654",
+    "runs/formal-performance-firstdot-d0-s01/result.json": "4ecdd3be2e2135e73ee44d122976e211315cc46ded5a3831835a88f45cc172c3",
+    "runs/formal-performance-firstdot-d0-s01/stderr.log": "8041173943e37b5e1a9d1e33087c526651ce5e7bf24809bb69de0040e13d95bb",
+    "runs/formal-performance-firstdot-d0-s01/stdout.log": "c3c708f3e50e753629b48ab7d78f9508c6d794f26971fc0966ce5c560f53de61",
+    "runs/formal-performance-firstdot-d0-s01/windows.json": "303c28b39a547373743ae99dc159e32f5c269dd8a8e4f89c7d544726b1b524dc",
+    "runs/formal-performance-firstdot-d0-s03/cwd/build/constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+    "runs/formal-performance-firstdot-d0-s03/cwd/build/plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+    "runs/formal-performance-firstdot-d0-s03/observation.json": "cd4183ddfc9bfaea74fe5d3deb2d63bf9019e450bd5876acef09cdd780d0dc12",
+    "runs/formal-performance-firstdot-d0-s03/result.json": "53a4db9531b31ece4f749f0918d77869f4d498b8a1b5581e6382d32f373cdf89",
+    "runs/formal-performance-firstdot-d0-s03/stderr.log": "427f10a98f13cb72fd511411e3bab97f9b68a1c12d94371363e9a4d0e9d1a37f",
+    "runs/formal-performance-firstdot-d0-s03/stdout.log": "a0518f2962c7b447a87f795d6699760d94f86878d1a4a4f3ca99090c4fcefde0",
+    "runs/formal-performance-firstdot-d0-s03/windows.json": "b83eacfb80feed1002c2a07eaf80c444899af5a4e1bba11c61ff290946eaa305",
+    "runs/formal-performance-firstdot-d0-s05/cwd/build/constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+    "runs/formal-performance-firstdot-d0-s05/cwd/build/plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+    "runs/formal-performance-firstdot-d0-s05/observation.json": "3f8f728a3208443737e19e7c7fd4a68b09d522e31456c8bd3d1bdc38863c6bf5",
+    "runs/formal-performance-firstdot-d0-s05/result.json": "6e6fc364c4dbc42bfa1f256d1dd00f3990a7593dc2283ac847af0a5720b51193",
+    "runs/formal-performance-firstdot-d0-s05/stderr.log": "f79912c61353bf9155127eddaf1036070e7313f25a72c256a7979e523609f503",
+    "runs/formal-performance-firstdot-d0-s05/stdout.log": "00883529c093d23b5a81f9f544f9436a34e4ec0e59c3df1f84e9d465e49ad763",
+    "runs/formal-performance-firstdot-d0-s05/windows.json": "2d5d6ae277e69db24e914717223af7f67427cf89a2d96b1fd78f8565155017fc",
+    "runs/formal-performance-firstdot-d0-s07/cwd/build/constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+    "runs/formal-performance-firstdot-d0-s07/cwd/build/plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+    "runs/formal-performance-firstdot-d0-s07/observation.json": "72aa61913d22a9bf9f12079384aaa5458817d6c282f444ddf2d3318baab787fb",
+    "runs/formal-performance-firstdot-d0-s07/result.json": "48afb57b68df6cbdda4a9e22a2754bafc26bc302f6052bc811ab8ee24e84c470",
+    "runs/formal-performance-firstdot-d0-s07/stderr.log": "c9626c718ec43c5e27567cff5d1e974933e69540baddd71dfa61837b6c5e0b34",
+    "runs/formal-performance-firstdot-d0-s07/stdout.log": "e5fc16354bca59f39e89aa2b4837895eb64d95e403297023d942e3acaa40c180",
+    "runs/formal-performance-firstdot-d0-s07/windows.json": "f1949fdec1d62dbc71cdf877f0b157740b61b7d0caec13e996b98131dfebe99c",
+    "runs/formal-performance-firstdot-d1-s01/cwd/build/constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+    "runs/formal-performance-firstdot-d1-s01/cwd/build/plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+    "runs/formal-performance-firstdot-d1-s01/observation.json": "c2691c6fc4edeb9e263f7bbd90eaf3060bba3af3e920dfb32dd1d8681eeb5c80",
+    "runs/formal-performance-firstdot-d1-s01/result.json": "722ab7d6ec14560b3116641a45e541928d9e6f43f87f483942ff7ca5b0613c74",
+    "runs/formal-performance-firstdot-d1-s01/stderr.log": "23d4d050d1042133fa7f248d0794dbcc108da52d4662872d30932923186154fb",
+    "runs/formal-performance-firstdot-d1-s01/stdout.log": "cf199ec1d1213ee71a175e4e13ecb0af7c808d48b35d8c7292f2939feb8f20a8",
+    "runs/formal-performance-firstdot-d1-s01/windows.json": "1cb8199b46d30303f4445ab35d0f0405cba50002f890b72424f008747a9ebd1d",
+    "runs/formal-performance-firstdot-d1-s03/cwd/build/constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+    "runs/formal-performance-firstdot-d1-s03/cwd/build/plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+    "runs/formal-performance-firstdot-d1-s03/observation.json": "37f88117bb4bdfe0ef263990749b4a5f3473f56fd1deb9c34358b13edb430355",
+    "runs/formal-performance-firstdot-d1-s03/result.json": "c0e605d8161f46d0cf6cefb5913d9a358ec06dc5e595b1ca9c8d270f9cddcca0",
+    "runs/formal-performance-firstdot-d1-s03/stderr.log": "abd0b0873e4cd25ab759896cdac9f4cf2dfccb737d4c11f2230ca0c57c549f68",
+    "runs/formal-performance-firstdot-d1-s03/stdout.log": "cb270371307253007ef330dd499a9dc2a24b853b2dd2a3d7a08f058b76a75c43",
+    "runs/formal-performance-firstdot-d1-s03/windows.json": "250b14e9705bf7c26e5e1be2dfca81c2da4cfe1894d59070e514db15935a7f0a",
+    "runs/formal-performance-firstdot-d1-s05/cwd/build/constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+    "runs/formal-performance-firstdot-d1-s05/cwd/build/plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+    "runs/formal-performance-firstdot-d1-s05/observation.json": "0f7a119289ccf3cb9c77a9bfe7d58df2f251343b4e56c4e1c1da2a48c295a8c5",
+    "runs/formal-performance-firstdot-d1-s05/result.json": "f54e34f099128f8822cb315c740daf2ca97a049ba954af301c08c9e224362828",
+    "runs/formal-performance-firstdot-d1-s05/stderr.log": "057114363285e2e12f47a54c24cb5507f500f4520b5981462ccbccbd471dfb55",
+    "runs/formal-performance-firstdot-d1-s05/stdout.log": "dd37f1dd8e330f817df02c24c760ae045e1c819fd35e6a9c678df3c38a41404c",
+    "runs/formal-performance-firstdot-d1-s05/windows.json": "42db12e807cbfb34bac1ca885a33bafe1ed126cfd9316ea7b4a4d0d8e34f1645",
+    "runs/formal-performance-firstdot-d1-s07/cwd/build/constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+    "runs/formal-performance-firstdot-d1-s07/cwd/build/plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+    "runs/formal-performance-firstdot-d1-s07/observation.json": "f0cff11b30acd0be1a5f6b861e42ea705e3de4679ed2941690b21becb28df976",
+    "runs/formal-performance-firstdot-d1-s07/result.json": "adaa5f4fbcba18911ce64b4363a49530000eb6d3d1b5121c1efbc7ee155cb15f",
+    "runs/formal-performance-firstdot-d1-s07/stderr.log": "ccf15fa2a9315e3cabdad48c7da4ae9bec1b6c481f9e25e8581a6b3962909d7f",
+    "runs/formal-performance-firstdot-d1-s07/stdout.log": "a1b5e88f60bbe6e54ab4f592578b75fce46981d3810a3737d8bf1de3c806ee98",
+    "runs/formal-performance-firstdot-d1-s07/windows.json": "26374c4207f6f495ca1e3393d2bb4d8920c415729039efe5ed8e65ed64dc875e",
+    "runs/formal-performance-firstdot-d2-s01/cwd/build/constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+    "runs/formal-performance-firstdot-d2-s01/cwd/build/plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+    "runs/formal-performance-firstdot-d2-s01/observation.json": "b416b508229c6082026efd5f3c74b95ae21a47aa798cf35d0610f102589952cc",
+    "runs/formal-performance-firstdot-d2-s01/result.json": "f57aa8a4a74755ccaf935f50ef7ff4fd8762bf3e201cc8e84172a82b2d702799",
+    "runs/formal-performance-firstdot-d2-s01/stderr.log": "7370a6aa86dfaf3d142bac20e151107428f284227ec2500ba3caeb8c6147b101",
+    "runs/formal-performance-firstdot-d2-s01/stdout.log": "3fde18ea589085d427d58de816f53399055fff9432ace50a6be093ca476b4a43",
+    "runs/formal-performance-firstdot-d2-s01/windows.json": "713500fa0a93f78696772607a7e210da7a3c98932058a735af790ec85aed4445",
+    "runs/formal-performance-firstdot-d2-s03/cwd/build/constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+    "runs/formal-performance-firstdot-d2-s03/cwd/build/plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+    "runs/formal-performance-firstdot-d2-s03/observation.json": "c28d2372e5ce92c41fcc1e1429f822a941dc1702d9b45c14341c03f74ca3e772",
+    "runs/formal-performance-firstdot-d2-s03/result.json": "08c8b3e4216e5f9741259efd8f26e4e835af11b3af4a6fee17cc008074a60972",
+    "runs/formal-performance-firstdot-d2-s03/stderr.log": "34dee10749e56b578ca1470ea0e2a51d6a421059d2d75b077f74bd190340d88e",
+    "runs/formal-performance-firstdot-d2-s03/stdout.log": "a0b84caf11685e1dad5cc05ed31687987fd42ad2a6ec6f31c953aa60d10832a2",
+    "runs/formal-performance-firstdot-d2-s03/windows.json": "29fadd169d725d5238dd508d5f2ef442421bb0172334cbdf3de9461c94afbf5b",
+    "runs/formal-performance-firstdot-d2-s05/cwd/build/constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+    "runs/formal-performance-firstdot-d2-s05/cwd/build/plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+    "runs/formal-performance-firstdot-d2-s05/observation.json": "5abea23ea7a23ff304148ebcf2a6c3ef9b5e088801ff57d5a7b6e31b90c261a1",
+    "runs/formal-performance-firstdot-d2-s05/result.json": "4cb0f3a28172a8449ece2b0da246b39072c0f29f0bd3676c1607e9dc846817a3",
+    "runs/formal-performance-firstdot-d2-s05/stderr.log": "f86987ca0029f23d74fa844f09fbe0f77a954804b0d1cf41070d1d2243c336c9",
+    "runs/formal-performance-firstdot-d2-s05/stdout.log": "a1180ab2af89c0b1044bd0477ad7c482688c3bfc663484b54dbf2eb61f581abc",
+    "runs/formal-performance-firstdot-d2-s05/windows.json": "622aca0b0d379908c211510307441eb5889dddf2a2686062141f740700a195c4",
+    "runs/formal-performance-firstdot-d2-s07/cwd/build/constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+    "runs/formal-performance-firstdot-d2-s07/cwd/build/plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+    "runs/formal-performance-firstdot-d2-s07/observation.json": "b7f12ebfe62b07baf6e9e54844d4ece6830bb5316d0922ad967ad0b61a3cd4de",
+    "runs/formal-performance-firstdot-d2-s07/result.json": "13c4e0243b410a4317fec9848aacb970241ed728152407ecdd99b1353087f518",
+    "runs/formal-performance-firstdot-d2-s07/stderr.log": "2b68935e1c80a847bde67d41721d551fe885716d21efaf062ce2816a537d0fb3",
+    "runs/formal-performance-firstdot-d2-s07/stdout.log": "7fbc559cad793b495788df2bd779c892024708c621a0e545255586406029868b",
+    "runs/formal-performance-firstdot-d2-s07/windows.json": "372a22e3f35bdc1547a1247114eec108598df8d16cc35285551e198ce689ee1e",
+    "runs/negative-config-reuse-8x32-d0/cwd/build/constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+    "runs/negative-config-reuse-8x32-d0/cwd/build/plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+    "runs/negative-config-reuse-8x32-d0/negative.json": "0c8d36c72f0fba97232cb28451074fc75476d672b3d795777c507d157a8a66fd",
+    "runs/negative-config-reuse-8x32-d0/observation.json": "12b83594c520e9642708e317a372740d1cbfc44035a1ccdff7ba9656add7d6ee",
+    "runs/negative-config-reuse-8x32-d0/result.json": "847fa66f282502fbcac7b0a18859232b3499fbb879a066c8d786514a2d08ef88",
+    "runs/negative-config-reuse-8x32-d0/stderr.log": "de50aae2e4f6bd4b19eadcd09e298fda5d6eee2ba02794538729d7227acd2f0b",
+    "runs/negative-config-reuse-8x32-d0/stdout.log": "87617ac7d6d6dce6619cf71491bec4d8eb690f56451df561b02d8666fcb5bcb5",
+    "runs/recovery-config-reuse-8x32-d0/cwd/build/constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+    "runs/recovery-config-reuse-8x32-d0/cwd/build/plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+    "runs/recovery-config-reuse-8x32-d0/observation.json": "5694884c5496c0a3fa17a154ba895beda4679b39c1848c252a9cde673023cdb5",
+    "runs/recovery-config-reuse-8x32-d0/result.json": "abb389b83f19a0f81170282a2103379bfc60b704f6b9b0f83e1486f6b62b1904",
+    "runs/recovery-config-reuse-8x32-d0/stderr.log": "5ac50d3c6c981be623542de735c1952ce3805f1596f6f8d9b0bfa552f2313beb",
+    "runs/recovery-config-reuse-8x32-d0/stdout.log": "6ea72147183631b75706c90d5a9bcc5e8e64a4546e44fb99f8d19675ed47ad74",
+    "runs/recovery-config-reuse-8x32-d0/windows.json": "2c9ae506e924d3e21ef299bf74d0d20e3a02a42f86028bef016107c24676c97f",
+    "runs/replay-performance-config-reuse-d0-s01/cwd/build/constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+    "runs/replay-performance-config-reuse-d0-s01/cwd/build/plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+    "runs/replay-performance-config-reuse-d0-s01/observation.json": "b0fe0929db7f35d3cafc13002709a45425289aee5f0193d0d3850c6a3c39b658",
+    "runs/replay-performance-config-reuse-d0-s01/result.json": "59725704631abb9b96cae015329f892a5ea00d481488b633c7778a19de9e3924",
+    "runs/replay-performance-config-reuse-d0-s01/stderr.log": "315de3f1db2955506f954f60bb978a41f854ad5ea591a91ca0dc04513458e18c",
+    "runs/replay-performance-config-reuse-d0-s01/stdout.log": "1407d12a9b127a18410a058c7071de3ceb718c73b4f02602c7a80b39b260c8ce",
+    "runs/replay-performance-config-reuse-d0-s01/windows.json": "b867dac73ca41a267be05274e2da1f4c47d736da02abe38f01761deaad1651f1",
+    "runs/replay-performance-config-reuse-d0-s03/cwd/build/constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+    "runs/replay-performance-config-reuse-d0-s03/cwd/build/plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+    "runs/replay-performance-config-reuse-d0-s03/observation.json": "e846ae66a3e31ba1bb41e2b12dc09b944073e7c4addd2df028a7068d9cf50b0c",
+    "runs/replay-performance-config-reuse-d0-s03/result.json": "d5edb89d18fe873493fabbd51a88122688a70dbc172b33707f222b89ff14a2c7",
+    "runs/replay-performance-config-reuse-d0-s03/stderr.log": "5ac50d3c6c981be623542de735c1952ce3805f1596f6f8d9b0bfa552f2313beb",
+    "runs/replay-performance-config-reuse-d0-s03/stdout.log": "42f63c374ec3683b99193c275086855c27e04004dd02056ae3d1d0d402b37bdd",
+    "runs/replay-performance-config-reuse-d0-s03/windows.json": "79e4d4c892bb2114cf8d9ed952f71254f2860768eb532d17ec88f7ef1b689964",
+    "runs/replay-performance-config-reuse-d0-s05/cwd/build/constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+    "runs/replay-performance-config-reuse-d0-s05/cwd/build/plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+    "runs/replay-performance-config-reuse-d0-s05/observation.json": "31777403d0a104a50a55cf2054a1994a741b2c14acad0bac4c26de5978d242d8",
+    "runs/replay-performance-config-reuse-d0-s05/result.json": "5d39f0cc2b5eab84662a38a31031673b7bbc38ed07524e56902a4d95b5e54ea7",
+    "runs/replay-performance-config-reuse-d0-s05/stderr.log": "6dbfb83a086b8cfeacad443885207fe43fd01820beb56db28f2625711dc0dd8b",
+    "runs/replay-performance-config-reuse-d0-s05/stdout.log": "a7051b88ca71b286d32bde75ecda323af8563fb0a669f5c02eb4c8836efd818a",
+    "runs/replay-performance-config-reuse-d0-s05/windows.json": "3084ffc58d21833cc2159d82c2d2d998e89fcdc722328dd1a6dbaeccf6751207",
+    "runs/replay-performance-config-reuse-d0-s07/cwd/build/constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+    "runs/replay-performance-config-reuse-d0-s07/cwd/build/plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+    "runs/replay-performance-config-reuse-d0-s07/observation.json": "9e1e76da6cb74a34eb397835671bf00d64223c0874c7d346b31ff64f11e948f2",
+    "runs/replay-performance-config-reuse-d0-s07/result.json": "18e8505e9cb17119a7dcbd85b902d4521d2a355555bdd53dffda9bd415463ef9",
+    "runs/replay-performance-config-reuse-d0-s07/stderr.log": "05cda4a078951bee0f530f17dfb30825733e30ea6caa968c870da314da5bc377",
+    "runs/replay-performance-config-reuse-d0-s07/stdout.log": "336aaedff6f3b9af0f6e368516644609564d4089f0c4b6dc833b93663970fd23",
+    "runs/replay-performance-config-reuse-d0-s07/windows.json": "358da6774ea9cf130e7d2c0942bbc71a5fee0b02965d5354f1d0a83beed5e8de",
+    "runs/replay-performance-firstdot-d0-s01/cwd/build/constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+    "runs/replay-performance-firstdot-d0-s01/cwd/build/plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+    "runs/replay-performance-firstdot-d0-s01/observation.json": "d960dd73f308a298ca8969ed10b78ae071975fe8f80dd72ac1052db9b9187dbe",
+    "runs/replay-performance-firstdot-d0-s01/result.json": "894e7b5053990afd2774d4962e5e390775863111b1b4841b1ac7996c0674c64d",
+    "runs/replay-performance-firstdot-d0-s01/stderr.log": "8041173943e37b5e1a9d1e33087c526651ce5e7bf24809bb69de0040e13d95bb",
+    "runs/replay-performance-firstdot-d0-s01/stdout.log": "29bb499f1fdf2dbb99d9e92e1acdbdb83fca09d2cbac7906ef51cd4583be6664",
+    "runs/replay-performance-firstdot-d0-s01/windows.json": "d4e42d82f831d2b891b5d35cd76ba92227944f02a0cdc9c1adaa9b83e67674c7",
+    "runs/replay-performance-firstdot-d0-s03/cwd/build/constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+    "runs/replay-performance-firstdot-d0-s03/cwd/build/plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+    "runs/replay-performance-firstdot-d0-s03/observation.json": "25ff45d04d202048d3b312ff20051c4e6a491c552a754bc56a264f14ecb21668",
+    "runs/replay-performance-firstdot-d0-s03/result.json": "08f8ac8dbb18fbdce4c4828a8117f0e6ebf51ce2bfffd7a759781d11eb34d232",
+    "runs/replay-performance-firstdot-d0-s03/stderr.log": "427f10a98f13cb72fd511411e3bab97f9b68a1c12d94371363e9a4d0e9d1a37f",
+    "runs/replay-performance-firstdot-d0-s03/stdout.log": "d7e7df1237a55fb1a613026a100450de1bc24d82935ea71f071ec5d7dea9bc3f",
+    "runs/replay-performance-firstdot-d0-s03/windows.json": "10d7c81fb87a0d458016c9b965b9f85c651eaf2bafede89e7f91977e09b6950f",
+    "runs/replay-performance-firstdot-d0-s05/cwd/build/constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+    "runs/replay-performance-firstdot-d0-s05/cwd/build/plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+    "runs/replay-performance-firstdot-d0-s05/observation.json": "4049170f19dcd1ba55b303925ad6ecd4ff57666499671fec450ae5eb7d44a886",
+    "runs/replay-performance-firstdot-d0-s05/result.json": "650a16b578f0fdc39b289e0d2739e098a2987a94bfa3c4b030507adaa1c40d42",
+    "runs/replay-performance-firstdot-d0-s05/stderr.log": "f79912c61353bf9155127eddaf1036070e7313f25a72c256a7979e523609f503",
+    "runs/replay-performance-firstdot-d0-s05/stdout.log": "8678a2fe3eb5e5794d06f0c3b41fb8d291ae2c479f077d688cd1ca568bb8115f",
+    "runs/replay-performance-firstdot-d0-s05/windows.json": "45a4ccd163e8cec991e9238799e5a76110ad7c4f829a0a7215b761ef644f72bc",
+    "runs/replay-performance-firstdot-d0-s07/cwd/build/constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+    "runs/replay-performance-firstdot-d0-s07/cwd/build/plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff",
+    "runs/replay-performance-firstdot-d0-s07/observation.json": "9943749351949caf21d4a5d9a948dcba31a2cc33bd4b96d27e7e83493348a75e",
+    "runs/replay-performance-firstdot-d0-s07/result.json": "f869aae3f5ce495f61417de9e50a47681168429e9b6bfd4293fe21abef06ce3f",
+    "runs/replay-performance-firstdot-d0-s07/stderr.log": "c9626c718ec43c5e27567cff5d1e974933e69540baddd71dfa61837b6c5e0b34",
+    "runs/replay-performance-firstdot-d0-s07/stdout.log": "8aa1ab7982a1dedd50670c8e371580f36d7173e56f1e5e6e7daf362ff38808c5",
+    "runs/replay-performance-firstdot-d0-s07/windows.json": "ba1c913fa32286b80b75c7349c765d6beb901d0a28518c677ba39a1ae19a0350",
+    "runtime-inputs.json": "b8961a3e4adb3fc705a9b3c207142b01906049d8f34eac5f721a8b7225f4e8e0",
+    "state.json": "2137996050e899f6d815af91c5a84c289deb00571ec602faf07e59a3d3efa90b"
+  },
+  "source_hardware_remeasured": false,
+  "portable_archive_audited": false,
+  "default_changed": false,
+  "records": [
+    {
+      "label": "negative-config-reuse-8x32-d0",
+      "status": "RAW_REPARSE_PASS",
+      "negative": true,
+      "windows": 0,
+      "new_emu_runs": 0,
+      "raw_sha256": {
+        "stdout.log": "87617ac7d6d6dce6619cf71491bec4d8eb690f56451df561b02d8666fcb5bcb5",
+        "stderr.log": "de50aae2e4f6bd4b19eadcd09e298fda5d6eee2ba02794538729d7227acd2f0b"
+      },
+      "source_hardware_remeasured": false
+    },
+    {
+      "label": "recovery-config-reuse-8x32-d0",
+      "status": "RAW_REPARSE_PASS",
+      "negative": false,
+      "windows": 24,
+      "new_emu_runs": 0,
+      "raw_sha256": {
+        "stdout.log": "6ea72147183631b75706c90d5a9bcc5e8e64a4546e44fb99f8d19675ed47ad74",
+        "stderr.log": "5ac50d3c6c981be623542de735c1952ce3805f1596f6f8d9b0bfa552f2313beb"
+      },
+      "source_hardware_remeasured": false
+    },
+    {
+      "label": "formal-performance-config-reuse-d0-s01",
+      "status": "RAW_REPARSE_PASS",
+      "negative": false,
+      "windows": 24,
+      "new_emu_runs": 0,
+      "raw_sha256": {
+        "stdout.log": "cd5f421661bc443f31bf50f34335edd975814e5a777da5c6baf384208ab0dc54",
+        "stderr.log": "315de3f1db2955506f954f60bb978a41f854ad5ea591a91ca0dc04513458e18c"
+      },
+      "source_hardware_remeasured": false
+    },
+    {
+      "label": "formal-performance-firstdot-d0-s01",
+      "status": "RAW_REPARSE_PASS",
+      "negative": false,
+      "windows": 24,
+      "new_emu_runs": 0,
+      "raw_sha256": {
+        "stdout.log": "c3c708f3e50e753629b48ab7d78f9508c6d794f26971fc0966ce5c560f53de61",
+        "stderr.log": "8041173943e37b5e1a9d1e33087c526651ce5e7bf24809bb69de0040e13d95bb"
+      },
+      "source_hardware_remeasured": false
+    },
+    {
+      "label": "formal-performance-firstdot-d1-s01",
+      "status": "RAW_REPARSE_PASS",
+      "negative": false,
+      "windows": 24,
+      "new_emu_runs": 0,
+      "raw_sha256": {
+        "stdout.log": "cf199ec1d1213ee71a175e4e13ecb0af7c808d48b35d8c7292f2939feb8f20a8",
+        "stderr.log": "23d4d050d1042133fa7f248d0794dbcc108da52d4662872d30932923186154fb"
+      },
+      "source_hardware_remeasured": false
+    },
+    {
+      "label": "formal-performance-config-reuse-d1-s01",
+      "status": "RAW_REPARSE_PASS",
+      "negative": false,
+      "windows": 24,
+      "new_emu_runs": 0,
+      "raw_sha256": {
+        "stdout.log": "44ecc226fbf3f03a655ba1561b912477f52a1dd8c79e8a0181bb085d039f0315",
+        "stderr.log": "e55cea6b4758fd9453d07145022fcb71a66467c1157770037785de891dd2cf5c"
+      },
+      "source_hardware_remeasured": false
+    },
+    {
+      "label": "formal-performance-config-reuse-d2-s01",
+      "status": "RAW_REPARSE_PASS",
+      "negative": false,
+      "windows": 24,
+      "new_emu_runs": 0,
+      "raw_sha256": {
+        "stdout.log": "d0e3086ca0603f1483d73bc1c8c11acb9ffc2c64cae8c282ecaa73f8438f7bc6",
+        "stderr.log": "7fa6d78605a02a5eaf02d4392a7e29daaffdfe2249e86bc2066739fac808042b"
+      },
+      "source_hardware_remeasured": false
+    },
+    {
+      "label": "formal-performance-firstdot-d2-s01",
+      "status": "RAW_REPARSE_PASS",
+      "negative": false,
+      "windows": 24,
+      "new_emu_runs": 0,
+      "raw_sha256": {
+        "stdout.log": "3fde18ea589085d427d58de816f53399055fff9432ace50a6be093ca476b4a43",
+        "stderr.log": "7370a6aa86dfaf3d142bac20e151107428f284227ec2500ba3caeb8c6147b101"
+      },
+      "source_hardware_remeasured": false
+    },
+    {
+      "label": "formal-performance-firstdot-d0-s03",
+      "status": "RAW_REPARSE_PASS",
+      "negative": false,
+      "windows": 24,
+      "new_emu_runs": 0,
+      "raw_sha256": {
+        "stdout.log": "a0518f2962c7b447a87f795d6699760d94f86878d1a4a4f3ca99090c4fcefde0",
+        "stderr.log": "427f10a98f13cb72fd511411e3bab97f9b68a1c12d94371363e9a4d0e9d1a37f"
+      },
+      "source_hardware_remeasured": false
+    },
+    {
+      "label": "formal-performance-firstdot-d1-s03",
+      "status": "RAW_REPARSE_PASS",
+      "negative": false,
+      "windows": 24,
+      "new_emu_runs": 0,
+      "raw_sha256": {
+        "stdout.log": "cb270371307253007ef330dd499a9dc2a24b853b2dd2a3d7a08f058b76a75c43",
+        "stderr.log": "abd0b0873e4cd25ab759896cdac9f4cf2dfccb737d4c11f2230ca0c57c549f68"
+      },
+      "source_hardware_remeasured": false
+    },
+    {
+      "label": "formal-performance-config-reuse-d1-s03",
+      "status": "RAW_REPARSE_PASS",
+      "negative": false,
+      "windows": 24,
+      "new_emu_runs": 0,
+      "raw_sha256": {
+        "stdout.log": "f95abaffdf6b99d4b9be648e0dd07a5ca190facfa96dd07211c4fb0e2bd680f1",
+        "stderr.log": "8031dbedf01fb965732f6b2447f1403e9257ce1f197ad984fe586175b06ae4b1"
+      },
+      "source_hardware_remeasured": false
+    },
+    {
+      "label": "formal-performance-config-reuse-d2-s03",
+      "status": "RAW_REPARSE_PASS",
+      "negative": false,
+      "windows": 24,
+      "new_emu_runs": 0,
+      "raw_sha256": {
+        "stdout.log": "9ea58885d2e1b4c036de115de14f9a892f34eeb69524e8f4a089ba3fba24c82b",
+        "stderr.log": "9ca00f252e124a9a49f24bbb75fd2d08dff151bb319bfc91ad097d6bec7c6b7a"
+      },
+      "source_hardware_remeasured": false
+    },
+    {
+      "label": "formal-performance-firstdot-d2-s03",
+      "status": "RAW_REPARSE_PASS",
+      "negative": false,
+      "windows": 24,
+      "new_emu_runs": 0,
+      "raw_sha256": {
+        "stdout.log": "a0b84caf11685e1dad5cc05ed31687987fd42ad2a6ec6f31c953aa60d10832a2",
+        "stderr.log": "34dee10749e56b578ca1470ea0e2a51d6a421059d2d75b077f74bd190340d88e"
+      },
+      "source_hardware_remeasured": false
+    },
+    {
+      "label": "formal-performance-config-reuse-d0-s05",
+      "status": "RAW_REPARSE_PASS",
+      "negative": false,
+      "windows": 24,
+      "new_emu_runs": 0,
+      "raw_sha256": {
+        "stdout.log": "06f9a09e0099ccf3ee690ff1d472d6cd49ea130fb9e5946171059393d6563707",
+        "stderr.log": "6dbfb83a086b8cfeacad443885207fe43fd01820beb56db28f2625711dc0dd8b"
+      },
+      "source_hardware_remeasured": false
+    },
+    {
+      "label": "formal-performance-firstdot-d0-s05",
+      "status": "RAW_REPARSE_PASS",
+      "negative": false,
+      "windows": 24,
+      "new_emu_runs": 0,
+      "raw_sha256": {
+        "stdout.log": "00883529c093d23b5a81f9f544f9436a34e4ec0e59c3df1f84e9d465e49ad763",
+        "stderr.log": "f79912c61353bf9155127eddaf1036070e7313f25a72c256a7979e523609f503"
+      },
+      "source_hardware_remeasured": false
+    },
+    {
+      "label": "formal-performance-firstdot-d1-s05",
+      "status": "RAW_REPARSE_PASS",
+      "negative": false,
+      "windows": 24,
+      "new_emu_runs": 0,
+      "raw_sha256": {
+        "stdout.log": "dd37f1dd8e330f817df02c24c760ae045e1c819fd35e6a9c678df3c38a41404c",
+        "stderr.log": "057114363285e2e12f47a54c24cb5507f500f4520b5981462ccbccbd471dfb55"
+      },
+      "source_hardware_remeasured": false
+    },
+    {
+      "label": "formal-performance-config-reuse-d1-s05",
+      "status": "RAW_REPARSE_PASS",
+      "negative": false,
+      "windows": 24,
+      "new_emu_runs": 0,
+      "raw_sha256": {
+        "stdout.log": "51c2f53006e22a40dbf229b75437f8b8adc1b888c5bbf3f82ef9b19f63f61211",
+        "stderr.log": "6baead79ffc7a983fa63c717367ccefe68af4b0f2b08542b3fd4f09442ea9659"
+      },
+      "source_hardware_remeasured": false
+    },
+    {
+      "label": "formal-performance-config-reuse-d2-s05",
+      "status": "RAW_REPARSE_PASS",
+      "negative": false,
+      "windows": 24,
+      "new_emu_runs": 0,
+      "raw_sha256": {
+        "stdout.log": "c883d45445c72ef222970b680b66092d54d740f678809854e046e1bf053b896e",
+        "stderr.log": "7009935d5751c8ea6a98d42906ec3e7af0eee56ddf57225320471565828129d7"
+      },
+      "source_hardware_remeasured": false
+    },
+    {
+      "label": "formal-performance-firstdot-d2-s05",
+      "status": "RAW_REPARSE_PASS",
+      "negative": false,
+      "windows": 24,
+      "new_emu_runs": 0,
+      "raw_sha256": {
+        "stdout.log": "a1180ab2af89c0b1044bd0477ad7c482688c3bfc663484b54dbf2eb61f581abc",
+        "stderr.log": "f86987ca0029f23d74fa844f09fbe0f77a954804b0d1cf41070d1d2243c336c9"
+      },
+      "source_hardware_remeasured": false
+    },
+    {
+      "label": "formal-performance-config-reuse-d0-s07",
+      "status": "RAW_REPARSE_PASS",
+      "negative": false,
+      "windows": 24,
+      "new_emu_runs": 0,
+      "raw_sha256": {
+        "stdout.log": "12aa4b374e829c484dc6e3bd0b064b6d6f4ed802d70f9ebe3c9d1e0db914dc31",
+        "stderr.log": "05cda4a078951bee0f530f17dfb30825733e30ea6caa968c870da314da5bc377"
+      },
+      "source_hardware_remeasured": false
+    },
+    {
+      "label": "formal-performance-firstdot-d0-s07",
+      "status": "RAW_REPARSE_PASS",
+      "negative": false,
+      "windows": 24,
+      "new_emu_runs": 0,
+      "raw_sha256": {
+        "stdout.log": "e5fc16354bca59f39e89aa2b4837895eb64d95e403297023d942e3acaa40c180",
+        "stderr.log": "c9626c718ec43c5e27567cff5d1e974933e69540baddd71dfa61837b6c5e0b34"
+      },
+      "source_hardware_remeasured": false
+    },
+    {
+      "label": "formal-performance-firstdot-d1-s07",
+      "status": "RAW_REPARSE_PASS",
+      "negative": false,
+      "windows": 24,
+      "new_emu_runs": 0,
+      "raw_sha256": {
+        "stdout.log": "a1b5e88f60bbe6e54ab4f592578b75fce46981d3810a3737d8bf1de3c806ee98",
+        "stderr.log": "ccf15fa2a9315e3cabdad48c7da4ae9bec1b6c481f9e25e8581a6b3962909d7f"
+      },
+      "source_hardware_remeasured": false
+    },
+    {
+      "label": "formal-performance-config-reuse-d1-s07",
+      "status": "RAW_REPARSE_PASS",
+      "negative": false,
+      "windows": 24,
+      "new_emu_runs": 0,
+      "raw_sha256": {
+        "stdout.log": "69c5133702f5683339e4ca4837e92b584aa61ce82ab10324e9e5be956981bab8",
+        "stderr.log": "8c401044012edbf6d89b829e22e9fb7c630fa896040198820697c7e48801a2f6"
+      },
+      "source_hardware_remeasured": false
+    },
+    {
+      "label": "formal-performance-config-reuse-d2-s07",
+      "status": "RAW_REPARSE_PASS",
+      "negative": false,
+      "windows": 24,
+      "new_emu_runs": 0,
+      "raw_sha256": {
+        "stdout.log": "714e63e2dad797a9328f2e2fe46a64b18b14653af003d77ddb49c98cbed6fd0a",
+        "stderr.log": "477686d1506f0a3b4acd4a3a0d3d8ca07a9d0a9ddd89ed2429c34c64f1df7638"
+      },
+      "source_hardware_remeasured": false
+    },
+    {
+      "label": "formal-performance-firstdot-d2-s07",
+      "status": "RAW_REPARSE_PASS",
+      "negative": false,
+      "windows": 24,
+      "new_emu_runs": 0,
+      "raw_sha256": {
+        "stdout.log": "7fbc559cad793b495788df2bd779c892024708c621a0e545255586406029868b",
+        "stderr.log": "2b68935e1c80a847bde67d41721d551fe885716d21efaf062ce2816a537d0fb3"
+      },
+      "source_hardware_remeasured": false
+    },
+    {
+      "label": "replay-performance-config-reuse-d0-s01",
+      "status": "RAW_REPARSE_PASS",
+      "negative": false,
+      "windows": 24,
+      "new_emu_runs": 0,
+      "raw_sha256": {
+        "stdout.log": "1407d12a9b127a18410a058c7071de3ceb718c73b4f02602c7a80b39b260c8ce",
+        "stderr.log": "315de3f1db2955506f954f60bb978a41f854ad5ea591a91ca0dc04513458e18c"
+      },
+      "source_hardware_remeasured": false
+    },
+    {
+      "label": "replay-performance-firstdot-d0-s01",
+      "status": "RAW_REPARSE_PASS",
+      "negative": false,
+      "windows": 24,
+      "new_emu_runs": 0,
+      "raw_sha256": {
+        "stdout.log": "29bb499f1fdf2dbb99d9e92e1acdbdb83fca09d2cbac7906ef51cd4583be6664",
+        "stderr.log": "8041173943e37b5e1a9d1e33087c526651ce5e7bf24809bb69de0040e13d95bb"
+      },
+      "source_hardware_remeasured": false
+    },
+    {
+      "label": "replay-performance-config-reuse-d0-s03",
+      "status": "RAW_REPARSE_PASS",
+      "negative": false,
+      "windows": 24,
+      "new_emu_runs": 0,
+      "raw_sha256": {
+        "stdout.log": "42f63c374ec3683b99193c275086855c27e04004dd02056ae3d1d0d402b37bdd",
+        "stderr.log": "5ac50d3c6c981be623542de735c1952ce3805f1596f6f8d9b0bfa552f2313beb"
+      },
+      "source_hardware_remeasured": false
+    },
+    {
+      "label": "replay-performance-firstdot-d0-s03",
+      "status": "RAW_REPARSE_PASS",
+      "negative": false,
+      "windows": 24,
+      "new_emu_runs": 0,
+      "raw_sha256": {
+        "stdout.log": "d7e7df1237a55fb1a613026a100450de1bc24d82935ea71f071ec5d7dea9bc3f",
+        "stderr.log": "427f10a98f13cb72fd511411e3bab97f9b68a1c12d94371363e9a4d0e9d1a37f"
+      },
+      "source_hardware_remeasured": false
+    },
+    {
+      "label": "replay-performance-config-reuse-d0-s05",
+      "status": "RAW_REPARSE_PASS",
+      "negative": false,
+      "windows": 24,
+      "new_emu_runs": 0,
+      "raw_sha256": {
+        "stdout.log": "a7051b88ca71b286d32bde75ecda323af8563fb0a669f5c02eb4c8836efd818a",
+        "stderr.log": "6dbfb83a086b8cfeacad443885207fe43fd01820beb56db28f2625711dc0dd8b"
+      },
+      "source_hardware_remeasured": false
+    },
+    {
+      "label": "replay-performance-firstdot-d0-s05",
+      "status": "RAW_REPARSE_PASS",
+      "negative": false,
+      "windows": 24,
+      "new_emu_runs": 0,
+      "raw_sha256": {
+        "stdout.log": "8678a2fe3eb5e5794d06f0c3b41fb8d291ae2c479f077d688cd1ca568bb8115f",
+        "stderr.log": "f79912c61353bf9155127eddaf1036070e7313f25a72c256a7979e523609f503"
+      },
+      "source_hardware_remeasured": false
+    },
+    {
+      "label": "replay-performance-config-reuse-d0-s07",
+      "status": "RAW_REPARSE_PASS",
+      "negative": false,
+      "windows": 24,
+      "new_emu_runs": 0,
+      "raw_sha256": {
+        "stdout.log": "336aaedff6f3b9af0f6e368516644609564d4089f0c4b6dc833b93663970fd23",
+        "stderr.log": "05cda4a078951bee0f530f17dfb30825733e30ea6caa968c870da314da5bc377"
+      },
+      "source_hardware_remeasured": false
+    },
+    {
+      "label": "replay-performance-firstdot-d0-s07",
+      "status": "RAW_REPARSE_PASS",
+      "negative": false,
+      "windows": 24,
+      "new_emu_runs": 0,
+      "raw_sha256": {
+        "stdout.log": "8aa1ab7982a1dedd50670c8e371580f36d7173e56f1e5e6e7daf362ff38808c5",
+        "stderr.log": "c9626c718ec43c5e27567cff5d1e974933e69540baddd71dfa61837b6c5e0b34"
+      },
+      "source_hardware_remeasured": false
+    }
+  ]
+}

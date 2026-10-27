@@ -1,0 +1,122 @@
+{
+  "status": "C3_HF_SOURCE_SCOPE_REVIEW_PASS",
+  "time": "2026-10-25T22:09:52.241601+08:00",
+  "candidate_commit": "77d0a1228f0da7d584d5c7375b404dcda9763cf3",
+  "candidate_exeunit_sha256": "150baa7c78aa8948ff0f4fb771912f7d2058aaa802a0853ee99ea3a2dc0bb9b7",
+  "baseline": "0f12df675378556670afd0dd2153f47fcb330610",
+  "production_files": [
+    "src/main/scala/xiangshan/backend/exu/ExeUnit.scala"
+  ],
+  "checks": [
+    "Exact reversal of three declared edits reconstructs complete baseline ExeUnit bytes",
+    "Only FP vfdiv SET changes; FuType selection includes DIV and SQRT",
+    "Double hold RegInit retained, no owner or additional RegInit state",
+    "Clock enables and ClockGate block byte-identical baseline",
+    "Entire tail from val busy byte-identical baseline",
+    "Original release and acceptance priority preserved by exact patch inversion",
+    "uncerLat applicability remains outside startUncertain"
+  ],
+  "unchanged_reused_fixture_files": [
+    {
+      "path": "build.sc",
+      "sha256": "d20720512ae5044deff80c0c67de99fb6377157fb97df3ad28e69da47974303a"
+    },
+    {
+      "path": "team/models/vdot/README.md",
+      "sha256": "5e7740bee399f674a7f2fad0ea430bda416a8fbdca1c6a9a187a2af0371c4906"
+    },
+    {
+      "path": "team/models/vdot/data/directed.jsonl",
+      "sha256": "b78708eca1145437d34af230721a3999c35889176131cdf57acfa6b7a6b8b333"
+    },
+    {
+      "path": "team/models/vdot/data/manifest.json",
+      "sha256": "dc2d38c274ff93feddc7e3e795cd6610aef46726f4c2346372189b034b0cfd86"
+    },
+    {
+      "path": "team/models/vdot/data/random.jsonl",
+      "sha256": "6201847c400f7ecac85848690704abac15b7278a824e447b35ad60788da70363"
+    },
+    {
+      "path": "team/models/vdot/data/smoke.jsonl",
+      "sha256": "de8e6a3b354f557eac1c5122a58116942d8d8aaf44e1046c0ccaedbdff3c045f"
+    },
+    {
+      "path": "team/models/vdot/data/state.jsonl",
+      "sha256": "7571111fa4c651ee33f1223ef284fdf65ce8da020353fc7368489c6e5eac4976"
+    },
+    {
+      "path": "team/models/vdot/generate.py",
+      "sha256": "99bcc7c66d39084f06a1e811e295a5b83ffd47af02a056a9623d567ac6f79468"
+    },
+    {
+      "path": "team/models/vdot/model.py",
+      "sha256": "1eab3593c04503a69d8dcc5b112cbc4bd3769b861f1f611bd6459662ef6b82bd"
+    },
+    {
+      "path": "team/models/vdot/tests/test_generate.py",
+      "sha256": "9cff8e2eed91d36e235175676fe8ed28448255eb10034366624776f3ca9fd84c"
+    },
+    {
+      "path": "team/models/vdot/tests/test_model.py",
+      "sha256": "abfc45ff731afa596f375e4a7be02c20686356b71ef031913914001452e70724"
+    },
+    {
+      "path": "team/models/vdot/tests/test_vectors.py",
+      "sha256": "d98974a1b1d99368cf7108d0fa3ac9a0e179a8ebbc89823f6fa6e08a7512ffe2"
+    },
+    {
+      "path": "team/optimizations/o2/check_negative_fu.py",
+      "sha256": "edbf473f3bb61a3b834dd16d994b5f92090582d5a7761cee6fecff7fed2511be"
+    },
+    {
+      "path": "team/optimizations/o2/fu/GenerateVDotElasticFu.scala",
+      "sha256": "74601b2c0097f2da5401b826518a23d910e1f9cb390536cf43215e8684678ff4"
+    },
+    {
+      "path": "team/optimizations/o2/fu/fu_test.cpp",
+      "sha256": "d4dc81c7c206f1d395856023b01a32e76bf1dbef957b9023f8debc0a549bc01d"
+    },
+    {
+      "path": "team/optimizations/o2/parent/GenerateVDotElasticParent.scala",
+      "sha256": "b47d61a34a620741660e4c5fbcbcb23072c9db95b44b1b514f6f41caa3027b60"
+    },
+    {
+      "path": "team/optimizations/o2/parent/check_negative.py",
+      "sha256": "c6f67c8127bac4599f2c4db090c74a26124b59341e977d90e140d62fd97d07a2"
+    },
+    {
+      "path": "team/optimizations/o2/parent/check_trace.py",
+      "sha256": "38f253b279ad911bd7fadd56f5d1c8e048b1bb7604ef47f942a2149b9ce37582"
+    },
+    {
+      "path": "team/optimizations/o2/parent/parent_test.cpp",
+      "sha256": "4f92723b21002c233b06b7b31242562c8f38650cbd0007845426ba00d548b3b7"
+    },
+    {
+      "path": "team/optimizations/o2/parent/test_negative.py",
+      "sha256": "073515026e62fffa382c04cf7e4f16ac73ccc9a0df9d00478c8a170789392c0e"
+    },
+    {
+      "path": "team/optimizations/o2/parent/test_trace.py",
+      "sha256": "cdcde12e09471aa2b1fb6b96a24ebd2af50d929cc78de03308a6f70b69b7f15c"
+    },
+    {
+      "path": "team/optimizations/o2/run_rtl.py",
+      "sha256": "cf4ba3fa27d8f251456ab60e006c3a22306e1716326ec795c3f7b01abd934938"
+    },
+    {
+      "path": "team/optimizations/o2/test_negative_fu.py",
+      "sha256": "2ca25b2ed763f275227bd144157314a054c0873c2a1529ccf6e46057af1d4457"
+    },
+    {
+      "path": "team/rtl/vdot/prepare_vectors.py",
+      "sha256": "c9c45b6bbc17a1e5120281d8089aec2f20cb639403be7a92cc65680534950128"
+    },
+    {
+      "path": "team/scripts/activate.sh",
+      "sha256": "ed7cc5954055c8df47aa0b2e9273616136dd0ae0a2180d8ef05b0bc6c0e51fcd"
+    }
+  ],
+  "boundary": "Source and fixture identity review only. Prior C2 functional PASS is not qualification for C3. New local and cost outputs still required."
+}

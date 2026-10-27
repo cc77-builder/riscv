@@ -1,0 +1,74 @@
+diff --git a/src/main/scala/xiangshan/backend/exu/ExeUnit.scala b/src/main/scala/xiangshan/backend/exu/ExeUnit.scala
+index 8486333c..664b11a0 100644
+--- a/src/main/scala/xiangshan/backend/exu/ExeUnit.scala
++++ b/src/main/scala/xiangshan/backend/exu/ExeUnit.scala
+@@ -89,15 +89,19 @@ class ExeUnitImp(
+   private val elasticVDotOccupied = elasticVDot.map { fu =>
+     fu.pipelineStatus.pValid || fu.pipelineStatus.rValid
+   }
+-  // Only O2 DIV owns this single ROB identity; VDot retains its P/R occupancy gate.
+-  private val elasticDivCancelled = if (vdotElastic) Some(WireDefault(false.B)) else None
++  // O2 DIV has one transaction and one owner. Reuse its unmasked busy state
++  // for clock holds; the old busy value still supplies the cancellation edge.
++  private val elasticDivClockBusy = if (vdotElastic) Some(WireDefault(false.B)) else None
++  private val elasticDivClockOwnerIsFp = if (vdotElastic) Some(WireDefault(false.B)) else None
+ 
+   if (EnableClockGate) {
+     fuCfgs.zip(funcUnits).foreach { case (cfg, fu) =>
+       val clk_en = WireInit(false.B)
+       val fuVld_en = WireInit(false.B)
+       val fuVld_en_reg = RegInit(false.B)
+-      val uncer_en_reg = RegInit(false.B)
++      val ownedDivGate = vdotElastic &&
++        (cfg.fuType == FuType.vidiv || cfg.fuType == FuType.vfdiv)
++      val uncer_en_reg = if (ownedDivGate) WireDefault(false.B) else RegInit(false.B)
+ 
+       def latReal: Int = cfg.latency.latencyVal.getOrElse(0)
+       def extralat: Int = cfg.latency.extraLatencyVal.getOrElse(0)
+@@ -123,16 +127,16 @@ class ExeUnitImp(
+       fuVld_en := fuVldVec.map(v => v).reduce(_ || _)
+       fuVld_en_reg := fuVld_en
+ 
+-      val releaseUncertain = if (vdotElastic &&
+-        (cfg.fuType == FuType.vidiv || cfg.fuType == FuType.vfdiv)) {
+-        // The old hold bit still supplies the cancellation edge. Clear it for
+-        // the following idle cycle; unrelated redirects must keep DIV running.
+-        fu.io.out.fire || elasticDivCancelled.get
+-      } else fu.io.out.fire
+-      when(uncerLat.asBool && fu.io.in.fire) {
+-        uncer_en_reg := true.B
+-      }.elsewhen(uncerLat.asBool && releaseUncertain) {
+-        uncer_en_reg := false.B
++      if (ownedDivGate) {
++        val ownsDiv = if (cfg.fuType == FuType.vfdiv) elasticDivClockOwnerIsFp.get
++          else !elasticDivClockOwnerIsFp.get
++        uncer_en_reg := elasticDivClockBusy.get && ownsDiv
++      } else {
++        when(uncerLat.asBool && fu.io.in.fire) {
++          uncer_en_reg := true.B
++        }.elsewhen(uncerLat.asBool && fu.io.out.fire) {
++          uncer_en_reg := false.B
++        }
+       }
+ 
+       when(lat0 && fu.io.in.fire) {
+@@ -166,13 +170,18 @@ class ExeUnitImp(
+   private val elasticDivOccupied = if (vdotElastic) {
+     val divUnits = funcUnits.filter(_.cfg.fuType != FuType.vdot)
+     val divBusy = RegInit(false.B)
++    val divOwnerIsFp = RegInit(false.B)
+     val divAccept = io.in.fire && io.in.bits.fuType =/= FuType.vdot.U
++    when(divAccept) {
++      divOwnerIsFp := io.in.bits.fuType === FuType.vfdiv.U
++    }
++    elasticDivClockBusy.get := divBusy
++    elasticDivClockOwnerIsFp.get := divOwnerIsFp
+     val divRobIdx = RegEnable(io.in.bits.robIdx, divAccept)
+     val divOutValid = divUnits.map(_.io.out.valid).reduce(_ || _)
+     val divOutFire = divUnits.map(_.io.out.fire).reduce(_ || _)
+     val divReady = divUnits.map(_.io.in.ready).reduce(_ && _)
+     val divCancelled = divBusy && divRobIdx.needFlush(io.flush)
+-    elasticDivCancelled.get := divCancelled
+     when(divCancelled) {
+       divBusy := false.B
+     }.elsewhen(divOutFire) {

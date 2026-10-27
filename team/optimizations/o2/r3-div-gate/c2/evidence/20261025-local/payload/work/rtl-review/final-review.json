@@ -1,0 +1,56 @@
+{
+  "status": "C2_RTL_INDEPENDENT_REVIEW_PASS",
+  "time": "2026-10-25T20:20:20.878447+08:00",
+  "candidate_head": "6704ce3502a7235cdb81697638c01ed23f6914f6",
+  "source_result": "C2_SOURCE_REVIEW_PASS",
+  "generated_cone_result": "C2_GATE_READY_CONE_PASS",
+  "old_c1_negative_result": "C2_GATE_READY_CONE_REJECT",
+  "reviewed_gates": [
+    {
+      "instance": "ClockGate",
+      "enable": "clockStart | elasticDivOccupied_divBusy & elasticDivOccupied_divOwnerIsFp",
+      "sinks": [
+        [
+          "Vfdiv",
+          "VFDivSqrt"
+        ]
+      ],
+      "node_count": 41,
+      "terminal_count": 13
+    },
+    {
+      "instance": "ClockGate_1",
+      "enable": "clockStart_1 | elasticDivOccupied_divBusy & ~elasticDivOccupied_divOwnerIsFp",
+      "sinks": [
+        [
+          "Vidiv",
+          "VIDiv"
+        ]
+      ],
+      "node_count": 41,
+      "terminal_count": 13
+    }
+  ],
+  "input_sha_rechecked": true,
+  "clock_gate_equal_old_c1": true,
+  "extra_inputs": [
+    {
+      "path": "/home/riscv/riscv-lab/o2-c2-readyless-20261025/parent-01/rtl/ClockGate.sv",
+      "sha256": "3a59c31230b388514521e3cb8c7e8140ada1b56ebbb0bb0dadf7962d6624dbc1",
+      "bytes": 223
+    }
+  ],
+  "commands": [
+    {
+      "command": "python3 -B check_generated_cone.py --rtl /home/riscv/riscv-lab/o2-c1-owner-20261025/parent-01/rtl --output old-c1-cone.json --expect reject",
+      "exit_code": 0,
+      "stdout": "C2_GATE_READY_CONE_REJECT gates 2 inputs 8"
+    },
+    {
+      "command": "python3 -B check_generated_cone.py --rtl /home/riscv/riscv-lab/o2-c2-readyless-20261025/parent-01/rtl --output c2-generated-cone.json --expect pass",
+      "exit_code": 0,
+      "stdout": "C2_GATE_READY_CONE_PASS gates 2 inputs 8"
+    }
+  ],
+  "scope": "Source and generated-control-structure review only; dynamic FU/parent validation belongs to separate campaign; no EDA/simulation/GitHub mutation by reviewer."
+}

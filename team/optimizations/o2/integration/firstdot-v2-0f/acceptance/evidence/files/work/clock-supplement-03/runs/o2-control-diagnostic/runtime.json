@@ -1,0 +1,53 @@
+{
+  "name": "o2-control-diagnostic",
+  "status": "RAW_EMU_EXITED_AWAITING_RECHECK",
+  "started": "2026-10-27T14:32:57.746969+00:00",
+  "command": [
+    "timeout",
+    "120m",
+    "stdbuf",
+    "-o0",
+    "-e0",
+    "/home/riscv/riscv-lab/software-import-20261026/clean-02/checkout/source/build/emu",
+    "-i",
+    "/home/riscv/riscv-lab/o2-fullcore-20261019/control-diagnostic-build-04/o2-control.bin",
+    "--flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+    "--ram-size=128MB",
+    "--diff=/home/riscv/riscv-lab/software-import-20261026/clean-02/support/nemu/reference/build/riscv64-nemu-interpreter-so",
+    "--max-cycles=5000000"
+  ],
+  "cwd": "/home/riscv/riscv-lab/software-import-20261026/r5-g5-acceptance-01/clock-supplement-03/runs/o2-control-diagnostic/cwd",
+  "files": {
+    "/home/riscv/riscv-lab/software-import-20261026/clean-02/checkout/source/build/emu": "acf672eb39f836da4000b253849e3214089e9c8e5198060a57d2cc6bbd393da9",
+    "/home/riscv/riscv-lab/software-import-20261026/clean-02/support/nemu/reference/build/riscv64-nemu-interpreter-so": "62b1707c52a4c323468481e0c1863b79f244d9a3fd54aeb7b7d2ecb5f01a35ca",
+    "/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+    "/home/riscv/riscv-lab/o2-fullcore-20261019/control-diagnostic-build-04/o2-control.bin": "45cdf2a6cb6848b3bcb56d860c36bc26a975a8aa96bfe1411d33dce6036bd305"
+  },
+  "negative_target": null,
+  "auxiliary_files": {
+    "constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+    "plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff"
+  },
+  "environment_overrides": {
+    "XS_NEGATIVE_VECTOR_TARGET": null
+  },
+  "process_started": true,
+  "pid_kind": "timeout process-group leader",
+  "actual_new_execution": true,
+  "performance_measured": false,
+  "timed_out": false,
+  "terminated_returncode": null,
+  "pid": 2999,
+  "exit_code": 0,
+  "finished": "2026-10-27T14:56:51.979833+00:00",
+  "raw_logs_sha256": {
+    "stdout.log": "cc07ac3e68b1aa4e81a440492c65e42a3141f080085ee3cd76c8ce190835ef2d",
+    "stderr.log": "f132ad85f6e75173eb814db0b5e543302f31e736e307786a76297054ba39b041",
+    "run.log": "550adf01b1b9b8dcac485e23b9664a868a3ddaf6cff80bcb70e4e6dd026bae61"
+  },
+  "raw_sha256": {
+    "stdout.log": "cc07ac3e68b1aa4e81a440492c65e42a3141f080085ee3cd76c8ce190835ef2d",
+    "stderr.log": "f132ad85f6e75173eb814db0b5e543302f31e736e307786a76297054ba39b041",
+    "run.log": "550adf01b1b9b8dcac485e23b9664a868a3ddaf6cff80bcb70e4e6dd026bae61"
+  }
+}

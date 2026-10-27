@@ -1,0 +1,31 @@
+--- adapter-v1/CONTRACT.md
++++ adapter-v2/CONTRACT.md
+@@ -1,6 +1,6 @@
+ # 当前 clean 硬件上的配置复用首筛合同（待评审草稿）
+ 
+-外层合同：zjhwork-clean-config-reuse-8x32-d0-probe-v1。仅 8×32 / dataset0，firstdot 和 config-reuse 各一图。当前状态为 HOST_AND_STATIC_VERIFIED_TARGET_NOT_EXECUTED；本目录不是生产导入，也不是运行证据。
++外层合同：zjhwork-clean-config-reuse-8x32-d0-probe-v2。仅 8×32 / dataset0，firstdot 和 config-reuse 各一图。当前状态为 V2_HOST_COMPONENT_VERIFIED_TARGET_NOT_EXECUTED；本目录不是生产导入，也不是运行证据。
+ 
+ ## 前置与来源
+ 
+@@ -45,7 +45,7 @@
+ - 严格小于本轮两变体、basic/reuse全部四种RVV格的最小总和；
+ - 两图全部24窗重放逐项相同；
+ - 相同完整BIN的firstdot新运行与已合格clean firstdot的全部24窗签名相同；
+-- 未改RVV控制格的全部6窗无未解释变化；其余格无未解释退化。
++- 未改RVV控制格的全部6窗无未解释变化；其余三个非主候选格无未解释退化；这三个格的检查不以主候选胜出为前提。
+ 
+ 不存在0.5%门槛，不在看到结果后加容差，不删样本，不只挑最快单窗，不把4样本范围或平均值当显著性证明。明确未胜两基线为 REJECT；重放/对照漂移或其他无法归因的退化为 INCONCLUSIVE，均不可自动扩测。严格源码或正确性失败为 FAILED，并保留失败目录。
+ 
+@@ -54,3 +54,11 @@
+ ## 留档
+ 
+ 独立新输出目录，禁止覆盖与隐式续跑；记录源闭包、clean身份、本轮baseline资格与源码/ELF/BIN/对象对应、实际命令/退出/PID/时间、负控夹具、原始日志、全部窗口与结论。离线复算须重新解析原始证据；raw_audit.py提供本地原始日志复算：重验编译对象、完整窗口、负控/恢复、5个进程身份/顺序、重放与决策，并拒绝缓存统计与原文不一致。它不启动EMU、不修改原始日志、不重新测量硬件。完整配置复用5进程尚未实跑；目前只有既有firstdot日志的正常/负控审计与篡改负控已验证。尚无新的可移植压缩归档审计器，不能宣称独立归档复现完成。真正运行后更新版本数据档案及JSON，失败与不确定结果同样留档。
++
++## v2 与 v1 的边界
++
++v1 完整保留。v2 只修复分类与本地输入闭包审计：主候选 config-reuse/reuse/vdot 未胜出本身仍为 REJECT；其他三个 paired 格出现未解释退化，无论主候选胜或负均为 INCONCLUSIVE。性能严格小于双基线的阈值不变。
++
++本地 audit_probe 从当前物理 identity 与 checker/build/image 输入按运行时同样规则重建完整 common，要求输入集合和每个 SHA 精确相等，审计前后复核共享实物。每个进程还单独复核其真实 cwd/AUX、BIN 与参考库；单条 record_audit 是组件核查，不能替代完整 audit_probe 的共享闭包门禁。审计前后物理 identity 也必须一致。
++
++本版本不改变 8×32/d0 范围、五进程顺序、候选指令、负控目标、目标周期或默认配置。外层合同升为 v2，用于区分更严格的分类和审计记录；不将 v1 的主机/静态证据重新标记为 v2 目标验证。

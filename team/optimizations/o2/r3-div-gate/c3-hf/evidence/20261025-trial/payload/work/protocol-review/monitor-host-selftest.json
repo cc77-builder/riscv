@@ -1,0 +1,75 @@
+{
+  "status": "C3_HF_HOLD_MONITOR_PASS",
+  "cycles": 16,
+  "counts": {
+    "bootstrap_edges": 1,
+    "qualified_cycles": 15,
+    "fp_accepts": 3,
+    "int_accepts": 1,
+    "fp_hold_cycles": 5,
+    "int_hold_cycles": 1,
+    "te0_reset_cycles": 1,
+    "cancel_cycles": 2,
+    "fp_cancel_cycles": 1,
+    "fp_release_cycles": 1,
+    "fp_backpressure_cycles": 1,
+    "sqrt_accepts": 1
+  },
+  "scope": "Synthetic HOST checker self-test only; not RTL stimulus/execution.",
+  "negative_controls": [
+    {
+      "name": "P_F_wrong",
+      "detected": true,
+      "reason": "P_F differs from actual fire",
+      "sha256": "1205f982ca3df4df41b4b284371170d5ee2d47da9a5f6b80b2db9c045d97e430"
+    },
+    {
+      "name": "FP_hold_wrong",
+      "detected": true,
+      "reason": "hold differs from original-fire recurrence",
+      "sha256": "0da276dcbe1d163b20f7df896932b895ecd156ef73e15dfd929d6a4ed1bdfa67"
+    },
+    {
+      "name": "INT_hold_wrong",
+      "detected": true,
+      "reason": "hold differs from original-fire recurrence",
+      "sha256": "1780272ad16d59d3686ca6ed0875fdced93f0f26a51a9364173ffcb0ba3c8b27"
+    },
+    {
+      "name": "FP_shadow_wrong",
+      "detected": true,
+      "reason": "shadow state disagreement",
+      "sha256": "c7574f46bd248dcbebff5e754a3be306a43108066be7ffa45cca9763c619ff37"
+    },
+    {
+      "name": "cancel_wrong",
+      "detected": true,
+      "reason": "actual cancel disagreement",
+      "sha256": "ea9b1536a0571dd0e8143bfd3ec212d4da71450dd8c6fd5be6f6c03bb986a417"
+    },
+    {
+      "name": "bootstrap_erased",
+      "detected": true,
+      "reason": "bootstrap qualification disagreement",
+      "sha256": "99a9efe1de5251081d4f2b8a5da75e0a6b95ab86581d4600239eb28dd4c26252"
+    },
+    {
+      "name": "reset_mislabeled",
+      "detected": true,
+      "reason": "sampling reset/TE mismatch",
+      "sha256": "e15b066f65ece94651e572e1fc9a2df7ba7f19256472edb5add3069744a5e83a"
+    },
+    {
+      "name": "actual_fire_wrong",
+      "detected": true,
+      "reason": "actual fire observation disagreement",
+      "sha256": "467ace8031d21283cc1c42c81f6fd4c45fbe8799c3a20090df7c9927aa23f479"
+    },
+    {
+      "name": "truncated",
+      "detected": true,
+      "reason": "monitor/parent length mismatch",
+      "sha256": "c6ff8fb601631817cd7b90f6be112bd6156ca8e47ba0ffdd197347ec67bd51f1"
+    }
+  ]
+}

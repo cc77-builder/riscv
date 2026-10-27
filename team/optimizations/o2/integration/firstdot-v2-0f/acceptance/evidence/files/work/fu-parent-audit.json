@@ -1,0 +1,115 @@
+{
+  "status": "R3_DIV_GATE_ARCHIVE_REPLAY_PASS",
+  "scope": "Archive bytes and frozen-checker replay only; no RTL/NEMU/fullcore/PPA execution",
+  "manifest_sha256": "2885f09ece9ac44c3079e3dfe180a0064ac84e0015ebaa3e59238e3b761c22bc",
+  "audit_script_sha256": "6a8d03487ffcb215b9ea8407ced54828c5e8fe5c1af7b24a2a9bd7977450155f",
+  "payloads": 167,
+  "red_rejection_verified": true,
+  "red_green_equal_prefix_frames": 13330,
+  "candidate_exeunit_sha256": "fd98aaced17c39dabd4776a53948f05650c8956178f6540bf5695d15753d60fa",
+  "results": {
+    "green-fu-01": {
+      "negative_checks": 4,
+      "expected_exit_codes": true
+    },
+    "green-parent-01": {
+      "negative_checks": 16,
+      "expected_exit_codes": true
+    },
+    "parent_trace": {
+      "status": "O2_PARENT_OFFLINE_TRACE_PASS",
+      "cycles": 35075,
+      "groups": 13,
+      "recomputed": {
+        "cycles": 35075,
+        "groups": 13,
+        "full_cycles": 11255,
+        "full_blocked": 545,
+        "p_accept_r_blocked": 102,
+        "r_response_p_survivor": 338,
+        "kill_p_only": 41,
+        "kill_r_only": 47,
+        "kill_both": 38,
+        "reset_both": 2,
+        "overlaps": 10494,
+        "stalls": 2051,
+        "p_to_r": 11782,
+        "te0_resets": 30,
+        "empty_te0_resets": 21,
+        "redirects": 156,
+        "reset_cases": 20,
+        "accepted": 13611,
+        "responses": 13122,
+        "cancelled": 426,
+        "cancel_idle_clock_on": 0,
+        "reset_dropped": 63
+      },
+      "per_fu": [
+        {
+          "latency_min": 2,
+          "clock_edges": 14978,
+          "accepted": 11867,
+          "latency_max": 25,
+          "latency_samples": 11755,
+          "responded": 11692,
+          "waits": 3472,
+          "killed": 164,
+          "reset_dropped": 11
+        },
+        {
+          "latency_min": 10,
+          "clock_edges": 11408,
+          "accepted": 886,
+          "latency_max": 14,
+          "latency_samples": 750,
+          "responded": 717,
+          "waits": 4148,
+          "killed": 140,
+          "raw_killed_response": 13,
+          "reset_dropped": 29
+        },
+        {
+          "latency_min": 8,
+          "clock_edges": 7781,
+          "accepted": 858,
+          "latency_max": 8,
+          "latency_samples": 748,
+          "responded": 713,
+          "waits": 4282,
+          "killed": 122,
+          "raw_killed_response": 15,
+          "reset_dropped": 23
+        }
+      ],
+      "full_campaign_required": true,
+      "cancel_idle_cases": {
+        "1": 24,
+        "2": 24
+      },
+      "cancel_idle_samples": {
+        "1": 72,
+        "2": 72
+      },
+      "div_rob_cases": 28,
+      "div_reset_overlap_kinds": [
+        1,
+        2
+      ],
+      "side_counters_not_recomputed": [],
+      "scope_note": "strict idle gating; cancel edge remains required; legacy DIV reset uses TE",
+      "scope": "cycle/identity/ROB/control replay only; no RTL execution or payload recheck"
+    },
+    "parent_transaction_replay": {
+      "status": "O2_PARENT_OFFLINE_REPLAY_PASS",
+      "cycles": 35075,
+      "accepted": 13611,
+      "responses": 13122,
+      "cancelled": 426,
+      "reset_dropped": 63,
+      "frozen_vectors": 10022,
+      "ii1_intervals": 10021,
+      "fullcore_tested": false,
+      "strict_clock_replay": "O2_PARENT_OFFLINE_TRACE_PASS"
+    }
+  }
+}

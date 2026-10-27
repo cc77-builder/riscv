@@ -1,0 +1,61 @@
+{
+  "status": "C2_STANDARD_PPA_COMPLETE_AWAIT_SCREEN",
+  "started": "2026-10-25T20:44:12.688219+08:00",
+  "steps": [
+    {
+      "label": "parent-generate",
+      "command": [
+        "python3",
+        "-B",
+        "team/optimizations/o4/elaborate.py",
+        "o2",
+        "parent",
+        "/home/riscv/riscv-lab/o2-c2-cost-20261025/parent-cost-01"
+      ],
+      "cwd": "/home/riscv/riscv-lab/o2-c2-readyless-20261025/repo",
+      "started": "2026-10-25T20:44:39.799541+08:00",
+      "status": "passed",
+      "pid": 1437,
+      "exit_code": 0,
+      "finished": "2026-10-25T20:45:00.592454+08:00"
+    },
+    {
+      "label": "parent-map",
+      "command": [
+        "python3",
+        "-B",
+        "team/optimizations/o4/synthesize.py",
+        "/home/riscv/riscv-lab/o2-c2-cost-20261025/parent-cost-01",
+        "/home/riscv/riscv-lab/o2-c2-cost-20261025/parent-map-01",
+        "--work",
+        "/home/riscv/riscv-lab/o4-cost-20261020"
+      ],
+      "cwd": "/home/riscv/riscv-lab/o2-c2-readyless-20261025/repo",
+      "started": "2026-10-25T20:45:04.041704+08:00",
+      "status": "passed",
+      "pid": 2011,
+      "exit_code": 0,
+      "finished": "2026-10-25T20:59:36.940935+08:00"
+    },
+    {
+      "label": "parent-sta",
+      "command": [
+        "python3",
+        "-B",
+        "team/optimizations/o4/timing.py",
+        "/home/riscv/riscv-lab/o2-c2-cost-20261025/parent-map-01",
+        "/home/riscv/riscv-lab/o2-c2-cost-20261025/parent-sta-01",
+        "--work",
+        "/home/riscv/riscv-lab/o4-cost-20261020"
+      ],
+      "cwd": "/home/riscv/riscv-lab/o2-c2-readyless-20261025/repo",
+      "started": "2026-10-25T20:59:41.357504+08:00",
+      "status": "passed",
+      "pid": 3162,
+      "exit_code": 0,
+      "finished": "2026-10-25T21:02:30.888576+08:00"
+    }
+  ],
+  "candidate_commit": "6704ce3502a7235cdb81697638c01ed23f6914f6",
+  "finished": "2026-10-25T21:02:32.641456+08:00"
+}

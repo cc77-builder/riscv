@@ -1,0 +1,7 @@
+{
+  "exit_code": 1,
+  "cause": "overly strict raw leaf equality across different module boundaries",
+  "difference": "parent global header additionally defines PRINTF_COND_; each arithmetic module body unchanged; within-boundary O1/O2 raw files identical",
+  "fix": "preserve raw hash comparison within each boundary; compare exact module bodies across all four elaborations; record both hashes",
+  "no_measurement_rerun": true
+}

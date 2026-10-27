@@ -1,0 +1,50 @@
+{
+  "status": "C2_PARENT_SUPPLEMENT_NEGATIVE_PASS",
+  "source_log_sha256": "16a019e1ad87e87988a23b9bd6357caf0fe1298034a45438e1faf665725414ea",
+  "count": 7,
+  "records": [
+    {
+      "mutation": "div-busy-owner",
+      "detected": true,
+      "reason": "busy register disagrees with accepted identity",
+      "mutated_sha256": "6f762dd8683aa91e22e18e301c0d1b0b01f67f8a28ed7f058e3083c66963e00a"
+    },
+    {
+      "mutation": "early-lane-join",
+      "detected": true,
+      "reason": "two-lane finish join mismatch",
+      "mutated_sha256": "d8a6a55201faac79475ce935ef141826881a3781b1664a04aa7ed3c6c37e1f25"
+    },
+    {
+      "mutation": "sqrt-opcode",
+      "detected": true,
+      "reason": "live SQRT opcode changed",
+      "mutated_sha256": "47d741527895e976c4a77481d19e95ac258bd51d753a2ceece0ca2059e8cd6ba"
+    },
+    {
+      "mutation": "te0-reset-mislabeled",
+      "detected": true,
+      "reason": "PASS summary mismatch: te0_resets",
+      "mutated_sha256": "f0466bffaedb992cb692e1046340c75703f792b923a41f09e6055f8056c27df6"
+    },
+    {
+      "mutation": "idle-extra-clock",
+      "detected": true,
+      "reason": "cycle 2956: idle FU retained clock after cancellation/completion",
+      "mutated_sha256": "2afec50b30604c52479c2225fe54a5c71376871c9045055ee6183e858ce5da97"
+    },
+    {
+      "mutation": "missing-aux",
+      "detected": true,
+      "reason": "missing/late lane observation",
+      "mutated_sha256": "888be6831a35b47774a59e9e54067d54a65c12431d8c85cf7b1180367cc1b323"
+    },
+    {
+      "mutation": "erase-lane-skew",
+      "detected": true,
+      "reason": "skew-phase cancel not at real skew",
+      "mutated_sha256": "fb87c88f577e8af2ab849c18ba99bc369baa062230c98227e781ea62129d8c0c"
+    }
+  ],
+  "scope": "offline observation mutations only; not RTL mutation coverage"
+}

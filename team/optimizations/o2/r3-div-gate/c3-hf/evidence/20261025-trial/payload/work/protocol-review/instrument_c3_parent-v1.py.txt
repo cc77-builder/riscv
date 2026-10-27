@@ -1,0 +1,72 @@
+"""Instrument only a NEW parent TEST TOP; old C2 suite remains byte unchanged."""
+import hashlib,importlib.util,json,sys
+from pathlib import Path
+from check_c3_structure import bind,need,sha,ROOT
+C2=ROOT/'team/optimizations/o2/r3-div-gate/c2/parent/instrument_parent.py'
+def instrument(rtl,receipt):
+    rtl=Path(rtl).resolve();receipt=Path(receipt).resolve()
+    need(not receipt.exists(),'receipt exists')
+    mon=receipt.parent/'c3-hold-monitor.log';need(not mon.exists(),'monitor output already exists')
+    report=bind(rtl)
+    (receipt.parent/'c3-structure.json').write_text(json.dumps(report,indent=2)+'\n')
+    spec=importlib.util.spec_from_file_location('old_c2_instrument',C2)
+    c2=importlib.util.module_from_spec(spec);spec.loader.exec_module(c2)
+    c2.instrument(rtl,receipt.parent/'c2-observer-reuse.json')
+    files=sorted(p for p in rtl.rglob('*') if p.suffix in ('.sv','.v'))
+    before={p.relative_to(rtl).as_posix():sha(p) for p in files}
+    top=rtl/'VDotElasticParentTestTop.sv';text=top.read_text()
+    need('c3_monitor_fd' not in text,'already C3 instrumented')
+    fp,ii=report['bindings']['fp'],report['bindings']['int']
+    # SV identifiers are bound from actual instance ports. Prefix all local nets.
+    import re
+    def scoped(expr):
+        return re.sub(r'\b[A-Za-z_][A-Za-z0-9_$]*\b',lambda m:'dut.'+m[0],expr)
+    path=json.dumps(str(mon))
+    sv=f"""
+  // C3-HF test-only monitor. Uses pre-edge state; next cycle checks old fire equation.
+  // Qualified only after a real synchronous reset edge with clock-test enable.
+  integer c3_monitor_fd;
+  integer c3_cycle = 0;
+  reg c3_qualified = 1'b0;
+  reg c3_expected_fp = 1'b0;
+  reg c3_expected_int = 1'b0;
+  wire c3_p = {scoped(fp['set'])};
+  wire c3_fp_fire = {scoped(fp['fire'])};
+  wire c3_int_fire = {scoped(ii['fire'])};
+  wire c3_fp_out_fire = {scoped(fp['outfire'])};
+  wire c3_int_out_fire = {scoped(ii['outfire'])};
+  wire c3_fp_hold = dut.{fp['hold']};
+  wire c3_int_hold = dut.{ii['hold']};
+  wire c3_cancel = dut.elasticDivCancelled;
+  initial begin
+    c3_monitor_fd = $fopen({path}, "w");
+    if (!c3_monitor_fd) $fatal(1, "C3 monitor open failed");
+  end
+  always @(posedge clock) begin
+    if (c3_qualified) begin
+      if (c3_fp_hold !== c3_expected_fp) $fatal(1, "C3 FP hold original-fire recurrence mismatch");
+      if (c3_int_hold !== c3_expected_int) $fatal(1, "C3 INT hold original-fire recurrence mismatch");
+      if (c3_p !== c3_fp_fire) $fatal(1, "C3 P_F differs from actual FP fire");
+    end
+    $fwrite(c3_monitor_fd, "C3_HOLD schema=1 cycle=%0d qualified=%0d reset=%0d te=%0d p=%0d fp_fire=%0d int_fire=%0d fp_out=%0d int_out=%0d cancel=%0d fp_hold=%0d int_hold=%0d expected_fp=%0d expected_int=%0d\\n",
+      c3_cycle, c3_qualified, reset, io_test_enable, c3_p, c3_fp_fire, c3_int_fire,
+      c3_fp_out_fire, c3_int_out_fire, c3_cancel, c3_fp_hold, c3_int_hold, c3_expected_fp, c3_expected_int);
+    $fflush(c3_monitor_fd);
+    if (reset && io_test_enable) c3_qualified <= 1'b1;
+    c3_expected_fp <= reset ? 1'b0 : (c3_fp_fire | (c3_fp_hold & ~(c3_fp_out_fire | c3_cancel)));
+    c3_expected_int <= reset ? 1'b0 : (c3_int_fire | (c3_int_hold & ~(c3_int_out_fire | c3_cancel)));
+    c3_cycle <= c3_cycle + 1;
+  end
+"""
+    original=receipt.parent/'c3-observer-before-top.sv.txt';need(not original.exists(),'original exists')
+    original.write_bytes(top.read_bytes())
+    need(text.count('\nendmodule')==1,'top boundary')
+    top.write_text(text.replace('\nendmodule','\n'+sv+'\nendmodule'))
+    after={p.relative_to(rtl).as_posix():sha(p) for p in files}
+    changed=[x for x in before if before[x]!=after[x]]
+    need(changed==['VDotElasticParentTestTop.sv'],'production module changed')
+    receipt.write_text(json.dumps(dict(status='C3_HF_TEST_ONLY_MONITOR_BOUND',before=before,after=after,
+        changed=changed,monitor_log=str(mon),production_modules_unchanged=True,source_bindings=report['bindings'],
+        c2_observer_script_sha256=sha(C2),script_sha256=sha(Path(__file__)),
+        sampling='posedge pre-state; prior sampled reset/fire/hold/release predicts current hold; start only after reset && TE edge'),indent=2)+'\n')
+if __name__=='__main__':instrument(sys.argv[1],sys.argv[2])

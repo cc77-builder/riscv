@@ -1,0 +1,2612 @@
+{
+  "baseline": {
+    "ready": {
+      "startpoint": "io_out_ready (input port clocked by core_clk)",
+      "endpoint": "io_in_ready (output port clocked by core_clk)",
+      "arrival_ns": 0.247821,
+      "slack_ns": 0.602179,
+      "stages": [
+        {
+          "cell": "c86553",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571331",
+          "pin": "ZN",
+          "type": "NOR2_X1",
+          "delay_ns": 0.061209,
+          "arrival_ns": 0.161224,
+          "slew_ns": 0.035819,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c86580",
+              "pin": "A1",
+              "type": "NAND2_X1"
+            },
+            {
+              "cell": "c92105",
+              "pin": "A1",
+              "type": "OR2_X1"
+            },
+            {
+              "cell": "c92109",
+              "pin": "A1",
+              "type": "NOR2_X1"
+            }
+          ],
+          "fanout_input_pin_count": 3,
+          "input_aliases": {
+            "A1": [
+              "dut.Vdot.io_out_ready",
+              "dut.Vfdiv.io_out_ready",
+              "dut.Vidiv.io_out_ready",
+              "dut.io_out_ready"
+            ],
+            "A2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c86580",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571358",
+          "pin": "ZN",
+          "type": "NAND2_X1",
+          "delay_ns": 0.028135,
+          "arrival_ns": 0.189374,
+          "slew_ns": 0.016851,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c86583",
+              "pin": "A2",
+              "type": "AND2_X1"
+            },
+            {
+              "cell": "c86586",
+              "pin": "A1",
+              "type": "NAND2_X1"
+            },
+            {
+              "cell": "c86600",
+              "pin": "A3",
+              "type": "NAND3_X1"
+            }
+          ],
+          "fanout_input_pin_count": 3,
+          "input_aliases": {
+            "A1": [],
+            "A2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c86600",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571378",
+          "pin": "ZN",
+          "type": "NAND3_X1",
+          "delay_ns": 0.032944,
+          "arrival_ns": 0.222332,
+          "slew_ns": 0.019479,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c86601",
+              "pin": "A2",
+              "type": "NOR2_X1"
+            },
+            {
+              "cell": "c87227",
+              "pin": "A2",
+              "type": "OR2_X1"
+            },
+            {
+              "cell": "c183626",
+              "pin": "B2",
+              "type": "AOI21_X1"
+            }
+          ],
+          "fanout_input_pin_count": 3,
+          "input_aliases": {
+            "A1": [],
+            "A2": [],
+            "A3": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c183626",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$668404",
+          "pin": "ZN",
+          "type": "AOI21_X1",
+          "delay_ns": 0.025472,
+          "arrival_ns": 0.247819,
+          "slew_ns": 0.014847,
+          "rtl_nets": [
+            "dut.io_in_ready",
+            "dut.io_in_ready_0"
+          ],
+          "sinks": [],
+          "fanout_input_pin_count": 0,
+          "input_aliases": {
+            "A": [],
+            "B1": [],
+            "B2": []
+          },
+          "output_aliases": [
+            "dut.io_in_ready",
+            "dut.io_in_ready_0"
+          ]
+        }
+      ],
+      "output_cell_count": 4,
+      "buffer_count": 0,
+      "buffer_delay_ns": 0,
+      "hold_register_on_path": false,
+      "divbusy_register_on_path": false,
+      "report_path": "/home/riscv/riscv-lab/o2-r3-div-gate-cost-20261025/parent-sta-01/nominal/ready.rpt",
+      "startpoint_aliases": [
+        "io_out_ready"
+      ],
+      "endpoint_aliases": [
+        "io_in_ready"
+      ],
+      "cell_delay_ns": 0.14776
+    },
+    "vdot_r2r": {
+      "startpoint": "c199582 (rising edge-triggered flip-flop clocked by core_clk)",
+      "endpoint": "c198906 (rising edge-triggered flip-flop clocked by core_clk)",
+      "arrival_ns": 1.356106,
+      "slack_ns": -0.43376,
+      "stages": [
+        {
+          "cell": "c199582",
+          "original_cell": "$auto$simplemap.cc:420:simplemap_dff$66397",
+          "pin": "Q",
+          "type": "DFF_X1",
+          "delay_ns": 0.113277,
+          "arrival_ns": 0.113277,
+          "slew_ns": 0.020875,
+          "rtl_nets": [
+            "dut.Vdot.pProducts_4[1]",
+            "dut.Vdot.reduce.io_products_4[1]"
+          ],
+          "sinks": [
+            {
+              "cell": "c89050",
+              "pin": "A",
+              "type": "MUX2_X1"
+            },
+            {
+              "cell": "c110050",
+              "pin": "A",
+              "type": "XOR2_X1"
+            },
+            {
+              "cell": "c110076",
+              "pin": "A1",
+              "type": "NAND2_X1"
+            },
+            {
+              "cell": "c110077",
+              "pin": "A1",
+              "type": "NOR2_X1"
+            }
+          ],
+          "fanout_input_pin_count": 4,
+          "input_aliases": {
+            "CK": [
+              "dut.ClockGate_2.Q",
+              "dut.Vdot.clock",
+              "dut._ClockGate_2_Q"
+            ],
+            "D": []
+          },
+          "output_aliases": [
+            "dut.Vdot.pProducts_4[1]",
+            "dut.Vdot.reduce.io_products_4[1]"
+          ]
+        },
+        {
+          "cell": "c110050",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$594828",
+          "pin": "Z",
+          "type": "XOR2_X1",
+          "delay_ns": 0.05545,
+          "arrival_ns": 0.168749,
+          "slew_ns": 0.026483,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c110051",
+              "pin": "B",
+              "type": "XNOR2_X1"
+            }
+          ],
+          "fanout_input_pin_count": 1,
+          "input_aliases": {
+            "A": [
+              "dut.Vdot.pProducts_4[1]",
+              "dut.Vdot.reduce.io_products_4[1]"
+            ],
+            "B": [
+              "dut.Vdot.pProducts_5[1]",
+              "dut.Vdot.reduce.io_products_5[1]"
+            ]
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c110051",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$594829",
+          "pin": "ZN",
+          "type": "XNOR2_X1",
+          "delay_ns": 0.050912,
+          "arrival_ns": 0.219679,
+          "slew_ns": 0.033658,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c110052",
+              "pin": "B",
+              "type": "XNOR2_X1"
+            },
+            {
+              "cell": "c110069",
+              "pin": "A2",
+              "type": "NAND2_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A": [],
+            "B": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c110052",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$594830",
+          "pin": "ZN",
+          "type": "XNOR2_X1",
+          "delay_ns": 0.051989,
+          "arrival_ns": 0.271689,
+          "slew_ns": 0.032673,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c110053",
+              "pin": "B",
+              "type": "XOR2_X1"
+            },
+            {
+              "cell": "c110070",
+              "pin": "B1",
+              "type": "OAI21_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A": [],
+            "B": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c110070",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$594848",
+          "pin": "ZN",
+          "type": "OAI21_X1",
+          "delay_ns": 0.026237,
+          "arrival_ns": 0.29794,
+          "slew_ns": 0.015417,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c110082",
+              "pin": "A",
+              "type": "XNOR2_X1"
+            },
+            {
+              "cell": "c110105",
+              "pin": "B2",
+              "type": "AOI21_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A": [],
+            "B1": [],
+            "B2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c110105",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$594883",
+          "pin": "ZN",
+          "type": "AOI21_X1",
+          "delay_ns": 0.048524,
+          "arrival_ns": 0.346476,
+          "slew_ns": 0.035305,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c110115",
+              "pin": "A",
+              "type": "XOR2_X1"
+            },
+            {
+              "cell": "c110143",
+              "pin": "A1",
+              "type": "NOR2_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A": [],
+            "B1": [],
+            "B2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c110143",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$594921",
+          "pin": "ZN",
+          "type": "NOR2_X1",
+          "delay_ns": 0.014651,
+          "arrival_ns": 0.361141,
+          "slew_ns": 0.011085,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c110145",
+              "pin": "B1",
+              "type": "OAI21_X1"
+            },
+            {
+              "cell": "c110146",
+              "pin": "A2",
+              "type": "OR3_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A1": [],
+            "A2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c110146",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$594924",
+          "pin": "ZN",
+          "type": "OR3_X1",
+          "delay_ns": 0.077341,
+          "arrival_ns": 0.43849,
+          "slew_ns": 0.013114,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c110147",
+              "pin": "A2",
+              "type": "NAND2_X1"
+            }
+          ],
+          "fanout_input_pin_count": 1,
+          "input_aliases": {
+            "A1": [],
+            "A2": [],
+            "A3": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c110147",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$594925",
+          "pin": "ZN",
+          "type": "NAND2_X1",
+          "delay_ns": 0.025995,
+          "arrival_ns": 0.464496,
+          "slew_ns": 0.015525,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c110164",
+              "pin": "A",
+              "type": "XOR2_X1"
+            },
+            {
+              "cell": "c110172",
+              "pin": "A1",
+              "type": "NOR2_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A1": [],
+            "A2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c110164",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$594942",
+          "pin": "Z",
+          "type": "XOR2_X1",
+          "delay_ns": 0.056324,
+          "arrival_ns": 0.520838,
+          "slew_ns": 0.028986,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c110168",
+              "pin": "A1",
+              "type": "AND2_X1"
+            },
+            {
+              "cell": "c110169",
+              "pin": "B1",
+              "type": "OAI21_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A": [],
+            "B": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c110168",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$594946",
+          "pin": "ZN",
+          "type": "AND2_X1",
+          "delay_ns": 0.043542,
+          "arrival_ns": 0.564389,
+          "slew_ns": 0.013262,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c110170",
+              "pin": "B1",
+              "type": "OAI21_X1"
+            },
+            {
+              "cell": "c110173",
+              "pin": "A2",
+              "type": "NOR2_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A1": [],
+            "A2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c110173",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$594951",
+          "pin": "ZN",
+          "type": "NOR2_X1",
+          "delay_ns": 0.014032,
+          "arrival_ns": 0.578436,
+          "slew_ns": 0.007749,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c110201",
+              "pin": "A1",
+              "type": "NOR2_X1"
+            },
+            {
+              "cell": "c110202",
+              "pin": "A1",
+              "type": "NAND2_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A1": [],
+            "A2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c110201",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$594979",
+          "pin": "ZN",
+          "type": "NOR2_X1",
+          "delay_ns": 0.045478,
+          "arrival_ns": 0.623926,
+          "slew_ns": 0.036074,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c110204",
+              "pin": "B1",
+              "type": "OAI22_X1"
+            },
+            {
+              "cell": "c110238",
+              "pin": "A2",
+              "type": "NOR3_X1"
+            },
+            {
+              "cell": "c110239",
+              "pin": "B1",
+              "type": "OAI21_X1"
+            }
+          ],
+          "fanout_input_pin_count": 3,
+          "input_aliases": {
+            "A1": [],
+            "A2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c110239",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$595017",
+          "pin": "ZN",
+          "type": "OAI21_X1",
+          "delay_ns": 0.023853,
+          "arrival_ns": 0.647794,
+          "slew_ns": 0.014633,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c110240",
+              "pin": "A2",
+              "type": "NAND2_X1"
+            },
+            {
+              "cell": "c110244",
+              "pin": "A2",
+              "type": "AND2_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A": [],
+            "B1": [],
+            "B2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c110244",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$595022",
+          "pin": "ZN",
+          "type": "AND2_X1",
+          "delay_ns": 0.037515,
+          "arrival_ns": 0.685317,
+          "slew_ns": 0.007921,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c110272",
+              "pin": "A1",
+              "type": "NOR2_X1"
+            },
+            {
+              "cell": "c110273",
+              "pin": "A1",
+              "type": "NAND2_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A1": [],
+            "A2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c110272",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$595050",
+          "pin": "ZN",
+          "type": "NOR2_X1",
+          "delay_ns": 0.031017,
+          "arrival_ns": 0.716347,
+          "slew_ns": 0.022924,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c110275",
+              "pin": "B1",
+              "type": "OAI21_X1"
+            },
+            {
+              "cell": "c110278",
+              "pin": "A2",
+              "type": "OR2_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A1": [],
+            "A2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c110278",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$595056",
+          "pin": "ZN",
+          "type": "OR2_X1",
+          "delay_ns": 0.036618,
+          "arrival_ns": 0.752974,
+          "slew_ns": 0.013438,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c110310",
+              "pin": "A",
+              "type": "XNOR2_X1"
+            },
+            {
+              "cell": "c110313",
+              "pin": "B2",
+              "type": "AOI21_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A1": [],
+            "A2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c110313",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$595091",
+          "pin": "ZN",
+          "type": "AOI21_X1",
+          "delay_ns": 0.018627,
+          "arrival_ns": 0.771615,
+          "slew_ns": 0.014549,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c110339",
+              "pin": "A1",
+              "type": "OR2_X1"
+            },
+            {
+              "cell": "c110340",
+              "pin": "B1",
+              "type": "AOI21_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A": [],
+            "B1": [],
+            "B2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c110339",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$595117",
+          "pin": "ZN",
+          "type": "OR2_X1",
+          "delay_ns": 0.055512,
+          "arrival_ns": 0.827135,
+          "slew_ns": 0.012983,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c110341",
+              "pin": "A1",
+              "type": "NAND2_X1"
+            },
+            {
+              "cell": "c110376",
+              "pin": "B1",
+              "type": "AOI21_X1"
+            },
+            {
+              "cell": "c110377",
+              "pin": "A2",
+              "type": "NAND3_X1"
+            }
+          ],
+          "fanout_input_pin_count": 3,
+          "input_aliases": {
+            "A1": [],
+            "A2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c110376",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$595154",
+          "pin": "ZN",
+          "type": "AOI21_X1",
+          "delay_ns": 0.039453,
+          "arrival_ns": 0.866602,
+          "slew_ns": 0.032347,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c110379",
+              "pin": "B1",
+              "type": "OAI21_X1"
+            },
+            {
+              "cell": "c110382",
+              "pin": "A2",
+              "type": "NOR2_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A": [],
+            "B1": [],
+            "B2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c110382",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$595160",
+          "pin": "ZN",
+          "type": "NOR2_X1",
+          "delay_ns": 0.018143,
+          "arrival_ns": 0.884759,
+          "slew_ns": 0.011555,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c110414",
+              "pin": "A1",
+              "type": "NOR2_X1"
+            },
+            {
+              "cell": "c110415",
+              "pin": "A1",
+              "type": "NAND2_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A1": [],
+            "A2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c110414",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$595192",
+          "pin": "ZN",
+          "type": "NOR2_X1",
+          "delay_ns": 0.046956,
+          "arrival_ns": 0.931728,
+          "slew_ns": 0.036054,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c110417",
+              "pin": "B1",
+              "type": "OAI21_X1"
+            },
+            {
+              "cell": "c110453",
+              "pin": "A2",
+              "type": "NOR3_X1"
+            },
+            {
+              "cell": "c110454",
+              "pin": "B1",
+              "type": "OAI21_X1"
+            }
+          ],
+          "fanout_input_pin_count": 3,
+          "input_aliases": {
+            "A1": [],
+            "A2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c110454",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$595232",
+          "pin": "ZN",
+          "type": "OAI21_X1",
+          "delay_ns": 0.023848,
+          "arrival_ns": 0.955592,
+          "slew_ns": 0.014629,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c110455",
+              "pin": "A2",
+              "type": "NAND2_X1"
+            },
+            {
+              "cell": "c110459",
+              "pin": "A2",
+              "type": "AND2_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A": [],
+            "B1": [],
+            "B2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c110459",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$595237",
+          "pin": "ZN",
+          "type": "AND2_X1",
+          "delay_ns": 0.040705,
+          "arrival_ns": 0.996306,
+          "slew_ns": 0.009876,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c110489",
+              "pin": "A1",
+              "type": "NOR2_X1"
+            },
+            {
+              "cell": "c110490",
+              "pin": "A1",
+              "type": "NAND2_X1"
+            },
+            {
+              "cell": "c110495",
+              "pin": "B2",
+              "type": "OAI21_X1"
+            }
+          ],
+          "fanout_input_pin_count": 3,
+          "input_aliases": {
+            "A1": [],
+            "A2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c110495",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$595273",
+          "pin": "ZN",
+          "type": "OAI21_X1",
+          "delay_ns": 0.040029,
+          "arrival_ns": 1.03635,
+          "slew_ns": 0.025792,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c110526",
+              "pin": "A1",
+              "type": "AND2_X1"
+            },
+            {
+              "cell": "c110527",
+              "pin": "B1",
+              "type": "OAI21_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A": [],
+            "B1": [],
+            "B2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c110526",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$595304",
+          "pin": "ZN",
+          "type": "AND2_X1",
+          "delay_ns": 0.047959,
+          "arrival_ns": 1.084318,
+          "slew_ns": 0.017701,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c110528",
+              "pin": "B1",
+              "type": "OAI21_X1"
+            },
+            {
+              "cell": "c110562",
+              "pin": "A2",
+              "type": "NOR3_X1"
+            },
+            {
+              "cell": "c110563",
+              "pin": "B1",
+              "type": "OAI21_X1"
+            }
+          ],
+          "fanout_input_pin_count": 3,
+          "input_aliases": {
+            "A1": [],
+            "A2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c110563",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$595341",
+          "pin": "ZN",
+          "type": "OAI21_X1",
+          "delay_ns": 0.025279,
+          "arrival_ns": 1.109613,
+          "slew_ns": 0.017312,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c110564",
+              "pin": "A2",
+              "type": "NAND2_X1"
+            },
+            {
+              "cell": "c110588",
+              "pin": "B1",
+              "type": "AOI21_X1"
+            },
+            {
+              "cell": "c110589",
+              "pin": "A2",
+              "type": "NAND3_X1"
+            }
+          ],
+          "fanout_input_pin_count": 3,
+          "input_aliases": {
+            "A": [],
+            "B1": [],
+            "B2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c110588",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$595366",
+          "pin": "ZN",
+          "type": "AOI21_X1",
+          "delay_ns": 0.0519,
+          "arrival_ns": 1.161527,
+          "slew_ns": 0.042215,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c110591",
+              "pin": "B1",
+              "type": "OAI21_X1"
+            },
+            {
+              "cell": "c110594",
+              "pin": "A2",
+              "type": "NOR2_X1"
+            },
+            {
+              "cell": "c110603",
+              "pin": "A2",
+              "type": "NOR3_X1"
+            }
+          ],
+          "fanout_input_pin_count": 3,
+          "input_aliases": {
+            "A": [],
+            "B1": [],
+            "B2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c110603",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$595381",
+          "pin": "ZN",
+          "type": "NOR3_X1",
+          "delay_ns": 0.015848,
+          "arrival_ns": 1.17739,
+          "slew_ns": 0.012151,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c110604",
+              "pin": "B2",
+              "type": "OAI21_X1"
+            }
+          ],
+          "fanout_input_pin_count": 1,
+          "input_aliases": {
+            "A1": [],
+            "A2": [],
+            "A3": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c110604",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$595382",
+          "pin": "ZN",
+          "type": "OAI21_X1",
+          "delay_ns": 0.07415,
+          "arrival_ns": 1.251552,
+          "slew_ns": 0.055776,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c110605",
+              "pin": "A",
+              "type": "BUF_X1"
+            },
+            {
+              "cell": "c110627",
+              "pin": "A",
+              "type": "OAI21_X1"
+            },
+            {
+              "cell": "c110629",
+              "pin": "A",
+              "type": "OAI21_X1"
+            },
+            {
+              "cell": "c110631",
+              "pin": "A",
+              "type": "OAI21_X1"
+            },
+            {
+              "cell": "c110633",
+              "pin": "A",
+              "type": "OAI21_X1"
+            }
+          ],
+          "fanout_input_pin_count": 5,
+          "input_aliases": {
+            "A": [],
+            "B1": [],
+            "B2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c110605",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$595383",
+          "pin": "Z",
+          "type": "BUF_X1",
+          "delay_ns": 0.078907,
+          "arrival_ns": 1.330471,
+          "slew_ns": 0.051613,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c110607",
+              "pin": "A",
+              "type": "OAI21_X1"
+            },
+            {
+              "cell": "c110609",
+              "pin": "A",
+              "type": "OAI21_X1"
+            },
+            {
+              "cell": "c110611",
+              "pin": "A",
+              "type": "OAI21_X1"
+            },
+            {
+              "cell": "c110613",
+              "pin": "A",
+              "type": "OAI21_X1"
+            },
+            {
+              "cell": "c110615",
+              "pin": "A",
+              "type": "OAI21_X1"
+            },
+            {
+              "cell": "c110617",
+              "pin": "A",
+              "type": "OAI21_X1"
+            },
+            {
+              "cell": "c110619",
+              "pin": "A",
+              "type": "OAI21_X1"
+            },
+            {
+              "cell": "c110621",
+              "pin": "A",
+              "type": "OAI21_X1"
+            },
+            {
+              "cell": "c110623",
+              "pin": "A",
+              "type": "OAI21_X1"
+            },
+            {
+              "cell": "c110625",
+              "pin": "A",
+              "type": "OAI21_X1"
+            }
+          ],
+          "fanout_input_pin_count": 10,
+          "input_aliases": {
+            "A": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c110607",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$595385",
+          "pin": "ZN",
+          "type": "OAI21_X1",
+          "delay_ns": 0.025606,
+          "arrival_ns": 1.356097,
+          "slew_ns": 0.015204,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c198906",
+              "pin": "D",
+              "type": "DFF_X1"
+            }
+          ],
+          "fanout_input_pin_count": 1,
+          "input_aliases": {
+            "A": [],
+            "B1": [],
+            "B2": []
+          },
+          "output_aliases": []
+        }
+      ],
+      "output_cell_count": 32,
+      "buffer_count": 1,
+      "buffer_delay_ns": 0.078907,
+      "hold_register_on_path": false,
+      "divbusy_register_on_path": false,
+      "report_path": "/home/riscv/riscv-lab/o2-r3-div-gate-cost-20261025/parent-sta-01/nominal/vdot_r2r.rpt",
+      "startpoint_aliases": [
+        "dut.Vdot.pProducts_4[1]",
+        "dut.Vdot.reduce.io_products_4[1]"
+      ],
+      "endpoint_aliases": [
+        "dut.Vdot.io_out_bits_res_data[18]",
+        "dut.Vdot.rPacket_res_data[18]",
+        "dut._Vdot_io_out_bits_res_data[18]"
+      ],
+      "cell_delay_ns": 1.3556770000000002
+    },
+    "profiles": {
+      "nominal": {
+        "ready": {
+          "startpoint": "io_out_ready (input port clocked by core_clk)",
+          "endpoint": "io_in_ready (output port clocked by core_clk)",
+          "arrival_ns": 0.247821,
+          "buffer_count": 0,
+          "buffer_delay_ns": 0
+        },
+        "vdot_r2r": {
+          "startpoint": "c199582 (rising edge-triggered flip-flop clocked by core_clk)",
+          "endpoint": "c198906 (rising edge-triggered flip-flop clocked by core_clk)",
+          "arrival_ns": 1.356106,
+          "buffer_count": 1,
+          "buffer_delay_ns": 0.078907
+        }
+      },
+      "period050": {
+        "ready": {
+          "startpoint": "io_out_ready (input port clocked by core_clk)",
+          "endpoint": "io_in_ready (output port clocked by core_clk)",
+          "arrival_ns": 0.247821,
+          "buffer_count": 0,
+          "buffer_delay_ns": 0
+        },
+        "vdot_r2r": {
+          "startpoint": "c199582 (rising edge-triggered flip-flop clocked by core_clk)",
+          "endpoint": "c198906 (rising edge-triggered flip-flop clocked by core_clk)",
+          "arrival_ns": 1.356106,
+          "buffer_count": 1,
+          "buffer_delay_ns": 0.078907
+        }
+      },
+      "period200": {
+        "ready": {
+          "startpoint": "io_out_ready (input port clocked by core_clk)",
+          "endpoint": "io_in_ready (output port clocked by core_clk)",
+          "arrival_ns": 0.247821,
+          "buffer_count": 0,
+          "buffer_delay_ns": 0
+        },
+        "vdot_r2r": {
+          "startpoint": "c199582 (rising edge-triggered flip-flop clocked by core_clk)",
+          "endpoint": "c198906 (rising edge-triggered flip-flop clocked by core_clk)",
+          "arrival_ns": 1.356106,
+          "buffer_count": 1,
+          "buffer_delay_ns": 0.078907
+        }
+      },
+      "load001": {
+        "ready": {
+          "startpoint": "io_out_ready (input port clocked by core_clk)",
+          "endpoint": "io_in_ready (output port clocked by core_clk)",
+          "arrival_ns": 0.238594,
+          "buffer_count": 0,
+          "buffer_delay_ns": 0
+        },
+        "vdot_r2r": {
+          "startpoint": "c199582 (rising edge-triggered flip-flop clocked by core_clk)",
+          "endpoint": "c198906 (rising edge-triggered flip-flop clocked by core_clk)",
+          "arrival_ns": 1.356106,
+          "buffer_count": 1,
+          "buffer_delay_ns": 0.078907
+        }
+      },
+      "load020": {
+        "ready": {
+          "startpoint": "io_out_ready (input port clocked by core_clk)",
+          "endpoint": "io_in_ready (output port clocked by core_clk)",
+          "arrival_ns": 0.308999,
+          "buffer_count": 0,
+          "buffer_delay_ns": 0
+        },
+        "vdot_r2r": {
+          "startpoint": "c199582 (rising edge-triggered flip-flop clocked by core_clk)",
+          "endpoint": "c198906 (rising edge-triggered flip-flop clocked by core_clk)",
+          "arrival_ns": 1.356106,
+          "buffer_count": 1,
+          "buffer_delay_ns": 0.078907
+        }
+      }
+    }
+  },
+  "c1": {
+    "ready": {
+      "startpoint": "io_out_ready (input port clocked by core_clk)",
+      "endpoint": "io_in_ready (output port clocked by core_clk)",
+      "arrival_ns": 0.266115,
+      "slack_ns": 0.583885,
+      "stages": [
+        {
+          "cell": "c38674",
+          "original_cell": "$abc$484558$auto$blifparse.cc:371:parse_blif$523264",
+          "pin": "ZN",
+          "type": "INV_X1",
+          "delay_ns": 0.042251,
+          "arrival_ns": 0.142267,
+          "slew_ns": 0.023625,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c38675",
+              "pin": "A1",
+              "type": "NOR2_X1"
+            },
+            {
+              "cell": "c113542",
+              "pin": "A2",
+              "type": "NAND4_X1"
+            },
+            {
+              "cell": "c156302",
+              "pin": "B2",
+              "type": "AOI21_X1"
+            }
+          ],
+          "fanout_input_pin_count": 3,
+          "input_aliases": {
+            "A": [
+              "dut.Vdot.io_out_ready",
+              "dut.Vfdiv.io_out_ready",
+              "dut.Vidiv.io_out_ready",
+              "dut.io_out_ready"
+            ]
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c113542",
+          "original_cell": "$abc$484558$auto$blifparse.cc:371:parse_blif$598132",
+          "pin": "ZN",
+          "type": "NAND4_X1",
+          "delay_ns": 0.055023,
+          "arrival_ns": 0.197305,
+          "slew_ns": 0.035593,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c113545",
+              "pin": "A3",
+              "type": "NAND3_X1"
+            },
+            {
+              "cell": "c113549",
+              "pin": "A1",
+              "type": "NAND2_X1"
+            },
+            {
+              "cell": "c113669",
+              "pin": "A3",
+              "type": "NAND3_X1"
+            },
+            {
+              "cell": "c113713",
+              "pin": "A3",
+              "type": "NAND3_X1"
+            }
+          ],
+          "fanout_input_pin_count": 4,
+          "input_aliases": {
+            "A1": [
+              "dut.Vdot.pValid",
+              "dut.Vdot.pipelineStatus_pValid",
+              "dut._Vdot_pipelineStatus_pValid"
+            ],
+            "A2": [],
+            "A3": [],
+            "A4": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c113669",
+          "original_cell": "$abc$484558$auto$blifparse.cc:371:parse_blif$598259",
+          "pin": "ZN",
+          "type": "NAND3_X1",
+          "delay_ns": 0.042642,
+          "arrival_ns": 0.239963,
+          "slew_ns": 0.022197,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c113670",
+              "pin": "A2",
+              "type": "NOR2_X1"
+            },
+            {
+              "cell": "c113863",
+              "pin": "A2",
+              "type": "OR2_X1"
+            },
+            {
+              "cell": "c184176",
+              "pin": "B2",
+              "type": "AOI21_X1"
+            }
+          ],
+          "fanout_input_pin_count": 3,
+          "input_aliases": {
+            "A1": [],
+            "A2": [],
+            "A3": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c184176",
+          "original_cell": "$abc$484558$auto$blifparse.cc:371:parse_blif$668766",
+          "pin": "ZN",
+          "type": "AOI21_X1",
+          "delay_ns": 0.026134,
+          "arrival_ns": 0.266113,
+          "slew_ns": 0.016266,
+          "rtl_nets": [
+            "dut.io_in_ready",
+            "dut.io_in_ready_0"
+          ],
+          "sinks": [],
+          "fanout_input_pin_count": 0,
+          "input_aliases": {
+            "A": [],
+            "B1": [],
+            "B2": []
+          },
+          "output_aliases": [
+            "dut.io_in_ready",
+            "dut.io_in_ready_0"
+          ]
+        }
+      ],
+      "output_cell_count": 4,
+      "buffer_count": 0,
+      "buffer_delay_ns": 0,
+      "hold_register_on_path": false,
+      "divbusy_register_on_path": false,
+      "report_path": "/home/riscv/riscv-lab/o2-c1-owner-20261025/parent-sta-01/nominal/ready.rpt",
+      "startpoint_aliases": [
+        "io_out_ready"
+      ],
+      "endpoint_aliases": [
+        "io_in_ready"
+      ],
+      "cell_delay_ns": 0.16604999999999998
+    },
+    "vdot_r2r": {
+      "startpoint": "c198423 (rising edge-triggered flip-flop clocked by core_clk)",
+      "endpoint": "c197779 (rising edge-triggered flip-flop clocked by core_clk)",
+      "arrival_ns": 1.402385,
+      "slack_ns": -0.480045,
+      "stages": [
+        {
+          "cell": "c198423",
+          "original_cell": "$auto$simplemap.cc:420:simplemap_dff$78124",
+          "pin": "Q",
+          "type": "DFF_X1",
+          "delay_ns": 0.113277,
+          "arrival_ns": 0.113277,
+          "slew_ns": 0.020875,
+          "rtl_nets": [
+            "dut.Vdot.pProducts_6[1]",
+            "dut.Vdot.reduce.io_products_6[1]"
+          ],
+          "sinks": [
+            {
+              "cell": "c116829",
+              "pin": "A",
+              "type": "MUX2_X1"
+            },
+            {
+              "cell": "c156355",
+              "pin": "A",
+              "type": "XOR2_X1"
+            },
+            {
+              "cell": "c156387",
+              "pin": "A1",
+              "type": "NAND2_X1"
+            },
+            {
+              "cell": "c156388",
+              "pin": "A1",
+              "type": "NOR2_X1"
+            }
+          ],
+          "fanout_input_pin_count": 4,
+          "input_aliases": {
+            "CK": [
+              "dut.ClockGate_2.Q",
+              "dut.Vdot.clock",
+              "dut._ClockGate_2_Q"
+            ],
+            "D": []
+          },
+          "output_aliases": [
+            "dut.Vdot.pProducts_6[1]",
+            "dut.Vdot.reduce.io_products_6[1]"
+          ]
+        },
+        {
+          "cell": "c156355",
+          "original_cell": "$abc$484558$auto$blifparse.cc:371:parse_blif$640945",
+          "pin": "Z",
+          "type": "XOR2_X1",
+          "delay_ns": 0.05545,
+          "arrival_ns": 0.168749,
+          "slew_ns": 0.026483,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c156356",
+              "pin": "B",
+              "type": "XNOR2_X1"
+            }
+          ],
+          "fanout_input_pin_count": 1,
+          "input_aliases": {
+            "A": [
+              "dut.Vdot.pProducts_6[1]",
+              "dut.Vdot.reduce.io_products_6[1]"
+            ],
+            "B": [
+              "dut.Vdot.pProducts_7[1]",
+              "dut.Vdot.reduce.io_products_7[1]"
+            ]
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c156356",
+          "original_cell": "$abc$484558$auto$blifparse.cc:371:parse_blif$640946",
+          "pin": "ZN",
+          "type": "XNOR2_X1",
+          "delay_ns": 0.050912,
+          "arrival_ns": 0.219679,
+          "slew_ns": 0.033658,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c156357",
+              "pin": "B",
+              "type": "XNOR2_X1"
+            },
+            {
+              "cell": "c156380",
+              "pin": "A2",
+              "type": "NAND2_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A": [],
+            "B": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c156357",
+          "original_cell": "$abc$484558$auto$blifparse.cc:371:parse_blif$640947",
+          "pin": "ZN",
+          "type": "XNOR2_X1",
+          "delay_ns": 0.051989,
+          "arrival_ns": 0.271689,
+          "slew_ns": 0.032673,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c156358",
+              "pin": "B",
+              "type": "XOR2_X1"
+            },
+            {
+              "cell": "c156381",
+              "pin": "B1",
+              "type": "OAI21_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A": [],
+            "B": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c156358",
+          "original_cell": "$abc$484558$auto$blifparse.cc:371:parse_blif$640948",
+          "pin": "Z",
+          "type": "XOR2_X1",
+          "delay_ns": 0.065997,
+          "arrival_ns": 0.337705,
+          "slew_ns": 0.035743,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c156359",
+              "pin": "B",
+              "type": "XOR2_X1"
+            },
+            {
+              "cell": "c156395",
+              "pin": "A2",
+              "type": "NAND2_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A": [],
+            "B": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c156359",
+          "original_cell": "$abc$484558$auto$blifparse.cc:371:parse_blif$640949",
+          "pin": "Z",
+          "type": "XOR2_X1",
+          "delay_ns": 0.062861,
+          "arrival_ns": 0.400586,
+          "slew_ns": 0.032225,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c156360",
+              "pin": "A",
+              "type": "AOI21_X1"
+            },
+            {
+              "cell": "c156361",
+              "pin": "A3",
+              "type": "NAND3_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A": [],
+            "B": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c156361",
+          "original_cell": "$abc$484558$auto$blifparse.cc:371:parse_blif$640951",
+          "pin": "ZN",
+          "type": "NAND3_X1",
+          "delay_ns": 0.034751,
+          "arrival_ns": 0.435351,
+          "slew_ns": 0.023789,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c156362",
+              "pin": "A2",
+              "type": "NAND2_X1"
+            },
+            {
+              "cell": "c156396",
+              "pin": "B1",
+              "type": "AOI21_X1"
+            },
+            {
+              "cell": "c156397",
+              "pin": "A2",
+              "type": "AND3_X1"
+            }
+          ],
+          "fanout_input_pin_count": 3,
+          "input_aliases": {
+            "A1": [],
+            "A2": [],
+            "A3": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c156396",
+          "original_cell": "$abc$484558$auto$blifparse.cc:371:parse_blif$640986",
+          "pin": "ZN",
+          "type": "AOI21_X1",
+          "delay_ns": 0.047708,
+          "arrival_ns": 0.483073,
+          "slew_ns": 0.035539,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c156398",
+              "pin": "A1",
+              "type": "OR2_X1"
+            },
+            {
+              "cell": "c156426",
+              "pin": "B1",
+              "type": "OAI21_X1"
+            },
+            {
+              "cell": "c156427",
+              "pin": "A2",
+              "type": "OR3_X1"
+            }
+          ],
+          "fanout_input_pin_count": 3,
+          "input_aliases": {
+            "A": [],
+            "B1": [],
+            "B2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c156426",
+          "original_cell": "$abc$484558$auto$blifparse.cc:371:parse_blif$641016",
+          "pin": "ZN",
+          "type": "OAI21_X1",
+          "delay_ns": 0.025588,
+          "arrival_ns": 0.508677,
+          "slew_ns": 0.015422,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c156428",
+              "pin": "A2",
+              "type": "NAND3_X1"
+            },
+            {
+              "cell": "c156434",
+              "pin": "A2",
+              "type": "NAND2_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A": [],
+            "B1": [],
+            "B2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c156434",
+          "original_cell": "$abc$484558$auto$blifparse.cc:371:parse_blif$641024",
+          "pin": "ZN",
+          "type": "NAND2_X1",
+          "delay_ns": 0.0239,
+          "arrival_ns": 0.53259,
+          "slew_ns": 0.012819,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c156468",
+              "pin": "A1",
+              "type": "AND2_X1"
+            },
+            {
+              "cell": "c156469",
+              "pin": "B1",
+              "type": "OAI21_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A1": [],
+            "A2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c156468",
+          "original_cell": "$abc$484558$auto$blifparse.cc:371:parse_blif$641058",
+          "pin": "ZN",
+          "type": "AND2_X1",
+          "delay_ns": 0.038216,
+          "arrival_ns": 0.570814,
+          "slew_ns": 0.013185,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c156470",
+              "pin": "B1",
+              "type": "OAI22_X1"
+            },
+            {
+              "cell": "c156472",
+              "pin": "A2",
+              "type": "NOR2_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A1": [],
+            "A2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c156472",
+          "original_cell": "$abc$484558$auto$blifparse.cc:371:parse_blif$641062",
+          "pin": "ZN",
+          "type": "NOR2_X1",
+          "delay_ns": 0.012916,
+          "arrival_ns": 0.583745,
+          "slew_ns": 0.007092,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c156500",
+              "pin": "A1",
+              "type": "OR2_X1"
+            },
+            {
+              "cell": "c156501",
+              "pin": "B1",
+              "type": "AOI21_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A1": [],
+            "A2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c156500",
+          "original_cell": "$abc$484558$auto$blifparse.cc:371:parse_blif$641090",
+          "pin": "ZN",
+          "type": "OR2_X1",
+          "delay_ns": 0.048699,
+          "arrival_ns": 0.632452,
+          "slew_ns": 0.011028,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c156502",
+              "pin": "A1",
+              "type": "NAND2_X1"
+            },
+            {
+              "cell": "c156507",
+              "pin": "A2",
+              "type": "NAND2_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A1": [],
+            "A2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c156507",
+          "original_cell": "$abc$484558$auto$blifparse.cc:371:parse_blif$641097",
+          "pin": "ZN",
+          "type": "NAND2_X1",
+          "delay_ns": 0.021629,
+          "arrival_ns": 0.654094,
+          "slew_ns": 0.012647,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c156539",
+              "pin": "A1",
+              "type": "AND2_X1"
+            },
+            {
+              "cell": "c156540",
+              "pin": "B1",
+              "type": "OAI21_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A1": [],
+            "A2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c156539",
+          "original_cell": "$abc$484558$auto$blifparse.cc:371:parse_blif$641129",
+          "pin": "ZN",
+          "type": "AND2_X1",
+          "delay_ns": 0.038147,
+          "arrival_ns": 0.69225,
+          "slew_ns": 0.013185,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c156541",
+              "pin": "B1",
+              "type": "OAI22_X1"
+            },
+            {
+              "cell": "c156544",
+              "pin": "A2",
+              "type": "NOR2_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A1": [],
+            "A2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c156544",
+          "original_cell": "$abc$484558$auto$blifparse.cc:371:parse_blif$641134",
+          "pin": "ZN",
+          "type": "NOR2_X1",
+          "delay_ns": 0.014002,
+          "arrival_ns": 0.706266,
+          "slew_ns": 0.007749,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c156572",
+              "pin": "A1",
+              "type": "NOR2_X1"
+            },
+            {
+              "cell": "c156573",
+              "pin": "A1",
+              "type": "NAND2_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A1": [],
+            "A2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c156572",
+          "original_cell": "$abc$484558$auto$blifparse.cc:371:parse_blif$641162",
+          "pin": "ZN",
+          "type": "NOR2_X1",
+          "delay_ns": 0.030962,
+          "arrival_ns": 0.737241,
+          "slew_ns": 0.02294,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c156575",
+              "pin": "B1",
+              "type": "OAI22_X1"
+            },
+            {
+              "cell": "c156578",
+              "pin": "A2",
+              "type": "OR2_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A1": [],
+            "A2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c156578",
+          "original_cell": "$abc$484558$auto$blifparse.cc:371:parse_blif$641168",
+          "pin": "ZN",
+          "type": "OR2_X1",
+          "delay_ns": 0.036622,
+          "arrival_ns": 0.773872,
+          "slew_ns": 0.013438,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c156610",
+              "pin": "A",
+              "type": "XNOR2_X1"
+            },
+            {
+              "cell": "c156614",
+              "pin": "B2",
+              "type": "AOI21_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A1": [],
+            "A2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c156614",
+          "original_cell": "$abc$484558$auto$blifparse.cc:371:parse_blif$641204",
+          "pin": "ZN",
+          "type": "AOI21_X1",
+          "delay_ns": 0.024432,
+          "arrival_ns": 0.798318,
+          "slew_ns": 0.018843,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c156640",
+              "pin": "A1",
+              "type": "NOR2_X1"
+            },
+            {
+              "cell": "c156641",
+              "pin": "A1",
+              "type": "NAND2_X1"
+            },
+            {
+              "cell": "c156646",
+              "pin": "B2",
+              "type": "OAI21_X1"
+            }
+          ],
+          "fanout_input_pin_count": 3,
+          "input_aliases": {
+            "A": [],
+            "B1": [],
+            "B2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c156646",
+          "original_cell": "$abc$484558$auto$blifparse.cc:371:parse_blif$641236",
+          "pin": "ZN",
+          "type": "OAI21_X1",
+          "delay_ns": 0.050398,
+          "arrival_ns": 0.848731,
+          "slew_ns": 0.032043,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c156676",
+              "pin": "A",
+              "type": "XNOR2_X1"
+            },
+            {
+              "cell": "c156680",
+              "pin": "B2",
+              "type": "AOI21_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A": [],
+            "B1": [],
+            "B2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c156680",
+          "original_cell": "$abc$484558$auto$blifparse.cc:371:parse_blif$641270",
+          "pin": "ZN",
+          "type": "AOI21_X1",
+          "delay_ns": 0.027872,
+          "arrival_ns": 0.876618,
+          "slew_ns": 0.017993,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c156712",
+              "pin": "A1",
+              "type": "AND2_X1"
+            },
+            {
+              "cell": "c156713",
+              "pin": "B1",
+              "type": "OAI21_X1"
+            },
+            {
+              "cell": "c156717",
+              "pin": "B2",
+              "type": "OAI21_X1"
+            }
+          ],
+          "fanout_input_pin_count": 3,
+          "input_aliases": {
+            "A": [],
+            "B1": [],
+            "B2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c156717",
+          "original_cell": "$abc$484558$auto$blifparse.cc:371:parse_blif$641307",
+          "pin": "ZN",
+          "type": "OAI21_X1",
+          "delay_ns": 0.043238,
+          "arrival_ns": 0.919871,
+          "slew_ns": 0.025833,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c156751",
+              "pin": "A1",
+              "type": "AND2_X1"
+            },
+            {
+              "cell": "c156752",
+              "pin": "B1",
+              "type": "OAI21_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A": [],
+            "B1": [],
+            "B2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c156751",
+          "original_cell": "$abc$484558$auto$blifparse.cc:371:parse_blif$641341",
+          "pin": "ZN",
+          "type": "AND2_X1",
+          "delay_ns": 0.042591,
+          "arrival_ns": 0.962471,
+          "slew_ns": 0.013206,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c156753",
+              "pin": "B1",
+              "type": "OAI22_X1"
+            },
+            {
+              "cell": "c156755",
+              "pin": "A2",
+              "type": "NOR2_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A1": [],
+            "A2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c156755",
+          "original_cell": "$abc$484558$auto$blifparse.cc:371:parse_blif$641345",
+          "pin": "ZN",
+          "type": "NOR2_X1",
+          "delay_ns": 0.012924,
+          "arrival_ns": 0.975409,
+          "slew_ns": 0.007096,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c156785",
+              "pin": "A1",
+              "type": "OR2_X1"
+            },
+            {
+              "cell": "c156786",
+              "pin": "B1",
+              "type": "AOI21_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A1": [],
+            "A2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c156785",
+          "original_cell": "$abc$484558$auto$blifparse.cc:371:parse_blif$641375",
+          "pin": "ZN",
+          "type": "OR2_X1",
+          "delay_ns": 0.0487,
+          "arrival_ns": 1.024118,
+          "slew_ns": 0.011028,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c156787",
+              "pin": "A1",
+              "type": "NAND2_X1"
+            },
+            {
+              "cell": "c156792",
+              "pin": "A2",
+              "type": "NAND2_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A1": [],
+            "A2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c156792",
+          "original_cell": "$abc$484558$auto$blifparse.cc:371:parse_blif$641382",
+          "pin": "ZN",
+          "type": "NAND2_X1",
+          "delay_ns": 0.021629,
+          "arrival_ns": 1.04576,
+          "slew_ns": 0.012647,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c156822",
+              "pin": "A1",
+              "type": "AND2_X1"
+            },
+            {
+              "cell": "c156823",
+              "pin": "B1",
+              "type": "OAI21_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A1": [],
+            "A2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c156822",
+          "original_cell": "$abc$484558$auto$blifparse.cc:371:parse_blif$641412",
+          "pin": "ZN",
+          "type": "AND2_X1",
+          "delay_ns": 0.038147,
+          "arrival_ns": 1.083916,
+          "slew_ns": 0.013185,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c156824",
+              "pin": "B1",
+              "type": "OAI22_X1"
+            },
+            {
+              "cell": "c156826",
+              "pin": "A2",
+              "type": "NOR2_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A1": [],
+            "A2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c156826",
+          "original_cell": "$abc$484558$auto$blifparse.cc:371:parse_blif$641416",
+          "pin": "ZN",
+          "type": "NOR2_X1",
+          "delay_ns": 0.012916,
+          "arrival_ns": 1.096847,
+          "slew_ns": 0.007092,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c156858",
+              "pin": "A1",
+              "type": "OR2_X1"
+            },
+            {
+              "cell": "c156859",
+              "pin": "B1",
+              "type": "AOI21_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A1": [],
+            "A2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c156858",
+          "original_cell": "$abc$484558$auto$blifparse.cc:371:parse_blif$641448",
+          "pin": "ZN",
+          "type": "OR2_X1",
+          "delay_ns": 0.048699,
+          "arrival_ns": 1.145553,
+          "slew_ns": 0.011028,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c156860",
+              "pin": "A1",
+              "type": "NAND2_X1"
+            },
+            {
+              "cell": "c156865",
+              "pin": "A2",
+              "type": "NAND2_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A1": [],
+            "A2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c156865",
+          "original_cell": "$abc$484558$auto$blifparse.cc:371:parse_blif$641455",
+          "pin": "ZN",
+          "type": "NAND2_X1",
+          "delay_ns": 0.021629,
+          "arrival_ns": 1.167195,
+          "slew_ns": 0.012647,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c156886",
+              "pin": "A1",
+              "type": "AND2_X1"
+            },
+            {
+              "cell": "c156887",
+              "pin": "B1",
+              "type": "OAI21_X1"
+            }
+          ],
+          "fanout_input_pin_count": 2,
+          "input_aliases": {
+            "A1": [],
+            "A2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c156886",
+          "original_cell": "$abc$484558$auto$blifparse.cc:371:parse_blif$641476",
+          "pin": "ZN",
+          "type": "AND2_X1",
+          "delay_ns": 0.043511,
+          "arrival_ns": 1.210715,
+          "slew_ns": 0.017675,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c156888",
+              "pin": "B1",
+              "type": "OAI22_X1"
+            },
+            {
+              "cell": "c156891",
+              "pin": "A2",
+              "type": "NOR2_X1"
+            },
+            {
+              "cell": "c156900",
+              "pin": "A2",
+              "type": "NOR3_X1"
+            }
+          ],
+          "fanout_input_pin_count": 3,
+          "input_aliases": {
+            "A1": [],
+            "A2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c156900",
+          "original_cell": "$abc$484558$auto$blifparse.cc:371:parse_blif$641490",
+          "pin": "ZN",
+          "type": "NOR3_X1",
+          "delay_ns": 0.013268,
+          "arrival_ns": 1.223999,
+          "slew_ns": 0.011342,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c156901",
+              "pin": "B2",
+              "type": "OAI21_X1"
+            }
+          ],
+          "fanout_input_pin_count": 1,
+          "input_aliases": {
+            "A1": [],
+            "A2": [],
+            "A3": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c156901",
+          "original_cell": "$abc$484558$auto$blifparse.cc:371:parse_blif$641491",
+          "pin": "ZN",
+          "type": "OAI21_X1",
+          "delay_ns": 0.073821,
+          "arrival_ns": 1.297832,
+          "slew_ns": 0.055776,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c156902",
+              "pin": "A",
+              "type": "BUF_X1"
+            },
+            {
+              "cell": "c156924",
+              "pin": "A",
+              "type": "OAI21_X1"
+            },
+            {
+              "cell": "c156926",
+              "pin": "A",
+              "type": "OAI21_X1"
+            },
+            {
+              "cell": "c156928",
+              "pin": "A",
+              "type": "OAI21_X1"
+            },
+            {
+              "cell": "c156930",
+              "pin": "A",
+              "type": "OAI21_X1"
+            }
+          ],
+          "fanout_input_pin_count": 5,
+          "input_aliases": {
+            "A": [],
+            "B1": [],
+            "B2": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c156902",
+          "original_cell": "$abc$484558$auto$blifparse.cc:371:parse_blif$641492",
+          "pin": "Z",
+          "type": "BUF_X1",
+          "delay_ns": 0.078907,
+          "arrival_ns": 1.376751,
+          "slew_ns": 0.051613,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c156904",
+              "pin": "A",
+              "type": "OAI21_X1"
+            },
+            {
+              "cell": "c156906",
+              "pin": "A",
+              "type": "OAI21_X1"
+            },
+            {
+              "cell": "c156908",
+              "pin": "A",
+              "type": "OAI21_X1"
+            },
+            {
+              "cell": "c156910",
+              "pin": "A",
+              "type": "OAI21_X1"
+            },
+            {
+              "cell": "c156912",
+              "pin": "A",
+              "type": "OAI21_X1"
+            },
+            {
+              "cell": "c156914",
+              "pin": "A",
+              "type": "OAI21_X1"
+            },
+            {
+              "cell": "c156916",
+              "pin": "A",
+              "type": "OAI21_X1"
+            },
+            {
+              "cell": "c156918",
+              "pin": "A",
+              "type": "OAI21_X1"
+            },
+            {
+              "cell": "c156920",
+              "pin": "A",
+              "type": "OAI21_X1"
+            },
+            {
+              "cell": "c156922",
+              "pin": "A",
+              "type": "OAI21_X1"
+            }
+          ],
+          "fanout_input_pin_count": 10,
+          "input_aliases": {
+            "A": []
+          },
+          "output_aliases": []
+        },
+        {
+          "cell": "c156904",
+          "original_cell": "$abc$484558$auto$blifparse.cc:371:parse_blif$641494",
+          "pin": "ZN",
+          "type": "OAI21_X1",
+          "delay_ns": 0.025606,
+          "arrival_ns": 1.402377,
+          "slew_ns": 0.015217,
+          "rtl_nets": [],
+          "sinks": [
+            {
+              "cell": "c197779",
+              "pin": "D",
+              "type": "DFF_X1"
+            }
+          ],
+          "fanout_input_pin_count": 1,
+          "input_aliases": {
+            "A": [],
+            "B1": [],
+            "B2": []
+          },
+          "output_aliases": []
+        }
+      ],
+      "output_cell_count": 35,
+      "buffer_count": 1,
+      "buffer_delay_ns": 0.078907,
+      "hold_register_on_path": false,
+      "divbusy_register_on_path": false,
+      "report_path": "/home/riscv/riscv-lab/o2-c1-owner-20261025/parent-sta-01/nominal/vdot_r2r.rpt",
+      "startpoint_aliases": [
+        "dut.Vdot.pProducts_6[1]",
+        "dut.Vdot.reduce.io_products_6[1]"
+      ],
+      "endpoint_aliases": [
+        "dut.Vdot.io_out_bits_res_data[18]",
+        "dut.Vdot.rPacket_res_data[18]",
+        "dut._Vdot_io_out_bits_res_data[18]"
+      ],
+      "cell_delay_ns": 1.4019140000000003
+    },
+    "profiles": {
+      "nominal": {
+        "ready": {
+          "startpoint": "io_out_ready (input port clocked by core_clk)",
+          "endpoint": "io_in_ready (output port clocked by core_clk)",
+          "arrival_ns": 0.266115,
+          "buffer_count": 0,
+          "buffer_delay_ns": 0
+        },
+        "vdot_r2r": {
+          "startpoint": "c198423 (rising edge-triggered flip-flop clocked by core_clk)",
+          "endpoint": "c197779 (rising edge-triggered flip-flop clocked by core_clk)",
+          "arrival_ns": 1.402385,
+          "buffer_count": 1,
+          "buffer_delay_ns": 0.078907
+        }
+      },
+      "period050": {
+        "ready": {
+          "startpoint": "io_out_ready (input port clocked by core_clk)",
+          "endpoint": "io_in_ready (output port clocked by core_clk)",
+          "arrival_ns": 0.266115,
+          "buffer_count": 0,
+          "buffer_delay_ns": 0
+        },
+        "vdot_r2r": {
+          "startpoint": "c198423 (rising edge-triggered flip-flop clocked by core_clk)",
+          "endpoint": "c197779 (rising edge-triggered flip-flop clocked by core_clk)",
+          "arrival_ns": 1.402385,
+          "buffer_count": 1,
+          "buffer_delay_ns": 0.078907
+        }
+      },
+      "period200": {
+        "ready": {
+          "startpoint": "io_out_ready (input port clocked by core_clk)",
+          "endpoint": "io_in_ready (output port clocked by core_clk)",
+          "arrival_ns": 0.266115,
+          "buffer_count": 0,
+          "buffer_delay_ns": 0
+        },
+        "vdot_r2r": {
+          "startpoint": "c198423 (rising edge-triggered flip-flop clocked by core_clk)",
+          "endpoint": "c197779 (rising edge-triggered flip-flop clocked by core_clk)",
+          "arrival_ns": 1.402385,
+          "buffer_count": 1,
+          "buffer_delay_ns": 0.078907
+        }
+      },
+      "load001": {
+        "ready": {
+          "startpoint": "io_out_ready (input port clocked by core_clk)",
+          "endpoint": "io_in_ready (output port clocked by core_clk)",
+          "arrival_ns": 0.256602,
+          "buffer_count": 0,
+          "buffer_delay_ns": 0
+        },
+        "vdot_r2r": {
+          "startpoint": "c198423 (rising edge-triggered flip-flop clocked by core_clk)",
+          "endpoint": "c197779 (rising edge-triggered flip-flop clocked by core_clk)",
+          "arrival_ns": 1.402385,
+          "buffer_count": 1,
+          "buffer_delay_ns": 0.078907
+        }
+      },
+      "load020": {
+        "ready": {
+          "startpoint": "io_out_ready (input port clocked by core_clk)",
+          "endpoint": "io_in_ready (output port clocked by core_clk)",
+          "arrival_ns": 0.325394,
+          "buffer_count": 0,
+          "buffer_delay_ns": 0
+        },
+        "vdot_r2r": {
+          "startpoint": "c198423 (rising edge-triggered flip-flop clocked by core_clk)",
+          "endpoint": "c197779 (rising edge-triggered flip-flop clocked by core_clk)",
+          "arrival_ns": 1.402385,
+          "buffer_count": 1,
+          "buffer_delay_ns": 0.078907
+        }
+      }
+    }
+  }
+}

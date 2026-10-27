@@ -1,0 +1,53 @@
+Startpoint: io_flush_valid (input port clocked by core_clk)
+Endpoint: c197693 (rising edge-triggered flip-flop clocked by core_clk)
+Path Group: core_clk
+Path Type: max
+
+Fanout         Cap        Slew       Delay        Time   Description
+--------------------------------------------------------------------------------------------
+                     0.050000    0.000000    0.000000   clock core_clk (rise edge)
+                                 0.000000    0.000000   clock network delay (ideal)
+                                 0.100000    0.100000 v input external delay
+                     0.050000    0.000000    0.100000 v io_flush_valid (in)
+    1    1.184990                                       io_flush_valid (net)
+                     0.050000    0.000007    0.100007 v c1/A (BUF_X1)
+                     0.016557    0.060734    0.160742 v c1/Z (BUF_X1)
+    6   11.855016                                       n2810 (net)
+                     0.016557    0.000018    0.160760 v c52/A2 (NOR2_X1)
+                     0.040911    0.057013    0.217773 ^ c52/ZN (NOR2_X1)
+    4    6.737221                                       n2879 (net)
+                     0.040911    0.000011    0.217784 ^ c90/A3 (AND4_X1)
+                     0.012454    0.064616    0.282400 ^ c90/ZN (AND4_X1)
+    1    1.967017                                       n2925 (net)
+                     0.012454    0.000012    0.282412 ^ c92/B (OAI211_X1)
+                     0.045113    0.051825    0.334237 v c92/ZN (OAI211_X1)
+    6    9.620529                                       n2927 (net)
+                     0.045113    0.000012    0.334249 v c105/A (BUF_X1)
+                     0.019794    0.064360    0.398609 v c105/Z (BUF_X1)
+   10   15.862868                                       n2941 (net)
+                     0.019794    0.000012    0.398621 v c86480/A1 (OR2_X1)
+                     0.008449    0.047873    0.446494 v c86480/ZN (OR2_X1)
+    1    1.184990                                       n103745 (net)
+                     0.008449    0.000007    0.446501 v c86481/A (BUF_X1)
+                     0.021583    0.049632    0.496133 v c86481/Z (BUF_X1)
+    8   18.063471                                       n103746 (net)
+                     0.021583    0.000019    0.496153 v c86483/C1 (AOI211_X1)
+                     0.035235    0.040445    0.536597 ^ c86483/ZN (AOI211_X1)
+    1    1.450030                                       n103748 (net)
+                     0.035235    0.000009    0.536606 ^ c197693/D (DFF_X1)
+                                             0.536606   data arrival time
+
+                     0.050000    1.000000    1.000000   clock core_clk (rise edge)
+                                 0.000000    1.000000   clock network delay (ideal)
+                                -0.050000    0.950000   clock uncertainty
+                                 0.000000    0.950000   clock reconvergence pessimism
+                                             0.950000 ^ c197693/CK (DFF_X1)
+                                -0.032714    0.917286   library setup time
+                                             0.917286   data required time
+--------------------------------------------------------------------------------------------
+                                             0.917286   data required time
+                                            -0.536606   data arrival time
+--------------------------------------------------------------------------------------------
+                                             0.380679   slack (MET)
+
+

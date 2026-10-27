@@ -1,0 +1,2559 @@
+{
+  "status": "INTEGER_SOURCE_LINKED_CONTROL_PROOF_PASS_CONDITIONAL_BOOTSTRAP",
+  "abstraction": "Universal representative child, all-finish implies its out-valid; nondeterministic early/iteration completion; no fairness assumption.",
+  "assumptions": [
+    "At least one valid reset edge reached all relevant DIV state flops before INIT.",
+    "Parent/selected child acceptance is identical and one-hot, as ExeUnit source enforces.",
+    "For an active integer transaction, parent and child flush compare the same ROB captured on that identical acceptance.",
+    "Other DIV abstraction can start only when parent/int is idle and never changes integer state.",
+    "Clock gate is ideal, delivers each root edge when fire|hold|TE is true."
+  ],
+  "scope": "Safety only, no arithmetic/liveness/RTL equivalence; I8 representative covers 8 identical instances, SRT covers 4x16,2x32,2x64 instances independent of data.",
+  "results": [
+    {
+      "status": "PASS",
+      "kind": "I8",
+      "reachable_states": 9,
+      "states": [
+        {
+          "parent_mode": 0,
+          "top_state": 0,
+          "representative_child_state": 0,
+          "integer_hold": 0
+        },
+        {
+          "parent_mode": 1,
+          "top_state": 1,
+          "representative_child_state": 0,
+          "integer_hold": 1
+        },
+        {
+          "parent_mode": 1,
+          "top_state": 1,
+          "representative_child_state": 1,
+          "integer_hold": 1
+        },
+        {
+          "parent_mode": 1,
+          "top_state": 1,
+          "representative_child_state": 3,
+          "integer_hold": 1
+        },
+        {
+          "parent_mode": 1,
+          "top_state": 1,
+          "representative_child_state": 4,
+          "integer_hold": 1
+        },
+        {
+          "parent_mode": 1,
+          "top_state": 1,
+          "representative_child_state": 5,
+          "integer_hold": 1
+        },
+        {
+          "parent_mode": 1,
+          "top_state": 2,
+          "representative_child_state": 0,
+          "integer_hold": 1
+        },
+        {
+          "parent_mode": 1,
+          "top_state": 2,
+          "representative_child_state": 5,
+          "integer_hold": 1
+        },
+        {
+          "parent_mode": 2,
+          "top_state": 0,
+          "representative_child_state": 0,
+          "integer_hold": 0
+        }
+      ],
+      "input_tuples_per_state": 1152,
+      "transitions_checked": 10368,
+      "coverage": [
+        "arbitrary_iteration_stall",
+        "cancel_divide_TE0",
+        "cancel_output_backpressured_TE0",
+        "dynamic_reset_active_TE0",
+        "finish_cancel_coincident",
+        "other_division_owner",
+        "output_backpressure_child_drain",
+        "same_edge_parent_and_child_release",
+        "unrelated_redirect_running"
+      ],
+      "witnesses": {
+        "unrelated_redirect_running": [
+          {
+            "state": {
+              "parent_mode": 0,
+              "top_state": 0,
+              "representative_child_state": 0,
+              "integer_hold": 0
+            },
+            "input": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 0,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 0,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 1,
+              "integer_hold": 1
+            }
+          }
+        ],
+        "cancel_divide_TE0": [
+          {
+            "state": {
+              "parent_mode": 0,
+              "top_state": 0,
+              "representative_child_state": 0,
+              "integer_hold": 0
+            },
+            "input": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 0,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 0,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 0,
+              "top_state": 0,
+              "representative_child_state": 0,
+              "integer_hold": 0
+            }
+          }
+        ],
+        "dynamic_reset_active_TE0": [
+          {
+            "state": {
+              "parent_mode": 0,
+              "top_state": 0,
+              "representative_child_state": 0,
+              "integer_hold": 0
+            },
+            "input": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 0,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 0,
+              "integer_hold": 1
+            },
+            "input": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 0,
+              "top_state": 0,
+              "representative_child_state": 0,
+              "integer_hold": 0
+            }
+          }
+        ],
+        "other_division_owner": [
+          {
+            "state": {
+              "parent_mode": 0,
+              "top_state": 0,
+              "representative_child_state": 0,
+              "integer_hold": 0
+            },
+            "input": [
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 2,
+              "top_state": 0,
+              "representative_child_state": 0,
+              "integer_hold": 0
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 2,
+              "top_state": 0,
+              "representative_child_state": 0,
+              "integer_hold": 0
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 2,
+              "top_state": 0,
+              "representative_child_state": 0,
+              "integer_hold": 0
+            }
+          }
+        ],
+        "arbitrary_iteration_stall": [
+          {
+            "state": {
+              "parent_mode": 0,
+              "top_state": 0,
+              "representative_child_state": 0,
+              "integer_hold": 0
+            },
+            "input": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 0,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 0,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 1,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 1,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 3,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 3,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 3,
+              "integer_hold": 1
+            }
+          }
+        ],
+        "output_backpressure_child_drain": [
+          {
+            "state": {
+              "parent_mode": 0,
+              "top_state": 0,
+              "representative_child_state": 0,
+              "integer_hold": 0
+            },
+            "input": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 0,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 0,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 1,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 1,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 4,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 4,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 5,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 5,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 2,
+              "representative_child_state": 5,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 2,
+              "representative_child_state": 5,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 2,
+              "representative_child_state": 0,
+              "integer_hold": 1
+            }
+          }
+        ],
+        "same_edge_parent_and_child_release": [
+          {
+            "state": {
+              "parent_mode": 0,
+              "top_state": 0,
+              "representative_child_state": 0,
+              "integer_hold": 0
+            },
+            "input": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 0,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 0,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 1,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 1,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 4,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 4,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 5,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 5,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 2,
+              "representative_child_state": 5,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 2,
+              "representative_child_state": 5,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            "next": {
+              "parent_mode": 0,
+              "top_state": 0,
+              "representative_child_state": 0,
+              "integer_hold": 0
+            }
+          }
+        ],
+        "cancel_output_backpressured_TE0": [
+          {
+            "state": {
+              "parent_mode": 0,
+              "top_state": 0,
+              "representative_child_state": 0,
+              "integer_hold": 0
+            },
+            "input": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 0,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 0,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 1,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 1,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 4,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 4,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 5,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 5,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 2,
+              "representative_child_state": 5,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 2,
+              "representative_child_state": 5,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 0,
+              "top_state": 0,
+              "representative_child_state": 0,
+              "integer_hold": 0
+            }
+          }
+        ],
+        "finish_cancel_coincident": [
+          {
+            "state": {
+              "parent_mode": 0,
+              "top_state": 0,
+              "representative_child_state": 0,
+              "integer_hold": 0
+            },
+            "input": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 0,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 0,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 1,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 1,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 4,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 4,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 5,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 5,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 2,
+              "representative_child_state": 5,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 2,
+              "representative_child_state": 5,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            "next": {
+              "parent_mode": 0,
+              "top_state": 0,
+              "representative_child_state": 0,
+              "integer_hold": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "status": "PASS",
+      "kind": "SRT",
+      "reachable_states": 10,
+      "states": [
+        {
+          "parent_mode": 0,
+          "top_state": 0,
+          "representative_child_state": 0,
+          "integer_hold": 0
+        },
+        {
+          "parent_mode": 1,
+          "top_state": 1,
+          "representative_child_state": 0,
+          "integer_hold": 1
+        },
+        {
+          "parent_mode": 1,
+          "top_state": 1,
+          "representative_child_state": 1,
+          "integer_hold": 1
+        },
+        {
+          "parent_mode": 1,
+          "top_state": 1,
+          "representative_child_state": 2,
+          "integer_hold": 1
+        },
+        {
+          "parent_mode": 1,
+          "top_state": 1,
+          "representative_child_state": 3,
+          "integer_hold": 1
+        },
+        {
+          "parent_mode": 1,
+          "top_state": 1,
+          "representative_child_state": 4,
+          "integer_hold": 1
+        },
+        {
+          "parent_mode": 1,
+          "top_state": 1,
+          "representative_child_state": 5,
+          "integer_hold": 1
+        },
+        {
+          "parent_mode": 1,
+          "top_state": 2,
+          "representative_child_state": 0,
+          "integer_hold": 1
+        },
+        {
+          "parent_mode": 1,
+          "top_state": 2,
+          "representative_child_state": 5,
+          "integer_hold": 1
+        },
+        {
+          "parent_mode": 2,
+          "top_state": 0,
+          "representative_child_state": 0,
+          "integer_hold": 0
+        }
+      ],
+      "input_tuples_per_state": 1152,
+      "transitions_checked": 11520,
+      "coverage": [
+        "arbitrary_iteration_stall",
+        "cancel_divide_TE0",
+        "cancel_output_backpressured_TE0",
+        "dynamic_reset_active_TE0",
+        "finish_cancel_coincident",
+        "other_division_owner",
+        "output_backpressure_child_drain",
+        "same_edge_parent_and_child_release",
+        "unrelated_redirect_running"
+      ],
+      "witnesses": {
+        "unrelated_redirect_running": [
+          {
+            "state": {
+              "parent_mode": 0,
+              "top_state": 0,
+              "representative_child_state": 0,
+              "integer_hold": 0
+            },
+            "input": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 0,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 0,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 1,
+              "integer_hold": 1
+            }
+          }
+        ],
+        "cancel_divide_TE0": [
+          {
+            "state": {
+              "parent_mode": 0,
+              "top_state": 0,
+              "representative_child_state": 0,
+              "integer_hold": 0
+            },
+            "input": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 0,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 0,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 0,
+              "top_state": 0,
+              "representative_child_state": 0,
+              "integer_hold": 0
+            }
+          }
+        ],
+        "dynamic_reset_active_TE0": [
+          {
+            "state": {
+              "parent_mode": 0,
+              "top_state": 0,
+              "representative_child_state": 0,
+              "integer_hold": 0
+            },
+            "input": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 0,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 0,
+              "integer_hold": 1
+            },
+            "input": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 0,
+              "top_state": 0,
+              "representative_child_state": 0,
+              "integer_hold": 0
+            }
+          }
+        ],
+        "other_division_owner": [
+          {
+            "state": {
+              "parent_mode": 0,
+              "top_state": 0,
+              "representative_child_state": 0,
+              "integer_hold": 0
+            },
+            "input": [
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 2,
+              "top_state": 0,
+              "representative_child_state": 0,
+              "integer_hold": 0
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 2,
+              "top_state": 0,
+              "representative_child_state": 0,
+              "integer_hold": 0
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 2,
+              "top_state": 0,
+              "representative_child_state": 0,
+              "integer_hold": 0
+            }
+          }
+        ],
+        "arbitrary_iteration_stall": [
+          {
+            "state": {
+              "parent_mode": 0,
+              "top_state": 0,
+              "representative_child_state": 0,
+              "integer_hold": 0
+            },
+            "input": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 0,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 0,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 1,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 1,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 2,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 2,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 3,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 3,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 3,
+              "integer_hold": 1
+            }
+          }
+        ],
+        "output_backpressure_child_drain": [
+          {
+            "state": {
+              "parent_mode": 0,
+              "top_state": 0,
+              "representative_child_state": 0,
+              "integer_hold": 0
+            },
+            "input": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 0,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 0,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 1,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 1,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 2,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 2,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 4,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 4,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 5,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 5,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 2,
+              "representative_child_state": 5,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 2,
+              "representative_child_state": 5,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 2,
+              "representative_child_state": 0,
+              "integer_hold": 1
+            }
+          }
+        ],
+        "same_edge_parent_and_child_release": [
+          {
+            "state": {
+              "parent_mode": 0,
+              "top_state": 0,
+              "representative_child_state": 0,
+              "integer_hold": 0
+            },
+            "input": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 0,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 0,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 1,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 1,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 2,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 2,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 4,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 4,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 5,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 5,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 2,
+              "representative_child_state": 5,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 2,
+              "representative_child_state": 5,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            "next": {
+              "parent_mode": 0,
+              "top_state": 0,
+              "representative_child_state": 0,
+              "integer_hold": 0
+            }
+          }
+        ],
+        "cancel_output_backpressured_TE0": [
+          {
+            "state": {
+              "parent_mode": 0,
+              "top_state": 0,
+              "representative_child_state": 0,
+              "integer_hold": 0
+            },
+            "input": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 0,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 0,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 1,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 1,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 2,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 2,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 4,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 4,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 5,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 5,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 2,
+              "representative_child_state": 5,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 2,
+              "representative_child_state": 5,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 0,
+              "top_state": 0,
+              "representative_child_state": 0,
+              "integer_hold": 0
+            }
+          }
+        ],
+        "finish_cancel_coincident": [
+          {
+            "state": {
+              "parent_mode": 0,
+              "top_state": 0,
+              "representative_child_state": 0,
+              "integer_hold": 0
+            },
+            "input": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 0,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 0,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 1,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 1,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 2,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 2,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 4,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 4,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 5,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 1,
+              "representative_child_state": 5,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "next": {
+              "parent_mode": 1,
+              "top_state": 2,
+              "representative_child_state": 5,
+              "integer_hold": 1
+            }
+          },
+          {
+            "state": {
+              "parent_mode": 1,
+              "top_state": 2,
+              "representative_child_state": 5,
+              "integer_hold": 1
+            },
+            "input": [
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            "next": {
+              "parent_mode": 0,
+              "top_state": 0,
+              "representative_child_state": 0,
+              "integer_hold": 0
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "mutation_checks": [
+    {
+      "status": "COUNTEREXAMPLE",
+      "mutation": "drop_child_flush",
+      "kind": "SRT",
+      "states_before_failure": 4,
+      "transitions_checked": 1217,
+      "trace": [
+        {
+          "state": {
+            "parent_mode": 0,
+            "top_state": 0,
+            "representative_child_state": 0,
+            "integer_hold": 0
+          },
+          "input": [
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "next": {
+            "parent_mode": 1,
+            "top_state": 1,
+            "representative_child_state": 0,
+            "integer_hold": 1
+          }
+        },
+        {
+          "state": {
+            "parent_mode": 1,
+            "top_state": 1,
+            "representative_child_state": 0,
+            "integer_hold": 1
+          },
+          "input": [
+            0,
+            0,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "next": {
+            "parent_mode": 0,
+            "top_state": 1,
+            "representative_child_state": 1,
+            "integer_hold": 0
+          }
+        }
+      ]
+    },
+    {
+      "status": "COUNTEREXAMPLE",
+      "mutation": "mask_cancellation_edge",
+      "kind": "SRT",
+      "states_before_failure": 4,
+      "transitions_checked": 1217,
+      "trace": [
+        {
+          "state": {
+            "parent_mode": 0,
+            "top_state": 0,
+            "representative_child_state": 0,
+            "integer_hold": 0
+          },
+          "input": [
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "next": {
+            "parent_mode": 1,
+            "top_state": 1,
+            "representative_child_state": 0,
+            "integer_hold": 1
+          }
+        },
+        {
+          "state": {
+            "parent_mode": 1,
+            "top_state": 1,
+            "representative_child_state": 0,
+            "integer_hold": 1
+          },
+          "input": [
+            0,
+            0,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "next": {
+            "parent_mode": 0,
+            "top_state": 1,
+            "representative_child_state": 0,
+            "integer_hold": 0
+          }
+        }
+      ]
+    },
+    {
+      "status": "COUNTEREXAMPLE",
+      "mutation": "early_parent_clear",
+      "kind": "SRT",
+      "states_before_failure": 8,
+      "transitions_checked": 8069,
+      "trace": [
+        {
+          "state": {
+            "parent_mode": 0,
+            "top_state": 0,
+            "representative_child_state": 0,
+            "integer_hold": 0
+          },
+          "input": [
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "next": {
+            "parent_mode": 1,
+            "top_state": 1,
+            "representative_child_state": 0,
+            "integer_hold": 1
+          }
+        },
+        {
+          "state": {
+            "parent_mode": 1,
+            "top_state": 1,
+            "representative_child_state": 0,
+            "integer_hold": 1
+          },
+          "input": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "next": {
+            "parent_mode": 1,
+            "top_state": 1,
+            "representative_child_state": 1,
+            "integer_hold": 1
+          }
+        },
+        {
+          "state": {
+            "parent_mode": 1,
+            "top_state": 1,
+            "representative_child_state": 1,
+            "integer_hold": 1
+          },
+          "input": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "next": {
+            "parent_mode": 1,
+            "top_state": 1,
+            "representative_child_state": 2,
+            "integer_hold": 1
+          }
+        },
+        {
+          "state": {
+            "parent_mode": 1,
+            "top_state": 1,
+            "representative_child_state": 2,
+            "integer_hold": 1
+          },
+          "input": [
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "next": {
+            "parent_mode": 1,
+            "top_state": 1,
+            "representative_child_state": 4,
+            "integer_hold": 1
+          }
+        },
+        {
+          "state": {
+            "parent_mode": 1,
+            "top_state": 1,
+            "representative_child_state": 4,
+            "integer_hold": 1
+          },
+          "input": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "next": {
+            "parent_mode": 1,
+            "top_state": 1,
+            "representative_child_state": 5,
+            "integer_hold": 1
+          }
+        },
+        {
+          "state": {
+            "parent_mode": 1,
+            "top_state": 1,
+            "representative_child_state": 5,
+            "integer_hold": 1
+          },
+          "input": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          "next": {
+            "parent_mode": 0,
+            "top_state": 2,
+            "representative_child_state": 5,
+            "integer_hold": 1
+          }
+        }
+      ]
+    },
+    {
+      "status": "COUNTEREXAMPLE",
+      "mutation": "drop_child_reset",
+      "kind": "SRT",
+      "states_before_failure": 4,
+      "transitions_checked": 1729,
+      "trace": [
+        {
+          "state": {
+            "parent_mode": 0,
+            "top_state": 0,
+            "representative_child_state": 0,
+            "integer_hold": 0
+          },
+          "input": [
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "next": {
+            "parent_mode": 1,
+            "top_state": 1,
+            "representative_child_state": 0,
+            "integer_hold": 1
+          }
+        },
+        {
+          "state": {
+            "parent_mode": 1,
+            "top_state": 1,
+            "representative_child_state": 0,
+            "integer_hold": 1
+          },
+          "input": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "next": {
+            "parent_mode": 0,
+            "top_state": 1,
+            "representative_child_state": 1,
+            "integer_hold": 0
+          }
+        }
+      ]
+    },
+    {
+      "status": "COUNTEREXAMPLE",
+      "mutation": "drop_all_child_finish",
+      "kind": "SRT",
+      "states_before_failure": 4,
+      "transitions_checked": 1157,
+      "trace": [
+        {
+          "state": {
+            "parent_mode": 0,
+            "top_state": 0,
+            "representative_child_state": 0,
+            "integer_hold": 0
+          },
+          "input": [
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "next": {
+            "parent_mode": 1,
+            "top_state": 1,
+            "representative_child_state": 0,
+            "integer_hold": 1
+          }
+        },
+        {
+          "state": {
+            "parent_mode": 1,
+            "top_state": 1,
+            "representative_child_state": 0,
+            "integer_hold": 1
+          },
+          "input": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          "next": {
+            "parent_mode": 1,
+            "top_state": 2,
+            "representative_child_state": 1,
+            "integer_hold": 1
+          }
+        }
+      ]
+    }
+  ],
+  "bootstrap_counterexample": {
+    "state": {
+      "parent_mode": 0,
+      "top_state": 1,
+      "representative_child_state": 3,
+      "integer_hold": 0
+    },
+    "input": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "next": {
+      "parent_mode": 0,
+      "top_state": 1,
+      "representative_child_state": 3,
+      "integer_hold": 0
+    },
+    "interpretation": "Illustrates why initial parent reset alone is insufficient if child reset is synchronous and its gate was closed; not claimed a normal post-bootstrap trace."
+  },
+  "rob_capture_equal_expression_audit_cases": 1536,
+  "elapsed_seconds": 0.039276040000004286,
+  "utc_completed": "2026-10-25T11:49:19.383179+00:00"
+}

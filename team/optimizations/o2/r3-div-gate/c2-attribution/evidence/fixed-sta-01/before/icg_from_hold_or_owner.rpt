@@ -1,0 +1,32 @@
+Startpoint: c197350 (rising edge-triggered flip-flop clocked by core_clk)
+Endpoint: c203018 (rising clock gating-check end-point clocked by core_clk)
+Path Group: core_clk
+Path Type: max
+
+Fanout         Cap        Slew       Delay        Time   Description
+--------------------------------------------------------------------------------------------
+                     0.050000    0.000000    0.000000   clock core_clk (rise edge)
+                                 0.000000    0.000000   clock network delay (ideal)
+                     0.050000    0.000000    0.000000 ^ c197350/CK (DFF_X1)
+                     0.007511    0.096153    0.096153 v c197350/Q (DFF_X1)
+    2    3.053268                                       n103666 (net)
+                     0.007511    0.000008    0.096161 v c176633/A1 (OR2_X1)
+                     0.008440    0.042424    0.138585 v c176633/ZN (OR2_X1)
+    1    1.151392                                       n197844 (net)
+                     0.008440    0.000007    0.138592 v c203018/E (CLKGATETST_X1)
+                                             0.138592   data arrival time
+
+                     0.050000    1.000000    1.000000   clock core_clk (rise edge)
+                                 0.000000    1.000000   clock network delay (ideal)
+                                -0.050000    0.950000   clock uncertainty
+                                 0.000000    0.950000   clock reconvergence pessimism
+                                             0.950000 ^ c203018/CK (CLKGATETST_X1)
+                                -0.063117    0.886883   library setup time
+                                             0.886883   data required time
+--------------------------------------------------------------------------------------------
+                                             0.886883   data required time
+                                            -0.138592   data arrival time
+--------------------------------------------------------------------------------------------
+                                             0.748290   slack (MET)
+
+

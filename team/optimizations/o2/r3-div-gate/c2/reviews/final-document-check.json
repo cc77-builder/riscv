@@ -1,0 +1,48 @@
+{
+  "status": "C2_FINAL_DOCUMENT_SOURCE_PASS",
+  "time": "2026-10-25T20:33:46.094392+08:00",
+  "historical_pins": 58,
+  "c2_pins": 32,
+  "historical_document_snapshots": {
+    "AGENTS.md": "team/optimizations/o2/r3-div-gate/c2/reviews/historical-document-snapshots/AGENTS.md",
+    "team/docs/development-route-current.md": "team/optimizations/o2/r3-div-gate/c2/reviews/historical-document-snapshots/development-route-current.md"
+  },
+  "ledger_records": 18,
+  "links_checked": 137,
+  "commands": [
+    {
+      "command": [
+        "git",
+        "-C",
+        "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo",
+        "apply",
+        "--check",
+        "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/r3-div-gate/c2/c2-production.patch"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/home/riscv/riscv-lab/o2-c2-readyless-20261025/repo",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "candidate_source_sha256": "febbce48c4865ac5e1c7909f8494599a01ae2fee643ee53396635a0f403323a6",
+  "baseline_source_sha256": "fd98aaced17c39dabd4776a53948f05650c8956178f6540bf5695d15753d60fa",
+  "manifest_sha256": "5fe7ea1cd978cf14ef371380a51e64d942673e1c62c7ac3748698418237b1428"
+}
