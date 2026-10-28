@@ -4,9 +4,10 @@ import argparse
 import copy
 import importlib.util
 import json
+import multiprocessing
 import os
+import signal
 import shutil
-import subprocess
 import sys
 import time
 
@@ -23,6 +24,14 @@ REL = e.NORM_REL / 'target'
 CONTRACT = 'r2-s3-w2-norm-first-token-v1'
 PASS = 'NORM_W2_FIRST_TOKEN_TARGET_CAMPAIGN_PASS'
 CASES = [('negative', 4, True), ('fr', 3, False), ('ta', 4, False), ('replay', 4, False)]
+OFFLINE_CONTRACT = 'r2-s3-first-token-frozen-offline-audit-v2'
+WORKER_TIMEOUT = 7200
+POOL_DEADLINE = 6900
+_CASE_CONTEXT = None
+
+
+def interrupted(signum, frame):
+    raise InterruptedError('offline evidence signal ' + str(signum))
 
 
 def tool_identity(root, descriptor):
@@ -213,9 +222,122 @@ def bind_case(root, campaign, name, runtime, original):
     return files
 
 
-def worker(root, campaign, output):
+def _pool_initializer():
+    # The outer owned session contains every worker. Pool.terminate() must
+    # terminate children rather than raise an exception caught by Pool's loop.
+    signal.signal(signal.SIGTERM, signal.SIG_DFL)
+    signal.signal(signal.SIGINT, signal.SIG_IGN)
+    need(_CASE_CONTEXT is not None and os.getpgrp() == _CASE_CONTEXT['process_group'],
+         'fork worker remains in the registered owned process group')
+
+
+def _audit_case(task):
+    name, method, negative, cpu = task
+    ctx = _CASE_CONTEXT
+    need(ctx is not None and (name, method, negative) in CASES and cpu in ctx['allowed_cpus'],
+         'one declared case on an originally allowed CPU')
+    root, campaign, output = ctx['root'], ctx['campaign'], ctx['output']
+    originals, module, record = ctx['originals'], ctx['module'], ctx['record']
+    runtime, state, profile, shared = ctx['runtime'], ctx['state'], ctx['profile'], ctx['shared']
+    rec = ctx['cases'][name]; dest = root / campaign / name; old_dest = originals[campaign] / name
+    previous_affinity = os.sched_getaffinity(0)
+    execution = dict(contract=OFFLINE_CONTRACT, case=name, status='RUNNING', pid=os.getpid(),
+        process_group=os.getpgrp(), started_unix=time.time(), cpu=cpu)
+    receipt_path = output / 'supervision' / (name + '.json')
+    actual, failed = None, None
+    try:
+        os.sched_setaffinity(0, {cpu})
+        execution['cpu_affinity'] = sorted(os.sched_getaffinity(0))
+        need(execution['cpu_affinity'] == [cpu] and execution['process_group'] == ctx['process_group'],
+             'actual isolated case CPU and owned process group')
+        save(receipt_path, execution)
+        files = bind_case(root, campaign, name, runtime, originals[campaign])
+        if campaign == 'reference':
+            e.reference_command(rec, runtime, root / 'build/dump-plan.txt', originals['build'], old_dest, 100000000, 600)
+            actual = module.validate(root / 'build', dest, record, rec, method, negative)
+        else:
+            cfg = read(dest / 'configuration.json')
+            need(cfg == profile['configuration'] and read(dest / 'hardware-profile.json') == profile['hardware_profile'] and
+                 read(dest / 'parent-identity.json') == profile['physical_identity'], 'saved exact actual runtime identity')
+            need(rec['cwd'] == str(old_dest / 'cwd') and rec['command'] == [str(Path(cfg['hardware_source']) / 'build/emu'), '-i',
+                str(old_dest / 'image.bin'), '--flash=' + cfg['flash'], '--ram-size=128MB', '--diff=' + cfg['reference'],
+                '--max-cycles=40000000', '--seed=1', '--log-end=0'] and files[rec['command'][2]] == rec['image_sha256'], 'exact historical target invocation')
+            need(len(rec['cpu_affinity']) == 1 and rec['cpu_affinity'][0] in profile['cpu_slots'], 'actual declared single CPU')
+            mapped = copy.deepcopy(rec); mapped['command'][2] = str(dest / 'image.bin')
+            if rec['status'] not in ('EXPECTED_FIRST_TOKEN_TARGET_REJECTION', 'FIRST_TOKEN_TARGET_DIFFTEST_PASS'):
+                need(state['status'] == 'FAILED_OR_PARTIAL' and rec['status'] == 'FAILED_OR_PARTIAL', 'failed process remains failed')
+                logs = [dest / n for n in ('stdout.log', 'stderr.log')]
+                need(rec['raw_sha256'] == {p.name: sha(p) for p in logs} and rec['raw_bytes'] == {p.name: p.stat().st_size for p in logs},
+                     'all raw failed bytes retained without qualification')
+                failed = dict(status=rec['status'], error=rec.get('error'), exit_code=rec['exit_code'],
+                    raw_bytes=rec['raw_bytes'], raw_sha256=rec['raw_sha256'], target_correctness_qualified=False)
+            else:
+                actual = module.a.validate(dest, root / 'build', record, mapped, cfg, profile, output / name)
+                need(e.inventory(output / name) == e.inventory(dest / 'audit'), 'every raw-derived audit artifact recomputed exactly')
+        if actual is not None:
+            need(actual == read(dest / 'validation.json') and rec['status'] == actual['status'], 'actual raw validation equals bound receipt')
+            if shared is not None: need(actual == shared['validations'][name], 'same campaign aggregate validation')
+        imported = e.imports(module, ctx['source'], ctx['info'], root)
+        if campaign == 'target':
+            for gate in module.a.gates(): imported.update(e.imports(gate, ctx['source'], ctx['info'], root))
+        execution['status'] = 'RAW_RECHECK_COMPLETE' if actual is not None else 'HISTORICAL_FAILURE_BYTES_PRESERVED'
+        return dict(case=name, check=actual, failed=failed, imported_source_files=imported, execution=execution)
+    except BaseException as error:
+        execution.update(status='FAILED', error=repr(error)); raise
+    finally:
+        os.sched_setaffinity(0, previous_affinity)
+        execution['finished_unix'] = time.time()
+        save(receipt_path, execution)
+
+
+def _dispatch_cases(tasks, jobs, timeout):
+    need(type(jobs) is int and 1 <= jobs <= 4 and timeout > 0, 'bounded offline scheduling contract')
+    if jobs == 1:
+        return [_audit_case(task) for task in tasks]
+    pool = multiprocessing.get_context('fork').Pool(jobs, initializer=_pool_initializer)
+    try:
+        result = pool.map_async(_audit_case, tasks).get(timeout=timeout)
+        pool.close()
+        return result
+    except BaseException:
+        pool.terminate()
+        raise
+    finally:
+        pool.join()
+
+
+def owned_command(argv, cwd, stdout_path, stderr_path, receipt_path, spawn, timeout=WORKER_TIMEOUT):
+    """Use the already frozen process owner, including its group cleanup checks."""
+    rec = dict(contract=OFFLINE_CONTRACT, status='RUNNING', command=[str(v) for v in argv],
+        cwd=str(cwd), started_unix=time.time(), process_started=False, exit_code=None,
+        external_timeout_seconds=timeout, cpu_affinity=sorted(os.sched_getaffinity(0)))
+    progress = lambda: save(receipt_path, rec)
+    progress()
+    try:
+        with stdout_path.open('wb') as stdout, stderr_path.open('wb') as stderr:
+            spawn(argv, cwd, stdout, stderr, rec, progress, dict(os.environ), timeout)
+        need(rec.get('direct_child_reaped') is True and rec.get('process_group_absent_after_exit') is True and
+             not rec.get('residual_process_group') and not rec.get('timed_out') and rec['exit_code'] == 0,
+             'owned offline worker exited successfully and its entire group is absent')
+        rec['status'] = 'OWNED_OFFLINE_WORKER_CLOSED'
+        return rec
+    except BaseException as error:
+        rec.update(status='FAILED', error=repr(error)); raise
+    finally:
+        rec['finished_unix'] = time.time()
+        rec['cleanup_unknown'] = bool(rec.get('process_started') and
+            not (rec.get('direct_child_reaped') and rec.get('process_group_absent_after_exit')))
+        progress()
+
+
+def worker(root, campaign, output, jobs=1):
+    global _CASE_CONTEXT
     need(not output.exists() and campaign in ('reference', 'target'), 'fresh selected offline worker output')
+    allowed_cpus = sorted(os.sched_getaffinity(0))
+    need(0 < len(allowed_cpus) <= 4 and 1 <= jobs <= 4 and (campaign == 'target' or jobs == 1),
+         'at most four allowed CPUs; only target cases use the optional process pool')
     output.mkdir(parents=True); started = time.monotonic()
+    (output / 'supervision').mkdir()
     descriptor = read(root / 'metadata/descriptor.json'); originals = {k: Path(v) for k, v in descriptor['roots'].items()}
     tool_identity(root, descriptor)
     module, source, info = e.frozen(root, campaign, 'target/reference.py' if campaign == 'reference' else 'target/run.py')
@@ -245,44 +367,32 @@ def worker(root, campaign, output):
              profile['performance_qualified'] is False, 'one explicit unchanged resource/workload contract')
         need(profile['paths']['build'] == str(originals['build']) and profile['paths']['reference'] == str(originals['reference']) and
              profile['paths']['output'] == str(originals['target']) and state['operation_id'] == profile['operation_id'], 'profile names these exact original roots')
-    for name, method, negative in CASES:
-        dest = root / campaign / name; rec = cases[name]; old_dest = originals[campaign] / name
-        files = bind_case(root, campaign, name, runtime, originals[campaign])
-        if campaign == 'reference':
-            e.reference_command(rec, runtime, root / 'build/dump-plan.txt', originals['build'], old_dest, 100000000, 600)
-            actual = module.validate(root / 'build', dest, record, rec, method, negative)
-        else:
-            cfg = read(dest / 'configuration.json')
-            need(cfg == profile['configuration'] and read(dest / 'hardware-profile.json') == profile['hardware_profile'] and
-                 read(dest / 'parent-identity.json') == profile['physical_identity'], 'saved exact actual runtime identity')
-            need(rec['cwd'] == str(old_dest / 'cwd') and rec['command'] == [str(Path(cfg['hardware_source']) / 'build/emu'), '-i',
-                str(old_dest / 'image.bin'), '--flash=' + cfg['flash'], '--ram-size=128MB', '--diff=' + cfg['reference'],
-                '--max-cycles=40000000', '--seed=1', '--log-end=0'] and files[rec['command'][2]] == rec['image_sha256'], 'exact historical target invocation')
-            need(len(rec['cpu_affinity']) == 1 and rec['cpu_affinity'][0] in profile['cpu_slots'], 'actual declared single CPU')
-            # Validate the historical command first. Only redirect the actual
-            # image access in an in-memory receipt copy; archived bytes stay fixed.
-            mapped = copy.deepcopy(rec); mapped['command'][2] = str(dest / 'image.bin')
-            if rec['status'] not in ('EXPECTED_FIRST_TOKEN_TARGET_REJECTION', 'FIRST_TOKEN_TARGET_DIFFTEST_PASS'):
-                need(state['status'] == 'FAILED_OR_PARTIAL' and rec['status'] == 'FAILED_OR_PARTIAL', 'failed process remains failed')
-                logs = [dest / n for n in ('stdout.log', 'stderr.log')]
-                need(rec['raw_sha256'] == {p.name: sha(p) for p in logs} and rec['raw_bytes'] == {p.name: p.stat().st_size for p in logs},
-                     'all raw failed bytes retained without qualification')
-                failed[name] = dict(status=rec['status'], error=rec.get('error'), exit_code=rec['exit_code'],
-                    raw_bytes=rec['raw_bytes'], raw_sha256=rec['raw_sha256'], target_correctness_qualified=False)
-                continue
-            actual = module.a.validate(dest, root / 'build', record, mapped, cfg, profile, output / name)
-            need(e.inventory(output / name) == e.inventory(dest / 'audit'), 'every raw-derived audit artifact recomputed exactly')
-        need(actual == read(dest / 'validation.json') and rec['status'] == actual['status'], 'actual raw validation equals bound receipt')
-        if shared is not None: need(actual == shared['validations'][name], 'same campaign aggregate validation')
-        checks[name] = actual
+    _CASE_CONTEXT = dict(root=root, campaign=campaign, output=output, originals=originals, module=module,
+        record=record, runtime=runtime, state=state, profile=profile, shared=shared, cases=cases,
+        source=source, info=info, allowed_cpus=allowed_cpus, process_group=os.getpgrp())
+    tasks = [(name, method, negative, allowed_cpus[index % len(allowed_cpus)] if jobs > 1 else allowed_cpus[0])
+             for index, (name, method, negative) in enumerate(CASES)]
+    try:
+        results = _dispatch_cases(tasks, jobs, POOL_DEADLINE - (time.monotonic() - started))
+    finally:
+        _CASE_CONTEXT = None
+    need([row['case'] for row in results] == [case[0] for case in CASES], 'complete ordered unique offline case results')
+    imported = {}; executions = {}
+    for row in results:
+        name = row['case']; executions[name] = row['execution']
+        need((row['check'] is None) != (row['failed'] is None), 'exactly one checked or preserved-failure outcome')
+        if row['check'] is not None: checks[name] = row['check']
+        else: failed[name] = row['failed']
+        for rel, value in row['imported_source_files'].items():
+            need(rel not in imported or imported[rel] == value, 'all workers used identical frozen helper bytes')
+            imported[rel] = value
     replay_equal = checks.get('ta') == checks.get('replay') if 'ta' in checks and 'replay' in checks else None
     qualified = state['status'] == (PASS if campaign == 'target' else b.REFERENCE_PASS)
     if qualified: need(not failed and replay_equal is True, 'independent complete raw architecture/counter/protocol replay')
     else: need(campaign == 'target' and state['status'] == 'FAILED_OR_PARTIAL', 'failed campaign remains unqualified')
-    imported = e.imports(module, source, info, root)
-    if campaign == 'target':
-        for gate in module.a.gates(): imported.update(e.imports(gate, source, info, root))
     report = dict(status='FIRST_TOKEN_FROZEN_RAW_RECHECK_PASS' if qualified else 'FIRST_TOKEN_CLOSED_PARTIAL_EVIDENCE_PRESERVED',
+        offline_audit_contract=OFFLINE_CONTRACT, jobs=jobs, allowed_cpus=allowed_cpus, case_executions=executions,
+        pool_deadline_seconds=POOL_DEADLINE if jobs > 1 else None,
         campaign=campaign, checks=checks, failed_cases=failed, historical_status=state['status'], imported_source_files=imported,
         historical_error=state.get('error'), replay_equal=replay_equal,
         historically_bound_files=bound + norm_bound, elapsed_seconds=time.monotonic() - started,
@@ -293,6 +403,7 @@ def worker(root, campaign, output):
 
 def recheck(args):
     root, output = args.root.resolve(), args.output.resolve()
+    need(1 <= args.jobs <= 4 and 0 < len(os.sched_getaffinity(0)) <= 4, 'explicit bounded offline CPUs and jobs')
     need(not output.exists() and not output.is_relative_to(root), 'fresh audit output outside restored originals')
     need(sha(args.manifest) == args.expected_manifest_sha256, 'published exact manifest identity')
     manifest = read(args.manifest); expected = {row['path']: dict(size=row['size'], sha256=row['sha256']) for row in manifest['files']}
@@ -309,11 +420,15 @@ def recheck(args):
          next(row['sha256'] for row in parent['files'] if row['path'] == 'consumer-build/consumer-w2-norm.o') == descriptor['parent_core_sha256'],
          'explicit sealed parent provenance and exact shared core; parent raw not rerun here')
     output.mkdir(parents=True); began = time.monotonic(); reports = {}
+    supervisor, supervisor_source, supervisor_info = e.frozen(root, 'target', 'target/run.py')
+    supervisor_imports = e.imports(supervisor, supervisor_source, supervisor_info, root)
+    spawn = supervisor.old.previous.spawn
     for campaign in ('reference', 'target'):
-        argv = [sys.executable, '-B', str(Path(__file__).resolve()), 'worker', '--root', str(root), '--campaign', campaign, '--output', str(output / campaign)]
-        with (output / (campaign + '.stdout.log')).open('wb') as stdout, (output / (campaign + '.stderr.log')).open('wb') as stderr:
-            proc = subprocess.run(argv, stdout=stdout, stderr=stderr, timeout=7200)
-        need(proc.returncode == 0, 'fresh historical-validator process: ' + campaign)
+        jobs = args.jobs if campaign == 'target' else 1
+        argv = [sys.executable, '-B', str(Path(__file__).resolve()), 'worker', '--root', str(root), '--campaign', campaign,
+                '--output', str(output / campaign), '--jobs', str(jobs)]
+        owned_command(argv, output, output / (campaign + '.stdout.log'), output / (campaign + '.stderr.log'),
+                      output / (campaign + '-ownership.json'), spawn)
         reports[campaign] = read(output / campaign / 'result.json')
     diagnostics = {}; originals = {name: Path(path) for name, path in descriptor['roots'].items()}
     roots = {name: root / name for name in originals}
@@ -325,9 +440,8 @@ def recheck(args):
         entry = root / 'profile/closure/repo' / REL / 'profile.py'
         argv = [sys.executable, '-B', str(entry), 'recheck', '--build', str(root / 'build'),
                 '--reference', str(root / 'reference'), '--profile', str(root / 'profile'), '--output', str(output / 'profile')]
-        with (output / 'profile.stdout.log').open('wb') as stdout, (output / 'profile.stderr.log').open('wb') as stderr:
-            proc = subprocess.run(argv, stdout=stdout, stderr=stderr, timeout=7200)
-        need(proc.returncode == 0, 'fresh historical reference-profile raw recheck')
+        owned_command(argv, output, output / 'profile.stdout.log', output / 'profile.stderr.log',
+                      output / 'profile-ownership.json', spawn)
         checked = read(output / 'profile/result.json')
         need(checked['status'] == 'FROZEN_REFERENCE_PROFILE_RECHECK_PASS' and
              checked['new_reference_runs'] == checked['new_emu_runs'] == 0 and checked['performance_qualified'] is False,
@@ -337,6 +451,7 @@ def recheck(args):
     need(e.inventory(root) == before, 'every restored original file unchanged after raw audit')
     qualified = reports['target']['historical_status'] == PASS and not reports['target']['failed_cases']
     report = dict(status='FIRST_TOKEN_ARCHIVE_RAW_RECHECK_PASS' if qualified else 'FIRST_TOKEN_PARTIAL_ARCHIVE_PRESERVED',
+        offline_audit_contract=OFFLINE_CONTRACT, target_jobs=args.jobs, supervisor_imported_source_files=supervisor_imports,
         manifest_sha256=sha(args.manifest), file_count=len(before), original_bytes=sum(r['size'] for r in before.values()),
         campaigns={name: dict(status=v['status'], cases=list(v['checks']), failed_cases=list(v['failed_cases'])) for name, v in reports.items()},
         diagnostics=diagnostics,
@@ -349,6 +464,8 @@ def recheck(args):
 
 
 if __name__ == '__main__':
+    signal.signal(signal.SIGTERM, interrupted)
+    signal.signal(signal.SIGINT, interrupted)
     parser = argparse.ArgumentParser(description=__doc__); sub = parser.add_subparsers(dest='action', required=True)
     p = sub.add_parser('seal')
     for name in ('repo', 'build', 'norm-build', 'reference', 'target', 'parent-evidence', 'output'): p.add_argument('--' + name, type=Path, required=True)
@@ -356,9 +473,11 @@ if __name__ == '__main__':
     p = sub.add_parser('recheck')
     for name in ('root', 'manifest', 'output'): p.add_argument('--' + name, type=Path, required=True)
     p.add_argument('--expected-manifest-sha256', required=True)
+    p.add_argument('--jobs', type=int, choices=(1, 2, 3, 4), default=1)
     p = sub.add_parser('worker')
     for name in ('root', 'output'): p.add_argument('--' + name, type=Path, required=True)
     p.add_argument('--campaign', choices=('reference', 'target'), required=True)
+    p.add_argument('--jobs', type=int, choices=(1, 2, 3, 4), default=1)
     args = parser.parse_args()
-    result = seal(args) if args.action == 'seal' else recheck(args) if args.action == 'recheck' else worker(args.root.resolve(), args.campaign, args.output.resolve())
+    result = seal(args) if args.action == 'seal' else recheck(args) if args.action == 'recheck' else worker(args.root.resolve(), args.campaign, args.output.resolve(), args.jobs)
     print(json.dumps({k: result[k] for k in ('status', 'target_correctness_qualified') if k in result}, indent=2))
