@@ -1,0 +1,44 @@
+Startpoint: io_in_bits_fuType[15] (input port clocked by core_clk)
+Endpoint: c198098 (rising edge-triggered flip-flop clocked by core_clk)
+Path Group: core_clk
+Path Type: max
+
+Fanout         Cap        Slew       Delay        Time   Description
+--------------------------------------------------------------------------------------------
+                     0.050000    0.000000    0.000000   clock core_clk (rise edge)
+                                 0.000000    0.000000   clock network delay (ideal)
+                                 0.100000    0.100000 v input external delay
+                     0.050000    0.000000    0.100000 v io_in_bits_fuType[15] (in)
+    1    1.202629                                       io_in_bits_fuType[15] (net)
+                     0.050000    0.000008    0.100007 v c57/A4 (OR4_X1)
+                     0.018834    0.133023    0.233030 v c57/ZN (OR4_X1)
+    2    3.145969                                       n2884 (net)
+                     0.018834    0.000009    0.233039 v c58/A4 (OR4_X1)
+                     0.031149    0.149052    0.382091 v c58/ZN (OR4_X1)
+    7   13.460602                                       n2885 (net)
+                     0.031149    0.000018    0.382109 v c75663/A2 (NOR4_X1)
+                     0.076970    0.110579    0.492688 ^ c75663/ZN (NOR4_X1)
+    3    5.328136                                       n91377 (net)
+                     0.076970    0.000015    0.492704 ^ c86520/B2 (AOI22_X1)
+                     0.020254    0.033442    0.526146 v c86520/ZN (AOI22_X1)
+    1    1.873585                                       n103785 (net)
+                     0.020254    0.000012    0.526157 v c86521/A2 (NOR2_X1)
+                     0.014482    0.031278    0.557436 ^ c86521/ZN (NOR2_X1)
+    1    1.450030                                       n103786 (net)
+                     0.014482    0.000009    0.557445 ^ c198098/D (DFF_X1)
+                                             0.557445   data arrival time
+
+                     0.050000    0.500000    0.500000   clock core_clk (rise edge)
+                                 0.000000    0.500000   clock network delay (ideal)
+                                -0.050000    0.450000   clock uncertainty
+                                 0.000000    0.450000   clock reconvergence pessimism
+                                             0.450000 ^ c198098/CK (DFF_X1)
+                                -0.027931    0.422069   library setup time
+                                             0.422069   data required time
+--------------------------------------------------------------------------------------------
+                                             0.422069   data required time
+                                            -0.557445   data arrival time
+--------------------------------------------------------------------------------------------
+                                            -0.135375   slack (VIOLATED)
+
+

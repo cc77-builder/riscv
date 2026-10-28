@@ -1,0 +1,92 @@
+[
+  {
+    "name": "safe-tail-host-retry",
+    "command": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "team/optimizations/o2/r2-safe-tail",
+      "-p",
+      "test_*.py",
+      "-v"
+    ],
+    "cwd": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo",
+    "returncode": 0
+  },
+  {
+    "name": "selection-host-only",
+    "command": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "team/optimizations/o2/r2-select",
+      "-p",
+      "test_selection.py",
+      "-v"
+    ],
+    "cwd": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo",
+    "returncode": 0
+  },
+  {
+    "name": "entry-portable-host",
+    "command": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "-v",
+      "test_entry.CallPath",
+      "test_entry_c_api.Recovery"
+    ],
+    "cwd": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/r2-select",
+    "returncode": 0
+  },
+  {
+    "name": "t12-host",
+    "command": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "team/tests",
+      "-p",
+      "test_t12*.py",
+      "-v"
+    ],
+    "cwd": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo",
+    "returncode": 0
+  },
+  {
+    "name": "t12-judge-build",
+    "command": [
+      "gcc",
+      "-std=c11",
+      "-O2",
+      "-Wall",
+      "-Wextra",
+      "-Iteam/workloads/vdot-exceptions",
+      "team/tests/test_t12_judge.c",
+      "team/workloads/vdot-exceptions/judge.c",
+      "-o",
+      "/home/riscv/riscv-lab/branch-review-integration-20261024/test_t12_judge"
+    ],
+    "cwd": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo",
+    "returncode": 0
+  },
+  {
+    "name": "t12-judge-run",
+    "command": [
+      "/home/riscv/riscv-lab/branch-review-integration-20261024/test_t12_judge"
+    ],
+    "cwd": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo",
+    "returncode": 0
+  }
+]

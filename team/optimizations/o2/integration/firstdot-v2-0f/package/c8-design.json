@@ -1,0 +1,238 @@
+{
+  "schema_version": 1,
+  "contract": "current-0f-c8-stable-entry-design-v1",
+  "status": "DESIGN_REVIEW_COMPLETE_NOT_IMPLEMENTED",
+  "operation_id": "20261027-cc77-builder-c8-stable-design",
+  "source_commit": "c823a8786e052c6e26f6915563c42b6d730dd8e3",
+  "selected_hardware_commit": "0f12df675378556670afd0dd2153f47fcb330610",
+  "branch": "local/zjhwork-integration-20261024",
+  "scope": "Independent opt-in8x32 compile-time source aliases and complete-object static package",
+  "implementation_state": "NOT_IMPLEMENTED",
+  "planned_package_root": "team/optimizations/o2/integration/firstdot-v2-0f/package/c8",
+  "selected_api": "config_reuse_gemv_8x32_reuse_vdot",
+  "rvv_api": "config_reuse_gemv_8x32_reuse_rvv",
+  "entry_design": {
+    "header": "selected_gemv_c8.h",
+    "raw_header": "config_reuse_gemv.h",
+    "aliases": {
+      "xs_c8_gemv_8x32": "config_reuse_gemv_8x32_reuse_vdot",
+      "xs_c8_gemv_8x32_rvv": "config_reuse_gemv_8x32_reuse_rvv"
+    },
+    "force_macro": "XS_C8_GEMV_FORCE_RVV",
+    "force_values": [
+      0,
+      1
+    ],
+    "version_macro": "XS_C8_GEMV_API_VERSION",
+    "api_version": 1,
+    "library": "libxs_gemv_c8.a",
+    "members": [
+      "gemv.o"
+    ],
+    "full_object_preserved": true,
+    "runtime_dispatch": false,
+    "additional_wrapper_symbols": false,
+    "old_entry_modified": false,
+    "global_default_switched": false
+  },
+  "observed_qualified_object": {
+    "path": "/home/riscv/riscv-lab/software-import-20261026/config-reuse-c8-02/build-01/gemv-reference.o",
+    "sha256": "f8bc13daeead98a414f313600a5778c96ac95a66b5bcb5c714ea3b98e0d25ab3",
+    "bytes": 27160,
+    "public_functions": 16,
+    "code_section": ".text",
+    "section_alignment_bytes": 16,
+    "target_vdot_bytes": 656,
+    "target_rvv_bytes": 448
+  },
+  "interface": {
+    "language": "C",
+    "abi": "RV64 lp64d",
+    "platform": "Nexus-AM bare metal on current0f",
+    "vlen_bits_exact": 128,
+    "vs_enabled": true,
+    "requires_custom_vdot_for_default": true,
+    "packed_signed_int8_input_bytes": 288,
+    "output_bytes": 128,
+    "output_rows": 8,
+    "output_row_stride_bytes": 16,
+    "low_result_bits": 32,
+    "high_zero_bits": 96,
+    "buffer_alignment_bytes": 16,
+    "disjoint_buffers": true,
+    "return_csr": {
+      "vl": 8,
+      "vtype": 0,
+      "vstart": 0,
+      "vcsr": 7
+    },
+    "linux_userspace_qualified": false,
+    "auto_cpu_detection": false,
+    "csr_preservation": false
+  },
+  "evidence_reuse": {
+    "hardware_identity": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/identity/current.json",
+      "sha256": "3b9d9332720b6d21a52c979d84c3398bf9c3070812094da29431575a4e7a7451",
+      "bytes": 667173
+    },
+    "matrix_record_id": "CONFIG-REUSE-MATRIX-DIVFIX0F-CLEAN02-20261027-01",
+    "matrix_audit": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/config-reuse-expanded-01/audit-01.json",
+      "sha256": "f38fb3c84aea3b92a0f48d47bc4e577d6fa6415c1eb7fa84927d8d5f115ddcce",
+      "bytes": 59562
+    },
+    "matrix_results": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/config-reuse-expanded-01/run-01/results.json",
+      "sha256": "71e066eea1d1688d943c9a4039e6f3fa51c3e651bcb803e5a8b7835ad4fd0adf",
+      "bytes": 2804170
+    },
+    "c8_record_id": "CONFIG-REUSE-C8-DIVFIX0F-CLEAN02-20261027-02",
+    "c8_record": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/config-reuse-c8-v2/record.json",
+      "sha256": "b15e13b926230bd10b488dcc8aa662ea06d46fee42b7063d12c11fa7790b6960",
+      "bytes": 20966
+    },
+    "c8_audit": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/config-reuse-c8-02/audit-01.json",
+      "sha256": "eb47e86bc9b402ffc7401c0409fa743ba58b9698edacd6db535e2abcc1726d33",
+      "bytes": 30846
+    },
+    "c8_manifest": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/config-reuse-c8-02/build-01/source/manifest.json",
+      "sha256": "78068ab52b6566f080b8530eba06bfbba5940b3ae30eed0756e808607a5b9b1b",
+      "bytes": 459832
+    },
+    "c8_contract": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/config-reuse-c8-v2/tools/c8-v2/CONTRACT.md",
+      "sha256": "77d9f05593298327b8a7e75c44ddc80c5e8f1d408a3d31c34ae8a6a1c839bf18",
+      "bytes": 3682
+    },
+    "c8_anchor": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/config-reuse-c8-02/build-01/current-matrix-anchor.json",
+      "sha256": "abcef76700ec63688f9a0af6d04713316a1150a8bfb97d2967444c871186f1ce",
+      "bytes": 11767
+    },
+    "qualification": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/config-reuse-c8-02/run-01/current-c-qualification.json",
+      "sha256": "b0fe4dca2529d2c16b764cb6e058cd37e329d757d8639c74c0ea982ce8a3d68a",
+      "bytes": 12908
+    }
+  },
+  "historical_metrics": {
+    "source_record": 25,
+    "shape": "8x32",
+    "formal_samples_per_cell": 12,
+    "firstdot_cycles": 282.25,
+    "candidate_cycles": 273,
+    "fastest_rvv_cycles": 299,
+    "speedup": 1.0952380952380953,
+    "measured_in_this_design": false
+  },
+  "verification_plan": {
+    "static_package": [
+      "current identity and raw qualification binding",
+      "independent whole-object assembly equality",
+      "single deterministic ar member equality",
+      "three macro modes and explicit call object equality",
+      "relocation and unresolved-symbol checks",
+      "semantic mutation rejection even with regenerated hashes",
+      "header ordering and independent macro controls",
+      "moved SDK and rollback"
+    ],
+    "new_emu_if_all_byte_equivalence_gates_pass": 0,
+    "not_guaranteed": "No arbitrary finalELF or application cycle claim",
+    "requires_new_contract_if": [
+      "wrapper",
+      "dispatcher",
+      "CSR save/restore",
+      "parameter checks",
+      "mixed/trimmed objects",
+      "new executable/load layout",
+      "changed compile options",
+      "new application"
+    ],
+    "conditional_probe": {
+      "shape": "8x32",
+      "dataset": 0,
+      "base_processes": 5,
+      "normal_windows_per_image": 24,
+      "formal_windows_per_image": 16,
+      "formal_windows_two_images": 32,
+      "baseline": "New same-path firstdot and fastest qualified RVV",
+      "preintegration_config_reuse_nonregression": "Needs legal paired control; historical273 is not a new measurement",
+      "expanded_gate": "Three datasets, aggregate and each dataset strictly faster; no unexplained control drift or other paired regression"
+    },
+    "new_control_flow_gate": "Old performance checker only accepts one direct jal ra/ret with fixed7 extra instructions; wrappers/dispatchers require new exact decode/retirement/boundary validation and negative controls."
+  },
+  "verification_actual": {
+    "source_review": "DONE",
+    "existing_object_read_only_inspection": "DONE",
+    "new_package_build": "NOT_TESTED",
+    "new_consumer_compile": "NOT_TESTED",
+    "new_emu_runs": 0,
+    "new_nemu_runs": 0,
+    "new_performance": "NOT_TESTED",
+    "new_fu_parent": "NOT_TESTED",
+    "new_area_sta_power": "NOT_TESTED"
+  },
+  "no_changes": {
+    "rtl": true,
+    "nemu": true,
+    "old_tools": true,
+    "old_headers": true,
+    "frozen_inputs": true,
+    "github": true
+  },
+  "planned_files": [
+    "CONTRACT.md",
+    "README.md",
+    "public/selected_gemv_c8.h",
+    "public/Makefile",
+    "public/example.c",
+    "INPUTS.json",
+    "verify_c8_package.py",
+    "test_c8_package.py"
+  ],
+  "current_scope_exclusions": [
+    "default promotion",
+    "new four-shape policy",
+    "runtime wrapper",
+    "Linux userspace",
+    "complete LLM",
+    "FPGA/ASIC frequency or power claim",
+    "formal contest reports"
+  ],
+  "reviewers": [
+    {
+      "agent": "/root/entry_c8_review",
+      "role": "Existing entry and minimal integration design",
+      "read_only": true,
+      "result": "Draft reviewed with no remaining findings"
+    },
+    {
+      "agent": "/root/entry_c8_contract",
+      "role": "Qualification/ABI/fairness contract",
+      "read_only": true,
+      "result": "Amended draft reviewed: no blocking issue after explicit new-control-flow validator requirement"
+    }
+  ],
+  "protected_input_manifest": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/package/c8-design-inputs.json",
+    "sha256": "ad1ab70b2273864edd369333049bf4497bf4ffba1287f01dfdde2ec4c62caa25",
+    "bytes": 40142
+  },
+  "issue_read_only": {
+    "latest_comment": 6441571759,
+    "comments": 207,
+    "messages_posted": 0
+  },
+  "design_document": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/package/C8_DESIGN.md",
+    "sha256": "2cd06343f5d75bd946b154dc8ed59d6d5793f1c53021011fb0587c39d0df4503",
+    "bytes": 14561
+  },
+  "recorded_at": "2026-10-27T21:18:54.413108+08:00",
+  "next_step": "Implement separate C8 package and current identity validator; validate GNU equivalence/semantic negatives/moved SDK. Zero newEMU only when exact byte and qualification gates hold.",
+  "completed_at": "2026-10-27T21:21:20.889312+08:00"
+}

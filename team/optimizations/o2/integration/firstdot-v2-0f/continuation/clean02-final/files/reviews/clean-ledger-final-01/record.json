@@ -1,0 +1,1733 @@
+{
+  "record_id": "CLEAN-FIRSTDOT-V2-DIVFIX0F-20261027-01",
+  "draft_only": false,
+  "status": "SAME_HOST_CLEAN_FUNCTIONAL_CYCLES_PASS_WALL_CLOCK_LIMITED",
+  "label": "同机独立干净构建与当前组合复现完成（全核宿主时间资格受限）",
+  "candidate": "clean-02 fresh EMU/NEMU/AM/klib + firstdot V2",
+  "baseline": "FIRSTDOT-V2-DIVFIX0F-20261026-01 current-hardware combination",
+  "scope": "same-host independent source/generated-product build; installed tools and downloaded Git/Mill caches retained",
+  "source_commit": "c823a8786e052c6e26f6915563c42b6d730dd8e3",
+  "selected_hardware_commit": "0f12df675378556670afd0dd2153f47fcb330610",
+  "hardware_implementation_changed": false,
+  "source_snapshot_manifest_path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/build/hardware-inputs.json",
+  "source_snapshot_manifest_sha256": "843d0a9ae680361bfff7240fd9afd8771acb10b6145b8519e8f8db6d5b8dbd59",
+  "contract_path": "team/optimizations/o2/integration/firstdot-v2-0f/clean/current_clean_fullcore.py",
+  "contract_sha256": "66ba5511fd3bc79e2b8af6b279f1ad8ad7c3e5e7e7a5a184cce9a3be59169913",
+  "configuration": {
+    "config": "MinimalConfig",
+    "NUM_CORES": 1,
+    "EMU_THREADS": 1,
+    "JVM_XMX": "8G",
+    "JVM_XSS": "16m",
+    "BUILD_JOBS": 4,
+    "OPT_FAST": "-O3",
+    "OPT_SLOW": "-O0",
+    "flags": {
+      "VDOT_O2_ELASTIC": "1",
+      "VDOT_O1_HANDOFF": "0",
+      "VDOT_O1_TRACE": "0",
+      "VDOT_T14_FUSED_INPUT": "1",
+      "VDOT_O2_TRACE": "1",
+      "VDOT_T12_TRACE": "0",
+      "VDOT_T13_TRACE": "1"
+    },
+    "build_cpu_affinity": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "runtime_seed": 1,
+    "runtime_ram": "128MB",
+    "runtime_max_cycles": 2000000,
+    "runtime_resource_order": "fullcore3 plus C1; after fullcore PASS start serial matrix while C may finish. Finalize C only after matrix and C exit0. All heavy work <=4CPU.",
+    "hardware_runtime": {
+      "hardware_source": "/home/riscv/riscv-lab/software-import-20261026/clean-02/checkout/source",
+      "build_record": "/home/riscv/riscv-lab/software-import-20261026/clean-02/build",
+      "build_driver": "/home/riscv/riscv-lab/software-import-20261026/clean-02/build/executed-builder.py",
+      "reference": "/home/riscv/riscv-lab/software-import-20261026/clean-02/support/nemu/reference/build/riscv64-nemu-interpreter-so",
+      "am_home": "/home/riscv/riscv-lab/software-import-20261026/clean-02/checkout/xs-env/nexus-am",
+      "flash": "/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+      "cross_prefix": "riscv64-linux-gnu-",
+      "source_commit": "c823a8786e052c6e26f6915563c42b6d730dd8e3",
+      "support_record": "/home/riscv/riscv-lab/software-import-20261026/clean-02/support"
+    }
+  },
+  "input_identities": {
+    "emu_sha256": "acf672eb39f836da4000b253849e3214089e9c8e5198060a57d2cc6bbd393da9",
+    "nemu_sha256": "62b1707c52a4c323468481e0c1863b79f244d9a3fd54aeb7b7d2ecb5f01a35ca",
+    "flash_sha256": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+    "hardware_identity": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/identity/current.json",
+      "sha256": "3b9d9332720b6d21a52c979d84c3398bf9c3070812094da29431575a4e7a7451",
+      "bytes": 667173
+    },
+    "matrix_images_manifest": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/matrix-build-01/images.json",
+      "sha256": "c8c041570eceebcf567667273983a774e04baa27214219cb958a10c9075bfa1d",
+      "bytes": 8637
+    },
+    "c_build_manifest": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/c-build-01/build.json",
+      "sha256": "497ac470fd55b6a26e5f42e59bfdecd35048447bcfe25135b3fa9477f4657234",
+      "bytes": 6993
+    },
+    "toolchain_manifest": "see bounded build version logs and each program build.json",
+    "library_sha256": {
+      "/home/riscv/riscv-lab/software-import-20261026/clean-02/checkout/xs-env/nexus-am/am/build/am-riscv64-xs.a": "b421e116992550ac29aa64f3116cc64f7bfad9a857b13eb773892cdaca20801a",
+      "/home/riscv/riscv-lab/software-import-20261026/clean-02/checkout/xs-env/nexus-am/libs/klib/build/klib-riscv64-xs.a": "3147e2bf410a16f3fbecd077601c4ca96bd26d17f6a53fb2c928bf13df53eb63"
+    }
+  },
+  "actual_preparation": {
+    "source_prepare": {
+      "state": "T17_CLEAN_SOURCE_PREPARED",
+      "repositories": 133,
+      "receipt": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/checkout/prepare-state.json",
+        "sha256": "a4315f8e6b98d4e4275acea0035205888d32ba26f17283d332f7be6dda2b49b0",
+        "bytes": 111762
+      }
+    },
+    "shallow_metadata": {
+      "status": "CLEAN_SHALLOW_METADATA_RESTORED",
+      "planned_writes": 1,
+      "actual_writes": 1,
+      "after_prepare_repositories": 133,
+      "after_support_repositories": 145,
+      "source_git_modified": false,
+      "rtl_modified": false,
+      "frozen_prepare_modified": false,
+      "plan": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/shallow-plan.json",
+        "sha256": "e93b6be037cb5486f6e5e5b9e2ff7b9fb3b8e7982da6ae5059bcf763ed70d8b8",
+        "bytes": 1558828
+      },
+      "apply": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/shallow-repair.json",
+        "sha256": "1b301e15ddbbca46dae69afb45a91893184e576dda2ac75b9d24415d82d29d9b",
+        "bytes": 2040242
+      },
+      "after_support": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/shallow-after-support.json",
+        "sha256": "4d4dc92fdfc17bb1383632da5cfc4db8263a8e1398437e529d566ef420ec4f43",
+        "bytes": 1684649
+      }
+    },
+    "support_build": {
+      "status": "T17_CLEAN_SUPPORT_BUILD_PASS",
+      "runtime_qualified": false,
+      "receipt": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/support/state.json",
+        "sha256": "2bf2d7bac70a257eea5c9e8e53a947598ea8d54d89c6d52978ddac6f4c44dd40",
+        "bytes": 1987
+      }
+    },
+    "hardware_build": {
+      "status": "CURRENT_CLEAN_BUILD_PASS",
+      "exit_code": 0,
+      "source_files": 429,
+      "dependency_files": 21236,
+      "generated_files": 2723,
+      "runtime_qualified": false,
+      "receipt": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/build/build-state.json",
+        "sha256": "4f6b5c4632c2e7a0a7402203fcda93f731c84f2e9aff4d675aa381622dc1e1d3",
+        "bytes": 1427
+      }
+    },
+    "program_builds": {
+      "status": "CLEAN_PROGRAM_BUILD_AND_BYTES_PASS",
+      "matrix_images": 24,
+      "ordinary_c_images": 1,
+      "target_loaded_bytes_equal_to_current": true,
+      "runtime_compared": false,
+      "receipt": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/program-preparation-state.json",
+        "sha256": "65ee74eb0cf31934a428bef35a805f8779ea07f4548ceda0fab7d5f51e4774b1",
+        "bytes": 692
+      },
+      "comparison": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/program-byte-comparison-01.json",
+        "sha256": "d4dc96c6c210cd9ace5744cac84b721d69a6827e7c0e1f2884c31bb36a856de5",
+        "bytes": 51471
+      }
+    }
+  },
+  "execution": {
+    "started_at": "2026-10-27T03:38:31.802391+00:00",
+    "finished_at": "2026-10-27T09:24:29.948544+00:00",
+    "commands_path": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/reviews/clean-runtime-orchestration-archive-02/manifest.json",
+      "sha256": "5798eb25ba85d5ac236fc6bd785779fdac73306823cf217ed1f3921fca9e6971",
+      "bytes": 101851
+    },
+    "actual_started_processes": 53,
+    "qualified_processes": 50,
+    "interrupted_processes": 0,
+    "new_runs": 53,
+    "reused_runs": 0,
+    "previous_c_processes_excluded_from_final_selection": 3,
+    "actual_exit_counts": {
+      "0": 49,
+      "1_expected_negative": 4
+    },
+    "actual_records": [
+      {
+        "campaign": "fullcore-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/fullcore-run-01/runs/control/result.json",
+          "sha256": "4523a2f64a7ec700faeca1eff39e8860c091203ef4898509391ef5875ce817ba",
+          "bytes": 3343
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T04:48:22.913032+00:00",
+        "finished": "2026-10-27T05:01:26.193403+00:00"
+      },
+      {
+        "campaign": "fullcore-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/fullcore-run-01/runs/dense-batch128/result.json",
+          "sha256": "614d330a9987f1ca656b6d02c5683c75a702857599068f60eea608e136babaaf",
+          "bytes": 3412
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T05:01:32.822431+00:00",
+        "finished": "2026-10-27T05:04:18.441558+00:00"
+      },
+      {
+        "campaign": "fullcore-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/fullcore-run-01/runs/functional-0/result.json",
+          "sha256": "267b5278d182d4da36cfc4085a0fc5f2f2bb3f40db2e4e7b48d7a279ca549189",
+          "bytes": 3369
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T03:53:07.235186+00:00",
+        "finished": "2026-10-27T04:20:50.751296+00:00"
+      },
+      {
+        "campaign": "fullcore-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/fullcore-run-01/runs/functional-1/result.json",
+          "sha256": "ca5394db040f96be17a108bae54979ea56faf9eefdd3c9c5cdf95934d0e3c464",
+          "bytes": 3369
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T03:40:45.374786+00:00",
+        "finished": "2026-10-27T04:10:38.921609+00:00"
+      },
+      {
+        "campaign": "fullcore-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/fullcore-run-01/runs/functional-2/result.json",
+          "sha256": "95e03be05da129c1319298b886115cfe95b5acb380029f040b44643d78fec2f5",
+          "bytes": 3369
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T03:40:45.374866+00:00",
+        "finished": "2026-10-27T04:10:44.703078+00:00"
+      },
+      {
+        "campaign": "fullcore-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/fullcore-run-01/runs/functional-3/result.json",
+          "sha256": "05203426e897c18e47fafd22ba705fca4df7f3f20e9a690293e33b950c73f5dd",
+          "bytes": 3369
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T04:10:41.549837+00:00",
+        "finished": "2026-10-27T04:39:36.112476+00:00"
+      },
+      {
+        "campaign": "fullcore-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/fullcore-run-01/runs/functional-4/result.json",
+          "sha256": "5191c1436a4929ce00481543de7d7cd4e22e610f1fe0dafb9576ac5544bc23e8",
+          "bytes": 3369
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T04:10:47.662103+00:00",
+        "finished": "2026-10-27T04:39:28.665892+00:00"
+      },
+      {
+        "campaign": "fullcore-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/fullcore-run-01/runs/functional-5/result.json",
+          "sha256": "e3d0a1903edabe89413c829fe7acf192d24a7655f89ab38973d64e1300d7e3d0",
+          "bytes": 3369
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T04:20:53.148534+00:00",
+        "finished": "2026-10-27T04:48:20.398198+00:00"
+      },
+      {
+        "campaign": "fullcore-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/fullcore-run-01/runs/functional-6/result.json",
+          "sha256": "eb60042b96ece80721f32fec5e4698a7bf089ace604df0d92a11fd2e41be00b5",
+          "bytes": 3369
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T04:39:31.609435+00:00",
+        "finished": "2026-10-27T05:05:53.711131+00:00"
+      },
+      {
+        "campaign": "fullcore-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/fullcore-run-01/runs/functional-7/result.json",
+          "sha256": "4be6b90eb9883be0d1303e0d85f00d31864acf49e3b1a6296c9e08fc3cf1d5ab",
+          "bytes": 3369
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T04:39:38.795826+00:00",
+        "finished": "2026-10-27T05:05:46.746956+00:00"
+      },
+      {
+        "campaign": "fullcore-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/fullcore-run-01/runs/hello-vadd/result.json",
+          "sha256": "c956757bfcfdebe49e59085bf7211516a9a3459a19c0c84e935e26c05b5eb3c5",
+          "bytes": 3336
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T03:38:41.560411+00:00",
+        "finished": "2026-10-27T03:40:44.362569+00:00"
+      },
+      {
+        "campaign": "fullcore-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/fullcore-run-01/runs/negative-vdot/result.json",
+          "sha256": "e0833c738d6c5c5b01b03cc44efcd8f1b7975f44ed3e792342d01478adc4cb69",
+          "bytes": 3849
+        },
+        "exit_code": 1,
+        "started": "2026-10-27T03:40:45.373988+00:00",
+        "finished": "2026-10-27T03:53:06.250829+00:00"
+      },
+      {
+        "campaign": "fullcore-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/fullcore-run-01/runs/o2-control-diagnostic/result.json",
+          "sha256": "c088c2d602c87fd55c77681ad33c911a8e395826971624d084d701f08a520375",
+          "bytes": 3482
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T05:05:46.666837+00:00",
+        "finished": "2026-10-27T05:30:32.099881+00:00"
+      },
+      {
+        "campaign": "fullcore-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/fullcore-run-01/runs/o2-diagnostic/result.json",
+          "sha256": "928e45488c7ad7c0529855f766a4fe6e462afe60ca7f0e0a7183152fb81f46c8",
+          "bytes": 3417
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T05:04:20.735993+00:00",
+        "finished": "2026-10-27T05:08:43.093291+00:00"
+      },
+      {
+        "campaign": "matrix-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/matrix-run-01/runs/formal-performance-firstdot-d0-s01/result.json",
+          "sha256": "5ca375ab4d42382ad79bd61f21dc40e75b6770417cf04cf554c9d926a8da8cc5",
+          "bytes": 46600
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T05:36:20.136485+00:00",
+        "finished": "2026-10-27T05:41:03.440029+00:00"
+      },
+      {
+        "campaign": "matrix-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/matrix-run-01/runs/formal-performance-firstdot-d0-s05/result.json",
+          "sha256": "2dcf7334747ad3ec2cb709042a59f0a2113b50f342a6b115c0918f9567b719d8",
+          "bytes": 46897
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T06:42:27.082705+00:00",
+        "finished": "2026-10-27T06:50:53.180000+00:00"
+      },
+      {
+        "campaign": "matrix-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/matrix-run-01/runs/formal-performance-firstdot-d0-s07/result.json",
+          "sha256": "2d0519542c3c60713f137be55ed9e658793f23afef77066a78e3cd462efe199f",
+          "bytes": 46688
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T07:41:11.926779+00:00",
+        "finished": "2026-10-27T07:44:51.316322+00:00"
+      },
+      {
+        "campaign": "matrix-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/matrix-run-01/runs/formal-performance-firstdot-d1-s01/result.json",
+          "sha256": "c039a1cac5645df76be72e44006d5ff2bfd6b673d8df9a6089bbd2fb8c502e63",
+          "bytes": 46600
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T05:50:41.758176+00:00",
+        "finished": "2026-10-27T05:55:17.484095+00:00"
+      },
+      {
+        "campaign": "matrix-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/matrix-run-01/runs/formal-performance-firstdot-d1-s03/result.json",
+          "sha256": "019786f7c57df58be5c44cd8e920b0e04ec7c8eb9a109e7b086ce5be5c68d510",
+          "bytes": 46752
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T06:13:23.442099+00:00",
+        "finished": "2026-10-27T06:17:50.074261+00:00"
+      },
+      {
+        "campaign": "matrix-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/matrix-run-01/runs/formal-performance-firstdot-d1-s05/result.json",
+          "sha256": "c847ca6ba0c437736af0929eb72aa2f6b24d2d815ce736f10fdfc1362182d3ba",
+          "bytes": 46897
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T07:06:31.415749+00:00",
+        "finished": "2026-10-27T07:13:44.773963+00:00"
+      },
+      {
+        "campaign": "matrix-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/matrix-run-01/runs/formal-performance-firstdot-d1-s07/result.json",
+          "sha256": "6d29721d8ba3eed12016230da3941aeacad0c6c1a1b75091cc3fb98aec18cfdd",
+          "bytes": 46688
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T07:53:07.045039+00:00",
+        "finished": "2026-10-27T07:57:10.386906+00:00"
+      },
+      {
+        "campaign": "matrix-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/matrix-run-01/runs/formal-performance-firstdot-d2-s01/result.json",
+          "sha256": "8471fa888142d4c9c97266e7a098b729aedc96c7f07f97a5a978b13cf9a94904",
+          "bytes": 46600
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T05:55:17.493540+00:00",
+        "finished": "2026-10-27T05:59:45.267765+00:00"
+      },
+      {
+        "campaign": "matrix-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/matrix-run-01/runs/formal-performance-firstdot-d2-s03/result.json",
+          "sha256": "11dc2030b9e65604f327817dbf2cd47a2698f5983cdabade046d2da263d4e5ae",
+          "bytes": 46752
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T06:17:50.086229+00:00",
+        "finished": "2026-10-27T06:35:36.713474+00:00"
+      },
+      {
+        "campaign": "matrix-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/matrix-run-01/runs/formal-performance-firstdot-d2-s05/result.json",
+          "sha256": "8518d1f4ef337c15b3a2b122d1bf4c4efbea9df504c9ceddd7af102a88014de5",
+          "bytes": 46897
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T07:13:44.812458+00:00",
+        "finished": "2026-10-27T07:35:13.305227+00:00"
+      },
+      {
+        "campaign": "matrix-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/matrix-run-01/runs/formal-performance-firstdot-d2-s07/result.json",
+          "sha256": "7c726b3a7ad82b8eafc3906b86dcad05a3ca53e1555a2a847bf69729baee8d63",
+          "bytes": 46688
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T07:57:10.408255+00:00",
+        "finished": "2026-10-27T08:00:13.075432+00:00"
+      },
+      {
+        "campaign": "matrix-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/matrix-run-01/runs/formal-performance-s1-d0-s01/result.json",
+          "sha256": "f5b729106ef92f0a4f433689c41e3dd17e2ed6b6c519c679e56d0adc12cb576e",
+          "bytes": 46408
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T05:41:03.445208+00:00",
+        "finished": "2026-10-27T05:45:46.401105+00:00"
+      },
+      {
+        "campaign": "matrix-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/matrix-run-01/runs/formal-performance-s1-d0-s03/result.json",
+          "sha256": "616eeaf091870c921676768ea988c46b3658f6c93cd94fce116b2f0d6bb844fc",
+          "bytes": 46560
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T06:04:14.965072+00:00",
+        "finished": "2026-10-27T06:08:53.928513+00:00"
+      },
+      {
+        "campaign": "matrix-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/matrix-run-01/runs/formal-performance-s1-d0-s05/result.json",
+          "sha256": "03256fcdf460b1759bdb1cc44278a61b8252dc8dc00dc217bf0ee7715f89acc9",
+          "bytes": 46706
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T06:50:53.213651+00:00",
+        "finished": "2026-10-27T06:58:52.184759+00:00"
+      },
+      {
+        "campaign": "matrix-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/matrix-run-01/runs/formal-performance-s1-d0-s07/result.json",
+          "sha256": "4bdeceda7ec86491ee9af5c1d10a90467bccba5ed571764f81418b263aec4d77",
+          "bytes": 46496
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T07:44:51.339158+00:00",
+        "finished": "2026-10-27T07:48:45.839317+00:00"
+      },
+      {
+        "campaign": "matrix-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/matrix-run-01/runs/formal-performance-s1-d1-s01/result.json",
+          "sha256": "bf0081a1d6814c60a098f8712ddb13c82e382efbeb2fbc2736000b0501006d63",
+          "bytes": 46408
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T05:45:46.407694+00:00",
+        "finished": "2026-10-27T05:50:41.751258+00:00"
+      },
+      {
+        "campaign": "matrix-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/matrix-run-01/runs/formal-performance-s1-d1-s03/result.json",
+          "sha256": "73032acc3f42a1b8c30e18eeb145b187ea607045d247b3a1d5620df1e1d59b35",
+          "bytes": 46560
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T06:08:53.939427+00:00",
+        "finished": "2026-10-27T06:13:23.430842+00:00"
+      },
+      {
+        "campaign": "matrix-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/matrix-run-01/runs/formal-performance-s1-d1-s05/result.json",
+          "sha256": "4590a5a9545a967f5e0aa7dda19c64cf8cfcbd5cda9f629a7c076c25b989e240",
+          "bytes": 46706
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T06:58:52.221503+00:00",
+        "finished": "2026-10-27T07:06:31.388146+00:00"
+      },
+      {
+        "campaign": "matrix-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/matrix-run-01/runs/formal-performance-s1-d1-s07/result.json",
+          "sha256": "82ec4bdc5dd6266cb11a5070b8187661bed6659d8098b194cc5e5a0b6a1f9ef5",
+          "bytes": 46496
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T07:48:45.861663+00:00",
+        "finished": "2026-10-27T07:53:07.022775+00:00"
+      },
+      {
+        "campaign": "matrix-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/matrix-run-01/runs/formal-performance-s1-d2-s01/result.json",
+          "sha256": "924b0bab6386b32328a8754501bf79f179d111b54d88c29f08ec5ac4880573fc",
+          "bytes": 46408
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T05:59:45.276226+00:00",
+        "finished": "2026-10-27T06:04:14.956656+00:00"
+      },
+      {
+        "campaign": "matrix-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/matrix-run-01/runs/formal-performance-s1-d2-s03/result.json",
+          "sha256": "13a45b8505b894dcf2570c3d7ad2e1733b1449503f9b8cc34a57f7a6d2991572",
+          "bytes": 46560
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T06:35:36.738626+00:00",
+        "finished": "2026-10-27T06:42:27.056697+00:00"
+      },
+      {
+        "campaign": "matrix-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/matrix-run-01/runs/formal-performance-s1-d2-s05/result.json",
+          "sha256": "a440219bba68dabaf47699224c21042802e90cc6bd6936bc64de4bdfb2c04d8f",
+          "bytes": 46706
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T07:35:13.322701+00:00",
+        "finished": "2026-10-27T07:41:11.906546+00:00"
+      },
+      {
+        "campaign": "matrix-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/matrix-run-01/runs/formal-performance-s1-d2-s07/result.json",
+          "sha256": "bbd7471270a59187b015ed997d802a362b229277015a9d623ad60a4a3699354d",
+          "bytes": 46496
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T08:00:13.100159+00:00",
+        "finished": "2026-10-27T08:03:23.182326+00:00"
+      },
+      {
+        "campaign": "matrix-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/matrix-run-01/runs/negative-firstdot-8x32/result.json",
+          "sha256": "531d135b461a75a667e7fcfe79bdf4dce457e4ba5a5d2cf2448b8363a56a9f8b",
+          "bytes": 28435
+        },
+        "exit_code": 1,
+        "started": "2026-10-27T05:30:57.946811+00:00",
+        "finished": "2026-10-27T05:31:20.445802+00:00"
+      },
+      {
+        "campaign": "matrix-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/matrix-run-01/runs/recovery-firstdot-8x32/result.json",
+          "sha256": "e594f422b52df40e89d5efb03e5289d723766bece1cf3863fbe330fa89742e9e",
+          "bytes": 46716
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T05:31:20.448655+00:00",
+        "finished": "2026-10-27T05:36:20.131494+00:00"
+      },
+      {
+        "campaign": "matrix-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/matrix-run-01/runs/replay-performance-firstdot-d0-s01/result.json",
+          "sha256": "cb89f4c1e2275f7a2c51e7d2bafc646111a6edec25bfda0640011cb91ce48e2a",
+          "bytes": 46600
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T08:03:23.210372+00:00",
+        "finished": "2026-10-27T08:06:29.175639+00:00"
+      },
+      {
+        "campaign": "matrix-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/matrix-run-01/runs/replay-performance-firstdot-d0-s03/result.json",
+          "sha256": "a64d7b8bed9d8b65629e8a11f308ca1e981f254e77d4652158fc04c8f9031f6f",
+          "bytes": 46752
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T08:06:29.198703+00:00",
+        "finished": "2026-10-27T08:09:54.827133+00:00"
+      },
+      {
+        "campaign": "matrix-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/matrix-run-01/runs/replay-performance-firstdot-d0-s05/result.json",
+          "sha256": "5709a505677b9be3e94b9888bc1aab5ef4215810b76c66f7abe9eb7aed4d349d",
+          "bytes": 46897
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T08:09:54.853048+00:00",
+        "finished": "2026-10-27T08:13:59.886453+00:00"
+      },
+      {
+        "campaign": "matrix-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/matrix-run-01/runs/replay-performance-firstdot-d0-s07/result.json",
+          "sha256": "7eb7bffb4fd70dc4667abc65e3e42b13a0c7317c8245b5f3e8c7ab99f7aae6bc",
+          "bytes": 46688
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T08:13:59.921808+00:00",
+        "finished": "2026-10-27T08:17:11.620726+00:00"
+      },
+      {
+        "campaign": "matrix-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/matrix-run-01/runs/replay-performance-s1-d0-s01/result.json",
+          "sha256": "a2455b1caee07430401d72cabf564dcdac4a604e2a014f479af7f13e080637e9",
+          "bytes": 46408
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T08:17:11.647469+00:00",
+        "finished": "2026-10-27T08:20:18.763884+00:00"
+      },
+      {
+        "campaign": "matrix-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/matrix-run-01/runs/replay-performance-s1-d0-s03/result.json",
+          "sha256": "c0f24c4b3f57950a3937b458d7208aa1d7fac60e9adf262b7fa4b5606430970e",
+          "bytes": 46560
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T08:20:18.797796+00:00",
+        "finished": "2026-10-27T08:23:50.224804+00:00"
+      },
+      {
+        "campaign": "matrix-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/matrix-run-01/runs/replay-performance-s1-d0-s05/result.json",
+          "sha256": "f95526eb634a5d2452163642fc1343f0839befad08ad1f141a2372936238a015",
+          "bytes": 46706
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T08:23:50.255530+00:00",
+        "finished": "2026-10-27T08:27:45.067930+00:00"
+      },
+      {
+        "campaign": "matrix-run-01",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/matrix-run-01/runs/replay-performance-s1-d0-s07/result.json",
+          "sha256": "f095da63e72b2f85717c981dbbc02744c86685c146626c66b102ea4c743ddba4",
+          "bytes": 46496
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T08:27:45.101834+00:00",
+        "finished": "2026-10-27T08:31:05.621311+00:00"
+      },
+      {
+        "campaign": "c-run-01",
+        "selected": false,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/c-run-01/runs/negative/result.json",
+          "sha256": "28d0f2c45ac4900055f611bb7a1a906620b134c1b3ba5d6228bd01ecdb1dda86",
+          "bytes": 18054
+        },
+        "exit_code": 1,
+        "started": "2026-10-27T03:38:31.802391+00:00",
+        "finished": "2026-10-27T03:39:05.994295+00:00"
+      },
+      {
+        "campaign": "c-run-01",
+        "selected": false,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/c-run-01/runs/recovery/result.json",
+          "sha256": "74555fe8d39a5089c0c5705650d5282e0fdb20fde17c413cb1533f7891af0635",
+          "bytes": 19083
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T03:39:05.996993+00:00",
+        "finished": "2026-10-27T04:13:01.016464+00:00"
+      },
+      {
+        "campaign": "c-run-01",
+        "selected": false,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/c-run-01/runs/replay/result.json",
+          "sha256": "2c8d1ef0d30e735bda6d31175f3ca00ee1fdac064313a4eb92d92688b74c2141",
+          "bytes": 19077
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T04:13:01.027433+00:00",
+        "finished": "2026-10-27T04:45:20.862717+00:00"
+      },
+      {
+        "campaign": "c-run-02",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/c-run-02/runs/negative/result.json",
+          "sha256": "72d9ee2d04c5ba4ab95e2f11024c5802257111c4b754df84e67c0c872e07e822",
+          "bytes": 18054
+        },
+        "exit_code": 1,
+        "started": "2026-10-27T08:41:11.967820+00:00",
+        "finished": "2026-10-27T08:41:29.811251+00:00"
+      },
+      {
+        "campaign": "c-run-02",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/c-run-02/runs/recovery/result.json",
+          "sha256": "460f79946fefae56678bb3815d0e5e0d5de610025af49cf73b77c4a0756efcba",
+          "bytes": 19083
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T08:41:29.813395+00:00",
+        "finished": "2026-10-27T09:02:06.336610+00:00"
+      },
+      {
+        "campaign": "c-run-02",
+        "selected": true,
+        "receipt": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/c-run-02/runs/replay/result.json",
+          "sha256": "9e492ccd0f6e8e9f0ab0fb228af97008b1f87699178c83a40a231cc6191facbb",
+          "bytes": 19077
+        },
+        "exit_code": 0,
+        "started": "2026-10-27T09:02:06.343987+00:00",
+        "finished": "2026-10-27T09:22:08.006170+00:00"
+      }
+    ],
+    "retained_within_same_clean_campaign": 47,
+    "strict_C_retry_new_processes": 3,
+    "historical_cross_version_run_verdicts_reused": 0
+  },
+  "verification": {
+    "source_prepare": "PASS",
+    "shallow_metadata_receipts": "PASS",
+    "support_build": "PASS",
+    "emu_build": "PASS",
+    "25_program_loaded_bytes": "PASS",
+    "fu": "NOT_TESTED",
+    "real_parent": "NOT_TESTED",
+    "fullcore_difftest": "PASS",
+    "full_128bit_results": "PASS",
+    "exception_cases": "PASS",
+    "csr_o2_lifecycle": "PASS",
+    "high_bit_negative_recovery": "PASS",
+    "ordinary_c": "PASS_STRICT_UNCHANGED_VALIDATOR_RUN02",
+    "cycles": "PASS",
+    "current_clean_all_768_windows": "PASS_EXACT_FULL_SAMPLE_DICTIONARIES",
+    "current_clean_96_c_outputs": "PASS",
+    "fullcore_physical_raw_audit": "PASS_WITH_EXPLICIT_WALL_CLOCK_CAPACITY_LIMIT",
+    "fullcore_archive_live_raw_audit": "PASS_WITH_EXPLICIT_WALL_CLOCK_CAPACITY_LIMIT",
+    "combination_raw_audit": "PASS",
+    "clean_wall_clock_chronology": "FAIL_LIMITED_HOST_TIMESTAMPS_SOURCE_BOUND_CAPACITY_ONLY",
+    "overall_clean_reproduction": "PASS_SAME_HOST_FUNCTIONAL_AND_TARGET_CYCLES_WITH_FULLCORE_WALL_CLOCK_LIMIT",
+    "config_reuse": "NOT_TESTED",
+    "area_sta": "NOT_TESTED",
+    "power": "NOT_TESTED",
+    "member_manual_reproduction": "NOT_TESTED",
+    "matrix_controller": "PASS_33_ACTUAL_PROCESSES"
+  },
+  "statistics": {
+    "aggregation": "all-window exact comparison first; arithmetic means only after both sides independently pass raw audit",
+    "measured_windows": 384,
+    "replay_windows": 192,
+    "all_normal_windows": 768,
+    "c_normal_case_executions": 96,
+    "actual_counts": {
+      "formal_windows": 384,
+      "replay_windows": 192,
+      "first_warmup_windows": 192,
+      "all_matrix_windows": 768,
+      "fullcore_unique_cases": 117,
+      "fullcore_case_executions": 124,
+      "ordinary_c_public_functions": 16,
+      "ordinary_c_distinct_cases": 48,
+      "ordinary_c_normal_case_executions": 96
+    }
+  },
+  "metrics": [
+    {
+      "shape": [
+        4,
+        8
+      ],
+      "candidates": [
+        {
+          "variant": "firstdot",
+          "software": "basic",
+          "method": "rvv",
+          "samples": 12,
+          "total": 2703,
+          "mean": 225.25,
+          "minimum": 225,
+          "maximum": 226,
+          "instructions": [
+            68
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "basic",
+          "method": "vdot",
+          "samples": 12,
+          "total": 2370,
+          "mean": 197.5,
+          "minimum": 195,
+          "maximum": 200,
+          "instructions": [
+            52
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "reuse",
+          "method": "rvv",
+          "samples": 12,
+          "total": 2253,
+          "mean": 187.75,
+          "minimum": 185,
+          "maximum": 190,
+          "instructions": [
+            54
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "reuse",
+          "method": "vdot",
+          "samples": 12,
+          "total": 1893,
+          "mean": 157.75,
+          "minimum": 157,
+          "maximum": 158,
+          "instructions": [
+            44
+          ]
+        },
+        {
+          "variant": "s1",
+          "software": "basic",
+          "method": "rvv",
+          "samples": 12,
+          "total": 2703,
+          "mean": 225.25,
+          "minimum": 225,
+          "maximum": 226,
+          "instructions": [
+            68
+          ]
+        },
+        {
+          "variant": "s1",
+          "software": "basic",
+          "method": "vdot",
+          "samples": 12,
+          "total": 2481,
+          "mean": 206.75,
+          "minimum": 204,
+          "maximum": 209,
+          "instructions": [
+            68
+          ]
+        },
+        {
+          "variant": "s1",
+          "software": "reuse",
+          "method": "rvv",
+          "samples": 12,
+          "total": 2250,
+          "mean": 187.5,
+          "minimum": 184,
+          "maximum": 190,
+          "instructions": [
+            54
+          ]
+        },
+        {
+          "variant": "s1",
+          "software": "reuse",
+          "method": "vdot",
+          "samples": 12,
+          "total": 2037,
+          "mean": 169.75,
+          "minimum": 169,
+          "maximum": 170,
+          "instructions": [
+            54
+          ]
+        }
+      ],
+      "s1_reuse_vdot_mean": 169.75,
+      "firstdot_reuse_vdot_mean": 157.75,
+      "fastest_included_rvv": {
+        "variant": "s1",
+        "software": "reuse",
+        "method": "rvv",
+        "samples": 12,
+        "total": 2250,
+        "mean": 187.5,
+        "minimum": 184,
+        "maximum": 190,
+        "instructions": [
+          54
+        ]
+      },
+      "firstdot_vs_s1_cycles_reduction_pct": 7.069219440353461,
+      "rvv_over_firstdot_speedup": 1.1885895404120443
+    },
+    {
+      "shape": [
+        8,
+        32
+      ],
+      "candidates": [
+        {
+          "variant": "firstdot",
+          "software": "basic",
+          "method": "rvv",
+          "samples": 12,
+          "total": 4272,
+          "mean": 356.0,
+          "minimum": 356,
+          "maximum": 356,
+          "instructions": [
+            180
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "basic",
+          "method": "vdot",
+          "samples": 12,
+          "total": 7746,
+          "mean": 645.5,
+          "minimum": 643,
+          "maximum": 648,
+          "instructions": [
+            276
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "reuse",
+          "method": "rvv",
+          "samples": 12,
+          "total": 3609,
+          "mean": 300.75,
+          "minimum": 298,
+          "maximum": 303,
+          "instructions": [
+            124
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "reuse",
+          "method": "vdot",
+          "samples": 12,
+          "total": 3387,
+          "mean": 282.25,
+          "minimum": 282,
+          "maximum": 283,
+          "instructions": [
+            182
+          ]
+        },
+        {
+          "variant": "s1",
+          "software": "basic",
+          "method": "rvv",
+          "samples": 12,
+          "total": 4272,
+          "mean": 356.0,
+          "minimum": 356,
+          "maximum": 356,
+          "instructions": [
+            180
+          ]
+        },
+        {
+          "variant": "s1",
+          "software": "basic",
+          "method": "vdot",
+          "samples": 12,
+          "total": 7782,
+          "mean": 648.5,
+          "minimum": 646,
+          "maximum": 651,
+          "instructions": [
+            308
+          ]
+        },
+        {
+          "variant": "s1",
+          "software": "reuse",
+          "method": "rvv",
+          "samples": 12,
+          "total": 3609,
+          "mean": 300.75,
+          "minimum": 298,
+          "maximum": 303,
+          "instructions": [
+            124
+          ]
+        },
+        {
+          "variant": "s1",
+          "software": "reuse",
+          "method": "vdot",
+          "samples": 12,
+          "total": 3510,
+          "mean": 292.5,
+          "minimum": 291,
+          "maximum": 294,
+          "instructions": [
+            202
+          ]
+        }
+      ],
+      "s1_reuse_vdot_mean": 292.5,
+      "firstdot_reuse_vdot_mean": 282.25,
+      "fastest_included_rvv": {
+        "variant": "firstdot",
+        "software": "reuse",
+        "method": "rvv",
+        "samples": 12,
+        "total": 3609,
+        "mean": 300.75,
+        "minimum": 298,
+        "maximum": 303,
+        "instructions": [
+          124
+        ]
+      },
+      "firstdot_vs_s1_cycles_reduction_pct": 3.5042735042735043,
+      "rvv_over_firstdot_speedup": 1.0655447298494243
+    },
+    {
+      "shape": [
+        16,
+        64
+      ],
+      "candidates": [
+        {
+          "variant": "firstdot",
+          "software": "basic",
+          "method": "rvv",
+          "samples": 12,
+          "total": 11880,
+          "mean": 990.0,
+          "minimum": 989,
+          "maximum": 991,
+          "instructions": [
+            596
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "basic",
+          "method": "vdot",
+          "samples": 12,
+          "total": 26556,
+          "mean": 2213.0,
+          "minimum": 2211,
+          "maximum": 2215,
+          "instructions": [
+            1044
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "reuse",
+          "method": "rvv",
+          "samples": 12,
+          "total": 9345,
+          "mean": 778.75,
+          "minimum": 776,
+          "maximum": 781,
+          "instructions": [
+            372
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "reuse",
+          "method": "vdot",
+          "samples": 12,
+          "total": 8484,
+          "mean": 707.0,
+          "minimum": 707,
+          "maximum": 707,
+          "instructions": [
+            632
+          ]
+        },
+        {
+          "variant": "s1",
+          "software": "basic",
+          "method": "rvv",
+          "samples": 12,
+          "total": 11901,
+          "mean": 991.75,
+          "minimum": 991,
+          "maximum": 993,
+          "instructions": [
+            596
+          ]
+        },
+        {
+          "variant": "s1",
+          "software": "basic",
+          "method": "vdot",
+          "samples": 12,
+          "total": 26598,
+          "mean": 2216.5,
+          "minimum": 2214,
+          "maximum": 2219,
+          "instructions": [
+            1108
+          ]
+        },
+        {
+          "variant": "s1",
+          "software": "reuse",
+          "method": "rvv",
+          "samples": 12,
+          "total": 9354,
+          "mean": 779.5,
+          "minimum": 777,
+          "maximum": 783,
+          "instructions": [
+            372
+          ]
+        },
+        {
+          "variant": "s1",
+          "software": "reuse",
+          "method": "vdot",
+          "samples": 12,
+          "total": 8607,
+          "mean": 717.25,
+          "minimum": 714,
+          "maximum": 720,
+          "instructions": [
+            672
+          ]
+        }
+      ],
+      "s1_reuse_vdot_mean": 717.25,
+      "firstdot_reuse_vdot_mean": 707.0,
+      "fastest_included_rvv": {
+        "variant": "firstdot",
+        "software": "reuse",
+        "method": "rvv",
+        "samples": 12,
+        "total": 9345,
+        "mean": 778.75,
+        "minimum": 776,
+        "maximum": 781,
+        "instructions": [
+          372
+        ]
+      },
+      "firstdot_vs_s1_cycles_reduction_pct": 1.4290693621470896,
+      "rvv_over_firstdot_speedup": 1.1014851485148516
+    },
+    {
+      "shape": [
+        4,
+        13
+      ],
+      "candidates": [
+        {
+          "variant": "firstdot",
+          "software": "basic",
+          "method": "rvv",
+          "samples": 12,
+          "total": 2766,
+          "mean": 230.5,
+          "minimum": 230,
+          "maximum": 231,
+          "instructions": [
+            68
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "basic",
+          "method": "vdot",
+          "samples": 12,
+          "total": 2799,
+          "mean": 233.25,
+          "minimum": 230,
+          "maximum": 237,
+          "instructions": [
+            152
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "reuse",
+          "method": "rvv",
+          "samples": 12,
+          "total": 2244,
+          "mean": 187.0,
+          "minimum": 184,
+          "maximum": 190,
+          "instructions": [
+            54
+          ]
+        },
+        {
+          "variant": "firstdot",
+          "software": "reuse",
+          "method": "vdot",
+          "samples": 12,
+          "total": 2454,
+          "mean": 204.5,
+          "minimum": 204,
+          "maximum": 205,
+          "instructions": [
+            126
+          ]
+        },
+        {
+          "variant": "s1",
+          "software": "basic",
+          "method": "rvv",
+          "samples": 12,
+          "total": 2760,
+          "mean": 230.0,
+          "minimum": 230,
+          "maximum": 230,
+          "instructions": [
+            68
+          ]
+        },
+        {
+          "variant": "s1",
+          "software": "basic",
+          "method": "vdot",
+          "samples": 12,
+          "total": 3048,
+          "mean": 254.0,
+          "minimum": 251,
+          "maximum": 257,
+          "instructions": [
+            168
+          ]
+        },
+        {
+          "variant": "s1",
+          "software": "reuse",
+          "method": "rvv",
+          "samples": 12,
+          "total": 2244,
+          "mean": 187.0,
+          "minimum": 184,
+          "maximum": 189,
+          "instructions": [
+            54
+          ]
+        },
+        {
+          "variant": "s1",
+          "software": "reuse",
+          "method": "vdot",
+          "samples": 12,
+          "total": 2637,
+          "mean": 219.75,
+          "minimum": 219,
+          "maximum": 220,
+          "instructions": [
+            136
+          ]
+        }
+      ],
+      "s1_reuse_vdot_mean": 219.75,
+      "firstdot_reuse_vdot_mean": 204.5,
+      "fastest_included_rvv": {
+        "variant": "firstdot",
+        "software": "reuse",
+        "method": "rvv",
+        "samples": 12,
+        "total": 2244,
+        "mean": 187.0,
+        "minimum": 184,
+        "maximum": 190,
+        "instructions": [
+          54
+        ]
+      },
+      "firstdot_vs_s1_cycles_reduction_pct": 6.939704209328783,
+      "rvv_over_firstdot_speedup": 0.9144254278728606
+    }
+  ],
+  "decision": "Accept same-host independent-source/build functional and target-cycle reproduction; keep fullcore wall-time limitation and all failed attempts. Proceed only to bounded configuration-reuse screening.",
+  "adopted": true,
+  "stable_default_changed": false,
+  "evidence_manifest": {
+    "overall_status": "PASS_WITH_EXPLICIT_FULLCORE_HOST_TIME_LIMIT",
+    "preparation_supplement": {
+      "status": "CLEAN_PREPARATION_SUPPLEMENTARY_BYTES_PASS",
+      "manifest": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/reviews/clean-preparation-archive-01/manifest.json",
+        "sha256": "bc7567257bbc38a4c33c516b1e3f21cb4e4c096bba97d2f34ac1030ceade6bf1",
+        "bytes": 337632
+      },
+      "verification": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/reviews/clean-preparation-archive-01/verification.json",
+        "sha256": "f3c43b973da2c30b7f2f1679115e65aaadd8e6c9e72d8cfe65eb211bdef90a08",
+        "bytes": 479
+      },
+      "files": 617,
+      "raw_bytes": 28664439,
+      "stored_bytes": 7034880,
+      "runtime_qualification": "NOT_TESTED"
+    },
+    "fullcore_archive": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/fullcore-archive-02/archive-manifest.json",
+      "sha256": "a80a1063aacd3baa524377710f280830f860d91071661636d6c493b407cebc91",
+      "bytes": 12427596
+    },
+    "combination_archive": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/combination-audit-03/archive/manifest.json",
+      "sha256": "eba6744de7e5973a5df273cd4d46542938cdfe40db8f83355dcfa9f16812f673",
+      "bytes": 907571
+    },
+    "runtime_orchestration_supplement": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/reviews/clean-runtime-orchestration-archive-02/manifest.json",
+      "sha256": "5798eb25ba85d5ac236fc6bd785779fdac73306823cf217ed1f3921fca9e6971",
+      "bytes": 101851
+    },
+    "full_reproduction_comparison": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/full-reproduction-comparison-03.json",
+      "sha256": "e04ede103ad771764e1f6e7e2568f19e92c2e833555fbb6bbf77d245cb8efec6",
+      "bytes": 70391
+    },
+    "runtime_orchestration_verification": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/reviews/clean-runtime-orchestration-archive-02/verification.json",
+      "sha256": "96c0426685d51d54b041b339e9707feb87e028a57aae97bb415336590d184b8c",
+      "bytes": 328
+    },
+    "root_readiness": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/reviews/config-reuse/actual-clean-readiness-01.json",
+      "sha256": "05f65ae265dab01784b0c2834b9503ff97f456449c95210145389533c3b81658",
+      "bytes": 23242
+    }
+  },
+  "failed_attempts": [
+    {
+      "attempt": "clean-01",
+      "kind": "git_shallow_metadata_preparation_failure",
+      "status": "FAILED",
+      "build_exit_code": 2,
+      "new_emu_sha256": null,
+      "state": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/clean-01/build/build-state.json",
+        "sha256": "8baa97294c473bbcc1b108d2890a924b3d4138ea6f768621d49c9969ca0a5337",
+        "bytes": 1289
+      },
+      "raw_log": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/clean-01/build/emu-build.log",
+        "sha256": "2af5b2da6c9c42122bdaec15a30895a26f0f72abc08925dada8d54820c35507a",
+        "bytes": 2838
+      },
+      "diagnosis": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/reviews/clean-git-readiness-failure-01/RESULT.md",
+        "sha256": "e08633d2107d83b14ef65aad709573c112647b3fa88b2619836a8b65036e67dc",
+        "bytes": 2730
+      },
+      "not_current_combination_DUT_failure": true
+    },
+    {
+      "attempt": "fullcore-physical-01 / postprocess-01",
+      "status": "FAILED_PRESERVED",
+      "reason": "Recorded UTC intervals infer peak 4 while the fixed worker budget is 3; unique 80119 us boundary overlap.",
+      "state": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/postprocess-01/state.json",
+        "sha256": "e5acf54d689f2334563a5019461d4b9db5001785c73e7725e6689be61aad042c",
+        "bytes": 4484
+      },
+      "receipt": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/fullcore-physical-01.command.json",
+        "sha256": "478a315b7a5cd7d07b8162f03dd8716d9e9704c02e686aee4b7c07c54e7ef77b",
+        "bytes": 765
+      },
+      "stderr": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/fullcore-physical-01.command.stderr.log",
+        "sha256": "d17b7c59e88ba68429ab030753f6e67af4a7b20f1365138b556e4943eba145c4",
+        "bytes": 1472
+      },
+      "replacement_contract": "zjh-current-clean-fullcore-archive-v2-wall-clock-limited",
+      "strict_v1_failure_retained": true
+    },
+    {
+      "attempt": "c-run-01 / finalize-c-02 / postprocess-02",
+      "functional_target_status": "PASS",
+      "strict_C_outer_chronology": "FAIL",
+      "postprocess_status": "FAILED",
+      "source_target_processes": 3,
+      "anomaly_seconds": 2.455386,
+      "timestamps_modified": false,
+      "C_chronology_contract_relaxed": false,
+      "reason": "A fresh 3-process C run02 supplies strict selected completion evidence; original three processes remain preserved and excluded from final selected combination.",
+      "state": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/postprocess-02/state.json",
+        "sha256": "d61e2f50cece01db38751ea5b885df78c03b65f90a93347822de52306955026f",
+        "bytes": 17555
+      },
+      "command": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/finalize-c-02.command.json",
+        "sha256": "b560550b7414ed4bfb7ece3f6c2abdb13ac1563a87577d147f25641293c3b8a8",
+        "bytes": 907
+      },
+      "stderr": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/finalize-c-02.command.stderr.log",
+        "sha256": "385ad1d9b604eaaff964996f5ff6e845082416a31b9db31dd66eeae45bb5a3b1",
+        "bytes": 1089
+      },
+      "failure_archive_manifest": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/reviews/clean-c-chronology-failure-archive-01/archive/manifest.json",
+        "sha256": "bed126b9132ad9078ac0d600e49921a6f2b7eb1ca79d7bb62962fd5d63af356c",
+        "bytes": 51035
+      },
+      "failure_archive_verification": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/reviews/clean-c-chronology-failure-archive-01/verification.json",
+        "sha256": "93ce85a52537189ab357201f779ac1066f6adfa97674c40638fcdcac59b1cd1b",
+        "bytes": 542
+      }
+    }
+  ],
+  "expected_evidence_gates": [
+    {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/fullcore-run-01/state.json",
+      "expected": {
+        "status": "CURRENT_CLEAN_FULLCORE_PASS"
+      }
+    },
+    {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/fullcore-physical-02/current-archive-physical.json",
+      "expected": {
+        "status": "CURRENT_CLEAN_PHYSICAL_RAW_AUDIT_PASS_WALL_CLOCK_LIMITED",
+        "source_new_emu_runs": 14,
+        "contract": "zjh-current-clean-fullcore-archive-v2-wall-clock-limited",
+        "wall_clock_capacity": "FAIL",
+        "source_bound_worker_capacity": "PASS",
+        "os_monotonic_capacity_measured": false,
+        "clock_cause": "UNCONFIRMED",
+        "recorded_peak_overlapping_intervals": 4,
+        "source_bound_max_workers": 3,
+        "exact_anomaly_microseconds": 80119,
+        "performance_measured": false
+      }
+    },
+    {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/fullcore-pack-02.json",
+      "expected": {
+        "status": "CURRENT_CLEAN_ARCHIVE_BYTES_SEALED_WALL_CLOCK_LIMITED",
+        "contract": "zjh-current-clean-fullcore-archive-v2-wall-clock-limited",
+        "wall_clock_capacity": "FAIL",
+        "source_bound_worker_capacity": "PASS",
+        "os_monotonic_capacity_measured": false,
+        "clock_cause": "UNCONFIRMED",
+        "recorded_peak_overlapping_intervals": 4,
+        "source_bound_max_workers": 3,
+        "exact_anomaly_microseconds": 80119,
+        "performance_measured": false
+      }
+    },
+    {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/fullcore-bytes-02.json",
+      "expected": {
+        "status": "CURRENT_CLEAN_ARCHIVE_BYTES_ONLY_PASS_WALL_CLOCK_LIMITED",
+        "contract": "zjh-current-clean-fullcore-archive-v2-wall-clock-limited",
+        "wall_clock_capacity": "FAIL",
+        "source_bound_worker_capacity": "PASS",
+        "os_monotonic_capacity_measured": false,
+        "clock_cause": "UNCONFIRMED",
+        "recorded_peak_overlapping_intervals": 4,
+        "source_bound_max_workers": 3,
+        "exact_anomaly_microseconds": 80119,
+        "performance_measured": false
+      }
+    },
+    {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/fullcore-archive-audit-02/archive-live-recheck.json",
+      "expected": {
+        "status": "CURRENT_CLEAN_ARCHIVE_LIVE_RAW_AUDIT_PASS_WALL_CLOCK_LIMITED",
+        "contract": "zjh-current-clean-fullcore-archive-v2-wall-clock-limited",
+        "wall_clock_capacity": "FAIL",
+        "source_bound_worker_capacity": "PASS",
+        "os_monotonic_capacity_measured": false,
+        "clock_cause": "UNCONFIRMED",
+        "recorded_peak_overlapping_intervals": 4,
+        "source_bound_max_workers": 3,
+        "exact_anomaly_microseconds": 80119,
+        "performance_measured": false
+      }
+    },
+    {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/matrix-run-01/state.json",
+      "expected": {
+        "status": "CURRENT_FIRSTDOT_PAIRED_C_ABI_PASS",
+        "new_emu_runs": 33
+      }
+    },
+    {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/combination-audit-03/state.json",
+      "expected": {
+        "status": "CURRENT_FIRSTDOT_RAW_RECOMPUTATION_AND_ARCHIVE_PASS",
+        "original_emu_processes": 36,
+        "source_commit": "c823a8786e052c6e26f6915563c42b6d730dd8e3",
+        "emu_sha256": "acf672eb39f836da4000b253849e3214089e9c8e5198060a57d2cc6bbd393da9"
+      }
+    },
+    {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/full-reproduction-comparison-03.json",
+      "expected": {
+        "status": "CURRENT_CLEAN_PROGRAMS_AND_ALL_WINDOWS_EQUAL",
+        "identities.clean": "3b9d9332720b6d21a52c979d84c3398bf9c3070812094da29431575a4e7a7451",
+        "identities.clean_emu": "acf672eb39f836da4000b253849e3214089e9c8e5198060a57d2cc6bbd393da9",
+        "windows.compared_windows": 768
+      }
+    }
+  ],
+  "limitations": [
+    "Clean means independent source/generated-product build on same host; installed tools/download caches retained. Not fresh OS, hermetic rebuild, or member manual acceptance.",
+    "Fullcore wall_clock_capacity FAIL: exact 80119us UTC-inferred overlap. Fixed source-bound capacity <=3 PASS; OS monotonic concurrency NOT_MEASURED, cause UNCONFIRMED. Not host wall-time performance.",
+    "Old C run01 functional PASS but strict outer chronology FAIL by 2.455386s; all 3 old processes excluded. Fresh C run02 passes unchanged strict validators; no timestamps or C contract changed.",
+    "53 actual target processes include 3 excluded old C attempts; selected 50 =14 fullcore+33 matrix+3 fresh C. 49 actual exit0 plus 4 expected negative exit1; zero interrupted.",
+    "25 application BIN/PT_LOAD identities,768 full matrix windows,96 ordinary C outputs exactly equal old current combination. Host EMU/NEMU hashes differ; full ELF debug bytes need not equal.",
+    "Fullcore has additional workload binaries;25 is application matrix+C count, not total all fullcore images.",
+    "Old current-combination wall-clock-limited qualification remains unchanged. Only simulator/CSR cycles compared, not host elapsed time.",
+    "Archives preserve bytes and local raw revalidation evidence; external physical build inputs are still required. No portable archive-only rebuild claim.",
+    "Fresh standalone FU/parent, area/STA,power,member manual reproduction NOT_TESTED. Configuration-reuse outcome belongs to separate record; no production RTL/default switch or GitHub publication."
+  ],
+  "host_time_qualification": {
+    "fullcore_wall_clock_capacity": "FAIL",
+    "recorded_peak_overlapping_intervals": 4,
+    "source_bound_worker_capacity": "PASS",
+    "source_bound_max_workers": 3,
+    "os_monotonic_capacity_measured": false,
+    "exact_anomaly_microseconds": 80119,
+    "clock_cause": "UNCONFIRMED",
+    "ordinary_c_outer_receipt_precedes_child_finish_seconds": 2.455386,
+    "note": "No timestamp modification, tolerance or general exception. The exact fourteen-process source-bound proof does not establish measured OS concurrency or wall-clock performance.",
+    "ordinary_c_anomaly_scope": "OLD c-run-01 ONLY; excluded; fresh c-run-02 strict chronology PASS",
+    "selected_c_strict_chronology": "PASS"
+  },
+  "completed_subgates": {
+    "fullcore_run": {
+      "status": "CURRENT_CLEAN_FULLCORE_PASS",
+      "evidence": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/fullcore-run-01/state.json",
+        "sha256": "0be67995e02d18af9270e58b60aad11824ee884e5822f836a5ad7658ae0a6e70",
+        "bytes": 639
+      }
+    },
+    "fullcore_physical": {
+      "status": "CURRENT_CLEAN_PHYSICAL_RAW_AUDIT_PASS_WALL_CLOCK_LIMITED",
+      "evidence": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/fullcore-physical-02/current-archive-physical.json",
+        "sha256": "5a47f866696887ea82fee1cb0db706284d9b163215ffbfe7fe67b29131e01d4d",
+        "bytes": 1785
+      }
+    },
+    "fullcore_pack": {
+      "status": "CURRENT_CLEAN_ARCHIVE_BYTES_SEALED_WALL_CLOCK_LIMITED",
+      "evidence": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/fullcore-pack-02.json",
+        "sha256": "7add8628448258400e0080aea077392d8ee740a049cf85962c92b0001e7b2733",
+        "bytes": 674
+      }
+    },
+    "fullcore_bytes": {
+      "status": "CURRENT_CLEAN_ARCHIVE_BYTES_ONLY_PASS_WALL_CLOCK_LIMITED",
+      "evidence": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/fullcore-bytes-02.json",
+        "sha256": "b42172c883e684a995af557c08dadefa7a3fdf5ba8cd73067d496b15a5ee5b23",
+        "bytes": 752
+      }
+    },
+    "fullcore_live": {
+      "status": "CURRENT_CLEAN_ARCHIVE_LIVE_RAW_AUDIT_PASS_WALL_CLOCK_LIMITED",
+      "evidence": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/fullcore-archive-audit-02/archive-live-recheck.json",
+        "sha256": "4b377333b32857c1c764bd93fb3aa328630c7f85b0c2ef2b223e6ba144db5f99",
+        "bytes": 968
+      }
+    },
+    "ordinary_c": {
+      "status": "R4_C_APPLICATION_CALLS_PASS",
+      "evidence": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/c-run-02/state.json",
+        "sha256": "490f839744e5f3d57a401197748519384ca4ea7f25cb23c9a731a9c755b87fd4",
+        "bytes": 529
+      }
+    },
+    "ordinary_c_strict": {
+      "status": "CURRENT_FIRSTDOT_C_APPLICATION_PASS",
+      "evidence": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/c-run-02/combination-c-qualification.json",
+        "sha256": "6c64605304fe9ff8dce3c7ca0a84b9ded2e122033d5c5a9868741fb2f7263ae9",
+        "bytes": 819
+      }
+    },
+    "matrix": {
+      "status": "CURRENT_FIRSTDOT_PAIRED_C_ABI_PASS",
+      "evidence": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/matrix-run-01/state.json",
+        "sha256": "9dafca4efa6d573c52eaea7eec5c76a277c693cabe93872bed9f61ed06607e89",
+        "bytes": 437
+      }
+    },
+    "joint_raw_audit": {
+      "status": "CURRENT_FIRSTDOT_RAW_RECOMPUTATION_AND_ARCHIVE_PASS",
+      "evidence": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/combination-audit-03/state.json",
+        "sha256": "e0e32d96ca97df72dc124a22038004df5b571ef6de38a6422de38c3ba4075ffd",
+        "bytes": 1107
+      }
+    },
+    "full_comparison": {
+      "status": "CURRENT_CLEAN_PROGRAMS_AND_ALL_WINDOWS_EQUAL",
+      "evidence": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/full-reproduction-comparison-03.json",
+        "sha256": "e04ede103ad771764e1f6e7e2568f19e92c2e833555fbb6bbf77d245cb8efec6",
+        "bytes": 70391
+      }
+    }
+  },
+  "fullcore_v2_runtime": {
+    "path": "/home/riscv/riscv-lab/software-import-20261026/reviews/clean-fullcore-audit-v2/runtime-closure.json",
+    "sha256": "e118d4a02967ac4da225d58502aac2eb6c39c47b039ec4dea167db57b19c0320",
+    "bytes": 968
+  },
+  "postprocess_plan": {
+    "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02-postbuild-plan-v3.json",
+    "sha256": "25f05bd30f45df47b7555431f057a6ea7f7c95ea1ceb8d4fca8967ac2a2e6ac6",
+    "bytes": 27927
+  },
+  "selected_c_run": "/home/riscv/riscv-lab/software-import-20261026/clean-02/c-run-02",
+  "metrics_final_qualification": "Fresh matrix measurements qualified by joint raw audit and full 768-window / 96-output comparison.",
+  "matrix_structured_comparison": {
+    "path": "/home/riscv/riscv-lab/software-import-20261026/reviews/clean-matrix-comparison-01/comparison.json",
+    "sha256": "81435750021606884646fd677eafa768d5d123c1d3468d1b300df7c5027c37f2",
+    "bytes": 728
+  }
+}

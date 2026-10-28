@@ -1,0 +1,100 @@
+{
+  "status": "C3_HF_FINAL_DOCUMENT_READONLY_REVIEW_COMPLETE_WITH_CLARIFICATIONS",
+  "reviewed_utc": "2026-10-25T14:40:44.516818+00:00",
+  "inputs": [
+    {
+      "path": "/home/riscv/riscv-lab/o2-c3-hf-20261025/finalize_result.py",
+      "sha256": "840fba407603386260ea8ae299e09812342254d59eb95b8427bbda59e8abf0dd"
+    },
+    {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/r3-div-gate/c3-hf/archive.py",
+      "sha256": "d1ce2e1030047fab171f8141090b30aabf9271012c0de31863fa95411c03b705"
+    },
+    {
+      "path": "/home/riscv/riscv-lab/o2-c3-hf-20261025/local-result.json",
+      "sha256": "8af1c4645dcd31c43773f6e9331edb4603ffff87739b4e888f629b7ca29f2215"
+    },
+    {
+      "path": "/home/riscv/riscv-lab/o2-c3-hf-20261025/independent-review/local-audit.json",
+      "sha256": "b1fb9928634f74ce978fa980430e4d8b852ff922af8329302c29adcc0550b649"
+    },
+    {
+      "path": "/home/riscv/riscv-lab/o2-c3-hf-20261025/supplement-02/c3-monitor-result.json",
+      "sha256": "8a87d306bc8f393c3b5d0fd68bf22d6cca21a84787ca1defeb30055db792416f"
+    },
+    {
+      "path": "/home/riscv/riscv-lab/o2-c3-hf-20261025/supplement-02/supplement-replay.json",
+      "sha256": "d7539e153c9955531f58e62ee506d44180cd802a2f477f52b41f79615f4ad7e7"
+    }
+  ],
+  "quantitative_local_statements": "PASS",
+  "verified_local_counts": {
+    "host_checks": 51,
+    "fu_vectors": 10022,
+    "fu_cycles": 31499,
+    "parent_groups": 13,
+    "parent_cycles": 35075,
+    "supplement_cases": 115,
+    "supplement_cycles": 2959,
+    "monitor_qualified_cycles": 2958,
+    "fp_accepts": 143,
+    "sqrt_normal_accepts": 15,
+    "fp_cancel_cycles": 54,
+    "fp_backpressure_cycles": 291,
+    "te0_reset_cases": 20,
+    "te0_reset_cycles": 40,
+    "cancel_windows": 54,
+    "immediate_idle_samples": 162,
+    "independent_inputs": 1103,
+    "dependencies": 126,
+    "runtime_observation_negatives": 20,
+    "offline_observation_negatives": 16,
+    "rtl_mutations": 0
+  },
+  "scope_statements": "PASS: preserved old G0 is reused not rerun; new P/hold scope is synchronous parent after valid bootstrap; no new fullcore/cycle; all old/failure qualifications separate.",
+  "recommendations": [
+    {
+      "id": "D1",
+      "severity": "wording",
+      "location": "finalize_result.py local FU and parent table",
+      "current": "4故障注入 / 16故障注入",
+      "requested": "Explicitly call these runtime observation-value fault injections, not RTL mutations.",
+      "reason": "Original C++ corrupts observed scoreboard values; total independent audit records rtl_mutations=0."
+    },
+    {
+      "id": "D2",
+      "severity": "clarification",
+      "location": "finalize_result.py local coverage paragraph",
+      "requested": "Mention 20 TE0-reset scenarios correspond to 40 reset cycles; keep scenarios and cycles separate.",
+      "reason": "Both numbers are correct and describe different dimensions."
+    },
+    {
+      "id": "A1",
+      "severity": "small archive completeness addition",
+      "location": "archive.py reused C3-G0 abstract argument",
+      "requested": "Include c3-g0/evidence/candidate-review/control_variants.py, control-variants-01.json, command-01.json as explicitly reused historical payload.",
+      "reason": "Current archive keeps only prior manifest reference plus C2-G0 system model; the selected hold-only variant equations/counts are not directly readable from this new archive.",
+      "blocking_local_replay": false
+    }
+  ],
+  "archive_local_reproduction": {
+    "status": "SUFFICIENT_FOR_NEW_LOCAL_RTL_REBUILD_WITH_PINNED_SOURCE_CHECKOUT",
+    "included": [
+      "candidate/baseline ExeUnit and patch",
+      "build.sc/activation",
+      "FU/parent generators and C++",
+      "model and vectors",
+      "new validation tools",
+      "old C2 suite/instrument/parser",
+      "generated RTL/commands/logs/identities including failed attempts"
+    ],
+    "baseline_checkout_and_dependency_requirement": "Original repository/dependencies must be restored at pinned revisions; archive intentionally not a complete clone. Binary identities retained, objects excluded.",
+    "no_need_to_add": [
+      "whole old G0 archive",
+      "large full repository duplicate",
+      "build objects/binaries"
+    ]
+  },
+  "modifications_by_reviewer": "Only this new review JSON; no fixed costs/validation/local-audit/instrument-review inputs modified.",
+  "cost_result_review": "Not the cost independent audit. Area already known over threshold; final summary must await finished screen and independent audit."
+}

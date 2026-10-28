@@ -33,6 +33,14 @@ PERF_PASS_KEYS = set("""perf_contract perf_bits perf_inputs perf_observations
 perf_walk_one perf_walk_zero""".split())
 TRANSITION_CASES = {f"switch-{old}-{new}-{delay}" for old in range(3)
                     for new in range(3) for delay in (0, 1, 7)}
+# Directed DIV redirects use absolute ROB positions 0..95.
+DIV_RELATIONS = ((10, 10, False, False), (8, 10, False, False),
+                 (12, 10, False, True), (47, 48, False, False),
+                 (48, 47, False, True), (95, 0, False, False),
+                 (0, 95, False, True))
+DIV_ROB_CASES = {f"DIV-ROB-k{kind}-r{rel}-p{phase}"
+                 for kind in (1, 2) for rel in range(len(DIV_RELATIONS))
+                 for phase in range(2)}
 FU_KEYS = set("""kind accepted responded killed reset_dropped raw_killed_response
 latency_min latency_max latency_samples clock_edges waits""".split())
 
@@ -108,6 +116,11 @@ def check_trace(text, require_campaign=True):
     previous_reset = False
     frozen_accept_cycles, frozen_response_latencies = [], []
     transition_cases = set()
+    div_rob_cases, div_reset_overlap = set(), set()
+    cancel_idle_window = None
+    cancel_idle_samples = Counter()
+    cancel_idle_cases = Counter()
+    idle_clock_samples = 0
 
     def end(seq, category):
         require(seq in live and seq not in ended, "duplicate/missing terminal sequence")
@@ -127,6 +140,16 @@ def check_trace(text, require_campaign=True):
             require(all(row[k] < 8 for k in ("child_ready", "child_out", "child_fire", "clocks")),
                     "bad child bit mask")
             old_p, old_r, old_div = p, r, div
+            if cancel_idle_window is not None:
+                kind, remaining, case = cancel_idle_window
+                require(row["case"] == case and not (p or r or div or row["accept"] or
+                        row["offered"] or row["reset"] or row["te"] or row["redirect"]),
+                        "missing immediate post-cancel idle sample")
+                pulse = bool(row["clocks"] & (1 << kind))
+                counts["cancel_idle_clock_on"] += pulse
+                cancel_idle_samples[kind] += 1
+                require(not pulse, "canceled DIV retained clock on immediate idle sample")
+                cancel_idle_window = ((kind, remaining - 1, case) if remaining > 1 else None)
             old_occ = bool(p) + bool(r)
             require((row["pseq"], row["rseq"], row["divseq"]) == (p, r, div), "slot sequence changed")
             require((row["p"], row["r"], row["occupancy"]) == (bool(p), bool(r), old_occ),
@@ -138,6 +161,31 @@ def check_trace(text, require_campaign=True):
             kd = bool(div and not reset and need_flush(live[div], row))
             require((row["kill_p"], row["kill_r"], row["kill_div"]) == (kp, kr, kd),
                     "ROB kill/priority mismatch")
+            if row["case"].startswith("DIV-ROB-") and redirect:
+                require(row["case"] in DIV_ROB_CASES and div and not reset,
+                        "unknown or inactive directed DIV ROB case")
+                match = re.fullmatch(r"DIV-ROB-k([12])-r([0-6])-p([01])", row["case"])
+                kind, relation, _ = map(int, match.groups())
+                req_at, flush_at, flush_self, expected_kill = DIV_RELATIONS[relation]
+                require(live[div]["kind"] == kind and
+                        live[div]["rob"] + 48 * live[div]["flag"] == req_at and
+                        row["redirect_rob"] + 48 * row["redirect_flag"] == flush_at and
+                        bool(row["self"]) == flush_self and kd == expected_kill,
+                        "directed DIV ROB relation differs from contract")
+                require(row["case"] not in div_rob_cases, "duplicate directed DIV ROB redirect")
+                div_rob_cases.add(row["case"])
+            if row["case"] == "DIV-legacy-reset" and reset and redirect:
+                require(div and not kd and not row["kill_p"] and not row["kill_r"] and
+                        row["te"] and row["self"] and
+                        row["redirect_rob"] == live[div]["rob"] and
+                        row["redirect_flag"] == live[div]["flag"],
+                        "DIV reset/cancel overlap must reset exactly once with TE")
+                div_reset_overlap.add(live[div]["kind"])
+            if kd and row["case"].startswith(("DIV-cancel-", "DIV-ROB-")):
+                require(cancel_idle_window is None, "overlapping cancel-idle windows")
+                kind = live[div]["kind"]
+                cancel_idle_cases[kind] += 1
+                cancel_idle_window = (kind, 3, row["case"])
             live_p, live_r = bool(p and not kp and not reset), bool(r and not kr and not reset)
             move = live_p and (not live_r or ready_out)
             p_ready = not live_p or not live_r or ready_out
@@ -201,6 +249,12 @@ def check_trace(text, require_campaign=True):
             require(row["clocks"] & required_clocks == required_clocks, "active/reset FU lost clock")
             if not (old_occ or old_div or accept or reset or row["te"]):
                 require(row["clocks"] == 0, "idle FU retained clock after cancellation/completion")
+            # These are the original explicitly counted startup/recovery samples.
+            if ((row["case"] == "initial" and 2 <= cycle <= 5) or
+                    (row["case"] == "clock-recovery" and
+                     not (old_occ or old_div or row["offered"] or accept or reset or row["te"]))):
+                require(row["clocks"] == 0, "counted idle sample has a clock")
+                idle_clock_samples += 1
             for kind in range(3):
                 per_fu[kind]["clock_edges"] += bool(row["clocks"] & (1 << kind))
             if row["offered"] and not accept and not reset and not redirect:
@@ -219,7 +273,7 @@ def check_trace(text, require_campaign=True):
             counts["te0_resets"] += reset and not row["te"]
             counts["empty_te0_resets"] += reset and not row["te"] and not live
             counts["redirects"] += (redirect and not reset and
-                (row["case"].startswith(("partial-ROB-", "DIV-cancel-")) or row["case"] == "single-slot-cancel"))
+                (row["case"].startswith(("partial-ROB-", "DIV-cancel-", "DIV-ROB-")) or row["case"] == "single-slot-cancel"))
             counts["reset_cases"] += (reset and not previous_reset and
                 (row["case"].startswith("TE0-reset-") or row["case"] == "DIV-legacy-reset"))
             previous_reset = bool(reset)
@@ -283,10 +337,15 @@ def check_trace(text, require_campaign=True):
         except (TraceError, KeyError, ValueError) as exc:
             raise TraceError(f"cycle {cycle}: {exc}") from exc
     require(not live and not p and not r and not div, "unfinished transactions")
+    require(cancel_idle_window is None, "truncated post-cancel idle window")
+    require(final["cancel_idle_clock_on"] == counts["cancel_idle_clock_on"] == 0,
+            "cancel-idle clock summary must match recomputed zero")
+    require(final["idle_clock_samples"] == idle_clock_samples,
+            "idle-clock sample summary mismatch")
     for name, value in counts.items():
         require(final[name] == value, "PASS summary mismatch: " + name)
     # Counter returns zero for absent keys; compare those too.
-    for name in PASS_KEYS - {"schema", "idle_clock_samples", "cancel_idle_clock_on",
+    for name in PASS_KEYS - {"schema", "idle_clock_samples",
                              "parent_tested", "fullcore_tested", "performance_measured"}:
         require(final[name] == counts[name], "PASS summary mismatch: " + name)
     for kind, summary in summaries.items():
@@ -298,7 +357,7 @@ def check_trace(text, require_campaign=True):
                 final["perf_walk_one"] == final["perf_walk_zero"] == 577,
                 "incomplete perf v2 summary")
     if require_campaign:
-        require(len(groups) == (13 if perf_v2 else 12) and transition_cases == TRANSITION_CASES,
+        require(len(groups) == (14 if perf_v2 else 13) and transition_cases == TRANSITION_CASES,
                 "incomplete directed groups/transitions")
         require(len(frozen_accept_cycles) == len(frozen_response_latencies) == 10022 and
                 all(b - a == 1 for a, b in zip(frozen_accept_cycles, frozen_accept_cycles[1:])) and
@@ -312,12 +371,22 @@ def check_trace(text, require_campaign=True):
                     "missing per-FU terminal coverage")
         require(per_fu[0]["raw_killed_response"] == 0 and per_fu[1]["raw_killed_response"] > 0 and
                 per_fu[2]["raw_killed_response"] > 0, "legacy DIV cancel-cycle observation missing")
-        require(final["idle_clock_samples"] >= 12, "idle-gating coverage missing")
+        require(final["idle_clock_samples"] == 12, "idle-gating coverage missing")
+        require(div_rob_cases == DIV_ROB_CASES and div_reset_overlap == {1, 2},
+                "directed DIV ROB/reset-overlap coverage missing")
+        require(cancel_idle_cases == {1: 24, 2: 24} and
+                cancel_idle_samples == {1: 72, 2: 72},
+                "missing 48 immediate DIV cancellation windows / 144 samples")
     return dict(status="O2_PARENT_OFFLINE_TRACE_PASS", cycles=len(rows), groups=len(groups),
                 recomputed=dict(counts), per_fu=[dict(x) for x in per_fu],
                 full_campaign_required=require_campaign, perf_contract=2 if perf_v2 else 1,
                 perf_observations_recomputed=perf_observations if perf_v2 else None,
-                side_counters_not_recomputed=["idle_clock_samples", "cancel_idle_clock_on"],
+                cancel_idle_cases=dict(cancel_idle_cases),
+                cancel_idle_samples=dict(cancel_idle_samples),
+                div_rob_cases=len(div_rob_cases),
+                div_reset_overlap_kinds=sorted(div_reset_overlap),
+                side_counters_not_recomputed=[],
+                scope_note="strict idle gating; cancel edge remains required; legacy DIV reset uses TE",
                 scope="cycle/identity/ROB/control replay only; no RTL execution or payload recheck")
 
 

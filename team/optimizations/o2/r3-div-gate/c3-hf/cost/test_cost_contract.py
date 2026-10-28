@@ -1,0 +1,205 @@
+"""Host-only observation/binding rejection tests. No RTL, EDA or EMU runs."""
+import copy
+import hashlib
+import json
+import tempfile
+import unittest
+from pathlib import Path
+from types import SimpleNamespace
+from unittest.mock import patch
+import audit_cost
+import control_contract as cc
+import qualification as qual
+
+OUTPUT = Path("/home/riscv/riscv-lab/o2-c3-hf-20261025/cost-review")
+CANDIDATE = Path("/home/riscv/riscv-lab/o2-c3-hf-20261025/repo")
+
+def digest(p):
+    return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+
+class Thresholds(unittest.TestCase):
+    def test_all_old_observation_negative_controls(self):
+        result = audit_cost.self_check()
+        self.assertEqual(result["corruptions"], 66)
+        self.assertEqual(result["status"], "PASS")
+
+    def test_old_c1_and_c2_decisions_remain_rejected(self):
+        for prefix, expected in [("c1-owner",15),("c2-cost",25)]:
+            p = Path("/home/riscv/riscv-lab/o2-"+prefix+"-20261025/screen-01/result.json")
+            data = json.loads(p.read_text())
+            result = audit_cost.classify(data)
+            self.assertFalse(result["pass_"])
+            self.assertEqual(sum(not x for x in result["path_pass"]), expected)
+
+class StateBindings(unittest.TestCase):
+    def design(self):
+        cells = {}
+        names = {}
+        drivers = {}
+        reverse = {}
+        for i, semantic in enumerate(cc.SEMANTICS):
+            key = "physical"+str(i)
+            cells[key] = {"type":"DFFR_X1","connections":{"Q":[100+i],"D":[200+i]}}
+            names[semantic] = {"bits":[100+i]}
+            drivers[100+i] = (key,"Q")
+            reverse[key] = "c"+str(50+i)
+        return SimpleNamespace(mapping={"cells":cells,"netnames":names},
+                               drivers=drivers,reverse=reverse)
+
+    def test_three_distinct_retained_states(self):
+        d = self.design()
+        self.assertEqual(list(cc.bind_states(d)), list(cc.SEMANTICS))
+        self.assertEqual(len(set(cc.bind_states(d).values())),3)
+
+    def test_each_missing_state_rejected(self):
+        for semantic in cc.SEMANTICS:
+            with self.subTest(semantic=semantic):
+                d=self.design();del d.mapping["netnames"][semantic]
+                with self.assertRaises(ValueError): cc.bind_states(d)
+
+    def test_non_scalar_constant_and_undriven_rejected(self):
+        for bits in [[],[100,101],["0"],[999]]:
+            with self.subTest(bits=bits):
+                d=self.design();d.mapping["netnames"][cc.SEMANTICS[1]]["bits"]=bits
+                with self.assertRaises(ValueError): cc.bind_states(d)
+
+    def test_wrong_driver_or_non_dff_rejected(self):
+        d=self.design();d.drivers[101]=("physical1","D")
+        with self.assertRaises(ValueError): cc.bind_states(d)
+        d=self.design();d.mapping["cells"]["physical1"]["type"]="BUF_X1"
+        with self.assertRaises(ValueError): cc.bind_states(d)
+
+    def test_missing_d_and_canonical_binding_rejected(self):
+        d=self.design();del d.mapping["cells"]["physical1"]["connections"]["D"]
+        with self.assertRaises(ValueError): cc.bind_states(d)
+        d=self.design();del d.reverse["physical1"]
+        with self.assertRaises(ValueError): cc.bind_states(d)
+
+    def test_state_alias_rejected(self):
+        d=self.design();d.mapping["netnames"][cc.SEMANTICS[2]]["bits"]=[101]
+        with self.assertRaises(ValueError): cc.bind_states(d)
+
+    def test_owner_rejected(self):
+        d=self.design();d.mapping["netnames"]["dut.elasticDivOccupied_divOwnerIsFp"]={"bits":[100]}
+        with self.assertRaises(ValueError): cc.bind_states(d)
+
+class Qualification(unittest.TestCase):
+    def setUp(self):
+        OUTPUT.mkdir(parents=True,exist_ok=True)
+        self.temp = tempfile.TemporaryDirectory(prefix="host-fixture-",dir=OUTPUT)
+        self.addCleanup(self.temp.cleanup)
+        self.root=Path(self.temp.name);self.repo=self.root/"repo";self.repo.mkdir()
+        exu=self.repo/qual.EXU;exu.parent.mkdir(parents=True)
+        exu.write_bytes((CANDIDATE/qual.EXU).read_bytes())
+        self.assertEqual(digest(exu),qual.EXU_SHA)
+        marker=self.root/"synthetic-local-input.txt";marker.write_text("SYNTHETIC HOST FIXTURE")
+        q={"schema":"C3_HF_COST_QUALIFICATION_V1",
+           "candidate":{"repo":str(self.repo),"head":qual.CANDIDATE,
+                        "exeunit_sha256":qual.EXU_SHA,"baseline":qual.BASELINE},
+           "checks":{},"source_manifests":{},"inputs":{str(marker):digest(marker)}}
+        for name in sorted(qual.CHECKS):
+            p=self.root/(name+".json")
+            data={"status":"SYNTHETIC_PASS","candidate_head":qual.CANDIDATE,"passed":True}
+            p.write_text(json.dumps(data))
+            q["checks"][name]={"path":str(p),"sha256":digest(p),
+                              "assertions":[{"keys":["status"],"equals":"SYNTHETIC_PASS"},
+                                            {"keys":["passed"],"equals":True}]}
+        for name in ["fu","parent","supplement"]:
+            p=self.root/(name+"-sources.json");p.write_text(json.dumps({qual.EXU:qual.EXU_SHA}))
+            q["source_manifests"][name]={"path":str(p),"sha256":digest(p)}
+        self.q=q
+        self.path=self.root/"qualification.json"
+
+    def run_fixture(self, q=None, dirty=False):
+        self.path.write_text(json.dumps(self.q if q is None else q))
+        def git(args,**kw):
+            return ("dirty"+chr(10) if dirty else "") if args[1]=="status" else qual.CANDIDATE+chr(10)
+        with patch.object(qual.subprocess,"check_output",side_effect=git):
+            return qual.validate(self.path,{})
+
+    def update_check(self, name, data):
+        r=self.q["checks"][name];p=Path(r["path"]);p.write_text(json.dumps(data));r["sha256"]=digest(p)
+
+    def add_external_source(self, p, include_input=True):
+        r=self.q["source_manifests"]["supplement"];m=Path(r["path"])
+        data=json.loads(m.read_text());data[str(p)]=digest(p)
+        m.write_text(json.dumps(data));r["sha256"]=digest(m)
+        if include_input:self.q["inputs"][str(p.resolve())]=digest(p)
+
+    def test_valid_qualification_fixture(self):
+        self.assertEqual(self.run_fixture()["candidate"]["head"],qual.CANDIDATE)
+
+    def test_old_or_unfrozen_identity_rejected(self):
+        for name,value in [("head",qual.BASELINE),("head","1"*40),("exeunit_sha256","0"*64)]:
+            q=copy.deepcopy(self.q);q["candidate"][name]=value
+            with self.subTest(name=name,value=value),self.assertRaises(ValueError):self.run_fixture(q)
+
+    def test_dirty_repo_rejected(self):
+        with self.assertRaises(ValueError):self.run_fixture(dirty=True)
+
+    def test_missing_qualification_class_rejected(self):
+        for name in qual.CHECKS:
+            q=copy.deepcopy(self.q);del q["checks"][name]
+            with self.subTest(name=name),self.assertRaises(ValueError):self.run_fixture(q)
+
+    def test_failed_missing_or_type_wrong_pass_rejected(self):
+        for value in [False,1,"true",None]:
+            self.update_check("parent",{"status":"SYNTHETIC_PASS","candidate_head":qual.CANDIDATE,"passed":value})
+            with self.subTest(value=value),self.assertRaises(ValueError):self.run_fixture()
+
+    def test_status_does_not_claim_pass_rejected(self):
+        for status in ["FAIL","NOT_TESTED","BLOCKED","NOT_PASS","C3_REJECT_PASS"]:
+            q=copy.deepcopy(self.q)
+            q["checks"]["state"]["assertions"]=[{"keys":["status"],"equals":status}]
+            with self.subTest(status=status),self.assertRaises(ValueError):self.run_fixture(q)
+
+    def test_audit_wrong_candidate_rejected(self):
+        self.update_check("audit",{"status":"SYNTHETIC_PASS","passed":True,"candidate_head":qual.BASELINE})
+        with self.assertRaises(ValueError):self.run_fixture()
+
+    def test_source_manifest_missing_wrong_exu_and_actual_drift_rejected(self):
+        r=self.q["source_manifests"]["parent"];p=Path(r["path"])
+        for sources in [{},{"old-source":"0"*64},{qual.EXU:"0"*64}]:
+            p.write_text(json.dumps(sources));r["sha256"]=digest(p)
+            with self.subTest(sources=sources),self.assertRaises(ValueError):self.run_fixture()
+        p.write_text(json.dumps({qual.EXU:qual.EXU_SHA}));r["sha256"]=digest(p)
+        (self.repo/qual.EXU).write_text("changed production fixture")
+        with self.assertRaises(ValueError):self.run_fixture()
+
+    def test_source_manifest_category_missing_rejected(self):
+        q=copy.deepcopy(self.q);del q["source_manifests"]["supplement"]
+        with self.assertRaises(ValueError):self.run_fixture(q)
+
+    def test_unpinned_external_source_rejected(self):
+        allowed=self.root/"allowed";allowed.mkdir();f=allowed/"test.py";f.write_text("fixture")
+        self.add_external_source(f,False)
+        with patch.object(qual,"EXTERNAL_SOURCE_ROOTS",(allowed,)),patch.object(qual,"EXTERNAL_SOURCE_FILES",set()):
+            with self.assertRaises(ValueError):self.run_fixture()
+
+    def test_pinned_allowed_external_source_accepted(self):
+        allowed=self.root/"allowed";allowed.mkdir();f=allowed/"test.py";f.write_text("fixture")
+        self.add_external_source(f)
+        with patch.object(qual,"EXTERNAL_SOURCE_ROOTS",(allowed,)),patch.object(qual,"EXTERNAL_SOURCE_FILES",set()):
+            self.run_fixture()
+
+    def test_exact_external_file_accepted_but_sibling_rejected(self):
+        allowed=self.root/"allowed.py";allowed.write_text("fixture");self.add_external_source(allowed)
+        with patch.object(qual,"EXTERNAL_SOURCE_ROOTS",()),patch.object(qual,"EXTERNAL_SOURCE_FILES",{allowed}):
+            self.run_fixture()
+            sibling=self.root/"not-allowed.py";sibling.write_text("fixture");self.add_external_source(sibling)
+            with self.assertRaises(ValueError):self.run_fixture()
+
+    def test_external_symlink_escape_rejected(self):
+        allowed=self.root/"allowed";allowed.mkdir();other=self.root/"escape";other.mkdir()
+        target=other/"escaped.py";target.write_text("fixture")
+        link=allowed/"link.py";link.symlink_to(target)
+        self.add_external_source(link)
+        with patch.object(qual,"EXTERNAL_SOURCE_ROOTS",(allowed,)),patch.object(qual,"EXTERNAL_SOURCE_FILES",set()):
+            with self.assertRaises(ValueError):self.run_fixture()
+
+    def test_local_artifact_hash_drift_rejected(self):
+        Path(self.q["checks"]["parent"]["path"]).write_text("changed")
+        with self.assertRaises(ValueError):self.run_fixture()
+
+if __name__=="__main__":
+    unittest.main(verbosity=2)

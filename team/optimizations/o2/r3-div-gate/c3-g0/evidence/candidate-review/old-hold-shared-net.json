@@ -1,0 +1,91 @@
+{
+  "map_path": "/home/riscv/riscv-lab/o2-r3-div-gate-cost-20261025/parent-map-01/mapped.json",
+  "map_sha256": "55bd18fd9fa564d3442a6f72a8c715c21ed512692efff56eb8ebad0c8feffd0b",
+  "net_aliases": {
+    "dut.ClockGate.E": {
+      "hide_name": 0,
+      "bits": [
+        103659
+      ],
+      "attributes": {
+        "src": "/home/riscv/riscv-lab/o2-r3-div-gate-cost-20261025/parent-cost-01/rtl/CommonParentCostTop.sv:243|/home/riscv/riscv-lab/o2-r3-div-gate-cost-20261025/parent-cost-01/rtl/ExeUnit.sv:616|/home/riscv/riscv-lab/o2-r3-div-gate-cost-20261025/parent-map-01/ClockGate.map.v:1"
+      }
+    }
+  },
+  "directly_connected_cells": {
+    "$abc$484748$auto$blifparse.cc:371:parse_blif$571172": {
+      "hide_name": 1,
+      "type": "OR2_X1",
+      "parameters": {},
+      "attributes": {},
+      "port_directions": {
+        "A1": "input",
+        "A2": "input",
+        "ZN": "output"
+      },
+      "connections": {
+        "A1": [
+          103658
+        ],
+        "A2": [
+          3009
+        ],
+        "ZN": [
+          103659
+        ]
+      }
+    },
+    "$abc$484748$auto$blifparse.cc:371:parse_blif$571173": {
+      "hide_name": 1,
+      "type": "NAND2_X1",
+      "parameters": {},
+      "attributes": {},
+      "port_directions": {
+        "A1": "input",
+        "A2": "input",
+        "ZN": "output"
+      },
+      "connections": {
+        "A1": [
+          2815
+        ],
+        "A2": [
+          103659
+        ],
+        "ZN": [
+          103660
+        ]
+      }
+    },
+    "dut.ClockGate.impl": {
+      "hide_name": 0,
+      "type": "CLKGATETST_X1",
+      "parameters": {},
+      "attributes": {
+        "module_not_derived": 1,
+        "src": "/home/riscv/riscv-lab/o2-r3-div-gate-cost-20261025/parent-cost-01/rtl/CommonParentCostTop.sv:243|/home/riscv/riscv-lab/o2-r3-div-gate-cost-20261025/parent-cost-01/rtl/ExeUnit.sv:616|/home/riscv/riscv-lab/o2-r3-div-gate-cost-20261025/parent-map-01/ClockGate.map.v:2"
+      },
+      "port_directions": {
+        "CK": "input",
+        "E": "input",
+        "GCK": "output",
+        "SE": "input"
+      },
+      "connections": {
+        "CK": [
+          2
+        ],
+        "E": [
+          103659
+        ],
+        "GCK": [
+          217261
+        ],
+        "SE": [
+          2808
+        ]
+      }
+    }
+  },
+  "note": "Net 103659 is shared by ICG E and combinational logic; this proves shared net, not an ICG E-to-GCK data timing arc."
+}

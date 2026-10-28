@@ -365,6 +365,10 @@ class Bench {
     unsigned clocks=dut->io_fu_clock;
     if(selectFault("clock",of&&move&&!inf))clocks&=~1U;
     if(reset || !te)check((clocks&requiredClocks)==requiredClocks,"clock","missing real FU rising clock");
+    // The cancelling edge is required above; only subsequent truly idle edges
+    // must close. No grace period and no post-cancel normal-completion repair.
+    if(!reset && !te && requiredClocks==0)
+      check(clocks==0,"clock","idle FU retained clock after cancellation/completion");
     for(unsigned k=0;k<3;k++)if(clocks&(1U<<k))++clockEdges[k];
     bool nextPv=dut->io_p_valid,nextRv=dut->io_r_valid;
     if(selectFault("kill_p",kp&&!kr))nextPv=true;
@@ -526,6 +530,38 @@ static void test(Bench& b,const std::vector<Data>& data){
   }
   b.check(b.rawKilled[0]==0&&b.rawKilled[1]>0&&b.rawKilled[2]>0,"coverage","legacy DIV cancel-cycle raw response not observed");
   b.group("DIV-cancel=36 calculate-visible-stalled x ready x next-FU; raw-cancel-output-retained-but-no-ghost-grace");
+  // Absolute ROB positions include the real flag bit. An unrelated redirect
+  // must not clear a surviving DIV's clock hold, including both wrap boundaries.
+  struct DivRel{unsigned req,at;bool self,kill;};
+  const DivRel divRels[]={
+    {10,10,false,false},{8,10,false,false},{12,10,false,true},
+    {47,48,false,false},{48,47,false,true},
+    {95,0,false,false},{0,95,false,true}
+  };
+  for(unsigned kind=1;kind<3;kind++)for(unsigned relIndex=0;relIndex<7;relIndex++)
+  for(unsigned phase=0;phase<2;phase++){
+    const auto rel=divRels[relIndex];
+    b.label="DIV-ROB-k"+std::to_string(kind)+"-r"+std::to_string(relIndex)+"-p"+std::to_string(phase);
+    Req q=sample(data,kind,serial++),n=sample(data,(kind+phase)%3,serial++);
+    q.flag=rel.req/48;q.rob=rel.req%48;
+    Flush f{true,bool(rel.at/48),rel.at%48,rel.self};
+    b.check(killed(q,f)==rel.kill,"oracle","DIV ROB relation");
+    b.accept(q);
+    if(phase){b.waitVisible(n);for(unsigned i=0;i<3;i++)b.step(n,true,false);}
+    auto c=b.step(n,true,false,f);
+    b.check(!c.in && c.killed==unsigned(rel.kill),"cancel","DIV ROB kill/survive priority");
+    if(rel.kill){
+      for(unsigned i=0;i<3;i++){
+        auto idle=b.step(n);if(idle.clocks&(1U<<kind))++b.cancelIdleClockOn;
+        b.check(!(idle.clocks&(1U<<kind)),"clock","ROB-canceled DIV retained idle clock hold");
+      }
+    }else{
+      b.check(b.active(),"cancel","non-cancel redirect lost surviving DIV");
+      b.drain(n);
+    }
+    b.one(n);++b.redirects;
+  }
+  b.group("DIV-ROB=28 same-no-self older-younger flag-wrap-full-wrap x calculating-stalled; immediate-gate-and-recovery");
   for(unsigned phase=0;phase<4;phase++)for(bool withFlush:{false,true}){
     b.label="TE0-reset-"+std::to_string(b.resetCases);
     Req a=dot(data[serial%data.size()],serial++),n=dot(data[serial%data.size()],serial++);
@@ -539,13 +575,16 @@ static void test(Bench& b,const std::vector<Data>& data){
     b.one(n);++b.resetCases;
   }
   b.group("O2-TE=0 reset empty-P-R-full x cancel; exact-reset-priority; post-reset-wakeup");
-  for(unsigned kind=1;kind<3;kind++)for(unsigned phase=0;phase<3;phase++){
+  for(unsigned kind=1;kind<3;kind++)for(unsigned phase=0;phase<3;phase++)for(bool withFlush:{false,true}){
     b.label="DIV-legacy-reset";Req q=sample(data,kind,serial++);b.accept(q);
     if(phase){b.waitVisible(noise);if(phase==2)for(unsigned i=0;i<7;i++)b.step(noise,false,false);}
-    b.step(noise,true,true,{},true,true);b.step(noise,false,true,{},true,true);
+    const auto beforeDrops=b.resets,beforeCancels=b.cancels;
+    b.step(noise,true,true,{withFlush,q.flag,q.rob,true},true,true);
+    b.check(b.resets==beforeDrops+1 && b.cancels==beforeCancels,"reset","DIV reset must dominate matching cancellation exactly once");
+    b.step(noise,false,true,{},true,true);
     for(unsigned i=0;i<3;i++)b.step(noise);b.one(sample(data,0,serial++));++b.resetCases;
   }
-  b.group("legacy-DIV-reset=6 bootstrap-compatible-TE=1 (not-O2-TE0-reset-evidence)");
+  b.group("legacy-DIV-reset=12 x matching-cancel; bootstrap-compatible-TE=1 (not-DIV-TE0-reset-evidence)");
   b.label="random-control";std::mt19937 rng(0x20261019);
   for(unsigned i=0;i<20000;i++){
     Req q=sample(data,rng()%3,serial++);if(q.kind==0&&rng()%9==0)q.vl=7;
@@ -584,6 +623,7 @@ static void test(Bench& b,const std::vector<Data>& data){
   b.check(b.killPOnly&&b.killROnly&&b.killBoth&&b.resetBoth&&b.pAcceptWhileRBlocked&&b.fullBlocked&&b.retireWithPSurviving,
     "coverage","missing elastic control corner");
   b.check(b.zeroTeResets&&b.emptyZeroTeResets&&b.overlaps>=10020,"coverage","missing true-gate or II1 evidence");
+  b.check(b.cancelIdleClockOn==0,"clock","nonzero cancel-idle clock count");
   b.finish();
 }
 int main(int argc,char** argv){

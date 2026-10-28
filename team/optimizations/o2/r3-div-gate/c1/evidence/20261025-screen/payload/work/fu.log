@@ -1,0 +1,19 @@
+COMMAND exit=0 log=git-version.log git --version
+COMMAND exit=0 log=java-version.log java -version
+COMMAND exit=0 log=mill-version.log mill --version
+COMMAND exit=0 log=verilator-version.log verilator --version
+COMMAND exit=0 log=cxx-version.log g++ --version
+COMMAND exit=0 log=clang-version.log clang++ --version
+COMMAND exit=0 log=make-version.log make --version
+COMMAND exit=0 log=firtool-version.log /home/riscv/.cache/llvm-firtool/1.62.1/bin/firtool --version
+COMMAND exit=0 log=source-commit.log git rev-parse HEAD
+COMMAND exit=0 log=source-status.log git status --short
+COMMAND exit=0 log=working-tree.patch git diff --binary HEAD
+Traceback (most recent call last):
+  File "/home/riscv/riscv-lab/o2-c1-owner-20261025/repo/team/optimizations/o2/run_rtl.py", line 141, in <module>
+    if __name__=="__main__": main()
+  File "/home/riscv/riscv-lab/o2-c1-owner-20261025/repo/team/optimizations/o2/run_rtl.py", line 83, in main
+    deps=modules(ROOT)
+  File "/home/riscv/riscv-lab/o2-c1-owner-20261025/repo/team/optimizations/o2/run_rtl.py", line 59, in modules
+    if head!=pin or status: raise RuntimeError(f"dirty/unpinned dependency {prefix+name}")
+RuntimeError: dirty/unpinned dependency src/main/resources/aia

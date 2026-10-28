@@ -1,6 +1,48 @@
 # James_Hotten 最新整合、复算与接续
 
-> 最新同步记录见下节；2026-10-23/24各节为历史，其旧“下一步”不再驱动任务。当前活动计划统一见[开发路线](development-route-current.md)。
+> 最新同步记录见下节；2026-10-23至27各节为历史，其旧“下一步”不再驱动任务。当前活动计划统一见[开发路线](development-route-current.md)。
+
+<a id="sync-20261028"></a>
+
+## 2026-10-28：norm、独立0f/C8整合与发布缺项审查
+
+日期级记录（UTC+08:00）；@JamesHotten / Agent，操作 `20261028-JamesHotten-progress-sync`。从 `e611eafb1af2730d8d86c768ee98f1b80f5fe0b2` 并入 `zufan:ffd668bf1bc80850d382f514d13bb00316c85582` 和 `zjhwork:10b71ad4bff25cd2070e775c74a4717b01602f75`。前者新增norm阶段提交，后者新增4个成果提交并带入此前未合并的旧文档祖先4669c487；旧活动文档没有覆盖当前路线。其他远端头未发现新增实现，LiZufan001各头仍由已有历史覆盖。本次获授权仅推送James_Hotten；main保持e9c70db，O1/O2默认关闭。
+
+### 整合和清理
+
+采用norm/consumer及首token准备的最新明确状态，导入独立0f/C8、C1/C2/C3否决、成本/版本档案与只读公开项目研究。当前生产RTL、difftest和build.sc相对e611无改动；ExeUnit保留本地更广的取消关钟和O1 observer，不退回仅覆盖O2 DIV的0f实现。C8资格仍绑定0f硬件及其冻结软件，不转授给James当前硬件，也不自动替换firstdot V2默认。
+
+父级测试/检查器并入28项DIV ROB边界、48个取消窗口/144拍和12项reset组合，保留perf-v2的577位payload/metadata验证。两个正例入口统一严格检查，完整group计数为perf-v2 14、旧非perf 13。当前合并C++夹具未重新执行RTL，其新增覆盖不能写成真实新硬件PASS。
+
+当前路线、team入口和progress导航已更新，撤下“等待norm发布”和旧扩矩阵待办。旧研究建议不自动成为活动任务，0f历史“未上传/未授权”不覆盖4653的实际发布。冻结合同、旧超时、墙钟失败、有效原始证据和RVV回退保持。跨系统核验5,176个导入文件的工作区原字节/index与来源相符；组合文件独立审阅，OPTIMIZATION的普通检出换行已归一到Git blob。冻结代码/patch格式不改写，属性仅按具体路径保护。
+
+### Standards：1项已确认发布缺口
+
+**P1：0f acceptance/evidence清单184成员，原Git发布只包含152项。** 缺失32项全部在上游10b71ad4b树中缺席，不是本次拉取丢失或gzip替代。`finalize.py`要求逐项读取和stored/raw SHA校验，巨型工作树快照的排除项不豁免它们。
+
+已从现有受控文件找到并恢复3个非空、大小/SHA完全一致的成员：constantin.txt、plusArgs、cost-archive.command.stdout.log；逐项来源见检查包的`restored-members.json`。已添加只覆盖这些清单缺项及父目录的局部.gitignore例外，32个路径均不再被根目录的`*.log`/`build`规则忽略。没有伪造日志或改写原manifest。
+
+**仍缺29项（16个非空日志、13个空成员），整包恢复状态BLOCKED。** 已存在155项的stored/raw哈希全部相符；这不推翻原作者按原物理文件取得的历史结果，但当前Git包不能宣称完整独立复现。缺项逐项路径、期望大小/SHA见[检查摘要](../evidence/progress-sync-20261028/summary.json)。下一步需从原作者规范归档取回原字节，按原manifest补齐后再验完整库存；不以删除清单项或新跑日志替代原证据。
+
+### Spec：0项确认实现错误，保留两项资格边界
+
+norm固定域目标正确性及组合参考可按原身份复用；其scalar跨度3.2205087%超过事前1%，性能仍HOLD。首token四目标没有已发布终态，单冷窗合同的performance_qualified永久为false；新离线并行工具仍在队友活动范围，尚未发布，不纳入此次合并。当前源码、T17/ff840、0f/C8及本地bc9/e66证据分别解释，不能合并为新全核验收。
+
+### 本次实际验证
+
+| 范围 | 结果 |
+| --- | --- |
+| 当前父级主机检查 | 53项PASS；冻结0f修复后非perf原流经两个正例入口通过，修复前原流仍被拒绝。未新增父级RTL运行。 |
+| C8与验收工具 | C8 22项、时钟合同11项PASS。编排15项在Windows因POSIX路径契约有6失败/2错误，原日志保留；原源码在Linux 15项PASS，未放宽路径/身份门禁。 |
+| norm完整恢复/原流 | 16分片ZIP SHA与1,826文件/2,884,708,772原字节核对通过；5类冻结检查器、18案例复算通过，含原超时目标继续按原门禁拒绝。没有新NEMU/EMU，外部物理运行身份未重验。 |
+| 0f证据字节 | R3 local 167成员/26,078,547原字节PASS；acceptance已恢复155/184成员、52,805,627原字节相符，剩余29项明确BLOCKED。不是完整0f组合复算。 |
+| 导入/保护 | 5,176导入文件与上游原字节/index一致；生产RTL不变、默认O1/O2关闭；保留所有旧失败。 |
+
+[检查包](../evidence/progress-sync-20261028/checks.zip)、[55成员哈希清单](../evidence/progress-sync-20261028/manifest.json)保存命令、退出码、平台失败、恢复来源和复算结果。未重复已经闭合的firstdot/W2全批，不新增EMU/NEMU或EDA。
+
+### 下一步
+
+先补齐0f验收包剩余29个原成员，这是当前独立恢复的具体缺口。同时按[协作Issue最新保护](https://github.com/cc77-builder/riscv/issues/2#issuecomment-6447361223)衔接首token四路的真实终态、完整state/DiffTest/custom/四CSR及TA重放；由原认领者收尾并发布后再整合，不重复启动、接管或自动续预算。矩阵函数占参考退休指令89.33%/92.09%，可用作后续目标路径调查的线索，但不是周期占比；新性能实验需要独立公平计划和强FR对照。norm和W2都保持HOLD，完整token性能及新ASIC资格仍未获得。
 
 <a id="sync-20261027"></a>
 

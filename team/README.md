@@ -11,7 +11,8 @@
 | 当前基线、工程达标与持续优化的全部工作包、下一决策 | [当前开发路线](docs/development-route-current.md) |
 | 谁在做什么、保护哪些运行、如何集成 | [协作约定与真实 Issue 状态](docs/collaboration-current.md) |
 | 开发时间、GitHub 身份、成果和路线历史 | [开发计分板](../开发计分板.md) |
-| 当前稳定 GEMV C 入口、库构建与回退 | [稳定使用说明](optimizations/o2/r2-select/STABLE.md)、[干净构建与真实运行](optimizations/o2/repro/CLEAN_REPRODUCE.md) |
+| 当前稳定 GEMV C 入口、库构建与回退 | [firstdot V2稳定入口](optimizations/o2/r2-select/FIRSTDOT_STABLE.md)、[V1回退](optimizations/o2/r2-select/STABLE.md)、[干净构建与真实运行](optimizations/o2/repro/CLEAN_REPRODUCE.md) |
+| 独立0f/C8资料（验收包缺29成员，完整恢复BLOCKED；不等于James硬件资格） | [C8使用](optimizations/o2/integration/firstdot-v2-0f/package/c8/README.md)、[已发布的0f验收](docs/r5-g5-publication-20261027.md) |
 | 工具与依赖、可复现输入 | [环境](docs/environment.md)、[版本清单](versions.env)、[O2 复现入口](optimizations/o2/repro/README.md) |
 
 ## 按任务阅读

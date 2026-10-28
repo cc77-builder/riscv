@@ -1,0 +1,13 @@
+--- frozen-v3/raw_audit.py
++++ audit-scope-fix-v1/raw_audit_fixed.py
+@@ -154,8 +154,8 @@
+     require(len({r["pid"] for r in records}) == 5, "five distinct process IDs required")
+     require(state.get("active_pid") is None and times(state)[0] <= times(records[0])[0]
+             and times(records[-1])[1] <= times(state)[1], "campaign/process time bounds")
+-    for before,after in zip(records,records[1:]):
+-        require(times(before)[1] <= times(after)[0], "nonserial/reversed probe chronology")
++    for previous,following in zip(records,records[1:]):
++        require(times(previous)[1] <= times(following)[0], "nonserial/reversed probe chronology")
+     rejected,normal = records[0],records[1:]
+     detail = rejected["negative_details"]
+     require(int(detail["pc"],16) == p.a.negative_target(chosen["config-reuse"])

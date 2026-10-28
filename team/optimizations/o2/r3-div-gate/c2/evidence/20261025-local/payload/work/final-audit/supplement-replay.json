@@ -1,0 +1,92 @@
+{
+  "status": "C2_PARENT_SUPPLEMENT_PASS",
+  "replay": {
+    "status": "O2_PARENT_OFFLINE_TRACE_PASS",
+    "cycles": 2959,
+    "groups": 6,
+    "recomputed": {
+      "cycles": 2959,
+      "groups": 6,
+      "full_cycles": 0,
+      "full_blocked": 0,
+      "p_accept_r_blocked": 0,
+      "r_response_p_survivor": 0,
+      "kill_p_only": 0,
+      "kill_r_only": 0,
+      "kill_both": 0,
+      "reset_both": 0,
+      "overlaps": 0,
+      "stalls": 310,
+      "p_to_r": 36,
+      "te0_resets": 40,
+      "empty_te0_resets": 22,
+      "redirects": 0,
+      "reset_cases": 0,
+      "accepted": 213,
+      "responses": 141,
+      "cancelled": 54,
+      "reset_dropped": 18
+    },
+    "per_fu": [
+      {
+        "latency_min": 2,
+        "clock_edges": 158,
+        "accepted": 36,
+        "latency_max": 2,
+        "latency_samples": 36,
+        "responded": 36,
+        "waits": 152
+      },
+      {
+        "latency_min": 10,
+        "clock_edges": 495,
+        "accepted": 34,
+        "latency_max": 14,
+        "latency_samples": 32,
+        "responded": 28,
+        "waits": 103,
+        "reset_dropped": 6
+      },
+      {
+        "latency_min": 8,
+        "clock_edges": 2001,
+        "accepted": 143,
+        "latency_max": 15,
+        "latency_samples": 112,
+        "responded": 77,
+        "killed": 54,
+        "waits": 151,
+        "raw_killed_response": 12,
+        "reset_dropped": 12
+      }
+    ],
+    "full_campaign_required": false,
+    "cancel_idle_cases": {},
+    "cancel_idle_samples": {},
+    "div_rob_cases": 0,
+    "div_reset_overlap_kinds": [],
+    "side_counters_not_recomputed": [],
+    "scope_note": "strict idle gating; cancel edge remains required; legacy DIV reset uses TE",
+    "scope": "cycle/identity/ROB/control replay only; no RTL execution or payload recheck"
+  },
+  "counts": {
+    "idle_ready_checks": 620
+  },
+  "normal_sqrt_cases": 15,
+  "sqrt_cancel_cases": 48,
+  "te0_reset_cases": 20,
+  "sqrt_rob_cases": 14,
+  "sqrt_switch_cases": 18,
+  "real_lane_skew_cycles": {
+    "2": 56,
+    "1": 27
+  },
+  "real_lane_skew_cancel_cases": {
+    "2": 6,
+    "1": 6
+  },
+  "immediate_cancel_idle_samples": 162,
+  "scope": "real parent supplemental control and exact directed SQRT; no fullcore/PPA",
+  "log_sha256": "16a019e1ad87e87988a23b9bd6357caf0fe1298034a45438e1faf665725414ea",
+  "checker_sha256": "c07c98f6f7aec3eb5bd8253bbb7327177c8a6be1830b4139b0bdf43585274746"
+}

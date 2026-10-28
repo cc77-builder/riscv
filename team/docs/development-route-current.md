@@ -1,12 +1,12 @@
 # 香山 vdot 工程开发路线：满足赛题技术要求，持续提高性能
 
-更新：2026-10-27（UTC+08:00）。硬件比较基点：6d2abe403b07c297b8830a7d4f06e370b0a8e070；当前T17新构建源码：34bae6d4acceac939f958199dae53c14bc1f6183；当前推荐采用的稳定 C 源包为[firstdot V2](../optimizations/o2/r2-select/FIRSTDOT_STABLE.md)，冻结[V1与回退](../optimizations/o2/r2-select/STABLE.md)保留；底层资格分别见[firstdot运行结果](../optimizations/o2/r2-vector-accum/FIRSTDOT_RESULT.md)及[R4结果](../optimizations/o2/r2-select/ENTRY_RESULT.md)，后续config-reuse选择性优化见[当前S3结果](../optimizations/o2/r2-config-reuse/RUNTIME_RESULT.md)。团队集成分支 cc77-builder/riscv:zufan。实时活动见[协作入口](collaboration-current.md)，每轮成果及路线变化见[开发计分板](../../开发计分板.md)。
+更新：2026-10-28（UTC+08:00）。硬件比较基点：6d2abe403b07c297b8830a7d4f06e370b0a8e070；当前T17新构建源码：34bae6d4acceac939f958199dae53c14bc1f6183；当前推荐采用的稳定 C 源包为[firstdot V2](../optimizations/o2/r2-select/FIRSTDOT_STABLE.md)，冻结[V1与回退](../optimizations/o2/r2-select/STABLE.md)保留；底层资格分别见[firstdot运行结果](../optimizations/o2/r2-vector-accum/FIRSTDOT_RESULT.md)及[R4结果](../optimizations/o2/r2-select/ENTRY_RESULT.md)，后续config-reuse选择性优化见[当前S3结果](../optimizations/o2/r2-config-reuse/RUNTIME_RESULT.md)。团队集成分支 cc77-builder/riscv:zufan。实时活动见[协作入口](collaboration-current.md)，每轮成果及路线变化见[开发计分板](../../开发计分板.md)。
 
 本路线只安排工程实现、验证、复现和性能优化。比赛报告、PPT、视频、答辩、平台提交及赛事事务由成员另行安排，不属于 Agent 的工程任务，也不作为工程推进的前置条件。开发只维护必要的运行说明、结果证据和简短计分板记录。
 
 赛题技术目标、完整评分表及官方／内部合同边界统一见根目录[赛题要求与评分总览](../../赛题要求与评分总览.md)。每轮先读计分板的近期“路线影响／接续”，结合 Issue 和真实运行恢复工作，再使用本路线选包；上轮聊天不是接续依据。
 
-> James_Hotten 同步边界（2026-10-27）：已并入团队 `zufan` 截至 `431938271` 的50个新增提交，复核范围见[同步记录](latest-integration-20261023.md#sync-20261027)。本地bc9/e66的G3补充验收与firstdot旧探针作为独立历史证据保留，不能与T17/ff840的完整C调用资格混用。旧“补firstdot dataset1/2”队列已撤下，采用本页完整上游进度。O1/O2生产默认关闭；最新norm认领与运行保护以协作Issue为准，本次不接管。
+> James_Hotten 同步边界（2026-10-28）：并入 `zufan:ffd668bf1` 的norm/consumer阶段成果及 `zjhwork:10b71ad4b` 的0f/C8和研究资料，复核见[同步记录](latest-integration-20261023.md#sync-20261028)。当前生产RTL保留James在e611eafb1的实现，含更完整的取消关钟和O1观测；0f验收包缺29个原成员，完整恢复BLOCKED；0f/C8、T17/ff840与本地bc9/e66证据各自绑定原身份，不拼接为新全核PASS。O1/O2默认关闭。旧firstdot扩数据、等待norm发布及0f/C1/C2/C3已完成筛选队列不再重启；在途首token与离线调度工具以协作Issue的实际终态和正式发布为准。
 
 ## 1. 当前从哪里出发
 
@@ -36,6 +36,7 @@
 | R2-S3 纯 forward 消费者 | [纯计算与组合结果](../optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/consumer/RESULT.md)完成scalar/FR/TA及FR/TA+cache五方法三位置完整参考、双状态交错与真实负控；验证/目标包装链接同一consumer.o，核心没有oracle/快照/计时 | 该旧consumer镜像的30万cycle原DiffTest成本探测未完成forward，完整目标及性能仍NOT_TESTED；新组合的独立入口见下方norm条目。增量O2审计逐笔复现冻结正/负日志，409MB正例实际峰值35.33MiB。预打包、固定未训练模型、原scalar W2及R5边界保持；不自动展开长时完整重放。 |
 | R2-S3 K768 W2 与完整支持域参考 | [W2结果与范围](../optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/w2/RESULT.md)提供K768 FR/TA与独立纯consumer，五方法p0..2的10案例及双状态API通过；scalar/FR-cache/TA-cache在固定token序列p0..255完成768次forward、512次完整状态比较与p256拒绝。真实p2/layer5完整W2目标的负控、正常、恢复和重放4进程审计PASS | 性能HOLD：FR四样本跨度1.6438%超过冻结1%门槛，不发布本批vdot优选或合格收益。S256为固定三方法参考资格；目标仅为预量化、预打包、selfwarm的完整W2调用边界。完整香山forward/token、模型质量与新ASIC仍未取得资格；强FR、旧consumer与R5默认保留。 |
 | R2-S3 RMSNorm 与 W2 组合消费者 | [norm结果及可选消费者](../optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/norm/RESULT.md)完成固定域目标正确性、完整重放及归档原文复算；同一对象完成八例消费者和双状态API参考，新的[首token入口](../optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/norm/target/RESULT.md)完成最终四例原参考 | norm性能HOLD：scalar四样本跨度3.220509%超过1%；首token目标四例按独立冻结合同验收，当前尚未取得目标资格。新对象不继承旧S256，不授公平应用性能或新ASIC资格；R5、强FR和scalar norm/W2回退保持。 |
+| 独立0f/C8交付 | [0f发布记录](r5-g5-publication-20261027.md)及[C8包](../optimizations/o2/integration/firstdot-v2-0f/package/c8/README.md)已并入；保留0f硬件、c823a软件和冻结清单的R5/G5资格与明确回退 | 本机发现原184成员验收包漏发32项，已同SHA恢复3项，仍缺29项；整包恢复BLOCKED，下一步先按原大小/SHA补齐。仅作独立可选包和受测版本资料，不将0f硬件替换当前James源码，不更改firstdot V2默认。原freeze之后的发布状态见发布记录；旧“未上传/未授权”只描述当时操作。当前合并父级新增覆盖已通过host与冻结原流检查，新的组合RTL执行仍NOT_RUN。 |
 | R3 | [perfDebugInfo子项](../optimizations/o4/perf/RESULT.md)已闭合并保留577位；[carry-save归约筛选](../optimizations/o4/reduce/RESULT.md)完成真实RTL证书/G1/完整FU新AB及封存复算 | 归约候选r2r仅改善0.8849%、面积增加0.5459%、i2r退化1.9166%，未达事前门槛，STOP_SCREEN；不采用、不扩大父级/整核、不继续枚举。生产RTL与稳定默认不变，两个子项均不产生新应用周期/ASIC成绩 |
 
 依据：[历史项目状态](project-status-20261020.md)、[H1 成本与时序](../optimizations/o2/result-width/h1/H1_RESULT.md)、[H1 周期](../optimizations/o2/result-width/h1/performance/B0_H1_RESULT.md)、[R2 入口](../../R2_STATUS.md)。结果绑定各自源码、配置和输入；运行是否结束须读实际 state、日志和进程。

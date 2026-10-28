@@ -1,0 +1,20 @@
+--- v2/raw_audit.py
++++ v3/raw_audit.py
+@@ -10,7 +10,7 @@
+ import shutil
+ import tempfile
+ 
+-from probe import CONTRACT, read, sha, require
++from probe import CONTRACT, read, sha, require, process_inputs
+ 
+ 
+ def times(record):
+@@ -73,7 +73,7 @@
+     local_inputs[str(build / "vdot-perf.bin")] = image["image_sha256"]
+     if negative:
+         local_inputs[reference] = fixture["negative_sha256"]
+-    expected_inputs = dict(common) | local_inputs
++    expected_inputs = process_inputs(common) | local_inputs
+     require(record["files"] == expected_inputs, "runtime input inventory drift")
+     # audit_probe verifies the complete shared map once before and after all five
+     # records. Recheck each process's real private AUX/BIN/reference here.

@@ -1,0 +1,38 @@
+{
+  "status": "R3_RECHECK_GUARD_PASS",
+  "checks": [
+    {
+      "label": "optimized_python_rejected",
+      "argv": [
+        "python3",
+        "-O",
+        "-B",
+        "/home/riscv/riscv-lab/o2-r3-readonly-20261024/gating/audit_trace.py",
+        "--repo",
+        "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo",
+        "--output",
+        "/home/riscv/riscv-lab/o2-r3-readonly-20261024/gating/optimized-must-not-exist"
+      ],
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/riscv/riscv-lab/o2-r3-readonly-20261024/gating/audit_trace.py\", line 4, in <module>\n    raise RuntimeError('Optimized Python (-O/-OO/PYTHONOPTIMIZE) is forbidden: verification requires assertions.')\nRuntimeError: Optimized Python (-O/-OO/PYTHONOPTIMIZE) is forbidden: verification requires assertions.\n"
+    },
+    {
+      "label": "existing_output_rejected",
+      "argv": [
+        "python3",
+        "-B",
+        "/home/riscv/riscv-lab/o2-r3-readonly-20261024/gating/audit_trace.py",
+        "--repo",
+        "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo",
+        "--output",
+        "/home/riscv/riscv-lab/o2-r3-readonly-20261024/gating/recheck"
+      ],
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/riscv/riscv-lab/o2-r3-readonly-20261024/gating/audit_trace.py\", line 15, in <module>\n    raise FileExistsError('Refusing to overwrite existing evidence: '+str(args.output))\nFileExistsError: Refusing to overwrite existing evidence: /home/riscv/riscv-lab/o2-r3-readonly-20261024/gating/recheck\n"
+    }
+  ],
+  "existing_recheck_unchanged": true,
+  "optimized_output_created": false
+}

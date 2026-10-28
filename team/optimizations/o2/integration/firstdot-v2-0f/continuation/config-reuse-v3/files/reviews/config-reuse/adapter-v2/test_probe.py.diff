@@ -1,0 +1,46 @@
+--- adapter-v1/test_probe.py
++++ adapter-v2/test_probe.py
+@@ -49,6 +49,9 @@
+ 
+     def test_fastest_rvv_from_firstdot_basic(self):
+         data = self.replace(1000, ("firstdot","basic","rvv"))
++        # Keep the unchanged RVV control equal while isolating fastest-baseline selection.
++        next(r for r in data if (r["variant"],r["software"],r["method"]) ==
++             ("config-reuse","basic","rvv"))["total"] = 1000
+         self.assertEqual(self.decision(data)["decision"], "REJECT")
+ 
+     def test_fastest_rvv_from_candidate_reuse(self):
+@@ -67,6 +70,33 @@
+     def test_other_cell_regression_blocks_adoption(self):
+         data = self.replace(1301, ("config-reuse","basic","vdot"))
+         self.assertEqual(self.decision(data)["decision"], "INCONCLUSIVE")
++
++    def test_other_regressions_block_both_winning_and_losing_main_candidate(self):
++        for main_total in (1092, 1130):
++            for software,method in (("basic","vdot"),("basic","rvv"),("reuse","rvv")):
++                with self.subTest(main_total=main_total, software=software, method=method):
++                    data = self.replace(main_total)
++                    base = next(r["total"] for r in data if (r["variant"],r["software"],r["method"]) ==
++                                ("firstdot",software,method))
++                    next(r for r in data if (r["variant"],r["software"],r["method"]) ==
++                         ("config-reuse",software,method))["total"] = base + 1
++                    value = self.decision(data)
++                    self.assertEqual(value["decision"], "INCONCLUSIVE")
++                    self.assertIn("unexplained paired cell regression: "+software+"/"+method,
++                                  value["unexplained_controls"])
++
++    def test_explicit_controls_block_both_winning_and_losing_candidate(self):
++        for main_total in (1092, 1130):
++            for control in ("identical baseline drift", "unchanged RVV drift"):
++                with self.subTest(main_total=main_total, control=control):
++                    value = self.decision(self.replace(main_total), controls=[control])
++                    self.assertEqual(value["decision"], "INCONCLUSIVE")
++                    self.assertIn(control, value["unexplained_controls"])
++
++    def test_main_candidate_regression_alone_remains_reject(self):
++        value = self.decision(self.replace(1130))
++        self.assertEqual(value["decision"], "REJECT")
++        self.assertEqual(value["unexplained_controls"], [])
+ 
+     def test_missing_cell_reject(self):
+         with self.assertRaisesRegex(ValueError, "eight"):

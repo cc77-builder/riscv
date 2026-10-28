@@ -1,0 +1,92 @@
+{
+  "status": "O2_PARTIAL_TRACE_AUDIT",
+  "input_sha256": "824d93ec755962b02a1502449c81404e7305e189981e03bed1bcd079d11cdd06",
+  "schema": {
+    "version": 1,
+    "clock": "global",
+    "latency": 2,
+    "slots": 2,
+    "rob_size": 48,
+    "ftq_size": 8,
+    "vlen": 128,
+    "vpu_width": 195,
+    "perf_width": 577
+  },
+  "counts": {
+    "STATE": 2901,
+    "VFEX4_ACCEPT": 1,
+    "VFEX4_WAIT": 0,
+    "VFEX4_REDIRECT": 1458,
+    "ACCEPT": 1,
+    "MOVE": 1,
+    "RESPONSE": 1,
+    "STALL": 0,
+    "KILL": 0,
+    "DIV_ACCEPT": 0,
+    "DIV_KILL": 0,
+    "DIV_OUTPUT": 0,
+    "ENQUEUE": 1,
+    "COMMIT": 1,
+    "REDIRECT": 1458,
+    "MULTI_INFLIGHT": 0,
+    "OVERLAP": 0,
+    "TRIPLE_OVERLAP": 0,
+    "FULL_STALL": 0,
+    "KILL_P": 0,
+    "KILL_R": 0,
+    "PARTIAL_KILL": 0,
+    "BOTH_KILL": 0,
+    "R_KILL_P_SURVIVES": 0,
+    "P_KILL_R_SURVIVES": 0,
+    "UNRELATED_FLUSH": 0,
+    "ROB_WRAP": 0,
+    "FTQ_WRAP": 0,
+    "DIV_RESPONSE": 0,
+    "ACCEPTED_THEN_SQUASHED": 0,
+    "ACCEPTED_YOUNGER_SQUASHED": 0
+  },
+  "vfex4_fu_counts": {
+    "0x800000000": 1
+  },
+  "pending_count": 0,
+  "pending_div_count": 0,
+  "unfinished_rob_count": 0,
+  "transactions": [
+    {
+      "seq": 0,
+      "rob": "0:8",
+      "pdest": 124,
+      "vl": 8,
+      "illegal": 0,
+      "vecwen": 1,
+      "v0wen": 0,
+      "vpu": 383123886643719907295546637845863265354179916928647168,
+      "perf": 0,
+      "vs1": 220182708007666064582012146878743838720,
+      "vs2": 220182708007666064591199348829179576191,
+      "accept_cycle": 311084,
+      "expected_data": 0,
+      "move_cycle": 311085,
+      "outcome": "response",
+      "end_cycle": 311086,
+      "elapsed_cycles": 2,
+      "writeback_stall_events": 0
+    }
+  ],
+  "o2_coverage": {
+    "multi_inflight": false,
+    "triple_overlap": false,
+    "full_stall": false,
+    "kill_p": false,
+    "kill_r": false,
+    "partial_kill": false
+  },
+  "response_latency_histogram": {
+    "2": 1
+  },
+  "observed_accept_gap_histogram": {},
+  "clock_mapping": "direct ungated VFEX4/ROB global cycle; independent P/R transition audit",
+  "scope": "trace and accepted-source full128 arithmetic audit; ISA legality/architectural state require workload and DiffTest",
+  "runtime_reset_audited": false,
+  "performance_measured": false
+}

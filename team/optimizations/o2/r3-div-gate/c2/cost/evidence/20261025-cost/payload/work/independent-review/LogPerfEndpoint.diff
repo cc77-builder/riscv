@@ -1,0 +1,21 @@
+--- 
++++ 
+@@ -39,14 +39,14 @@
+ 
+   `ifndef SYNTHESIS
+     always @(posedge clock) begin
++      if ((`PRINTF_COND_) & x1_bore_2 & ~reset)
++        $fwrite(32'h80000002,
++                "[ERROR][time=%d] xiangshan.backend.exu.ExeUnitImp@72e789cb: fuOutValidOH %b should be one-hot)\n",
++                64'h0, x2_bore);
+       if ((`PRINTF_COND_) & x1_bore & ~reset)
+         $fwrite(32'h80000002,
+                 "[ERROR][time=%d] xiangshan.backend.fu.wrapper.VFDivSqrt@1a87b51: Vfdiv OpType not supported",
+                 64'h0);
+-      if ((`PRINTF_COND_) & x1_bore_2 & ~reset)
+-        $fwrite(32'h80000002,
+-                "[ERROR][time=%d] xiangshan.backend.exu.ExeUnitImp@72e789cb: fuOutValidOH %b should be one-hot)\n",
+-                64'h0, x2_bore);
+       if ((`PRINTF_COND_) & x1_bore_1 & ~reset)
+         $fwrite(32'h80000002,
+                 "[ERROR][time=%d] xiangshan.backend.fu.wrapper.VIDiv@2b62475a: Vfdiv OpType not supported",

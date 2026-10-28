@@ -1,0 +1,50 @@
+Startpoint: io_in_bits_fuType[31] (input port clocked by core_clk)
+Endpoint: c202763 (rising clock gating-check end-point clocked by core_clk)
+Path Group: core_clk
+Path Type: max
+
+Fanout         Cap        Slew       Delay        Time   Description
+--------------------------------------------------------------------------------------------
+                     0.050000    0.000000    0.000000   clock core_clk (rise edge)
+                                 0.000000    0.000000   clock network delay (ideal)
+                                 0.100000    0.100000 v input external delay
+                     0.050000    0.000000    0.100000 v io_in_bits_fuType[31] (in)
+    2    3.805798                                       io_in_bits_fuType[31] (net)
+                     0.050000    0.000013    0.100013 v c69/A4 (NOR4_X1)
+                     0.083323    0.136990    0.237003 ^ c69/ZN (NOR4_X1)
+    3    5.987947                                       n2896 (net)
+                     0.083323    0.000015    0.237019 ^ c71/A2 (NAND3_X1)
+                     0.024760    0.042341    0.279360 v c71/ZN (NAND3_X1)
+    2    3.738130                                       n2898 (net)
+                     0.024760    0.000013    0.279373 v c81/A (INV_X1)
+                     0.014078    0.025925    0.305298 ^ c81/ZN (INV_X1)
+    2    4.013425                                       n2909 (net)
+                     0.014078    0.000014    0.305312 ^ c82/A3 (NAND3_X1)
+                     0.020566    0.021855    0.327167 v c82/ZN (NAND3_X1)
+    1    1.786543                                       n2910 (net)
+                     0.020566    0.000011    0.327178 v c85/A2 (NOR3_X1)
+                     0.068463    0.095849    0.423027 ^ c85/ZN (NOR3_X1)
+    4    7.619309                                       n2913 (net)
+                     0.068463    0.000017    0.423044 ^ c175946/A3 (NAND4_X1)
+                     0.022181    0.039993    0.463037 v c175946/ZN (NAND4_X1)
+    1    1.828314                                       n197336 (net)
+                     0.022181    0.000011    0.463048 v c175948/A (OAI21_X1)
+                     0.015789    0.025156    0.488204 ^ c175948/ZN (OAI21_X1)
+    1    1.187720                                       n197339 (net)
+                     0.015789    0.000007    0.488211 ^ c202763/E (CLKGATETST_X1)
+                                             0.488211   data arrival time
+
+                     0.050000    2.000000    2.000000   clock core_clk (rise edge)
+                                 0.000000    2.000000   clock network delay (ideal)
+                                -0.050000    1.950000   clock uncertainty
+                                 0.000000    1.950000   clock reconvergence pessimism
+                                             1.950000 ^ c202763/CK (CLKGATETST_X1)
+                                -0.073916    1.876084   library setup time
+                                             1.876084   data required time
+--------------------------------------------------------------------------------------------
+                                             1.876084   data required time
+                                            -0.488211   data arrival time
+--------------------------------------------------------------------------------------------
+                                             1.387873   slack (MET)
+
+

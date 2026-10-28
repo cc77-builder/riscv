@@ -1,0 +1,99 @@
+{
+  "status": "C3_HF_ORIGINAL_FU_PARENT_GATES_PASS_AWAIT_SUPPLEMENT",
+  "started": "2026-10-25T22:06:27.327164+08:00",
+  "candidate_commit": "77d0a1228f0da7d584d5c7375b404dcda9763cf3",
+  "exeunit_sha256": "150baa7c78aa8948ff0f4fb771912f7d2058aaa802a0853ee99ea3a2dc0bb9b7",
+  "steps": [
+    {
+      "label": "parent-host",
+      "command": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "team/optimizations/o2/parent",
+        "-v"
+      ],
+      "cwd": "/home/riscv/riscv-lab/o2-c3-hf-20261025/repo",
+      "started": "2026-10-25T22:06:27.327796+08:00",
+      "status": "passed",
+      "pid": 453,
+      "exit_code": 0,
+      "finished": "2026-10-25T22:06:27.450149+08:00"
+    },
+    {
+      "label": "fu-host",
+      "command": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "team/optimizations/o2",
+        "-p",
+        "test_negative_fu.py",
+        "-v"
+      ],
+      "cwd": "/home/riscv/riscv-lab/o2-c3-hf-20261025/repo",
+      "started": "2026-10-25T22:06:27.450741+08:00",
+      "status": "passed",
+      "pid": 454,
+      "exit_code": 0,
+      "finished": "2026-10-25T22:06:27.501797+08:00"
+    },
+    {
+      "label": "fu",
+      "command": [
+        "python3",
+        "-B",
+        "team/optimizations/o2/run_rtl.py",
+        "fu",
+        "/home/riscv/riscv-lab/o2-c3-hf-20261025/fu-01"
+      ],
+      "cwd": "/home/riscv/riscv-lab/o2-c3-hf-20261025/repo",
+      "started": "2026-10-25T22:06:27.502656+08:00",
+      "status": "passed",
+      "pid": 455,
+      "exit_code": 0,
+      "finished": "2026-10-25T22:09:37.859980+08:00"
+    },
+    {
+      "label": "parent",
+      "command": [
+        "python3",
+        "-B",
+        "team/optimizations/o2/run_rtl.py",
+        "parent",
+        "/home/riscv/riscv-lab/o2-c3-hf-20261025/parent-01"
+      ],
+      "cwd": "/home/riscv/riscv-lab/o2-c3-hf-20261025/repo",
+      "started": "2026-10-25T22:09:37.861289+08:00",
+      "status": "passed",
+      "pid": 3442,
+      "exit_code": 0,
+      "finished": "2026-10-25T22:10:26.888354+08:00"
+    },
+    {
+      "label": "parent-replay",
+      "command": [
+        "python3",
+        "-B",
+        "team/optimizations/o2/parent/check_trace.py",
+        "--log",
+        "/home/riscv/riscv-lab/o2-c3-hf-20261025/parent-01/result.log",
+        "--output",
+        "/home/riscv/riscv-lab/o2-c3-hf-20261025/parent-replay.json"
+      ],
+      "cwd": "/home/riscv/riscv-lab/o2-c3-hf-20261025/repo",
+      "started": "2026-10-25T22:10:26.889031+08:00",
+      "status": "passed",
+      "pid": 6228,
+      "exit_code": 0,
+      "finished": "2026-10-25T22:10:28.993672+08:00"
+    }
+  ],
+  "finished": "2026-10-25T22:10:28.994213+08:00"
+}

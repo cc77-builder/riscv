@@ -1,0 +1,44 @@
+{
+  "command": [
+    "bash",
+    "-lc",
+    "source team/scripts/activate.sh && export CHISEL_FIRTOOL_PATH=/home/riscv/.cache/llvm-firtool/1.62.1/bin && exec mill -i -j 2 vdotCost.runMain team.vdot.GenerateVDotCost fu /home/riscv/riscv-lab/o4-cost-20261020/o1-fu-01/rtl"
+  ],
+  "flags": {
+    "VDOT_T14_FUSED_INPUT": "1",
+    "VDOT_O1_HANDOFF": "1",
+    "VDOT_O2_ELASTIC": "0",
+    "VDOT_T12_TRACE": "0",
+    "VDOT_T13_TRACE": "0",
+    "VDOT_O1_TRACE": "0",
+    "VDOT_O2_TRACE": "0"
+  },
+  "source_commit": "34a54cf2136cbf244dd5260a79bb23d94b802ebd",
+  "boundary": "fu",
+  "mode": "o1",
+  "start": 1792498439.1254897,
+  "exit_code": 0,
+  "end": 1792498472.5238075,
+  "rtl": {
+    "rtl/CommonFuCostTop.sv": {
+      "sha256": "4ad6958e579fb93635bb7247eb5ab187fb4b7bd8832b931557aa8e5a2af6efcf",
+      "bytes": 23067
+    },
+    "rtl/VDot.sv": {
+      "sha256": "5183984c2eb3732ce6fe341f669a6c1b567570f8faf6a69331f733255cb9ef0c",
+      "bytes": 27921
+    },
+    "rtl/VDotProducts.sv": {
+      "sha256": "0c1e566dd820f80382c64b98a74882ff400e5cb63cd511bcd19831759597178a",
+      "bytes": 1812
+    },
+    "rtl/VDotReduce.sv": {
+      "sha256": "ed09c5ac8ca7a0a910ac8d51000ef1de8f01dadca4bec544467d1678ebeaaf85",
+      "bytes": 1709
+    },
+    "rtl/filelist.f": {
+      "sha256": "8750964e280dbcca8d2848660be0fca97bad6f01f77cce3928b6e2cac5b1faee",
+      "bytes": 57
+    }
+  }
+}

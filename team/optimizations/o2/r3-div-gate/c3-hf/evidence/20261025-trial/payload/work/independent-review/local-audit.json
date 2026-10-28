@@ -1,0 +1,156 @@
+{
+  "status": "C3_HF_LOCAL_INDEPENDENT_AUDIT_PASS",
+  "candidate_head": "77d0a1228f0da7d584d5c7375b404dcda9763cf3",
+  "candidate_exeunit_sha256": "150baa7c78aa8948ff0f4fb771912f7d2058aaa802a0853ee99ea3a2dc0bb9b7",
+  "time": "2026-10-25T22:19:24.167816+08:00",
+  "original_stages": {
+    "status": "C3_HF_ORIGINAL_FU_PARENT_AUDIT_PASS",
+    "time": "2026-10-25T22:11:35.450987+08:00",
+    "candidate_head": "77d0a1228f0da7d584d5c7375b404dcda9763cf3",
+    "stages": {
+      "fu-01": {
+        "status": "PASS",
+        "source_files": 429,
+        "commands": 24,
+        "negative_controls": [
+          "identity",
+          "wen",
+          "high",
+          "cancel"
+        ],
+        "metrics": {
+          "vectors": 10022,
+          "cycles": 31499,
+          "accepted": 23311,
+          "responses": 22460,
+          "cancelled": 739,
+          "reset_dropped": 112,
+          "overlaps": 19856,
+          "stalls": 4900,
+          "full": 24901,
+          "partial_kill": 322,
+          "both_kill": 158,
+          "reset_cases": 8,
+          "ii1_intervals": 10021,
+          "latency2_probes": 1
+        },
+        "result_sha256": "f4e25245ec987560921322215d3291967f56f0257b0eccadb81f68c3138020e3",
+        "result_byte_equal_prior_C2": true
+      },
+      "parent-01": {
+        "status": "PASS",
+        "source_files": 431,
+        "commands": 49,
+        "negative_controls": [
+          "identity",
+          "rob",
+          "high",
+          "metadata",
+          "wen",
+          "stall",
+          "route",
+          "double",
+          "clock",
+          "occupancy",
+          "kill_p",
+          "kill_r",
+          "survivor",
+          "duplicate",
+          "missing",
+          "reset"
+        ],
+        "metrics": {
+          "schema": 1,
+          "cycles": 35075,
+          "groups": 13,
+          "accepted": 13611,
+          "responses": 13122,
+          "cancelled": 426,
+          "reset_dropped": 63,
+          "overlaps": 10494,
+          "stalls": 2051,
+          "p_to_r": 11782,
+          "full_cycles": 11255,
+          "full_blocked": 545,
+          "p_accept_r_blocked": 102,
+          "r_response_p_survivor": 338,
+          "kill_p_only": 41,
+          "kill_r_only": 47,
+          "kill_both": 38,
+          "reset_both": 2,
+          "redirects": 156,
+          "reset_cases": 20,
+          "te0_resets": 30,
+          "empty_te0_resets": 21,
+          "idle_clock_samples": 12,
+          "cancel_idle_clock_on": 0,
+          "parent_tested": 1,
+          "fullcore_tested": 0,
+          "performance_measured": 0
+        },
+        "result_sha256": "a38e8d806dc84c46b16af6f3c17323ee5f404ba3eb221d94fa15e127bf22ee6d",
+        "result_byte_equal_prior_C2": true
+      }
+    },
+    "input_hashes_unchanged": true,
+    "input_files": 583,
+    "scope": "Read-only audit of new C3 executions plus offline parent replay. Supplemental and P/hold monitor still separate; no EDA or simulation executed by reviewer."
+  },
+  "source_scope": "C3_HF_SOURCE_SCOPE_REVIEW_PASS",
+  "baseline_trace": "C3_HF_RETAINED_BASELINE_TRACE_PASS",
+  "supplement": {
+    "stage": "supplement-02",
+    "status": "PASS",
+    "source_files": 443,
+    "commands": 20,
+    "cycles": 2959,
+    "scenarios": 115,
+    "result_sha256": "16a019e1ad87e87988a23b9bd6357caf0fe1298034a45438e1faf665725414ea",
+    "byte_equal_prior_C2_suite_result": true,
+    "suite_status_name": "C2 names identify unchanged test suite; new C3 execution/source independently bound"
+  },
+  "monitor": {
+    "status": "PASS",
+    "counts": {
+      "bootstrap_edges": 2,
+      "qualified_cycles": 2958,
+      "fp_accepts": 143,
+      "int_accepts": 34,
+      "fp_hold_cycles": 1856,
+      "int_hold_cycles": 459,
+      "te0_reset_cycles": 40,
+      "cancel_cycles": 54,
+      "fp_cancel_cycles": 54,
+      "fp_release_cycles": 89,
+      "fp_backpressure_cycles": 291,
+      "sqrt_accepts": 15
+    },
+    "negative_controls": 9,
+    "preedge_original_fire_recurrence_independently_recomputed": true
+  },
+  "observer": {
+    "two_test_top_only_instrumentations": true,
+    "production_modules_unchanged": 55
+  },
+  "negative_controls": {
+    "total": 36,
+    "fu_runtime_observation": 4,
+    "parent_runtime_observation": 16,
+    "supplement_offline_observation": 7,
+    "hold_monitor_offline_observation": 9,
+    "rtl_mutations": 0
+  },
+  "dependencies": 126,
+  "inputs_unique": 1103,
+  "input_hashes_unchanged": true,
+  "failed_attempt": {
+    "stage": "supplement-01",
+    "failure": "test-only file-descriptor width warning before RTL execution",
+    "preserved": true,
+    "historical_instrument_sha256": "2abdb319930ef7c0a128535f688c98a17a67789aa82f0bca31f435b3ded96acf"
+  },
+  "area_sta": "NOT_TESTED",
+  "fullcore": "NOT_TESTED",
+  "cycles": "NOT_TESTED",
+  "scope": "New C3 local executions audited; no EDA or simulation run by this reviewer; local qualification only, no cost/fullcore adoption."
+}

@@ -1,0 +1,1152 @@
+{
+  "status": "R3_CANCEL_PROBE_PASS",
+  "paths": {
+    "float_hold_rob": {
+      "startpoint": "c197345 (rising edge-triggered flip-flop clocked by core_clk)",
+      "endpoint": "c197351 (rising edge-triggered flip-flop clocked by core_clk)",
+      "arrival_ns": 0.505119,
+      "slack_ns": 0.421204,
+      "stages": [
+        {
+          "cell": "c197345",
+          "original_cell": "$auto$simplemap.cc:420:simplemap_dff$38626",
+          "pin": "Q",
+          "type": "DFF_X1",
+          "delay_ns": 0.10333,
+          "arrival_ns": 0.10333,
+          "slew_ns": 0.012177,
+          "rtl_nets": [
+            "dut.elasticDivOccupied_divRobIdx_value[3]"
+          ]
+        },
+        {
+          "cell": "c86375",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571153",
+          "pin": "Z",
+          "type": "XOR2_X1",
+          "delay_ns": 0.053959,
+          "arrival_ns": 0.15731,
+          "slew_ns": 0.012617,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86378",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571156",
+          "pin": "ZN",
+          "type": "OR4_X1",
+          "delay_ns": 0.109041,
+          "arrival_ns": 0.26636,
+          "slew_ns": 0.01934,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86379",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571157",
+          "pin": "ZN",
+          "type": "AOI211_X1",
+          "delay_ns": 0.085901,
+          "arrival_ns": 0.352274,
+          "slew_ns": 0.053902,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86380",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571158",
+          "pin": "ZN",
+          "type": "AOI21_X1",
+          "delay_ns": 0.018275,
+          "arrival_ns": 0.370563,
+          "slew_ns": 0.015394,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86389",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571167",
+          "pin": "Z",
+          "type": "MUX2_X1",
+          "delay_ns": 0.060684,
+          "arrival_ns": 0.431254,
+          "slew_ns": 0.009898,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86391",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571169",
+          "pin": "ZN",
+          "type": "NOR2_X1",
+          "delay_ns": 0.032062,
+          "arrival_ns": 0.463327,
+          "slew_ns": 0.023123,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86393",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571171",
+          "pin": "ZN",
+          "type": "OR2_X1",
+          "delay_ns": 0.033281,
+          "arrival_ns": 0.496617,
+          "slew_ns": 0.01223,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86396",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571174",
+          "pin": "ZN",
+          "type": "NOR2_X1",
+          "delay_ns": 0.008479,
+          "arrival_ns": 0.505111,
+          "slew_ns": 0.005307,
+          "rtl_nets": []
+        }
+      ],
+      "output_cell_count": 9,
+      "buffer_count": 0,
+      "buffer_delay_ns": 0,
+      "hold_register_on_path": false,
+      "divbusy_register_on_path": false
+    },
+    "float_hold_divbusy": {
+      "startpoint": "c197349 (rising edge-triggered flip-flop clocked by core_clk)",
+      "endpoint": "c197351 (rising edge-triggered flip-flop clocked by core_clk)",
+      "arrival_ns": 1.590571,
+      "slack_ns": -0.668434,
+      "stages": [
+        {
+          "cell": "c197349",
+          "original_cell": "$auto$simplemap.cc:420:simplemap_dff$38630",
+          "pin": "Q",
+          "type": "DFF_X1",
+          "delay_ns": 0.100259,
+          "arrival_ns": 0.100259,
+          "slew_ns": 0.009945,
+          "rtl_nets": [
+            "dut.elasticDivOccupied_divBusy"
+          ]
+        },
+        {
+          "cell": "c84",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$484833",
+          "pin": "ZN",
+          "type": "NOR4_X1",
+          "delay_ns": 0.077629,
+          "arrival_ns": 0.177902,
+          "slew_ns": 0.044956,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c85",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$484834",
+          "pin": "ZN",
+          "type": "NAND4_X1",
+          "delay_ns": 0.040332,
+          "arrival_ns": 0.218246,
+          "slew_ns": 0.026644,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c135",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$484884",
+          "pin": "ZN",
+          "type": "NOR4_X1",
+          "delay_ns": 0.239665,
+          "arrival_ns": 0.457925,
+          "slew_ns": 0.183443,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c145",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$484894",
+          "pin": "Z",
+          "type": "BUF_X1",
+          "delay_ns": 0.0716,
+          "arrival_ns": 0.529539,
+          "slew_ns": 0.041051,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c146",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$484895",
+          "pin": "Z",
+          "type": "BUF_X1",
+          "delay_ns": 0.080037,
+          "arrival_ns": 0.60959,
+          "slew_ns": 0.053925,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c148",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$484897",
+          "pin": "Z",
+          "type": "BUF_X1",
+          "delay_ns": 0.070483,
+          "arrival_ns": 0.680086,
+          "slew_ns": 0.043776,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c152",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$484901",
+          "pin": "Z",
+          "type": "BUF_X1",
+          "delay_ns": 0.081517,
+          "arrival_ns": 0.761617,
+          "slew_ns": 0.055099,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c153",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$484902",
+          "pin": "Z",
+          "type": "BUF_X1",
+          "delay_ns": 0.082559,
+          "arrival_ns": 0.844189,
+          "slew_ns": 0.055134,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c154",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$484903",
+          "pin": "Z",
+          "type": "BUF_X1",
+          "delay_ns": 0.075753,
+          "arrival_ns": 0.919956,
+          "slew_ns": 0.048674,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c155",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$484904",
+          "pin": "Z",
+          "type": "BUF_X1",
+          "delay_ns": 0.072886,
+          "arrival_ns": 0.992855,
+          "slew_ns": 0.046498,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c156",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$484905",
+          "pin": "Z",
+          "type": "BUF_X1",
+          "delay_ns": 0.079497,
+          "arrival_ns": 1.072366,
+          "slew_ns": 0.052953,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c157",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$484906",
+          "pin": "Z",
+          "type": "BUF_X1",
+          "delay_ns": 0.080092,
+          "arrival_ns": 1.152471,
+          "slew_ns": 0.052974,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c158",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$484907",
+          "pin": "Z",
+          "type": "BUF_X1",
+          "delay_ns": 0.073284,
+          "arrival_ns": 1.225768,
+          "slew_ns": 0.046513,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c159",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$484908",
+          "pin": "Z",
+          "type": "BUF_X1",
+          "delay_ns": 0.072686,
+          "arrival_ns": 1.298468,
+          "slew_ns": 0.046491,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c160",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$484909",
+          "pin": "Z",
+          "type": "BUF_X1",
+          "delay_ns": 0.074955,
+          "arrival_ns": 1.373436,
+          "slew_ns": 0.048645,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c161",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$484910",
+          "pin": "Z",
+          "type": "BUF_X1",
+          "delay_ns": 0.07681,
+          "arrival_ns": 1.45026,
+          "slew_ns": 0.050223,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c162",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$484911",
+          "pin": "Z",
+          "type": "BUF_X1",
+          "delay_ns": 0.061602,
+          "arrival_ns": 1.511875,
+          "slew_ns": 0.035679,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86394",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571172",
+          "pin": "ZN",
+          "type": "OR2_X1",
+          "delay_ns": 0.036452,
+          "arrival_ns": 1.54834,
+          "slew_ns": 0.010654,
+          "rtl_nets": [
+            "dut.ClockGate.E"
+          ]
+        },
+        {
+          "cell": "c86395",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571173",
+          "pin": "ZN",
+          "type": "NAND2_X1",
+          "delay_ns": 0.014272,
+          "arrival_ns": 1.562627,
+          "slew_ns": 0.011727,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86396",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571174",
+          "pin": "ZN",
+          "type": "NOR2_X1",
+          "delay_ns": 0.027923,
+          "arrival_ns": 1.590562,
+          "slew_ns": 0.014188,
+          "rtl_nets": []
+        }
+      ],
+      "output_cell_count": 21,
+      "buffer_count": 14,
+      "buffer_delay_ns": 1.053761,
+      "hold_register_on_path": false,
+      "divbusy_register_on_path": true
+    },
+    "float_hold_flush_index": {
+      "startpoint": "io_flush_bits_robIdx_value[2] (input port clocked by core_clk)",
+      "endpoint": "c197351 (rising edge-triggered flip-flop clocked by core_clk)",
+      "arrival_ns": 0.610073,
+      "slack_ns": 0.312064,
+      "stages": [
+        {
+          "cell": "c21",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$484770",
+          "pin": "Z",
+          "type": "BUF_X1",
+          "delay_ns": 0.05043,
+          "arrival_ns": 0.150438,
+          "slew_ns": 0.025198,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c24",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$484773",
+          "pin": "Z",
+          "type": "BUF_X1",
+          "delay_ns": 0.078247,
+          "arrival_ns": 0.228698,
+          "slew_ns": 0.055158,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86374",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571152",
+          "pin": "Z",
+          "type": "XOR2_X1",
+          "delay_ns": 0.062434,
+          "arrival_ns": 0.291158,
+          "slew_ns": 0.029751,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86382",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571160",
+          "pin": "ZN",
+          "type": "NOR2_X1",
+          "delay_ns": 0.011271,
+          "arrival_ns": 0.302443,
+          "slew_ns": 0.00938,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86383",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571161",
+          "pin": "ZN",
+          "type": "AOI22_X1",
+          "delay_ns": 0.03866,
+          "arrival_ns": 0.341115,
+          "slew_ns": 0.022683,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86384",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571162",
+          "pin": "ZN",
+          "type": "AND2_X1",
+          "delay_ns": 0.035935,
+          "arrival_ns": 0.377057,
+          "slew_ns": 0.008931,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86385",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571163",
+          "pin": "ZN",
+          "type": "AOI21_X1",
+          "delay_ns": 0.014899,
+          "arrival_ns": 0.391969,
+          "slew_ns": 0.008358,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86387",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571165",
+          "pin": "ZN",
+          "type": "AOI211_X1",
+          "delay_ns": 0.069082,
+          "arrival_ns": 0.461063,
+          "slew_ns": 0.038902,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86388",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571166",
+          "pin": "ZN",
+          "type": "NOR2_X1",
+          "delay_ns": 0.015407,
+          "arrival_ns": 0.476482,
+          "slew_ns": 0.013209,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86389",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571167",
+          "pin": "Z",
+          "type": "MUX2_X1",
+          "delay_ns": 0.052144,
+          "arrival_ns": 0.528639,
+          "slew_ns": 0.009485,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86391",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571169",
+          "pin": "ZN",
+          "type": "NOR2_X1",
+          "delay_ns": 0.010429,
+          "arrival_ns": 0.539081,
+          "slew_ns": 0.006641,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86393",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571171",
+          "pin": "ZN",
+          "type": "OR2_X1",
+          "delay_ns": 0.048178,
+          "arrival_ns": 0.587267,
+          "slew_ns": 0.010864,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86396",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571174",
+          "pin": "ZN",
+          "type": "NOR2_X1",
+          "delay_ns": 0.022785,
+          "arrival_ns": 0.610064,
+          "slew_ns": 0.014188,
+          "rtl_nets": []
+        }
+      ],
+      "output_cell_count": 13,
+      "buffer_count": 2,
+      "buffer_delay_ns": 0.12867699999999999,
+      "hold_register_on_path": false,
+      "divbusy_register_on_path": false
+    },
+    "float_hold_flush_level": {
+      "startpoint": "io_flush_bits_level (input port clocked by core_clk)",
+      "endpoint": "c197351 (rising edge-triggered flip-flop clocked by core_clk)",
+      "arrival_ns": 0.269579,
+      "slack_ns": 0.652558,
+      "stages": [
+        {
+          "cell": "c86380",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571158",
+          "pin": "ZN",
+          "type": "AOI21_X1",
+          "delay_ns": 0.046822,
+          "arrival_ns": 0.146837,
+          "slew_ns": 0.024171,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86389",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571167",
+          "pin": "Z",
+          "type": "MUX2_X1",
+          "delay_ns": 0.041299,
+          "arrival_ns": 0.188145,
+          "slew_ns": 0.009485,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86391",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571169",
+          "pin": "ZN",
+          "type": "NOR2_X1",
+          "delay_ns": 0.010429,
+          "arrival_ns": 0.198587,
+          "slew_ns": 0.006641,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86393",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571171",
+          "pin": "ZN",
+          "type": "OR2_X1",
+          "delay_ns": 0.048178,
+          "arrival_ns": 0.246772,
+          "slew_ns": 0.010864,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86396",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571174",
+          "pin": "ZN",
+          "type": "NOR2_X1",
+          "delay_ns": 0.022785,
+          "arrival_ns": 0.26957,
+          "slew_ns": 0.014188,
+          "rtl_nets": []
+        }
+      ],
+      "output_cell_count": 5,
+      "buffer_count": 0,
+      "buffer_delay_ns": 0,
+      "hold_register_on_path": false,
+      "divbusy_register_on_path": false
+    },
+    "float_hold_self": {
+      "startpoint": "c197351 (rising edge-triggered flip-flop clocked by core_clk)",
+      "endpoint": "c197351 (rising edge-triggered flip-flop clocked by core_clk)",
+      "arrival_ns": 0.167226,
+      "slack_ns": 0.754911,
+      "stages": [
+        {
+          "cell": "c197351",
+          "original_cell": "$auto$simplemap.cc:420:simplemap_dff$38632",
+          "pin": "Q",
+          "type": "DFF_X1",
+          "delay_ns": 0.098823,
+          "arrival_ns": 0.098823,
+          "slew_ns": 0.007739,
+          "rtl_nets": [
+            "dut.uncer_en_reg"
+          ]
+        },
+        {
+          "cell": "c86394",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571172",
+          "pin": "ZN",
+          "type": "OR2_X1",
+          "delay_ns": 0.026165,
+          "arrival_ns": 0.124996,
+          "slew_ns": 0.010654,
+          "rtl_nets": [
+            "dut.ClockGate.E"
+          ]
+        },
+        {
+          "cell": "c86395",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571173",
+          "pin": "ZN",
+          "type": "NAND2_X1",
+          "delay_ns": 0.014272,
+          "arrival_ns": 0.139282,
+          "slew_ns": 0.011727,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86396",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571174",
+          "pin": "ZN",
+          "type": "NOR2_X1",
+          "delay_ns": 0.027923,
+          "arrival_ns": 0.167217,
+          "slew_ns": 0.014188,
+          "rtl_nets": []
+        }
+      ],
+      "output_cell_count": 4,
+      "buffer_count": 0,
+      "buffer_delay_ns": 0,
+      "hold_register_on_path": true,
+      "divbusy_register_on_path": false
+    },
+    "int_hold_rob": {
+      "startpoint": "c197345 (rising edge-triggered flip-flop clocked by core_clk)",
+      "endpoint": "c197350 (rising edge-triggered flip-flop clocked by core_clk)",
+      "arrival_ns": 0.505855,
+      "slack_ns": 0.416113,
+      "stages": [
+        {
+          "cell": "c197345",
+          "original_cell": "$auto$simplemap.cc:420:simplemap_dff$38626",
+          "pin": "Q",
+          "type": "DFF_X1",
+          "delay_ns": 0.10333,
+          "arrival_ns": 0.10333,
+          "slew_ns": 0.012177,
+          "rtl_nets": [
+            "dut.elasticDivOccupied_divRobIdx_value[3]"
+          ]
+        },
+        {
+          "cell": "c86375",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571153",
+          "pin": "Z",
+          "type": "XOR2_X1",
+          "delay_ns": 0.053959,
+          "arrival_ns": 0.15731,
+          "slew_ns": 0.012617,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86378",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571156",
+          "pin": "ZN",
+          "type": "OR4_X1",
+          "delay_ns": 0.109041,
+          "arrival_ns": 0.26636,
+          "slew_ns": 0.01934,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86379",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571157",
+          "pin": "ZN",
+          "type": "AOI211_X1",
+          "delay_ns": 0.085901,
+          "arrival_ns": 0.352274,
+          "slew_ns": 0.053902,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86380",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571158",
+          "pin": "ZN",
+          "type": "AOI21_X1",
+          "delay_ns": 0.018275,
+          "arrival_ns": 0.370563,
+          "slew_ns": 0.015394,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86389",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571167",
+          "pin": "Z",
+          "type": "MUX2_X1",
+          "delay_ns": 0.060684,
+          "arrival_ns": 0.431254,
+          "slew_ns": 0.009898,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86391",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571169",
+          "pin": "ZN",
+          "type": "NOR2_X1",
+          "delay_ns": 0.032062,
+          "arrival_ns": 0.463327,
+          "slew_ns": 0.023123,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86399",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571177",
+          "pin": "ZN",
+          "type": "INV_X1",
+          "delay_ns": 0.009735,
+          "arrival_ns": 0.473077,
+          "slew_ns": 0.006982,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86401",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571179",
+          "pin": "ZN",
+          "type": "NAND3_X1",
+          "delay_ns": 0.017773,
+          "arrival_ns": 0.490861,
+          "slew_ns": 0.013198,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86402",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571180",
+          "pin": "ZN",
+          "type": "AOI21_X1",
+          "delay_ns": 0.014973,
+          "arrival_ns": 0.505846,
+          "slew_ns": 0.016145,
+          "rtl_nets": []
+        }
+      ],
+      "output_cell_count": 10,
+      "buffer_count": 0,
+      "buffer_delay_ns": 0,
+      "hold_register_on_path": false,
+      "divbusy_register_on_path": false
+    },
+    "int_hold_divbusy": {
+      "startpoint": "c197349 (rising edge-triggered flip-flop clocked by core_clk)",
+      "endpoint": "c197350 (rising edge-triggered flip-flop clocked by core_clk)",
+      "arrival_ns": 1.16614,
+      "slack_ns": -0.245974,
+      "stages": [
+        {
+          "cell": "c197349",
+          "original_cell": "$auto$simplemap.cc:420:simplemap_dff$38630",
+          "pin": "Q",
+          "type": "DFF_X1",
+          "delay_ns": 0.100259,
+          "arrival_ns": 0.100259,
+          "slew_ns": 0.009945,
+          "rtl_nets": [
+            "dut.elasticDivOccupied_divBusy"
+          ]
+        },
+        {
+          "cell": "c84",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$484833",
+          "pin": "ZN",
+          "type": "NOR4_X1",
+          "delay_ns": 0.077629,
+          "arrival_ns": 0.177902,
+          "slew_ns": 0.044956,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c85",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$484834",
+          "pin": "ZN",
+          "type": "NAND4_X1",
+          "delay_ns": 0.040332,
+          "arrival_ns": 0.218246,
+          "slew_ns": 0.026644,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$484835",
+          "pin": "ZN",
+          "type": "OR2_X1",
+          "delay_ns": 0.064176,
+          "arrival_ns": 0.282432,
+          "slew_ns": 0.012538,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c87",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$484836",
+          "pin": "ZN",
+          "type": "NOR2_X1",
+          "delay_ns": 0.103774,
+          "arrival_ns": 0.386221,
+          "slew_ns": 0.083014,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c93",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$484842",
+          "pin": "ZN",
+          "type": "NAND2_X1",
+          "delay_ns": 0.076221,
+          "arrival_ns": 0.462463,
+          "slew_ns": 0.047068,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c94",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$484843",
+          "pin": "Z",
+          "type": "BUF_X1",
+          "delay_ns": 0.068959,
+          "arrival_ns": 0.531435,
+          "slew_ns": 0.022991,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c181",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$484931",
+          "pin": "Z",
+          "type": "BUF_X1",
+          "delay_ns": 0.061568,
+          "arrival_ns": 0.593016,
+          "slew_ns": 0.02541,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c75184",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$559962",
+          "pin": "Z",
+          "type": "BUF_X1",
+          "delay_ns": 0.062729,
+          "arrival_ns": 0.655757,
+          "slew_ns": 0.025432,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c75185",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$559963",
+          "pin": "Z",
+          "type": "BUF_X1",
+          "delay_ns": 0.060471,
+          "arrival_ns": 0.716241,
+          "slew_ns": 0.023576,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c75194",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$559972",
+          "pin": "Z",
+          "type": "BUF_X1",
+          "delay_ns": 0.060726,
+          "arrival_ns": 0.776979,
+          "slew_ns": 0.024496,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c75195",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$559973",
+          "pin": "Z",
+          "type": "BUF_X1",
+          "delay_ns": 0.060021,
+          "arrival_ns": 0.837013,
+          "slew_ns": 0.023567,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c75221",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$559999",
+          "pin": "Z",
+          "type": "BUF_X1",
+          "delay_ns": 0.061844,
+          "arrival_ns": 0.89887,
+          "slew_ns": 0.025415,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c75222",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$560000",
+          "pin": "Z",
+          "type": "BUF_X1",
+          "delay_ns": 0.062732,
+          "arrival_ns": 0.961614,
+          "slew_ns": 0.025432,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c75223",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$560001",
+          "pin": "Z",
+          "type": "BUF_X1",
+          "delay_ns": 0.054376,
+          "arrival_ns": 1.016002,
+          "slew_ns": 0.018613,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86397",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571175",
+          "pin": "Z",
+          "type": "BUF_X1",
+          "delay_ns": 0.056028,
+          "arrival_ns": 1.072043,
+          "slew_ns": 0.022546,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86398",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571176",
+          "pin": "Z",
+          "type": "BUF_X1",
+          "delay_ns": 0.062058,
+          "arrival_ns": 1.134113,
+          "slew_ns": 0.025983,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86402",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571180",
+          "pin": "ZN",
+          "type": "AOI21_X1",
+          "delay_ns": 0.032,
+          "arrival_ns": 1.166131,
+          "slew_ns": 0.022739,
+          "rtl_nets": []
+        }
+      ],
+      "output_cell_count": 18,
+      "buffer_count": 11,
+      "buffer_delay_ns": 0.6715119999999999,
+      "hold_register_on_path": false,
+      "divbusy_register_on_path": true
+    },
+    "int_hold_flush_index": {
+      "startpoint": "io_flush_bits_robIdx_value[2] (input port clocked by core_clk)",
+      "endpoint": "c197350 (rising edge-triggered flip-flop clocked by core_clk)",
+      "arrival_ns": 0.607478,
+      "slack_ns": 0.314489,
+      "stages": [
+        {
+          "cell": "c21",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$484770",
+          "pin": "Z",
+          "type": "BUF_X1",
+          "delay_ns": 0.056548,
+          "arrival_ns": 0.156555,
+          "slew_ns": 0.014014,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c24",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$484773",
+          "pin": "Z",
+          "type": "BUF_X1",
+          "delay_ns": 0.056474,
+          "arrival_ns": 0.213041,
+          "slew_ns": 0.024823,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86374",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571152",
+          "pin": "Z",
+          "type": "XOR2_X1",
+          "delay_ns": 0.063606,
+          "arrival_ns": 0.276674,
+          "slew_ns": 0.014181,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86378",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571156",
+          "pin": "ZN",
+          "type": "OR4_X1",
+          "delay_ns": 0.091302,
+          "arrival_ns": 0.367983,
+          "slew_ns": 0.01934,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86379",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571157",
+          "pin": "ZN",
+          "type": "AOI211_X1",
+          "delay_ns": 0.085901,
+          "arrival_ns": 0.453897,
+          "slew_ns": 0.053902,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86380",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571158",
+          "pin": "ZN",
+          "type": "AOI21_X1",
+          "delay_ns": 0.018275,
+          "arrival_ns": 0.472186,
+          "slew_ns": 0.015394,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86389",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571167",
+          "pin": "Z",
+          "type": "MUX2_X1",
+          "delay_ns": 0.060684,
+          "arrival_ns": 0.532878,
+          "slew_ns": 0.009898,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86391",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571169",
+          "pin": "ZN",
+          "type": "NOR2_X1",
+          "delay_ns": 0.032062,
+          "arrival_ns": 0.56495,
+          "slew_ns": 0.023123,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86399",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571177",
+          "pin": "ZN",
+          "type": "INV_X1",
+          "delay_ns": 0.009735,
+          "arrival_ns": 0.5747,
+          "slew_ns": 0.006982,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86401",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571179",
+          "pin": "ZN",
+          "type": "NAND3_X1",
+          "delay_ns": 0.017773,
+          "arrival_ns": 0.592484,
+          "slew_ns": 0.013198,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86402",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571180",
+          "pin": "ZN",
+          "type": "AOI21_X1",
+          "delay_ns": 0.014973,
+          "arrival_ns": 0.60747,
+          "slew_ns": 0.016145,
+          "rtl_nets": []
+        }
+      ],
+      "output_cell_count": 11,
+      "buffer_count": 2,
+      "buffer_delay_ns": 0.11302200000000001,
+      "hold_register_on_path": false,
+      "divbusy_register_on_path": false
+    },
+    "int_hold_flush_level": {
+      "startpoint": "io_flush_bits_level (input port clocked by core_clk)",
+      "endpoint": "c197350 (rising edge-triggered flip-flop clocked by core_clk)",
+      "arrival_ns": 0.260405,
+      "slack_ns": 0.659761,
+      "stages": [
+        {
+          "cell": "c86380",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571158",
+          "pin": "ZN",
+          "type": "AOI21_X1",
+          "delay_ns": 0.046822,
+          "arrival_ns": 0.146837,
+          "slew_ns": 0.024171,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86389",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571167",
+          "pin": "Z",
+          "type": "MUX2_X1",
+          "delay_ns": 0.041299,
+          "arrival_ns": 0.188145,
+          "slew_ns": 0.009485,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86391",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571169",
+          "pin": "ZN",
+          "type": "NOR2_X1",
+          "delay_ns": 0.010429,
+          "arrival_ns": 0.198587,
+          "slew_ns": 0.006641,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86399",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571177",
+          "pin": "ZN",
+          "type": "INV_X1",
+          "delay_ns": 0.012061,
+          "arrival_ns": 0.210661,
+          "slew_ns": 0.006968,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86401",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571179",
+          "pin": "ZN",
+          "type": "NAND3_X1",
+          "delay_ns": 0.019229,
+          "arrival_ns": 0.229902,
+          "slew_ns": 0.011268,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86402",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571180",
+          "pin": "ZN",
+          "type": "AOI21_X1",
+          "delay_ns": 0.030483,
+          "arrival_ns": 0.260396,
+          "slew_ns": 0.022739,
+          "rtl_nets": []
+        }
+      ],
+      "output_cell_count": 6,
+      "buffer_count": 0,
+      "buffer_delay_ns": 0,
+      "hold_register_on_path": false,
+      "divbusy_register_on_path": false
+    },
+    "int_hold_self": {
+      "startpoint": "c197350 (rising edge-triggered flip-flop clocked by core_clk)",
+      "endpoint": "c197350 (rising edge-triggered flip-flop clocked by core_clk)",
+      "arrival_ns": 0.151531,
+      "slack_ns": 0.768635,
+      "stages": [
+        {
+          "cell": "c197350",
+          "original_cell": "$auto$simplemap.cc:420:simplemap_dff$38631",
+          "pin": "Q",
+          "type": "DFF_X1",
+          "delay_ns": 0.102925,
+          "arrival_ns": 0.102925,
+          "slew_ns": 0.011061,
+          "rtl_nets": [
+            "dut.uncer_en_reg_1"
+          ]
+        },
+        {
+          "cell": "c86401",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571179",
+          "pin": "ZN",
+          "type": "NAND3_X1",
+          "delay_ns": 0.01809,
+          "arrival_ns": 0.121028,
+          "slew_ns": 0.011268,
+          "rtl_nets": []
+        },
+        {
+          "cell": "c86402",
+          "original_cell": "$abc$484748$auto$blifparse.cc:371:parse_blif$571180",
+          "pin": "ZN",
+          "type": "AOI21_X1",
+          "delay_ns": 0.030483,
+          "arrival_ns": 0.151522,
+          "slew_ns": 0.022739,
+          "rtl_nets": []
+        }
+      ],
+      "output_cell_count": 3,
+      "buffer_count": 0,
+      "buffer_delay_ns": 0,
+      "hold_register_on_path": true,
+      "divbusy_register_on_path": false
+    }
+  },
+  "input_sha_unchanged": true
+}

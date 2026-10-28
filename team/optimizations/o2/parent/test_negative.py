@@ -62,6 +62,14 @@ class NegativeGateTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             check_positive("O2_PARENT_CYCLE schema=1 schema=1\n")
 
+    def test_positive_entry_also_enforces_strict_idle_clock(self):
+        from test_trace import encode, fixture
+        rows, fus, final = fixture()
+        rows[11]["clocks"] = 2
+        fus[1]["clock_edges"] += 1
+        with self.assertRaisesRegex(ValueError, "idle FU retained clock"):
+            check_positive(encode(rows, fus, final))
+
     def test_positive_bare_pass_is_not_complete(self):
         with self.assertRaises((ValueError, KeyError)):
             check_positive("O2_PARENT_PASS schema=1\n")

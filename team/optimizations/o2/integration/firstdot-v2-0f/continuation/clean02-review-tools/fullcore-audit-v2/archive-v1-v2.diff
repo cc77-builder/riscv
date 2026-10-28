@@ -1,0 +1,211 @@
+--- /home/riscv/riscv-lab/software-import-20261026/clean-02/checkout/source/team/optimizations/o2/integration/firstdot-v2-0f/clean-audit/current_clean_archive.py
++++ /home/riscv/riscv-lab/software-import-20261026/reviews/clean-fullcore-audit-v2/current_clean_archive_v2.py
+@@ -1,4 +1,4 @@
+-"""Strict current-clean archive bytes plus read-only raw recheck using physical originals.
++"""Exact clean-02 fullcore archive with explicit wall-clock-limited resource proof.
+ 
+ No new EMU process is spawned. Semantic audit intentionally still needs original
+ physical source/build/run inputs; bytes-only verification is separately labelled.
+@@ -17,8 +17,16 @@
+ import sys
+ import types
+ 
+-CONTRACT = "zjh-current-clean-fullcore-archive-v1"
++CONTRACT = "zjh-current-clean-fullcore-archive-v2-wall-clock-limited"
+ HERE = Path(__file__).resolve().parent
++sys.dont_write_bytecode = True
++import capacity_proof as capacity
++CAPACITY_SOURCE_SHA = "bd3c284d4b0291617fa1bc927acbf6cb7c40ec7b87a323607d1526d7562da5e8"
++CAPACITY_CASE_SHA = "a48cbceada7c955293e22aefb9e9e9c9e03a3a7a00efcc78d9321820197d968e"
++SELECTED_ROOT = Path("/home/riscv/riscv-lab/software-import-20261026/clean-02")
++SELECTED_RUN = SELECTED_ROOT / "fullcore-run-01"
++SELECTED_REPO = SELECTED_ROOT / "checkout/source"
++
+ PORTABLE = "team/optimizations/o2/fullcore/portable.py"
+ PORTABLE_SHA = "7a2fc8e9638b898cc8f2f24fcb7794cf7108ef4e625bf38bcd8cc423ef3ae17b"
+ RECEIPT_TOOL = "team/optimizations/o2/repro/clean_fullcore_evidence.py"
+@@ -74,8 +82,50 @@
+     require(sha(path) == PORTABLE_SHA, "frozen portable reader changed")
+     return load("current_archive_portable", path)
+ 
++def limited_sources():
++    """Closed external auditor extension; no source file in the checkout changes."""
++    require(Path(capacity.__file__).resolve() == HERE / "capacity_proof.py", "capacity module from another directory")
++    expected = {str(HERE / "capacity_proof.py"): CAPACITY_SOURCE_SHA,
++                str(HERE / "exact-case.json"): CAPACITY_CASE_SHA}
++    for path, value in expected.items():
++        require(Path(path).is_file() and not Path(path).is_symlink() and sha(path) == value,
++                "capacity auditor source changed: " + path)
++    return expected
++
++
++def capacity_evidence():
++    limited_sources()
++    return capacity.source_inputs()
++
++
++def limited_flags():
++    return dict(wall_clock_capacity="FAIL", source_bound_worker_capacity="PASS",
++                os_monotonic_capacity_measured=False, clock_cause="UNCONFIRMED",
++                recorded_peak_overlapping_intervals=4, source_bound_max_workers=3,
++                exact_anomaly_microseconds=80119, performance_measured=False)
++
++
++def validate_capacity_archive(info, roles):
++    """Bind the limited claim to this exact campaign and its sealed failure chain."""
++    fixed = capacity_evidence()
++    require(info["contract"] == CONTRACT and info["campaign"] == str(SELECTED_RUN)
++            and info["source_root"] == str(SELECTED_REPO)
++            and info["clean_adapter"] == str(SELECTED_REPO / CLEAN_REL),
++            "capacity proof belongs to another campaign")
++    require(info["capacity_source_sha256"] == CAPACITY_SOURCE_SHA
++            and info["capacity_case_sha256"] == CAPACITY_CASE_SHA, "capacity auditor identity differs")
++    require(all(type(info.get(k)) is type(v) and info.get(k) == v
++                for k, v in limited_flags().items()), "limited resource scope differs")
++    require(roles["capacity-evidence"] == fixed, "exact capacity evidence closure differs")
++    require(info["source_result_sha256"] == fixed[str(SELECTED_RUN / "results.json")]
++            and info["identity_sha256"] == fixed[str(SELECTED_RUN / "identity.json")],
++            "limited campaign result or identity binding differs")
++
++
+ def selected_tools(repo, clean):
+     repo, clean = Path(repo).resolve(), Path(clean).resolve()
++    limited_sources()
++    require(repo == SELECTED_REPO and clean == repo / CLEAN_REL, "exact clean-02 source binding")
+     lock = read(HERE / "runtime-source-lock.json")
+     require(lock["contract"] == "zjh-current-clean-archive-source-lock-v1"
+             and set(lock["sources"]) == {"current_clean_common.py", "current_clean_build.py",
+@@ -100,6 +150,7 @@
+     e.fc, e.p, e.g, e.ce = fc, fc.p, fc.g, fc.ce
+     e.CONTRACT = CONTRACT
+     e.CONTROLLER = sha(fc.__file__)
++    e.process_proof = lambda run: capacity.process_proof(run, e)
+     return e
+ 
+ def process_receipts(run, e):
+@@ -141,8 +192,8 @@
+             and negative["command"][6] == "-i", "negative recovery images differ")
+     require(read(run / "completed-runs.json") == sorted(rows.values(), key=lambda row: row["name"]),
+             "completed-run index is not exact")
+-    return dict(status="CURRENT_CLEAN_PROCESS_RECEIPTS_PASS", delegated_frozen_proof=proof,
+-                source_new_emu_runs=14, new_emu_runs=0, negative_recovery_same_image=True)
++    return dict(status="CURRENT_CLEAN_PROCESS_RECEIPTS_PASS_WALL_CLOCK_LIMITED", source_bound_capacity_proof=proof,
++                source_new_emu_runs=14, new_emu_runs=0, negative_recovery_same_image=True, **limited_flags())
+ 
+ def protected(repo, run, value):
+     cfg = value["configuration"]
+@@ -161,14 +212,15 @@
+     after = process_receipts(run, e)
+     require(before == after, "receipt drift during raw audit")
+     save(output / "process-bindings.json", after)
+-    receipt = dict(contract=CONTRACT, status="CURRENT_CLEAN_PHYSICAL_RAW_AUDIT_PASS",
++    receipt = dict(contract=CONTRACT, status="CURRENT_CLEAN_PHYSICAL_RAW_AUDIT_PASS_WALL_CLOCK_LIMITED",
+         source_run=str(run), source_result_sha256=sha(run / "results.json"),
+         identity_sha256=sha(run / "identity.json"), raw_result_sha256=sha(output / "results.json"),
+         process_bindings_sha256=sha(output / "process-bindings.json"),
+         auditor_sha256=sha(__file__), source_lock_sha256=sha(HERE / "runtime-source-lock.json"),
+         controller_sha256=sha(clean / "current_clean_fullcore.py"), clean_adapter=str(clean),
+         source_new_emu_runs=14, new_emu_runs=0, physical_originals_required=True,
+-        historical_t17_acceptance=False, scope="fresh raw recheck with physical source/build/input validation")
++        historical_t17_acceptance=False, scope="fresh raw recheck with physical source/build/input validation; wall-clock resource bound failed; source-bound capacity only",
++        capacity_source_sha256=CAPACITY_SOURCE_SHA, capacity_case_sha256=CAPACITY_CASE_SHA, **limited_flags())
+     require(result["source_new_emu_runs"] == 14 and result["new_emu_runs"] == 0
+             and result["normal_reference_recovery"] is True, "raw recheck scope")
+     save(output / "current-archive-physical.json", receipt)
+@@ -233,14 +285,15 @@
+ 
+ def validate_physical_receipt(repo, clean, run, audit):
+     receipt = read(audit / "current-archive-physical.json")
+-    expected = dict(contract=CONTRACT, status="CURRENT_CLEAN_PHYSICAL_RAW_AUDIT_PASS",
++    expected = dict(contract=CONTRACT, status="CURRENT_CLEAN_PHYSICAL_RAW_AUDIT_PASS_WALL_CLOCK_LIMITED",
+         source_run=str(run), source_result_sha256=sha(run / "results.json"),
+         identity_sha256=sha(run / "identity.json"), raw_result_sha256=sha(audit / "results.json"),
+         process_bindings_sha256=sha(audit / "process-bindings.json"),
+         auditor_sha256=sha(__file__), source_lock_sha256=sha(HERE / "runtime-source-lock.json"),
+         controller_sha256=sha(clean / "current_clean_fullcore.py"), clean_adapter=str(clean),
+         source_new_emu_runs=14, new_emu_runs=0, physical_originals_required=True,
+-        historical_t17_acceptance=False, scope="fresh raw recheck with physical source/build/input validation")
++        historical_t17_acceptance=False, scope="fresh raw recheck with physical source/build/input validation; wall-clock resource bound failed; source-bound capacity only",
++        capacity_source_sha256=CAPACITY_SOURCE_SHA, capacity_case_sha256=CAPACITY_CASE_SHA, **limited_flags())
+     require(receipt == expected, "physical receipt/tool/source binding differs")
+     return receipt
+ 
+@@ -274,8 +327,12 @@
+         writer.add(Path(name), f"support/{number:05d}/" + Path(name).name, "support-input")
+     for number, path in enumerate([Path(__file__).resolve(), HERE / "runtime-source-lock.json",
+                                   repo / PORTABLE, repo / RECEIPT_TOOL] +
+-                                 [clean / n for n in read(HERE / "runtime-source-lock.json")["sources"]]):
++                                 [clean / n for n in read(HERE / "runtime-source-lock.json")["sources"]] +
++                                 [Path(n) for n in limited_sources()]):
+         writer.add(path, f"auditors/{number:02d}/" + path.name, "auditor-source")
++    for number, (name, expected) in enumerate(sorted(capacity_evidence().items())):
++        require(sha(name) == expected, "exact resource evidence drift while sealing")
++        writer.add(Path(name), f"capacity-evidence/{number:03d}/" + Path(name).name, "capacity-evidence")
+     source_links = {}
+     if source_scope == "hardware":
+         pins = read(Path(cfg["build_record"]) / "hardware-inputs.json")
+@@ -296,6 +353,8 @@
+         controller_sha256=sha(clean / "current_clean_fullcore.py"), source_result_sha256=sha(run / "results.json"),
+         identity_sha256=sha(run / "identity.json"), semantic_audit_requires_physical_originals=True,
+         full_machine_environment_included=False, new_emu_runs=0,
++        capacity_source_sha256=CAPACITY_SOURCE_SHA, capacity_case_sha256=CAPACITY_CASE_SHA,
++        **limited_flags(),
+         scope="Exact raw campaign, checker/controller sources, direct inputs and support proofs; EMU external. " +
+               ("All 429 hardware and 21236 dependency source files included. " if source_scope == "hardware" else
+                "Full hardware/dependency source trees external. ") +
+@@ -304,8 +363,8 @@
+     sealed, sealed_info, combined = open_archive(repo, output)
+     live_match(sealed_info, combined)
+     # Hash-only seal; semantic PASS is produced only by a later physical raw audit.
+-    return dict(status="CURRENT_CLEAN_ARCHIVE_BYTES_SEALED", contract=CONTRACT, new_emu_runs=0,
+-                semantic_recheck_executed=False, **sealed.bytes_result)
++    return dict(status="CURRENT_CLEAN_ARCHIVE_BYTES_SEALED_WALL_CLOCK_LIMITED", contract=CONTRACT, new_emu_runs=0,
++                semantic_recheck_executed=False, **limited_flags(), **sealed.bytes_result)
+ 
+ def open_archive(repo, archive):
+     archive = Path(archive).resolve()
+@@ -325,7 +384,7 @@
+         require(original == "generated:evidence-map" or Path(original).is_absolute(), "nonabsolute original mapping")
+     roles = info["roles"]
+     require("generated-map" not in roles and set(roles) == {
+-        "campaign", "physical-audit", "runtime-input", "support-input", "auditor-source"} |
++        "campaign", "physical-audit", "runtime-input", "support-input", "auditor-source", "capacity-evidence"} |
+         ({"hardware-source"} if info["source_scope"] == "hardware" else set()), "archive role inventory differs")
+     combined = {}
+     for role, rows in roles.items():
+@@ -354,7 +413,9 @@
+     }
+     for name, expected in read(HERE / "runtime-source-lock.json")["sources"].items():
+         expected_auditors[str(Path(info["clean_adapter"]) / name)] = expected
++    expected_auditors.update(limited_sources())
+     require(roles["auditor-source"] == expected_auditors, "auditor/controller source closure differs")
++    validate_capacity_archive(info, roles)
+     require(info["controller_sha256"] ==
+             read(HERE / "runtime-source-lock.json")["sources"]["current_clean_fullcore.py"], "controller identity differs")
+     def original_json(path):
+@@ -385,9 +446,9 @@
+ 
+ def bytes_only(repo, archive):
+     sealed, info, _ = open_archive(repo, archive)
+-    return dict(status="CURRENT_CLEAN_ARCHIVE_BYTES_ONLY_PASS", contract=CONTRACT, new_emu_runs=0,
++    return dict(status="CURRENT_CLEAN_ARCHIVE_BYTES_ONLY_PASS_WALL_CLOCK_LIMITED", contract=CONTRACT, new_emu_runs=0,
+                 raw_semantic_audit_executed=False, physical_originals_revalidated=False,
+-                source_scope=info["source_scope"], **sealed.bytes_result)
++                source_scope=info["source_scope"], **limited_flags(), **sealed.bytes_result)
+ 
+ def live_match(info, combined):
+     for original, expected in combined.items():
+@@ -416,11 +477,11 @@
+     live_match(info, combined)
+     raw = physical(repo, clean, run, output)
+     live_match(info, combined)
+-    result = dict(status="CURRENT_CLEAN_ARCHIVE_LIVE_RAW_AUDIT_PASS", contract=CONTRACT,
++    result = dict(status="CURRENT_CLEAN_ARCHIVE_LIVE_RAW_AUDIT_PASS_WALL_CLOCK_LIMITED", contract=CONTRACT,
+         source_new_emu_runs=14, new_emu_runs=0, negative_reference_recovery=True,
+         raw_audit_receipt_sha256=sha(output / "current-archive-physical.json"),
+         original_physical_inputs_required=True, source_scope=info["source_scope"],
+-        detached_archive_semantic_recheck=False, historical_t17_acceptance=False, **sealed.bytes_result)
++        detached_archive_semantic_recheck=False, historical_t17_acceptance=False, **limited_flags(), **sealed.bytes_result)
+     save(output / "archive-live-recheck.json", result)
+     return result
+ 

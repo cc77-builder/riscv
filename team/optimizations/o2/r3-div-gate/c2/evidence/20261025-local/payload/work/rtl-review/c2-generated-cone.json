@@ -1,0 +1,208 @@
+{
+  "status": "C2_GATE_READY_CONE_PASS",
+  "gates": [
+    {
+      "instance": "ClockGate",
+      "enable": "clockStart | elasticDivOccupied_divBusy & elasticDivOccupied_divOwnerIsFp",
+      "clock_output": "_ClockGate_Q",
+      "nodes": [
+        "ExeUnit.Vdot.pValid",
+        "ExeUnit.Vdot.pipelineStatus_pValid",
+        "ExeUnit.Vdot.pipelineStatus_rValid",
+        "ExeUnit.Vdot.rValid",
+        "ExeUnit.Vfdiv._vfdivs_0_io_finish_valid_o",
+        "ExeUnit.Vfdiv._vfdivs_1_io_finish_valid_o",
+        "ExeUnit.Vfdiv.io_out_valid",
+        "ExeUnit.Vfdiv.io_out_valid_0",
+        "ExeUnit.Vfdiv.vfdivs_0._u_vector_float_divider_r64_io_finish_valid_o",
+        "ExeUnit.Vfdiv.vfdivs_0._u_vector_float_sqrt_r16_finish_valid_o",
+        "ExeUnit.Vfdiv.vfdivs_0.io_finish_valid_o",
+        "ExeUnit.Vfdiv.vfdivs_0.u_vector_float_divider_r64.fsm_q",
+        "ExeUnit.Vfdiv.vfdivs_0.u_vector_float_divider_r64.io_finish_valid_o",
+        "ExeUnit.Vfdiv.vfdivs_0.u_vector_float_sqrt_r16.finish_valid_o",
+        "ExeUnit.Vfdiv.vfdivs_0.u_vector_float_sqrt_r16.fsm_q",
+        "ExeUnit.Vfdiv.vfdivs_1._u_vector_float_divider_r64_io_finish_valid_o",
+        "ExeUnit.Vfdiv.vfdivs_1._u_vector_float_sqrt_r16_finish_valid_o",
+        "ExeUnit.Vfdiv.vfdivs_1.io_finish_valid_o",
+        "ExeUnit.Vfdiv.vfdivs_1.u_vector_float_divider_r64.fsm_q",
+        "ExeUnit.Vfdiv.vfdivs_1.u_vector_float_divider_r64.io_finish_valid_o",
+        "ExeUnit.Vfdiv.vfdivs_1.u_vector_float_sqrt_r16.finish_valid_o",
+        "ExeUnit.Vfdiv.vfdivs_1.u_vector_float_sqrt_r16.fsm_q",
+        "ExeUnit.Vidiv._vidiv_io_div_out_valid",
+        "ExeUnit.Vidiv.io_out_valid",
+        "ExeUnit.Vidiv.vidiv.io_div_out_valid",
+        "ExeUnit.Vidiv.vidiv.stateReg",
+        "ExeUnit._Vdot_pipelineStatus_pValid",
+        "ExeUnit._Vdot_pipelineStatus_rValid",
+        "ExeUnit._Vfdiv_io_out_valid",
+        "ExeUnit._Vidiv_io_out_valid",
+        "ExeUnit.clockStart",
+        "ExeUnit.dispatchedInputs_selected_0",
+        "ExeUnit.elasticDivClockStartAllowed",
+        "ExeUnit.elasticDivOccupied_divBusy",
+        "ExeUnit.elasticDivOccupied_divOutValid",
+        "ExeUnit.elasticDivOccupied_divOwnerIsFp",
+        "ExeUnit.elasticVDotOccupied",
+        "ExeUnit.io_flush_valid",
+        "ExeUnit.io_in_bits_fuType",
+        "ExeUnit.io_in_valid",
+        "ExeUnit.reset"
+      ],
+      "leaves": [
+        "ExeUnit.Vdot.pValid [register]",
+        "ExeUnit.Vdot.rValid [register]",
+        "ExeUnit.Vfdiv.vfdivs_0.u_vector_float_divider_r64.fsm_q [register]",
+        "ExeUnit.Vfdiv.vfdivs_0.u_vector_float_sqrt_r16.fsm_q [register]",
+        "ExeUnit.Vfdiv.vfdivs_1.u_vector_float_divider_r64.fsm_q [register]",
+        "ExeUnit.Vfdiv.vfdivs_1.u_vector_float_sqrt_r16.fsm_q [register]",
+        "ExeUnit.Vidiv.vidiv.stateReg [register]",
+        "ExeUnit.elasticDivOccupied_divBusy [register]",
+        "ExeUnit.elasticDivOccupied_divOwnerIsFp [register]",
+        "ExeUnit.io_flush_valid [input]",
+        "ExeUnit.io_in_bits_fuType [input]",
+        "ExeUnit.io_in_valid [input]",
+        "ExeUnit.reset [input]"
+      ],
+      "forbidden": [],
+      "input_files": [
+        "/home/riscv/riscv-lab/o2-c2-readyless-20261025/parent-01/rtl/ExeUnit.sv",
+        "/home/riscv/riscv-lab/o2-c2-readyless-20261025/parent-01/rtl/VDotElastic.sv",
+        "/home/riscv/riscv-lab/o2-c2-readyless-20261025/parent-01/rtl/VFDivSqrt.sv",
+        "/home/riscv/riscv-lab/o2-c2-readyless-20261025/parent-01/rtl/VIDiv.sv",
+        "/home/riscv/riscv-lab/o2-c2-readyless-20261025/parent-01/rtl/VectorFloatDivider.sv",
+        "/home/riscv/riscv-lab/o2-c2-readyless-20261025/parent-01/rtl/VectorFloatDividerR64.sv",
+        "/home/riscv/riscv-lab/o2-c2-readyless-20261025/parent-01/rtl/VectorIdiv.sv",
+        "/home/riscv/riscv-lab/o2-c2-readyless-20261025/parent-01/rtl/fpsqrt_vector_r16.sv"
+      ],
+      "sinks": [
+        [
+          "Vfdiv",
+          "VFDivSqrt"
+        ]
+      ]
+    },
+    {
+      "instance": "ClockGate_1",
+      "enable": "clockStart_1 | elasticDivOccupied_divBusy & ~elasticDivOccupied_divOwnerIsFp",
+      "clock_output": "_ClockGate_1_Q",
+      "nodes": [
+        "ExeUnit.Vdot.pValid",
+        "ExeUnit.Vdot.pipelineStatus_pValid",
+        "ExeUnit.Vdot.pipelineStatus_rValid",
+        "ExeUnit.Vdot.rValid",
+        "ExeUnit.Vfdiv._vfdivs_0_io_finish_valid_o",
+        "ExeUnit.Vfdiv._vfdivs_1_io_finish_valid_o",
+        "ExeUnit.Vfdiv.io_out_valid",
+        "ExeUnit.Vfdiv.io_out_valid_0",
+        "ExeUnit.Vfdiv.vfdivs_0._u_vector_float_divider_r64_io_finish_valid_o",
+        "ExeUnit.Vfdiv.vfdivs_0._u_vector_float_sqrt_r16_finish_valid_o",
+        "ExeUnit.Vfdiv.vfdivs_0.io_finish_valid_o",
+        "ExeUnit.Vfdiv.vfdivs_0.u_vector_float_divider_r64.fsm_q",
+        "ExeUnit.Vfdiv.vfdivs_0.u_vector_float_divider_r64.io_finish_valid_o",
+        "ExeUnit.Vfdiv.vfdivs_0.u_vector_float_sqrt_r16.finish_valid_o",
+        "ExeUnit.Vfdiv.vfdivs_0.u_vector_float_sqrt_r16.fsm_q",
+        "ExeUnit.Vfdiv.vfdivs_1._u_vector_float_divider_r64_io_finish_valid_o",
+        "ExeUnit.Vfdiv.vfdivs_1._u_vector_float_sqrt_r16_finish_valid_o",
+        "ExeUnit.Vfdiv.vfdivs_1.io_finish_valid_o",
+        "ExeUnit.Vfdiv.vfdivs_1.u_vector_float_divider_r64.fsm_q",
+        "ExeUnit.Vfdiv.vfdivs_1.u_vector_float_divider_r64.io_finish_valid_o",
+        "ExeUnit.Vfdiv.vfdivs_1.u_vector_float_sqrt_r16.finish_valid_o",
+        "ExeUnit.Vfdiv.vfdivs_1.u_vector_float_sqrt_r16.fsm_q",
+        "ExeUnit.Vidiv._vidiv_io_div_out_valid",
+        "ExeUnit.Vidiv.io_out_valid",
+        "ExeUnit.Vidiv.vidiv.io_div_out_valid",
+        "ExeUnit.Vidiv.vidiv.stateReg",
+        "ExeUnit._Vdot_pipelineStatus_pValid",
+        "ExeUnit._Vdot_pipelineStatus_rValid",
+        "ExeUnit._Vfdiv_io_out_valid",
+        "ExeUnit._Vidiv_io_out_valid",
+        "ExeUnit.clockStart_1",
+        "ExeUnit.dispatchedInputs_selected_1",
+        "ExeUnit.elasticDivClockStartAllowed",
+        "ExeUnit.elasticDivOccupied_divBusy",
+        "ExeUnit.elasticDivOccupied_divOutValid",
+        "ExeUnit.elasticDivOccupied_divOwnerIsFp",
+        "ExeUnit.elasticVDotOccupied",
+        "ExeUnit.io_flush_valid",
+        "ExeUnit.io_in_bits_fuType",
+        "ExeUnit.io_in_valid",
+        "ExeUnit.reset"
+      ],
+      "leaves": [
+        "ExeUnit.Vdot.pValid [register]",
+        "ExeUnit.Vdot.rValid [register]",
+        "ExeUnit.Vfdiv.vfdivs_0.u_vector_float_divider_r64.fsm_q [register]",
+        "ExeUnit.Vfdiv.vfdivs_0.u_vector_float_sqrt_r16.fsm_q [register]",
+        "ExeUnit.Vfdiv.vfdivs_1.u_vector_float_divider_r64.fsm_q [register]",
+        "ExeUnit.Vfdiv.vfdivs_1.u_vector_float_sqrt_r16.fsm_q [register]",
+        "ExeUnit.Vidiv.vidiv.stateReg [register]",
+        "ExeUnit.elasticDivOccupied_divBusy [register]",
+        "ExeUnit.elasticDivOccupied_divOwnerIsFp [register]",
+        "ExeUnit.io_flush_valid [input]",
+        "ExeUnit.io_in_bits_fuType [input]",
+        "ExeUnit.io_in_valid [input]",
+        "ExeUnit.reset [input]"
+      ],
+      "forbidden": [],
+      "input_files": [
+        "/home/riscv/riscv-lab/o2-c2-readyless-20261025/parent-01/rtl/ExeUnit.sv",
+        "/home/riscv/riscv-lab/o2-c2-readyless-20261025/parent-01/rtl/VDotElastic.sv",
+        "/home/riscv/riscv-lab/o2-c2-readyless-20261025/parent-01/rtl/VFDivSqrt.sv",
+        "/home/riscv/riscv-lab/o2-c2-readyless-20261025/parent-01/rtl/VIDiv.sv",
+        "/home/riscv/riscv-lab/o2-c2-readyless-20261025/parent-01/rtl/VectorFloatDivider.sv",
+        "/home/riscv/riscv-lab/o2-c2-readyless-20261025/parent-01/rtl/VectorFloatDividerR64.sv",
+        "/home/riscv/riscv-lab/o2-c2-readyless-20261025/parent-01/rtl/VectorIdiv.sv",
+        "/home/riscv/riscv-lab/o2-c2-readyless-20261025/parent-01/rtl/fpsqrt_vector_r16.sv"
+      ],
+      "sinks": [
+        [
+          "Vidiv",
+          "VIDiv"
+        ]
+      ]
+    }
+  ],
+  "inputs": [
+    {
+      "path": "/home/riscv/riscv-lab/o2-c2-readyless-20261025/parent-01/rtl/ExeUnit.sv",
+      "sha256": "19cd890da81a208d3523844074cd751c209a7ae67961070f60b9ec164189bedf",
+      "bytes": 58986
+    },
+    {
+      "path": "/home/riscv/riscv-lab/o2-c2-readyless-20261025/parent-01/rtl/VDotElastic.sv",
+      "sha256": "80e5cabca39e7072efb51039fd9aefdf59215f727ed037ee48490742752e40d4",
+      "bytes": 28209
+    },
+    {
+      "path": "/home/riscv/riscv-lab/o2-c2-readyless-20261025/parent-01/rtl/VFDivSqrt.sv",
+      "sha256": "f33401af500d6a60f6370e8e6f94238df111534a74bb53a6b509e683cd565b1d",
+      "bytes": 25270
+    },
+    {
+      "path": "/home/riscv/riscv-lab/o2-c2-readyless-20261025/parent-01/rtl/VIDiv.sv",
+      "sha256": "aa08a2b817ed4578b4e9d96e6e89d08509f926bff6777869bd27167475c549a1",
+      "bytes": 20679
+    },
+    {
+      "path": "/home/riscv/riscv-lab/o2-c2-readyless-20261025/parent-01/rtl/VectorFloatDivider.sv",
+      "sha256": "59bf72e98e4f6c95e09f861388cb42cc0e55145cdcb49103bf3e23a0308d9070",
+      "bytes": 3880
+    },
+    {
+      "path": "/home/riscv/riscv-lab/o2-c2-readyless-20261025/parent-01/rtl/VectorFloatDividerR64.sv",
+      "sha256": "3199658bddb18c481d26960c9580bf7e69d262e348a0e66c4d61716e98d2a6f9",
+      "bytes": 101697
+    },
+    {
+      "path": "/home/riscv/riscv-lab/o2-c2-readyless-20261025/parent-01/rtl/VectorIdiv.sv",
+      "sha256": "239ef91b4ef15978e9fa62395147533b60e7167d3d5b3e4a2e19b3985722be24",
+      "bytes": 18048
+    },
+    {
+      "path": "/home/riscv/riscv-lab/o2-c2-readyless-20261025/parent-01/rtl/fpsqrt_vector_r16.sv",
+      "sha256": "8da90e3c71f336b175d24ebbfe70a5dc63c4e84c8fcd372e45b479197377493a",
+      "bytes": 41814
+    }
+  ],
+  "method": "Generated split RTL assignment/instance graph, cut at declared registers; descend child output cones and map child inputs back to parent; no EDA execution."
+}
