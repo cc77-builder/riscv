@@ -1,0 +1,27 @@
+emu compiled at Oct 24 2026, 09:22:45
+Using seed = 1
+Using simulated 32768B flash
+use /home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin as flash bin
+Using simulated 128MB RAM
+The image is /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/forward-norm-20261027-1536/build-04/real-norm.bin
+The reference model is /home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so
+The first instruction of core 0 has commited. Difftest enabled. 
+[1;34m[src/monitor/image_loader.c:205,load_img] Loading flash image: /home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin
+[0m
+[1;34m[src/monitor/image_loader.c:250,load_img] Read 12 bytes from file /home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin to 0x0xf0000000[0m
+NORM_BEGIN real=39 synthetic=9 size=288 control=0
+NORM_FUNCTIONAL_PASS cases=48 calls=384 alias=both sticky=both
+NORM_SAMPLE 0 0 51538 53188 1 e8d94ebe570b175c
+NORM_SAMPLE 1 1 23774 20989 1 e8d94ebe570b175c
+NORM_SAMPLE 2 1 23662 20989 1 e8d94ebe570b175c
+NORM_SAMPLE 3 0 50008 53188 1 e8d94ebe570b175c
+NORM_SAMPLE 4 1 23607 20989 1 e8d94ebe570b175c
+NORM_SAMPLE 5 0 49930 53188 1 e8d94ebe570b175c
+NORM_SAMPLE 6 0 49937 53188 1 e8d94ebe570b175c
+NORM_SAMPLE 7 1 23619 20989 1 e8d94ebe570b175c
+NORM_PASS functional=384 samples=8 batch_calls=208
+Core 0: [32mHIT GOOD TRAP at pc = 0x8000013c
+[0m[35mCore-0 instrCnt = 5860591, cycleCnt = 4319520, IPC = 1.356769
+[0m[34mSeed=1 Guest cycle spent: 4319524 (this will be different from cycleCnt if emu loads a snapshot)
+[0m[34mHost time spent: 3195263ms
+[0m

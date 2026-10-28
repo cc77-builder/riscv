@@ -1,0 +1,18 @@
+emu compiled at Oct 24 2026, 09:22:45
+Using seed = 1
+Using simulated 32768B flash
+use /home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin as flash bin
+Using simulated 128MB RAM
+The image is /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/forward-norm-20261027-1536/build-04/negative.bin
+The reference model is /home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so
+The first instruction of core 0 has commited. Difftest enabled. 
+[1;34m[src/monitor/image_loader.c:205,load_img] Loading flash image: /home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin
+[0m
+[1;34m[src/monitor/image_loader.c:250,load_img] Read 12 bytes from file /home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin to 0x0xf0000000[0m
+NORM_BEGIN real=39 synthetic=9 size=288 control=1
+NORM_REJECT case=38 method=1 name=result byte=1151
+Core 0: [31mHIT BAD TRAP at pc = 0x8000033c
+[0m[35mCore-0 instrCnt = 8748, cycleCnt = 21217, IPC = 0.412311
+[0m[34mSeed=1 Guest cycle spent: 21221 (this will be different from cycleCnt if emu loads a snapshot)
+[0m[34mHost time spent: 17612ms
+[0m

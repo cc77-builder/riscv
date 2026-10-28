@@ -1,0 +1,2307 @@
+{
+  "status": "FROZEN_NORM_EVIDENCE_RECHECK_PASS",
+  "campaign": "target-budget2",
+  "checks": {
+    "negative": {
+      "status": "EXPECTED_NORM_APPLICATION_REJECTION",
+      "mode": 1,
+      "samples": [],
+      "transcript": [
+        "NORM_BEGIN real=39 synthetic=9 size=288 control=1",
+        "NORM_REJECT case=38 method=1 name=result byte=1151"
+      ],
+      "protocol": {
+        "status": "O2_TRACE_PASS",
+        "schema": {
+          "version": 1,
+          "clock": "global",
+          "latency": 2,
+          "slots": 2,
+          "rob_size": 48,
+          "ftq_size": 8,
+          "vlen": 128,
+          "vpu_width": 195,
+          "perf_width": 577
+        },
+        "counts": {
+          "STATE": 388,
+          "VFEX4_ACCEPT": 0,
+          "VFEX4_WAIT": 0,
+          "VFEX4_REDIRECT": 200,
+          "ACCEPT": 0,
+          "MOVE": 0,
+          "RESPONSE": 0,
+          "STALL": 0,
+          "KILL": 0,
+          "DIV_ACCEPT": 0,
+          "DIV_KILL": 0,
+          "DIV_OUTPUT": 0,
+          "ENQUEUE": 0,
+          "COMMIT": 0,
+          "REDIRECT": 200,
+          "MULTI_INFLIGHT": 0,
+          "OVERLAP": 0,
+          "TRIPLE_OVERLAP": 0,
+          "FULL_STALL": 0,
+          "KILL_P": 0,
+          "KILL_R": 0,
+          "PARTIAL_KILL": 0,
+          "BOTH_KILL": 0,
+          "R_KILL_P_SURVIVES": 0,
+          "P_KILL_R_SURVIVES": 0,
+          "UNRELATED_FLUSH": 0,
+          "ROB_WRAP": 0,
+          "FTQ_WRAP": 0,
+          "DIV_RESPONSE": 0,
+          "ACCEPTED_THEN_SQUASHED": 0,
+          "ACCEPTED_YOUNGER_SQUASHED": 0
+        },
+        "vfex4_fu_counts": {},
+        "pending_count": 0,
+        "pending_div_count": 0,
+        "unfinished_rob_count": 0,
+        "transaction_count": 0,
+        "transaction_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "storage": {
+          "max_live_rob": 0,
+          "max_pending_transactions": 0,
+          "max_cycle_records": 3
+        },
+        "o2_coverage": {
+          "multi_inflight": false,
+          "triple_overlap": false,
+          "full_stall": false,
+          "kill_p": false,
+          "kill_r": false,
+          "partial_kill": false
+        },
+        "response_latency_histogram": {},
+        "observed_accept_gap_histogram": {},
+        "clock_mapping": "direct ungated VFEX4/ROB global cycle; independent P/R transition audit",
+        "scope": "trace and accepted-source full128 arithmetic audit; ISA legality/architectural state require workload and DiffTest",
+        "runtime_reset_audited": false,
+        "performance_measured": false
+      },
+      "custom_count": 0,
+      "trap_pc": "0x8000033c",
+      "counter_audit": {
+        "status": "FENCED_COUNTER_SAMPLE_RETIRE_PASS",
+        "windows": 0,
+        "reads": 0,
+        "deltas": [],
+        "records": [],
+        "full_retirement_window_audited": false
+      },
+      "full_forward_performance_qualified": false,
+      "full_retirement_window_audited": false
+    },
+    "normal": {
+      "status": "NORM_BOUNDARY_DIFFTEST_PASS",
+      "mode": 0,
+      "samples": [
+        {
+          "index": 0,
+          "method": 0,
+          "cycles": 51538,
+          "instret": 53188,
+          "fcsr": 1,
+          "fnv1a64": "e8d94ebe570b175c"
+        },
+        {
+          "index": 1,
+          "method": 1,
+          "cycles": 23774,
+          "instret": 20989,
+          "fcsr": 1,
+          "fnv1a64": "e8d94ebe570b175c"
+        },
+        {
+          "index": 2,
+          "method": 1,
+          "cycles": 23662,
+          "instret": 20989,
+          "fcsr": 1,
+          "fnv1a64": "e8d94ebe570b175c"
+        },
+        {
+          "index": 3,
+          "method": 0,
+          "cycles": 50008,
+          "instret": 53188,
+          "fcsr": 1,
+          "fnv1a64": "e8d94ebe570b175c"
+        },
+        {
+          "index": 4,
+          "method": 1,
+          "cycles": 23607,
+          "instret": 20989,
+          "fcsr": 1,
+          "fnv1a64": "e8d94ebe570b175c"
+        },
+        {
+          "index": 5,
+          "method": 0,
+          "cycles": 49930,
+          "instret": 53188,
+          "fcsr": 1,
+          "fnv1a64": "e8d94ebe570b175c"
+        },
+        {
+          "index": 6,
+          "method": 0,
+          "cycles": 49937,
+          "instret": 53188,
+          "fcsr": 1,
+          "fnv1a64": "e8d94ebe570b175c"
+        },
+        {
+          "index": 7,
+          "method": 1,
+          "cycles": 23619,
+          "instret": 20989,
+          "fcsr": 1,
+          "fnv1a64": "e8d94ebe570b175c"
+        }
+      ],
+      "transcript": [
+        "NORM_BEGIN real=39 synthetic=9 size=288 control=0",
+        "NORM_FUNCTIONAL_PASS cases=48 calls=384 alias=both sticky=both",
+        "NORM_SAMPLE 0 0 51538 53188 1 e8d94ebe570b175c",
+        "NORM_SAMPLE 1 1 23774 20989 1 e8d94ebe570b175c",
+        "NORM_SAMPLE 2 1 23662 20989 1 e8d94ebe570b175c",
+        "NORM_SAMPLE 3 0 50008 53188 1 e8d94ebe570b175c",
+        "NORM_SAMPLE 4 1 23607 20989 1 e8d94ebe570b175c",
+        "NORM_SAMPLE 5 0 49930 53188 1 e8d94ebe570b175c",
+        "NORM_SAMPLE 6 0 49937 53188 1 e8d94ebe570b175c",
+        "NORM_SAMPLE 7 1 23619 20989 1 e8d94ebe570b175c",
+        "NORM_PASS functional=384 samples=8 batch_calls=208"
+      ],
+      "protocol": {
+        "status": "O2_TRACE_PASS",
+        "schema": {
+          "version": 1,
+          "clock": "global",
+          "latency": 2,
+          "slots": 2,
+          "rob_size": 48,
+          "ftq_size": 8,
+          "vlen": 128,
+          "vpu_width": 195,
+          "perf_width": 577
+        },
+        "counts": {
+          "STATE": 12378,
+          "VFEX4_ACCEPT": 0,
+          "VFEX4_WAIT": 0,
+          "VFEX4_REDIRECT": 6212,
+          "ACCEPT": 0,
+          "MOVE": 0,
+          "RESPONSE": 0,
+          "STALL": 0,
+          "KILL": 0,
+          "DIV_ACCEPT": 0,
+          "DIV_KILL": 0,
+          "DIV_OUTPUT": 0,
+          "ENQUEUE": 0,
+          "COMMIT": 0,
+          "REDIRECT": 6212,
+          "MULTI_INFLIGHT": 0,
+          "OVERLAP": 0,
+          "TRIPLE_OVERLAP": 0,
+          "FULL_STALL": 0,
+          "KILL_P": 0,
+          "KILL_R": 0,
+          "PARTIAL_KILL": 0,
+          "BOTH_KILL": 0,
+          "R_KILL_P_SURVIVES": 0,
+          "P_KILL_R_SURVIVES": 0,
+          "UNRELATED_FLUSH": 0,
+          "ROB_WRAP": 0,
+          "FTQ_WRAP": 0,
+          "DIV_RESPONSE": 0,
+          "ACCEPTED_THEN_SQUASHED": 0,
+          "ACCEPTED_YOUNGER_SQUASHED": 0
+        },
+        "vfex4_fu_counts": {},
+        "pending_count": 0,
+        "pending_div_count": 0,
+        "unfinished_rob_count": 0,
+        "transaction_count": 0,
+        "transaction_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "storage": {
+          "max_live_rob": 0,
+          "max_pending_transactions": 0,
+          "max_cycle_records": 3
+        },
+        "o2_coverage": {
+          "multi_inflight": false,
+          "triple_overlap": false,
+          "full_stall": false,
+          "kill_p": false,
+          "kill_r": false,
+          "partial_kill": false
+        },
+        "response_latency_histogram": {},
+        "observed_accept_gap_histogram": {},
+        "clock_mapping": "direct ungated VFEX4/ROB global cycle; independent P/R transition audit",
+        "scope": "trace and accepted-source full128 arithmetic audit; ISA legality/architectural state require workload and DiffTest",
+        "runtime_reset_audited": false,
+        "performance_measured": false
+      },
+      "custom_count": 0,
+      "trap_pc": "0x8000013c",
+      "counter_audit": {
+        "status": "FENCED_COUNTER_SAMPLE_RETIRE_PASS",
+        "windows": 8,
+        "reads": 32,
+        "deltas": [
+          {
+            "cycles": 51538,
+            "instret": 53188
+          },
+          {
+            "cycles": 23774,
+            "instret": 20989
+          },
+          {
+            "cycles": 23662,
+            "instret": 20989
+          },
+          {
+            "cycles": 50008,
+            "instret": 53188
+          },
+          {
+            "cycles": 23607,
+            "instret": 20989
+          },
+          {
+            "cycles": 49930,
+            "instret": 53188
+          },
+          {
+            "cycles": 49937,
+            "instret": 53188
+          },
+          {
+            "cycles": 23619,
+            "instret": 20989
+          }
+        ],
+        "records": [
+          {
+            "enqueue": {
+              "cycle": 2318231,
+              "rob": "1:19",
+              "pc": 2147486932,
+              "word": 3221236723,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 2318234,
+              "addr": 3072,
+              "data": 16270799599948821730,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 2318237,
+              "slot": 0,
+              "rob": "1:19",
+              "pc": 2147486932,
+              "word": 3221236723,
+              "count": 1,
+              "data": 16270799599948821730
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 2318290,
+              "rob": "1:22",
+              "pc": 2147486944,
+              "word": 3223334131,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 2318293,
+              "addr": 3074,
+              "data": 14784781538189273938,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 2318296,
+              "slot": 0,
+              "rob": "1:22",
+              "pc": 2147486944,
+              "word": 3223334131,
+              "count": 1,
+              "data": 14784781538189273938
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 2369710,
+              "rob": "1:43",
+              "pc": 2147486968,
+              "word": 3223334259,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 2369713,
+              "addr": 3074,
+              "data": 14784781538189327126,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 2369716,
+              "slot": 0,
+              "rob": "1:43",
+              "pc": 2147486968,
+              "word": 3223334259,
+              "count": 1,
+              "data": 14784781538189327126
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 2369769,
+              "rob": "1:46",
+              "pc": 2147486980,
+              "word": 3221236851,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 2369772,
+              "addr": 3072,
+              "data": 16270799599948873268,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 2369775,
+              "slot": 0,
+              "rob": "1:46",
+              "pc": 2147486980,
+              "word": 3221236851,
+              "count": 1,
+              "data": 16270799599948873268
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 2592162,
+              "rob": "1:38",
+              "pc": 2147486932,
+              "word": 3221236723,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 2592165,
+              "addr": 3072,
+              "data": 16270799599949095661,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 2592168,
+              "slot": 0,
+              "rob": "1:38",
+              "pc": 2147486932,
+              "word": 3221236723,
+              "count": 1,
+              "data": 16270799599949095661
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 2592221,
+              "rob": "1:41",
+              "pc": 2147486944,
+              "word": 3223334131,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 2592224,
+              "addr": 3074,
+              "data": 14784781538189635846,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 2592227,
+              "slot": 0,
+              "rob": "1:41",
+              "pc": 2147486944,
+              "word": 3223334131,
+              "count": 1,
+              "data": 14784781538189635846
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 2615877,
+              "rob": "0:26",
+              "pc": 2147486968,
+              "word": 3223334259,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 2615880,
+              "addr": 3074,
+              "data": 14784781538189656835,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 2615883,
+              "slot": 0,
+              "rob": "0:26",
+              "pc": 2147486968,
+              "word": 3223334259,
+              "count": 1,
+              "data": 14784781538189656835
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 2615936,
+              "rob": "0:29",
+              "pc": 2147486980,
+              "word": 3221236851,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 2615939,
+              "addr": 3072,
+              "data": 16270799599949119435,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 2615942,
+              "slot": 0,
+              "rob": "0:29",
+              "pc": 2147486980,
+              "word": 3221236851,
+              "count": 1,
+              "data": 16270799599949119435
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 2834377,
+              "rob": "0:13",
+              "pc": 2147486932,
+              "word": 3221236723,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 2834380,
+              "addr": 3072,
+              "data": 16270799599949337876,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 2834383,
+              "slot": 0,
+              "rob": "0:13",
+              "pc": 2147486932,
+              "word": 3221236723,
+              "count": 1,
+              "data": 16270799599949337876
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 2834436,
+              "rob": "0:16",
+              "pc": 2147486944,
+              "word": 3223334131,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 2834439,
+              "addr": 3074,
+              "data": 14784781538189965549,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 2834442,
+              "slot": 0,
+              "rob": "0:16",
+              "pc": 2147486944,
+              "word": 3223334131,
+              "count": 1,
+              "data": 14784781538189965549
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 2857980,
+              "rob": "1:0",
+              "pc": 2147486968,
+              "word": 3223334259,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 2857983,
+              "addr": 3074,
+              "data": 14784781538189986538,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 2857986,
+              "slot": 0,
+              "rob": "1:0",
+              "pc": 2147486968,
+              "word": 3223334259,
+              "count": 1,
+              "data": 14784781538189986538
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 2858039,
+              "rob": "1:3",
+              "pc": 2147486980,
+              "word": 3221236851,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 2858042,
+              "addr": 3072,
+              "data": 16270799599949361538,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 2858045,
+              "slot": 0,
+              "rob": "1:3",
+              "pc": 2147486980,
+              "word": 3221236851,
+              "count": 1,
+              "data": 16270799599949361538
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 3102112,
+              "rob": "0:28",
+              "pc": 2147486932,
+              "word": 3221236723,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 3102115,
+              "addr": 3072,
+              "data": 16270799599949605611,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 3102118,
+              "slot": 0,
+              "rob": "0:28",
+              "pc": 2147486932,
+              "word": 3221236723,
+              "count": 1,
+              "data": 16270799599949605611
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 3102171,
+              "rob": "0:31",
+              "pc": 2147486944,
+              "word": 3223334131,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 3102174,
+              "addr": 3074,
+              "data": 14784781538190327451,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 3102177,
+              "slot": 0,
+              "rob": "0:31",
+              "pc": 2147486944,
+              "word": 3223334131,
+              "count": 1,
+              "data": 14784781538190327451
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 3152061,
+              "rob": "1:6",
+              "pc": 2147486968,
+              "word": 3223334259,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 3152064,
+              "addr": 3074,
+              "data": 14784781538190380639,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 3152067,
+              "slot": 0,
+              "rob": "1:6",
+              "pc": 2147486968,
+              "word": 3223334259,
+              "count": 1,
+              "data": 14784781538190380639
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 3152120,
+              "rob": "1:9",
+              "pc": 2147486980,
+              "word": 3221236851,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 3152123,
+              "addr": 3072,
+              "data": 16270799599949655619,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 3152126,
+              "slot": 0,
+              "rob": "1:9",
+              "pc": 2147486980,
+              "word": 3221236851,
+              "count": 1,
+              "data": 16270799599949655619
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 3369712,
+              "rob": "0:46",
+              "pc": 2147486932,
+              "word": 3221236723,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 3369715,
+              "addr": 3072,
+              "data": 16270799599949873211,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 3369718,
+              "slot": 0,
+              "rob": "0:46",
+              "pc": 2147486932,
+              "word": 3221236723,
+              "count": 1,
+              "data": 16270799599949873211
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 3369771,
+              "rob": "1:1",
+              "pc": 2147486944,
+              "word": 3223334131,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 3369774,
+              "addr": 3074,
+              "data": 14784781538190689356,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 3369777,
+              "slot": 0,
+              "rob": "1:1",
+              "pc": 2147486944,
+              "word": 3223334131,
+              "count": 1,
+              "data": 14784781538190689356
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 3393260,
+              "rob": "1:33",
+              "pc": 2147486968,
+              "word": 3223334259,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 3393263,
+              "addr": 3074,
+              "data": 14784781538190710345,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 3393266,
+              "slot": 0,
+              "rob": "1:33",
+              "pc": 2147486968,
+              "word": 3223334259,
+              "count": 1,
+              "data": 14784781538190710345
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 3393319,
+              "rob": "1:36",
+              "pc": 2147486980,
+              "word": 3221236851,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 3393322,
+              "addr": 3072,
+              "data": 16270799599949896818,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 3393325,
+              "slot": 0,
+              "rob": "1:36",
+              "pc": 2147486980,
+              "word": 3221236851,
+              "count": 1,
+              "data": 16270799599949896818
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 3637165,
+              "rob": "1:7",
+              "pc": 2147486932,
+              "word": 3221236723,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 3637168,
+              "addr": 3072,
+              "data": 16270799599950140664,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 3637171,
+              "slot": 0,
+              "rob": "1:7",
+              "pc": 2147486932,
+              "word": 3221236723,
+              "count": 1,
+              "data": 16270799599950140664
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 3637224,
+              "rob": "1:10",
+              "pc": 2147486944,
+              "word": 3223334131,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 3637227,
+              "addr": 3074,
+              "data": 14784781538191051258,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 3637230,
+              "slot": 0,
+              "rob": "1:10",
+              "pc": 2147486944,
+              "word": 3223334131,
+              "count": 1,
+              "data": 14784781538191051258
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 3687036,
+              "rob": "1:33",
+              "pc": 2147486968,
+              "word": 3223334259,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 3687039,
+              "addr": 3074,
+              "data": 14784781538191104446,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 3687042,
+              "slot": 0,
+              "rob": "1:33",
+              "pc": 2147486968,
+              "word": 3223334259,
+              "count": 1,
+              "data": 14784781538191104446
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 3687095,
+              "rob": "1:36",
+              "pc": 2147486980,
+              "word": 3221236851,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 3687098,
+              "addr": 3072,
+              "data": 16270799599950190594,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 3687101,
+              "slot": 0,
+              "rob": "1:36",
+              "pc": 2147486980,
+              "word": 3221236851,
+              "count": 1,
+              "data": 16270799599950190594
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 3931234,
+              "rob": "1:12",
+              "pc": 2147486932,
+              "word": 3221236723,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 3931237,
+              "addr": 3072,
+              "data": 16270799599950434733,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 3931240,
+              "slot": 0,
+              "rob": "1:12",
+              "pc": 2147486932,
+              "word": 3221236723,
+              "count": 1,
+              "data": 16270799599950434733
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 3931293,
+              "rob": "1:15",
+              "pc": 2147486944,
+              "word": 3223334131,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 3931296,
+              "addr": 3074,
+              "data": 14784781538191445362,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 3931299,
+              "slot": 0,
+              "rob": "1:15",
+              "pc": 2147486944,
+              "word": 3223334131,
+              "count": 1,
+              "data": 14784781538191445362
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 3981112,
+              "rob": "1:38",
+              "pc": 2147486968,
+              "word": 3223334259,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 3981115,
+              "addr": 3074,
+              "data": 14784781538191498550,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 3981118,
+              "slot": 0,
+              "rob": "1:38",
+              "pc": 2147486968,
+              "word": 3223334259,
+              "count": 1,
+              "data": 14784781538191498550
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 3981171,
+              "rob": "1:41",
+              "pc": 2147486980,
+              "word": 3221236851,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 3981174,
+              "addr": 3072,
+              "data": 16270799599950484670,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 3981177,
+              "slot": 0,
+              "rob": "1:41",
+              "pc": 2147486980,
+              "word": 3221236851,
+              "count": 1,
+              "data": 16270799599950484670
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 4198669,
+              "rob": "1:24",
+              "pc": 2147486932,
+              "word": 3221236723,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 4198672,
+              "addr": 3072,
+              "data": 16270799599950702168,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 4198675,
+              "slot": 0,
+              "rob": "1:24",
+              "pc": 2147486932,
+              "word": 3221236723,
+              "count": 1,
+              "data": 16270799599950702168
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 4198728,
+              "rob": "1:27",
+              "pc": 2147486944,
+              "word": 3223334131,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 4198731,
+              "addr": 3074,
+              "data": 14784781538191807267,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 4198734,
+              "slot": 0,
+              "rob": "1:27",
+              "pc": 2147486944,
+              "word": 3223334131,
+              "count": 1,
+              "data": 14784781538191807267
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 4222229,
+              "rob": "0:10",
+              "pc": 2147486968,
+              "word": 3223334259,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 4222232,
+              "addr": 3074,
+              "data": 14784781538191828256,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 4222235,
+              "slot": 0,
+              "rob": "0:10",
+              "pc": 2147486968,
+              "word": 3223334259,
+              "count": 1,
+              "data": 14784781538191828256
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 4222288,
+              "rob": "0:13",
+              "pc": 2147486980,
+              "word": 3221236851,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 4222291,
+              "addr": 3072,
+              "data": 16270799599950725787,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 4222294,
+              "slot": 0,
+              "rob": "0:13",
+              "pc": 2147486980,
+              "word": 3221236851,
+              "count": 1,
+              "data": 16270799599950725787
+            }
+          }
+        ],
+        "full_retirement_window_audited": false
+      },
+      "full_forward_performance_qualified": false,
+      "full_retirement_window_audited": false
+    },
+    "replay": {
+      "status": "NORM_BOUNDARY_DIFFTEST_PASS",
+      "mode": 0,
+      "samples": [
+        {
+          "index": 0,
+          "method": 0,
+          "cycles": 51538,
+          "instret": 53188,
+          "fcsr": 1,
+          "fnv1a64": "e8d94ebe570b175c"
+        },
+        {
+          "index": 1,
+          "method": 1,
+          "cycles": 23774,
+          "instret": 20989,
+          "fcsr": 1,
+          "fnv1a64": "e8d94ebe570b175c"
+        },
+        {
+          "index": 2,
+          "method": 1,
+          "cycles": 23662,
+          "instret": 20989,
+          "fcsr": 1,
+          "fnv1a64": "e8d94ebe570b175c"
+        },
+        {
+          "index": 3,
+          "method": 0,
+          "cycles": 50008,
+          "instret": 53188,
+          "fcsr": 1,
+          "fnv1a64": "e8d94ebe570b175c"
+        },
+        {
+          "index": 4,
+          "method": 1,
+          "cycles": 23607,
+          "instret": 20989,
+          "fcsr": 1,
+          "fnv1a64": "e8d94ebe570b175c"
+        },
+        {
+          "index": 5,
+          "method": 0,
+          "cycles": 49930,
+          "instret": 53188,
+          "fcsr": 1,
+          "fnv1a64": "e8d94ebe570b175c"
+        },
+        {
+          "index": 6,
+          "method": 0,
+          "cycles": 49937,
+          "instret": 53188,
+          "fcsr": 1,
+          "fnv1a64": "e8d94ebe570b175c"
+        },
+        {
+          "index": 7,
+          "method": 1,
+          "cycles": 23619,
+          "instret": 20989,
+          "fcsr": 1,
+          "fnv1a64": "e8d94ebe570b175c"
+        }
+      ],
+      "transcript": [
+        "NORM_BEGIN real=39 synthetic=9 size=288 control=0",
+        "NORM_FUNCTIONAL_PASS cases=48 calls=384 alias=both sticky=both",
+        "NORM_SAMPLE 0 0 51538 53188 1 e8d94ebe570b175c",
+        "NORM_SAMPLE 1 1 23774 20989 1 e8d94ebe570b175c",
+        "NORM_SAMPLE 2 1 23662 20989 1 e8d94ebe570b175c",
+        "NORM_SAMPLE 3 0 50008 53188 1 e8d94ebe570b175c",
+        "NORM_SAMPLE 4 1 23607 20989 1 e8d94ebe570b175c",
+        "NORM_SAMPLE 5 0 49930 53188 1 e8d94ebe570b175c",
+        "NORM_SAMPLE 6 0 49937 53188 1 e8d94ebe570b175c",
+        "NORM_SAMPLE 7 1 23619 20989 1 e8d94ebe570b175c",
+        "NORM_PASS functional=384 samples=8 batch_calls=208"
+      ],
+      "protocol": {
+        "status": "O2_TRACE_PASS",
+        "schema": {
+          "version": 1,
+          "clock": "global",
+          "latency": 2,
+          "slots": 2,
+          "rob_size": 48,
+          "ftq_size": 8,
+          "vlen": 128,
+          "vpu_width": 195,
+          "perf_width": 577
+        },
+        "counts": {
+          "STATE": 12378,
+          "VFEX4_ACCEPT": 0,
+          "VFEX4_WAIT": 0,
+          "VFEX4_REDIRECT": 6212,
+          "ACCEPT": 0,
+          "MOVE": 0,
+          "RESPONSE": 0,
+          "STALL": 0,
+          "KILL": 0,
+          "DIV_ACCEPT": 0,
+          "DIV_KILL": 0,
+          "DIV_OUTPUT": 0,
+          "ENQUEUE": 0,
+          "COMMIT": 0,
+          "REDIRECT": 6212,
+          "MULTI_INFLIGHT": 0,
+          "OVERLAP": 0,
+          "TRIPLE_OVERLAP": 0,
+          "FULL_STALL": 0,
+          "KILL_P": 0,
+          "KILL_R": 0,
+          "PARTIAL_KILL": 0,
+          "BOTH_KILL": 0,
+          "R_KILL_P_SURVIVES": 0,
+          "P_KILL_R_SURVIVES": 0,
+          "UNRELATED_FLUSH": 0,
+          "ROB_WRAP": 0,
+          "FTQ_WRAP": 0,
+          "DIV_RESPONSE": 0,
+          "ACCEPTED_THEN_SQUASHED": 0,
+          "ACCEPTED_YOUNGER_SQUASHED": 0
+        },
+        "vfex4_fu_counts": {},
+        "pending_count": 0,
+        "pending_div_count": 0,
+        "unfinished_rob_count": 0,
+        "transaction_count": 0,
+        "transaction_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "storage": {
+          "max_live_rob": 0,
+          "max_pending_transactions": 0,
+          "max_cycle_records": 3
+        },
+        "o2_coverage": {
+          "multi_inflight": false,
+          "triple_overlap": false,
+          "full_stall": false,
+          "kill_p": false,
+          "kill_r": false,
+          "partial_kill": false
+        },
+        "response_latency_histogram": {},
+        "observed_accept_gap_histogram": {},
+        "clock_mapping": "direct ungated VFEX4/ROB global cycle; independent P/R transition audit",
+        "scope": "trace and accepted-source full128 arithmetic audit; ISA legality/architectural state require workload and DiffTest",
+        "runtime_reset_audited": false,
+        "performance_measured": false
+      },
+      "custom_count": 0,
+      "trap_pc": "0x8000013c",
+      "counter_audit": {
+        "status": "FENCED_COUNTER_SAMPLE_RETIRE_PASS",
+        "windows": 8,
+        "reads": 32,
+        "deltas": [
+          {
+            "cycles": 51538,
+            "instret": 53188
+          },
+          {
+            "cycles": 23774,
+            "instret": 20989
+          },
+          {
+            "cycles": 23662,
+            "instret": 20989
+          },
+          {
+            "cycles": 50008,
+            "instret": 53188
+          },
+          {
+            "cycles": 23607,
+            "instret": 20989
+          },
+          {
+            "cycles": 49930,
+            "instret": 53188
+          },
+          {
+            "cycles": 49937,
+            "instret": 53188
+          },
+          {
+            "cycles": 23619,
+            "instret": 20989
+          }
+        ],
+        "records": [
+          {
+            "enqueue": {
+              "cycle": 2318231,
+              "rob": "1:19",
+              "pc": 2147486932,
+              "word": 3221236723,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 2318234,
+              "addr": 3072,
+              "data": 16270799599948821730,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 2318237,
+              "slot": 0,
+              "rob": "1:19",
+              "pc": 2147486932,
+              "word": 3221236723,
+              "count": 1,
+              "data": 16270799599948821730
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 2318290,
+              "rob": "1:22",
+              "pc": 2147486944,
+              "word": 3223334131,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 2318293,
+              "addr": 3074,
+              "data": 14784781538189273938,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 2318296,
+              "slot": 0,
+              "rob": "1:22",
+              "pc": 2147486944,
+              "word": 3223334131,
+              "count": 1,
+              "data": 14784781538189273938
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 2369710,
+              "rob": "1:43",
+              "pc": 2147486968,
+              "word": 3223334259,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 2369713,
+              "addr": 3074,
+              "data": 14784781538189327126,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 2369716,
+              "slot": 0,
+              "rob": "1:43",
+              "pc": 2147486968,
+              "word": 3223334259,
+              "count": 1,
+              "data": 14784781538189327126
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 2369769,
+              "rob": "1:46",
+              "pc": 2147486980,
+              "word": 3221236851,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 2369772,
+              "addr": 3072,
+              "data": 16270799599948873268,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 2369775,
+              "slot": 0,
+              "rob": "1:46",
+              "pc": 2147486980,
+              "word": 3221236851,
+              "count": 1,
+              "data": 16270799599948873268
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 2592162,
+              "rob": "1:38",
+              "pc": 2147486932,
+              "word": 3221236723,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 2592165,
+              "addr": 3072,
+              "data": 16270799599949095661,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 2592168,
+              "slot": 0,
+              "rob": "1:38",
+              "pc": 2147486932,
+              "word": 3221236723,
+              "count": 1,
+              "data": 16270799599949095661
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 2592221,
+              "rob": "1:41",
+              "pc": 2147486944,
+              "word": 3223334131,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 2592224,
+              "addr": 3074,
+              "data": 14784781538189635846,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 2592227,
+              "slot": 0,
+              "rob": "1:41",
+              "pc": 2147486944,
+              "word": 3223334131,
+              "count": 1,
+              "data": 14784781538189635846
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 2615877,
+              "rob": "0:26",
+              "pc": 2147486968,
+              "word": 3223334259,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 2615880,
+              "addr": 3074,
+              "data": 14784781538189656835,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 2615883,
+              "slot": 0,
+              "rob": "0:26",
+              "pc": 2147486968,
+              "word": 3223334259,
+              "count": 1,
+              "data": 14784781538189656835
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 2615936,
+              "rob": "0:29",
+              "pc": 2147486980,
+              "word": 3221236851,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 2615939,
+              "addr": 3072,
+              "data": 16270799599949119435,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 2615942,
+              "slot": 0,
+              "rob": "0:29",
+              "pc": 2147486980,
+              "word": 3221236851,
+              "count": 1,
+              "data": 16270799599949119435
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 2834377,
+              "rob": "0:13",
+              "pc": 2147486932,
+              "word": 3221236723,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 2834380,
+              "addr": 3072,
+              "data": 16270799599949337876,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 2834383,
+              "slot": 0,
+              "rob": "0:13",
+              "pc": 2147486932,
+              "word": 3221236723,
+              "count": 1,
+              "data": 16270799599949337876
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 2834436,
+              "rob": "0:16",
+              "pc": 2147486944,
+              "word": 3223334131,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 2834439,
+              "addr": 3074,
+              "data": 14784781538189965549,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 2834442,
+              "slot": 0,
+              "rob": "0:16",
+              "pc": 2147486944,
+              "word": 3223334131,
+              "count": 1,
+              "data": 14784781538189965549
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 2857980,
+              "rob": "1:0",
+              "pc": 2147486968,
+              "word": 3223334259,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 2857983,
+              "addr": 3074,
+              "data": 14784781538189986538,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 2857986,
+              "slot": 0,
+              "rob": "1:0",
+              "pc": 2147486968,
+              "word": 3223334259,
+              "count": 1,
+              "data": 14784781538189986538
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 2858039,
+              "rob": "1:3",
+              "pc": 2147486980,
+              "word": 3221236851,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 2858042,
+              "addr": 3072,
+              "data": 16270799599949361538,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 2858045,
+              "slot": 0,
+              "rob": "1:3",
+              "pc": 2147486980,
+              "word": 3221236851,
+              "count": 1,
+              "data": 16270799599949361538
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 3102112,
+              "rob": "0:28",
+              "pc": 2147486932,
+              "word": 3221236723,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 3102115,
+              "addr": 3072,
+              "data": 16270799599949605611,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 3102118,
+              "slot": 0,
+              "rob": "0:28",
+              "pc": 2147486932,
+              "word": 3221236723,
+              "count": 1,
+              "data": 16270799599949605611
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 3102171,
+              "rob": "0:31",
+              "pc": 2147486944,
+              "word": 3223334131,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 3102174,
+              "addr": 3074,
+              "data": 14784781538190327451,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 3102177,
+              "slot": 0,
+              "rob": "0:31",
+              "pc": 2147486944,
+              "word": 3223334131,
+              "count": 1,
+              "data": 14784781538190327451
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 3152061,
+              "rob": "1:6",
+              "pc": 2147486968,
+              "word": 3223334259,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 3152064,
+              "addr": 3074,
+              "data": 14784781538190380639,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 3152067,
+              "slot": 0,
+              "rob": "1:6",
+              "pc": 2147486968,
+              "word": 3223334259,
+              "count": 1,
+              "data": 14784781538190380639
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 3152120,
+              "rob": "1:9",
+              "pc": 2147486980,
+              "word": 3221236851,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 3152123,
+              "addr": 3072,
+              "data": 16270799599949655619,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 3152126,
+              "slot": 0,
+              "rob": "1:9",
+              "pc": 2147486980,
+              "word": 3221236851,
+              "count": 1,
+              "data": 16270799599949655619
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 3369712,
+              "rob": "0:46",
+              "pc": 2147486932,
+              "word": 3221236723,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 3369715,
+              "addr": 3072,
+              "data": 16270799599949873211,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 3369718,
+              "slot": 0,
+              "rob": "0:46",
+              "pc": 2147486932,
+              "word": 3221236723,
+              "count": 1,
+              "data": 16270799599949873211
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 3369771,
+              "rob": "1:1",
+              "pc": 2147486944,
+              "word": 3223334131,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 3369774,
+              "addr": 3074,
+              "data": 14784781538190689356,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 3369777,
+              "slot": 0,
+              "rob": "1:1",
+              "pc": 2147486944,
+              "word": 3223334131,
+              "count": 1,
+              "data": 14784781538190689356
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 3393260,
+              "rob": "1:33",
+              "pc": 2147486968,
+              "word": 3223334259,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 3393263,
+              "addr": 3074,
+              "data": 14784781538190710345,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 3393266,
+              "slot": 0,
+              "rob": "1:33",
+              "pc": 2147486968,
+              "word": 3223334259,
+              "count": 1,
+              "data": 14784781538190710345
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 3393319,
+              "rob": "1:36",
+              "pc": 2147486980,
+              "word": 3221236851,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 3393322,
+              "addr": 3072,
+              "data": 16270799599949896818,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 3393325,
+              "slot": 0,
+              "rob": "1:36",
+              "pc": 2147486980,
+              "word": 3221236851,
+              "count": 1,
+              "data": 16270799599949896818
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 3637165,
+              "rob": "1:7",
+              "pc": 2147486932,
+              "word": 3221236723,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 3637168,
+              "addr": 3072,
+              "data": 16270799599950140664,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 3637171,
+              "slot": 0,
+              "rob": "1:7",
+              "pc": 2147486932,
+              "word": 3221236723,
+              "count": 1,
+              "data": 16270799599950140664
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 3637224,
+              "rob": "1:10",
+              "pc": 2147486944,
+              "word": 3223334131,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 3637227,
+              "addr": 3074,
+              "data": 14784781538191051258,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 3637230,
+              "slot": 0,
+              "rob": "1:10",
+              "pc": 2147486944,
+              "word": 3223334131,
+              "count": 1,
+              "data": 14784781538191051258
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 3687036,
+              "rob": "1:33",
+              "pc": 2147486968,
+              "word": 3223334259,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 3687039,
+              "addr": 3074,
+              "data": 14784781538191104446,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 3687042,
+              "slot": 0,
+              "rob": "1:33",
+              "pc": 2147486968,
+              "word": 3223334259,
+              "count": 1,
+              "data": 14784781538191104446
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 3687095,
+              "rob": "1:36",
+              "pc": 2147486980,
+              "word": 3221236851,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 3687098,
+              "addr": 3072,
+              "data": 16270799599950190594,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 3687101,
+              "slot": 0,
+              "rob": "1:36",
+              "pc": 2147486980,
+              "word": 3221236851,
+              "count": 1,
+              "data": 16270799599950190594
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 3931234,
+              "rob": "1:12",
+              "pc": 2147486932,
+              "word": 3221236723,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 3931237,
+              "addr": 3072,
+              "data": 16270799599950434733,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 3931240,
+              "slot": 0,
+              "rob": "1:12",
+              "pc": 2147486932,
+              "word": 3221236723,
+              "count": 1,
+              "data": 16270799599950434733
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 3931293,
+              "rob": "1:15",
+              "pc": 2147486944,
+              "word": 3223334131,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 3931296,
+              "addr": 3074,
+              "data": 14784781538191445362,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 3931299,
+              "slot": 0,
+              "rob": "1:15",
+              "pc": 2147486944,
+              "word": 3223334131,
+              "count": 1,
+              "data": 14784781538191445362
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 3981112,
+              "rob": "1:38",
+              "pc": 2147486968,
+              "word": 3223334259,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 3981115,
+              "addr": 3074,
+              "data": 14784781538191498550,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 3981118,
+              "slot": 0,
+              "rob": "1:38",
+              "pc": 2147486968,
+              "word": 3223334259,
+              "count": 1,
+              "data": 14784781538191498550
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 3981171,
+              "rob": "1:41",
+              "pc": 2147486980,
+              "word": 3221236851,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 3981174,
+              "addr": 3072,
+              "data": 16270799599950484670,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 3981177,
+              "slot": 0,
+              "rob": "1:41",
+              "pc": 2147486980,
+              "word": 3221236851,
+              "count": 1,
+              "data": 16270799599950484670
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 4198669,
+              "rob": "1:24",
+              "pc": 2147486932,
+              "word": 3221236723,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 4198672,
+              "addr": 3072,
+              "data": 16270799599950702168,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 4198675,
+              "slot": 0,
+              "rob": "1:24",
+              "pc": 2147486932,
+              "word": 3221236723,
+              "count": 1,
+              "data": 16270799599950702168
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 4198728,
+              "rob": "1:27",
+              "pc": 2147486944,
+              "word": 3223334131,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 4198731,
+              "addr": 3074,
+              "data": 14784781538191807267,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 4198734,
+              "slot": 0,
+              "rob": "1:27",
+              "pc": 2147486944,
+              "word": 3223334131,
+              "count": 1,
+              "data": 14784781538191807267
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 4222229,
+              "rob": "0:10",
+              "pc": 2147486968,
+              "word": 3223334259,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 4222232,
+              "addr": 3074,
+              "data": 14784781538191828256,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 4222235,
+              "slot": 0,
+              "rob": "0:10",
+              "pc": 2147486968,
+              "word": 3223334259,
+              "count": 1,
+              "data": 14784781538191828256
+            }
+          },
+          {
+            "enqueue": {
+              "cycle": 4222288,
+              "rob": "0:13",
+              "pc": 2147486980,
+              "word": 3221236851,
+              "empty": 1,
+              "wait": 0,
+              "block": 0
+            },
+            "sample": {
+              "cycle": 4222291,
+              "addr": 3072,
+              "data": 16270799599950725787,
+              "wen": 0
+            },
+            "retire": {
+              "cycle": 4222294,
+              "slot": 0,
+              "rob": "0:13",
+              "pc": 2147486980,
+              "word": 3221236851,
+              "count": 1,
+              "data": 16270799599950725787
+            }
+          }
+        ],
+        "full_retirement_window_audited": false
+      },
+      "full_forward_performance_qualified": false,
+      "full_retirement_window_audited": false
+    }
+  },
+  "imported_source_files": {
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/norm/budget.py": "b1b8b70030060f73d82107d00f7fc77716d066db452fbc92c44825c24e78ac45",
+    "team/optimizations/o2/fullcore/analyze.py": "27d9fe451c035157848625e84c2a229ac1d83073eb56ba3ebc25131e5569d496",
+    "team/optimizations/o2/fullcore/recheck.py": "8cebe76129f86747cdddf87f93f54d4379a8606dd3c1a20d55008361f2f95140",
+    "team/optimizations/o1/audit/runtime_gate.py": "80315b278f4dc0168edd33657a07ae648b20f0279fa57a69f35b0f983fa42ea1",
+    "team/optimizations/o2/fullcore/run_suite.py": "7bc68d73cd830ceb8fb9aa18469ebe6ff3efcdf56de6922049e05556b0e02475",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/norm/run.py": "77fe20c798bcd5025810f5e7f97efa171935fc37fc43fff39e44d6dd6293bb53",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/consumer/stream_audit.py": "3f72629ea0ccc30779883f9e696e21c4d92d33aa2406b67df02ab2212d9382cf",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/projection/target/run.py": "35bcaef3443b17cfaaa8fbd3bf0149d090b67425d89ccb8d88b6063121cb598a",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/target/run_smoke.py": "775155d433c49888294fa0a202716c305e1f8ded87a81009587d74ee9bb15e87",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/check.py": "0c81b6620b2c417ef73a251899bbe3af0ec4749832dd76ad2631b3e6fbd1386f",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/generate.py": "cac40ad6f5fc66d5c793683bf54fb3e411f7490c25468bc24c7bfc8be406e1e7",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/target/build_smoke.py": "e5ced03f98b3d9cfa318fc60881879cf42649a9546fb34261986149710373b69",
+    "team/optimizations/o2/r2-safe-tail/linked_gate.py": "96807465bfd97a483f31ce100e552e2b83c4d0edd59f9bf4d817c66abd80ec1f",
+    "team/optimizations/o2/r2-config-reuse/runtime_experiment.py": "56c25151b591d98a87a16f6cedb8afa65dbadde8ff0cca88b5113e2157e798f3",
+    "team/optimizations/o2/repro/clean_entry.py": "6aabb8bbd764d1b7b18b643eaf592efc0a0a1d49e6545842dc7a6b337d39a883",
+    "team/optimizations/o2/r2-select/entry_gate.py": "d20e0bd7426ac7a3b56b62d2a9b495b51b9cd6da257e46723eddbbb984de8f11",
+    "team/optimizations/o2/r2-select/entry_candidate.py": "a19224bb3b659615e3a1ca5c7db1bcb0e6af90649b098f8b39e3af6021d42edf",
+    "team/optimizations/o2/r2-vector-accum/gate.py": "ab07b578f5fe2dc7782ef9af64e722e051363d1dfddfcd0f1939efb209346b6d",
+    "team/optimizations/o2/r2-safe-tail/machine_model.py": "8fb2ac208d8db9083464fb839c06b46ec365234d72b819822563830dad90171e",
+    "team/optimizations/o2/r2-select/entry_c_evidence.py": "166186d7e9114729bb042b2cee3e719f6fe56150077aca905b657fe0e703362f",
+    "team/optimizations/o2/r2-select/entry_experiment.py": "417b2d8d0b97b293d7db565bfddb39f111756cd23638ddc62c8117997e069b6e",
+    "team/optimizations/o2/r2-safe-tail/merged_screen.py": "ff75464c5b0f75349fc4321bdd80a7a85985a54ae415ad347c3ce04fdf4bd885",
+    "team/optimizations/o2/r2-safe-tail/fullcore_screen.py": "5f5c719a9a5b675f4de166ca30a3d89bd52c944c667cee302f66da94fa2779f2",
+    "team/optimizations/o2/r2-select/entry_c_api.py": "4e1ae340c5b122d09d634631d7fce322ad121838ba9a4affdf193d2a4d9105fd",
+    "team/optimizations/o2/r2-select/entry_evidence.py": "039f81a2c7e216514c94939b8807647787c4b046413a48fb4c7e33293c027db3",
+    "team/optimizations/o2/repro/clean_profile.py": "1c4c467f43ede68fd30b1063868d8f02d71fbe8a5442f2da180210468db9a642",
+    "team/optimizations/o2/r2-config-reuse/runtime_candidate.py": "7d98abce6aaad40639c935e49b6d5c6f6663d992d8227d62b3d804ae4118f2a6",
+    "team/optimizations/o2/r2-config-reuse/candidate.py": "e1ec595c78f3c14314c1d4dc1cc9f49650929e77275ba38241bce541481b15f7",
+    "team/optimizations/o2/r2-config-reuse/runtime_gate.py": "5a9be8bf244a35a878964b0716ee32ed9a3faed16fd3da7938ed30f511d5d72c",
+    "team/optimizations/o2/r2-vector-accum/firstdot_gate.py": "fc11387899bab8b2d1ecfa074edfb52e939c15869032b4457043acf288564b3b",
+    "team/optimizations/o2/r2-vector-accum/firstdot_candidate.py": "79c1c808ac7e46560ed470028fb50487b31da478e43d9f1d83d770f089cc285d",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/projection/target/build.py": "9e4dc2e0fb2b2331d8c8ce7e3be6997441bc0c3031fd716c3586935d2f1efcc0",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/projection/build.py": "9e9e5014d03dc8904354cf1cb9a292c0329c4c5452b37dc4cd86762e7bc31428",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/full/build.py": "d52451331b02c42a3921651feec3b4d1d57ce20b396f63ddf0bdd8a452856890",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/norm/build.py": "53da4ad9d9aff07ad655beec55f8fa6dfaa2726a4a77d9e3ca1d62160d7f9e02",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/norm/generate.py": "0b91d846903573e0c57fd9915b73a7c53423128d042e3797b98a683513f4b7dc",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/norm/reference.py": "e95ac2debd0e2d63e7d955d85b0446aa9dc0a47bbcbe1935206e9c11a6750e0d",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/consumer/run.py": "ae60bd91ce0bf7c55c7833cc4ebe0b66ffff2082bedc7a99ba98af5a32bade5a",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/full/run.py": "bee89ca4424110f244560b1ab0529c80fd4e9736dd274c49690026754dbf8475",
+    "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/consumer/build.py": "ad7a056eb9ceb1e07eeeae1e19cc452d742fdaf7b710a6be00043c86587b99e1"
+  },
+  "extra": {
+    "historical_process_receipts": {
+      "cases": [
+        "negative",
+        "normal",
+        "replay"
+      ],
+      "unique_processes": 3,
+      "terminal_status": "NORM_BOUNDARY_DIFFTEST_CAMPAIGN_PASS",
+      "pids": {
+        "negative": 1288,
+        "normal": 1299,
+        "replay": 1300
+      }
+    },
+    "resource_contract": {
+      "resource_contract": "r2-s3-rmsnorm-output-v1-budget2",
+      "validation_contract": "r2-s3-rmsnorm-output-v1",
+      "operation_id": "20261027-LiZufan001-norm-resume-2000",
+      "created_at": "2026-10-27T12:14:23.310084+00:00",
+      "original_runner_sha256": "77fe20c798bcd5025810f5e7f97efa171935fc37fc43fff39e44d6dd6293bb53",
+      "original_contract_sha256": "7123410cbd1485999dfa4ec8922ddd136f417a2054019a51adfa02b3eb5ab86e",
+      "resource_contract_sha256": "568f2498e311ec3d959a4e7fd18f93565020c178f3853804e3a8f15d4d5c97b4",
+      "entry_sha256": "b1b8b70030060f73d82107d00f7fc77716d066db452fbc92c44825c24e78ac45",
+      "entry_path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/norm/budget.py",
+      "resource_contract_path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/norm/BUDGET-CONTRACT.md",
+      "original_limits": {
+        "guest_cycles": 4000000,
+        "host_seconds": 3600
+      },
+      "limits": {
+        "guest_cycles": 6000000,
+        "host_seconds": 7200,
+        "raw_file_bytes": 536870912,
+        "concurrent_emu": 2
+      },
+      "arguments": {
+        "identity": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/forward-norm-20261027-1536/target-01/parent-identity.json",
+        "build": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/forward-norm-20261027-1536/build-04",
+        "reference": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/forward-norm-20261027-1536/reference-01",
+        "output": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/norm-resume-20261027-2000/target-budget2"
+      },
+      "workload_changed": false,
+      "runtime_log_profile_changed": false,
+      "numerical_or_performance_rules_changed": false,
+      "old_failed_campaign_reclassified": false,
+      "command": [
+        "/usr/bin/python3",
+        "team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/norm/budget.py",
+        "--identity",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/forward-norm-20261027-1536/target-01/parent-identity.json",
+        "--build",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/forward-norm-20261027-1536/build-04",
+        "--reference",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/forward-norm-20261027-1536/reference-01",
+        "--output",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/norm-resume-20261027-2000/target-budget2",
+        "--cpu-count",
+        "2",
+        "--operation-id",
+        "20261027-LiZufan001-norm-resume-2000"
+      ]
+    },
+    "historical_input_files_bound": 144,
+    "performance": {
+      "status": "NORM_LOCAL_PERFORMANCE_EVALUATED",
+      "selected": "HOLD",
+      "formal_samples_per_method": 4,
+      "comparison_qualified": false,
+      "candidate_performance_qualified": false,
+      "scalar_span_limit_fraction": 0.01,
+      "rvv_required_reduction_fraction": 0.005,
+      "scalar_cycles": [
+        51538,
+        50008,
+        49930,
+        49937
+      ],
+      "rvv_cycles": [
+        23774,
+        23662,
+        23607,
+        23619
+      ],
+      "scalar_span_fraction": 0.03220508712197079,
+      "conservative_rvv_reduction_fraction": 0.5238533947526537,
+      "both_order_groups_favor_rvv": true,
+      "order_group_directions": [
+        true,
+        true
+      ],
+      "scalar_to_rvv_worst_speedup": 2.100193488685118,
+      "same_elf_whole_13_call_selfwarm_only": true,
+      "full_forward_performance_qualified": false
+    }
+  },
+  "seconds": 20.027764110999897,
+  "new_reference_runs": 0,
+  "new_emu_runs": 0,
+  "physical_runtime_identity_rechecked": false
+}
