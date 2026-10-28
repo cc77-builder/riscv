@@ -14,7 +14,7 @@
 | W2＋norm consumer-build-02 / reference-01 | PASS | 八个独立案例：七个正常／恢复／重放案例覆盖 p0..2，真实负控在 p0 的 byte152476 拒绝；完整状态和五模型检查 |
 | api-build-01 / api-reference-01 | PASS | 同一完整 consumer 对象，双状态、初始化／失败调用原子性、guards、TLS、errno、flags 与模型只读 |
 | 原字节恢复与离线复算 | PASS | 1,826 个普通文件、2,884,708,772 字节；五类 campaign 各在独立进程中导入自己的历史源码 |
-| 同对象首 token 包装 | 单独记账 | [目标结果](target/RESULT.md)；不把新包装资格补写到原 300k consumer probe 或旧 W2 实验 |
+| 同对象首 token 包装 | 四例完整目标、实际恢复及冻结raw复算PASS | [目标结果](target/RESULT.md)；资格限固定p0/token1，不把它补写到原300k probe、旧W2或公平性能实验 |
 
 主审计入口为 [完整复算结果](evidence/norm/audit/result.json)，所有发布文件的摘要见 [证据索引](evidence/index.json)。原先失败的 build-01/02/03、原 target 超时、初始工具参数拒绝及对应原始记录均保留在归档；“失败证据复核通过”表示保存及判定一致，不表示原失败实验通过。
 
@@ -79,6 +79,6 @@ ZIP 为320,342,190字节，以16个至多20MiB的原字节分片发布。已用�
 
 ## 6. 路线影响
 
-独立 norm 已完成这次有界筛选，保留 HOLD。下一步优先收束已冻结的首 token 完整目标正确性链，取得实际终态、完整状态比较、原 DiffTest、custom 协议、四 CSR 链和独立重放证据；失败或超限如实保留，不自动续预算。
+独立norm已完成这次有界筛选，保留HOLD。2026-10-28已收束同对象首token的四例完整目标、全状态比较、原DiffTest、custom协议、四CSR链、独立重放及实际恢复后的原文复算，详见[首token结果](target/RESULT.md)。该固定p0/token1正确性资格不等于公平性能；旧失败保留。后续优先评估实际矩阵尾部填充计算，不自动重复已闭合长跑。
 
 进一步性能比较需要独立、事前明确且包含强 FR 的公平计划。新的 norm、量化或非线性优化应由实际消费者成本证据驱动，不因本批局部 RVV 原始值较低而继续枚举。连续 token、真实 checkpoint/tokenizer 与模型质量、完整应用公平性能、ASIC 面积／功耗／时序仍分别缺少本候选的新资格。

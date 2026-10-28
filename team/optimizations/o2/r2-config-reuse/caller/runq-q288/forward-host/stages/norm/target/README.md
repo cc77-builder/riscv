@@ -38,7 +38,7 @@ taskset -c 0,1,2,3 python3 -B "$NORM_SRC/target/run.py" \
 
 ## 2. 原字节封存与离线复核
 
-只有四例实际启动记录齐全、全部已回收且没有未知进程归属时才封存。完整失败可保存为 `FAILED_OR_PARTIAL`；单例失败、TA/replay 不一致或最终输入检查失败不会升级成 PASS。没有被失败收据认领的派生 validation 仅作为原文件保留。
+只有四例实际启动记录齐全、全部已回收且没有未知进程归属时才封存。在四例都已实际启动并有确定终态／回收收据的条件下，失败或部分成功可保存为 `FAILED_OR_PARTIAL`；未启动齐四例的campaign不在当前seal入口的接收范围内，仍需原样保留而不能伪造收据。单例失败、TA/replay 不一致或最终输入检查失败不会升级成 PASS。没有被失败收据认领的派生 validation 仅作为原文件保留。
 
 ```bash
 python3 -B "$NORM_SRC/target/evidence.py" seal \
@@ -49,14 +49,36 @@ python3 -B "$NORM_SRC/target/evidence.py" seal \
 python3 -B "$NORM_SRC/target/transport.py" verify \
   --archive "$FIRST_EVIDENCE_WORK/archive/payload.zip" \
   --expected-sha256 "$FIRST_ZIP_SHA256" --output "$RESTORED"
-python3 -B "$NORM_SRC/target/evidence.py" recheck \
+# 原目标全部闭合、四核资源可用后，从包内同版本工具进行复算。
+taskset -c 0,1,2,3 python3 -B \
+  "$RESTORED/metadata/tool-source/$NORM_SRC/target/evidence.py" recheck \
   --root "$RESTORED" --manifest "$FIRST_EVIDENCE_WORK/archive/manifest.json" \
-  --expected-manifest-sha256 "$FIRST_MANIFEST_SHA256" --output "$AUDIT_OUTPUT"
+  --expected-manifest-sha256 "$FIRST_MANIFEST_SHA256" --output "$AUDIT_OUTPUT" --jobs 4
 ```
 
-发布分片先使用上一级 `stages/restore.py` 重组原 ZIP，再执行上述流式 verify。大日志使用 `target/transport.py`，每次以1MiB块处理，保持已有 SHA256 对象 ZIP 格式、全部对象去重及恢复普通文件；避免旧归档器把数GB对象一次载入内存。
+本批已发布的50片在 [../evidence/first-token/](../evidence/first-token/)，逐文件摘要与限定资格见 [../evidence/index.json](../evidence/index.json)。恢复现有证据可先执行：
+
+```bash
+STAGES=team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages
+NORM_SRC="$STAGES/norm"
+python3 -B "$STAGES/restore.py" \
+  --archive "$NORM_SRC/evidence/first-token" --output "$REASSEMBLED"
+FIRST_ZIP_SHA256=5dd9c61601ed204ba6d0475da2fb5319b36a164129257ea6eeea23f85bdfc28e
+FIRST_MANIFEST_SHA256=df00872b6b493d9a89c37ca72c226d96bf7d5ed2882afc232186e765d68475ef
+python3 -B "$NORM_SRC/target/transport.py" verify \
+  --archive "$REASSEMBLED/payload.zip" --expected-sha256 "$FIRST_ZIP_SHA256" \
+  --output "$RESTORED"
+taskset -c 0,1,2,3 python3 -B \
+  "$RESTORED/metadata/tool-source/$NORM_SRC/target/evidence.py" recheck \
+  --root "$RESTORED" --manifest "$REASSEMBLED/manifest.json" \
+  --expected-manifest-sha256 "$FIRST_MANIFEST_SHA256" --output "$AUDIT_OUTPUT" --jobs 4
+```
+
+所有输出变量必须指向互不冲突且不存在的新目录；完整恢复需要约15.07GB普通文件，另预留归档与审计输出空间。发布分片使用上一级 `stages/restore.py` 重组原ZIP，再执行上述流式verify。大日志使用 `target/transport.py`，每次以1MiB块处理，保持已有 SHA256 对象 ZIP 格式、全部对象去重及恢复普通文件；避免旧归档器把数GB对象一次载入内存。
 
 完整 recheck 先核对全体恢复文件及成员，再分别启动两个新的 Python 进程，执行各 campaign 自己封存的 reference / target 校验器。实际加载的自身、norm evidence、transport、archive helper 与包内摘要绑定。目标原 argv 先按历史路径核对，之后只在内存收据中把 image 路径映射到恢复目录；原记录不改。
+
+`--jobs` 默认1、最多4，只并行调度 target 的独立case；reference与可选PC profile保持串行。每例原冻结校验器、五项派生产物逐字核对、父级完整性与重放门禁不变。新调度合同、真实机制检查及超时/取消边界见 [OFFLINE-AUDIT.md](OFFLINE-AUDIT.md)。完整worker的7200秒由已登记的进程组监督；并行池等待预算为扣除前置耗时后的6900秒。可用CPU或内存不足时选择较小并发数，实际affinity须显式限制在至多四核内。不要向恢复树内写日志或缓存；所有审计输出都放在独立目录。
 
 父 norm 包不重复复制。新包记录其 ZIP、manifest、raw 复算结果及同对象 SHA，并把新构建实际消费的父构建记录、八例参考的 results/state/runtime-inputs 与父 manifest 逐项对应。父包须独立按 norm 的恢复说明复核；新包没有冒称再次运行父 raw。
 
