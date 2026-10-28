@@ -1,0 +1,150 @@
+{
+  "status": "O2_PARENT_OFFLINE_TRACE_PASS",
+  "cycles": 38536,
+  "groups": 14,
+  "recomputed": {
+    "cycles": 38536,
+    "groups": 14,
+    "full_cycles": 12985,
+    "full_blocked": 1698,
+    "p_accept_r_blocked": 102,
+    "r_response_p_survivor": 915,
+    "kill_p_only": 41,
+    "kill_r_only": 47,
+    "kill_both": 38,
+    "reset_both": 2,
+    "overlaps": 10494,
+    "stalls": 3204,
+    "p_to_r": 12936,
+    "te0_resets": 30,
+    "empty_te0_resets": 21,
+    "redirects": 156,
+    "reset_cases": 20,
+    "accepted": 14765,
+    "responses": 14276,
+    "cancelled": 426,
+    "cancel_idle_clock_on": 0,
+    "reset_dropped": 63
+  },
+  "per_fu": [
+    {
+      "latency_min": 2,
+      "clock_edges": 18439,
+      "accepted": 13021,
+      "latency_max": 25,
+      "latency_samples": 12909,
+      "responded": 12846,
+      "waits": 4625,
+      "killed": 164,
+      "reset_dropped": 11
+    },
+    {
+      "latency_min": 10,
+      "clock_edges": 11408,
+      "accepted": 886,
+      "latency_max": 14,
+      "latency_samples": 750,
+      "responded": 717,
+      "waits": 4148,
+      "killed": 140,
+      "raw_killed_response": 13,
+      "reset_dropped": 29
+    },
+    {
+      "latency_min": 8,
+      "clock_edges": 7781,
+      "accepted": 858,
+      "latency_max": 8,
+      "latency_samples": 748,
+      "responded": 713,
+      "waits": 4282,
+      "killed": 122,
+      "raw_killed_response": 15,
+      "reset_dropped": 23
+    }
+  ],
+  "full_campaign_required": true,
+  "perf_contract": 2,
+  "perf_observations_recomputed": 17537,
+  "cancel_idle_cases": {
+    "1": 24,
+    "2": 24
+  },
+  "cancel_idle_samples": {
+    "1": 72,
+    "2": 72
+  },
+  "div_rob_cases": 28,
+  "div_reset_overlap_kinds": [
+    1,
+    2
+  ],
+  "div_reset_cases": [
+    [
+      1,
+      0,
+      false
+    ],
+    [
+      1,
+      0,
+      true
+    ],
+    [
+      1,
+      1,
+      false
+    ],
+    [
+      1,
+      1,
+      true
+    ],
+    [
+      1,
+      2,
+      false
+    ],
+    [
+      1,
+      2,
+      true
+    ],
+    [
+      2,
+      0,
+      false
+    ],
+    [
+      2,
+      0,
+      true
+    ],
+    [
+      2,
+      1,
+      false
+    ],
+    [
+      2,
+      1,
+      true
+    ],
+    [
+      2,
+      2,
+      false
+    ],
+    [
+      2,
+      2,
+      true
+    ]
+  ],
+  "side_counters_not_recomputed": [],
+  "scope_note": "strict idle gating; cancel edge remains required; legacy DIV reset uses TE",
+  "scope": "cycle/identity/ROB/control replay only; no RTL execution or payload recheck",
+  "archive_sha256": "0e23354c5f1e506fbd8aff4e0db1ebefef6c0a312675b95b8a9eab99441b850a",
+  "archive_members": 179,
+  "all_member_hashes_verified": true
+}

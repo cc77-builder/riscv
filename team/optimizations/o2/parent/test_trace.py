@@ -96,7 +96,70 @@ def encode(rows, per_fu, final):
                        line("O2_PARENT_PASS", final)]) + "\n"
 
 
+def div_rob_fixture(phase, extra_stalls=0):
+    rows, fus, final = cancel_window_fixture()
+    rows[7]["rob"] = 12
+    rows[10].update(redirect_rob=10, self=0)
+    for row in rows[10:14]:
+        row["case"] = f"DIV-ROB-k1-r2-p{phase}"
+    rows[10:10] = [copy.deepcopy(rows[9]) for _ in range(extra_stalls)]
+    for cycle, row in enumerate(rows):
+        row["cycle"] = cycle
+    fus[1]["clock_edges"] += extra_stalls
+    final["cycles"] += extra_stalls
+    final["stalls"] += extra_stalls
+    return rows, fus, final
+
+
+def div_reset_fixture(extra_stalls=0, overlap=True):
+    rows, fus, final = fixture()
+    rows[10].update(case="DIV-legacy-reset", reset=1, te=1, child_ready=6,
+                    reset_drop=1, kill_div=0, clocks=7, block_reason="reset",
+                    redirect=int(overlap))
+    for row in rows[10:]:
+        row.update(cancels_total=1, resets_total=2)
+    rows[10:10] = [copy.deepcopy(rows[9]) for _ in range(extra_stalls)]
+    for cycle, row in enumerate(rows):
+        row["cycle"] = cycle
+    fus[0]["clock_edges"] += 1
+    fus[2]["clock_edges"] += 1
+    fus[1].update(killed=0, raw_killed_response=0, reset_dropped=1)
+    fus[1]["clock_edges"] += extra_stalls
+    final.update(cancelled=1, reset_dropped=2, reset_cases=1)
+    final["cycles"] += extra_stalls
+    final["stalls"] += extra_stalls
+    return rows, fus, final
+
+
 class TraceTests(unittest.TestCase):
+    def test_div_reset_phase_is_derived_from_prior_stalls(self):
+        for extra, phase in ((0, 1), (7, 2)):
+            for overlap in (False, True):
+                with self.subTest(phase=phase, overlap=overlap):
+                    result = check_trace(encode(*div_reset_fixture(extra, overlap)), require_campaign=False)
+                    self.assertEqual(result["div_reset_cases"], [[1, phase, overlap]])
+
+    def test_div_reset_intermediate_stall_cannot_count_as_directed_case(self):
+        with self.assertRaisesRegex(TraceError, "DIV reset phase"):
+            check_trace(encode(*div_reset_fixture(1)), require_campaign=False)
+
+    def test_div_reset_without_active_owner_cannot_count_as_directed_case(self):
+        rows, fus, final = fixture()
+        rows[12]["case"] = "DIV-legacy-reset"
+        with self.assertRaisesRegex(TraceError, "DIV reset requires"):
+            check_trace(encode(rows, fus, final), require_campaign=False)
+
+    def test_div_rob_phase_zero_cannot_claim_already_stalled_output(self):
+        with self.assertRaisesRegex(TraceError, "DIV ROB phase"):
+            check_trace(encode(*div_rob_fixture(0)), require_campaign=False)
+
+    def test_div_rob_stalled_phase_needs_four_prior_stalls(self):
+        with self.assertRaisesRegex(TraceError, "DIV ROB phase"):
+            check_trace(encode(*div_rob_fixture(1)), require_campaign=False)
+
+    def test_div_rob_stalled_phase_accepts_observed_four_stalls(self):
+        check_trace(encode(*div_rob_fixture(1, extra_stalls=3)), require_campaign=False)
+
     def test_div_cancel_idle_clock_leak_rejected_even_with_matching_summary(self):
         rows, fus, final = fixture()
         rows[11]['clocks'] = 2

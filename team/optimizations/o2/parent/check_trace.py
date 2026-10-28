@@ -116,7 +116,7 @@ def check_trace(text, require_campaign=True):
     previous_reset = False
     frozen_accept_cycles, frozen_response_latencies = [], []
     transition_cases = set()
-    div_rob_cases, div_reset_overlap = set(), set()
+    div_rob_cases, div_reset_overlap, div_reset_cases = set(), set(), set()
     cancel_idle_window = None
     cancel_idle_samples = Counter()
     cancel_idle_cases = Counter()
@@ -165,15 +165,34 @@ def check_trace(text, require_campaign=True):
                 require(row["case"] in DIV_ROB_CASES and div and not reset,
                         "unknown or inactive directed DIV ROB case")
                 match = re.fullmatch(r"DIV-ROB-k([12])-r([0-6])-p([01])", row["case"])
-                kind, relation, _ = map(int, match.groups())
+                kind, relation, phase = map(int, match.groups())
                 req_at, flush_at, flush_self, expected_kill = DIV_RELATIONS[relation]
                 require(live[div]["kind"] == kind and
                         live[div]["rob"] + 48 * live[div]["flag"] == req_at and
                         row["redirect_rob"] + 48 * row["redirect_flag"] == flush_at and
                         bool(row["self"]) == flush_self and kd == expected_kill,
                         "directed DIV ROB relation differs from contract")
+                req = live[div]
+                require((not req["seen"] and not row["child_out"] and
+                         cycle == req["cycle"] + 1) if phase == 0 else
+                        (req["seen"] and req["stalled_cycles"] == 4 and
+                         row["child_out"] == 1 << kind),
+                        "directed DIV ROB phase differs from observed execution")
                 require(row["case"] not in div_rob_cases, "duplicate directed DIV ROB redirect")
                 div_rob_cases.add(row["case"])
+            if row["case"] == "DIV-legacy-reset" and reset and not previous_reset:
+                require(div and row["te"], "DIV reset requires active owner and TE")
+                req = live[div]
+                # waitVisible observes one stalled edge; the long-stall case
+                # then adds seven. Derive phases from the trace, not labels.
+                stalls = req["stalled_cycles"]
+                require((not req["seen"] and stalls == 0 and cycle == req["cycle"] + 1) or
+                        (req["seen"] and stalls in (1, 8)),
+                        "DIV reset phase differs from observed execution")
+                phase = {0: 0, 1: 1, 8: 2}[stalls]
+                reset_case = (req["kind"], phase, bool(redirect))
+                require(reset_case not in div_reset_cases, "duplicate DIV reset phase/overlap case")
+                div_reset_cases.add(reset_case)
             if row["case"] == "DIV-legacy-reset" and reset and redirect:
                 require(div and not kd and not row["kill_p"] and not row["kill_r"] and
                         row["te"] and row["self"] and
@@ -225,6 +244,8 @@ def check_trace(text, require_campaign=True):
                     "response sequence/priority mismatch")
             stall = bool(output_mask and not ready_out and not reset and not kr and not kd)
             require(row["stall"] == stall and row["p_to_r"] == move, "stall/transfer mismatch")
+            if stall and div:
+                live[div]["stalled_cycles"] += 1
             if output_mask and not reset:
                 perf_observations += 1
                 require(owner in live, "output has no owner")
@@ -310,7 +331,7 @@ def check_trace(text, require_campaign=True):
                     require(row["accept_seq"] == seq and seq not in live and seq not in ended,
                             "accept sequence reused/non-contiguous")
                     live[seq] = dict(kind=row["kind"], flag=row["rob_flag"], rob=row["rob"],
-                                     pdest=row["pdest"], cycle=cycle, seen=False)
+                                     pdest=row["pdest"], cycle=cycle, seen=False, stalled_cycles=0)
                     if row["kind"] == 0:
                         require(not p and not div, "accept into occupied product slot")
                         p = seq
@@ -374,6 +395,9 @@ def check_trace(text, require_campaign=True):
         require(final["idle_clock_samples"] == 12, "idle-gating coverage missing")
         require(div_rob_cases == DIV_ROB_CASES and div_reset_overlap == {1, 2},
                 "directed DIV ROB/reset-overlap coverage missing")
+        require(div_reset_cases == {(kind, phase, overlap) for kind in (1, 2)
+                                    for phase in range(3) for overlap in (False, True)},
+                "missing 12 distinct DIV reset phase/overlap cases")
         require(cancel_idle_cases == {1: 24, 2: 24} and
                 cancel_idle_samples == {1: 72, 2: 72},
                 "missing 48 immediate DIV cancellation windows / 144 samples")
@@ -385,6 +409,7 @@ def check_trace(text, require_campaign=True):
                 cancel_idle_samples=dict(cancel_idle_samples),
                 div_rob_cases=len(div_rob_cases),
                 div_reset_overlap_kinds=sorted(div_reset_overlap),
+                div_reset_cases=[list(case) for case in sorted(div_reset_cases)],
                 side_counters_not_recomputed=[],
                 scope_note="strict idle gating; cancel edge remains required; legacy DIV reset uses TE",
                 scope="cycle/identity/ROB/control replay only; no RTL execution or payload recheck")
