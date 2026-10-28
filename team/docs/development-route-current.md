@@ -8,6 +8,8 @@
 
 > James_Hotten 同步边界（2026-10-28）：并入 `zufan:ffd668bf1` 的norm/consumer阶段成果及 `zjhwork:10b71ad4b` 的0f/C8和研究资料，复核见[同步记录](latest-integration-20261023.md#sync-20261028)。当前生产RTL保留James在e611eafb1的实现，含更完整的取消关钟和O1观测；0f验收包缺29个原成员，完整恢复BLOCKED；0f/C8、T17/ff840与本地bc9/e66证据各自绑定原身份，不拼接为新全核PASS。O1/O2默认关闭。旧firstdot扩数据、等待norm发布及0f/C1/C2/C3已完成筛选队列不再重启；在途首token与离线调度工具以协作Issue的实际终态和正式发布为准。
 
+2026-10-28 后续发布核查：上游zufan已发布首token固定域完整正确性及归档复算（5c7cd127b），认领已释放，见[最新性能汇总与候选](latest-integration-20261023.md#performance-20261028)。该提交尚未并入James；下表首token待终态描述是本地已合并版本的状态。下一步先审查该发布并绑定证据，再选择单一矩阵路径候选；单冷窗原始少2.388158%不具有公平性能资格。
+
 ## 1. 当前从哪里出发
 
 2026-10-28 James 父级补验：[当前合并父级结果](../optimizations/o2/parent/RESULT_CURRENT.md)已完成新 RTL／14 组／20 观察负控及 577 位元数据审计；修复 ROB 阶段标签和复位组合重复仍被接受的两项检查缺口。此前“当前 C++ 尚未执行 RTL”的缺口在该父级范围闭合，不扩展为新全核或性能资格。生产 RTL及 O1/O2 默认值保持。

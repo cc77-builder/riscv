@@ -2,7 +2,44 @@
 
 > 最新同步记录见下节；2026-10-23至27各节为历史，其旧“下一步”不再驱动任务。当前活动计划统一见[开发路线](development-route-current.md)。
 
-同步后补验（2026-10-28）：[当前合并父级](../optimizations/o2/parent/RESULT_CURRENT.md)已实际重新生成 RTL 并通过 14 组、20 项观察负控和完整元数据审计，同时修复两项覆盖判定缺口。下节“合并 C++ 未重新执行”是同步当时状态；0f 缺失原件、首 token 待发布及全核／性能边界不变。
+同步后补验（2026-10-28）：[当前合并父级](../optimizations/o2/parent/RESULT_CURRENT.md)已实际重新生成 RTL 并通过 14 组、20 项观察负控和完整元数据审计，同时修复两项覆盖判定缺口。下节“合并 C++ 未重新执行”是同步当时状态；首 token 后续发布见最新核查，0f 缺失原件及新全核／性能边界不变。
+
+<a id="performance-20261028"></a>
+
+## 2026-10-28：提交发布、上游新进展与性能汇总
+
+@JamesHotten / Agent，操作 `20261028-JamesHotten-publish-performance`。父级覆盖修复、当前真实RTL回归和证据已提交并正常推送为 `6a1b547ece08abf065a8bee49df1aa9e812baff6`。提交前发现证据ZIP受根文本属性影响，补充精确目录的 `-text` 规则并重新规范化索引；179个归档成员和Git blob字节核验通过后才推送，原始ZIP不变。远端main仍为e9c70db，O1/O2默认关闭。
+
+### 新增进展
+
+远端zufan从ffd668bf1新增 `5c7cd127b12a46d4927ddb6f0ef359fde0ba4c91`，见[固定提交的目标结果](https://github.com/cc77-builder/riscv/blob/5c7cd127b12a46d4927ddb6f0ef359fde0ba4c91/team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/norm/target/RESULT.md)。其他cc77-builder分支及LiZufan001仓库各分支头无变化。本次检查新增内容，不自动合并上游实现。
+
+新发布闭合固定未训练模型p0/token1的四例目标：真实负控、FR-cache、TA-cache、独立TA重放；全部3,691,424字节状态、guards、TLS、精确flags与原DiffTest通过。原作者已完成1646文件恢复及冻结原文复算，最多四工人的新工具用于离线审计，并非加速CPU推理。本轮读取发布结果及结构化算术交叉核对，不声称重新执行其15GB原始流审计。
+
+TA正常及replay各完成1,949,184笔custom事务；两次握手延至3拍，其余为2拍，符合反压合同。`performance_qualified=false`、`full_retirement_window_audited=false`仍保留，不把完整状态正确性等同完整计时路径或公平性能资格。认领已由原作者在[发布完成事件](https://github.com/cc77-builder/riscv/issues/2#issuecomment-6461511577)释放。
+
+### 最新可引用的性能对比
+
+每行只比较同一实验内的方法；不同负载、硬件或计时边界不能串乘。FR为相应计划中的强RVV路径，TA为vdot候选路径。周期减少以对照为分母；加速比为对照周期除以候选周期。
+
+| 场景 | 对照 → 候选 cycles | 结果 | 当前资格／来源 |
+| --- | ---: | --- | --- |
+| 独立batch128点积 | RVV 678 → O2 221 | 3.067873×；周期少67.4041% | 历史固定微基准；不是完整应用，[版本表](version-comparison-r5-g5-20261027.md) |
+| 0f／C8，8×32 GEMV | 最快RVV 299 → vdot 273 | 1.095238×；周期少8.6957%；比同轮firstdot 282.25少3.2772% | 固定0f与C8；其验收包仍缺29原件，不转授当前James硬件，[版本表](version-comparison-r5-g5-20261027.md) |
+| split-input，8×32完整C调用 | vdot均值308.5 | 比同轮最低split RVV少7.703815% | 固定T17／独立调用布局；与273不可跨合同排名，[split结果](../optimizations/o2/r2-config-reuse/caller/split/RESULT.md) |
+| 融合288×288 Q | 最快RVV 67,298 → 最慢vdot 62,692 | 保守少6.844186%；融合本身使vdot比acc8少23.797253% | 预量化／预打包，不含完整token；RVV同获融合优化，[融合结果](../optimizations/o2/r2-config-reuse/caller/runq-q288/fused/target/RESULT.md) |
+| 真实FP32→QKV | 最快FR 254,665 → 最慢TA 245,820 | 保守少3.4731903%（约1.035982×）；FR跨度0.2261795% | 包含共同量化的固定完整QKV边界，[QKV结果](../optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/active/target/RESULT.md) |
+| K768 W2 | FR 230,562～234,352；TA 207,477～209,738 | HOLD，FR跨度1.643809%超过1% | 正确性通过，无合格性能优选，[W2结果](../optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/w2/RESULT.md) |
+| 13次完整RMSNorm调用 | Scalar 49,930～51,538；RVV 23,607～23,774 | HOLD，Scalar跨度3.2205087%超过1% | 保留全部样本，不发布局部加速资格，[norm结果](../optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/norm/RESULT.md) |
+| 新发布完整首token调用窗 | FR 20,258,039 → TA 19,774,245 | 原始少483,794拍／2.388158%；**不是合格加速结论** | 单次冷窗，重放不增加独立样本；见上述固定上游结果及其target-summary.json |
+
+硬件成本仍沿用独立0f已报告的FU面积17,298.246μm²、VFEX4父级284,614.946μm²；Nangate45 nominal 1ns/5fF下，父级r2r到达3.261218ns、所报告路径最差slack −2.393998ns，1ns未收敛。没有本次新PPA、整核Fmax或功耗结论，不将面积相加或将arrival倒数当主频。
+
+### 新候选与下一步
+
+上游新增三个尚未实施的假设：裁剪K288补齐行；同时清理FR/TA零偏移地址复制；合并相邻8B加载。第三项每内组静态指令预算152→134，但新增load→slide→dot依赖，可能变慢。预算不是周期收益，且前两项有重叠，不能相加。
+
+首token终态已发布，下一步可以先完成该提交的兼容性审查和必要证据绑定，再选择一个有界矩阵候选及对等强FR实验。优先评估补齐行裁剪的适用调用与输出边界；保持浮点顺序、保护状态和实际输入范围，先参考/功能验证，再做事前固定的公平周期比较。不重开norm枚举，不自动重跑HOLD，不直接扩大ISA/RTL。父级补验已完成，不再作为未完队列；29缺件仍按原来源补齐。
 
 <a id="sync-20261028"></a>
 
