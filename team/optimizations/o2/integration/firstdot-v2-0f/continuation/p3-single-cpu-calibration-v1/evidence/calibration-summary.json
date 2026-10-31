@@ -1,0 +1,291 @@
+{
+  "campaign": {
+    "contract": "p3-0f-single-cpu-bounded-calibration-v1",
+    "status": "STOPPED_CALIBRATION_LIMIT_NO_NEXT",
+    "started_utc": "2026-10-30T16:33:35.923236+00:00",
+    "input_freeze_sha256": "fc6abe6f46e16df9c518c6ae03704f6e0ecb179e7b1d17b9ca6ed18f35d15d7b",
+    "runs": [
+      {
+        "role": "negative_bit100",
+        "directory": "/home/riscv/riscv-lab/software-import-20261026/p3-single-cpu-calibration-20261031-01/runs/01-negative_bit100",
+        "prelaunch_resources": {
+          "mem_available_bytes": 20061044736,
+          "disk_free_bytes": 941688340480,
+          "allowed_launcher_affinity": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
+        "elapsed_seconds": 23.401694939,
+        "audit": {
+          "guest_cycles": 12586,
+          "architectural_cycle_count": 12583,
+          "elapsed_seconds": 23.401694939,
+          "guest_per_monotonic_second": 537.8242914800524,
+          "observed_progress": {
+            "max_observer_cycle": 12580,
+            "o2_commit_count": 1,
+            "t13_retire_rows": 0,
+            "uart_fragments": 0
+          },
+          "formal_performance_qualified": false,
+          "full_function_qualified": false,
+          "status": "P3_EXPECTED_BIT100_REJECTION_PASS",
+          "fault": {
+            "vd": 0,
+            "pc": "0x80001d44",
+            "word": "0x0388000b",
+            "bit": 100,
+            "abort_event_pc": "0x80002b04",
+            "abort_count": 1,
+            "fault_pc_binding": "injection PC equals mismatch PC",
+            "abort_pc_scope": "recorded XSTrap event field; not required to equal mismatch PC"
+          },
+          "pending_at_expected_failure": 0
+        }
+      },
+      {
+        "role": "normal_calibration",
+        "directory": "/home/riscv/riscv-lab/software-import-20261026/p3-single-cpu-calibration-20261031-01/runs/02-normal_calibration",
+        "prelaunch_resources": {
+          "mem_available_bytes": 20068229120,
+          "disk_free_bytes": 941688279040,
+          "allowed_launcher_affinity": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
+        "elapsed_seconds": 1599.320037257,
+        "audit": {
+          "guest_cycles": 999988,
+          "architectural_cycle_count": 999984,
+          "elapsed_seconds": 1599.320037257,
+          "guest_per_monotonic_second": 625.2582201840498,
+          "observed_progress": {
+            "max_observer_cycle": 999985,
+            "o2_commit_count": 31105,
+            "t13_retire_rows": 65288,
+            "uart_fragments": 0
+          },
+          "formal_performance_qualified": false,
+          "full_function_qualified": false,
+          "status": "INCOMPLETE_CALIBRATION",
+          "stop_reason": "NATIVE_GUEST_LIMIT"
+        }
+      }
+    ],
+    "processes_attempted": 2,
+    "formal_processes_started": 0,
+    "target_wall_seconds": 1622.721732196,
+    "current": "normal_calibration",
+    "finished_utc": "2026-10-30T17:01:10.393810+00:00",
+    "campaign_wall_including_audit_seconds": 1654.469173938,
+    "post_input_integrity": "PASS"
+  },
+  "runs": [
+    {
+      "role": "01-negative_bit100",
+      "record_sha256": "21ff0847f14960b7cf86791a306f7f0e563fc5a9d9913722fcca48b06ba06caa",
+      "validation": {
+        "guest_cycles": 12586,
+        "architectural_cycle_count": 12583,
+        "elapsed_seconds": 23.401694939,
+        "guest_per_monotonic_second": 537.8242914800524,
+        "observed_progress": {
+          "max_observer_cycle": 12580,
+          "o2_commit_count": 1,
+          "t13_retire_rows": 0,
+          "uart_fragments": 0
+        },
+        "formal_performance_qualified": false,
+        "full_function_qualified": false,
+        "status": "P3_EXPECTED_BIT100_REJECTION_PASS",
+        "fault": {
+          "vd": 0,
+          "pc": "0x80001d44",
+          "word": "0x0388000b",
+          "bit": 100,
+          "abort_event_pc": "0x80002b04",
+          "abort_count": 1,
+          "fault_pc_binding": "injection PC equals mismatch PC",
+          "abort_pc_scope": "recorded XSTrap event field; not required to equal mismatch PC"
+        },
+        "pending_at_expected_failure": 0
+      },
+      "wall_seconds": 23.401694939,
+      "limit": null,
+      "returncode": 1,
+      "observed_peak_threads": 1,
+      "observed_masks": [
+        [
+          4
+        ]
+      ],
+      "peak_rss_bytes": 76414976,
+      "raw_bytes": {
+        "stdout": 14652,
+        "stderr": 38039
+      },
+      "raw_sha256": {
+        "stdout": "a538359edaa020fce3bfcd502cc9501093b05886aba82d8550072920737c5c46",
+        "stderr": "a56e70f4e66df63a28f801fe12d6bfd3653ee33400a440614d38121b7a0ef153"
+      },
+      "cleanup_complete": true,
+      "progress": {
+        "max_observer_cycle": 12580,
+        "o2_commit_count": 1,
+        "t13_retire_rows": 0,
+        "uart_fragments": 0
+      },
+      "telemetry_samples": 3,
+      "observer_event_delta_rates_not_guest_throughput": {
+        "min": null,
+        "median": null,
+        "max": null
+      },
+      "diagnostic_tags": {
+        "O2_SCHEMA": 1,
+        "O2_STATE": 103,
+        "O2_REDIRECT": 49,
+        "O2_VFEX4_REDIRECT": 49,
+        "O2_ENQUEUE": 1,
+        "O2_VFEX4_ACCEPT": 1,
+        "O2_ACCEPT": 1,
+        "O2_MOVE": 1,
+        "O2_RESPONSE": 1,
+        "O2_COMMIT": 1
+      },
+      "observed_window_starts": 0,
+      "observed_window_ends": 0,
+      "observed_CSR_samples": 0
+    },
+    {
+      "role": "02-normal_calibration",
+      "record_sha256": "a7349cf267913d339cd89a0f10735efed851e212d5a0a405851361a9d4ef16fe",
+      "validation": {
+        "guest_cycles": 999988,
+        "architectural_cycle_count": 999984,
+        "elapsed_seconds": 1599.320037257,
+        "guest_per_monotonic_second": 625.2582201840498,
+        "observed_progress": {
+          "max_observer_cycle": 999985,
+          "o2_commit_count": 31105,
+          "t13_retire_rows": 65288,
+          "uart_fragments": 0
+        },
+        "formal_performance_qualified": false,
+        "full_function_qualified": false,
+        "status": "INCOMPLETE_CALIBRATION",
+        "stop_reason": "NATIVE_GUEST_LIMIT"
+      },
+      "wall_seconds": 1599.320037257,
+      "limit": null,
+      "returncode": 0,
+      "observed_peak_threads": 1,
+      "observed_masks": [
+        [
+          4
+        ]
+      ],
+      "peak_rss_bytes": 81133568,
+      "raw_bytes": {
+        "stdout": 1237,
+        "stderr": 73289211
+      },
+      "raw_sha256": {
+        "stdout": "b1542d84dd5236c357b5fee4f21d6eab0e3db82efd6b58cd15d1f3d33945757b",
+        "stderr": "c5319320a9639954b988dae920e82765b91d6678ba711ec54fd774275ecc20c9"
+      },
+      "cleanup_complete": true,
+      "progress": {
+        "max_observer_cycle": 999985,
+        "o2_commit_count": 31105,
+        "t13_retire_rows": 65288,
+        "uart_fragments": 0
+      },
+      "telemetry_samples": 160,
+      "observer_event_delta_rates_not_guest_throughput": {
+        "min": 76.37732107742222,
+        "median": 548.9097007333196,
+        "max": 5923.660344055676
+      },
+      "diagnostic_tags": {
+        "O2_SCHEMA": 1,
+        "O2_STATE": 65579,
+        "O2_REDIRECT": 671,
+        "O2_VFEX4_REDIRECT": 671,
+        "O2_ENQUEUE": 31105,
+        "O2_VFEX4_ACCEPT": 31105,
+        "O2_ACCEPT": 31105,
+        "O2_MOVE": 31105,
+        "O2_RESPONSE": 31105,
+        "O2_COMMIT": 31105,
+        "O2_STALL": 1,
+        "T13_RETIRE": 65288,
+        "T13_COUNTER_ENQUEUE": 2,
+        "T13_CSR_SAMPLE": 2
+      },
+      "observed_window_starts": 1,
+      "observed_window_ends": 0,
+      "observed_CSR_samples": 2,
+      "rate_scope": "this bounded prefix, not a proven rate for unexecuted calls",
+      "guest_cycles_fitting_7200_at_prefix_rate": 4501859.185325159,
+      "hypothetical_full_time_scenarios": [
+        {
+          "assumed_total_guest_cycles": 3000000,
+          "seconds_at_prefix_rate": 4798.017687983255
+        },
+        {
+          "assumed_total_guest_cycles": 3500000,
+          "seconds_at_prefix_rate": 5597.687302647131
+        },
+        {
+          "assumed_total_guest_cycles": 4000000,
+          "seconds_at_prefix_rate": 6397.356917311007
+        },
+        {
+          "assumed_total_guest_cycles": 4500000,
+          "seconds_at_prefix_rate": 7197.026531974883
+        },
+        {
+          "assumed_total_guest_cycles": 18000000,
+          "seconds_at_prefix_rate": 28788.106127899533
+        }
+      ],
+      "full_workload_wall_upper_bound": null
+    }
+  ],
+  "formal_budget_seconds": 7200,
+  "performance_qualified": false,
+  "full_function_qualified": false,
+  "budget_decision": "HOLD_NO_VALIDATED_COMPLETE_QKV_WALL_UPPER_BOUND",
+  "reason": "A bounded prefix supplies measured throughput but does not bound remaining quantization, TA/FR, validation, observer or shutdown cost. No formal run is authorized."
+}

@@ -37,7 +37,7 @@
 
 - [8×32配置复用普通C调用](optimizations/o2/integration/firstdot-v2-0f/continuation/config-reuse-c8-v2/RESULT.md)：真实调用、全宽差分与重放；数据档案第26条。
 
-- [8×32稳定调用入口评审与最小集成设计](optimizations/o2/integration/firstdot-v2-0f/package/C8_DESIGN.md)：独立C8包方案、ABI边界、验收与回退；当前仅设计。
+- [8×32稳定调用入口评审与最小集成设计](optimizations/o2/integration/firstdot-v2-0f/package/C8_DESIGN.md)：独立C8包的历史设计、ABI边界及回退；已完成的包与接入证据见下两项。
 
 - [独立8×32 C8软件包：构建、选用与验收](optimizations/o2/integration/firstdot-v2-0f/package/c8/RESULT.md)。
 

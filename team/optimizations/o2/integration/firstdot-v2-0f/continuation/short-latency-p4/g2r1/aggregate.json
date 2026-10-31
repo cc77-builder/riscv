@@ -1,0 +1,1638 @@
+{
+  "status": "P4_G2R1_LOCAL_VALIDATION_PASS",
+  "checked_at": "2026-10-30T05:26:32.868855+00:00",
+  "source_scope": {
+    "changed_from_G1": [
+      "src/main/scala/xiangshan/backend/fu/wrapper/VDotElastic.scala"
+    ],
+    "other_444_unchanged": true,
+    "Scala_Reg_objects_unchanged": true,
+    "state_and_ready_assignments_unchanged": true,
+    "default_branch_unchanged": true,
+    "mutual_exclusion_assertion_present": true,
+    "frozen_analysis_test_inputs_unchanged": 313
+  },
+  "runs": {
+    "p4-fu-01": {
+      "state": {
+        "status": "P4_G1_LOCAL_RUN_PASS",
+        "mode": "p4",
+        "stage": "fu",
+        "start": "2026-10-30T05:20:20.501624+00:00",
+        "fullcore": false,
+        "synthesis_sta": false,
+        "source_unchanged": true,
+        "end": "2026-10-30T05:20:45.495697+00:00"
+      },
+      "summary": {
+        "vectors": 10022,
+        "cycles": 31497,
+        "accepted": 24215,
+        "responses": 23545,
+        "cancelled": 600,
+        "reset_dropped": 70,
+        "overlaps": 20623,
+        "stalls": 5214,
+        "full": 10313,
+        "partial_kill": 223,
+        "both_kill": 91,
+        "reset_cases": 8,
+        "ii1_intervals": 10021,
+        "latency1_responses": 10022,
+        "direct_r": 16911,
+        "enqueue_p": 7304,
+        "moves": 6978,
+        "triples": 5622,
+        "empty_direct": 1910,
+        "replace_direct": 15001,
+        "head_only_kill": 8,
+        "tail_only_kill": 215,
+        "illegal_accepted": 1588,
+        "illegal_responses": 1530
+      },
+      "artifacts": {
+        "binary": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/p4-g2r1-local-20261030-01/p4-fu-01/obj/VVDotElasticFuTestTop",
+          "sha256": "e5f15e9ff1f12d937c74ed1a97c02d55b807f965a2364b3c48a98d8fed79c4f5"
+        },
+        "vectors_sha256": "901a7be30e62b81bcd3df55b20538a5ba9c879ba9c7c34f28b8c0421d8e6a327"
+      },
+      "source_manifest_sha256": "3e5e36cf244983907efc7d8093d94651568666acb1e9774f9505404e4bfa5663",
+      "result_sha256": "356981d4a80c8fbf4288b9b8a58312bc35850d1663d57e1482aab09714a2be79",
+      "old_G1_run": "p4-fu-01",
+      "positive_log_byte_equal": true,
+      "observational_negative_controls": 9,
+      "raw_output": "/home/riscv/riscv-lab/software-import-20261026/p4-g2r1-local-20261030-01/p4-fu-01"
+    },
+    "p4-parent-01": {
+      "state": {
+        "status": "P4_G1_LOCAL_RUN_PASS",
+        "mode": "p4",
+        "stage": "parent",
+        "start": "2026-10-30T05:20:48.590590+00:00",
+        "fullcore": false,
+        "synthesis_sta": false,
+        "source_unchanged": true,
+        "end": "2026-10-30T05:21:29.636192+00:00"
+      },
+      "summary": {
+        "schema": 2,
+        "cycles": 34998,
+        "groups": 14,
+        "accepted": 13468,
+        "responses": 12959,
+        "cancelled": 446,
+        "reset_dropped": 63,
+        "overlaps": 10412,
+        "stalls": 2029,
+        "p_to_r": 204,
+        "direct_r": 11339,
+        "enqueue_p": 260,
+        "full_cycles": 641,
+        "full_blocked": 372,
+        "p_accept_r_blocked": 218,
+        "r_response_p_survivor": 138,
+        "kill_p_only": 25,
+        "kill_r_only": 59,
+        "kill_both": 29,
+        "reset_both": 2,
+        "redirects": 156,
+        "reset_cases": 20,
+        "te0_resets": 23,
+        "empty_te0_resets": 16,
+        "idle_clock_samples": 12,
+        "cancel_idle_clock_on": 0,
+        "parent_tested": 1,
+        "fullcore_tested": 0,
+        "performance_measured": 0
+      },
+      "artifacts": {
+        "binary": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/p4-g2r1-local-20261030-01/p4-parent-01/obj/VVDotElasticParentTestTop",
+          "sha256": "3631e6b6e476792392eebb9edb63aece879300540be5f5340614aa7eb53378e9"
+        },
+        "vectors_sha256": "901a7be30e62b81bcd3df55b20538a5ba9c879ba9c7c34f28b8c0421d8e6a327"
+      },
+      "source_manifest_sha256": "1374537c92fe31ac722f1381be6f727802145fe249c47633d5fc3ad9ac0b30d6",
+      "result_sha256": "3776cb128b198840adecfdcb0327c5677adc5b5afe7762b2e8f1be83816ccd80",
+      "old_G1_run": "p4-parent-02",
+      "positive_log_byte_equal": true,
+      "observational_negative_controls": 20,
+      "raw_output": "/home/riscv/riscv-lab/software-import-20261026/p4-g2r1-local-20261030-01/p4-parent-01"
+    },
+    "p4-sqrt-01": {
+      "state": {
+        "status": "P4_G1_LOCAL_RUN_PASS",
+        "mode": "p4",
+        "stage": "sqrt",
+        "start": "2026-10-30T05:21:32.440662+00:00",
+        "fullcore": false,
+        "synthesis_sta": false,
+        "source_unchanged": true,
+        "end": "2026-10-30T05:22:08.361728+00:00"
+      },
+      "summary": {
+        "schema": 2,
+        "cycles": 2923,
+        "groups": 6,
+        "accepted": 213,
+        "responses": 141,
+        "cancelled": 54,
+        "reset_dropped": 18,
+        "overlaps": 0,
+        "stalls": 310,
+        "direct_r": 36,
+        "enqueue_p": 0,
+        "p_to_r": 0,
+        "full_cycles": 0,
+        "full_blocked": 0,
+        "p_accept_r_blocked": 0,
+        "r_response_p_survivor": 0,
+        "kill_p_only": 0,
+        "kill_r_only": 0,
+        "kill_both": 0,
+        "reset_both": 0,
+        "redirects": 0,
+        "reset_cases": 0,
+        "te0_resets": 40,
+        "empty_te0_resets": 22,
+        "idle_clock_samples": 0,
+        "cancel_idle_clock_on": 0,
+        "parent_tested": 1,
+        "fullcore_tested": 0,
+        "performance_measured": 0
+      },
+      "artifacts": {
+        "binary": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/p4-g2r1-local-20261030-01/p4-sqrt-01/obj/VVDotElasticParentTestTop",
+          "sha256": "f3be73710ac2a7bf7d29151c7e414d2a4d28d685f6bac9290ff681c6f3c7d884"
+        },
+        "vectors_sha256": "901a7be30e62b81bcd3df55b20538a5ba9c879ba9c7c34f28b8c0421d8e6a327"
+      },
+      "source_manifest_sha256": "99511aa4c16d3fa600e1a88a55ec3e1381f4b0679c75c000d4c472c8f3f8b85c",
+      "result_sha256": "c12fa7b9f90d9618ec442bea78664f4f7dc9f39a778b79c83639a02f4ebb87c9",
+      "old_G1_run": "p4-sqrt-01",
+      "positive_log_byte_equal": true,
+      "observational_negative_controls": 0,
+      "raw_output": "/home/riscv/riscv-lab/software-import-20261026/p4-g2r1-local-20261030-01/p4-sqrt-01"
+    },
+    "off-fu-01": {
+      "state": {
+        "status": "P4_G1_LOCAL_RUN_PASS",
+        "mode": "off",
+        "stage": "fu",
+        "start": "2026-10-30T05:22:11.352223+00:00",
+        "fullcore": false,
+        "synthesis_sta": false,
+        "source_unchanged": true,
+        "end": "2026-10-30T05:22:24.944182+00:00"
+      },
+      "summary": {
+        "vectors": 10022,
+        "cycles": 31499,
+        "accepted": 23311,
+        "responses": 22460,
+        "cancelled": 739,
+        "reset_dropped": 112,
+        "overlaps": 19856,
+        "stalls": 4900,
+        "full": 24901,
+        "partial_kill": 322,
+        "both_kill": 158,
+        "reset_cases": 8,
+        "ii1_intervals": 10021,
+        "latency2_probes": 1
+      },
+      "artifacts": {
+        "binary": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/p4-g2r1-local-20261030-01/off-fu-01/obj/VVDotElasticFuTestTop",
+          "sha256": "625b1285da451f397dfd926fa6d4ebc204c7ee7a40fdc97676fe63382775ce26"
+        },
+        "vectors_sha256": "901a7be30e62b81bcd3df55b20538a5ba9c879ba9c7c34f28b8c0421d8e6a327"
+      },
+      "source_manifest_sha256": "ad10aa22f538e598eb7516aa3508a0eab607a63d4d89b59b746a5bd87c0e645f",
+      "result_sha256": "f4e25245ec987560921322215d3291967f56f0257b0eccadb81f68c3138020e3",
+      "old_G1_run": "off-fu-01",
+      "positive_log_byte_equal": true,
+      "observational_negative_controls": 4,
+      "raw_output": "/home/riscv/riscv-lab/software-import-20261026/p4-g2r1-local-20261030-01/off-fu-01"
+    },
+    "off-parent-01": {
+      "state": {
+        "status": "P4_G1_LOCAL_RUN_PASS",
+        "mode": "off",
+        "stage": "parent",
+        "start": "2026-10-30T05:22:27.551731+00:00",
+        "fullcore": false,
+        "synthesis_sta": false,
+        "source_unchanged": true,
+        "end": "2026-10-30T05:23:02.457023+00:00"
+      },
+      "summary": {
+        "schema": 1,
+        "cycles": 35075,
+        "groups": 13,
+        "accepted": 13611,
+        "responses": 13122,
+        "cancelled": 426,
+        "reset_dropped": 63,
+        "overlaps": 10494,
+        "stalls": 2051,
+        "p_to_r": 11782,
+        "full_cycles": 11255,
+        "full_blocked": 545,
+        "p_accept_r_blocked": 102,
+        "r_response_p_survivor": 338,
+        "kill_p_only": 41,
+        "kill_r_only": 47,
+        "kill_both": 38,
+        "reset_both": 2,
+        "redirects": 156,
+        "reset_cases": 20,
+        "te0_resets": 30,
+        "empty_te0_resets": 21,
+        "idle_clock_samples": 12,
+        "cancel_idle_clock_on": 0,
+        "parent_tested": 1,
+        "fullcore_tested": 0,
+        "performance_measured": 0
+      },
+      "artifacts": {
+        "binary": {
+          "path": "/home/riscv/riscv-lab/software-import-20261026/p4-g2r1-local-20261030-01/off-parent-01/obj/VVDotElasticParentTestTop",
+          "sha256": "f454407b4f499ed2e01b51d7d96d874c980cb27994b39775fc7f6694701bf4d8"
+        },
+        "vectors_sha256": "901a7be30e62b81bcd3df55b20538a5ba9c879ba9c7c34f28b8c0421d8e6a327"
+      },
+      "source_manifest_sha256": "25f44325b6fb4542894f88c6d313a0fa2fe979354a1c8dd5ec390b76b3b5cb2b",
+      "result_sha256": "a38e8d806dc84c46b16af6f3c17323ee5f404ba3eb221d94fa15e127bf22ee6d",
+      "old_G1_run": "off-parent-01",
+      "positive_log_byte_equal": true,
+      "observational_negative_controls": 16,
+      "raw_output": "/home/riscv/riscv-lab/software-import-20261026/p4-g2r1-local-20261030-01/off-parent-01"
+    }
+  },
+  "configurations": {
+    "status": "P4_CONFIGURATION_REJECTION_PASS",
+    "cases": 9,
+    "default_unset_tested": true,
+    "source_unchanged": true
+  },
+  "default_generated_logic": {
+    "default-off-fu": {
+      "status": "DEFAULT_OFF_GENERATED_LOGIC_EQUAL",
+      "modules": 4,
+      "normalization": [
+        "assertion Scala source line numbers only",
+        "LogPerfEndpoint only: no outputs, exactly3 guarded fwrite calls, normalize JVM IDs and compare call multiset; no signal logic removed"
+      ],
+      "rows": [
+        {
+          "path": "VDotElastic.sv",
+          "before_sha256": "ae459f445335bc5c92a1bd7235afe45cdf8042ff8b3fa80ef768a4fbc9d9dabc",
+          "after_sha256": "9d3e6189a4a769edddbb0507adf7a99d5af69d68dbea2998e6b6da624ce4a672",
+          "byte_equal": false,
+          "normalized_equal": true
+        },
+        {
+          "path": "VDotElasticFuTestTop.sv",
+          "before_sha256": "47235cf3f7f7b80f62037c03fbddfc76d1f79ebc7cdb2652b6fe9441390510b9",
+          "after_sha256": "47235cf3f7f7b80f62037c03fbddfc76d1f79ebc7cdb2652b6fe9441390510b9",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "VDotProducts.sv",
+          "before_sha256": "0c1e566dd820f80382c64b98a74882ff400e5cb63cd511bcd19831759597178a",
+          "after_sha256": "0c1e566dd820f80382c64b98a74882ff400e5cb63cd511bcd19831759597178a",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "VDotReduce.sv",
+          "before_sha256": "ed09c5ac8ca7a0a910ac8d51000ef1de8f01dadca4bec544467d1678ebeaaf85",
+          "after_sha256": "ed09c5ac8ca7a0a910ac8d51000ef1de8f01dadca4bec544467d1678ebeaaf85",
+          "byte_equal": true,
+          "normalized_equal": true
+        }
+      ]
+    },
+    "default-off-parent": {
+      "status": "DEFAULT_OFF_GENERATED_LOGIC_EQUAL",
+      "modules": 56,
+      "normalization": [
+        "assertion Scala source line numbers only",
+        "LogPerfEndpoint only: no outputs, exactly3 guarded fwrite calls, normalize JVM IDs and compare call multiset; no signal logic removed"
+      ],
+      "rows": [
+        {
+          "path": "ByteMaskTailGen.sv",
+          "before_sha256": "3ebb0ff9421f28f432b56e1326293b633161581985132da8766d735633ccb0e1",
+          "after_sha256": "3ebb0ff9421f28f432b56e1326293b633161581985132da8766d735633ccb0e1",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "CSA3_2.sv",
+          "before_sha256": "69dc4cedcee2e6ad97114921b9bd64d00ffc70dc2e78b80d73b1521ad7d5108d",
+          "after_sha256": "69dc4cedcee2e6ad97114921b9bd64d00ffc70dc2e78b80d73b1521ad7d5108d",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "CSA3_2_1.sv",
+          "before_sha256": "12235cb15c0d88344460404c8d5d005d0e4720758389dede0278b5c24a84ca04",
+          "after_sha256": "12235cb15c0d88344460404c8d5d005d0e4720758389dede0278b5c24a84ca04",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "CSA3_2_124.sv",
+          "before_sha256": "86ff1097c7c571204a237dd4c04e8b4e8ed16d5df3512bf7cecee222a4b77396",
+          "after_sha256": "86ff1097c7c571204a237dd4c04e8b4e8ed16d5df3512bf7cecee222a4b77396",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "CSA3_2_186.sv",
+          "before_sha256": "d48f680ac3ba9bca72553ee9e43c4737f37987ea0ec54d2f250f65661d908f72",
+          "after_sha256": "d48f680ac3ba9bca72553ee9e43c4737f37987ea0ec54d2f250f65661d908f72",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "CSA3_2_30.sv",
+          "before_sha256": "9176b3b0ba413683e47ab094c1f6371f25af8ff83cbd669b6389ce82ab935583",
+          "after_sha256": "9176b3b0ba413683e47ab094c1f6371f25af8ff83cbd669b6389ce82ab935583",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "CSA3_2_5.sv",
+          "before_sha256": "04999dbeface257ab2f12400fc016d9e0f72cdedade7f214fb8f0d77a58a6b66",
+          "after_sha256": "04999dbeface257ab2f12400fc016d9e0f72cdedade7f214fb8f0d77a58a6b66",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "CSA3to2.sv",
+          "before_sha256": "0423f630f81e46e27bc0843f2eae8313cde6cb5b2051cad7ff0c1e960e6c965a",
+          "after_sha256": "0423f630f81e46e27bc0843f2eae8313cde6cb5b2051cad7ff0c1e960e6c965a",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "CSA3to2_4.sv",
+          "before_sha256": "57562af48f47818edbd7e95c4474d60d1343f848278f8ac9a673ae3dcc4c4645",
+          "after_sha256": "57562af48f47818edbd7e95c4474d60d1343f848278f8ac9a673ae3dcc4c4645",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "ClockGate.sv",
+          "before_sha256": "3a59c31230b388514521e3cb8c7e8140ada1b56ebbb0bb0dadf7962d6624dbc1",
+          "after_sha256": "3a59c31230b388514521e3cb8c7e8140ada1b56ebbb0bb0dadf7962d6624dbc1",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "Conversion.sv",
+          "before_sha256": "030fd1dbf72e4564ea1338a802aa88c6f59962948cc0ebd96656b02381361b99",
+          "after_sha256": "030fd1dbf72e4564ea1338a802aa88c6f59962948cc0ebd96656b02381361b99",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "Conversion_12.sv",
+          "before_sha256": "675c0af5edef4938015dec730426ded3172ab90daf155e66e9edeb16375c4b23",
+          "after_sha256": "675c0af5edef4938015dec730426ded3172ab90daf155e66e9edeb16375c4b23",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "Conversion_8.sv",
+          "before_sha256": "134c06a7753f8ad703865e7a125cb3d8d3be66a7b7fdd41dd0701b14dc243b04",
+          "after_sha256": "134c06a7753f8ad703865e7a125cb3d8d3be66a7b7fdd41dd0701b14dc243b04",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "ExeUnit.sv",
+          "before_sha256": "63c9fe079660b069cf4b63154e74385ece1ed650d4381c70407b3f7ef6615bf4",
+          "after_sha256": "63c9fe079660b069cf4b63154e74385ece1ed650d4381c70407b3f7ef6615bf4",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "I8DivNr4.sv",
+          "before_sha256": "12c8d164beca38781885c575ad280c636a01078f1318e1697e3c7d585de53624",
+          "after_sha256": "12c8d164beca38781885c575ad280c636a01078f1318e1697e3c7d585de53624",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "IterBlockI8Nr4.sv",
+          "before_sha256": "4fa6e3980a8359faaa6011926f654e11aa4962a496fdf35ce26c3adc7ece155a",
+          "after_sha256": "4fa6e3980a8359faaa6011926f654e11aa4962a496fdf35ce26c3adc7ece155a",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "IterBlock_v4.sv",
+          "before_sha256": "d68238df5c35995414aae3e59028c4a85994d6fe01d12e8678987f6c6e94a892",
+          "after_sha256": "d68238df5c35995414aae3e59028c4a85994d6fe01d12e8678987f6c6e94a892",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "IterBlock_v4_4.sv",
+          "before_sha256": "7881b5f4582166efc654160ae358655d8e806ea2ac727e98705cd7a5bd58263a",
+          "after_sha256": "7881b5f4582166efc654160ae358655d8e806ea2ac727e98705cd7a5bd58263a",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "IterBlock_v4_6.sv",
+          "before_sha256": "f8ee498d4deb89bb9b994726774970f0603cd1d789f59d8f230b09369e2fe6b3",
+          "after_sha256": "f8ee498d4deb89bb9b994726774970f0603cd1d789f59d8f230b09369e2fe6b3",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "LogPerfEndpoint.sv",
+          "before_sha256": "7e40dd065aa70acac571e9ae631066c771cea119c26fb9e1d55252f8b706e94f",
+          "after_sha256": "a456432c53d7d43b0dace7b7b32a6198a78b3c7d3e63e897a9db4a1aa55c5160",
+          "byte_equal": false,
+          "normalized_equal": true
+        },
+        {
+          "path": "MaskExtractor.sv",
+          "before_sha256": "167f154435b8265420b693c246ef2bc107b7aa2001ae2b8aec4548a676a58522",
+          "after_sha256": "167f154435b8265420b693c246ef2bc107b7aa2001ae2b8aec4548a676a58522",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "Mgu.sv",
+          "before_sha256": "c4022bc39c6cdcae24ff34366d1c3628618f96d960b388058f1d7bb0e485ce28",
+          "after_sha256": "c4022bc39c6cdcae24ff34366d1c3628618f96d960b388058f1d7bb0e485ce28",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "SRT16Divint.sv",
+          "before_sha256": "d032d1ea41057fb1d030f449f8a9d3880ac2e2257a6e85445ff72c068e8e6154",
+          "after_sha256": "d032d1ea41057fb1d030f449f8a9d3880ac2e2257a6e85445ff72c068e8e6154",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "SRT16Divint_4.sv",
+          "before_sha256": "4ad21fae9c2302ed76b0f6d26389c411036ce7fbfc627647cbc9df2b21bb087b",
+          "after_sha256": "4ad21fae9c2302ed76b0f6d26389c411036ce7fbfc627647cbc9df2b21bb087b",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "SRT16Divint_6.sv",
+          "before_sha256": "6f415b74586a976b620b2491d0c1dd9a34eeca49a7903ddad5e13da3e17f63d3",
+          "after_sha256": "6f415b74586a976b620b2491d0c1dd9a34eeca49a7903ddad5e13da3e17f63d3",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "SRT4qdsCons.sv",
+          "before_sha256": "849eb49b9131bcdb19930287c629efee6d2e3a383732f2ec45ea1f0b09471be8",
+          "after_sha256": "849eb49b9131bcdb19930287c629efee6d2e3a383732f2ec45ea1f0b09471be8",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "SelBlock_v4.sv",
+          "before_sha256": "00dcbac0387658164a2695b8720b0ecb0b0c374ab451fba0d982661435d4ee29",
+          "after_sha256": "00dcbac0387658164a2695b8720b0ecb0b0c374ab451fba0d982661435d4ee29",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "ShiftLeftPriorityWithLZDResult.sv",
+          "before_sha256": "049f60f5ad0f6a3192325667656bd96f0a966e91661fe8924efd2375ef52e7bd",
+          "after_sha256": "049f60f5ad0f6a3192325667656bd96f0a966e91661fe8924efd2375ef52e7bd",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "ShiftLeftPriorityWithLZDResult_2.sv",
+          "before_sha256": "a2ab0a189feca4a7fa57761f93311f3a328716592b9feb7ea0ee7fa5814630a0",
+          "after_sha256": "a2ab0a189feca4a7fa57761f93311f3a328716592b9feb7ea0ee7fa5814630a0",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "ShiftLeftPriorityWithLZDResult_4.sv",
+          "before_sha256": "40f5596e9eed21a3e5140de14a0a74495931f5701c365e28474ca46ea5dc4d84",
+          "after_sha256": "40f5596e9eed21a3e5140de14a0a74495931f5701c365e28474ca46ea5dc4d84",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "SignDec.sv",
+          "before_sha256": "fa639cf67afb6a4116fe1dddea52eaae9210892d59e30aba0cf5ca6f82e9288c",
+          "after_sha256": "fa639cf67afb6a4116fe1dddea52eaae9210892d59e30aba0cf5ca6f82e9288c",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "SpecBlock_v4.sv",
+          "before_sha256": "d2cd245b532e40172bac0597c4ca633ed4e7e8d6c31b20006164145de394dc7e",
+          "after_sha256": "d2cd245b532e40172bac0597c4ca633ed4e7e8d6c31b20006164145de394dc7e",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "UIntToContLow0s.sv",
+          "before_sha256": "4b3bf798ab6ca3c2bb630204c05f05cdb7ecd190aed2d160e13cbfba581e3667",
+          "after_sha256": "4b3bf798ab6ca3c2bb630204c05f05cdb7ecd190aed2d160e13cbfba581e3667",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "UIntToContLow1s.sv",
+          "before_sha256": "881cd6771b78e3be640d94c9b63e365565350f18de968382a4fce232f2ad0339",
+          "after_sha256": "881cd6771b78e3be640d94c9b63e365565350f18de968382a4fce232f2ad0339",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "VDotElastic.sv",
+          "before_sha256": "b07b34212e13f44d1569e90815ad6202ec6bf53355e7c443f9b082982c7e510e",
+          "after_sha256": "85281aa0decb594e964d705f8ab68062b633b54a49c972643ad7e04e1c105d8a",
+          "byte_equal": false,
+          "normalized_equal": true
+        },
+        {
+          "path": "VDotElasticParentTestTop.sv",
+          "before_sha256": "5e26cdf6193d1da790675101fd95a3a49def814c21646a45be87a13e9bca5ac1",
+          "after_sha256": "5e26cdf6193d1da790675101fd95a3a49def814c21646a45be87a13e9bca5ac1",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "VDotProducts.sv",
+          "before_sha256": "905763dd42362adbe93d997917c539f2c14c4abbeff3ccba9d148b66aac6c613",
+          "after_sha256": "905763dd42362adbe93d997917c539f2c14c4abbeff3ccba9d148b66aac6c613",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "VDotReduce.sv",
+          "before_sha256": "bac7dbe900674f3e5df88a48f8576b18e26ee632b6a66b207c7e060e9e27fce1",
+          "after_sha256": "bac7dbe900674f3e5df88a48f8576b18e26ee632b6a66b207c7e060e9e27fce1",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "VFDivSqrt.sv",
+          "before_sha256": "f33401af500d6a60f6370e8e6f94238df111534a74bb53a6b509e683cd565b1d",
+          "after_sha256": "f33401af500d6a60f6370e8e6f94238df111534a74bb53a6b509e683cd565b1d",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "VIDiv.sv",
+          "before_sha256": "aa08a2b817ed4578b4e9d96e6e89d08509f926bff6777869bd27167475c549a1",
+          "after_sha256": "aa08a2b817ed4578b4e9d96e6e89d08509f926bff6777869bd27167475c549a1",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "VecDataSplitModule.sv",
+          "before_sha256": "fdbff7d626fa3c8afc2e62e890141972b3d8da88ef5395fddfd8e34a8673ad75",
+          "after_sha256": "fdbff7d626fa3c8afc2e62e890141972b3d8da88ef5395fddfd8e34a8673ad75",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "VectorFloatDivider.sv",
+          "before_sha256": "59bf72e98e4f6c95e09f861388cb42cc0e55145cdcb49103bf3e23a0308d9070",
+          "after_sha256": "59bf72e98e4f6c95e09f861388cb42cc0e55145cdcb49103bf3e23a0308d9070",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "VectorFloatDividerR64.sv",
+          "before_sha256": "3199658bddb18c481d26960c9580bf7e69d262e348a0e66c4d61716e98d2a6f9",
+          "after_sha256": "3199658bddb18c481d26960c9580bf7e69d262e348a0e66c4d61716e98d2a6f9",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "VectorIdiv.sv",
+          "before_sha256": "239ef91b4ef15978e9fa62395147533b60e7167d3d5b3e4a2e19b3985722be24",
+          "after_sha256": "239ef91b4ef15978e9fa62395147533b60e7167d3d5b3e4a2e19b3985722be24",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "extern_modules.sv",
+          "before_sha256": "2d69022ece337de7e76928d1104e1a39f495a7ab59c42fce04ffc822bffc84d6",
+          "after_sha256": "2d69022ece337de7e76928d1104e1a39f495a7ab59c42fce04ffc822bffc84d6",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "fpdiv_r64_block_vector.sv",
+          "before_sha256": "b27a21ae78d25c26bc179bad450757c9453c34ff511a54a190c98f856af41ab5",
+          "after_sha256": "b27a21ae78d25c26bc179bad450757c9453c34ff511a54a190c98f856af41ab5",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "fpsqrt_r16_block.sv",
+          "before_sha256": "fc36d1200df234815270615bb6c163ffa47f345e3c066e1df673ad7187945bcd",
+          "after_sha256": "fc36d1200df234815270615bb6c163ffa47f345e3c066e1df673ad7187945bcd",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "fpsqrt_vector_r16.sv",
+          "before_sha256": "8da90e3c71f336b175d24ebbfe70a5dc63c4e84c8fcd372e45b479197377493a",
+          "after_sha256": "8da90e3c71f336b175d24ebbfe70a5dc63c4e84c8fcd372e45b479197377493a",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "lzc.sv",
+          "before_sha256": "8c4dbca0e999fcb8629dfa04600c5d7d727845d04b78abdf58e341a903297328",
+          "after_sha256": "8c4dbca0e999fcb8629dfa04600c5d7d727845d04b78abdf58e341a903297328",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "lzc_1.sv",
+          "before_sha256": "37fd82e22dddc7cb7193a9e23017b772196378fd35b0eadefcaca33f7efe6660",
+          "after_sha256": "37fd82e22dddc7cb7193a9e23017b772196378fd35b0eadefcaca33f7efe6660",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "lzc_2.sv",
+          "before_sha256": "0c24dff5230ea4db5805a665d2b437890cc35329020c094191c4a36fa0eb0fe0",
+          "after_sha256": "0c24dff5230ea4db5805a665d2b437890cc35329020c094191c4a36fa0eb0fe0",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "r4_qds.sv",
+          "before_sha256": "f9bc10b39ee2bda1adbfbde92eef01a77c8f0b64d14b58f34558473a2aae3c3e",
+          "after_sha256": "f9bc10b39ee2bda1adbfbde92eef01a77c8f0b64d14b58f34558473a2aae3c3e",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "r4_qds_cg.sv",
+          "before_sha256": "9b570fca7fc6af5f23e16cce7975a8dcccd1dec473b549818104acf77b6942d5",
+          "after_sha256": "9b570fca7fc6af5f23e16cce7975a8dcccd1dec473b549818104acf77b6942d5",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "r4_qds_spec.sv",
+          "before_sha256": "af3c43ed889b7fdb0c276827ba9d3744186ea2a85069f98a6af696115392f745",
+          "after_sha256": "af3c43ed889b7fdb0c276827ba9d3744186ea2a85069f98a6af696115392f745",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "r4_qds_v2.sv",
+          "before_sha256": "905a1bf52ae8d7625b24410cc02f62f688deae8620fcd5a3b78ee2034e572a4a",
+          "after_sha256": "905a1bf52ae8d7625b24410cc02f62f688deae8620fcd5a3b78ee2034e572a4a",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "r4_qds_v2_spec.sv",
+          "before_sha256": "ffccd2cd24490148ee5ca902ee6fd7bdd0817407b1f7287107ba2f6ca996c255",
+          "after_sha256": "ffccd2cd24490148ee5ca902ee6fd7bdd0817407b1f7287107ba2f6ca996c255",
+          "byte_equal": true,
+          "normalized_equal": true
+        }
+      ]
+    },
+    "default-unset": {
+      "status": "DEFAULT_OFF_GENERATED_LOGIC_EQUAL",
+      "modules": 4,
+      "normalization": [
+        "assertion Scala source line numbers only",
+        "LogPerfEndpoint only: no outputs, exactly3 guarded fwrite calls, normalize JVM IDs and compare call multiset; no signal logic removed"
+      ],
+      "rows": [
+        {
+          "path": "VDotElastic.sv",
+          "before_sha256": "9d3e6189a4a769edddbb0507adf7a99d5af69d68dbea2998e6b6da624ce4a672",
+          "after_sha256": "9d3e6189a4a769edddbb0507adf7a99d5af69d68dbea2998e6b6da624ce4a672",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "VDotElasticFuTestTop.sv",
+          "before_sha256": "47235cf3f7f7b80f62037c03fbddfc76d1f79ebc7cdb2652b6fe9441390510b9",
+          "after_sha256": "47235cf3f7f7b80f62037c03fbddfc76d1f79ebc7cdb2652b6fe9441390510b9",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "VDotProducts.sv",
+          "before_sha256": "0c1e566dd820f80382c64b98a74882ff400e5cb63cd511bcd19831759597178a",
+          "after_sha256": "0c1e566dd820f80382c64b98a74882ff400e5cb63cd511bcd19831759597178a",
+          "byte_equal": true,
+          "normalized_equal": true
+        },
+        {
+          "path": "VDotReduce.sv",
+          "before_sha256": "ed09c5ac8ca7a0a910ac8d51000ef1de8f01dadca4bec544467d1678ebeaaf85",
+          "after_sha256": "ed09c5ac8ca7a0a910ac8d51000ef1de8f01dadca4bec544467d1678ebeaaf85",
+          "byte_equal": true,
+          "normalized_equal": true
+        }
+      ]
+    }
+  },
+  "sqrt": {
+    "status": "P4_SQRT_SUPPLEMENT_PASS",
+    "replay": {
+      "status": "P4_PARENT_OFFLINE_TRACE_PASS",
+      "cycles": 2923,
+      "groups": 6,
+      "recomputed": {
+        "cycles": 2923,
+        "groups": 6,
+        "full_cycles": 0,
+        "full_blocked": 0,
+        "p_accept_r_blocked": 0,
+        "r_response_p_survivor": 0,
+        "kill_p_only": 0,
+        "kill_r_only": 0,
+        "kill_both": 0,
+        "reset_both": 0,
+        "overlaps": 0,
+        "stalls": 310,
+        "p_to_r": 0,
+        "direct_r": 36,
+        "enqueue_p": 0,
+        "te0_resets": 40,
+        "empty_te0_resets": 22,
+        "redirects": 0,
+        "reset_cases": 0,
+        "accepted": 213,
+        "responses": 141,
+        "cancelled": 54,
+        "reset_dropped": 18
+      },
+      "per_fu": [
+        {
+          "latency_min": 1,
+          "clock_edges": 122,
+          "accepted": 36,
+          "latency_max": 1,
+          "latency_samples": 36,
+          "responded": 36,
+          "waits": 152
+        },
+        {
+          "latency_min": 10,
+          "clock_edges": 495,
+          "accepted": 34,
+          "latency_max": 14,
+          "latency_samples": 32,
+          "responded": 28,
+          "waits": 103,
+          "reset_dropped": 6
+        },
+        {
+          "latency_min": 8,
+          "clock_edges": 2001,
+          "accepted": 143,
+          "latency_max": 15,
+          "latency_samples": 112,
+          "responded": 77,
+          "killed": 54,
+          "waits": 150,
+          "raw_killed_response": 12,
+          "reset_dropped": 12
+        }
+      ],
+      "full_campaign_required": false,
+      "cancel_idle_cases": {},
+      "cancel_idle_samples": {},
+      "div_rob_cases": 0,
+      "div_reset_overlap_kinds": [],
+      "side_counters_not_recomputed": [],
+      "scope_note": "strict idle gating; cancel edge remains required; legacy DIV reset uses TE",
+      "scope": "cycle/identity/ROB/control replay only; no RTL execution or payload recheck"
+    },
+    "counts": {
+      "idle_ready_checks": 584
+    },
+    "normal_sqrt_cases": 15,
+    "sqrt_cancel_cases": 48,
+    "te0_reset_cases": 20,
+    "sqrt_rob_cases": 14,
+    "sqrt_switch_cases": 18,
+    "real_lane_skew_cycles": {
+      "2": 56,
+      "1": 27
+    },
+    "real_lane_skew_cancel_cases": {
+      "2": 6,
+      "1": 6
+    },
+    "immediate_cancel_idle_samples": 162,
+    "scope": "real parent supplemental control and exact directed SQRT; no fullcore/PPA",
+    "log_sha256": "c12fa7b9f90d9618ec442bea78664f4f7dc9f39a778b79c83639a02f4ebb87c9",
+    "checker_sha256": "c33396c99b455b7d00d9b54682816520ae3df13db085ab38c5949698ddbadc1d"
+  },
+  "sqrt_negative": {
+    "status": "P4_SQRT_SUPPLEMENT_NEGATIVE_PASS",
+    "source_log_sha256": "c12fa7b9f90d9618ec442bea78664f4f7dc9f39a778b79c83639a02f4ebb87c9",
+    "count": 7,
+    "records": [
+      {
+        "mutation": "div-busy-owner",
+        "detected": true,
+        "reason": "busy register disagrees with accepted identity",
+        "mutated_sha256": "741105390b99d05dff17c709e5104fe101fbbfa0b5f4b516cfcefa93e4dfa407"
+      },
+      {
+        "mutation": "early-lane-join",
+        "detected": true,
+        "reason": "two-lane finish join mismatch",
+        "mutated_sha256": "a216cae4ebe13c1a552b0b57aaf9075074be50d1f6e7845b546533fbd19f3322"
+      },
+      {
+        "mutation": "sqrt-opcode",
+        "detected": true,
+        "reason": "live SQRT opcode changed",
+        "mutated_sha256": "c8b539dd5d72900b7c1617c750b0ec6611e4e7ba501be8f5cbe2b830dce61456"
+      },
+      {
+        "mutation": "te0-reset-mislabeled",
+        "detected": true,
+        "reason": "PASS summary mismatch: te0_resets",
+        "mutated_sha256": "e2cf6317c54db997b6bad85897d17482e4827299b220ef935fd2d12f928eda3d"
+      },
+      {
+        "mutation": "idle-extra-clock",
+        "detected": true,
+        "reason": "cycle 2920: idle FU retained clock after cancellation/completion",
+        "mutated_sha256": "2a7ce8d36332cc780721b5a1437b41b7d6ee2d6d850ac735db1aded4e7ff481d"
+      },
+      {
+        "mutation": "missing-aux",
+        "detected": true,
+        "reason": "missing/late lane observation",
+        "mutated_sha256": "a3efb5dcfe969efcd99a2eead89e99842a76414ccaf99b08967029f82b06f954"
+      },
+      {
+        "mutation": "erase-lane-skew",
+        "detected": true,
+        "reason": "skew-phase cancel not at real skew",
+        "mutated_sha256": "0c500ff7ccd7ddf9fa7754e4e9c8ba4e7a3fa8edd5742a5cec3f02d3609957aa"
+      }
+    ],
+    "scope": "offline observation mutations only; not RTL mutation coverage"
+  },
+  "generated_register_note": {
+    "p4-fu-01": {
+      "old_reg_declarations": 40,
+      "new_reg_declarations": 98,
+      "old_declared_bits": 1354,
+      "new_declared_bits": 1994,
+      "extra_constant_metadata_declarations": {
+        "rPacket_ctrl_exceptionVec_0": 1,
+        "rPacket_ctrl_exceptionVec_1": 1,
+        "rPacket_ctrl_exceptionVec_10": 1,
+        "rPacket_ctrl_exceptionVec_11": 1,
+        "rPacket_ctrl_exceptionVec_12": 1,
+        "rPacket_ctrl_exceptionVec_13": 1,
+        "rPacket_ctrl_exceptionVec_14": 1,
+        "rPacket_ctrl_exceptionVec_15": 1,
+        "rPacket_ctrl_exceptionVec_16": 1,
+        "rPacket_ctrl_exceptionVec_17": 1,
+        "rPacket_ctrl_exceptionVec_18": 1,
+        "rPacket_ctrl_exceptionVec_19": 1,
+        "rPacket_ctrl_exceptionVec_20": 1,
+        "rPacket_ctrl_exceptionVec_21": 1,
+        "rPacket_ctrl_exceptionVec_22": 1,
+        "rPacket_ctrl_exceptionVec_23": 1,
+        "rPacket_ctrl_exceptionVec_3": 1,
+        "rPacket_ctrl_exceptionVec_4": 1,
+        "rPacket_ctrl_exceptionVec_5": 1,
+        "rPacket_ctrl_exceptionVec_6": 1,
+        "rPacket_ctrl_exceptionVec_7": 1,
+        "rPacket_ctrl_exceptionVec_8": 1,
+        "rPacket_ctrl_exceptionVec_9": 1,
+        "rPacket_ctrl_vpu_fpu_isFP32Instr": 1,
+        "rPacket_ctrl_vpu_fpu_isFP64Instr": 1,
+        "rPacket_ctrl_vpu_fpu_isFoldTo1_2": 1,
+        "rPacket_ctrl_vpu_fpu_isFoldTo1_4": 1,
+        "rPacket_ctrl_vpu_fpu_isFoldTo1_8": 1,
+        "rPacket_ctrl_vpu_fpu_isFpToVecInst": 1,
+        "rPacket_ctrl_vpu_fpu_isReduction": 1,
+        "rPacket_ctrl_vpu_frm": 3,
+        "rPacket_ctrl_vpu_isDependOldVd": 1,
+        "rPacket_ctrl_vpu_isDstMask": 1,
+        "rPacket_ctrl_vpu_isExt": 1,
+        "rPacket_ctrl_vpu_isMove": 1,
+        "rPacket_ctrl_vpu_isNarrow": 1,
+        "rPacket_ctrl_vpu_isOpMask": 1,
+        "rPacket_ctrl_vpu_isReverse": 1,
+        "rPacket_ctrl_vpu_isVleff": 1,
+        "rPacket_ctrl_vpu_isWritePartVd": 1,
+        "rPacket_ctrl_vpu_lastUop": 1,
+        "rPacket_ctrl_vpu_nf": 3,
+        "rPacket_ctrl_vpu_specVill": 1,
+        "rPacket_ctrl_vpu_specVlmul": 3,
+        "rPacket_ctrl_vpu_specVma": 1,
+        "rPacket_ctrl_vpu_specVsew": 2,
+        "rPacket_ctrl_vpu_specVta": 1,
+        "rPacket_ctrl_vpu_veew": 2,
+        "rPacket_ctrl_vpu_vmask": 128,
+        "rPacket_ctrl_vpu_vuopIdx": 7,
+        "rPacket_perfDebugInfo_dispatchTime": 64,
+        "rPacket_perfDebugInfo_eliminatedMove": 1,
+        "rPacket_perfDebugInfo_enqRsTime": 64,
+        "rPacket_perfDebugInfo_runahead_checkpoint_id": 64,
+        "rPacket_perfDebugInfo_selectTime": 64,
+        "rPacket_perfDebugInfo_tlbFirstReqTime": 64,
+        "rPacket_perfDebugInfo_tlbRespTime": 64,
+        "rPacket_perfDebugInfo_writebackTime": 64
+      },
+      "qualification": "generated test-harness HDL only, not mapped DFF count or area"
+    },
+    "p4-parent-01": {
+      "old_reg_declarations": 102,
+      "new_reg_declarations": 129,
+      "old_declared_bits": 2580,
+      "new_declared_bits": 2607,
+      "extra_constant_metadata_declarations": {
+        "rPacket_ctrl_exceptionVec_0": 1,
+        "rPacket_ctrl_exceptionVec_1": 1,
+        "rPacket_ctrl_exceptionVec_10": 1,
+        "rPacket_ctrl_exceptionVec_11": 1,
+        "rPacket_ctrl_exceptionVec_12": 1,
+        "rPacket_ctrl_exceptionVec_13": 1,
+        "rPacket_ctrl_exceptionVec_14": 1,
+        "rPacket_ctrl_exceptionVec_15": 1,
+        "rPacket_ctrl_exceptionVec_16": 1,
+        "rPacket_ctrl_exceptionVec_17": 1,
+        "rPacket_ctrl_exceptionVec_18": 1,
+        "rPacket_ctrl_exceptionVec_19": 1,
+        "rPacket_ctrl_exceptionVec_20": 1,
+        "rPacket_ctrl_exceptionVec_21": 1,
+        "rPacket_ctrl_exceptionVec_22": 1,
+        "rPacket_ctrl_exceptionVec_23": 1,
+        "rPacket_ctrl_exceptionVec_3": 1,
+        "rPacket_ctrl_exceptionVec_4": 1,
+        "rPacket_ctrl_exceptionVec_5": 1,
+        "rPacket_ctrl_exceptionVec_6": 1,
+        "rPacket_ctrl_exceptionVec_7": 1,
+        "rPacket_ctrl_exceptionVec_8": 1,
+        "rPacket_ctrl_exceptionVec_9": 1,
+        "rPacket_ctrl_vpu_fpu_isFP32Instr": 1,
+        "rPacket_ctrl_vpu_fpu_isFP64Instr": 1,
+        "rPacket_ctrl_vpu_fpu_isFpToVecInst": 1,
+        "rPacket_ctrl_vpu_lastUop": 1
+      },
+      "qualification": "generated test-harness HDL only, not mapped DFF count or area"
+    }
+  },
+  "parent_other_HDL": [
+    {
+      "path": "ByteMaskTailGen.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "CSA3_2.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "CSA3_2_1.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "CSA3_2_124.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "CSA3_2_186.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "CSA3_2_30.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "CSA3_2_5.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "CSA3to2.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "CSA3to2_4.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "ClockGate.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "Conversion.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "Conversion_12.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "Conversion_8.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "ExeUnit.sv",
+      "byte_equal": false,
+      "diagnostic_normalized_equal": false
+    },
+    {
+      "path": "I8DivNr4.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "IterBlockI8Nr4.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "IterBlock_v4.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "IterBlock_v4_4.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "IterBlock_v4_6.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "LogPerfEndpoint.sv",
+      "byte_equal": false,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "MaskExtractor.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "Mgu.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "SRT16Divint.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "SRT16Divint_4.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "SRT16Divint_6.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "SRT4qdsCons.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "SelBlock_v4.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "ShiftLeftPriorityWithLZDResult.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "ShiftLeftPriorityWithLZDResult_2.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "ShiftLeftPriorityWithLZDResult_4.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "SignDec.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "SpecBlock_v4.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "UIntToContLow0s.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "UIntToContLow1s.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "VDotElastic.sv",
+      "byte_equal": false,
+      "diagnostic_normalized_equal": false
+    },
+    {
+      "path": "VDotElasticParentTestTop.sv",
+      "byte_equal": false,
+      "diagnostic_normalized_equal": false
+    },
+    {
+      "path": "VDotProducts.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "VDotReduce.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "VFDivSqrt.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "VIDiv.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "VecDataSplitModule.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "VectorFloatDivider.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "VectorFloatDividerR64.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "VectorIdiv.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "extern_modules.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "fpdiv_r64_block_vector.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "fpsqrt_r16_block.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "fpsqrt_vector_r16.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "lzc.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "lzc_1.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "lzc_2.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "r4_qds.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "r4_qds_cg.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "r4_qds_spec.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "r4_qds_v2.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    },
+    {
+      "path": "r4_qds_v2_spec.sv",
+      "byte_equal": true,
+      "diagnostic_normalized_equal": true
+    }
+  ],
+  "generated_review": {
+    "status": "GENERATED_INTEGRATION_DIFFERENCE_REVIEWED",
+    "whole_parent_hdl_equivalent_claim": false,
+    "changed_generated_modules": [
+      "ExeUnit.sv",
+      "VDotElastic.sv",
+      "VDotElasticParentTestTop.sv"
+    ],
+    "modules": [
+      {
+        "path": "ByteMaskTailGen.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "CSA3_2.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "CSA3_2_1.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "CSA3_2_124.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "CSA3_2_186.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "CSA3_2_30.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "CSA3_2_5.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "CSA3to2.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "CSA3to2_4.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "ClockGate.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "Conversion.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "Conversion_12.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "Conversion_8.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "ExeUnit.sv",
+        "byte_equal": false,
+        "diagnostic_normalized_equal": false
+      },
+      {
+        "path": "I8DivNr4.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "IterBlockI8Nr4.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "IterBlock_v4.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "IterBlock_v4_4.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "IterBlock_v4_6.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "LogPerfEndpoint.sv",
+        "byte_equal": false,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "MaskExtractor.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "Mgu.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "SRT16Divint.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "SRT16Divint_4.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "SRT16Divint_6.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "SRT4qdsCons.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "SelBlock_v4.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "ShiftLeftPriorityWithLZDResult.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "ShiftLeftPriorityWithLZDResult_2.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "ShiftLeftPriorityWithLZDResult_4.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "SignDec.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "SpecBlock_v4.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "UIntToContLow0s.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "UIntToContLow1s.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "VDotElastic.sv",
+        "byte_equal": false,
+        "diagnostic_normalized_equal": false
+      },
+      {
+        "path": "VDotElasticParentTestTop.sv",
+        "byte_equal": false,
+        "diagnostic_normalized_equal": false
+      },
+      {
+        "path": "VDotProducts.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "VDotReduce.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "VFDivSqrt.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "VIDiv.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "VecDataSplitModule.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "VectorFloatDivider.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "VectorFloatDividerR64.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "VectorIdiv.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "extern_modules.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "fpdiv_r64_block_vector.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "fpsqrt_r16_block.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "fpsqrt_vector_r16.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "lzc.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "lzc_1.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "lzc_2.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "r4_qds.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "r4_qds_cg.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "r4_qds_spec.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "r4_qds_v2.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      },
+      {
+        "path": "r4_qds_v2_spec.sv",
+        "byte_equal": true,
+        "diagnostic_normalized_equal": true
+      }
+    ],
+    "ready_busy_state_assertions_fragment_equal_after_3_input_probe_renames": true,
+    "control_fragment_sha256": "d8f542fdd642b0c4e4ea47b33e58c5646c9af0ba0a2857e8d22aab24a9db9d71",
+    "clock_gate_3_instance_bindings_equal": true,
+    "DIV_instance_bindings_equal_except_observer_names": true,
+    "old_input_probe_names": {
+      "_probe_121": "INPUT_VALID_Vfdiv",
+      "_probe_120": "INPUT_VALID_Vidiv",
+      "_probe_119": "INPUT_VALID_Vdot"
+    },
+    "new_input_probe_names": {
+      "_probe_125": "INPUT_VALID_Vfdiv",
+      "_probe_124": "INPUT_VALID_Vidiv",
+      "_probe_123": "INPUT_VALID_Vdot"
+    },
+    "old_exception_output_assignments": {
+      "io_out_bits_exceptionVec_2": "_Vdot_io_out_valid&_Vdot_io_out_bits_ctrl_exceptionVec_2"
+    },
+    "new_exception_output_assignments": {
+      "io_out_bits_exceptionVec_0": "_Vdot_io_out_valid&_Vdot_io_out_bits_ctrl_exceptionVec_0",
+      "io_out_bits_exceptionVec_1": "_Vdot_io_out_valid&_Vdot_io_out_bits_ctrl_exceptionVec_1",
+      "io_out_bits_exceptionVec_2": "_Vdot_io_out_valid&_Vdot_io_out_bits_ctrl_exceptionVec_2",
+      "io_out_bits_exceptionVec_3": "_Vdot_io_out_valid&_Vdot_io_out_bits_ctrl_exceptionVec_3",
+      "io_out_bits_exceptionVec_4": "_Vdot_io_out_valid&_Vdot_io_out_bits_ctrl_exceptionVec_4",
+      "io_out_bits_exceptionVec_5": "_Vdot_io_out_valid&_Vdot_io_out_bits_ctrl_exceptionVec_5",
+      "io_out_bits_exceptionVec_6": "_Vdot_io_out_valid&_Vdot_io_out_bits_ctrl_exceptionVec_6",
+      "io_out_bits_exceptionVec_7": "_Vdot_io_out_valid&_Vdot_io_out_bits_ctrl_exceptionVec_7",
+      "io_out_bits_exceptionVec_8": "_Vdot_io_out_valid&_Vdot_io_out_bits_ctrl_exceptionVec_8",
+      "io_out_bits_exceptionVec_9": "_Vdot_io_out_valid&_Vdot_io_out_bits_ctrl_exceptionVec_9",
+      "io_out_bits_exceptionVec_10": "_Vdot_io_out_valid&_Vdot_io_out_bits_ctrl_exceptionVec_10",
+      "io_out_bits_exceptionVec_11": "_Vdot_io_out_valid&_Vdot_io_out_bits_ctrl_exceptionVec_11",
+      "io_out_bits_exceptionVec_12": "_Vdot_io_out_valid&_Vdot_io_out_bits_ctrl_exceptionVec_12",
+      "io_out_bits_exceptionVec_13": "_Vdot_io_out_valid&_Vdot_io_out_bits_ctrl_exceptionVec_13",
+      "io_out_bits_exceptionVec_14": "_Vdot_io_out_valid&_Vdot_io_out_bits_ctrl_exceptionVec_14",
+      "io_out_bits_exceptionVec_15": "_Vdot_io_out_valid&_Vdot_io_out_bits_ctrl_exceptionVec_15",
+      "io_out_bits_exceptionVec_16": "_Vdot_io_out_valid&_Vdot_io_out_bits_ctrl_exceptionVec_16",
+      "io_out_bits_exceptionVec_17": "_Vdot_io_out_valid&_Vdot_io_out_bits_ctrl_exceptionVec_17",
+      "io_out_bits_exceptionVec_18": "_Vdot_io_out_valid&_Vdot_io_out_bits_ctrl_exceptionVec_18",
+      "io_out_bits_exceptionVec_19": "_Vdot_io_out_valid&_Vdot_io_out_bits_ctrl_exceptionVec_19",
+      "io_out_bits_exceptionVec_20": "_Vdot_io_out_valid&_Vdot_io_out_bits_ctrl_exceptionVec_20",
+      "io_out_bits_exceptionVec_21": "_Vdot_io_out_valid&_Vdot_io_out_bits_ctrl_exceptionVec_21",
+      "io_out_bits_exceptionVec_22": "_Vdot_io_out_valid&_Vdot_io_out_bits_ctrl_exceptionVec_22",
+      "io_out_bits_exceptionVec_23": "_Vdot_io_out_valid&_Vdot_io_out_bits_ctrl_exceptionVec_23"
+    },
+    "interpretation": "Same Scala parent and runtime full exception/metadata comparisons. Extra constant-state ports and observer routes propagate from R metadata expression; no assertion of graph or area equivalence.",
+    "qualification": "local source/generated-control audit plus actual behavior tests; not formal equivalence or synthesis"
+  },
+  "three_metrics": {
+    "speedup": "NOT_TESTED",
+    "area": "NOT_TESTED",
+    "STA": "NOT_TESTED"
+  },
+  "adopt_candidate": false,
+  "go_to_cost_screening": true,
+  "go_to_fullcore": false,
+  "old_ledger_records_preserved": 37,
+  "scope": "new local Verilator + strict checker runs only; no synthesis STA fullcore NEMU upload"
+}

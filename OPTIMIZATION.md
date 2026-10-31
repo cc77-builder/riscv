@@ -4,6 +4,10 @@
 
 | 内容 | 入口 |
 | --- | --- |
+| P4/R1成本收口NO-GO；默认关闭、未采用 | [成本历史](team/optimizations/o2/integration/firstdot-v2-0f/continuation/short-latency-p4/g2r1-cost/RESULT.md) |
+| P4收口只读评审；宿主试验已接续完成 | [历史评审](team/optimizations/o2/integration/firstdot-v2-0f/continuation/post-p4-route-review/RESULT.md) |
+| C8分段归约已收口NO-GO；旧HOLD保留 | [归因与决定](team/optimizations/o2/integration/firstdot-v2-0f/continuation/deferred-reduction-c8-r1-review/RESULT.md) |
+| 当前后续优化顺序、已测结果与采用门槛 | [当前路线第0节](team/docs/development-route-current.md) |
 | 2026-10-28 公开项目、分支对比与后续建议（只读研究，未启动新实验） | [对比与优化计划](team/docs/public-vdot-review-and-plan-20261028.md) |
 | O2、H1、全核及成本证据 | [O2 导航](team/optimizations/o2/README.md) |
 | S2／S1 软件候选 | [R2 导航](R2_STATUS.md) |

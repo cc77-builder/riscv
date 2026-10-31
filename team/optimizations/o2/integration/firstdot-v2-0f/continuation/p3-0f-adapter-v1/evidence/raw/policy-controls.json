@@ -1,0 +1,90 @@
+{
+  "status": "P3_POLICY_14_CASES_PASS",
+  "cases": [
+    {
+      "name": "exact_3pct",
+      "expected": "GO_CYCLE_SCREEN_ONLY",
+      "observed": "GO_CYCLE_SCREEN_ONLY",
+      "reason": "GO_CYCLE_SCREEN_ONLY"
+    },
+    {
+      "name": "one_cycle_below_3pct",
+      "expected": "NO_GO_GAIN",
+      "observed": "NO_GO_GAIN",
+      "reason": "NO_GO_GAIN"
+    },
+    {
+      "name": "donor_half_pct_is_insufficient",
+      "expected": "NO_GO_GAIN",
+      "observed": "NO_GO_GAIN",
+      "reason": "NO_GO_GAIN"
+    },
+    {
+      "name": "exact_1pct_anchor",
+      "expected": "GO_CYCLE_SCREEN_ONLY",
+      "observed": "GO_CYCLE_SCREEN_ONLY",
+      "reason": "GO_CYCLE_SCREEN_ONLY"
+    },
+    {
+      "name": "anchor_exceeds_by_one_cycle",
+      "expected": "HOLD_ANCHOR",
+      "observed": "HOLD_ANCHOR",
+      "reason": "HOLD_ANCHOR"
+    },
+    {
+      "name": "slow_ta_not_mean",
+      "expected": "NO_GO_GAIN",
+      "observed": "NO_GO_GAIN",
+      "reason": "NO_GO_GAIN"
+    },
+    {
+      "name": "fastest_fr_preserved",
+      "expected": "HOLD_ANCHOR",
+      "observed": "HOLD_ANCHOR",
+      "reason": "HOLD_ANCHOR"
+    },
+    {
+      "name": "missing_window",
+      "expected": "REJECT",
+      "observed": "REJECT",
+      "reason": "exactly six frozen windows required"
+    },
+    {
+      "name": "duplicate_sequence",
+      "expected": "REJECT",
+      "observed": "REJECT",
+      "reason": "fixed order and unique sequence"
+    },
+    {
+      "name": "reordered_method",
+      "expected": "REJECT",
+      "observed": "REJECT",
+      "reason": "fixed order and unique sequence"
+    },
+    {
+      "name": "invalid_cycles_0",
+      "expected": "REJECT",
+      "observed": "REJECT",
+      "reason": "positive integer cycles"
+    },
+    {
+      "name": "invalid_cycles_-1",
+      "expected": "REJECT",
+      "observed": "REJECT",
+      "reason": "positive integer cycles"
+    },
+    {
+      "name": "invalid_cycles_9700.0",
+      "expected": "REJECT",
+      "observed": "REJECT",
+      "reason": "positive integer cycles"
+    },
+    {
+      "name": "invalid_cycles_True",
+      "expected": "REJECT",
+      "observed": "REJECT",
+      "reason": "positive integer cycles"
+    }
+  ],
+  "scope": "synthetic policy controls; not measured performance"
+}

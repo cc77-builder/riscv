@@ -1,0 +1,2050 @@
+{
+  "record_id": "P1-SPLIT-INPUT-DIVFIX0F-CLEAN02-20261028-01",
+  "status": "P1_PROBE_HOLD",
+  "recorded_at": "2026-10-28T17:13:31.013620+08:00",
+  "contract": "zjhwork-0f-c8-split-fixed-a-8x32-v1",
+  "operator": "@cc77-builder / Agent",
+  "operation_id": "20261028-cc77-builder-p1-split-input",
+  "source_commit": "10b71ad4bff25cd2070e775c74a4717b01602f75",
+  "source_state": "local uncommitted P1 software; HEAD is provenance, not a commit containing P1",
+  "selected_hardware_commit": "0f12df675378556670afd0dd2153f47fcb330610",
+  "hardware_identity": {
+    "source_commit": "c823a8786e052c6e26f6915563c42b6d730dd8e3",
+    "selected_hardware_commit": "0f12df675378556670afd0dd2153f47fcb330610",
+    "emu_sha256": "acf672eb39f836da4000b253849e3214089e9c8e5198060a57d2cc6bbd393da9",
+    "reference_sha256": "62b1707c52a4c323468481e0c1863b79f244d9a3fd54aeb7b7d2ecb5f01a35ca",
+    "historical_new_runtime_execution_completed": false,
+    "historical_support_runtime_qualified": false
+  },
+  "toolchain": {
+    "gcc": {
+      "path": "/usr/bin/riscv64-linux-gnu-gcc",
+      "link_text": "riscv64-linux-gnu-gcc-11",
+      "resolved_path": "/usr/bin/riscv64-linux-gnu-gcc-11",
+      "sha256": "0c54895c55568be5b5fee49e2426abcc8fb05ca2c121ca5685dea2cbc24a1c13"
+    },
+    "ld": {
+      "path": "/usr/bin/riscv64-linux-gnu-ld",
+      "link_text": "riscv64-linux-gnu-ld.bfd",
+      "resolved_path": "/usr/bin/riscv64-linux-gnu-ld.bfd",
+      "sha256": "59db886faf252e5e2fb2e5341fd57c24ddbd216197f69296321fef913e5b64ba"
+    },
+    "ar": {
+      "path": "/usr/bin/riscv64-linux-gnu-ar",
+      "link_text": null,
+      "resolved_path": "/usr/bin/riscv64-linux-gnu-ar",
+      "sha256": "7985a5f5a10d03843aa7b296e1652bf5bd9fd5180839c7df9b49ef56738fcc74"
+    },
+    "objcopy": {
+      "path": "/usr/bin/riscv64-linux-gnu-objcopy",
+      "link_text": null,
+      "resolved_path": "/usr/bin/riscv64-linux-gnu-objcopy",
+      "sha256": "48c1d507b5c7b89da9c81349738ee413a522c364a17d416bcfb91e2c8e785006"
+    },
+    "objdump": {
+      "path": "/usr/bin/riscv64-linux-gnu-objdump",
+      "link_text": null,
+      "resolved_path": "/usr/bin/riscv64-linux-gnu-objdump",
+      "sha256": "07a28885534079b220a44c7f787c0eecdd240fbe95c525b85e88cc7b88b70e82"
+    },
+    "readelf": {
+      "path": "/usr/bin/riscv64-linux-gnu-readelf",
+      "link_text": null,
+      "resolved_path": "/usr/bin/riscv64-linux-gnu-readelf",
+      "sha256": "2ee6c57f1efa53bda4a784afb82340b2d925383a8892c36df448028645af2d3f"
+    },
+    "make": {
+      "path": "/usr/bin/make",
+      "link_text": null,
+      "resolved_path": "/usr/bin/make",
+      "sha256": "92f646030615cd98490a68a94c0aefd87b552be3158b941c02e43b0bfdb576db"
+    },
+    "nm": {
+      "path": "/usr/bin/riscv64-linux-gnu-nm",
+      "link_text": null,
+      "resolved_path": "/usr/bin/riscv64-linux-gnu-nm",
+      "sha256": "3f6c21492177e99a2a6db48d530d5ec310ed058c679bc71a743f80c86cb87b56"
+    }
+  },
+  "compiler_helpers": {
+    "cc1": {
+      "query": "-print-prog-name=cc1",
+      "path": "/usr/lib/gcc-cross/riscv64-linux-gnu/11/cc1",
+      "resolved_path": "/usr/lib/gcc-cross/riscv64-linux-gnu/11/cc1",
+      "sha256": "1a9e1e98ccec360a8bd5dccd4a5e00a7bfaaab07c16a1c6043750ca5b40bbe8b",
+      "link_text": null
+    },
+    "as": {
+      "query": "-print-prog-name=as",
+      "path": "/usr/lib/gcc-cross/riscv64-linux-gnu/11/../../../../riscv64-linux-gnu/bin/as",
+      "resolved_path": "/usr/bin/riscv64-linux-gnu-as",
+      "sha256": "30ab46dce94fa2120f9465dd2965784af831363f75fac42ea9999819f6d15953",
+      "link_text": "../../bin/riscv64-linux-gnu-as"
+    },
+    "libgcc": {
+      "query": "-print-libgcc-file-name",
+      "path": "/usr/lib/gcc-cross/riscv64-linux-gnu/11/libgcc.a",
+      "resolved_path": "/usr/lib/gcc-cross/riscv64-linux-gnu/11/libgcc.a",
+      "sha256": "2cd1d64c15086238882afe4e779c66f11a3475b369d71ed38f0d102c7255b1be",
+      "link_text": null
+    },
+    "python": {
+      "path": "/usr/bin/python3",
+      "resolved_path": "/usr/bin/python3.10",
+      "sha256": "a2f33a6e006989270f4340528eb61f8f97366e00a5d1b602ac8672ea44fc56ae",
+      "version": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+      "link_text": "python3.10"
+    }
+  },
+  "runtime_roles": {
+    "emu": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/checkout/source/build/emu",
+      "sha256": "acf672eb39f836da4000b253849e3214089e9c8e5198060a57d2cc6bbd393da9",
+      "bytes": 71244064
+    },
+    "nemu_normal": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/support/nemu/reference/build/riscv64-nemu-interpreter-so",
+      "sha256": "62b1707c52a4c323468481e0c1863b79f244d9a3fd54aeb7b7d2ecb5f01a35ca",
+      "bytes": 1463152
+    },
+    "nemu_negative": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/fullcore-run-01/negative-fixture/negative-reference.so",
+      "sha256": "8a8eb72ea44e88c551fc23ba5c659bfc23854db6c67c105e285d813f96aa8405",
+      "bytes": 16568
+    },
+    "am": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/checkout/xs-env/nexus-am/am/build/am-riscv64-xs.a",
+      "sha256": "b421e116992550ac29aa64f3116cc64f7bfad9a857b13eb773892cdaca20801a",
+      "bytes": 777530
+    },
+    "klib": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/checkout/xs-env/nexus-am/libs/klib/build/klib-riscv64-xs.a",
+      "sha256": "3147e2bf410a16f3fbecd077601c4ca96bd26d17f6a53fb2c928bf13df53eb63",
+      "bytes": 441902
+    },
+    "identity": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/identity/current.json",
+      "sha256": "3b9d9332720b6d21a52c979d84c3398bf9c3070812094da29431575a4e7a7451",
+      "bytes": 667173
+    },
+    "c8_object": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/c8-package-01/sdk/gemv.o",
+      "sha256": "f8bc13daeead98a414f313600a5778c96ac95a66b5bcb5c714ea3b98e0d25ab3",
+      "bytes": 27160
+    },
+    "c8_library": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/c8-package-01/sdk/libxs_gemv_c8.a",
+      "sha256": "92c8941d440f55b1ebf824b0a937a17648f4a769dfe62de6a53b47054369dc28",
+      "bytes": 27892
+    },
+    "c8_manifest": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/c8-package-01/sdk/manifest.json",
+      "sha256": "4631d7db91e0e58869f14517bba1a5077d1a0f866c720119851d7b5f437f145a",
+      "bytes": 1171
+    },
+    "firstdot_object": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/v2-package-01/gemv.o",
+      "sha256": "b65d4ca4faf3550ad2e95d3fb7d1d452923b71ae50776420bfcd679d098238af",
+      "bytes": 27416
+    },
+    "firstdot_library": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/v2-package-01/libxs_gemv_firstdot.a",
+      "sha256": "9e12de07d363a2627d7d33cff401da257c30487d59b3a3f7029bb3a262fbd33e",
+      "bytes": 28084
+    },
+    "historical_c8_bin": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/c8-relink-01/integrated/vdot-perf.bin",
+      "sha256": "56805506eb98b68269c73a3645d8f75dff73b697e30dec5f93ccc4716089ad34",
+      "bytes": 31440
+    },
+    "flash": {
+      "path": "/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+      "sha256": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+      "bytes": 12
+    }
+  },
+  "build_receipt": {
+    "status": "P1_BUILD_RECEIPTS_INPUTS_PASS",
+    "images": 9,
+    "summary_sha256": "f9bc819c7087993f4931e9fff9de830a72f150f7bb6a05ea030a8e79b5257689"
+  },
+  "images": {
+    "first-d1": {
+      "static": "P1_NINE_IMAGES_STATIC_VERIFIED",
+      "runtime": "NOT_TESTED",
+      "bin": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/build-02/images/first-d1/vdot-perf.bin",
+        "sha256": "5b50e27b1c52f289c4fa1983b4ffe9a8e09683c3f6d81903dcf7c767d9760e23",
+        "bytes": 51948
+      },
+      "elf": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/build-02/images/first-d1/vdot-perf.elf",
+        "sha256": "fb23b1ec94d736617e088efb26c084a59a6d7ca8542d3de9792f1c69e4e088fe",
+        "bytes": 134456
+      }
+    },
+    "native-d0": {
+      "static": "P1_NINE_IMAGES_STATIC_VERIFIED",
+      "runtime": "NOT_TESTED",
+      "bin": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/build-02/images/native-d0/vdot-perf.bin",
+        "sha256": "da5bb1242ea3bfc123b28cd72960be2e0ed8f1d8ea3723b9c7204e66091a0268",
+        "bytes": 49480
+      },
+      "elf": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/build-02/images/native-d0/vdot-perf.elf",
+        "sha256": "c83894df5ec2f37f52b5dfc75c56ee7ececb751635eb835aba87d8e9e72bfa29",
+        "bytes": 130752
+      }
+    },
+    "native-d1": {
+      "static": "P1_NINE_IMAGES_STATIC_VERIFIED",
+      "runtime": "NOT_TESTED",
+      "bin": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/build-02/images/native-d1/vdot-perf.bin",
+        "sha256": "31dcdf1f1f9fe3286d6489f4c73bb84025617f7df7ed163614bd4d0bc6c7c572",
+        "bytes": 49464
+      },
+      "elf": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/build-02/images/native-d1/vdot-perf.elf",
+        "sha256": "2ef88c25269aebfb0b91a7a9ec95f2fed361644dbfca9ec0e515a2732b86cdea",
+        "bytes": 130688
+      }
+    },
+    "steady-d2": {
+      "static": "P1_NINE_IMAGES_STATIC_VERIFIED",
+      "runtime": "NOT_TESTED",
+      "bin": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/build-02/images/steady-d2/vdot-perf.bin",
+        "sha256": "c8234dfc8ef2b3b2b4eac3fd025beff1863c618909bd6e5d10e2b39a37c1ee49",
+        "bytes": 52428
+      },
+      "elf": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/build-02/images/steady-d2/vdot-perf.elf",
+        "sha256": "09b291fb57c4266f28a8833752ea34de10da568c87c4cf4b50a3d7c2dbd88202",
+        "bytes": 134192
+      }
+    },
+    "steady-d0": {
+      "static": "P1_NINE_IMAGES_STATIC_VERIFIED",
+      "runtime": "CORRECTNESS_PASS_PERFORMANCE_HOLD",
+      "bin": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/build-02/images/steady-d0/vdot-perf.bin",
+        "sha256": "6e1622d43eeac2188af36251337fe811fc48974de468ced1415142d4480fa15b",
+        "bytes": 52444
+      },
+      "elf": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/build-02/images/steady-d0/vdot-perf.elf",
+        "sha256": "a3ef36f36cd744ba8abcfbca91666e79464d0650159930982ada7334e6c9864c",
+        "bytes": 134248
+      }
+    },
+    "first-d2": {
+      "static": "P1_NINE_IMAGES_STATIC_VERIFIED",
+      "runtime": "NOT_TESTED",
+      "bin": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/build-02/images/first-d2/vdot-perf.bin",
+        "sha256": "78731bcbc31a03df3fcb63b978dfb371fc78fb1b4df5db06111a8ece7928603a",
+        "bytes": 51948
+      },
+      "elf": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/build-02/images/first-d2/vdot-perf.elf",
+        "sha256": "a14c0ecb4776d2fa10281b1a969ad21ec8778f104f26d6c5eea9ab7703382e88",
+        "bytes": 134456
+      }
+    },
+    "steady-d1": {
+      "static": "P1_NINE_IMAGES_STATIC_VERIFIED",
+      "runtime": "NOT_TESTED",
+      "bin": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/build-02/images/steady-d1/vdot-perf.bin",
+        "sha256": "afcf43cdaaf9dee1a1a1c6c5267de85c378060ad2d295d76af5e5d8992ea9ec7",
+        "bytes": 52428
+      },
+      "elf": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/build-02/images/steady-d1/vdot-perf.elf",
+        "sha256": "3536d5d4b00dd431f8fad315e89e23919880edf374052b3bd8203d03850992da",
+        "bytes": 134192
+      }
+    },
+    "native-d2": {
+      "static": "P1_NINE_IMAGES_STATIC_VERIFIED",
+      "runtime": "NOT_TESTED",
+      "bin": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/build-02/images/native-d2/vdot-perf.bin",
+        "sha256": "40e42dd748214e2cf7f83403276fbcbae4d8b32bf8df2c739766fe250fbbea6d",
+        "bytes": 49464
+      },
+      "elf": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/build-02/images/native-d2/vdot-perf.elf",
+        "sha256": "1ba2aceaf7ccae7e2024aea761cef7e8df4ff28cb83f41d9b6c630b52ec6821a",
+        "bytes": 130688
+      }
+    },
+    "first-d0": {
+      "static": "P1_NINE_IMAGES_STATIC_VERIFIED",
+      "runtime": "NOT_TESTED",
+      "bin": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/build-02/images/first-d0/vdot-perf.bin",
+        "sha256": "c6766be6cd2e6e74b2ddec7e878183afb6aeb7749ff7c5b66151702fe8835e8f",
+        "bytes": 51964
+      },
+      "elf": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/build-02/images/first-d0/vdot-perf.elf",
+        "sha256": "dfa125f9bcd69992f49869d3386b7a26f3442cc6989806c2e118d6a30aa1ffda",
+        "bytes": 134520
+      }
+    }
+  },
+  "qualification": {
+    "minimal_software_and_nine_images": "PASS",
+    "host_tests": 63,
+    "steady_d0_functional_nemu_full128_abi_guard_path": "PASS",
+    "bit100_negative_then_recovery_replay": "PASS",
+    "all_84_replay_windows_and_full_validation_equal": true,
+    "both_order_3percent_benefit": true,
+    "anchor_1percent": false,
+    "performance_upgrade": "HOLD",
+    "runtime_other_eight_images": "NOT_TESTED",
+    "public_package_migration_or_consumer_adoption": "NOT_TESTED"
+  },
+  "coverage": {
+    "functional_datasets_each_normal_round": 7,
+    "functional_calls_each": 312,
+    "controls_each": 8,
+    "architectural_vdot_commits_each": 2432,
+    "completed_timing_windows_normal_and_replay": 168,
+    "independent_replay_adds_statistical_samples": false,
+    "formal_ordinary_windows_used": 48,
+    "formal_windows_per_method": 4,
+    "timed_performance_datasets": [
+      0
+    ],
+    "performance_profile": "steady",
+    "actual_emu_processes_all_attempts": 5,
+    "run01_processes": 2,
+    "run02_processes": 3,
+    "run01_samples_used": 0
+  },
+  "methods": {
+    "P-V": {
+      "cycles": [
+        400,
+        422,
+        400,
+        413
+      ],
+      "total": 1635,
+      "mean": 408.75,
+      "instret": [
+        399,
+        399,
+        399,
+        399
+      ]
+    },
+    "P-R0": {
+      "cycles": [
+        635,
+        657,
+        641,
+        652
+      ],
+      "total": 2585,
+      "mean": 646.25,
+      "instret": [
+        500,
+        500,
+        500,
+        500
+      ]
+    },
+    "P-R1": {
+      "cycles": [
+        489,
+        486,
+        487,
+        488
+      ],
+      "total": 1950,
+      "mean": 487.5,
+      "instret": [
+        420,
+        420,
+        420,
+        420
+      ]
+    },
+    "P-R2": {
+      "cycles": [
+        519,
+        499,
+        519,
+        508
+      ],
+      "total": 2045,
+      "mean": 511.25,
+      "instret": [
+        404,
+        404,
+        404,
+        404
+      ]
+    },
+    "P-R3": {
+      "cycles": [
+        450,
+        452,
+        451,
+        442
+      ],
+      "total": 1795,
+      "mean": 448.75,
+      "instret": [
+        348,
+        348,
+        348,
+        348
+      ]
+    },
+    "P-R4": {
+      "cycles": [
+        442,
+        427,
+        440,
+        428
+      ],
+      "total": 1737,
+      "mean": 434.25,
+      "instret": [
+        347,
+        347,
+        347,
+        347
+      ]
+    },
+    "S-V": {
+      "cycles": [
+        304,
+        315,
+        303,
+        312
+      ],
+      "total": 1234,
+      "mean": 308.5,
+      "instret": [
+        235,
+        235,
+        235,
+        235
+      ]
+    },
+    "S-R0": {
+      "cycles": [
+        525,
+        532,
+        522,
+        534
+      ],
+      "total": 2113,
+      "mean": 528.25,
+      "instret": [
+        336,
+        336,
+        336,
+        336
+      ]
+    },
+    "S-R1": {
+      "cycles": [
+        386,
+        386,
+        386,
+        386
+      ],
+      "total": 1544,
+      "mean": 386.0,
+      "instret": [
+        256,
+        256,
+        256,
+        256
+      ]
+    },
+    "S-R2": {
+      "cycles": [
+        399,
+        399,
+        399,
+        399
+      ],
+      "total": 1596,
+      "mean": 399.0,
+      "instret": [
+        240,
+        240,
+        240,
+        240
+      ]
+    },
+    "S-R3": {
+      "cycles": [
+        343,
+        343,
+        343,
+        343
+      ],
+      "total": 1372,
+      "mean": 343.0,
+      "instret": [
+        184,
+        184,
+        184,
+        184
+      ]
+    },
+    "S-R4": {
+      "cycles": [
+        341,
+        340,
+        340,
+        341
+      ],
+      "total": 1362,
+      "mean": 340.5,
+      "instret": [
+        183,
+        183,
+        183,
+        183
+      ]
+    }
+  },
+  "all_84_normal_samples": [
+    {
+      "seq": 0,
+      "round": 0,
+      "method": 6,
+      "kind": 1,
+      "cycles": 355,
+      "instret": 235
+    },
+    {
+      "seq": 1,
+      "round": 0,
+      "method": 0,
+      "kind": 0,
+      "cycles": 453,
+      "instret": 399
+    },
+    {
+      "seq": 2,
+      "round": 0,
+      "method": 1,
+      "kind": 0,
+      "cycles": 633,
+      "instret": 500
+    },
+    {
+      "seq": 3,
+      "round": 0,
+      "method": 2,
+      "kind": 0,
+      "cycles": 489,
+      "instret": 420
+    },
+    {
+      "seq": 4,
+      "round": 0,
+      "method": 3,
+      "kind": 0,
+      "cycles": 520,
+      "instret": 404
+    },
+    {
+      "seq": 5,
+      "round": 0,
+      "method": 4,
+      "kind": 0,
+      "cycles": 443,
+      "instret": 348
+    },
+    {
+      "seq": 6,
+      "round": 0,
+      "method": 5,
+      "kind": 0,
+      "cycles": 439,
+      "instret": 347
+    },
+    {
+      "seq": 7,
+      "round": 0,
+      "method": 6,
+      "kind": 0,
+      "cycles": 341,
+      "instret": 235
+    },
+    {
+      "seq": 8,
+      "round": 0,
+      "method": 7,
+      "kind": 0,
+      "cycles": 535,
+      "instret": 336
+    },
+    {
+      "seq": 9,
+      "round": 0,
+      "method": 8,
+      "kind": 0,
+      "cycles": 386,
+      "instret": 256
+    },
+    {
+      "seq": 10,
+      "round": 0,
+      "method": 9,
+      "kind": 0,
+      "cycles": 398,
+      "instret": 240
+    },
+    {
+      "seq": 11,
+      "round": 0,
+      "method": 10,
+      "kind": 0,
+      "cycles": 342,
+      "instret": 184
+    },
+    {
+      "seq": 12,
+      "round": 0,
+      "method": 11,
+      "kind": 0,
+      "cycles": 340,
+      "instret": 183
+    },
+    {
+      "seq": 13,
+      "round": 0,
+      "method": 6,
+      "kind": 2,
+      "cycles": 313,
+      "instret": 235
+    },
+    {
+      "seq": 14,
+      "round": 1,
+      "method": 6,
+      "kind": 1,
+      "cycles": 302,
+      "instret": 235
+    },
+    {
+      "seq": 15,
+      "round": 1,
+      "method": 11,
+      "kind": 0,
+      "cycles": 340,
+      "instret": 183
+    },
+    {
+      "seq": 16,
+      "round": 1,
+      "method": 10,
+      "kind": 0,
+      "cycles": 343,
+      "instret": 184
+    },
+    {
+      "seq": 17,
+      "round": 1,
+      "method": 9,
+      "kind": 0,
+      "cycles": 399,
+      "instret": 240
+    },
+    {
+      "seq": 18,
+      "round": 1,
+      "method": 8,
+      "kind": 0,
+      "cycles": 386,
+      "instret": 256
+    },
+    {
+      "seq": 19,
+      "round": 1,
+      "method": 7,
+      "kind": 0,
+      "cycles": 534,
+      "instret": 336
+    },
+    {
+      "seq": 20,
+      "round": 1,
+      "method": 6,
+      "kind": 0,
+      "cycles": 315,
+      "instret": 235
+    },
+    {
+      "seq": 21,
+      "round": 1,
+      "method": 5,
+      "kind": 0,
+      "cycles": 427,
+      "instret": 347
+    },
+    {
+      "seq": 22,
+      "round": 1,
+      "method": 4,
+      "kind": 0,
+      "cycles": 451,
+      "instret": 348
+    },
+    {
+      "seq": 23,
+      "round": 1,
+      "method": 3,
+      "kind": 0,
+      "cycles": 509,
+      "instret": 404
+    },
+    {
+      "seq": 24,
+      "round": 1,
+      "method": 2,
+      "kind": 0,
+      "cycles": 486,
+      "instret": 420
+    },
+    {
+      "seq": 25,
+      "round": 1,
+      "method": 1,
+      "kind": 0,
+      "cycles": 643,
+      "instret": 500
+    },
+    {
+      "seq": 26,
+      "round": 1,
+      "method": 0,
+      "kind": 0,
+      "cycles": 412,
+      "instret": 399
+    },
+    {
+      "seq": 27,
+      "round": 1,
+      "method": 6,
+      "kind": 2,
+      "cycles": 304,
+      "instret": 235
+    },
+    {
+      "seq": 28,
+      "round": 2,
+      "method": 6,
+      "kind": 1,
+      "cycles": 303,
+      "instret": 235
+    },
+    {
+      "seq": 29,
+      "round": 2,
+      "method": 0,
+      "kind": 0,
+      "cycles": 400,
+      "instret": 399
+    },
+    {
+      "seq": 30,
+      "round": 2,
+      "method": 1,
+      "kind": 0,
+      "cycles": 635,
+      "instret": 500
+    },
+    {
+      "seq": 31,
+      "round": 2,
+      "method": 2,
+      "kind": 0,
+      "cycles": 489,
+      "instret": 420
+    },
+    {
+      "seq": 32,
+      "round": 2,
+      "method": 3,
+      "kind": 0,
+      "cycles": 519,
+      "instret": 404
+    },
+    {
+      "seq": 33,
+      "round": 2,
+      "method": 4,
+      "kind": 0,
+      "cycles": 450,
+      "instret": 348
+    },
+    {
+      "seq": 34,
+      "round": 2,
+      "method": 5,
+      "kind": 0,
+      "cycles": 442,
+      "instret": 347
+    },
+    {
+      "seq": 35,
+      "round": 2,
+      "method": 6,
+      "kind": 0,
+      "cycles": 304,
+      "instret": 235
+    },
+    {
+      "seq": 36,
+      "round": 2,
+      "method": 7,
+      "kind": 0,
+      "cycles": 525,
+      "instret": 336
+    },
+    {
+      "seq": 37,
+      "round": 2,
+      "method": 8,
+      "kind": 0,
+      "cycles": 386,
+      "instret": 256
+    },
+    {
+      "seq": 38,
+      "round": 2,
+      "method": 9,
+      "kind": 0,
+      "cycles": 399,
+      "instret": 240
+    },
+    {
+      "seq": 39,
+      "round": 2,
+      "method": 10,
+      "kind": 0,
+      "cycles": 343,
+      "instret": 184
+    },
+    {
+      "seq": 40,
+      "round": 2,
+      "method": 11,
+      "kind": 0,
+      "cycles": 341,
+      "instret": 183
+    },
+    {
+      "seq": 41,
+      "round": 2,
+      "method": 6,
+      "kind": 2,
+      "cycles": 312,
+      "instret": 235
+    },
+    {
+      "seq": 42,
+      "round": 3,
+      "method": 6,
+      "kind": 1,
+      "cycles": 302,
+      "instret": 235
+    },
+    {
+      "seq": 43,
+      "round": 3,
+      "method": 11,
+      "kind": 0,
+      "cycles": 340,
+      "instret": 183
+    },
+    {
+      "seq": 44,
+      "round": 3,
+      "method": 10,
+      "kind": 0,
+      "cycles": 343,
+      "instret": 184
+    },
+    {
+      "seq": 45,
+      "round": 3,
+      "method": 9,
+      "kind": 0,
+      "cycles": 399,
+      "instret": 240
+    },
+    {
+      "seq": 46,
+      "round": 3,
+      "method": 8,
+      "kind": 0,
+      "cycles": 386,
+      "instret": 256
+    },
+    {
+      "seq": 47,
+      "round": 3,
+      "method": 7,
+      "kind": 0,
+      "cycles": 532,
+      "instret": 336
+    },
+    {
+      "seq": 48,
+      "round": 3,
+      "method": 6,
+      "kind": 0,
+      "cycles": 315,
+      "instret": 235
+    },
+    {
+      "seq": 49,
+      "round": 3,
+      "method": 5,
+      "kind": 0,
+      "cycles": 427,
+      "instret": 347
+    },
+    {
+      "seq": 50,
+      "round": 3,
+      "method": 4,
+      "kind": 0,
+      "cycles": 452,
+      "instret": 348
+    },
+    {
+      "seq": 51,
+      "round": 3,
+      "method": 3,
+      "kind": 0,
+      "cycles": 499,
+      "instret": 404
+    },
+    {
+      "seq": 52,
+      "round": 3,
+      "method": 2,
+      "kind": 0,
+      "cycles": 486,
+      "instret": 420
+    },
+    {
+      "seq": 53,
+      "round": 3,
+      "method": 1,
+      "kind": 0,
+      "cycles": 657,
+      "instret": 500
+    },
+    {
+      "seq": 54,
+      "round": 3,
+      "method": 0,
+      "kind": 0,
+      "cycles": 422,
+      "instret": 399
+    },
+    {
+      "seq": 55,
+      "round": 3,
+      "method": 6,
+      "kind": 2,
+      "cycles": 303,
+      "instret": 235
+    },
+    {
+      "seq": 56,
+      "round": 4,
+      "method": 6,
+      "kind": 1,
+      "cycles": 302,
+      "instret": 235
+    },
+    {
+      "seq": 57,
+      "round": 4,
+      "method": 0,
+      "kind": 0,
+      "cycles": 400,
+      "instret": 399
+    },
+    {
+      "seq": 58,
+      "round": 4,
+      "method": 1,
+      "kind": 0,
+      "cycles": 641,
+      "instret": 500
+    },
+    {
+      "seq": 59,
+      "round": 4,
+      "method": 2,
+      "kind": 0,
+      "cycles": 487,
+      "instret": 420
+    },
+    {
+      "seq": 60,
+      "round": 4,
+      "method": 3,
+      "kind": 0,
+      "cycles": 519,
+      "instret": 404
+    },
+    {
+      "seq": 61,
+      "round": 4,
+      "method": 4,
+      "kind": 0,
+      "cycles": 451,
+      "instret": 348
+    },
+    {
+      "seq": 62,
+      "round": 4,
+      "method": 5,
+      "kind": 0,
+      "cycles": 440,
+      "instret": 347
+    },
+    {
+      "seq": 63,
+      "round": 4,
+      "method": 6,
+      "kind": 0,
+      "cycles": 303,
+      "instret": 235
+    },
+    {
+      "seq": 64,
+      "round": 4,
+      "method": 7,
+      "kind": 0,
+      "cycles": 522,
+      "instret": 336
+    },
+    {
+      "seq": 65,
+      "round": 4,
+      "method": 8,
+      "kind": 0,
+      "cycles": 386,
+      "instret": 256
+    },
+    {
+      "seq": 66,
+      "round": 4,
+      "method": 9,
+      "kind": 0,
+      "cycles": 399,
+      "instret": 240
+    },
+    {
+      "seq": 67,
+      "round": 4,
+      "method": 10,
+      "kind": 0,
+      "cycles": 343,
+      "instret": 184
+    },
+    {
+      "seq": 68,
+      "round": 4,
+      "method": 11,
+      "kind": 0,
+      "cycles": 340,
+      "instret": 183
+    },
+    {
+      "seq": 69,
+      "round": 4,
+      "method": 6,
+      "kind": 2,
+      "cycles": 314,
+      "instret": 235
+    },
+    {
+      "seq": 70,
+      "round": 5,
+      "method": 6,
+      "kind": 1,
+      "cycles": 303,
+      "instret": 235
+    },
+    {
+      "seq": 71,
+      "round": 5,
+      "method": 11,
+      "kind": 0,
+      "cycles": 341,
+      "instret": 183
+    },
+    {
+      "seq": 72,
+      "round": 5,
+      "method": 10,
+      "kind": 0,
+      "cycles": 343,
+      "instret": 184
+    },
+    {
+      "seq": 73,
+      "round": 5,
+      "method": 9,
+      "kind": 0,
+      "cycles": 399,
+      "instret": 240
+    },
+    {
+      "seq": 74,
+      "round": 5,
+      "method": 8,
+      "kind": 0,
+      "cycles": 386,
+      "instret": 256
+    },
+    {
+      "seq": 75,
+      "round": 5,
+      "method": 7,
+      "kind": 0,
+      "cycles": 534,
+      "instret": 336
+    },
+    {
+      "seq": 76,
+      "round": 5,
+      "method": 6,
+      "kind": 0,
+      "cycles": 312,
+      "instret": 235
+    },
+    {
+      "seq": 77,
+      "round": 5,
+      "method": 5,
+      "kind": 0,
+      "cycles": 428,
+      "instret": 347
+    },
+    {
+      "seq": 78,
+      "round": 5,
+      "method": 4,
+      "kind": 0,
+      "cycles": 442,
+      "instret": 348
+    },
+    {
+      "seq": 79,
+      "round": 5,
+      "method": 3,
+      "kind": 0,
+      "cycles": 508,
+      "instret": 404
+    },
+    {
+      "seq": 80,
+      "round": 5,
+      "method": 2,
+      "kind": 0,
+      "cycles": 488,
+      "instret": 420
+    },
+    {
+      "seq": 81,
+      "round": 5,
+      "method": 1,
+      "kind": 0,
+      "cycles": 652,
+      "instret": 500
+    },
+    {
+      "seq": 82,
+      "round": 5,
+      "method": 0,
+      "kind": 0,
+      "cycles": 413,
+      "instret": 399
+    },
+    {
+      "seq": 83,
+      "round": 5,
+      "method": 6,
+      "kind": 2,
+      "cycles": 303,
+      "instret": 235
+    }
+  ],
+  "gate": {
+    "contract": "zjhwork-0f-c8-split-fixed-a-8x32-v1",
+    "cells": [
+      {
+        "order": "forward",
+        "cycles_sum": {
+          "P-V": 800,
+          "P-R0": 1276,
+          "P-R1": 976,
+          "P-R2": 1038,
+          "P-R3": 901,
+          "P-R4": 882,
+          "S-V": 607,
+          "S-R0": 1047,
+          "S-R1": 772,
+          "S-R2": 798,
+          "S-R3": 686,
+          "S-R4": 681
+        },
+        "fastest_competitor_cycles_sum": 681,
+        "split_speedup_vs_fastest": 1.1219110378912684,
+        "split_speedup_vs_packed_vdot": 1.3179571663920921,
+        "pass": true
+      },
+      {
+        "order": "reverse",
+        "cycles_sum": {
+          "P-V": 835,
+          "P-R0": 1309,
+          "P-R1": 974,
+          "P-R2": 1007,
+          "P-R3": 894,
+          "P-R4": 855,
+          "S-V": 627,
+          "S-R0": 1066,
+          "S-R1": 772,
+          "S-R2": 798,
+          "S-R3": 686,
+          "S-R4": 681
+        },
+        "fastest_competitor_cycles_sum": 681,
+        "split_speedup_vs_fastest": 1.0861244019138756,
+        "split_speedup_vs_packed_vdot": 1.331738437001595,
+        "pass": true
+      }
+    ],
+    "anchor_sums": {
+      "before_forward": 605,
+      "before_reverse": 605,
+      "after_forward": 626,
+      "after_reverse": 606
+    },
+    "anchor_max_min_ratio": 1.034710743801653,
+    "anchor_pass": false,
+    "performance_pass": true,
+    "expand": false,
+    "thresholds": {
+      "anchor": "100*max <= 101*min",
+      "benefit_each_order": "100*S-V <= 97*min(all 11 competitors)"
+    },
+    "replay_adds_samples": false
+  },
+  "independent_integer_comparisons": [
+    {
+      "order": "forward",
+      "sums": {
+        "P-V": 800,
+        "P-R0": 1276,
+        "P-R1": 976,
+        "P-R2": 1038,
+        "P-R3": 901,
+        "P-R4": 882,
+        "S-V": 607,
+        "S-R0": 1047,
+        "S-R1": 772,
+        "S-R2": 798,
+        "S-R3": 686,
+        "S-R4": 681
+      },
+      "minimum": 681,
+      "split_sum": 607,
+      "margin_97B_minus_100S": 5357,
+      "fraction_reduction": 0.10866372980910421,
+      "passed": true
+    },
+    {
+      "order": "reverse",
+      "sums": {
+        "P-V": 835,
+        "P-R0": 1309,
+        "P-R1": 974,
+        "P-R2": 1007,
+        "P-R3": 894,
+        "P-R4": 855,
+        "S-V": 627,
+        "S-R0": 1066,
+        "S-R1": 772,
+        "S-R2": 798,
+        "S-R3": 686,
+        "S-R4": 681
+      },
+      "minimum": 681,
+      "split_sum": 627,
+      "margin_97B_minus_100S": 3357,
+      "fraction_reduction": 0.07929515418502198,
+      "passed": true
+    }
+  ],
+  "anchor_integer": {
+    "max_sum": 626,
+    "min_sum": 605,
+    "lhs_100max": 62600,
+    "rhs_101min": 61105,
+    "margin_rhs_minus_lhs": -1495,
+    "span_percent": 3.4710743801652955
+  },
+  "observed_metrics": {
+    "S_V_cycles": 308.5,
+    "fastest_observed_rvv": "S-R4",
+    "S_R4_cycles": 340.5,
+    "P_V_cycles": 408.75,
+    "rvv_over_split": 1.1037277147487845,
+    "packed_over_split": 1.3249594813614263,
+    "scope": "same new ELF steady-d0 4 formal windows/method; OBSERVED_ONLY_HOLD",
+    "comparison_with_old_273_299": "NOT_COMPARABLE_DIFFERENT_WINDOW"
+  },
+  "retained_ppa": {
+    "status": "RETAINED_0F_NO_NEW_SYNTHESIS_OR_STA",
+    "selected_hardware_commit": "0f12df675378556670afd0dd2153f47fcb330610",
+    "area_um2": {
+      "FU": 17298.246,
+      "VFEX4_parent": 284614.946
+    },
+    "nominal_ns": {
+      "FU_i2r": 1.190323,
+      "FU_r2r": 1.163404,
+      "FU_worst_slack": -0.26852,
+      "parent_global_r2r": 3.261218,
+      "parent_vdot_r2r": 1.356106,
+      "parent_reported_worst_slack": -2.393998
+    },
+    "conditions": "Nangate45 typical/25C/1.1V; nominal 1ns, 5fF; pre-layout reference",
+    "source": "team/optimizations/o2/r3-div-gate/PERFORMANCE_COST_RESULT.md",
+    "limits": "FU is contained by parent; do not add areas; not core Fmax, 1ns not closed",
+    "new_area": "NOT_TESTED",
+    "new_sta": "NOT_TESTED",
+    "power": "NOT_TESTED",
+    "pnr_cts_spef": "NOT_TESTED",
+    "core_fmax": "NOT_TESTED"
+  },
+  "actual_processes": [
+    {
+      "run": "run-01",
+      "mode": "negative",
+      "status": "EXPECTED_NEGATIVE_REJECTION",
+      "record": {
+        "argv": [
+          "/home/riscv/riscv-lab/software-import-20261026/clean-02/checkout/source/build/emu",
+          "-i",
+          "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/build-02/images/steady-d0/vdot-perf.bin",
+          "--flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+          "--ram-size=128MB",
+          "--diff=/home/riscv/riscv-lab/software-import-20261026/clean-02/fullcore-run-01/negative-fixture/negative-reference.so",
+          "--max-cycles=3000000",
+          "--seed=1"
+        ],
+        "cwd": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/run-01/steady-d0/negative-cwd",
+        "start_utc": "2026-10-28T05:05:08.693200+00:00",
+        "timeout_seconds": 7200,
+        "cap_bytes_each": 536870912,
+        "negative_env": "vdot",
+        "process_started": true,
+        "limit": null,
+        "pid": 421,
+        "elapsed_seconds": 78.495610502,
+        "raw_bytes": {
+          "stdout": 14633,
+          "stderr": 206854
+        },
+        "returncode": 1,
+        "end_utc": "2026-10-28T05:06:27.188814+00:00",
+        "monotonic": {
+          "boot_id": "4209eb1e-fb97-44bb-8ce2-afb3b6a2aefd",
+          "pid": 421,
+          "start_ns": 965117246192,
+          "end_ns": 1043612856694,
+          "scope": "popen_wait_bracket"
+        },
+        "raw_sha256": {
+          "stdout": "8941a2871407e1fc2d2c578b7a9adc3174c51644114762a0668127d7380a3479",
+          "stderr": "7a0e660bf25320bd254c3f271165d2a790c0654965e8cf92c7532d9d70d0753c"
+        }
+      },
+      "clocks": {
+        "pid": 421,
+        "start_utc": "2026-10-28T05:05:08.693200+00:00",
+        "end_utc": "2026-10-28T05:06:27.188814+00:00",
+        "utc_duration_seconds": 78.495614,
+        "monotonic": {
+          "boot_id": "4209eb1e-fb97-44bb-8ce2-afb3b6a2aefd",
+          "pid": 421,
+          "start_ns": 965117246192,
+          "end_ns": 1043612856694,
+          "scope": "popen_wait_bracket"
+        },
+        "monotonic_duration_seconds": 78.495610502,
+        "record_elapsed_seconds": 78.495610502,
+        "utc_minus_monotonic_seconds": 3.497999998103296e-06,
+        "scope": "raw clock facts; monotonic is a Popen/wait envelope, not exact OS scheduling"
+      }
+    },
+    {
+      "run": "run-01",
+      "mode": "normal",
+      "status": "INTERRUPTED_NO_COMPLETE_EXIT",
+      "record": {
+        "argv": [
+          "/home/riscv/riscv-lab/software-import-20261026/clean-02/checkout/source/build/emu",
+          "-i",
+          "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/build-02/images/steady-d0/vdot-perf.bin",
+          "--flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+          "--ram-size=128MB",
+          "--diff=/home/riscv/riscv-lab/software-import-20261026/clean-02/support/nemu/reference/build/riscv64-nemu-interpreter-so",
+          "--max-cycles=3000000",
+          "--seed=1"
+        ],
+        "cwd": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/run-01/steady-d0/normal-cwd",
+        "start_utc": "2026-10-28T05:06:30.668662+00:00",
+        "timeout_seconds": 7200,
+        "cap_bytes_each": 536870912,
+        "negative_env": null,
+        "process_started": true,
+        "limit": null,
+        "pid": 471,
+        "elapsed_seconds": 983.161607281,
+        "raw_bytes": {
+          "stdout": 948,
+          "stderr": 3653632
+        }
+      },
+      "clocks": {
+        "pid": 471,
+        "start_utc": "2026-10-28T05:06:30.668662+00:00",
+        "end_utc": null,
+        "utc_duration_seconds": null,
+        "monotonic": null,
+        "monotonic_duration_seconds": null,
+        "record_elapsed_seconds": 983.161607281,
+        "utc_minus_monotonic_seconds": null,
+        "scope": "raw clock facts; monotonic is a Popen/wait envelope, not exact OS scheduling"
+      }
+    },
+    {
+      "run": "run-02",
+      "mode": "negative",
+      "status": "EXPECTED_NEGATIVE_REJECTION",
+      "record": {
+        "argv": [
+          "/home/riscv/riscv-lab/software-import-20261026/clean-02/checkout/source/build/emu",
+          "-i",
+          "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/build-02/images/steady-d0/vdot-perf.bin",
+          "--flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+          "--ram-size=128MB",
+          "--diff=/home/riscv/riscv-lab/software-import-20261026/clean-02/fullcore-run-01/negative-fixture/negative-reference.so",
+          "--max-cycles=3000000",
+          "--seed=1"
+        ],
+        "cwd": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/run-02/steady-d0/negative-cwd",
+        "start_utc": "2026-10-28T06:57:57.142063+00:00",
+        "timeout_seconds": 7200,
+        "cap_bytes_each": 536870912,
+        "negative_env": "vdot",
+        "process_started": true,
+        "limit": null,
+        "pid": 408,
+        "elapsed_seconds": 76.537963519,
+        "raw_bytes": {
+          "stdout": 14633,
+          "stderr": 206854
+        },
+        "returncode": 1,
+        "end_utc": "2026-10-28T06:59:12.487952+00:00",
+        "monotonic": {
+          "boot_id": "ea978e7c-9d80-4e80-9d2d-f19195f1f09f",
+          "pid": 408,
+          "start_ns": 95863479424,
+          "end_ns": 172401442943,
+          "scope": "popen_wait_bracket"
+        },
+        "raw_sha256": {
+          "stdout": "f69731f04bc3f47192e254ab1a4b8d48adf8036976cdb94c7e564e96e93ae478",
+          "stderr": "7a0e660bf25320bd254c3f271165d2a790c0654965e8cf92c7532d9d70d0753c"
+        }
+      },
+      "clocks": {
+        "pid": 408,
+        "start_utc": "2026-10-28T06:57:57.142063+00:00",
+        "end_utc": "2026-10-28T06:59:12.487952+00:00",
+        "utc_duration_seconds": 75.345889,
+        "monotonic": {
+          "boot_id": "ea978e7c-9d80-4e80-9d2d-f19195f1f09f",
+          "pid": 408,
+          "start_ns": 95863479424,
+          "end_ns": 172401442943,
+          "scope": "popen_wait_bracket"
+        },
+        "monotonic_duration_seconds": 76.537963519,
+        "record_elapsed_seconds": 76.537963519,
+        "utc_minus_monotonic_seconds": -1.192074519000002,
+        "scope": "raw clock facts; monotonic is a Popen/wait envelope, not exact OS scheduling"
+      }
+    },
+    {
+      "run": "run-02",
+      "mode": "normal",
+      "status": "CORRECTNESS_PATH_PASS",
+      "record": {
+        "argv": [
+          "/home/riscv/riscv-lab/software-import-20261026/clean-02/checkout/source/build/emu",
+          "-i",
+          "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/build-02/images/steady-d0/vdot-perf.bin",
+          "--flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+          "--ram-size=128MB",
+          "--diff=/home/riscv/riscv-lab/software-import-20261026/clean-02/support/nemu/reference/build/riscv64-nemu-interpreter-so",
+          "--max-cycles=3000000",
+          "--seed=1"
+        ],
+        "cwd": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/run-02/steady-d0/normal-cwd",
+        "start_utc": "2026-10-28T06:59:15.944934+00:00",
+        "timeout_seconds": 7200,
+        "cap_bytes_each": 536870912,
+        "negative_env": null,
+        "process_started": true,
+        "limit": null,
+        "pid": 459,
+        "elapsed_seconds": 4023.085584551,
+        "raw_bytes": {
+          "stdout": 6992,
+          "stderr": 19069464
+        },
+        "returncode": 0,
+        "end_utc": "2026-10-28T08:04:47.193869+00:00",
+        "monotonic": {
+          "boot_id": "ea978e7c-9d80-4e80-9d2d-f19195f1f09f",
+          "pid": 459,
+          "start_ns": 175858445003,
+          "end_ns": 4198944029554,
+          "scope": "popen_wait_bracket"
+        },
+        "raw_sha256": {
+          "stdout": "76dde83a83b3a68fc9b07639f550f883ef02ca1e6af8fc57e30030f584a5db04",
+          "stderr": "b4df356175d3dd69b53d49029f03de501961085f935b945b5818d65b6e6819aa"
+        }
+      },
+      "clocks": {
+        "pid": 459,
+        "start_utc": "2026-10-28T06:59:15.944934+00:00",
+        "end_utc": "2026-10-28T08:04:47.193869+00:00",
+        "utc_duration_seconds": 3931.248935,
+        "monotonic": {
+          "boot_id": "ea978e7c-9d80-4e80-9d2d-f19195f1f09f",
+          "pid": 459,
+          "start_ns": 175858445003,
+          "end_ns": 4198944029554,
+          "scope": "popen_wait_bracket"
+        },
+        "monotonic_duration_seconds": 4023.085584551,
+        "record_elapsed_seconds": 4023.085584551,
+        "utc_minus_monotonic_seconds": -91.83664955099994,
+        "scope": "raw clock facts; monotonic is a Popen/wait envelope, not exact OS scheduling"
+      }
+    },
+    {
+      "run": "run-02",
+      "mode": "replay",
+      "status": "CORRECTNESS_PATH_PASS",
+      "record": {
+        "argv": [
+          "/home/riscv/riscv-lab/software-import-20261026/clean-02/checkout/source/build/emu",
+          "-i",
+          "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/build-02/images/steady-d0/vdot-perf.bin",
+          "--flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+          "--ram-size=128MB",
+          "--diff=/home/riscv/riscv-lab/software-import-20261026/clean-02/support/nemu/reference/build/riscv64-nemu-interpreter-so",
+          "--max-cycles=3000000",
+          "--seed=1"
+        ],
+        "cwd": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/run-02/steady-d0/replay-cwd",
+        "start_utc": "2026-10-28T08:05:07.892546+00:00",
+        "timeout_seconds": 7200,
+        "cap_bytes_each": 536870912,
+        "negative_env": null,
+        "process_started": true,
+        "limit": null,
+        "pid": 1512,
+        "elapsed_seconds": 4095.007511667,
+        "raw_bytes": {
+          "stdout": 6992,
+          "stderr": 19069464
+        },
+        "returncode": 0,
+        "end_utc": "2026-10-28T09:11:12.374249+00:00",
+        "monotonic": {
+          "boot_id": "ea978e7c-9d80-4e80-9d2d-f19195f1f09f",
+          "pid": 1512,
+          "start_ns": 4221106693753,
+          "end_ns": 8316114205420,
+          "scope": "popen_wait_bracket"
+        },
+        "raw_sha256": {
+          "stdout": "d1b104c38b794e7820ba6fde861c4fc98f62390a5a7754491d783cb64080db94",
+          "stderr": "b4df356175d3dd69b53d49029f03de501961085f935b945b5818d65b6e6819aa"
+        }
+      },
+      "clocks": {
+        "pid": 1512,
+        "start_utc": "2026-10-28T08:05:07.892546+00:00",
+        "end_utc": "2026-10-28T09:11:12.374249+00:00",
+        "utc_duration_seconds": 3964.481703,
+        "monotonic": {
+          "boot_id": "ea978e7c-9d80-4e80-9d2d-f19195f1f09f",
+          "pid": 1512,
+          "start_ns": 4221106693753,
+          "end_ns": 8316114205420,
+          "scope": "popen_wait_bracket"
+        },
+        "monotonic_duration_seconds": 4095.007511667,
+        "record_elapsed_seconds": 4095.007511667,
+        "utc_minus_monotonic_seconds": -130.5258086670001,
+        "scope": "raw clock facts; monotonic is a Popen/wait envelope, not exact OS scheduling"
+      }
+    }
+  ],
+  "interruption": {
+    "status": "INTERRUPTED_ATTEMPT_CLOSED_WITH_ORIGINALS_PRESERVED",
+    "recorded_utc": "2026-10-28T07:01:03.505920+00:00",
+    "run_name": "run-01",
+    "state_file_sha256": "2da9e9065aeef23de5349790dbb6c3a5b19b3377d8da1ba57b22eaee6007bf04",
+    "interruption_record_sha256": "2623744ea7e909abf8346da3b3ccfc6d65e9caa194e2d6578b023732ae255d75",
+    "raw_files_verified": {
+      "steady-d0/normal/stderr.log": {
+        "sha256": "311dd70b4e5072e833854999eac921e38787375b30b7a13bcad003353dba983d",
+        "bytes": 3670016
+      },
+      "steady-d0/normal/stdout.log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "steady-d0/normal/record.json": {
+        "sha256": "40944ab458671d347004f610f709a32bafb51c75e553f198d4a6af06693e31ae",
+        "bytes": 951
+      },
+      "steady-d0/negative/preflight.json": {
+        "sha256": "bd4a066a7de77b94789e0779ca1ee043d54fb60bbc722e19b90db6215c37069d",
+        "bytes": 1674
+      },
+      "steady-d0/negative/stderr.log": {
+        "sha256": "7a0e660bf25320bd254c3f271165d2a790c0654965e8cf92c7532d9d70d0753c",
+        "bytes": 206854
+      },
+      "steady-d0/negative/stdout.log": {
+        "sha256": "8941a2871407e1fc2d2c578b7a9adc3174c51644114762a0668127d7380a3479",
+        "bytes": 14633
+      },
+      "steady-d0/negative/validation.json": {
+        "sha256": "f9778238292d50149d1f6bed88c0efab03f1d4ff35d6a26e043fdde167c185d3",
+        "bytes": 4552
+      },
+      "steady-d0/negative/record.json": {
+        "sha256": "6ff5fcb07cb7e49d92988719ce07a5c3a70943e60296d4e2b487cb2ba02fb131",
+        "bytes": 1393
+      }
+    },
+    "new_performance_qualified": false,
+    "original_state_remains_running_but_processes_lost_with_boot": true
+  },
+  "raw_clock_note": "Original UTC/monotonic differences retained; no UTC rewrite. run02 serial proof uses same-boot Popen/wait monotonic envelopes.",
+  "diagnostic": {
+    "status": "READONLY_SEGMENT_NOT_CAUSAL_PROOF_NOT_ADMISSION",
+    "path": "diagnostics-01/RESULT.md",
+    "group_sums": {
+      "before_forward": {
+        "samples": [
+          28,
+          56
+        ],
+        "cycles_sum": 605,
+        "segments_sum": {
+          "before_first_accept": 193,
+          "first_accept_to_last_commit": 242,
+          "after_last_commit": 170
+        },
+        "subsegments_sum": {
+          "first_to_last_accept": 234,
+          "last_accept_to_last_commit": 8
+        }
+      },
+      "before_reverse": {
+        "samples": [
+          42,
+          70
+        ],
+        "cycles_sum": 605,
+        "segments_sum": {
+          "before_first_accept": 193,
+          "first_accept_to_last_commit": 242,
+          "after_last_commit": 170
+        },
+        "subsegments_sum": {
+          "first_to_last_accept": 234,
+          "last_accept_to_last_commit": 8
+        }
+      },
+      "after_forward": {
+        "samples": [
+          41,
+          69
+        ],
+        "cycles_sum": 626,
+        "segments_sum": {
+          "before_first_accept": 212,
+          "first_accept_to_last_commit": 245,
+          "after_last_commit": 169
+        },
+        "subsegments_sum": {
+          "first_to_last_accept": 236,
+          "last_accept_to_last_commit": 9
+        }
+      },
+      "after_reverse": {
+        "samples": [
+          55,
+          83
+        ],
+        "cycles_sum": 606,
+        "segments_sum": {
+          "before_first_accept": 194,
+          "first_accept_to_last_commit": 242,
+          "after_last_commit": 170
+        },
+        "subsegments_sum": {
+          "first_to_last_accept": 234,
+          "last_accept_to_last_commit": 8
+        }
+      },
+      "ordinary_forward": {
+        "samples": [
+          35,
+          63
+        ],
+        "cycles_sum": 607,
+        "segments_sum": {
+          "before_first_accept": 195,
+          "first_accept_to_last_commit": 242,
+          "after_last_commit": 170
+        },
+        "subsegments_sum": {
+          "first_to_last_accept": 234,
+          "last_accept_to_last_commit": 8
+        }
+      },
+      "ordinary_reverse": {
+        "samples": [
+          48,
+          76
+        ],
+        "cycles_sum": 627,
+        "segments_sum": {
+          "before_first_accept": 212,
+          "first_accept_to_last_commit": 244,
+          "after_last_commit": 171
+        },
+        "subsegments_sum": {
+          "first_to_last_accept": 236,
+          "last_accept_to_last_commit": 8
+        }
+      }
+    },
+    "anchor_after_minus_before_forward": {
+      "total": 21,
+      "before_first_retiring_accept": 19,
+      "middle": 3,
+      "tail": -1
+    },
+    "limits": "No direct branch predictor/cache attribution; middle includes load/add/scheduling/retirement, not pure FU latency"
+  },
+  "evidence_sources": {
+    "run-02/result.json": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/run-02/result.json",
+      "sha256": "cac29034ba8d09797c652105078f5237d6fabe6fc33ae544cc38778e432888d6",
+      "bytes": 20531
+    },
+    "run-02/state.json": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/run-02/state.json",
+      "sha256": "ffb96edb46aee318380ae9fbeb4a1e74645ed9128a456cc81ac06c9ccad8cf3b",
+      "bytes": 2152
+    },
+    "run-02/frozen-inputs.json": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/run-02/frozen-inputs.json",
+      "sha256": "c8340a20cca871ddfef6055edc83165ba75a85280ab582bf087ad961f9ab4ee1",
+      "bytes": 2061196
+    },
+    "build-02/summary.json": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/build-02/summary.json",
+      "sha256": "f9bc819c7087993f4931e9fff9de830a72f150f7bb6a05ea030a8e79b5257689",
+      "bytes": 38213
+    },
+    "before.json": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/before.json",
+      "sha256": "10fc6200c643b94b852cd5ec0d1532f18a56f77f763991cf4bad1ad45aa3def7",
+      "bytes": 1287
+    },
+    "all-host-tests.log": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/all-host-tests.log",
+      "sha256": "56e4ce0f1b4a7e6458ba7d7183deebeab2fca0e0b77a372044dd8ffe44abe254",
+      "bytes": 4945
+    },
+    "run-01-interruption-audit.json": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/run-01-interruption-audit.json",
+      "sha256": "cfc43b3b9ae73083db0f1e09659d9e889b13386de00661e9424229ee52a74d33",
+      "bytes": 1685
+    },
+    "run-01-interruption.json": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/run-01-interruption.json",
+      "sha256": "2623744ea7e909abf8346da3b3ccfc6d65e9caa194e2d6578b023732ae255d75",
+      "bytes": 2259
+    },
+    "diagnostics-01/manifest.json": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/diagnostics-01/manifest.json",
+      "sha256": "6646afd2ce38f1cdb51458452e8a5e1915c791e73ce6bda95dfcc932a4798efa",
+      "bytes": 893
+    },
+    "diagnostics-01/segmentation.json": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/diagnostics-01/segmentation.json",
+      "sha256": "0b63ab3d1e29f4de8259e3291401cd8b02f74c53b259cdd30c43ed0c9f390833",
+      "bytes": 574051
+    },
+    "preview-normal-csr.json": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/preview-normal-csr.json",
+      "sha256": "0a7476d098ac071ad6fd03a6041bfef6f19c71ec6e896f8485af7c1bf76d11d8",
+      "bytes": 12468
+    },
+    "preview-normal-closure.json": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/preview-normal-closure.json",
+      "sha256": "2395fde03d9d0809daaee13d959ca9e83731c39fe4ae1190031ca3a065f52828",
+      "bytes": 297
+    },
+    "archive.py": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/archive.py",
+      "sha256": "bd0e0207f6907675403046501af5a290d3a499930b46ec581be442b026fed5b3",
+      "bytes": 5872
+    },
+    "independent-audit/audit-03.py": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/independent-audit/audit-03.py",
+      "sha256": "c7f2afacfe3a30da46a8b3ead61e216eef2a1c3f03b87a252004b797021d9afe",
+      "bytes": 15735
+    },
+    "development-route-current.md.pre-finalize": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/development-route-current.md.pre-finalize",
+      "sha256": "086bd3a46331547466930d060f3d300580175c9817f853879f089f311278f608",
+      "bytes": 43270
+    },
+    "finalize-route-input.json": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/finalize-route-input.json",
+      "sha256": "609c70f388d7f052b70f499cdecf85437706570bf0c7ef87ad0e37cf1ef6797b",
+      "bytes": 2715
+    },
+    "independent-audit/negative-run02.json": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/independent-audit/negative-run02.json",
+      "sha256": "63a84c3e5c63cead6b8a52ee8c57b9bfe68fb9d5efcb1dd53265c7f7ff3ea43b",
+      "bytes": 672
+    },
+    "independent-audit/normal-run02.json": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/independent-audit/normal-run02.json",
+      "sha256": "3d25fe0adf0f8fb34473793c017214da3b78d4113cd4550998d0e1a6dae75981",
+      "bytes": 15344
+    },
+    "independent-audit/replay-run02.json": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/independent-audit/replay-run02.json",
+      "sha256": "149e589d7061cf7b0d4172d21562c3ee2335c9afa8ec3648e0621006e5648cf2",
+      "bytes": 15344
+    },
+    "independent-audit/comparison-run02.json": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/independent-audit/comparison-run02.json",
+      "sha256": "c3b68f6ddf2ca9367f8506fbad938268d9dcecd89d7a3f560c3c480a88e5393e",
+      "bytes": 1736
+    },
+    "run-02/steady-d0/negative/record.json": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/run-02/steady-d0/negative/record.json",
+      "sha256": "a96635a3c6993a518c688c908e3f0e52f25146b8ff902a177105e403325e3525",
+      "bytes": 1391
+    },
+    "run-02/steady-d0/negative/validation.json": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/run-02/steady-d0/negative/validation.json",
+      "sha256": "f9778238292d50149d1f6bed88c0efab03f1d4ff35d6a26e043fdde167c185d3",
+      "bytes": 4552
+    },
+    "run-02/steady-d0/negative/preflight.json": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/run-02/steady-d0/negative/preflight.json",
+      "sha256": "3c90df48523bd2d7d0e4ab5e7a19596ca14d09974a1a5537438d7ca73b4aa23d",
+      "bytes": 1674
+    },
+    "run-02/steady-d0/negative/stdout.log": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/run-02/steady-d0/negative/stdout.log",
+      "sha256": "f69731f04bc3f47192e254ab1a4b8d48adf8036976cdb94c7e564e96e93ae478",
+      "bytes": 14633
+    },
+    "run-02/steady-d0/negative/stderr.log": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/run-02/steady-d0/negative/stderr.log",
+      "sha256": "7a0e660bf25320bd254c3f271165d2a790c0654965e8cf92c7532d9d70d0753c",
+      "bytes": 206854
+    },
+    "run-02/steady-d0/normal/record.json": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/run-02/steady-d0/normal/record.json",
+      "sha256": "a96da7f24a619a014e6d29a10307550d6c4768142468467243d452f0a6c7bc8e",
+      "bytes": 1394
+    },
+    "run-02/steady-d0/normal/validation.json": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/run-02/steady-d0/normal/validation.json",
+      "sha256": "dee3a2afef1784323bc0ffff59aadcc498e8f56316e441f82a2b9779928e90d1",
+      "bytes": 1518536
+    },
+    "run-02/steady-d0/normal/preflight.json": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/run-02/steady-d0/normal/preflight.json",
+      "sha256": "76c0486df88386756ebbf34ef739798eb6e1e6c89af95ea730b48c8f2c78b185",
+      "bytes": 1674
+    },
+    "run-02/steady-d0/normal/stdout.log": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/run-02/steady-d0/normal/stdout.log",
+      "sha256": "76dde83a83b3a68fc9b07639f550f883ef02ca1e6af8fc57e30030f584a5db04",
+      "bytes": 6992
+    },
+    "run-02/steady-d0/normal/stderr.log": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/run-02/steady-d0/normal/stderr.log",
+      "sha256": "b4df356175d3dd69b53d49029f03de501961085f935b945b5818d65b6e6819aa",
+      "bytes": 19069464
+    },
+    "run-02/steady-d0/replay/record.json": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/run-02/steady-d0/replay/record.json",
+      "sha256": "27934763cc78f591ac07c3d3516f8d8a9fb4ec322d9dbdbbb45bcf8ceb83e7eb",
+      "bytes": 1397
+    },
+    "run-02/steady-d0/replay/validation.json": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/run-02/steady-d0/replay/validation.json",
+      "sha256": "dee3a2afef1784323bc0ffff59aadcc498e8f56316e441f82a2b9779928e90d1",
+      "bytes": 1518536
+    },
+    "run-02/steady-d0/replay/preflight.json": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/run-02/steady-d0/replay/preflight.json",
+      "sha256": "9e3301fb4dabd0ea8b08e58518af6f7b30b19bf7eefd39f2638326495e2cfc91",
+      "bytes": 1674
+    },
+    "run-02/steady-d0/replay/stdout.log": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/run-02/steady-d0/replay/stdout.log",
+      "sha256": "d1b104c38b794e7820ba6fde861c4fc98f62390a5a7754491d783cb64080db94",
+      "bytes": 6992
+    },
+    "run-02/steady-d0/replay/stderr.log": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/run-02/steady-d0/replay/stderr.log",
+      "sha256": "b4df356175d3dd69b53d49029f03de501961085f935b945b5818d65b6e6819aa",
+      "bytes": 19069464
+    }
+  },
+  "original_frozen_pins": {
+    "run-01": {
+      "file": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/run-01/frozen-inputs.json",
+        "sha256": "9122adff5dc41ac2bde615ed962fdfbc95d6ffa7c1ad758ab0aa3abe9c3dd85b",
+        "bytes": 2061196
+      },
+      "pins": 4692,
+      "drift": []
+    },
+    "run-02": {
+      "file": {
+        "path": "/home/riscv/riscv-lab/software-import-20261026/p1-split-input-20261028-01/run-02/frozen-inputs.json",
+        "sha256": "c8340a20cca871ddfef6055edc83165ba75a85280ab582bf087ad961f9ab4ee1",
+        "bytes": 2061196
+      },
+      "pins": 4692,
+      "drift": []
+    }
+  },
+  "archive": {
+    "manifest_path": "team/optimizations/o2/integration/firstdot-v2-0f/continuation/split-input-v1/evidence/20261028-p1/manifest.json",
+    "hash_policy": "This result copy is archived before the manifest exists; manifest SHA is recorded afterward in ledger record30. No self-reference."
+  },
+  "historical_identity_boundary": "P0 SOURCE_LOCK.current_sources 中两份 ledger 标记 historical_snapshot_reference，但冻结 identity.check 实际将其当作当前路径 live pins。此次在全部运行和最终完整身份复核结束后才追加第30条；原 ledger 字节保存在本归档的 *.before。追加后旧完整 identity 对当前工作树拒绝属于预期复现边界，旧资格应在独立历史快照中用归档的旧 ledger 与原冻结输入复核，不能恢复当前文件凑 PASS，也不修改 identity.py 或回写旧 SOURCE_LOCK。新增 RESULT/证据后重建完整源码清单也须另立新身份。",
+  "route_input_binding": {
+    "status": "EXPLICIT_KNOWN_RESUME_ROUTE_BOUND_NOT_FINALIZED",
+    "recorded_utc": "2026-10-28T08:37:53.170305+00:00",
+    "route_path": "team/docs/development-route-current.md",
+    "original_before_snapshot": "development-route-current.md.before",
+    "original_before_sha256": "6a86422f9a74623abccb271b74cfa445027f9f75f2d4ba1916fe059ea6d14f8e",
+    "pre_finalize_snapshot": "development-route-current.md.pre-finalize",
+    "pre_finalize_sha256": "086bd3a46331547466930d060f3d300580175c9817f853879f089f311278f608",
+    "authorization": "Root supplied exact known resume progress SHA; only three section-0 prose changes. No unknown drift accepted.",
+    "historical_body_equal": true,
+    "all_before_current_comparison": [
+      {
+        "path": "team/docs/development-route-current.md",
+        "original_before_sha256": "6a86422f9a74623abccb271b74cfa445027f9f75f2d4ba1916fe059ea6d14f8e",
+        "original_snapshot_sha256": "6a86422f9a74623abccb271b74cfa445027f9f75f2d4ba1916fe059ea6d14f8e",
+        "current_sha256": "086bd3a46331547466930d060f3d300580175c9817f853879f089f311278f608",
+        "known_authorized_progress_update": true
+      },
+      {
+        "path": "开发计分板.md",
+        "original_before_sha256": "5833e07b138dbe5244907e559eb138840de400289e427e2786e092a0c733dea1",
+        "original_snapshot_sha256": "5833e07b138dbe5244907e559eb138840de400289e427e2786e092a0c733dea1",
+        "current_sha256": "5833e07b138dbe5244907e559eb138840de400289e427e2786e092a0c733dea1",
+        "known_authorized_progress_update": false
+      },
+      {
+        "path": "OPTIMIZATION.md",
+        "original_before_sha256": "de22ba6739ef082501e0877c8b67ddca900ead6c18258aa007a5d8c7c469a80b",
+        "original_snapshot_sha256": "de22ba6739ef082501e0877c8b67ddca900ead6c18258aa007a5d8c7c469a80b",
+        "current_sha256": "de22ba6739ef082501e0877c8b67ddca900ead6c18258aa007a5d8c7c469a80b",
+        "known_authorized_progress_update": false
+      },
+      {
+        "path": "team/docs/version-data-ledger.md",
+        "original_before_sha256": "eee3e485377628b1c48beac6803f67554a3cde96770c29f8b48988635eec5682",
+        "original_snapshot_sha256": "eee3e485377628b1c48beac6803f67554a3cde96770c29f8b48988635eec5682",
+        "current_sha256": "eee3e485377628b1c48beac6803f67554a3cde96770c29f8b48988635eec5682",
+        "known_authorized_progress_update": false
+      },
+      {
+        "path": "team/docs/version-data-ledger.json",
+        "original_before_sha256": "b748a0a075f980ab4f83be3592cbed9234160a9099ae4b2f8d8cde0bc2c78033",
+        "original_snapshot_sha256": "b748a0a075f980ab4f83be3592cbed9234160a9099ae4b2f8d8cde0bc2c78033",
+        "current_sha256": "b748a0a075f980ab4f83be3592cbed9234160a9099ae4b2f8d8cde0bc2c78033",
+        "known_authorized_progress_update": false
+      }
+    ]
+  },
+  "decision": {
+    "adopted_as_performance_upgrade": false,
+    "default_changed": false,
+    "rtl_changed": false,
+    "expanded_after_probe": false,
+    "stable_version": "0f + firstdot V2 + explicit C8",
+    "next": "Stop P1 expansion under frozen gate. Existing optional P2/P3/P4 not started; no automatic new experiment.",
+    "git_commit_created": false,
+    "github_uploaded": false
+  },
+  "limits": [
+    "Functional seven-dataset coverage is not three-dataset performance qualification.",
+    "First/native and steady-d1/d2 runtime NOT_TESTED; no mean aggregation with replay or run01.",
+    "No new hardware/PPA; old negative slack and engineering acceptance limits remain.",
+    "Diagnostic and preview retain original unqualified labels; final closure does not rewrite originals.",
+    "Archive contains T as observed at creation; subsequent ledger/score/route/Windows updates are not archived payload."
+  ]
+}

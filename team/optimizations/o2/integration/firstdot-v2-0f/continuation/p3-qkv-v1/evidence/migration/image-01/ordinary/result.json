@@ -1,0 +1,83 @@
+{
+  "status": "P3_ORDINARY_C_TWO_METHOD_LINK_PASS",
+  "methods": [
+    {
+      "method": "TA",
+      "kernel": "q288_tail_vdot",
+      "elf_sha256": "6a33eca3ef3e5fd9813253b2f42034f337d5d19be7b3569469f625df926b77de",
+      "route": [
+        2164549288,
+        2164514400,
+        2164549248,
+        2164265016,
+        2164265072,
+        2164265128,
+        2164263424
+      ],
+      "function_sha256": {
+        "q288_fused_vdot": "9a155c33b9f27ca04d68ab3e0d883d6819876db6dc1c5d6f55ba9a3faa435648",
+        "q288_fused_rvv4": "66a12c0ec3cb7c0d1cdceadf04e4c658607438d83a2a958892100422343117ab",
+        "q288_phased_vdot": "78893b4754e0e1f5b0d2599d29e9ad50ff675cae088797ea7207eedfd5b78d9b",
+        "q288_tail_vdot": "b318b99344d0ceabb2a5cab6ce671ab2bfcb189e4aacc9ffccb18488165971f3",
+        "qkv_quantize": "8e1c1cceae931c0b80f0ed8a85a8de57daeefc85e2a399ead971eeca93005016",
+        "qkv_boundary": "3d3110458b6a36667af22a0db9d0f5b5fb8717e71b2993efc7833f9e60544245"
+      },
+      "slots_bytes": 384,
+      "unresolved_symbols": 0,
+      "link_only_zero_inputs_not_run": true
+    },
+    {
+      "method": "FR",
+      "kernel": "q288_fused_rvv4",
+      "elf_sha256": "79429f4bcb29dc2e17b633df587e2632692d23f4be88c47fdc04ff6f12221ae1",
+      "route": [
+        2164549288,
+        2164514400,
+        2164549248,
+        2164265016,
+        2164265072,
+        2164265128,
+        2164262016
+      ],
+      "function_sha256": {
+        "q288_fused_vdot": "9a155c33b9f27ca04d68ab3e0d883d6819876db6dc1c5d6f55ba9a3faa435648",
+        "q288_fused_rvv4": "66a12c0ec3cb7c0d1cdceadf04e4c658607438d83a2a958892100422343117ab",
+        "q288_phased_vdot": "78893b4754e0e1f5b0d2599d29e9ad50ff675cae088797ea7207eedfd5b78d9b",
+        "q288_tail_vdot": "b318b99344d0ceabb2a5cab6ce671ab2bfcb189e4aacc9ffccb18488165971f3",
+        "qkv_quantize": "8e1c1cceae931c0b80f0ed8a85a8de57daeefc85e2a399ead971eeca93005016",
+        "qkv_boundary": "3d3110458b6a36667af22a0db9d0f5b5fb8717e71b2993efc7833f9e60544245"
+      },
+      "slots_bytes": 384,
+      "unresolved_symbols": 0,
+      "link_only_zero_inputs_not_run": true
+    }
+  ],
+  "decoder_controls": {
+    "status": "CALL_DECODER_CONTROLS_PASS",
+    "cases": [
+      "auipc_forward",
+      "auipc_backward",
+      "jal_forward",
+      "jal_backward",
+      "auipc_x0_not_a_pc_relative_call"
+    ]
+  },
+  "export": {
+    "status": "Q288_DEDUPLICATED_SOURCE_EXPORTED",
+    "variant": "tail",
+    "generator": "team/optimizations/o2/r2-config-reuse/caller/runq-q288/fused/phased/tail/target/generate.py",
+    "generator_sha256": "8369f553aaf642cb2de84ca40506e04f67b5458c6c3992f4d540dc5af7c1c9b5",
+    "assembly_sha256": "f7cd8ae5a9b206f42ef94bc803a6b67e0ccfc588ec763906b79e57e168ff37b4",
+    "symbols": [
+      "q288_fused_vdot",
+      "q288_fused_rvv4",
+      "q288_phased_vdot",
+      "q288_tail_vdot"
+    ],
+    "new_emu_runs": 0,
+    "performance_qualified_by_export": false,
+    "stable_default_changed": false,
+    "note": "Link this assembly once with q288.c; do not also link static-screen phased.o/tail.o or old fused.o"
+  },
+  "new_target_runs": 0
+}

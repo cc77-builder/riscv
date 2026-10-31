@@ -1,0 +1,152 @@
+{
+  "schema": "c8-deferred-d0-fair-probe-v1",
+  "status": "CONTRACT_FROZEN_NOT_BUILT_NOT_RUN",
+  "hardware": "0f12df675378556670afd0dd2153f47fcb330610",
+  "emu_sha256": "acf672eb39f836da4000b253849e3214089e9c8e5198060a57d2cc6bbd393da9",
+  "normal_nemu_sha256": "62b1707c52a4c323468481e0c1863b79f244d9a3fd54aeb7b7d2ecb5f01a35ca",
+  "candidate_source_sha256": "bdd86ba4552cca7f48865fa5740dc9c855152b4649407ef6e497d64d70691807",
+  "candidate_object_sha256": "2a5b5dc774f3acc343eea2ec69fd08fa2ffe9093be9bfbd03dbf3095760b4157",
+  "baseline_object_sha256": "f8bc13daeead98a414f313600a5778c96ac95a66b5bcb5c714ea3b98e0d25ab3",
+  "host_result_sha256": "9aad44463b355319895d775915d9610388777a1947b3cbfe94c6bbcf773bae90",
+  "host_contract_sha256": "d04f69417ec64638b59e2401785c5eaa04044c653fc0f86b41422c909d248793",
+  "implementation_ids": {
+    "OV": "current vdot",
+    "NV": "deferred vdot",
+    "OR": "current RVV",
+    "NR": "deferred RVV"
+  },
+  "comparison": "one treatment ELF containing all four implementations, plus one identical-layout calibration ELF replacing NV/NR leaf bytes with corresponding current implementation",
+  "shape": [
+    8,
+    32
+  ],
+  "performance_datasets": [
+    0
+  ],
+  "functional_case_ids": [
+    "dataset-0",
+    "dataset-1",
+    "dataset-2",
+    "constant--128--128",
+    "constant-127--128",
+    "constant-0-127",
+    "alternating-0"
+  ],
+  "functional_initial_states": 3,
+  "functional_calls_per_normal_image": 84,
+  "performance": {
+    "first": [
+      "OV",
+      "NV",
+      "OR",
+      "NR"
+    ],
+    "warmup": [
+      "OV",
+      "NV",
+      "OR",
+      "NR"
+    ],
+    "formal_blocks": [
+      {
+        "order": "forward",
+        "pre_anchors": [
+          "OV",
+          "OR"
+        ],
+        "rounds": [
+          [
+            "OV",
+            "NV",
+            "OR",
+            "NR"
+          ],
+          [
+            "OV",
+            "NV",
+            "OR",
+            "NR"
+          ]
+        ],
+        "post_anchors": [
+          "OV",
+          "OR"
+        ]
+      },
+      {
+        "order": "reverse",
+        "pre_anchors": [
+          "OV",
+          "OR"
+        ],
+        "rounds": [
+          [
+            "NR",
+            "OR",
+            "NV",
+            "OV"
+          ],
+          [
+            "NR",
+            "OR",
+            "NV",
+            "OV"
+          ]
+        ],
+        "post_anchors": [
+          "OV",
+          "OR"
+        ]
+      }
+    ],
+    "formal_samples_per_implementation": 4,
+    "formal_windows": 16,
+    "anchor_windows": 8,
+    "all_windows_per_normal_image": 32,
+    "anchor_gate": "100*(max(values)-min(values)) <= min(values), separately OV and OR across four anchors",
+    "unchanged_cross_image_control": "all first/warmup/anchor/formal OV/OR cycles and instret at matched plan positions exactly equal",
+    "replay_gate": "same image entire 32 windows cycles/instret/architectural and relative O2 validation exactly equal; no averaging across replay",
+    "gain_gate": "per order: 100*mean(NV) <= 97*min(mean(OV),mean(OR),mean(NR)); require all functionality including NR",
+    "speedup": "min(mean(OR),mean(NR))/mean(NV); report both orders and aggregate separately"
+  },
+  "run_plan": [
+    "A_negative_bit100",
+    "A_normal_recovery",
+    "B_calibration_normal",
+    "A_normal_replay",
+    "B_calibration_replay"
+  ],
+  "budget": {
+    "max_target_processes": 5,
+    "parallel_processes": 1,
+    "max_total_cpu_cores": 4,
+    "seed": 1,
+    "RAM_MiB": 128,
+    "guest_cycles_each": 3000000,
+    "monotonic_seconds_each": 7200,
+    "raw_log_bytes_each": 2147483648,
+    "auto_retry": false
+  },
+  "runtime_images": {
+    "A": "NOT_BUILT",
+    "B": "NOT_BUILT"
+  },
+  "observer_adapter": "NOT_IMPLEMENTED",
+  "gates_before_first_run": [
+    "hardware/tool/dependency/observer physical identity freeze",
+    "actual AM ELF/BIN layout and all source hashes",
+    "new vector-clobber contract and exact-retirement adapter plus host negatives",
+    "bit100 injector actual NV PC/word/vd qualification",
+    "resource/Issue state and monotonic boot/PID audit"
+  ],
+  "scope": "full ordinary-C ABI call from argument setup through all input loads, compute, full128 stores, return and common observation pointer restoration; wrapper snapshots outside both windows",
+  "forbidden": [
+    "using static link fixture as a runtime image",
+    "new fullcore build",
+    "P4 enable or RTL change",
+    "stable package/default change",
+    "relaxing 1%/3% or exact controls after seeing results",
+    "choosing slower RVV denominator",
+    "automatic expansion/retry/push"
+  ]
+}

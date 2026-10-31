@@ -1,0 +1,158 @@
+{
+  "status": "PARTIAL_OBSERVER_EVIDENCE_ONLY",
+  "observer": {
+    "status": "O2_PARTIAL_TRACE_AUDIT",
+    "input_sha256": "a56e70f4e66df63a28f801fe12d6bfd3653ee33400a440614d38121b7a0ef153",
+    "schema": {
+      "version": 1,
+      "clock": "global",
+      "latency": 2,
+      "slots": 2,
+      "rob_size": 48,
+      "ftq_size": 8,
+      "vlen": 128,
+      "vpu_width": 195,
+      "perf_width": 577
+    },
+    "counts": {
+      "STATE": 103,
+      "VFEX4_ACCEPT": 1,
+      "VFEX4_WAIT": 0,
+      "VFEX4_REDIRECT": 49,
+      "ACCEPT": 1,
+      "MOVE": 1,
+      "RESPONSE": 1,
+      "STALL": 0,
+      "KILL": 0,
+      "DIV_ACCEPT": 0,
+      "DIV_KILL": 0,
+      "DIV_OUTPUT": 0,
+      "ENQUEUE": 1,
+      "COMMIT": 1,
+      "REDIRECT": 49,
+      "MULTI_INFLIGHT": 0,
+      "OVERLAP": 0,
+      "TRIPLE_OVERLAP": 0,
+      "FULL_STALL": 0,
+      "KILL_P": 0,
+      "KILL_R": 0,
+      "PARTIAL_KILL": 0,
+      "BOTH_KILL": 0,
+      "R_KILL_P_SURVIVES": 0,
+      "P_KILL_R_SURVIVES": 0,
+      "UNRELATED_FLUSH": 0,
+      "ROB_WRAP": 0,
+      "FTQ_WRAP": 0,
+      "DIV_RESPONSE": 0,
+      "ACCEPTED_THEN_SQUASHED": 0,
+      "ACCEPTED_YOUNGER_SQUASHED": 0
+    },
+    "vfex4_fu_counts": {
+      "0x800000000": 1
+    },
+    "pending_count": 0,
+    "pending_div_count": 0,
+    "unfinished_rob_count": 0,
+    "transactions": [
+      {
+        "seq": 0,
+        "rob": "1:29",
+        "pdest": 1,
+        "vl": 8,
+        "illegal": 0,
+        "vecwen": 0,
+        "v0wen": 1,
+        "vpu": 383123886643719907295546637845863265354179916928647168,
+        "perf": 0,
+        "vs1": 297095330608427884100679527137441216763,
+        "vs2": 134721639640916722547983038419754340685,
+        "accept_cycle": 12576,
+        "expected_data": 4294966518,
+        "move_cycle": 12577,
+        "outcome": "response",
+        "end_cycle": 12578,
+        "elapsed_cycles": 2,
+        "writeback_stall_events": 0
+      }
+    ],
+    "o2_coverage": {
+      "multi_inflight": false,
+      "triple_overlap": false,
+      "full_stall": false,
+      "kill_p": false,
+      "kill_r": false,
+      "partial_kill": false
+    },
+    "response_latency_histogram": {
+      "2": 1
+    },
+    "observed_accept_gap_histogram": {},
+    "clock_mapping": "direct ungated VFEX4/ROB global cycle; independent P/R transition audit",
+    "scope": "trace and accepted-source full128 arithmetic audit; ISA legality/architectural state require workload and DiffTest",
+    "runtime_reset_audited": false,
+    "performance_measured": false
+  },
+  "first_commit": {
+    "cycle": 12580,
+    "rob": "1:29",
+    "pc": 2147491140,
+    "ftq": "0:7"
+  },
+  "injection_marker_present": true,
+  "canonical_mismatch_present": false,
+  "canonical_abort_present": false,
+  "negative_gate_rejection": "negative run must exit 1",
+  "source_refs": [
+    {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/checkout/source/difftest/src/test/csrc/difftest/difftest.cpp",
+      "sha256": "23c2f677377696a64bebe568c6b0457294a4d7db9c721271391e41aecf0201a7",
+      "excerpts": [
+        {
+          "first": 445,
+          "last": 457,
+          "text": "  if (proxy->compare(dut) || pc_mismatch) {\n#ifdef FUZZING\n    if (in_disambiguation_state()) {\n      Info(\"Mismatch detected with a disambiguation state at pc = 0x%lx.\\n\", dut->trap.pc);\n      return 0;\n    }\n#endif\n    display();\n    proxy->display(dut);\n#ifdef FUZZER_LIB\n    stats.exit_code = SimExitCode::difftest;\n#endif // FUZZER_LIB\n    return 1;"
+        },
+        {
+          "first": 1608,
+          "last": 1618,
+          "text": "void Difftest::display() {\n  Info(\"\\n==============  In the last commit group  ==============\\n\");\n  Info(\"the first commit instr pc of DUT is 0x%016lx\\nthe first commit instr pc of REF is 0x%016lx\\n\",\n       dut_commit_first_pc, ref_commit_first_pc);\n\n  state->display(this->id);\n\n  Info(\"\\n==============  REF Regs  ==============\\n\");\n  fflush(stdout);\n  proxy->ref_reg_display();\n  Info(\"privilegeMode: %lu\\n\", dut->csr.privilegeMode);"
+        },
+        {
+          "first": 1659,
+          "last": 1671,
+          "text": "void DiffState::display(int coreid) {\n  Info(\"\\n============== Commit Group Trace (Core %d) ==============\\n\", coreid);\n  for (int j = 0; j < DEBUG_GROUP_TRACE_SIZE; j++) {\n    display_commit_count(j);\n  }\n\n  Info(\"\\n============== Commit Instr Trace ==============\\n\");\n  bool use_spike = spike_valid();\n  for (int j = 0; j < DEBUG_INST_TRACE_SIZE; j++) {\n    display_commit_instr(j, use_spike);\n  }\n\n  fflush(stdout);"
+        }
+      ]
+    },
+    {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/checkout/source/difftest/src/test/csrc/plugin/spikedasm/spikedasm.cpp",
+      "sha256": "7c3d4e7bfb4af1246761f1426db3997a4b59728d4f07d0dd373507b1cf48abbf",
+      "excerpts": [
+        {
+          "first": 32,
+          "last": 45,
+          "text": "bool spike_valid() {\n  if (!is_tested) {\n    is_tested = true;\n    char cmd[128];\n    sprintf(cmd, \"%s > /dev/null 2> /dev/null\", dasm_cmd);\n    is_valid = !system(cmd);\n  }\n  return is_valid;\n}\n\nstatic void execute_dasm_cmd() {\n  FILE *ptr = popen(dasm_cmd, \"r\");\n  if (ptr) {\n    fgets(dasm_result, sizeof(dasm_result), ptr);"
+        }
+      ]
+    },
+    {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/checkout/source/difftest/src/test/csrc/verilator/emu.cpp",
+      "sha256": "18168347ef6f4d9eac108bc74f653aa985a5b7a2ac7744b742dc6afd21a4663b",
+      "excerpts": [
+        {
+          "first": 706,
+          "last": 724,
+          "text": "  // cycle limitation\n  bool exceed_cycle_limit = false;\n#ifdef CONFIG_NO_DIFFTEST\n  exceed_cycle_limit = !args.max_cycles;\n#else\n  for (int i = 0; i < NUM_CORES; i++) {\n    auto trap = difftest[i]->get_trap_event();\n    if (trap->cycleCnt >= args.max_cycles) {\n      exceed_cycle_limit = true;\n    }\n  }\n#endif // CONFIG_NO_DIFFTEST\n\n  if (exceed_cycle_limit) {\n    trapCode = STATE_LIMIT_EXCEEDED;\n#ifdef FUZZER_LIB\n    stats.exit_code = SimExitCode::exceed_limit;\n#endif // FUZZER_LIB\n    return trapCode;"
+        },
+        {
+          "first": 1029,
+          "last": 1033,
+          "text": "\n  if (trapCode != STATE_ABORT) {\n    trigger_stat_dump();\n  }\n#endif // CONFIG_NO_DIFFTEST"
+        }
+      ]
+    }
+  ],
+  "thread_hypothesis": "DiffTest mismatch display calls spike_valid/system and popen, which may transiently add group members to an already four-thread EMU.",
+  "root_cause": "NOT_PROVEN: resource trigger snapshot PID/TID rows were not persisted; ten-second rows only show EMU four threads.",
+  "no_target_retry": true
+}

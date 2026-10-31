@@ -991,3 +991,337 @@ SDK接入ELF SHA256：f0ddf1167c961101e70f58cfd012ae788d2965324ad057aa4ade5af1de
 398生产源码、627个C8输入、31,440字节最终BIN和24,157冻结文件校验；35模型测试、11时钟门禁测试、FU/父级与T15旧归档复算通过。PPA证据审计不等于时序收敛；新性能/PPA/功耗/Fmax均NOT_TESTED。
 
 [结果](../optimizations/o2/integration/firstdot-v2-0f/acceptance/RESULT.md) · [完整记录](../optimizations/o2/integration/firstdot-v2-0f/acceptance/record.json)。证据manifest SHA256：e5122e1c3eb5a4f25ca608ee87ed2e432b16758775d76ccb132599434e23137c。旧28条保留。
+
+
+
+## 30. P1 split-input 最小迁入与 steady-d0 探针（2026-10-28T17:13:31.013620+08:00）
+
+**P1_PROBE_HOLD**：9镜像静态与63主机检查通过；steady-d0负控/正常/独立重放及完整validation通过。各轮7组功能数据/312调用/8控制/2432退休vdot。两次共168计时窗，统计仅正常48正式普通窗；其余8镜像runtime NOT_TESTED。
+
+同新窗口S-V **308.5**、最快观测S-R4 **340.5**、P-V **408.75 cycles**，观测比 **1.103727715×**。两顺序3%收益过线，但锚点605/605/626/606、跨度 **3.471074% > 1%**，停止扩大、不采用为升级。不能与旧273/299比较。
+
+PPA沿用0f：FU17,298.246 / 父级284,614.946 μm²；nominal FU i2r1.190323、r2r1.163404、slack−0.268520ns；父级全局r2r3.261218、VDot r2r1.356106、最差已报告slack−2.393998ns。无新综合/STA/功耗/Fmax。
+
+实际5个EMU进程（run01负控完成＋正常中断；run02负控/正常/重放），旧中断closure闭合、原文不改。只读分段21cycles锚点差主要为首个退休vdot接受前+19，不指定分支预测/缓存原因。完整原4窗、全部84窗、整数门槛与原始UTC/单调差在结果JSON及归档。
+
+[完整结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/split-input-v1/RESULT.md) · [结构化结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/split-input-v1/RESULT.json)。
+manifest：team/optimizations/o2/integration/firstdot-v2-0f/continuation/split-input-v1/evidence/20261028-p1/manifest.json，SHA256 **b4713776247348ed7c8c4745e5c1f5b46254272af307cdee11a2048011e687b2**，2622载荷；原29条保持。
+
+P0 SOURCE_LOCK.current_sources 中两份 ledger 标记 historical_snapshot_reference，但冻结 identity.check 实际将其当作当前路径 live pins。此次在全部运行和最终完整身份复核结束后才追加第30条；原 ledger 字节保存在本归档的 *.before。追加后旧完整 identity 对当前工作树拒绝属于预期复现边界，旧资格应在独立历史快照中用归档的旧 ledger 与原冻结输入复核，不能恢复当前文件凑 PASS，也不修改 identity.py 或回写旧 SOURCE_LOCK。新增 RESULT/证据后重建完整源码清单也须另立新身份。
+
+本轮未改RTL/默认、未commit/push。后续不自动新增实验。
+
+
+## 31. P2 首vdot调用路径归因（2026-10-28T17:57:12.483077+08:00）
+
+**只读派生分析完成，不是新性能测量。** 基于P1相同steady-d0原文，正常/重放84窗归因一致、7变异拒绝及独立复算通过。4个正式慢窗41/48/69/76额外redirect绑定0x800015ac的正常退休JALR；快/慢leaf首退休45–47/55拍，随后到首vdot接受均51拍，首vdot入队到接受均19拍。差值已在入队前，支持间接调用控制流预测纠正所在到达区间归因，不能称特定BTB或固定9拍纯恢复。
+
+20个正式split RVV普通窗也发生同调用纠正，必须重新测对照。决定值得一次P1-R1窗外conditioning调用点隔离；设计已写、未实现/未构建/未目标测试。原1%/3%门槛、P1 HOLD、稳定0f+C8保持。P2其他依赖链/Jade未开展。
+
+三指标沿用旧值：P1观察308.5/340.5 cycles、1.103727715×仍HOLD；FU/父级面积17,298.246/284,614.946 μm²；参考nominal父级全局r2r3.261218ns、VDot r2r1.356106ns、已报告最差slack−2.393998ns（全字段见JSON）。新性能/综合/STA均NOT_TESTED。
+
+[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/callpath-p2/RESULT.md) · [修订设计](../optimizations/o2/integration/firstdot-v2-0f/continuation/callpath-p2/REVISION_PLAN.md)。manifest SHA256 c70c41682b00ace838031406e691d416fcbbe491eb8fa7f33fece61d0c671011；59个归档载荷。原30条JSON和Markdown前缀保持；无commit/push。
+
+
+## 32. P1-R1 准备调用隔离（2026-10-28T20:57:21.546706+08:00）
+
+**P1_R1_PROBE_HOLD**；新候选正确性 PASS_STEADY_D0_ONLY；性能探针 HOLD。实际EMU 4 个，后处理新增目标0。
+
+candidate S-V 310.00、最快观测RVV S-R4，同场RVV/S-V 1.099193548×；1%锚点=False，正反3%收益=True。
+
+仅steady-d0；其余8镜像NOT_TESTED，重放不追加统计样本，默认/RTL未改。PPA继承0f：FU/父级17,298.246/284,614.946 μm²；nominal父级全局r2r3.261218、vdot r2r1.356106 ns、最差已报告slack−2.393998 ns；本轮无新面积/STA/功耗/Fmax。
+
+[完整结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/split-input-r1/RESULT.md)。manifest SHA256 4604a8c369617fe3ac0d55bd4bf3d78deba568fb0777a5213ff2d21768796a32。原31条逐条深等值、旧Markdown前缀保留；全部失败/partial原文封存。未commit/push。
+
+保留0f＋firstdot V2＋显式C8稳定版；停止该候选扩大，先复核本轮完整失败/未过门槛原因，不自动重试。
+
+
+## 33. P2 依赖链只读归因（2026-10-28T23:53:08.308949+08:00）
+
+**P2_DEPENDENCY_READONLY_COMPLETE**。复用0f三数据/12正式chain256窗、3072条vdot/3060依赖边；ACCEPT→MOVE1、MOVE→RESPONSE1、RESPONSE→下一ACCEPT5，合计7拍。每窗1857=37+255×7+2+33。ROB提前分配不证明IQ驻留；COMMIT非WB，后五拍逐段为静态模型。
+
+398生产源码/原EMU身份一致；15主机检查、Jade2个ROI拒错通过；根分别fresh复算最终派生逐字相等。无新增EMU/NEMU/综合/STA。旧chain256加速比2.929725×与0f面积/时序沿用，1601/1602只是条件模型，不纳入实测成绩。
+
+决定仅GO_FOR_P4_G0_READONLY_REVIEW：研究VDot内部2→1且保留两槽/全部协议，先评审组合锥和同约束成本门槛。没有允许改功能RTL；不先重建观察器或改共享后端。稳定0f+C8保持、P1-R1 HOLD保持。
+
+[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/dependency-p2/RESULT.md) · [下一步](../optimizations/o2/integration/firstdot-v2-0f/continuation/dependency-p2/NEXT_STEP.md)。manifest SHA256 a8366da492856270e0eecbed6ede4a6c672618f2516b69578967aeaaf08add01。原32条保留；未commit/push。
+
+## 34. P4-G0 一拍算术／两槽弹性只读评审（2026-10-29T00:31:40.273005+08:00）
+
+**P4_G0_READONLY_REVIEW_COMPLETE_CONDITIONAL_GO**。唯一候选为组合乘加、无旧P且R可接收则新包直写R，否则存P低32结果；两槽身份/异常/取消/反压与DIV协议保持。默认0f＋firstdot V2＋显式C8不变。
+
+320组抽象状态、连续8笔一拍/II1、4类错误拒绝通过；根独立复算协议/PPA提取逐字节相等。不是RTL/父级/全核PASS。新加速比、面积、STA均NOT_TESTED，无构建/综合/目标运行。
+
+历史0f chain256=1857拍、RVV/VDot=2.929725×，FU/父级面积17298.246/284614.946 μm²；nominal父级最差setup slack−2.393998ns。1601拍、13.7857%下降仅条件模型；少96数据保存位、裸DFF理想差434.112μm²不等于净面积节约。
+
+预声明G2：FU＋5%、父级＋1%面积上限，五档局部Q增长≤5%，输出/控制保护、全路径覆盖；全部为工程筛选而非官网门槛。GO只指值得下轮启动G1，未实施/采用，未进全核。G1先说明RTL改法；完成FU/真实父级/DIV/SQRT后再决定G2。
+
+[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/short-latency-p4/g0/RESULT.md) · [合同](../optimizations/o2/integration/firstdot-v2-0f/continuation/short-latency-p4/g0/CONTRACT.md)。manifest SHA256 2b5b55cda9411a64dc7a294c169d0a16380b666509154d12a93f00d9be4c003e。原33条保持，无commit/push。
+
+
+## 35. P4-G1 一拍算术／两槽弹性局部验证（2026-10-29T01:14:23.782861+08:00）
+
+**P4_G1_LOCAL_VALIDATION_PASS**。候选默认关闭，仅VDotO2.scala/VDotElastic.scala两处生产改动，改前已说明。当前HEAD加未提交patch构成候选，不能用HEAD单独代表源码。
+
+10022完整128位向量全部通过，无反压10022响应均1拍、10021个II1间隔；FU24215接受守恒，9负控；真实父级14组13468接受守恒，20负控；SQRT115场景、54取消后162立即空闲钟样本全部关闭、7离线负控。关闭模式原FU/父级及功能生成物对照通过，默认未设置及8种错误配置已验证。
+
+新程序加速比、面积、STA均NOT_TESTED。0f历史参考2.929725×（chain256）、FU/父级17298.246/284614.946μm²、nominal父级最差setup slack−2.393998ns不能转授候选。一拍是局部协议延迟，非程序2倍提速。
+
+首次parent-01因identity注入先命中stability而被严格门禁拒绝，保留FAIL；只修注入窗口、不放宽检查，重建parent-02全部通过。无生产功能修复，完整正向日志修前后逐字一致。
+
+[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/short-latency-p4/g1/RESULT.md)；manifest SHA256 48ebb60bcf92745577cc3b80bdeeb0109a04fd9b460f883e23ffacdbddd19033；patch SHA256 86b34d6117d8f36609e152847a0cda763b3aeb5411908194489e5be882a47243。旧34条保持。
+
+下一步仅P4-G2同约束综合和五档STA，继续按G0门槛筛选；本轮未执行G2、未构建全核、未NEMU/应用性能运行、未commit/push。
+
+
+## 36. P4-G2 同约束综合与五档STA（2026-10-30T12:31:24.863291+08:00）
+
+**P4_G2_NO_GO**。47项冻结门槛中41通过、6未通过；不进入G3，不采用，稳定0f行为＋firstdot V2＋C8保持。G1候选源码445份不变，本轮RTL修改0；HEAD加原未提交patch，不能用HEAD单独代表候选。
+
+| 三指标 | 0f基线 | P4候选 |
+| --- | ---: | ---: |
+| chain256加速比 | 历史2.929725× | NOT_TESTED |
+| FU面积μm² | 17298.246 | 18322.878（+5.923329%） |
+| 含FU父级面积μm² | 284614.946 | 285241.642（+0.220191%） |
+| nominal FU最差setup裕量ns | -0.268520 | -0.790381 |
+| nominal父级最差setup裕量ns | -2.393998 | -2.337809 |
+
+FU少96 DFF但多737 MUX，净面积+1024.632μm²；完整身份保留，主要新增选择位于R控制/perf写入锥。两模式4次映射、40档STA执行（20原组＋20覆盖），旧14×5组和候选70补充报告完整。两边界旧成本数值精确复现；全部失败门槛及五档Q见结果，未用改善项冲抵失败。
+
+首次off-fu-coverage-01分析别名错误被严格断言拒绝，保留旧源与失败；仅改工具，新02通过。无全核/NEMU/性能或功耗测量；局部Q非整核Fmax，1ns负裕量不冒充时序闭合。
+
+[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/short-latency-p4/g2/RESULT.md) · [完整逐项](../optimizations/o2/integration/firstdot-v2-0f/continuation/short-latency-p4/g2/screening.json)。manifest SHA256 ff4224cfcd193e78b9c221864220c005d9f99f0dc818698e9a0491f27644754c。旧35条保持，无commit/push。
+
+下一轮仅建议P4-G2R0只读成本复核，按全部失败项判断一次最小修订价值；不自动改RTL或进入G3。
+
+## 37. P4-G2R0 R元数据／父级ready只读评审（2026-10-30T13:03:20.575600+08:00）
+
+**P4_G2R0_GO_ONE_BOUNDED_REVISION**：只表示值得下一轮做一次元数据选择的最小修订。当前P4-G2仍NO-GO，47项41通过／6失败原样保留，不进入G3、不采用。稳定0f＋firstdot V2＋C8保持。
+
+FU的790位R元数据中，784位各有两级MUX（1568个不同实例）；真实父级595位中593位相同。建议仅在一拍分支中把ctrl/perf写入改为完整的hold/move/directR三路互斥表达，其他数据、状态、ready与DIV均保持。
+
+两个手工等价单元构型的毛面积节省208.544／625.632μm²，未包含控制/缓冲/映射，不是新综合成绩或上下界。父级ready仍需五档分别恢复5.243／5.243／5.243／5.535／6.844ps；共享负载分析不能保证改善。2048项主机位逻辑检查与4类错误反例、独立重放通过，仅为二值选择逻辑，不代替RTL验证。
+
+| 三指标 | 本轮新修订 |
+| --- | --- |
+| 程序加速比 | NOT_TESTED |
+| FU／父级面积 | NOT_TESTED |
+| STA／时序 | NOT_TESTED |
+
+旧G2实测仅作为归因参考：FU18322.878、父级285241.642μm²，nominal父级slack−2.337809ns／ready0.303064ns，候选加速比未测。0f历史chain256为2.929725×，不能转授新修订。
+
+41项输入与445份候选源码未变，原patch SHA256 86b34d6117d8f36609e152847a0cda763b3aeb5411908194489e5be882a47243；生产RTL修改0、新EDA/全核/NEMU运行0、无commit/push。旧36条保持。
+
+[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/short-latency-p4/g2r0/RESULT.md) · [最小修订合同](../optimizations/o2/integration/firstdot-v2-0f/continuation/short-latency-p4/g2r0/REVISION_CONTRACT.md)。manifest SHA256 2c09801af8eeb90e6f17060300f82a47b2f23e1c1d29150e36b39cfc8bb3c053。下一轮仅建议P4-G2R1局部实现与验证，另轮再做原G2成本筛选；任一原门槛失败停止该次修订，不自动扩大。
+
+## 38. P4-G2R1 R槽元数据最小修订局部验证（2026-10-30T13:29:29.086733+08:00）
+
+**P4_G2R1_LOCAL_VALIDATION_PASS**。相对G1仅改VDotElastic.scala一拍分支的R ctrl/perf为完整hold/move/directR三路互斥选择，加恰一断言；数据、状态、ready、DIV和默认关分支不变。改前已说明；默认关闭、不采用、未进入全核。
+
+| 本轮资格 | 实测 |
+| --- | --- |
+| 完整128位 | 22定向＋10000随机全部通过；10022一拍响应、10021个II1间隔 |
+| FU | 24215接受守恒；9观察负控拒绝 |
+| 真实VFEX4 | 14组、13468接受守恒；完整VPU/perf/异常，DIV切换/反压/取消/身份，20观察负控拒绝 |
+| SQRT/双lane | 115场景；54取消后162立即真空闲钟样本全部关闭；7离线负控拒绝 |
+| 默认关/拒错 | FU/父级重新通过，4/16负控；4/56模块严格诊断规范化后逻辑一致；默认未设置成功及8种错误配置拒绝 |
+| 程序加速比、面积、STA | **全部NOT_TESTED**；不转授旧G2数值 |
+
+五份新正向日志与G1逐字一致，非性能测量。生成夹具中常量元数据保留变化：FU的reg声明40/1354位→98/1994位，父级102/2580位→129/2607位；不是映射DFF/面积，成本轮需核查。
+
+首轮汇总因“非VDot生成HDL都应相同”的过宽假设FAIL，完整留档；仅修分析方法，生产源/原checker不变。确认传播差异仅VDotElastic/ExeUnit/测试顶层，ready/busy/状态/断言片段经3个输入探针重命名一致，三个ClockGate连接一致；不声称整个候选父级生成图等价。
+
+HEAD 10b71ad4bff25cd2070e775c74a4717b01602f75＋完整补丁SHA256 9327fa6f472f1869a41d04ceb515a7f8b76bae338279719568512571f88610d5；本轮增量SHA256 fb85300a4600318c36964bc77518be3560a6c7ce50909272343744b17e602023。源码/配置/实际新二进制/日志均绑定；313冻结输入和444其他源码未变。
+
+[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/short-latency-p4/g2r1/RESULT.md) · [完整数据](../optimizations/o2/integration/firstdot-v2-0f/continuation/short-latency-p4/g2r1/aggregate.json)。manifest SHA256 75351b6eef5cedf28e976e592b9610ad0c0aecf3466e847cefc99a866c0ca412（938条，776去重gzip）。旧37条及原G2六项失败保留。
+
+下一轮先FU同约束综合＋五档STA并核查常量元数据实际映射，合格后才做真实父级；原47项门槛不变。本轮无综合/STA/全核/NEMU/commit/push，稳定0f行为＋firstdot V2＋C8保持。
+
+## 39. P4-G2R1 成本筛选（2026-10-30T14:41:16.082152+08:00）
+
+**P4_G2R1_COST_NO_GO**；原47项 37 PASS / 10 FAIL。FU通过后才运行父级；默认0f＋firstdot V2＋C8保持，未采用。R1程序加速比NOT_TESTED。
+
+| 本轮三指标 | R1实测 | 说明 |
+| --- | ---: | --- |
+| 程序加速比 | NOT_TESTED | 不借用0f历史成绩 |
+| FU面积 μm² | 18086.936 | 相对0f +4.559364% |
+| 含FU父级面积 μm² | 285473.062 | 相对0f +0.301501% |
+| nominal FU最差slack ns | -0.776319 | 布局前局部参考 |
+| nominal父级最差slack ns | -2.235609 | 负裕量保留；非整核Fmax |
+
+[全部47项、五档及历版对照](../optimizations/o2/integration/firstdot-v2-0f/continuation/short-latency-p4/g2r1-cost/RESULT.md)。源码补丁 9327fa6f472f1869a41d04ceb515a7f8b76bae338279719568512571f88610d5；证据manifest 4ad0eba39ad487f15e7b4dfa8c8dfaae5331b57bd05921d4f9bfc1a5509d3b9d。常量位实际保留逐位归因，全部计入面积与STA；原数值门槛未改，分析工具两次失败和旧G2六项FAIL保留。旧38条不变；RTL修改0，全核/NEMU/性能0，无commit/push。
+
+下一轮：开始 P4 收口后的只读路线评审：保持 0f＋firstdot V2＋C8，依据 P4/R1 的完整成本结果和现有应用瓶颈，判断还有没有值得启动的最小优化。不继续试改 P4、不修改 RTL、不构建全核、不上传 GitHub，给出 GO/NO-GO 和下一轮指令。
+
+
+## 40. C8 8×32分段归约：GNU与宿主资格（2026-10-30）
+
+记录C8-DEFERRED-HOST-20261030-01，状态**C8_DEFERRED_HOST_PASS_GO_D0_PROBE**。只到dataset0公平探针，不采用候选；当前0f＋firstdot V2＋C8保持。
+新加速比/面积/STA均**NOT_TESTED**，目标EMU/NEMU为0。不得把本条称为全核验证通过。
+GNU实际叶：vdot 164→156指令、13→5配置、656→624B；RVV112→108、13→9、448→432B。架构向量寄存器使用20→28、22→30；无spill/额外move。
+最终attempt-03：310输入×3入口状态×4实现＝3720有限模型执行；29760完整128位输出槽、59520逐dot独立完整128位oracle核对，4原语、39负控、9对象/ELF/BIN重复构建字节一致。
+三次宿主尝试原样保留；只统计最后一次独立覆盖，不把重复用例倍增。真实C引用与静态链接通过，夹具不是AM运行程序。
+候选汇编SHA256 bdd86ba4552cca7f48865fa5740dc9c855152b4649407ef6e497d64d70691807；对象2a5b5dc774f3acc343eea2ec69fd08fa2ffe9093be9bfbd03dbf3095760b4157。
+完整版本/工具/合同/负控/证据见[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/deferred-reduction-c8-v1/RESULT.md)及配套JSON；下一轮按[冻结探针合同](../optimizations/o2/integration/firstdot-v2-0f/continuation/deferred-reduction-c8-v1/PROBE_CONTRACT.md)，先构建实际AM及observer适配，再最多5串行目标进程；本轮未启动、未改RTL、未上传。
+
+## 41. C8 分段归约 dataset0 公平探针（2026-10-30）
+
+**HOLD_TEST_HARNESS_BUDGET_REVIEW，不采用候选。** 真实AM A/B、静态及宿主负控、首条NV的bit100实际拒错通过。正常恢复没有完成，没有合格性能窗口。
+
+| 新三指标 | 结论 |
+| --- | --- |
+| 加速比 | NOT_TESTED |
+| 面积 | NOT_TESTED，RTL未变 |
+| 时序 | NOT_TESTED，未做STA |
+
+A/B各53,572B，所有ALLOC布局相同，仅NV/NR叶代码不同。静态窗口instret OV/NV/OR/NR＝175/167/123/119；不能当作实测cycles。实际C校验函数84组、177,408次宿主扰动；退休/跳转/计数及阈值负控通过。
+
+2/5个目标进程：A拒错24.906965秒PASS，PC0x80004854、word0x0388000b、vd0、bit100；A正常534.868194秒后主动SIGTERM（−15），后三项NOT_TESTED。原因是本Agent把15项校验器负控重复放进84次目标功能调用，额外1,260项自检导致明显前序开销、预算预检不足。80,794是前两条不同调用首dot提交间隔，**不是叶延迟或加速比**。主动停止未触发硬上限，不写成超时，也不据此判断候选性能失败；原campaign NO_GO退出门禁保留，候选决定HOLD。
+
+1%锚点、逐窗控制精确相等和正反3%收益均未实际验证，原门槛不变。下一轮仅先修框架重复自检与预算审计，保留84功能调用及完整检查、原四叶和计时窗口；新镜像/新预算重新开始，不能续借本轮部分资格。
+
+[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/deferred-reduction-c8-d0/RESULT.md)及配套JSON；manifest SHA256 c94290a60dcf121420ab0e59cd2b9b67ddf561c6ecf7012a5625ab9f009db834，119条归档。5298运行输入、926保护文件、src补丁9327fa6f472f1869a41d04ceb515a7f8b76bae338279719568512571f88610d5复核未变。旧40记录保持，无RTL/新核/EDA/commit/push。
+
+## 42. C8 分段归约 dataset0 公平探针 R1（2026-10-30）
+
+**HOLD_ANCHOR_AND_GAIN_SCREEN，不采用、不扩围。** 测试框架修复后，84次功能调用、32个计时窗口、完整128位/CSR/寄存器/范围检查、NEMU差分、退休与O2身份审计通过；原1%锚点及正反3%收益门槛失败，实际2/5串行进程后自动停止。
+
+| 实现 | 正向均值 cycles | 反向均值 cycles | 全部正式均值 cycles | 每窗instret |
+| --- | ---: | ---: | ---: | ---: |
+| 原C8 vdot OV | 273.50 | 274.00 | 273.75 | 175 |
+| 分段归约vdot NV | 273.00 | 273.00 | 273.00 | 167 |
+| 原C8 RVV OR | 301.00 | 301.00 | 301.00 | 123 |
+| 分段归约RVV NR | 278.00 | 278.00 | 278.00 | 119 |
+
+**以上仅A图诊断观察，不是公平资格已通过的性能成绩。** OV四锚点273/274/274/268，跨度2.238806%>1%；OR四锚点301，跨度0%。NV正反分别仅比OV少0.183%/0.365%，均未达3%。原始最快RVV/NV＝278/273＝1.018315×，不得排除更快NR改用OR分母。B校准、A/B重放、跨镜像逐窗控制精确相等均NOT_TESTED，保留原门槛。
+
+| 新三指标 | 资格 |
+| --- | --- |
+| 合格加速比 | NOT_QUALIFIED；1.018315×仅诊断观察 |
+| 面积 | NOT_TESTED；硬件保持0f |
+| 时序 | NOT_TESTED；未做STA/新核构建 |
+
+R1仅移出目标端1260重复校验器自检及84恢复复检，validate调用1460→116；84功能与32性能调用不变，宿主177408扰动和1260自检保留。新旧A/B共24项叶/计时/功能入口的机器码、地址、长度逐项相同。新A/B各52868B，仅NV/NR叶666字节不同；原53572B镜像和主动停止失败记录不覆盖。
+
+bit100拒错PASS（PC0x80004854、word0x0388000b、vd0），单调耗时32.307366s；A正常exit0，3065.826606s，O2接受/移动/响应/入队/提交各1856。实际4线程CPU4–7；未超硬限、未人工停止、未重试。正常单调时间与UTC显示差211.463253s，原因NOT_ATTRIBUTED，两者保留；7200s预算只按冻结单调时钟判断。新增DIV/STALL/KILL覆盖为0，不借本次扩张硬件资格。
+
+HEAD 10b71ad4bff25cd2070e775c74a4717b01602f75、原src补丁9327fa6f472f1869a41d04ceb515a7f8b76bae338279719568512571f88610d5保持；固定5583输入、1179保护文件复核未变。完整镜像/工具/合同/轨迹/时钟及已知显示路径说明见[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/deferred-reduction-c8-d0-r1/RESULT.md)和[JSON](../optimizations/o2/integration/firstdot-v2-0f/continuation/deferred-reduction-c8-d0-r1/RESULT.json)。归档manifest SHA256 bed28543a868b72af5fccc69f51055274a5ca7ebafab4081cc9f637beb247230，141载荷；旧41记录及失败保持。
+
+下一轮只读归因：解释末OV锚点6周期差异与NV/OV、NR/OR等待和依赖；不自动新开EMU、修代码、改RTL、构建新核或上传。当前仍0f＋firstdot V2＋原C8。
+
+
+## 43. P3 FP32→QKV最小迁入与宿主门禁（2026-10-30）
+
+**P3_HOST_PASS_GO_0F_ADAPTATION_AND_BUDGET_ADMISSION；HOST_ONLY。** 供体固定ffd668bf1bc80850d382f514d13bb00316c85582；生产保持0f＋firstdot V2＋原C8，不采用P3为默认。
+
+| 项目 | 实际值／资格 |
+| --- | --- |
+| 源闭包 | 143项＋2项API；19历史Git对象；最小运行包8文件25140B |
+| GNU最终镜像 | ELF 50004cbc4436c8bd52edfae198527be48c224fb1baffc1e9986038e8bc3109f1；BIN fc43caac20b07a6241b20d88fc37e1acc530cb1e1eea89d0b6bef70e4c76c459 |
+| 构建/对象/链接/搬移 | PASS；6函数实际字/重定位、完整只读数组和路由、字段布局、去重、两个普通C链接入口、独立路径及包替换重链相等 |
+| 完整数值 | 864量化元素/27尺度；2真实位置×2方法×3投影＝3456直接输出比较，1728唯一参考；另4 wrapper完整路径 |
+| 完整128位 | 124416笔dot写入、192次slotstore逐笔独立检查，低32/高96均验证 |
+| CSR/ABI/负控 | 宿主静态和模型PASS；5迁入负控、11机器字变异、14值/CSR/ABI负控、5类非法域；14策略合成测试 |
+| 新加速比 /面积 /STA | NOT_TESTED /NOT_TESTED /NOT_TESTED |
+| 当前硬件、旧成绩 | 没有改变0f；供体3.473%不转授；没有把新host指令数当cycles |
+| 目标执行 /全核构建 | 0 /0；真实fflags/异常/DiffTest和新应用周期NOT_TESTED |
+| 下一步 | GO仅进入0f身份/观察器/3%selector适配和预算准入；最多3进程合同已给出，NOT_READY_TO_RUN |
+
+有效数值轮为attempt05；attempt01挂钩/变异定位失败、attempt04身份NUL构造失败保留。算法与GNU镜像未变，02/03早期PASS不替代最终身份门禁，不累计重复覆盖。两项FP机器字负控有提前拒绝限制，FP ABI敏感性由fs0/fs11值负控单独证明。
+
+当前源码HEAD 10b71ad4bff25cd2070e775c74a4717b01602f75，local/zjhwork-integration-20261024，原src补丁9327fa6f472f1869a41d04ceb515a7f8b76bae338279719568512571f88610d5；639保护文件与7运行时身份不变。记录人为@cc77-builder / Agent，operation 20261030-cc77-builder-p3-qkv-host。本轮未提交、未上传。
+
+证据：[P3结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/p3-qkv-v1/RESULT.md)、[JSON](../optimizations/o2/integration/firstdot-v2-0f/continuation/p3-qkv-v1/RESULT.json)、[manifest](../optimizations/o2/integration/firstdot-v2-0f/continuation/p3-qkv-v1/evidence/manifest.json)、[下一轮合同](../optimizations/o2/integration/firstdot-v2-0f/continuation/p3-qkv-v1/PROBE_CONTRACT.md)。原始输出software-import-20261026/p3-qkv-host-20261030-01。预算18M/7200只为硬上限，缺可完成性证据不能开跑；旧42记录及失败保持。
+
+## 44. P3-0f探针适配与预算准入（2026-10-30）
+
+**HOST_ADAPTER_PASS / HOLD_BUDGET_NOT_DEMONSTRATED；HOST_ADAPTER_ONLY。** 保持0f＋firstdot V2＋原C8；P3不切默认。复用上轮冻结ELF/BIN，0个目标进程、0次核构建、0项RTL修改、0次GitHub写入。
+
+| 项目 | 结果 |
+| --- | --- |
+| 0f身份 | 3519项物理运行/构建pins、2723生成物；另核对429实际硬件源；本轮冻结4303项 |
+| 真实配置 | EMU_THREADS=1，O2两槽、T13/O2开启；CPU4–7/4个OS线程不是四模型线程 |
+| 离线整规模观察器 | 155521笔合成提交，62208笔计时退休与O2 cycle/ROB/PC绑定；24CSR＋24计数入队 |
+| 真实旧日志兼容 | C8原32窗、1856提交、512计时绑定重新解析PASS；不是新P3运行 |
+| 门禁与负控 | 最终tests-05共22组通过；包含14个1%/3%整数策略用例，失败即停、回执、首bit100绑定及重放拒绝 |
+| 解析器开销实测 | 合成293661026B stderr＋802B stdout，183.473969宿主秒，峰值6664052736B（6.206GiB） |
+| 目标预算 | HOLD。旧C8吞吐498.287guest cycles/s仅用于情景估算；缺完整P3周期、吞吐/资源上界 |
+| 新加速比 / 面积 / 时序 | **NOT_TESTED / NOT_TESTED / NOT_TESTED** |
+
+冻结ELF 50004cbc4436c8bd52edfae198527be48c224fb1baffc1e9986038e8bc3109f1；
+BIN fc43caac20b07a6241b20d88fc37e1acc530cb1e1eea89d0b6bef70e4c76c459。
+14边界/42投影/17量化/5049标量除法、主机审计14977比较等成本全部保留。正式FR/TA/FR/FR/TA/FR顺序、1%锚点和最慢TA相对最快FR少3%不变。合成cycles不记作硬件性能，供体3.473%不转授。
+
+7200秒只是正常单进程硬限；按旧吞吐350万guest cycles约7024秒、400万约8027秒，均是条件情景，不能据此宣称P3必超时或必完成。日志点估计约761MB不是上界，真实解析峰值也未确定。budget_admitted=false，next_role=null，正式三项全NOT_STARTED，不自动校准/加时/重试。
+
+保留identity-01误读模型线程数、tests-01模块重名、tests-02语法、tests-03负控末行截断、tests-04错误流无效变异及source-map定位失败；最终通过没有改原合同或输入。
+3615保护文件、HEAD 10b71ad4bff25cd2070e775c74a4717b01602f75和原src补丁不变，前43记录保持。
+
+[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/p3-0f-adapter-v1/RESULT.md)、
+[JSON](../optimizations/o2/integration/firstdot-v2-0f/continuation/p3-0f-adapter-v1/RESULT.json)、
+[manifest](../optimizations/o2/integration/firstdot-v2-0f/continuation/p3-0f-adapter-v1/evidence/manifest.json)：
+3673e11b8aa2504f3d858417c025d233bae1bfe8360ba2104c6630b6a3fd6c6b，102载荷。
+下一轮建议另立独立短校准合同，仅在用户另行指令后最多2串行/2700秒获取吞吐和日志进度；不能自动进入正式探针，详见[NEXT_STEP](../optimizations/o2/integration/firstdot-v2-0f/continuation/p3-0f-adapter-v1/NEXT_STEP.md)。
+
+## 45. P3独立短校准（2026-10-30）
+
+**HOLD_THREAD_LIMIT_NO_NORMAL_CALIBRATION。** 1/2个目标进程，负控24.422046秒后整组线程峰值5>4，SIGKILL/exit−9；正常2400秒未启动。不是300秒超时，也不是候选数学失败；无自动重试、加时或正式探针。
+
+| 项目 | 实测或资格 |
+| --- | --- |
+| 首指令及注入 | PC0x80001d44/word0x0388000b/vd0，O2 cycle12580；bit100标记已出现 |
+| 完整拒错 | 未取得规范mismatch/ABORT/exit1，NOT_PASSED |
+| RSS / 原始日志 | 77725696B；stdout961B＋stderr38039B |
+| 线程 / 清理 | 5>4；检测到清理0.116474秒，存活组成员0 |
+| 正常吞吐、完整QKV周期 | NOT_MEASURED |
+| 7200秒预算 | HOLD_NOT_DEMONSTRATED |
+| 新加速比 / 面积 / 时序 | NOT_TESTED / NOT_TESTED / NOT_TESTED |
+
+另保留 **FAIL_NEW_RUNNER_SOURCE_FREEZE_INCOMPLETE**：context通配导入覆盖HERE，导致新运行器/测试/合同6项未入预冻结；镜像和EMU/NEMU原哈希不变，但不能授完整运行资格。原freeze不改，事后源码清单不替代预冻结。
+
+10秒、20秒快照只有EMU自身4线程；触发瞬间缺PID/TID明细。固定DiffTest源码错误打印含system/popen辅助进程，是候选机制，尚未证明第5个的实际身份。原有界门禁保持，不排除辅助进程或回填PASS。8真实宿主机制＋8门禁用例通过，但未覆盖源路径遮蔽缺陷。
+
+[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/p3-short-calibration-v1/RESULT.md) · [完整JSON](../optimizations/o2/integration/firstdot-v2-0f/continuation/p3-short-calibration-v1/RESULT.json) · [证据manifest](../optimizations/o2/integration/firstdot-v2-0f/continuation/p3-short-calibration-v1/evidence/manifest.json)。
+保持0f＋firstdot V2＋原C8，前44条不变。下一轮先修源冻结和触发观测，仅宿主验证，按[NEXT_STEP](../optimizations/o2/integration/firstdot-v2-0f/continuation/p3-short-calibration-v1/NEXT_STEP.md)；本轮不再运行EMU/NEMU、未改RTL/构建核/上传。
+
+## 46. P3校准运行器R1宿主修订（2026-10-31）
+
+**HOST_GO_SINGLE_CPU_CALIBRATION_CANDIDATE，HOST_TOOLS_ONLY。** 生产0f＋firstdot V2＋原C8不变，本轮0次EMU/NEMU。
+
+| 项目 | 实际结果 |
+| --- | --- |
+| 路径/源冻结 | 显式pc_context.CAL_HERE，8必需源码/合同，4324项测试前冻结；旧V1错误清单及缺项/漂移均拒绝 |
+| 触发快照 | 保存当次PID/PPID/PGID/SID、进程/TID出生ticks、命令/亲和；先持久化再回收，首原因保留 |
+| 宿主测试 | 14组PASS，13实际宿主进程，目标0 |
+| 四核运行时基线 | 主运行时4线程，峰值4 |
+| 四核诊断夹具 | 主运行时4＋子sh1＝5，THREAD_LIMIT正确停止，触发PID/TID明细完整 |
+| 单核CPU4诊断 | 两次正常结束，整组峰值均3，不超过原4线程上限 |
+| 新加速比 / 面积 / 时序 | NOT_TESTED / NOT_TESTED / NOT_TESTED |
+| 7200秒预算 | HOLD，尚无正常QKV吞吐 |
+
+夹具仅链接原始冻结verilated.o/verilated_threads.o/spikedasm.o，不含VSimTop或NEMU；诊断占位程序仅用于宿主可控采样。已证明这一宿主机制，未追溯证明旧目标第5个线程身份。模型threads()=1与运行时按亲和建立的宿主池分开记录。
+
+预算仍CPU允许4–7、整组4线程（含助手）、RSS12GiB、日志合计2GiB、300/2400/2700秒和各100万guest。建议launch_cpus=[4]，属于原允许子集；不增加预算、不豁免shell。新运行wrapper和授权须列入下一次预冻结，当前没有目标启动CLI。
+
+[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/p3-short-calibration-r1/RESULT.md) · [JSON](../optimizations/o2/integration/firstdot-v2-0f/continuation/p3-short-calibration-r1/RESULT.json) · [manifest](../optimizations/o2/integration/firstdot-v2-0f/continuation/p3-short-calibration-r1/evidence/manifest.json) · [下一轮](../optimizations/o2/integration/firstdot-v2-0f/continuation/p3-short-calibration-r1/NEXT_STEP.md)。
+4540既有保护输入及原RTL补丁不变，前45条/上轮两项失败保留，无commit/push。
+
+## 47. P3单核亲和有界校准（2026-10-31）
+
+**TARGET_PREFIX_ONLY / HOLD正式预算**；稳定0f＋firstdot V2＋原C8不变。HEAD 10b71ad4bff25cd2070e775c74a4717b01602f75，记录ID P3-SINGLE-CPU-CALIBRATION-20261031-01。
+
+| 项目 | 实测 |
+| --- | --- |
+| bit100拒错 | PASS，23.401695秒，12586 guest，exit1，首PC/word/vd/高位mismatch绑定 |
+| 正常校准 | INCOMPLETE，1599.320037秒，999988 guest，原生guest限额，exit0不等于GOOD TRAP |
+| 正常前缀吞吐 | 625.258220 guest cycles/秒 |
+| 覆盖 | 31105条vdot；首RVV窗开始855738周期，1窗启动/0窗完成，2次CSR起始采样 |
+| 冻结ELF前缀 | 65288退休记录、67782/110580条首窗动态指令吻合；仅进度资格 |
+| 资源 | CPU4，两项线程观测峰值1；正常RSS81133568字节，日志73290448字节；组清理完成 |
+| 两项目标墙钟 | 1622.721732秒，最多2串行，无重试/正式探针 |
+| 7200秒预算 | HOLD；按前缀速率约容纳4501859周期，完整14调用无可信耗时上界 |
+| 新加速比/面积/时序 | NOT_QUALIFIED_NO_COMPLETE_PAIR / NOT_TESTED / NOT_TESTED |
+
+4502项预冻结、5项本轮必需源、10组宿主门禁通过；4487旧保护文件与RTL补丁保持。事后前缀核对的list/tuple实现失败已保留并修正，0次目标重跑。旧46条及全部失败不覆盖。
+
+[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/p3-single-cpu-calibration-v1/RESULT.md) · [合同](../optimizations/o2/integration/firstdot-v2-0f/continuation/p3-single-cpu-calibration-v1/CONTRACT.md) · [证据manifest](../optimizations/o2/integration/firstdot-v2-0f/continuation/p3-single-cpu-calibration-v1/evidence/manifest.json)，SHA 695b2db238836b7089839e20c1b55269d0e9a3993c0bcdb38041623c84be0ea3。

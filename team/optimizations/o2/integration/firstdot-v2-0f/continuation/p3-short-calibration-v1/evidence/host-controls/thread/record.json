@@ -1,0 +1,56 @@
+{
+  "argv": [
+    "/usr/bin/taskset",
+    "-c",
+    "4",
+    "/usr/bin/python3",
+    "-B",
+    "-c",
+    "import threading,time\nfor i in range(5):threading.Thread(target=time.sleep,args=(2,)).start()\ntime.sleep(2)"
+  ],
+  "cwd": "/home/riscv/riscv-lab/software-import-20261026/p3-short-calibration-20261030-01",
+  "environment": {
+    "PATH": "/usr/bin:/bin",
+    "LC_ALL": "C"
+  },
+  "start_utc": "2026-10-30T15:47:26.477843+00:00",
+  "monotonic_start_ns": 161531963181,
+  "boot_id": "498e2336-2b61-4e88-996e-138f2ca770e7",
+  "timeout_seconds": 2,
+  "log_cap_bytes": 2147483648,
+  "rss_cap_bytes": 12884901888,
+  "thread_cap": 4,
+  "process_started": true,
+  "limit": "THREAD_LIMIT",
+  "peak_rss_bytes": 9175040,
+  "max_threads_observed": 6,
+  "observed_cpu_masks": [
+    [
+      4
+    ]
+  ],
+  "cleanup_complete": true,
+  "pid": 398,
+  "proc_stat_at_start": "398 (python3) R 393 398 398 0 -1 4194304 562 0 0 0 0 0 0 0 20 0 1 0 16153 13090816 1504 18446744073709551615 110508227379200 110508230219277 140734868254096 0 0 0 0 0 0 0 0 0 17 4 0 0 0 0 0 110508232591408 110508232875480 110508969168896 140734868258632 140734868258763 140734868258763 140734868258791 0\n",
+  "elapsed_seconds": 0.214967747,
+  "raw_bytes": {
+    "stdout": 0,
+    "stderr": 0
+  },
+  "progress": {
+    "max_observer_cycle": 0,
+    "o2_commit_count": 0,
+    "t13_retire_rows": 0,
+    "uart_fragments": 0
+  },
+  "limit_detected_ns": 161640722656,
+  "returncode": -9,
+  "remaining_group": [],
+  "monotonic_end_ns": 161746930928,
+  "end_utc": "2026-10-30T15:47:26.692812+00:00",
+  "raw_sha256": {
+    "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "cleanup_after_detection_seconds": 0.106208272
+}

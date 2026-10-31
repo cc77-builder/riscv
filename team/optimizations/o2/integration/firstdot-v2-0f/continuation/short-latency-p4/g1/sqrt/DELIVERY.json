@@ -1,0 +1,38 @@
+{
+  "status": "P4_G1_SQRT_MATERIALS_READY_NOT_HARDWARE_TESTED",
+  "created_utc": "2026-10-28T16:52:36.637393+00:00",
+  "files": {
+    "sqrt_vectors.hpp": "ccbf4ca34c44a5001ac0db1a53088ca252c919509e557750f6d5706a013aa62c",
+    "negative_sqrt_parent.py": "2737ccc3b878df2d4603205e14f2b6143a6a8240847dda208e7e16cde564d4bc",
+    "sqrt_parent_test.cpp": "6f85250d8f90e15a7f8c3eed4b687332b813008b14f4af4c4728262a8dd98825",
+    "verify_sqrt_oracle.py": "b15b492ec45ca90be3e10f8b2b71c37466e59aa9cba02a1e400e74ab0e08b173",
+    "README.md": "d780d38f472b2f81dc1a3c38eb93e2a3af938f4e9ac92ec62a2a9f88c229766d",
+    "instrument_parent.py": "f09c015cd71e0852f4fc7d424fef4c2fe94ff7e3694b241fff80c9f45c1809ea",
+    "sqrt-oracle.json": "21d0919c08539d3f05809bf3836778b6e6284804edf7addbc6858f29e6763938",
+    "test_sqrt_oracle.py": "d39f1f9ba1eaf763170da645d0dd0e46dae6a149a42956a6f3944db78c6edb8e",
+    "check_sqrt_parent.py": "c33396c99b455b7d00d9b54682816520ae3df13db085ab38c5949698ddbadc1d"
+  },
+  "main_test": "sqrt_parent_test.cpp",
+  "requires_parent": "../parent/parent_test.cpp with P4_SQRT_AUX_ENABLED hook and P4 schema2 replay",
+  "root_runs_builds": true,
+  "new_hardware_results": "NOT_TESTED",
+  "host_checks": {
+    "python_ast": "PASS",
+    "fraction_finite_cases": 12,
+    "special_value_cases": 4,
+    "oracle_unit_tests": 7,
+    "instrumentation_smoke": "PASS_ON_THREE_FILE_COPY_ONLY"
+  },
+  "future_scenarios": {
+    "normal": 15,
+    "cancel": 48,
+    "rob": 14,
+    "reset_te0": 20,
+    "switch": 18,
+    "total": 115
+  },
+  "future_checker_negative_controls": 7,
+  "production_rtl_changed_by_agent": false,
+  "builds_or_simulations_by_agent": 0,
+  "git_mutation": false
+}

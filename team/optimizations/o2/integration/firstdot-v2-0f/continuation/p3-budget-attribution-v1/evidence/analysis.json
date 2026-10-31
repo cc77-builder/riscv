@@ -1,0 +1,407 @@
+{
+  "schema": "p3-budget-attribution-v1",
+  "qualification": "READ_ONLY_DERIVED_NOT_NEW_MEASUREMENT",
+  "new_target_runs": 0,
+  "image": {
+    "elf_sha256": "50004cbc4436c8bd52edfae198527be48c224fb1baffc1e9986038e8bc3109f1",
+    "bin_sha256": "fc43caac20b07a6241b20d88fc37e1acc530cb1e1eea89d0b6bef70e4c76c459"
+  },
+  "calibration": {
+    "guest_cycles": 999988,
+    "wall_seconds": 1599.320037257,
+    "guest_per_second": 625.2582201840498,
+    "prefix_instruction_retired": 587784,
+    "raw_bytes": {
+      "stdout": 1237,
+      "stderr": 73289211
+    },
+    "peak_rss_bytes": 81133568
+  },
+  "static_per_method": {
+    "0": {
+      "split_measure": 16,
+      "qkv_boundary": 22,
+      "qkv_quantize": 3532,
+      "projection_0_TA": 49602,
+      "projection_1_TA": 49602,
+      "projection_2_TA": 49602
+    },
+    "1": {
+      "split_measure": 16,
+      "qkv_boundary": 22,
+      "qkv_quantize": 3532,
+      "projection_0_FR": 35670,
+      "projection_1_FR": 35670,
+      "projection_2_FR": 35670
+    }
+  },
+  "call_plan": [
+    {
+      "stage": 0,
+      "arm": 0,
+      "dataset": 1,
+      "index": 0,
+      "method": "TA",
+      "stage_name": "functional",
+      "certified_instructions": 152360,
+      "evidence": "prior successful control-flow path inferred"
+    },
+    {
+      "stage": 0,
+      "arm": 1,
+      "dataset": 1,
+      "index": 1,
+      "method": "FR",
+      "stage_name": "functional",
+      "certified_instructions": 110564,
+      "evidence": "prior successful control-flow path inferred"
+    },
+    {
+      "stage": 1,
+      "arm": 1,
+      "dataset": 0,
+      "index": 2,
+      "method": "FR",
+      "stage_name": "warm",
+      "certified_instructions": 110564,
+      "evidence": "prior successful control-flow path inferred"
+    },
+    {
+      "stage": 2,
+      "arm": 1,
+      "dataset": 0,
+      "index": 3,
+      "method": "FR",
+      "stage_name": "measured",
+      "certified_instructions": 110580,
+      "evidence": "partially retired first window"
+    },
+    {
+      "stage": 1,
+      "arm": 0,
+      "dataset": 0,
+      "index": 4,
+      "method": "TA",
+      "stage_name": "warm",
+      "certified_instructions": 152360,
+      "evidence": "not executed"
+    },
+    {
+      "stage": 2,
+      "arm": 0,
+      "dataset": 0,
+      "index": 5,
+      "method": "TA",
+      "stage_name": "measured",
+      "certified_instructions": 152376,
+      "evidence": "not executed"
+    },
+    {
+      "stage": 1,
+      "arm": 1,
+      "dataset": 0,
+      "index": 6,
+      "method": "FR",
+      "stage_name": "warm",
+      "certified_instructions": 110564,
+      "evidence": "not executed"
+    },
+    {
+      "stage": 2,
+      "arm": 1,
+      "dataset": 0,
+      "index": 7,
+      "method": "FR",
+      "stage_name": "measured",
+      "certified_instructions": 110580,
+      "evidence": "not executed"
+    },
+    {
+      "stage": 1,
+      "arm": 1,
+      "dataset": 0,
+      "index": 8,
+      "method": "FR",
+      "stage_name": "warm",
+      "certified_instructions": 110564,
+      "evidence": "not executed"
+    },
+    {
+      "stage": 2,
+      "arm": 1,
+      "dataset": 0,
+      "index": 9,
+      "method": "FR",
+      "stage_name": "measured",
+      "certified_instructions": 110580,
+      "evidence": "not executed"
+    },
+    {
+      "stage": 1,
+      "arm": 0,
+      "dataset": 0,
+      "index": 10,
+      "method": "TA",
+      "stage_name": "warm",
+      "certified_instructions": 152360,
+      "evidence": "not executed"
+    },
+    {
+      "stage": 2,
+      "arm": 0,
+      "dataset": 0,
+      "index": 11,
+      "method": "TA",
+      "stage_name": "measured",
+      "certified_instructions": 152376,
+      "evidence": "not executed"
+    },
+    {
+      "stage": 1,
+      "arm": 1,
+      "dataset": 0,
+      "index": 12,
+      "method": "FR",
+      "stage_name": "warm",
+      "certified_instructions": 110564,
+      "evidence": "not executed"
+    },
+    {
+      "stage": 2,
+      "arm": 1,
+      "dataset": 0,
+      "index": 13,
+      "method": "FR",
+      "stage_name": "measured",
+      "certified_instructions": 110580,
+      "evidence": "not executed"
+    }
+  ],
+  "stage_static_instructions": {
+    "functional": 262924,
+    "warm": 746976,
+    "measured": 747072,
+    "standalone_quantize": 10596
+  },
+  "minimum_known_remaining_path_instructions_excluding_checks": 1315702,
+  "instruction_reconciliation": {
+    "total_retired": 587784,
+    "completed_certified_path_instructions": 384084,
+    "incomplete_window_instructions": 67782,
+    "residual_boot_preparation_validation_probe_and_callsite": 135918,
+    "qualification": "static path counts plus mandatory control-flow inference; residual not assigned to individual helpers"
+  },
+  "retirement_gap_cycles_in_first_window_prefix": 132,
+  "quantization": {
+    "calls": 17,
+    "instructions_per_call": 3532,
+    "full_plan_instructions": 60044,
+    "scalar_fp_divides": 5049,
+    "VFEX4_DIV_events": 0,
+    "note": "scalar fdiv.s is not observed by this vector VFEX4 DIV event stream"
+  },
+  "prefix": {
+    "first_marker_cycle": 855738,
+    "last_retirement_cycle": 999985,
+    "retirement_span_cycles": 144247,
+    "covered_instructions": 67782,
+    "full_first_window_instructions": 110580,
+    "first_window_complete": false,
+    "completed_windows": 0,
+    "segments": [
+      {
+        "label": "split_measure",
+        "begin_index": 0,
+        "last_index": 9,
+        "first_retire_cycle": 855738,
+        "last_retire_cycle": 855843,
+        "instructions": 10,
+        "retirement_span_cycles": 105,
+        "complete_contiguous_segment": true
+      },
+      {
+        "label": "qkv_boundary",
+        "begin_index": 10,
+        "last_index": 18,
+        "first_retire_cycle": 855855,
+        "last_retire_cycle": 855861,
+        "instructions": 9,
+        "retirement_span_cycles": 6,
+        "complete_contiguous_segment": true
+      },
+      {
+        "label": "qkv_quantize",
+        "begin_index": 19,
+        "last_index": 3550,
+        "first_retire_cycle": 855861,
+        "last_retire_cycle": 859393,
+        "instructions": 3532,
+        "retirement_span_cycles": 3532,
+        "complete_contiguous_segment": true
+      },
+      {
+        "label": "qkv_boundary",
+        "begin_index": 3551,
+        "last_index": 3553,
+        "first_retire_cycle": 859405,
+        "last_retire_cycle": 859410,
+        "instructions": 3,
+        "retirement_span_cycles": 5,
+        "complete_contiguous_segment": true
+      },
+      {
+        "label": "projection_0_FR",
+        "begin_index": 3554,
+        "last_index": 39223,
+        "first_retire_cycle": 859425,
+        "last_retire_cycle": 937833,
+        "instructions": 35670,
+        "retirement_span_cycles": 78408,
+        "complete_contiguous_segment": true
+      },
+      {
+        "label": "qkv_boundary",
+        "begin_index": 39224,
+        "last_index": 39226,
+        "first_retire_cycle": 937895,
+        "last_retire_cycle": 937895,
+        "instructions": 3,
+        "retirement_span_cycles": 0,
+        "complete_contiguous_segment": true
+      },
+      {
+        "label": "projection_1_FR",
+        "begin_index": 39227,
+        "last_index": 67781,
+        "first_retire_cycle": 937926,
+        "last_retire_cycle": 999985,
+        "instructions": 28555,
+        "retirement_span_cycles": 62059,
+        "complete_contiguous_segment": false
+      }
+    ],
+    "first_marker_wall_delivery_bracket": {
+      "previous_sample_seconds": 1386.675747645,
+      "first_observing_sample_seconds": 1396.731940906,
+      "scope": "observer delivery bracket only; buffered output prevents exact execution wall attribution"
+    }
+  },
+  "functional_TA_custom_projections": [
+    {
+      "projection": "Q",
+      "count": 10368,
+      "first_commit_cycle": 43589,
+      "last_commit_cycle": 120790,
+      "commit_span_cycles": 77201,
+      "scope": "custom commit span, not whole projection latency"
+    },
+    {
+      "projection": "K",
+      "count": 10368,
+      "first_commit_cycle": 121026,
+      "last_commit_cycle": 208490,
+      "commit_span_cycles": 87464,
+      "scope": "custom commit span, not whole projection latency"
+    },
+    {
+      "projection": "V",
+      "count": 10368,
+      "first_commit_cycle": 208749,
+      "last_commit_cycle": 300059,
+      "commit_span_cycles": 91310,
+      "scope": "custom commit span, not whole projection latency"
+    }
+  ],
+  "functional_TA_all_custom_span_cycles": 256470,
+  "first_custom_commit_cycle": 12580,
+  "first_TA_custom_commit_cycle": 43589,
+  "last_TA_custom_commit_cycle": 300059,
+  "unpartitioned_intervals": {
+    "start_to_first_TA_custom_commit": 43589,
+    "last_TA_custom_to_first_window_marker": 555679,
+    "note": "aggregate envelopes include untraced preparation, quantization, projections, checks and warming; cannot allocate their cycles individually"
+  },
+  "log_bytes_by_tag": {
+    "O2_SCHEMA": 114,
+    "O2_STATE": 19345805,
+    "O2_REDIRECT": 42273,
+    "O2_VFEX4_REDIRECT": 40931,
+    "O2_ENQUEUE": 2799450,
+    "O2_VFEX4_ACCEPT": 3172710,
+    "O2_ACCEPT": 12504210,
+    "O2_MOVE": 10389070,
+    "O2_RESPONSE": 11757690,
+    "O2_COMMIT": 2270665,
+    "O2_STALL": 375,
+    "T13_RETIRE": 7899848,
+    "T13_COUNTER_ENQUEUE": 228,
+    "T13_CSR_SAMPLE": 166
+  },
+  "log_counts_by_tag": {
+    "O2_SCHEMA": 1,
+    "O2_STATE": 65579,
+    "O2_REDIRECT": 671,
+    "O2_VFEX4_REDIRECT": 671,
+    "O2_ENQUEUE": 31105,
+    "O2_VFEX4_ACCEPT": 31105,
+    "O2_ACCEPT": 31105,
+    "O2_MOVE": 31105,
+    "O2_RESPONSE": 31105,
+    "O2_COMMIT": 31105,
+    "O2_STALL": 1,
+    "T13_RETIRE": 65288,
+    "T13_COUNTER_ENQUEUE": 2,
+    "T13_CSR_SAMPLE": 2
+  },
+  "scenarios_not_bounds": {
+    "prefix_rate_7200_capacity": 4501859.185325159,
+    "first_FR_projection_replicated_proxy": 238756,
+    "first_TA_custom_span_plus_quantizer_proxy": 260002,
+    "allowable_overrun_fraction_before_7200": 0.262071051419134,
+    "TA_custom_projection_span_variation": 0.18275670004274547,
+    "proxy_total_guest_cycles": 3567041,
+    "proxy_seconds_at_prefix_rate": 5704.908603920493,
+    "omitted": "future prepare/judge/UART/timer gaps, cache/data-dependent and logger/host slowdown; not an upper bound",
+    "multipliers": [
+      {
+        "assumed_cycle_multiplier": 1.0,
+        "seconds_at_prefix_rate": 5704.908603920493,
+        "within_7200": true
+      },
+      {
+        "assumed_cycle_multiplier": 1.1,
+        "seconds_at_prefix_rate": 6275.3994643125425,
+        "within_7200": true
+      },
+      {
+        "assumed_cycle_multiplier": 1.2,
+        "seconds_at_prefix_rate": 6845.890324704592,
+        "within_7200": true
+      },
+      {
+        "assumed_cycle_multiplier": 1.3,
+        "seconds_at_prefix_rate": 7416.381185096641,
+        "within_7200": false
+      },
+      {
+        "assumed_cycle_multiplier": 1.5,
+        "seconds_at_prefix_rate": 8557.36290588074,
+        "within_7200": false
+      }
+    ],
+    "required_future_rate_for_18M_at_7200": 2500.0
+  },
+  "bound_inputs": {
+    "complete_guest_cycle_upper": null,
+    "future_guest_per_second_lower": null,
+    "other_wall_overhead_upper": null,
+    "trace_complete": false
+  },
+  "decision": {
+    "status": "HOLD_STAGE_P3",
+    "upper_seconds": null,
+    "admitted": false
+  },
+  "formal_probe_recommended": false,
+  "stage_p3": true
+}

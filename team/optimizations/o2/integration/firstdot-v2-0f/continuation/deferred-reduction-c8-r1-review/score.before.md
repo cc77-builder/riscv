@@ -1,0 +1,416 @@
+# 开发计分板：时间、身份、成果与路线变化
+
+从 2026-10-23 起记录真实开发活动。这里的“计分板”用于观察成果和路线，不计算个人积分、官方分数或按提交数排名。实时任务包认领与发布窗口只在协调 Issue 管理，这里不维护第二套实时状态。当前任务及默认推进顺序见[开发路线](team/docs/development-route-current.md)，正在做什么见[协作入口](team/docs/collaboration-current.md)，详细结果留在对应模块和证据目录。
+
+## 记账规则
+
+- 每个有实际改动、验证或研究结论的工作单元完成、暂停或取消时追加一条；无收益、失败、阻塞和文档工作也如实记录。一次工作可涉及几个关联工作包，不为每条命令记一行。
+- 时间填写开始～结束及 UTC 偏移，默认北京时间 +08:00；只有日期就记日期并注明精度。历时不等于人工工时，不补造开始时间，不按等待仿真的时长评价贡献。
+- 身份使用已核实的 GitHub 用户名，区分“@用户名 / Agent”和“@用户名 / 人工”；用户明确指定的身份可使用，未知写“待核实”。Git 作者名字不单独证明 GitHub 账号，Agent 不代签人工评审。
+- 记录 ID 使用日期＋账号＋唯一短后缀，可复用协调 Issue 的操作 ID；同账号多 Agent 不共用 ID。需要更正旧结论时追加更正并引用原 ID，不悄悄改掉历史结论。
+- 每条用一两句话写做了什么、得到了什么，验证状态写 PASS／FAIL／BLOCKED／NOT_TESTED 及层级，附提交／基点＋补丁身份、结果／证据链接。“路线影响／接续”有变化写依据；仍有待续工作时，即使路线不变也写具体下一动作、前置条件和成果位置，确无待续项才写“无”。
+- 未提交成果写“未提交，基点 <完整 SHA>，本条随成果提交”；提交后由 Git 历史定位承载本条的提交。代码已有独立提交时填实际 SHA。不为把承载本条的 SHA 写进它自身而反复提交／改写历史。
+- 两个 Agent 可以在独立工作区各追加自己的记录；合并冲突时按 ID 保留双方，只消除完全相同的重复条目，不覆盖整张表，不替队友补记成果。集成者可追加集成记录并引用原 ID，不把同一成果算作第二次开发。
+- 本文件不保存实时持有人、运行保护、日志全文或复制各报告。历史旧成果只导航到[既有报告](team/README.md)，不按 Git 作者猜测参与者或补造工时。
+
+## 开发记录
+
+按记录时间追加，ID 唯一。表格较长时保留近期条目，把已结束阶段的完整条目按原 ID 归入一个历史文件，并在此放时间范围链接；不按天创建空日志文件，也不归档后丢失证据链接。只有阅读成本明显增加时才归档。
+
+| 记录 ID／开发时间 | GitHub 身份／执行方式 | 工作包 | 开发内容与成果 | 验证、源码身份与证据 | 路线影响／接续 |
+| --- | --- | --- | --- | --- | --- |
+| 20261023-LiZufan001-docs-route / 2026-10-23（UTC+08:00，日期级记录） | @LiZufan001 / Agent；GitHub 连接账号已核实 | 协作启用的本地准备、全路线整理 | 统一当前入口；列齐 28 个工作包和实验采用／否决规则；补充双人并行、短发布窗口和活动摘要；建立本计分板。七份旧入口正文集中归档，原证据不变。 | PASS：本地文档静态／链接检查，无新增失效文件链接或锚点；硬件及真实双人试运行 NOT_TESTED。未提交，基点 6d2abe403b07c297b8830a7d4f06e370b0a8e070，本条随成果提交。[路线](team/docs/development-route-current.md)、[协作](team/docs/collaboration-current.md)、[归档](team/docs/history/entrypoints-before-consolidation-20261023.md)。 | 保留 O2＋H1 主线；明确近期选择和直至比赛结束的前置／关闭条件。仅本地整理；Issue 发布、正式双人试运行及官方期限核查仍待完成。 |
+| 20261023-LiZufan001-engineering-scope / 2026-10-23（UTC+08:00，日期级记录） | @LiZufan001 / Agent；沿用本会话已核实账号 | 工程路线范围更正 | 更正 docs-route 记录对应的路线范围：移出比赛材料与赛事事务，去掉 P0/P1/P2，保留 14 个工程工作包；写明 S2 实测与 S1 并行、按结果转向及稳定版本闭环，统一相关入口。原记录和历史证据保留。 | PASS：本地文档一致性、链接／锚点及保留检查；硬件和真实双人试运行 NOT_TESTED。未提交，基点 6d2abe403b07c297b8830a7d4f06e370b0a8e070，本条随成果提交。[路线](team/docs/development-route-current.md)、[AGENTS](AGENTS.md)、[协作](team/docs/collaboration-current.md)。 | 取代上一条“直至比赛结束”的工程范围：只以满足赛题技术要求和持续提高性能为目标；人工材料不阻塞工程。未启动实验、未发布 Issue、未提交或推送。 |
+| 20261023-LiZufan001-claim-s2-config-01 / 2026-10-23（UTC+08:00，日期级记录） | @LiZufan001 / Agent；沿用已核实 GitHub 账号，操作ID `20261023-LiZufan001-claim-s2-config-01` | 双 Agent 任务包认领／R2-S2 运行配置迁移 | 保留 14 固定包；WORK 明确认领、READY 保留、短 FF 窗口；S2 新增 B0/H1 回执可配置路径和严格迁移检查器身份，修正预检说明及 Windows Git 路径，增加 6 项回归。仅本地改动，不发布 Issue/不推送。 | PASS：Windows 6 项配置测试＋16 项旧 R2 审计；WSL 21 项 S2＋29 项全核入口门禁＋6 项配置；历史 H1 的 Linux 31 项 PASS，原函数未变化；文档本地链接、Git diff 静态检查 PASS。Windows H1 旧有 POSIX 路径断言 1 FAIL，未冒充新回归通过；真实 B0/H1 EMU、DiffTest、PPA NOT_RUN。基点 `6d2abe403b07c297b8830a7d4f06e370b0a8e070`，本条随未提交成果保存。 | 明确默认认领次序及冲突回读，S1/S2 冻结边界保留；下一步需发布协作 Issue 并做真正双 Agent 试运行、按现有依赖补全 R2 实测。 |
+| 20261023-LiZufan001-collab-final-01 / 2026-10-23（UTC+08:00，日期级记录） | @LiZufan001 / Agent；本轮重新核实 GitHub 登录 | 用户指定协作维护／发布准备 | 在现有文档补齐发布窗口回读、竞争避让、交接和完整活动摘要；14 包改为当前规划；说明 S2 无断点恢复且 all 会重新构建；修复计分板表格并发布协调 Issue。原有改动及历史证据保留，本轮未改运行脚本、未新增仓库文件。 | PASS：124 份文档的文件链接与锚点、活动文件 Git 静态检查；归档保留 6 处原有 Markdown 硬换行，原运行脚本/配置/测试和历史文件字节保持。本轮未启动硬件实验或真实双 Agent 试运行。基点 6d2abe403b07c297b8830a7d4f06e370b0a8e070，本条随成果提交，承载提交由 Git 历史定位。[协作入口](team/docs/collaboration-current.md)、[S2 限制](team/optimizations/o2/r2-safe-tail/FULLCORE_VALIDATION.md#中断与重复构建限制)。 | 协调入口为 [Issue #2](https://github.com/cc77-builder/riscv/issues/2)；首次成员同步及后续发布状态以该 Issue 的真实事件为准，不代签队友状态。 |
+| 20261023-LiZufan001-requirements-prompt-01 / 2026-10-23 15:23～15:44（UTC+08:00，文档整理与核查） | @LiZufan001 / Agent；本轮核实 GitHub 登录 | 用户指定赛题资料与跨轮接续说明 | 转录三张干净截图及九项评分，以二进制保留原图；核对香山官方赛题、教学题和环境／提交说明，区分官方要求与内部合同。统一要求入口及新对话接续规则；另交付本地长期提示词，写明持续推进、120 分钟努力目标和实际权限边界。 | PASS：七份文档本地链接／锚点、评分合计、三张源图哈希及历史保留检查；工程代码、脚本未变，硬件与真实双 Agent／PPA 长时试运行 NOT_TESTED。基点 `cd1be4d0bceb7927fdd5a60508493d00fa341e36`，本条随成果提交。[要求与来源](赛题要求与评分总览.md)、[接续规则](team/docs/collaboration-current.md#cross-round-handoff)。 | 工程默认路线未改，比赛材料继续由人工负责。下一轮先读总览第 1/2/5 节及 Issue 实时活动；R2-S2 未被占用且输入就绪时按现有筛选合同接续，否则选就绪独立包。本轮未启动实验，也未修改 PPA 配置或触发投递。 |
+| 20261023-LiZufan001-r2s2-screen-1632 / 2026-10-23 16:32:30～18:08:22（UTC+08:00，工程准备与实测复核） | @LiZufan001 / Agent；本轮核实GitHub登录 | R2-S2 合并版单硬件筛选 | 完成26份真实GNU/AM ELF及31次EMU，形成384正式窗口和4次重放。4×13 reuse/endtoend 209.5→187.25周期（−10.621%），basic退化21.138%；只保留reuse为选型候选。新增独立运行/封存/复算入口，原候选、黄金值、旧固定哈希保持。 | PASS：80主机测试、完整DiffTest/拒错恢复/CSR退休/O2事务、Linux原文复算、Windows归档字节和965文件完整Git索引（实测拒绝初始漏303文件）。962文件原始约274MB、保存约55MB。原B0/H1仍BLOCKED；MERGE-REG、T17、PPA不转移PASS。基点 `ff58e519091f273c4bc177f5e82cfbbfaf102cc5`，本条随成果提交。[结果](team/optimizations/o2/r2-safe-tail/MERGED_RESULT.md)、[合同与命令](team/optimizations/o2/r2-safe-tail/MERGED_SCREEN.md)、[原文复算](team/optimizations/o2/r2-safe-tail/evidence/merged-screen-v1-audit-linux.json)。 | 新实测支持reuse进入R2-SELECT，距较快RVV仅2.75周期，basic保留S0。下一步按结果末节补MERGE-REG新matrix0拒错→新正常恢复并复核旧11正常/2补充及adopted来源；若被占用，做独立S1及对等RVV原型。运行配置和实际来源在归档support，独立工作区/操作ID和实时交接见[Issue #2](https://github.com/cc77-builder/riscv/issues/2)；旧实物不变时不重复预检。 |
+| 20261023-LiZufan001-r2s2-index-1810 / 2026-10-23 18:11:33～18:15:39（UTC+08:00，门禁补强） | @LiZufan001 / Agent；沿用本轮核实GitHub登录 | R2-S2 归档发布门禁子项 | 只读审查发现Git文件模式与回执输出位置两个边界；要求唯一stage 0普通文件、绑定对象ID读取blob，并拒绝将回执写入封存目录。未改归档、运行入口或黄金值。 | PASS：新增8项针对性测试、2项实际CLI拒错（独立临时索引中的同blob符号链接、归档内输出）；965文件全部100644且字节/清单一致。新增EMU为0。基点 `d5967731fad46e2f40527add35da1b0984bd17a4`，本条随成果提交。[测试](team/optimizations/o2/r2-safe-tail/evidence/merged-screen-v1-index-hardening-tests.json)、[实际索引](team/optimizations/o2/r2-safe-tail/evidence/merged-screen-v1-index-hardened-check.json)。 | 关闭上述发布漏项，S2性能取舍不变；接续MERGE-REG新matrix0负控→新正常恢复及旧记录来源复核，具体入口见[结果末节](team/optimizations/o2/r2-safe-tail/MERGED_RESULT.md#实际验证状态与接续)。当前实时状态只见[Issue #2](https://github.com/cc77-builder/riscv/issues/2)。 |
+
+| 20261023-LiZufan001-r2s1-2100 / 2026-10-23 21:00:41～2026-10-24 00:32:31（UTC+08:00，工程与交付检查；发布结束时间见Issue） | @LiZufan001 / Agent；本轮实际核实GitHub登录 | R2-S1 向量累加／对等RVV及比较完整性 | 实现独立S1，定位并修复GNU relaxation引起的槽外布局混杂；固定完整布局后，4×8、8×32、16×64 reuse/endtoend vdot周期下降5.7751%、12.5000%、17.1589%；K13退化1.3095%不采用。完成指令／FU诊断及首dot初始化可行性探针，后者无动态收益结论。 | PASS：19项GNU／模型＋19项证据测试、52AM ELF／26对布局、57次规范整核进程（含1预期负控）／768正式窗口、另4次小尺寸重放／96签名；两项跨检出原文重算、Windows字节、2797封存文件index及31外置报告／日志逐blob核验。被否决v1的17次和真实失败原样保留；Git whitespace FAIL仅3处冻结源码EOF空行；旧B0/H1 BLOCKED，MERGE-REG/R4/T17/PPA NOT_TESTED。基点 `bca14d45b07ff07a86a7f54bce2b25870e60e2f3`，本条随成果提交，承载提交由Git历史定位。[结果与运行定位](team/optimizations/o2/r2-vector-accum/VALIDATION.md)、[合同／命令](team/optimizations/o2/r2-vector-accum/README.md)、[完整审计](team/optimizations/o2/r2-vector-accum/evidence/merged-v2-audit-linux.json)、[外置交付检查](team/optimizations/o2/r2-vector-accum/evidence/merged-v2-publication-check.json)。 | 更正r2s2-screen-1632的采用建议：旧K13 −10.621%受完整布局混杂，保留功能PASS及历史观察，暂不用于选择；新S2须固定完整布局并对照本轮更快RVV。三个整块S1 reuse已可进入R2-SELECT，K13保留S0 vdot回退及更快S1 RVV；无需等待新S2或firstdot才开始现有合格候选选择。S2被占用时可从最终first_dot_probe.py／first-dot-probe-02接续独立合同、实际目的寄存器负控恢复后再配对实测；具体输入和退出条件已写入结果末节及路线，实时交接仅见[Issue #2](https://github.com/cc77-builder/riscv/issues/2)。 |
+
+| 20261024-LiZufan001-r2s2-fixed-0001 / 2026-10-24 00:01:02～2026-10-24 01:45:18（UTC+08:00，工程/验证阶段记录；发布收束见Issue） | @LiZufan001 / Agent；本轮实际核实GitHub登录 | R2-S2 固定布局重测与强RVV取舍 | 新合同固定完整加载布局，31次主批/384正式窗口确认K13 reuse端到端210→187（−10.952%），basic退化21.117%，16×64控制不变；另5次统一强RVV探针/32窗口得到同镜像187对175.25，S2慢6.705%，按预设条件停止扩大采用。 | PASS：最终20项布局/模型与9项probe测试、26+2 canonical ELF、两项原生Linux独立检出完整复算、10+5归档拒错测试；88项旧门禁兼容、Windows994+204封存文件完整index通过。首次probe测试预期错误FAIL及准备/观察命令失败原样保留；旧B0/H1 BLOCKED，强RVV全矩阵/R4/T17/PPA NOT_TESTED。主批来源bca14d45b07ff07a86a7f54bce2b25870e60e2f3，交付基点ec221262ae29522dd9d1a2be7240b405cc23a549，本条随成果提交。[结果和接续](team/optimizations/o2/r2-safe-tail/FIXED_RESULT.md)、[主合同](team/optimizations/o2/r2-safe-tail/FIXED_LAYOUT.md)、[强RVV合同](team/optimizations/o2/r2-safe-tail/RVV_PROBE.md)、[主批复算](team/optimizations/o2/r2-safe-tail/evidence/fixed-screen-v1-audit-linux.json)、[probe复算](team/optimizations/o2/r2-safe-tail/evidence/rvv-probe-v1-audit-linux.json)。 | 原S2旧布局差不再用于采用；新reuse收益保留，但当前较快RVV消除其采用优势，不扩大无收益矩阵。下一项按Issue认领R2-SELECT，复用S1 v2四尺寸完整12窗口做可检查的选择入口；任何新调度/合并镜像须验证真实影响，先查余量最小的8×32/endtoend。精确源码SHA、原始配置/运行/审计命令和回退均已封存；独立检出与实时交接见[Issue #2](https://github.com/cc77-builder/riscv/issues/2)，不接管MERGE-REG有效认领。 |
+
+| 20261024-LiZufan001-r2select-0001 / 2026-10-24 01:54:04～2026-10-24 02:25:18（UTC+08:00，工程/验证阶段；发布收束见Issue） | @LiZufan001 / Agent；沿用本轮已核实GitHub登录 | R2-SELECT 合格原镜像选择/查询/精确导出 | 新增严格export/verify/resolve入口，完整复算768正式窗口/64候选格，保留最快RVV和S0 vdot回退；实际导出48份完整原镜像、1296载荷/101861823字节。三个整块形状选S1 reuse vdot，K13选S1 reuse RVV；无新dispatcher或默认切换。 | PASS：最终Linux和原生Windows各21项真实归档测试，实际导出、跨WSL UNC核验/查询及移位/篡改/输入写保护拒错；源selection.py SHA256 8230162c9f28356614cefb0b22a5f88efc1dbcfff66eb7b216853e1bec43f60b。Windows长路径初始FAIL与包装异常类型错误已定位，旧版本/失败原样保留。新增EMU/NEMU为0，架构资格复用原报告并核验身份，R4/T17/PPA NOT_TESTED。基点fdef4e45dcfab46ee85ca6d3574fb8e8d33943bd，本条随成果提交。[结果/接续](team/optimizations/o2/r2-select/RESULT.md)、[命令](team/optimizations/o2/r2-select/README.md)、[实际选择](team/optimizations/o2/r2-select/evidence/selection-v1/bundle-02/selection.json)、[运行定位](team/optimizations/o2/r2-select/evidence/selection-v1/runtime/locations.json)。 | 原镜像数据层已闭合；下一项按Issue认领R4/O5，先resolve获选与最快RVV的8×32/d0/endtoend原身份。若引入新caller/链接/调用计划，建立新合同、实际负控恢复与重放，强RVV同新入口/计时边界重测；旧10.75周期余量只定首个试验，不转移性能分母。无收益保留现有工具/RVV，通过后扩大受影响范围再T17→R5/G5。R4被占用时选未冲突firstdot运行合同或R3只读分析；MERGE-REG有效认领/保护不接管，实时收束见[Issue #2](https://github.com/cc77-builder/riscv/issues/2)。 |
+
+| 20261024-LiZufan001-r4-entry-0442 / 2026-10-24 04:42:15～07:08:33（UTC+08:00，工程及主要验证；提交发布收束见Issue） | @LiZufan001 / Agent；本轮实际核实GitHub登录 | R4/O5 获选GEMV普通调用入口影响验证 | 新增RV64 C ABI叶函数、16个S1公共函数及普通C使用入口；新固定调用窗中4×8／8×32／16×64选S1 reuse vdot，较最快同入口RVV少9.4667%／2.7431%／7.9859%周期；K13选S1 reuse RVV，保留S0回退。 | PASS：24性能ELF＋1普通C ELF、25主机测试、33性能EMU／384正式窗口／192重放比较；另3C进程，48不同case／96正常执行且每个正常进程1008vdot提交；真实负控恢复、原文审计、主Agent跨目录报告相同比较、1695档案文件完整Git索引均通过。准备命令失败、取消及工具提案阻塞/目录更新拒绝原样保留。基点ac2f4082a6a4710dca6a739f66d6fa77c49552b8，本条随成果提交，承载提交由Git历史定位。[结果](team/optimizations/o2/r2-select/ENTRY_RESULT.md)、[使用与回退](team/optimizations/o2/r2-select/ENTRY_README.md)、[性能审计](team/optimizations/o2/r2-select/evidence/entry-v1-audit-linux.json)、[C审计](team/optimizations/o2/r2-select/evidence/c-api-v1-audit-linux.json)、[运行定位](team/optimizations/o2/r2-select/evidence/entry-runtime-v1/locations.json)。 | 只闭合调用入口子项，未切换默认、未改RTL/官方程序；完整MERGE-REG由有效认领者交付，T17／ASIC PPA不转移PASS。下一步核对相容MERGE-REG证据并补完整依赖，由另一执行者实际复现，再按R5/G5切换。8×32仅8.25周期余量，未来caller/调度变化仍先同入口强RVV配对；K13无理由统一为较慢vdot。工作区与state已写运行定位，认领释放及远端真实SHA见[Issue #2](https://github.com/cc77-builder/riscv/issues/2)。 |
+| 20261024-LiZufan001-native-fs-docs / 2026-10-24（UTC+08:00，日期级记录） | @LiZufan001 / Agent；本会话 GitHub 身份已核实 | 用户明确要求的 Windows/WSL 执行环境规范（任务包外文档维护） | 在独立文档工作区补充 Windows NTFS 工作树使用原生 Git、WSL 原生目录构建/仿真、跨系统源码与证据身份核验的默认原则；同步修订香山 PPA 专属提示词引用，未改 PPA 公共提示词或其他项目。 | PASS：Windows 原生 Git `diff --check`、修改范围和 R4 证据相对链接检查；PPA 配置使用官方保存接口并回读确认只改变香山提示词。硬件构建／EMU／PPA NOT_TESTED（文档无硬件修改）。基点 `0cc45ab2de4af9d1a4ca49c84a16637ccf2e6c34`，本条随成果提交。[入口](AGENTS.md)、[环境](team/docs/environment.md)。 | 工程任务优先级及当前 MERGE-REG 认领不变；下一轮按工作树实际文件系统选择 Git 执行环境，以 Linux/WSL 原生目录运行重型任务；例外依据实测调整。没有新增实验资格或工程包交接。 |
+
+| 20261024-LiZufan001-merge-close-0854 / 2026-10-24 09:07～09:30（UTC+08:00，接续及主要验证；发布收束见Issue） | @LiZufan001 / Agent；本轮已核实GitHub登录，用户明确授权接续原认领 | MERGE-REG 新交付与释放 | 保留原controller和运行，修复归档审计对输入JSON键顺序的误拒；12 core＋2 supplements、13完整正常轨迹、1预期拒错和六项O2覆盖均通过完整原文复算。交付原archive-02的558载荷及三次先前审计失败记录；本轮没有新增EMU/NEMU。 | PASS：15主机测试；Linux完整架构／异常／控制／dense／来源链／同镜像拒错恢复复算；原实物审计结果SHA `57737f94…`，原归档manifest `42fa2d85…`，冻结controller `b082d34f…` 不变。本轮归档工具 `69216d4a…`；完整Git index核验见证据回执。基点 `34bae6d4acceac939f958199dae53c14bc1f6183`，本条随成果提交。[结果与边界](team/optimizations/o2/fullcore/MERGED_REGRESSION_RESULT.md)、[离线复算](team/optimizations/o2/fullcore/evidence/merged-regression-v1/archive-audit-linux-final.json)、[运行定位](team/optimizations/o2/fullcore/evidence/merged-regression-v1/locations.json)。 | 已提供与R4相同6d2/1a23硬件的相容回归证据，解除该组合交付缺项；旧9b3/B0/H1仍不改判。T17正以新干净构建身份开展，本包不转授T17/性能/PPA资格。正常FF发布后按[Issue #2](https://github.com/cc77-builder/riscv/issues/2)关闭认领；原输入和失败证据可回溯。 |
+
+| 20261024-cc77-builder-branch-integration / 2026-10-24（UTC+08:00，日期级记录） | @cc77-builder / Agent；本轮连接器核实登录 | 用户要求的三分支审查与zjhwork整合 | 以zufan c9132b8d快进候选保留28提交，含zjhwork2；James门控/门禁改进待独立移植，未混入新RTL。 | 259主机项、98321 C judge检查、7项原文复算及560文件index检查PASS；4可选组和原R4物理夹具测试边界、首次环境失败保留。0新EMU/NEMU。[证据](team/docs/branch-integration-20261024.md)。基点17bab1d，候选c9132b8d，本条随集成说明提交，实际推送另回读。 | 本用户目标继续zjhwork；保留O2/H1，导入S1/选择/C接口及MERGE-REG。T17由Issue现有执行者进行，待最终提交再审查；不代签ACK或自动默认切换。 |
+
+| 20261024-cc77-builder-r3-readonly / 2026-10-24 11:33～11:47（UTC+08:00，分析与归档，非人工工时） | @cc77-builder / Agent；沿用本轮已核实账号 | R3 只读成本、元数据、ready与门控分析 | 完成消费者／映射核查；确认父级VPU已裁除、全核perf输入常零、VDot占用门控正确，选择共享DIV取消保持位清理为下一最小候选；暂缓裁字段、注册ready和19位保存。 | PASS：两份映射、5份生成SV、3137条正常接受元数据，34356帧门控对照，82输入／70 STA路径及96应用窗口原文重算。0新RTL/EMU/NEMU/综合；当前H1＋修复NOT_TESTED。未提交，基点4669c487f3024ee5fce514c37270297f99066b2a，本条随成果提交。[分析及来源](team/optimizations/o2/r3-readonly/README.md)。 | 调查完成不等于实现完成。下一硬件动作是严格取消空闲门禁旧版预期失败→最小修复→FU/父级→新身份全核与周期/STA；软件首块初始化单独推进，不阻塞T17。未发布Issue消息、未提交或推送；旧输入与默认入口不变。 |
+
+| 20261024-cc77-builder-r3-div-cancel-gate / 2026-10-24 11:53～12:10（UTC+08:00，工程与验证，非人工工时） | @cc77-builder / Agent；沿用已核实账号 | R3 O2 DIV取消关钟／局部G1-G2 | 仅ExeUnit增加O2 VIDiv/VFDiv匹配取消清理；保留VDot占用门控。严格C++和离线门禁，新增28组ROB定向及6组复位取消交叠。 | PASS：旧版tick13330预期clock失败；新FU/父级10022向量和4＋16观察负控、49主机项；父级35075帧，48取消窗口144拍零脉冲，167载荷离线复算。新全核/NEMU/周期/PPA NOT_RUN。未提交，基点4669c487f3024ee5fce514c37270297f99066b2a，候选ExeUnit SHA fd98aaced17c39dabd4776a53948f05650c8956178f6540bf5695d15753d60fa。[结果](team/optimizations/o2/r3-div-gate/RESULT.md)。 | 下一步固定候选新身份构建EMU并做受影响差分/控制回归，随后同镜像周期及同条件STA再取舍；仅局部通过，旧全核EMU/默认入口/T17输入未改。用户要求先不上传，未提交/推送、未发Issue消息，无在途硬件运行。 |
+
+| 20261024-cc77-builder-r3-div-gate-fullcore / 2026-10-24 12:23～2026-10-25 00:05（UTC+08:00；含执行暂停／墙钟长间隔，非连续计算或人工工时） | @cc77-builder / Agent；沿用已核实账号 | R3 DIV取消关钟修复：新身份全核/NEMU及证据交付 | 将修复与五份门禁保存为本地提交0f12df675378556670afd0dd2153f47fcb330610，完整保留原H1构建；新EMU 2d1db77cc407486a2387a4a69da2498b68d44980239025eebcc02370c02826e8。 | PASS：110主机项、12 core＋2 supplements，13正常差分＋1真实bit100预期拒错及同镜像正常恢复；117唯一／124执行case、5378正常vdot提交、六项O2覆盖。严格原文复算429硬件／21236依赖；319载荷／18699120封存字节（含两份AM静态库的限定忽略例外）及Linux/Windows原生便携轨迹复算均PASS。[全核结果与接续](team/optimizations/o2/r3-div-gate/fullcore/RESULT.md)、[跨平台回执](team/optimizations/o2/r3-div-gate/fullcore/reviews/cross-platform-check.json)。最终342文件原生复制核验PASS；首轮因清单尚在刷新而拒绝，失败及成功回执均保留在本地交付目录。 本轮无新性能A/B、综合STA、功耗或人工ACK；执行暂停证据已保留，没有重复启动EMU。 | 全核/NEMU正确性关卡闭合，当前仍是本地O2＋H1＋DIV关钟修复候选。下一步用保留的原H1／修复版同镜像周期不退化，再同约束成本/STA后取舍；不转授T17或最终采用。用户要求不上传：未推送、未发Issue消息；源码本地提交，工程证据及导航留在工作树。原H1位于/home/riscv/riscv-lab/o2-h1-build-before-r3-div-gate-20261024，本轮原始根/home/riscv/riscv-lab/o2-r3-div-gate-fullcore-20261024；无在途硬件运行。 |
+
+| 20261025-cc77-builder-r3-div-gate-performance-cost / 2026-10-25 14:54～16:52（UTC+08:00；含构建等待，非人工工时） | @cc77-builder / Agent；沿用已核实账号 | R3 修复前后同镜像周期与同约束综合STA | 固定原H1 8b5024fc/e37b3c26与修复版0f12df67/2d1db77c，429源码、21236依赖、1672生成物及工具身份审计；未改生产RTL或冻结镜像。 | PASS：36次新EMU、478校验窗、96对正式窗周期全部相同、4次确定性重放一致；batch仍221周期、3.067873×RVV。复用已封存原H1 205份PPA载荷；修复版2次综合、10档STA、70项路径对比完成，62项主机测试及严格复算通过。FU面积和时序不变；父级面积284879.882→284614.946（−0.093%），DFF17171→17172已定位为原整数DIV余数位的映射保留；r2r +94.304ps、i2r +119.132ps，ready −47.603ps，两版均未满足参考1ns时序，不能称时序不退化。1008载荷封存及Linux/Windows原生字节核验通过，最终1048文件复制核验通过；保留生成范围初次拒绝和Windows编码包装失败记录。[结果及限制](team/optimizations/o2/r3-div-gate/PERFORMANCE_COST_RESULT.md)、[跨平台回执](team/optimizations/o2/r3-div-gate/reviews/cross-platform-check.json)。 | 本轮周期不退化与成本评估闭合，无在途EMU/EDA；保留为关钟正确性候选，下一步团队复核取舍后再冻结，若继续优化应针对DIV关钟控制锥并重做对应门禁，不能宣称功耗降低或全核频率提升。本地原始根/home/riscv/riscv-lab/o2-r3-div-gate-performance-20261025与o2-r3-div-gate-cost-20261025；交付回执位于o2-r3-div-gate-evaluation-delivery-20261025。本轮未推送、未发Issue消息；用户授权上传后才发布zjhwork，不触碰他人独立工作区。 |
+
+| 20261025-cc77-builder-r3-div-gate-timing-review / 2026-10-25 已记录17:17～17:33（UTC+08:00；含工具等待，非人工工时） | @cc77-builder / Agent；沿用已核实账号 | R3 DIV关钟时序复核与有界候选决定 | 只读原H1/修复版父级固定映射，2次nominal定向STA后按新增保持D端证据追加1次取消来源探针；生产源码仍0f12df675378556670afd0dd2153f47fcb330610，无RTL改动、新综合或EMU。 | PASS：3次STA/46份新报告、30份封存输入身份、18旧路径、4固定端点与2门控最差重现。固定r2r仍+94.304ps；浮点保持D最差0.713811→1.930584ns，BUF弧增量占所报差值95.18%，共享ClockGate.E接收网络；ROB来源约0.505ns、flush ROB输入约0.610ns，hold→ICG约0.139ns。VDot门控nominal slack仅+3.779ps，不忽略。见[结果与候选筛选线](team/optimizations/o2/r3-div-gate/timing-review/RESULT.md)、[审计](team/optimizations/o2/r3-div-gate/timing-review/evidence/audit-01.json)。 | 保留当前正确性修复，值得一次C1复用divBusy＋owner编码筛选；先证明状态/事件等价及FU/真实父级严格门禁，再完整父级面积和五档STA，合格才全核与同镜像周期。C1尚未实现，不能宣称提速/功耗改善/1ns收敛。原始根/home/riscv/riscv-lab/o2-r3-div-gate-timing-review-20261025，本地95文件交付及Windows原生字节校验通过，无在途任务；未推送、未发Issue消息、不改队友受保护工作区。 |
+
+| 20261025-cc77-builder-c1-owner / 2026-10-25 17:51～18:31（UTC+08:00；含构建与归档等待，非人工工时） | @cc77-builder / Agent；沿用已核实账号 | R3 C1 DIV占用/owner实现与一次有界筛选 | 修改RTL前已告知；独立候选3be0e3d9e500bd1aa772bcc8d4f8b023a2877c66，仅ExeUnit.scala，当前0f12df6与原构建保留。控制状态D最差1.930584→0.798315ns，父级面积−0.009626%、DFF净少1。 | 状态模型4状态/1920转移/18240 ROB关系及4变异、51主机项、FU/真实父级10022向量及4＋16观测负控PASS；35075拍父级原文完全相同，48取消窗144拍零额外时钟。1次父级综合、5档标准STA及10次定向STA；40504运行输入/305筛选输入/115原始报告/45比较复算PASS，但15项相对路径门槛FAIL（VDot r2r、ready、整数DIV ICG），结论C1_SCREEN_REJECT。583载荷封存及Linux/Windows原生字节核验通过，606文件交付一致；依赖预检失败及映射审查额外差异原样保留。[结果与证据](team/optimizations/o2/r3-div-gate/c1/RESULT.md)。 | C1不采用，不进入全核/NEMU/周期；无新加速比、功耗或Fmax结论，未推送/未发Issue消息。原始根/home/riscv/riscv-lab/o2-c1-owner-20261025，候选在repo/，无在途硬件运行。关闭一次候选，下一硬件尝试须有共享接收/ICG缓冲路径新假设并另立合同；修改RTL前先告知用户。不将C1局部PASS转授下一版或T17，原修复版0f12df6保持。 |
+
+| 20261025-cc77-builder-c2-attribution / 2026-10-25 18:37～18:55（UTC+08:00；只读分析与交付，非人工工时） | @cc77-builder / Agent；沿用已核实账号 | R3 DIV门控只读路径归因与C2决策 | 固定0f12df6与被否决C1的既有映射；确认整数ICG共享接收分发树缓冲加深，ready门型/负载重排，VDot同端点也退化。 | 只读审计PASS：2次同约束STA/20查询（19有效路径、1 owner/Q无路径；实际走QN）；182去重输入身份、59载荷3,910,055字节归档核验。35075拍旧轨迹中17666空闲非reset采样均ready，1744受限启动与fire一致；无不变量约束时仍有12组合反例。保留解析器失败/离线恢复和主机命令长度失败。[结果及证据](team/optimizations/o2/r3-div-gate/c2-attribution/RESULT.md)、[审计](team/optimizations/o2/r3-div-gate/c2-attribution/reviews/final-audit.json)。 | 建议仅开启C2-G0空闲就绪不变量证明，未开始G0或C2 RTL；须核对有效初始化、ROB取消同边沿、双lane和SQRT，合法反例则停止。通过后才提前告知RTL改法并另立筛选合同；保留0f12df6，C1仍否决。无新综合/FU/全核/NEMU/周期，无GitHub写入或默认切换；原始根/home/riscv/riscv-lab/o2-c2-attribution-20261025。 |
+
+| 20261025-cc77-builder-c2-g0-proof / 2026-10-25 已记录19:46～19:59（UTC+08:00；本轮初始只读检查早于落盘时间，非人工工时） | @cc77-builder / Agent；沿用已核实账号 | R3 C2-G0 空闲就绪控制证明 | 保持0f12df6；源码审查＋控制抽象闭包证明!divBusy⇒intReady&&fpReady，覆盖整数16子、浮点双lane/SQRT、ROB取消和复位。实际全核EMU2d1db77c及10生成RTL与旧manifest一致，确认共享async reset、TE0仍有效。 | 控制抽象PASS：主async48状态/33600转移，sync有效bootstrap后任意TE同数；5主变异均击穿目标；FP细模型各38/11184，细化640输入/660后继、整数top384包含，整数代表子21888转移，ROB65536项。65输入身份/44载荷251126字节及独立审查通过。保留无bootstrap同步反例、首轮结果与新增warm-reset复核，修正固定向量实例无标量early-finish分支。[结果](team/optimizations/o2/r3-div-gate/c2-g0/RESULT.md)、[审计](team/optimizations/o2/r3-div-gate/c2-g0/reviews/final-audit.json)。 | G0在固定源码/有效复位/同步接口域通过，非完整RTL形式等价；建议下一步另立有界C2合同，仅改门控启动项并保留实际接收，改RTL前先告知。先真实FU/父级含SQRT与lane偏斜/取消/复位，再同约束PPA，合格才全核/周期。未改RTL、未启动硬件或EDA、未上传/发Issue；原始根/home/riscv/riscv-lab/o2-c2-g0-20261025。C1仍否决，当前0f12df6不变。 |
+
+| 20261025-cc77-builder-c2-readyless / 2026-10-25 20:11～20:33（UTC+08:00；含构建与归档等待，非人工工时） | @cc77-builder / Agent；沿用已核实账号 | R3 C2 门控启动去ready＋各版本数据档案 | 修改前说明并冻结合同，独立候选6704ce3502a7235cdb81697638c01ed23f6914f6，仅ExeUnit生产改动；C1 busy/owner与新启动式组合重新验证，真实接收/ROB/写回不变。0f主检出与原EMU保持，C1否决保持。 | PASS：51主机项，FU10022完整128位/31499拍及4观察负控；真实父级13组/35075拍和16观察负控，与源兼容0f及C1三方日志字节一致。新增115场景/2959拍，含实际SQRT双lane偏斜、TE0动态复位、取消与切换；54取消窗162空闲采样0多余脉冲，7离线坏观察拒绝。生成两DIV ICG.E无ready/fire组合依赖。独立审计1119输入/1298源码检查；375载荷封存及Linux/Windows原生离线复算PASS，原依赖预检失败与审计修正保留。[结果](team/optimizations/o2/r3-div-gate/c2/RESULT.md)、[18条版本数据档案](team/docs/version-data-ledger.md)（58历史来源＋32本轮来源）。 | C2局部功能通过但未采用；下一步按合同相对0f做同约束父级综合＋五档STA，过筛才新全核/NEMU及同镜像周期。本轮未做C2成本/全核/周期，无提速结论；未上传/写Issue。候选及原始输出在/home/riscv/riscv-lab/o2-c2-readyless-20261025；无在途硬件运行。今后每轮数据追加单一档案，旧失败/未测不覆盖；修改RTL仍提前告知。 |
+
+| 20261025-cc77-builder-c2-cost-01 / 2026-10-25 20:44～21:21（UTC+08:00） | @cc77-builder / Agent；沿用本会话核实身份 | R3 C2同约束成本筛选 | 固定6704ce35、无RTL修改，新父级综合1次、常规STA5次、两边定向STA10次全部exit0；面积284614.946→284496.310（−0.041683%）、控制D1.930584→0.977028ns，但25/45项超限，C2拒绝。 | PASS：工具报告与独立复算可信；REJECT：冻结筛选。529份压缩载荷封存、Linux/Windows原生校验复算一致；66观察拒错检查PASS，旧18档案保留、追加第19条。源6704ce3502a7235cdb81697638c01ed23f6914f6；结果/文档本地未提交，主基点0f12df675378556670afd0dd2153f47fcb330610。[结果](team/optimizations/o2/r3-div-gate/c2/cost/RESULT.md)、[档案](team/docs/version-data-ledger.md)。 | 保留0f和原EMU，C1/C2均不采用，关闭本版C2全核与周期；新构建/EMU进程数0，无在途本轮硬件任务。若继续门控优化，先明确共享逻辑/扇出隔离实验，改RTL前提前说明；不放宽门槛重试。未上传GitHub/未写Issue；后续数据继续追加。 |
+
+| 20261025-cc77-builder-c3-g0-01 / 2026-10-25 21:42～21:58（UTC+08:00） | @cc77-builder / Agent；沿用本会话核实身份 | R3 C3-G0最小改法可行性评审 | 只读固定0f/C1/C2及原网表路径，建议唯一C3-HF：FP DIV/SQRT hold置位F→P，ICG/实际握手不动。没有RTL改动、EDA/EMU或GitHub写入。 | PASS：源码绑定控制抽象4组，各48状态/38400输入组合/48960后继，6负控拒绝，域外初始化反例保留；35份独立审查载荷校核、54份总载荷封存。NOT_TESTED：新RTL/FU/父级/PPA/全核/周期。旧19条档案不变，追加评审第20条。未提交，基点0f12df675378556670afd0dd2153f47fcb330610。[评审](team/optimizations/o2/r3-div-gate/c3-g0/RESULT.md)、[档案](team/docs/version-data-ledger.md)。 | 值得至多一次试验，不等于采用；实施前说明RTL改法，先局部门禁再一次原成本筛选，失败结束当前门控优化、保留0f并回稳定集成/T17；全通过才新全核/周期。不自动扩大或放宽门槛。本轮停在评审，无在途硬件任务。 |
+
+| 20261025-cc77-builder-c3-hf-01 / 2026-10-25 22:03～22:41（UTC+08:00；含综合等待，非人工工时） | @cc77-builder / Agent；沿用本会话核实身份 | R3 C3-HF 单次最小范围试验 | 改RTL前已说明，独立候选77d0a1228f0da7d584d5c7375b404dcda9763cf3，仅FP hold SET；原0f源码/EMU不变。面积+0.184115%，控制D最差1.930584→1.609770ns。 | 局部PASS：51主机项、10022完整128位向量、FU31499拍、原父级13组35075拍、补充115场景2959拍及保持递推2958合格拍，36分层拒错；54取消窗162采样零额外时钟。一次综合、5常规+10定向STA，20/45路径通过、25/45未通过；独立原文审计通过。观察器首次编译失败及解析初检保留。[结果](team/optimizations/o2/r3-div-gate/c3-hf/RESULT.md)、[第21条档案](team/docs/version-data-ledger.md)。 | 成本拒绝，关闭本轮门控优化；保留0f，转回稳定集成和T17干净复现。新全核/周期NOT_TESTED，无新加速比；未推送/未发Issue。候选本地提交，证据文档未提交，原始根/home/riscv/riscv-lab/o2-c3-hf-20261025；无在途硬件。 |
+
+| 20261026-cc77-builder-branch-review / 2026-10-26 14:17～14:27（UTC+08:00） | @cc77-builder / Agent；沿用会话核实身份 | R4/O5、T17接续前分支只读评审 | 固定zufan fcf4a11、James a669af78；fetch对象、读取代码/结果/部分原文，保留本地0f；未合并/推送/改RTL/新仿真。 | 生产blob对比：zufan仅缺本地取消关钟修复，James有6生产文件差异。T17/firstdot V2可复用；James partial-kill与完整身份检查本地已多有覆盖。固定Q融合已发布对最快纳入RVV保守少6.844186%，仅预打包合成Q。未发布phased/TA按Issue陈述分开。[完整复用评审](team/docs/branch-review-20261026.md)。 | 优先选择性吸收zufan T17/firstdot V2及验证方法，保留本地严格DIV门禁；先0f＋软件R4/O5组合验证，再T17/R5，config-reuse和Q融合按新合同逐项筛选。原路线未改，建议尚未实施；无新硬件数据记录或GitHub写入。 |
+
+| 20261026-cc77-builder-firstdot-import / 2026-10-26 14:31～14:55（UTC+08:00；含自动验证等待） | @cc77-builder / Agent | R4/O5＋T17选择性集成准备 | 按用户指定顺序引入zufan fcf4a11的43新文件；原有2文件相同；保留0f生产RTL/严格父级。新增独立硬件身份与组合适配，不更改旧T17锁。 | firstdot生成器及C公开源码、24实际GNU镜像静态/完整128位模型、22项组合门禁、18项硬件身份测试、4项构建产物篡改拒绝通过；主机失败/跳过及旧build01保留。[当前组合记录](team/optimizations/o2/integration/firstdot-v2-0f/RESULT.md)。 | 已启动当前EMU的33项配对/负控/重放；随后C3调用验证，通过后才干净重建，再筛配置复用。原始根software-import-20261026；无生产RTL改动，无推送/外部消息。 |
+
+## 填写示例（不是实际记录）
+
+~~~text
+ID：YYYYMMDD-github-login-唯一短后缀
+时间：YYYY-MM-DD HH:MM+08:00 ～ YYYY-MM-DD HH:MM+08:00（或日期级记录）
+身份：@已核实账号 / Agent，操作ID与协作Issue一致
+工作包：R2-S2
+内容与成果：完成一次明确范围的实现／验证／审查；写出实际结果和限制。
+验证与证据：PASS/FAIL/BLOCKED/NOT_TESTED（具体层级）；实际SHA或未提交基点；结果相对链接。
+路线影响／接续：采用／不采用／补输入／继续筛选，注明依据；下一动作＋所需条件＋成果位置，确无待续项写无。
+~~~
+
+历史背景：[整理前入口归档](team/docs/history/entrypoints-before-consolidation-20261023.md)。本表建立不表示历史工作已补齐身份，也不表示当前合并版通过新的硬件验收。
+
+
+## 20261026-cc77-builder-firstdot-resume
+
+- 开发时间：2026-10-26 21:52—22:02 UTC+08（核查及启动；目标续跑仍在执行，不计作已完成人工工时）。
+- 执行者：@cc77-builder / Agent；操作ID 20261026-cc77-builder-firstdot-resume。
+- 工作包：0f＋firstdot V2 当前组合中断恢复。实际核对旧矩阵12项完成/1项未完成、普通C1项完成/1项未完成，旧进程已不存在，真实退出码与终止时间未知。
+- 成果：旧原文及部分输出完整保留；重新物理验证25869项输入；独立续跑工具只补21次矩阵和2次C，区分36完整运行与38次累计启动，不把2次中断计PASS。
+- 验证：矩阵保留12项原文复算与13项主机检查、C旧负例复算与5项主机检查通过；续跑联合审计工具20项检查通过。目标运行状态为RUNNING。
+- 证据：/home/riscv/riscv-lab/software-import-20261026/interruption-01/、combination-resume-01/、c-run-02/；[运行记录](team/optimizations/o2/integration/firstdot-v2-0f/RESULT.md)。
+- 路线影响／接续：等待正在执行的两组续跑，通过continuation/audit/resume_audit.py后才做固定软件提交和干净复现；不重新执行已经完成的12＋1项。硬件仍0f，未修改RTL，未推送。
+
+## 20261027-cc77-builder-firstdot-current-qualified
+
+- 时间：当前组合目标运行2026-10-26 14:53起至23:41；原文审计2026-10-27 00:05完成（UTC+08，含中断/等待，非人工工时）。
+- 身份：@cc77-builder / Agent；当前硬件0f12df675378556670afd0dd2153f47fcb330610，软件工具本地提交c823a8786e052c6e26f6915563c42b6d730dd8e3。
+- 工作包：0f＋firstdot V2选择性集成/当前组合验收。38次实际启动、36项完整运行、2次中断保留；384正式、192重放、768全部正常窗口及16函数/48case/96普通C调用原文通过。
+- 结果：前三整块尺寸firstdot相对S1分别少7.0692%/3.5043%/1.4291%周期；K13保留187周期RVV。旧路径审计失败与唯一墙钟回退0.543481秒保留，v2合同明确功能/目标周期PASS、墙钟FAIL、固定控制器因果串行PASS，原因未确认。
+- 证据：software-import-20261026/reviews/resume-audit-fix-01/full-raw-audit-02；1756归档载荷manifest b4f255c6cb81c02536f1797ee8938ab784888b4a65f90cf6b5fb5024f274d06c；[结果](team/optimizations/o2/integration/firstdot-v2-0f/RESULT.md)。
+- 接续：clean-01恢复133独立仓库与新NEMU/AM/klib通过；硬件构建因本地克隆漏linked-worktree shallow元数据失败，旧目录保留。修复元数据复制流程后开clean-02，完成新EMU/差分/周期/原文对照才筛配置复用。未改RTL、未推送或发Issue消息。
+
+### clean-02 接续：审计执行器复核与证据准备（20261027-root-clean02-evidence-preparation-01）
+
+- 开发时间：2026-10-27T14:51:39+08:00 至 2026-10-27T15:05:44.888168+08:00；@cc77-builder / Agent（Codex root），本地执行；等待时间不代表人工工时。
+- 内容与成果：复核配置复用执行器 V2 的固定放行和身份约束；准备新版最终留档草稿与仅在运行完成后执行的编排证据封存脚本；逐字节留档 30 份已使用的外部全核审计与编排文件，213,538 bytes。
+- 验证：Python 语法检查、复制前后字节/SHA 一致；已有主机测试证据沿用且注明来源。未新增目标仿真，未修改生产 RTL、冻结 clean 源码或旧记录；未上传 GitHub。
+- 证据：[工具快照](team/optimizations/o2/integration/firstdot-v2-0f/continuation/clean02-review-tools/source-snapshot.json)及原 software-import-20261026/reviews/config-reuse/executor-v2-root-review-01.json。
+- 接续：保留矩阵与后处理实际进程，完成严格联合原文审计和全部窗口/普通 C 输出比较，再进行限定 8×32/d0 的五进程配置复用试验；宿主时间戳限制保留。
+
+### 干净矩阵完成与严格 C 回执补测（20261027-clean-matrix-pass-c-receipt-retry）
+
+- 节点记录：2026-10-27T17:09:46.043269+08:00；@cc77-builder / Agent（Codex root），本地执行。矩阵实际起止以 matrix-run-01.command.json 为准，不把等待时间计作人工工时。
+- 矩阵：33 个实际进程通过（1 负控、24 正式、8 重放），384 正式窗、192 首轮/预热窗和192重放窗；全部768结构化窗口与旧构建逐项一致。联合原文审计和最终组合资格仍待完成。
+- 失败及处理：原 C run01 的3次运行功能通过，但 finalize-c-02 因外层结束早于内部2.455386秒退出1。原时间戳和失败状态保留；108份原始/支撑文件另行压缩封存，raw/stored双SHA校验通过，只声明字节封存。严格C验收源码未修改。仅新建 C run02 的3进程补测，复用全核14和矩阵33；新C当前尚未最终验收。
+- 接续：新 postprocess-03 复用四项已通过全核证据，只新执行 C 验收、联合审计及完整比对，输出使用 -03。配置复用执行器 v3 的53项主机门禁测试通过，计划v4绑定新C及保留失败的来源；配置复用目标仿真仍为0，尚未导入26文件。
+- 证据：[当前记录](team/optimizations/o2/integration/firstdot-v2-0f/RESULT.md)；本地 software-import-20261026/reviews/clean-matrix-comparison-01、clean-c-chronology-failure-archive-01、config-reuse/executor-v3-validation-summary-01.json。原工具测试初次fixture失败亦保留。
+- 生产RTL仍为0f（O2+H1+DIV取消修复），软件源码为c823a；未上传GitHub。下一步先审查新C和完整组合的实际结果，再运行有界配置复用五进程；不把旧失败或主机测试转借成新RTL/性能通过。
+
+### 同机干净复现完成（20261027-clean02-qualified-record23）
+
+- 节点：2026-10-27（UTC+08）；@cc77-builder / Agent，Codex root本地执行。实际运行时间见回执，不将跨轮等待算成人工工时。
+- 成果：新EMU/NEMU/AM/klib独立构建，25应用装载字节、768完整矩阵窗口和96普通C输出与原组合一致。全核14＋矩阵33＋新C3选用；53实际启动含旧C3时间失败，49正常exit0/4预期负控exit1，无中断。
+- 验证：全核117不同case/124执行、六项O2覆盖，联合原文审计及严格新C验收通过。全核墙钟容量FAIL/源码界定容量PASS仍保留，旧C2.455386s异常和clean-01失败不覆盖。
+- 证据：[完成工具与证据快照](team/optimizations/o2/integration/firstdot-v2-0f/continuation/clean02-final/README.md)，[版本档案](team/docs/version-data-ledger.md)新增23条，原22条逐项不变。
+- 接续：配置复用8×32/d0试验V2在2进程后因对照BIN角色混入运行输入而停，修正适配层后61主机测试通过；V3新目录config-reuse-clean02-02已启动限定5进程。旧失败保留；等待新原文审计和性能筛选，不改默认、不改生产RTL、不推送。
+
+### 配置复用有界筛选完成（20261027-config-reuse-v3-bounded-complete）
+
+- 实际V3编排起止：2026-10-27T17:43:07.856018+08:00 至 2026-10-27T18:04:15.670065+08:00；@cc77-builder / Agent，本地执行；开发含此前定位/准备，运行等待不计人工工时。
+- 范围：0f硬件不变，固定fcf4a11配置复用26文件选择性引入，39依赖相同；不整分支merge、不切默认。C ABI完整调用窗口，8×32/d0。
+- 实测：PERFORMANCE_CANDIDATE。reuse vdot 282.25→273.00 cycles，少3.277236%；最快同场RVV为299.00，加速比1.095238×。每格4正式样本，不能推广为所有输入/整LLM/比赛评分。
+- 验证：新5进程，32正式/96全部正常窗，48对重放、firstdot同BIN24窗控制、bit100负控恢复、完整128位NEMU差分/O2生命周期、独立原文审计及前后物理身份均通过。61项适配器主机检查及2项真实批次审计/身份漂移检查通过。旧V2两进程因工具镜像角色绑定失败保留；本任务实际7进程，选用5，5正常exit0/2预期负控exit1。
+- 留档：[V3结果](team/optimizations/o2/integration/firstdot-v2-0f/continuation/config-reuse-v3/RESULT.md)、[版本档案第24条](team/docs/version-data-ledger.md)、本地完整archive及manifest。旧失败和未测项保留；未修改生产RTL，未提交/推送本轮修改。
+- 路线影响／接续：将配置复用保留为候选；下一工程包先扩展多数据集/其他尺寸，并补普通公共C调用验证，再决定默认入口。 当前限定试验全部结束，无本轮在途目标；不重复启动config-reuse-clean02-02。下一包开始前仍核对实际源码和已有运行。
+
+
+## 2026-10-27 配置复用数据集与尺寸扩展
+
+- 执行者：@cc77-builder / Agent；操作ID：zjhwork-config-reuse-expanded-20261027-01。
+- 命令执行区间：2026-10-27T18:48:08.485187+08:00 至 2026-10-27T19:33:20.214029+08:00；主机执行与等待不计为成员人工投入。
+- 工作包：R2-S3配置复用的当前0f硬件扩展；24新图、33新进程；92主机测试、GNU、full128/NEMU、O2观察器和原文复核完成。
+- 结果：4x8=INCONCLUSIVE；8x32=PERFORMANCE_CANDIDATE；16x64=INCONCLUSIVE；4x13=INCONCLUSIVE。保留全部逐数据集、控制和非主项结果，不汇总成单一总加速比。
+- 身份：源码c823a8786e052c6e26f6915563c42b6d730dd8e3；硬件0f12df675378556670afd0dd2153f47fcb330610；详见[扩展结果](team/optimizations/o2/integration/firstdot-v2-0f/continuation/config-reuse-expanded-v1/RESULT.md), [版本档案](team/docs/version-data-ledger.md)第25条。
+- 接续：8×32补普通公共C调用；4×8/16×64先只读归因控制差异；4×13保留较优RVV；默认未切换、RTL未改、未上传。首次启动因新增测试撞上源码冻结被拒，0构建/0目标进程；失败回执与主机JSON键类型修复历史均保留。
+
+
+## 2026-10-27 8×32配置复用普通C调用
+
+- 执行者：@cc77-builder / Agent；操作ID：zjhwork-config-reuse-8x32-c-20261027-01（V2独立输出）。
+- 工作区段：从V1主机检查2026-10-27T19:56:23.698683+08:00至本轮留档2026-10-27T20:53:01.467003+08:00；成功流水线2026-10-27T20:05:30.496475+08:00至2026-10-27T20:49:03.394487+08:00。含自动验证和等待，不计为成员人工投入。
+- 成果：8×32四API/三数据集12例、两轮24调用；保留完整16函数48例/96调用。全128位、标量参考、边界/CSR、O2及NEMU通过；bit100负控命中8×32实际PC0x80000d64，同BIN恢复与重放通过。20项主机检查及原文审计完成。
+- 失败保留：V1的spawn包装器位置参数缺陷在EMU前中止，0新目标。V2只修复env/timeout透传；不修改内层冻结门禁或RTL。
+- 证据：[结果](team/optimizations/o2/integration/firstdot-v2-0f/continuation/config-reuse-c8-v2/RESULT.md)、[版本档案](team/docs/version-data-ledger.md)第26条。c823a软件＋0f硬件；输入/构建/镜像及3个真实PID见JSON。原始根software-import-20261026/config-reuse-c8-02。
+- 接续：8×32普通C候选已闭合；下一步评审稳定入口范围。4×8/16×64控制差异仍待只读归因，4×13保留RVV。无新性能/PPA，默认不变、无生产RTL改动、未上传GitHub。
+
+
+## 2026-10-27 8×32稳定调用入口评审与最小集成设计
+
+- 执行者：@cc77-builder / Agent；操作ID：20261027-cc77-builder-c8-stable-design；开发区间：2026-10-27T21:04:24.117919+08:00 至 2026-10-27T21:21:20.889312+08:00，UTC+08:00。Agent只读交叉审查，不是成员人工验收。
+- 范围与决定：独立显式C8软件包，两个编译期别名，完整27160-byte单对象静态库；旧四尺寸入口、firstdot库、生产RTL及冻结运行输入保持。新增入口限定VLEN恰好128、288字节输入和128字节输出槽，保留CSR/ABI前提及RVV/firstdot回退。
+- 审查：复用当前0f第25/26条证据；确认旧R5/库工具绑定旧身份，须新建外层适配。两项只读Agent审查后补充：新wrapper/dispatcher不能借用旧唯一jal/ret及7条开销门禁，须新控制流验证。当前149项受保护文件和版本档案原字节已检查。
+- 成果：[设计](team/optimizations/o2/integration/firstdot-v2-0f/package/C8_DESIGN.md)、[机器可读选择](team/optimizations/o2/integration/firstdot-v2-0f/package/c8-design.json)。本轮未构建包或运行consumer，0新EMU/NEMU，无新实测，版本档案仍26条。只读object检查与哈希证据位于software-import-20261026/reviews/c8-stable-entry-design-01。
+- 接续：实现package/c8的最小构建/选用头/示例/当前资格验证器；先GNU等价、错误选择/身份负控和搬移。完整对象/调用等价成立可复用旧运行，新增最终映像或运行路径再按新合同补测。默认未切换，未提交/推送、未发GitHub消息；其他尺寸判定不变。
+
+
+## 2026-10-27 独立8×32 C8最小软件包
+
+- 执行者：@cc77-builder / Agent；操作ID：20261027-cc77-builder-c8-package；开发区间：2026-10-27T21:30:44.835769+08:00 至 2026-10-27T21:43:20.001400+08:00（UTC+08:00）；主机自动验证与等待不计成员人工投入。
+- 成果：新增独立C8头、完整27160-byte单对象库构建、示例、当前资格适配及测试；默认/0/1及展开1调用/链接全字节等价，17集成负控、16共存、2搬移模式和22主机检查通过。构建门禁另覆盖3项Python优化模式拒错。
+- 验证：首次完整流水线21:36:30至21:38:56+08 exit0，115命令回执；当前0f与原33矩阵+3C进程重审、48叶锚通过。0新EMU/NEMU；新应用运行、最终ELF、周期、面积/STA/功耗均NOT_TESTED。完整对象/宏别名证据不扩大到任意最终应用布局。
+- 身份与证据：[包结果](team/optimizations/o2/integration/firstdot-v2-0f/package/c8/RESULT.md)、[数据档案](team/docs/version-data-ledger.md)第27条；源码c823a/硬件0f。旧149项设计输入和398生产源码文件未变。局部烟雾测试原件及assert门禁修正前后均留档。
+- 接续：最小包完成，可显式选用；若接入真实应用，先固定新最终映像/路径合同并按影响验证，需性能时同路径公平比较。另可继续4×8/16×64控制差异只读归因，4×13保留RVV。旧默认及RTL保持，未提交/推送GitHub，未发布Issue消息。
+
+
+## 2026-10-27 C8回接普通C最终镜像等价
+
+- 执行者：@cc77-builder / Agent；操作ID：20261027-cc77-builder-c8-relink；工作区间2026-10-27T21:54:33.676443+08:00至2026-10-27T22:06:43.389751+08:00（UTC+08:00），包含自动检查，不计成员人工投入。
+- 实现：原main只换选用头，48项表仅6项改用C8别名，真实链接完整SDK库；原数据/校验/次序保持。独立GNU构建原源码对照和接入版。
+- 结果：三份BIN均31440B、SHA56805506…；PT_LOAD/全部装载节/入口/21函数锚/48表项/12输入一致。ELF差异仅debug_info/line/line_str；GNU去调试后三份完整ELF一致。7负控及调试字节正控通过，627固定输入/原文封存身份保持；8主命令+3GNU补充回执。
+- 运行边界：符合预先约定，同BIN同计划明确复用第26条全128/NEMU/O2及负控恢复重放；0新EMU/NEMU，未跑新周期/PPA。首次接入流水线21:59:40至21:59:43+08 exit0。无生产RTL修改、默认切换、提交或GitHub写入。
+- 证据：[接入结果](team/optimizations/o2/integration/firstdot-v2-0f/package/c8/relink/RESULT.md)、[版本档案](team/docs/version-data-ledger.md)第28条；原始输出software-import-20261026/c8-relink-01，归档reviews/c8-relink-final-archive-01。
+- 接续：C8最小包与既有C程序接入闭环完成；下一步选定实际应用才增加新镜像/调用合同，或继续4×8/16×64控制漂移只读归因，4×13保留RVV。新应用不得仅凭本次等价借用原周期与功能。
+
+
+## R5/G5 冻结候选与总验收 — R5-G5-DIVFIX0F-FIRSTDOT-C8-20261027-01
+
+- 时间：2026-10-27T14:28:04.486636+00:00 至 2026-10-27T22:58:45.908838+08:00；@cc77-builder / Agent；本地执行。
+- 工作：固定0f＋firstdot V2和显式C8，不改RTL；冻结24157文件并创建可回读快照。仅补控制诊断1进程，原13项重新解析，通过功能/差分/O2覆盖和独立审计；新UTC/单调时钟证据闭合所选组合，旧全14项墙钟FAIL保留。
+- 验证：35模型、11时钟门禁测试，398生产源码身份、627C8输入/最终镜像，FU/父级原文、T15原冻结环境和1008成本载荷审计通过。4次前置/环境检查拒绝保留，均0新EMU；未放宽门槛。
+- 取舍：工程所选范围验收完成；1ns负slack、功耗/Fmax未测、非目标尺寸未决、官方语义待答与人工事务不冒称通过。本轮无新性能，未提交或推送。
+- 证据：[最终结果](team/optimizations/o2/integration/firstdot-v2-0f/acceptance/RESULT.md)、版本档案第29条；外部r5-g5-acceptance-01。
+- 接续：已完成工程收尾；按用户后续安排发布zjhwork或另选单个有收益假设的优化，不自动扩大工程范围。
+
+
+## 当前冻结版与历次版本差异对照 — 20261027-cc77-builder-r5-version-comparison
+
+- 时间：2026-10-27T23:28:03.685512+08:00 至 2026-10-27T23:35:17.316821+08:00；@cc77-builder / Agent；本地资料核对与文档更新，非新增硬件实验。
+- 工作包：用户指定的R5/G5版本对照与计分板维护。汇总档案第1～29条，分别列出硬件/软件演进、同合同周期、GEMV矩阵、面积/时序、未采用候选及工程验收能力；明确最新冻结版较C8回接版没有新硬件或新性能提升。
+- 成果：[详细版本对照表](team/docs/version-comparison-r5-g5-20261027.md)及[派生数值与来源SHA](team/docs/version-comparison-r5-g5-20261027.json)。下表只导航和解释已有成果，不作为本轮新实测计数：
+
+| 已有成果层级 | 当前保留内容 | 对应证据与比较边界 |
+| --- | --- | --- |
+| 吞吐 | O2两槽；无停顿接受间隔1拍、首响应2拍 | O1/O2同镜像batch362.5→221 cycles，少39.0345%；不能替代应用收益 |
+| 成本与正确性 | H1低32位保存＋0f DIV取消修复 | H1与0f各自96对周期不变；成本和部分STA退化均保留 |
+| 软件性能 | firstdot四尺寸入口＋显式8×32 C8配置复用 | 原矩阵282.25→273 cycles，少3.2772%；最快RVV299，1.095238×；其他尺寸未决项保持 |
+| 使用与接入 | 独立SDK、RVV回退、普通C最终镜像等价 | C8包、回接的对象/链接/拒错/搬移/最终BIN证据；未增加运行时调度器 |
+| 最终验收 | R5/G5冻结与最小补证完成 | 原13＋新1组合全核/差分审计PASS；旧墙钟FAIL及新UTC/单调差约62.89秒保留 |
+| 限制 | 1ns未收敛，功耗/Fmax未测，独立INT16不等于生产全核支持 | C1/C2/C3未采用；官方语义待澄清与团队正式材料不冒称完成 |
+
+- 验证：本轮仅做数值来源、派生比例、Markdown表格/链接和历史保留检查；新增EMU/NEMU/综合/STA均为0。原29条实测档案与R5冻结记录保持字节不变，不追加伪造的第30条。
+- 源码身份：未提交，基点 c823a8786e052c6e26f6915563c42b6d730dd8e3；生产硬件仍0f，默认入口不变，未提交或推送GitHub，未修改队友受保护运行。
+- 路线影响／接续：当前冻结选择不变；工程已可供团队复核。下一步按用户安排发布zjhwork或整理比赛材料；新优化需另立范围，无本轮待续仿真。
+
+
+## 版本对照补齐三项主指标 — 20261027-cc77-builder-version-primary-metrics
+
+- 时间：2026-10-27T23:43:04.915485+08:00 至 2026-10-27T23:51:12.691271+08:00；@cc77-builder / Agent；本地文档更新，不计为成员人工验收。
+- 用户要求：将加速比、面积和时序作为版本对照主列。已在[详细版本表](team/docs/version-comparison-r5-g5-20261027.md)的21个版本/阶段行中补齐三项指标；增加完整FU/父级nominal绝对时序及7版父级五档最差slack。原工作内容、取舍、失败及限制保持。
+- 当前指标：批量RVV/vdot为3.067873×；8×32 GEMV为1.095238×（299/273 cycles）。沿用0f面积：FU 17298.246μm²、父级284614.946μm²；nominal父级r2r到达3.261218ns、已报告路径最差slack −2.393998ns。两类工作负载不混成一个总加速比。
+- 数据边界：S1/R4等6d2组合无新PPA，H1数据只作参考；firstdot/C8/R5沿用相同0f硬件数据。C1/C2/C3全核加速比及未重测独立FU成本写NOT_TESTED，不借用O2成绩。时序是布局前参考STA，不是整核频率；各版1ns父级负slack保留。
+- 验证：42份来源哈希、11份综合面积、55档/共415个已报告类别路径及派生比例核对；11张表列数和链接通过，旧计分板保留，原29条实测档案未改。新增EMU/NEMU/综合/STA均为0。
+- 身份/交付：基点c823a8786e052c6e26f6915563c42b6d730dd8e3，生产RTL仍0f；结构化数值见[配套JSON](team/docs/version-comparison-r5-g5-20261027.json)。更新Windows阅读副本，未提交或推送GitHub，未改变队友的受保护输入。
+- 路线影响／接续：选型和工程计划不变；今后出现新实测仍追加版本档案，并按同负载、同约束更新三项指标。本轮没有待续硬件运行。
+
+
+## R5/G5与C8当前工程发布到zjhwork — 20261027-cc77-builder-publish-r5-g5
+
+- 时间：2026-10-27T23:55:36.342253+08:00 至 2026-10-28T00:03:12.709712+08:00；@cc77-builder / Agent；包含发布检查与等待，不计为成员人工验收。
+- 授权与目标：用户明确要求把当前版本代码上传到cc77-builder/riscv的zjhwork。采用正常快进发布，不使用共享zufan集成窗口。
+- 内容：已有0f DIV修复与c823a firstdot集成提交，加上C1/C2/C3研究及否决证据、clean-02、8×32配置复用/普通C、C8包和回接、R5/G5最终验收、29条数据档案及21行三指标版本表。生产硬件选型仍为0f；未采用候选只作实验记录。
+- 发布检查：先核对24,157个原冻结文件，0差异；35模型测试及5份数据再生一致；184项R5封存载荷解压前后哈希一致。Git属性补充证据/结果目录的字节保留规则，阻止gzip、ELF和5份CRLF原始CSV被文本转换；工作源与原CSV未改。
+- Git验证：5,006项本轮待提交输入的index blob和工作树逐字节一致；原有封存补丁上下文、Markdown硬换行和EOF空白保留，完整diff空白提示不通过格式化抹掉。新发布元数据另做空白与链接检查。仅根.gitattributes存在声明的原冻结元数据差异，生产源码无新改动；本次0新EMU/NEMU/EDA。
+- 证据：[发布说明与使用入口](team/docs/r5-g5-publication-20261027.md)、[R5最终验收](team/optimizations/o2/integration/firstdot-v2-0f/acceptance/RESULT.md)、[版本三指标](team/docs/version-comparison-r5-g5-20261027.md)。本机发布目录software-import-20261026/publish-zjhwork-r5-g5-01保存前置远端、逐文件摘要、失败的文本转换拒绝及实际提交/推送回执；本记录随发布提交保存，最终状态以远端回读为准。
+- 指标和边界：批量3.067873×、8×32应用1.095238×，面积/STA沿用0f；无新测量，原29条档案字节保持。原墙钟失败、1ns负slack、功耗/Fmax未测及非目标尺寸未决保留。
+- 路线影响／接续：此工作包交付当前稳定工程与必要证据，成员从zjhwork按入口使用/复核；后续新优化或赛事材料按用户安排。历史“未上传”属于各次原实验的时间状态，见本次发布记录理解当前交付。
+
+
+## 当前0f/C8的后续优化计划复核 — 20261028-cc77-builder-next-optimization-plan
+
+- 时间：2026-10-28T11:51:36.652189+08:00 至 2026-10-28T12:09:34.149776+08:00（UTC+08:00）；@cc77-builder / Agent；只读技术核查与文档规划，包含自动检查及等待，不计成员人工验收。
+- 请求与身份：依据zjhwork的公开项目研究及官方评分转录，结合当前工程重新排序。先确认本地干净，正常快进到10b71ad4bff25cd2070e775c74a4717b01602f75（只新增研究文档和导航）；生产src仍等于0f，树78a0c93852dced038f645205e33d36a520fedfcd。
+- 结论：保留0f＋firstdot V2＋C8；下一包为R0/R2-SELECT的split消费者生命周期/比较合同，再做R2-S3的8×32最小迁入；P2成本和依赖链只读归因可并行。QKV及最多一个RTL候选有条件进入；三项目全量重跑、重复门控、完整LLM和低收益宽度裁剪不列为必做。
+- 成果：更新唯一[当前路线第0节](team/docs/development-route-current.md)，列三指标基线、评分映射、P0～P5顺序、公平边界/新合同建议、采用/停止条件和三人建议分工；原2026-10-25正文完整保留并标历史。优化导航指向当前路线；Windows生成同名阅读快照。
+- 交叉复核：三个只读Agent分别核查软件、硬件和评分。已补：P1的3数据集×每实现/窗口4正式样本及正反序定义、P3真实输入独立合同、C8/RVV进入新配对ELF必须重测、向量状态按ABI允许覆盖、换承载单元必须联合统计受影响面积，避免移出硬件漏算。
+- 验证：新节8张表、20处本地来源链接、12份已读来源哈希、历史正文及原29条实测档案字节保持，git diff --check通过；没有新EMU/NEMU/综合/STA或生产RTL修改。1%/3%等为新试验内部建议，不伪称官方要求、不追改旧合同；旧墙钟FAIL、1ns负slack和未决项保留。
+- 证据：本机software-import-20261026/next-optimization-plan-20261028-01保存研究前状态、来源pins、改前文档和检查回执；本轮没有新增实测结论，不追加版本档案。
+- 路线影响／接续：工程稳定版资格不变；P0～P5均待执行，用户下一次授权开工后先做P0再P1最小样本。修改生产RTL前仍提前说明；本轮未Git提交/推送、未发送Issue消息，未更改他人受保护运行。
+
+
+## P0：当前版本与8×32 split-input调用合同 — 20261028-cc77-builder-p0-split-contract
+
+- 时间：2026-10-28T12:12:33.575176+08:00 至 2026-10-28T12:39:32.756423+08:00（UTC+08:00）；@cc77-builder / Agent；静态核查与合同制定，不计成员人工验收。
+- 当前版本：本地/查询远端zjhwork均10b71ad4bff25cd2070e775c74a4717b01602f75；实际工作分支local/zjhwork-integration-20261024。生产硬件仍0f12df67（O2＋H1＋DIV取消修复），src树78a0c938；软件firstdot V2＋显式C8，R5/G5稳定资格及默认保持。
+- P0决定：P1_GO_FOR_OPTIONAL_INTERFACE_QUALIFICATION。真实runq权重固定、激活独立变化，允许后续可选split接口资格验证；当前C8数据原本连续，不能用供体每次288B打包的74.5%预告当前收益。P1主场景改为固定A一次准备/每次仅更新32B x；steady、first、native分别比较。
+- 固定与检查：398生产文件＋1gitlink、15份当前源码/证据、27份供体文件、13项运行/包实物、8项GNU＋4项辅助工具；旧6函数完整机器码SHA/长度与供体相同，split汇编只改变参数和x寻址；原3份288B输入及切片SHA固定。静态身份可用不授新ELF或性能资格。
+- 成果：[P0结果](team/optimizations/o2/integration/firstdot-v2-0f/continuation/split-input-p0/RESULT.md)、[合同](team/optimizations/o2/integration/firstdot-v2-0f/continuation/split-input-p0/CONTRACT.md)、SOURCE_LOCK/STATIC_REVIEW/MEASUREMENT_PLAN/REVIEW四份JSON。三只读Agent复核，明确native合法源、缓存旧x映射、量化探针门槛、first不等于冷cache、故障夹具搬移限制；源资料保持原字节。
+- 验证：9张新表、12处新材料本地链接、JSON样本数及pins、git diff --check通过。原29条版本档案未改，原源码/旧默认/冻结结果未改；0新构建/EMU/NEMU/综合/STA，无新跑分。准备过程中命令长度限制及399索引项包含1gitlink的计数拒绝均发生在静态阶段，纠正数据传递/分类后验证通过，没有目标运行失败。
+- 接续：P0完成，下一步P1在独立目录实现当前0f适配与GNU最小迁入，先对象/最终链接证书，再steady-d0负控→正常→重放。功能/路径/锚点/重放合格且两个顺序格均比合理P-V及10个RVV对照少至少3%，才扩其余8镜像；未跑项NOT_TESTED，不以旧273/299作新分母。
+- 本机证据：software-import-20261026/p0-split-contract-20261028-01；Windows阅读副本doc/P0_8x32_split合同_20261028。来源锁中ledger为历史引用，未来追加不回改旧锁。当前无本轮在途任务；未Git提交/推送、未发Issue消息，未改队友输入；未来改生产RTL前仍提前说明。
+
+
+
+## P1 split-input 最小迁入与探针收口 — 20261028-cc77-builder-p1-split-input
+
+- 时间：2026-10-28T12:44:02.373373+08:00 至 2026-10-28T17:13:31.013620+08:00（UTC+08:00）；@cc77-builder / Agent；含软件、自动检查和运行等待，不作为成员人工验收。
+- 身份：HEAD 10b71ad4bff25cd2070e775c74a4717b01602f75；生产0f不变，clean-02 EMU/NEMU、GNU和最终BIN/ELF固定；P1为本地未提交材料。
+- 工作：最小split leaf/完整普通C包装、对称10个RVV与当前C8对照；9镜像静态证书、63主机检查；仅steady-d0目标运行。
+- 验证：run02负控/正常/重放完整，normal/replay各7数据集/312calls/8controls/84窗/2432COMMIT；完整validation及84窗相等，独立CSR/UART/整数门槛复算。合计5个EMU进程包括run01负控与重启中断，旧原文保持。
+- 结果：S-V308.5、最快S-R4 340.5、P-V408.75 cycles；观测1.103727715×，统计仅normal48正式普通窗。正反3%收益PASS，锚点3.471074%超过1%而 **P1_PROBE_HOLD**，其余8镜像runtime NOT_TESTED；不能与旧273/299比较。
+- 成本：RTL未改，面积/五档STA沿用0f，无新EDA；旧负slack、功耗/Fmax未测保持。只读分段定位主要差异在首条退休vdot接受前，无分支预测/缓存具体因果证据。
+- 证据：[P1结果](team/optimizations/o2/integration/firstdot-v2-0f/continuation/split-input-v1/RESULT.md)、[JSON](team/optimizations/o2/integration/firstdot-v2-0f/continuation/split-input-v1/RESULT.json)；manifest team/optimizations/o2/integration/firstdot-v2-0f/continuation/split-input-v1/evidence/20261028-p1/manifest.json SHA256 b4713776247348ed7c8c4745e5c1f5b46254272af307cdee11a2048011e687b2。统一档案第30条，原29条深等值/旧Markdown及计分板前缀保持。
+- 历史身份：P0把historical ledger当live pin；全campaign终态与完整身份核验后才追加。旧完整identity用归档旧ledger的独立历史快照复核，不恢复当前文件凑PASS；identity.py及旧锁不改。
+- 路线影响／接续：P1停止扩大，不替换0f＋firstdot V2＋显式C8，没有获选软件变化自动推进P5。既有P2/P3/P4可选包未启动，不新增实验或任务表。无commit/push/Issue消息，未改队友输入；以后改RTL前仍提前说明。
+
+
+## P2 调用路径归因 — 20261028-cc77-builder-p2-callpath
+
+- 时间：2026-10-28T09:33:13.744135+00:00 至 2026-10-28T17:57:12.483077+08:00；@cc77-builder / Agent；新目标运行0，不计人工验收。
+- 叶级范围：P2/callpath/0f-P1-steady-d0；HEAD 10b71ad4bff25cd2070e775c74a4717b01602f75，旧P0/P1/RTL和默认只读。
+- 成果：最终ELF38条前缀/完整退休序列一致；正式快/慢首vdot接受96–98/106拍，差异位于同代0x800015ac间接调用纠正所在到达区间；leaf首退休后到接受均51、入队到接受均19。全部20个split RVV正式普通窗也纠正；不指定预测表、不把退休间隔称执行延迟。
+- 验证：正常/重放84窗派生相等、7项关键变异拒绝、11源与实际EMU相同、11425对重定向阶段+1拍；根独立复算三包一致。旧离线失败和首次/预热保留。
+- 三指标：无新测量；P1观察1.103727715×仍HOLD，面积/时序沿用0f，见统一档案第31条。未改旧30条；没有新RTL/NEMU/EMU/EDA。
+- 路线影响／接续：本次P2调用路径叶完成，依赖链/Jade未开展。决定值得一次A型P1-R1：隔离窗外conditioning调用PC，保留12实现完整计时工作与原门槛。下一步先静态实现/最终ELF布局对照，再冻结有界目标合同；本轮未执行修订，不改默认。
+- 证据：[team/optimizations/o2/integration/firstdot-v2-0f/continuation/callpath-p2/RESULT.md](team/optimizations/o2/integration/firstdot-v2-0f/continuation/callpath-p2/RESULT.md)、[修订设计](team/optimizations/o2/integration/firstdot-v2-0f/continuation/callpath-p2/REVISION_PLAN.md)；归档manifest SHA256 c70c41682b00ace838031406e691d416fcbbe491eb8fa7f33fece61d0c671011。本机原始派生根 /home/riscv/riscv-lab/software-import-20261026/p2-callpath-20261028-01。
+- 协作：Issue#2仅只读，已核对当前tailrows叶与本地分析范围独立；未接管队友输入、未发送消息或开发布窗口。未commit/push。
+
+
+## P1-R1 准备调用隔离 — 20261028-cc77-builder-p1-r1-condition-isolation
+
+- 时间：2026-10-28T10:02:57.482181+00:00 至 2026-10-28T20:57:21.546706+08:00；@cc77-builder / Agent；包含构建/测试/等待，不记作成员人工验收。
+- 身份：基点 10b71ad4bff25cd2070e775c74a4717b01602f75；生产0f＋firstdot V2＋显式C8保持，本轮为本地未提交软件候选。
+- 工作：同布局control/candidate，仅窗外conditioning调用点变更；两镜像完整源码/载入内容、GNU工具、EMU/NEMU和历史ledger视图分别绑定；原false资格不回写。
+- 结果：**P1_R1_PROBE_HOLD**；新候选正确性 PASS_STEADY_D0_ONLY；性能探针 HOLD。实际EMU 4 个，后处理新增目标0。 candidate S-V 310.00、最快观测RVV S-R4，同场RVV/S-V 1.099193548×；1%锚点=False，正反3%收益=True。
+- 验证：新资格只取完整四进程独立审计；正常/bit100负向/恢复重放、84窗、整数门槛及单调串行记录在结果JSON。中断和宿主失败保留；部分结果不授资格。新综合/STA、其他8镜像运行、独立机器复现NOT_TESTED。
+- 证据：[team/optimizations/o2/integration/firstdot-v2-0f/continuation/split-input-r1/RESULT.md](team/optimizations/o2/integration/firstdot-v2-0f/continuation/split-input-r1/RESULT.md)；manifest SHA256 4604a8c369617fe3ac0d55bd4bf3d78deba568fb0777a5213ff2d21768796a32；统一档案第32条，原31条保持。
+- 路线影响／接续：保留0f＋firstdot V2＋显式C8稳定版；停止该候选扩大，先复核本轮完整失败/未过门槛原因，不自动重试。 未自动扩大、未改默认或RTL；未Git提交/推送；未来生产RTL改动前仍提前说明。
+
+
+## P2 依赖链归因 — 20261028-cc77-builder-p2-dependency
+
+- 时间：2026-10-28T15:28:36.616445+00:00 至 2026-10-28T23:53:08.308949+08:00；@cc77-builder / Agent；只读分析，不计人工验收。
+- 身份：HEAD 10b71ad4bff25cd2070e775c74a4717b01602f75；生产0f不变；新材料未提交。
+- 成果：**P2_DEPENDENCY_READONLY_COMPLETE**。复用0f三数据/12正式chain256窗、3072条vdot/3060依赖边；ACCEPT→MOVE1、MOVE→RESPONSE1、RESPONSE→下一ACCEPT5，合计7拍。每窗1857=37+255×7+2+33。ROB提前分配不证明IQ驻留；COMMIT非WB，后五拍逐段为静态模型。
+- 398生产源码/原EMU身份一致；15主机检查、Jade2个ROI拒错通过；根分别fresh复算最终派生逐字相等。无新增EMU/NEMU/综合/STA。旧chain256加速比2.929725×与0f面积/时序沿用，1601/1602只是条件模型，不纳入实测成绩。
+- 决定仅GO_FOR_P4_G0_READONLY_REVIEW：研究VDot内部2→1且保留两槽/全部协议，先评审组合锥和同约束成本门槛。没有允许改功能RTL；不先重建观察器或改共享后端。稳定0f+C8保持、P1-R1 HOLD保持。
+
+- 证据：[team/optimizations/o2/integration/firstdot-v2-0f/continuation/dependency-p2/RESULT.md](team/optimizations/o2/integration/firstdot-v2-0f/continuation/dependency-p2/RESULT.md)；统一档案第33条，原32条保持。失败分析器版本保留，不冒充DUT失败。
+- 路线影响／接续：下一步P4-G0只读可行性评审，详见[team/optimizations/o2/integration/firstdot-v2-0f/continuation/dependency-p2/NEXT_STEP.md](team/optimizations/o2/integration/firstdot-v2-0f/continuation/dependency-p2/NEXT_STEP.md)；未开展RTL/EMU/EDA或Issue写入，未来修改RTL前提前说明。Issue#2仅只读，tailrows任务与本分析独立。
+
+## P4-G0 只读短延迟评审 — 20261029-cc77-builder-p4-g0-short-latency
+
+- 时间：2026-10-28T16:09:28.591107+00:00 至 2026-10-29T00:31:40.273005+08:00；@cc77-builder / Agent；只读研究/主机推导，不计成员人工验收。
+- 身份：HEAD 10b71ad4bff25cd2070e775c74a4717b01602f75；稳定0f＋firstdot V2＋显式C8；未提交材料。
+- 成果：有条件GO到下一轮隔离G1；固定P低32备用槽/R低32头槽、输入组合完整点积、旧P优先和新输入directR。保留父级DIV协议，禁止改CertainLatency或早唤醒。
+- 验证：320组抽象组合、8笔一拍/II1、4反例拒绝；根fresh复算协议和旧PPA提取逐字相等。独立复核合同无阻断问题。新候选RTL/真实父级/周期/面积/STA均NOT_TESTED。
+- 三指标：只保留历史0f 2.929725×（chain256）、FU/父级17298.246/284614.946μm²和nominal父级−2.393998ns最差slack；1601拍为条件模型，未冒充成绩。统一档案第34条，旧33条不变。
+- 证据：[team/optimizations/o2/integration/firstdot-v2-0f/continuation/short-latency-p4/g0/RESULT.md](team/optimizations/o2/integration/firstdot-v2-0f/continuation/short-latency-p4/g0/RESULT.md)，合同和逐档门槛同目录；manifest SHA256 2b5b55cda9411a64dc7a294c169d0a16380b666509154d12a93f00d9be4c003e。本机原始输出 /home/riscv/riscv-lab/software-import-20261026/p4-g0-short-latency-20261029-01。
+- 路线影响／接续：下一步P4-G1，先向用户说明RTL文件/信号变化，再隔离实现、FU＋真实父级DIV/SQRT＋负控。通过后下一轮G2综合/五档STA，再G3全核；当前不自动启动。保留0f回退，未改RTL/构建/上传。
+- 协作：只读Issue#2至6465173156，tailrows范围独立；未发送消息或开启集成窗口，未改队友输入。
+
+## P4-G1 一拍两槽局部验证 — 20261029-cc77-builder-p4-g1-one-cycle
+
+- 时间：2026-10-28T16:45:22.476061+00:00 至 2026-10-29T01:14:23.782861+08:00；@cc77-builder / Agent；包含本地构建/仿真/审查，不算成员人工验收。
+- 身份：HEAD 10b71ad4bff25cd2070e775c74a4717b01602f75＋未提交candidate.patch（SHA256 86b34d6117d8f36609e152847a0cda763b3aeb5411908194489e5be882a47243）；默认开关关闭，稳定0f行为/firstdot V2/C8保持。
+- 工作：提前说明后只改VDotO2.scala/VDotElastic.scala，实现directR/低32P结果槽、旧P优先，保留所有协议。独立FU/父级/SQRT checker，不修改原测试或DIV/ExeUnit。
+- 成果：G1局部门禁PASS；22＋10000完整128位、10022个一拍响应、II1；真实父级14组/13468接受、115 SQRT场景；9＋20观察负控和7日志负控通过。默认关闭生成逻辑/回归、默认未设置及8项错误配置通过。
+- 失败留档：parent-01严格类别门禁FAIL，仅调整注入时机；parent-02重建后通过，正向日志完全相同。诊断源码行号/JVM打印顺序差异单列，不声称原始HDL逐字相等。
+- 三指标：新全核加速比/面积/STA全部NOT_TESTED；局部1拍不是整体2倍。版本档案第35条，旧34条保持。
+- 证据：[team/optimizations/o2/integration/firstdot-v2-0f/continuation/short-latency-p4/g1/RESULT.md](team/optimizations/o2/integration/firstdot-v2-0f/continuation/short-latency-p4/g1/RESULT.md)；manifest SHA256 48ebb60bcf92745577cc3b80bdeeb0109a04fd9b460f883e23ffacdbddd19033；本机实际运行 /home/riscv/riscv-lab/software-import-20261026/p4-g1-short-latency-20261029-01；候选源码/输入/二进制均绑定。
+- 接续：下一轮P4-G2同约束FU/真实父级综合与五档STA，按G0固定门槛；通过后才考虑G3。当前不再改RTL、不启动全核/NEMU/性能，不自动上传。Issue#2仅只读至6465173156，未发消息或开窗口。
+
+
+## P4-G2 同约束成本筛选 — 20261030-cc77-builder-p4-g2-cost
+
+- 时间：2026-10-30T03:51:08.193120+00:00 至 2026-10-30T12:31:24.863291+08:00；@cc77-builder / Agent；包含EDA等待，不记为成员人工验收。
+- 身份：HEAD 10b71ad4bff25cd2070e775c74a4717b01602f75＋G1补丁 86b34d6117d8f36609e152847a0cda763b3aeb5411908194489e5be882a47243，445份源码和build.sc未改；默认开关关闭。
+- 工作：两模式、FU/真实VFEX4各新综合，五档原STA＋全局/P/R/源直写覆盖。基线面积/单元/五档旧路径数值精确复现；21,707旧输入仅两份预期G1源码不同。
+- 结果：**P4_G2_NO_GO**，47项门槛41通过/6未过；全部失败保留，不进入G3。FU面积18322.878μm²（+5.923329%），父级285241.642μm²（+0.220191%）；nominal父级slack -2.337809ns。候选加速比NOT_TESTED。
+- 归因：少96 DFF但多737 MUX，R宽元数据写入锥主要增长；共享算术和两槽身份完整。首次补充分析因别名错误FAIL，旧记录保留，仅工具修正后新目录通过；10项基础检查＋4项汇总变异拒错通过。
+- 证据：[结果](team/optimizations/o2/integration/firstdot-v2-0f/continuation/short-latency-p4/g2/RESULT.md)；manifest SHA256 ff4224cfcd193e78b9c221864220c005d9f99f0dc818698e9a0491f27644754c；原始输出 /home/riscv/riscv-lab/software-import-20261026/p4-g2-cost-20261030-01。版本档案第36条，旧35条保持。
+- 路线影响／接续：保持0f＋firstdot V2＋C8，下一轮仅建议P4-G2R0只读复核全部成本失败、判断一次最小修订是否值得；未自动修改RTL、构建全核、NEMU或上传GitHub。
+- 协作：Issue#2只读至6511950608；队友tailrows任务独立，未改其受保护输入，未发送Issue消息、开发布窗口或commit/push。
+
+## P4-G2R0 只读最小修订评审 — 20261030-cc77-builder-p4-g2r0-readonly
+
+- 时间：2026-10-30T04:45:36.473427+00:00 至 2026-10-30T13:03:20.575600+08:00；@cc77-builder / Agent；只读工程分析，不记为成员人工验收。
+- 身份：HEAD 10b71ad4bff25cd2070e775c74a4717b01602f75＋原G1补丁 86b34d6117d8f36609e152847a0cda763b3aeb5411908194489e5be882a47243；41项输入/445源码不变，默认关闭。
+- 结果：**GO，仅值得一次未来最小修订；当前P4-G2仍NO-GO，不进全核。** FU R元数据784位、真实父级593位为两级MUX；提出仅ctrl/perf完整三路互斥选择，数据/状态/ready/DIV不变。
+- 限制：手工单元毛节省208.544／625.632μm²不等于综合收益；ready需恢复5.243–6.844ps且可能因控制负载变差。原G0全部47项门槛保持，失败不以Q改善抵消。
+- 检查：2048项二值逐位等价、4类错误反例、独立重放一致；只说明抽象选择表达，未授予新RTL资格。新加速比/面积/STA均NOT_TESTED；旧G2的6项FAIL保留。
+- 证据：[结果](team/optimizations/o2/integration/firstdot-v2-0f/continuation/short-latency-p4/g2r0/RESULT.md)、[修订合同](team/optimizations/o2/integration/firstdot-v2-0f/continuation/short-latency-p4/g2r0/REVISION_CONTRACT.md)；manifest SHA256 2c09801af8eeb90e6f17060300f82a47b2f23e1c1d29150e36b39cfc8bb3c053；统一档案第37条，旧36条保持。
+- 接续：P4-G2R1先说明一文件改法、做局部功能/协议/默认关验证，下一轮再同约束成本筛选；当前不改RTL、不EDA、不全核/NEMU、不commit/push。若该次修订仍有原成本项失败，停止该次P4探索，保持0f。
+- 协作：Issue#2仅只读核查至6511950608，队友R2-S3/tailrows任务与本叶分开；未发消息、修改受保护输入或占用其构建窗口。
+
+## P4-G2R1 元数据选择局部实现与验证 — 20261030-cc77-builder-p4-g2r1-local
+
+- 时间：2026-10-30T05:19:36.493304+00:00 至 2026-10-30T13:29:29.086733+08:00；@cc77-builder / Agent；包含构建/仿真等待，不记为成员人工验收。
+- 改动：事前说明后，只改VDotElastic.scala一拍分支R ctrl/perf为完整hold/move/directR Mux1H并加恰一断言；其他数据/状态/ready/DIV及默认关不变。444其他源码和313测试/历史输入保持。
+- 结果：**P4_G2R1_LOCAL_VALIDATION_PASS**；10022完整128位、一拍/II1，FU24215接受＋9负控，真实父级14组13468接受＋20负控，SQRT115场景＋7轨迹负控；默认关FU/父级重新验证＋4/16负控，默认未设置及8非法配置通过。五个正向日志与G1逐字相同。
+- 审查失败留档：首次汇总错误要求所有非VDot生成HDL相同；常量元数据端口/探针传播造成差异，保留FAIL和旧工具，仅完善生成层归因。ready/busy/状态片段与三个门控连接保持；无RTL/原checker修补。
+- 限制：生成层多保留常量位（FU640位、父级27位），不是综合DFF或面积结论。新加速比/面积/STA/全核NEMU均NOT_TESTED；默认仍0f行为＋firstdot V2＋C8。
+- 身份：HEAD 10b71ad4bff25cd2070e775c74a4717b01602f75＋总补丁 9327fa6f472f1869a41d04ceb515a7f8b76bae338279719568512571f88610d5；增量补丁 fb85300a4600318c36964bc77518be3560a6c7ce50909272343744b17e602023。原始输出 /home/riscv/riscv-lab/software-import-20261026/p4-g2r1-local-20261030-01；manifest 75351b6eef5cedf28e976e592b9610ad0c0aecf3466e847cefc99a866c0ca412。
+- 证据：[结果](team/optimizations/o2/integration/firstdot-v2-0f/continuation/short-latency-p4/g2r1/RESULT.md)、[实现](team/optimizations/o2/integration/firstdot-v2-0f/continuation/short-latency-p4/g2r1/IMPLEMENTATION.md)；版本档案第38条，旧37条保留。
+- 接续：下一轮P4-G2R1成本筛选，先FU映射/五档STA，查常量位与MUX/缓冲；FU过原门槛才做真实父级。G0原47项和原G2六失败保留，本轮未综合/STA/全核或commit/push，不自动继续。
+- 协作：Issue#2只读至6511950608；本机独立目录串行CPU4–7、构建2jobs，启动前无旧重任务；未写Issue、触碰队友tailrows输入或占发布窗口。
+
+## P4-G2R1 成本筛选 — 20261030-cc77-builder-p4-g2r1-cost
+
+- 时间：2026-10-30T05:44:08.002152+00:00 至 2026-10-30T14:41:16.082152+08:00；@cc77-builder / Agent；含EDA等待，不记为成员人工评审。
+- 版本：HEAD 10b71ad4bff25cd2070e775c74a4717b01602f75＋R1补丁 9327fa6f472f1869a41d04ceb515a7f8b76bae338279719568512571f88610d5；445源码不变，默认关闭。
+- 结果：**P4_G2R1_COST_NO_GO**，原47项37通过/10失败。FU21通过后才执行父级26；独立数值复算与完整性检查通过。
+- 三指标：R1加速比NOT_TESTED；FU面积18086.936μm²，父级285473.062μm²；nominal FU/父级最差slack -0.776319/-2.235609ns。完整五档及历版对照见[结果](team/optimizations/o2/integration/firstdot-v2-0f/continuation/short-latency-p4/g2r1-cost/RESULT.md)。
+- 常量位全部计费并纳入路径；保留工具失败和旧/新退化。10基础检查＋5真实输入损坏负控＋1父级控制变异拒绝通过。统一档案追加第39条，旧38条不变。
+- 证据manifest：4ad0eba39ad487f15e7b4dfa8c8dfaae5331b57bd05921d4f9bfc1a5509d3b9d；原始目录 /home/riscv/riscv-lab/software-import-20261026/p4-g2r1-cost-20261030-01；本轮RTL修改0、全核/NEMU/性能运行0，无GitHub/Issue写操作。
+- 接续：开始 P4 收口后的只读路线评审：保持 0f＋firstdot V2＋C8，依据 P4/R1 的完整成本结果和现有应用瓶颈，判断还有没有值得启动的最小优化。不继续试改 P4、不修改 RTL、不构建全核、不上传 GitHub，给出 GO/NO-GO 和下一轮指令。
+
+## P4收口后的只读路线评审 — 20261030-cc77-builder-post-p4-route-review
+
+- 时间：2026-10-30，UTC+08:00；最早只读动作未单独记录时间戳，留档与终核区间从15:06:31+08至2026-10-30T15:15:39.133737+08:00，不当作完整工时/仿真墙钟。@cc77-builder / Agent，非成员人工验收。
+- 身份：HEAD 10b71ad4bff25cd2070e775c74a4717b01602f75；445源码与R1清单一致，src补丁9327fa6f472f1869a41d04ceb515a7f8b76bae338279719568512571f88610d5；P4默认关闭，继续0f＋firstdot V2＋C8。
+- 结论：**硬件NO-GO；GO仅限下一轮8×32分段结果保留/延后归约的软件实现与宿主门禁。** 不再试改P4、不直接改共享后端；P1/R1保持HOLD，4×8/QKV为暂缓条件项。
+- 新发现：当前C8 vdot/RVV各13次配置，叶内164/112条非压缩指令。静态拟调度可到5/9次配置、156/108条指令、28/30个架构向量寄存器，无spill/额外搬移是设计要求，尚无候选实现/运行资格。必须同时评估对等RVV，不能把少指令直接写成周期收益。
+- 依据：P4/R1仍37/47通过、10失败，原47门槛原字节；P2链7拍间隔及P1调用历史限定解释；C8源/三份历史生成器、评分及协作入口。34直接输入与445源码小范围核查，不冒称重跑完整证据审计。
+- 三指标：新加速比/面积/STA均NOT_TESTED。统一实测档案保持39条且原字节未改，历史失败、旧样本不改写；新静态设计单独归档。
+- 证据：[只读评审](team/optimizations/o2/integration/firstdot-v2-0f/continuation/post-p4-route-review/RESULT.md)、source-analysis.json、input-lock.json、RESULT.json；本轮仅工程文档与索引更新，没有RTL/内核修改、GNU/EDA/全核/EMU/NEMU运行或commit/push。
+- 路线影响／接续：开始 R2-S3/C8 分段归约的最小软件试验：保持 0f＋firstdot V2＋现有 C8 包，在独立目录仅实现 8×32 reuse 的 vdot 和对等 RVV 延后归约候选；先冻结寄存器、完整 128 位、CSR、固定布局和公平对照合同，完成 GNU 构建、对象审计、宿主模型及负控。通过后给出 dataset0 最小周期探针合同，未通过即停止。先不运行 EMU、不修改 RTL、不构建全核、不上传 GitHub，完成后给我 GO/NO-GO 和下一轮指令。
+- 协作：Issue#2只读至6511950608，队友tailrows/forward保护保持；未发消息、改受保护输入或开启发布窗口。
+
+## C8分段归约最小软件宿主试验 — 20261030-cc77-builder-c8-deferred-host
+
+- 时间：2026-10-30T15:30:49.559123+08:00 至 2026-10-30T16:02:00.975194+08:00；@cc77-builder / Agent，宿主工程验证，不计成员人工验收。
+- 身份：HEAD 10b71ad4bff25cd2070e775c74a4717b01602f75，local/zjhwork-integration-20261024；445 RTL及原src补丁9327fa6f472f1869a41d04ceb515a7f8b76bae338279719568512571f88610d5保持；现有C8包未动。
+- 实现：独立8×32 packed reuse vdot/RVV保存分段结果、延后归约；使用v8–v15新增scratch，独立新合同/模型，旧检查器未修改。GNU实际vdot164→156指令、13→5配置、656→624B；RVV112→108、13→9、448→432B；无spill/额外向量move。
+- 结果：**C8_DEFERRED_HOST_PASS_GO_D0_PROBE**。最终310输入×3入口状态×4实现＝3720机器码宿主执行，29760完整128位槽、59520逐dot独立oracle，4原语/39负控、真实C引用/固定槽链接及9产物字节重建一致通过。
+- 留档：attempt01计数负控被提前门禁拒绝，attempt02补强直接计数/实际C引用，attempt03补强逐dot独立全128位和明确源码清单。三次候选汇编/对象未变，全部保留；覆盖只计最后一次。457载荷封存，非目标仿真。
+- 三指标：新周期/加速比/面积/STA均NOT_TESTED；目标运行0，AM性能图/observer适配未完成，不采用候选。版本档案追加第40条HOST_ONLY，原39条及历史失败保持。
+- 证据：[结果](team/optimizations/o2/integration/firstdot-v2-0f/continuation/deferred-reduction-c8-v1/RESULT.md)、[冻结探针合同](team/optimizations/o2/integration/firstdot-v2-0f/continuation/deferred-reduction-c8-v1/PROBE_CONTRACT.md)；本机输出software-import-20261026/c8-deferred-reduction-host-20261030-01/-02/-03。代码入口generate.py、machine.py、verify.py及public/gemv.S；旧版本回退不动。
+- 路线影响／接续：开始 R2-S3/C8 分段归约的 dataset0 公平周期探针：按已冻结 PROBE_CONTRACT 构建真实 AM 的 A/B 镜像并适配退休与寄存器检查，先通过静态布局及负控门禁，再复用冻结 0f EMU/NEMU，按最多5个串行进程完成 bit100 拒错、正常恢复、校准与重放。严格保留1%锚点、逐窗控制相等和3%收益门槛；失败即停止，不自动扩围。保持现有 C8 默认，不修改 RTL、不构建新核、不上传 GitHub，完成后给我 GO/HOLD/NO-GO 和下一轮指令。
+- 协作：Issue#2只读至6511950608，未写WORK/消息或占发布窗口，未碰队友tailrows/forward保护输入；本轮仅独立宿主单核运行。无RTL修改/核构建/EMU/NEMU/EDA/commit/push。
+
+| 20261030-cc77-builder-c8-deferred-d0 / 2026-10-30 16:14:15～16:42:46（UTC+08:00） | @cc77-builder / Agent | C8分段归约dataset0公平探针 | 构建同布局真实AM A/B并完成静态、宿主负控；实际bit100拒错PASS。正常恢复因本Agent重复加入1260项校验器自检而主动停止；HOLD，不采用，无合格周期样本。 | 2/5进程；首项24.907秒PASS，次项534.868秒SIGTERM，后三项NOT_TESTED；没有把主动停止写成超时或性能失败。新加速比/面积/STA未测。未提交，基点10b71ad4bff25cd2070e775c74a4717b01602f75，原src补丁保持。[结果](team/optimizations/o2/integration/firstdot-v2-0f/continuation/deferred-reduction-c8-d0/RESULT.md)、[档案41](team/docs/version-data-ledger.md)。 | 先修测试框架重复自检与预算审计，保留84功能调用、四叶、窗口及1%/精确控制/3%门槛；新镜像新预算重开完整门禁链，不自动扩围或上传。 |
+
+## C8 dataset0 探针 R1 — 20261030-cc77-builder-c8-deferred-d0-r1
+
+- 时间：2026-10-30T17:27:09.909701+08:00 开始；目标campaign于18:23:02.346209+08:00结束；本条留档于2026-10-30T18:35:41.988734+08:00。@cc77-builder / Agent，含构建/仿真等待，不记作成员人工验收；目标预算按各record的单调时钟。
+- 版本：HEAD 10b71ad4bff25cd2070e775c74a4717b01602f75；local/zjhwork-integration-20261024；原src补丁9327fa6f472f1869a41d04ceb515a7f8b76bae338279719568512571f88610d5、固定0f EMU/NEMU及原C8包保持。
+- 改动：独立框架把目标1260重复自检移至宿主，validate1460→116；保留84功能、32窗和完整128位/CSR/寄存器/范围检查。新旧A/B共24项叶/计时/功能入口机器码、地址、长度相同；先做开销与负控审计，再冻结新A/B各52868B。
+- 结果：**HOLD_ANCHOR_AND_GAIN_SCREEN**。bit100拒错、A正常NEMU/退休/O2通过；OV锚点273/274/274/268跨度2.238806%>1%，正反3%收益均FAIL。2/5串行后自动停止，后三项及跨镜像控制NOT_TESTED；无重试、无主动提前终止。
+- 三指标：A图正式均值OV/NV/OR/NR＝273.75/273/301/278；原始最快RVV/NV＝1.018315×，**仅诊断、未取得公平性能资格**。面积/STA NOT_TESTED，不能拿OR替掉更快的NR分母。不采用、不扩围，稳定版仍0f＋firstdot V2＋C8。
+- 运行：拒错32.307366单调秒、正常3065.826606单调秒，实际4线程CPU4–7。正常单调/UTC显示差211.463253秒，原因未归因，两个值保留，7200秒硬限仍用单调时钟。新DIV/STALL/KILL覆盖为0。
+- 证据：[结果](team/optimizations/o2/integration/firstdot-v2-0f/continuation/deferred-reduction-c8-d0-r1/RESULT.md)、[完整JSON](team/optimizations/o2/integration/firstdot-v2-0f/continuation/deferred-reduction-c8-d0-r1/RESULT.json)、[档案42](team/docs/version-data-ledger.md)；5583冻结输入及1179保护文件核查不变；manifest bed28543a868b72af5fccc69f51055274a5ca7ebafab4081cc9f637beb247230，141载荷。旧41档案与旧失败保持。
+- 接续：下一轮仅对本轮日志做只读归因，解释末OV锚点6周期差异与NV/OV、NR/OR等待依赖，判断是否值得继续。原1%/逐窗控制/3%门槛不变；本轮未改RTL、构建新核、做EDA或commit/push。
+- 协作：Issue#2只读至6511950608，队友tailrows资源边界保持；本机使用独立目录、CPU4–7串行，没有写Issue或发送消息，不推断队友资源已释放。

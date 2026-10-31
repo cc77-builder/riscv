@@ -1,0 +1,182 @@
+{
+  "status": "PASS",
+  "revision": "R1",
+  "source_changes_bounded": true,
+  "runtime_functions_byte_address_size_equal": [
+    {
+      "image": "A",
+      "symbol": "c8_leaf_0",
+      "address": 2147493888,
+      "size": 656
+    },
+    {
+      "image": "A",
+      "symbol": "c8_measure_0",
+      "address": 2147491840,
+      "size": 876
+    },
+    {
+      "image": "A",
+      "symbol": "c8_functional_0",
+      "address": 2147495936,
+      "size": 808
+    },
+    {
+      "image": "A",
+      "symbol": "c8_leaf_1",
+      "address": 2147502080,
+      "size": 624
+    },
+    {
+      "image": "A",
+      "symbol": "c8_measure_1",
+      "address": 2147500032,
+      "size": 876
+    },
+    {
+      "image": "A",
+      "symbol": "c8_functional_1",
+      "address": 2147504128,
+      "size": 808
+    },
+    {
+      "image": "A",
+      "symbol": "c8_leaf_2",
+      "address": 2147510272,
+      "size": 448
+    },
+    {
+      "image": "A",
+      "symbol": "c8_measure_2",
+      "address": 2147508224,
+      "size": 876
+    },
+    {
+      "image": "A",
+      "symbol": "c8_functional_2",
+      "address": 2147512320,
+      "size": 808
+    },
+    {
+      "image": "A",
+      "symbol": "c8_leaf_3",
+      "address": 2147518464,
+      "size": 432
+    },
+    {
+      "image": "A",
+      "symbol": "c8_measure_3",
+      "address": 2147516416,
+      "size": 876
+    },
+    {
+      "image": "A",
+      "symbol": "c8_functional_3",
+      "address": 2147520512,
+      "size": 808
+    },
+    {
+      "image": "B",
+      "symbol": "c8_leaf_0",
+      "address": 2147493888,
+      "size": 656
+    },
+    {
+      "image": "B",
+      "symbol": "c8_measure_0",
+      "address": 2147491840,
+      "size": 876
+    },
+    {
+      "image": "B",
+      "symbol": "c8_functional_0",
+      "address": 2147495936,
+      "size": 808
+    },
+    {
+      "image": "B",
+      "symbol": "c8_leaf_1",
+      "address": 2147502080,
+      "size": 656
+    },
+    {
+      "image": "B",
+      "symbol": "c8_measure_1",
+      "address": 2147500032,
+      "size": 876
+    },
+    {
+      "image": "B",
+      "symbol": "c8_functional_1",
+      "address": 2147504128,
+      "size": 808
+    },
+    {
+      "image": "B",
+      "symbol": "c8_leaf_2",
+      "address": 2147510272,
+      "size": 448
+    },
+    {
+      "image": "B",
+      "symbol": "c8_measure_2",
+      "address": 2147508224,
+      "size": 876
+    },
+    {
+      "image": "B",
+      "symbol": "c8_functional_2",
+      "address": 2147512320,
+      "size": 808
+    },
+    {
+      "image": "B",
+      "symbol": "c8_leaf_3",
+      "address": 2147518464,
+      "size": 448
+    },
+    {
+      "image": "B",
+      "symbol": "c8_measure_3",
+      "address": 2147516416,
+      "size": 876
+    },
+    {
+      "image": "B",
+      "symbol": "c8_functional_3",
+      "address": 2147520512,
+      "size": 808
+    }
+  ],
+  "flows": {
+    "previous": {
+      "functional": 84,
+      "measured": 32,
+      "validate": 1460,
+      "prepare": 116,
+      "cycles": "NOT_MEASURED_HOST_STUBS"
+    },
+    "r1": {
+      "functional": 84,
+      "measured": 32,
+      "validate": 116,
+      "prepare": 116,
+      "cycles": "NOT_MEASURED_HOST_STUBS"
+    }
+  },
+  "removed_target_mutation_checks": 1260,
+  "removed_validation_invocations": 1344,
+  "target_validation_calls": 116,
+  "target_functional_calls": 84,
+  "performance_windows": 32,
+  "prepare_and_validation_bodies_unchanged": true,
+  "target_helper_absent_in_preprocessor": true,
+  "host_mutations": 177408,
+  "host_self_controls": 1260,
+  "runtime_budget": {
+    "guest_cycles": 3000000,
+    "wall_monotonic_seconds": 7200,
+    "max_processes": 5
+  },
+  "assessment": "GO to bounded runtime. Eliminated repeated validator work; all required prepare/validate calls remain. Native counts are not target cycles and cannot prove a wall-clock/guest-cycle bound. Runtime hard limits remain authoritative; no forecast-based abort or retry."
+}

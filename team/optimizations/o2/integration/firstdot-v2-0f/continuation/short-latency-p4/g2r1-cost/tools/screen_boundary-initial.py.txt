@@ -1,0 +1,109 @@
+#!/usr/bin/env python3
+"""Strict P4-G0 screening. Failures are findings, never rewritten thresholds."""
+from pathlib import Path
+from collections import Counter
+from decimal import Decimal
+import sys,json,hashlib,re,argparse,csv
+R=Path(__file__).resolve().parents[9]
+sys.path.insert(0,str(R/'team/optimizations/o4'))
+from synthesize import library_areas
+def read(p):return json.loads(p.read_text())
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def require(ok,msg):
+ if not ok:raise ValueError(msg)
+def metric_gate(name,value,cap,**kw):
+ return dict(name=name,value=value,cap=cap,pass_gate=Decimal(str(value))<=Decimal(str(cap)),**kw)
+def inventory(summary):
+ h=summary['cell_histogram']
+ return {label:sum(v for k,v in h.items() if k.startswith(prefix)) for label,prefix in [('DFF','DFF'),('MUX','MUX'),('BUF','BUF'),('CLKBUF','CLKBUF'),('ICG','CLKGATE')]}
+def main():
+ a=argparse.ArgumentParser();a.add_argument('work',type=Path);a.add_argument('output',type=Path);a.add_argument('--boundary',choices=['fu','parent','all'],default='all');o=a.parse_args()
+ W=o.work;O=o.output;O.mkdir(exist_ok=False)
+ B=Path('/home/riscv/riscv-lab/o2-r3-div-gate-cost-20261025')
+ P=R/'team/optimizations/o2/integration/firstdot-v2-0f/continuation/short-latency-p4'
+ C=read(P/'g0/cost-screening-baseline.json')
+ lib=Path('/home/riscv/riscv-lab/o4-cost-20261020/library/NangateOpenCellLibrary_typical.lib')
+ areas=library_areas(lib);gates=[];rows=[];boundary_data={};calibration=[]
+ boundaries=['fu','parent'] if o.boundary=='all' else [o.boundary]
+ for boundary in boundaries:
+  off=read(W/f'off-{boundary}-map-01/summary.json');new=read(W/f'p4-{boundary}-map-01/summary.json');hist=read(B/f'{boundary}-map-01/summary.json')
+  require(off['pass'] and new['pass'] and hist['pass'],'failed mapping')
+  for s in [off,new,hist]:require(s['library_sha256']==sha(lib) and not s['unknown_cells'],'library or unknown cells')
+  for m in [off,new]:
+   require(not any(k.startswith(('DLH','DLL','LATCH','TLAT')) for k in m['cell_histogram']),'unexpected mapped latch')
+   require(inventory(m)['ICG']==(3 if boundary=='parent' else 0),'clock-gate count changed')
+  require(off['ports']==new['ports']==hist['ports'],'production interface changed')
+  require(off['cell_histogram']==hist['cell_histogram'],'baseline cell histogram does not reproduce frozen 0f')
+  require(abs(off['cell_area_sum']-hist['cell_area_sum'])<1e-7,'baseline area mismatch')
+  gates.append(metric_gate(boundary+'.area_um2',round(new['cell_area_sum'],6),C['area_caps_um2'][boundary],baseline=round(hist['cell_area_sum'],6),unit='um2'))
+  histsta=read(B/f'{boundary}-sta-01/summary.json')
+  coverage_run='01'
+  pair={m:read(W/f'{m}-{boundary}-coverage-{coverage_run}/summary.json') for m in ['off','p4']}
+  legacy={m:read(W/f'{m}-{boundary}-sta-01/summary.json') for m in ['off','p4']}
+  groups={'r2r','i2r','r2o','i2o','ready'}|({'vdot_r2r','vdot_i2r','vdot_r2o','gate_enable'} if boundary=='parent' else set())
+  for m in ['off','p4']:
+   require(pair[m]['pass'] and legacy[m]['pass'],'STA execution/coverage failure')
+   require([x['profile'] for x in pair[m]['profiles']]==list(C['profiles']),'five profile sequence mismatch')
+   require(pair[m]['name_binding']['topology_sha256']==legacy[m]['name_binding']['topology_sha256'] if boundary=='parent' else True,'topology binding mismatch')
+   counts=pair[m]['slot_coverage']['counts']
+   for k in ['p_ctrl','r_ctrl','p_perf','r_perf','p_valid','r_valid','r_data']:
+    require(counts[k]==pair['off']['slot_coverage']['counts'][k],f'identity/result group changed: {boundary}/{m}/{k}')
+   require(counts['p_data']==(32 if m=='p4' else 128),'unexpected P payload')
+   require(counts['r_data']==32 and counts['p_valid']==counts['r_valid']==1,'bad R/valid storage')
+   require(pair[m]['slot_coverage']['all_slot_dffs_accounted'],'unclassified slot')
+   for idx,profile in enumerate(pair[m]['profiles']):
+    h=histsta['profiles'][idx];b=legacy[m]['profiles'][idx]
+    require(set(b['paths'])==groups,'legacy path group lost')
+    for g in groups:
+     for val in ['arrival_ns','slack_ns']:
+      require(b['paths'][g][val]==profile['paths'][g][val],f'canonical traversal changed numeric timing: {boundary}/{m}/{profile["profile"]}/{g}/{val}')
+      if m=='off':require(b['paths'][g][val]==h['paths'][g][val],f'baseline timing does not reproduce frozen 0f: {boundary}/{profile["profile"]}/{g}/{val}')
+    for g,v in profile['paths'].items():
+     require(v['exists'] or (m=='off' and g=='operands_to_r'),'missing candidate path')
+     if v['exists']:rows.append(dict(mode=m,boundary=boundary,profile=profile['profile'],group=g,arrival_ns=v['arrival_ns'],required_ns=round(v['arrival_ns']+v['slack_ns'],6),slack_ns=v['slack_ns'],startpoint=v['startpoint'],endpoint=v['endpoint']))
+    worst=min(v['slack_ns'] for v in profile['paths'].values() if v['exists'])
+    require(profile['paths']['all_max']['slack_ns']==worst,'full global report differs from group envelope')
+    q=round(profile['period_ns']-worst,6)
+    c=C['profiles'][profile['profile']]
+    if boundary=='parent' and m=='off':require(q==c['baseline_proxy_ns'],'frozen parent Q disagrees with full path coverage')
+    if m=='p4':
+     gates.append(metric_gate(boundary+'.'+profile['profile']+'.Q_ns',q,c['fu_proxy_cap_ns'] if boundary=='fu' else c['candidate_proxy_cap_ns'],baseline=round(pair['off']['profiles'][idx]['period_ns']-pair['off']['profiles'][idx]['paths']['all_max']['slack_ns'],6),unit='ns'))
+     protected=c['fu_protected_groups' if boundary=='fu' else 'protected_groups']
+     for g,v in protected.items():
+      require(pair['off']['profiles'][idx]['paths'][g]['arrival_ns']==v['arrival_ns'],'protected baseline changed')
+      gates.append(metric_gate(boundary+'.'+profile['profile']+'.'+g,profile['paths'][g]['arrival_ns'],v['cap_ns'],baseline=v['arrival_ns'],unit='ns'))
+  if boundary=='fu':
+   require(inventory(off)['DFF']-inventory(new)['DFF']==96,'unexpected FU DFF change')
+  else:
+   # Mapping/cleanup may remove a different constant/redundant non-VDot register.
+   # G0 does not require exact total mapped DFF equality; preserve source/slot identity and report all area.
+   gen=read(W/'parent-generation-comparison.json')
+   require(gen['functional_changes_only_VDotElastic'],'production non-VDot HDL changed')
+   pre={m:int(re.findall(r'^\s*\$_DFF_P_\s+(\d+)\s*$',(W/f'{m}-parent-map-01/synthesis.log').read_text(),re.M)[0]) for m in ['off','p4']}
+   require(pre['off']-pre['p4']==96,'unexpected pre-mapping sequential state change')
+   require(pair['off']['vdot_register_count']-pair['p4']['vdot_register_count']==96,'unexpected VDot register change')
+  composition={}
+  for label,prefix in [('DFF','DFF'),('MUX','MUX'),('BUF','BUF'),('CLKBUF','CLKBUF'),('ICG','CLKGATE'),('other',None)]:
+   def match(k):
+    return k.startswith(prefix) if prefix else not k.startswith(('DFF','MUX','BUF','CLKBUF','CLKGATE'))
+   x=sum(v*areas[k] for k,v in off['cell_histogram'].items() if match(k));y=sum(v*areas[k] for k,v in new['cell_histogram'].items() if match(k))
+   composition[label]={'off_um2':round(x,6),'p4_um2':round(y,6),'delta_um2':round(y-x,6)}
+  # Production arithmetic remains shared, one multiplier bank + one reduction tree.
+  structural={}
+  for m in ['off','p4']:
+   st=read(W/f'{m}-{boundary}-map-01/structure.json')['modules']
+   wrapper=st['VDotElastic']['cells']
+   require(sum(c['type']=='VDotProducts' for c in wrapper.values())==1,'duplicated products')
+   require(sum(c['type']=='VDotReduce' for c in wrapper.values())==1,'duplicated reduce')
+   require(Counter(c['type'] for c in st['VDotProducts']['cells'].values())=={'$mul':8},'multiply bank changed')
+   require(Counter(c['type'] for c in st['VDotReduce']['cells'].values())=={'$add':7},'reduction tree changed')
+   structural[m]={'VDotProducts_instances':1,'VDotReduce_instances':1,'signed_multipliers':8,'balanced_adders':7,'slots':pair[m]['slot_coverage']['counts']}
+  boundary_data[boundary]={'baseline_area_um2':round(off['cell_area_sum'],6),'candidate_area_um2':round(new['cell_area_sum'],6),'area_change_pct':(new['cell_area_sum']/off['cell_area_sum']-1)*100,'area_composition':composition,'baseline_cells':inventory(off),'candidate_cells':inventory(new),'structure':structural,'baseline_profiles':pair['off']['profiles'],'candidate_profiles':pair['p4']['profiles']}
+  calibration.append({'boundary':boundary,'default_off_frozen_histogram_equal':True,'five_profile_legacy_numbers_equal':True,'canonical_topology_equal':True,'ports_equal':True,'complete_slot_coverage':True})
+ require(len(gates)==(47 if o.boundary=='all' else 21 if o.boundary=='fu' else 26),'wrong screening gate count')
+ result={'status':'P4_G2R1_'+o.boundary.upper()+('_GO' if all(g['pass_gate'] for g in gates) else '_NO_GO'),'adopt_candidate':False,'go_to_fullcore':o.boundary=='all' and all(g['pass_gate'] for g in gates),'boundary_scope':o.boundary,'parent_started':o.boundary!='fu','contract_id':'p4-short-latency-g0-v1','contract_sha256':sha(P/'g0/CONTRACT.md'),'caps_sha256':sha(P/'g0/cost-screening-baseline.json'),'gates':gates,'gate_pass_count':sum(g['pass_gate'] for g in gates),'gate_fail_count':sum(not g['pass_gate'] for g in gates),'failures':[g for g in gates if not g['pass_gate']],'boundary_data':boundary_data,'calibration':calibration,'candidate_legacy_groups':70 if o.boundary=='all' else 25 if o.boundary=='fu' else 45,'candidate_supplementary_groups':70 if o.boundary=='all' else 35,'baseline_expected_absent_operand_to_R_groups':10 if o.boundary=='all' else 5,'timing_rows':len(rows),'scope':'pre-layout Nangate45 typical local proxy only, not fullcore Fmax, no application speedup or power result'}
+ (O/'screening.json').write_text(json.dumps(result,indent=2)+'\n')
+ with (O/'timing.csv').open('w') as f:
+  out=csv.DictWriter(f,fieldnames=list(rows[0]));out.writeheader();out.writerows(rows)
+ print(json.dumps({'status':result['status'],'passes':result['gate_pass_count'],'failures':result['failures']},indent=2))
+if __name__=='__main__':main()

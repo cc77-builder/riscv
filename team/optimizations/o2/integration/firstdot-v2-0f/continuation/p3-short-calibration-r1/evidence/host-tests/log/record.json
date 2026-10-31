@@ -1,0 +1,208 @@
+{
+  "argv": [
+    "/usr/bin/taskset",
+    "-c",
+    "4",
+    "/usr/bin/python3",
+    "-B",
+    "-c",
+    "import os;os.write(1,b'x'*20000)"
+  ],
+  "cwd": "/home/riscv/riscv-lab/software-import-20261026/p3-runner-revision-20261031-01",
+  "environment": {
+    "PATH": "/usr/bin:/bin",
+    "LC_ALL": "C"
+  },
+  "start_utc": "2026-10-30T16:11:15.321327+00:00",
+  "monotonic_start_ns": 77823324816,
+  "boot_id": "63d30490-2917-4512-bdbb-614d9bfd3568",
+  "timeout_seconds": 2,
+  "log_cap_bytes": 1000,
+  "rss_cap_bytes": 12884901888,
+  "thread_cap": 4,
+  "process_started": true,
+  "limit": "RAW_LOG_LIMIT",
+  "peak_rss_bytes": 5898240,
+  "max_threads_observed": 1,
+  "observed_cpu_masks": [
+    [
+      4
+    ]
+  ],
+  "cleanup_complete": true,
+  "pid": 409,
+  "proc_stat_at_start": "409 (python3) R 404 409 409 0 -1 4194304 547 0 0 0 0 0 0 0 20 0 1 0 7782 13086720 1440 18446744073709551615 102283667546112 102283670386189 140726981344128 0 0 0 0 0 0 0 0 0 17 4 0 0 0 0 0 102283672758320 102283673042392 102284387475456 140726981345171 140726981345227 140726981345227 140726981345255 0\n",
+  "elapsed_seconds": 0.122754762,
+  "raw_bytes": {
+    "stdout": 1000,
+    "stderr": 0
+  },
+  "progress": {
+    "max_observer_cycle": 0,
+    "o2_commit_count": 0,
+    "t13_retire_rows": 0,
+    "uart_fragments": 0
+  },
+  "last_periodic_sample": {
+    "monotonic_ns": 77829294442,
+    "elapsed_seconds": 0.005179041,
+    "raw_bytes": {
+      "stdout": 0,
+      "stderr": 0
+    },
+    "rss_bytes": 5898240,
+    "threads": 1,
+    "processes": [
+      {
+        "state": "R",
+        "ppid": 404,
+        "pgid": 409,
+        "sid": 409,
+        "start_ticks": 7782,
+        "cpu_seconds": 0.0,
+        "pid": 409,
+        "comm": "python3",
+        "exe": "/usr/bin/python3.10",
+        "cmdline": "/usr/bin/python3 -B -c import os;os.write(1,b'x'*20000) ",
+        "rss_bytes": 5898240,
+        "threads": 1,
+        "tasks": [
+          {
+            "tid": 409,
+            "start_ticks": 7782,
+            "comm": "python3",
+            "affinity": [
+              4
+            ]
+          }
+        ],
+        "masks": [
+          [
+            4
+          ]
+        ],
+        "disappeared_tids": [],
+        "sample_start_ns": 77829091130,
+        "sample_end_ns": 77829283651
+      }
+    ],
+    "progress": {
+      "max_observer_cycle": 0,
+      "o2_commit_count": 0,
+      "t13_retire_rows": 0,
+      "uart_fragments": 0
+    }
+  },
+  "limit_detected_ns": 77836619787,
+  "trigger": {
+    "schema": "p3-trigger-r1",
+    "reason": "RAW_LOG_LIMIT",
+    "detected_ns": 77836619787,
+    "boot_id": "63d30490-2917-4512-bdbb-614d9bfd3568",
+    "owned_pgid": 409,
+    "source": "last available sample",
+    "processes": [
+      {
+        "state": "R",
+        "ppid": 404,
+        "pgid": 409,
+        "sid": 409,
+        "start_ticks": 7782,
+        "cpu_seconds": 0.0,
+        "pid": 409,
+        "comm": "python3",
+        "exe": "/usr/bin/python3.10",
+        "cmdline": "/usr/bin/python3 -B -c import os;os.write(1,b'x'*20000) ",
+        "rss_bytes": 5898240,
+        "threads": 1,
+        "tasks": [
+          {
+            "tid": 409,
+            "start_ticks": 7782,
+            "comm": "python3",
+            "affinity": [
+              4
+            ]
+          }
+        ],
+        "masks": [
+          [
+            4
+          ]
+        ],
+        "disappeared_tids": [],
+        "sample_start_ns": 77829091130,
+        "sample_end_ns": 77829283651
+      }
+    ],
+    "observed_threads": 1,
+    "observed_rss_bytes": 5898240,
+    "limits": {
+      "threads": 4,
+      "rss_bytes": 12884901888,
+      "raw_bytes": 1000,
+      "seconds": 2
+    },
+    "last_periodic_sample": {
+      "monotonic_ns": 77829294442,
+      "elapsed_seconds": 0.005179041,
+      "raw_bytes": {
+        "stdout": 0,
+        "stderr": 0
+      },
+      "rss_bytes": 5898240,
+      "threads": 1,
+      "processes": [
+        {
+          "state": "R",
+          "ppid": 404,
+          "pgid": 409,
+          "sid": 409,
+          "start_ticks": 7782,
+          "cpu_seconds": 0.0,
+          "pid": 409,
+          "comm": "python3",
+          "exe": "/usr/bin/python3.10",
+          "cmdline": "/usr/bin/python3 -B -c import os;os.write(1,b'x'*20000) ",
+          "rss_bytes": 5898240,
+          "threads": 1,
+          "tasks": [
+            {
+              "tid": 409,
+              "start_ticks": 7782,
+              "comm": "python3",
+              "affinity": [
+                4
+              ]
+            }
+          ],
+          "masks": [
+            [
+              4
+            ]
+          ],
+          "disappeared_tids": [],
+          "sample_start_ns": 77829091130,
+          "sample_end_ns": 77829283651
+        }
+      ],
+      "progress": {
+        "max_observer_cycle": 0,
+        "o2_commit_count": 0,
+        "t13_retire_rows": 0,
+        "uart_fragments": 0
+      }
+    }
+  },
+  "trigger_persisted": true,
+  "signal_sent_ns": 77839697927,
+  "returncode": 0,
+  "remaining_group": [],
+  "monotonic_end_ns": 77946079578,
+  "end_utc": "2026-10-30T16:11:15.444080+00:00",
+  "raw_sha256": {
+    "stdout": "44f8354494a5ba03ba1792a8d3e9c534c47a9181980fde7a3f44b06ef2ae7c7f",
+    "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "cleanup_after_detection_seconds": 0.109459791
+}

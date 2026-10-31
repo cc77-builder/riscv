@@ -1,0 +1,482 @@
+{
+  "status": "P3_SAME_ELF_EXACT_PATH_BINDING_PASS",
+  "contract": "p3-qkv-0f-bounded-probe-v1",
+  "elf_sha256": "50004cbc4436c8bd52edfae198527be48c224fb1baffc1e9986038e8bc3109f1",
+  "bin_sha256": "fc43caac20b07a6241b20d88fc37e1acc530cb1e1eea89d0b6bef70e4c76c459",
+  "manifest": {
+    "contract": "p3-qkv-0f-bounded-probe-v1",
+    "rows": [
+      {
+        "id": 0,
+        "kind": "QKV",
+        "method": "vdot",
+        "variant": "tail",
+        "label": "TA-QKV",
+        "wrapper": "qkv_boundary",
+        "kernel": "q288_tail_vdot",
+        "leaf": "split_gemv_8x32_vdot",
+        "scenario": "actual-fp32-shared-quantization-qkv",
+        "n": 1,
+        "dots": 31104
+      },
+      {
+        "id": 1,
+        "kind": "QKV",
+        "method": "rvv",
+        "variant": "fused-rvv4",
+        "label": "FR-QKV",
+        "wrapper": "qkv_boundary",
+        "kernel": "q288_fused_rvv4",
+        "leaf": "split_gemv_8x32_rvv4",
+        "scenario": "actual-fp32-shared-quantization-qkv",
+        "n": 1,
+        "dots": 0
+      }
+    ],
+    "plan": [
+      {
+        "index": 1,
+        "phase": "measured",
+        "repeat": 0,
+        "dataset": 0,
+        "block": 0,
+        "role": "anchor_start"
+      },
+      {
+        "index": 0,
+        "phase": "measured",
+        "repeat": 0,
+        "dataset": 0,
+        "block": 0,
+        "role": "candidate"
+      },
+      {
+        "index": 1,
+        "phase": "measured",
+        "repeat": 0,
+        "dataset": 0,
+        "block": 0,
+        "role": "anchor_end"
+      },
+      {
+        "index": 1,
+        "phase": "measured",
+        "repeat": 1,
+        "dataset": 0,
+        "block": 1,
+        "role": "anchor_start"
+      },
+      {
+        "index": 0,
+        "phase": "measured",
+        "repeat": 1,
+        "dataset": 0,
+        "block": 1,
+        "role": "candidate"
+      },
+      {
+        "index": 1,
+        "phase": "measured",
+        "repeat": 1,
+        "dataset": 0,
+        "block": 1,
+        "role": "anchor_end"
+      }
+    ],
+    "call_plan": [
+      {
+        "stage": 0,
+        "arm": 0,
+        "dataset": 1
+      },
+      {
+        "stage": 0,
+        "arm": 1,
+        "dataset": 1
+      },
+      {
+        "stage": 1,
+        "arm": 1,
+        "dataset": 0
+      },
+      {
+        "stage": 2,
+        "arm": 1,
+        "dataset": 0
+      },
+      {
+        "stage": 1,
+        "arm": 0,
+        "dataset": 0
+      },
+      {
+        "stage": 2,
+        "arm": 0,
+        "dataset": 0
+      },
+      {
+        "stage": 1,
+        "arm": 1,
+        "dataset": 0
+      },
+      {
+        "stage": 2,
+        "arm": 1,
+        "dataset": 0
+      },
+      {
+        "stage": 1,
+        "arm": 1,
+        "dataset": 0
+      },
+      {
+        "stage": 2,
+        "arm": 1,
+        "dataset": 0
+      },
+      {
+        "stage": 1,
+        "arm": 0,
+        "dataset": 0
+      },
+      {
+        "stage": 2,
+        "arm": 0,
+        "dataset": 0
+      },
+      {
+        "stage": 1,
+        "arm": 1,
+        "dataset": 0
+      },
+      {
+        "stage": 2,
+        "arm": 1,
+        "dataset": 0
+      }
+    ],
+    "dataset": 0,
+    "custom_mask": 4261441663,
+    "custom_match": 33554443,
+    "expected_dots": 155521,
+    "timed_dots": 62208,
+    "max_cycles": 18000000,
+    "full_q_calls": 42,
+    "boundary_calls": 14,
+    "quantize_calls_in_boundaries": 14,
+    "standalone_quantize_probes": 3,
+    "quantize_groups_total": 153,
+    "quantize_elements_total": 4896,
+    "projection_outputs": 12096,
+    "windows": 6,
+    "csr_samples": 24,
+    "counter_enqueues": 24,
+    "fixture_sha256": "4b926d3c459e52ad3e9c8ec78c2dd22f090498b06a1b11b5188d7f1e75353913",
+    "layer": 0,
+    "measured_position": 0,
+    "functional_position": 1,
+    "input_scope": "actual untrained active-forward capture; persistent packed weights",
+    "primary_metric": "FP32 input through one shared scalar quantization and three complete Q/K/V projections",
+    "conditioning": "same-method whole-boundary selfwarm followed by identical prepare",
+    "anchor_threshold_ratio": [
+      101,
+      100
+    ],
+    "separation_threshold_ratio": [
+      97,
+      100
+    ],
+    "performance_qualified": false,
+    "hardware_changed": false,
+    "stable_default_changed": false,
+    "includes_quantization": true,
+    "pack_included": false,
+    "full_forward_included": false,
+    "trained_model_quality": false,
+    "inert_source_contract": "r2-s3-runq-active-qkv-target-v1"
+  },
+  "details": {
+    "0": {
+      "instructions": 152376,
+      "expected_csr_instret": 152371,
+      "vdot": 31104,
+      "calls": [
+        "quantize",
+        "q288_tail_vdot",
+        "q288_tail_vdot",
+        "q288_tail_vdot"
+      ],
+      "quantize_fp_operations": {
+        "move": 10,
+        "load": 576,
+        "abs": 288,
+        "max": 288,
+        "divide": 297,
+        "scale_store": 9,
+        "round": 288
+      },
+      "q_details": [
+        {
+          "instructions": 49602,
+          "counts": {
+            "ld": 6,
+            "csrwi": 2,
+            "addi": 13187,
+            "vsetivli": 1622,
+            "vmv.v.i": 36,
+            "vle8.v": 11664,
+            "vdot.vv": 10368,
+            "vadd.vv": 7776,
+            "vmv.v.v": 648,
+            "vslideup.vi": 1944,
+            "vfcvt.f.x.v": 324,
+            "vlse32.v": 324,
+            "vfmul.vv": 324,
+            "flw": 324,
+            "vfmul.vf": 324,
+            "vfadd.vv": 324,
+            "bne": 360,
+            "vse32.v": 36,
+            "vs1r.v": 8,
+            "ret": 1
+          },
+          "output_sha256": "f277aed8a30a542880897689b1dcb1e12d23e0960ffb2234dcdeda9c9b2c68b9",
+          "final_slots_sha256": "ed3850cc3c2f3eca8cfb96b398cc7b10a26af64b69a27624f1ec4565ff6991b2",
+          "core_executions": 324,
+          "core_words": 131,
+          "inputs_readonly": true,
+          "exact_footprints": true,
+          "abi_preserved": true,
+          "stack_used_bytes": 0
+        },
+        {
+          "instructions": 49602,
+          "counts": {
+            "ld": 6,
+            "csrwi": 2,
+            "addi": 13187,
+            "vsetivli": 1622,
+            "vmv.v.i": 36,
+            "vle8.v": 11664,
+            "vdot.vv": 10368,
+            "vadd.vv": 7776,
+            "vmv.v.v": 648,
+            "vslideup.vi": 1944,
+            "vfcvt.f.x.v": 324,
+            "vlse32.v": 324,
+            "vfmul.vv": 324,
+            "flw": 324,
+            "vfmul.vf": 324,
+            "vfadd.vv": 324,
+            "bne": 360,
+            "vse32.v": 36,
+            "vs1r.v": 8,
+            "ret": 1
+          },
+          "output_sha256": "b3099b54da75640132a6bb64be481db938b7fce741eb1176c2f75518b0dd6d53",
+          "final_slots_sha256": "78972f78a167c17c879775a3b6b62176000bd989c9fedf09e3eb35a32b2f86ad",
+          "core_executions": 324,
+          "core_words": 131,
+          "inputs_readonly": true,
+          "exact_footprints": true,
+          "abi_preserved": true,
+          "stack_used_bytes": 0
+        },
+        {
+          "instructions": 49602,
+          "counts": {
+            "ld": 6,
+            "csrwi": 2,
+            "addi": 13187,
+            "vsetivli": 1622,
+            "vmv.v.i": 36,
+            "vle8.v": 11664,
+            "vdot.vv": 10368,
+            "vadd.vv": 7776,
+            "vmv.v.v": 648,
+            "vslideup.vi": 1944,
+            "vfcvt.f.x.v": 324,
+            "vlse32.v": 324,
+            "vfmul.vv": 324,
+            "flw": 324,
+            "vfmul.vf": 324,
+            "vfadd.vv": 324,
+            "bne": 360,
+            "vse32.v": 36,
+            "vs1r.v": 8,
+            "ret": 1
+          },
+          "output_sha256": "f44aa4d2828b730ae92315f8373d86ebf9cff5bae906cc7ba02626106d06ec45",
+          "final_slots_sha256": "14dd8d17085d8abec1da7c7a7240e570e2c8072494097e395daa92339d400cd2",
+          "core_executions": 324,
+          "core_words": 131,
+          "inputs_readonly": true,
+          "exact_footprints": true,
+          "abi_preserved": true,
+          "stack_used_bytes": 0
+        }
+      ],
+      "stack_bytes": 16,
+      "actual_elf_addresses": true,
+      "quantize_values": "unknown here; original golden and target DiffTest",
+      "shared_quantization": true,
+      "quantize_input_reads": 2304,
+      "quantize_output_bytes": 324,
+      "path_sha256": "adf96806fe4cfd02cd7de0a12d53fbcb00b3186365e9bad299869695b749b633"
+    },
+    "1": {
+      "instructions": 110580,
+      "expected_csr_instret": 110575,
+      "vdot": 0,
+      "calls": [
+        "quantize",
+        "q288_fused_rvv4",
+        "q288_fused_rvv4",
+        "q288_fused_rvv4"
+      ],
+      "quantize_fp_operations": {
+        "move": 10,
+        "load": 576,
+        "abs": 288,
+        "max": 288,
+        "divide": 297,
+        "scale_store": 9,
+        "round": 288
+      },
+      "q_details": [
+        {
+          "function_instructions": 35670,
+          "counts": {
+            "ld": 6,
+            "csrwi": 2,
+            "addi": 7679,
+            "vsetivli": 4214,
+            "vmv.v.i": 2628,
+            "vle8.v": 5832,
+            "vwmul.vv": 5184,
+            "vwredsum.vs": 5184,
+            "vmv.v.v": 648,
+            "vslideup.vi": 1944,
+            "vfcvt.f.x.v": 324,
+            "vlse32.v": 324,
+            "vfmul.vv": 324,
+            "flw": 324,
+            "vfmul.vf": 324,
+            "vfadd.vv": 324,
+            "bne": 360,
+            "vse32.v": 36,
+            "vs1r.v": 8,
+            "ret": 1
+          },
+          "fp_element_operations": {
+            "convert": 2592,
+            "mul": 5184,
+            "add": 2592
+          },
+          "output_sha256": "f277aed8a30a542880897689b1dcb1e12d23e0960ffb2234dcdeda9c9b2c68b9",
+          "final_slots_sha256": "ed3850cc3c2f3eca8cfb96b398cc7b10a26af64b69a27624f1ec4565ff6991b2",
+          "path_sha256": "f23ef44281f825880e4193e0d7c072efc6f7ff2f35306ac219d7397e983d07aa",
+          "full_inputs_readonly": true,
+          "exact_footprints": true,
+          "abi_preserved": true,
+          "stack_used_bytes": 0
+        },
+        {
+          "function_instructions": 35670,
+          "counts": {
+            "ld": 6,
+            "csrwi": 2,
+            "addi": 7679,
+            "vsetivli": 4214,
+            "vmv.v.i": 2628,
+            "vle8.v": 5832,
+            "vwmul.vv": 5184,
+            "vwredsum.vs": 5184,
+            "vmv.v.v": 648,
+            "vslideup.vi": 1944,
+            "vfcvt.f.x.v": 324,
+            "vlse32.v": 324,
+            "vfmul.vv": 324,
+            "flw": 324,
+            "vfmul.vf": 324,
+            "vfadd.vv": 324,
+            "bne": 360,
+            "vse32.v": 36,
+            "vs1r.v": 8,
+            "ret": 1
+          },
+          "fp_element_operations": {
+            "convert": 2592,
+            "mul": 5184,
+            "add": 2592
+          },
+          "output_sha256": "b3099b54da75640132a6bb64be481db938b7fce741eb1176c2f75518b0dd6d53",
+          "final_slots_sha256": "78972f78a167c17c879775a3b6b62176000bd989c9fedf09e3eb35a32b2f86ad",
+          "path_sha256": "f23ef44281f825880e4193e0d7c072efc6f7ff2f35306ac219d7397e983d07aa",
+          "full_inputs_readonly": true,
+          "exact_footprints": true,
+          "abi_preserved": true,
+          "stack_used_bytes": 0
+        },
+        {
+          "function_instructions": 35670,
+          "counts": {
+            "ld": 6,
+            "csrwi": 2,
+            "addi": 7679,
+            "vsetivli": 4214,
+            "vmv.v.i": 2628,
+            "vle8.v": 5832,
+            "vwmul.vv": 5184,
+            "vwredsum.vs": 5184,
+            "vmv.v.v": 648,
+            "vslideup.vi": 1944,
+            "vfcvt.f.x.v": 324,
+            "vlse32.v": 324,
+            "vfmul.vv": 324,
+            "flw": 324,
+            "vfmul.vf": 324,
+            "vfadd.vv": 324,
+            "bne": 360,
+            "vse32.v": 36,
+            "vs1r.v": 8,
+            "ret": 1
+          },
+          "fp_element_operations": {
+            "convert": 2592,
+            "mul": 5184,
+            "add": 2592
+          },
+          "output_sha256": "f44aa4d2828b730ae92315f8373d86ebf9cff5bae906cc7ba02626106d06ec45",
+          "final_slots_sha256": "14dd8d17085d8abec1da7c7a7240e570e2c8072494097e395daa92339d400cd2",
+          "path_sha256": "f23ef44281f825880e4193e0d7c072efc6f7ff2f35306ac219d7397e983d07aa",
+          "full_inputs_readonly": true,
+          "exact_footprints": true,
+          "abi_preserved": true,
+          "stack_used_bytes": 0
+        }
+      ],
+      "stack_bytes": 16,
+      "actual_elf_addresses": true,
+      "quantize_values": "unknown here; original golden and target DiffTest",
+      "shared_quantization": true,
+      "quantize_input_reads": 2304,
+      "quantize_output_bytes": 324,
+      "path_sha256": "887a0d20f8977574168afbf070791caa066be5ff22d81bf6e6c2a914f27f2d71"
+    }
+  },
+  "first_custom": {
+    "pc": 2147491140,
+    "word": 59244555,
+    "vd": 0
+  },
+  "custom_count": 155521,
+  "all_custom_pc_sha256": "eaa328860c062bc5aa63039f0e4fbf1131c915ec533c9a0c65d55ca0debd6bb5",
+  "controls_same_words": true,
+  "target_cycles": "NOT_TESTED",
+  "path_files": {
+    "0.bin.gz": "ad776873c946c2bf1a1c803b7c4b1fd2ea39e6ad8eb682cc7798ed769eedb552",
+    "1.bin.gz": "ecdfe85f1c184e75cf30f8b188c054b3054e33c4298a7c9cc37939a5d2e30c2d",
+    "all-custom-pcs.bin.gz": "888ae91c9c8a1a27beab84d57532ca4cf426268e9e83729f3276fc00f1bf7722"
+  }
+}

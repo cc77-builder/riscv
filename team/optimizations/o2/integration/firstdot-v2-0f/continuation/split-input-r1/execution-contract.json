@@ -1,0 +1,40 @@
+{
+  "contract": "p1-r1-conditioning-callsite-isolation-v1",
+  "scope": "steady-d0 paired intervention only",
+  "process_order": [
+    [
+      "control",
+      "normal"
+    ],
+    [
+      "candidate",
+      "negative"
+    ],
+    [
+      "candidate",
+      "normal"
+    ],
+    [
+      "candidate",
+      "replay"
+    ]
+  ],
+  "max_processes": 4,
+  "max_cycles_each": 3000000,
+  "monotonic_seconds_each": 7200,
+  "raw_bytes_each_stream": 536870912,
+  "seed": 1,
+  "ram": "128MB",
+  "omp_threads": 1,
+  "concurrency": 1,
+  "automatic_retry": false,
+  "automatic_expansion": false,
+  "control_trace_sha256": "b4df356175d3dd69b53d49029f03de501961085f935b945b5818d65b6e6819aa",
+  "control_old_gate_expected": "HOLD",
+  "benefit_each_order": "100*S-V <= 97*min(all 11 competitors)",
+  "anchor": "100*max <= 101*min",
+  "replay_adds_samples": false,
+  "negative_fault": "full 128-bit high-bit corruption rejected",
+  "production_rtl_modified": false,
+  "github_upload": false
+}
