@@ -1,0 +1,40 @@
+\documentclass[UTF8,a4paper,11pt,fontset=none]{ctexart}
+\usepackage[margin=24mm,headheight=15pt]{geometry}
+\usepackage{fontspec}
+\IfFileExists{fonts/times.ttf}{
+\setmainfont{times.ttf}[Path=fonts/,BoldFont=timesbd.ttf,ItalicFont=timesi.ttf,BoldItalicFont=timesbi.ttf]
+\setsansfont{times.ttf}[Path=fonts/,BoldFont=timesbd.ttf,ItalicFont=timesi.ttf]
+\setmonofont{times.ttf}[Path=fonts/]
+\setCJKmainfont{simsun.ttc}[Path=fonts/,FontIndex=0,AutoFakeBold=2]
+\setCJKsansfont{simsun.ttc}[Path=fonts/,FontIndex=0,AutoFakeBold=2]
+\setCJKmonofont{simsun.ttc}[Path=fonts/,FontIndex=0]
+}{
+
+\setmainfont{Times New Roman}
+\setsansfont{Times New Roman}
+\setmonofont{Times New Roman}
+\setCJKmainfont{SimSun}[AutoFakeBold=2]
+\setCJKsansfont{SimSun}[AutoFakeBold=2]
+\setCJKmonofont{SimSun}
+}
+\usepackage{booktabs,longtable,array,seqsplit}
+\usepackage{xcolor,graphicx,tikz}
+\usetikzlibrary{arrows.meta,positioning}
+\usepackage{fvextra}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,urlcolor=blue!45!black,linkcolor=black,unicode=true}
+\urlstyle{same}
+\usepackage{fancyhdr}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small 香山 VDot 参赛工程 V1.0}
+\fancyhead[R]{\small 技术文档初稿}
+\fancyfoot[C]{\thepage}
+\ctexset{section={format=\Large\bfseries\rmfamily},subsection={format=\large\bfseries\rmfamily}}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{4pt}
+\linespread{1.25}
+\setlength{\LTpre}{8pt}\setlength{\LTpost}{8pt}
+\renewcommand{\arraystretch}{1.25}
+\emergencystretch=4em
+\sloppy
+\newcommand{\reporttitle}[1]{\clearpage\begin{center}{\LARGE\bfseries #1\par}\vspace{6pt}{\large 香山昆明湖 V2 自定义向量点积指令\par}\vspace{5pt}工程组合 0f＋firstdot V2＋原 C8\quad 材料日期 2026年11月2日\par\end{center}\vspace{8pt}}

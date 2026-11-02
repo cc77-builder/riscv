@@ -1,0 +1,195 @@
++ /home/riscv/riscv-lab/stage1-run-hello-vadd.sh:11: date -Is
+2026-10-09T20:53:54+08:00
++ /home/riscv/riscv-lab/stage1-run-hello-vadd.sh:12: cd /home/riscv/riscv-lab/xs-env/XiangShan
++ /home/riscv/riscv-lab/stage1-run-hello-vadd.sh:13: test -f /home/riscv/riscv-lab/workloads/hello-vadd/build/hello-vadd-riscv64-xs.bin
++ /home/riscv/riscv-lab/stage1-run-hello-vadd.sh:14: test -f /home/riscv/riscv-lab/xs-env/NEMU/build/riscv64-nemu-interpreter-so
++ /home/riscv/riscv-lab/stage1-run-hello-vadd.sh:15: /usr/bin/time -v timeout 20m ./build/emu -i /home/riscv/riscv-lab/workloads/hello-vadd/build/hello-vadd-riscv64-xs.bin --diff=/home/riscv/riscv-lab/xs-env/NEMU/build/riscv64-nemu-interpreter-so --max-cycles=2000000 --dump-wave --wave-path=/home/riscv/riscv-lab/stage1-evidence/hello-vadd.fst -b 0 -e 2000000
+emu compiled at Oct  9 2026, 20:39:43
+Using simulated 32768B flash
+Using simulated 8386560MB RAM
+The image is /home/riscv/riscv-lab/workloads/hello-vadd/build/hello-vadd-riscv64-xs.bin
+The reference model is /home/riscv/riscv-lab/xs-env/NEMU/build/riscv64-nemu-interpreter-so
+%Warning: previous dump at t=0, requesting t=0, dump call ignored
+%Warning: previous dump at t=0, requesting t=0, dump call ignored
+The first instruction of core 0 has commited. Difftest enabled. 
+
+==============  In the last commit group  ==============
+the first commit instr pc of DUT is 0x0000000010000004
+the first commit instr pc of REF is 0x0000000010000004
+
+============== Commit Group Trace (Core 0) ==============
+commit group [00]: pc 0010000000 cmtcnt 1
+commit group [01]: pc 0010000004 cmtcnt 1 <--
+commit group [02]: pc 0000000000 cmtcnt 0
+commit group [03]: pc 0000000000 cmtcnt 0
+commit group [04]: pc 0000000000 cmtcnt 0
+commit group [05]: pc 0000000000 cmtcnt 0
+commit group [06]: pc 0000000000 cmtcnt 0
+commit group [07]: pc 0000000000 cmtcnt 0
+commit group [08]: pc 0000000000 cmtcnt 0
+commit group [09]: pc 0000000000 cmtcnt 0
+commit group [10]: pc 0000000000 cmtcnt 0
+commit group [11]: pc 0000000000 cmtcnt 0
+commit group [12]: pc 0000000000 cmtcnt 0
+commit group [13]: pc 0000000000 cmtcnt 0
+commit group [14]: pc 0000000000 cmtcnt 0
+commit group [15]: pc 0000000000 cmtcnt 0
+
+============== Commit Instr Trace ==============
+[00] commit pc 0000000010000000 inst 0010029b wen 1 dst 05 data 0000000000000001 idx 000
+[01] commit pc 0000000010000004 inst 01f29293 wen 1 dst 05 data 0000000080000000 idx 001 <--
+
+==============  REF Regs  ==============
+---------------- Intger Registers ----------------
+  $0: 0x0000000000000000   ra: 0x0000000000000000   sp: 0x0000000000000000   gp: 0x0000000000000000 
+  tp: 0x0000000000000000   t0: 0x0000000000000001   t1: 0x0000000000000000   t2: 0x0000000000000000 
+  s0: 0x0000000000000000   s1: 0x0000000000000000   a0: 0x0000000000000000   a1: 0x0000000000000000 
+  a2: 0x0000000000000000   a3: 0x0000000000000000   a4: 0x0000000000000000   a5: 0x0000000000000000 
+  a6: 0x0000000000000000   a7: 0x0000000000000000   s2: 0x0000000000000000   s3: 0x0000000000000000 
+  s4: 0x0000000000000000   s5: 0x0000000000000000   s6: 0x0000000000000000   s7: 0x0000000000000000 
+  s8: 0x0000000000000000   s9: 0x0000000000000000  s10: 0x0000000000000000  s11: 0x0000000000000000 
+  t3: 0x0000000000000000   t4: 0x0000000000000000   t5: 0x0000000000000000   t6: 0x0000000000000000 
+---------------- Float Registers ----------------
+ ft0: 0x2c5dcc87a7fbfc77  ft1: 0x7d0784824c882461  ft2: 0x9e51f60021707a7a  ft3: 0xdd26477e5da10ff5 
+ ft4: 0x3add8686283525c4  ft5: 0x4ef0e74caaa2c860  ft6: 0xa4d820ea9d2be0e1  ft7: 0xbe302ed16b775603 
+ fs0: 0x91b8deacabd10386  fs1: 0x1b1f4d8634919501  fa0: 0x3ff3d079e67816ac  fa1: 0x22dd6b179b53ff27 
+ fa2: 0xe309ee5d5a53c050  fa3: 0x8c38805d35cfa5bb  fa4: 0xee770692fd7313bd  fa5: 0xfa024a0b36a1ff79 
+ fa6: 0xbe403ae0b66e5a4b  fa7: 0x13b3bee71e9b7279  fs2: 0x1bf8e59b1fade057  fs3: 0x0897eabf7ab6e085 
+ fs4: 0x59460fb6c95ac523  fs5: 0x2fa6c324b44dc0f1  fs6: 0x2d294cb9f63066cc  fs7: 0x91c9300155a81239 
+ fs8: 0xc9ff3126c336d142  fs9: 0xdb20e9a83c3d9ea6 fs10: 0x02a527e1f4ed44e6 fs11: 0x006e0ccb95651685 
+ ft8: 0xe39d906ebf1720c1  ft9: 0xe8a046f7426f6050 ft10: 0x06d59dc60e234739 ft11: 0x39b0820291cc5a8f 
+ fcsr: 0x0000000000000000 fflags: 0x0000000000000000 frm: 0x0000000000000000
+---------------- Privileged CSRs ----------------
+pc: 0x0000000010000008  privilege mode: M (mode: 3  v: 0  debug: 0)
+   mstatus: 0x0000000a00000000   sstatus: 0x0000000200000000  vsstatus: 0x0000000200000000
+   hstatus: 0x0000000200000000  mnstatus: 0x0000000000000008
+    mcause: 0x0000000000000000      mepc: 0x0000000000000000     mtval: 0x0000000000000000
+    scause: 0x0000000000000000      sepc: 0x0000000000000000     stval: 0x0000000000000000
+   vscause: 0x0000000000000000     vsepc: 0x0000000000000000    vstval: 0x0000000000000000
+   mncause: 0x0000000000000000     mnepc: 0x0000000000000000 mnscratch: 0x0000000000000000
+    mtval2: 0x0000000000000000     htval: 0x0000000000000000
+    mtinst: 0x0000000000000000    htinst: 0x0000000000000000
+  mscratch: 0x789b836f16320633  sscratch: 0x27a704cd1a711732 vsscratch: 0x87b824b2cd0bcf15
+     mtvec: 0x0000000000000000     stvec: 0x0000000000000000    vstvec: 0x0000000000000000
+       mip: 0x0000000000000000       mie: 0x0000000000000000
+   mideleg: 0x0000000000001444   medeleg: 0x0000000000000000
+   hideleg: 0x0000000000000000   hedeleg: 0x0000000000000000
+      satp: 0x0000000000000000     hgatp: 0x0000000000000000     vsatp: 0x0000000000000000
+ mcounteren: 0x0000000000000000 scounteren: 0x0000000000000000 hcounteren: 0x0000000000000000
+  miselect: 0x0000000000000000  siselect: 0x0000000000000000 vsiselect: 0x0000000000000000
+     mireg: 0x0000000000000000     sireg: 0x0000000000000000    vsireg: 0x0000000000000000
+     mtopi: 0x0000000000000000     stopi: 0x0000000000000000    vstopi: 0x0000000000000000
+     mvien: 0x0000000000000000     hvien: 0x0000000000000000      mvip: 0x0000000000000000
+    mtopei: 0x0000000000000000    stopei: 0x0000000000000000   vstopei: 0x0000000000000000
+    hvictl: 0x0000000000000000  hviprio1: 0x0000000000000000  hviprio2: 0x0000000000000000
+---------------- PMP CSRs ----------------
+pmp: 32 entries active, details:
+ 0: cfg:0x00 addr:0x0000000000000000| 1: cfg:0x00 addr:0x0000000000000000
+ 2: cfg:0x00 addr:0x0000000000000000| 3: cfg:0x00 addr:0x0000000000000000
+ 4: cfg:0x00 addr:0x0000000000000000| 5: cfg:0x00 addr:0x0000000000000000
+ 6: cfg:0x00 addr:0x0000000000000000| 7: cfg:0x00 addr:0x0000000000000000
+ 8: cfg:0x00 addr:0x0000000000000000| 9: cfg:0x00 addr:0x0000000000000000
+10: cfg:0x00 addr:0x0000000000000000|11: cfg:0x00 addr:0x0000000000000000
+12: cfg:0x00 addr:0x0000000000000000|13: cfg:0x00 addr:0x0000000000000000
+14: cfg:0x00 addr:0x0000000000000000|15: cfg:0x00 addr:0x0000000000000000
+16: cfg:0x00 addr:0x0000000000000000|17: cfg:0x00 addr:0x0000000000000000
+18: cfg:0x00 addr:0x0000000000000000|19: cfg:0x00 addr:0x0000000000000000
+20: cfg:0x00 addr:0x0000000000000000|21: cfg:0x00 addr:0x0000000000000000
+22: cfg:0x00 addr:0x0000000000000000|23: cfg:0x00 addr:0x0000000000000000
+24: cfg:0x00 addr:0x0000000000000000|25: cfg:0x00 addr:0x0000000000000000
+26: cfg:0x00 addr:0x0000000000000000|27: cfg:0x00 addr:0x0000000000000000
+28: cfg:0x00 addr:0x0000000000000000|29: cfg:0x00 addr:0x0000000000000000
+30: cfg:0x00 addr:0x0000000000000000|31: cfg:0x00 addr:0x0000000000000000
+32: cfg:0x00 addr:0x0000000000000000|33: cfg:0x00 addr:0x0000000000000000
+34: cfg:0x00 addr:0x0000000000000000|35: cfg:0x00 addr:0x0000000000000000
+36: cfg:0x00 addr:0x0000000000000000|37: cfg:0x00 addr:0x0000000000000000
+38: cfg:0x00 addr:0x0000000000000000|39: cfg:0x00 addr:0x0000000000000000
+40: cfg:0x00 addr:0x0000000000000000|41: cfg:0x00 addr:0x0000000000000000
+42: cfg:0x00 addr:0x0000000000000000|43: cfg:0x00 addr:0x0000000000000000
+44: cfg:0x00 addr:0x0000000000000000|45: cfg:0x00 addr:0x0000000000000000
+46: cfg:0x00 addr:0x0000000000000000|47: cfg:0x00 addr:0x0000000000000000
+48: cfg:0x00 addr:0x0000000000000000|49: cfg:0x00 addr:0x0000000000000000
+50: cfg:0x00 addr:0x0000000000000000|51: cfg:0x00 addr:0x0000000000000000
+52: cfg:0x00 addr:0x0000000000000000|53: cfg:0x00 addr:0x0000000000000000
+54: cfg:0x00 addr:0x0000000000000000|55: cfg:0x00 addr:0x0000000000000000
+56: cfg:0x00 addr:0x0000000000000000|57: cfg:0x00 addr:0x0000000000000000
+58: cfg:0x00 addr:0x0000000000000000|59: cfg:0x00 addr:0x0000000000000000
+60: cfg:0x00 addr:0x0000000000000000|61: cfg:0x00 addr:0x0000000000000000
+62: cfg:0x00 addr:0x0000000000000000|63: cfg:0x00 addr:0x0000000000000000
+---------------- PMA CSRs ----------------
+pma: 32 entries active, details:
+ 0: cfg:0x00 addr:0x0000000000000000| 1: cfg:0x00 addr:0x0000000000000000
+ 2: cfg:0x00 addr:0x0000000000000000| 3: cfg:0x00 addr:0x0000000000000000
+ 4: cfg:0x00 addr:0x0000000000000000| 5: cfg:0x00 addr:0x0000000000000000
+ 6: cfg:0x00 addr:0x0000000000000000| 7: cfg:0x00 addr:0x0000000000000000
+ 8: cfg:0x00 addr:0x0000000000000000| 9: cfg:0x00 addr:0x0000000000000000
+10: cfg:0x00 addr:0x0000000000000000|11: cfg:0x00 addr:0x0000000000000000
+12: cfg:0x00 addr:0x0000000000000000|13: cfg:0x00 addr:0x0000000000000000
+14: cfg:0x00 addr:0x0000000000000000|15: cfg:0x00 addr:0x0000000000000000
+16: cfg:0x00 addr:0x0000000000000000|17: cfg:0x00 addr:0x0000000000000000
+18: cfg:0x00 addr:0x0000000000000000|19: cfg:0x0b addr:0x0000000004000000
+20: cfg:0x0f addr:0x0000000008000000|21: cfg:0x0b addr:0x000000000c004000
+22: cfg:0x0b addr:0x000000000c014000|23: cfg:0x0b addr:0x000000000e008000
+24: cfg:0x0f addr:0x000000000e008400|25: cfg:0x0b addr:0x000000000e008800
+26: cfg:0x0b addr:0x000000000e400000|27: cfg:0x0b addr:0x000000000e400800
+28: cfg:0x08 addr:0x000000000e800000|29: cfg:0x0b addr:0x0000000020000000
+30: cfg:0x6f addr:0x0000020000000000|31: cfg:0x18 addr:0x00001fffffffffff
+---------------- Vector Registers ----------------
+v0 : 0xc72d570cae4b5108_979d6578c157fae9  v1 : 0xbba0a4b902a2869d_dc2bd220e5f94a68  
+v2 : 0x85b63788ebc272c5_77ece296d886425f  v3 : 0x0388de894040fd78_2ea4d5e2fea84e5f  
+v4 : 0x21cf2926eb8863c2_5fc36de72ebe0546  v5 : 0x8c1f1b1aaae34b5d_51f499f902336640  
+v6 : 0x8b011ebc5b451ecb_39b0f6b4939a5a86  v7 : 0x0f976fe91e7b2665_e54726771cf72fda  
+v8 : 0x82b64f40bbfd2e6c_38dc996cdd088c3f  v9 : 0x35d072dadce83e1e_012da9835086b878  
+v10: 0x8c6398d1977724ed_3d5a929474c6a992  v11: 0x2761de499195a5f9_0458dd7ee20e5015  
+v12: 0x89faef09f425a067_e3d485ec16273f9b  v13: 0x594adcad800750a9_16e58eb292a18869  
+v14: 0xa60fe3a01835bf83_4e7dfdbcfa13be5e  v15: 0x595f218b90c3bd28_6edc2e8a9a1243cb  
+v16: 0x9d0cecb6a526f145_4c5588f6dd4526a4  v17: 0x4525073516cffd80_c7a070c18d7316a6  
+v18: 0x930a21285a72b061_8d9a20d66fe63ba5  v19: 0xe2d15ace9ec808a3_0cadb6457b366aad  
+v20: 0x4737e7ec82032c33_6c1b0029cdef7302  v21: 0x94e3025cf7bafa95_dbb0ea6bc3230e03  
+v22: 0xc637a56ea6adffd0_d54cc95344e76ae6  v23: 0x81a6866b5f8ba184_a2ecde2835e31adf  
+v24: 0x1a3740d678f35e37_156c104b9e48ec06  v25: 0xe83e338440e0a502_4efe42aca2fb129b  
+v26: 0xbf7bbec98e9a16f0_6e1f4d81c26d4ce6  v27: 0x28f29c91e9f0f6f7_4567575e54055f81  
+v28: 0x021088e8c8c4c083_05fe7139995ddb07  v29: 0x307e43b01519e8cd_8c76d2a1f382fc10  
+v30: 0x6f94b02e8be1b545_c79ebcc4e4ce79f9  v31: 0x4cf9874dd07ff71c_a7aafec6fa6cf4df  
+  vtype: 0x8000000000000000 vstart: 0x0000000000000000  vxsat: 0x0000000000000001
+   vxrm: 0x0000000000000003     vl: 0x0000000000000000   vcsr: 0x0000000000000007
+---------------- Triggers ----------------
+ tselect: 0x0000000000000000
+ 0: tdata1: 0xf000000000000000 tdata2: 0x0000000000000000 tdata3: 0x0000557b13700970
+ 1: tdata1: 0xf000000000000000 tdata2: 0x0000000000000030 tdata3: 0x0000000000000030
+ 2: tdata1: 0xf000000000000000 tdata2: 0x0000557b13700b10 tdata3: 0x0000000000000000
+ 3: tdata1: 0xf000000000000000 tdata2: 0x0000000000000060 tdata3: 0x0000000000000030
+ 4: tdata1: 0x0000557e44c13cd0 tdata2: 0x0000557b13700b10 tdata3: 0x0000000000000000
+privilegeMode: 3
+     t0 different at pc = 0x0010000004, right= 0x0000000000000001, wrong = 0x0000000080000000
+Core 0: [31mABORT at pc = 0x18c704a0ea3ec
+[0m[35mCore-0 instrCnt = 2, cycleCnt = 2152, IPC = 0.000929
+[0m[34mSeed=0 Guest cycle spent: 2155 (this will be different from cycleCnt if emu loads a snapshot)
+[0m[34mHost time spent: 13942ms
+[0mCommand exited with non-zero status 1
+	Command being timed: "timeout 20m ./build/emu -i /home/riscv/riscv-lab/workloads/hello-vadd/build/hello-vadd-riscv64-xs.bin --diff=/home/riscv/riscv-lab/xs-env/NEMU/build/riscv64-nemu-interpreter-so --max-cycles=2000000 --dump-wave --wave-path=/home/riscv/riscv-lab/stage1-evidence/hello-vadd.fst -b 0 -e 2000000"
+	User time (seconds): 13.41
+	System time (seconds): 0.44
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:13.99
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 479084
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 3
+	Minor (reclaiming a frame) page faults: 89800
+	Voluntary context switches: 431
+	Involuntary context switches: 27
+	Swaps: 0
+	File system inputs: 96
+	File system outputs: 23896
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 1
++ /home/riscv/riscv-lab/stage1-run-hello-vadd.sh:1: rc=1
+++ /home/riscv/riscv-lab/stage1-run-hello-vadd.sh:1: date -Is
++ /home/riscv/riscv-lab/stage1-run-hello-vadd.sh:1: printf 'exit_code=%s end=%s\n' 1 2026-10-09T20:54:08+08:00

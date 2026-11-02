@@ -1,0 +1,26 @@
++ /home/riscv/riscv-lab/stage1-build-workload.sh:11: date -Is
+2026-10-09T20:55:26+08:00
++ /home/riscv/riscv-lab/stage1-build-workload.sh:12: cd /home/riscv/riscv-lab/workloads/hello-vadd
++ /home/riscv/riscv-lab/stage1-build-workload.sh:13: python3 -
++ /home/riscv/riscv-lab/stage1-build-workload.sh:20: make ARCH=riscv64-xs MARCH=rv64gcv -j1
+# Building hello-vadd [riscv64-xs] with AM_HOME {/home/riscv/riscv-lab/xs-env/nexus-am}
++ CC main.c
+# Building lib-am [riscv64-xs]
++ AS src/nemu/common/mainargs.S
++ AR -> build/am-riscv64-xs.a
+# Building lib-klib [riscv64-xs]
+# Creating binary image [riscv64-xs]
++ LD -> build/hello-vadd-riscv64-xs.elf
++ OBJCOPY -> build/hello-vadd-riscv64-xs.bin
++ /home/riscv/riscv-lab/stage1-build-workload.sh:21: riscv64-linux-gnu-gcc -c -march=rv64gc -mabi=lp64d boot-flash.S -o build/boot-flash.o
++ /home/riscv/riscv-lab/stage1-build-workload.sh:22: riscv64-linux-gnu-objcopy -O binary -j .text build/boot-flash.o build/boot-flash.bin
++ /home/riscv/riscv-lab/stage1-build-workload.sh:23: riscv64-linux-gnu-objdump -d build/boot-flash.o
++ /home/riscv/riscv-lab/stage1-build-workload.sh:24: cp build/boot-flash.bin /home/riscv/riscv-lab/stage1-evidence/boot-flash.bin
++ /home/riscv/riscv-lab/stage1-build-workload.sh:25: sha256sum build/boot-flash.bin
++ /home/riscv/riscv-lab/stage1-build-workload.sh:26: cp build/hello-vadd-riscv64-xs.txt /home/riscv/riscv-lab/stage1-evidence/hello-vadd-disassembly.txt
++ /home/riscv/riscv-lab/stage1-build-workload.sh:27: sha256sum build/hello-vadd-riscv64-xs.elf build/hello-vadd-riscv64-xs.bin
++ /home/riscv/riscv-lab/stage1-build-workload.sh:28: echo WORKLOAD_BUILD_PASS
+WORKLOAD_BUILD_PASS
++ /home/riscv/riscv-lab/stage1-build-workload.sh:1: rc=0
+++ /home/riscv/riscv-lab/stage1-build-workload.sh:1: date -Is
++ /home/riscv/riscv-lab/stage1-build-workload.sh:1: printf 'exit_code=%s end=%s\n' 0 2026-10-09T20:55:26+08:00

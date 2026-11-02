@@ -1,0 +1,125 @@
+\reporttitle{第二阶段设计与基础测试文档}
+
+
+团队名称（待团队确认）　成员（待团队确认）\par
+工程采用0f硬件，材料版本V1.0，初稿日期为2026年11月2日。\par
+
+
+\section{设计目标}
+
+
+点积由多次乘法与累加构成。本设计在昆明湖V2已有向量路径中增加vdot功能，复用处理器的译码、向量寄存器、调度、写回和精确提交机制。优化集中于独立点积吞吐、结果保存成本及与DIV共用父级时的取消行为。\par
+
+
+\section{指令语义与编码}
+
+
+内部合同vdot-s8x8-r32-v0.1固定VLEN128、SEW8、LMUL1、VL8及vstart0。两个源各取低8个字节，按signed int8解释。\par
+
+
+S = Σ(i=0…7) signed8(vs1[i]) × signed8(vs2[i])\par
+
+
+目的低32位保存S的二补码，高96位清零。源高64位不参与计算。结果覆盖旧目的，源与目的允许别名。单项乘积范围为−16256～16384，总和范围为−130048～131072，32位结果能够完整保存。\par
+
+
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}p{0.3\linewidth}>{\raggedright\arraybackslash}p{0.35\linewidth}}
+\toprule
+\textbf{字段} & \textbf{位段} & \textbf{取值}\\ \midrule\endhead
+funct6 & 31～26 & 000000\\
+vm & 25 & 1\\
+vs2 / vs1 & 24～20 / 19～15 & 向量源寄存器编号\\
+funct3 & 14～12 & 000\\
+vd & 11～7 & 向量目的寄存器编号\\
+opcode & 6～0 & custom-0，0x0b\\
+\bottomrule\end{longtable}}
+
+
+MATCH为0x0200000b，MASK为0xfe00707f。汇编记法使用vdot.vv vd, vs2, vs1，程序通过校验后的机器字/汇编宏编码。示例vdot.vv v10,v8,v9对应0x0284850b。\par
+
+
+合法状态还要求vill=0和vm=1，接受四种vta/vma组合。非法配置通过异常路径处理，成功运算保留合同规定的向量CSR。对目的宽度、合法域等赛题歧义，按内部合同公开说明，并保留Q01～Q07待官方澄清状态。\par
+
+
+\section{数据通路和两槽微架构}
+
+
+数据通路由8路有符号乘法、乘积寄存器、归约加法网络及结果槽构成。乘积为16位有符号数，归约在足够宽度下累加。\par
+
+
+
+\begin{center}
+\begin{tikzpicture}[node distance=7mm,box/.style={draw,rounded corners,text width=95mm,align=center,minimum height=9mm},>=Stealth]
+\node[box](a){两个128位源，提取低8个有符号字节};
+\node[box,below=of a](b){8路有符号乘法，P槽保存乘积及事务身份};
+\node[box,below=of b](c){归约加法，R槽保存32位结果及事务身份};
+\node[box,below=of c](d){高96位补零，输出完整128位及写回控制};
+\draw[->](a)--(b);\draw[->](b)--(c);\draw[->](c)--(d);
+\end{tikzpicture}
+\par\small 图：固定0f数据通路示意，身份随P/R槽推进。
+\end{center}
+
+
+
+P槽保存8个乘积及对应控制信息，R槽保存完成结果和完整身份。无阻塞时，旧R输出、旧P转入R、新请求进入P可在同一拍发生。最早响应为接收后2拍，连续接受间隔为1拍。\par
+
+
+H1将结果状态保存宽度收窄到32位，输出处拼接96个零。ROB标识、目的物理寄存器、向量写使能和性能信息随事务一起推进，反压期间保持待输出数据及身份。flush分别匹配P、R的ROB标识，处理部分取消与同时取消。异常请求携带异常信息并关闭目的写使能。\par
+
+
+实现路径包括backend/fu/vector中的算术模块、\seqsplit{wrapper/VDotElastic.scala}及VDotO2.scala，父级调度和时钟控制位于\seqsplit{backend/exu/ExeUnit.scala}。实际浏览以固定0f提交的路径为准。\par
+
+
+
+
+\section{与DIV共用父级的处理}
+
+
+VFEX4在vdot及整数/浮点DIV之间管理分派、占用和时钟。0f修复匹配DIV取消之后保持状态未及时释放的问题。验证通过实际父级信号检查取消后的空闲时钟，并覆盖复位、两类DIV、反压和请求切换。两槽占用信息用于保持正确互斥，控制信号以实际事务身份为依据。\par
+
+
+\section{功能验证}
+
+
+测试从独立数学模型推进到算术RTL、FU、真实父级和全核差分。各层统计分别保存。\par
+
+
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}p{0.3\linewidth}>{\raggedright\arraybackslash}p{0.35\linewidth}}
+\toprule
+\textbf{层级} & \textbf{主要覆盖} & \textbf{已有结果}\\ \midrule\endhead
+模型/算术 & 22组定向＋10000组随机，完整128位 & 验证通过\\
+FU/真实父级 & 反压、取消、复位、身份、异常及DIV交互 & 0f原证据复用，4＋16项负控\\
+全核 & 正负边界、寄存器别名、非法向量状态等 & 117个不同用例，按原矩阵分片执行124次\\
+总验收 & 原13项与补1项组合、负控及恢复 & R5/G5组合验证通过\\
+\bottomrule\end{longtable}}
+
+
+下面列出便于评审阅读的定向预期值，完整执行证据见原测试归档。\par
+
+
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}p{0.3\linewidth}>{\raggedright\arraybackslash}p{0.35\linewidth}}
+\toprule
+\textbf{输入} & \textbf{数学结果} & \textbf{目的低32位}\\ \midrule\endhead
+[1,2,3,4,5,6,7,8]与自身点积 & 204 & 0x000000cc\\
+8个−1与8个1点积 & −8 & 0xfffffff8\\
+8个−128与8个−128点积 & 131072 & 0x00020000\\
+8个−128与8个127点积 & −130048 & 0xfffe0400\\
+8个0与任意合法输入 & 0 & 0x00000000\\
+\bottomrule\end{longtable}}
+
+
+所有行还需检查高96位为零。测试对源高半区和旧目的设置哨兵，以发现错误lane选择、目的高位保留和源/目的别名处理问题。\par
+
+
+
+
+\section{设计取舍与扩展}
+
+
+O2以两槽容量提高独立吞吐，H1降低结果寄存器开销，0f完善DIV取消关钟行为。后续一拍P4候选经历局部验证和成本筛选，原版6项、唯一修订10项门槛未过，最终选择0f。\par
+
+
+参数扩展实验另行实现signed INT16×8、64位结果，完成94组定向和10000组随机验证。该证据说明算术与包装的参数化方法，生产实现的ISA域按INT8合同交付。\par
+
+
+\href{https://github.com/cc77-builder/riscv/blob/eca41d7cd959f5f3c4f240e382919c492d1ccb96/team/spec/vdot.md}{指令合同} · \href{https://github.com/cc77-builder/riscv/blob/0f12df675378556670afd0dd2153f47fcb330610/src/main/scala/xiangshan/backend/fu/wrapper/VDotElastic.scala}{稳定FU源码} · \href{https://github.com/cc77-builder/riscv/blob/eca41d7cd959f5f3c4f240e382919c492d1ccb96/team/optimizations/o2/integration/firstdot-v2-0f/acceptance/acceptance-matrix.json}{R5验收矩阵} · \href{https://github.com/cc77-builder/riscv/blob/eca41d7cd959f5f3c4f240e382919c492d1ccb96/team/docs/t15-parameter-extension.md}{参数扩展}\par

@@ -42,3 +42,5 @@
 - [独立8×32 C8软件包：构建、选用与验收](optimizations/o2/integration/firstdot-v2-0f/package/c8/RESULT.md)。
 
 - [C8接回普通C：最终镜像等价与原回归复用](optimizations/o2/integration/firstdot-v2-0f/package/c8/relink/RESULT.md)。
+
+- [三阶段LaTeX与PDF技术文档](submission/latex-v1/README.md)：三份阶段报告、合订本、源码和原始日志附件。
