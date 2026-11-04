@@ -1,0 +1,156 @@
++ /home/riscv/riscv-lab/stage1-build-nemu.sh:9: date -Is
+2026-10-09T20:24:27+08:00
++ /home/riscv/riscv-lab/stage1-build-nemu.sh:10: cd /home/riscv/riscv-lab/xs-env/NEMU
++ /home/riscv/riscv-lab/stage1-build-nemu.sh:11: git rev-parse HEAD
+a48a11f208ff81ad765591d83271d1b339fb3861
++ /home/riscv/riscv-lab/stage1-build-nemu.sh:12: make riscv64-xs-ref_defconfig
+Cloning into '/home/riscv/riscv-lab/xs-env/NEMU/resource/nanopb'...
+Cloning into '/home/riscv/riscv-lab/xs-env/NEMU/resource/LibCheckpoint'...
+Submodule 'resource/nanopb' (https://github.com/nanopb/nanopb) registered for path 'resource/nanopb'
+Cloning into '/home/riscv/riscv-lab/xs-env/NEMU/resource/LibCheckpoint/resource/nanopb'...
+Submodule path 'resource/nanopb': checked out '671672b4d7994a9b07a307ae654885c7202ae886'
+Cloning into '/home/riscv/riscv-lab/xs-env/NEMU/resource/gcpt_restore'...
+/home/riscv/riscv-lab/xs-env/NEMU/scripts/config.mk:20: Warning: .config does not exists!
+/home/riscv/riscv-lab/xs-env/NEMU/scripts/config.mk:21: To build the project, first run 'make menuconfig'.
++ CC confdata.c
++ CC expr.c
++ CC preprocess.c
++ CC symbol.c
++ CC util.c
++ YACC build/parser.tab.h
++ LEX build/lexer.lex.c
++ CC build/lexer.lex.c
++ CC build/parser.tab.c
++ CC conf.c
++ g++ /home/riscv/riscv-lab/xs-env/NEMU/tools/kconfig/build/conf
++ CC fixdep.c
++ g++ /home/riscv/riscv-lab/xs-env/NEMU/tools/fixdep/build/fixdep
++ /home/riscv/riscv-lab/stage1-build-nemu.sh:13: /usr/bin/time -v make -j1
+Makefile:40: You have set CONFIG_FLASH_IMG_PATH option, but the specified path '""' does not exist!
+Cloning into 'resource/softfloat/repo'...
++ CC src/nemu-main.c
++ CC src/device/device.c
++ CC src/device/alarm.c
++ CC src/device/intr.c
++ CC src/device/flash.c
++ CC src/cpu/tcache.c
++ CC src/cpu/cpu-exec.c
++ CC src/cpu/instr_stat.c
++ CC src/cpu/difftest/ame/amuctrl.c
++ CC src/cpu/difftest/ame/msync.c
++ CC src/cpu/difftest/dut.c
++ CC src/cpu/difftest/ref.c
++ CC src/monitor/ui.c
++ CC src/monitor/watchpoint.c
++ CC src/monitor/monitor.c
++ CC src/monitor/fdt_rng_seed.c
++ CC src/monitor/aligncheck.c
++ CC src/monitor/image_loader.c
++ CC src/utils/state.c
++ CC src/utils/iqueue.c
++ CC src/utils/br_log.c
++ CC src/utils/expr.c
++ CC src/utils/log.c
++ CC src/utils/filename.c
++ CC src/utils/dynamic-config.c
++ CC src/utils/timer.c
++ CC src/memory/host-tlb.c
++ CC src/memory/vaddr.c
++ CC src/memory/paddr.c
++ CC src/isa/riscv64/system/mmu.c
++ CC src/isa/riscv64/system/priv.c
++ CC src/isa/riscv64/system/trigger.c
++ CC src/isa/riscv64/system/intr.c
++ CC src/isa/riscv64/system/timer.c
++ CC src/isa/riscv64/system/aia.c
++ CC src/isa/riscv64/reg.c
++ CC src/isa/riscv64/ame/raw_fp4_memory.c
++ CC src/isa/riscv64/clint.c
++ CC src/isa/riscv64/difftest/dut.c
++ CC src/isa/riscv64/difftest/ref.c
++ CC src/isa/riscv64/init.c
++ CC src/isa/riscv64/logo.c
++ CC src/isa/riscv64/instr/priv/system.c
++ CC src/isa/riscv64/instr/fp.c
++ CC src/isa/riscv64/instr/rvk/aes_common.c
++ CC src/isa/riscv64/instr/rvk/crypto_impl.c
++ CC src/isa/riscv64/instr/ame/mcompute_impl.c
++ CC src/isa/riscv64/instr/ame/mldst_transpose_fast.c
++ CC src/isa/riscv64/instr/ame/mreg.c
++ CC src/isa/riscv64/instr/ame/mldst_impl.c
++ CC src/isa/riscv64/instr/ame/mldst_fast.c
++ CC src/isa/riscv64/instr/decode.c
++ CC src/isa/riscv64/instr/rva/amo.c
++ CC src/isa/riscv64/instr/rvv/vldst_impl.c
++ CC src/isa/riscv64/instr/rvv/vfexp2.c
++ CC src/isa/riscv64/instr/rvv/vcompute_impl.c
++ CC src/isa/riscv64/instr/rvv/vreg_impl.c
++ CC src/isa/riscv64/instr/rvv/vcommon.c
++ CC src/isa/riscv64/instr/rvcbo/cbo_impl.c
++ CC src/isa/riscv64/instr/mp.c
++ CC src/isa/riscv64/instr/rvb/rvintrin.c
++ CC src/isa/riscv64/instr/rvt/sfu.c
++ CC src/isa/riscv64/instr/rvt/matmul_subfloat.c
++ CC src/isa/riscv64/instr/rvt/element_wise.c
++ CC src/isa/riscv64/instr/rvt/convert.c
++ CC src/isa/riscv64/instr/rvt/conv2d.c
++ CC src/isa/riscv64/instr/rvt/type.c
++ CC src/isa/riscv64/instr/rvt/tensor_init.c
++ CC src/isa/riscv64/instr/rvt/tensor_copy.c
++ CC src/isa/riscv64/instr/rvt/pooling.c
++ CC src/isa/riscv64/instr/rvt/register.c
++ CC src/isa/riscv64/instr/rvt/matmul.c
++ CC src/isa/riscv64/instr/vp.c
++ CC src/engine/interpreter/hostcall.c
++ CC src/engine/interpreter/fp.c
++ CC src/engine/interpreter/init.c
++ CC src/device/io/mmio.c
++ CC src/device/io/port-io.c
++ CC src/device/io/map.c
++ CC src/profiling/profiling_control.c
++ CC src/checkpoint/cpt_env.c
++ CXX src/checkpoint/simpoint.cpp
++ CXX src/checkpoint/path_manager.cpp
++ CXX src/checkpoint/serializer.cpp
++ CXX src/checkpoint/semantic_point.cpp
++ CXX src/base/output.cpp
++ CXX src/iostream3/zfstream.cpp
++ CXX src/cpu/difftest/ame/msync_queue_wrapper.cpp
++ CXX src/cpu/difftest/ame/amu_ctrl_queue_wrapper.cpp
++ CXX src/memory/store_queue_wrapper.cpp
++ CXX src/memory/elfloader.cpp
+SPECIALIZE_TYPE=RISCV SOFTFLOAT_OPTS="-DSOFTFLOAT_ROUND_ODD -DINLINE_LEVEL=5 -DSOFTFLOAT_FAST_DIV32TO16 -DSOFTFLOAT_FAST_DIV64TO32 -fPIC" make -s -C /home/riscv/riscv-lab/xs-env/NEMU/resource/softfloat/repo/build/Linux-x86_64-GCC all
+mkdir -p resource/softfloat/build
+ln -sf /home/riscv/riscv-lab/xs-env/NEMU/resource/softfloat/repo/build/Linux-x86_64-GCC/softfloat.a resource/softfloat/build/softfloat.a
++ g++ /home/riscv/riscv-lab/xs-env/NEMU/build/riscv64-nemu-interpreter-so
+	Command being timed: "make -j1"
+	User time (seconds): 22.97
+	System time (seconds): 7.18
+	Percent of CPU this job got: 101%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:29.76
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 445324
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 1324
+	Minor (reclaiming a frame) page faults: 1488436
+	Voluntary context switches: 7740
+	Involuntary context switches: 491
+	Swaps: 0
+	File system inputs: 227800
+	File system outputs: 96112
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
++ /home/riscv/riscv-lab/stage1-build-nemu.sh:14: cp .config /home/riscv/riscv-lab/stage1-evidence/nemu.config
++ /home/riscv/riscv-lab/stage1-build-nemu.sh:15: file build/riscv64-nemu-interpreter-so
+build/riscv64-nemu-interpreter-so: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, BuildID[sha1]=4841e67452e47681eecaff72b0e3526c02cec25f, not stripped
++ /home/riscv/riscv-lab/stage1-build-nemu.sh:16: sha256sum build/riscv64-nemu-interpreter-so
++ /home/riscv/riscv-lab/stage1-build-nemu.sh:17: date -Is
+2026-10-09T20:25:12+08:00
++ /home/riscv/riscv-lab/stage1-build-nemu.sh:18: echo NEMU_BUILD_PASS
+NEMU_BUILD_PASS

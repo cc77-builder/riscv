@@ -1,138 +1,464 @@
 {
-  "schema": "latex-pdf-publication-v1",
-  "date": "2026-11-02",
-  "base": "eca41d7cd959f5f3c4f240e382919c492d1ccb96",
-  "scope": "LaTeX/PDF/referenced evidence only",
+  "schema": "latex-pdf-publication-v2",
+  "date": "2026-11-04",
+  "base": "347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e",
+  "branch": "zjhwork",
+  "scope": "Only report PDFs, LaTeX sources, document build helpers, figures, referenced document evidence and publication note",
   "production_src_tree": "78a0c93852dced038f645205e33d36a520fedfcd",
-  "p4_implementation_included": false,
+  "project_implementation_code_included": false,
   "font_files_included": false,
-  "source_adaptation": "system font fallback and portable XeLaTeX build entry",
-  "source_fallback_compile": "PASS",
+  "source_fallback_compile": {
+    "status": "PASS",
+    "compiler": "XeLaTeX TeX Live 2026",
+    "passes": 3,
+    "bundled_fonts": false,
+    "system_fonts": [
+      "SimSun",
+      "Times New Roman"
+    ],
+    "main_pages": 82,
+    "main_text_matches_verified_original": true,
+    "all_four_pdf_bytes_match_verified_original": true,
+    "regenerated_sections_byte_identical": true,
+    "warnings": []
+  },
   "pdf_original_bytes_verified": true,
   "files": {
-    ".gitattributes": {
-      "sha256": "004fdfaa1a9ab8c8b70a78d9f8ac102e16b779f55fad4cfbf65379561ac1045a",
-      "bytes": 90
+    "team/submission/latex-v1/.gitattributes": {
+      "sha256": "fabdd1ffe2301cb3ccc890449c41646331a98ddca34dc7e0b58cd931fe3863f1",
+      "bytes": 107
     },
-    "README.md": {
-      "sha256": "7727386902f4128da4b47fa906131c6fcca6295f086fb54e996f5314801a5910",
-      "bytes": 2257
+    "team/submission/latex-v1/.gitignore": {
+      "sha256": "6dd178cfdb9a299fe626f74bae0159992fc84529b8ac36f7b91641a32db239ef",
+      "bytes": 150
     },
-    "build.py": {
-      "sha256": "c0f748f946eed0b3fa079248a7d91076b14010f6d64f354cc20f3327a4a16776",
-      "bytes": 556
+    "team/submission/latex-v1/README.md": {
+      "sha256": "cd8c1dfdfc4f7e732d10ffdf8637bb51c65e2e4129babbacc192e85be33977f2",
+      "bytes": 2939
     },
-    "evidence/build-concurrency-adjustment.log": {
-      "sha256": "3c91395b06564efa415a9a9206387191c29752b37b35b5c1e8f179f6604e1c2c",
-      "bytes": 476
+    "team/submission/latex-v1/build.py": {
+      "sha256": "274c8d34e5cff9c2d954a8355651c21b6d66371a9848f0867ad8b01df8aa5172",
+      "bytes": 1519
     },
-    "evidence/emu-build-20261009-204228.log": {
-      "sha256": "660040513c791ab62575ad6f8ec150debc072f5ddb04aaf1e3718753b8c14617",
-      "bytes": 3132
-    },
-    "evidence/hello-vadd-run-20261009-205354.log": {
-      "sha256": "0aff186a3e997f0006e73d7bfad810a1a562012909b3c51259106e8177435644",
-      "bytes": 13522
-    },
-    "evidence/hello-vadd-run-20261009-205526.status": {
-      "sha256": "149a9d46118f2a58df0968f6b97b2ffc7c278440a31f793b83537a610f0364dd",
-      "bytes": 42
-    },
-    "evidence/hello-vadd-run-clean.log": {
-      "sha256": "676290fe6f30eec384d4db37c17cc97e4f3e0973ab2467de538d86a70aa02035",
-      "bytes": 3068358
-    },
-    "evidence/hello-vadd-summary.log": {
-      "sha256": "7daf21a2672b939998f5998fe6761a7b38032231979fd28b82bf0427f3783072",
-      "bytes": 1043
-    },
-    "evidence/nemu-build.log": {
-      "sha256": "516a117d0ebbd4ab22a1dc17e9d28c4615ef49ab3c90a843817384f450bacb27",
-      "bytes": 6610
-    },
-    "evidence/submodules-after-build.lock.txt": {
-      "sha256": "4c8f864e8a6c32b69436abe8d4388f057211d61c1c2eba82e1c1f5598a294b4f",
-      "bytes": 13237
-    },
-    "evidence/tool-versions.txt": {
-      "sha256": "7fd5bcf215a6faacb5ab7c2db6f004df8253a7b716867041eb5e17cee8d3f5e5",
-      "bytes": 2732
-    },
-    "evidence/vadd-commit-events.csv": {
-      "sha256": "20c6f09d1bccf39b385551ee9c0177bc5f7cc1547b768ab6d4e32291f7a73712",
-      "bytes": 2483
-    },
-    "evidence/vector-fix-alu-events.csv": {
-      "sha256": "c782724c61d0debc304e4fe635a4c36d55087dc9891fa0aacdfd99ba9c43cd79",
-      "bytes": 914
-    },
-    "evidence/wave-signals.json": {
-      "sha256": "a92a2cf2ea1004135b535b84f051c501e2a87d44067cec8646be78a20cc67af4",
-      "bytes": 10126
-    },
-    "evidence/workload-build.log": {
-      "sha256": "00f3d2d834625aaca006446f9ea7e804561c63abd6de22c7306783a8d6cbbc17",
-      "bytes": 1890
-    },
-    "main.tex": {
-      "sha256": "07b9df385eefb39bacf997f5c2c67148cee8435f3c8f59c6fa0b371d6b25b971",
-      "bytes": 310
-    },
-    "output/三阶段技术文档_合订本.pdf": {
-      "sha256": "da42444eb19014d8fcccfcfe5a1d4ab90a353c451c3f301b09d84e24802cba8f",
-      "bytes": 279641
-    },
-    "output/第一阶段_执行日志与过程文档.pdf": {
-      "sha256": "c0659b739726576a110bfa68aa373077fcdd8af9f7ba1a059bd9a6ce21566b50",
-      "bytes": 168425
-    },
-    "output/第三阶段_协同仿真与性能分析.pdf": {
-      "sha256": "d21b0a70a6ffbf83c21c7fce4ef1675b29593a7a7ad4268cd916af1f23dc5da9",
-      "bytes": 186377
-    },
-    "output/第二阶段_设计与基础测试文档.pdf": {
-      "sha256": "ef659865b0b9801072489445e4f5b959fc0b2a1f7b5008605ee1780748db572e",
-      "bytes": 155299
-    },
-    "preamble.tex": {
-      "sha256": "e834eca60366e517918cd3defd884ae709d526e8affc19eb25ec80a3062f890a",
-      "bytes": 1748
-    },
-    "qa/pdf-inspection.json": {
-      "sha256": "1975596d4287f90a60d09b3734ddde14ebd74bd9b746b434b35ecfd30a8269e9",
-      "bytes": 1216
-    },
-    "sections/stage1.tex": {
+    "team/submission/latex-v1/content/baseline/sections/stage1.tex": {
       "sha256": "899c6fe9af8031e26b574a00c3d6ccf18d9ead735bd797da4f10069ec3466ac8",
       "bytes": 8133
     },
-    "sections/stage2.tex": {
+    "team/submission/latex-v1/content/baseline/sections/stage2.tex": {
       "sha256": "70536b077a9eab4502924e76fff28e89b5c768d35bf6eeaa5dfb7a3732f02671",
       "bytes": 6780
     },
-    "sections/stage3.tex": {
+    "team/submission/latex-v1/content/baseline/sections/stage3.tex": {
       "sha256": "a68dd237aa67dec8d85434e1154dbc20579c6218d70558c845e90de4eb3ab1be",
       "bytes": 9609
     },
-    "stage1.tex": {
+    "team/submission/latex-v1/content/evidence-stage1.json": {
+      "sha256": "a7fdebbe6b02b3622161ce4ce13f095014b08859eb3f122628bcb0a52a8dd660",
+      "bytes": 8373
+    },
+    "team/submission/latex-v1/content/evidence-stage2.json": {
+      "sha256": "f856070fcbd75f7a7dfc4dbaf3aa7b971d6bd0f77f92192b7162a97e51befb71",
+      "bytes": 33277
+    },
+    "team/submission/latex-v1/content/evidence-stage3.json": {
+      "sha256": "984ff065f57f736ac1844a526a3508aa446aefb4c4327204c3448e4ebe21d16f",
+      "bytes": 32935
+    },
+    "team/submission/latex-v1/content/narrative-stage1.md": {
+      "sha256": "88364a8c59c2a658c72d7b5e782768788530c452805d9922c9e4724838020689",
+      "bytes": 6775
+    },
+    "team/submission/latex-v1/content/narrative-stage2.md": {
+      "sha256": "748eb9af8c6f7869c658a01aa3833abffe39e662101e49aaa8663622f0cc3d5d",
+      "bytes": 6992
+    },
+    "team/submission/latex-v1/content/narrative-stage3.md": {
+      "sha256": "92d170528585cec1c37a08749f3d954370e177044747ad83c3350009da74ae84",
+      "bytes": 7936
+    },
+    "team/submission/latex-v1/content/source-manifest.json": {
+      "sha256": "02f623c102cee6109920dfbff3756ec8cfb4342aadf6a337ab39795eed2dc80a",
+      "bytes": 2308
+    },
+    "team/submission/latex-v1/evidence/build-concurrency-adjustment.log": {
+      "sha256": "3c91395b06564efa415a9a9206387191c29752b37b35b5c1e8f179f6604e1c2c",
+      "bytes": 476
+    },
+    "team/submission/latex-v1/evidence/emu-build-20261009-204228.log": {
+      "sha256": "660040513c791ab62575ad6f8ec150debc072f5ddb04aaf1e3718753b8c14617",
+      "bytes": 3132
+    },
+    "team/submission/latex-v1/evidence/hello-vadd-run-20261009-205354.log": {
+      "sha256": "0aff186a3e997f0006e73d7bfad810a1a562012909b3c51259106e8177435644",
+      "bytes": 13522
+    },
+    "team/submission/latex-v1/evidence/hello-vadd-run-20261009-205526.status": {
+      "sha256": "149a9d46118f2a58df0968f6b97b2ffc7c278440a31f793b83537a610f0364dd",
+      "bytes": 42
+    },
+    "team/submission/latex-v1/evidence/hello-vadd-run-clean.log": {
+      "sha256": "676290fe6f30eec384d4db37c17cc97e4f3e0973ab2467de538d86a70aa02035",
+      "bytes": 3068358
+    },
+    "team/submission/latex-v1/evidence/hello-vadd-summary.log": {
+      "sha256": "7daf21a2672b939998f5998fe6761a7b38032231979fd28b82bf0427f3783072",
+      "bytes": 1043
+    },
+    "team/submission/latex-v1/evidence/nemu-build.log": {
+      "sha256": "516a117d0ebbd4ab22a1dc17e9d28c4615ef49ab3c90a843817384f450bacb27",
+      "bytes": 6610
+    },
+    "team/submission/latex-v1/evidence/rendered/nemu-build.txt": {
+      "sha256": "424aacbbb070a18e6f3c231dbcf29806f453fc21d9f3a6e9c4901e34affbaf50",
+      "bytes": 6588
+    },
+    "team/submission/latex-v1/evidence/submodules-after-build.lock.txt": {
+      "sha256": "4c8f864e8a6c32b69436abe8d4388f057211d61c1c2eba82e1c1f5598a294b4f",
+      "bytes": 13237
+    },
+    "team/submission/latex-v1/evidence/tool-versions.txt": {
+      "sha256": "7fd5bcf215a6faacb5ab7c2db6f004df8253a7b716867041eb5e17cee8d3f5e5",
+      "bytes": 2732
+    },
+    "team/submission/latex-v1/evidence/vadd-commit-events.csv": {
+      "sha256": "20c6f09d1bccf39b385551ee9c0177bc5f7cc1547b768ab6d4e32291f7a73712",
+      "bytes": 2483
+    },
+    "team/submission/latex-v1/evidence/vector-fix-alu-events.csv": {
+      "sha256": "c782724c61d0debc304e4fe635a4c36d55087dc9891fa0aacdfd99ba9c43cd79",
+      "bytes": 914
+    },
+    "team/submission/latex-v1/evidence/wave-signals.json": {
+      "sha256": "a92a2cf2ea1004135b535b84f051c501e2a87d44067cec8646be78a20cc67af4",
+      "bytes": 10126
+    },
+    "team/submission/latex-v1/evidence/workload-build.log": {
+      "sha256": "00f3d2d834625aaca006446f9ea7e804561c63abd6de22c7306783a8d6cbbc17",
+      "bytes": 1890
+    },
+    "team/submission/latex-v1/expand_reports.py": {
+      "sha256": "7a1f86a3b8afb5e93c9ad08d9027fb7f749092cf4a3b7390a797ccbb0208e146",
+      "bytes": 6082
+    },
+    "team/submission/latex-v1/figure_placeholders.py": {
+      "sha256": "891e52df56741fad91dadfcf35d1828d058cb6d38e25b242ab93601192c01a1c",
+      "bytes": 2174
+    },
+    "team/submission/latex-v1/figures/README.md": {
+      "sha256": "e65319882d8fa220bd87015b235e892623d3612aa6c9423d4e7bec57dbaab648",
+      "bytes": 244
+    },
+    "team/submission/latex-v1/figures/S1-01.png": {
+      "sha256": "a4300f548f7cc14a4c198a219660a91502ef7c51178155424173d3552645facf",
+      "bytes": 641742
+    },
+    "team/submission/latex-v1/figures/S1-02.png": {
+      "sha256": "b0b0734cfcc57a5982057b646364ad2d376a2df56ac34bd4d681893c45bd5e68",
+      "bytes": 791174
+    },
+    "team/submission/latex-v1/figures/S1-03.pdf": {
+      "sha256": "8e56f430c5052b67975bd2422debe49c7fbaafe74f099768c6371ce259d89784",
+      "bytes": 48641
+    },
+    "team/submission/latex-v1/figures/S1-04.pdf": {
+      "sha256": "b9ec72c5ca5e78904835f5b05a92935dbd3c180817b76ee51ec55b712a248490",
+      "bytes": 159213
+    },
+    "team/submission/latex-v1/figures/S1-05.pdf": {
+      "sha256": "73e150be10e494431079297dfc47dfbf3fdfc0c75f0b6ac07484a63b6670e928",
+      "bytes": 225447
+    },
+    "team/submission/latex-v1/figures/S2-01.png": {
+      "sha256": "bde1d7a5861a2c9e756821e292f4609da19f17f30947ac9401962b09b737e278",
+      "bytes": 549028
+    },
+    "team/submission/latex-v1/figures/S2-02.png": {
+      "sha256": "f596bf755e99f62d8eead9724fc065b0680989cf7ba82705fbfbf0a64e222504",
+      "bytes": 1135528
+    },
+    "team/submission/latex-v1/figures/S2-03.png": {
+      "sha256": "a9eaee69af099f1073452779540157ab34aea080fc9476fb719084d7978e4670",
+      "bytes": 404282
+    },
+    "team/submission/latex-v1/figures/S2-04.png": {
+      "sha256": "24e89192ad2db6ee855b4aeaffafa7969e5f6c76b2b244923f2d1db6130a4d23",
+      "bytes": 854027
+    },
+    "team/submission/latex-v1/figures/S2-09.pdf": {
+      "sha256": "a36d72689912a7866695d825ef2afa6affef8b9937edec2155f916a47173b00e",
+      "bytes": 37123
+    },
+    "team/submission/latex-v1/figures/S2-10.png": {
+      "sha256": "f9fa32c2dcf5635c98a1ef035c719bb14c36c35cff4a9c1e8498cba204e6573c",
+      "bytes": 777104
+    },
+    "team/submission/latex-v1/figures/S3-01.png": {
+      "sha256": "1f27d2a2e54290738030cff9f6395d35274dbb0f95918c0a2491f068dd5afd3d",
+      "bytes": 493129
+    },
+    "team/submission/latex-v1/figures/S3-02.png": {
+      "sha256": "100b5f8f7eb2b588107c56a4b004c9d039121ed9bff410df59988c0faca63d45",
+      "bytes": 589096
+    },
+    "team/submission/latex-v1/figures/S3-04.png": {
+      "sha256": "a4384ce6f1e2ab1d3ddce09d8e8c0167b02efa2bc6e2466f75d5baa5d27110a1",
+      "bytes": 813773
+    },
+    "team/submission/latex-v1/figures/S3-06.png": {
+      "sha256": "b2fb99b109d21ce11775aecca2a08dc03f2117980d1bf43b8afc6726ff168ba1",
+      "bytes": 802130
+    },
+    "team/submission/latex-v1/figures/S3-08.png": {
+      "sha256": "4d82768fba0e44960aa88162fc97a21f0578fe6fdcad2db7fbb6ec5a170613e9",
+      "bytes": 898927
+    },
+    "team/submission/latex-v1/figures/S3-09.png": {
+      "sha256": "19da1df05c036ec854d76337e5dda725f5a707dd3f61b4f6e3f41093d59cc7f6",
+      "bytes": 786089
+    },
+    "team/submission/latex-v1/figures/SUP-S2-ARITH.pdf": {
+      "sha256": "cf687a40eda24d72239d7bce1fbebb3e2bdf9f3ec88e78133f6565080d15609c",
+      "bytes": 38601
+    },
+    "team/submission/latex-v1/figures/SUP-S2-MODEL.pdf": {
+      "sha256": "609d4240748dcd83f20b013681132229ef682af2a02f05e1f31ec3a9e96484c1",
+      "bytes": 76958
+    },
+    "team/submission/latex-v1/figures/SUP-S2-OVERLAP.pdf": {
+      "sha256": "56d8bfdbb95e3561caac650e34646f5117496115a4c1822f63f43cce3399f2dd",
+      "bytes": 38078
+    },
+    "team/submission/latex-v1/figures/SUP-S2-STATE.pdf": {
+      "sha256": "0ef344fca9fdb716d88fe587df7ebebdb25b2d892028d07eddbd23409e3bf33c",
+      "bytes": 88618
+    },
+    "team/submission/latex-v1/figures/SUP-S3-SUMMARY.pdf": {
+      "sha256": "4233276add2ac96e810141864809deca6bd5d0ecb574355d982e5629b78f9296",
+      "bytes": 18158
+    },
+    "team/submission/latex-v1/figures/named-figure-insertion-manifest-20261104.json": {
+      "sha256": "0ff330396c55a1a3606e0af27a19dd9377da7df2867f70de545cb784b9342e00",
+      "bytes": 6598
+    },
+    "team/submission/latex-v1/figures/page-map.json": {
+      "sha256": "93a34c31a90c72a46a52e15bc373cbbc989f49970bca8d208f2003aecb86acfe",
+      "bytes": 1479
+    },
+    "team/submission/latex-v1/figures/placement.json": {
+      "sha256": "2f08a5bfbc22b635a7657f1458ac323cc826c6420e39c0fef7cf739e988be70b",
+      "bytes": 15659
+    },
+    "team/submission/latex-v1/figures/screenshot-insertion-manifest.json": {
+      "sha256": "f060bb9b005810487a53a1947ff6a219f05c49b15d20f85ae5a6672669e44af8",
+      "bytes": 11245
+    },
+    "team/submission/latex-v1/figures/source-diagrams/S1-01_development_environment.png": {
+      "sha256": "a4300f548f7cc14a4c198a219660a91502ef7c51178155424173d3552645facf",
+      "bytes": 641742
+    },
+    "team/submission/latex-v1/figures/source-diagrams/S1-02_environment_setup_and_validation_flow.png": {
+      "sha256": "b0b0734cfcc57a5982057b646364ad2d376a2df56ac34bd4d681893c45bd5e68",
+      "bytes": 791174
+    },
+    "team/submission/latex-v1/figures/source-diagrams/S2-01_vdot_instruction_and_result_layout.png": {
+      "sha256": "bde1d7a5861a2c9e756821e292f4609da19f17f30947ac9401962b09b737e278",
+      "bytes": 549028
+    },
+    "team/submission/latex-v1/figures/source-diagrams/S2-02_core_datapath.png": {
+      "sha256": "f596bf755e99f62d8eead9724fc065b0680989cf7ba82705fbfbf0a64e222504",
+      "bytes": 1135528
+    },
+    "team/submission/latex-v1/figures/source-diagrams/S2-03_VFEX4_simplified.png": {
+      "sha256": "a9eaee69af099f1073452779540157ab34aea080fc9476fb719084d7978e4670",
+      "bytes": 404282
+    },
+    "team/submission/latex-v1/figures/source-diagrams/S2-04_validation_layers_and_dataflow.png": {
+      "sha256": "24e89192ad2db6ee855b4aeaffafa7969e5f6c76b2b244923f2d1db6130a4d23",
+      "bytes": 854027
+    },
+    "team/submission/latex-v1/figures/source-diagrams/S2-10_PR_elastic_state_and_cancel_priority.png": {
+      "sha256": "f9fa32c2dcf5635c98a1ef035c719bb14c36c35cff4a9c1e8498cba204e6573c",
+      "bytes": 777104
+    },
+    "team/submission/latex-v1/figures/source-diagrams/S3-01_DiffTest_framework.png": {
+      "sha256": "1f27d2a2e54290738030cff9f6395d35274dbb0f95918c0a2491f068dd5afd3d",
+      "bytes": 493129
+    },
+    "team/submission/latex-v1/figures/source-diagrams/S3-02_NEMU_vdot_decode_and_execute.png": {
+      "sha256": "100b5f8f7eb2b588107c56a4b004c9d039121ed9bff410df59988c0faca63d45",
+      "bytes": 589096
+    },
+    "team/submission/latex-v1/figures/source-diagrams/S3-04_CSR_timing_window_and_retirement_events.png": {
+      "sha256": "a4384ce6f1e2ab1d3ddce09d8e8c0167b02efa2bc6e2466f75d5baa5d27110a1",
+      "bytes": 813773
+    },
+    "team/submission/latex-v1/figures/source-diagrams/S3-06_firstdot_C8_entry_and_image_equivalence.png": {
+      "sha256": "b2fb99b109d21ce11775aecca2a08dc03f2117980d1bf43b8afc6726ff168ba1",
+      "bytes": 802130
+    },
+    "team/submission/latex-v1/figures/source-diagrams/S3-08_C_call_link_and_result_audit.png": {
+      "sha256": "4d82768fba0e44960aa88162fc97a21f0578fe6fdcad2db7fbb6ec5a170613e9",
+      "bytes": 898927
+    },
+    "team/submission/latex-v1/figures/source-diagrams/S3-09_R5_acceptance_and_P5_selection_closeout.png": {
+      "sha256": "19da1df05c036ec854d76337e5dda725f5a707dd3f61b4f6e3f41093d59cc7f6",
+      "bytes": 786089
+    },
+    "team/submission/latex-v1/figures/source-screenshots/Notepad_25TDi0pHhe.png": {
+      "sha256": "0e253836fd3e9559e8fe91a28d3a67ae747c6b6a947b8235e11f30c2bc7a6522",
+      "bytes": 18726
+    },
+    "team/submission/latex-v1/figures/source-screenshots/Notepad_4e1yBGB6vI.png": {
+      "sha256": "a42a5fcb22cc1d4bcb2632a1b586ef5e83c03d7a772c3ca6d04b213b60c52e64",
+      "bytes": 7691
+    },
+    "team/submission/latex-v1/figures/source-screenshots/Notepad_kUWl09ct1X.png": {
+      "sha256": "d4472a7b8ba35dce6841e3df720c634fea965930793baa9f525a7687453049d0",
+      "bytes": 5179
+    },
+    "team/submission/latex-v1/figures/source-screenshots/S1-04-01-vadd-positive-input.png": {
+      "sha256": "39fb403ef09199e3dd21e12eb8ae9dda0d37b2d897c4929b75041a6ea7c8eda0",
+      "bytes": 128639
+    },
+    "team/submission/latex-v1/figures/source-screenshots/S1-04-03-vadd-positive-commit.png": {
+      "sha256": "b9bb811880f38cf4a52dcaed55c23176ff2c5e825ff76dd5922157654df9c7d2",
+      "bytes": 128078
+    },
+    "team/submission/latex-v1/figures/source-screenshots/S2-05-vdot-overlap-log-2.png": {
+      "sha256": "5649cdeaac885b189ba805552acf91add71e502778fe4767965cc225d14ad609",
+      "bytes": 48001
+    },
+    "team/submission/latex-v1/figures/source-screenshots/S2-09-01-vdot-datapath-results.png": {
+      "sha256": "3f14dbe4fafb2667e5f40b168f2453923925f4a0f592e25bc66810c94db3da92",
+      "bytes": 12657
+    },
+    "team/submission/latex-v1/figures/source-screenshots/S2-09-02-vdot-positive-response.png": {
+      "sha256": "e15b36a4414bf126257b0b3e7be0b4a4e1bd335bf6cf244415953cfddfd5d1c8",
+      "bytes": 13565
+    },
+    "team/submission/latex-v1/figures/source-screenshots/S2-09-03-vdot-negative-response.png": {
+      "sha256": "ce01d0f9728057b5638b833dcc88fe7ad9c315f7917ca838f3b547f1540e7b80",
+      "bytes": 12867
+    },
+    "team/submission/latex-v1/figures/source-screenshots/S2-09-04-vdot-boundary-response.png": {
+      "sha256": "ac335e51c82e61f2d9c4ed085e7bb287e1c51c9e36aa60bcd0a7ec8ba817b1ea",
+      "bytes": 13006
+    },
+    "team/submission/latex-v1/figures/source-screenshots/WindowsTerminal_9ib5XAdUs2.png": {
+      "sha256": "fefabdd7aa575e750aaf51beb8447b79993a2092dd85492cbdf9f9d3a44fe52a",
+      "bytes": 19334
+    },
+    "team/submission/latex-v1/figures/source-screenshots/WindowsTerminal_EK8zDAyWdk.png": {
+      "sha256": "6689c7af7fd86a9ce4979df56ec50d9ebaede04e2c3248a47ef3515ba82a82c3",
+      "bytes": 37072
+    },
+    "team/submission/latex-v1/figures/source-screenshots/WindowsTerminal_LFLdXsfe26.png": {
+      "sha256": "9e19612db1e03504b337f121f04fbdeb7b6459dcbf8f885584b960ef1cfe3498",
+      "bytes": 33011
+    },
+    "team/submission/latex-v1/figures/source-screenshots/WindowsTerminal_YZINbZqezU.png": {
+      "sha256": "6a67f079c5eb6e4326285f84eceb7e5936d35962245f91ba89940ab2a01244a2",
+      "bytes": 46519
+    },
+    "team/submission/latex-v1/figures/source-screenshots/WindowsTerminal_b2FCbAEdzj.png": {
+      "sha256": "0ee3f4716916fe3f72824372b063aaec96749d9c233a7e457bd61ba4afe8d76c",
+      "bytes": 33282
+    },
+    "team/submission/latex-v1/figures/source-screenshots/WindowsTerminal_m5hXeDJnV1.png": {
+      "sha256": "453c27dd7db5dd5bcfcc54a1fffd38bbf1f9c672fa5848185505f3cc03985505",
+      "bytes": 55383
+    },
+    "team/submission/latex-v1/figures/source-screenshots/WindowsTerminal_yFneKZvWHF.png": {
+      "sha256": "97af20369b5b1f913849144bdf90a07794730c4a6d0b0a091f3bc2135dc9c566",
+      "bytes": 94132
+    },
+    "team/submission/latex-v1/figures/source-screenshots/msrdc_6cIzJ9aIVJ.png": {
+      "sha256": "3092eaaddb8d7d1714e1929062b924273e82a5b85e500e2088bc18de36a7838d",
+      "bytes": 117816
+    },
+    "team/submission/latex-v1/figures/source-screenshots/msrdc_TvJP0uDH6i.png": {
+      "sha256": "a81ae891469c32daf1a9b971a2872cc0b966abc48746ecde05ca8eb01919a603",
+      "bytes": 113192
+    },
+    "team/submission/latex-v1/figures/source-screenshots/msrdc_yWBpPeYM8q.png": {
+      "sha256": "a0aa2be18ee25a706e4a08c678d313719d412c89790f3e5d8d438eca409e0a88",
+      "bytes": 140775
+    },
+    "team/submission/latex-v1/main.tex": {
+      "sha256": "07b9df385eefb39bacf997f5c2c67148cee8435f3c8f59c6fa0b371d6b25b971",
+      "bytes": 310
+    },
+    "team/submission/latex-v1/output/三阶段技术文档_合订本.pdf": {
+      "sha256": "38d1e126b0cded9d87ae19fbda2eff6ff74b95148765eea8d54767c560e5f2a0",
+      "bytes": 9971059
+    },
+    "team/submission/latex-v1/output/第一阶段_执行日志与过程文档.pdf": {
+      "sha256": "5916fef8656d5771a29af9b9423d90be300ba90eceb786be1da8827d160f7cd8",
+      "bytes": 2038772
+    },
+    "team/submission/latex-v1/output/第三阶段_协同仿真与性能分析.pdf": {
+      "sha256": "d3721de9b969630997679aa35d59811ef5aafeff64757682a82ac36443263d8b",
+      "bytes": 4367953
+    },
+    "team/submission/latex-v1/output/第二阶段_设计与基础测试文档.pdf": {
+      "sha256": "856499d856fd4e8440c649b2af6d18da19c91f27d00295cb6816e68a8504dce5",
+      "bytes": 4011318
+    },
+    "team/submission/latex-v1/preamble.tex": {
+      "sha256": "524a808bab135b8f556c75d579b90c4e1e7adf2e7af1263157ca8f5ab7c9e80c",
+      "bytes": 3586
+    },
+    "team/submission/latex-v1/qa/pdf-inspection.json": {
+      "sha256": "7cc0386a99518294f59abf7dcd3194dcffb01c76ebd373865e5e49718c04cbc3",
+      "bytes": 3663
+    },
+    "team/submission/latex-v1/sections/screenshots-stage2.tex": {
+      "sha256": "f18d4d644736a8163a0a8d81ca9f0d5a8ec21f02ec6693342189270463c5dd71",
+      "bytes": 931
+    },
+    "team/submission/latex-v1/sections/screenshots-stage3.tex": {
+      "sha256": "8db6335dd0647532bcafedb6a4febaa6fa9544125bc694a5311db87c7c09f9b8",
+      "bytes": 453
+    },
+    "team/submission/latex-v1/sections/stage1.tex": {
+      "sha256": "7c1b0a7ae93214fd87a4e7cd4b9d2ada1213ed95526b60d3491496891cb5c4f7",
+      "bytes": 29855
+    },
+    "team/submission/latex-v1/sections/stage2.tex": {
+      "sha256": "a4265ff6912a778df9d681fba55ecc63ce68fbbf81da7e1d55a5856141cdbd3a",
+      "bytes": 56974
+    },
+    "team/submission/latex-v1/sections/stage3.tex": {
+      "sha256": "173b014aefcf6cb72b2b8eda4387c6487d0148c82c6bfa5637132fa1ff8cf6fe",
+      "bytes": 62449
+    },
+    "team/submission/latex-v1/stage1.tex": {
       "sha256": "d38bf0e67df899b80bf65a7a1b294cc6ee3b0f8d298ec698918ad9bfd75958b7",
       "bytes": 81
     },
-    "stage2.tex": {
+    "team/submission/latex-v1/stage2.tex": {
       "sha256": "7c9224c2625bcd7946e1972c03daf4b4cade1c91abfe5c40e3625a7431172d6f",
       "bytes": 81
     },
-    "stage3.tex": {
+    "team/submission/latex-v1/stage3.tex": {
       "sha256": "865feca436afbc03ca55f0d2957e042a5322f07cb9da9c4223ad309e4f668007",
       "bytes": 81
     },
-    "交付校验.json": {
-      "sha256": "18b5e55b2458a97318bc9fc4cfc1a6f3ef2c07498894f0b79dd6c7698a0e0767",
-      "bytes": 1830
+    "team/submission/latex-v1/交付校验.json": {
+      "sha256": "7cc0386a99518294f59abf7dcd3194dcffb01c76ebd373865e5e49718c04cbc3",
+      "bytes": 3663
     },
-    "最终版本确认.md": {
+    "team/submission/latex-v1/插图清单与替换说明.md": {
+      "sha256": "8db82fd5c6a36036bc067cb14cbd8f8543de6d175c71a82db41ea2c019373014",
+      "bytes": 17799
+    },
+    "team/submission/latex-v1/最终版本确认.md": {
       "sha256": "68a3ab28035b52a19587e0a5aabe76ef4a58084f73686faccc0d88aa6bc2b029",
       "bytes": 3592
+    },
+    "开发计分板.md": {
+      "sha256": "9c4563e58d61535a2371ef53f900fd3d4278aa9787bdfd8062593f5679812259",
+      "bytes": 121601
     }
   }
 }
