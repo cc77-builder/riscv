@@ -1,0 +1,104 @@
+\documentclass[UTF8,a4paper,12pt,fontset=none]{ctexart}
+\usepackage[left=25mm,right=25mm,top=25mm,bottom=25mm,headheight=16pt]{geometry}
+\usepackage{fontspec}
+\IfFileExists{fonts/times.ttf}{
+\setmainfont{times.ttf}[Path=fonts/,BoldFont=timesbd.ttf,ItalicFont=timesi.ttf,BoldItalicFont=timesbi.ttf]
+\setsansfont{times.ttf}[Path=fonts/,BoldFont=timesbd.ttf,ItalicFont=timesi.ttf]
+\setmonofont{times.ttf}[Path=fonts/]
+\setCJKmainfont{simsun.ttc}[Path=fonts/,FontIndex=0,AutoFakeBold=2]
+\setCJKsansfont{simsun.ttc}[Path=fonts/,FontIndex=0,AutoFakeBold=2]
+\setCJKmonofont{simsun.ttc}[Path=fonts/,FontIndex=0]
+}{
+\setmainfont{Times New Roman}
+\setsansfont{Times New Roman}
+\setmonofont{Times New Roman}
+\setCJKmainfont{SimSun}[AutoFakeBold=2]
+\setCJKsansfont{SimSun}[AutoFakeBold=2]
+\setCJKmonofont{SimSun}
+}
+\usepackage{booktabs,longtable,array,seqsplit}
+\usepackage{xcolor,graphicx,tikz}
+\usepackage{caption}
+\usetikzlibrary{arrows.meta,positioning}
+\usepackage{fvextra,needspace}\fvset{fontsize=\footnotesize,baselinestretch=1,breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={}}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,urlcolor=blue!45!black,linkcolor=black,unicode=true,hypertexnames=false}
+\urlstyle{same}
+\usepackage{fancyhdr}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small 香山昆明湖 V2 · VDot 技术报告}
+\fancyhead[R]{\small 技术文档扩充稿}
+\fancyfoot[C]{\thepage}
+\ctexset{section={format=\Large\bfseries\rmfamily},subsection={format=\large\bfseries\rmfamily}}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{3pt}
+\linespread{1.25}
+\setlength{\LTpre}{8pt}\setlength{\LTpost}{8pt}
+\renewcommand{\arraystretch}{1.25}
+\emergencystretch=4em
+% Resolve long identifiers locally; avoid global loose justification.
+
+\newcommand{\reportshorttitle}{技术报告}
+\newcommand{\reportcover}[1]{%
+\begin{titlepage}\thispagestyle{empty}\centering
+\vspace*{18mm}
+{\Large 香山昆明湖 V2\par}\vspace{8mm}
+{\Huge\bfseries 自定义向量点积指令\par}\vspace{8mm}
+{\LARGE\bfseries #1\par}\vspace{8mm}
+{\large 技术报告\par}\vfill
+\begin{tabular}{rl}
+工程组合： & 0f＋firstdot V2＋原 C8\\[8pt]
+团队名称： & 待团队确认\\[8pt]
+成员： & 待团队确认\\[8pt]
+学校： & 待团队确认\\[8pt]
+材料日期： & 2026年11月2日\\[8pt]
+版式修订： & 2026年11月4日
+\end{tabular}\vspace{15mm}
+\par{\small 本稿保留未补图片及身份标记，供团队复核。}\vspace{10mm}
+\end{titlepage}}
+\newcommand{\reportcontents}{%
+\pagenumbering{Roman}\tableofcontents\clearpage\pagenumbering{arabic}}
+\newcommand{\reporttitle}[1]{%
+\clearpage\setcounter{section}{0}\setcounter{table}{0}
+\phantomsection\addcontentsline{toc}{part}{#1}
+\begin{center}{\LARGE\bfseries #1\par}\vspace{6pt}
+{\normalsize 工程组合：0f＋firstdot V2＋原 C8\quad 材料日期：2026年11月2日\par}
+\end{center}\vspace{6pt}}
+\setcounter{tocdepth}{2}
+% Fixed-position image blocks keep each placeholder next to its discussion.
+% Add a PDF/PNG/JPG under figures/<ID> to replace its blank frame automatically.
+\newcommand{\stagefigureprefix}{1}
+\renewcommand{\thefigure}{\stagefigureprefix-\arabic{figure}}
+\renewcommand{\thetable}{\stagefigureprefix-\arabic{table}}
+\renewcommand{\thesection}{\stagefigureprefix.\arabic{section}}
+\captionsetup[table]{font=small,labelsep=quad,justification=centering,singlelinecheck=false,position=top}
+\setlength{\LTcapwidth}{\textwidth}
+\captionsetup[figure]{font=small,labelsep=quad,hypcap=false,justification=centering,singlelinecheck=false}
+\newif\ifreportimagepresent
+\newcommand{\reportfigure}[5]{%
+\begin{center}\begin{minipage}{\linewidth}\centering
+\reportimagepresentfalse
+\IfFileExists{figures/#1.pdf}{\reportimagepresenttrue\includegraphics[width=\linewidth,height=#3,keepaspectratio]{figures/#1.pdf}}{%
+\IfFileExists{figures/#1.png}{\reportimagepresenttrue\includegraphics[width=\linewidth,height=#3,keepaspectratio]{figures/#1.png}}{%
+\IfFileExists{figures/#1.jpg}{\reportimagepresenttrue\includegraphics[width=\linewidth,height=#3,keepaspectratio]{figures/#1.jpg}}{%
+\setlength{\fboxsep}{8pt}\fbox{\begin{minipage}[c][#3][c]{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}
+\centering\small\textbf{待插入图片：#1}\par\vspace{8pt}#2\par\vspace{8pt}在此替换为正式图片
+\end{minipage}}}}}%
+\captionof{figure}{#2}\label{fig:#1}
+\raggedright\footnotesize
+\ifreportimagepresent
+\textbf{注：}#4\par
+\textbf{来源与范围：}#5\par
+\else
+\textbf{插图要求：}#4\par
+\textbf{建议来源：}#5\par
+\fi
+\end{minipage}\end{center}}
+
+% Supplemental supplied screenshots; not substitutes for unfilled original slots.
+\newcommand{\evidencefigure}[4]{%
+\begin{center}\begin{minipage}{\linewidth}\centering
+\includegraphics[width=\linewidth,height=#3,keepaspectratio]{figures/#1.pdf}
+\captionof{figure}{#2}\label{fig:#1}
+\raggedright\footnotesize #4\par
+\end{minipage}\end{center}}
