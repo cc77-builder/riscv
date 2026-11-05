@@ -1,0 +1,153 @@
+diff --git a/src/isa/riscv64/Kconfig b/src/isa/riscv64/Kconfig
+--- a/src/isa/riscv64/Kconfig
++++ b/src/isa/riscv64/Kconfig
+@@ -135,6 +135,25 @@
+     illegal instructions retain the instruction bits, while a precise
+     vdot illegal VL discovered only in its FU reports zero in xTVAL.
+     Effective only with CUSTOM_VDOT; all xTVAL comparisons stay enabled.
++
++config CUSTOM_VDOT16
++  bool "Team dot16-s8x16-r32-v0.1 extension candidate"
++  depends on RVV && CUSTOM_VDOT
++  default n
++  help
++    Sixteen signed int8 products from two full 128-bit source registers,
++    a low 32-bit result with high 96 bits zero, and precise exceptions
++    outside e8/m1/vl16/vstart0. The existing dot8 extension is unchanged.
++
++config CUSTOM_VDOT16_XS_TVAL
++  bool "Explicit XiangShan dot16 runtime-illegal trap-value candidate"
++  depends on CUSTOM_VDOT16
++  default n
++  help
++    Opt-in candidate platform policy: only an otherwise legal dot16 with
++    VL != 16 has zero xTVAL. Enable only after validating the new hardware
++    decode/FU/TrapInstMod path. This is not the qualified dot8 profile.
++    Ordinary illegal-instruction and all xTVAL comparisons remain enabled.
+ 
+ config CUSTOM_XVEXP2
+   bool "RISC-V Xvexp2 Custom Vector Extension"
+diff --git a/src/isa/riscv64/include/isa-all-instr.h b/src/isa/riscv64/include/isa-all-instr.h
+--- a/src/isa/riscv64/include/isa-all-instr.h
++++ b/src/isa/riscv64/include/isa-all-instr.h
+@@ -159,7 +159,13 @@
+ #else
+ #define VDOT_INSTR_TERNARY(f)
+ #endif
++#ifdef CONFIG_CUSTOM_VDOT16
++#define VDOT16_INSTR_TERNARY(f) f(vdot16)
++#else
++#define VDOT16_INSTR_TERNARY(f)
++#endif
+ #define VECTOR_INSTR_TERNARY(f) \
++  VDOT16_INSTR_TERNARY(f) \
+   VDOT_INSTR_TERNARY(f) \
+   f(vadd) f(vsub) f(vrsub) f(vminu) f(vmin) \
+   f(vmaxu) f(vmax) f(vand) f(vor) f(vxor) \
+diff --git a/src/isa/riscv64/instr/decode.c b/src/isa/riscv64/instr/decode.c
+--- a/src/isa/riscv64/instr/decode.c
++++ b/src/isa/riscv64/instr/decode.c
+@@ -102,6 +102,10 @@
+   /* Exact custom-0 match; do not enter the ordinary OP-V subdecoder. */
+   def_INSTR_IDTAB("0000001 ????? ????? 000 ????? 00010 11", R, vdot);
+ #endif
++#ifdef CONFIG_CUSTOM_VDOT16
++  /* A separate exact custom-0 opcode; never reuse the OP-V subdecoder. */
++  def_INSTR_IDTAB("0000111 ????? ????? 000 ????? 00010 11", R, vdot16);
++#endif
+ #endif // CONFIG_RVV
+ #ifdef CONFIG_RV_AME
+   def_INSTR_TAB  ("??????? ????? ????? ??? ????? 01010 ??",         OP_M);
+diff --git a/src/isa/riscv64/instr/rvv/exec.h b/src/isa/riscv64/instr/rvv/exec.h
+--- a/src/isa/riscv64/instr/rvv/exec.h
++++ b/src/isa/riscv64/instr/rvv/exec.h
+@@ -17,3 +17,4 @@
+ #include "vcompute.h"
+ #include "vldst.h"
+ #include "vdot.h"
++#include "vdot16.h"
+diff --git a/src/isa/riscv64/instr/rvv/vdot16.h b/src/isa/riscv64/instr/rvv/vdot16.h
+new file mode 100644
+--- /dev/null
++++ b/src/isa/riscv64/instr/rvv/vdot16.h
+@@ -0,0 +1,37 @@
++/* Team extension candidate: dot16-s8x16-r32-v0.1; Mulan PSL v2. */
++#ifdef CONFIG_CUSTOM_VDOT16
++_Static_assert(VLEN == 128, "dot16-s8x16-r32-v0.1 requires VLEN=128");
++bool vp_enable();
++void vp_set_dirty();
++
++def_EHelper(vdot16) {
++  /* Reject the entire request before source reads, destination writes or VS. */
++  if (!vp_enable() || vtype->vill || vtype->pad || vtype->vsew != 0 ||
++      vtype->vlmul != 0 || vl->val != 16 || vstart->val != 0) {
++    longjmp_exception(EX_II);
++  }
++
++  const uint32_t word = s->isa.instr.val;
++  const unsigned vs1 = (word >> 15) & 31;
++  const unsigned vs2 = (word >> 20) & 31;
++  const unsigned vd = (word >> 7) & 31;
++  /* All four halves are captured before writing, including any v0 aliases. */
++  const uint64_t a[2] = {cpu.vr[vs1]._64[0], cpu.vr[vs1]._64[1]};
++  const uint64_t b[2] = {cpu.vr[vs2]._64[0], cpu.vr[vs2]._64[1]};
++  int32_t sum = 0;
++  for (unsigned i = 0; i < 16; ++i) {
++    const unsigned half = i / 8;
++    const unsigned shift = 8 * (i % 8);
++    const uint8_t byte_a = a[half] >> shift;
++    const uint8_t byte_b = b[half] >> shift;
++    const int32_t x = byte_a < 128 ? byte_a : (int32_t)byte_a - 256;
++    const int32_t y = byte_b < 128 ? byte_b : (int32_t)byte_b - 256;
++    sum += x * y;
++  }
++  /* Widen the unsigned 32-bit field, not the signed result, to low 64 bits. */
++  cpu.vr[vd]._64[0] = (uint32_t)sum;
++  cpu.vr[vd]._64[1] = 0;
++  vp_set_dirty();
++  /* vl/vtype/vstart/vxrm/vxsat/vcsr/fflags are unchanged. */
++}
++#endif
+diff --git a/src/isa/riscv64/local-include/vdot16_tval.h b/src/isa/riscv64/local-include/vdot16_tval.h
+new file mode 100644
+--- /dev/null
++++ b/src/isa/riscv64/local-include/vdot16_tval.h
+@@ -0,0 +1,16 @@
++/* Team candidate platform adapter; Mulan PSL v2.
++ * Independent of the frozen dot8 policy. This predicate is not evidence that
++ * a new XiangShan build implements the proposed FU-only illegal-VL policy.
++ * It only inspects architectural instruction/configuration state.
++ */
++#ifndef XS_VDOT16_TVAL_POLICY_H
++#define XS_VDOT16_TVAL_POLICY_H
++#include <stdbool.h>
++#include <stdint.h>
++static inline bool xs_vdot16_tval_is_zero(uint32_t instruction, bool vector_enabled,
++                                         uint64_t type, uint64_t length, uint64_t start) {
++  return (instruction & UINT32_C(0xfe00707f)) == UINT32_C(0x0e00000b) &&
++         vector_enabled && (type & ~UINT64_C(0xc0)) == 0 &&
++         start == 0 && length != 16;
++}
++#endif
+diff --git a/src/isa/riscv64/system/intr.c b/src/isa/riscv64/system/intr.c
+--- a/src/isa/riscv64/system/intr.c
++++ b/src/isa/riscv64/system/intr.c
+@@ -27,7 +27,18 @@
+ extern bool vp_enable(void);
+ #endif
+ 
++#if defined(CONFIG_CUSTOM_VDOT16) && defined(CONFIG_CUSTOM_VDOT16_XS_TVAL)
++#include "../local-include/vdot16_tval.h"
++extern bool vp_enable(void);
++#endif
++
+ static inline word_t platform_illegal_instruction_tval(word_t exception) {
++#if defined(CONFIG_CUSTOM_VDOT16) && defined(CONFIG_CUSTOM_VDOT16_XS_TVAL)
++  if (exception == EX_II && xs_vdot16_tval_is_zero(cpu.instr, vp_enable(),
++                                                 vtype->val, vl->val, vstart->val)) {
++    return 0;
++  }
++#endif
+ #if defined(CONFIG_CUSTOM_VDOT) && defined(CONFIG_CUSTOM_VDOT_XS_TVAL)
+   if (exception == EX_II && xs_vdot_tval_is_zero(cpu.instr, vp_enable(),
+                                                vtype->val, vl->val, vstart->val)) {
