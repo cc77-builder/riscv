@@ -1,7 +1,9 @@
 """Rebuild evidence figures from the frozen, attributed data beside this file.
 
 Usage: python figures/build_evidence_figures.py [--preview-dir DIR]
-Requires matplotlib, NumPy and a CJK font; PDF previews also use PyMuPDF.
+Requires matplotlib, NumPy, installed Microsoft YaHei and SimSun;
+PDF previews also use PyMuPDF. Generated illustration assets are embedded
+unchanged; all technical geometry, numbers, labels and fonts are typeset here.
 All plotted numbers come from source CSVs
 or exact log records in evidence-20261105/figure-data.json. No new simulation.
 """
@@ -18,7 +20,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib import font_manager
 from matplotlib.colors import LinearSegmentedColormap, TwoSlopeNorm
-from matplotlib.patches import FancyBboxPatch, Rectangle
+from matplotlib.patches import FancyBboxPatch, Rectangle, Circle, Polygon
 import numpy as np
 
 ROOT = Path(__file__).resolve().parent
@@ -26,15 +28,18 @@ DATA = json.loads((ROOT / "evidence-20261105/figure-data.json").read_text(encodi
 NAVY, TEAL, GRAY = "#17324d", "#087f8c", "#697b8c"
 LIGHT, PALE, LINE = "#eaf4f5", "#f2f5f8", "#d4dee6"
 RED, AMBER = "#ad4b3a", "#b27828"
-for font in ("/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
-             "C:/Windows/Fonts/msyh.ttc", "C:/Windows/Fonts/simsun.ttc"):
-    if Path(font).exists():
-        font_manager.fontManager.addfont(font)
-        CJK = font_manager.FontProperties(fname=font).get_name()
-        break
-else:
-    raise SystemExit("Install Noto Sans CJK, Microsoft YaHei or SimSun.")
-plt.rcParams.update({"font.family": CJK, "font.size": 8.5,
+FONT_SANS, FONT_SERIF = 'Microsoft YaHei', 'SimSun'
+# Resolve installed font families through the normal font renderer. Do not
+# copy or distribute the Windows system-font files with the report.
+FONT_RESOLUTION = {}
+for family in (FONT_SANS, FONT_SERIF):
+    resolved = font_manager.findfont(font_manager.FontProperties(family=family),
+                                     fallback_to_default=False)
+    actual = font_manager.FontProperties(fname=resolved).get_name()
+    if actual != family:
+        raise SystemExit(f'Font substitution is forbidden: {family} -> {actual}')
+    FONT_RESOLUTION[family] = {'resolved_family': actual, 'file_name': Path(resolved).name}
+plt.rcParams.update({"font.family": FONT_SANS, "font.size": 8.5,
                      "text.color": NAVY, "axes.labelcolor": NAVY,
                      "xtick.color": GRAY, "ytick.color": NAVY,
                      # Type 42 embedding of this OpenType CJK collection produced
@@ -45,13 +50,15 @@ plt.rcParams.update({"font.family": CJK, "font.size": 8.5,
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--preview-dir", type=Path)
 parser.add_argument("--preview-dpi", type=int, default=180)
+parser.add_argument("--only", nargs='+', help='Build only these figure IDs for a bounded visual review.')
 args = parser.parse_args()
 OUTPUTS = []
 
 
-def label(ax, x, y, text, size=8.5, color=NAVY, ha="left", va="center", weight="normal", **kw):
+def label(ax, x, y, text, size=8.5, color=NAVY, ha="left", va="center", weight="normal", serif=False, **kw):
     return ax.text(x, y, text, fontsize=size, color=color, ha=ha, va=va,
-                   fontweight=weight, transform=ax.transAxes, **kw)
+                   fontweight=weight, fontfamily=FONT_SERIF if serif else FONT_SANS,
+                   transform=ax.transAxes, zorder=6, **kw)
 
 
 def rect(ax, x, y, w, h, face=PALE, edge="none", radius=0.012, **kw):
@@ -65,15 +72,56 @@ def rect(ax, x, y, w, h, face=PALE, edge="none", radius=0.012, **kw):
 def canvas(fid, title, subtitle, height):
     fig = plt.figure(figsize=(6.3, height))
     ax = fig.add_axes([0, 0, 1, 1]); ax.set_axis_off()
+    ax.set_xlim(0,1); ax.set_ylim(0,1)
     label(ax, .035, .963, fid + "  /  EVIDENCE", 7.2, TEAL, weight="bold")
     label(ax, .035, .902 if height < 3.3 else .917, title, 12.0, weight="bold")
     label(ax, .035, .840 if height < 3.3 else .869, subtitle, 7.3, GRAY)
     return fig, ax
 
 
+def arrow(ax, x0, y0, x1, y1, color=GRAY, lw=1.1, style='->', **kw):
+    ax.annotate('', xy=(x1,y1), xytext=(x0,y0), xycoords='axes fraction',
+                arrowprops={'arrowstyle':style,'lw':lw,'color':color,
+                            'shrinkA':0,'shrinkB':0, **kw}, zorder=4)
+
+
+def asset(ax, name, x, y, w, h):
+    """Place the unchanged generated RGBA asset; preserve its aspect ratio."""
+    arr = plt.imread(ROOT/'generated-assets-20261105'/name)
+    fw,fh = ax.figure.get_size_inches()
+    ratio = arr.shape[1]/arr.shape[0]
+    if w*fw/(h*fh) > ratio:
+        fitw=h*fh*ratio/fw; x+=(w-fitw)/2; w=fitw
+    else:
+        fith=w*fw/ratio/fh; y+=(h-fith)/2; h=fith
+    ax.imshow(arr, extent=(x,x+w,y,y+h), transform=ax.transAxes,
+              aspect='auto', interpolation='antialiased', zorder=2)
+    ax.set_xlim(0,1); ax.set_ylim(0,1)
+
+
+def check(ax,x,y,size=.025,color=TEAL):
+    ax.plot([x-size*.7,x-size*.12,x+size],[y,y-size*.5,y+size*.7],
+            transform=ax.transAxes,color=color,lw=2.0,zorder=5,solid_capstyle='round')
+
+
+def cross(ax,x,y,size=.018,color=RED):
+    for sign in (-1,1):
+        ax.plot([x-size,x+size],[y-sign*size,y+sign*size],
+                transform=ax.transAxes,color=color,lw=1.6,zorder=7,solid_capstyle='round')
+
+
+def token(ax,x,y,w,h,text,color=TEAL):
+    rect(ax,x,y,w,h,face=color,radius=.008,zorder=3)
+    label(ax,x+w/2,y+h/2,text,9.4,'white',ha='center',weight='bold')
+
+
+def foot(ax,text,y=.033):
+    label(ax,.035,y,text,7.8,'#526475',serif=True)
+
+
 def save(fig, fid):
     path = ROOT / (fid + ".pdf")
-    fig.savefig(path, metadata={"Creator": "VDot report evidence figure generator",
+    fig.savefig(path, dpi=300, metadata={"Creator": "VDot report evidence figure generator",
         "Title": fid + " — historical evidence redrawn", "CreationDate": None, "ModDate": None})
     if args.preview_dir:
         import fitz
@@ -82,7 +130,11 @@ def save(fig, fid):
         # hide PDF-only font failures.
         with fitz.open(path) as pdf:
             pdf[0].get_pixmap(dpi=args.preview_dpi, alpha=False).save(args.preview_dir / (fid + ".png"))
-    OUTPUTS.append({"id": fid, "path": path.name, "sha256": hashlib.sha256(path.read_bytes()).hexdigest()})
+    OUTPUTS.append({"id": fid, "path": path.name,
+                    "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+                    "typography": FONT_RESOLUTION,
+                    "technical_content": 'deterministic geometry and frozen data',
+                    "illustration_assets": fid in ('S1-07','S2-05','S2-07','S3-03')})
     plt.close(fig)
 
 
@@ -93,7 +145,7 @@ def grid(ax, rows, cols, x=.275, y=.785, width=.685, step=.059, highlights=()):
         if j in highlights:
             rect(ax, x+j*cw, y-len(rows)*step+.012, cw, len(rows)*step+.04,
                  face="#fff3df", radius=0)
-        label(ax, x+(j+.5)*cw, y+.029, str(c), 7.4, GRAY, ha="center")
+        label(ax, x+(j+.5)*cw, y+step*.66, str(c), 7.4, GRAY, ha="center")
     for i, (name, values, color) in enumerate(rows):
         cy = y-i*step
         label(ax, .035, cy, name, 8.0, NAVY)
@@ -128,33 +180,38 @@ def s1_timeline():
                         arrowprops={"arrowstyle":"->", "lw":.9, "color":GRAY})
         result = b["result"].lower().removeprefix("0x")[-16:].upper()
         label(ax, .30, y-.051, "输出低 64 位  0x" + result, 8.5, TEAL)
-    label(ax, .035, .064, "提交 PC 0x80000138  ·  指令 0x021101D7  ·  目的向量寄存器 v3", 7.1, GRAY)
-    label(ax, .035, .023, "数字沿用 CSV 事件坐标；图中间距不表示时间长度，不能推导物理时钟或新硬件延迟。", 7.0, GRAY)
+    foot(ax, 'CSV 事件坐标；图中间距不表示时间长度。')
     save(fig, "S1-06")
 
 
 def s2_ii1():
-    rr = DATA["parent"]["ii1"]
-    assert [r["cycle"] for r in rr] == list(range(10,18))
-    assert all(r["accept"] and r["out_ready"] for r in rr)
-    assert all(r["response"] and r["p_to_r"] for r in rr[2:])
-    fig,ax=canvas("S2-05", "无阻塞时：接收、移动与输出同拍重叠", "0f · 真实 VFEX4 父级逐拍日志 · frozen-vdot-II1", 3.8)
-    rows = [
-        ("输入 offered / ready", [f'{r["offered"]}/{r["ready"]}' for r in rr], TEAL),
-        ("输出 out_ready", [r["out_ready"] for r in rr], NAVY),
-        ("P 槽事务（沿前）", [r["pseq"] if r["p"] else "—" for r in rr], TEAL),
-        ("R 槽事务（沿前）", [r["rseq"] if r["r"] else "—" for r in rr], NAVY),
-        ("P → R 移动", [r["p_to_r"] for r in rr], TEAL),
-        ("新接收 seq", [r["accept_seq"] for r in rr], TEAL),
-        ("FU 响应 seq", [r["response_seq"] if r["response"] else "—" for r in rr], NAVY),
-    ]
-    grid(ax, rows, [r["cycle"] for r in rr], y=.77, step=.066, highlights=(2,))
-    rect(ax,.035,.17,.93,.115,face=LIGHT)
-    label(ax,.055,.248,"cycle 12：R 输出 #1 ＋ P→R 移动 #2 ＋ 新接收 #3",9.1,TEAL,weight="bold")
-    label(ax,.055,.202,"#1 在 10 接收、12 响应；连续接收间隔 = 1 拍。仅适用于无反压窗口。",7.6)
-    label(ax,.035,.102,"seq 是独立测试记分板事务号；无效槽显示“—”。响应指 FU 握手，非 ROB 提交。",7.0,GRAY)
-    label(ax,.035,.054,"来源：green-parent-01/result.log.gz，原行 12–19；时钟边沿由记录的 cycle 表示。",7.0,GRAY)
-    save(fig,"S2-05")
+    rr=DATA['parent']['ii1']
+    assert [r['cycle'] for r in rr]==list(range(10,18))
+    assert all(r['accept'] and r['out_ready'] for r in rr)
+    assert all(r['response'] and r['p_to_r'] for r in rr[2:])
+    assert (rr[2]['pseq'],rr[2]['rseq'],rr[2]['accept_seq'])==(2,1,3)
+    fig,ax=canvas('S2-05','同一拍，接收、移动与输出重叠','0f 真实父级 · 无阻塞窗口 · cycle 12 放大示意',3.65)
+    for xx,slot,seq,col in ((.265,'P',2,TEAL),(.555,'R',1,NAVY)):
+        asset(ax,'pipeline-tray.png',xx,.535,.19,.17)
+        label(ax,xx+.095,.731,slot+' 槽（沿前）',8.3,ha='center',weight='bold')
+        token(ax,xx+.058,.587,.074,.061,'#'+str(seq),col)
+    token(ax,.060,.588,.09,.060,'#3',AMBER)
+    arrow(ax,.158,.618,.257,.618,AMBER,lw=1.4)
+    arrow(ax,.463,.618,.547,.618,TEAL,lw=1.4)
+    arrow(ax,.752,.618,.886,.618,NAVY,lw=1.4)
+    label(ax,.201,.677,'接收 #3',7.9,AMBER,ha='center')
+    label(ax,.503,.677,'移动 #2',7.9,TEAL,ha='center')
+    label(ax,.823,.677,'输出 #1',7.9,NAVY,ha='center')
+    label(ax,.912,.618,'响应',8.9,NAVY,ha='center',weight='bold')
+    label(ax,.035,.472,'连续窗口',8.8,weight='bold')
+    label(ax,.96,.472,'out_ready = 1',7.5,GRAY,ha='right')
+    rows=[('接收事务',['#'+str(r['accept_seq']) for r in rr],TEAL),
+          ('FU 响应',['#'+str(r['response_seq']) if r['response'] else '—' for r in rr],NAVY)]
+    grid(ax,rows,[r['cycle'] for r in rr],x=.25,width=.715,y=.352,step=.090,highlights=(2,))
+    label(ax,.035,.126,'接收间隔 1 拍',10.2,TEAL,weight='bold')
+    label(ax,.43,.126,'#1：cycle 10 接收 → 12 响应',8.4)
+    foot(ax,'仅此无反压窗口；seq 为测试事务号，FU 响应不表示 ROB 提交。')
+    save(fig,'S2-05')
 
 
 def s1_boot():
@@ -166,28 +223,41 @@ def s1_boot():
     assert '--flash=' in boot['command'][0]['plain'] and 'Read 12 bytes' in boot['command'][4]['plain']
     assert 'HELLO_VADD_PASS cases=3 lanes=24' in boot['success'][1]['plain']
     assert 'exit_code=0' in boot['status'][0]['plain']
-    fig,ax=canvas('S1-07','统一启动文件后，差分恢复正常','2026-10-09 历史运行 · 原日志与反汇编摘录重排',4.6)
-    rect(ax,.035,.642,.93,.172,face='#fff1eb')
-    label(ax,.055,.786,'A  首次差异发生在启动阶段',9.5,RED,weight='bold')
-    label(ax,.055,.746,'t0  ·  首次差异 PC 0x10000004  ·  instrCnt = 2',8.5)
-    label(ax,.055,.701,'right  '+m[2],8.3)
-    label(ax,.52,.701,'wrong  '+m[3],8.3,RED)
-    label(ax,.055,.667,'定位使用首次寄存器差异；未把后续 ABORT 事件地址当作首次故障 PC。',7.1,GRAY)
-    rect(ax,.035,.321,.93,.282,face=PALE)
-    label(ax,.055,.576,'B  DUT 与 NEMU 显式使用同一个 12 字节 flash',9.1,weight='bold')
-    label(ax,.055,.540,'原命令：--flash=…/boot-flash.bin；NEMU 原日志：Read 12 bytes',7.8,TEAL)
-    for x,t in ((.065,'文件偏移'),(.30,'机器字'),(.56,'反汇编指令')):label(ax,x,.499,t,7.6,GRAY)
-    for i,(off,word,inst) in enumerate([('0x0','0010029b','addiw t0, zero, 1'),('0x4','01f29293','slli t0, t0, 0x1f'),('0x8','00028067','jr t0')]):
-        assert word in boot['disassembly']
-        for x,t in ((.065,off),(.30,word),(.56,inst)):label(ax,x,.465-i*.038,t,8.4)
-    label(ax,.055,.344,'两端使用相同启动文件；装载地址遵循各自平台映射。',7.1,GRAY)
-    rect(ax,.035,.105,.93,.177,face=LIGHT)
-    label(ax,.055,.255,'C  同一历史恢复记录正常结束',9.5,TEAL,weight='bold')
-    label(ax,.055,.214,'HELLO_VADD_PASS cases=3 lanes=24',9.1,TEAL)
-    label(ax,.055,.176,'HIT GOOD TRAP at pc = 0x8000029c',8.6)
-    label(ax,.055,.137,'Exit status: 0  ·  状态文件 exit_code=0',8.5)
-    label(ax,.035,.060,'失败：20:53:54 运行，原行164/166；恢复：20:55:26运行，21:00:28 +08结束。',7.0,GRAY)
-    label(ax,.035,.025,'日志、状态与反汇编的固定提交/文件SHA保存在图数据附件；本图没有新增运行。',7.0,GRAY)
+    fig,ax=canvas('S1-07','统一启动输入，恢复差分一致','2026-10-09 · hello / vadd 历史故障与恢复',3.95)
+    ax.plot([.355,.355],[.19,.81],color=LINE,lw=.8,transform=ax.transAxes)
+    label(ax,.05,.79,'修复前',9.8,RED,weight='bold')
+    label(ax,.405,.79,'显式装载同一文件',9.8,TEAL,weight='bold')
+    for yy,name in ((.64,'DUT'),(.45,'NEMU')):
+        rect(ax,.055,yy-.038,.105,.078,face=PALE,edge=LINE)
+        label(ax,.107,yy,'默认输入',7.8,ha='center')
+        arrow(ax,.165,yy,.201,yy)
+        rect(ax,.205,yy-.044,.105,.088,face='white',edge=NAVY)
+        label(ax,.257,yy,name,9,ha='center',weight='bold')
+    # Both sides are compared before and after the boot-input change.
+    arrow(ax,.276,.591,.313,.546,color=RED,lw=.9)
+    arrow(ax,.276,.499,.313,.546,color=RED,lw=.9)
+    label(ax,.328,.546,'≠',17,RED,ha='center',weight='bold')
+    label(ax,.182,.295,'DiffTest：启动差异',8.6,RED,ha='center')
+    label(ax,.182,.234,'两套默认启动输入',7.7,GRAY,ha='center')
+    asset(ax,'boot-document.png',.385,.40,.21,.30)
+    label(ax,.49,.695,'12 B',11,TEAL,ha='center',weight='bold')
+    label(ax,.49,.382,'boot-flash.bin',8.2,ha='center')
+    # One file, two independent load endpoints: no shared physical ROM.
+    ax.plot([.582,.615,.615],[.55,.55,.69],color=TEAL,lw=1.1,transform=ax.transAxes)
+    ax.plot([.615,.615],[.55,.44],color=TEAL,lw=1.1,transform=ax.transAxes)
+    arrow(ax,.615,.69,.662,.69,color=TEAL)
+    arrow(ax,.615,.44,.662,.44,color=TEAL)
+    for yy,name in ((.69,'DUT'),(.44,'NEMU')):
+        rect(ax,.67,yy-.048,.14,.096,face=LIGHT,edge=TEAL)
+        label(ax,.74,yy,name,10,ha='center',weight='bold')
+        arrow(ax,.817,yy,.877,.566,color=TEAL)
+    label(ax,.89,.565,'=',18,TEAL,ha='center',weight='bold')
+    label(ax,.89,.49,'DiffTest',7.8,ha='center')
+    check(ax,.456,.255,.019)
+    label(ax,.50,.255,'3 组 · 24 元素通过',10.2,TEAL,weight='bold')
+    label(ax,.50,.204,'GOOD TRAP · 退出 0',8.0,GRAY)
+    foot(ax,'DiffTest 全程启用；共同文件分别按两端的平台映射装载。',.105)
+    foot(ax,'历史记录重绘；精确差异、三条启动指令与来源见图注及附件。')
     save(fig,'S1-07')
 
 
@@ -200,107 +270,125 @@ def s2_backpressure():
     fields=("data","rob","pdest","illegal","vecwen","v0wen","exception","vpu","perf")
     assert all(all(r[k]==response[0][k] for k in fields) for r in stall)
     assert response[0]["data"]=="0x00000000000000000000000000001a87"
-    rows=[
-      ("父级 inready",[r["inready"] for r in states],NAVY),
-      ("FU vready",[r["vready"] for r in states],TEAL),
-      ("输出 outvalid",[r["outvalid"] for r in states],TEAL),
-      ("输出 outready",[r["outready"] for r in states],NAVY),
-      ("P 槽 seq（有效时）",[r["pseq"] if r["pvalid"]=="1" else "—" for r in states],TEAL),
-      ("R 槽 seq（有效时）",[r["rseq"] if r["rvalid"]=="1" else "—" for r in states],NAVY),
-      ("P → R 移动",[r["move"] for r in states],TEAL),
-      ("#1321 FU 响应",["1" if r["cycle"]=="181606" else "0" for r in states],NAVY),
-    ]
-    fig,ax=canvas("S2-06", "反压 7 拍：完整结果和事务身份保持", "0f 历史全核观察器 · core-01/control · 基准 cycle = 181597",4.55)
-    grid(ax,rows,["+"+str(i) for i in range(10)],x=.27,width=.695,y=.785,step=.055,highlights=range(2,9))
-    rect(ax,.035,.235,.93,.09,face=LIGHT)
-    label(ax,.055,.296,"181599–181605：outvalid = 1，outready = 0",8.5,TEAL,weight="bold")
-    label(ax,.055,.257,"128 位 data = 0x00000000000000000000000000001A87",8.1)
-    label(ax,.035,.192,"保持字段：seq 1321 · ROB 1:9 · pdest 158 · vecwen 1 · v0wen 0 · exception 0",7.5)
-    label(ax,.035,.151,"VPU 与 perf 全字段也逐行相同；181606 仅有一次 #1321 FU 响应。",7.5)
-    label(ax,.035,.105,"父级 inready 与 FU vready 不同；181606 前者仍为 0。无效槽残留身份不绘为在途事务。",6.9,GRAY)
-    label(ax,.035,.060,"原日志行 15012–15044；响应不是 ROB 提交。接收到响应相隔 9 拍，包含 7 拍反压。",7.0,GRAY)
-    label(ax,.035,.024,"EMU 2d1db77cc407… · raw SHA256 c7351619b11e… · 历史记录重绘，无新增仿真。",6.9,GRAY)
-    save(fig,"S2-06")
+    assert [int(r['cycle']) for r in states]==list(range(181597,181607))
+    assert states[-1]['inready']=='0' and states[-1]['vready']=='1'
+    assert states[-1]['move']=='1' and states[-1]['pseq']=='1322'
+    fig,ax=canvas('S2-06','反压 7 拍，结果与事务身份保持','0f 历史全核观察器 · cycle 181597 + 横轴偏移',4.55)
+    left,cw=.267,.0677
+    rect(ax,left+2*cw,.205,7*cw,.55,face='#fff4df',radius=.004)
+    label(ax,left+5.5*cw,.782,'连续 7 拍反压',10.0,AMBER,ha='center',weight='bold')
+    for j in range(10):
+        label(ax,left+(j+.5)*cw,.727,'+'+str(j),7.6,GRAY,ha='center')
+        ax.plot([left+j*cw]*2,[.217,.705],color=LINE,lw=.4,transform=ax.transAxes,zorder=1)
+    def bands(name,values,y,colors):
+        label(ax,.035,y,name,8.1,weight='bold' if name in ('P 槽','R 槽') else 'normal')
+        first=0
+        for j in range(1,len(values)+1):
+            if j==len(values) or values[j]!=values[first]:
+                val=values[first];col=colors.get(str(val),PALE)
+                rect(ax,left+first*cw+.003,y-.026,(j-first)*cw-.006,.052,face=col,radius=.003)
+                label(ax,left+(first+j)/2*cw,y,str(val),8.0,'white' if col in (TEAL,NAVY) else NAVY,ha='center',weight='bold' if str(val).startswith('#') else 'normal')
+                first=j
+    bands('P 槽',['#'+r['pseq'] if r['pvalid']=='1' else '—' for r in states],.651,{'#1321':TEAL,'#1322':NAVY})
+    bands('R 槽',['#'+r['rseq'] if r['rvalid']=='1' else '—' for r in states],.563,{'#1321':TEAL})
+    bands('outvalid',[r['outvalid'] for r in states],.464,{'1':'#d2e9e9'})
+    bands('outready',[r['outready'] for r in states],.394,{'1':'#d2e9e9','0':'#f1dfbd'})
+    bands('FU vready',[r['vready'] for r in states],.324,{'1':'#d2e9e9'})
+    bands('父级 inready',[r['inready'] for r in states],.254,{'1':'#d2e9e9'})
+    label(ax,.035,.782,'+0 接收 #1321',8.3,TEAL,weight='bold')
+    label(ax,left+9.5*cw,.510,'响应',7.0,TEAL,ha='center')
+    label(ax,.035,.149,'+9：#1321 单次响应，同时 #1322 从 P 转入 R',8.4,TEAL,weight='bold')
+    foot(ax,'条带为沿前采样；接收到响应相隔 9 拍，包含 7 拍反压。',.085)
+    foot(ax,'完整 128 位结果与控制字段逐行保持；原值、身份与来源见图注及附件。')
+    save(fig,'S2-06')
 
 
 def s2_cancel():
-    fig,ax=canvas("S2-07", "取消与复位：只保留仍然有效的事务", "0f 真实父级 · 三个取消窗口与一个独立复位窗口",5.55)
-    specs=[("cancel_p","(a) 仅取消 P · ROB 环绕","partial-ROB-48",12790,12791),
-           ("cancel_r","(b) 仅取消 R · 反序接收","partial-ROB-54",12878,12879),
-           ("cancel_both","(c) P / R 同时取消","partial-ROB-12",12266,12267),
-           ("reset","(d) reset 优先于 redirect","TE0-reset-7",14811,14813)]
-    for k,(key,title,case,cancel,nextcycle) in enumerate(specs):
-        yy=.775-k*.178
-        rr=DATA["parent"][key]
-        before=next(r for r in rr if r["cycle"]==cancel)
-        after=next(r for r in rr if r["cycle"]==nextcycle)
-        rect(ax,.035,yy-.119,.93,.16,face=PALE)
-        label(ax,.052,yy+.015,title,8.6,weight="bold")
-        label(ax,.95,yy+.015,case,7.0,GRAY,ha="right")
-        def identity(r,slot):
-            seq=r[slot+"seq"]
-            if not r[slot]:return "无效"
-            ident=DATA["identities"][str(seq)]
-            return f'#{seq} / ROB {ident["rob_flag"]}:{ident["rob"]}'
-        x1,x2=.16,.66
-        label(ax,x1,yy-.024,f'cycle {cancel} 沿前',7.4,GRAY)
-        label(ax,x1,yy-.055,'P  '+identity(before,'p'),7.8,TEAL)
-        label(ax,x1,yy-.084,'R  '+identity(before,'r'),7.8,NAVY)
-        if key=='reset': event='reset=1\nredirect=1'
-        else:event=f'kill_P={before["kill_p"]}\nkill_R={before["kill_r"]}'
-        label(ax,.51,yy-.058,event,7.4,RED,ha="center")
-        for x0,x1 in ((.414,.464),(.558,.617)):
-            ax.annotate('',xy=(x1,yy-.058),xytext=(x0,yy-.058),xycoords='axes fraction',
-                        arrowprops={'arrowstyle':'->','lw':.7,'color':GRAY})
-        label(ax,x2,yy-.024,f'cycle {nextcycle} 沿前',7.4,GRAY)
-        label(ax,x2,yy-.055,'P  '+identity(after,'p'),7.8,TEAL)
-        label(ax,x2,yy-.084,'R  '+identity(after,'r'),7.8,NAVY)
-        if key in ('cancel_p','cancel_r'):
-            tail=("P → R；" if key=='cancel_r' else "")+f'幸存事务 #{after["response_seq"]} 于 {nextcycle} 输出'
-        elif key=='cancel_both':tail='取消当拍 child_out=0；下一拍两槽均无效'
-        else:tail='reset_drop=2，kill_P/R=0；14813–14815 子时钟均为 0'
-        label(ax,.052,yy-.106,tail,6.9,GRAY)
-    label(ax,.035,.093,"取消使用 ROB 的 flag 与 index 判龄；seq 仅标识测试事务，不能代替程序年龄。",7.1,GRAY)
-    label(ax,.035,.058,"redirect 的 ROB：(a)(b) 为 1:0，(c)(d) 为 0:10；self 均为 0。",7.1,GRAY)
-    label(ax,.035,.024,"图中槽状态为边沿前记录；新接收发生在该边沿。原 case 与逐行证据见 figure-data.json。",6.9,GRAY)
-    save(fig,"S2-07")
+    fig,ax=canvas('S2-07','取消与复位：看清事务保留和迁移','0f 真实父级 · 四个独立窗口 · 槽位为沿前状态',4.55)
+    specs=[('cancel_p','A  仅取消 P',12790,12791),
+           ('cancel_r','B  仅取消 R',12878,12879),
+           ('cancel_both','C  两槽同时取消',12266,12267),
+           ('reset','D  reset + redirect',14811,14813)]
+    for i,(key,title,cy,ncy) in enumerate(specs):
+        x=.035+(i%2)*.485;top=.80-(i//2)*.345
+        rr=DATA['parent'][key];before=next(r for r in rr if r['cycle']==cy)
+        after=next(r for r in rr if r['cycle']==ncy)
+        assert before['p'] and before['r'] and not after['p']
+        if key=='cancel_p':assert after['r'] and after['rseq']==before['rseq']
+        elif key=='cancel_r':assert after['r'] and after['rseq']==before['pseq']
+        else:assert not after['r']
+        if key=='reset':assert before['reset_drop']==2 and not before['kill_p'] and not before['kill_r']
+        rect(ax,x,top-.302,.445,.322,face='#f7f9fb',edge=LINE)
+        label(ax,x+.018,top-.011,title,9.0,weight='bold')
+        label(ax,x+.111,top-.060,'之前',7.1,GRAY,ha='center')
+        label(ax,x+.340,top-.060,'之后',7.1,GRAY,ha='center')
+        yP,yR=top-.113,top-.205
+        for yy,slot in ((yP,'P'),(yR,'R')):
+            label(ax,x+.026,yy,slot,9,GRAY,weight='bold')
+            for xx in (x+.047,x+.276):
+                asset(ax,'pipeline-tray.png',xx,yy-.041,.128,.083)
+            token(ax,x+.087,yy-.020,.048,.040,'A' if slot=='P' else 'B',TEAL if slot=='P' else NAVY)
+        if key in ('cancel_p','cancel_both'):
+            cross(ax,x+.111,yP,.021)
+        if key in ('cancel_r','cancel_both'):
+            cross(ax,x+.111,yR,.021)
+        if key=='cancel_p':
+            token(ax,x+.316,yR-.020,.048,.040,'B',NAVY)
+            arrow(ax,x+.181,yR,x+.269,yR,color=NAVY)
+            label(ax,x+.224,yP,'取消',7.3,RED,ha='center')
+            result='原 R 保留并输出'
+        elif key=='cancel_r':
+            token(ax,x+.316,yR-.020,.048,.040,'A',TEAL)
+            arrow(ax,x+.181,yP,x+.269,yR,color=TEAL,lw=1.4)
+            label(ax,x+.224,yP+.016,'P → R',7.8,TEAL,ha='center')
+            result='原 P 转入 R 后输出'
+        elif key=='cancel_both':
+            arrow(ax,x+.187,(yP+yR)/2,x+.263,(yP+yR)/2,color=RED)
+            result='两槽 valid 均清除'
+        else:
+            # Reset is not drawn as two redirect kills.
+            label(ax,x+.226,(yP+yR)/2+.010,'reset',8.0,RED,ha='center',weight='bold')
+            arrow(ax,x+.190,(yP+yR)/2-.025,x+.264,(yP+yR)/2-.025,color=RED)
+            result='reset 优先 · 两槽失效'
+        label(ax,x+.222,top-.275,result,8.0,TEAL if i<2 else RED,ha='center',weight='bold')
+    foot(ax,'A / B 是各小图内的事务标记；空槽仅表示 valid=0。',.069)
+    foot(ax,'取消按 ROB 判龄；程序年龄、cycle、真实 seq 和来源保留在图注及附件。')
+    save(fig,'S2-07')
 
 
 def s2_div():
-    fig,ax=canvas("S2-08", "DIV 切换、取消清理与空闲关钟", "0f 真实 VFEX4 父级 · 动态记录仅含整数 DIV 与浮点 DIV",5.7)
-    label(ax,.035,.802,"A  先排空 VDot，再接收 DIV",9.4,weight="bold")
-    for i,(key,kind,c1,c2,c3,c4) in enumerate([
-        ('switch_int','整数 DIV',11447,11448,11449,11459),
-        ('switch_fp','浮点 DIV',11504,11505,11506,11514)]):
-        yy=.711-i*.135; rr=DATA['parent'][key]
-        rect(ax,.035,yy-.062,.93,.116,face=PALE)
-        label(ax,.052,yy+.033,kind,8.3,weight='bold')
-        label(ax,.95,yy+.033,rr[0]['case'],6.8,GRAY,ha='right')
-        xs=[.18,.42,.66,.89]
-        texts=[f'{c1}\n旧 R 输出',f'{c2}\n剩余 VDot 输出',f'{c3}\nDIV 接收',f'{c4}\nDIV 响应']
-        for x,t in zip(xs,texts):label(ax,x,yy-.019,t,7.4,TEAL if x==.66 else NAVY,ha='center')
-        for x0,x1 in zip(xs[:-1],xs[1:]):
-            ax.annotate('',xy=(x1-.07,yy-.013),xytext=(x0+.07,yy-.013),xycoords='axes fraction',arrowprops={'arrowstyle':'->','lw':.7,'color':GRAY})
-    label(ax,.035,.463,"B  取消仍保留清理边沿，随后关闭子时钟",9.4,weight='bold')
+    fig,ax=canvas('S2-08','DIV 切换、取消清理与空闲关钟','0f 真实父级 · 整数 DIV / 浮点 DIV 动态记录',4.8)
+    label(ax,.035,.796,'A  先排空 VDot，再接收 DIV',9.5,weight='bold')
+    xs=[.25,.48,.71,.92]
+    for x,t in zip(xs,['旧 R 输出','剩余 VDot 输出','DIV 接收','DIV 响应']):
+        label(ax,x,.729,t,7.5,GRAY,ha='center')
+    for i,(key,kind,cycles) in enumerate([
+        ('switch_int','整数 DIV',[11447,11448,11449,11459]),
+        ('switch_fp','浮点 DIV',[11504,11505,11506,11514])]):
+        yy=.662-i*.086;rr=DATA['parent'][key]
+        assert all(c in [r['cycle'] for r in rr] for c in cycles)
+        label(ax,.035,yy,kind,8.5,weight='bold')
+        for x,c in zip(xs,cycles):
+            rect(ax,x-.047,yy-.027,.094,.054,face=LIGHT if x==.71 else PALE)
+            label(ax,x,yy,str(c),8.7,TEAL if x==.71 else NAVY,ha='center',weight='bold')
+        for x0,x1 in zip(xs[:-1],xs[1:]):arrow(ax,x0+.055,yy,x1-.055,yy,lw=.8)
+    label(ax,.035,.480,'B  取消当拍完成清理，随后采样为零',9.5,weight='bold')
     for i,(key,name,base) in enumerate([('cancel_int','整数 DIV',13328),('cancel_fp','浮点 DIV',13769)]):
-        rr=DATA['parent'][key];yy=.383-i*.137
-        label(ax,.035,yy+.024,name,8.0,weight='bold')
-        label(ax,.035,yy-.007,rr[0]['case'],6.8,GRAY)
-        label(ax,.035,yy-.038,f'起点 {base}',6.8,GRAY)
-        cw=.665/8;xx=.30
-        for j,r in enumerate(rr):
-            x=xx+(j+.5)*cw
-            face='#fff3df' if r['kill_div'] else (LIGHT if r['clocks']==0 else PALE)
-            rect(ax,xx+j*cw+.002,yy-.047,cw-.004,.083,face=face,radius=.004)
-            label(ax,x,yy+.019,'+'+str(j),7.1,GRAY,ha='center')
-            label(ax,x,yy-.007,str(r['clocks']),8.5,TEAL if r['clocks']==0 else NAVY,ha='center',weight='bold')
-            evt='取消' if r['kill_div'] else ('入 DIV' if j==0 else ('入 VDot' if r['accept'] else ('响应' if r['response'] else '')))
-            label(ax,x,yy-.033,evt,7.2,RED if r['kill_div'] else GRAY,ha='center')
-    label(ax,.035,.139,"数字为上升沿后采样的子时钟位掩码：1 = VDot，2 = VIDiv，4 = VFDiv。",7.0,GRAY)
-    label(ax,.035,.103,"0 表示三个子时钟均关闭；取消当拍保留清理时钟。该记录不是 gate_enable 波形。",7.0,GRAY)
-    label(ax,.035,.065,"SQRT 仅有静态取消路径检查，本图不扩展为 SQRT 动态验证或功耗测量。",7.2,RED)
-    label(ax,.035,.027,"原始逐拍日志重绘；上部箭头间距按事件排列，不表示 DIV 运算时间比例。",7.0,GRAY)
-    save(fig,"S2-08")
+        rr=DATA['parent'][key];yy=.376-i*.142
+        assert len(rr)==8 and all(rr[j]['clocks']==0 for j in (2,3,4))
+        assert rr[1]['kill_div'] and rr[5]['accept'] and rr[7]['response']
+        label(ax,.035,yy+.015,name,8.5,weight='bold')
+        label(ax,.035,yy-.025,'起点 '+str(base),7.2,GRAY)
+        xx,cw=.26,.085
+        for j,n,tag in ((0,1,'入 DIV'),(1,1,'取消清理'),(2,3,'关钟'),(5,1,'入 VDot'),(6,1,''),(7,1,'响应')):
+            x=xx+j*cw;w=n*cw
+            rect(ax,x+.002,yy-.030,w-.004,.061,face='#fff0d9' if j==1 else (LIGHT if j==2 else PALE),radius=.004)
+            label(ax,x+w/2,yy+.059,'+2～+4' if j==2 else '+'+str(j),7.4,GRAY,ha='center')
+            label(ax,x+w/2,yy,str(rr[j]['clocks']),10.0,TEAL if j==2 else NAVY,ha='center',weight='bold')
+            label(ax,x+w/2,yy-.055,tag,7.0,RED if j==1 else GRAY,ha='center')
+    foot(ax,'下部数字为沿后子时钟采样值：1=VDot，2=VIDiv，4=VFDiv；不是 gate_enable。',.092)
+    foot(ax,'仅 DIV 动态记录；事件箭头不按时长比例绘制，SQRT 范围见正文。')
+    save(fig,'S2-08')
 
 
 def s3_negative_recovery():
@@ -319,29 +407,42 @@ def s3_negative_recovery():
         keys=[k for k in negative['files'] if k.endswith(suffix)]
         assert len(keys)==1 and negative['files'][keys[0]]==normal['files'][keys[0]]
     assert 'planned=15 executed=15 passed=15 failed=0 unreachable=0' in files[2]['content']
-    fig,ax=canvas('S3-03','高位错误被拒绝，同镜像恢复通过','0f 原始整核记录 · 2026-10-24 · core-01 的两个连续运行',5.05)
-    rect(ax,.035,.737,.93,.081,face=PALE)
-    label(ax,.055,.793,'保持相同：EMU 2d1db77cc407…  /  BIN b8b7e1a70320…',8.0,weight='bold')
-    label(ax,.055,.759,'同一 boot-flash；恢复时将负控参考模型切回正常参考模型。',7.6,GRAY)
-    rect(ax,.035,.369,.93,.334,face='#fff1eb')
-    label(ax,.055,.673,'A  negative-vdot：按预期拒错',10.0,RED,weight='bold')
-    label(ax,.94,.673,'exit 1',9.7,RED,ha='right',weight='bold')
-    label(ax,.055,.634,'首次差异 PC 0x80001bdc · 指令 0x0294050b · 目的 v10',8.2)
-    label(ax,.055,.596,'原 stdout 的高 64 位差异（L204）',7.9,GRAY)
-    label(ax,.075,.555,'right = 0x0000001000000000',9.3,TEAL)
-    label(ax,.075,.515,'wrong = 0x0000000000000000',9.3,RED)
-    label(ax,.055,.468,'位位置：高半部 bit 36 = 完整 128 位向量的 bit 100',8.5,weight='bold')
-    label(ax,.055,.426,'12:46:20 → 12:58:45 +08  ·  负控参考 SHA256 9b3aecf362b7…',7.5)
-    label(ax,.055,.392,'ABORT 事件 PC 0x800016b0 是另一字段，不作首次失配地址。',7.3,GRAY)
-    rect(ax,.035,.118,.93,.216,face=LIGHT)
-    label(ax,.055,.304,'B  functional-0：恢复正常参考',10.0,TEAL,weight='bold')
-    label(ax,.94,.304,'exit 0',9.7,TEAL,ha='right',weight='bold')
-    label(ax,.055,.265,'VDOT_SUMMARY  planned=15  executed=15  passed=15',8.6)
-    label(ax,.055,.228,'failed=0  unreachable=0  ·  HIT GOOD TRAP at 0x8000236a',8.1)
-    label(ax,.055,.188,'12:58:45 → 13:28:42 +08  ·  正常参考 SHA256 efbed0774add…',7.5)
-    label(ax,.055,.148,'原 stdout L40–41 与 result.json；这是同镜像恢复，未添加独立 replay。',7.0,GRAY)
-    label(ax,.035,.073,'读数范围：原 stdout 显示高 64 位差异；完整向量位号由 64 + 36 得出。',7.0,GRAY)
-    label(ax,.035,.032,'本图绑定 2026-10-24 原 0f 运行；R5 clean02 的独立验收身份见正文。',7.0,GRAY)
+    fig,ax=canvas('S3-03','高位注错被检出，正常参考通过','2026-10-24 · core-01 · 同镜像的两次独立运行',4.5)
+    asset(ax,'verification-chip.png',.055,.682,.23,.16)
+    label(ax,.315,.783,'同一 DUT · 同一程序 · 同一启动文件',10.0,weight='bold')
+    label(ax,.315,.728,'仅更换所加载的参考模型',8.1,GRAY)
+    # Branches are separate experiments, not an in-run reference switch.
+    ax.plot([.50,.50],[.698,.662],color=GRAY,lw=1,transform=ax.transAxes)
+    ax.plot([.265,.735],[.662,.662],color=GRAY,lw=1,transform=ax.transAxes)
+    arrow(ax,.265,.662,.265,.620)
+    arrow(ax,.735,.662,.735,.620)
+    for col,(title,normal_run,color) in enumerate([
+        ('A  参考模型注错',False,RED),('B  恢复正常参考',True,TEAL)]):
+        xx=.035+col*.485
+        rect(ax,xx,.167,.445,.441,face='#fff7f2' if col==0 else '#f0f7f7',edge=LINE)
+        label(ax,xx+.024,.575,title,9.2,color,weight='bold')
+        label(ax,xx+.165,.514,'高 64 位',7.3,GRAY,ha='center')
+        label(ax,xx+.318,.514,'低 64 位',7.3,GRAY,ha='center')
+        for yy,who in ((.463,'DUT'),(.353,'REF')):
+            label(ax,xx+.022,yy,who,8.2,weight='bold')
+            barx=xx+.086;barw=.31
+            rect(ax,barx,yy-.024,barw/2,.048,face='#dce8f0',edge=LINE,radius=.003)
+            rect(ax,barx+barw/2,yy-.024,barw/2,.048,face='#eaf0f4',edge=LINE,radius=.003)
+            # Linear 127..0 bit position; only the indicated mismatch is encoded.
+            if not normal_run and who=='REF':
+                bx=barx+barw*((127-100)+.5)/128
+                rect(ax,bx-.0045,yy-.028,.009,.056,face=RED,radius=0)
+                arrow(ax,bx,.409,bx,yy+.032,color=RED,lw=.8)
+                label(ax,bx+.012,.412,'bit100',7.7,RED)
+        label(ax,xx+.241,.407,'=' if normal_run else '≠',16,color,ha='center',weight='bold')
+        if normal_run:
+            check(ax,xx+.072,.240,.018,color)
+            label(ax,xx+.116,.240,'15 / 15 用例通过',10.1,color,weight='bold')
+        else:
+            cross(ax,xx+.072,.240,.016,color)
+            label(ax,xx+.116,.240,'预期拒错',10.3,color,weight='bold')
+    foot(ax,'向量条只示意高低半部及注错位；不虚构完整 128 位打印值。',.097)
+    foot(ax,'EMU / BIN / 参考模型身份、首次差异和退出码见图注及原始记录。')
     save(fig,'S3-03')
 
 
@@ -367,35 +468,37 @@ def s3_performance():
         name={'single':'single × 1','chain':'chain × 256','batch':'batch × 128','stream':'stream × 64'}[r['scenario']]
         label(ax,.035+col*.48,.775-row*.31,name,9.3,weight='bold')
         label(ax,.45+col*.48,.775-row*.31,f'{speed:.3f}×',10.3,TEAL,ha='right',weight='bold')
-    rect(ax,.035,.075,.93,.095,face=LIGHT)
-    label(ax,.052,.139,'加速比 = ΣRVV 周期 / Σvdot 周期；每法每类 12 个正式样本。',7.5)
-    label(ax,.052,.101,'DIV 关钟修复前 8b5024 与 0f：配对窗口周期相同；stream 仅约 1.005×。',7.2)
-    label(ax,.035,.029,'柱图分别从零开始，横轴尺度因场景不同；不减空窗口，不使用主机运行时间。',7.0,GRAY)
+    foot(ax,'同镜像 · 每类每法 n=12 · 各子图横轴尺度不同。',.100)
+    foot(ax,'加速比按总周期之比；仅为所列微基准结果。')
     save(fig,'S3-05')
 
 
 def s3_cost():
-    fig,ax=canvas('S3-07','Nangate45：面积与五档 setup 裕量','8b5024fc → 0f12df67 · Typical 1.10 V / 25°C · 布局前评估',5.8)
+    fig,ax=canvas('S3-07','Nangate45：面积与时序约束敏感性','8b5024fc → 0f12df67 · Typical 1.10 V / 25°C · 布局前评估',5.45)
     for i,b in enumerate(('fu','parent')):
         x=.035+i*.48;v=DATA['area'][b];before=v['before'];after=v['after']
         rect(ax,x,.708,.45,.112,face=PALE)
         label(ax,x+.018,.798,'VDot FU' if b=='fu' else '完整 VFEX4 父级（含 FU）',8.2,weight='bold')
-        label(ax,x+.018,.761,f'{before["area"]:,.3f} → {after["area"]:,.3f} μm²',8.0,TEAL)
+        label(ax,x+.018,.759,f'{after["area"]:,.3f} μm²',11.3,TEAL,weight='bold')
         change=100*(after['area']/before['area']-1)
-        label(ax,x+.018,.727,f'Δ {change:+.4f}%   ·   DFF {before["dff_count"]}→{after["dff_count"]}   ·   ICG {after["icg_count"]}',6.8,GRAY)
+        label(ax,x+.018,.726,f'面积变化 {change:+.4f}%',7.9,GRAY)
     profiles=['period050','nominal','period200','load001','load020']
     paths=[('fu',p) for p in ['i2o','i2r','r2o','r2r','ready']]+[('parent',p) for p in ['gate_enable','i2o','i2r','r2o','r2r','ready','vdot_i2r','vdot_r2o','vdot_r2r']]
     rows=DATA['timing'];assert len(rows)==70
     matrix=np.array([[float(next(r for r in rows if r['boundary']==b and r['path']==p and r['profile']==q)['after_slack_ns']) for q in profiles] for b,p in paths])
-    pax=fig.add_axes([.30,.235,.65,.375])
+    pax=fig.add_axes([.30,.258,.65,.365])
     cmap=LinearSegmentedColormap.from_list('slack',['#b45a4a','#f8eee9','#f7fafb','#b9dfe1','#087f8c'])
     norm=TwoSlopeNorm(vmin=-3,vcenter=0,vmax=1.7)
-    pax.imshow(matrix,cmap=cmap,norm=norm,aspect='auto',interpolation='none')
+    img=pax.imshow(matrix,cmap=cmap,norm=norm,aspect='auto',interpolation='none')
     ticklabels=[f'{DATA["profiles"][p]["period_ns"]:g} ns\n{DATA["profiles"][p]["load_ff"]} fF' for p in profiles]
     pax.set_xticks(range(5),ticklabels,fontsize=6.8);pax.xaxis.tick_top();pax.tick_params(length=0,pad=4)
-    pax.set_yticks(range(14),[b+'/'+p for b,p in paths],fontsize=6.9)
+    pax.set_yticks(range(14),[p for b,p in paths],fontsize=7.0)
+    label(ax,.044,.557,'VDot FU',8.0,weight='bold')
+    label(ax,.044,.382,'VFEX4\n父级',8.0,weight='bold')
     for spine in pax.spines.values():spine.set_visible(False)
+    annotated={(i,1) for i in range(14)} | {np.unravel_index(matrix.argmin(),matrix.shape),np.unravel_index(matrix.argmax(),matrix.shape),(5,2)}
     for (i,j),value in np.ndenumerate(matrix):
+        if (i,j) not in annotated:continue
         rgb = cmap(norm(value))[:3]
         linear = [v/12.92 if v <= .04045 else ((v+.055)/1.055)**2.4 for v in rgb]
         luminance = sum(v*w for v,w in zip(linear,(.2126,.7152,.0722)))
@@ -406,16 +509,25 @@ def s3_cost():
         pax.text(j,i,f'{value:+.3f}',ha='center',va='center',fontsize=7.1,color=ink)
     pax.axhline(4.5,color='white',lw=2)
     pax.add_patch(Rectangle((.5,-.5),1,14,fill=False,edgecolor=NAVY,linewidth=.8))
-    label(ax,.035,.680,'候选时序裕量 / ns（含门控建立检查）；负值表示未满足',8.3,weight='bold')
-    rect(ax,.035,.112,.93,.079,face='#fff1eb')
-    label(ax,.052,.164,'1 ns / 5 fF：所报 14 类检查中 10 类为负；不代表 1 ns 时序收敛。',8.0,RED,weight='bold')
-    label(ax,.052,.132,'父级面积已包含 FU，不能相加。面积变化不能直接推算动态功耗。',7.2)
-    label(ax,.035,.073,'五档为单变量约束敏感性；布局前参考库结果，未测整核 PPA、布线后时序、功耗或 Fmax。',7.0,GRAY)
-    label(ax,.035,.031,'来源：cost/results/timing.csv（70 行）与 summary.json；完整精度与起止点保留于数据附件。',7.0,GRAY)
+    label(ax,.035,.680,'候选裕量 / ns · 负值表示未满足',8.7,weight='bold')
+    cax=fig.add_axes([.32,.207,.57,.014])
+    cb=fig.colorbar(img,cax=cax,orientation='horizontal',ticks=[-3,-2,-1,0,1])
+    cb.outline.set_visible(False);cb.ax.tick_params(labelsize=6.4,length=2,pad=2)
+    label(ax,.035,.132,'1 ns / 5 fF：10 / 14 项为负',10.0,RED,weight='bold')
+    foot(ax,'框选名义档；数字标名义档及选定关键值，完整 70 项见附件。',.078)
+    foot(ax,'含门控建立检查；父级面积已含 FU。布局前结果不等同功耗或整核 PPA。')
     save(fig,'S3-07')
 
 
 if __name__ == '__main__':
-    s1_timeline();s1_boot();s2_ii1();s2_backpressure();s2_cancel();s2_div();s3_negative_recovery();s3_performance();s3_cost()
-    (ROOT/'evidence-20261105/generated-figures.json').write_text(json.dumps(OUTPUTS,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-    print(json.dumps({'figures':len(OUTPUTS),'ids':[x['id'] for x in OUTPUTS]},ensure_ascii=False))
+    builders={'S1-06':s1_timeline,'S1-07':s1_boot,'S2-05':s2_ii1,
+              'S2-06':s2_backpressure,'S2-07':s2_cancel,'S2-08':s2_div,
+              'S3-03':s3_negative_recovery,'S3-05':s3_performance,'S3-07':s3_cost}
+    selected=args.only or list(builders)
+    for fid in selected:
+        if fid not in builders:raise SystemExit('Unknown figure: '+fid)
+        builders[fid]()
+    manifest='generated-figures-preview.json' if args.only else 'generated-figures.json'
+    (ROOT/'evidence-20261105'/manifest).write_text(json.dumps(OUTPUTS,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    print(json.dumps({'figures':len(OUTPUTS),'ids':[x['id'] for x in OUTPUTS],
+                      'fonts':FONT_RESOLUTION},ensure_ascii=False))

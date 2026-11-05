@@ -45,7 +45,7 @@ R5 clean-02原宿主UTC并发审计存在80.119ms表观四路重叠，旧FAIL记
 
 
 
-\reportfigure{S3-03}{0f原始bit100拒错与同镜像恢复记录}{13.2cm}{2026-10-24 core-01：负控首次失配PC 0x80001bdc、机器字0x0294050b、目的v10；保留原高64位right/wrong打印，第36位对应全128位bit100。恢复正常reference后15/15与GOOD TRAP、真实exit 0；负控exit 1。}{e2c2e8d固定归档：\seqsplit{team/optimizations/o2/r3-div-gate/fullcore/evidence/20261024-fullcore/files/runs/core-01/}\{negative-vdot,functional-0\}/\{stdout.log,result.json\}；图数据附件保存原文、Git blob和SHA256。版本范围：历史EMU 2d1db77c…与BIN b8b7e1a7…；不是R5 clean02/acf672…日志，不添加本组独立replay，不把ABORT事件PC等同首次失配PC；仅图示原记录，无新增仿真。}
+\reportfigure{S3-03}{0f原始bit100拒错与同镜像恢复记录}{13.2cm}{2026-10-24 core-01：负控首次失配PC 0x80001bdc、机器字0x0294050b、目的v10；原高64位right/wrong十六进制打印见附件，第36位对应完整128位bit100。恢复正常reference后15/15与GOOD TRAP、真实exit 0；负控exit 1。}{e2c2e8d固定归档：\seqsplit{team/optimizations/o2/r3-div-gate/fullcore/evidence/20261024-fullcore/files/runs/core-01/}\{negative-vdot,functional-0\}/\{stdout.log,result.json\}；图数据附件保存原文、Git blob和SHA256。版本范围：历史EMU 2d1db77c…与BIN b8b7e1a7…；不是R5 clean02/acf672…日志，不添加本组独立replay，不把ABORT事件PC等同首次失配PC；仅图示原记录，无新增仿真。}
 \section{等价RVV基线与测量方法}
 
 
@@ -146,7 +146,7 @@ nominal最差setup裕量 ns & −0.268520 & −2.393998\\
 
 
 
-\reportfigure{S3-07}{Nangate45面积与五档STA报告证据}{15.0cm}{面积卡片按8b5024fc到0f12df67比较；父级包含FU，不能相加。热图列出五档70项时序裕量（包含门控建立检查），框出nominal 1ns/5fF列，其中所报14类检查有10类负值。I/R/O分别为输入、寄存器、输出；完整起止点和精度保留于附件。}{\seqsplit{r3-div-gate/cost/results/summary.json}与timing.csv；源身份、SHA及完整数值见\seqsplit{figures/evidence-20261105/figure-data.json}。版本范围：Nangate45 Typical 1.10V/25°C，布局前理想时钟/线负载；没有整核PPA、布线后时序、功耗或Fmax结果。}
+\reportfigure{S3-07}{Nangate45面积与五档STA报告证据}{15.0cm}{面积卡片按8b5024fc到0f12df67比较；父级包含FU，不能相加。热图以色阶展示五档70项时序裕量（包含门控建立检查），数字标注nominal及选定关键值；完整70项数值见附件。框选nominal 1ns/5fF档，其14类检查有10类负值。I/R/O分别为输入、寄存器、输出；完整起止点和精度保留于附件。}{\seqsplit{r3-div-gate/cost/results/summary.json}与timing.csv；源身份、SHA及完整数值见\seqsplit{figures/evidence-20261105/figure-data.json}。版本范围：Nangate45 Typical 1.10V/25°C，布局前理想时钟/线负载；没有整核PPA、布线后时序、功耗或Fmax结果。}
 \section{优化探索及最终取舍}
 
 

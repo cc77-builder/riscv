@@ -237,7 +237,7 @@ hello输出先确认程序已经经过启动代码到达C入口，并检查UART�
 
 
 
-\reportfigure{S1-07}{共同启动镜像修复前后的差分定位}{12.1cm}{首次差异在启动PC 0x10000004、t0，原instrCnt为2；随后两端通过显式flash参数使用同一12字节文件，三条指令按原文件偏移列出。恢复日志记录三类24 lane通过、GOOD TRAP及exit 0。}{2026-10-09原失败日志行164/166、\seqsplit{boot-flash-disassembly.txt}、完整成功日志行7/10/16/17/19及\seqsplit{hello-vadd-summary.log}；完整出处和哈希见图数据附件。版本范围：历史启动问题定位；不是vdot错误或新运行。共用文件不等于两端物理映射地址相同。}
+\reportfigure{S1-07}{共同启动镜像修复前后的差分定位}{12.1cm}{首次差异在启动PC 0x10000004、t0，原instrCnt为2；随后两端通过显式flash参数使用同一12字节文件，三条启动指令及文件偏移见图数据附件。恢复日志记录三类24 lane通过、GOOD TRAP及exit 0。}{2026-10-09原失败日志行164/166、\seqsplit{boot-flash-disassembly.txt}、完整成功日志行7/10/16/17/19及\seqsplit{hello-vadd-summary.log}；完整出处和哈希见图数据附件。版本范围：历史启动问题定位；不是vdot错误或新运行。共用文件不等于两端物理映射地址相同。}
 \subsection{向量加法结果的解释}
 
 

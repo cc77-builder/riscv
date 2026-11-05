@@ -77,8 +77,8 @@
     "title": "共同启动镜像修复前后的差分定位",
     "height_cm": 12.1,
     "anchor": "\\subsection{向量加法结果的解释}",
-    "kind": "原日志与反汇编摘录重排",
-    "content": "首次差异在启动PC 0x10000004、t0，原instrCnt为2；随后两端通过显式flash参数使用同一12字节文件，三条指令按原文件偏移列出。恢复日志记录三类24 lane通过、GOOD TRAP及exit 0。",
+    "kind": "基于原记录的启动故障与恢复示意",
+    "content": "首次差异在启动PC 0x10000004、t0，原instrCnt为2；随后两端通过显式flash参数使用同一12字节文件，三条启动指令及文件偏移见图数据附件。恢复日志记录三类24 lane通过、GOOD TRAP及exit 0。",
     "source": "2026-10-09原失败日志行164/166、boot-flash-disassembly.txt、完整成功日志行7/10/16/17/19及hello-vadd-summary.log；完整出处和哈希见图数据附件",
     "scope": "历史启动问题定位；不是vdot错误或新运行。共用文件不等于两端物理映射地址相同",
     "priority": "补充"
@@ -150,7 +150,7 @@
     "height_cm": 12.0,
     "anchor": "\\subsection{取消、复位及环形年龄}",
     "kind": "原始全核观察器日志重绘",
-    "content": "同一事务seq1321于181597接收，181599–181605连续7拍反压，完整128位结果0x00000000000000000000000000001A87及ROB/pdest/控制字段保持；181606只有一次FU输出握手。父级inready与FU vready分列。",
+    "content": "同一事务seq1321于181597接收，181599–181605连续7拍反压，完整128位结果0x00000000000000000000000000001A87及ROB/pdest/控制字段保持；181606只有一次FU输出握手。图中分别保留父级inready与FU vready；181606后者恢复而前者仍为0，同拍旧P事务1322转入R。",
     "source": "0f fullcore/core-01/control/run.log.gz，原行15012–15044；raw SHA256 c7351619b11e61171009c1dc997c08dd8a575f7c1508d79f7484df72711c6cb7",
     "scope": "历史EMU 2d1db77cc407…，非clean-02 acf672…；接收到响应9拍含7拍反压，不是ROB提交或新仿真",
     "priority": "必备"
@@ -162,7 +162,7 @@
     "height_cm": 14.3,
     "anchor": "\\subsection{共享DIV资源与时钟使能}",
     "kind": "原始逐拍日志重绘",
-    "content": "四个独立窗口展示仅P取消、仅R取消且P转R、两槽取消，以及reset与redirect同拍时按reset唯一记账。前两例包含ROB flag环绕；seq不能代替程序年龄。左右状态均按各自cycle沿前记录。",
+    "content": "四个独立窗口展示仅P取消、仅R取消且P转R、两槽取消，以及reset与redirect同拍时按reset唯一记账。前两例包含ROB flag环绕；seq不能代替程序年龄。状态按各窗口沿前记录抽象展示，原cycle及事务身份见附件；空槽仅表示valid清除。",
     "source": "green-parent-01/result.log.gz；partial-ROB-48/54/12及TE0-reset-7；原行与逐行值见figures/evidence-20261105/figure-data.json",
     "scope": "仅0f真实父级已记录窗口；被取消请求无错误响应，幸存请求按原身份输出",
     "priority": "必备"
@@ -233,8 +233,8 @@
     "title": "0f原始bit100拒错与同镜像恢复记录",
     "height_cm": 13.2,
     "anchor": "\\section{等价RVV基线与测量方法}",
-    "kind": "原始日志摘录与位位置说明",
-    "content": "2026-10-24 core-01：负控首次失配PC 0x80001bdc、机器字0x0294050b、目的v10；保留原高64位right/wrong打印，第36位对应全128位bit100。恢复正常reference后15/15与GOOD TRAP、真实exit 0；负控exit 1。",
+    "kind": "基于原日志的拒错、恢复与位位置示意",
+    "content": "2026-10-24 core-01：负控首次失配PC 0x80001bdc、机器字0x0294050b、目的v10；原高64位right/wrong十六进制打印见附件，第36位对应完整128位bit100。恢复正常reference后15/15与GOOD TRAP、真实exit 0；负控exit 1。",
     "source": "e2c2e8d固定归档：team/optimizations/o2/r3-div-gate/fullcore/evidence/20261024-fullcore/files/runs/core-01/{negative-vdot,functional-0}/{stdout.log,result.json}；图数据附件保存原文、Git blob和SHA256",
     "scope": "历史EMU 2d1db77c…与BIN b8b7e1a7…；不是R5 clean02/acf672…日志，不添加本组独立replay，不把ABORT事件PC等同首次失配PC；仅图示原记录，无新增仿真",
     "priority": "必备"
@@ -282,7 +282,7 @@
     "height_cm": 15.0,
     "anchor": "\\section{优化探索及最终取舍}",
     "kind": "原始综合/STA数据重绘",
-    "content": "面积卡片按8b5024fc到0f12df67比较；父级包含FU，不能相加。热图列出五档70项时序裕量（包含门控建立检查），框出nominal 1ns/5fF列，其中所报14类检查有10类负值。I/R/O分别为输入、寄存器、输出；完整起止点和精度保留于附件。",
+    "content": "面积卡片按8b5024fc到0f12df67比较；父级包含FU，不能相加。热图以色阶展示五档70项时序裕量（包含门控建立检查），数字标注nominal及选定关键值；完整70项数值见附件。框选nominal 1ns/5fF档，其14类检查有10类负值。I/R/O分别为输入、寄存器、输出；完整起止点和精度保留于附件。",
     "source": "r3-div-gate/cost/results/summary.json与timing.csv；源身份、SHA及完整数值见figures/evidence-20261105/figure-data.json",
     "scope": "Nangate45 Typical 1.10V/25°C，布局前理想时钟/线负载；没有整核PPA、布线后时序、功耗或Fmax结果",
     "priority": "必备"

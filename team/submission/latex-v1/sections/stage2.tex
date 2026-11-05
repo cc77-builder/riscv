@@ -202,7 +202,7 @@ io.out.valid表示R中存在可输出事务，其含义独立于io.out.ready。�
 
 
 
-\reportfigure{S2-06}{反压期间完整结果与事务身份保持}{12.0cm}{同一事务seq1321于181597接收，181599–181605连续7拍反压，完整128位结果\seqsplit{0x00000000000000000000000000001A87}及ROB/pdest/控制字段保持；181606只有一次FU输出握手。父级inready与FU vready分列。}{0f \seqsplit{fullcore/core-01/control/run.log.gz}，原行15012–15044；raw SHA256 \seqsplit{c7351619b11e61171009c1dc997c08dd8a575f7c1508d79f7484df72711c6cb7}。版本范围：历史EMU 2d1db77cc407…，非clean-02 acf672…；接收到响应9拍含7拍反压，不是ROB提交或新仿真。}
+\reportfigure{S2-06}{反压期间完整结果与事务身份保持}{12.0cm}{同一事务seq1321于181597接收，181599–181605连续7拍反压，完整128位结果\seqsplit{0x00000000000000000000000000001A87}及ROB/pdest/控制字段保持；181606只有一次FU输出握手。图中分别保留父级inready与FU vready；181606后者恢复而前者仍为0，同拍旧P事务1322转入R。}{0f \seqsplit{fullcore/core-01/control/run.log.gz}，原行15012–15044；raw SHA256 \seqsplit{c7351619b11e61171009c1dc997c08dd8a575f7c1508d79f7484df72711c6cb7}。版本范围：历史EMU 2d1db77cc407…，非clean-02 acf672…；接收到响应9拍含7拍反压，不是ROB提交或新仿真。}
 \subsection{取消、复位及环形年龄}
 
 
@@ -216,7 +216,7 @@ redirect按RobPtr的年龄语义分别判断P和R是否需要取消。ROB索引�
 
 
 
-\reportfigure{S2-07}{部分取消、全部取消与复位优先级}{14.3cm}{四个独立窗口展示仅P取消、仅R取消且P转R、两槽取消，以及reset与redirect同拍时按reset唯一记账。前两例包含ROB flag环绕；seq不能代替程序年龄。左右状态均按各自cycle沿前记录。}{\seqsplit{green-parent-01/result.log.gz}；\seqsplit{partial-ROB-48/54/12}及TE0-reset-7；原行与逐行值见\seqsplit{figures/evidence-20261105/figure-data.json}。版本范围：仅0f真实父级已记录窗口；被取消请求无错误响应，幸存请求按原身份输出。}
+\reportfigure{S2-07}{部分取消、全部取消与复位优先级}{14.3cm}{四个独立窗口展示仅P取消、仅R取消且P转R、两槽取消，以及reset与redirect同拍时按reset唯一记账。前两例包含ROB flag环绕；seq不能代替程序年龄。状态按各窗口沿前记录抽象展示，原cycle及事务身份见附件；空槽仅表示valid清除。}{\seqsplit{green-parent-01/result.log.gz}；\seqsplit{partial-ROB-48/54/12}及TE0-reset-7；原行与逐行值见\seqsplit{figures/evidence-20261105/figure-data.json}。版本范围：仅0f真实父级已记录窗口；被取消请求无错误响应，幸存请求按原身份输出。}
 \subsection{共享DIV资源与时钟使能}
 
 
@@ -981,8 +981,8 @@ child.in.fire -> parent.in.fire \&\& selected(child)\par
 
 性能采用条件：先争取冻结batch128相对O1再降至少10\%（362.50\allowbreak{}→\allowbreak{}不高于326.25 cycles），这是本合同新增的工程投入目标，不是预言、官方标准或正确性通过线；必须同时报告全部场景，其他保留场景均值退化超过2\%先调查。若RVV保持678，这个目标约对应2.078×，正式加速比仍用候选自身实测RVV。达到2×本身不自动通过采用门禁。\par
 \section{本轮已提供截图补充}
-本节仅收录已有截图，原始波形、框架图和其他缺图占位仍保留。各截图按照历史版本和证据层级解释。
+本节收录已有补充截图，并按各自历史版本和证据层级解释。正式图位已补齐；尚未提供的原始波形或专门异常截图，其补证范围按正文保留。
 \evidencefigure{SUP-S2-ARITH}{固定0f算术实现源码摘录}{15cm}{源代码截图辅助解释8路乘法和归约；不替代S2-02数据通路图。}
 \evidencefigure{SUP-S2-MODEL}{主机端参考模型检查画面}{14cm}{35个测试方法通过；该命令只检查主机模型和数据，不授RTL或NEMU资格。}
-\evidencefigure{SUP-S2-OVERLAP}{两槽重叠事务日志摘录}{15cm}{保留10986周期ACCEPT seq2、MOVE seq1、RESPONSE seq0；本图是历史日志字段摘录，S2-05原始波形仍待补。原批次UTC容量审计FAIL保留。}
-\evidencefigure{SUP-S2-STATE}{固定0f两槽状态与控制源码摘录}{16cm}{依次展示寄存器、握手与取消条件、状态更新；源代码画面不替代S2-06至S2-08控制行为波形。}
+\evidencefigure{SUP-S2-OVERLAP}{两槽重叠事务日志摘录}{15cm}{保留10986周期ACCEPT seq2、MOVE seq1、RESPONSE seq0；本图为历史日志字段摘录；S2-05现为父级逐拍记录的事件重绘，未提供原始波形截图。原批次UTC容量审计FAIL保留。}
+\evidencefigure{SUP-S2-STATE}{固定0f两槽状态与控制源码摘录}{16cm}{依次展示寄存器、握手与取消条件、状态更新；源代码画面辅助解释实现；S2-06至S2-08的控制行为及证据范围以各图所列原始记录为准。}

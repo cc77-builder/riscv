@@ -6,7 +6,7 @@
 
 原 26 个图位现均有图：沿用 17 处、补齐 9 处，并保留原 5 组补充截图。新增九图包括历史 vadd 事件与启动恢复、P/R 重叠、反压保持、取消/复位、DIV 切换/关钟、bit100 拒错恢复、四类微基准和 Nangate45 面积/STA。
 
-技术图以固定日志和 CSV 为输入生成矢量 PDF；每张均有运行身份、字段含义及范围说明。图源与 SHA256 见 `figures/evidence-20261105/`，完整清单见[插图清单与替换说明](插图清单与替换说明.md)。封面概念图通过图像生成工具创建并注明用途，不承担工程证据作用。图形表达参考见[厂商风格与制图决策](figures/evidence-20261105/图形表达参考.md)。
+技术图以固定日志和 CSV 为输入生成 PDF 图版；每张均有运行身份、字段含义及范围说明。图源与 SHA256 见 `figures/evidence-20261105/`，完整清单见[插图清单与替换说明](插图清单与替换说明.md)。封面概念图通过图像生成工具创建并注明用途，不承担工程证据作用。图形表达参考见[厂商风格与制图决策](figures/evidence-20261105/图形表达参考.md)。
 
 仍需保留的补证限制：S1-04/05 原截图的时钟显示尚未确认；S2-09 缺少非法配置异常码与目的不更新的专门截图。SQRT 仅保留静态取消路径检查范围。本轮没有新增 RTL 仿真、性能运行或 EDA，也未修改官方程序、验证器、原始日志和失败证据。
 
@@ -23,10 +23,10 @@ python -X utf8 expand_reports.py
 python -X utf8 build.py --output-dir <独立输出目录>
 ```
 
-`build.py` 支持 `--compiler` 指定 XeLaTeX、`--documents` 选择文档，每份编译三遍。仓库不分发字体。重绘九图另需 Matplotlib、NumPy（PDF 预览还需 PyMuPDF）和 Noto Sans CJK / 微软雅黑 / 宋体，可运行：
+`build.py` 支持 `--compiler` 指定 XeLaTeX、`--documents` 选择文档，每份编译三遍。仓库不分发字体。重绘九图另需 Matplotlib、NumPy（PDF 预览还需 PyMuPDF）以及实际安装的 Microsoft YaHei（微软雅黑）和 SimSun（宋体），可运行：
 
 ```bash
-python figures/build_evidence_figures.py --preview-dir <图片预览目录>
+python figures/build_evidence_figures.py --preview-dir <图片预览目录> --preview-dpi 300
 ```
 
 正文由 `content/`、`expand_reports.py`、`report_layout.py` 与 `figures/placement.json` 生成。修改源材料或配置后重新生成，不只改生成的 `sections/stage*.tex`。图片按同名 PDF、PNG、JPG 顺序加载。
@@ -34,3 +34,9 @@ python figures/build_evidence_figures.py --preview-dir <图片预览目录>
 ## 版本与核验
 
 原发布元数据分别保留于 `qa/upstream-402706f/`、`qa/upstream-e2c2e8d/`，适用其原版 PDF。当前发布清单在最终编译和视觉复核后生成，不能用历史 PASS 或旧页数代替本版检查。原报告中的“本轮”工程状态按 `最终版本确认.md` 所列历史语境阅读；本次仅补图、核对图注与重编译。
+
+## 字体与主图形第二版
+
+按2026-11-05人工反馈，九张新增图的主标签改用实际微软雅黑，简短说明改用实际宋体。S1-07、S2-07、S3-03由长日志卡片改为关系图、状态图和独立运行对照；另精简S2-05/06/08及S3-07。生图概念素材原字节、提示词及哈希保留在 `figures/generated-assets-20261105/`；精确关系、数据、位位置和文字由生成器排版。正文与代码/日志原字体偏好保持。
+
+第二版四份实际PDF重新三遍编译并通过视觉检查；详情见当前校验及 `qa/figure-completion-20261105/*-fonts-v2*`。第一版检查记录保存在同目录 `inspection-first-edition.json`，对应原提交2690c737。
