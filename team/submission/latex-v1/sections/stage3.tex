@@ -33,19 +33,19 @@ NEMU以\seqsplit{a48a11f208ff81ad765591d83271d1b339fb3861}为基点，使用vdot
 DiffTest将硬件提交后的架构状态与NEMU对应状态比较。除正常算术结果外，本项目检查完整向量写回、向量CSR、寄存器别名和非法状态路径。\par
 
 
-负控对vdot结果的bit100注入错误，检验高96位比较是否真正生效。成功的拒错记录应呈现对应PC/机器字、向量目的及差异位置，并以预期错误终止。随后恢复正常reference，运行同一镜像取得正常结果，再用独立重放确认验证结构一致。\par
+负控对vdot结果的bit100注入错误，检验高96位比较是否真正生效。图S3-03展示2026年10月24日原0f记录中的negative-vdot拒错与functional-0同镜像恢复两次运行，绑定EMU 2d1db77c…与BIN b8b7e1a7…。原高64位的第36位对应完整向量的bit100；首次失配PC为0x80001bdc，机器字0x0294050b，目的v10。恢复正常reference后，15个计划用例全部通过并以GOOD TRAP、exit 0结束。这组图示证据覆盖拒错与恢复两次运行。\par
 
 
-R5/G5选择原13项记录与1项新控制诊断组成验收，原始记录重新解析后通过。全核功能矩阵包含117个不同用例及124次分片执行。新控制诊断检查131072字节寄存器结果。算术模型、局部RTL、全核作业和应用矩阵的数量按其范围分别记账。\par
-
-
-
-
-clean-02原宿主UTC并发审计存在80.119ms表观四路重叠，旧FAIL记录保留。补证以同boot/PID单调包络完成所选审计，组合UTC峰3、补项单调峰1。系统UTC稳定性仍待建立，性能采用DUT guest周期。\par
+后续R5/G5在另一组冻结运行身份下选择原13项记录与1项新控制诊断组成验收，原始记录重新解析后通过。全核功能矩阵包含117个不同用例及124次分片执行。新控制诊断检查131072字节寄存器结果。算术模型、局部RTL、全核作业和应用矩阵的数量按其范围分别记账。\par
 
 
 
-\reportfigure{S3-03}{bit100拒错、恢复与正常完成证据}{6.0cm}{左侧原bit100注入差分失败，右侧恢复reference后的正常完成；显示PC/机器字、完整结果差异、GOOD TRAP/summary与真实退出状态。}{R5原拒错、恢复、重放记录及新控制诊断证据。版本范围：每个截图绑定其运行ID；不把有界P3前缀当成功记录。}
+
+R5 clean-02原宿主UTC并发审计存在80.119ms表观四路重叠，旧FAIL记录保留。补证以同boot/PID单调包络完成所选审计，组合UTC峰3、补项单调峰1。系统UTC稳定性仍待建立，性能采用DUT guest周期。\par
+
+
+
+\reportfigure{S3-03}{0f原始bit100拒错与同镜像恢复记录}{13.2cm}{2026-10-24 core-01：负控首次失配PC 0x80001bdc、机器字0x0294050b、目的v10；保留原高64位right/wrong打印，第36位对应全128位bit100。恢复正常reference后15/15与GOOD TRAP、真实exit 0；负控exit 1。}{e2c2e8d固定归档：\seqsplit{team/optimizations/o2/r3-div-gate/fullcore/evidence/20261024-fullcore/files/runs/core-01/}\{negative-vdot,functional-0\}/\{stdout.log,result.json\}；图数据附件保存原文、Git blob和SHA256。版本范围：历史EMU 2d1db77c…与BIN b8b7e1a7…；不是R5 clean02/acf672…日志，不添加本组独立replay，不把ABORT事件PC等同首次失配PC；仅图示原记录，无新增仿真。}
 \section{等价RVV基线与测量方法}
 
 
@@ -92,7 +92,7 @@ O1→O2的独立同镜像比较中，batch128由362.5降至221周期，减少39.
 
 
 
-\reportfigure{S3-05}{四类微基准周期与加速比}{5.8cm}{按single、chain256、batch128、stream64列RVV与vdot周期；加速比逐项标注，保留单位/输入/统计合同；不同量级宜分面，不混成一个总体加速比。}{本文0f实测表与原同镜像窗口CSV。版本范围：71/85.25、1857/5440.5、221/678、1127.5/1133均按原均值。}
+\reportfigure{S3-05}{四类微基准周期与加速比}{10.6cm}{四类窗口分别从零比较RVV与vdot平均周期，每法每类12个正式样本；加速比为周期总和之比。各分面使用自己的周期横轴尺度，stream64仅约1.005倍。before/after配对窗口周期相同。 batch为四路独立、共128次点积；修复前后指8b5024到0f的DIV关钟修复，非vdot/RVV两方法。}{0f \seqsplit{r3-div-gate/performance/results/summary.csv}；样本与配对核查见同目录samples.csv、\seqsplit{paired-windows.csv}和\seqsplit{verification.json}。版本范围：同镜像、固定单核单线程合同的局部微基准；不减空窗口，不等于完整应用或LLM收益。}
 \section{软件调用与C8结果}
 
 
@@ -146,7 +146,7 @@ nominal最差setup裕量 ns & −0.268520 & −2.393998\\
 
 
 
-\reportfigure{S3-07}{Nangate45面积与五档STA报告证据}{6.1cm}{分别展示FU及完整VFEX4父级综合面积、时钟/负载档位、最差setup路径和负slack；标明工艺角、布局前、父级包含FU，不能相加。}{0f \seqsplit{PERFORMANCE\_COST\_RESULT.md}、原综合/STA报告及timing.csv。版本范围：Nangate45 Typical 1.10V/25°C；1ns负裕量如实保留。}
+\reportfigure{S3-07}{Nangate45面积与五档STA报告证据}{15.0cm}{面积卡片按8b5024fc到0f12df67比较；父级包含FU，不能相加。热图列出五档70项时序裕量（包含门控建立检查），框出nominal 1ns/5fF列，其中所报14类检查有10类负值。I/R/O分别为输入、寄存器、输出；完整起止点和精度保留于附件。}{\seqsplit{r3-div-gate/cost/results/summary.json}与timing.csv；源身份、SHA及完整数值见\seqsplit{figures/evidence-20261105/figure-data.json}。版本范围：Nangate45 Typical 1.10V/25°C，布局前理想时钟/线负载；没有整核PPA、布线后时序、功耗或Fmax结果。}
 \section{优化探索及最终取舍}
 
 

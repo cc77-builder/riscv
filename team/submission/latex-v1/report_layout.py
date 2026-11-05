@@ -3,6 +3,11 @@ import re
 
 
 def format_report(body, stage):
+    # The fixed-source table begins immediately after this heading; reserve
+    # room for the heading, caption and first rows to avoid a stranded title.
+    if stage == 1:
+        body = body.replace(r"\subsection{固定源码}",
+                            r"\Needspace{8\baselineskip}" + "\n" + r"\subsection{固定源码}")
     # Identity fields live on the cover; keep historical logs untouched.
     body = re.sub(r"^团队名称（待团队确认）[^\n]*\n", "", body, flags=re.M)
     body = body.replace(r"fontsize=\small", r"fontsize=\footnotesize,baselinestretch=1")

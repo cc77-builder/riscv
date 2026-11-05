@@ -100,17 +100,17 @@ vadd程序设置SEW8、LMUL1、VL8，执行两次向量加载、一次vadd.vv和
 {\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.1\linewidth}>{\raggedright\arraybackslash}p{0.16\linewidth}>{\raggedright\arraybackslash}p{0.16\linewidth}>{\raggedright\arraybackslash}p{0.16\linewidth}>{\raggedright\arraybackslash}p{0.34\linewidth}}
 \caption{波形与执行过程}\label{tab:1-3}\\
 \toprule
-\textbf{用例} & \textbf{输入握手周期} & \textbf{输出握手周期} & \textbf{提交周期} & \textbf{写回低64位}\\ \midrule\endfirsthead
+\textbf{用例} & \textbf{输入事件坐标} & \textbf{输出事件坐标} & \textbf{提交事件坐标} & \textbf{运算输出低64位}\\ \midrule\endfirsthead
 \caption[]{波形与执行过程（续）}\\
 \toprule
-\textbf{用例} & \textbf{输入握手周期} & \textbf{输出握手周期} & \textbf{提交周期} & \textbf{写回低64位}\\ \midrule\endhead
+\textbf{用例} & \textbf{输入事件坐标} & \textbf{输出事件坐标} & \textbf{提交事件坐标} & \textbf{运算输出低64位}\\ \midrule\endhead
 正数 & 19625 & 19626 & 19631 & \seqsplit{0x0909090909090909}\\
 负数 & 25460 & 25461 & 25466 & \seqsplit{0xf0f2f4f6f8fafcfe}\\
 边界 & 33009 & 33010 & 33015 & \seqsplit{0xfefe000000007f80}\\
 \bottomrule\end{longtable}}
 
 
-按原波形展开时，应展示时钟、valid/ready、提交PC和结果信号，并用游标标注表内事件。具体信号层级以原波形与事件提取脚本为准。表内周期是采样事件坐标，结果可说明运算单元输出早于架构提交的流水关系。\par
+按原波形展开时，应展示时钟、valid/ready、提交PC和结果信号，并用游标标注表内事件。具体信号层级以原波形与事件提取脚本为准。表内三列事件数值为采样坐标，结果可说明运算单元输出早于架构提交的流水关系。\par
 
 
 
@@ -145,7 +145,7 @@ vadd程序设置SEW8、LMUL1、VL8，执行两次向量加载、一次vadd.vv和
 \VerbatimInput[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\footnotesize,baselinestretch=1]{evidence/hello-vadd-summary.log}
 \section{从原波形提取的事件时间线}
 
-\reportfigure{S1-06}{vadd输入、输出与提交事件时间线}{4.8cm}{按原事件CSV绘制三类用例的输入握手、输出握手及ROB提交；保留周期和结果标注，明确这是事件重绘图，不是原始波形截图。}{\seqsplit{evidence/vadd-commit-events.csv}与\seqsplit{vector-fix-alu-events.csv}；旧TikZ图可参考。版本范围：历史事件重绘；不可用于宣称新硬件延迟。}
+\reportfigure{S1-06}{vadd输入、输出与提交事件时间线}{8.0cm}{按PC 0x80000138、指令0x021101D7及目的v3精确关联三类vadd用例。数字为原CSV事件坐标；三列按事件阶段排列，间距不表示时间长度。}{\seqsplit{evidence/vector-fix-alu-events.csv}及\seqsplit{vadd-commit-events.csv}；生成源与哈希见\seqsplit{figures/evidence-20261105}。版本范围：2026-10-09历史vadd事件；不能推导物理时钟或新硬件延迟。}
 
 图中坐标来自原FST提取CSV，为事件重绘示意。负数和边界用例的对应坐标列于正文表格，完整原波形以SHA绑定。
 \section{日志附件索引}
@@ -231,20 +231,20 @@ hello输出先确认程序已经经过启动代码到达C入口，并检查UART�
 \textbf{排查步骤} & \textbf{所查证据} & \textbf{得到的判断}\\\midrule\endhead
 {定位首次差分} & {原失败日志、PC、整数状态} & {发生在启动代码}\\
 {比较输入} & {默认flash及反汇编} & {两端默认序列不一致}\\
-{统一启动实物} & {共同boot-flash.bin及SHA} & {输入条件明确}\\
+{统一启动实物} & {共同boot-flash.bin} & {输入条件明确}\\
 {使用原比较域恢复运行} & {正常输出、GOOD TRAP、退出状态} & {hello/vadd通过}\\
 \bottomrule\end{longtable}}
 
 
 
-\reportfigure{S1-07}{共同启动镜像修复前后的差分定位}{5.3cm}{左侧呈现原PC 0x10000004差异与启动反汇编，右侧呈现共同12字节flash和恢复证据；注明两端flash原差异，避免只截错误最后一行。}{保存的启动失败/修复日志、boot-flash.S和反汇编。版本范围：历史问题定位过程；不新增运行。}
+\reportfigure{S1-07}{共同启动镜像修复前后的差分定位}{12.1cm}{首次差异在启动PC 0x10000004、t0，原instrCnt为2；随后两端通过显式flash参数使用同一12字节文件，三条指令按原文件偏移列出。恢复日志记录三类24 lane通过、GOOD TRAP及exit 0。}{2026-10-09原失败日志行164/166、\seqsplit{boot-flash-disassembly.txt}、完整成功日志行7/10/16/17/19及\seqsplit{hello-vadd-summary.log}；完整出处和哈希见图数据附件。版本范围：历史启动问题定位；不是vdot错误或新运行。共用文件不等于两端物理映射地址相同。}
 \subsection{向量加法结果的解释}
 
 
 SEW8下每个元素保存8位加法结果，运算按模256保留低8位。负数补码的无符号打印值应结合原输入解释。例如十进制254对应8位补码−2，打印成254不表示数学结果变为正数。边界用例专门包含回绕，以检查程序的参考计算与向量指令行为一致。\par
 
 
-结果进入执行单元输出后，仍需经过写回和乱序提交。本项目把输入握手、输出握手和ROB提交分别标出。正数用例的输入19625、输出19626、提交19631说明三个事件属于不同流水位置。表中单次差值用于解释该次观测，不据此给出所有操作的固定提交延迟。\par
+结果进入执行单元输出后，仍需经过写回和乱序提交。本项目把输入事件、输出事件和ROB提交分别标出。正数用例的输入19625、输出19626、提交19631说明三个事件属于不同流水位置。表中单次差值用于解释该次观测，不据此给出所有操作的固定提交延迟。\par
 
 
 \subsection{日志附件的阅读和复查顺序}
@@ -382,9 +382,7 @@ hello和三组vadd说明基本链路已经闭合，但测试范围依旧有限�
 复现实验时，最容易被忽略的是运行输入和编译输入之间的版本断层。源码更新后若复用旧EMU，现象可能与新代码无关；镜像更新后若沿用旧反汇编，PC定位也会发生偏差。阶段一把可执行文件、启动镜像、程序镜像和反汇编视为一组关联产物，并记录生成顺序。新复现者可以使用不同的绝对路径，但需要在同一轮运行中重新确认这组产物的关联性。\par
 
 
-阶段一最终能够支持的结论是：在已记录环境与固定输入下，启动差异得到解释和修正，基本程序及选定向量用例完成验证，后续自定义指令开发具备可重复的运行入口。这个结论不包含新点积指令的语义正确性，也不包含后续父级门控与性能指标。明确边界让阶段二能以现成环境为基础，继续添加真正针对点积的模型、协议和全核测试。\par
-
-\section{环境部署详细方法}
+阶段一最终能够支持的结论是：在已记录环境与固定输入下，启动差异得到解释和修正，基本程序及选定向量用例完成验证，后续自定义指令开发具备可重复的运行入口。这个结论不包含新点积指令的语义正确性，也不包含后续父级门控与性能指标。明确边界让阶段二能以现成环境为基础，继续添加真正针对点积的模型、协议和全核测试。\par\section{环境部署详细方法}
 本节整理固定项目材料中的详细方法和原始合同。设计阶段的“拟实现”“必须验证”等表述属于原合同约束，当前完成状态以本报告正文和R5/P5证据为准。原日期、比较合同及未测边界按来源保留。
 \par\smallskip\noindent 来源：\href{https://github.com/cc77-builder/riscv/blob/347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e/team/docs/environment.md}{\seqsplit{team/docs/environment.md}}\par
 \subsection{Windows/WSL 原生文件系统与工具分工（工程实践）}
@@ -429,6 +427,7 @@ swap=16GB
 保存正在进行的 WSL 工作后，在 PowerShell 执行 wsl --shutdown，重新进入 Ubuntu，用 free -h 核对。原机器 swap 文件放在 D:\textbackslash{}WSL\textbackslash{}wsl-swap.vhdx，新成员无需照搬该路径。较小内存的机器相应降低 JVM 堆和构建并行度，不能同时把 JVM 堆和构建进程占满可用内存。\par
 
 
+\Needspace{8\baselineskip}
 \subsection{固定源码}
 
 

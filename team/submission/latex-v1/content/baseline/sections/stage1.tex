@@ -83,14 +83,14 @@ vadd程序设置SEW8、LMUL1、VL8，执行两次向量加载、一次vadd.vv和
 
 {\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.1\linewidth}>{\raggedright\arraybackslash}p{0.16\linewidth}>{\raggedright\arraybackslash}p{0.16\linewidth}>{\raggedright\arraybackslash}p{0.16\linewidth}>{\raggedright\arraybackslash}p{0.34\linewidth}}
 \toprule
-\textbf{用例} & \textbf{输入握手周期} & \textbf{输出握手周期} & \textbf{提交周期} & \textbf{写回低64位}\\ \midrule\endhead
+\textbf{用例} & \textbf{输入事件坐标} & \textbf{输出事件坐标} & \textbf{提交事件坐标} & \textbf{运算输出低64位}\\ \midrule\endhead
 正数 & 19625 & 19626 & 19631 & \seqsplit{0x0909090909090909}\\
 负数 & 25460 & 25461 & 25466 & \seqsplit{0xf0f2f4f6f8fafcfe}\\
 边界 & 33009 & 33010 & 33015 & \seqsplit{0xfefe000000007f80}\\
 \bottomrule\end{longtable}}
 
 
-按原波形展开时，应展示时钟、valid/ready、提交PC和结果信号，并用游标标注表内事件。具体信号层级以原波形与事件提取脚本为准。表内周期是采样事件坐标，结果可说明运算单元输出早于架构提交的流水关系。\par
+按原波形展开时，应展示时钟、valid/ready、提交PC和结果信号，并用游标标注表内事件。具体信号层级以原波形与事件提取脚本为准。表内三列事件数值为采样坐标，结果可说明运算单元输出早于架构提交的流水关系。\par
 
 
 
