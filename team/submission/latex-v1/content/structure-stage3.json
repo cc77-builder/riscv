@@ -1,0 +1,320 @@
+{
+  "report_title": "第三阶段：协同仿真与性能分析",
+  "introduction_tex": "本阶段完成NEMU指令扩展与RTL协同仿真，使用现有RVV指令构造等价对照，并评估点积及矩阵向量计算的周期与实现成本。最终硬件版本记为0f，包含两槽弹性执行结构（O2）、低32位结果保存（H1）和DIV取消关钟修复。软件中的firstdot表示首段点积初始化方法，C8表示8×32调用中的向量配置复用入口。\\par",
+  "sections": [
+    {
+      "title": "NEMU扩展与协同仿真",
+      "items": [
+        {
+          "block": "narrative:01",
+          "title": "独立参考模型与架构行为",
+          "heading": true
+        },
+        {
+          "figure": "S3-01"
+        },
+        {
+          "block": "narrative:02",
+          "title": "指令译码与异常处理",
+          "heading": true
+        },
+        {
+          "figure": "S3-02"
+        },
+        {
+          "block": "narrative:03",
+          "title": "提交边界上的差分比较",
+          "heading": true
+        },
+        {
+          "block": "narrative:05",
+          "heading": false
+        },
+        {
+          "block": "narrative:04",
+          "title": "高位注错与正常参考对照",
+          "heading": true
+        },
+        {
+          "figure": "S3-03"
+        }
+      ]
+    },
+    {
+      "title": "RVV对照与周期测量方法",
+      "items": [
+        {
+          "block": "technical1:01",
+          "title": "等价RVV指令序列",
+          "heading": true
+        },
+        {
+          "block": "technical1:02",
+          "title": "计数窗口与实际执行边界",
+          "heading": true
+        },
+        {
+          "figure": "S3-04"
+        },
+        {
+          "block": "technical1:03",
+          "title": "工作负载、输入与重复测量",
+          "heading": true
+        },
+        {
+          "block": "technical1:04",
+          "title": "加速比与统计方法",
+          "heading": true
+        },
+        {
+          "block": "narrative:26",
+          "heading": false
+        }
+      ]
+    },
+    {
+      "title": "点积与矩阵向量计算性能",
+      "items": [
+        {
+          "block": "overview:05",
+          "title": "四类点积微基准",
+          "heading": true
+        },
+        {
+          "figure": "S3-05"
+        },
+        {
+          "block": "narrative:11",
+          "title": "单次调用与独立批量",
+          "heading": true
+        },
+        {
+          "block": "narrative:12",
+          "title": "依赖链与流式循环",
+          "heading": true
+        },
+        {
+          "block": "narrative:25",
+          "title": "每次点积的平均成本",
+          "heading": true
+        },
+        {
+          "block": "overview:06",
+          "title": "GEMV调用与配置复用收益",
+          "heading": true
+        },
+        {
+          "block": "narrative:13",
+          "title": "硬件与软件收益的对应关系",
+          "heading": true
+        }
+      ]
+    },
+    {
+      "title": "普通C接口与软件包接入",
+      "items": [
+        {
+          "block": "narrative:14",
+          "title": "firstdot与C8的调用组织",
+          "heading": true
+        },
+        {
+          "figure": "S3-06"
+        },
+        {
+          "block": "technical4:02",
+          "title": "输入输出布局与调用约定",
+          "heading": true
+        },
+        {
+          "block": "narrative:16",
+          "title": "编译期选择与RVV回退",
+          "heading": true
+        },
+        {
+          "block": "technical5:02",
+          "title": "对象、装载镜像与调用表核对",
+          "heading": true
+        },
+        {
+          "block": "narrative:17",
+          "heading": false
+        },
+        {
+          "block": "technical5:03",
+          "title": "接入检查器的正负控制",
+          "heading": true
+        },
+        {
+          "figure": "S3-08"
+        },
+        {
+          "block": "technical5:04",
+          "title": "接入结果与功能记录复用",
+          "heading": true
+        }
+      ]
+    },
+    {
+      "title": "面积、时序与实现成本",
+      "items": [
+        {
+          "block": "overview:07",
+          "title": "评估条件与主要结果",
+          "heading": true
+        },
+        {
+          "block": "narrative:19",
+          "title": "寄存状态与综合面积",
+          "heading": true
+        },
+        {
+          "block": "narrative:20",
+          "title": "时序约束与路径分类",
+          "heading": true
+        },
+        {
+          "figure": "S3-07"
+        },
+        {
+          "block": "narrative:21",
+          "title": "父级关键路径与改进方向",
+          "heading": true
+        },
+        {
+          "block": "narrative:27",
+          "title": "取消关钟与成本结果",
+          "heading": true
+        },
+        {
+          "block": "technical3:05",
+          "title": "门控修复的工程取舍",
+          "heading": true
+        }
+      ]
+    },
+    {
+      "title": "验证汇总与设计结论",
+      "items": [
+        {
+          "block": "technical6:02",
+          "title": "功能、复现与性能检查汇总",
+          "heading": true
+        },
+        {
+          "figure": "S3-09"
+        },
+        {
+          "block": "overview:08",
+          "title": "优化候选的实测取舍",
+          "heading": true
+        },
+        {
+          "block": "overview:09",
+          "title": "阶段结论",
+          "heading": true
+        }
+      ]
+    },
+    {
+      "title": "工程复现资料",
+      "items": [
+        {
+          "block": "overview:10",
+          "title": "固定版本与主要运行产物",
+          "heading": true
+        },
+        {
+          "block": "technical2:01",
+          "title": "两槽结构对照的样本记录",
+          "heading": true
+        },
+        {
+          "block": "technical2:02",
+          "title": "硬件对照与工具身份",
+          "heading": true
+        },
+        {
+          "block": "technical2:03",
+          "title": "离线复算与模型数据",
+          "heading": true
+        },
+        {
+          "block": "technical3:01",
+          "title": "取消关钟修复的对照输入",
+          "heading": true
+        },
+        {
+          "block": "technical3:02",
+          "title": "修复前后逐窗周期核对",
+          "heading": true
+        },
+        {
+          "block": "technical3:03",
+          "title": "综合面积与完整接口",
+          "heading": true
+        },
+        {
+          "block": "technical3:04",
+          "title": "五档时序详细结果",
+          "heading": true
+        },
+        {
+          "block": "technical3:06",
+          "title": "复算入口与实验归档",
+          "heading": true
+        },
+        {
+          "block": "technical4:01",
+          "title": "C接口与编译开关",
+          "heading": true
+        },
+        {
+          "block": "technical4:03",
+          "title": "对象构建与接入命令",
+          "heading": true
+        },
+        {
+          "block": "technical4:04",
+          "heading": false
+        },
+        {
+          "block": "technical5:01",
+          "title": "链接对象与检查入口",
+          "heading": true
+        },
+        {
+          "block": "technical6:01",
+          "title": "宿主运行记录与并发审计",
+          "heading": true
+        },
+        {
+          "supplement": "SUP-S3-SUMMARY"
+        },
+        {
+          "block": "technical6:04",
+          "title": "工程使用与回退资料",
+          "heading": true
+        }
+      ]
+    }
+  ],
+  "omitted": {
+    "overview:intro": "由统一引言说明评估对象与版本简称。",
+    "overview:01": "本阶段目标在统一引言中说明。",
+    "overview:02": "译码、算术及异常过程由narrative01/02集中解释；补丁及平台配置身份已移overview10。",
+    "overview:03": "差分机制与bit100真实记录由narrative03/04说明，R5功能矩阵和宿主审计在对应独立小节保留。",
+    "overview:04": "RVV序列、配置和测量边界由technical1完整说明，不重复概览。",
+    "narrative:06": "RVV序列及批量复用在technical1:01具体说明。",
+    "narrative:07": "CSR、fence与退休边界在technical1:02连同窗口伪代码集中保留。",
+    "narrative:08": "整数计数、校准和重放规则在technical1:02/03中保留。",
+    "narrative:09": "场景与输入矩阵使用technical1:03的完整表格。",
+    "narrative:10": "统计公式与配对身份由technical1:04及narrative26解释。",
+    "narrative:15": "完整缓冲区、ABI和返回CSR规则在technical4:02保留。",
+    "narrative:18": "检查器的实际正负控制由technical5:03集中说明。",
+    "narrative:22": "稳定选型由overview08/09及复现资料说明。",
+    "narrative:23": "R5矩阵、复用关系与UTC/单调时钟审计在technical6:01/02保留。",
+    "narrative:24": "未来工作集中于结论及工程使用说明。",
+    "technical6:03": "主要性能数字已在性能节一次给出，不在验收后重复列举。"
+  }
+}

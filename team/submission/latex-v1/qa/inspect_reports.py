@@ -24,6 +24,16 @@ parser.add_argument('--render-dir',type=Path)
 args = parser.parse_args()
 args.result_dir.mkdir(parents=True,exist_ok=True)
 slots = json.loads((ROOT/'figures/placement.json').read_text(encoding='utf-8'))
+by_id = {x['id']: x for x in slots}
+ordered_slots = []
+for stage in (1,2,3):
+    source = (ROOT/'sections'/f'stage{stage}.tex').read_text(encoding='utf-8')
+    matches = re.findall(r'\\(?:reportfigure|evidencefigure)\{([^}]+)\}\{([^}]+)\}',source)
+    for index,(fid,title) in enumerate(matches,1):
+        slot = dict(by_id.get(fid, {'id':fid,'stage':stage,'title':title}))
+        slot['number'] = f'{stage}-{index}'
+        ordered_slots.append(slot)
+slots = ordered_slots
 reports, maps = {}, {}
 compact = lambda text: re.sub(r'\s+','',text)
 for key,name in NAMES.items():
@@ -47,7 +57,7 @@ for key,name in NAMES.items():
     figure_map={}
     for slot in slots:
         if key!='main' and slot['stage']!=int(key[-1]):continue
-        fid=slot['id'];number=f"{slot['stage']}-{int(fid[-2:])}"
+        fid=slot['id'];number=slot['number']
         caption=compact('图'+number+slot['title'])
         pages=[i+1 for i,text in enumerate(texts) if caption in compact(text)]
         images=[ROOT/'figures'/(fid+'.'+ext) for ext in ('pdf','png','jpg')]
@@ -66,7 +76,9 @@ for key,name in NAMES.items():
             'placeholder_pages':[i+1 for i,t in enumerate(texts) if '待插入图片' in t],
             'a4_all_pages':all(abs(p.rect.width-595.276)<.5 and abs(p.rect.height-841.89)<.5 for p in doc),
             'figure_captions_unique':all(len(f['pdf_pages'])==1 for f in figure_map.values())}
-    if key!='main':record['required_chinese_characters']=10000 if key=='stage1' else 17000
+    if key!='main':
+        record['upstream_reference_chinese_characters']=10000 if key=='stage1' else 17000
+        record['body_count_reference']='Upstream e2c2e8d delivery metadata; not an official requirement or an acceptance gate.'
     reports[key]=record;maps[key]={'pages':len(doc),'figures':figure_map}
     if args.render_dir:
         dest=args.render_dir/key;dest.mkdir(parents=True,exist_ok=True)
@@ -80,14 +92,14 @@ for key,name in NAMES.items():
             sheet.save(dest/f'contact-{first+1:03d}.png')
         selected={0,body_start-1}
         for fid,value in figure_map.items():
-            if fid in NEW:selected.update(p-1 for p in value['pdf_pages'])
+            selected.update(p-1 for p in value['pdf_pages'])
         for index in sorted(selected):
             doc[index].get_pixmap(matrix=fitz.Matrix(1.6,1.6),alpha=False).save(dest/f'page-{index+1:03d}.png')
     print(json.dumps({'document':key,'pages':len(doc),'body_start':body_start,'han':count,
                       'diagnostics':diagnostics,'outside_count':len(outside),
                       'caption_ok':record['figure_captions_unique'],'footers':footer_mismatches},ensure_ascii=False))
 result={'date':'2026-11-05','status':'AUTOMATED_INSPECTION_COMPLETE_VISUAL_REVIEW_PENDING',
-        'scope':'Nine missing figure slots completed from fixed historical evidence; no new RTL/simulation/EDA validation.',
+        'scope':'Editorial revision of all three stages and figure presentation, with fixed historical engineering evidence preserved; no new RTL/simulation/EDA validation.',
         'body_count_method':'U+4E00..U+9FFF in extractable PDF text from first body bookmark to end, clipped to y=65..780 points. Cover, TOC, header and footer excluded. Only extractable figure text is counted; Type3 outline glyphs are not included.',
         'reports':reports}
 (args.result_dir/'pdf-inspection.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')

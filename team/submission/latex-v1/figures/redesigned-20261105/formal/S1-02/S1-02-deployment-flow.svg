@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" width="160mm" height="148mm" viewBox="0 0 160 148" version="1.1" role="img" aria-labelledby="title desc">
+  <title id="title">S1-02 环境部署与验证执行流程</title>
+  <desc id="desc">Historical 2026-10-09 deployment: prepare WSL and fixed sources, check tools, build NEMU/EMU and hello-vadd/flash, run DiffTest with fixed inputs and inspect output/exit state. Successful results and failed evidence are archived separately. Failures are preserved before diagnosis. Dashed return branches select preparation, tool checks or affected builds according to cause; they are a diagnostic method, not claims that every historical step failed, or that all three must be repeated. No new run or PASS is represented.</desc>
+  <defs>
+    <marker id="arrow-navy" viewBox="0 0 8 8" refX="7.2" refY="4" markerWidth="2.2" markerHeight="2.2" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#24384A" />
+    </marker>
+    <marker id="arrow-gray" viewBox="0 0 8 8" refX="7.2" refY="4" markerWidth="2.2" markerHeight="2.2" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#637487" />
+    </marker>
+    <marker id="arrow-teal" viewBox="0 0 8 8" refX="7.2" refY="4" markerWidth="2.2" markerHeight="2.2" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#287F84" />
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="160.0" height="148.0" fill="white" />
+  <text id="text-00" x="3" y="6.8" font-family="Noto Sans CJK SC" font-size="4.056944" text-anchor="start" fill="#637487" font-weight="400">2026-10-09 历史流程</text>
+  <text id="text-01" x="156.5" y="6.8" font-family="Noto Sans CJK SC" font-size="4.056944" text-anchor="end" fill="#637487" font-weight="400">实线：执行与留证</text>
+  <path d="M 3 13 H 10" fill="none" stroke="#287F84" stroke-width="0.3" stroke-linejoin="round" stroke-dasharray="1.4 1.0" marker-end="url(#arrow-teal)" />
+  <text id="text-02" x="12" y="14.6" font-family="Noto Sans CJK SC" font-size="4.056944" text-anchor="start" fill="#287F84" font-weight="400">按原因选择返回点</text>
+  <rect id="prepare" x="24.0" y="20" width="65.0" height="14" fill="white" stroke="#24384A" stroke-width="0.28" />
+  <text id="prepare-title" x="56.5" y="25.5" font-family="Noto Sans CJK SC" font-size="4.233333" text-anchor="middle" fill="#24384A" font-weight="400">环境准备</text>
+  <text id="prepare-detail-0" x="56.5" y="31.5" font-family="Noto Sans CJK SC" font-size="4.056944" text-anchor="middle" fill="#637487" font-weight="400">WSL 资源 · 固定源码依赖</text>
+  <rect id="tools" x="24.0" y="41" width="65.0" height="14" fill="white" stroke="#24384A" stroke-width="0.28" />
+  <text id="tools-title" x="56.5" y="46.5" font-family="Noto Sans CJK SC" font-size="4.233333" text-anchor="middle" fill="#24384A" font-weight="400">工具核查</text>
+  <text id="tools-detail-0" x="56.5" y="52.5" font-family="Noto Sans CJK SC" font-size="4.056944" text-anchor="middle" fill="#637487" font-weight="400">版本与路径</text>
+  <rect id="build" x="24.0" y="62" width="65.0" height="23" fill="white" stroke="#24384A" stroke-width="0.28" />
+  <text id="build-title" x="56.5" y="67.5" font-family="Noto Sans CJK SC" font-size="4.233333" text-anchor="middle" fill="#24384A" font-weight="400">构建产物</text>
+  <text id="build-detail-0" x="56.5" y="73.5" font-family="Noto Sans CJK SC" font-size="4.056944" text-anchor="middle" fill="#637487" font-weight="400">NEMU reference / EMU</text>
+  <text id="build-detail-1" x="56.5" y="79.5" font-family="Noto Sans CJK SC" font-size="4.056944" text-anchor="middle" fill="#637487" font-weight="400">hello/vadd / 共同 flash</text>
+  <rect id="run" x="24.0" y="94" width="65.0" height="23" fill="white" stroke="#24384A" stroke-width="0.28" />
+  <text id="run-title" x="56.5" y="99.5" font-family="Noto Sans CJK SC" font-size="4.233333" text-anchor="middle" fill="#24384A" font-weight="400">DiffTest 运行</text>
+  <text id="run-detail-0" x="56.5" y="105.5" font-family="Noto Sans CJK SC" font-size="4.056944" text-anchor="middle" fill="#637487" font-weight="400">固定 reference 与 flash</text>
+  <text id="run-detail-1" x="56.5" y="111.5" font-family="Noto Sans CJK SC" font-size="4.056944" text-anchor="middle" fill="#637487" font-weight="400">核对输出与退出状态</text>
+  <rect id="success" x="24.0" y="128" width="65.0" height="14" fill="#F1F8F8" stroke="#287F84" stroke-width="0.28" />
+  <text id="success-title" x="56.5" y="133.5" font-family="Noto Sans CJK SC" font-size="4.233333" text-anchor="middle" fill="#287F84" font-weight="400">成功结果归档</text>
+  <text id="success-detail-0" x="56.5" y="139.5" font-family="Noto Sans CJK SC" font-size="4.056944" text-anchor="middle" fill="#637487" font-weight="400">成功日志 · 输入身份</text>
+  <path d="M 56.5 34 V 40.3" fill="none" stroke="#24384A" stroke-width="0.3" stroke-linejoin="round" marker-end="url(#arrow-navy)" />
+  <path d="M 56.5 55 V 61.3" fill="none" stroke="#24384A" stroke-width="0.3" stroke-linejoin="round" marker-end="url(#arrow-navy)" />
+  <path d="M 56.5 85 V 93.3" fill="none" stroke="#24384A" stroke-width="0.3" stroke-linejoin="round" marker-end="url(#arrow-navy)" />
+  <path d="M 56.5 117 V 127.3" fill="none" stroke="#24384A" stroke-width="0.3" stroke-linejoin="round" marker-end="url(#arrow-navy)" />
+  <text id="text-15" x="61" y="124.4" font-family="Noto Sans CJK SC" font-size="4.056944" text-anchor="start" fill="#24384A" font-weight="400">正常完成</text>
+  <path d="M 89 27 H 105" fill="none" stroke="#637487" stroke-width="0.3" stroke-linejoin="round" id="failure-from-prepare" />
+  <text id="text-16" x="97.1" y="25.6" font-family="Noto Sans CJK SC" font-size="4.056944" text-anchor="middle" fill="#637487" font-weight="400">异常</text>
+  <path d="M 89 48 H 105" fill="none" stroke="#637487" stroke-width="0.3" stroke-linejoin="round" id="failure-from-tools" />
+  <text id="text-17" x="97.1" y="46.6" font-family="Noto Sans CJK SC" font-size="4.056944" text-anchor="middle" fill="#637487" font-weight="400">异常</text>
+  <path d="M 89 73.5 H 105" fill="none" stroke="#637487" stroke-width="0.3" stroke-linejoin="round" id="failure-from-build" />
+  <text id="text-18" x="97.1" y="72.1" font-family="Noto Sans CJK SC" font-size="4.056944" text-anchor="middle" fill="#637487" font-weight="400">异常</text>
+  <path d="M 89 101 H 105" fill="none" stroke="#637487" stroke-width="0.3" stroke-linejoin="round" id="failure-from-run" />
+  <text id="text-19" x="97.1" y="99.6" font-family="Noto Sans CJK SC" font-size="4.056944" text-anchor="middle" fill="#637487" font-weight="400">异常</text>
+  <path d="M 105 27 V 101 H 110.3" fill="none" stroke="#637487" stroke-width="0.3" stroke-linejoin="round" marker-end="url(#arrow-gray)" />
+  <rect id="failure-evidence" x="111" y="94" width="46" height="14" fill="white" stroke="#637487" stroke-width="0.28" />
+  <text id="failure-evidence-title" x="134.0" y="99.5" font-family="Noto Sans CJK SC" font-size="4.233333" text-anchor="middle" fill="#637487" font-weight="400">失败证据归档</text>
+  <text id="failure-evidence-detail-0" x="134.0" y="105.5" font-family="Noto Sans CJK SC" font-size="4.056944" text-anchor="middle" fill="#637487" font-weight="400">日志 · 退出码</text>
+  <rect id="diagnose" x="111" y="128" width="46" height="14" fill="white" stroke="#637487" stroke-width="0.28" />
+  <text id="diagnose-title" x="134.0" y="133.5" font-family="Noto Sans CJK SC" font-size="4.233333" text-anchor="middle" fill="#637487" font-weight="400">定位与修正</text>
+  <text id="diagnose-detail-0" x="134.0" y="139.5" font-family="Noto Sans CJK SC" font-size="4.056944" text-anchor="middle" fill="#637487" font-weight="400">按最早异常定位</text>
+  <path d="M 134 108 V 127.3" fill="none" stroke="#637487" stroke-width="0.3" stroke-linejoin="round" marker-end="url(#arrow-gray)" />
+  <path d="M 134 142 V 146 H 8 V 27" fill="none" stroke="#287F84" stroke-width="0.3" stroke-linejoin="round" stroke-dasharray="1.4 1.0" />
+  <path d="M 8 27 H 23.3" fill="none" stroke="#287F84" stroke-width="0.3" stroke-linejoin="round" stroke-dasharray="1.4 1.0" marker-end="url(#arrow-teal)" id="return-to-prepare" />
+  <path d="M 8 48 H 23.3" fill="none" stroke="#287F84" stroke-width="0.3" stroke-linejoin="round" stroke-dasharray="1.4 1.0" marker-end="url(#arrow-teal)" id="return-to-tools" />
+  <path d="M 8 73.5 H 23.3" fill="none" stroke="#287F84" stroke-width="0.3" stroke-linejoin="round" stroke-dasharray="1.4 1.0" marker-end="url(#arrow-teal)" id="return-to-build" />
+</svg>

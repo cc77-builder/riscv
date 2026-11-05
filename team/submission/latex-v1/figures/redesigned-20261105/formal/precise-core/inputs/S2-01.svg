@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="160mm" height="136mm" viewBox="0 0 160 136" role="img" aria-labelledby="title desc">
+<title id="title">S2-01</title>
+<desc id="desc">内部合同 vdot-s8x8-r32-v0.1。合法配置为 VLEN=128、e8/m1、vl=8、vstart=0、vill=0、vm=1，且 V 已启用、mstatus.VS 非 Off；vta/vma 四组合结果一致。vs1/vs2/vd 可为 v0…v31 并允许任意别名；先快照源值，再完整覆盖目的，旧 vd 不参与。低32位保存精确和的补码，高96位清零。</desc>
+<metadata>Fixed source: 0f12df675378556670afd0dd2153f47fcb330610; see S2-01.sources.json. Native width 160 mm; minimum text 4.0 mm = 11.33858 pt.</metadata>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="2.6" markerHeight="2.6" orient="auto" markerUnits="userSpaceOnUse"><path d="M 1 1 L 9 5 L 1 9 Z" fill="#242424"/></marker>
+<marker id="accentArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="2.6" markerHeight="2.6" orient="auto" markerUnits="userSpaceOnUse"><path d="M 1 1 L 9 5 L 1 9 Z" fill="#CE4B32"/></marker>
+<style>
+text {font-family: "Microsoft YaHei", "SimSun", "Noto Sans CJK SC", sans-serif; fill: #242424; font-weight: 400;}
+.aux {font-size: 4px;} .body {font-size: 4.5px;} .bold {font-weight: 600;} .sigma {font-size: 7.8px;}
+</style></defs>
+<rect x="0" y="0" width="160" height="136" fill="#F6F3EE"/>
+<text x="6" y="7" class="body bold" text-anchor="start">32 位指令</text>
+<text x="154" y="7" class="aux" text-anchor="end">vdot.vv vd, vs2, vs1</text>
+<text x="19.875" y="15" class="aux" text-anchor="middle">funct6</text>
+<rect x="6.0" y="19" width="27.75" height="11" fill="#E8E3DC" stroke="#242424" stroke-width="0.3" id="field-funct6"/>
+<text x="19.875" y="26.2" class="body" text-anchor="middle">000000</text>
+<text x="19.875" y="36" class="aux" text-anchor="middle">[31:26]</text>
+<text x="36.0625" y="15" class="aux" text-anchor="middle">vm</text>
+<rect x="33.75" y="19" width="4.625" height="11" fill="#E8E3DC" stroke="#242424" stroke-width="0.3" id="field-vm"/>
+<text x="36.0625" y="26.2" class="body" text-anchor="middle">1</text>
+<text x="36.0625" y="36" class="aux" text-anchor="middle">[25]</text>
+<text x="49.9375" y="15" class="aux" text-anchor="middle">vs2</text>
+<rect x="38.375" y="19" width="23.125" height="11" fill="#F6F3EE" stroke="#242424" stroke-width="0.3" id="field-vs2"/>
+<text x="49.9375" y="26.2" class="body" text-anchor="middle">0–31</text>
+<text x="49.9375" y="36" class="aux" text-anchor="middle">[24:20]</text>
+<text x="73.0625" y="15" class="aux" text-anchor="middle">vs1</text>
+<rect x="61.5" y="19" width="23.125" height="11" fill="#F6F3EE" stroke="#242424" stroke-width="0.3" id="field-vs1"/>
+<text x="73.0625" y="26.2" class="body" text-anchor="middle">0–31</text>
+<text x="73.0625" y="36" class="aux" text-anchor="middle">[19:15]</text>
+<text x="91.5625" y="15" class="aux" text-anchor="middle">funct3</text>
+<rect x="84.625" y="19" width="13.875" height="11" fill="#E8E3DC" stroke="#242424" stroke-width="0.3" id="field-funct3"/>
+<text x="91.5625" y="26.2" class="body" text-anchor="middle">000</text>
+<text x="91.5625" y="36" class="aux" text-anchor="middle">[14:12]</text>
+<text x="110.0625" y="15" class="aux" text-anchor="middle">vd</text>
+<rect x="98.5" y="19" width="23.125" height="11" fill="#F6F3EE" stroke="#CE4B32" stroke-width="0.42" id="field-vd"/>
+<text x="110.0625" y="26.2" class="body" text-anchor="middle">0–31</text>
+<text x="110.0625" y="36" class="aux" text-anchor="middle">[11:7]</text>
+<text x="137.8125" y="15" class="aux" text-anchor="middle">opcode</text>
+<rect x="121.625" y="19" width="32.375" height="11" fill="#E8E3DC" stroke="#242424" stroke-width="0.3" id="field-opcode"/>
+<text x="137.8125" y="26.2" class="body" text-anchor="middle">0001011</text>
+<text x="137.8125" y="36" class="aux" text-anchor="middle">[6:0]</text>
+<text x="6" y="46" class="aux" text-anchor="start">两源 [127:64] 不参与；每格为 signed int8</text>
+<text x="6" y="54" class="body" text-anchor="start">vs1[63:0]</text>
+<rect x="6" y="58" width="10" height="11" fill="#E8E3DC" stroke="#242424" stroke-width="0.3"/>
+<text x="11" y="65.15" class="body" text-anchor="middle">a7</text>
+<rect x="16" y="58" width="10" height="11" fill="#E8E3DC" stroke="#242424" stroke-width="0.3"/>
+<text x="21" y="65.15" class="body" text-anchor="middle">a6</text>
+<rect x="26" y="58" width="10" height="11" fill="#E8E3DC" stroke="#242424" stroke-width="0.3"/>
+<text x="31" y="65.15" class="body" text-anchor="middle">a5</text>
+<rect x="36" y="58" width="10" height="11" fill="#E8E3DC" stroke="#242424" stroke-width="0.3"/>
+<text x="41" y="65.15" class="body" text-anchor="middle">a4</text>
+<rect x="46" y="58" width="10" height="11" fill="#E8E3DC" stroke="#242424" stroke-width="0.3"/>
+<text x="51" y="65.15" class="body" text-anchor="middle">a3</text>
+<rect x="56" y="58" width="10" height="11" fill="#E8E3DC" stroke="#242424" stroke-width="0.3"/>
+<text x="61" y="65.15" class="body" text-anchor="middle">a2</text>
+<rect x="66" y="58" width="10" height="11" fill="#E8E3DC" stroke="#242424" stroke-width="0.3"/>
+<text x="71" y="65.15" class="body" text-anchor="middle">a1</text>
+<rect x="76" y="58" width="10" height="11" fill="#E8E3DC" stroke="#242424" stroke-width="0.3"/>
+<text x="81" y="65.15" class="body" text-anchor="middle">a0</text>
+<text x="6" y="75" class="body" text-anchor="start">vs2[63:0]</text>
+<rect x="6" y="79" width="10" height="11" fill="#E8E3DC" stroke="#242424" stroke-width="0.3"/>
+<text x="11" y="86.15" class="body" text-anchor="middle">b7</text>
+<rect x="16" y="79" width="10" height="11" fill="#E8E3DC" stroke="#242424" stroke-width="0.3"/>
+<text x="21" y="86.15" class="body" text-anchor="middle">b6</text>
+<rect x="26" y="79" width="10" height="11" fill="#E8E3DC" stroke="#242424" stroke-width="0.3"/>
+<text x="31" y="86.15" class="body" text-anchor="middle">b5</text>
+<rect x="36" y="79" width="10" height="11" fill="#E8E3DC" stroke="#242424" stroke-width="0.3"/>
+<text x="41" y="86.15" class="body" text-anchor="middle">b4</text>
+<rect x="46" y="79" width="10" height="11" fill="#E8E3DC" stroke="#242424" stroke-width="0.3"/>
+<text x="51" y="86.15" class="body" text-anchor="middle">b3</text>
+<rect x="56" y="79" width="10" height="11" fill="#E8E3DC" stroke="#242424" stroke-width="0.3"/>
+<text x="61" y="86.15" class="body" text-anchor="middle">b2</text>
+<rect x="66" y="79" width="10" height="11" fill="#E8E3DC" stroke="#242424" stroke-width="0.3"/>
+<text x="71" y="86.15" class="body" text-anchor="middle">b1</text>
+<rect x="76" y="79" width="10" height="11" fill="#E8E3DC" stroke="#242424" stroke-width="0.3"/>
+<text x="81" y="86.15" class="body" text-anchor="middle">b0</text>
+<path d="M 86 63.5 H 95 L 105.4 70.7" fill="none" stroke="#242424" stroke-width="0.35" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 86 84.5 H 95 L 105.4 77.3" fill="none" stroke="#242424" stroke-width="0.35" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<circle cx="111" cy="74" r="6.5" fill="#F6F3EE" stroke="#CE4B32" stroke-width="0.42"/>
+<text x="111" y="76.65" class="sigma" text-anchor="middle" fill="#CE4B32" style="fill:#CE4B32">Σ</text>
+<path d="M 117.5 74 H 148 V 118" fill="none" stroke="#242424" stroke-width="0.35" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<text x="111" y="94" class="aux" text-anchor="middle">S = Σ a[i]b[i]</text>
+<text x="111" y="100" class="aux" text-anchor="middle">i = 0…7</text>
+<text x="6" y="100" class="aux" text-anchor="start">8 对乘积精确求和</text>
+<text x="6" y="108" class="body bold" text-anchor="start">完整 128 位写回 · vd</text>
+<text x="61.5" y="115" class="aux" text-anchor="middle">[127:32]</text>
+<text x="135.5" y="115" class="aux" text-anchor="middle">[31:0]</text>
+<rect x="6" y="118" width="111.0" height="12" fill="#E8E3DC" stroke="#242424" stroke-width="0.3" id="result-high96"/>
+<rect x="117.0" y="118" width="37.0" height="12" fill="#E8E3DC" stroke="#CE4B32" stroke-width="0.42" id="result-low32"/>
+<text x="61.5" y="125.8" class="body" text-anchor="middle">高 96 位清零</text>
+<text x="135.5" y="125.8" class="body" text-anchor="middle">32 位补码</text>
+</svg>

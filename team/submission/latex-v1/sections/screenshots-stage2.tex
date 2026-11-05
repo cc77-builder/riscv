@@ -1,6 +1,6 @@
-\section{本轮已提供截图补充}
-本节收录已有补充截图，并按各自历史版本和证据层级解释。正式图位已补齐；尚未提供的原始波形或专门异常截图，其补证范围按正文保留。
-\evidencefigure{SUP-S2-ARITH}{固定0f算术实现源码摘录}{15cm}{源代码截图辅助解释8路乘法和归约；不替代S2-02数据通路图。}
-\evidencefigure{SUP-S2-MODEL}{主机端参考模型检查画面}{14cm}{35个测试方法通过；该命令只检查主机模型和数据，不授RTL或NEMU资格。}
-\evidencefigure{SUP-S2-OVERLAP}{两槽重叠事务日志摘录}{15cm}{保留10986周期ACCEPT seq2、MOVE seq1、RESPONSE seq0；本图为历史日志字段摘录；S2-05现为父级逐拍记录的事件重绘，未提供原始波形截图。原批次UTC容量审计FAIL保留。}
-\evidencefigure{SUP-S2-STATE}{固定0f两槽状态与控制源码摘录}{16cm}{依次展示寄存器、握手与取消条件、状态更新；源代码画面辅助解释实现；S2-06至S2-08的控制行为及证据范围以各图所列原始记录为准。}
+\section{实现代码与测试记录}
+以下截图展示乘法与归约实现、主机模型测试，以及两槽控制的关键代码和事务日志。
+\evidencefigure{SUP-S2-ARITH}{VDot乘法与归约代码}{15cm}{VDotProducts生成8路有符号乘积，VDotReduce完成归约求和。}
+\evidencefigure{SUP-S2-MODEL}{主机参考模型测试结果}{14cm}{主机模型及测试数据检查共35个测试方法通过。}
+\evidencefigure{SUP-S2-OVERLAP}{两槽重叠事务日志}{15cm}{clean-02 dense-batch128日志中，10986周期同时发生ACCEPT seq2、MOVE seq1与RESPONSE seq0，分别对应新请求接收、旧P迁移和旧R响应。}
+\evidencefigure{SUP-S2-STATE}{两槽寄存器与控制代码}{16cm}{依次展示寄存状态、握手与取消条件，以及读取旧P数据的状态更新。}

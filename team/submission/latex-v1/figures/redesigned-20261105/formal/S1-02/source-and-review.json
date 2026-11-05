@@ -1,0 +1,374 @@
+{
+  "schema": "s102-deployment-flow-review-v1",
+  "figure_id": "S1-02",
+  "created_utc": "2026-11-05T17:58:41.472194+00:00",
+  "status": "candidate-visual-review-pass-awaiting-parent-selection",
+  "human_aesthetic_approval": false,
+  "canvas_mm": [
+    160.0,
+    148.0
+  ],
+  "minimum_text_pt": 11.5,
+  "font": {
+    "family": "Noto Sans CJK SC",
+    "svg_text_editable": true,
+    "pdf_text_outlined": true,
+    "validation": "SVG native point sizes and Inkscape glyph bounds; actual PDF preview. No PDF text-span claim."
+  },
+  "automatic_checks": {
+    "documentary_assertions": true,
+    "text_outside_canvas": [],
+    "pdf_no_text_objects": true,
+    "pdf_size_mm": [
+      159.99999906751844,
+      147.99999940660263
+    ]
+  },
+  "preview": {
+    "renderer": "PyMuPDF from saved outlined PDF",
+    "dpi": 240
+  },
+  "scope": "2026-10-09 historical process; documentation only, no new engineering execution, PASS, or 0f/T04 result transfer.",
+  "semantic_edges": [
+    [
+      "prepare",
+      "tools",
+      "normal progression"
+    ],
+    [
+      "tools",
+      "build",
+      "normal progression"
+    ],
+    [
+      "build",
+      "run",
+      "normal progression"
+    ],
+    [
+      "run",
+      "success",
+      "only after normal completion and output/exit-state review"
+    ],
+    [
+      "prepare",
+      "failure-evidence",
+      "conditional abnormal result; method, not claim of actual historical occurrence"
+    ],
+    [
+      "tools",
+      "failure-evidence",
+      "conditional abnormal result; method, not claim of actual historical occurrence"
+    ],
+    [
+      "build",
+      "failure-evidence",
+      "conditional abnormal result; method, not claim of actual historical occurrence"
+    ],
+    [
+      "run",
+      "failure-evidence",
+      "conditional abnormal result; method, not claim of actual historical occurrence"
+    ],
+    [
+      "failure-evidence",
+      "diagnose",
+      "preserve failure before diagnosis and correction"
+    ],
+    [
+      "diagnose",
+      "prepare",
+      "select the corresponding return point according to cause; not all return points mandatory"
+    ],
+    [
+      "diagnose",
+      "tools",
+      "select the corresponding return point according to cause; not all return points mandatory"
+    ],
+    [
+      "diagnose",
+      "build",
+      "select the corresponding return point according to cause; not all return points mandatory"
+    ]
+  ],
+  "evidence_mapping": {
+    "main_sequence": "overview-stage1.tex lines 27,32-37; stage1-e2.tex lines 41,48-53",
+    "inputs_and_archive": "narrative-stage1.md build/loader roles, lines 11-18,48,103-111; overview lines 80,112",
+    "success_failure_separate": "narrative-stage1.md lines 56-62; actual failing run exit 1, successful summary exit 0 and status file",
+    "diagnostic_alternatives": "current placement S1-02 scope explicitly returns to preparation/tools/build by fault cause; narrative-stage1.md failure diagnosis method",
+    "historical_recovery_examples": "build-concurrency-adjustment.log: intentional interruption, -j4, preserve objects; startup flash difference and common-image recovery in narrative lines 56-62"
+  },
+  "direct_script_source": {
+    "key": "stage1_script",
+    "repository": "cc77-builder/riscv",
+    "ref": "eca41d7cd959f5f3c4f240e382919c492d1ccb96",
+    "path": "team/scripts/stage1.sh",
+    "blob_sha": "1c44feb7e4efa26ecfbeb04e52922b18c691a96b",
+    "url": "https://github.com/cc77-builder/riscv/blob/eca41d7cd959f5f3c4f240e382919c492d1ccb96/team/scripts/stage1.sh",
+    "local": "evidence/stage1_script.sh",
+    "bytes": 3333,
+    "sha256": "761985936ac32f589e528fe9125243b370dd5c8e7b5fb123c3caf8fb3c28e527",
+    "git_blob_verified": true,
+    "local_checked": "/workspace/scratch/582acb94c9f1/report-work/image-redesign/native-s102-formal-v1/evidence/stage1_script.sh",
+    "independently_verified_sha256_and_git_blob": true,
+    "observed": "nemu/emu/workload/run actions, per-action logs and EXIT status trap, artifact SHA, explicit flash/reference and 128MB RAM; no automatic diagnostic or repair loop"
+  },
+  "not_asserted": [
+    "No claim that stage1.sh automatically diagnoses or repairs faults; its frozen script was read, never run.",
+    "No claim that all depicted abnormal branches occurred historically.",
+    "No claim that all faults need a rebuild or full reinstallation.",
+    "No OOM diagnosis added to the intentional C++ interruption record.",
+    "No new PASS, simulation, benchmark, or 2026-10-25 T04 event in this historical process."
+  ],
+  "sources": [
+    {
+      "path": "/workspace/scratch/582acb94c9f1/report-work/source/team/submission/latex-v1/content/overview-stage1.tex",
+      "sha256": "fd05514c2074855c8fcf7c47fc3babd77ad6d865433195a956090c9c09479fc0"
+    },
+    {
+      "path": "/workspace/scratch/582acb94c9f1/report-work/source/team/submission/latex-v1/content/narrative-stage1.md",
+      "sha256": "6b64a829b8836b3f38a86e10759eaa383c4455b59583f4f945a3419de75a867b"
+    },
+    {
+      "path": "/workspace/scratch/582acb94c9f1/report-work/source/team/submission/latex-v1/figures/placement.json",
+      "sha256": "b90ed19840b9295374a1584d5b66a522152e6b46181fcd641d163c540c4bd7fa"
+    },
+    {
+      "path": "/workspace/scratch/582acb94c9f1/report-work/source/team/submission/latex-v1/evidence/tool-versions.txt",
+      "sha256": "7fd5bcf215a6faacb5ab7c2db6f004df8253a7b716867041eb5e17cee8d3f5e5"
+    },
+    {
+      "path": "/workspace/scratch/582acb94c9f1/report-work/source/team/submission/latex-v1/evidence/build-concurrency-adjustment.log",
+      "sha256": "3c91395b06564efa415a9a9206387191c29752b37b35b5c1e8f179f6604e1c2c"
+    },
+    {
+      "path": "/workspace/scratch/582acb94c9f1/report-work/source/team/submission/latex-v1/evidence/hello-vadd-summary.log",
+      "sha256": "7daf21a2672b939998f5998fe6761a7b38032231979fd28b82bf0427f3783072"
+    },
+    {
+      "path": "/workspace/scratch/582acb94c9f1/report-work/source/team/submission/latex-v1/evidence/hello-vadd-run-20261009-205354.log",
+      "sha256": "0aff186a3e997f0006e73d7bfad810a1a562012909b3c51259106e8177435644"
+    },
+    {
+      "path": "/workspace/scratch/582acb94c9f1/report-work/source/team/submission/latex-v1/evidence/hello-vadd-run-20261009-205526.status",
+      "sha256": "149a9d46118f2a58df0968f6b97b2ffc7c278440a31f793b83537a610f0364dd"
+    },
+    {
+      "path": "/workspace/scratch/582acb94c9f1/report-work/image-redesign/native-s102-formal-v1/evidence/stage1-e2.tex",
+      "sha256": "c3d69defa8252b558c37e5282e9031dfcc0e7133defa06fabedb3f0bea3caff1"
+    },
+    {
+      "path": "/workspace/scratch/582acb94c9f1/report-work/image-redesign/native-s102-formal-v1/evidence/stage1_script.sh",
+      "sha256": "761985936ac32f589e528fe9125243b370dd5c8e7b5fb123c3caf8fb3c28e527"
+    },
+    {
+      "path": "/workspace/scratch/582acb94c9f1/report-work/image-redesign/native-s102-formal-v1/evidence/stage1-script-source.json",
+      "sha256": "fb9ddb7b06cdbdcd09409b7391554fdda643e1fe9bf84a530e12e96682dfb99c"
+    }
+  ],
+  "outputs": {
+    "S1-02-deployment-flow.svg": {
+      "sha256": "46d209ca83ffd9381e2c73f3a2b0e7e5d1e2cb253eab20c11ef71f82bd750bdb",
+      "bytes": 8706
+    },
+    "S1-02-deployment-flow.pdf": {
+      "sha256": "8c7f421fde0bd13d250929efd4fa5f4536a733e3041146acfcabf38bd1d6359b",
+      "bytes": 50992
+    },
+    "S1-02-deployment-flow.png": {
+      "sha256": "8fcae531e471f42e9390a5eeb508b3d5730e3af79e51088d6177649853732d8d",
+      "bytes": 129302
+    },
+    "build_s102.py": {
+      "sha256": "f217502892266dc069410a16c8147d546943f2ca379cbd6faf66dc5c1031eef5",
+      "bytes": 13608
+    }
+  },
+  "text_inventory": [
+    {
+      "id": "text-00",
+      "text": "2026-10-09 历史流程",
+      "size_pt": 11.5
+    },
+    {
+      "id": "text-01",
+      "text": "实线：执行与留证",
+      "size_pt": 11.5
+    },
+    {
+      "id": "text-02",
+      "text": "按原因选择返回点",
+      "size_pt": 11.5
+    },
+    {
+      "id": "prepare-title",
+      "text": "环境准备",
+      "size_pt": 12.0
+    },
+    {
+      "id": "prepare-detail-0",
+      "text": "WSL 资源 · 固定源码依赖",
+      "size_pt": 11.5
+    },
+    {
+      "id": "tools-title",
+      "text": "工具核查",
+      "size_pt": 12.0
+    },
+    {
+      "id": "tools-detail-0",
+      "text": "版本与路径",
+      "size_pt": 11.5
+    },
+    {
+      "id": "build-title",
+      "text": "构建产物",
+      "size_pt": 12.0
+    },
+    {
+      "id": "build-detail-0",
+      "text": "NEMU reference / EMU",
+      "size_pt": 11.5
+    },
+    {
+      "id": "build-detail-1",
+      "text": "hello/vadd / 共同 flash",
+      "size_pt": 11.5
+    },
+    {
+      "id": "run-title",
+      "text": "DiffTest 运行",
+      "size_pt": 12.0
+    },
+    {
+      "id": "run-detail-0",
+      "text": "固定 reference 与 flash",
+      "size_pt": 11.5
+    },
+    {
+      "id": "run-detail-1",
+      "text": "核对输出与退出状态",
+      "size_pt": 11.5
+    },
+    {
+      "id": "success-title",
+      "text": "成功结果归档",
+      "size_pt": 12.0
+    },
+    {
+      "id": "success-detail-0",
+      "text": "成功日志 · 输入身份",
+      "size_pt": 11.5
+    },
+    {
+      "id": "text-15",
+      "text": "正常完成",
+      "size_pt": 11.5
+    },
+    {
+      "id": "text-16",
+      "text": "异常",
+      "size_pt": 11.5
+    },
+    {
+      "id": "text-17",
+      "text": "异常",
+      "size_pt": 11.5
+    },
+    {
+      "id": "text-18",
+      "text": "异常",
+      "size_pt": 11.5
+    },
+    {
+      "id": "text-19",
+      "text": "异常",
+      "size_pt": 11.5
+    },
+    {
+      "id": "failure-evidence-title",
+      "text": "失败证据归档",
+      "size_pt": 12.0
+    },
+    {
+      "id": "failure-evidence-detail-0",
+      "text": "日志 · 退出码",
+      "size_pt": 11.5
+    },
+    {
+      "id": "diagnose-title",
+      "text": "定位与修正",
+      "size_pt": 12.0
+    },
+    {
+      "id": "diagnose-detail-0",
+      "text": "按最早异常定位",
+      "size_pt": 11.5
+    }
+  ],
+  "visual_review": {
+    "actual_pdf_preview_viewed": true,
+    "reviewed_utc": "2026-11-05T18:00:23.124772+00:00",
+    "preview_sha256": "8fcae531e471f42e9390a5eeb508b3d5730e3af79e51088d6177649853732d8d",
+    "result": "PASS: readable text, no observed overlap or clipping, clear normal and exception routes.",
+    "independent_reviewer": "/root/vendor_visual_research/stage2_figure_titles",
+    "independent_result": "PASS: correct main order; separate success/failure evidence; cause-selected returns to preparation/tools/build; no implied automatic diagnosis; no overlap or cropping.",
+    "human_aesthetic_approval": false
+  },
+  "recommended_caption": "环境部署、差分运行与分支归档流程",
+  "recommended_scope_note": "2026年10月9日阶段一流程。虚线表示按故障原因选择的修正返回点，成功结果与失败证据分别保存。",
+  "placement_requirement": {
+    "display_width_mm": 160,
+    "height_allowance_mm": 148,
+    "minimum_display_text_pt": 11.5,
+    "note": "Keep the 148 mm height at 160 mm width. A 120 mm height cap would shrink the smallest text to about 9.32 pt."
+  },
+  "portability_check": {
+    "checked_utc": "2026-11-05T18:05:56.132917+00:00",
+    "relocated_layout": "figures/redesigned-20261105/formal/S1-02",
+    "ancestor_source_root_detection": true,
+    "explicit_source_root_resolution": true,
+    "default_cli_rebuild": "PASS",
+    "source_report_modified": false,
+    "engineering_commands_run": false,
+    "svg_and_pdf_rendered_png_byte_identical": true,
+    "comparison": {
+      "svg": {
+        "original_sha256": "46d209ca83ffd9381e2c73f3a2b0e7e5d1e2cb253eab20c11ef71f82bd750bdb",
+        "rebuilt_sha256": "46d209ca83ffd9381e2c73f3a2b0e7e5d1e2cb253eab20c11ef71f82bd750bdb"
+      },
+      "png": {
+        "original_sha256": "8fcae531e471f42e9390a5eeb508b3d5730e3af79e51088d6177649853732d8d",
+        "rebuilt_sha256": "8fcae531e471f42e9390a5eeb508b3d5730e3af79e51088d6177649853732d8d"
+      }
+    },
+    "rebuilt_pdf_sha256": "f562b64a5c669d82c00c107a1634354b767eea24da7c9760686ebb7dfe954be5",
+    "review_inheritance": "Same SVG and PDF-rendered PNG SHA256 as the originally viewed candidate; no new direct or human visual review is claimed."
+  },
+  "root_review": {
+    "actual_final_pdf_png_viewed": true,
+    "preview_sha256": "8fcae531e471f42e9390a5eeb508b3d5730e3af79e51088d6177649853732d8d",
+    "human_adopted": false,
+    "candidate_integrable": true,
+    "basis": "Parent /root explicitly confirmed viewing the final PNG and that its structure can be integrated."
+  },
+  "baseline_source": {
+    "repository": "cc77-builder/riscv",
+    "ref": "e2c2e8d5fa9a92c5d99c3c3e3f5399d60a115c63",
+    "path": "team/submission/latex-v1/sections/stage1.tex",
+    "local": "evidence/stage1-e2.tex",
+    "sha256": "c3d69defa8252b558c37e5282e9031dfcc0e7133defa06fabedb3f0bea3caff1",
+    "blob_sha": "836284ad8f9a96c813921c7e7d6fcc2fcfc233de",
+    "independently_verified_sha256_and_git_blob": true
+  },
+  "portable_inputs": [
+    "evidence/stage1_script.sh",
+    "evidence/stage1-script-source.json",
+    "evidence/stage1-e2.tex"
+  ],
+  "root_visual_review": {
+    "viewed_final_pdf_png": true,
+    "human_adopted": false,
+    "finding": "Actual final PNG inspected. Mainline, separate failure archive, and three conditional return targets are legible. Caption must retain that return paths are conditional process guidance, not a claim that all historical failures happened."
+  }
+}

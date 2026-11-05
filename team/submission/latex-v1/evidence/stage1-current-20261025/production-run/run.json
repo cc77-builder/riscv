@@ -1,0 +1,90 @@
+{
+  "schema": "hello-vadd-run-v1",
+  "status": "PASS",
+  "started": "2026-10-24T17:09:21.574716+00:00",
+  "command": [
+    "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu",
+    "-i",
+    "/home/lizufan/riscv-lab/t04-current-20261025-0054/build-01/workload/build/hello-vadd-riscv64-xs.bin",
+    "--flash=/home/lizufan/riscv-lab/t04-current-20261025-0054/build-01/workload/build/boot-flash.bin",
+    "--ram-size=128MB",
+    "--diff=/home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so",
+    "--max-cycles=2000000"
+  ],
+  "inputs": {
+    "emu": {
+      "path": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu",
+      "sha256": "ff840528eb1009e94906eefb3773ca321050f309553543ab26f0db23c410e30f"
+    },
+    "reference": {
+      "path": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so",
+      "sha256": "8af118e5519db7ef6001010a2d547707c5d47630412e80abfc3f343bfef987c9"
+    },
+    "image": {
+      "path": "/home/lizufan/riscv-lab/t04-current-20261025-0054/build-01/workload/build/hello-vadd-riscv64-xs.bin",
+      "sha256": "d81437b44473cef2b0c5777330e13fd076567d4fc1a4296be35d971e51a4dcad"
+    },
+    "flash": {
+      "path": "/home/lizufan/riscv-lab/t04-current-20261025-0054/build-01/workload/build/boot-flash.bin",
+      "sha256": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994"
+    }
+  },
+  "identity": {
+    "team_id": "LiZufan001",
+    "host_ip": "172.27.184.54",
+    "status": "configured"
+  },
+  "aux": {
+    "constantin.txt": {
+      "source": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/constantin.txt",
+      "sha256": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf"
+    },
+    "plusArgs": {
+      "source": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/plusArgs",
+      "sha256": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff"
+    }
+  },
+  "cwd": "/home/lizufan/riscv-lab/t04-current-20261025-0054/run-prod-01/run/work",
+  "cpu_affinity": [
+    3
+  ],
+  "timeout_seconds": 1200,
+  "wave_window": [
+    null,
+    null
+  ],
+  "source_sha256": {
+    "stage1-run.py": "ea498e8a9678a2439108e893c1ee2f565da48bab29388f64e4d2a1043694828e",
+    "summarize-run.py": "352d61ad8e135286df0138138369f5bbb146beb38302917e377add04eac40ae5"
+  },
+  "timed_out": false,
+  "exit_code": 0,
+  "pid": 641,
+  "finished": "2026-10-24T17:10:18.357888+00:00",
+  "elapsed_seconds": 56.054,
+  "inputs_after": {
+    "emu": {
+      "path": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu",
+      "sha256": "ff840528eb1009e94906eefb3773ca321050f309553543ab26f0db23c410e30f"
+    },
+    "reference": {
+      "path": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so",
+      "sha256": "8af118e5519db7ef6001010a2d547707c5d47630412e80abfc3f343bfef987c9"
+    },
+    "image": {
+      "path": "/home/lizufan/riscv-lab/t04-current-20261025-0054/build-01/workload/build/hello-vadd-riscv64-xs.bin",
+      "sha256": "d81437b44473cef2b0c5777330e13fd076567d4fc1a4296be35d971e51a4dcad"
+    },
+    "flash": {
+      "path": "/home/lizufan/riscv-lab/t04-current-20261025-0054/build-01/workload/build/boot-flash.bin",
+      "sha256": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994"
+    }
+  },
+  "log_sha256": "f3f52cbf684c0edf214ec89e79ad0a5b5dbb4f3b42cf3d40f3fbb6c085f26f54",
+  "stderr_sha256": "e01820345762b8480326b566070c4494757f44d87eaed875bfe0bbd86331afb6",
+  "aux_after": {
+    "constantin.txt": "a1fd1d4de05919fec0257bacb550a3622c0f4ec2373e5cf230fc4233fb98c1bf",
+    "plusArgs": "160d9702d313cbe66be84ae88c2f45c3df9ed7b61b65e3ddeea25133ac6765ff"
+  },
+  "checker_exit_code": 0
+}

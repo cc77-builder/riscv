@@ -1,0 +1,250 @@
+{
+  "schema": "xiangshan-original-vector-figure-record-v1",
+  "figure_id": "S3-08",
+  "status": "candidate-for-main-and-human-review",
+  "title": "C8三方静态装载内容与调用输入对照",
+  "artifact_kind": "deterministic-original-vector-figure",
+  "main_task_message_id": "98d5659827664605ae0c68306831c2ad",
+  "sources": [
+    {
+      "repository": "cc77-builder/riscv",
+      "commit": "347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e",
+      "path": "team/optimizations/o2/integration/firstdot-v2-0f/package/c8/relink/RESULT.md",
+      "git_blob_sha": "7222c1a88bbf5f969ba1fd0ef81a0a7f0ff1e82f",
+      "url": "https://github.com/cc77-builder/riscv/blob/347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e/team/optimizations/o2/integration/firstdot-v2-0f/package/c8/relink/RESULT.md"
+    },
+    {
+      "repository": "cc77-builder/riscv",
+      "commit": "347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e",
+      "path": "team/optimizations/o2/integration/firstdot-v2-0f/package/c8/relink/evidence/integrated/equivalence.json",
+      "git_blob_sha": "33a82b517e6481368a99f726ffdf2d05cdc35889",
+      "url": "https://github.com/cc77-builder/riscv/blob/347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e/team/optimizations/o2/integration/firstdot-v2-0f/package/c8/relink/evidence/integrated/equivalence.json"
+    },
+    {
+      "repository": "cc77-builder/riscv",
+      "commit": "347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e",
+      "path": "team/optimizations/o2/integration/firstdot-v2-0f/package/c8/relink/evidence/report.json",
+      "git_blob_sha": "2533a58a42a9dfcc03468a9282e4a0ad772dad17",
+      "url": "https://github.com/cc77-builder/riscv/blob/347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e/team/optimizations/o2/integration/firstdot-v2-0f/package/c8/relink/evidence/report.json"
+    },
+    {
+      "repository": "cc77-builder/riscv",
+      "commit": "347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e",
+      "path": "team/optimizations/o2/integration/firstdot-v2-0f/package/c8/relink/source/cases.h",
+      "git_blob_sha": "9914cea85c9d6cad719b2b9ab7225926cc30a96f",
+      "url": "https://github.com/cc77-builder/riscv/blob/347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e/team/optimizations/o2/integration/firstdot-v2-0f/package/c8/relink/source/cases.h"
+    },
+    {
+      "repository": "cc77-builder/riscv",
+      "commit": "347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e",
+      "path": "team/optimizations/o2/integration/firstdot-v2-0f/package/c8/relink/integrate.py",
+      "git_blob_sha": "264d67a1af79a087f1420a68e37c3a6794a673c5",
+      "url": "https://github.com/cc77-builder/riscv/blob/347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e/team/optimizations/o2/integration/firstdot-v2-0f/package/c8/relink/integrate.py"
+    }
+  ],
+  "facts": {
+    "comparison_columns": [
+      "Original qualified C fixture ELF",
+      "Same-source copied rebuild ELF",
+      "Actual SDK-linked ELF"
+    ],
+    "bin_bytes": 31440,
+    "bin_sha256": "56805506eb98b68269c73a3645d8f75dff73b697e30dec5f93ccc4716089ad34",
+    "bin_all_bytes_equal": true,
+    "entry_hex": "0x80000000",
+    "pt_load_count": 1,
+    "pt_load_file_bytes": 30024,
+    "pt_load_memory_bytes": 31440,
+    "pt_load_zero_fill_bytes": 1416,
+    "bss_section_bytes": 1408,
+    "zero_fill_not_identical_to_bss": true,
+    "pt_load_addresses_permissions_alignment_content_equal": true,
+    "call_records_per_program": 48,
+    "call_record_bytes": 64,
+    "call_table_order": "Original immutable plan sequence; no sorting or method-order normalization.",
+    "call_grid_rows": [
+      {
+        "shape": [
+          8,
+          32
+        ],
+        "seq_inclusive": [
+          0,
+          11
+        ],
+        "input_bytes": 288
+      },
+      {
+        "shape": [
+          4,
+          8
+        ],
+        "seq_inclusive": [
+          12,
+          23
+        ],
+        "input_bytes": 40
+      },
+      {
+        "shape": [
+          16,
+          64
+        ],
+        "seq_inclusive": [
+          24,
+          35
+        ],
+        "input_bytes": 1088
+      },
+      {
+        "shape": [
+          4,
+          13
+        ],
+        "seq_inclusive": [
+          36,
+          47
+        ],
+        "input_bytes": 65
+      }
+    ],
+    "dataset_order": [
+      0,
+      1,
+      2
+    ],
+    "records_per_shape_dataset": 4,
+    "first_four_method_indices": [
+      6,
+      4,
+      5,
+      7
+    ],
+    "method_label_note": "No shared method order is drawn; the first 8x32,d0 group has a documented distinct order.",
+    "input_arrays_per_program": 12,
+    "input_contents": "Each signed-int8 array is packed A[M*K] followed by x[K].",
+    "input_array_address_and_content_equal": true,
+    "logical_grids_not_physical_memory": true,
+    "original_whole_elf_equal": false,
+    "actual_nonload_differences": [
+      ".debug_info",
+      ".debug_line",
+      ".debug_line_str"
+    ],
+    "pairwise_debug_differences_verified": {
+      "control": {
+        "whole_elf_equal": false,
+        "different_sections": [
+          ".debug_info",
+          ".debug_line",
+          ".debug_line_str"
+        ]
+      },
+      "integrated": {
+        "whole_elf_equal": false,
+        "different_sections": [
+          ".debug_info",
+          ".debug_line",
+          ".debug_line_str"
+        ]
+      },
+      "control_vs_integrated": {
+        "whole_elf_equal": false,
+        "different_sections": [
+          ".debug_info",
+          ".debug_line",
+          ".debug_line_str"
+        ]
+      }
+    },
+    "protected_files": 627,
+    "protected_files_not_test_count": true,
+    "new_emu_runs": 0,
+    "new_nemu_runs": 0,
+    "new_fullcore_runs": 0
+  },
+  "rendering": {
+    "toolchain": [
+      "Original XML SVG from render.py",
+      "Inkscape SVG to PDF, with text converted to paths",
+      "Poppler final PDF to PNG at 300 dpi"
+    ],
+    "source_svg_font_families": [
+      "Noto Sans CJK SC",
+      "DejaVu Sans Mono"
+    ],
+    "source_svg_editable_text": true,
+    "pdf_text_outlined": true,
+    "pdf_searchable_text": false,
+    "png_derived_from_final_pdf": true
+  },
+  "review": {
+    "root_final_viewed": true,
+    "independent_source_review": {
+      "agent": "native stage2_reader_audit",
+      "result": "Verified actual call ordering, twelve distinct packed arrays, protected_files=627, paired debug differences, and no new runtime."
+    },
+    "independent_visual_review": {
+      "agent": "native outline_review",
+      "viewed_png_sha256": "dff9dca4edc2497b0f05a9736a01a64411de5e9df534c12f69dbcc093c3d9988",
+      "result": "Structure carries information; no text overlap or clipping. Requested per-program counts and explicit input address/content equality; asked for direct evidence supporting second debug inequality.",
+      "resolution": "Final notes state 每份48条 and 每份12个数组 with address/content equality. Root directly checked comparisons.control_vs_integrated in evidence/report.json; all three named debug section hashes differ, so the second inequality is retained."
+    },
+    "initial_bytes_retained_in_scratch": "/workspace/scratch/79eded243990/tmp/relink-initial-review-20261105-1746",
+    "user_approval_claimed": false,
+    "root_final_viewed_png_sha256": "297e79de646ced05131c97c8014a2f4992695f93d70b26fdcc70a29cde9ff4d5",
+    "root_observations": [
+      "Final PNG viewed at its actual bytes; no clipping or overlap observed.",
+      "Exactly 48 ordered call cells and 12 input cells per program; row sizes and dataset groups independently parsed from frozen cases.h.",
+      "Calls and arrays explicitly use per-program counts. Input equality explicitly includes addresses and content.",
+      "Exact proportional PT_LOAD split; zero-filled tail is not mislabeled as BSS.",
+      "Both debug inequalities supported by all three pairwise comparisons in frozen evidence/report.json.",
+      "PDF is one page and uses outlined vector text; PNG derives from that final PDF."
+    ]
+  },
+  "suggested_caption": "C8三方静态装载内容与调用输入对照",
+  "adjacent_caption_note": "原合格夹具、同源重建与SDK实际链接版的BIN、PT_LOAD及有序调用表/输入身份一致。PT_LOAD按文件内容与零填充的实际字节比例绘制；两组网格表示逻辑表项和输入对象，不表示物理地址排列。调试节差异位于非装载区。静态等价只支持沿用原夹具已有证据；本次接入未新增EMU、NEMU或全核运行。",
+  "placement_note": "Figure is authored at160mm width with11.5/12pt normal-weight labels. Rendered PDF is font independent; editable SVG requires the listed fonts.",
+  "scope": "Only a documentation figure was authored. Frozen engineering source, results and failed evidence remain unchanged; no project build, simulation, performance or EDA run.",
+  "geometry": {
+    "canvas_mm": [
+      160,
+      178
+    ],
+    "font_points": [
+      11.5,
+      12
+    ],
+    "columns": 3,
+    "load_file_width_mm": 36.28854961832061,
+    "load_zero_width_mm": 1.7114503816793893,
+    "load_width_ratio_matches_byte_counts": true,
+    "call_grid_rows_cols": [
+      4,
+      12
+    ],
+    "input_grid_rows_cols": [
+      4,
+      3
+    ]
+  },
+  "files": {
+    "S3-08-relink-structure.svg": {
+      "bytes": 48460,
+      "sha256": "0905742989879253acb25b7716cb2d50262c894b9b9e726b50fe81b36a704ad3"
+    },
+    "S3-08-relink-structure.pdf": {
+      "bytes": 115733,
+      "sha256": "c4c0c0d9eff93e62de04046322fd2e188e6073505790c42a5dac4a55d9846400"
+    },
+    "S3-08-relink-structure.png": {
+      "bytes": 262682,
+      "sha256": "297e79de646ced05131c97c8014a2f4992695f93d70b26fdcc70a29cde9ff4d5"
+    },
+    "render.py": {
+      "bytes": 9462,
+      "sha256": "45916ae2f0cc2e0e5eae805a4c5105db1683a70567261cdfe52e465b1c5d14e4"
+    }
+  },
+  "recorded_at_utc": "2026-11-05T17:48:35.858725+00:00"
+}

@@ -1,0 +1,463 @@
+{
+  "figure": "S3-01",
+  "version": "structural-svg-v1",
+  "canvas_mm": [
+    160,
+    122
+  ],
+  "font_user_units": {
+    "body": 41,
+    "model_name": 44,
+    "shared_input_and_difftest": 42
+  },
+  "minimum_font_pt": 11.622047244094489,
+  "role_colors": {
+    "DUT": "#285D84",
+    "REF": "#267A78"
+  },
+  "nodes": [
+    {
+      "id": "rtl_mul_0",
+      "kind": "operator",
+      "operation": "×",
+      "center": [
+        133,
+        416
+      ]
+    },
+    {
+      "id": "rtl_mul_1",
+      "kind": "operator",
+      "operation": "×",
+      "center": [
+        205,
+        416
+      ]
+    },
+    {
+      "id": "rtl_mul_2",
+      "kind": "operator",
+      "operation": "×",
+      "center": [
+        277,
+        416
+      ]
+    },
+    {
+      "id": "rtl_mul_3",
+      "kind": "operator",
+      "operation": "×",
+      "center": [
+        349,
+        416
+      ]
+    },
+    {
+      "id": "rtl_mul_4",
+      "kind": "operator",
+      "operation": "×",
+      "center": [
+        421,
+        416
+      ]
+    },
+    {
+      "id": "rtl_mul_5",
+      "kind": "operator",
+      "operation": "×",
+      "center": [
+        493,
+        416
+      ]
+    },
+    {
+      "id": "rtl_mul_6",
+      "kind": "operator",
+      "operation": "×",
+      "center": [
+        565,
+        416
+      ]
+    },
+    {
+      "id": "rtl_mul_7",
+      "kind": "operator",
+      "operation": "×",
+      "center": [
+        637,
+        416
+      ]
+    },
+    {
+      "id": "rtl_add1_0",
+      "kind": "operator",
+      "operation": "+",
+      "center": [
+        169.0,
+        521
+      ]
+    },
+    {
+      "id": "rtl_add1_1",
+      "kind": "operator",
+      "operation": "+",
+      "center": [
+        313.0,
+        521
+      ]
+    },
+    {
+      "id": "rtl_add1_2",
+      "kind": "operator",
+      "operation": "+",
+      "center": [
+        457.0,
+        521
+      ]
+    },
+    {
+      "id": "rtl_add1_3",
+      "kind": "operator",
+      "operation": "+",
+      "center": [
+        601.0,
+        521
+      ]
+    },
+    {
+      "id": "rtl_add2_0",
+      "kind": "operator",
+      "operation": "+",
+      "center": [
+        241.0,
+        601
+      ]
+    },
+    {
+      "id": "rtl_add2_1",
+      "kind": "operator",
+      "operation": "+",
+      "center": [
+        529.0,
+        601
+      ]
+    },
+    {
+      "id": "rtl_add3",
+      "kind": "operator",
+      "operation": "+",
+      "center": [
+        385,
+        671
+      ]
+    },
+    {
+      "id": "nemu_mul",
+      "kind": "operator",
+      "operation": "×",
+      "center": [
+        1215,
+        445
+      ]
+    },
+    {
+      "id": "nemu_add",
+      "kind": "operator",
+      "operation": "+",
+      "center": [
+        1215,
+        548
+      ]
+    },
+    {
+      "id": "dut_vector",
+      "kind": "architectural_state_field",
+      "model": "dut",
+      "row_y": 907.5
+    },
+    {
+      "id": "dut_vcsr",
+      "kind": "architectural_state_field",
+      "model": "dut",
+      "row_y": 981
+    },
+    {
+      "id": "dut_exception",
+      "kind": "architectural_state_field",
+      "model": "dut",
+      "row_y": 1053.5
+    },
+    {
+      "id": "ref_vector",
+      "kind": "architectural_state_field",
+      "model": "ref",
+      "row_y": 907.5
+    },
+    {
+      "id": "ref_vcsr",
+      "kind": "architectural_state_field",
+      "model": "ref",
+      "row_y": 981
+    },
+    {
+      "id": "ref_exception",
+      "kind": "architectural_state_field",
+      "model": "ref",
+      "row_y": 1053.5
+    },
+    {
+      "id": "compare_vector",
+      "kind": "comparison_operation",
+      "preselected_result": null
+    },
+    {
+      "id": "compare_vcsr",
+      "kind": "comparison_operation",
+      "preselected_result": null
+    },
+    {
+      "id": "compare_exception",
+      "kind": "comparison_operation",
+      "preselected_result": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "common_input",
+      "target": "rtl_model",
+      "role": "shared_program_initial_state"
+    },
+    {
+      "source": "common_input",
+      "target": "nemu_model",
+      "role": "shared_program_initial_state"
+    },
+    {
+      "source": "rtl_a_0",
+      "target": "rtl_mul_0",
+      "role": "signed8_operand"
+    },
+    {
+      "source": "rtl_b_0",
+      "target": "rtl_mul_0",
+      "role": "signed8_operand"
+    },
+    {
+      "source": "rtl_a_1",
+      "target": "rtl_mul_1",
+      "role": "signed8_operand"
+    },
+    {
+      "source": "rtl_b_1",
+      "target": "rtl_mul_1",
+      "role": "signed8_operand"
+    },
+    {
+      "source": "rtl_a_2",
+      "target": "rtl_mul_2",
+      "role": "signed8_operand"
+    },
+    {
+      "source": "rtl_b_2",
+      "target": "rtl_mul_2",
+      "role": "signed8_operand"
+    },
+    {
+      "source": "rtl_a_3",
+      "target": "rtl_mul_3",
+      "role": "signed8_operand"
+    },
+    {
+      "source": "rtl_b_3",
+      "target": "rtl_mul_3",
+      "role": "signed8_operand"
+    },
+    {
+      "source": "rtl_a_4",
+      "target": "rtl_mul_4",
+      "role": "signed8_operand"
+    },
+    {
+      "source": "rtl_b_4",
+      "target": "rtl_mul_4",
+      "role": "signed8_operand"
+    },
+    {
+      "source": "rtl_a_5",
+      "target": "rtl_mul_5",
+      "role": "signed8_operand"
+    },
+    {
+      "source": "rtl_b_5",
+      "target": "rtl_mul_5",
+      "role": "signed8_operand"
+    },
+    {
+      "source": "rtl_a_6",
+      "target": "rtl_mul_6",
+      "role": "signed8_operand"
+    },
+    {
+      "source": "rtl_b_6",
+      "target": "rtl_mul_6",
+      "role": "signed8_operand"
+    },
+    {
+      "source": "rtl_a_7",
+      "target": "rtl_mul_7",
+      "role": "signed8_operand"
+    },
+    {
+      "source": "rtl_b_7",
+      "target": "rtl_mul_7",
+      "role": "signed8_operand"
+    },
+    {
+      "source": "rtl_mul_0",
+      "target": "rtl_add1_0",
+      "role": "product"
+    },
+    {
+      "source": "rtl_mul_1",
+      "target": "rtl_add1_0",
+      "role": "product"
+    },
+    {
+      "source": "rtl_mul_2",
+      "target": "rtl_add1_1",
+      "role": "product"
+    },
+    {
+      "source": "rtl_mul_3",
+      "target": "rtl_add1_1",
+      "role": "product"
+    },
+    {
+      "source": "rtl_mul_4",
+      "target": "rtl_add1_2",
+      "role": "product"
+    },
+    {
+      "source": "rtl_mul_5",
+      "target": "rtl_add1_2",
+      "role": "product"
+    },
+    {
+      "source": "rtl_mul_6",
+      "target": "rtl_add1_3",
+      "role": "product"
+    },
+    {
+      "source": "rtl_mul_7",
+      "target": "rtl_add1_3",
+      "role": "product"
+    },
+    {
+      "source": "rtl_add1_0",
+      "target": "rtl_add2_0",
+      "role": "partial_sum"
+    },
+    {
+      "source": "rtl_add1_1",
+      "target": "rtl_add2_0",
+      "role": "partial_sum"
+    },
+    {
+      "source": "rtl_add1_2",
+      "target": "rtl_add2_1",
+      "role": "partial_sum"
+    },
+    {
+      "source": "rtl_add1_3",
+      "target": "rtl_add2_1",
+      "role": "partial_sum"
+    },
+    {
+      "source": "rtl_add2_0",
+      "target": "rtl_add3",
+      "role": "partial_sum"
+    },
+    {
+      "source": "rtl_add2_1",
+      "target": "rtl_add3",
+      "role": "partial_sum"
+    },
+    {
+      "source": "rtl_add3",
+      "target": "rtl_result_D",
+      "role": "signed_sum_to_32bit"
+    },
+    {
+      "source": "nemu_pair",
+      "target": "nemu_mul",
+      "role": "signed8_pair"
+    },
+    {
+      "source": "nemu_mul",
+      "target": "nemu_add",
+      "role": "product"
+    },
+    {
+      "source": "nemu_add",
+      "target": "nemu_sum",
+      "role": "assignment"
+    },
+    {
+      "source": "nemu_sum",
+      "target": "nemu_add",
+      "role": "software_feedback"
+    },
+    {
+      "source": "zero",
+      "target": "nemu_sum",
+      "role": "initialization_only"
+    },
+    {
+      "source": "nemu_sum",
+      "target": "nemu_result_R",
+      "role": "after_loop"
+    },
+    {
+      "source": "rtl_result_D",
+      "target": "dut_vector",
+      "role": "low32_field_only"
+    },
+    {
+      "source": "nemu_result_R",
+      "target": "ref_vector",
+      "role": "low32_field_only"
+    },
+    {
+      "source": "dut_vector",
+      "target": "compare_vector",
+      "role": "DUT"
+    },
+    {
+      "source": "ref_vector",
+      "target": "compare_vector",
+      "role": "REF"
+    },
+    {
+      "source": "dut_vcsr",
+      "target": "compare_vcsr",
+      "role": "DUT"
+    },
+    {
+      "source": "ref_vcsr",
+      "target": "compare_vcsr",
+      "role": "REF"
+    },
+    {
+      "source": "dut_exception",
+      "target": "compare_exception",
+      "role": "DUT"
+    },
+    {
+      "source": "ref_exception",
+      "target": "compare_exception",
+      "role": "REF"
+    }
+  ],
+  "svg_sha256": "3eef0e79114ecdd1564d20f4035b171d46af8be9e4e512ea22b021c8f256e9fe",
+  "scope": "Diagram of independent computation and matching architectural fields; no cycle axis, test result, or DiffTest-internal queue implementation."
+}

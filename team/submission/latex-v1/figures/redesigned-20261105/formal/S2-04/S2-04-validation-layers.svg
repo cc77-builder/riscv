@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="160mm" height="126mm" viewBox="0 0 1600 1260" role="img" aria-labelledby="title desc">
+<title id="title">S2-04 验证层级、实现范围与独立对照关系</title>
+<desc id="desc">嵌套框表示整核含真实VFEX4父级、父级含VDot FU、FU含算术逻辑这一实现关系，并列出各层可观察维度；不表示测试集合全包含或同时进行一次测试。独立整数模型位于硬件之外，与完整128位算术结果对照；NEMU另与整核对应架构状态进行DiffTest差分。八路乘积与四二一归约仅标识算术范围，不增加流水级或时序含义。各层原证据独立保留，图中不预设通过。</desc>
+<style>text {font-family:Microsoft YaHei, 微软雅黑, SimSun, 宋体, "Noto Sans CJK SC", sans-serif;}</style>
+<defs>
+<marker id="blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M 1 1 L 9 5 L 1 9 Z" fill="#285D84"/></marker>
+<marker id="teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M 1 1 L 9 5 L 1 9 Z" fill="#267A78"/></marker>
+<marker id="ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M 1 1 L 9 5 L 1 9 Z" fill="#263745"/></marker>
+</defs>
+<rect x="0" y="0" width="1600" height="1260" fill="white" stroke="none" stroke-width="1.8"/>
+<rect x="500" y="40" width="1050" height="1160" fill="#F8FBFD" stroke="#285D84" stroke-width="1.8"/>
+<text x="548" y="103" text-anchor="start" fill="#285D84" font-size="42" font-weight="500">整核差分</text>
+<text x="548" y="163" text-anchor="start" fill="#263745" font-size="41" font-weight="400">架构状态 · 异常 · 别名</text>
+<rect x="540" y="215" width="970" height="945" fill="white" stroke="#285D84" stroke-width="1.8"/>
+<text x="588" y="278" text-anchor="start" fill="#285D84" font-size="42" font-weight="500">真实 VFEX4</text>
+<text x="588" y="338" text-anchor="start" fill="#263745" font-size="41" font-weight="400">派发互斥 · 共享输出 · 门控</text>
+<rect x="580" y="390" width="890" height="730" fill="#F5F9FC" stroke="#285D84" stroke-width="1.8"/>
+<text x="628" y="453" text-anchor="start" fill="#285D84" font-size="42" font-weight="500">VDot FU</text>
+<text x="628" y="513" text-anchor="start" fill="#263745" font-size="41" font-weight="400">握手 / 反压 · 身份 · flush/reset</text>
+<rect x="620" y="565" width="810" height="515" fill="white" stroke="#285D84" stroke-width="1.8"/>
+<text x="668" y="628" text-anchor="start" fill="#285D84" font-size="42" font-weight="500">算术 RTL</text>
+<text x="668" y="688" text-anchor="start" fill="#263745" font-size="41" font-weight="400">完整 128 位结果</text>
+<rect x="40" y="70" width="330" height="140" fill="#EFF7F6" stroke="#267A78" stroke-width="1.8"/>
+<text x="205" y="126" text-anchor="middle" fill="#267A78" font-size="42" font-weight="500">NEMU</text>
+<text x="205" y="182" text-anchor="middle" fill="#267A78" font-size="41" font-weight="400">参考状态</text>
+<path d="M 370 140 L 409 140" fill="none" stroke="#267A78" stroke-width="2" stroke-linejoin="round" marker-end="url(#teal)" stroke-dasharray="9 6"/>
+<path d="M 500 140 L 481 140" fill="none" stroke="#285D84" stroke-width="2" stroke-linejoin="round" marker-end="url(#blue)" stroke-dasharray="9 6"/>
+<g id="fullcore_compare"><path d="M 445 108 L 480 140 L 445 172 L 410 140 Z" fill="white" stroke="#263745" stroke-width="1.8"/>
+<text x="445" y="154" text-anchor="middle" fill="#263745" font-size="41" font-weight="400">?</text>
+<text x="445" y="212" text-anchor="middle" fill="#65747F" font-size="41" font-weight="400">差分</text>
+</g>
+<rect x="40" y="820" width="330" height="225" fill="#EFF7F6" stroke="#267A78" stroke-width="1.8"/>
+<text x="205" y="873" text-anchor="middle" fill="#267A78" font-size="42" font-weight="500">独立整数模型</text>
+<text x="205" y="931" text-anchor="middle" fill="#267A78" font-size="41" font-weight="400">数学期望</text>
+<text x="205" y="992" text-anchor="middle" fill="#267A78" font-size="41" font-weight="400">Σ(a × b)</text>
+<g id="mul_0"><circle cx="700" cy="735" r="22" fill="#F0F5FA" stroke="#285D84" stroke-width="1.8"/>
+<text x="700" y="749" text-anchor="middle" fill="#285D84" font-size="41" font-weight="400">×</text>
+</g>
+<g id="mul_1"><circle cx="790" cy="735" r="22" fill="#F0F5FA" stroke="#285D84" stroke-width="1.8"/>
+<text x="790" y="749" text-anchor="middle" fill="#285D84" font-size="41" font-weight="400">×</text>
+</g>
+<g id="mul_2"><circle cx="880" cy="735" r="22" fill="#F0F5FA" stroke="#285D84" stroke-width="1.8"/>
+<text x="880" y="749" text-anchor="middle" fill="#285D84" font-size="41" font-weight="400">×</text>
+</g>
+<g id="mul_3"><circle cx="970" cy="735" r="22" fill="#F0F5FA" stroke="#285D84" stroke-width="1.8"/>
+<text x="970" y="749" text-anchor="middle" fill="#285D84" font-size="41" font-weight="400">×</text>
+</g>
+<g id="mul_4"><circle cx="1060" cy="735" r="22" fill="#F0F5FA" stroke="#285D84" stroke-width="1.8"/>
+<text x="1060" y="749" text-anchor="middle" fill="#285D84" font-size="41" font-weight="400">×</text>
+</g>
+<g id="mul_5"><circle cx="1150" cy="735" r="22" fill="#F0F5FA" stroke="#285D84" stroke-width="1.8"/>
+<text x="1150" y="749" text-anchor="middle" fill="#285D84" font-size="41" font-weight="400">×</text>
+</g>
+<g id="mul_6"><circle cx="1240" cy="735" r="22" fill="#F0F5FA" stroke="#285D84" stroke-width="1.8"/>
+<text x="1240" y="749" text-anchor="middle" fill="#285D84" font-size="41" font-weight="400">×</text>
+</g>
+<g id="mul_7"><circle cx="1330" cy="735" r="22" fill="#F0F5FA" stroke="#285D84" stroke-width="1.8"/>
+<text x="1330" y="749" text-anchor="middle" fill="#285D84" font-size="41" font-weight="400">×</text>
+</g>
+<path d="M 700 757 V 770 L 735.0 778" fill="none" stroke="#285D84" stroke-width="2" stroke-linejoin="round" marker-end="url(#blue)"/>
+<path d="M 790 757 V 770 L 755.0 778" fill="none" stroke="#285D84" stroke-width="2" stroke-linejoin="round" marker-end="url(#blue)"/>
+<g id="add1_0"><circle cx="745.0" cy="800" r="22" fill="#F0F5FA" stroke="#285D84" stroke-width="1.8"/>
+<text x="745.0" y="814" text-anchor="middle" fill="#285D84" font-size="41" font-weight="400">+</text>
+</g>
+<path d="M 880 757 V 770 L 915.0 778" fill="none" stroke="#285D84" stroke-width="2" stroke-linejoin="round" marker-end="url(#blue)"/>
+<path d="M 970 757 V 770 L 935.0 778" fill="none" stroke="#285D84" stroke-width="2" stroke-linejoin="round" marker-end="url(#blue)"/>
+<g id="add1_1"><circle cx="925.0" cy="800" r="22" fill="#F0F5FA" stroke="#285D84" stroke-width="1.8"/>
+<text x="925.0" y="814" text-anchor="middle" fill="#285D84" font-size="41" font-weight="400">+</text>
+</g>
+<path d="M 1060 757 V 770 L 1095.0 778" fill="none" stroke="#285D84" stroke-width="2" stroke-linejoin="round" marker-end="url(#blue)"/>
+<path d="M 1150 757 V 770 L 1115.0 778" fill="none" stroke="#285D84" stroke-width="2" stroke-linejoin="round" marker-end="url(#blue)"/>
+<g id="add1_2"><circle cx="1105.0" cy="800" r="22" fill="#F0F5FA" stroke="#285D84" stroke-width="1.8"/>
+<text x="1105.0" y="814" text-anchor="middle" fill="#285D84" font-size="41" font-weight="400">+</text>
+</g>
+<path d="M 1240 757 V 770 L 1275.0 778" fill="none" stroke="#285D84" stroke-width="2" stroke-linejoin="round" marker-end="url(#blue)"/>
+<path d="M 1330 757 V 770 L 1295.0 778" fill="none" stroke="#285D84" stroke-width="2" stroke-linejoin="round" marker-end="url(#blue)"/>
+<g id="add1_3"><circle cx="1285.0" cy="800" r="22" fill="#F0F5FA" stroke="#285D84" stroke-width="1.8"/>
+<text x="1285.0" y="814" text-anchor="middle" fill="#285D84" font-size="41" font-weight="400">+</text>
+</g>
+<path d="M 745.0 822 V 835 L 825.0 843" fill="none" stroke="#285D84" stroke-width="2" stroke-linejoin="round" marker-end="url(#blue)"/>
+<path d="M 925.0 822 V 835 L 845.0 843" fill="none" stroke="#285D84" stroke-width="2" stroke-linejoin="round" marker-end="url(#blue)"/>
+<g id="add2_0"><circle cx="835.0" cy="865" r="22" fill="#F0F5FA" stroke="#285D84" stroke-width="1.8"/>
+<text x="835.0" y="879" text-anchor="middle" fill="#285D84" font-size="41" font-weight="400">+</text>
+</g>
+<path d="M 1105.0 822 V 835 L 1185.0 843" fill="none" stroke="#285D84" stroke-width="2" stroke-linejoin="round" marker-end="url(#blue)"/>
+<path d="M 1285.0 822 V 835 L 1205.0 843" fill="none" stroke="#285D84" stroke-width="2" stroke-linejoin="round" marker-end="url(#blue)"/>
+<g id="add2_1"><circle cx="1195.0" cy="865" r="22" fill="#F0F5FA" stroke="#285D84" stroke-width="1.8"/>
+<text x="1195.0" y="879" text-anchor="middle" fill="#285D84" font-size="41" font-weight="400">+</text>
+</g>
+<path d="M 835.0 887 V 900 L 1005 908" fill="none" stroke="#285D84" stroke-width="2" stroke-linejoin="round" marker-end="url(#blue)"/>
+<path d="M 1195.0 887 V 900 L 1025 908" fill="none" stroke="#285D84" stroke-width="2" stroke-linejoin="round" marker-end="url(#blue)"/>
+<g id="add3"><circle cx="1015" cy="930" r="22" fill="#F0F5FA" stroke="#285D84" stroke-width="1.8"/>
+<text x="1015" y="944" text-anchor="middle" fill="#285D84" font-size="41" font-weight="400">+</text>
+</g>
+<rect x="860" y="995" width="430" height="50" fill="white" stroke="#285D84" stroke-width="1.8"/>
+<rect x="1182.5" y="995" width="107.5" height="50" fill="#F0F5FA" stroke="#285D84" stroke-width="1.8"/>
+<text x="1021.25" y="1033" text-anchor="middle" fill="#65747F" font-size="41" font-weight="400">0</text>
+<text x="1236.25" y="1033" text-anchor="middle" fill="#285D84" font-size="41" font-weight="400">S</text>
+<path d="M 1015 952 V 973 H 1236.25 V 994" fill="none" stroke="#285D84" stroke-width="2" stroke-linejoin="round" marker-end="url(#blue)"/>
+<path d="M 860 1020 L 481 1020" fill="none" stroke="#285D84" stroke-width="2" stroke-linejoin="round" marker-end="url(#blue)" stroke-dasharray="9 6"/>
+<path d="M 370 1020 L 409 1020" fill="none" stroke="#267A78" stroke-width="2" stroke-linejoin="round" marker-end="url(#teal)" stroke-dasharray="9 6"/>
+<g id="arithmetic_compare"><path d="M 445 988 L 480 1020 L 445 1052 L 410 1020 Z" fill="white" stroke="#263745" stroke-width="1.8"/>
+<text x="445" y="1034" text-anchor="middle" fill="#263745" font-size="41" font-weight="400">?</text>
+<text x="445" y="1092" text-anchor="middle" fill="#65747F" font-size="41" font-weight="400">对照</text>
+</g>
+<text x="800" y="1240" text-anchor="middle" fill="#65747F" font-size="41" font-weight="400">框线表示实现范围；各层分别核验</text>
+</svg>

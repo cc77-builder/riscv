@@ -1,0 +1,76 @@
+{
+  "figure_id": "S3-04",
+  "description": "依据既有全核事件记录重绘的双窗口示意；不是新运行或原始波形。",
+  "scope": "0f; mode=after; single-1-vdot; dataset=0; replay=0; seq=4; phase=measured; repeat=2",
+  "source_figure": "../../S3-04.png",
+  "source_notes": "../../evidence-20261105/csr-window-source.json",
+  "start_absolute_tick": 36679,
+  "stop_relative_tick": 206,
+  "csr_events": [
+    {
+      "id": "I0",
+      "kind": "instret",
+      "rob": 28,
+      "sample": 31,
+      "retire": 34
+    },
+    {
+      "id": "C0",
+      "kind": "cycle",
+      "rob": 62,
+      "sample": 65,
+      "retire": 68
+    },
+    {
+      "id": "C1",
+      "kind": "cycle",
+      "rob": 133,
+      "sample": 136,
+      "retire": 139
+    },
+    {
+      "id": "I1",
+      "kind": "instret",
+      "rob": 167,
+      "sample": 170,
+      "retire": 173
+    }
+  ],
+  "fence_retirement_ticks": [
+    17,
+    51,
+    85,
+    122,
+    156,
+    190
+  ],
+  "body_retirement_ticks": [
+    101,
+    105
+  ],
+  "body_instruction_count": 5,
+  "body_vdot_count": 1,
+  "body_record_assignment": "未指定5条主体在101/105两处记录中的分配；图中仅绘制覆盖区间。",
+  "expected_cycle_delta": 71,
+  "expected_instret_delta": 12,
+  "instret_window_includes": "I0退休",
+  "instret_window_excludes": "I1退休",
+  "retirement_records_in_window": 11,
+  "one_record_has_count_2": true,
+  "style": {
+    "width_mm": 160,
+    "height_pt": 430,
+    "minimum_text_pt": 11,
+    "text": "#242424",
+    "structure": "#766E65",
+    "cycle": "#242424",
+    "instret": "#CE4B32",
+    "fence": "#766E65",
+    "background": "#F6F3EE",
+    "subtle": "#DAD4CB"
+  },
+  "field_notes": {
+    "rob": "ROB enqueue relative tick, not ROB index.",
+    "r0": "run replay=0, not sample repeat=0."
+  }
+}

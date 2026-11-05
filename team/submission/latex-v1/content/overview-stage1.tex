@@ -1,0 +1,112 @@
+\reporttitle{第一阶段执行日志与过程文档}
+
+本阶段记录2026年10月9日完成的香山仿真环境部署、hello程序运行和向量加法验证。报告初稿整理于2026年11月2日；后续自定义vdot工程的选定版本见《最终版本确认》。\par
+
+\section{实验目的}
+
+本阶段建立香山RTL仿真器、NEMU参考模型与裸机程序协同工作的运行入口。hello程序用于检查启动流程和串口输出，vadd程序用于观察向量配置、数据加载、按元素运算、写回与提交。通过共同启动镜像和差分比较，将工具链生成的产物与实际运行结果连接起来，为后续指令扩展提供可复用的环境。\par
+
+\section{环境与部署过程}
+
+原实验使用Windows下的WSL2 Ubuntu 22.04.5，宿主处理器为Ryzen 7 7840H，可用物理内存约27.7GiB。WSL配置20GB内存与16GB swap，硬件生成、编译和仿真在WSL原生文件系统中执行。下表列出阶段一的主要版本与运行设置；完整子模块锁和工具输出列于文后。\par
+
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.25\linewidth}>{\raggedright\arraybackslash}p{0.69\linewidth}}
+\toprule
+\textbf{组件} & \textbf{固定版本或设置}\\ \midrule\endhead
+xs-env & \seqsplit{b0b506481e839a5df8a580e76f5aa246dc60fe7c}\\
+原香山基线 & \seqsplit{16ae9ddcda54fc9a2fddffad73174cf793ac7814}\\
+原NEMU基线 & \seqsplit{a48a11f208ff81ad765591d83271d1b339fb3861}\\
+nexus-am & \seqsplit{086a238062fdfb3281b745a537b361983d0154b5}\\
+JDK / Mill / firtool & 21.0.12 / 0.12.3 / 1.62.1\\
+Verilator & 5.052，固定ea338be提交\\
+RISC-V GCC / binutils & 11.4.0 / 2.38\\
+DUT & MinimalConfig、单核、VLEN128\\
+原波形构建 & EMU\_THREADS=1、EMU\_TRACE=fst\\
+\bottomrule\end{longtable}}
+
+部署按照依赖关系推进：配置WSL资源，检出配套源码和递归依赖，核对工具版本，分别构建NEMU reference与香山EMU，编译hello/vadd及启动镜像，最后执行差分运行。命令、退出状态、版本和文件摘要随各阶段产物一起保存。\par
+
+复现入口由以下脚本组成。工作负载中的团队标识由成员确认后填写；构建与运行输出应使用独立目录，以便对应具体实验。\par
+
+\begin{Verbatim}[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\small]
+source team/scripts/activate.sh
+bash team/scripts/check-environment.sh
+bash team/scripts/stage1.sh nemu
+bash team/scripts/stage1.sh emu
+TEAM_ID=正式团队标识 bash team/scripts/stage1.sh workload
+bash team/scripts/stage1.sh run
+\end{Verbatim}
+
+部署中遇到的首个差分问题位于启动PC 0x10000004。检查发现两端默认flash分别包含3条和6条启动指令。随后使用同一boot-flash.S生成12字节镜像，并在启动命令中显式指定共同flash、128MB RAM和固定reference。完整定位过程见后文“启动差分故障的定位与修复”。\par
+
+\section{hello与vadd验证结果}
+
+hello输出包含团队标识和WSL宿主IPv4。2026年10月9日记录使用的团队字符串为riscv-vdot-team，本文按原日志保留。正式团队名称等身份信息集中列于封面。\par
+
+vadd程序采用SEW8、LMUL1和VL8，依次执行两次向量加载、一次vadd.vv及一次向量存储，再将八个结果字节与标量参考逐项比较。三个用例分别检查基本加法、负数补码和定宽回绕。\par
+
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.25\linewidth}>{\raggedright\arraybackslash}p{0.69\linewidth}}
+\toprule
+\textbf{用例} & \textbf{输出字节}\\ \midrule\endhead
+正数 & 9 9 9 9 9 9 9 9\\
+负数补码 & 254 252 250 248 246 244 242 240\\
+边界回绕 & 128 127 0 0 0 0 254 254\\
+\bottomrule\end{longtable}}
+
+正常运行记录包含HELLO\_VADD\_PASS cases=3 lanes=24、GOOD TRAP和真实退出状态0，运行期间启用DiffTest。EMU统计为16557条指令、42962周期，统计对象是包含启动、UART与结果校验的完整程序。各用例的数值解释见本节“定宽加法与字节结果”，事件关系见“基于波形的向量执行过程”。\par
+
+\section{波形与执行过程}
+
+取指和译码之后，向量指令经重命名、调度与操作数准备进入执行单元。两个vle8.v提供输入，vadd.vv完成按元素加法，结果进入写回路径并在ROB提交。差分系统在架构状态比较点与NEMU对应状态核对，内部观察器则记录输入、输出和提交事件。\par
+
+原波形提取的vadd提交PC为0x80000138，机器码为0x021101d7，vecwen=1、wdest=3。下表按这组指令身份关联三个用例的事件坐标与低64位结果。\par
+
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.1\linewidth}>{\raggedright\arraybackslash}p{0.16\linewidth}>{\raggedright\arraybackslash}p{0.16\linewidth}>{\raggedright\arraybackslash}p{0.16\linewidth}>{\raggedright\arraybackslash}p{0.34\linewidth}}
+\toprule
+\textbf{用例} & \textbf{输入事件坐标} & \textbf{输出事件坐标} & \textbf{提交事件坐标} & \textbf{运算输出低64位}\\ \midrule\endhead
+正数 & 19625 & 19626 & 19631 & \seqsplit{0x0909090909090909}\\
+负数 & 25460 & 25461 & 25466 & \seqsplit{0xf0f2f4f6f8fafcfe}\\
+边界 & 33009 & 33010 & 33015 & \seqsplit{0xfefe000000007f80}\\
+\bottomrule\end{longtable}}
+
+三个观察点展示了执行结果产生到架构提交的流水关系。表中数字是原CSV事件坐标，图中间距用于组织阅读；现有局部截图未显示时钟，因而本节按事件位置解释记录，不把坐标差换算为物理时间或固定指令时延。需要进一步查看握手时，可恢复对应完整波形，联合定位时钟、valid、ready和结果信号。\par
+
+{\raggedright 原归档记载的完整FST路径为\seqsplit{/home/riscv/riscv-lab/stage1-evidence/hello-vadd.fst}，文件大小220295598字节。该记录属于2026年10月9日基线，恢复时以归档索引和文件摘要定位。最终0f环境的hello/vadd验证记录由R5验收单独绑定。\par}
+
+\section{结论及附件}
+
+阶段一完成了配套环境部署、启动差异定位、共同flash配置和三类向量加法用例的差分运行。软件输出、EMU退出状态、事件CSV和原波形为后续分析提供了互相对应的记录；自定义vdot的语义、父级控制与性能验证在后续阶段展开。\par
+
+阶段一证据目录为\seqsplit{team/evidence/stage1-20261009}，包含\seqsplit{hello-vadd-summary.log}、工具版本、子模块锁、boot-flash反汇编、\seqsplit{vadd-commit-events.csv}及\seqsplit{vector-fix-alu-events.csv}。程序源码位于\seqsplit{team/workloads/hello-vadd}，本文源目录中的evidence保存用于报告展示的对应材料。\par
+
+\href{https://github.com/cc77-builder/riscv/blob/eca41d7cd959f5f3c4f240e382919c492d1ccb96/team/docs/stage1.md}{阶段一原记录} · \href{https://github.com/cc77-builder/riscv/blob/eca41d7cd959f5f3c4f240e382919c492d1ccb96/team/docs/environment.md}{环境记录}\par
+
+\section{构建与运行记录}
+本节摘录原归档中的操作时间、程序构建输出和运行结果。日志中的日期、路径、命令及退出状态保持原值。\par
+
+\subsection{构建与运行时间}
+\begin{itemize}
+\item 2026年10月9日20:42:15，中断并恢复C++构建，将并行度调为4，保留已完成对象。
+\item 2026年10月9日20:53:32，EMU构建结束，状态文件记录exit\_code=0。
+\item 2026年10月9日20:55:26，workload与共同flash构建结束，记录\seqsplit{WORKLOAD\_BUILD\_PASS}。
+\item 原正常运行于21:00:28结束，退出状态为0。
+\end{itemize}
+
+\subsection{程序构建}
+\VerbatimInput[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\small]{evidence/workload-build.log}
+
+\subsection{差分运行与结果}
+\VerbatimInput[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\small]{evidence/hello-vadd-summary.log}
+
+\section{向量执行事件}
+% S1-06 insertion marker: apply_figure_slots replaces this entire legacy-shaped block.
+\begin{center}
+\begin{tikzpicture}
+\node {阶段一事件图插入位置};
+\end{tikzpicture}
+\end{center}
+
+事件图依据原FST提取的CSV绘制，按输入、输出和ROB提交组织三列。三类用例的完整坐标与结果见前表，信号层级及原始记录见波形归档。\par
+
+\section{日志与数据索引}
+evidence目录提供NEMU构建、EMU构建、workload构建、正常运行、启动失败和并行度调整日志，并包含工具版本、子模块锁、事件CSV及信号索引。正文用于解释主要过程，完整日志用于定位命令、产物和运行状态。\par

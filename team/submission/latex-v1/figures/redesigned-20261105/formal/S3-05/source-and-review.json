@@ -1,0 +1,123 @@
+{
+  "schema": "xiangshan-original-chart-record-v1",
+  "figure_id": "S3-05",
+  "status": "alternative-candidate-for-main-and-human-review",
+  "main_task_message_id": "0652dd85b1a3416ea819318dcf847daa",
+  "title": "四类微基准相对RVV的周期占比",
+  "source": {
+    "repository": "cc77-builder/riscv",
+    "commit": "e2c2e8d5fa9a92c5d99c3c3e3f5399d60a115c63",
+    "path": "team/optimizations/o2/r3-div-gate/performance/results/summary.csv",
+    "git_blob_sha": "5a30c92eacad99ab317f0f15825b8aa0a0d6e34e",
+    "url": "https://github.com/cc77-builder/riscv/blob/e2c2e8d5fa9a92c5d99c3c3e3f5399d60a115c63/team/optimizations/o2/r3-div-gate/performance/results/summary.csv"
+  },
+  "measurement_scope": "Existing frozen after rows only; no new benchmark, simulation, performance or EDA run.",
+  "sample_rule": "12 formal samples per scenario and method; before and after rows are not combined.",
+  "normalization": "100 × mean_window_cycles_VDot / mean_window_cycles_RVV, using the RVV mean of the same scenario.",
+  "bar_widths_use_unrounded_values": true,
+  "percentage_labels_decimal_places": 2,
+  "actual_cycle_labels_preserve_source_means": true,
+  "values": [
+    {
+      "scenario": "single",
+      "dots_per_window": 1,
+      "rvv_mean_cycles": "85.25",
+      "vdot_mean_cycles": "71",
+      "samples_per_method": 12,
+      "vdot_relative_percent": "83.28445747800586510263929618768328445748",
+      "displayed_percent": "83.28%",
+      "ratio_of_cycle_sums": "1.200704225352112676056338028169014084507"
+    },
+    {
+      "scenario": "chain",
+      "dots_per_window": 256,
+      "rvv_mean_cycles": "5440.5",
+      "vdot_mean_cycles": "1857",
+      "samples_per_method": 12,
+      "vdot_relative_percent": "34.13289219740832644058450510063413289220",
+      "displayed_percent": "34.13%",
+      "ratio_of_cycle_sums": "2.929725363489499192245557350565428109855"
+    },
+    {
+      "scenario": "batch",
+      "dots_per_window": 128,
+      "rvv_mean_cycles": "678",
+      "vdot_mean_cycles": "221",
+      "samples_per_method": 12,
+      "vdot_relative_percent": "32.59587020648967551622418879056047197640",
+      "displayed_percent": "32.60%",
+      "ratio_of_cycle_sums": "3.067873303167420814479638009049773755656"
+    },
+    {
+      "scenario": "stream",
+      "dots_per_window": 64,
+      "rvv_mean_cycles": "1133",
+      "vdot_mean_cycles": "1127.5",
+      "samples_per_method": 12,
+      "vdot_relative_percent": "99.51456310679611650485436893203883495146",
+      "displayed_percent": "99.51%",
+      "ratio_of_cycle_sums": "1.004878048780487804878048780487804878049"
+    }
+  ],
+  "rendering": {
+    "canvas_mm": [
+      160,
+      132
+    ],
+    "normal_font_points": [
+      11.5,
+      12
+    ],
+    "axis_percent": [
+      0,
+      100
+    ],
+    "axis_scale": "linear, shared by all four scenario pairs",
+    "method": "Matplotlib horizontal paired bars; SVG editable text; Inkscape PDF outlines; Poppler PNG at300dpi",
+    "matplotlib_version": "3.10.8",
+    "source_font": "Noto Sans CJK SC",
+    "pdf_text_outlined": true,
+    "pdf_searchable_text": false
+  },
+  "review": {
+    "numeric_source_check": "Root parsed the frozen CSV and statically compared all four data rows (means, sums, dots and n=12) to render.py: exact match.",
+    "independent_numeric_review": "Native stage2_reader_audit independently read the same frozen CSV and reproduced 83.28%,34.13%,32.60%,99.51%. Equal sample counts make mean ratio equal ratio of sums.",
+    "independent_visual_review": {
+      "agent": "native outline_review",
+      "viewed_png_sha256": "298a6e1614561bc217c4368f8a768d3bf975012e928c6baf74e1c49a3fd2de9c",
+      "finding": "Clear genuine bar comparison; no overlap/cropping; stream99.51% visible. Requested per-scenario denominator in wording.",
+      "resolved": "Final axis title explicitly says 相对本场景 RVV 周期."
+    },
+    "root_final_viewed": true,
+    "user_approval_claimed": false,
+    "initial_bytes_retained_in_scratch": "/workspace/scratch/79eded243990/tmp/microbench-initial-review-20261105-1814",
+    "root_final_viewed_png_sha256": "38481d3b040cd960bb2c83f1ed263d28e0a774194fa97c508b444a46f1cf135b",
+    "root_final_findings": [
+      "Actual final PNG inspected; no clipping or overlap.",
+      "All eight bars start at zero and use a common linear percent axis.",
+      "Per-scenario normalization is explicit in the final axis title; original window cycles remain inside bars.",
+      "Unrounded bar values preserve the small stream difference; displayed label is99.51%, not100%."
+    ]
+  },
+  "suggested_caption": "四类微基准的相对周期对照",
+  "adjacent_caption_note": "取固定after记录，各场景、各方法均为12个正式样本。各场景按自身RVV平均窗口周期归一化为100%，条内保留实际平均窗口cycles，条外为VDot周期占比。single、chain、batch、stream每窗口分别包含1、256、128、64次点积；batch为四路独立任务。加速比是周期总和之比，不能把图中的周期占比标为加速比。该图不表示完整应用性能。",
+  "files": {
+    "S3-05-normalized-cycles.svg": {
+      "bytes": 12933,
+      "sha256": "c2e9e2ef1fbd8993126567d7ace55e22f621eb69a6a29c625ae79899d03ab4a2"
+    },
+    "S3-05-normalized-cycles.pdf": {
+      "bytes": 44279,
+      "sha256": "b22d507c67572b75b9285e461179156dd80bc84bdf81ec8c3928ca91d18fc479"
+    },
+    "S3-05-normalized-cycles.png": {
+      "bytes": 128815,
+      "sha256": "38481d3b040cd960bb2c83f1ed263d28e0a774194fa97c508b444a46f1cf135b"
+    },
+    "render.py": {
+      "bytes": 6644,
+      "sha256": "a1dd0f0cebd3ad59215ae10acbdc015237bc9f0fa2f2b7e3aaa9bd9fcbe34591"
+    }
+  },
+  "recorded_at_utc": "2026-11-05T18:15:00.501350+00:00"
+}

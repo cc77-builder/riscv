@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="160mm" height="122mm" viewBox="0 0 1600 1220" role="img" aria-labelledby="title desc">
+<title id="title">S3-01 两种独立求值结构及对应架构状态比较</title>
+<desc id="desc">相同程序与初始状态分别进入RTL与NEMU。RTL示意八对有符号字节相乘及组合平衡归约；NEMU示意逐项乘法、从零开始的sum反馈及循环结束。算术结果仅写入各模型向量状态，CSR与异常来自各模型整体状态。三个中性比较节点分别接收一份DUT和一份参考的同类状态。图中不表示周期、完整硬件布线或测试通过。</desc>
+<style>text {font-family:Microsoft YaHei, 微软雅黑, SimSun, 宋体, "Noto Sans CJK SC", sans-serif;}</style>
+<defs>
+<marker id="blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M 1 1 L 9 5 L 1 9 Z" fill="#285D84"/></marker>
+<marker id="teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M 1 1 L 9 5 L 1 9 Z" fill="#267A78"/></marker>
+<marker id="ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M 1 1 L 9 5 L 1 9 Z" fill="#263745"/></marker>
+</defs>
+<rect x="0" y="0" width="1600" height="1220" rx="0" fill="white" stroke="none" stroke-width="1.8"/>
+<text x="800" y="57" text-anchor="middle" fill="#263745" font-size="42" font-weight="400">同一程序与初始状态</text>
+<path d="M 800 82 L 800 125" fill="none" stroke="#263745" stroke-width="2.2"/>
+<circle cx="800" cy="125" r="4" fill="#263745"/>
+<path d="M 800 125 H 385 V 196" fill="none" stroke="#285D84" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#blue)"/>
+<path d="M 800 125 H 1215 V 196" fill="none" stroke="#267A78" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#teal)"/>
+<rect x="40" y="200" width="690" height="920" rx="10" fill="white" stroke="#285D84" stroke-width="1.9"/>
+<rect x="41" y="201" width="688" height="66" rx="8" fill="#F0F5FA" stroke="none" stroke-width="1.8"/>
+<text x="72" y="247" text-anchor="start" fill="#285D84" font-size="44" font-weight="600">RTL / 硬件求值</text>
+<path d="M 64 790 L 706 790" fill="none" stroke="#CFDAE2" stroke-width="1.5"/>
+<rect x="870" y="200" width="690" height="920" rx="10" fill="white" stroke="#267A78" stroke-width="1.9"/>
+<rect x="871" y="201" width="688" height="66" rx="8" fill="#EFF7F6" stroke="none" stroke-width="1.8"/>
+<text x="902" y="247" text-anchor="start" fill="#267A78" font-size="44" font-weight="600">NEMU / 参考求值</text>
+<path d="M 894 790 L 1536 790" fill="none" stroke="#CFDAE2" stroke-width="1.5"/>
+<text x="385" y="313" text-anchor="middle" fill="#285D84" font-size="41" font-weight="400">8 对 signed8</text>
+<rect x="106" y="335" width="24" height="35" rx="0" fill="#F0F5FA" stroke="#285D84" stroke-width="1.6"/>
+<rect x="136" y="335" width="24" height="35" rx="0" fill="white" stroke="#285D84" stroke-width="1.6"/>
+<path d="M 118 370 L 123 392" fill="none" stroke="#285D84" stroke-width="1.8" marker-end="url(#blue)"/>
+<path d="M 148 370 L 143 392" fill="none" stroke="#285D84" stroke-width="1.8" marker-end="url(#blue)"/>
+<g id="rtl_mul_0"><circle cx="133" cy="416" r="24" fill="#F0F5FA" stroke="#285D84" stroke-width="2"/>
+<text x="133" y="430" text-anchor="middle" fill="#285D84" font-size="41" font-weight="400">×</text>
+</g>
+<rect x="178" y="335" width="24" height="35" rx="0" fill="#F0F5FA" stroke="#285D84" stroke-width="1.6"/>
+<rect x="208" y="335" width="24" height="35" rx="0" fill="white" stroke="#285D84" stroke-width="1.6"/>
+<path d="M 190 370 L 195 392" fill="none" stroke="#285D84" stroke-width="1.8" marker-end="url(#blue)"/>
+<path d="M 220 370 L 215 392" fill="none" stroke="#285D84" stroke-width="1.8" marker-end="url(#blue)"/>
+<g id="rtl_mul_1"><circle cx="205" cy="416" r="24" fill="#F0F5FA" stroke="#285D84" stroke-width="2"/>
+<text x="205" y="430" text-anchor="middle" fill="#285D84" font-size="41" font-weight="400">×</text>
+</g>
+<rect x="250" y="335" width="24" height="35" rx="0" fill="#F0F5FA" stroke="#285D84" stroke-width="1.6"/>
+<rect x="280" y="335" width="24" height="35" rx="0" fill="white" stroke="#285D84" stroke-width="1.6"/>
+<path d="M 262 370 L 267 392" fill="none" stroke="#285D84" stroke-width="1.8" marker-end="url(#blue)"/>
+<path d="M 292 370 L 287 392" fill="none" stroke="#285D84" stroke-width="1.8" marker-end="url(#blue)"/>
+<g id="rtl_mul_2"><circle cx="277" cy="416" r="24" fill="#F0F5FA" stroke="#285D84" stroke-width="2"/>
+<text x="277" y="430" text-anchor="middle" fill="#285D84" font-size="41" font-weight="400">×</text>
+</g>
+<rect x="322" y="335" width="24" height="35" rx="0" fill="#F0F5FA" stroke="#285D84" stroke-width="1.6"/>
+<rect x="352" y="335" width="24" height="35" rx="0" fill="white" stroke="#285D84" stroke-width="1.6"/>
+<path d="M 334 370 L 339 392" fill="none" stroke="#285D84" stroke-width="1.8" marker-end="url(#blue)"/>
+<path d="M 364 370 L 359 392" fill="none" stroke="#285D84" stroke-width="1.8" marker-end="url(#blue)"/>
+<g id="rtl_mul_3"><circle cx="349" cy="416" r="24" fill="#F0F5FA" stroke="#285D84" stroke-width="2"/>
+<text x="349" y="430" text-anchor="middle" fill="#285D84" font-size="41" font-weight="400">×</text>
+</g>
+<rect x="394" y="335" width="24" height="35" rx="0" fill="#F0F5FA" stroke="#285D84" stroke-width="1.6"/>
+<rect x="424" y="335" width="24" height="35" rx="0" fill="white" stroke="#285D84" stroke-width="1.6"/>
+<path d="M 406 370 L 411 392" fill="none" stroke="#285D84" stroke-width="1.8" marker-end="url(#blue)"/>
+<path d="M 436 370 L 431 392" fill="none" stroke="#285D84" stroke-width="1.8" marker-end="url(#blue)"/>
+<g id="rtl_mul_4"><circle cx="421" cy="416" r="24" fill="#F0F5FA" stroke="#285D84" stroke-width="2"/>
+<text x="421" y="430" text-anchor="middle" fill="#285D84" font-size="41" font-weight="400">×</text>
+</g>
+<rect x="466" y="335" width="24" height="35" rx="0" fill="#F0F5FA" stroke="#285D84" stroke-width="1.6"/>
+<rect x="496" y="335" width="24" height="35" rx="0" fill="white" stroke="#285D84" stroke-width="1.6"/>
+<path d="M 478 370 L 483 392" fill="none" stroke="#285D84" stroke-width="1.8" marker-end="url(#blue)"/>
+<path d="M 508 370 L 503 392" fill="none" stroke="#285D84" stroke-width="1.8" marker-end="url(#blue)"/>
+<g id="rtl_mul_5"><circle cx="493" cy="416" r="24" fill="#F0F5FA" stroke="#285D84" stroke-width="2"/>
+<text x="493" y="430" text-anchor="middle" fill="#285D84" font-size="41" font-weight="400">×</text>
+</g>
+<rect x="538" y="335" width="24" height="35" rx="0" fill="#F0F5FA" stroke="#285D84" stroke-width="1.6"/>
+<rect x="568" y="335" width="24" height="35" rx="0" fill="white" stroke="#285D84" stroke-width="1.6"/>
+<path d="M 550 370 L 555 392" fill="none" stroke="#285D84" stroke-width="1.8" marker-end="url(#blue)"/>
+<path d="M 580 370 L 575 392" fill="none" stroke="#285D84" stroke-width="1.8" marker-end="url(#blue)"/>
+<g id="rtl_mul_6"><circle cx="565" cy="416" r="24" fill="#F0F5FA" stroke="#285D84" stroke-width="2"/>
+<text x="565" y="430" text-anchor="middle" fill="#285D84" font-size="41" font-weight="400">×</text>
+</g>
+<rect x="610" y="335" width="24" height="35" rx="0" fill="#F0F5FA" stroke="#285D84" stroke-width="1.6"/>
+<rect x="640" y="335" width="24" height="35" rx="0" fill="white" stroke="#285D84" stroke-width="1.6"/>
+<path d="M 622 370 L 627 392" fill="none" stroke="#285D84" stroke-width="1.8" marker-end="url(#blue)"/>
+<path d="M 652 370 L 647 392" fill="none" stroke="#285D84" stroke-width="1.8" marker-end="url(#blue)"/>
+<g id="rtl_mul_7"><circle cx="637" cy="416" r="24" fill="#F0F5FA" stroke="#285D84" stroke-width="2"/>
+<text x="637" y="430" text-anchor="middle" fill="#285D84" font-size="41" font-weight="400">×</text>
+</g>
+<path d="M 133 440 V 468 L 159.0 497" fill="none" stroke="#285D84" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#blue)"/>
+<path d="M 205 440 V 468 L 179.0 497" fill="none" stroke="#285D84" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#blue)"/>
+<g id="rtl_add1_0"><circle cx="169.0" cy="521" r="24" fill="#F0F5FA" stroke="#285D84" stroke-width="2"/>
+<text x="169.0" y="535" text-anchor="middle" fill="#285D84" font-size="41" font-weight="400">+</text>
+</g>
+<path d="M 277 440 V 468 L 303.0 497" fill="none" stroke="#285D84" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#blue)"/>
+<path d="M 349 440 V 468 L 323.0 497" fill="none" stroke="#285D84" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#blue)"/>
+<g id="rtl_add1_1"><circle cx="313.0" cy="521" r="24" fill="#F0F5FA" stroke="#285D84" stroke-width="2"/>
+<text x="313.0" y="535" text-anchor="middle" fill="#285D84" font-size="41" font-weight="400">+</text>
+</g>
+<path d="M 421 440 V 468 L 447.0 497" fill="none" stroke="#285D84" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#blue)"/>
+<path d="M 493 440 V 468 L 467.0 497" fill="none" stroke="#285D84" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#blue)"/>
+<g id="rtl_add1_2"><circle cx="457.0" cy="521" r="24" fill="#F0F5FA" stroke="#285D84" stroke-width="2"/>
+<text x="457.0" y="535" text-anchor="middle" fill="#285D84" font-size="41" font-weight="400">+</text>
+</g>
+<path d="M 565 440 V 468 L 591.0 497" fill="none" stroke="#285D84" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#blue)"/>
+<path d="M 637 440 V 468 L 611.0 497" fill="none" stroke="#285D84" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#blue)"/>
+<g id="rtl_add1_3"><circle cx="601.0" cy="521" r="24" fill="#F0F5FA" stroke="#285D84" stroke-width="2"/>
+<text x="601.0" y="535" text-anchor="middle" fill="#285D84" font-size="41" font-weight="400">+</text>
+</g>
+<path d="M 169.0 545 V 565 L 231.0 577" fill="none" stroke="#285D84" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#blue)"/>
+<path d="M 313.0 545 V 565 L 251.0 577" fill="none" stroke="#285D84" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#blue)"/>
+<g id="rtl_add2_0"><circle cx="241.0" cy="601" r="24" fill="#F0F5FA" stroke="#285D84" stroke-width="2"/>
+<text x="241.0" y="615" text-anchor="middle" fill="#285D84" font-size="41" font-weight="400">+</text>
+</g>
+<path d="M 457.0 545 V 565 L 519.0 577" fill="none" stroke="#285D84" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#blue)"/>
+<path d="M 601.0 545 V 565 L 539.0 577" fill="none" stroke="#285D84" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#blue)"/>
+<g id="rtl_add2_1"><circle cx="529.0" cy="601" r="24" fill="#F0F5FA" stroke="#285D84" stroke-width="2"/>
+<text x="529.0" y="615" text-anchor="middle" fill="#285D84" font-size="41" font-weight="400">+</text>
+</g>
+<path d="M 241.0 625 V 641 L 375 647" fill="none" stroke="#285D84" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#blue)"/>
+<path d="M 529.0 625 V 641 L 395 647" fill="none" stroke="#285D84" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#blue)"/>
+<g id="rtl_add3"><circle cx="385" cy="671" r="24" fill="#F0F5FA" stroke="#285D84" stroke-width="2"/>
+<text x="385" y="685" text-anchor="middle" fill="#285D84" font-size="41" font-weight="400">+</text>
+</g>
+<path d="M 385 695 L 385 730" fill="none" stroke="#285D84" stroke-width="2.2" marker-end="url(#blue)"/>
+<text x="80" y="746" text-anchor="start" fill="#65747F" font-size="41" font-weight="400">组合归约</text>
+<rect x="315" y="730" width="140" height="50" rx="6" fill="#F0F5FA" stroke="#285D84" stroke-width="1.8"/>
+<text x="385" y="764" text-anchor="middle" fill="#285D84" font-size="41" font-weight="400">D</text>
+<text x="1215" y="313" text-anchor="middle" fill="#267A78" font-size="41" font-weight="400">i = 0 … 7</text>
+<rect x="1030" y="335" width="370" height="56" rx="6" fill="#EFF7F6" stroke="#267A78" stroke-width="1.8"/>
+<text x="1215" y="373" text-anchor="middle" fill="#267A78" font-size="41" font-weight="400">a[i] , b[i]</text>
+<path d="M 1215 391 L 1215 419" fill="none" stroke="#267A78" stroke-width="2.2" marker-end="url(#teal)"/>
+<g id="nemu_mul"><circle cx="1215" cy="445" r="26" fill="#EFF7F6" stroke="#267A78" stroke-width="2"/>
+<text x="1215" y="459" text-anchor="middle" fill="#267A78" font-size="41" font-weight="400">×</text>
+</g>
+<path d="M 1215 471 L 1215 523" fill="none" stroke="#267A78" stroke-width="2.2" marker-end="url(#teal)"/>
+<g id="nemu_add"><circle cx="1215" cy="548" r="25" fill="#EFF7F6" stroke="#267A78" stroke-width="2"/>
+<text x="1215" y="562" text-anchor="middle" fill="#267A78" font-size="41" font-weight="400">+</text>
+</g>
+<path d="M 1215 573 L 1215 630" fill="none" stroke="#267A78" stroke-width="2.2" marker-end="url(#teal)"/>
+<rect x="1130" y="630" width="170" height="62" rx="6" fill="#EFF7F6" stroke="#267A78" stroke-width="1.8"/>
+<text x="1215" y="672" text-anchor="middle" fill="#267A78" font-size="41" font-weight="400">sum</text>
+<text x="1102" y="673" text-anchor="end" fill="#65747F" font-size="41" font-weight="400">初值 0</text>
+<path d="M 1108 660 L 1128 660" fill="none" stroke="#267A78" stroke-width="1.8" marker-end="url(#teal)"/>
+<path d="M 1300 661 H 1470 V 548 H 1241" fill="none" stroke="#267A78" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#teal)"/>
+<text x="1385" y="518" text-anchor="middle" fill="#267A78" font-size="41" font-weight="400">循环</text>
+<path d="M 1215 692 L 1215 730" fill="none" stroke="#267A78" stroke-width="2.2" marker-end="url(#teal)"/>
+<text x="1310" y="724" text-anchor="start" fill="#65747F" font-size="41" font-weight="400">结束</text>
+<rect x="1145" y="730" width="140" height="50" rx="6" fill="#EFF7F6" stroke="#267A78" stroke-width="1.8"/>
+<text x="1215" y="764" text-anchor="middle" fill="#267A78" font-size="41" font-weight="400">R</text>
+<text x="75" y="845" text-anchor="start" fill="#285D84" font-size="41" font-weight="400">对应提交状态</text>
+<rect x="75" y="870" width="620" height="220" rx="5" fill="white" stroke="#285D84" stroke-width="1.7"/>
+<path d="M 75 945 L 695 945" fill="none" stroke="#285D84" stroke-width="1.4"/>
+<path d="M 75 1017 L 695 1017" fill="none" stroke="#285D84" stroke-width="1.4"/>
+<text x="95" y="921" text-anchor="start" fill="#263745" font-size="41" font-weight="400">vd[127:0]</text>
+<text x="95" y="995" text-anchor="start" fill="#263745" font-size="41" font-weight="400">向量 CSR</text>
+<text x="95" y="1067" text-anchor="start" fill="#263745" font-size="41" font-weight="400">异常状态</text>
+<rect x="355" y="884" width="305" height="42" rx="0" fill="white" stroke="#285D84" stroke-width="1.6"/>
+<rect x="583.75" y="884" width="76.25" height="42" rx="0" fill="#F0F5FA" stroke="#285D84" stroke-width="1.6"/>
+<text x="469.375" y="918" text-anchor="middle" fill="#65747F" font-size="41" font-weight="400">0</text>
+<text x="621.875" y="918" text-anchor="middle" fill="#285D84" font-size="41" font-weight="400">D</text>
+<rect x="355" y="960" width="80" height="43" rx="3" fill="#F0F5FA" stroke="#285D84" stroke-width="1.5"/>
+<text x="395.0" y="993" text-anchor="middle" fill="#285D84" font-size="41" font-weight="400">vl</text>
+<rect x="455" y="960" width="135" height="43" rx="3" fill="#F0F5FA" stroke="#285D84" stroke-width="1.5"/>
+<text x="522.5" y="993" text-anchor="middle" fill="#285D84" font-size="41" font-weight="400">vtype</text>
+<rect x="610" y="960" width="50" height="43" rx="3" fill="#F0F5FA" stroke="#285D84" stroke-width="1.5"/>
+<text x="635.0" y="993" text-anchor="middle" fill="#285D84" font-size="41" font-weight="400">…</text>
+<rect x="355" y="1026" width="305" height="55" rx="3" fill="#F0F5FA" stroke="#285D84" stroke-width="1.5"/>
+<text x="507.5" y="1069" text-anchor="middle" fill="#285D84" font-size="41" font-weight="400">异常信息</text>
+<text x="905" y="845" text-anchor="start" fill="#267A78" font-size="41" font-weight="400">参考架构状态</text>
+<rect x="905" y="870" width="620" height="220" rx="5" fill="white" stroke="#267A78" stroke-width="1.7"/>
+<path d="M 905 945 L 1525 945" fill="none" stroke="#267A78" stroke-width="1.4"/>
+<path d="M 905 1017 L 1525 1017" fill="none" stroke="#267A78" stroke-width="1.4"/>
+<text x="925" y="921" text-anchor="start" fill="#263745" font-size="41" font-weight="400">vd[127:0]</text>
+<text x="925" y="995" text-anchor="start" fill="#263745" font-size="41" font-weight="400">向量 CSR</text>
+<text x="925" y="1067" text-anchor="start" fill="#263745" font-size="41" font-weight="400">异常状态</text>
+<rect x="1185" y="884" width="305" height="42" rx="0" fill="white" stroke="#267A78" stroke-width="1.6"/>
+<rect x="1413.75" y="884" width="76.25" height="42" rx="0" fill="#EFF7F6" stroke="#267A78" stroke-width="1.6"/>
+<text x="1299.375" y="918" text-anchor="middle" fill="#65747F" font-size="41" font-weight="400">0</text>
+<text x="1451.875" y="918" text-anchor="middle" fill="#267A78" font-size="41" font-weight="400">R</text>
+<rect x="1185" y="960" width="80" height="43" rx="3" fill="#EFF7F6" stroke="#267A78" stroke-width="1.5"/>
+<text x="1225.0" y="993" text-anchor="middle" fill="#267A78" font-size="41" font-weight="400">vl</text>
+<rect x="1285" y="960" width="135" height="43" rx="3" fill="#EFF7F6" stroke="#267A78" stroke-width="1.5"/>
+<text x="1352.5" y="993" text-anchor="middle" fill="#267A78" font-size="41" font-weight="400">vtype</text>
+<rect x="1440" y="960" width="50" height="43" rx="3" fill="#EFF7F6" stroke="#267A78" stroke-width="1.5"/>
+<text x="1465.0" y="993" text-anchor="middle" fill="#267A78" font-size="41" font-weight="400">…</text>
+<rect x="1185" y="1026" width="305" height="55" rx="3" fill="#EFF7F6" stroke="#267A78" stroke-width="1.5"/>
+<text x="1337.5" y="1069" text-anchor="middle" fill="#267A78" font-size="41" font-weight="400">异常信息</text>
+<path d="M 455 755 H 621.875 V 882" fill="none" stroke="#285D84" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#blue)"/>
+<path d="M 1285 755 H 1451.875 V 882" fill="none" stroke="#267A78" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#teal)"/>
+<path d="M 695 907.5 L 764 907.5" fill="none" stroke="#285D84" stroke-width="2.2" marker-end="url(#blue)"/>
+<path d="M 905 907.5 L 836 907.5" fill="none" stroke="#267A78" stroke-width="2.2" marker-end="url(#teal)"/>
+<g id="compare_vector"><path d="M 800 876.5 L 835 907.5 L 800 938.5 L 765 907.5 Z" fill="white" stroke="#263745" stroke-width="1.8"/>
+<text x="800" y="921.5" text-anchor="middle" fill="#263745" font-size="41" font-weight="400">?</text>
+</g>
+<path d="M 695 981 L 764 981" fill="none" stroke="#285D84" stroke-width="2.2" marker-end="url(#blue)"/>
+<path d="M 905 981 L 836 981" fill="none" stroke="#267A78" stroke-width="2.2" marker-end="url(#teal)"/>
+<g id="compare_vcsr"><path d="M 800 950 L 835 981 L 800 1012 L 765 981 Z" fill="white" stroke="#263745" stroke-width="1.8"/>
+<text x="800" y="995" text-anchor="middle" fill="#263745" font-size="41" font-weight="400">?</text>
+</g>
+<path d="M 695 1053.5 L 764 1053.5" fill="none" stroke="#285D84" stroke-width="2.2" marker-end="url(#blue)"/>
+<path d="M 905 1053.5 L 836 1053.5" fill="none" stroke="#267A78" stroke-width="2.2" marker-end="url(#teal)"/>
+<g id="compare_exception"><path d="M 800 1022.5 L 835 1053.5 L 800 1084.5 L 765 1053.5 Z" fill="white" stroke="#263745" stroke-width="1.8"/>
+<text x="800" y="1067.5" text-anchor="middle" fill="#263745" font-size="41" font-weight="400">?</text>
+</g>
+<text x="800" y="1188" text-anchor="middle" fill="#263745" font-size="42" font-weight="400">DiffTest</text>
+</svg>

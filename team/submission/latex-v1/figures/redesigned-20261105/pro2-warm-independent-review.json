@@ -1,0 +1,72 @@
+{
+  "reviewer": "coordination_audit",
+  "scope": "独立实图视觉检查及与当前图注/相关正文的一致性审查；没有修改正式资产，也没有执行新的工程验证。",
+  "overall_verdict": "ACCEPT",
+  "must_change_count": 0,
+  "images": [
+    {
+      "id": "S3-02",
+      "file": "S3-02-warm-branches-v1.png",
+      "verdict": "ACCEPT",
+      "must_change": [],
+      "findings": [
+        "实看全部12处标签，未见错字、裁切或箭头遮挡。",
+        "未匹配分支独立通往其他译码；匹配后再检查向量状态。非法状态分支终止于触发异常、vd不写回，没有重新接入合法执行路径。",
+        "合法路径依次为双源快照、点积运算、完整写回；与当前正文的先读源后写回及别名语义一致。"
+      ],
+      "prose_refs": [
+        "content/narrative-stage3.md：指令译码与异常行为",
+        "content/overview-stage3.tex：NEMU执行过程与平台适配",
+        "figures/placement.json：S3-02"
+      ],
+      "sha256": "81669a2a25cba5a8772b9eeb8bd255fe4c8f8afa20d9984451fde29686cfc7b3",
+      "record_file": "S3-02-warm-branches-v1-record.json",
+      "record_sha256_match": true,
+      "actual_image_viewed": true,
+      "readability_at_160mm": "ACCEPT：关键标签均为大字，按160mm报告宽度判断无明显阅读障碍；此为实图视觉判断，未将栅格文字声明为精确字号测量。"
+    },
+    {
+      "id": "S3-08",
+      "file": "S3-08-warm-comparison-v2.png",
+      "verdict": "ACCEPT",
+      "must_change": [],
+      "findings": [
+        "实看全部9处标签，分组括号与唯一条件箭头清楚，没有空表格、错误合流或新运行标记。",
+        "原验证程序、同源重建、SDK实际链接是三个对照对象；装载内容与调用/输入为核查对象，调试节可不同单独注明。",
+        "一致时才沿用既有夹具证据，范围没有扩展为任意应用资格或完整ELF全字节相同；与当前正文的装载内容及原测试记录复用一致。"
+      ],
+      "prose_refs": [
+        "content/narrative-stage3.md：从对象到最终镜像的等价检查",
+        "content/narrative-stage3.md：接入检查器的正负控制",
+        "figures/placement.json：S3-08"
+      ],
+      "sha256": "bff6b3f3d1d7c12c6724c28ab8adb23cf00e29ea0e3b2143b4e58f6ef23fe9e4",
+      "record_file": "S3-08-warm-comparison-v2-record.json",
+      "record_sha256_match": true,
+      "actual_image_viewed": true,
+      "readability_at_160mm": "ACCEPT：关键标签均为大字，按160mm报告宽度判断无明显阅读障碍；此为实图视觉判断，未将栅格文字声明为精确字号测量。"
+    },
+    {
+      "id": "S3-09",
+      "file": "S3-09-warm-evidence-v2.png",
+      "verdict": "ACCEPT",
+      "must_change": [],
+      "findings": [
+        "实看全部9处标签，未见错字、截断或范围之间的误导性箭头。",
+        "明确写成整核物理指标未测，没有否定已测得的全核仿真周期；当前正文及placement明确对应整核Fmax、布线后时序和功耗。",
+        "旧UTC容量审计FAIL、墙钟稳定性未证实、1ns负裕量和未测物理指标分别列示，与正文的宿主审计历史失败及13项复用加1项新诊断的边界一致。"
+      ],
+      "prose_refs": [
+        "content/narrative-stage3.md：复现与R5组合验收",
+        "content/narrative-stage3.md：STA约束与路径分类、父级关键路径与优化方向",
+        "figures/placement.json：S3-09"
+      ],
+      "sha256": "ec8eafad0b1401bb6300074de1f93d761ea5881154cb1ed18cfc18db39ea2e47",
+      "record_file": "S3-09-warm-evidence-v2-record.json",
+      "record_sha256_match": true,
+      "actual_image_viewed": true,
+      "readability_at_160mm": "ACCEPT：关键标签均为大字，按160mm报告宽度判断无明显阅读障碍；此为实图视觉判断，未将栅格文字声明为精确字号测量。"
+    }
+  ],
+  "adoption_boundary": "结论仅为图文与阅读审查接受；最终人工审美采用及正文集成由主端处理。"
+}

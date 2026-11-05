@@ -8,6 +8,12 @@ def format_report(body, stage):
     if stage == 1:
         body = body.replace(r"\subsection{固定源码}",
                             r"\Needspace{8\baselineskip}" + "\n" + r"\subsection{固定源码}")
+        body = body.replace(r"\subsection{源码版本与依赖恢复}",
+                            r"\Needspace{8\baselineskip}" + "\n" + r"\subsection{源码版本与依赖恢复}")
+    if stage == 3:
+        for title in ("优化候选的实测取舍", "取消关钟修复的对照输入"):
+            heading = r"\subsection{" + title + "}"
+            body = body.replace(heading, r"\Needspace{8\baselineskip}" + "\n" + heading)
     # Identity fields live on the cover; keep historical logs untouched.
     body = re.sub(r"^团队名称（待团队确认）[^\n]*\n", "", body, flags=re.M)
     body = body.replace(r"fontsize=\small", r"fontsize=\footnotesize,baselinestretch=1")

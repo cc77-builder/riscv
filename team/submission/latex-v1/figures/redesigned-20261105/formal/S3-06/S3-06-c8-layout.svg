@@ -1,0 +1,388 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" width="160mm" height="145mm" viewBox="0 0 160 145" version="1.1" role="img" aria-labelledby="title description">
+  <title id="title">C8 公共调用、编译选择与输入输出布局</title>
+  <desc id="description">xs_c8_gemv_8x32 is a compile-time alias. XS_C8_GEMV_FORCE_RVV=0 or absent selects the VDot implementation; 1 selects RVV. packed_ax contains row-major signed INT8 A[8][32], 256 bytes, immediately followed by x[32], 32 bytes. output_slots contains eight 16-byte slots. Each complete 128-bit slot contains zero in bits 127:32 and the signed dot product in bits 31:0. Bit fields are drawn high-to-low, not as an endianness diagram. Both buffers are 16-byte aligned and non-overlapping. VLEN=128.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 8 8" refX="6.8" refY="4" markerWidth="2.1" markerHeight="2.1" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#52687B" />
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="160.0" height="145.0" fill="#FFFFFF" stroke="none" stroke-width="0" />
+  <text x="80" y="7" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">xs_c8_gemv_8x32(packed_ax, output_slots)</text>
+  <text x="80" y="15" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">XS_C8_GEMV_FORCE_RVV</text>
+  <path d="M 80 17.5 V 20 H 39 V 27" stroke="#52687B" stroke-width="0.22" fill="none" stroke-dasharray="1.1 0.85" marker-end="url(#arrow)" />
+  <path d="M 80 20 H 121 V 27" stroke="#52687B" stroke-width="0.22" fill="none" stroke-dasharray="1.1 0.85" marker-end="url(#arrow)" />
+  <text x="19" y="24.4" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="start">0（缺省）</text>
+  <text x="130" y="24.4" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="start">1</text>
+  <text x="80" y="25.5" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">编译时绑定</text>
+  <text x="39" y="33" font-family="Noto Sans CJK SC" font-size="4.233333" font-weight="400" fill="#315D85" text-anchor="middle">VDot 实现</text>
+  <text x="121" y="33" font-family="Noto Sans CJK SC" font-size="4.233333" font-weight="400" fill="#237D82" text-anchor="middle">RVV 实现</text>
+  <line x1="22" y1="35.5" x2="56" y2="35.5" stroke="#315D85" stroke-width="0.45" fill="none" />
+  <line x1="104" y1="35.5" x2="138" y2="35.5" stroke="#237D82" stroke-width="0.45" fill="none" />
+  <line x1="4" y1="40" x2="156" y2="40" stroke="#CCD8E1" stroke-width="0.25" fill="none" />
+  <text x="46.5" y="47.3" font-family="DejaVu Sans Mono" font-size="4.233333" font-weight="400" fill="#24364A" text-anchor="middle">packed_ax · 288 B</text>
+  <text x="124.5" y="47.3" font-family="DejaVu Sans Mono" font-size="4.233333" font-weight="400" fill="#24364A" text-anchor="middle">output_slots · 128 B</text>
+  <text x="47" y="55.5" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#315D85" text-anchor="middle">A[8][32] · 256 B</text>
+  <text x="125" y="55.5" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">8 槽 × 16 B</text>
+  <text x="4" y="62.3" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="start">偏移</text>
+  <text x="4" y="68.4" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="start">/B</text>
+  <text x="16.0" y="68.4" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">0</text>
+  <text x="30.0" y="68.4" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">7</text>
+  <text x="46.0" y="68.4" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">15</text>
+  <text x="62.0" y="68.4" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">23</text>
+  <text x="78.0" y="68.4" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">31</text>
+  <rect x="15.0" y="72.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-0" />
+  <rect x="17.0" y="72.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-1" />
+  <rect x="19.0" y="72.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-2" />
+  <rect x="21.0" y="72.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-3" />
+  <rect x="23.0" y="72.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-4" />
+  <rect x="25.0" y="72.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-5" />
+  <rect x="27.0" y="72.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-6" />
+  <rect x="29.0" y="72.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-7" />
+  <rect x="31.0" y="72.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-8" />
+  <rect x="33.0" y="72.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-9" />
+  <rect x="35.0" y="72.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-10" />
+  <rect x="37.0" y="72.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-11" />
+  <rect x="39.0" y="72.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-12" />
+  <rect x="41.0" y="72.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-13" />
+  <rect x="43.0" y="72.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-14" />
+  <rect x="45.0" y="72.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-15" />
+  <rect x="47.0" y="72.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-16" />
+  <rect x="49.0" y="72.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-17" />
+  <rect x="51.0" y="72.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-18" />
+  <rect x="53.0" y="72.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-19" />
+  <rect x="55.0" y="72.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-20" />
+  <rect x="57.0" y="72.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-21" />
+  <rect x="59.0" y="72.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-22" />
+  <rect x="61.0" y="72.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-23" />
+  <rect x="63.0" y="72.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-24" />
+  <rect x="65.0" y="72.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-25" />
+  <rect x="67.0" y="72.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-26" />
+  <rect x="69.0" y="72.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-27" />
+  <rect x="71.0" y="72.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-28" />
+  <rect x="73.0" y="72.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-29" />
+  <rect x="75.0" y="72.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-30" />
+  <rect x="77.0" y="72.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-31" />
+  <text x="11.3" y="76.45" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="end">0</text>
+  <rect x="15.0" y="78.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-32" />
+  <rect x="17.0" y="78.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-33" />
+  <rect x="19.0" y="78.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-34" />
+  <rect x="21.0" y="78.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-35" />
+  <rect x="23.0" y="78.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-36" />
+  <rect x="25.0" y="78.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-37" />
+  <rect x="27.0" y="78.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-38" />
+  <rect x="29.0" y="78.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-39" />
+  <rect x="31.0" y="78.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-40" />
+  <rect x="33.0" y="78.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-41" />
+  <rect x="35.0" y="78.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-42" />
+  <rect x="37.0" y="78.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-43" />
+  <rect x="39.0" y="78.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-44" />
+  <rect x="41.0" y="78.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-45" />
+  <rect x="43.0" y="78.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-46" />
+  <rect x="45.0" y="78.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-47" />
+  <rect x="47.0" y="78.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-48" />
+  <rect x="49.0" y="78.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-49" />
+  <rect x="51.0" y="78.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-50" />
+  <rect x="53.0" y="78.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-51" />
+  <rect x="55.0" y="78.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-52" />
+  <rect x="57.0" y="78.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-53" />
+  <rect x="59.0" y="78.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-54" />
+  <rect x="61.0" y="78.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-55" />
+  <rect x="63.0" y="78.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-56" />
+  <rect x="65.0" y="78.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-57" />
+  <rect x="67.0" y="78.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-58" />
+  <rect x="69.0" y="78.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-59" />
+  <rect x="71.0" y="78.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-60" />
+  <rect x="73.0" y="78.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-61" />
+  <rect x="75.0" y="78.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-62" />
+  <rect x="77.0" y="78.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-63" />
+  <text x="11.3" y="82.45" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="end">32</text>
+  <rect x="15.0" y="84.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-64" />
+  <rect x="17.0" y="84.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-65" />
+  <rect x="19.0" y="84.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-66" />
+  <rect x="21.0" y="84.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-67" />
+  <rect x="23.0" y="84.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-68" />
+  <rect x="25.0" y="84.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-69" />
+  <rect x="27.0" y="84.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-70" />
+  <rect x="29.0" y="84.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-71" />
+  <rect x="31.0" y="84.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-72" />
+  <rect x="33.0" y="84.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-73" />
+  <rect x="35.0" y="84.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-74" />
+  <rect x="37.0" y="84.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-75" />
+  <rect x="39.0" y="84.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-76" />
+  <rect x="41.0" y="84.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-77" />
+  <rect x="43.0" y="84.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-78" />
+  <rect x="45.0" y="84.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-79" />
+  <rect x="47.0" y="84.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-80" />
+  <rect x="49.0" y="84.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-81" />
+  <rect x="51.0" y="84.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-82" />
+  <rect x="53.0" y="84.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-83" />
+  <rect x="55.0" y="84.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-84" />
+  <rect x="57.0" y="84.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-85" />
+  <rect x="59.0" y="84.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-86" />
+  <rect x="61.0" y="84.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-87" />
+  <rect x="63.0" y="84.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-88" />
+  <rect x="65.0" y="84.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-89" />
+  <rect x="67.0" y="84.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-90" />
+  <rect x="69.0" y="84.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-91" />
+  <rect x="71.0" y="84.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-92" />
+  <rect x="73.0" y="84.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-93" />
+  <rect x="75.0" y="84.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-94" />
+  <rect x="77.0" y="84.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-95" />
+  <text x="11.3" y="88.45" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="end">64</text>
+  <rect x="15.0" y="90.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-96" />
+  <rect x="17.0" y="90.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-97" />
+  <rect x="19.0" y="90.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-98" />
+  <rect x="21.0" y="90.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-99" />
+  <rect x="23.0" y="90.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-100" />
+  <rect x="25.0" y="90.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-101" />
+  <rect x="27.0" y="90.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-102" />
+  <rect x="29.0" y="90.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-103" />
+  <rect x="31.0" y="90.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-104" />
+  <rect x="33.0" y="90.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-105" />
+  <rect x="35.0" y="90.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-106" />
+  <rect x="37.0" y="90.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-107" />
+  <rect x="39.0" y="90.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-108" />
+  <rect x="41.0" y="90.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-109" />
+  <rect x="43.0" y="90.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-110" />
+  <rect x="45.0" y="90.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-111" />
+  <rect x="47.0" y="90.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-112" />
+  <rect x="49.0" y="90.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-113" />
+  <rect x="51.0" y="90.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-114" />
+  <rect x="53.0" y="90.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-115" />
+  <rect x="55.0" y="90.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-116" />
+  <rect x="57.0" y="90.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-117" />
+  <rect x="59.0" y="90.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-118" />
+  <rect x="61.0" y="90.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-119" />
+  <rect x="63.0" y="90.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-120" />
+  <rect x="65.0" y="90.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-121" />
+  <rect x="67.0" y="90.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-122" />
+  <rect x="69.0" y="90.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-123" />
+  <rect x="71.0" y="90.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-124" />
+  <rect x="73.0" y="90.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-125" />
+  <rect x="75.0" y="90.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-126" />
+  <rect x="77.0" y="90.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-127" />
+  <text x="11.3" y="94.45" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="end">96</text>
+  <rect x="15.0" y="96.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-128" />
+  <rect x="17.0" y="96.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-129" />
+  <rect x="19.0" y="96.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-130" />
+  <rect x="21.0" y="96.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-131" />
+  <rect x="23.0" y="96.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-132" />
+  <rect x="25.0" y="96.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-133" />
+  <rect x="27.0" y="96.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-134" />
+  <rect x="29.0" y="96.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-135" />
+  <rect x="31.0" y="96.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-136" />
+  <rect x="33.0" y="96.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-137" />
+  <rect x="35.0" y="96.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-138" />
+  <rect x="37.0" y="96.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-139" />
+  <rect x="39.0" y="96.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-140" />
+  <rect x="41.0" y="96.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-141" />
+  <rect x="43.0" y="96.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-142" />
+  <rect x="45.0" y="96.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-143" />
+  <rect x="47.0" y="96.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-144" />
+  <rect x="49.0" y="96.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-145" />
+  <rect x="51.0" y="96.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-146" />
+  <rect x="53.0" y="96.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-147" />
+  <rect x="55.0" y="96.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-148" />
+  <rect x="57.0" y="96.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-149" />
+  <rect x="59.0" y="96.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-150" />
+  <rect x="61.0" y="96.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-151" />
+  <rect x="63.0" y="96.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-152" />
+  <rect x="65.0" y="96.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-153" />
+  <rect x="67.0" y="96.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-154" />
+  <rect x="69.0" y="96.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-155" />
+  <rect x="71.0" y="96.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-156" />
+  <rect x="73.0" y="96.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-157" />
+  <rect x="75.0" y="96.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-158" />
+  <rect x="77.0" y="96.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-159" />
+  <text x="11.3" y="100.45" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="end">128</text>
+  <rect x="15.0" y="102.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-160" />
+  <rect x="17.0" y="102.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-161" />
+  <rect x="19.0" y="102.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-162" />
+  <rect x="21.0" y="102.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-163" />
+  <rect x="23.0" y="102.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-164" />
+  <rect x="25.0" y="102.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-165" />
+  <rect x="27.0" y="102.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-166" />
+  <rect x="29.0" y="102.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-167" />
+  <rect x="31.0" y="102.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-168" />
+  <rect x="33.0" y="102.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-169" />
+  <rect x="35.0" y="102.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-170" />
+  <rect x="37.0" y="102.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-171" />
+  <rect x="39.0" y="102.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-172" />
+  <rect x="41.0" y="102.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-173" />
+  <rect x="43.0" y="102.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-174" />
+  <rect x="45.0" y="102.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-175" />
+  <rect x="47.0" y="102.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-176" />
+  <rect x="49.0" y="102.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-177" />
+  <rect x="51.0" y="102.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-178" />
+  <rect x="53.0" y="102.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-179" />
+  <rect x="55.0" y="102.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-180" />
+  <rect x="57.0" y="102.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-181" />
+  <rect x="59.0" y="102.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-182" />
+  <rect x="61.0" y="102.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-183" />
+  <rect x="63.0" y="102.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-184" />
+  <rect x="65.0" y="102.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-185" />
+  <rect x="67.0" y="102.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-186" />
+  <rect x="69.0" y="102.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-187" />
+  <rect x="71.0" y="102.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-188" />
+  <rect x="73.0" y="102.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-189" />
+  <rect x="75.0" y="102.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-190" />
+  <rect x="77.0" y="102.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-191" />
+  <text x="11.3" y="106.45" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="end">160</text>
+  <rect x="15.0" y="108.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-192" />
+  <rect x="17.0" y="108.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-193" />
+  <rect x="19.0" y="108.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-194" />
+  <rect x="21.0" y="108.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-195" />
+  <rect x="23.0" y="108.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-196" />
+  <rect x="25.0" y="108.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-197" />
+  <rect x="27.0" y="108.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-198" />
+  <rect x="29.0" y="108.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-199" />
+  <rect x="31.0" y="108.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-200" />
+  <rect x="33.0" y="108.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-201" />
+  <rect x="35.0" y="108.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-202" />
+  <rect x="37.0" y="108.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-203" />
+  <rect x="39.0" y="108.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-204" />
+  <rect x="41.0" y="108.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-205" />
+  <rect x="43.0" y="108.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-206" />
+  <rect x="45.0" y="108.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-207" />
+  <rect x="47.0" y="108.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-208" />
+  <rect x="49.0" y="108.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-209" />
+  <rect x="51.0" y="108.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-210" />
+  <rect x="53.0" y="108.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-211" />
+  <rect x="55.0" y="108.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-212" />
+  <rect x="57.0" y="108.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-213" />
+  <rect x="59.0" y="108.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-214" />
+  <rect x="61.0" y="108.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-215" />
+  <rect x="63.0" y="108.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-216" />
+  <rect x="65.0" y="108.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-217" />
+  <rect x="67.0" y="108.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-218" />
+  <rect x="69.0" y="108.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-219" />
+  <rect x="71.0" y="108.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-220" />
+  <rect x="73.0" y="108.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-221" />
+  <rect x="75.0" y="108.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-222" />
+  <rect x="77.0" y="108.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-223" />
+  <text x="11.3" y="112.45" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="end">192</text>
+  <rect x="15.0" y="114.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-224" />
+  <rect x="17.0" y="114.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-225" />
+  <rect x="19.0" y="114.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-226" />
+  <rect x="21.0" y="114.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-227" />
+  <rect x="23.0" y="114.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-228" />
+  <rect x="25.0" y="114.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-229" />
+  <rect x="27.0" y="114.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-230" />
+  <rect x="29.0" y="114.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-231" />
+  <rect x="31.0" y="114.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-232" />
+  <rect x="33.0" y="114.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-233" />
+  <rect x="35.0" y="114.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-234" />
+  <rect x="37.0" y="114.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-235" />
+  <rect x="39.0" y="114.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-236" />
+  <rect x="41.0" y="114.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-237" />
+  <rect x="43.0" y="114.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-238" />
+  <rect x="45.0" y="114.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-239" />
+  <rect x="47.0" y="114.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-240" />
+  <rect x="49.0" y="114.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-241" />
+  <rect x="51.0" y="114.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-242" />
+  <rect x="53.0" y="114.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-243" />
+  <rect x="55.0" y="114.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-244" />
+  <rect x="57.0" y="114.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-245" />
+  <rect x="59.0" y="114.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-246" />
+  <rect x="61.0" y="114.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-247" />
+  <rect x="63.0" y="114.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-248" />
+  <rect x="65.0" y="114.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-249" />
+  <rect x="67.0" y="114.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-250" />
+  <rect x="69.0" y="114.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-251" />
+  <rect x="71.0" y="114.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-252" />
+  <rect x="73.0" y="114.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-253" />
+  <rect x="75.0" y="114.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-254" />
+  <rect x="77.0" y="114.0" width="2.0" height="6.0" fill="#EBF3FA" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-255" />
+  <text x="11.3" y="118.45" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="end">224</text>
+  <rect x="15.0" y="120.0" width="2.0" height="6.0" fill="#DEF1EF" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-256" />
+  <rect x="17.0" y="120.0" width="2.0" height="6.0" fill="#DEF1EF" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-257" />
+  <rect x="19.0" y="120.0" width="2.0" height="6.0" fill="#DEF1EF" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-258" />
+  <rect x="21.0" y="120.0" width="2.0" height="6.0" fill="#DEF1EF" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-259" />
+  <rect x="23.0" y="120.0" width="2.0" height="6.0" fill="#DEF1EF" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-260" />
+  <rect x="25.0" y="120.0" width="2.0" height="6.0" fill="#DEF1EF" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-261" />
+  <rect x="27.0" y="120.0" width="2.0" height="6.0" fill="#DEF1EF" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-262" />
+  <rect x="29.0" y="120.0" width="2.0" height="6.0" fill="#DEF1EF" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-263" />
+  <rect x="31.0" y="120.0" width="2.0" height="6.0" fill="#DEF1EF" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-264" />
+  <rect x="33.0" y="120.0" width="2.0" height="6.0" fill="#DEF1EF" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-265" />
+  <rect x="35.0" y="120.0" width="2.0" height="6.0" fill="#DEF1EF" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-266" />
+  <rect x="37.0" y="120.0" width="2.0" height="6.0" fill="#DEF1EF" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-267" />
+  <rect x="39.0" y="120.0" width="2.0" height="6.0" fill="#DEF1EF" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-268" />
+  <rect x="41.0" y="120.0" width="2.0" height="6.0" fill="#DEF1EF" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-269" />
+  <rect x="43.0" y="120.0" width="2.0" height="6.0" fill="#DEF1EF" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-270" />
+  <rect x="45.0" y="120.0" width="2.0" height="6.0" fill="#DEF1EF" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-271" />
+  <rect x="47.0" y="120.0" width="2.0" height="6.0" fill="#DEF1EF" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-272" />
+  <rect x="49.0" y="120.0" width="2.0" height="6.0" fill="#DEF1EF" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-273" />
+  <rect x="51.0" y="120.0" width="2.0" height="6.0" fill="#DEF1EF" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-274" />
+  <rect x="53.0" y="120.0" width="2.0" height="6.0" fill="#DEF1EF" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-275" />
+  <rect x="55.0" y="120.0" width="2.0" height="6.0" fill="#DEF1EF" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-276" />
+  <rect x="57.0" y="120.0" width="2.0" height="6.0" fill="#DEF1EF" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-277" />
+  <rect x="59.0" y="120.0" width="2.0" height="6.0" fill="#DEF1EF" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-278" />
+  <rect x="61.0" y="120.0" width="2.0" height="6.0" fill="#DEF1EF" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-279" />
+  <rect x="63.0" y="120.0" width="2.0" height="6.0" fill="#DEF1EF" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-280" />
+  <rect x="65.0" y="120.0" width="2.0" height="6.0" fill="#DEF1EF" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-281" />
+  <rect x="67.0" y="120.0" width="2.0" height="6.0" fill="#DEF1EF" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-282" />
+  <rect x="69.0" y="120.0" width="2.0" height="6.0" fill="#DEF1EF" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-283" />
+  <rect x="71.0" y="120.0" width="2.0" height="6.0" fill="#DEF1EF" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-284" />
+  <rect x="73.0" y="120.0" width="2.0" height="6.0" fill="#DEF1EF" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-285" />
+  <rect x="75.0" y="120.0" width="2.0" height="6.0" fill="#DEF1EF" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-286" />
+  <rect x="77.0" y="120.0" width="2.0" height="6.0" fill="#DEF1EF" stroke="#B9CCD9" stroke-width="0.12" id="input-byte-287" />
+  <text x="11.3" y="124.45" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#237D82" text-anchor="end">256</text>
+  <rect x="15.0" y="72.0" width="64.0" height="48.0" fill="none" stroke="#315D85" stroke-width="0.28" id="input-A-256B" />
+  <rect x="15.0" y="120.0" width="64.0" height="6.0" fill="none" stroke="#237D82" stroke-width="0.28" id="input-x-32B" />
+  <line x1="31.0" y1="72.0" x2="31.0" y2="126.0" stroke="#7790A4" stroke-width="0.2" fill="none" />
+  <line x1="47.0" y1="72.0" x2="47.0" y2="126.0" stroke="#7790A4" stroke-width="0.2" fill="none" />
+  <line x1="63.0" y1="72.0" x2="63.0" y2="126.0" stroke="#7790A4" stroke-width="0.2" fill="none" />
+  <line x1="47" y1="126.5" x2="47" y2="129.3" stroke="#237D82" stroke-width="0.25" fill="none" />
+  <text x="47" y="134.4" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#237D82" text-anchor="middle">x[32] · 32 B</text>
+  <text x="84" y="62.3" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="start">偏移</text>
+  <text x="84" y="68.4" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="start">/B</text>
+  <text x="118.0" y="62.3" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">高96位清零</text>
+  <text x="146.0" y="62.3" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#315D85" text-anchor="middle">低32位</text>
+  <text x="118.0" y="68.4" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">127:32</text>
+  <text x="146.0" y="68.4" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">31:0</text>
+  <rect x="97.0" y="72.0" width="42.0" height="6.75" fill="#F3F6F8" stroke="#B9CCD9" stroke-width="0.16" id="slot-0-bits127-32-zero" />
+  <rect x="139.0" y="72.0" width="14.0" height="6.75" fill="#DCEAF7" stroke="#B9CCD9" stroke-width="0.16" id="slot-0-bits31-0-result" />
+  <text x="93.3" y="76.825" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="end">0</text>
+  <text x="118.0" y="76.825" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">0</text>
+  <text x="146.0" y="76.825" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#315D85" text-anchor="middle">S[0]</text>
+  <rect x="97.0" y="78.75" width="42.0" height="6.75" fill="#F3F6F8" stroke="#B9CCD9" stroke-width="0.16" id="slot-1-bits127-32-zero" />
+  <rect x="139.0" y="78.75" width="14.0" height="6.75" fill="#DCEAF7" stroke="#B9CCD9" stroke-width="0.16" id="slot-1-bits31-0-result" />
+  <text x="93.3" y="83.575" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="end">16</text>
+  <text x="118.0" y="83.575" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">0</text>
+  <text x="146.0" y="83.575" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#315D85" text-anchor="middle">S[1]</text>
+  <rect x="97.0" y="85.5" width="42.0" height="6.75" fill="#F3F6F8" stroke="#B9CCD9" stroke-width="0.16" id="slot-2-bits127-32-zero" />
+  <rect x="139.0" y="85.5" width="14.0" height="6.75" fill="#DCEAF7" stroke="#B9CCD9" stroke-width="0.16" id="slot-2-bits31-0-result" />
+  <text x="93.3" y="90.325" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="end">32</text>
+  <text x="118.0" y="90.325" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">0</text>
+  <text x="146.0" y="90.325" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#315D85" text-anchor="middle">S[2]</text>
+  <rect x="97.0" y="92.25" width="42.0" height="6.75" fill="#F3F6F8" stroke="#B9CCD9" stroke-width="0.16" id="slot-3-bits127-32-zero" />
+  <rect x="139.0" y="92.25" width="14.0" height="6.75" fill="#DCEAF7" stroke="#B9CCD9" stroke-width="0.16" id="slot-3-bits31-0-result" />
+  <text x="93.3" y="97.075" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="end">48</text>
+  <text x="118.0" y="97.075" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">0</text>
+  <text x="146.0" y="97.075" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#315D85" text-anchor="middle">S[3]</text>
+  <rect x="97.0" y="99.0" width="42.0" height="6.75" fill="#F3F6F8" stroke="#B9CCD9" stroke-width="0.16" id="slot-4-bits127-32-zero" />
+  <rect x="139.0" y="99.0" width="14.0" height="6.75" fill="#DCEAF7" stroke="#B9CCD9" stroke-width="0.16" id="slot-4-bits31-0-result" />
+  <text x="93.3" y="103.825" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="end">64</text>
+  <text x="118.0" y="103.825" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">0</text>
+  <text x="146.0" y="103.825" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#315D85" text-anchor="middle">S[4]</text>
+  <rect x="97.0" y="105.75" width="42.0" height="6.75" fill="#F3F6F8" stroke="#B9CCD9" stroke-width="0.16" id="slot-5-bits127-32-zero" />
+  <rect x="139.0" y="105.75" width="14.0" height="6.75" fill="#DCEAF7" stroke="#B9CCD9" stroke-width="0.16" id="slot-5-bits31-0-result" />
+  <text x="93.3" y="110.575" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="end">80</text>
+  <text x="118.0" y="110.575" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">0</text>
+  <text x="146.0" y="110.575" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#315D85" text-anchor="middle">S[5]</text>
+  <rect x="97.0" y="112.5" width="42.0" height="6.75" fill="#F3F6F8" stroke="#B9CCD9" stroke-width="0.16" id="slot-6-bits127-32-zero" />
+  <rect x="139.0" y="112.5" width="14.0" height="6.75" fill="#DCEAF7" stroke="#B9CCD9" stroke-width="0.16" id="slot-6-bits31-0-result" />
+  <text x="93.3" y="117.325" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="end">96</text>
+  <text x="118.0" y="117.325" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">0</text>
+  <text x="146.0" y="117.325" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#315D85" text-anchor="middle">S[6]</text>
+  <rect x="97.0" y="119.25" width="42.0" height="6.75" fill="#F3F6F8" stroke="#B9CCD9" stroke-width="0.16" id="slot-7-bits127-32-zero" />
+  <rect x="139.0" y="119.25" width="14.0" height="6.75" fill="#DCEAF7" stroke="#B9CCD9" stroke-width="0.16" id="slot-7-bits31-0-result" />
+  <text x="93.3" y="124.075" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="end">112</text>
+  <text x="118.0" y="124.075" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">0</text>
+  <text x="146.0" y="124.075" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#315D85" text-anchor="middle">S[7]</text>
+  <rect x="97.0" y="72.0" width="56.0" height="54.0" fill="none" stroke="#7790A4" stroke-width="0.28" id="output-8x16B" />
+  <line x1="139.0" y1="72.0" x2="139.0" y2="126.0" stroke="#7790A4" stroke-width="0.28" fill="none" />
+  <text x="125" y="134.4" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">S[i]：第 i 行点积补码</text>
+  <text x="80" y="142.2" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">两缓冲区各自 16 B 对齐、互不重叠；VLEN = 128</text>
+</svg>

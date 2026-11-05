@@ -1,6 +1,7 @@
 from pathlib import Path
 import re, json
-from figure_placeholders import apply_figure_slots
+from figure_placeholders import apply_figure_slots, tex_text
+from report_structure import source_blocks, assemble
 from report_layout import format_report
 root = Path(__file__).resolve().parent
 backup = root / "content/baseline"
@@ -12,8 +13,14 @@ def escape(text):
 def plain(text):
     return "".join(r"\seqsplit{"+escape(x)+"}" if re.fullmatch(r"[A-Za-z0-9_./:=+-]{16,}",x) else escape(x) for x in re.split(r"([A-Za-z0-9_./:=+-]{16,})", text))
 def inline(text):
+    math = re.compile(r"(?<![\\$])\$(?!\$)(?:\\[^\n]|[^$\\`\n])+\$(?!\$)")
+    inline_tokens = re.compile(
+        "(" + tick + "[^" + tick + "]+" + tick
+        + r"|\\\$|" + math.pattern
+        + r"|\[[^\]]+\]\([^)]+\)|\*\*.+?\*\*)"
+    )
     result=[]
-    for part in tokens.split(text):
+    for part in inline_tokens.split(text):
         if part.startswith("[") and "](" in part:
             label, url = part[1:].split("](",1)
             url=url[:-1]
@@ -24,7 +31,12 @@ def inline(text):
         elif part.startswith("**"):
             result.append(r"\textbf{"+plain(part[2:-2])+"}")
         elif part.startswith(tick):
-            result.append(plain(part[1:-1]))
+            # Keep literal command hyphens distinct from TeX punctuation ligatures.
+            result.append(plain(part[1:-1]).replace("--", "-{}-"))
+        elif part == r"\$":
+            result.append(r"\$")
+        elif math.fullmatch(part):
+            result.append(part)
         else:
             result.append(plain(part))
     return "".join(result)
@@ -53,7 +65,8 @@ def convert(markdown):
             while i<len(lines) and not lines[i].strip().startswith(marker):block.append(lines[i]);i+=1
             i+=1
             if lang!="mermaid":
-                result.append("\\begin{Verbatim}[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\\small]\n"+"\n".join(block)+"\n\\end{Verbatim}")
+                reserve = (r"\Needspace{"+str(len(block)+2)+r"\baselineskip}"+"\n") if len(block)<=6 else ""
+                result.append(reserve+"\\begin{Verbatim}[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\\small]\n"+"\n".join(block)+"\n\\end{Verbatim}")
             continue
         if line.startswith("|"):
             rows=[]
@@ -80,24 +93,41 @@ def convert(markdown):
         result.append(inline(line)+r"\par");i+=1
     return "\n".join(result)
 for stage in (1,2,3):
-    original=(backup/"sections"/("stage"+str(stage)+".tex")).read_text(encoding="utf-8")
-    body=original
-    body+=r"\section{工程实现与验证方法补充}"+"\n"+convert((root/"content"/("narrative-stage"+str(stage)+".md")).read_text(encoding="utf-8"))
-    sources=json.loads((root/"content"/("evidence-stage"+str(stage)+".json")).read_text(encoding="utf-8"))
+    overview = root / 'content' / f'overview-stage{stage}.tex'
+    if not overview.exists():
+        overview = backup / 'sections' / f'stage{stage}.tex'
+    original=overview.read_text(encoding="utf-8")
+    narrative=(root/"content"/("narrative-stage"+str(stage)+".md")).read_text(encoding="utf-8")
+    technical = root / 'content' / f'technical-stage{stage}.json'
+    if not technical.exists():
+        technical = root / 'content' / f'evidence-stage{stage}.json'
+    sources=json.loads(technical.read_text(encoding="utf-8"))
+    structured=(root / 'content' / f'structure-stage{stage}.json').exists()
+    if structured:
+        body=assemble(stage, source_blocks(original,narrative,sources,convert),tex_text)
+    else:
+        body=original
+        method_titles={1:'环境搭建与运行分析',2:'数据通路与控制实现',3:'协同仿真与性能评估方法'}
+        body+=r"\section{"+method_titles[stage]+"}\n"+convert(narrative)
+        for title,path,text in sources:
+            body+=r"\section{"+escape(title)+"}\n"+convert(text)
+    body+=r"\subsection{技术资料索引}"+'\n'
+    references=[]
     for title,path,text in sources:
-        body+=r"\section{"+escape(title)+"}\n"
-        body+="本节整理固定项目材料中的详细方法和原始合同。设计阶段的“拟实现”“必须验证”等表述属于原合同约束，当前完成状态以本报告正文和R5/P5证据为准。原日期、比较合同及未测边界按来源保留。\n"
-        body+=r"\par\smallskip\noindent 来源："+r"\href{https://github.com/cc77-builder/riscv/blob/347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e/"+escape(path)+"}{"+plain(path)+"}"+r"\par"+"\n"
-        body+=convert(text)
+        references.append(r"\href{https://github.com/cc77-builder/riscv/blob/347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e/"+escape(path)+"}{"+plain(title)+"}")
+    body+=r"{\small\noindent "+"；".join(references)+r"。\par}"+'\n'
     if stage==1:
-        for title,name in [("NEMU构建原始日志","nemu-build.log"),("EMU构建原始日志","emu-build-20261009-204228.log"),("工具与编译链版本原始输出","tool-versions.txt"),("固定子模块版本清单","submodules-after-build.lock.txt"),("原始波形事件记录","vadd-commit-events.csv"),("向量运算单元事件记录","vector-fix-alu-events.csv")]:
-            body+=r"\section{"+title+"}\n"
-            body+="以下为对应历史记录的原始输出，日期、路径和提交身份保留原值。\n"
+        body+=r"\section{原始操作日志}"+"\n"
+        for title,name in [("10月25日生产模型原始输出","rendered/hello-vadd-production-20261025.txt"),("10月25日FST模型原始输出","rendered/hello-vadd-trace-20261025.txt"),("程序构建原始日志","workload-build.log"),("历史hello与vadd运行摘要","hello-vadd-summary.log"),("NEMU构建原始日志","nemu-build.log"),("EMU构建原始日志","emu-build-20261009-204228.log"),("工具与编译链版本原始输出","tool-versions.txt"),("固定子模块版本清单","submodules-after-build.lock.txt"),("原始波形事件记录","vadd-commit-events.csv"),("向量运算单元事件记录","vector-fix-alu-events.csv")]:
+            body+=r"\subsection{"+title+"}\n"
+            body+="以下列出该次构建或运行的记录。\n"
             display_name = "rendered/nemu-build.txt" if name == "nemu-build.log" else name
             body+=r"\VerbatimInput[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\small]{evidence/"+display_name+"}\n"
-    body = apply_figure_slots(body, stage)
+    if not structured:
+        body = apply_figure_slots(body, stage)
     supplement = root / "sections" / ("screenshots-stage" + str(stage) + ".tex")
-    if supplement.exists():
+    if supplement.exists() and not structured:
         body += "\n" + supplement.read_text(encoding="utf-8")
+    body=re.sub(r"图S([123])-([0-9]{2})", lambda m: "图\\ref{fig:S"+m[1]+"-"+m[2]+"}", body)
     body = format_report(body, stage)
     (root/"sections"/("stage"+str(stage)+".tex")).write_text(body,encoding="utf-8",newline="\n")

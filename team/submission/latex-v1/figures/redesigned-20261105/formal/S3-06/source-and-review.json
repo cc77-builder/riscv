@@ -1,0 +1,144 @@
+{
+  "schema": "xiangshan-original-vector-figure-record-v1",
+  "figure_id": "S3-06",
+  "status": "candidate-for-main-and-human-review",
+  "title": "C8公共调用、编译选择与输入输出布局",
+  "artifact_kind": "deterministic-original-vector-figure",
+  "source": {
+    "repository": "cc77-builder/riscv",
+    "commit": "347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e",
+    "path": "team/optimizations/o2/integration/firstdot-v2-0f/package/c8/CONTRACT.md",
+    "git_blob_sha": "115d4fe814a47f05e8ef5abc6e5de6f087f8863c",
+    "url": "https://github.com/cc77-builder/riscv/blob/347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e/team/optimizations/o2/integration/firstdot-v2-0f/package/c8/CONTRACT.md",
+    "sections": [
+      "入口与选择",
+      "普通 C ABI"
+    ],
+    "source_note": "Frozen source contract; no new implementation, build, simulation, performance or EDA run.",
+    "content_sha256": "4532cd1365b1436660df3207f265853f7d8a8f253b8b9765ae96cef947651941",
+    "content_bytes": 4186
+  },
+  "main_task_message_id": "4e502f67e2974b738c6c588081cb6a3d",
+  "earlier_style_feedback_message_id": "8e53cf68372046ec978a933c2da8ec8a",
+  "interface": {
+    "common_call_alias": "xs_c8_gemv_8x32(packed_ax, output_slots)",
+    "compile_selector": "XS_C8_GEMV_FORCE_RVV",
+    "when_absent_or_zero": "config_reuse_gemv_8x32_reuse_vdot",
+    "when_one": "config_reuse_gemv_8x32_reuse_rvv",
+    "interpretation": "Compile-time macro alias selection, not a runtime wrapper, probe or simultaneous execution.",
+    "scope_note": "The explicit always-RVV alias is omitted from this focused figure; complete ABI and return vector state remain in the adjacent contract/report."
+  },
+  "geometry": {
+    "canvas_mm": [
+      160,
+      145
+    ],
+    "font_points": [
+      11.5,
+      12
+    ],
+    "A_shape": [
+      8,
+      32
+    ],
+    "A_bytes": 256,
+    "x_shape": [
+      32
+    ],
+    "x_bytes": 32,
+    "x_offset_bytes": 256,
+    "input_bytes": 288,
+    "input_row_start_offsets_bytes": [
+      0,
+      32,
+      64,
+      96,
+      128,
+      160,
+      192,
+      224,
+      256
+    ],
+    "output_slots": 8,
+    "slot_bytes": 16,
+    "output_bytes": 128,
+    "output_slot_start_offsets_bytes": [
+      0,
+      16,
+      32,
+      48,
+      64,
+      80,
+      96,
+      112
+    ],
+    "high_zero_bits": 96,
+    "low_result_bits": 32,
+    "drawn_high_field_width_mm": 42,
+    "drawn_low_field_width_mm": 14,
+    "high_to_low_width_ratio": 3,
+    "output_bitfield_orientation": "High bit numbers on left, low bit numbers on right; horizontal position is not a byte-endianness claim.",
+    "buffer_alignment_bytes": 16,
+    "buffers_nonoverlap": true,
+    "VLEN_bits": 128
+  },
+  "rendering": {
+    "toolchain": [
+      "Original XML SVG from render.py",
+      "Inkscape SVG-to-PDF with text converted to vector paths",
+      "Poppler PDF-to-PNG at 300 dpi"
+    ],
+    "source_svg_font_families": [
+      "Noto Sans CJK SC",
+      "DejaVu Sans Mono"
+    ],
+    "source_svg_editable_text": true,
+    "pdf_text_outlined": true,
+    "pdf_searchable_text": false,
+    "png_derived_from_final_pdf": true
+  },
+  "review": {
+    "root_final_viewed": true,
+    "root_observations": [
+      "288 input byte cells drawn exactly; first eight rows A and ninth row x are adjacent.",
+      "Eight output slots explicitly use 42mm zero fields and 14mm result fields, an exact 3:1 ratio.",
+      "Offsets, total lengths and alignment/nonoverlap match the frozen contract.",
+      "No text clipping or overlap observed in the final PDF-derived PNG; labels are normal-weight 11.5 or 12pt.",
+      "A source-level alias is shown with compile-time selection, not runtime dispatch."
+    ],
+    "independent_review": {
+      "agent": "native outline_review",
+      "viewed_png_sha256": "d588fd35d5afdc1570071c40a31143db9eeeb97a53493cdbd3b037b9d1161b85",
+      "result": "The initial rendered candidate was judged structurally informative and readable, with one local ambiguity: B+ might imply a shared base.",
+      "resolved_in_final": "B+ replaced by unit-marked offset headers under each separate buffer name. Root viewed the final bytes."
+    },
+    "concrete_export_correction": {
+      "initial_pdf_sha256": "9fdd7691de6a3eab9839c814fe146f9566636a5ed9b385a50dfe98811cbf4361",
+      "finding": "Initial PDF had incorrect extracted text for the visually correct VLEN=128 label.",
+      "resolution": "Final PDF outlines text as vector paths; final SVG retains editable source text. No false searchable-text claim.",
+      "initial_bytes_retained_in_scratch": "/workspace/scratch/79eded243990/tmp/c8-layout-initial-review-20261105-1719"
+    },
+    "user_approval_claimed": false
+  },
+  "suggested_caption": "C8公共调用的编译选择与输入输出内存布局",
+  "adjacent_caption_note": "输入为行优先signed INT8矩阵A与紧接的向量x；每个16字节输出槽保存完整128位结果。输出横向按位号从高到低展示；行首数字是各缓冲区内的字节偏移。完整ABI及运行范围见C8合同。",
+  "recorded_at_utc": "2026-11-05T17:26:06.270817+00:00",
+  "files": {
+    "S3-06-c8-layout.svg": {
+      "bytes": 49881,
+      "sha256": "5b8af504881229a668dcc2f701068aaa96b9e29cbac9bc50c8acab1130ab0fc8"
+    },
+    "S3-06-c8-layout.pdf": {
+      "bytes": 72738,
+      "sha256": "ddcacb358235e5307f5e83781cdcb609b4abf6926af373c24156437a72855279"
+    },
+    "S3-06-c8-layout.png": {
+      "bytes": 174765,
+      "sha256": "f891040c1384c62721627d2ce18c33e6b9cee256fa636deb06f9e425d78b15d9"
+    },
+    "render.py": {
+      "bytes": 9405,
+      "sha256": "fbf24c43030b71ca790ba52a743bbbb812ae823e8704cc700ade0d4623c021bf"
+    }
+  }
+}

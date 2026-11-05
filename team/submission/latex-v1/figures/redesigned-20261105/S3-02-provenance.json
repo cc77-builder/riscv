@@ -1,0 +1,66 @@
+{
+  "schema": "xiangshan-concept-delivery-v1",
+  "figure_id": "S3-02",
+  "status": "qa-approved-pending-integrator-review",
+  "recommended_caption": "NEMU 中 vdot 的识别、状态检查与独立执行",
+  "output_recorded_at_utc": "2026-11-05T16:18:19.059Z",
+  "timestamp_note": "Actual workflow output-record time; provider generation time was not separately returned.",
+  "version_id": "v_8e7d30112917449e819a226972a10ffe",
+  "request_id": "r_adabea08899a426e96953a61b0570354",
+  "parent_version_id": "v_25a76b6232f546f595f07642ba520fe7",
+  "image": {
+    "file": "S3-02-warm-branches-v1.png",
+    "sha256": "81669a2a25cba5a8772b9eeb8bd255fe4c8f8afa20d9984451fde29686cfc7b3",
+    "bytes": 1264946,
+    "width": 1586,
+    "height": 992,
+    "format": "PNG"
+  },
+  "actual_tool_arguments": {
+    "prompt": "Completely redesign the FIRST reference image, S3-02, preserving its correct NEMU instruction-interpreter subject but replacing all icon artwork and the former four-corner circular composition. The SECOND image is STYLE REFERENCE ONLY: borrow its warm-white/graphite/warm-gray/vermilion palette and large typography, not its compile-time choice semantics or its layout.\n\nCreate a branching execution map with three unequal columns. Upper left is one modest open typographic block labeled vdot 识别. A short thin horizontal arrow labeled 匹配 leads to the middle block 向量状态. From the left block, a completely separate downward branch labeled 未匹配 ends in 其他译码. This means an instruction that does not match the vdot encoding continues the normal decoder; it does not automatically become an illegal instruction.\n\nFrom the middle state-check block, a rightward arrow labeled 合法 enters a broad pale-warm-gray execution region on the right. Inside that right region, vertically arrange 双源快照, then 点积运算, then 完整写回, linked by two short downward arrows. Do not put a separate box around every word. The snapshot is inside the legal path and MUST occur before arithmetic or destination writes; it preserves correct behavior when destination aliases either source. Dot product is an independent signed-INT8 dot operation, not feedback accumulation: no circular arrows, no previous-destination input.\n\nFrom the middle state-check block, a separate downward branch labeled 不合法 ends in a compact vermilion-accent exception group, showing 触发异常 above vd 不写回. That exception group is terminal: NO connector from it to the execution region or the writeback label. Thus the two lower branches are visually distinct: nonmatching encoding continues other decoding, whereas a matched vdot with an illegal state raises the defined exception without writing vd. No RTL input, no common hardware computation block, no PASS symbol.\n\nExact visible labels, once each: vdot 识别; 匹配; 未匹配; 其他译码; 向量状态; 合法; 不合法; 双源快照; 点积运算; 完整写回; 触发异常; vd 不写回. No other visible words or values. Exact state predicates, cause 2, eight signed-INT8 products, low32/high96 and VS-dirty behavior remain in the adjacent report text; do not try to draw bit-exact registers. Keep every connector clearly attached to its source and destination and clear of the labels. This is a concept map, not a measurement or a new verification result.\n\nArt direction: landscape about 1600 by 1000, refined flat editorial technical illustration for a Chinese engineering report. Opaque warm-white #F6F3EE canvas, graphite #242424 typography and connectors, pale warm-gray #E8E3DC grouping, restrained vermilion #CE4B32 only for a small functional emphasis. Keep ample whitespace, thin clean straight rules, aligned text, and consistent modern Chinese sans-serif similar to Noto Sans CJK SC. Every label must remain large and clear at 160mm print width: main type around 50–64 px, minimum visible type about 42 px at this canvas size. No giant overall title, caption, figure number, legend paragraph, tiny footnotes, icons, documents, magnifiers, locks, folders, chips, podiums, shadows, gradients, textures, 3D effects, decorative dots or invented numeric examples. Do not shrink type to fit more content. The whole image, including every label, should be natively composed as one coherent graphic.",
+    "transparent_background": false,
+    "referenced_image_paths": [
+      "/workspace/scratch/79eded243990/tmp/pro2-visual/project/objects/ca8fc63fd2aabc6f5c713ee036dd1ea81c8847a8ded1264392cd8cf3dfd22674.png",
+      "/workspace/scratch/79eded243990/tmp/pro2-visual/project/objects/8ca79367f1e8ff134f2a36c4038ae094f5ff0358e8feea2563d0e176b4433a29.png"
+    ]
+  },
+  "review": {
+    "reviewer": "ppa-child-5a2c8f6a-pro2",
+    "verdict": "approved",
+    "viewed_sha256": "81669a2a25cba5a8772b9eeb8bd255fe4c8f8afa20d9984451fde29686cfc7b3",
+    "visually_inspected": true,
+    "requested_change_satisfied": true,
+    "invariants_satisfied": true,
+    "exact_invariant_pass": null,
+    "acceptance_criterion": "One large-type B-style concept map with separate nonmatching-encoding and illegal-state branches, source snapshot before arithmetic, and a terminal exception path without destination writeback.",
+    "evidence": "Viewed the actual 1586×992 generated image. The left vdot-recognition block sends matched instructions to vector-state checking and unmatched instructions downward to other decoding. Only the legal state branch enters source snapshot, dot operation and full writeback in that order. The separate illegal branch ends at exception and vd-no-writeback; it does not reconnect. All 12 labels are legible and unclipped. There are no icons, overall title, circular accumulation arrow, RTL input, measurements or PASS claims.",
+    "limitations": "Integrator/human adoption remains separate from this visual QA. Raster type has no point-size metadata; the actual lettering is larger than the nominal minimum. Exact vdot bit pattern, vector-state conditions, signed element count, full writeback bits, cause code and VS update remain in adjacent prose. No new engineering execution."
+  },
+  "intended_report_width_mm": 160,
+  "adjacent_details_required": [
+    "精确vdot编码未匹配时继续其他译码；其他路径最终是否非法由原译码决定，不能把所有custom-0当作vdot。",
+    "向量状态须VS启用、vtype合法且e8/m1、vl=8、vstart=0。合法路径先快照双源低64位，允许目的与源别名及v0。",
+    "计算8项signed INT8点积，完整128位写回：低32位结果、高96位清零；成功后VS脏。",
+    "状态非法触发非法指令cause=2且不写vd，xTVAL沿用固定平台规则。"
+  ],
+  "notes": [
+    "This selected image is the original native imagegen output; no text overlay or pixel editing was applied.",
+    "Exactly one actual imagegen call belongs to this version. Prior candidates, their original outputs and their reviews remain in the complete project history.",
+    "Only isolated Pro2 assets were written; this child did not edit the main repository or compile/run engineering tests."
+  ],
+  "technical_basis": {
+    "source_report_capture": {
+      "path": "D:\\Projects\\competitions\\2026-10-CIE-RISCV-XiangShan\\working-zufan-full-20261022\\team\\submission\\latex-v1\\sections\\stage3.tex",
+      "sha256": "02874f816c9b41e886c8b2d7706a34931bbafb35eb91e2b9add9e8e9b4226c23",
+      "note": "Captured engineering text used for semantic review; this is not a claim about the later editorial candidate's file bytes."
+    },
+    "referenced_repository_records": [
+      {
+        "repository": "cc77-builder/riscv",
+        "revision": "347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e",
+        "path": "team/patches/nemu/README.md"
+      }
+    ],
+    "scope": "Existing recorded engineering facts and contract boundaries; no new simulation, benchmark or synthesis."
+  }
+}

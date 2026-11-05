@@ -1,0 +1,195 @@
+{
+  "figure": "S2-02",
+  "repository": "cc77-builder/riscv",
+  "hardware_commit": "0f12df675378556670afd0dd2153f47fcb330610",
+  "sources": [
+    {
+      "path": "src/main/scala/xiangshan/backend/fu/vector/VDotDatapath.scala",
+      "git_blob": "e0703191ed2b626179e36fb40eb9741cdb843151",
+      "local_cache": "evidence/0f-VDotDatapath.scala",
+      "local_sha256": "a1b9d50c7c11d0717137864cb300618d12e1b1b202f38b5e67de6b790cfe4b16",
+      "local_git_blob": "6c41737088869dd0944ef235001128b0428d746c",
+      "canonical_git_blob": "e0703191ed2b626179e36fb40eb9741cdb843151",
+      "appended_final_LF_bytes_removed_in_memory": 1,
+      "cache_modified": false
+    },
+    {
+      "path": "src/main/scala/xiangshan/backend/fu/wrapper/VDotElastic.scala",
+      "git_blob": "72d23e224bbfea13245865cc5a506ac87aed877b",
+      "local_cache": "evidence/0f-VDotElastic.scala",
+      "local_sha256": "0ece96df4b6c1ea56cfdb74231a43c963cc2a219d125525d5dcbaccda1398a02",
+      "local_git_blob": "a0f120c8b3d2ae5cac1547c9904328fd7fb05eae",
+      "canonical_git_blob": "72d23e224bbfea13245865cc5a506ac87aed877b",
+      "appended_final_LF_bytes_removed_in_memory": 1,
+      "cache_modified": false
+    }
+  ],
+  "previous_review": {
+    "file": "evidence/previous-verification-notes.md",
+    "sha256": "84a3bc2a2c67d189f0f81a18aba84808e575cc64354214f9b314a1171410ad20"
+  },
+  "facts": [
+    {
+      "id": "lane_inputs",
+      "source": "VDotDatapath.scala",
+      "lines": [
+        6,
+        21
+      ],
+      "value": {
+        "lanes": 8,
+        "operand_bits_per_lane": 8,
+        "signed": true,
+        "used_operand_bits": [
+          63,
+          0
+        ],
+        "ignored_operand_bits": [
+          127,
+          64
+        ]
+      }
+    },
+    {
+      "id": "P_products",
+      "source": "VDotElastic.scala",
+      "lines": [
+        38,
+        42
+      ],
+      "value": {
+        "count": 8,
+        "bits": 16,
+        "registered": true
+      }
+    },
+    {
+      "id": "balanced_reduction",
+      "source": "VDotDatapath.scala",
+      "lines": [
+        34,
+        45
+      ],
+      "value": [
+        {
+          "count": 4,
+          "bits": 17
+        },
+        {
+          "count": 2,
+          "bits": 18
+        },
+        {
+          "count": 1,
+          "bits": 19
+        }
+      ],
+      "combinational": true
+    },
+    {
+      "id": "sign_extension",
+      "source": "VDotDatapath.scala",
+      "lines": [
+        47,
+        49
+      ],
+      "value": {
+        "from_bits": 19,
+        "to_bits": 32
+      }
+    },
+    {
+      "id": "R_data",
+      "source": "VDotElastic.scala",
+      "lines": [
+        45,
+        51
+      ],
+      "value": {
+        "bits": 32,
+        "registered": true
+      }
+    },
+    {
+      "id": "full_output",
+      "source": "VDotElastic.scala",
+      "lines": [
+        69,
+        74
+      ],
+      "value": {
+        "bits": 128,
+        "high_96": 0,
+        "low_32": "R.data"
+      }
+    },
+    {
+      "id": "sideband",
+      "source": "VDotElastic.scala",
+      "lines": [
+        85,
+        107
+      ],
+      "value": "accepted control including exception and write enables, plus perfDebugInfo, move with the same P-to-R transaction"
+    },
+    {
+      "id": "illegal_input",
+      "source": "VDotElastic.scala",
+      "lines": [
+        85,
+        107
+      ],
+      "value": "illegal input disables destination writes; exception is retained and R data becomes zero",
+      "display": "external caption"
+    },
+    {
+      "id": "earliest_latency",
+      "source": "VDotElastic.scala",
+      "lines": [
+        20,
+        24
+      ],
+      "value": {
+        "accept": "E0",
+        "P_to_R": "E1",
+        "first_possible_response": "E2",
+        "minimum_cycles": 2,
+        "initiation_interval_cycles": 1
+      },
+      "conditions": "no blocking, input admissible, no cancellation",
+      "display": "external caption"
+    }
+  ],
+  "scope": {
+    "VDotO2.enabled": true,
+    "VLEN": 128,
+    "arithmetic_path_shown": "legal",
+    "internal_slots": [
+      "P",
+      "R"
+    ],
+    "extra_registers_between_reduction_levels": 0,
+    "framework_latency": "uncertain; the drawing is not a fixed-latency framework declaration",
+    "functional_verification_performed": false
+  },
+  "layout": {
+    "width_mm": 160,
+    "height_mm": 136,
+    "minimum_font_user_units": 40.0,
+    "minimum_font_pt_at_160mm": 11.338582677165356,
+    "body_font_pt_at_160mm": 12.47244094488189,
+    "font_stack": "Microsoft YaHei, 微软雅黑, SimSun, 宋体, \"Noto Sans CJK SC\", sans-serif",
+    "colors": {
+      "background": "#F6F3EE",
+      "ink": "#242424",
+      "fill": "#E8E3DC",
+      "accent": "#CE4B32"
+    },
+    "editable_text_nodes": 61,
+    "embedded_rasters": 0
+  },
+  "output": {
+    "file": "S2-02.svg",
+    "sha256": "527a296c72c5d15287374c367673567938281446e23c6639cb1cda069bc039a5"
+  }
+}

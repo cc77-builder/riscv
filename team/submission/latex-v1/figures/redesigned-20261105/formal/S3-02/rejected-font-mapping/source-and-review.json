@@ -1,0 +1,80 @@
+{
+  "figure": "S3-02",
+  "status": "candidate; human visual approval pending",
+  "method": "exact SVG from frozen team NEMU source; no image generation or new execution",
+  "geometry": {
+    "width_mm": 160,
+    "height_mm": 168,
+    "minimum_text_pt": 11.499998092651367,
+    "outside_page": [],
+    "output_high_low_width_ratio": 3.0
+  },
+  "pdf_fonts": [
+    {
+      "xref": 7,
+      "ext": "ttf",
+      "type": "TrueType",
+      "basefont": "EIZQSH+DejaVuSansMono",
+      "name": "f-0-0",
+      "encoding": "WinAnsiEncoding"
+    },
+    {
+      "xref": 8,
+      "ext": "cid",
+      "type": "Type0",
+      "basefont": "JUQNCR+NotoSansCJKsc-Regular",
+      "name": "f-1-0",
+      "encoding": "Identity-H"
+    }
+  ],
+  "files": {
+    "S3-02-nemu-execution.svg": {
+      "bytes": 6811,
+      "sha256": "997ff825f06830627015bee36e996ba93af77cae224e2b04875b3d40c28b62f8"
+    },
+    "S3-02-nemu-execution.pdf": {
+      "bytes": 75998,
+      "sha256": "ab92f534d89fb794261026320aa2487e370fda6bb439b07cdc7ea9e6aba77d37"
+    },
+    "S3-02-nemu-execution.png": {
+      "bytes": 133158,
+      "sha256": "c0b2a4cb378c2ea2d2de5e607ace5736d64ca38de957e0d2a81ecfb1c2c8c0d6"
+    },
+    "render.py": {
+      "bytes": 8580,
+      "sha256": "b21341f1947f50bc2389ffee5b57a3a6d345910cb0df5e3f3e06ecc1e5274ed9"
+    },
+    "evidence/nemu-vdot.patch": {
+      "bytes": 7440,
+      "sha256": "6c165bf5f94ef0bfb4f894a5f06eb6d620d4a7e0e12f3b1400fa72811f5d24db"
+    },
+    "evidence/nemu-vdot.h": {
+      "bytes": 1302,
+      "sha256": "6c668a153a5da5a8bfe2833830c7238bd9805a0405bfaa8906fb7520e1f2059b"
+    }
+  },
+  "source": {
+    "repository": "cc77-builder/riscv",
+    "commit": "eca41d7cd959f5f3c4f240e382919c492d1ccb96",
+    "path": "team/patches/nemu/vdot-s8x8-r32-v0.1.patch",
+    "patch_version": "1.1.0",
+    "base_rev": "a48a11f208ff81ad765591d83271d1b339fb3861",
+    "source_record": "../pro1-structural-svg-v1/sources.json"
+  },
+  "required_adjacent_scope": [
+    "Exact match only; other decoder paths decide whether nonmatching encodings are legal.",
+    "vtype legality includes vill and reserved pad bits; e8/m1 means SEW8, LMUL1.",
+    "Checks precede all source reads, destination writes and VS dirtying.",
+    "sum is the low32 two-complement field, zero-extended to the complete 128-bit destination.",
+    "VLEN128 and team contract scope; vl/vtype/vstart/vxrm/vxsat/vcsr unchanged on success.",
+    "Exception xTVAL follows the fixed platform profile, with M-mode test coverage; no new privilege-mode proof.",
+    "Source-level interpreter flow; no hardware-cycle, PASS or current-run claim."
+  ],
+  "visual_review": {
+    "actual_pdf_png_viewed": true,
+    "human_adopted": false,
+    "reviewer": "root",
+    "technical_review": "Matched encoding, all-state guard, separate terminal illegal branch, source snapshot ordering, signed eight-term sum, full128 high96 zero/low32 and VS dirty all checked against frozen patch. Actual PDF PNG inspected: no detached data/control arrows, clipped text or overlap found.",
+    "reviewed_png_sha256": "c0b2a4cb378c2ea2d2de5e607ace5736d64ca38de957e0d2a81ecfb1c2c8c0d6"
+  }
+}

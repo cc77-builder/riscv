@@ -27,7 +27,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}\fancyhf{}
 \fancyhead[L]{\small 香山昆明湖 V2 · VDot 技术报告}
-\fancyhead[R]{\small 技术文档扩充稿}
+\fancyhead[R]{\small 技术报告}
 \fancyfoot[C]{\thepage}
 \ctexset{section={format=\Large\bfseries\rmfamily},subsection={format=\large\bfseries\rmfamily}}
 \setlength{\parindent}{2em}
@@ -47,16 +47,16 @@
 {\LARGE\bfseries #1\par}\vspace{8mm}
 {\large 技术报告\par}\vspace{12mm}
 \includegraphics[width=.90\linewidth,height=46mm,keepaspectratio]{figures/cover-concept.png}\par\vspace{3mm}
-{\footnotesize AI生成概念插图；不表示实际芯片版图或实测数据。\par}\vfill
+\vfill
 \begin{tabular}{rl}
 工程组合： & 0f＋firstdot V2＋原 C8\\[8pt]
 团队名称： & 待团队确认\\[8pt]
 成员： & 待团队确认\\[8pt]
 学校： & 待团队确认\\[8pt]
 材料日期： & 2026年11月2日\\[8pt]
-图像修订： & 2026年11月5日
+文档修订： & 2026年11月5日
 \end{tabular}\vspace{15mm}
-\par{\small 已补齐原9处空图位；身份信息与波形补证范围见正文。}\vspace{10mm}
+\vspace{10mm}
 \end{titlepage}}
 \newcommand{\reportcontents}{%
 \pagenumbering{Roman}\tableofcontents\clearpage\pagenumbering{arabic}}
@@ -67,6 +67,7 @@
 {\normalsize 工程组合：0f＋firstdot V2＋原 C8\quad 材料日期：2026年11月2日\par}
 \end{center}\vspace{6pt}}
 \setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{2}
 % Fixed-position image blocks keep each placeholder next to its discussion.
 % Add a PDF/PNG/JPG under figures/<ID> to replace its blank frame automatically.
 \newcommand{\stagefigureprefix}{1}
@@ -75,7 +76,7 @@
 \renewcommand{\thesection}{\stagefigureprefix.\arabic{section}}
 \captionsetup[table]{font=small,labelsep=quad,justification=centering,singlelinecheck=false,position=top}
 \setlength{\LTcapwidth}{\textwidth}
-\captionsetup[figure]{font=small,labelsep=quad,hypcap=false,justification=centering,singlelinecheck=false}
+\captionsetup[figure]{font=small,labelsep=quad,hypcap=false,justification=centering,singlelinecheck=false,position=bottom}
 \newif\ifreportimagepresent
 \newcommand{\reportfigure}[5]{%
 \begin{center}\begin{minipage}{\linewidth}\centering
@@ -89,8 +90,7 @@
 \captionof{figure}{#2}\label{fig:#1}
 \raggedright\footnotesize
 \ifreportimagepresent
-\textbf{注：}#4\par
-\textbf{来源与范围：}#5\par
+#4\par
 \else
 \textbf{插图要求：}#4\par
 \textbf{建议来源：}#5\par

@@ -1,0 +1,90 @@
+\reporttitle{第二阶段设计与基础测试文档}
+
+本章以固定0f实现为对象，说明指令语义、两槽数据通路、父级控制和基础验证。O2提供两槽弹性结构，H1收窄结果保存宽度，0f完成DIV取消控制修复。\par
+
+\section{设计目标}
+
+点积将多组乘法结果归约为一个和。本设计在昆明湖V2已有向量执行路径中接入vdot，复用译码、向量寄存器、调度、写回和精确提交机制。数据通路完成8项有符号乘加，控制通路维护请求身份、反压及取消。优化围绕独立点积吞吐、结果寄存器开销和与DIV共享父级资源的切换行为展开。\par
+
+\section{指令语义与编码}
+
+内部合同vdot-s8x8-r32-v0.1规定VLEN=128、SEW=8、LMUL=1、VL=8及vstart=0。两个向量源各取低8个字节，按signed int8解释；累加初值为零。\par
+
+$S = \sum_{i=0}^{7} \mathrm{signed8}(\mathrm{vs1}[i]) \times \mathrm{signed8}(\mathrm{vs2}[i])$\par
+
+目的低32位保存S的二补码，高96位清零。源高64位不参与计算。结果覆盖旧目的，源与目的允许别名。单项乘积范围为−16256～16384，总和范围为−130048～131072，32位结果能够完整保存。\par
+
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}p{0.3\linewidth}>{\raggedright\arraybackslash}p{0.35\linewidth}}
+\toprule
+\textbf{字段} & \textbf{位段} & \textbf{取值}\\ \midrule\endhead
+funct6 & 31～26 & 000000\\
+vm & 25 & 1\\
+vs2 / vs1 & 24～20 / 19～15 & 向量源寄存器编号\\
+funct3 & 14～12 & 000\\
+vd & 11～7 & 向量目的寄存器编号\\
+opcode & 6～0 & custom-0，0x0b\\
+\bottomrule\end{longtable}}
+
+MATCH为0x0200000b，MASK为0xfe00707f。汇编记法使用vdot.vv vd, vs2, vs1，程序通过校验后的机器字/汇编宏编码。示例vdot.vv v10,v8,v9对应0x0284850b。\par
+
+合法状态还要求向量状态已启用、vill=0和vm=1；四种vta/vma组合均可使用。域外配置进入精确非法指令异常路径，成功执行保留合同规定的向量CSR。目的格式与合法域采用本项目内部合同；相关赛事待确认项集中列于“歧义清单与变更流程”。\par
+
+\section{数据通路和两槽微架构}
+
+数据通路由8路有符号乘法、乘积槽P、归约加法网络及结果槽R构成。8×8有符号乘积使用16位表示，二项、四项、八项归约分别保留17、18、19位；归约结果扩展为32位补码。输出将该字段与高96位零拼接，形成完整128位向量目的值。\par
+
+\begin{center}
+\begin{tikzpicture}[node distance=7mm,box/.style={draw,rounded corners,text width=95mm,align=center,minimum height=9mm},>=Stealth]
+\node[box](a){两个128位源，提取低8个有符号字节};
+\node[box,below=of a](b){8路有符号乘法，P槽保存乘积及事务身份};
+\node[box,below=of b](c){归约加法，R槽保存32位结果及事务身份};
+\node[box,below=of c](d){高96位补零，输出完整128位及写回控制};
+\draw[->](a)--(b);\draw[->](b)--(c);\draw[->](c)--(d);
+\end{tikzpicture}
+\par\small 图：固定0f数据通路示意，身份随P/R槽推进。
+\end{center}
+
+P槽保存8个16位乘积及请求控制信息，R槽保存归约结果状态和对应身份。两个槽分别具有有效位，握手与转移统一按时钟边沿前状态计算。下游就绪且持续供给时，旧R响应、旧P转入R和新请求进入P可以在同一边沿完成，最早响应为接收后2拍，连续接收间隔为1拍。\par
+
+H1将R槽的物理结果状态收窄到32位，输出端补高96位零，保持128位架构结果不变。ROB标识、目的物理寄存器、向量写使能、异常及性能字段随同一事务推进，反压时完整输出包保持稳定。redirect分别按P、R的ROB年龄判断取消；reset优先清除两槽有效位及父级占用，并抑制当拍输入、输出握手。异常请求保留身份和异常信息，关闭正常目的写使能。\par
+
+实现路径包括backend/fu/vector中的算术模块、\seqsplit{wrapper/VDotElastic.scala}及VDotO2.scala；VFEX4的派发、资源占用与时钟控制位于\seqsplit{backend/exu/ExeUnit.scala}。下文实现说明均对应固定0f提交。\par
+
+\section{与DIV共用父级的处理}
+
+VFEX4统一管理vdot与整数、浮点DIV的派发、占用和时钟。VDot在途状态由P、R真实有效位提供，DIV独立保存占用与身份；共享输出保持唯一有效完成来源。0f在原O2接入之后修复了匹配DIV取消时保持状态未及时释放的问题，保留取消清理所需边沿，再进入空闲关钟。真实父级验证覆盖两类DIV切换、反压、取消、复位及重新唤醒。\par
+
+\section{功能验证}
+
+测试分为独立数学模型、算术RTL、弹性FU、真实VFEX4父级和全核差分五个层次。算术层核对完整128位结果，FU与父级层核对握手、身份及资源控制，全核层核对译码、配置依赖、异常和提交。各层分别保存输入、构建身份与结果。\par
+
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}p{0.3\linewidth}>{\raggedright\arraybackslash}p{0.35\linewidth}}
+\toprule
+\textbf{层级} & \textbf{主要覆盖} & \textbf{已有结果}\\ \midrule\endhead
+模型/算术 & 22组定向＋10000组随机，完整128位 & 验证通过\\
+FU/真实父级 & 反压、取消、复位、身份、异常及DIV交互 & 0f原证据复用，4＋16项负控\\
+全核 & 正负边界、寄存器别名、非法向量状态等 & 117个不同用例，按原矩阵分片执行124次\\
+总验收 & 原13项与补1项组合、负控及恢复 & R5/G5组合验证通过\\
+\bottomrule\end{longtable}}
+
+下表列出代表性定向向量及精确预期值，便于对照位宽推导与结果布局。完整输入和执行记录随测试归档保存。\par
+
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}p{0.3\linewidth}>{\raggedright\arraybackslash}p{0.35\linewidth}}
+\toprule
+\textbf{输入} & \textbf{数学结果} & \textbf{目的低32位}\\ \midrule\endhead
+[1,2,3,4,5,6,7,8]与自身点积 & 204 & 0x000000cc\\
+8个−1与8个1点积 & −8 & 0xfffffff8\\
+8个−128与8个−128点积 & 131072 & 0x00020000\\
+8个−128与8个127点积 & −130048 & 0xfffe0400\\
+8个0与任意合法输入 & 0 & 0x00000000\\
+\bottomrule\end{longtable}}
+
+每个用例同时比较低32位补码和高96位零。源高64位填入非零哨兵，用于识别错误的lane范围；旧目的预填非零值，用于检查完整覆盖。别名用例使用执行前源快照计算期望，覆盖vd与vs1、vs2重合及v0目的。\par
+
+\section{设计取舍与扩展}
+
+O2通过两槽容量支持连续接收，H1降低结果寄存器开销，0f完善DIV取消后的关钟行为。冻结0f构建按clean-02配置启用O2/T14、关闭O1；通用源码默认开关与该冻结构建分别记录。一拍P4候选完成局部验证后进入47项同约束筛选，初版6项、唯一修订10项未通过，因此生产版本选择0f。\par
+
+参数扩展实验实现signed INT16×8和64位结果，完成94组定向及10000组随机验证，用于检查算术与包装层的参数化方法。当前生产ISA仍采用INT8×8、低32位结果及高96位清零的合同。\par
+
+\href{https://github.com/cc77-builder/riscv/blob/eca41d7cd959f5f3c4f240e382919c492d1ccb96/team/spec/vdot.md}{指令合同} · \href{https://github.com/cc77-builder/riscv/blob/0f12df675378556670afd0dd2153f47fcb330610/src/main/scala/xiangshan/backend/fu/wrapper/VDotElastic.scala}{稳定FU源码} · \href{https://github.com/cc77-builder/riscv/blob/eca41d7cd959f5f3c4f240e382919c492d1ccb96/team/optimizations/o2/integration/firstdot-v2-0f/acceptance/acceptance-matrix.json}{R5验收矩阵} · \href{https://github.com/cc77-builder/riscv/blob/eca41d7cd959f5f3c4f240e382919c492d1ccb96/team/docs/t15-parameter-extension.md}{参数扩展}\par

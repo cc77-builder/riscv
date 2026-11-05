@@ -1,0 +1,324 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" width="160mm" height="178mm" viewBox="0 0 160 178" version="1.1" role="img" aria-labelledby="title description">
+  <title id="title">C8三方静态装载内容与调用输入对照</title>
+  <desc id="description">Original qualified fixture, same-source rebuild, and actual SDK linkage are compared statically. Each PT_LOAD memory range consists of 30024 file-backed bytes and 1416 zero-filled bytes, in exact horizontal proportion. All three 31440-byte BIN images are byte-identical. Forty-eight 64-byte call records are shown in original sequence, rows 8x32, 4x8, 16x64, 4x13, and dataset groups d0,d1,d2. Four records per dataset are not relabeled into a common method order: the first group retains its original special ordering. Twelve packed input arrays have sizes 288,40,1088,65 bytes in the same row order, three datasets each. Grid widths represent logical objects rather than physical byte sizes or addresses. Only the named debug sections differ outside allocated content; complete original ELF files are not identical. 627 counts protected files. This historical static qualification introduced zero EMU, NEMU or full-core runs and permits reuse of the original fixture evidence.</desc>
+  <rect x="0" y="0" width="160.0" height="178.0" fill="#FFFFFF" stroke="none" stroke-width="0" />
+  <text x="50.0" y="7.5" font-family="Noto Sans CJK SC" font-size="4.233333" font-weight="400" fill="#24364A" text-anchor="middle">原夹具 ELF</text>
+  <line x1="31.0" y1="11.5" x2="69.0" y2="11.5" stroke="#CCD8E1" stroke-width="0.28" fill="none" />
+  <text x="93.0" y="7.5" font-family="Noto Sans CJK SC" font-size="4.233333" font-weight="400" fill="#24364A" text-anchor="middle">同源重建 ELF</text>
+  <line x1="74.0" y1="11.5" x2="112.0" y2="11.5" stroke="#CCD8E1" stroke-width="0.28" fill="none" />
+  <text x="136.0" y="7.5" font-family="Noto Sans CJK SC" font-size="4.233333" font-weight="400" fill="#24364A" text-anchor="middle">SDK 接入 ELF</text>
+  <line x1="117.0" y1="11.5" x2="155.0" y2="11.5" stroke="#CCD8E1" stroke-width="0.28" fill="none" />
+  <text x="4" y="22.1" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="start">PT_LOAD</text>
+  <text x="4" y="28.4" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="start">装载内存</text>
+  <rect x="31.0" y="17" width="36.28854961832061" height="12" fill="#E5EFF8" stroke="#7790A4" stroke-width="0.22" id="load-0-file-30024" />
+  <rect x="67.28854961832062" y="17" width="1.7114503816793893" height="12" fill="#F1F3F5" stroke="#7790A4" stroke-width="0.22" id="load-0-zero-1416" />
+  <line x1="67.43854961832062" y1="19.7" x2="68.85" y2="18.5" stroke="#7790A4" stroke-width="0.14" fill="none" />
+  <line x1="67.43854961832062" y1="22.2" x2="68.85" y2="21" stroke="#7790A4" stroke-width="0.14" fill="none" />
+  <line x1="67.43854961832062" y1="24.7" x2="68.85" y2="23.5" stroke="#7790A4" stroke-width="0.14" fill="none" />
+  <line x1="67.43854961832062" y1="27.2" x2="68.85" y2="26" stroke="#7790A4" stroke-width="0.14" fill="none" />
+  <text x="49.14427480916031" y="24.5" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#315D85" text-anchor="middle">30,024 B</text>
+  <rect x="74.0" y="17" width="36.28854961832061" height="12" fill="#E5EFF8" stroke="#7790A4" stroke-width="0.22" id="load-1-file-30024" />
+  <rect x="110.28854961832062" y="17" width="1.7114503816793893" height="12" fill="#F1F3F5" stroke="#7790A4" stroke-width="0.22" id="load-1-zero-1416" />
+  <line x1="110.43854961832062" y1="19.7" x2="111.85" y2="18.5" stroke="#7790A4" stroke-width="0.14" fill="none" />
+  <line x1="110.43854961832062" y1="22.2" x2="111.85" y2="21" stroke="#7790A4" stroke-width="0.14" fill="none" />
+  <line x1="110.43854961832062" y1="24.7" x2="111.85" y2="23.5" stroke="#7790A4" stroke-width="0.14" fill="none" />
+  <line x1="110.43854961832062" y1="27.2" x2="111.85" y2="26" stroke="#7790A4" stroke-width="0.14" fill="none" />
+  <text x="92.14427480916031" y="24.5" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#315D85" text-anchor="middle">30,024 B</text>
+  <rect x="117.0" y="17" width="36.28854961832061" height="12" fill="#E5EFF8" stroke="#7790A4" stroke-width="0.22" id="load-2-file-30024" />
+  <rect x="153.28854961832062" y="17" width="1.7114503816793893" height="12" fill="#F1F3F5" stroke="#7790A4" stroke-width="0.22" id="load-2-zero-1416" />
+  <line x1="153.43854961832062" y1="19.7" x2="154.85" y2="18.5" stroke="#7790A4" stroke-width="0.14" fill="none" />
+  <line x1="153.43854961832062" y1="22.2" x2="154.85" y2="21" stroke="#7790A4" stroke-width="0.14" fill="none" />
+  <line x1="153.43854961832062" y1="24.7" x2="154.85" y2="23.5" stroke="#7790A4" stroke-width="0.14" fill="none" />
+  <line x1="153.43854961832062" y1="27.2" x2="154.85" y2="26" stroke="#7790A4" stroke-width="0.14" fill="none" />
+  <text x="135.1442748091603" y="24.5" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#315D85" text-anchor="middle">30,024 B</text>
+  <text x="71.5" y="24.5" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">=</text>
+  <text x="114.5" y="24.5" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">=</text>
+  <text x="80" y="36.5" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">蓝区为文件内容；末端为 1,416 B 零填充</text>
+  <text x="80" y="43.5" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">入口 0x80000000；地址、权限、对齐一致</text>
+  <text x="4" y="53" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="start">BIN</text>
+  <text x="4" y="59" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="start">全字节</text>
+  <rect x="31.0" y="48.5" width="38.0" height="10" fill="#FAFCFE" stroke="#7790A4" stroke-width="0.22" id="bin-0-31440" />
+  <text x="50.0" y="55.3" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">31,440 B</text>
+  <rect x="74.0" y="48.5" width="38.0" height="10" fill="#FAFCFE" stroke="#7790A4" stroke-width="0.22" id="bin-1-31440" />
+  <text x="93.0" y="55.3" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">31,440 B</text>
+  <rect x="117.0" y="48.5" width="38.0" height="10" fill="#FAFCFE" stroke="#7790A4" stroke-width="0.22" id="bin-2-31440" />
+  <text x="136.0" y="55.3" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">31,440 B</text>
+  <text x="71.5" y="55.3" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">=</text>
+  <text x="114.5" y="55.3" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">=</text>
+  <line x1="4" y1="64" x2="156" y2="64" stroke="#CCD8E1" stroke-width="0.25" fill="none" />
+  <text x="4" y="72" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="start">调用记录</text>
+  <text x="37.333333333333336" y="72" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">d0</text>
+  <text x="50.0" y="72" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">d1</text>
+  <text x="62.66666666666667" y="72" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">d2</text>
+  <text x="80.33333333333333" y="72" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">d0</text>
+  <text x="93.0" y="72" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">d1</text>
+  <text x="105.66666666666667" y="72" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">d2</text>
+  <text x="123.33333333333333" y="72" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">d0</text>
+  <text x="136.0" y="72" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">d1</text>
+  <text x="148.66666666666666" y="72" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">d2</text>
+  <text x="4" y="79.85" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="start">8×32</text>
+  <text x="4" y="84.85" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="start">4×8</text>
+  <text x="4" y="89.85" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="start">16×64</text>
+  <text x="4" y="94.85" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="start">4×13</text>
+  <rect x="31.0" y="76.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-00" />
+  <rect x="34.166666666666664" y="76.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-01" />
+  <rect x="37.333333333333336" y="76.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-02" />
+  <rect x="40.5" y="76.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-03" />
+  <rect x="43.666666666666664" y="76.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-04" />
+  <rect x="46.833333333333336" y="76.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-05" />
+  <rect x="50.0" y="76.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-06" />
+  <rect x="53.16666666666667" y="76.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-07" />
+  <rect x="56.33333333333333" y="76.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-08" />
+  <rect x="59.5" y="76.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-09" />
+  <rect x="62.66666666666667" y="76.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-10" />
+  <rect x="65.83333333333334" y="76.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-11" />
+  <rect x="31.0" y="81.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-12" />
+  <rect x="34.166666666666664" y="81.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-13" />
+  <rect x="37.333333333333336" y="81.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-14" />
+  <rect x="40.5" y="81.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-15" />
+  <rect x="43.666666666666664" y="81.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-16" />
+  <rect x="46.833333333333336" y="81.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-17" />
+  <rect x="50.0" y="81.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-18" />
+  <rect x="53.16666666666667" y="81.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-19" />
+  <rect x="56.33333333333333" y="81.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-20" />
+  <rect x="59.5" y="81.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-21" />
+  <rect x="62.66666666666667" y="81.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-22" />
+  <rect x="65.83333333333334" y="81.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-23" />
+  <rect x="31.0" y="86.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-24" />
+  <rect x="34.166666666666664" y="86.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-25" />
+  <rect x="37.333333333333336" y="86.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-26" />
+  <rect x="40.5" y="86.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-27" />
+  <rect x="43.666666666666664" y="86.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-28" />
+  <rect x="46.833333333333336" y="86.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-29" />
+  <rect x="50.0" y="86.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-30" />
+  <rect x="53.16666666666667" y="86.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-31" />
+  <rect x="56.33333333333333" y="86.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-32" />
+  <rect x="59.5" y="86.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-33" />
+  <rect x="62.66666666666667" y="86.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-34" />
+  <rect x="65.83333333333334" y="86.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-35" />
+  <rect x="31.0" y="91.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-36" />
+  <rect x="34.166666666666664" y="91.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-37" />
+  <rect x="37.333333333333336" y="91.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-38" />
+  <rect x="40.5" y="91.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-39" />
+  <rect x="43.666666666666664" y="91.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-40" />
+  <rect x="46.833333333333336" y="91.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-41" />
+  <rect x="50.0" y="91.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-42" />
+  <rect x="53.16666666666667" y="91.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-43" />
+  <rect x="56.33333333333333" y="91.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-44" />
+  <rect x="59.5" y="91.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-45" />
+  <rect x="62.66666666666667" y="91.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-46" />
+  <rect x="65.83333333333334" y="91.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-0-seq-47" />
+  <rect x="31.0" y="76.0" width="38.0" height="20.0" fill="none" stroke="#7790A4" stroke-width="0.25" />
+  <line x1="43.666666666666664" y1="76.0" x2="43.666666666666664" y2="96.0" stroke="#7790A4" stroke-width="0.3" fill="none" />
+  <line x1="56.33333333333333" y1="76.0" x2="56.33333333333333" y2="96.0" stroke="#7790A4" stroke-width="0.3" fill="none" />
+  <rect x="74.0" y="76.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-00" />
+  <rect x="77.16666666666667" y="76.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-01" />
+  <rect x="80.33333333333333" y="76.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-02" />
+  <rect x="83.5" y="76.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-03" />
+  <rect x="86.66666666666667" y="76.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-04" />
+  <rect x="89.83333333333333" y="76.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-05" />
+  <rect x="93.0" y="76.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-06" />
+  <rect x="96.16666666666667" y="76.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-07" />
+  <rect x="99.33333333333333" y="76.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-08" />
+  <rect x="102.5" y="76.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-09" />
+  <rect x="105.66666666666667" y="76.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-10" />
+  <rect x="108.83333333333334" y="76.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-11" />
+  <rect x="74.0" y="81.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-12" />
+  <rect x="77.16666666666667" y="81.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-13" />
+  <rect x="80.33333333333333" y="81.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-14" />
+  <rect x="83.5" y="81.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-15" />
+  <rect x="86.66666666666667" y="81.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-16" />
+  <rect x="89.83333333333333" y="81.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-17" />
+  <rect x="93.0" y="81.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-18" />
+  <rect x="96.16666666666667" y="81.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-19" />
+  <rect x="99.33333333333333" y="81.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-20" />
+  <rect x="102.5" y="81.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-21" />
+  <rect x="105.66666666666667" y="81.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-22" />
+  <rect x="108.83333333333334" y="81.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-23" />
+  <rect x="74.0" y="86.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-24" />
+  <rect x="77.16666666666667" y="86.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-25" />
+  <rect x="80.33333333333333" y="86.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-26" />
+  <rect x="83.5" y="86.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-27" />
+  <rect x="86.66666666666667" y="86.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-28" />
+  <rect x="89.83333333333333" y="86.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-29" />
+  <rect x="93.0" y="86.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-30" />
+  <rect x="96.16666666666667" y="86.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-31" />
+  <rect x="99.33333333333333" y="86.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-32" />
+  <rect x="102.5" y="86.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-33" />
+  <rect x="105.66666666666667" y="86.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-34" />
+  <rect x="108.83333333333334" y="86.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-35" />
+  <rect x="74.0" y="91.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-36" />
+  <rect x="77.16666666666667" y="91.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-37" />
+  <rect x="80.33333333333333" y="91.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-38" />
+  <rect x="83.5" y="91.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-39" />
+  <rect x="86.66666666666667" y="91.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-40" />
+  <rect x="89.83333333333333" y="91.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-41" />
+  <rect x="93.0" y="91.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-42" />
+  <rect x="96.16666666666667" y="91.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-43" />
+  <rect x="99.33333333333333" y="91.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-44" />
+  <rect x="102.5" y="91.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-45" />
+  <rect x="105.66666666666667" y="91.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-46" />
+  <rect x="108.83333333333334" y="91.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-1-seq-47" />
+  <rect x="74.0" y="76.0" width="38.0" height="20.0" fill="none" stroke="#7790A4" stroke-width="0.25" />
+  <line x1="86.66666666666667" y1="76.0" x2="86.66666666666667" y2="96.0" stroke="#7790A4" stroke-width="0.3" fill="none" />
+  <line x1="99.33333333333333" y1="76.0" x2="99.33333333333333" y2="96.0" stroke="#7790A4" stroke-width="0.3" fill="none" />
+  <rect x="117.0" y="76.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-00" />
+  <rect x="120.16666666666667" y="76.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-01" />
+  <rect x="123.33333333333333" y="76.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-02" />
+  <rect x="126.5" y="76.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-03" />
+  <rect x="129.66666666666666" y="76.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-04" />
+  <rect x="132.83333333333334" y="76.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-05" />
+  <rect x="136.0" y="76.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-06" />
+  <rect x="139.16666666666666" y="76.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-07" />
+  <rect x="142.33333333333334" y="76.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-08" />
+  <rect x="145.5" y="76.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-09" />
+  <rect x="148.66666666666666" y="76.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-10" />
+  <rect x="151.83333333333334" y="76.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-11" />
+  <rect x="117.0" y="81.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-12" />
+  <rect x="120.16666666666667" y="81.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-13" />
+  <rect x="123.33333333333333" y="81.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-14" />
+  <rect x="126.5" y="81.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-15" />
+  <rect x="129.66666666666666" y="81.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-16" />
+  <rect x="132.83333333333334" y="81.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-17" />
+  <rect x="136.0" y="81.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-18" />
+  <rect x="139.16666666666666" y="81.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-19" />
+  <rect x="142.33333333333334" y="81.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-20" />
+  <rect x="145.5" y="81.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-21" />
+  <rect x="148.66666666666666" y="81.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-22" />
+  <rect x="151.83333333333334" y="81.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-23" />
+  <rect x="117.0" y="86.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-24" />
+  <rect x="120.16666666666667" y="86.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-25" />
+  <rect x="123.33333333333333" y="86.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-26" />
+  <rect x="126.5" y="86.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-27" />
+  <rect x="129.66666666666666" y="86.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-28" />
+  <rect x="132.83333333333334" y="86.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-29" />
+  <rect x="136.0" y="86.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-30" />
+  <rect x="139.16666666666666" y="86.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-31" />
+  <rect x="142.33333333333334" y="86.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-32" />
+  <rect x="145.5" y="86.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-33" />
+  <rect x="148.66666666666666" y="86.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-34" />
+  <rect x="151.83333333333334" y="86.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-35" />
+  <rect x="117.0" y="91.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-36" />
+  <rect x="120.16666666666667" y="91.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-37" />
+  <rect x="123.33333333333333" y="91.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-38" />
+  <rect x="126.5" y="91.0" width="3.1666666666666665" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-39" />
+  <rect x="129.66666666666666" y="91.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-40" />
+  <rect x="132.83333333333334" y="91.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-41" />
+  <rect x="136.0" y="91.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-42" />
+  <rect x="139.16666666666666" y="91.0" width="3.1666666666666665" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-43" />
+  <rect x="142.33333333333334" y="91.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-44" />
+  <rect x="145.5" y="91.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-45" />
+  <rect x="148.66666666666666" y="91.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-46" />
+  <rect x="151.83333333333334" y="91.0" width="3.1666666666666665" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.15" id="call-2-seq-47" />
+  <rect x="117.0" y="76.0" width="38.0" height="20.0" fill="none" stroke="#7790A4" stroke-width="0.25" />
+  <line x1="129.66666666666666" y1="76.0" x2="129.66666666666666" y2="96.0" stroke="#7790A4" stroke-width="0.3" fill="none" />
+  <line x1="142.33333333333334" y1="76.0" x2="142.33333333333334" y2="96.0" stroke="#7790A4" stroke-width="0.3" fill="none" />
+  <text x="71.5" y="87.5" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">=</text>
+  <text x="114.5" y="87.5" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">=</text>
+  <text x="80" y="103" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">每格 64 B · 每份 48 条 · 按原 seq 逐项核对</text>
+  <text x="4" y="111" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="start">输入数组</text>
+  <text x="37.333333333333336" y="111" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">d0</text>
+  <text x="50.0" y="111" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">d1</text>
+  <text x="62.66666666666667" y="111" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">d2</text>
+  <text x="80.33333333333333" y="111" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">d0</text>
+  <text x="93.0" y="111" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">d1</text>
+  <text x="105.66666666666667" y="111" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">d2</text>
+  <text x="123.33333333333333" y="111" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">d0</text>
+  <text x="136.0" y="111" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">d1</text>
+  <text x="148.66666666666666" y="111" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">d2</text>
+  <text x="4" y="118.85" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="start">8×32</text>
+  <text x="4" y="123.85" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="start">4×8</text>
+  <text x="4" y="128.85" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="start">16×64</text>
+  <text x="4" y="133.85" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="start">4×13</text>
+  <rect x="31.0" y="115.0" width="12.666666666666666" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.18" id="input-0-shape-0-dataset-0" />
+  <text x="37.333333333333336" y="118.85" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">288</text>
+  <rect x="43.666666666666664" y="115.0" width="12.666666666666666" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.18" id="input-0-shape-0-dataset-1" />
+  <text x="50.0" y="118.85" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">288</text>
+  <rect x="56.33333333333333" y="115.0" width="12.666666666666666" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.18" id="input-0-shape-0-dataset-2" />
+  <text x="62.66666666666667" y="118.85" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">288</text>
+  <rect x="31.0" y="120.0" width="12.666666666666666" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.18" id="input-0-shape-1-dataset-0" />
+  <text x="37.333333333333336" y="123.85" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">40</text>
+  <rect x="43.666666666666664" y="120.0" width="12.666666666666666" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.18" id="input-0-shape-1-dataset-1" />
+  <text x="50.0" y="123.85" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">40</text>
+  <rect x="56.33333333333333" y="120.0" width="12.666666666666666" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.18" id="input-0-shape-1-dataset-2" />
+  <text x="62.66666666666667" y="123.85" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">40</text>
+  <rect x="31.0" y="125.0" width="12.666666666666666" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.18" id="input-0-shape-2-dataset-0" />
+  <text x="37.333333333333336" y="128.85" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">1088</text>
+  <rect x="43.666666666666664" y="125.0" width="12.666666666666666" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.18" id="input-0-shape-2-dataset-1" />
+  <text x="50.0" y="128.85" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">1088</text>
+  <rect x="56.33333333333333" y="125.0" width="12.666666666666666" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.18" id="input-0-shape-2-dataset-2" />
+  <text x="62.66666666666667" y="128.85" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">1088</text>
+  <rect x="31.0" y="130.0" width="12.666666666666666" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.18" id="input-0-shape-3-dataset-0" />
+  <text x="37.333333333333336" y="133.85" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">65</text>
+  <rect x="43.666666666666664" y="130.0" width="12.666666666666666" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.18" id="input-0-shape-3-dataset-1" />
+  <text x="50.0" y="133.85" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">65</text>
+  <rect x="56.33333333333333" y="130.0" width="12.666666666666666" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.18" id="input-0-shape-3-dataset-2" />
+  <text x="62.66666666666667" y="133.85" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">65</text>
+  <rect x="31.0" y="115.0" width="38.0" height="20.0" fill="none" stroke="#7790A4" stroke-width="0.25" />
+  <rect x="74.0" y="115.0" width="12.666666666666666" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.18" id="input-1-shape-0-dataset-0" />
+  <text x="80.33333333333333" y="118.85" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">288</text>
+  <rect x="86.66666666666667" y="115.0" width="12.666666666666666" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.18" id="input-1-shape-0-dataset-1" />
+  <text x="93.0" y="118.85" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">288</text>
+  <rect x="99.33333333333333" y="115.0" width="12.666666666666666" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.18" id="input-1-shape-0-dataset-2" />
+  <text x="105.66666666666667" y="118.85" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">288</text>
+  <rect x="74.0" y="120.0" width="12.666666666666666" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.18" id="input-1-shape-1-dataset-0" />
+  <text x="80.33333333333333" y="123.85" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">40</text>
+  <rect x="86.66666666666667" y="120.0" width="12.666666666666666" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.18" id="input-1-shape-1-dataset-1" />
+  <text x="93.0" y="123.85" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">40</text>
+  <rect x="99.33333333333333" y="120.0" width="12.666666666666666" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.18" id="input-1-shape-1-dataset-2" />
+  <text x="105.66666666666667" y="123.85" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">40</text>
+  <rect x="74.0" y="125.0" width="12.666666666666666" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.18" id="input-1-shape-2-dataset-0" />
+  <text x="80.33333333333333" y="128.85" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">1088</text>
+  <rect x="86.66666666666667" y="125.0" width="12.666666666666666" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.18" id="input-1-shape-2-dataset-1" />
+  <text x="93.0" y="128.85" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">1088</text>
+  <rect x="99.33333333333333" y="125.0" width="12.666666666666666" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.18" id="input-1-shape-2-dataset-2" />
+  <text x="105.66666666666667" y="128.85" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">1088</text>
+  <rect x="74.0" y="130.0" width="12.666666666666666" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.18" id="input-1-shape-3-dataset-0" />
+  <text x="80.33333333333333" y="133.85" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">65</text>
+  <rect x="86.66666666666667" y="130.0" width="12.666666666666666" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.18" id="input-1-shape-3-dataset-1" />
+  <text x="93.0" y="133.85" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">65</text>
+  <rect x="99.33333333333333" y="130.0" width="12.666666666666666" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.18" id="input-1-shape-3-dataset-2" />
+  <text x="105.66666666666667" y="133.85" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">65</text>
+  <rect x="74.0" y="115.0" width="38.0" height="20.0" fill="none" stroke="#7790A4" stroke-width="0.25" />
+  <rect x="117.0" y="115.0" width="12.666666666666666" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.18" id="input-2-shape-0-dataset-0" />
+  <text x="123.33333333333333" y="118.85" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">288</text>
+  <rect x="129.66666666666666" y="115.0" width="12.666666666666666" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.18" id="input-2-shape-0-dataset-1" />
+  <text x="136.0" y="118.85" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">288</text>
+  <rect x="142.33333333333334" y="115.0" width="12.666666666666666" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.18" id="input-2-shape-0-dataset-2" />
+  <text x="148.66666666666666" y="118.85" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">288</text>
+  <rect x="117.0" y="120.0" width="12.666666666666666" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.18" id="input-2-shape-1-dataset-0" />
+  <text x="123.33333333333333" y="123.85" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">40</text>
+  <rect x="129.66666666666666" y="120.0" width="12.666666666666666" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.18" id="input-2-shape-1-dataset-1" />
+  <text x="136.0" y="123.85" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">40</text>
+  <rect x="142.33333333333334" y="120.0" width="12.666666666666666" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.18" id="input-2-shape-1-dataset-2" />
+  <text x="148.66666666666666" y="123.85" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">40</text>
+  <rect x="117.0" y="125.0" width="12.666666666666666" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.18" id="input-2-shape-2-dataset-0" />
+  <text x="123.33333333333333" y="128.85" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">1088</text>
+  <rect x="129.66666666666666" y="125.0" width="12.666666666666666" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.18" id="input-2-shape-2-dataset-1" />
+  <text x="136.0" y="128.85" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">1088</text>
+  <rect x="142.33333333333334" y="125.0" width="12.666666666666666" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.18" id="input-2-shape-2-dataset-2" />
+  <text x="148.66666666666666" y="128.85" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">1088</text>
+  <rect x="117.0" y="130.0" width="12.666666666666666" height="5.0" fill="#E5EFF8" stroke="#B9CCD9" stroke-width="0.18" id="input-2-shape-3-dataset-0" />
+  <text x="123.33333333333333" y="133.85" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">65</text>
+  <rect x="129.66666666666666" y="130.0" width="12.666666666666666" height="5.0" fill="#E1F0ED" stroke="#B9CCD9" stroke-width="0.18" id="input-2-shape-3-dataset-1" />
+  <text x="136.0" y="133.85" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">65</text>
+  <rect x="142.33333333333334" y="130.0" width="12.666666666666666" height="5.0" fill="#F0EDE5" stroke="#B9CCD9" stroke-width="0.18" id="input-2-shape-3-dataset-2" />
+  <text x="148.66666666666666" y="133.85" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#24364A" text-anchor="middle">65</text>
+  <rect x="117.0" y="115.0" width="38.0" height="20.0" fill="none" stroke="#7790A4" stroke-width="0.25" />
+  <text x="71.5" y="126.5" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">=</text>
+  <text x="114.5" y="126.5" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">=</text>
+  <text x="80" y="142" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">每份 12 个数组：地址与内容一致；格内为 B（非比例）</text>
+  <line x1="4" y1="146.5" x2="156" y2="146.5" stroke="#CCD8E1" stroke-width="0.25" fill="none" stroke-dasharray="1.2 0.9" />
+  <text x="4" y="155.5" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="start">非装载</text>
+  <rect x="31.0" y="150" width="38.0" height="8" fill="#F3F4F5" stroke="#CCD8E1" stroke-width="0.22" id="debug-0-outside-loaded-content" />
+  <text x="50.0" y="155.5" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">调试信息</text>
+  <rect x="74.0" y="150" width="38.0" height="8" fill="#F3F4F5" stroke="#CCD8E1" stroke-width="0.22" id="debug-1-outside-loaded-content" />
+  <text x="93.0" y="155.5" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">调试信息</text>
+  <rect x="117.0" y="150" width="38.0" height="8" fill="#F3F4F5" stroke="#CCD8E1" stroke-width="0.22" id="debug-2-outside-loaded-content" />
+  <text x="136.0" y="155.5" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">调试信息</text>
+  <text x="71.5" y="155.5" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">≠</text>
+  <text x="114.5" y="155.5" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">≠</text>
+  <text x="80" y="165" font-family="DejaVu Sans Mono" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">.debug_info / .debug_line / .debug_line_str</text>
+  <text x="80" y="173.2" font-family="Noto Sans CJK SC" font-size="4.056944" font-weight="400" fill="#52687B" text-anchor="middle">627 个受保护文件 · SDK 新增 EMU：0</text>
+</svg>

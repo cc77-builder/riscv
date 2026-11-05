@@ -1,0 +1,277 @@
+{
+  "report_title": "第二阶段：向量点积设计与功能验证",
+  "introduction_tex": "本设计在香山昆明湖V2现有向量执行单元中接入自定义点积，采用乘积槽P和结果槽R保存两笔在途请求。下文依次说明指令语义、RTL实现、正数、负数与边界测试，以及取消和共享资源控制；完成取消关钟修复的最终工程版本记为0f。\\par",
+  "sections": [
+    {
+      "title": "指令语义与微架构设计",
+      "items": [
+        {
+          "block": "overview:01",
+          "heading": false
+        },
+        {
+          "block": "technical1:02",
+          "heading": true,
+          "title": "点积定义、位宽与结果布局"
+        },
+        {
+          "block": "technical1:03",
+          "heading": false
+        },
+        {
+          "block": "technical1:04",
+          "heading": false
+        },
+        {
+          "block": "technical1:11",
+          "heading": true,
+          "title": "指令编码与合法配置"
+        },
+        {
+          "figure": "S2-01"
+        },
+        {
+          "block": "technical1:07",
+          "heading": false
+        },
+        {
+          "block": "technical1:08",
+          "heading": false
+        },
+        {
+          "block": "technical1:09",
+          "heading": false
+        },
+        {
+          "block": "technical1:05",
+          "heading": true,
+          "title": "架构参考伪代码"
+        },
+        {
+          "block": "technical2:01",
+          "heading": true,
+          "title": "P/R两槽数据通路"
+        },
+        {
+          "figure": "S2-02"
+        },
+        {
+          "supplement": "SUP-S2-ARITH"
+        }
+      ]
+    },
+    {
+      "title": "RTL功能单元扩展与父级接入",
+      "items": [
+        {
+          "block": "narrative:02",
+          "heading": true,
+          "title": "译码、微操作与配置依赖"
+        },
+        {
+          "block": "technical2:02",
+          "heading": true,
+          "title": "逐拍状态转移与握手"
+        },
+        {
+          "figure": "S2-10"
+        },
+        {
+          "supplement": "SUP-S2-STATE"
+        },
+        {
+          "figure": "S2-05"
+        },
+        {
+          "supplement": "SUP-S2-OVERLAP"
+        },
+        {
+          "block": "technical2:03",
+          "heading": true,
+          "title": "VFEX4派发与共享资源"
+        },
+        {
+          "figure": "S2-03"
+        },
+        {
+          "block": "technical2:04",
+          "heading": true,
+          "title": "时钟门控、唤醒与写回"
+        }
+      ]
+    },
+    {
+      "title": "基础功能验证",
+      "items": [
+        {
+          "title": "",
+          "tex": "基础验证覆盖独立数学模型、算术RTL、弹性FU、真实VFEX4父级和全核差分五个层次。算术集合包含22组定向与10000组随机输入；全核矩阵包含117个不同用例，按原矩阵分片执行124次。0f的FU与真实父级原记录及4＋16项负控纳入复核，R5/G5采用13项原记录与1项新控制诊断的组合验收。\\par",
+          "heading": false
+        },
+        {
+          "figure": "S2-04"
+        },
+        {
+          "supplement": "SUP-S2-MODEL"
+        },
+        {
+          "title": "正数点积测试",
+          "tex": "正数用例将[1,2,3,4,5,6,7,8]与自身相乘并求和，精确结果为204，目的低32位为0x000000CC，高96位为零。该输入用于检查八项乘法、归约和完整向量写回；对应的正数事务响应与期望值在本节结果图中展示。\\par",
+          "heading": true
+        },
+        {
+          "title": "负数点积测试",
+          "tex": "负数用例计算8个−1与8个1的点积，精确结果为−8，目的低32位为0xFFFFFFF8，高96位为零。检查同时覆盖有符号输入解释、低32位补码以及完整结果格式；结果图保留对应负数事务的完整响应。\\par",
+          "heading": true
+        },
+        {
+          "title": "边界点积测试",
+          "tex": "八个−128与自身点积得到正端点131072，目的低32位为0x00020000；该值超过18位有符号数的正上限，用于检查归约末级位宽。八个−128与八个127点积得到负端点−130048，低32位为0xFFFE0400。零输入、端点及其他定向向量的精确预期集中列于下表；结果图展示正端点事务的完整响应。\\par",
+          "heading": true
+        },
+        {
+          "figure": "S2-09"
+        },
+        {
+          "block": "technical1:18",
+          "heading": true,
+          "title": "完整定向向量与精确预期"
+        },
+        {
+          "block": "technical1:19",
+          "heading": true,
+          "title": "数据布局、别名与异常测试"
+        },
+        {
+          "block": "technical1:20",
+          "heading": true,
+          "title": "随机输入与完整结果读回"
+        }
+      ]
+    },
+    {
+      "title": "协议与系统验证",
+      "items": [
+        {
+          "block": "narrative:04",
+          "heading": true,
+          "title": "反压期间的结果与身份保持"
+        },
+        {
+          "figure": "S2-06"
+        },
+        {
+          "block": "narrative:05",
+          "heading": true,
+          "title": "ROB取消与复位优先级"
+        },
+        {
+          "figure": "S2-07"
+        },
+        {
+          "block": "narrative:06",
+          "heading": true,
+          "title": "DIV切换、取消清理与关钟"
+        },
+        {
+          "figure": "S2-08"
+        },
+        {
+          "block": "narrative:21",
+          "heading": true,
+          "title": "写回身份与全核结果检查"
+        },
+        {
+          "block": "narrative:16",
+          "heading": true,
+          "title": "控制场景的组合与回归覆盖"
+        }
+      ]
+    },
+    {
+      "title": "设计演进、参数扩展与取舍",
+      "items": [
+        {
+          "block": "overview:06",
+          "heading": false
+        },
+        {
+          "block": "narrative:18",
+          "heading": true,
+          "title": "吞吐与实现成本"
+        },
+        {
+          "block": "narrative:19",
+          "heading": true,
+          "title": "本阶段小结与接口衔接"
+        }
+      ]
+    },
+    {
+      "title": "复现资料与接口索引",
+      "items": [
+        {
+          "block": "technical1:12",
+          "heading": true,
+          "title": "汇编封装与编码冲突记录"
+        },
+        {
+          "block": "technical1:14",
+          "heading": true,
+          "title": "源码接入位置与职责"
+        },
+        {
+          "block": "technical1:16",
+          "heading": true,
+          "title": "参考模型的构建与运行身份"
+        },
+        {
+          "block": "technical2:05",
+          "heading": true,
+          "title": "事件记录与检查不变量"
+        },
+        {
+          "block": "technical2:06",
+          "heading": true,
+          "title": "原O2分阶段判据与负控"
+        },
+        {
+          "block": "technical1:21",
+          "heading": true,
+          "title": "RVV对照的功能等价条件"
+        },
+        {
+          "block": "technical1:22",
+          "heading": true,
+          "title": "待确认规格与变更记录"
+        }
+      ]
+    }
+  ],
+  "omitted": {
+    "overview:intro": "章首由introduction_tex统一说明固定0f对象与内容范围，避免再次出现reporttitle。",
+    "overview:02": "语义、位宽、完整结果、编码、合法域与异常已集中采用technical1:02至09及11的完整说明；不再重复摘要表。",
+    "overview:03": "算术位宽保留于technical1:03，P/R状态、接口与逐拍规则保留于technical2:01/02，图S2-02展示数据通路；源码位置集中于复现资料。",
+    "overview:04": "共享资源与门控机制由technical2:03/04说明，真实DIV切换与取消覆盖由narrative:06及S2-08展示。",
+    "overview:05": "五层验证、真实数量与R5组合身份保留于基础验证节引言；三类结果分成独立小节，完整定向向量仅以technical1:18展示一次；布局与异常检查保留于technical1:19。",
+    "narrative:01": "位宽范围、逐级扩展及高位清零在technical1:03/04完整保留；源哨兵与字段检查在technical1:19及编码部分说明。",
+    "narrative:03": "P/R容量与同拍重叠由technical2:01/02的状态方程和E0至E3表完整说明，S2-05展示对应实测事件。",
+    "narrative:07": "测试层次与数量在基础验证节引言和S2-04说明，三类测试的目的由独立小节与完整向量表说明。",
+    "narrative:08": "演进和P4取舍由overview:06统一保留，原O2阶段判据在technical2:06给出。",
+    "narrative:09": "架构合同、输入配置与输出身份已由technical1:02至09、narrative:02及technical2:01分工说明，避免再次总结。",
+    "narrative:10": "正负端点、符号扩展和不变量分别由technical1:03、三类功能小节及technical1:19/20覆盖。",
+    "narrative:11": "配置快照与单微操作接入保留于narrative:02，别名和异常的完整条件保留于technical1:08/09，写回身份检查保留于narrative:21。",
+    "narrative:12": "两级状态推导、旧P/新P关系、容量、取消和复位已在technical2:02及narrative:05说明，不重复讲解整套状态。",
+    "narrative:13": "父级机制、0f取消修复与真实ClockGate验证分别由technical2:03/04及narrative:06说明；构建开关由overview:06保留。",
+    "narrative:14": "分层验证在基础验证引言集中说明，随机输入和结果读回由technical1:20保留，负控与观察层级由technical2:06保留。",
+    "narrative:15": "设计取舍由overview:06和narrative:18说明，局部时延/吞吐条件在技术状态定义中保留；避免再次总结。",
+    "narrative:17": "逐拍比较方法已由technical2:02/05和协议验证小节给出，回归覆盖的组合关系保留于narrative:16。",
+    "narrative:20": "回归定位、身份保存和修订方法与保留的事件协议、控制场景组合及规格变更记录重复，不增加独立结果。",
+    "technical1:01": "无正文的旧层级标题；数学内容合并到新的点积定义、位宽与结果布局小节。",
+    "technical1:06": "无正文的旧层级标题；合法配置、别名和状态正文合并在新的编码与合法配置小节。",
+    "technical1:10": "无正文的旧层级标题；编码正文保留，工具链记录移至末尾复现资料。",
+    "technical1:13": "无正文的旧层级标题；接入职责、接口及参考模型正文在相应主题下保留。",
+    "technical1:15": "通用接口条件已由technical2:01至04、narrative:02及完整结果定义逐项说明，2拍响应/II1和反压约束均保留。",
+    "technical1:17": "定向表引导句由新的基础功能验证引言及三类测试小节承担；精确向量表和实际验证统计继续保留。"
+  }
+}

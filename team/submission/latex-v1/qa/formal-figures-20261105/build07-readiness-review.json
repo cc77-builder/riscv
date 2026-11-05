@@ -1,0 +1,339 @@
+{
+  "reviewed_at_utc": "2026-11-05T18:21:23.536375+00:00",
+  "status": "STATIC_REVIEW_COMPLETE_NO_NATIVE_BUILD_OR_REPORT_EDIT",
+  "scope": "只读审查当前Build07 driver/206项基线清单与报告生成、检查接口；仅写本隔离JSON。未验证最终delta包或native构建结果。",
+  "base_inventory": {
+    "file": "phase3-drafts/build07-native-base-inventory.json",
+    "source_root": "D:\\Projects\\competitions\\2026-10-CIE-RISCV-XiangShan\\report-assets-20261105-1723\\build-06\\source",
+    "files": 206,
+    "native_files_verified_here": false
+  },
+  "findings": [
+    {
+      "id": "R1",
+      "severity": "组装前处理",
+      "status": "主代理已明确计划排除；本审查未读取最终delta包，未确认实施结果",
+      "evidence": [
+        "phase3-drafts/build07_native_driver.py:56-66",
+        "source/team/submission/latex-v1/figures/build_evidence_figures.py:128-160,549-556",
+        "source/team/submission/latex-v1/figures/build_diagram_layouts.py:122,145-146",
+        "source/team/submission/latex-v1/expand_reports.py:95-133"
+      ],
+      "fact": "driver先生成22个顶层展示PDF、generated-figures.json、diagram-layout.json及sections/stageN.tex，再按delta全部files检查after_sha256。",
+      "risk": "若把这些会被本次脚本重写的旧或跨环境生成结果列入不可变delta输入，脚本成功生成也可能触发Source assembly differed；只改生成sections而不带原生成源也会被expand覆盖。",
+      "minimum_fix": "delta只包含修改的生成源和选定资产，排除本次重生成的22个顶层展示PDF、两份生成JSON及sections/stage1..3.tex；原始SVG、其轮廓PDF及supporting_sources是不可变源输入，不能按扩展名一并排除。重生成之后用frozen-sources记录实际产物。"
+    },
+    {
+      "id": "R2",
+      "severity": "交付前处理",
+      "status": "主代理已明确归档方案；本审查未验证其最终实施",
+      "evidence": [
+        "phase3-drafts/build07_native_driver.py:49,101-103",
+        "phase3-drafts/build07-native-base-inventory.json",
+        "source/team/submission/latex-v1/qa/pdf-inspection.json",
+        "source/team/submission/latex-v1/交付校验.json",
+        "source/team/submission/latex-v1/figures/page-map.json",
+        "source/team/submission/latex-v1/publication-manifest.json"
+      ],
+      "fact": "copytree继承build06/source的活动QA、交付校验、出版manifest和page-map。inspect_reports只写build07/qa。当前source/qa/pdf-inspection.json仍含DOCUMENT_VISUAL_AND_AUTOMATED_INSPECTION_PASS，交付校验仍含DOCUMENT_DELIVERY_PASS_WITH_DISCLOSED_EVIDENCE_LIMITS。",
+      "risk": "仅从delta排除旧QA不会从新副本移除这些文件；交付新source或照README链接读取时，可能把旧PASS、旧页码及旧文件SHA当成Build07结果。",
+      "minimum_fix": "按主代理方案，在新source内将qa/pdf-inspection.json、figures/page-map.json、publication-manifest.json、交付校验.json归档至qa/inherited-build06-current-metadata/，标为“build06源包携带，未断言由build06生成”；不触碰原base。实际检查后仅把本轮out/qa记录同步为当前，保留VISUAL_REVIEW_PENDING，最终交付声明另待真实视觉审阅。"
+    },
+    {
+      "id": "R3",
+      "severity": "解释与最终审阅",
+      "status": "再次通过当前检查器AST确认：无Assert、Raise或exit调用；检查字段异常不会主动返回非零",
+      "evidence": [
+        "source/team/submission/latex-v1/qa/inspect_reports.py:45-78,98-106",
+        "phase3-drafts/build07_native_driver.py:100-103"
+      ],
+      "fact": "inspect_reports记录诊断、越界、页脚、图题及缺图页，不因这些字段异常而raise或非零退出；最终状态固定为AUTOMATED_INSPECTION_COMPLETE_VISUAL_REVIEW_PENDING。driver的check=True仅确认该脚本运行完成。",
+      "risk": "把进程exit 0或检查器COMPLETE当成所有文档项PASS，会漏掉已记录的问题；它也不检查数学语义、最终字号/图体缩放或轮廓图内容。",
+      "minimum_fix": "driver在inspect_reports进程完成后显式读取本轮out/qa/pdf-inspection.json，核对四份reports的a4_all_pages、figure_captions_unique、placeholder_pages、outside_text、footer_mismatches和final_log_diagnostics；进程return0不算这些字段通过。通过自动字段检查后仍保持VISUAL_REVIEW_PENDING，不能替代实际公式/缩放/图页审阅。"
+    },
+    {
+      "id": "R4",
+      "severity": "小范围溯源修正",
+      "status": "当前driver仍排除整个qa目录",
+      "evidence": [
+        "phase3-drafts/build07_native_driver.py:65-69,101-103",
+        "source/team/submission/latex-v1/qa/inspect_reports.py"
+      ],
+      "fact": "frozen-sources过滤所有qa路径，包含实际执行的qa/inspect_reports.py；该脚本虽然可在delta入口校验，但不会出现在生成后的冻结源清单。",
+      "risk": "冻结清单不能完整说明最终检查使用的代码，宽泛地从delta排除qa还会把检查器更新一起漏掉。",
+      "minimum_fix": "把qa/inspect_reports.py视作源程序纳入delta差异与冻结清单；继续排除历史结果/新派生QA数据，无需新建检查框架。"
+    },
+    {
+      "id": "R5",
+      "severity": "已知整合依赖",
+      "status": "材料由主代理整合中；不构成新验收门槛",
+      "evidence": [
+        "source/team/submission/latex-v1/figures/build_diagram_layouts.py:27-33,79-112",
+        "source/team/submission/latex-v1/figures/redesigned-20261105/selected-diagrams.json"
+      ],
+      "fact": "审查时正式selected-diagrams.json尚不存在。当前loader已经支持vector-outlines，通过绑定SVG与实际PDF预览记录处理CFF数字映射问题。",
+      "risk": "选图清单缺失或supporting_sources未全部进入delta会在编译前停止；把轮廓PDF当普通文本PDF会落入assert spans分支。",
+      "minimum_fix": "最终清单包含13个现有稳定入口；每个选定PDF/SVG/支持源均在包内并匹配SHA。轮廓字图使用现已实现的text_representation、editable_svg和typography_review字段，不重新要求PDF必须可提取文字。"
+    },
+    {
+      "id": "R6",
+      "severity": "简短溯源补记",
+      "status": "建议；不阻塞现有工程内容或新增测试",
+      "evidence": [
+        "phase3-drafts/build07_native_driver.py:28-29,95-115"
+      ],
+      "fact": "driver核对bundle_sha256，但build-receipt未直接保存该值或driver自身SHA；metadata.zip只含日志、manifest、展示PDF和检查JSON，不包含全部可编辑源与原delta。",
+      "risk": "若以后只保留metadata.zip，无法仅靠它恢复所用脚本及可编辑图源；source_unchanged也不等于四PDF已证明字节级重复构建一致。",
+      "minimum_fix": "保留原delta或完整source；回执补记bundle_sha256和driver_sha256即可。使用现有输入/产物哈希描述可追溯性，不另行承诺未做过的逐字节重建试验。"
+    }
+  ],
+  "passed_static_interfaces": [
+    {
+      "item": "四份入口与日志路径",
+      "result": "PASS_STATIC",
+      "basis": "build.py支持--compiler、--output-dir、--documents；每份三遍，日志在out/<name>/<name>.log，与检查器读取路径一致。"
+    },
+    {
+      "item": "旧成果保护与并发",
+      "result": "PASS_STATIC",
+      "basis": "driver在创建前拒绝已存在build-07，复制build06到新source；图生成及expand顺序执行，再用两个线程并行四个独立输出目录，未写Git工作树或Downloads。基线206文件在组装前和构建后重新核SHA。"
+    },
+    {
+      "item": "来源到正文生成顺序",
+      "result": "PASS_STATIC",
+      "basis": "expand读取overview、narrative、technical及structure，不以generated sections为编辑源；report_structure核对每块使用/省略、26正式图与5补图完整性；report_layout最后施加排版。顺序与driver一致。"
+    },
+    {
+      "item": "数学源传递",
+      "result": "PASS_STATIC_LIMITED",
+      "basis": "overview中LaTeX直接保留，narrative/technical经支持成对$...$的inline转换，代码反引号优先；本轮目标公式已在对应编辑源中。未运行expand或编译，不外推实际排版。"
+    },
+    {
+      "item": "图页预览覆盖",
+      "result": "PASS_STATIC",
+      "basis": "检查器从现行sections提取全部reportfigure/evidencefigure，四份PDF全部页面进入联系表，全部定位到的图题页进入1.6倍页面图。NEW九图集合未被后续使用，不会限制新22图的预览。"
+    },
+    {
+      "item": "汉字计数边界",
+      "result": "PASS_STATIC",
+      "basis": "检查器明确只统计可提取汉字，历史10000/17000是参考而非门槛；轮廓图字不计入这一计数不应误判为正文丢失。"
+    }
+  ],
+  "delta_policy": {
+    "include_as_immutable_inputs": [
+      "修改过的content/overview-stageN.tex、narrative-stageN.md、technical-stageN.json、structure-stageN.json及其他实际编辑源。",
+      "expand_reports.py、report_structure.py、report_layout.py、figure_placeholders.py、preamble.tex、build.py和图生成脚本中的实际变化。",
+      "qa/inspect_reports.py是执行源程序，不能随旧qa结果一起排除。",
+      "figures/placement.json、完整selected-diagrams.json，以及选中SVG、outline PDF/PNG、字体/尺寸/实际预览记录、全部supporting_sources。",
+      "实际新增/更新的固定图数据与来源记录；原工程证据和9截图按基线继承，不重造。",
+      "实际修改的README与制作说明。"
+    ],
+    "exclude_regenerated_outputs": [
+      "22个顶层figures/<ID>.pdf展示副本；selected-diagrams指向的子目录源PDF不在此排除范围。",
+      "figures/diagram-layout.json；figures/evidence-20261105/generated-figures.json及preview专用记录。",
+      "sections/stage1.tex、sections/stage2.tex、sections/stage3.tex；sections/screenshots-stageN.tex是源定义，保留。",
+      "本轮自动生成的qa结果、page-map、交付校验、publication-manifest及LaTeX临时文件、预览、构建日志。不能按*.log通配排除原始evidence日志。"
+    ],
+    "retain_from_baseline": [
+      "9组截图PDF和screenshot-layout.json及原PNG；13原始示意PNG及原件SHA清单；固定工程证据；封面及未修改模板。"
+    ],
+    "historical_metadata_note": "排除delta不改变copytree继承内容。主代理计划在新source归档四项活动旧元数据至qa/inherited-build06-current-metadata/，明确其为build06源包携带、未断言由build06生成；只将本轮out/qa检查结果同步回当前入口，且仍为VISUAL_REVIEW_PENDING。原base及历史QA不改。"
+  },
+  "actual_automated_check_scope": [
+    {
+      "check": "A4页面",
+      "can_establish": "所有页面MediaBox接近595.276×841.89pt。",
+      "does_not_establish": "不自动证明内容位于25mm正文边界内。"
+    },
+    {
+      "check": "最终编译日志",
+      "can_establish": "记录最终.log中的Overfull/Underfull、Missing character和LaTeX/Package警告等匹配行。",
+      "does_not_establish": "没有自动按严重程度判定全部诊断；exit 0不代表列表为空。"
+    },
+    {
+      "check": "文本越界",
+      "can_establish": "可提取text span未超过整页边界1pt容差。",
+      "does_not_establish": "不覆盖轮廓文字/线条/图像裁切，不检查图内标签重叠或160mm图宽与最终字号。"
+    },
+    {
+      "check": "图题与图位",
+      "can_establish": "按生成sections顺序得到图号，完整图题在PDF中恰出现一次；记录当前同名显示文件是否存在与物理页。",
+      "does_not_establish": "不能仅据图题证明正确资产可见、图体与图题同页且未裁切；图片是否实际采用仍需看成品。"
+    },
+    {
+      "check": "正文页脚",
+      "can_establish": "从首个正文书签开始，指定页脚区域提取值等于连续阿拉伯页号。",
+      "does_not_establish": "不检查所有标题孤立、空白页及表头和数据的视觉关系。"
+    },
+    {
+      "check": "数学公式",
+      "can_establish": "目前无专门数学排版检查；编译可暴露TeX错误。",
+      "does_not_establish": "不能证明A_i/B_i为正确下标、分式/求和上下限可读或统计表达未被排成字面文本。"
+    },
+    {
+      "check": "字体与字数",
+      "can_establish": "记录PDF字体资源名、可提取汉字数。",
+      "does_not_establish": "轮廓字没有文本font span；资源列表不能证明每个可见字形/字宽正确。"
+    }
+  ],
+  "remaining_visual_work": {
+    "all_four_documents": "查看既有脚本将生成的四份联系表和全部图页放大图；核对图体/图题同页、真实裁切/重叠、缩放与标题表格分页。无需新增工程验证或另建渲染流水线。",
+    "formula_pages": "上列公式页未必含图，可能不进入当前selected放大页集合；从新PDF按小节/公式定位后查看相应实际页面。不能沿用旧合订本P65页码。",
+    "math_targets": [
+      {
+        "source": "content/overview-stage2.tex:13",
+        "context": "指令语义与编码",
+        "expressions": [
+          "S = \\sum_{i=0}^{7} \\mathrm{signed8}(\\mathrm{vs1}[i]) \\times \\mathrm{signed8}(\\mathrm{vs2}[i])"
+        ],
+        "visual_focus": "上下限0至7、乘号及源元素下标；图文相邻时不溢出。"
+      },
+      {
+        "source": "content/overview-stage3.tex:51",
+        "context": "等价RVV基线与测量方法",
+        "expressions": [
+          "S = \\frac{C_{\\mathrm{RVV}}}{C_{\\mathrm{vdot}}}",
+          "R = \\frac{C_{\\mathrm{old}} - C_{\\mathrm{new}}}{C_{\\mathrm{old}}}"
+        ],
+        "visual_focus": "CRVV/Cvdot下标及old-new分子分母完整，无字面下划线。"
+      },
+      {
+        "source": "content/narrative-stage3.md:220",
+        "context": "汇总加速比与样本权重",
+        "expressions": [
+          "A_i",
+          "B_i",
+          "\\frac{\\sum_i A_i}{\\sum_i B_i}",
+          "\\frac{A_i}{B_i}"
+        ],
+        "visual_focus": "配对窗口变量下标、两个求和与分式正确；保持ratio of sums及B_i加权说明。"
+      },
+      {
+        "source": "content/technical-stage3.json triple2 / 实验配置与样本",
+        "expressions": [
+          "1 - \\frac{\\sum_i C_{\\mathrm{O2,custom},i}}{\\sum_i C_{\\mathrm{O1,custom},i}}",
+          "\\frac{\\sum_i C_{\\mathrm{RVV},i}}{\\sum_i C_{\\mathrm{custom},i}}"
+        ],
+        "visual_focus": "长模式下标、减号与分式不能被截断；不将1减比率误排为加速比。"
+      },
+      {
+        "source": "content/technical-stage3.json triple3 / 同镜像周期",
+        "expressions": [
+          "\\frac{\\sum_i C_{\\mathrm{RVV},i}}{\\sum_i C_{\\mathrm{vdot},i}}"
+        ],
+        "visual_focus": "同场景配对窗口总周期比，分子分母及索引清楚。"
+      }
+    ],
+    "current_height_caps_cm": {
+      "S2-10": 16.9,
+      "S3-01": 12.3,
+      "S3-02": 16.9,
+      "S3-06": 14.6
+    },
+    "height_status": "四处已改为16.9/12.3/16.9/14.6cm；现有源上限可容纳对应候选原高。最终缩放/字号仍以实际正文页为准，QA不自动测量。",
+    "outline_note": "SVG字号与原画布受loader既有校验；完整PDF里的轮廓字只能以实际画面核对显示，不能把零text spans判为缺字。"
+  },
+  "minimal_next_steps": [
+    "按已同意策略组装delta；正式选图及支持源到齐后才启动现有driver。",
+    "冻结清单保留实际执行的qa/inspect_reports.py；原delta或完整source随身份记录保存。",
+    "构建后先读取out/qa结果字段，再完成已有四PDF视觉检查和本次公式页检查；据实更新当前交付元数据。"
+  ],
+  "input_snapshots": [
+    {
+      "path": "phase3-drafts/build07_native_driver.py",
+      "sha256": "49e85fb4fd2ee937c65567bfabb15ab6a013888258f3d2bf7169c44330aea167"
+    },
+    {
+      "path": "phase3-drafts/build07-native-base-inventory.json",
+      "sha256": "95ba0f199a827bf388c94f95c12383694a920eb956350e61b068ca15400550a0"
+    },
+    {
+      "path": "source/team/submission/latex-v1/build.py",
+      "sha256": "274c8d34e5cff9c2d954a8355651c21b6d66371a9848f0867ad8b01df8aa5172"
+    },
+    {
+      "path": "source/team/submission/latex-v1/expand_reports.py",
+      "sha256": "e22b90b04806d30113a202f6a3cfb89ba4a42e5c845d2702b8afbf2297ec670a"
+    },
+    {
+      "path": "source/team/submission/latex-v1/report_structure.py",
+      "sha256": "0b4bbbdb69f586db9dd989eac3f91d0a97051909699af742509602582d8fe8df"
+    },
+    {
+      "path": "source/team/submission/latex-v1/report_layout.py",
+      "sha256": "8841dc53d509c47a979257872d01805763572a6b436bc5e3a3d7bf5f7bf48b4e"
+    },
+    {
+      "path": "source/team/submission/latex-v1/preamble.tex",
+      "sha256": "f70da494b724d66e3f5965a4b0506c1c086a98760c1dd2df667f8cd0132f2be4"
+    },
+    {
+      "path": "source/team/submission/latex-v1/qa/inspect_reports.py",
+      "sha256": "c82a74d4f6c98fcd5f09b6e931dc9d5c72ccbc0b3c81c423bacf5d4ac9991894"
+    },
+    {
+      "path": "source/team/submission/latex-v1/figures/build_evidence_figures.py",
+      "sha256": "18e36f60eebcc15a43b2aba851af3c77e9d67b9d24f4074d8195cdd30ec3c9b3"
+    },
+    {
+      "path": "source/team/submission/latex-v1/figures/build_diagram_layouts.py",
+      "sha256": "23c287ad0fcd280ba12aa05958aa0ef794e17fb5a729bd43785a08d1b72a1b4f"
+    },
+    {
+      "path": "source/team/submission/latex-v1/figures/placement.json",
+      "sha256": "e56795adcfe41b4d77f9bae9f9998c10c2b1fd44f724bb1f67fb34184f9f414f"
+    },
+    {
+      "path": "source/team/submission/latex-v1/figures/screenshot-layout.json",
+      "sha256": "27280c39b143160263a0258479594a8ac5cfc81dfbdc804c42621194b7e94b1a"
+    },
+    {
+      "path": "source/team/submission/latex-v1/content/overview-stage2.tex",
+      "sha256": "c442610f1f7cfb3aeb95393ca01be8bb8d318640d9e1d6ed291830280812eee6"
+    },
+    {
+      "path": "source/team/submission/latex-v1/content/overview-stage3.tex",
+      "sha256": "bbf34b1dfb49b8770865fdd3302d2c77e621cdee414e9d51c7b5c55f8aa5b6db"
+    },
+    {
+      "path": "source/team/submission/latex-v1/content/narrative-stage3.md",
+      "sha256": "baaf1a1c397552e063eba84fc7cd1f3ffee6c480e82e5630b7d254ba0ee7beb6"
+    },
+    {
+      "path": "source/team/submission/latex-v1/content/technical-stage3.json",
+      "sha256": "d3536a813f2583475d8996f57c13e9050edcf32567f572eb0861c0dc85188139"
+    }
+  ],
+  "driver_result_gate": {
+    "checker_static_confirmation": {
+      "assert_nodes": 0,
+      "raise_nodes": 0,
+      "exit_call_lines": [],
+      "checker_sha256": "c82a74d4f6c98fcd5f09b6e931dc9d5c72ccbc0b3c81c423bacf5d4ac9991894"
+    },
+    "process_exit_zero_means": "脚本完成读取、记录与渲染；不代表检查字段满足要求。",
+    "record_to_read": "build-07/qa/pdf-inspection.json",
+    "expected_reports": [
+      "main",
+      "stage1",
+      "stage2",
+      "stage3"
+    ],
+    "fields_to_check": {
+      "a4_all_pages": true,
+      "figure_captions_unique": true,
+      "placeholder_pages": [],
+      "outside_text": [],
+      "footer_mismatches": [],
+      "final_log_diagnostics": "明确逐项检查并按本轮已有诊断接受标准处理；不能省略该字段。"
+    },
+    "status_after_automatic_checks": "AUTOMATED_INSPECTION_COMPLETE_VISUAL_REVIEW_PENDING",
+    "not_proved": [
+      "人工审美认可",
+      "数学公式实际排版正确",
+      "轮廓图全部标签/连接可见且不裁切",
+      "正文中最终图宽/字号及图文同页"
+    ]
+  },
+  "update_note": "纳入主代理新副本历史元数据归档方案，并再次静态确认inspect_reports的return0与自动字段检查之间的区别。未修改driver或报告。"
+}
