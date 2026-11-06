@@ -47,7 +47,9 @@ python -X utf8 build.py --documents main
 
 文档整合基于 `zufan` 与 `zjhwork` 合并提交 `cfb0010f379f13ac7732dfb98ae600cc7ee1d44b`；最新完整 forward 独立参考摘要对应提交 `6fc3972158daec30bad37b97b72c4653155e1260`。各测量使用的硬件和软件版本在正文证据索引中单独列出。
 
-`evidence/application-current-20261106/` 随包保留旧目标单窗口结果与新 FR/G/P 独立参考摘要，以及原始仓库路径和 SHA256。新参考的退休指令减少与目标处理器周期采用不同列和不同文字说明。
+`evidence/application-current-20261106/` 保留旧 FR/TA 目标单窗口结果、FR/G/P 独立参考摘要，以及 2026 年 11 月 6 日闭合的 FR/G/P 三臂目标原始结果。第三阶段源码已补入同 ELF 的完整 forward 周期与退休指令观测，并保留目标正确性、正式性能资格和测量边界的区别；新增结果来自提交 `75b832d0d3ce82fc09c217e20a226676c7c33ba7`，来源成员、原始字节数与 SHA256 见 `provenance.json`。
+
+本次新增目标结果目前已进入正文源码，现存 PDF 与发布元数据仍对应 Build11；新增内容将在下一次统一编译时纳入。
 
 `figures/ai-concepts/layout-map.json` 与 `selected-assets.json` 保留了沿用图片的 Build10 选择记录和内容校验，仅作为资产来源；当前文档的编译、页码和视觉检查以 Build11 发布元数据为准。
 

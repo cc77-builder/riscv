@@ -201,21 +201,27 @@ TA：自定义VDot & 19,774,245 & 10,122,100\\
 
 在相同模型与共同程序上，进一步接入了两种标准 RVV 软件组织：GS32一次处理完整的32项量化组；paired16把前后半组对应的乘积在16个 INT16 通道中相加，再扩宽归约。paired16在入口检查激活值，遇到$-128$时执行完整 FR 路径，保持完整的 signed-int8 数值域。这些入口检测和回退属于实际调用的一部分。
 
-新生成的三路共同程序已完成 NEMU 参考验证，三个正常方法的完整输出与状态逐位一致。表~\ref{tab:3-app-reference} 给出该组参考执行的窗口退休指令数；其中 W2 保持 FR，实现差异集中在输入维度为288的矩阵路径。参考指令数用于评估软件组织；该组香山目标机周期结果尚待完成验证。
+三路共同程序已完成原 NEMU 参考验证，并于2026年11月6日完成三路香山目标运行。三种方法共用 ELF（SHA256前缀\texttt{be6c3ead424d}），目标镜像仅四字节方法选择字不同；W2继续使用FR，实现差异集中在输入维度为288的矩阵路径。三个目标运行均通过原DiffTest、3,691,424字节完整状态比较、保护区与调用状态检查，以及精确浮点异常标志检查（flags=1）。四个CSR读取的采样与退休链均通过核验，custom COMMIT观测数均为0。
 
-{\small\setlength{\tabcolsep}{6pt}
-\begin{longtable}{lrr}
-\caption{共同参考模型中的完整 forward 指令数}\label{tab:3-app-reference}\\
+表~\ref{tab:3-app-reference}列出同一构建的三个完整forward目标窗口；目标退休指令数与各自已有NEMU参考记录相同。
+
+{\small\setlength{\tabcolsep}{4pt}
+\begin{longtable}{lrrr}
+\caption{共同ELF的完整forward单窗口目标观测}\label{tab:3-app-reference}\\
 \toprule
-实现 & 窗口退休指令数 & 相对本组FR的指令数减少\\
+实现 & 目标窗口周期数 & 目标窗口退休指令数 & 相对FR周期减少\\
 \midrule\endhead
-FR & 7,502,886 & ---\\
-GS32 & 4,828,788 & 35.64\%\\
-paired16 & 5,175,371 & 31.02\%\\
+FR & 22,244,288 & 7,502,886 & ---\\
+GS32（G） & 19,996,570 & 4,828,788 & 10.1047\%\\
+paired16（P） & 17,382,632 & 5,175,371 & 21.8558\%\\
 \bottomrule
 \end{longtable}}
 
-共同验证还包含 paired16 重放与末项输出扰动负控，分别检查结果复现和比较器的拒错能力。
+在本次固定窗口中，paired16比GS32少用13.0719\%的周期，同时多退休346,583条指令，即增加7.1774\%。因此，不能仅依据参考指令数判断这两种实现的目标周期排序。
+
+本组使用固定合成模型，计时范围为共同prepare之后、position=0、token=1的一次完整forward，不包含模型生成或载入、离线packing、程序启动及此前的初始化和prepare。参考验证另外包含paired16独立重放与末项输出扰动负控；本轮目标运行只有三个正常观测，没有新增目标重放或负控。
+
+本轮已取得上述固定范围的目标正确性资格，尚未取得正式应用性能资格，也未逐条审计整个退休窗口。表中百分比仅描述本次既定准备状态下的单窗口算术，不证明VDot指令的收益。前述FR/TA实验和C8实验各自使用不同的程序与测量窗口，不能与本表交叉计算加速比。
 
 
 \section{综合面积、时序与设计成本}
@@ -264,13 +270,13 @@ paired16 & 5,175,371 & 31.02\%\\
 R5工程复现 & \texttt{clean-02}构建及其参考模型 & 干净环境构建、差分和工程验收\\
 C8普通C入口 & 最终BIN的SHA256前缀\texttt{56805506eb98} & 固定GEMV、调用状态与最终镜像等价\\
 FR/TA完整forward & 固定T17环境与FR/TA消费者程序 & 首个token完整执行、全状态比较及目标机单窗口观测\\
-三路RVV完整forward & 共同FR/GS32/paired16程序及固定模型 & 全状态比较、重放、负控及参考指令数\\
+三路RVV完整forward & T17环境、共同ELF \texttt{be6c3ead424d}及固定模型 & 完整状态比较、参考重放与负控，以及三个正常目标窗口的周期和退休指令观测\\
 \bottomrule
 \end{longtable}}
 
 四类微基准可由\href{https://github.com/cc77-builder/riscv/blob/6fc3972158daec30bad37b97b72c4653155e1260/team/optimizations/o2/r3-div-gate/performance/results/samples.csv}{微基准原始窗口CSV}与\href{https://github.com/cc77-builder/riscv/blob/6fc3972158daec30bad37b97b72c4653155e1260/team/optimizations/o2/r3-div-gate/PERFORMANCE_COST_RESULT.md}{测量方法与成本汇总}复查；软件包的使用与版本选择见\href{https://github.com/cc77-builder/riscv/blob/6fc3972158daec30bad37b97b72c4653155e1260/team/docs/version-comparison-r5-g5-20261027.md}{C入口与版本间比较}。
 
-完整前向计算的\href{https://github.com/cc77-builder/riscv/blob/6fc3972158daec30bad37b97b72c4653155e1260/team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/norm/evidence/first-token/analysis/target-summary.json}{FR/TA目标机记录}和\href{https://github.com/cc77-builder/riscv/blob/6fc3972158daec30bad37b97b72c4653155e1260/team/optimizations/o2/r2-config-reuse/caller/runq-q288/fused/first-forward-rvv/evidence/reference-v1/reference-summary.json}{FR/GS32/paired16共同参考结果}分别保存目标周期与参考指令计数。两个摘要也随LaTeX整合包提供；原始仓库路径与SHA256见同目录的\texttt{provenance.json}。各实验目录同时保存构建身份、输入清单和原始运行记录。
+完整前向计算的\href{https://github.com/cc77-builder/riscv/blob/6fc3972158daec30bad37b97b72c4653155e1260/team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/norm/evidence/first-token/analysis/target-summary.json}{FR/TA目标机记录}和\href{https://github.com/cc77-builder/riscv/blob/6fc3972158daec30bad37b97b72c4653155e1260/team/optimizations/o2/r2-config-reuse/caller/runq-q288/fused/first-forward-rvv/evidence/reference-v1/reference-summary.json}{FR/GS32/paired16共同参考结果}保留各自实验身份；本次三路RVV目标观察见\href{https://github.com/cc77-builder/riscv/blob/75b832d0d3ce82fc09c217e20a226676c7c33ba7/team/optimizations/o2/r2-config-reuse/caller/runq-q288/fused/first-forward-rvv/REFERENCE.md\#target-result-01}{三臂目标结果及证据入口}。前述两个摘要和本次三臂原始结果随LaTeX整合包提供；后者保存为\texttt{first-forward-target-results.json}，来源提交、归档成员及SHA256见同目录的\texttt{provenance.json}。各实验目录同时保存构建身份、输入清单和原始运行记录。
 
 \subsection{复现与图像来源}
 本报告在\texttt{zjhwork}文档与证据基础上，合入\texttt{zufan}的功能进展和已选插图，资料修订日期为2026年11月6日。实际产生测量的构建由前表单独标识，仓库合并与文档编辑不改变这些实验的身份。
