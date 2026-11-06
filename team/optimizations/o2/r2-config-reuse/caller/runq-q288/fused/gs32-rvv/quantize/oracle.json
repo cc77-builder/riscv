@@ -1,0 +1,115 @@
+{
+  "receipt": {
+    "operation_id": "d9b025210fdcd3c1fd06c2f645cfad75.26ae90d13fce485a4add7c9426c06ffe",
+    "started_at": "2026-11-06T05:13:55.5271477Z",
+    "updated_at": "2026-11-06T05:13:56.6292777Z",
+    "status": "succeeded",
+    "duration_ms": 1063,
+    "exit_code": 0,
+    "cleanup_complete": true
+  },
+  "windows": {
+    "windows_head": "fed21888103bcfd0c917df40ac10d04630dfc3b6",
+    "index": [],
+    "leaf": [
+      "?? team/optimizations/o2/r2-config-reuse/caller/runq-q288/fused/gs32-rvv/quantize/"
+    ]
+  },
+  "readback": {
+    "cpu_affinity": [
+      1
+    ],
+    "tools": {
+      "gcc": {
+        "path": "/usr/bin/riscv64-linux-gnu-gcc",
+        "sha256": "0c54895c55568be5b5fee49e2426abcc8fb05ca2c121ca5685dea2cbc24a1c13",
+        "resolved": "/usr/bin/riscv64-linux-gnu-gcc-11"
+      },
+      "ld": {
+        "path": "/usr/bin/riscv64-linux-gnu-ld",
+        "sha256": "59db886faf252e5e2fb2e5341fd57c24ddbd216197f69296321fef913e5b64ba",
+        "resolved": "/usr/bin/riscv64-linux-gnu-ld.bfd"
+      },
+      "ar": {
+        "path": "/usr/bin/riscv64-linux-gnu-ar",
+        "sha256": "7985a5f5a10d03843aa7b296e1652bf5bd9fd5180839c7df9b49ef56738fcc74",
+        "resolved": "/usr/bin/riscv64-linux-gnu-ar"
+      },
+      "objcopy": {
+        "path": "/usr/bin/riscv64-linux-gnu-objcopy",
+        "sha256": "48c1d507b5c7b89da9c81349738ee413a522c364a17d416bcfb91e2c8e785006",
+        "resolved": "/usr/bin/riscv64-linux-gnu-objcopy"
+      },
+      "objdump": {
+        "path": "/usr/bin/riscv64-linux-gnu-objdump",
+        "sha256": "07a28885534079b220a44c7f787c0eecdd240fbe95c525b85e88cc7b88b70e82",
+        "resolved": "/usr/bin/riscv64-linux-gnu-objdump"
+      },
+      "readelf": {
+        "path": "/usr/bin/riscv64-linux-gnu-readelf",
+        "sha256": "2ee6c57f1efa53bda4a784afb82340b2d925383a8892c36df448028645af2d3f",
+        "resolved": "/usr/bin/riscv64-linux-gnu-readelf"
+      },
+      "nm": {
+        "path": "/usr/bin/riscv64-linux-gnu-nm",
+        "sha256": "3f6c21492177e99a2a6db48d530d5ec310ed058c679bc71a743f80c86cb87b56",
+        "resolved": "/usr/bin/riscv64-linux-gnu-nm"
+      },
+      "make": {
+        "path": "/usr/bin/make",
+        "sha256": "92f646030615cd98490a68a94c0aefd87b552be3158b941c02e43b0bfdb576db",
+        "resolved": "/usr/bin/make"
+      }
+    },
+    "parent_contract": "r2-s3-forward-consumer-w2-norm-v1",
+    "parent_status": "NORM_W2_CONSUMER_STATIC_PASS_NOT_RUNTIME",
+    "inputs": {
+      "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/norm-resume-20261027-2000/consumer-build-02/consumer-core.o": {
+        "bytes": 770528,
+        "sha256": "6d50d5b613f6bdb7011f4fd148e668ca44e23bb59b11e2b9e6fcbaa69a7207bb"
+      },
+      "/usr/riscv64-linux-gnu/lib/libm.a": {
+        "bytes": 4481562,
+        "sha256": "fab30dd1171318d09d987f7f84a9542e2b0504b27bca4170ddc22454c6b8041b"
+      },
+      "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/forward-stages-20261027-0300/reference-adapter-04/reference-runner": {
+        "bytes": 21384,
+        "sha256": "567ab9b91e7596c6bf682b56baeb42b36334e307fb54657dfe730eb2e1d98b9d"
+      },
+      "/home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so": {
+        "bytes": 1454944,
+        "sha256": "8af118e5519db7ef6001010a2d547707c5d47630412e80abfc3f343bfef987c9"
+      }
+    },
+    "run_root_exists": false,
+    "am_makefile": "APP_DIR ?= $(shell pwd)\nINC_DIR += $(APP_DIR)/include/\nDST_DIR ?= $(APP_DIR)/build/$(ARCH)/\nBINARY  ?= $(APP_DIR)/build/$(NAME)-$(ARCH)\nBINARY_REL = $(shell realpath $(BINARY) --relative-to .)\n\n## Paste in \"Makefile.check\" here\ninclude $(AM_HOME)/Makefile.check\n$(info # Building $(NAME) [$(ARCH)] with AM_HOME {$(AM_HOME)})\n\n## Default: Build a runnable image\ndefault: image\n\nLIBS    += klib\nINC_DIR += $(addsuffix /include/, $(addprefix $(AM_HOME)/libs/, $(LIBS)))\n\n## Paste in \"Makefile.compile\" here\ninclude $(AM_HOME)/Makefile.compile\n\n## Produce a list of files to be linked: app objects, AM, and libraries\nLINK_LIBS  = $(sort $(LIBS))\nLINK_FILES = \\\n  $(OBJS) \\\n  $(AM_HOME)/am/build/am-$(ARCH).a \\\n  $(addsuffix -$(ARCH).a, $(join \\\n    $(addsuffix /build/, $(addprefix $(AM_HOME)/libs/, $(LINK_LIBS))), \\\n    $(LINK_LIBS) \\\n))\n\n$(OBJS): $(PREBUILD)\nimage:   $(OBJS) am $(LIBS) prompt\nprompt:  $(OBJS) am $(LIBS)\nrun:     default\n\nprompt:\n\t@echo \\# Creating binary image [$(ARCH)]\n\nclean-am:\n\t@$(MAKE) -s -C $(AM_HOME) clean\n\nclean: \n\trm -rf $(APP_DIR)/build/\n\n.PHONY: default run image prompt clean\n",
+    "actual_elf": {
+      "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/norm-resume-20261027-2000/consumer-build-02/forward-consumer-w2-norm.elf",
+      "sha256": "93296b046b4cd8b814c65297dab74351389226a5cb004aa0fec700ba0d856198"
+    },
+    "constants": {
+      "round_threshold": {
+        "address": "0x8427cab0",
+        "hex": "0000000000004043",
+        "value": 9007199254740992
+      },
+      "quantize_denominator": {
+        "address": "0x8427ced8",
+        "hex": "0000fe42",
+        "value": 127
+      }
+    },
+    "actual_functions": {
+      "quantize": "\n/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/norm-resume-20261027-2000/consumer-build-02/forward-consumer-w2-norm.elf:     file format elf64-littleriscv\n\n\nDisassembly of section .text:\n\nDisassembly of section .text.stop:\n\nDisassembly of section .text.tls_check:\n\nDisassembly of section .text.__stack_chk_fail:\n\nDisassembly of section .text.team_forward_main:\n\nDisassembly of section .text.memset:\n\nDisassembly of section .text.memcpy:\n\nDisassembly of section .text.quantize:\n\n000000008000247c <quantize>:\n    8000247c:\tf9010113          \taddi\tsp,sp,-112\n    80002480:\t05413023          \tsd\ts4,64(sp)\n    80002484:\t05b22a17          \tauipc\ts4,0x5b22\n    80002488:\t53ca0a13          \taddi\ts4,s4,1340 # 85b249c0 <GS>\n    8000248c:\t000a2783          \tlw\ta5,0(s4)\n    80002490:\t03713423          \tsd\ts7,40(sp)\n    80002494:\t06113423          \tsd\tra,104(sp)\n    80002498:\t02f64bbb          \tdivw\ts7,a2,a5\n\n000000008000249c <.LBB174>:\n    8000249c:\t06813023          \tsd\ts0,96(sp)\n    800024a0:\t04913c23          \tsd\ts1,88(sp)\n    800024a4:\t05213823          \tsd\ts2,80(sp)\n    800024a8:\t05313423          \tsd\ts3,72(sp)\n    800024ac:\t03513c23          \tsd\ts5,56(sp)\n    800024b0:\t03613823          \tsd\ts6,48(sp)\n    800024b4:\t03813023          \tsd\ts8,32(sp)\n    800024b8:\t01913c23          \tsd\ts9,24(sp)\n    800024bc:\t01a13823          \tsd\ts10,16(sp)\n    800024c0:\t00813427          \tfsd\tfs0,8(sp)\n    800024c4:\t00913027          \tfsd\tfs1,0(sp)\n\n00000000800024c8 <.LBB190>:\n    800024c8:\t11705263          \tblez\ts7,800025cc <.L49>\n    800024cc:\t00050913          \tmv\ts2,a0\n\n00000000800024d0 <.LBB175>:\n    800024d0:\t00893b03          \tld\ts6,8(s2)\n    800024d4:\t00000a93          \tli\ts5,0\n    800024d8:\t0427b717          \tauipc\ta4,0x427b\n    800024dc:\ta0072487          \tflw\tfs1,-1536(a4) # 8427ced8 <.LC3>\n\n00000000800024e0 <.LBB176>:\n    800024e0:\t002a9713          \tslli\ta4,s5,0x2\n    800024e4:\t00058993          \tmv\ts3,a1\n    800024e8:\t00000493          \tli\ts1,0\n    800024ec:\t00458c13          \taddi\ts8,a1,4\n    800024f0:\t00eb0b33          \tadd\ts6,s6,a4\n\n00000000800024f4 <.LBB180>:\n    800024f4:\t0cf05463          \tblez\ta5,800025bc <.L68>\n\n00000000800024f8 <.L57>:\n    800024f8:\t02f48d3b          \tmulw\ts10,s1,a5\n    800024fc:\tfff7841b          \taddiw\ts0,a5,-1\n    80002500:\t02041413          \tslli\ts0,s0,0x20\n    80002504:\t02045413          \tsrli\ts0,s0,0x20\n\n0000000080002508 <.LBE177>:\n    80002508:\tf0000453          \tfmv.w.x\tfs0,zero\n    8000250c:\t01a40433          \tadd\ts0,s0,s10\n\n0000000080002510 <.LBB178>:\n    80002510:\t000d0c93          \tmv\ts9,s10\n    80002514:\t00241413          \tslli\ts0,s0,0x2\n    80002518:\t002d1d13          \tslli\ts10,s10,0x2\n    8000251c:\t01a98d33          \tadd\ts10,s3,s10\n    80002520:\t01840433          \tadd\ts0,s0,s8\n\n0000000080002524 <.L54>:\n    80002524:\t000d2507          \tflw\tfa0,0(s10)\n\n0000000080002528 <.LBE178>:\n    80002528:\t004d0d13          \taddi\ts10,s10,4\n\n000000008000252c <.LBB179>:\n    8000252c:\t42050553          \tfcvt.d.s\tfa0,fa0\n    80002530:\tfffff097          \tauipc\tra,0xfffff\n    80002534:\tdd0080e7          \tjalr\t-560(ra) # 80001300 <__fabs>\n\n0000000080002538 <.LVL62>:\n    80002538:\t40157553          \tfcvt.s.d\tfa0,fa0\n\n000000008000253c <.LVL63>:\n    8000253c:\ta0a417d3          \tflt.s\ta5,fs0,fa0\n    80002540:\t00078463          \tbeqz\ta5,80002548 <.L52>\n    80002544:\t20a50453          \tfmv.s\tfs0,fa0\n\n0000000080002548 <.L52>:\n    80002548:\tfda41ee3          \tbne\ts0,s10,80002524 <.L54>\n\n000000008000254c <.LBE181>:\n    8000254c:\t18947453          \tfdiv.s\tfs0,fs0,fs1\n\n0000000080002550 <.LVL65>:\n    80002550:\t00000d13          \tli\ts10,0\n    80002554:\t008b2027          \tfsw\tfs0,0(s6)\n\n0000000080002558 <.LBB182>:\n    80002558:\t0080006f          \tj\t80002560 <.L56>\n\n000000008000255c <.L69>:\n    8000255c:\t02f48cbb          \tmulw\ts9,s1,a5\n\n0000000080002560 <.L56>:\n    80002560:\t01ac8cbb          \taddw\ts9,s9,s10\n\n0000000080002564 <.LVL69>:\n    80002564:\t002c9793          \tslli\ta5,s9,0x2\n    80002568:\t00f987b3          \tadd\ta5,s3,a5\n\n000000008000256c <.LVL70>:\n    8000256c:\t0007a507          \tflw\tfa0,0(a5)\n\n0000000080002570 <.LBE183>:\n    80002570:\t001d0d1b          \taddiw\ts10,s10,1\n\n0000000080002574 <.LBB184>:\n    80002574:\t18857553          \tfdiv.s\tfa0,fa0,fs0\n\n0000000080002578 <.LVL72>:\n    80002578:\t42050553          \tfcvt.d.s\tfa0,fa0\n\n000000008000257c <.LVL73>:\n    8000257c:\tfffff097          \tauipc\tra,0xfffff\n    80002580:\td8a080e7          \tjalr\t-630(ra) # 80001306 <__round>\n\n0000000080002584 <.LVL74>:\n    80002584:\t00093783          \tld\ta5,0(s2)\n    80002588:\tc2051753          \tfcvt.w.d\ta4,fa0,rtz\n    8000258c:\t019787b3          \tadd\ta5,a5,s9\n    80002590:\t00e78023          \tsb\ta4,0(a5)\n\n0000000080002594 <.LBE184>:\n    80002594:\t000a2783          \tlw\ta5,0(s4)\n    80002598:\tfcfd42e3          \tblt\ts10,a5,8000255c <.L69>\n\n000000008000259c <.LBE175>:\n    8000259c:\t001a8a93          \taddi\ts5,s5,1\n\n00000000800025a0 <.LVL76>:\n    800025a0:\t000a849b          \tsext.w\ts1,s5\n    800025a4:\t0374d463          \tbge\ts1,s7,800025cc <.L49>\n\n00000000800025a8 <.L70>:\n    800025a8:\t00893b03          \tld\ts6,8(s2)\n\n00000000800025ac <.LBB185>:\n    800025ac:\t000a2783          \tlw\ta5,0(s4)\n\n00000000800025b0 <.LBE185>:\n    800025b0:\t002a9713          \tslli\ta4,s5,0x2\n    800025b4:\t00eb0b33          \tadd\ts6,s6,a4\n\n00000000800025b8 <.LBB186>:\n    800025b8:\tf4f040e3          \tbgtz\ta5,800024f8 <.L57>\n\n00000000800025bc <.L68>:\n    800025bc:\t001a8a93          \taddi\ts5,s5,1\n\n00000000800025c0 <.LBB189>:\n    800025c0:\t000b2023          \tsw\tzero,0(s6)\n\n00000000800025c4 <.LBB187>:\n    800025c4:\t000a849b          \tsext.w\ts1,s5\n    800025c8:\tff74c0e3          \tblt\ts1,s7,800025a8 <.L70>\n\n00000000800025cc <.L49>:\n    800025cc:\t06813083          \tld\tra,104(sp)\n    800025d0:\t06013403          \tld\ts0,96(sp)\n    800025d4:\t05813483          \tld\ts1,88(sp)\n    800025d8:\t05013903          \tld\ts2,80(sp)\n    800025dc:\t04813983          \tld\ts3,72(sp)\n    800025e0:\t04013a03          \tld\ts4,64(sp)\n    800025e4:\t03813a83          \tld\ts5,56(sp)\n    800025e8:\t03013b03          \tld\ts6,48(sp)\n    800025ec:\t02813b83          \tld\ts7,40(sp)\n    800025f0:\t02013c03          \tld\ts8,32(sp)\n    800025f4:\t01813c83          \tld\ts9,24(sp)\n    800025f8:\t01013d03          \tld\ts10,16(sp)\n    800025fc:\t00813407          \tfld\tfs0,8(sp)\n    80002600:\t00013487          \tfld\tfs1,0(sp)\n    80002604:\t07010113          \taddi\tsp,sp,112\n    80002608:\t00008067          \tret\n\nDisassembly of section .text.rmsnorm:\n\nDisassembly of section .text.softmax:\n\nDisassembly of section .text.matmul:\n\nDisassembly of section .text.route_matmul:\n\nDisassembly of section .text.consumer_fr:\n\nDisassembly of section .text.consumer_fr_cache:\n\nDisassembly of section .text.consumer_ta:\n\nDisassembly of section .text.consumer_ta_cache:\n\nDisassembly of section .text.forward:\n\nDisassembly of section .text.r2_w2_init:\n\nDisassembly of section .text.r2_w2_forward:\n\nDisassembly of section .text.r2_rmsnorm_rvv:\n",
+      "__round": "\n/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/norm-resume-20261027-2000/consumer-build-02/forward-consumer-w2-norm.elf:     file format elf64-littleriscv\n\n\nDisassembly of section .text:\n\n0000000080001306 <__round>:\n    80001306:\t00102773          \tfrflags\ta4\n    8000130a:\ta2a527d3          \tfeq.d\ta5,fa0,fa0\n    8000130e:\t22a527d3          \tfabs.d\tfa5,fa0\n    80001312:\tc38d                \tbeqz\ta5,80001334 <.L9>\n    80001314:\t0427b797          \tauipc\ta5,0x427b\n    80001318:\t79c7b707          \tfld\tfa4,1948(a5) # 8427cab0 <.LC0>\n    8000131c:\ta2e797d3          \tflt.d\ta5,fa5,fa4\n    80001320:\tcb89                \tbeqz\ta5,80001332 <.L1>\n    80001322:\tc22547d3          \tfcvt.l.d\ta5,fa0,rmm\n    80001326:\td227c7d3          \tfcvt.d.l\tfa5,a5,rmm\n    8000132a:\t22a78553          \tfsgnj.d\tfa0,fa5,fa0\n    8000132e:\t00171073          \tfsflags\ta4\n\n0000000080001332 <.L1>:\n    80001332:\t8082                \tret\n\n0000000080001334 <.L9>:\n    80001334:\t02a57553          \tfadd.d\tfa0,fa0,fa0\n    80001338:\t8082                \tret\n\nDisassembly of section .text.stop:\n\nDisassembly of section .text.tls_check:\n\nDisassembly of section .text.__stack_chk_fail:\n\nDisassembly of section .text.team_forward_main:\n\nDisassembly of section .text.memset:\n\nDisassembly of section .text.memcpy:\n\nDisassembly of section .text.quantize:\n\nDisassembly of section .text.rmsnorm:\n\nDisassembly of section .text.softmax:\n\nDisassembly of section .text.matmul:\n\nDisassembly of section .text.route_matmul:\n\nDisassembly of section .text.consumer_fr:\n\nDisassembly of section .text.consumer_fr_cache:\n\nDisassembly of section .text.consumer_ta:\n\nDisassembly of section .text.consumer_ta_cache:\n\nDisassembly of section .text.forward:\n\nDisassembly of section .text.r2_w2_init:\n\nDisassembly of section .text.r2_w2_forward:\n\nDisassembly of section .text.r2_rmsnorm_rvv:\n",
+      "__fabs": "\n/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/norm-resume-20261027-2000/consumer-build-02/forward-consumer-w2-norm.elf:     file format elf64-littleriscv\n\n\nDisassembly of section .text:\n\n0000000080001300 <__fabs>:\n    80001300:\t22a52553          \tfabs.d\tfa0,fa0\n    80001304:\t8082                \tret\n\nDisassembly of section .text.stop:\n\nDisassembly of section .text.tls_check:\n\nDisassembly of section .text.__stack_chk_fail:\n\nDisassembly of section .text.team_forward_main:\n\nDisassembly of section .text.memset:\n\nDisassembly of section .text.memcpy:\n\nDisassembly of section .text.quantize:\n\nDisassembly of section .text.rmsnorm:\n\nDisassembly of section .text.softmax:\n\nDisassembly of section .text.matmul:\n\nDisassembly of section .text.route_matmul:\n\nDisassembly of section .text.consumer_fr:\n\nDisassembly of section .text.consumer_fr_cache:\n\nDisassembly of section .text.consumer_ta:\n\nDisassembly of section .text.consumer_ta_cache:\n\nDisassembly of section .text.forward:\n\nDisassembly of section .text.r2_w2_init:\n\nDisassembly of section .text.r2_w2_forward:\n\nDisassembly of section .text.r2_rmsnorm_rvv:\n"
+    },
+    "original_link_commands": [
+      "echo + LD \"->\" ../forward-consumer-w2-norm.elf",
+      "+ LD -> ../forward-consumer-w2-norm.elf",
+      "/usr/bin/riscv64-linux-gnu-ld -melf64lriscv -L /home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/am/src/nemu/ldscript -T /home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/am/src/nemu/isa/riscv/boot/loader64.ld -static --no-relax --emit-relocs -Map=/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/norm-resume-20261027-2000/consumer-build-02/forward-consumer-w2-norm.map --gc-sections -o /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/norm-resume-20261027-2000/consumer-build-02/forward-consumer-w2-norm.elf --start-group /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/norm-resume-20261027-2000/consumer-build-02/objects/main.o /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/norm-resume-20261027-2000/consumer-build-02/objects/w2.o /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/norm-resume-20261027-2000/consumer-build-02/objects/entry.o /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/norm-resume-20261027-2000/consumer-build-02/objects/fixture.o /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/norm-resume-20261027-2000/consumer-build-02/objects/fused.o /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/norm-resume-20261027-2000/consumer-build-02/objects/q288.o /home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/am/build/am-riscv64-xs.a /home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/libs/klib/build/klib-riscv64-xs.a /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/norm-resume-20261027-2000/consumer-build-02/source/consumer-w2-norm.o /usr/riscv64-linux-gnu/lib/libm.a --end-group",
+      "/usr/bin/riscv64-linux-gnu-objdump -d /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/norm-resume-20261027-2000/consumer-build-02/forward-consumer-w2-norm.elf > /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/norm-resume-20261027-2000/consumer-build-02/forward-consumer-w2-norm.txt",
+      "/usr/bin/riscv64-linux-gnu-objcopy -S --set-section-flags .bss=alloc,contents -O binary /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/norm-resume-20261027-2000/consumer-build-02/forward-consumer-w2-norm.elf /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/norm-resume-20261027-2000/consumer-build-02/forward-consumer-w2-norm.bin"
+    ]
+  }
+}
