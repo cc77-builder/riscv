@@ -1,0 +1,557 @@
+{
+  "schema": "rowlane32-existing-reference-result-v1",
+  "contract": "r2-s3-runq-rowlane32-reference-probe-v1",
+  "status": "ROWLANE32_EXISTING_REFERENCE_FUNCTIONAL_PASS",
+  "runtime": {
+    "contract": "r2-s3-runq-rowlane32-reference-probe-v1",
+    "status": "ROWLANE32_EXISTING_REFERENCE_PROBE_PASS",
+    "started": "2026-11-06T01:46:24.733734+00:00",
+    "cpu_affinity": [
+      0
+    ],
+    "reference_runs_started": 2,
+    "reference_runs_completed": 2,
+    "emu_runs": 0,
+    "maximum_total_observation_seconds": 120,
+    "results": [
+      {
+        "label": "normal",
+        "status": "ROWLANE32_FIXED_NEMU_NORMAL_PASS",
+        "image_sha256": "8aeddf57be08a7bd1ed68000837878ac54289b722a2d55d94c5d2ce9eed9146d",
+        "check_sha256": "4778b75036b15ff69bece159f8dd28d4ca24180ef570d5ef6eb237708d6b49ce",
+        "reference_result": {
+          "reason": "good_trap",
+          "api_calls": 232524,
+          "retired": 232523,
+          "elapsed_seconds": 0.041455,
+          "state": 2,
+          "halt_pc": 2147483964,
+          "halt_ret": 0,
+          "pc": 2147483968,
+          "mcause": 0,
+          "mepc": 0,
+          "mtval": 0,
+          "mnstatus": 8,
+          "mnepc": 0,
+          "mncause": 0,
+          "memory_dumps": 5,
+          "xiangshan_cycles_measured": false
+        },
+        "fflags": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "label": "wrong-x-byte",
+        "status": "ROWLANE32_FIXED_NEMU_NEGATIVE_REJECTED",
+        "image_sha256": "8bcdf733dbeace0705e70c24836b3f15a3235730fbfd9edabf462bd316de2418",
+        "check_sha256": "2d77748b1c756dbdfcd19590113acfb4dd06b04d85bce5d422ad3dd312ac1050",
+        "reference_result": {
+          "reason": "good_trap",
+          "api_calls": 232524,
+          "retired": 232523,
+          "elapsed_seconds": 0.04228,
+          "state": 2,
+          "halt_pc": 2147483964,
+          "halt_ret": 0,
+          "pc": 2147483968,
+          "mcause": 0,
+          "mepc": 0,
+          "mtval": 0,
+          "mnstatus": 8,
+          "mnepc": 0,
+          "mncause": 0,
+          "memory_dumps": 5,
+          "xiangshan_cycles_measured": false
+        },
+        "fflags": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    ],
+    "performance_qualified": false,
+    "phase": "wrong-x-byte",
+    "finished": "2026-11-06T01:46:25.523726+00:00",
+    "elapsed_seconds": 0.8222381750001659,
+    "changed_inputs": []
+  },
+  "execution": {
+    "operation_id": "bee1ca65369429068a98a24c112ef728.752f904b65dad2b16a0f1cabee8e1721",
+    "started_at": "2026-11-06T01:46:24.1423372Z",
+    "finished_at": "2026-11-06T01:46:25.6617729Z",
+    "exit_code": 0,
+    "cleanup_complete": true,
+    "cpu_affinity": [
+      0
+    ],
+    "issue_window": 6674603820,
+    "issue_close": 6674660914
+  },
+  "new_functional_evidence": {
+    "normal_calls": 8,
+    "finite_cases": [
+      "x0",
+      "x1",
+      "x0",
+      "min-min"
+    ],
+    "methods": [
+      "unchanged_fr",
+      "rowlane32_w8"
+    ],
+    "all_normal_Y_and_slots_match": true,
+    "observed_inputs_contexts_and_guards_unchanged": true,
+    "actual_return_csr_checks_pass": true,
+    "fflags_all": 1,
+    "fflags_FR_row_equal": true,
+    "wrong_X_negative_full_Y_rejected": true,
+    "negative_same_value_minmin_unaffected": true
+  },
+  "function_proof": {
+    "q288_fused_rvv4": {
+      "bytes": 592,
+      "sha256": "66a12c0ec3cb7c0d1cdceadf04e4c658607438d83a2a958892100422343117ab",
+      "old_address": 2147483648,
+      "new_address": 2147484480
+    },
+    "q288_rowlane32_i8": {
+      "bytes": 836,
+      "sha256": "f74b1a753a731dec5d803c9fca6afb1e1ca293737a85414f974b715d5912ea00",
+      "old_address": 2147484288,
+      "new_address": 2147485184
+    }
+  },
+  "actual_artifacts": [
+    {
+      "name": "probe.elf",
+      "bytes": 382344,
+      "sha256": "1fcbdadaa8d92c807f84188fb2b3d1716a728871e0fa9da36ba1cfda146dac6d",
+      "recorded": "1fcbdadaa8d92c807f84188fb2b3d1716a728871e0fa9da36ba1cfda146dac6d"
+    },
+    {
+      "name": "probe.bin",
+      "bytes": 357296,
+      "sha256": "8aeddf57be08a7bd1ed68000837878ac54289b722a2d55d94c5d2ce9eed9146d",
+      "recorded": "8aeddf57be08a7bd1ed68000837878ac54289b722a2d55d94c5d2ce9eed9146d"
+    },
+    {
+      "name": "bad-wrong-x-byte.bin",
+      "bytes": 357296,
+      "sha256": "8bcdf733dbeace0705e70c24836b3f15a3235730fbfd9edabf462bd316de2418",
+      "recorded": "8bcdf733dbeace0705e70c24836b3f15a3235730fbfd9edabf462bd316de2418"
+    },
+    {
+      "name": "dump-plan.txt",
+      "bytes": 127,
+      "sha256": "46e3c057aa7461b2261bce9915d75850d886aaf78640ae3cf315f022e17cfaa2",
+      "recorded": "46e3c057aa7461b2261bce9915d75850d886aaf78640ae3cf315f022e17cfaa2"
+    },
+    {
+      "name": "contexts-before.bin",
+      "bytes": 448,
+      "sha256": "0ae04c01ebf70abf43f56ae143e62b4f1257ac79c81e3a422938403baec6b2c6",
+      "recorded": "0ae04c01ebf70abf43f56ae143e62b4f1257ac79c81e3a422938403baec6b2c6"
+    }
+  ],
+  "command_cleanup": [
+    {
+      "path": "build.command.json",
+      "sha256": "f36b693c85d26200102f8c90257b94fe31576a82b70da1e5f17ae0961e7f824f",
+      "exit_code": 0,
+      "pid": 15120,
+      "direct_child_reaped": true,
+      "process_group_absent_after_exit": true
+    },
+    {
+      "path": "normal/reference.command.json",
+      "sha256": "0532acbca311c097e7574d1165a4b98cffa71717a8e532f37e365d03ac8c7d9c",
+      "exit_code": 0,
+      "pid": 15173,
+      "direct_child_reaped": true,
+      "process_group_absent_after_exit": true
+    },
+    {
+      "path": "normal/compare.command.json",
+      "sha256": "790b173f18c01236aaf1f24c216d1baf49f1e5213dfa0a5031588c7351b7fc10",
+      "exit_code": 0,
+      "pid": 15174,
+      "direct_child_reaped": true,
+      "process_group_absent_after_exit": true
+    },
+    {
+      "path": "wrong-x-byte/reference.command.json",
+      "sha256": "bb4b6db57dab2b258c5a375d82c8c4980d91f7de228942bfd9704a7a3006eec1",
+      "exit_code": 0,
+      "pid": 15175,
+      "direct_child_reaped": true,
+      "process_group_absent_after_exit": true
+    },
+    {
+      "path": "wrong-x-byte/compare.command.json",
+      "sha256": "ba520c00208376eaedd8a9eb2dda007d2740805d818f06acc9fbcc951ec7b4b7",
+      "exit_code": 0,
+      "pid": 15176,
+      "direct_child_reaped": true,
+      "process_group_absent_after_exit": true
+    }
+  ],
+  "checks": [
+    {
+      "label": "normal",
+      "status": "ROWLANE32_FIXED_NEMU_NORMAL_PASS",
+      "sha256": "4778b75036b15ff69bece159f8dd28d4ca24180ef570d5ef6eb237708d6b49ce",
+      "cases": [
+        {
+          "case": "x0",
+          "original_index": 0,
+          "method": "unchanged_fr",
+          "output_sha256": "a26e602d26b7ca32ad7df4c04f376caee9c9e3347be8fc54a8e341ac82dcec21",
+          "slots_sha256": "ebdb04dc5f1a7b2c12bc1315aef2c4eb440b3afc25e6e3807f51ca60445a6316",
+          "y_matches": true,
+          "slots_match": true,
+          "fflags": 1,
+          "vl": 8,
+          "vtype": 0,
+          "vstart": 0,
+          "vcsr": 7,
+          "frm": 0,
+          "vlenb": 16,
+          "mstatus": 9223372079804475000
+        },
+        {
+          "case": "x0",
+          "original_index": 0,
+          "method": "rowlane32_w8",
+          "output_sha256": "a26e602d26b7ca32ad7df4c04f376caee9c9e3347be8fc54a8e341ac82dcec21",
+          "slots_sha256": "ebdb04dc5f1a7b2c12bc1315aef2c4eb440b3afc25e6e3807f51ca60445a6316",
+          "y_matches": true,
+          "slots_match": true,
+          "fflags": 1,
+          "vl": 8,
+          "vtype": 0,
+          "vstart": 0,
+          "vcsr": 7,
+          "frm": 0,
+          "vlenb": 16,
+          "mstatus": 9223372079804475000
+        },
+        {
+          "case": "x1",
+          "original_index": 1,
+          "method": "unchanged_fr",
+          "output_sha256": "9988bac575c9513069f188209e1e0fb76542e87ad0ddebc1cd4b8fe69a897edd",
+          "slots_sha256": "c688f8155ac1730cc7645ae90e80d1e118cfa72fda89a511ab49f60ee285f78c",
+          "y_matches": true,
+          "slots_match": true,
+          "fflags": 1,
+          "vl": 8,
+          "vtype": 0,
+          "vstart": 0,
+          "vcsr": 7,
+          "frm": 0,
+          "vlenb": 16,
+          "mstatus": 9223372079804475000
+        },
+        {
+          "case": "x1",
+          "original_index": 1,
+          "method": "rowlane32_w8",
+          "output_sha256": "9988bac575c9513069f188209e1e0fb76542e87ad0ddebc1cd4b8fe69a897edd",
+          "slots_sha256": "c688f8155ac1730cc7645ae90e80d1e118cfa72fda89a511ab49f60ee285f78c",
+          "y_matches": true,
+          "slots_match": true,
+          "fflags": 1,
+          "vl": 8,
+          "vtype": 0,
+          "vstart": 0,
+          "vcsr": 7,
+          "frm": 0,
+          "vlenb": 16,
+          "mstatus": 9223372079804475000
+        },
+        {
+          "case": "x0",
+          "original_index": 2,
+          "method": "unchanged_fr",
+          "output_sha256": "a26e602d26b7ca32ad7df4c04f376caee9c9e3347be8fc54a8e341ac82dcec21",
+          "slots_sha256": "ebdb04dc5f1a7b2c12bc1315aef2c4eb440b3afc25e6e3807f51ca60445a6316",
+          "y_matches": true,
+          "slots_match": true,
+          "fflags": 1,
+          "vl": 8,
+          "vtype": 0,
+          "vstart": 0,
+          "vcsr": 7,
+          "frm": 0,
+          "vlenb": 16,
+          "mstatus": 9223372079804475000
+        },
+        {
+          "case": "x0",
+          "original_index": 2,
+          "method": "rowlane32_w8",
+          "output_sha256": "a26e602d26b7ca32ad7df4c04f376caee9c9e3347be8fc54a8e341ac82dcec21",
+          "slots_sha256": "ebdb04dc5f1a7b2c12bc1315aef2c4eb440b3afc25e6e3807f51ca60445a6316",
+          "y_matches": true,
+          "slots_match": true,
+          "fflags": 1,
+          "vl": 8,
+          "vtype": 0,
+          "vstart": 0,
+          "vcsr": 7,
+          "frm": 0,
+          "vlenb": 16,
+          "mstatus": 9223372079804475000
+        },
+        {
+          "case": "min-min",
+          "original_index": 4,
+          "method": "unchanged_fr",
+          "output_sha256": "66c4c3af41f5c15c3228ce31c1bfc1be67e438e566d1def9499e6daa6b96e525",
+          "slots_sha256": "0f17fc2497c7567875cf2006ae87ae8b316972e7dd469c9fe024cd8e6c465f97",
+          "y_matches": true,
+          "slots_match": true,
+          "fflags": 1,
+          "vl": 8,
+          "vtype": 0,
+          "vstart": 0,
+          "vcsr": 7,
+          "frm": 0,
+          "vlenb": 16,
+          "mstatus": 9223372079804475000
+        },
+        {
+          "case": "min-min",
+          "original_index": 4,
+          "method": "rowlane32_w8",
+          "output_sha256": "66c4c3af41f5c15c3228ce31c1bfc1be67e438e566d1def9499e6daa6b96e525",
+          "slots_sha256": "0f17fc2497c7567875cf2006ae87ae8b316972e7dd469c9fe024cd8e6c465f97",
+          "y_matches": true,
+          "slots_match": true,
+          "fflags": 1,
+          "vl": 8,
+          "vtype": 0,
+          "vstart": 0,
+          "vcsr": 7,
+          "frm": 0,
+          "vlenb": 16,
+          "mstatus": 9223372079804475000
+        }
+      ]
+    },
+    {
+      "label": "wrong-x-byte",
+      "status": "ROWLANE32_FIXED_NEMU_NEGATIVE_REJECTED",
+      "sha256": "2d77748b1c756dbdfcd19590113acfb4dd06b04d85bce5d422ad3dd312ac1050",
+      "cases": [
+        {
+          "case": "x0",
+          "original_index": 0,
+          "method": "unchanged_fr",
+          "output_sha256": "a26e602d26b7ca32ad7df4c04f376caee9c9e3347be8fc54a8e341ac82dcec21",
+          "slots_sha256": "ebdb04dc5f1a7b2c12bc1315aef2c4eb440b3afc25e6e3807f51ca60445a6316",
+          "y_matches": true,
+          "slots_match": true,
+          "fflags": 1,
+          "vl": 8,
+          "vtype": 0,
+          "vstart": 0,
+          "vcsr": 7,
+          "frm": 0,
+          "vlenb": 16,
+          "mstatus": 9223372079804475000
+        },
+        {
+          "case": "x0",
+          "original_index": 0,
+          "method": "rowlane32_w8",
+          "output_sha256": "5f70a2909e2ea70820bb3be858502272c8cf9daabd1a0468c56095390235a71c",
+          "slots_sha256": "c22255a6343e97844f2cba5cec7915e3440af84abfaf3c84fb97d6d1f4a61911",
+          "y_matches": false,
+          "slots_match": false,
+          "fflags": 1,
+          "vl": 8,
+          "vtype": 0,
+          "vstart": 0,
+          "vcsr": 7,
+          "frm": 0,
+          "vlenb": 16,
+          "mstatus": 9223372079804475000
+        },
+        {
+          "case": "x1",
+          "original_index": 1,
+          "method": "unchanged_fr",
+          "output_sha256": "9988bac575c9513069f188209e1e0fb76542e87ad0ddebc1cd4b8fe69a897edd",
+          "slots_sha256": "c688f8155ac1730cc7645ae90e80d1e118cfa72fda89a511ab49f60ee285f78c",
+          "y_matches": true,
+          "slots_match": true,
+          "fflags": 1,
+          "vl": 8,
+          "vtype": 0,
+          "vstart": 0,
+          "vcsr": 7,
+          "frm": 0,
+          "vlenb": 16,
+          "mstatus": 9223372079804475000
+        },
+        {
+          "case": "x1",
+          "original_index": 1,
+          "method": "rowlane32_w8",
+          "output_sha256": "7e0b516a2bb905f7704ac3eadb536a6d54da0ef6e517eb605af0cc3f9c1fd0bf",
+          "slots_sha256": "2ed379730222778d285cf3e8554387bd08dddf1358bc9a37c334f89e0add7b6e",
+          "y_matches": false,
+          "slots_match": false,
+          "fflags": 1,
+          "vl": 8,
+          "vtype": 0,
+          "vstart": 0,
+          "vcsr": 7,
+          "frm": 0,
+          "vlenb": 16,
+          "mstatus": 9223372079804475000
+        },
+        {
+          "case": "x0",
+          "original_index": 2,
+          "method": "unchanged_fr",
+          "output_sha256": "a26e602d26b7ca32ad7df4c04f376caee9c9e3347be8fc54a8e341ac82dcec21",
+          "slots_sha256": "ebdb04dc5f1a7b2c12bc1315aef2c4eb440b3afc25e6e3807f51ca60445a6316",
+          "y_matches": true,
+          "slots_match": true,
+          "fflags": 1,
+          "vl": 8,
+          "vtype": 0,
+          "vstart": 0,
+          "vcsr": 7,
+          "frm": 0,
+          "vlenb": 16,
+          "mstatus": 9223372079804475000
+        },
+        {
+          "case": "x0",
+          "original_index": 2,
+          "method": "rowlane32_w8",
+          "output_sha256": "5f70a2909e2ea70820bb3be858502272c8cf9daabd1a0468c56095390235a71c",
+          "slots_sha256": "c22255a6343e97844f2cba5cec7915e3440af84abfaf3c84fb97d6d1f4a61911",
+          "y_matches": false,
+          "slots_match": false,
+          "fflags": 1,
+          "vl": 8,
+          "vtype": 0,
+          "vstart": 0,
+          "vcsr": 7,
+          "frm": 0,
+          "vlenb": 16,
+          "mstatus": 9223372079804475000
+        },
+        {
+          "case": "min-min",
+          "original_index": 4,
+          "method": "unchanged_fr",
+          "output_sha256": "66c4c3af41f5c15c3228ce31c1bfc1be67e438e566d1def9499e6daa6b96e525",
+          "slots_sha256": "0f17fc2497c7567875cf2006ae87ae8b316972e7dd469c9fe024cd8e6c465f97",
+          "y_matches": true,
+          "slots_match": true,
+          "fflags": 1,
+          "vl": 8,
+          "vtype": 0,
+          "vstart": 0,
+          "vcsr": 7,
+          "frm": 0,
+          "vlenb": 16,
+          "mstatus": 9223372079804475000
+        },
+        {
+          "case": "min-min",
+          "original_index": 4,
+          "method": "rowlane32_w8",
+          "output_sha256": "66c4c3af41f5c15c3228ce31c1bfc1be67e438e566d1def9499e6daa6b96e525",
+          "slots_sha256": "0f17fc2497c7567875cf2006ae87ae8b316972e7dd469c9fe024cd8e6c465f97",
+          "y_matches": true,
+          "slots_match": true,
+          "fflags": 1,
+          "vl": 8,
+          "vtype": 0,
+          "vstart": 0,
+          "vcsr": 7,
+          "frm": 0,
+          "vlenb": 16,
+          "mstatus": 9223372079804475000
+        }
+      ]
+    }
+  ],
+  "raw_archive": {
+    "observed_utc": "2026-11-06T01:55:34.0011620Z",
+    "status": "ROWLANE32_REFERENCE_RAW_ARCHIVE_VERIFIED",
+    "scope": "native archive only; no WSL subprocess, compiler or reference execution",
+    "archive": "D:\\Projects\\competitions\\2026-10-CIE-RISCV-XiangShan\\runs\\rowlane32-20261106-0750\\reference-probe-v1.raw.zip",
+    "bytes": 933597,
+    "sha256": "111338bc0b4ae051ffb0586a54072c01791db30e8249f08911a2cdb70a324f4b",
+    "members": 91,
+    "expanded_bytes": 3182732,
+    "members_sha256": "40c662be4d0526471cbf32e3fb5767e312c625324e00c54e4dc69bdf22802a04",
+    "all_member_bytes_verified": true,
+    "source_bytes_unchanged_after_archive": true,
+    "parent_archive_sha256": "7a26ca8ae38603a125c3105ccebe741df709e19eb245d0e843b66db001005d1c",
+    "summary_revision": 2,
+    "correction": {
+      "field": "expanded_bytes",
+      "previous_value": 0,
+      "method": "sum of all 91 byte lengths in the exact archive member manifest",
+      "original_summary_preserved": "reference-probe-v1.archive.json",
+      "archive_regenerated": false,
+      "reference_reexecuted": false
+    },
+    "corrected_at_utc": "2026-11-06 01:57:25 UTC",
+    "initial_archive_summary": {
+      "observed_utc": "2026-11-06T01:55:34.0011620Z",
+      "status": "ROWLANE32_REFERENCE_RAW_ARCHIVE_VERIFIED",
+      "scope": "native archive only; no WSL subprocess, compiler or reference execution",
+      "archive": "D:\\Projects\\competitions\\2026-10-CIE-RISCV-XiangShan\\runs\\rowlane32-20261106-0750\\reference-probe-v1.raw.zip",
+      "bytes": 933597,
+      "sha256": "111338bc0b4ae051ffb0586a54072c01791db30e8249f08911a2cdb70a324f4b",
+      "members": 91,
+      "expanded_bytes": 0,
+      "members_sha256": "40c662be4d0526471cbf32e3fb5767e312c625324e00c54e4dc69bdf22802a04",
+      "all_member_bytes_verified": true,
+      "source_bytes_unchanged_after_archive": true,
+      "parent_archive_sha256": "7a26ca8ae38603a125c3105ccebe741df709e19eb245d0e843b66db001005d1c"
+    },
+    "archive_operation_id": "d9b025210fdcd3c1fd06c2f645cfad75.1a57ce0fd8fb4101ffcfda48aa2779ba"
+  },
+  "parent_archive": {
+    "path": "../screen-v1/raw.zip",
+    "sha256": "7a26ca8ae38603a125c3105ccebe741df709e19eb245d0e843b66db001005d1c"
+  },
+  "boundaries": {
+    "new_nemu_runs": 2,
+    "new_emu_runs": 0,
+    "full_target_ABI_poison_screen": false,
+    "exact_target_access_footprints": false,
+    "nan_inf_or_non_rne_qualified": false,
+    "target_difftest_qualified": false,
+    "xiangshan_cycles_measured": false,
+    "application_performance_qualified": false,
+    "packing_timed": false
+  },
+  "source_location": "raw.zip: reference-probe-01/source-inputs and control/probe-launch-v1.py",
+  "source_identity_bundle": "raw.zip: control/probe-draft-v2.json",
+  "fflags_spec": "https://docs.riscv.org/reference/isa/v20260120/unpriv/f-st-ext.html"
+}

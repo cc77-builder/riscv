@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "candidate_id": "dot16-elastic-integration-v0.1",
+  "patch_sha256": "5b5824bac200c2a775598686e550854f8276d5db007b72f4b7be92437b4d3416",
+  "root_checks": {
+    "status": "SCRATCH_REPLICA_PATCH_AND_REVERSE_PASS",
+    "patch_sha256": "5b5824bac200c2a775598686e550854f8276d5db007b72f4b7be92437b4d3416",
+    "git_version": "git version 2.52.0",
+    "forward": "EXACT_SIX_FILE_RESULT_SHA_MATCH",
+    "reverse": "ALL_SEVEN_BASE_FILES_EXACT_AND_NEW_FILE_ABSENT",
+    "steps": [
+      {
+        "argv": [
+          "git",
+          "apply",
+          "--no-index",
+          "--check",
+          "--whitespace=error-all",
+          "/workspace/scratch/79eded243990/tmp/dot16-production-candidate-20261105/deliverable/candidate.patch"
+        ],
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "git",
+          "apply",
+          "--no-index",
+          "--whitespace=error-all",
+          "/workspace/scratch/79eded243990/tmp/dot16-production-candidate-20261105/deliverable/candidate.patch"
+        ],
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "git",
+          "apply",
+          "--no-index",
+          "--reverse",
+          "--check",
+          "--whitespace=error-all",
+          "/workspace/scratch/79eded243990/tmp/dot16-production-candidate-20261105/deliverable/candidate.patch"
+        ],
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "git",
+          "apply",
+          "--no-index",
+          "--reverse",
+          "--whitespace=error-all",
+          "/workspace/scratch/79eded243990/tmp/dot16-production-candidate-20261105/deliverable/candidate.patch"
+        ],
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "production_applied": false,
+    "scala_compiled": false,
+    "rtl_elaborated": false
+  },
+  "native_source_guard": {
+    "files_read_completely": 7,
+    "modified_existing_files_match_fixed_352_capture": 5,
+    "source_capture_window_utc": {
+      "earliest_clock_read": "2026-11-05T23:26:31Z",
+      "latest_clock_read": "2026-11-05T23:30:27Z"
+    },
+    "production_new_file_absence": "CONFIRMED_NOT_FOUND_BY_CHATPC_FILE_INFO",
+    "new_file_absence_observed_before_utc": "2026-11-05T23:45:23Z",
+    "new_file_absence_path": "src/main/scala/xiangshan/backend/fu/wrapper/VDot16Feature.scala"
+  },
+  "native_agent_review": {
+    "agent": "dot16_isa_audit",
+    "scope": "Read-only independent static review; no production apply or compilation",
+    "conclusion": "No concrete static defect requiring a change was found in v0.1; preserve unqualified candidate status",
+    "patch_sha256": "5b5824bac200c2a775598686e550854f8276d5db007b72f4b7be92437b4d3416",
+    "checks": [
+      "Seven native byte-count/hash guards",
+      "Five previous source captures at fixed 352 match",
+      "Six-file patch reconstruction hunk by hunk in memory",
+      "Exact opcode and same flag in decode/classification/FU",
+      "Fail-fast O2 and old-FU construction constraints",
+      "Signed19 + signed19 -> signed20 -> signed32 and high96 zero",
+      "Old-op high products zeroed at accept, no later-input mode dependence",
+      "Unchanged ROB kill, backpressure and pre-edge P/R identity transfer",
+      "Chisel v6.6.0 source definitions for VecLike/VecInit and signed expanding addition"
+    ],
+    "not_claimed": [
+      "actual Scala compilation",
+      "RTL elaboration",
+      "real FU/parent correctness",
+      "core qualification",
+      "timing qualification"
+    ]
+  },
+  "not_tested": [
+    "Scala compilation",
+    "Chisel elaboration",
+    "real FU simulation",
+    "real parent simulation",
+    "NEMU reference API",
+    "fullcore DiffTest",
+    "application cycles",
+    "synthesis and timing",
+    "power"
+  ],
+  "build_source_audit": {
+    "reference_commit": "352789e1975a3a409d39f67d143de6cf04938745",
+    "scala": "2.13.15",
+    "chisel": "6.6.0",
+    "source_inclusion": "vdotDecode, vdotElasticFu and vdotElasticParent depend on full xiangshan module",
+    "legacy_runner_limitation": "run_rtl.py run.env.json does not record VDOT_DOT16; future enabled validation needs a separately frozen explicit flag and source identity",
+    "legacy_negative_op_note": "Old G1/G2 op=1 cases also use VL8; the new ISA keeps those inputs illegal due to VL, while op=1/VL16 is newly legal."
+  }
+}

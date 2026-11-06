@@ -1,0 +1,69 @@
+{
+  "scope": "standalone-reference instret diagnostic only; different consumer ELFs, not XiangShan timing",
+  "counter_order": [
+    "cycle_before",
+    "instret_before",
+    "instret_after",
+    "cycle_after"
+  ],
+  "definition": "sample[2] - sample[1]; outer cycle envelope has eight extra reference ticks",
+  "old_source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/norm-resume-20261027-2000/consumer-reference-01/results.json",
+  "old_results_sha256": "ba9bafd6e9050d122dfaf729419f0cfe3654f44a50a761ff774ca51f7e3243b6",
+  "new_results_sha256": "88a120c2b208cad6554ceef35bb96679b12b359dea19ba66e423a2f75300ad2b",
+  "per_token": {
+    "scalar": [
+      120203587,
+      120249059,
+      120282258
+    ],
+    "fr": [
+      7634045,
+      7679517,
+      7712716
+    ],
+    "ta": [
+      10253273,
+      10298745,
+      10331944
+    ],
+    "fr-cache": [
+      7502872,
+      7532699,
+      7561908
+    ],
+    "ta-cache": [
+      10122100,
+      10151927,
+      10181136
+    ],
+    "gs32": [
+      4828781,
+      4858608,
+      4887817
+    ]
+  },
+  "reduction_vs_fr_cache": [
+    {
+      "position": 0,
+      "saved": 2674091,
+      "fraction": 0.3564089857857098
+    },
+    {
+      "position": 1,
+      "saved": 2674091,
+      "fraction": 0.3549977239233906
+    },
+    {
+      "position": 2,
+      "saved": 2674091,
+      "fraction": 0.35362649214986486
+    }
+  ],
+  "same_target_fullq_instruction_delta": 15547,
+  "predicted_k288_instruction_saving": 2674084,
+  "unattributed_residual": 7,
+  "full_process_retired_not_comparable": "new correctness harness includes two complete 3691424-byte zero-state scans outside forward windows; future timing must use a new fair common harness",
+  "k288_full_q288_panel_calls": 172,
+  "eight_row_tiles": 6192,
+  "residual_scope": "seven retired instructions of net change over the complete call window remain unattributed; no per-PC trace was collected"
+}

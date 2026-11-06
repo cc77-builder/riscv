@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "candidate_id": "dot16-elastic-integration-v0.1",
+  "contract_id": "dot16-s8x16-r32-v0.1",
+  "source_reference_commit": "352789e1975a3a409d39f67d143de6cf04938745",
+  "source_native_head_reported": "c981529dc6e493fb7deee8429b9ce05fd197497b",
+  "source_native_head_basis": "HEAD from main successful commit receipt; these seven exact native byte hashes are the candidate guards.",
+  "patch_file": "candidate.patch",
+  "patch_sha256": "5b5824bac200c2a775598686e550854f8276d5db007b72f4b7be92437b4d3416",
+  "apply_base": {
+    "src/main/scala/xiangshan/backend/decode/Instructions.scala": "cc26b735440af4af6d580c9625517bb7fa83f0df3a11dce81826afcd8049c868",
+    "src/main/scala/xiangshan/backend/decode/VecDecoder.scala": "2ae12df34733075ab01fb012cb3a889ca36bb1cdde5e53ce72c9460e784cb3df",
+    "src/main/scala/xiangshan/backend/decode/isa/bitfield/RiscvInst.scala": "b6597168a63a5345603e56ff4a2aeea72ee6c2f53c1d5a74aa7c457662471247",
+    "src/main/scala/xiangshan/backend/fu/wrapper/VDot.scala": "bf69510e71be20f14229e36908cb7a5f949b905748ef5a4794057e223e9de2ba",
+    "src/main/scala/xiangshan/backend/fu/wrapper/VDotElastic.scala": "93812d4776bdf390d60d4cd47f6fbc80debfff82d8a5e9d1a5676987365658db"
+  },
+  "must_not_exist": [
+    "src/main/scala/xiangshan/backend/fu/wrapper/VDot16Feature.scala"
+  ],
+  "apply_result": {
+    "src/main/scala/xiangshan/backend/decode/Instructions.scala": "877b8d114a6e89ab847b6b8f9dbb2e9aa89a164d3eecff57795d259f98e9be7f",
+    "src/main/scala/xiangshan/backend/decode/VecDecoder.scala": "424be273935763ac17f23136a7428c2b06f4c8cfc84774cd1747e68bf9f0d011",
+    "src/main/scala/xiangshan/backend/decode/isa/bitfield/RiscvInst.scala": "4b051bc6d646eb619adfe51f8a3034684d8a87454fb0edbe5322d162a65ff90b",
+    "src/main/scala/xiangshan/backend/fu/wrapper/VDot.scala": "4e1707f0b76d8c66a09ab155bb052d829cca9b9db1ec5387847b6b08a5e7f8a3",
+    "src/main/scala/xiangshan/backend/fu/wrapper/VDot16Feature.scala": "abb51fd72dbf02201d5fd716ad3bc03a92a932df4452af46e269f09d88742dbe",
+    "src/main/scala/xiangshan/backend/fu/wrapper/VDotElastic.scala": "63911b937a526b97ddaa67e34526fd19bbd2fa2801eadfda10ae6c2fa4b9fe9e"
+  },
+  "unchanged_dependency_sha256": {
+    "src/main/scala/xiangshan/backend/fu/vector/VDotDatapath.scala": "161df70403fd131a3adf445230ed637dc7ad7c619d05c0a890aa8aa1791546d8",
+    "src/main/scala/xiangshan/backend/fu/wrapper/VDotO2.scala": "8a5e58c5d81b7c42fcd97452330e9477c2f52b5676aca47d45639ace726ebb59"
+  },
+  "elaboration_flag": "VDOT_DOT16",
+  "default_enabled": false,
+  "required_enabled_environment": {
+    "VDOT_DOT16": "1",
+    "VDOT_O2_ELASTIC": "1",
+    "VDOT_T14_FUSED_INPUT": "1"
+  },
+  "forbidden_enabled_environment": {
+    "VDOT_O1_HANDOFF": "1",
+    "VDOT_T12_TRACE": "1",
+    "VDOT_O1_TRACE": "1"
+  },
+  "additional_constraints": [
+    "Existing VDotO2.enabled validation remains authoritative, including T13/O2 trace coupling."
+  ],
+  "production_applied": false,
+  "scala_compiled": false,
+  "rtl_elaborated": false,
+  "fu_qualified": false,
+  "parent_qualified": false,
+  "fullcore_qualified": false,
+  "ppa_qualified": false,
+  "source_capture_window_utc": {
+    "earliest_clock_read": "2026-11-05T23:26:31Z",
+    "latest_clock_read": "2026-11-05T23:30:27Z"
+  },
+  "validation_record": "review.json",
+  "validation_scope": "Static review and forward/reverse application only in a seven-source scratch replica; no production application or compilation."
+}

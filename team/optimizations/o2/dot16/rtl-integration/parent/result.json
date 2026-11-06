@@ -1,0 +1,1600 @@
+{
+  "schema": 1,
+  "qualification": "DOT16_PARENT_BOTH_FEATURE_STATES_PASS",
+  "base_commit": "c981529dc6e493fb7deee8429b9ce05fd197497b",
+  "production_patch_sha256": "5b5824bac200c2a775598686e550854f8276d5db007b72f4b7be92437b4d3416",
+  "source_files": [
+    {
+      "name": "CONTRACT.md",
+      "sha256": "07ed215e2f1be7a48d80f7c94a05fa2e6e836231d19f00ed017c87f09c1edd9f",
+      "bytes": 5978
+    },
+    {
+      "name": "check_coverage.py",
+      "sha256": "0a7a9b31df768235c0ca1c98aaa477bef58172b615ade9c5cf23d71088905bd1",
+      "bytes": 11019
+    },
+    {
+      "name": "derive_test.py",
+      "sha256": "b6733d205f1b46f5500837f27c99e60ca74f6fed680e4bcf600e547daa7f1375",
+      "bytes": 2373
+    },
+    {
+      "name": "extra_cases.cpp.inc",
+      "sha256": "8769f41b4083b746085eadf25464f377b27b091d9b09729b7b6f6feca324c752",
+      "bytes": 9478
+    },
+    {
+      "name": "run.py",
+      "sha256": "8a8eee12389133d9f9a9f9e1b5729e40e4193cc2a6bb7ba5a122989e6596ffe8",
+      "bytes": 9763
+    }
+  ],
+  "scope": {
+    "real_parent": true,
+    "real_clock_gate": true,
+    "real_vidiv": true,
+    "real_vfdiv": true,
+    "decode_qualified": false,
+    "fullcore_qualified": false,
+    "application_performance_measured": false,
+    "ppa_qualified": false
+  },
+  "qualifications": [
+    "Original full campaign, 14 groups, 10022 frozen arithmetic inputs, 577 walking-one and 577 walking-zero metadata retained.",
+    "Original strict/positive/metadata replay and all 20 observation-negative tests actually completed.",
+    "Additional requests are bound only at actual accept_seq and closed against cycle terminal records plus metadata E.",
+    "The nine illegal stimulus categories are fixed in independently reviewed C++; the new gate independently checks case/op/VL/v0/illegal/terminal, not each of the five malformed configuration fields separately.",
+    "Twenty original fault modes remain observation-chain negatives; they are not described as dot16-specific RTL mutation tests."
+  ],
+  "runs": [
+    {
+      "feature": 0,
+      "operation_id": "d9b025210fdcd3c1fd06c2f645cfad75.c3370ee13e3c84db5e4d14fb9e40f4bb",
+      "started": "2026-11-06T02:04:44.5243835Z",
+      "finished": "2026-11-06T02:06:02.3134143Z",
+      "exit_code": 0,
+      "duration_ms": 77729,
+      "cleanup_complete": true,
+      "timed_out": false,
+      "cancelled": false,
+      "independent_process_group_absent": true,
+      "evidence": {
+        "run": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag0-01",
+        "status": {
+          "schema": 1,
+          "started": "2026-11-06T02:04:44.946752+00:00",
+          "passed": true,
+          "feature": 0,
+          "cpu_affinity": [
+            1
+          ],
+          "budget_seconds": 900,
+          "repo": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+          "output": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag0-01",
+          "mill_output": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2",
+          "parent_qualified": true,
+          "decode_qualified": false,
+          "fullcore_qualified": false,
+          "ppa_qualified": false,
+          "head": "c981529dc6e493fb7deee8429b9ce05fd197497b",
+          "mill_jvm_options": {
+            "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag0-01/source-snapshot/mill-jvm-opts",
+            "sha256": "7e266538e31b6d13c26e42792389207e6b9cdc2fbb9d95c2ba0e8db6bde83a98"
+          },
+          "mill_launcher": {
+            "path": "/home/lizufan/riscv-tools/bin/mill",
+            "sha256": "86acc0b9869d09c8983ecfdbeb39682d47eb585e2b46d94148cc528fbb4b83b8"
+          },
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag0-01/source-snapshot/dot16_run_rtl.py",
+            "parent",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag0-01/campaign"
+          ],
+          "pid": 410,
+          "exit_code": 0,
+          "coverage": {
+            "schema": 1,
+            "status": "DOT16_PARENT_FEATURE_0_COVERAGE_PASS",
+            "feature": 0,
+            "additional_accepted": 16,
+            "additional_responses": 16,
+            "additional_cancelled": 0,
+            "additional_reset_dropped": 0,
+            "mixed_ii1_intervals": 0,
+            "mixed_latency": null,
+            "reset_state_cases": 0,
+            "inputs": {
+              "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag0-01/campaign/result.log": "1e6eed4178aa84d5025c9d99f425623188a17e67207e49a8a14d41e1063cce90",
+              "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag0-01/campaign/metadata.log": "7f849f13b8c25b3bb89aadb4523be1feb910c59e4c004e86b54682c44908aa1c"
+            },
+            "decode_qualified": false,
+            "fullcore_qualified": false,
+            "performance_measured": false
+          },
+          "original_summary": {
+            "schema": "1",
+            "cycles": "38602",
+            "groups": "14",
+            "accepted": "14781",
+            "responses": "14292",
+            "cancelled": "426",
+            "reset_dropped": "63",
+            "overlaps": "10494",
+            "stalls": "3218",
+            "p_to_r": "12952",
+            "full_cycles": "12985",
+            "full_blocked": "1698",
+            "p_accept_r_blocked": "102",
+            "r_response_p_survivor": "915",
+            "kill_p_only": "41",
+            "kill_r_only": "47",
+            "kill_both": "38",
+            "reset_both": "2",
+            "redirects": "156",
+            "reset_cases": "20",
+            "te0_resets": "30",
+            "empty_te0_resets": "21",
+            "idle_clock_samples": "12",
+            "cancel_idle_clock_on": "0",
+            "perf_contract": "2",
+            "perf_bits": "577",
+            "perf_inputs": "14781",
+            "perf_observations": "17567",
+            "perf_walk_one": "577",
+            "perf_walk_zero": "577",
+            "parent_tested": "1",
+            "fullcore_tested": "0",
+            "performance_measured": "0"
+          },
+          "qualification": "DOT16_PARENT_FEATURE_0_PASS",
+          "finished": "2026-11-06T02:06:02.164097+00:00",
+          "process_returncode": 0,
+          "process_group_absent": true
+        },
+        "process_group_absent_independent": true,
+        "source_count": 437,
+        "dependencies_count": 126,
+        "files": [
+          {
+            "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag0-01/status.json",
+            "bytes": 3347,
+            "sha256": "21eaa2a213d2812d8b86df3d7ac9c0944cf6ef6396d1e1858ff0cbf8c817fc88"
+          },
+          {
+            "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag0-01/inputs.json",
+            "bytes": 3088,
+            "sha256": "263d8f7505cab448aeb7c3c24896b24ec9590b71ca1ca7bd60c47acf00e2a9f1"
+          },
+          {
+            "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag0-01/test-derivation.json",
+            "bytes": 359,
+            "sha256": "19e0bd79826e98b225de15ffd203512ccfc9df2d08d29fa6c84b04e1da65b3c9"
+          },
+          {
+            "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag0-01/runner-derivation.json",
+            "bytes": 239,
+            "sha256": "059f3b03b0b89dec81302810cd2bf7afaa7c826c3920c2594c49e9038c03baa6"
+          },
+          {
+            "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag0-01/additional-coverage.json",
+            "bytes": 8573,
+            "sha256": "46c2aadc411ca43fca4addf81df0e6043ca9e8c88a7d58c556c10523dcb21ec9"
+          },
+          {
+            "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag0-01/campaign/runner.status.json",
+            "bytes": 149,
+            "sha256": "d56ab233f0a9d142575cbc7f853f1e22179432cb24367f926810937f687a35a4"
+          },
+          {
+            "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag0-01/campaign/commands.json",
+            "bytes": 44017,
+            "sha256": "cbdc39d980631013ed74889813b80c30f572bc6ed265f70da1cf283441f5365f"
+          },
+          {
+            "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag0-01/campaign/source.json",
+            "bytes": 54912,
+            "sha256": "f29c70c43591b982d1b4796b026d56f645c008fb333df37e4a6f5356f4444e55"
+          },
+          {
+            "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag0-01/campaign/dependencies.json",
+            "bytes": 24018,
+            "sha256": "de4cf9023b946028d6c50594e5faa2ef3d59d4d6031859e2ae84622819cf47ba"
+          },
+          {
+            "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag0-01/campaign/compiler-inputs.json",
+            "bytes": 54390,
+            "sha256": "0aa905be9b130f762b764c442df0d0c613ccdd0da03416b56296552764d473be"
+          },
+          {
+            "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag0-01/campaign/generated-files.json",
+            "bytes": 8275,
+            "sha256": "be932495cd15c13a4d467cf6d4dc92256f72f93043c22c85bc6311af8d3d1403"
+          },
+          {
+            "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag0-01/campaign/artifacts.json",
+            "bytes": 299,
+            "sha256": "d72447b7094b7482cb525fee79db8f3f1be9e627312e4d77faf9f1d9b42a3e0b"
+          },
+          {
+            "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag0-01/campaign/result.log",
+            "bytes": 19926614,
+            "sha256": "1e6eed4178aa84d5025c9d99f425623188a17e67207e49a8a14d41e1063cce90"
+          },
+          {
+            "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag0-01/campaign/metadata.log",
+            "bytes": 11872392,
+            "sha256": "7f849f13b8c25b3bb89aadb4523be1feb910c59e4c004e86b54682c44908aa1c"
+          },
+          {
+            "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag0-01/campaign/metadata-audit.json",
+            "bytes": 4369,
+            "sha256": "236ef42f3d7913089fabf3840bf607eb59353921b269d1b956843d6402ef0893"
+          }
+        ],
+        "commands": [
+          {
+            "start": "2026-11-06T02:04:45.092024+00:00",
+            "end": "2026-11-06T02:04:45.092716+00:00",
+            "exit_code": 0,
+            "log": "git-version.log",
+            "argument_count": 2
+          },
+          {
+            "start": "2026-11-06T02:04:45.092817+00:00",
+            "end": "2026-11-06T02:04:45.188631+00:00",
+            "exit_code": 0,
+            "log": "java-version.log",
+            "argument_count": 2
+          },
+          {
+            "start": "2026-11-06T02:04:45.188816+00:00",
+            "end": "2026-11-06T02:04:45.902038+00:00",
+            "exit_code": 0,
+            "log": "mill-version.log",
+            "argument_count": 4
+          },
+          {
+            "start": "2026-11-06T02:04:45.902234+00:00",
+            "end": "2026-11-06T02:04:45.970313+00:00",
+            "exit_code": 0,
+            "log": "verilator-version.log",
+            "argument_count": 2
+          },
+          {
+            "start": "2026-11-06T02:04:45.970505+00:00",
+            "end": "2026-11-06T02:04:45.974731+00:00",
+            "exit_code": 0,
+            "log": "cxx-version.log",
+            "argument_count": 2
+          },
+          {
+            "start": "2026-11-06T02:04:45.974849+00:00",
+            "end": "2026-11-06T02:04:46.190630+00:00",
+            "exit_code": 0,
+            "log": "clang-version.log",
+            "argument_count": 2
+          },
+          {
+            "start": "2026-11-06T02:04:46.190854+00:00",
+            "end": "2026-11-06T02:04:46.192620+00:00",
+            "exit_code": 0,
+            "log": "make-version.log",
+            "argument_count": 2
+          },
+          {
+            "start": "2026-11-06T02:04:46.192741+00:00",
+            "end": "2026-11-06T02:04:46.209653+00:00",
+            "exit_code": 0,
+            "log": "firtool-version.log",
+            "argument_count": 2
+          },
+          {
+            "start": "2026-11-06T02:04:46.209877+00:00",
+            "end": "2026-11-06T02:04:46.211006+00:00",
+            "exit_code": 0,
+            "log": "source-commit.log",
+            "argument_count": 3
+          },
+          {
+            "start": "2026-11-06T02:04:46.211175+00:00",
+            "end": "2026-11-06T02:04:50.051846+00:00",
+            "exit_code": 0,
+            "log": "source-status.log",
+            "argument_count": 3
+          },
+          {
+            "start": "2026-11-06T02:04:50.052091+00:00",
+            "end": "2026-11-06T02:04:50.671984+00:00",
+            "exit_code": 0,
+            "log": "working-tree.patch",
+            "argument_count": 4
+          },
+          {
+            "start": "2026-11-06T02:04:56.082096+00:00",
+            "end": "2026-11-06T02:04:56.135549+00:00",
+            "exit_code": 0,
+            "log": "vectors.log",
+            "argument_count": 5
+          },
+          {
+            "start": "2026-11-06T02:04:56.135794+00:00",
+            "end": "2026-11-06T02:04:56.209682+00:00",
+            "exit_code": 0,
+            "log": "negative-gate-tests.log",
+            "argument_count": 10
+          },
+          {
+            "start": "2026-11-06T02:04:56.209970+00:00",
+            "end": "2026-11-06T02:05:27.196437+00:00",
+            "exit_code": 0,
+            "log": "elaboration.log",
+            "argument_count": 8
+          },
+          {
+            "start": "2026-11-06T02:05:27.201201+00:00",
+            "end": "2026-11-06T02:05:29.999871+00:00",
+            "exit_code": 0,
+            "log": "lint.log",
+            "argument_count": 62
+          },
+          {
+            "start": "2026-11-06T02:05:30.000228+00:00",
+            "end": "2026-11-06T02:05:51.314877+00:00",
+            "exit_code": 0,
+            "log": "verilator.log",
+            "argument_count": 71
+          },
+          {
+            "start": "2026-11-06T02:05:51.315302+00:00",
+            "end": "2026-11-06T02:05:51.569549+00:00",
+            "exit_code": 0,
+            "log": "result.log",
+            "argument_count": 4
+          },
+          {
+            "start": "2026-11-06T02:05:51.607213+00:00",
+            "end": "2026-11-06T02:05:53.469374+00:00",
+            "exit_code": 0,
+            "log": "positive-replay.log",
+            "argument_count": 8
+          },
+          {
+            "start": "2026-11-06T02:05:53.469795+00:00",
+            "end": "2026-11-06T02:05:56.116600+00:00",
+            "exit_code": 0,
+            "log": "metadata-replay.log",
+            "argument_count": 9
+          },
+          {
+            "start": "2026-11-06T02:05:56.117107+00:00",
+            "end": "2026-11-06T02:05:56.130153+00:00",
+            "exit_code": 1,
+            "log": "inject-identity.log",
+            "argument_count": 3
+          },
+          {
+            "start": "2026-11-06T02:05:56.130498+00:00",
+            "end": "2026-11-06T02:05:56.150199+00:00",
+            "exit_code": 0,
+            "log": "check-identity.log",
+            "argument_count": 9
+          },
+          {
+            "start": "2026-11-06T02:05:56.150583+00:00",
+            "end": "2026-11-06T02:05:56.163338+00:00",
+            "exit_code": 1,
+            "log": "inject-rob.log",
+            "argument_count": 3
+          },
+          {
+            "start": "2026-11-06T02:05:56.163709+00:00",
+            "end": "2026-11-06T02:05:56.180506+00:00",
+            "exit_code": 0,
+            "log": "check-rob.log",
+            "argument_count": 9
+          },
+          {
+            "start": "2026-11-06T02:05:56.180855+00:00",
+            "end": "2026-11-06T02:05:56.192690+00:00",
+            "exit_code": 1,
+            "log": "inject-high.log",
+            "argument_count": 3
+          },
+          {
+            "start": "2026-11-06T02:05:56.193030+00:00",
+            "end": "2026-11-06T02:05:56.209759+00:00",
+            "exit_code": 0,
+            "log": "check-high.log",
+            "argument_count": 9
+          },
+          {
+            "start": "2026-11-06T02:05:56.210115+00:00",
+            "end": "2026-11-06T02:05:56.222479+00:00",
+            "exit_code": 1,
+            "log": "inject-metadata.log",
+            "argument_count": 3
+          },
+          {
+            "start": "2026-11-06T02:05:56.222847+00:00",
+            "end": "2026-11-06T02:05:56.239812+00:00",
+            "exit_code": 0,
+            "log": "check-metadata.log",
+            "argument_count": 9
+          },
+          {
+            "start": "2026-11-06T02:05:56.240212+00:00",
+            "end": "2026-11-06T02:05:56.251743+00:00",
+            "exit_code": 1,
+            "log": "inject-wen.log",
+            "argument_count": 3
+          },
+          {
+            "start": "2026-11-06T02:05:56.252218+00:00",
+            "end": "2026-11-06T02:05:56.269222+00:00",
+            "exit_code": 0,
+            "log": "check-wen.log",
+            "argument_count": 9
+          },
+          {
+            "start": "2026-11-06T02:05:56.269597+00:00",
+            "end": "2026-11-06T02:05:56.316567+00:00",
+            "exit_code": 1,
+            "log": "inject-stall.log",
+            "argument_count": 3
+          },
+          {
+            "start": "2026-11-06T02:05:56.316981+00:00",
+            "end": "2026-11-06T02:05:56.334273+00:00",
+            "exit_code": 0,
+            "log": "check-stall.log",
+            "argument_count": 9
+          },
+          {
+            "start": "2026-11-06T02:05:56.334636+00:00",
+            "end": "2026-11-06T02:05:56.346580+00:00",
+            "exit_code": 1,
+            "log": "inject-route.log",
+            "argument_count": 3
+          },
+          {
+            "start": "2026-11-06T02:05:56.346893+00:00",
+            "end": "2026-11-06T02:05:56.363186+00:00",
+            "exit_code": 0,
+            "log": "check-route.log",
+            "argument_count": 9
+          },
+          {
+            "start": "2026-11-06T02:05:56.363589+00:00",
+            "end": "2026-11-06T02:05:56.375665+00:00",
+            "exit_code": 1,
+            "log": "inject-double.log",
+            "argument_count": 3
+          },
+          {
+            "start": "2026-11-06T02:05:56.376038+00:00",
+            "end": "2026-11-06T02:05:56.392695+00:00",
+            "exit_code": 0,
+            "log": "check-double.log",
+            "argument_count": 9
+          },
+          {
+            "start": "2026-11-06T02:05:56.393073+00:00",
+            "end": "2026-11-06T02:05:56.441640+00:00",
+            "exit_code": 1,
+            "log": "inject-clock.log",
+            "argument_count": 3
+          },
+          {
+            "start": "2026-11-06T02:05:56.442565+00:00",
+            "end": "2026-11-06T02:05:56.460592+00:00",
+            "exit_code": 0,
+            "log": "check-clock.log",
+            "argument_count": 9
+          },
+          {
+            "start": "2026-11-06T02:05:56.461025+00:00",
+            "end": "2026-11-06T02:05:56.472893+00:00",
+            "exit_code": 1,
+            "log": "inject-occupancy.log",
+            "argument_count": 3
+          },
+          {
+            "start": "2026-11-06T02:05:56.473301+00:00",
+            "end": "2026-11-06T02:05:56.490791+00:00",
+            "exit_code": 0,
+            "log": "check-occupancy.log",
+            "argument_count": 9
+          },
+          {
+            "start": "2026-11-06T02:05:56.491311+00:00",
+            "end": "2026-11-06T02:05:56.545197+00:00",
+            "exit_code": 1,
+            "log": "inject-kill_p.log",
+            "argument_count": 3
+          },
+          {
+            "start": "2026-11-06T02:05:56.545654+00:00",
+            "end": "2026-11-06T02:05:56.562886+00:00",
+            "exit_code": 0,
+            "log": "check-kill_p.log",
+            "argument_count": 9
+          },
+          {
+            "start": "2026-11-06T02:05:56.563332+00:00",
+            "end": "2026-11-06T02:05:56.621371+00:00",
+            "exit_code": 1,
+            "log": "inject-kill_r.log",
+            "argument_count": 3
+          },
+          {
+            "start": "2026-11-06T02:05:56.621829+00:00",
+            "end": "2026-11-06T02:05:56.639260+00:00",
+            "exit_code": 0,
+            "log": "check-kill_r.log",
+            "argument_count": 9
+          },
+          {
+            "start": "2026-11-06T02:05:56.639679+00:00",
+            "end": "2026-11-06T02:05:56.694643+00:00",
+            "exit_code": 1,
+            "log": "inject-survivor.log",
+            "argument_count": 3
+          },
+          {
+            "start": "2026-11-06T02:05:56.695136+00:00",
+            "end": "2026-11-06T02:05:56.712443+00:00",
+            "exit_code": 0,
+            "log": "check-survivor.log",
+            "argument_count": 9
+          },
+          {
+            "start": "2026-11-06T02:05:56.712873+00:00",
+            "end": "2026-11-06T02:05:56.762122+00:00",
+            "exit_code": 1,
+            "log": "inject-duplicate.log",
+            "argument_count": 3
+          },
+          {
+            "start": "2026-11-06T02:05:56.762635+00:00",
+            "end": "2026-11-06T02:05:56.780257+00:00",
+            "exit_code": 0,
+            "log": "check-duplicate.log",
+            "argument_count": 9
+          },
+          {
+            "start": "2026-11-06T02:05:56.780677+00:00",
+            "end": "2026-11-06T02:05:56.792040+00:00",
+            "exit_code": 1,
+            "log": "inject-missing.log",
+            "argument_count": 3
+          },
+          {
+            "start": "2026-11-06T02:05:56.792389+00:00",
+            "end": "2026-11-06T02:05:56.809069+00:00",
+            "exit_code": 0,
+            "log": "check-missing.log",
+            "argument_count": 9
+          },
+          {
+            "start": "2026-11-06T02:05:56.809539+00:00",
+            "end": "2026-11-06T02:05:56.872803+00:00",
+            "exit_code": 1,
+            "log": "inject-reset.log",
+            "argument_count": 3
+          },
+          {
+            "start": "2026-11-06T02:05:56.873285+00:00",
+            "end": "2026-11-06T02:05:56.891653+00:00",
+            "exit_code": 0,
+            "log": "check-reset.log",
+            "argument_count": 9
+          },
+          {
+            "start": "2026-11-06T02:05:56.892122+00:00",
+            "end": "2026-11-06T02:05:56.904530+00:00",
+            "exit_code": 1,
+            "log": "inject-perf_input.log",
+            "argument_count": 3
+          },
+          {
+            "start": "2026-11-06T02:05:56.905017+00:00",
+            "end": "2026-11-06T02:05:56.923386+00:00",
+            "exit_code": 0,
+            "log": "check-perf_input.log",
+            "argument_count": 9
+          },
+          {
+            "start": "2026-11-06T02:05:56.923885+00:00",
+            "end": "2026-11-06T02:05:56.936031+00:00",
+            "exit_code": 1,
+            "log": "inject-perf_swap.log",
+            "argument_count": 3
+          },
+          {
+            "start": "2026-11-06T02:05:56.936523+00:00",
+            "end": "2026-11-06T02:05:56.953498+00:00",
+            "exit_code": 0,
+            "log": "check-perf_swap.log",
+            "argument_count": 9
+          },
+          {
+            "start": "2026-11-06T02:05:56.953981+00:00",
+            "end": "2026-11-06T02:05:56.966090+00:00",
+            "exit_code": 1,
+            "log": "inject-perf_parent.log",
+            "argument_count": 3
+          },
+          {
+            "start": "2026-11-06T02:05:56.966602+00:00",
+            "end": "2026-11-06T02:05:56.983285+00:00",
+            "exit_code": 0,
+            "log": "check-perf_parent.log",
+            "argument_count": 9
+          },
+          {
+            "start": "2026-11-06T02:05:56.983761+00:00",
+            "end": "2026-11-06T02:05:56.996149+00:00",
+            "exit_code": 1,
+            "log": "inject-perf_cross.log",
+            "argument_count": 3
+          },
+          {
+            "start": "2026-11-06T02:05:56.996668+00:00",
+            "end": "2026-11-06T02:05:57.015046+00:00",
+            "exit_code": 0,
+            "log": "check-perf_cross.log",
+            "argument_count": 9
+          }
+        ],
+        "summaries": [
+          "O2_PARENT_GROUP_PASS real-ClockGate bootstrap-TE=1; empty-O2-reset-TE=0; idle-gating",
+          "O2_PARENT_GROUP_PASS frozen=10022 full128-three-buses; continuous-II=1 latency=2 full-vpu-perf-copy",
+          "O2_PARENT_GROUP_PASS R-blocked-empty-P-fill; full-reject; stall=1,2,7,23; R-drain-P-survives-no-new-input",
+          "O2_PARENT_GROUP_PASS real-VIDiv=76 div-divu-rem-remu overflow-div0; real-VFDiv=9 FP32-DZ-signed-zero",
+          "O2_PARENT_GROUP_PASS all-nine-FU-transitions x stalls=0,1,7; full-vdot-pair-drain-before-DIV",
+          "O2_PARENT_GROUP_PASS legal-illegal=128 mixed-v0-exception-full-metadata",
+          "O2_PARENT_GROUP_PASS ROB-pair-partial-both-neither age-order-reversal flag-wrap flush-self; single-slot-kills",
+          "O2_PARENT_GROUP_PASS DIV-cancel=36 calculate-visible-stalled x ready x next-FU; raw-cancel-output-retained-but-no-ghost-grace",
+          "O2_PARENT_GROUP_PASS DIV-ROB=28 same-no-self older-younger flag-wrap-full-wrap x calculating-stalled; immediate-gate-and-recovery",
+          "O2_PARENT_GROUP_PASS O2-TE=0 reset empty-P-R-full x cancel; exact-reset-priority; post-reset-wakeup",
+          "O2_PARENT_GROUP_PASS legacy-DIV-reset=12 x matching-cancel; bootstrap-compatible-TE=1 (not-DIV-TE0-reset-evidence)",
+          "O2_PARENT_GROUP_PASS random=20000 seed=0x20261019; bounded-ROB-window; prefix-conservation",
+          "O2_PARENT_GROUP_PASS perf-v2 577-walking-one 577-walking-zero external-input-child-parent; blocked-two-slot-pairs",
+          "O2_PARENT_GROUP_PASS all-real-FU-clocks-gated-after-recovery",
+          "O2_PARENT_FU kind=0 accepted=13037 responded=12862 killed=164 reset_dropped=11 raw_killed_response=0 latency_min=2 latency_max=25 latency_samples=12925 clock_edges=18501 waits=4625",
+          "O2_PARENT_FU kind=1 accepted=886 responded=717 killed=140 reset_dropped=29 raw_killed_response=13 latency_min=10 latency_max=14 latency_samples=750 clock_edges=11412 waits=4148",
+          "O2_PARENT_FU kind=2 accepted=858 responded=713 killed=122 reset_dropped=23 raw_killed_response=15 latency_min=8 latency_max=8 latency_samples=748 clock_edges=7781 waits=4282",
+          "O2_PARENT_PASS schema=1 cycles=38602 groups=14 accepted=14781 responses=14292 cancelled=426 reset_dropped=63 overlaps=10494 stalls=3218 p_to_r=12952 full_cycles=12985 full_blocked=1698 p_accept_r_blocked=102 r_response_p_survivor=915 kill_p_only=41 kill_r_only=47 kill_both=38 reset_both=2 redirects=156 reset_cases=20 te0_resets=30 empty_te0_resets=21 idle_clock_samples=12 cancel_idle_clock_on=0 perf_contract=2 perf_bits=577 perf_inputs=14781 perf_observations=17567 perf_walk_one=577 perf_walk_zero=577 parent_tested=1 fullcore_tested=0 performance_measured=0"
+        ],
+        "replays": {
+          "positive-replay.log": {
+            "sha256": "799153b3d7673e42de4e9cc1e246036f4b06428648e29af28c3100c65b42681f",
+            "text": "{\"accepted\": 14781, \"cancelled\": 426, \"cycles\": 38602, \"frozen_vectors\": 10022, \"fullcore_tested\": false, \"ii1_intervals\": 10021, \"reset_dropped\": 63, \"responses\": 14292, \"status\": \"O2_PARENT_OFFLINE_REPLAY_PASS\", \"strict_clock_replay\": \"O2_PARENT_OFFLINE_TRACE_PASS\"}\n"
+          },
+          "metadata-replay.log": {
+            "sha256": "51ab0e6dd036a7246696fbe5234fbefdf2a61025c2104b7c7dde96182b6a9604",
+            "text": "{\"actual_parent_output_checked\": true, \"bits\": 577, \"contract\": \"r3-perf-parent-v2\", \"control_replay\": {\"cancel_idle_cases\": {\"1\": 24, \"2\": 24}, \"cancel_idle_samples\": {\"1\": 72, \"2\": 72}, \"cycles\": 38602, \"div_reset_cases\": [[1, 0, false], [1, 0, true], [1, 1, false], [1, 1, true], [1, 2, false], [1, 2, true], [2, 0, false], [2, 0, true], [2, 1, false], [2, 1, true], [2, 2, false], [2, 2, true]], \"div_reset_overlap_kinds\": [1, 2], \"div_rob_cases\": 28, \"full_campaign_required\": true, \"groups\": 14, \"per_fu\": [{\"accepted\": 13037, \"clock_edges\": 18501, \"killed\": 164, \"latency_max\": 25, \"latency_min\": 2, \"latency_samples\": 12925, \"reset_dropped\": 11, \"responded\": 12862, \"waits\": 4625}, {\"accepted\": 886, \"clock_edges\": 11412, \"killed\": 140, \"latency_max\": 14, \"latency_min\": 10, \"latency_samples\": 750, \"raw_killed_response\": 13, \"reset_dropped\": 29, \"responded\": 717, \"waits\": 4148}, {\"accepted\": 858, \"clock_edges\": 7781, \"killed\": 122, \"latency_max\": 8, \"latency_min\": 8, \"latency_samples\": 748, \"raw_killed_response\": 15, \"reset_dropped\": 23, \"responded\": 713, \"waits\": 4282}], \"perf_contract\": 2, \"perf_observations_recomputed\": 17567, \"recomputed\": {\"accepted\": 14781, \"cancel_idle_clock_on\": 0, \"cancelled\": 426, \"cycles\": 38602, \"empty_te0_resets\": 21, \"full_blocked\": 1698, \"full_cycles\": 12985, \"groups\": 14, \"kill_both\": 38, \"kill_p_only\": 41, \"kill_r_only\": 47, \"overlaps\": 10494, \"p_accept_r_blocked\": 102, \"p_to_r\": 12952, \"r_response_p_survivor\": 915, \"redirects\": 156, \"reset_both\": 2, \"reset_cases\": 20, \"reset_dropped\": 63, \"responses\": 14292, \"stalls\": 3218, \"te0_resets\": 30}, \"scope\": \"cycle/identity/ROB/control replay only; no RTL execution or payload recheck\", \"scope_note\": \"strict idle gating; cancel edge remains required; legacy DIV reset uses TE\", \"side_counters_not_recomputed\": [], \"status\": \"O2_PARENT_OFFLINE_TRACE_PASS\"}, \"counts\": {\"accepts\": 14781, \"cancelled\": 426, \"observations\": 17567, \"reset\": 63, \"responded\": 14292}, \"cycles\": 38602, \"fields_lsb_first\": [\"tlbRespTime\", \"tlbFirstReqTime\", \"runahead_checkpoint_id\", \"writebackTime\", \"issueTime\", \"selectTime\", \"enqRsTime\", \"dispatchTime\", \"renameTime\", \"eliminatedMove\"], \"independent_field_requests\": 13627, \"input_bits_at_both_values\": 577, \"inputs\": {\"/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag0-01/campaign/metadata.log\": {\"payload_bytes\": 11872392, \"payload_sha256\": \"7f849f13b8c25b3bb89aadb4523be1feb910c59e4c004e86b54682c44908aa1c\", \"stored_bytes\": 11872392, \"stored_sha256\": \"7f849f13b8c25b3bb89aadb4523be1feb910c59e4c004e86b54682c44908aa1c\"}, \"/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag0-01/campaign/result.log\": {\"payload_bytes\": 19926614, \"payload_sha256\": \"1e6eed4178aa84d5025c9d99f425623188a17e67207e49a8a14d41e1063cce90\", \"stored_bytes\": 19926614, \"stored_sha256\": \"1e6eed4178aa84d5025c9d99f425623188a17e67207e49a8a14d41e1063cce90\"}}, \"new_fullcore\": false, \"new_ppa\": false, \"payload_events\": 47129, \"per_fu_accepts\": {\"0\": 13037, \"1\": 886, \"2\": 858}, \"status\": \"R3_PERF_PAYLOAD_REPLAY_PASS\", \"walking_one_bits\": 577, \"walking_zero_bits\": 577}\n"
+          },
+          "source-after.status": {
+            "sha256": "78807531b9b32a8ad448a4311d42d998ba69a15d9f0574aee86cda0b8008aac1",
+            "text": "SOURCE_AND_DEPENDENCIES_UNCHANGED\n"
+          },
+          "check-identity.log": {
+            "sha256": "685d43bb5930052032c35e43bed39946636da146332e48f8c5c4a60064500e23",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS identity\n"
+          },
+          "check-rob.log": {
+            "sha256": "8886d1700389b9ec6f0e481bb511433e97a2b4c170d58be724d53443560f59ef",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS rob\n"
+          },
+          "check-high.log": {
+            "sha256": "8bc9dfad375d6710cd00d8d607467294fc410e19187cf19857f91c98a39a1c03",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS high\n"
+          },
+          "check-metadata.log": {
+            "sha256": "7fbdbae5a24372df103478f61592828a69e52841ddba9633c3fa09b2cb720bb8",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS metadata\n"
+          },
+          "check-wen.log": {
+            "sha256": "29fe7f380ad4ce34736c6c6220bb6ea09d5892bcdb4f4adabf8146086b1e3716",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS wen\n"
+          },
+          "check-stall.log": {
+            "sha256": "fd4cdf1171ba9b1216ff3e5317f55c80680cf1367b486e6c959a2219f6c1d2aa",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS stall\n"
+          },
+          "check-route.log": {
+            "sha256": "486b2a821330a7e7475a1d76cbede65369c62128630d65b9320e8e024c9290cb",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS route\n"
+          },
+          "check-double.log": {
+            "sha256": "a32ddfc1a7ad863a5ba5c7d7a2a6d5583636bf512e648fa3e11f03942b5baf34",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS double\n"
+          },
+          "check-clock.log": {
+            "sha256": "767535e3f1b9af73bf744aa6d688c67974b2e2af374b6f821c252bc26d41a391",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS clock\n"
+          },
+          "check-occupancy.log": {
+            "sha256": "db7d04bccac9997d90f55cefdee87a3716b01e83e53c10d00b6c7faae00d4bb7",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS occupancy\n"
+          },
+          "check-kill_p.log": {
+            "sha256": "9e099039e08703268c2bfe35e7b4ebffef56110864b56df4962ad2499b783dc0",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS kill_p\n"
+          },
+          "check-kill_r.log": {
+            "sha256": "2c374499af9e12c962d64fa17877daeb30c37caabdb32ee46748a696a2d8ad1d",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS kill_r\n"
+          },
+          "check-survivor.log": {
+            "sha256": "e0ef866fb23c25f7e09a48f47570b43e51ce82d1d335b90206730b02625893de",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS survivor\n"
+          },
+          "check-duplicate.log": {
+            "sha256": "a09274d1680767b2330f82c5a7e6696f36ca1f84505f8c3109f2118adc20e256",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS duplicate\n"
+          },
+          "check-missing.log": {
+            "sha256": "fbc75d21a9728505c625750da58136f031d24633b34e6f022cceafdafcf97039",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS missing\n"
+          },
+          "check-reset.log": {
+            "sha256": "ec914512269de20c7014508be1f24e00cd0d9c2e6049f60a685dac27b6d0524c",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS reset\n"
+          },
+          "check-perf_input.log": {
+            "sha256": "5f515c063286de189489055a38becaa1b05e1762ee98089091df34fbc967cc48",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS perf_input\n"
+          },
+          "check-perf_swap.log": {
+            "sha256": "ec3a01c29f5e283a213194a8a299a65fc80e3a3d5ac73a22ec6033a3fdb1ff57",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS perf_swap\n"
+          },
+          "check-perf_parent.log": {
+            "sha256": "ba34a1957307ddcc27a198fddcbcade5e0310ab7033b8654676cf71a131e97e5",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS perf_parent\n"
+          },
+          "check-perf_cross.log": {
+            "sha256": "6c19fb213a8aaa201945ecd4c801219568811b0db801f123adc8cf6a9766691d",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS perf_cross\n"
+          }
+        },
+        "additional_coverage": {
+          "schema": 1,
+          "status": "DOT16_PARENT_FEATURE_0_COVERAGE_PASS",
+          "feature": 0,
+          "additional_accepted": 16,
+          "additional_responses": 16,
+          "additional_cancelled": 0,
+          "additional_reset_dropped": 0,
+          "mixed_ii1_intervals": 0,
+          "mixed_latency": null,
+          "reset_state_cases": 0,
+          "decode_qualified": false,
+          "fullcore_qualified": false,
+          "performance_measured": false
+        },
+        "generated_count": 57,
+        "all_generated_and_artifacts_verified": true,
+        "selected_generated": [
+          {
+            "path": "rtl/ClockGate.sv",
+            "sha256": "3a59c31230b388514521e3cb8c7e8140ada1b56ebbb0bb0dadf7962d6624dbc1",
+            "bytes": 223
+          },
+          {
+            "path": "rtl/VDotElastic.sv",
+            "sha256": "3a10269dffb4bcc818b32f899f4388b4023875322e10f8485e7229e51989e41b",
+            "bytes": 28209
+          },
+          {
+            "path": "rtl/VDotElasticParentTestTop.sv",
+            "sha256": "f378c463f2a7a11f22f742bbfc3ef7655ae6db85c59886c57b1381821a26bc25",
+            "bytes": 32296
+          }
+        ],
+        "artifacts": [
+          {
+            "path": "vectors.tsv",
+            "sha256": "901a7be30e62b81bcd3df55b20538a5ba9c879ba9c7c34f28b8c0421d8e6a327",
+            "bytes": 1132502
+          },
+          {
+            "path": "obj/VVDotElasticParentTestTop",
+            "sha256": "32cc7dc8a0b2d3e3adcbe4d033fa622f5c01f0254a2688ad68c5f2ac2ee3835c",
+            "bytes": 1300648
+          }
+        ]
+      }
+    },
+    {
+      "feature": 1,
+      "operation_id": "d9b025210fdcd3c1fd06c2f645cfad75.b62a902e48682b18fc3c5184b5198034",
+      "started": "2026-11-06T02:07:44.5156238Z",
+      "finished": "2026-11-06T02:08:50.253419Z",
+      "exit_code": 0,
+      "duration_ms": 65693,
+      "cleanup_complete": true,
+      "timed_out": false,
+      "cancelled": false,
+      "independent_process_group_absent": true,
+      "evidence": {
+        "run": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag1-01",
+        "status": {
+          "schema": 1,
+          "started": "2026-11-06T02:07:44.993187+00:00",
+          "passed": true,
+          "feature": 1,
+          "cpu_affinity": [
+            1
+          ],
+          "budget_seconds": 900,
+          "repo": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+          "output": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag1-01",
+          "mill_output": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2",
+          "parent_qualified": true,
+          "decode_qualified": false,
+          "fullcore_qualified": false,
+          "ppa_qualified": false,
+          "head": "c981529dc6e493fb7deee8429b9ce05fd197497b",
+          "mill_jvm_options": {
+            "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag1-01/source-snapshot/mill-jvm-opts",
+            "sha256": "7e266538e31b6d13c26e42792389207e6b9cdc2fbb9d95c2ba0e8db6bde83a98"
+          },
+          "mill_launcher": {
+            "path": "/home/lizufan/riscv-tools/bin/mill",
+            "sha256": "86acc0b9869d09c8983ecfdbeb39682d47eb585e2b46d94148cc528fbb4b83b8"
+          },
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag1-01/source-snapshot/dot16_run_rtl.py",
+            "parent",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag1-01/campaign"
+          ],
+          "pid": 400,
+          "exit_code": 0,
+          "coverage": {
+            "schema": 1,
+            "status": "DOT16_PARENT_FEATURE_1_COVERAGE_PASS",
+            "feature": 1,
+            "additional_accepted": 166,
+            "additional_responses": 138,
+            "additional_cancelled": 20,
+            "additional_reset_dropped": 8,
+            "mixed_ii1_intervals": 63,
+            "mixed_latency": 2,
+            "reset_state_cases": 8,
+            "inputs": {
+              "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag1-01/campaign/result.log": "85c45b21695a2f641731cb52d98d1304a91d055ed155dfc18fd900716e634bce",
+              "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag1-01/campaign/metadata.log": "8599acd26a2af4fee2d0e93833fe5efb40a2da791cf52ae019622aa558069401"
+            },
+            "decode_qualified": false,
+            "fullcore_qualified": false,
+            "performance_measured": false
+          },
+          "original_summary": {
+            "schema": "1",
+            "cycles": "39100",
+            "groups": "14",
+            "accepted": "14931",
+            "responses": "14414",
+            "cancelled": "446",
+            "reset_dropped": "71",
+            "overlaps": "10556",
+            "stalls": "3344",
+            "p_to_r": "13080",
+            "full_cycles": "13136",
+            "full_blocked": "1762",
+            "p_accept_r_blocked": "106",
+            "r_response_p_survivor": "924",
+            "kill_p_only": "47",
+            "kill_r_only": "53",
+            "kill_both": "42",
+            "reset_both": "4",
+            "redirects": "156",
+            "reset_cases": "20",
+            "te0_resets": "46",
+            "empty_te0_resets": "31",
+            "idle_clock_samples": "12",
+            "cancel_idle_clock_on": "0",
+            "perf_contract": "2",
+            "perf_bits": "577",
+            "perf_inputs": "14931",
+            "perf_observations": "17815",
+            "perf_walk_one": "577",
+            "perf_walk_zero": "577",
+            "parent_tested": "1",
+            "fullcore_tested": "0",
+            "performance_measured": "0"
+          },
+          "qualification": "DOT16_PARENT_FEATURE_1_PASS",
+          "finished": "2026-11-06T02:08:50.191368+00:00",
+          "process_returncode": 0,
+          "process_group_absent": true
+        },
+        "process_group_absent_independent": true,
+        "source_count": 437,
+        "dependencies_count": 126,
+        "files": [
+          {
+            "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag1-01/status.json",
+            "bytes": 3348,
+            "sha256": "028559bf5ea081daeeb1441eb4cbd9420fb7a9eadf0e9442f4f34c0cfbc50b09"
+          },
+          {
+            "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag1-01/inputs.json",
+            "bytes": 3088,
+            "sha256": "263d8f7505cab448aeb7c3c24896b24ec9590b71ca1ca7bd60c47acf00e2a9f1"
+          },
+          {
+            "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag1-01/test-derivation.json",
+            "bytes": 359,
+            "sha256": "bd260666db5bf6012b5de49c4a9f4587b9d22dbd00abdd584c0a41c7e18597c8"
+          },
+          {
+            "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag1-01/runner-derivation.json",
+            "bytes": 239,
+            "sha256": "7e04630b9e2e63e7ad48f62279c931b2a21635f3963ae40f90ce66db8e7338d5"
+          },
+          {
+            "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag1-01/additional-coverage.json",
+            "bytes": 73379,
+            "sha256": "2aaeedbbb19fadaee60fb5307e066ed3de0a99bf2b47e7f7aa9619785ef980ed"
+          },
+          {
+            "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag1-01/campaign/runner.status.json",
+            "bytes": 149,
+            "sha256": "a3fe2e0689369d76d2cc502fcca70ebcb9dcfba3b24b14b2f21216ee3ee1abda"
+          },
+          {
+            "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag1-01/campaign/commands.json",
+            "bytes": 44017,
+            "sha256": "f88028f84a64f324f393d04f27518da14efaee1ee12677ff168be5066e55d8ba"
+          },
+          {
+            "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag1-01/campaign/source.json",
+            "bytes": 54912,
+            "sha256": "f29c70c43591b982d1b4796b026d56f645c008fb333df37e4a6f5356f4444e55"
+          },
+          {
+            "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag1-01/campaign/dependencies.json",
+            "bytes": 24018,
+            "sha256": "de4cf9023b946028d6c50594e5faa2ef3d59d4d6031859e2ae84622819cf47ba"
+          },
+          {
+            "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag1-01/campaign/compiler-inputs.json",
+            "bytes": 54390,
+            "sha256": "0aa905be9b130f762b764c442df0d0c613ccdd0da03416b56296552764d473be"
+          },
+          {
+            "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag1-01/campaign/generated-files.json",
+            "bytes": 8275,
+            "sha256": "69484df7cc9f4992f2fd32a84290d1a79f65fbdd2707669ef03d97c560c512b4"
+          },
+          {
+            "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag1-01/campaign/artifacts.json",
+            "bytes": 299,
+            "sha256": "ee762476e1aabb396870b65657ad43cfc160424e5a99c4e84eca387f7f3fb769"
+          },
+          {
+            "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag1-01/campaign/result.log",
+            "bytes": 20204418,
+            "sha256": "85c45b21695a2f641731cb52d98d1304a91d055ed155dfc18fd900716e634bce"
+          },
+          {
+            "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag1-01/campaign/metadata.log",
+            "bytes": 12017456,
+            "sha256": "8599acd26a2af4fee2d0e93833fe5efb40a2da791cf52ae019622aa558069401"
+          },
+          {
+            "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag1-01/campaign/metadata-audit.json",
+            "bytes": 4369,
+            "sha256": "2bc2a82041db8ac35f8cac54045d5646a27b0a02c06062262a2d163600e40ced"
+          }
+        ],
+        "commands": [
+          {
+            "log": "git-version.log",
+            "start": "2026-11-06T02:07:45.139340+00:00",
+            "end": "2026-11-06T02:07:45.140106+00:00",
+            "exit_code": 0,
+            "argument_count": 2
+          },
+          {
+            "log": "java-version.log",
+            "start": "2026-11-06T02:07:45.140210+00:00",
+            "end": "2026-11-06T02:07:45.235465+00:00",
+            "exit_code": 0,
+            "argument_count": 2
+          },
+          {
+            "log": "mill-version.log",
+            "start": "2026-11-06T02:07:45.235666+00:00",
+            "end": "2026-11-06T02:07:45.955083+00:00",
+            "exit_code": 0,
+            "argument_count": 4
+          },
+          {
+            "log": "verilator-version.log",
+            "start": "2026-11-06T02:07:45.955271+00:00",
+            "end": "2026-11-06T02:07:46.027083+00:00",
+            "exit_code": 0,
+            "argument_count": 2
+          },
+          {
+            "log": "cxx-version.log",
+            "start": "2026-11-06T02:07:46.027284+00:00",
+            "end": "2026-11-06T02:07:46.032113+00:00",
+            "exit_code": 0,
+            "argument_count": 2
+          },
+          {
+            "log": "clang-version.log",
+            "start": "2026-11-06T02:07:46.032266+00:00",
+            "end": "2026-11-06T02:07:46.241058+00:00",
+            "exit_code": 0,
+            "argument_count": 2
+          },
+          {
+            "log": "make-version.log",
+            "start": "2026-11-06T02:07:46.241295+00:00",
+            "end": "2026-11-06T02:07:46.243149+00:00",
+            "exit_code": 0,
+            "argument_count": 2
+          },
+          {
+            "log": "firtool-version.log",
+            "start": "2026-11-06T02:07:46.243268+00:00",
+            "end": "2026-11-06T02:07:46.259583+00:00",
+            "exit_code": 0,
+            "argument_count": 2
+          },
+          {
+            "log": "source-commit.log",
+            "start": "2026-11-06T02:07:46.259800+00:00",
+            "end": "2026-11-06T02:07:46.260831+00:00",
+            "exit_code": 0,
+            "argument_count": 3
+          },
+          {
+            "log": "source-status.log",
+            "start": "2026-11-06T02:07:46.260957+00:00",
+            "end": "2026-11-06T02:07:50.251749+00:00",
+            "exit_code": 0,
+            "argument_count": 3
+          },
+          {
+            "log": "working-tree.patch",
+            "start": "2026-11-06T02:07:50.251978+00:00",
+            "end": "2026-11-06T02:07:50.860773+00:00",
+            "exit_code": 0,
+            "argument_count": 4
+          },
+          {
+            "log": "vectors.log",
+            "start": "2026-11-06T02:07:56.539775+00:00",
+            "end": "2026-11-06T02:07:56.609146+00:00",
+            "exit_code": 0,
+            "argument_count": 5
+          },
+          {
+            "log": "negative-gate-tests.log",
+            "start": "2026-11-06T02:07:56.609457+00:00",
+            "end": "2026-11-06T02:07:56.699407+00:00",
+            "exit_code": 0,
+            "argument_count": 10
+          },
+          {
+            "log": "elaboration.log",
+            "start": "2026-11-06T02:07:56.699811+00:00",
+            "end": "2026-11-06T02:08:14.712783+00:00",
+            "exit_code": 0,
+            "argument_count": 8
+          },
+          {
+            "log": "lint.log",
+            "start": "2026-11-06T02:08:14.716778+00:00",
+            "end": "2026-11-06T02:08:17.084217+00:00",
+            "exit_code": 0,
+            "argument_count": 62
+          },
+          {
+            "log": "verilator.log",
+            "start": "2026-11-06T02:08:17.084590+00:00",
+            "end": "2026-11-06T02:08:39.090801+00:00",
+            "exit_code": 0,
+            "argument_count": 71
+          },
+          {
+            "log": "result.log",
+            "start": "2026-11-06T02:08:39.091230+00:00",
+            "end": "2026-11-06T02:08:39.348620+00:00",
+            "exit_code": 0,
+            "argument_count": 4
+          },
+          {
+            "log": "positive-replay.log",
+            "start": "2026-11-06T02:08:39.388402+00:00",
+            "end": "2026-11-06T02:08:41.293813+00:00",
+            "exit_code": 0,
+            "argument_count": 8
+          },
+          {
+            "log": "metadata-replay.log",
+            "start": "2026-11-06T02:08:41.294248+00:00",
+            "end": "2026-11-06T02:08:44.031965+00:00",
+            "exit_code": 0,
+            "argument_count": 9
+          },
+          {
+            "log": "inject-identity.log",
+            "start": "2026-11-06T02:08:44.032339+00:00",
+            "end": "2026-11-06T02:08:44.044955+00:00",
+            "exit_code": 1,
+            "argument_count": 3
+          },
+          {
+            "log": "check-identity.log",
+            "start": "2026-11-06T02:08:44.045297+00:00",
+            "end": "2026-11-06T02:08:44.062822+00:00",
+            "exit_code": 0,
+            "argument_count": 9
+          },
+          {
+            "log": "inject-rob.log",
+            "start": "2026-11-06T02:08:44.063172+00:00",
+            "end": "2026-11-06T02:08:44.075458+00:00",
+            "exit_code": 1,
+            "argument_count": 3
+          },
+          {
+            "log": "check-rob.log",
+            "start": "2026-11-06T02:08:44.075806+00:00",
+            "end": "2026-11-06T02:08:44.094537+00:00",
+            "exit_code": 0,
+            "argument_count": 9
+          },
+          {
+            "log": "inject-high.log",
+            "start": "2026-11-06T02:08:44.094932+00:00",
+            "end": "2026-11-06T02:08:44.107173+00:00",
+            "exit_code": 1,
+            "argument_count": 3
+          },
+          {
+            "log": "check-high.log",
+            "start": "2026-11-06T02:08:44.107615+00:00",
+            "end": "2026-11-06T02:08:44.124657+00:00",
+            "exit_code": 0,
+            "argument_count": 9
+          },
+          {
+            "log": "inject-metadata.log",
+            "start": "2026-11-06T02:08:44.125016+00:00",
+            "end": "2026-11-06T02:08:44.137668+00:00",
+            "exit_code": 1,
+            "argument_count": 3
+          },
+          {
+            "log": "check-metadata.log",
+            "start": "2026-11-06T02:08:44.138047+00:00",
+            "end": "2026-11-06T02:08:44.156925+00:00",
+            "exit_code": 0,
+            "argument_count": 9
+          },
+          {
+            "log": "inject-wen.log",
+            "start": "2026-11-06T02:08:44.157317+00:00",
+            "end": "2026-11-06T02:08:44.169659+00:00",
+            "exit_code": 1,
+            "argument_count": 3
+          },
+          {
+            "log": "check-wen.log",
+            "start": "2026-11-06T02:08:44.170197+00:00",
+            "end": "2026-11-06T02:08:44.188997+00:00",
+            "exit_code": 0,
+            "argument_count": 9
+          },
+          {
+            "log": "inject-stall.log",
+            "start": "2026-11-06T02:08:44.189471+00:00",
+            "end": "2026-11-06T02:08:44.240113+00:00",
+            "exit_code": 1,
+            "argument_count": 3
+          },
+          {
+            "log": "check-stall.log",
+            "start": "2026-11-06T02:08:44.240622+00:00",
+            "end": "2026-11-06T02:08:44.258946+00:00",
+            "exit_code": 0,
+            "argument_count": 9
+          },
+          {
+            "log": "inject-route.log",
+            "start": "2026-11-06T02:08:44.259386+00:00",
+            "end": "2026-11-06T02:08:44.272572+00:00",
+            "exit_code": 1,
+            "argument_count": 3
+          },
+          {
+            "log": "check-route.log",
+            "start": "2026-11-06T02:08:44.273071+00:00",
+            "end": "2026-11-06T02:08:44.291661+00:00",
+            "exit_code": 0,
+            "argument_count": 9
+          },
+          {
+            "log": "inject-double.log",
+            "start": "2026-11-06T02:08:44.292042+00:00",
+            "end": "2026-11-06T02:08:44.304392+00:00",
+            "exit_code": 1,
+            "argument_count": 3
+          },
+          {
+            "log": "check-double.log",
+            "start": "2026-11-06T02:08:44.304867+00:00",
+            "end": "2026-11-06T02:08:44.323713+00:00",
+            "exit_code": 0,
+            "argument_count": 9
+          },
+          {
+            "log": "inject-clock.log",
+            "start": "2026-11-06T02:08:44.324117+00:00",
+            "end": "2026-11-06T02:08:44.372154+00:00",
+            "exit_code": 1,
+            "argument_count": 3
+          },
+          {
+            "log": "check-clock.log",
+            "start": "2026-11-06T02:08:44.372592+00:00",
+            "end": "2026-11-06T02:08:44.390390+00:00",
+            "exit_code": 0,
+            "argument_count": 9
+          },
+          {
+            "log": "inject-occupancy.log",
+            "start": "2026-11-06T02:08:44.390791+00:00",
+            "end": "2026-11-06T02:08:44.403099+00:00",
+            "exit_code": 1,
+            "argument_count": 3
+          },
+          {
+            "log": "check-occupancy.log",
+            "start": "2026-11-06T02:08:44.403524+00:00",
+            "end": "2026-11-06T02:08:44.421253+00:00",
+            "exit_code": 0,
+            "argument_count": 9
+          },
+          {
+            "log": "inject-kill_p.log",
+            "start": "2026-11-06T02:08:44.421728+00:00",
+            "end": "2026-11-06T02:08:44.478914+00:00",
+            "exit_code": 1,
+            "argument_count": 3
+          },
+          {
+            "log": "check-kill_p.log",
+            "start": "2026-11-06T02:08:44.479370+00:00",
+            "end": "2026-11-06T02:08:44.498329+00:00",
+            "exit_code": 0,
+            "argument_count": 9
+          },
+          {
+            "log": "inject-kill_r.log",
+            "start": "2026-11-06T02:08:44.499022+00:00",
+            "end": "2026-11-06T02:08:44.559150+00:00",
+            "exit_code": 1,
+            "argument_count": 3
+          },
+          {
+            "log": "check-kill_r.log",
+            "start": "2026-11-06T02:08:44.559604+00:00",
+            "end": "2026-11-06T02:08:44.576766+00:00",
+            "exit_code": 0,
+            "argument_count": 9
+          },
+          {
+            "log": "inject-survivor.log",
+            "start": "2026-11-06T02:08:44.577184+00:00",
+            "end": "2026-11-06T02:08:44.631092+00:00",
+            "exit_code": 1,
+            "argument_count": 3
+          },
+          {
+            "log": "check-survivor.log",
+            "start": "2026-11-06T02:08:44.631576+00:00",
+            "end": "2026-11-06T02:08:44.650611+00:00",
+            "exit_code": 0,
+            "argument_count": 9
+          },
+          {
+            "log": "inject-duplicate.log",
+            "start": "2026-11-06T02:08:44.651171+00:00",
+            "end": "2026-11-06T02:08:44.699524+00:00",
+            "exit_code": 1,
+            "argument_count": 3
+          },
+          {
+            "log": "check-duplicate.log",
+            "start": "2026-11-06T02:08:44.700015+00:00",
+            "end": "2026-11-06T02:08:44.719252+00:00",
+            "exit_code": 0,
+            "argument_count": 9
+          },
+          {
+            "log": "inject-missing.log",
+            "start": "2026-11-06T02:08:44.719712+00:00",
+            "end": "2026-11-06T02:08:44.732738+00:00",
+            "exit_code": 1,
+            "argument_count": 3
+          },
+          {
+            "log": "check-missing.log",
+            "start": "2026-11-06T02:08:44.733168+00:00",
+            "end": "2026-11-06T02:08:44.752880+00:00",
+            "exit_code": 0,
+            "argument_count": 9
+          },
+          {
+            "log": "inject-reset.log",
+            "start": "2026-11-06T02:08:44.753349+00:00",
+            "end": "2026-11-06T02:08:44.820127+00:00",
+            "exit_code": 1,
+            "argument_count": 3
+          },
+          {
+            "log": "check-reset.log",
+            "start": "2026-11-06T02:08:44.820633+00:00",
+            "end": "2026-11-06T02:08:44.839268+00:00",
+            "exit_code": 0,
+            "argument_count": 9
+          },
+          {
+            "log": "inject-perf_input.log",
+            "start": "2026-11-06T02:08:44.839772+00:00",
+            "end": "2026-11-06T02:08:44.852246+00:00",
+            "exit_code": 1,
+            "argument_count": 3
+          },
+          {
+            "log": "check-perf_input.log",
+            "start": "2026-11-06T02:08:44.852720+00:00",
+            "end": "2026-11-06T02:08:44.871736+00:00",
+            "exit_code": 0,
+            "argument_count": 9
+          },
+          {
+            "log": "inject-perf_swap.log",
+            "start": "2026-11-06T02:08:44.872243+00:00",
+            "end": "2026-11-06T02:08:44.884753+00:00",
+            "exit_code": 1,
+            "argument_count": 3
+          },
+          {
+            "log": "check-perf_swap.log",
+            "start": "2026-11-06T02:08:44.885257+00:00",
+            "end": "2026-11-06T02:08:44.902179+00:00",
+            "exit_code": 0,
+            "argument_count": 9
+          },
+          {
+            "log": "inject-perf_parent.log",
+            "start": "2026-11-06T02:08:44.902678+00:00",
+            "end": "2026-11-06T02:08:44.914669+00:00",
+            "exit_code": 1,
+            "argument_count": 3
+          },
+          {
+            "log": "check-perf_parent.log",
+            "start": "2026-11-06T02:08:44.915169+00:00",
+            "end": "2026-11-06T02:08:44.933230+00:00",
+            "exit_code": 0,
+            "argument_count": 9
+          },
+          {
+            "log": "inject-perf_cross.log",
+            "start": "2026-11-06T02:08:44.933800+00:00",
+            "end": "2026-11-06T02:08:44.945694+00:00",
+            "exit_code": 1,
+            "argument_count": 3
+          },
+          {
+            "log": "check-perf_cross.log",
+            "start": "2026-11-06T02:08:44.946206+00:00",
+            "end": "2026-11-06T02:08:44.963044+00:00",
+            "exit_code": 0,
+            "argument_count": 9
+          }
+        ],
+        "summaries": [
+          "O2_PARENT_GROUP_PASS real-ClockGate bootstrap-TE=1; empty-O2-reset-TE=0; idle-gating",
+          "O2_PARENT_GROUP_PASS frozen=10022 full128-three-buses; continuous-II=1 latency=2 full-vpu-perf-copy",
+          "O2_PARENT_GROUP_PASS R-blocked-empty-P-fill; full-reject; stall=1,2,7,23; R-drain-P-survives-no-new-input",
+          "O2_PARENT_GROUP_PASS real-VIDiv=76 div-divu-rem-remu overflow-div0; real-VFDiv=9 FP32-DZ-signed-zero",
+          "O2_PARENT_GROUP_PASS all-nine-FU-transitions x stalls=0,1,7; full-vdot-pair-drain-before-DIV",
+          "O2_PARENT_GROUP_PASS legal-illegal=128 mixed-v0-exception-full-metadata",
+          "O2_PARENT_GROUP_PASS ROB-pair-partial-both-neither age-order-reversal flag-wrap flush-self; single-slot-kills",
+          "O2_PARENT_GROUP_PASS DIV-cancel=36 calculate-visible-stalled x ready x next-FU; raw-cancel-output-retained-but-no-ghost-grace",
+          "O2_PARENT_GROUP_PASS DIV-ROB=28 same-no-self older-younger flag-wrap-full-wrap x calculating-stalled; immediate-gate-and-recovery",
+          "O2_PARENT_GROUP_PASS O2-TE=0 reset empty-P-R-full x cancel; exact-reset-priority; post-reset-wakeup",
+          "O2_PARENT_GROUP_PASS legacy-DIV-reset=12 x matching-cancel; bootstrap-compatible-TE=1 (not-DIV-TE0-reset-evidence)",
+          "O2_PARENT_GROUP_PASS random=20000 seed=0x20261019; bounded-ROB-window; prefix-conservation",
+          "O2_PARENT_GROUP_PASS perf-v2 577-walking-one 577-walking-zero external-input-child-parent; blocked-two-slot-pairs",
+          "O2_PARENT_GROUP_PASS all-real-FU-clocks-gated-after-recovery",
+          "O2_PARENT_FU kind=0 accepted=13179 responded=12976 killed=184 reset_dropped=19 raw_killed_response=0 latency_min=2 latency_max=25 latency_samples=13051 clock_edges=18865 waits=4677",
+          "O2_PARENT_FU kind=1 accepted=890 responded=721 killed=140 reset_dropped=29 raw_killed_response=13 latency_min=10 latency_max=14 latency_samples=754 clock_edges=11479 waits=4157",
+          "O2_PARENT_FU kind=2 accepted=862 responded=717 killed=122 reset_dropped=23 raw_killed_response=15 latency_min=8 latency_max=8 latency_samples=752 clock_edges=7824 waits=4291",
+          "O2_PARENT_PASS schema=1 cycles=39100 groups=14 accepted=14931 responses=14414 cancelled=446 reset_dropped=71 overlaps=10556 stalls=3344 p_to_r=13080 full_cycles=13136 full_blocked=1762 p_accept_r_blocked=106 r_response_p_survivor=924 kill_p_only=47 kill_r_only=53 kill_both=42 reset_both=4 redirects=156 reset_cases=20 te0_resets=46 empty_te0_resets=31 idle_clock_samples=12 cancel_idle_clock_on=0 perf_contract=2 perf_bits=577 perf_inputs=14931 perf_observations=17815 perf_walk_one=577 perf_walk_zero=577 parent_tested=1 fullcore_tested=0 performance_measured=0"
+        ],
+        "replays": {
+          "positive-replay.log": {
+            "sha256": "1862eb70405bb378a273bac9d60cba5021d3fca2f67ef6ee16dd62ce0dd17678",
+            "text": "{\"accepted\": 14931, \"cancelled\": 446, \"cycles\": 39100, \"frozen_vectors\": 10022, \"fullcore_tested\": false, \"ii1_intervals\": 10021, \"reset_dropped\": 71, \"responses\": 14414, \"status\": \"O2_PARENT_OFFLINE_REPLAY_PASS\", \"strict_clock_replay\": \"O2_PARENT_OFFLINE_TRACE_PASS\"}\n"
+          },
+          "metadata-replay.log": {
+            "sha256": "2c45f4fbd608d82fa24386999fbd20043649848df4b2cc580624895183cb88b7",
+            "text": "{\"actual_parent_output_checked\": true, \"bits\": 577, \"contract\": \"r3-perf-parent-v2\", \"control_replay\": {\"cancel_idle_cases\": {\"1\": 24, \"2\": 24}, \"cancel_idle_samples\": {\"1\": 72, \"2\": 72}, \"cycles\": 39100, \"div_reset_cases\": [[1, 0, false], [1, 0, true], [1, 1, false], [1, 1, true], [1, 2, false], [1, 2, true], [2, 0, false], [2, 0, true], [2, 1, false], [2, 1, true], [2, 2, false], [2, 2, true]], \"div_reset_overlap_kinds\": [1, 2], \"div_rob_cases\": 28, \"full_campaign_required\": true, \"groups\": 14, \"per_fu\": [{\"accepted\": 13179, \"clock_edges\": 18865, \"killed\": 184, \"latency_max\": 25, \"latency_min\": 2, \"latency_samples\": 13051, \"reset_dropped\": 19, \"responded\": 12976, \"waits\": 4677}, {\"accepted\": 890, \"clock_edges\": 11479, \"killed\": 140, \"latency_max\": 14, \"latency_min\": 10, \"latency_samples\": 754, \"raw_killed_response\": 13, \"reset_dropped\": 29, \"responded\": 721, \"waits\": 4157}, {\"accepted\": 862, \"clock_edges\": 7824, \"killed\": 122, \"latency_max\": 8, \"latency_min\": 8, \"latency_samples\": 752, \"raw_killed_response\": 15, \"reset_dropped\": 23, \"responded\": 717, \"waits\": 4291}], \"perf_contract\": 2, \"perf_observations_recomputed\": 17815, \"recomputed\": {\"accepted\": 14931, \"cancel_idle_clock_on\": 0, \"cancelled\": 446, \"cycles\": 39100, \"empty_te0_resets\": 31, \"full_blocked\": 1762, \"full_cycles\": 13136, \"groups\": 14, \"kill_both\": 42, \"kill_p_only\": 47, \"kill_r_only\": 53, \"overlaps\": 10556, \"p_accept_r_blocked\": 106, \"p_to_r\": 13080, \"r_response_p_survivor\": 924, \"redirects\": 156, \"reset_both\": 4, \"reset_cases\": 20, \"reset_dropped\": 71, \"responses\": 14414, \"stalls\": 3344, \"te0_resets\": 46}, \"scope\": \"cycle/identity/ROB/control replay only; no RTL execution or payload recheck\", \"scope_note\": \"strict idle gating; cancel edge remains required; legacy DIV reset uses TE\", \"side_counters_not_recomputed\": [], \"status\": \"O2_PARENT_OFFLINE_TRACE_PASS\"}, \"counts\": {\"accepts\": 14931, \"cancelled\": 446, \"observations\": 17815, \"reset\": 71, \"responded\": 14414}, \"cycles\": 39100, \"fields_lsb_first\": [\"tlbRespTime\", \"tlbFirstReqTime\", \"runahead_checkpoint_id\", \"writebackTime\", \"issueTime\", \"selectTime\", \"enqRsTime\", \"dispatchTime\", \"renameTime\", \"eliminatedMove\"], \"independent_field_requests\": 13777, \"input_bits_at_both_values\": 577, \"inputs\": {\"/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag1-01/campaign/metadata.log\": {\"payload_bytes\": 12017456, \"payload_sha256\": \"8599acd26a2af4fee2d0e93833fe5efb40a2da791cf52ae019622aa558069401\", \"stored_bytes\": 12017456, \"stored_sha256\": \"8599acd26a2af4fee2d0e93833fe5efb40a2da791cf52ae019622aa558069401\"}, \"/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/parent-flag1-01/campaign/result.log\": {\"payload_bytes\": 20204418, \"payload_sha256\": \"85c45b21695a2f641731cb52d98d1304a91d055ed155dfc18fd900716e634bce\", \"stored_bytes\": 20204418, \"stored_sha256\": \"85c45b21695a2f641731cb52d98d1304a91d055ed155dfc18fd900716e634bce\"}}, \"new_fullcore\": false, \"new_ppa\": false, \"payload_events\": 47677, \"per_fu_accepts\": {\"0\": 13179, \"1\": 890, \"2\": 862}, \"status\": \"R3_PERF_PAYLOAD_REPLAY_PASS\", \"walking_one_bits\": 577, \"walking_zero_bits\": 577}\n"
+          },
+          "source-after.status": {
+            "sha256": "78807531b9b32a8ad448a4311d42d998ba69a15d9f0574aee86cda0b8008aac1",
+            "text": "SOURCE_AND_DEPENDENCIES_UNCHANGED\n"
+          },
+          "check-identity.log": {
+            "sha256": "685d43bb5930052032c35e43bed39946636da146332e48f8c5c4a60064500e23",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS identity\n"
+          },
+          "check-rob.log": {
+            "sha256": "8886d1700389b9ec6f0e481bb511433e97a2b4c170d58be724d53443560f59ef",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS rob\n"
+          },
+          "check-high.log": {
+            "sha256": "8bc9dfad375d6710cd00d8d607467294fc410e19187cf19857f91c98a39a1c03",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS high\n"
+          },
+          "check-metadata.log": {
+            "sha256": "7fbdbae5a24372df103478f61592828a69e52841ddba9633c3fa09b2cb720bb8",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS metadata\n"
+          },
+          "check-wen.log": {
+            "sha256": "29fe7f380ad4ce34736c6c6220bb6ea09d5892bcdb4f4adabf8146086b1e3716",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS wen\n"
+          },
+          "check-stall.log": {
+            "sha256": "fd4cdf1171ba9b1216ff3e5317f55c80680cf1367b486e6c959a2219f6c1d2aa",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS stall\n"
+          },
+          "check-route.log": {
+            "sha256": "486b2a821330a7e7475a1d76cbede65369c62128630d65b9320e8e024c9290cb",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS route\n"
+          },
+          "check-double.log": {
+            "sha256": "a32ddfc1a7ad863a5ba5c7d7a2a6d5583636bf512e648fa3e11f03942b5baf34",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS double\n"
+          },
+          "check-clock.log": {
+            "sha256": "767535e3f1b9af73bf744aa6d688c67974b2e2af374b6f821c252bc26d41a391",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS clock\n"
+          },
+          "check-occupancy.log": {
+            "sha256": "db7d04bccac9997d90f55cefdee87a3716b01e83e53c10d00b6c7faae00d4bb7",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS occupancy\n"
+          },
+          "check-kill_p.log": {
+            "sha256": "9e099039e08703268c2bfe35e7b4ebffef56110864b56df4962ad2499b783dc0",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS kill_p\n"
+          },
+          "check-kill_r.log": {
+            "sha256": "2c374499af9e12c962d64fa17877daeb30c37caabdb32ee46748a696a2d8ad1d",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS kill_r\n"
+          },
+          "check-survivor.log": {
+            "sha256": "e0ef866fb23c25f7e09a48f47570b43e51ce82d1d335b90206730b02625893de",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS survivor\n"
+          },
+          "check-duplicate.log": {
+            "sha256": "a09274d1680767b2330f82c5a7e6696f36ca1f84505f8c3109f2118adc20e256",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS duplicate\n"
+          },
+          "check-missing.log": {
+            "sha256": "fbc75d21a9728505c625750da58136f031d24633b34e6f022cceafdafcf97039",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS missing\n"
+          },
+          "check-reset.log": {
+            "sha256": "ec914512269de20c7014508be1f24e00cd0d9c2e6049f60a685dac27b6d0524c",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS reset\n"
+          },
+          "check-perf_input.log": {
+            "sha256": "5f515c063286de189489055a38becaa1b05e1762ee98089091df34fbc967cc48",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS perf_input\n"
+          },
+          "check-perf_swap.log": {
+            "sha256": "ec3a01c29f5e283a213194a8a299a65fc80e3a3d5ac73a22ec6033a3fdb1ff57",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS perf_swap\n"
+          },
+          "check-perf_parent.log": {
+            "sha256": "ba34a1957307ddcc27a198fddcbcade5e0310ab7033b8654676cf71a131e97e5",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS perf_parent\n"
+          },
+          "check-perf_cross.log": {
+            "sha256": "6c19fb213a8aaa201945ecd4c801219568811b0db801f123adc8cf6a9766691d",
+            "text": "O2_PARENT_NEGATIVE_CHECK_PASS perf_cross\n"
+          }
+        },
+        "additional_coverage": {
+          "schema": 1,
+          "status": "DOT16_PARENT_FEATURE_1_COVERAGE_PASS",
+          "feature": 1,
+          "additional_accepted": 166,
+          "additional_responses": 138,
+          "additional_cancelled": 20,
+          "additional_reset_dropped": 8,
+          "mixed_ii1_intervals": 63,
+          "mixed_latency": 2,
+          "reset_state_cases": 8,
+          "decode_qualified": false,
+          "fullcore_qualified": false,
+          "performance_measured": false
+        },
+        "reset_implementation": [
+          {
+            "line": 302,
+            "text": "always @(posedge clock) begin"
+          },
+          {
+            "line": 383,
+            "text": "end // always @(posedge)"
+          },
+          {
+            "line": 385,
+            "text": "always @(posedge clock) begin"
+          },
+          {
+            "line": 388,
+            "text": "if (reset) begin"
+          },
+          {
+            "line": 584,
+            "text": "end // always @(posedge)"
+          }
+        ],
+        "generated_count": 57,
+        "all_generated_and_artifacts_verified": true,
+        "selected_generated": [
+          {
+            "path": "rtl/ClockGate.sv",
+            "sha256": "3a59c31230b388514521e3cb8c7e8140ada1b56ebbb0bb0dadf7962d6624dbc1",
+            "bytes": 223
+          },
+          {
+            "path": "rtl/VDotElastic.sv",
+            "sha256": "9fce30e92b9803b7e69126a789e7fbfbab3089f50d21d0bd42180f7ccc685849",
+            "bytes": 30674
+          },
+          {
+            "path": "rtl/VDotElasticParentTestTop.sv",
+            "sha256": "f378c463f2a7a11f22f742bbfc3ef7655ae6db85c59886c57b1381821a26bc25",
+            "bytes": 32296
+          }
+        ],
+        "artifacts": [
+          {
+            "path": "vectors.tsv",
+            "sha256": "901a7be30e62b81bcd3df55b20538a5ba9c879ba9c7c34f28b8c0421d8e6a327",
+            "bytes": 1132502
+          },
+          {
+            "path": "obj/VVDotElasticParentTestTop",
+            "sha256": "f231c1d899e88b38db20105f157145c1ff5c21f57308a953f692c773c4b8d3ed",
+            "bytes": 1317840
+          }
+        ]
+      }
+    }
+  ]
+}

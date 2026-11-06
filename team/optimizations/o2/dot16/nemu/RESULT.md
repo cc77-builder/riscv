@@ -55,3 +55,7 @@ python team/optimizations/o2/dot16/nemu/screen.py \
 入口只复制 manifest 指定的五个原始文件，不修改传入 NEMU 目录，也不需要新建完整主仓检出。它验证这些文件的字节身份，不冒充完整 NEMU Git/编译输入审计。
 
 当前暂不启动大构建。先结合现有 T17 上更强 GS32 标准 RVV 的真实周期，以及 dot16 三种独立原型的成本，决定是否继续新硬件接入。若继续，需要显式的新 reference 构建身份和真实 API/陷阱/整核验证；旧硬件上的参考库与 PASS 保持原适用范围。
+
+## 后续实际记录
+
+2026-11-06，独立的新NEMU feature0/feature1构建和真实reference API已完成。结果、适用范围、原始证据及可复现输入见 [API_VALIDATION_RESULT.md](API_VALIDATION_RESULT.md)。本页以上内容继续作为2026-11-05宿主helper筛查的历史快照，不将后续结果改写为当时已经完成。

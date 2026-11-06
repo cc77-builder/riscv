@@ -1,0 +1,956 @@
+{
+  "schema": 1,
+  "recorded_utc": "2026-11-06T01:32:07.054930+00:00",
+  "status": "DOT16_PRODUCTION_FU_BOTH_FEATURES_PASS",
+  "base_head": "c981529dc6e493fb7deee8429b9ce05fd197497b",
+  "patch_sha256": "5b5824bac200c2a775598686e550854f8276d5db007b72f4b7be92437b4d3416",
+  "qualification": {
+    "fu_feature_0": true,
+    "fu_feature_1": true,
+    "decode": false,
+    "parent": false,
+    "fullcore_difftest": false,
+    "application_performance": false,
+    "asic_ppa": false
+  },
+  "apply": {
+    "schema": 1,
+    "started": "2026-11-06T00:57:24.072849+00:00",
+    "head_before": "c981529dc6e493fb7deee8429b9ce05fd197497b",
+    "apply_succeeded": true,
+    "harness_sha256": {
+      "candidate.patch": "5b5824bac200c2a775598686e550854f8276d5db007b72f4b7be92437b4d3416",
+      "source-manifest.json": "fd556a8c498ab4a3928ecd1cae46f4ac7af4fa8b319d3741d31713f5c2fdba89",
+      "README.md": "fd89342524d269ac15315e3f7544bfb7139e19be7dae9cac1cec2f48686f4dea",
+      "review.json": "7bf9161aaeb7a4f4905be27b26d7d251a62d56f3ed0a11f8a4bd4aeda4f5c1fb",
+      "derive_fu_test.py": "e5f5daa27840e69ac873d59466587de95721de0ba154308c0875e8ef6b4f6196",
+      "run_fu.py": "4367cf44f009e952d0eb5af8140ae80a95c17ff7365267a659005b5cd439a1ed",
+      "VALIDATION_CONTRACT.md": "923c2211b0b266dfae322fabd0943adfa5e8f096a7cbaf2edf03bc30edb7199e"
+    },
+    "base_sha256": {
+      "src/main/scala/xiangshan/backend/decode/Instructions.scala": "cc26b735440af4af6d580c9625517bb7fa83f0df3a11dce81826afcd8049c868",
+      "src/main/scala/xiangshan/backend/decode/VecDecoder.scala": "2ae12df34733075ab01fb012cb3a889ca36bb1cdde5e53ce72c9460e784cb3df",
+      "src/main/scala/xiangshan/backend/decode/isa/bitfield/RiscvInst.scala": "b6597168a63a5345603e56ff4a2aeea72ee6c2f53c1d5a74aa7c457662471247",
+      "src/main/scala/xiangshan/backend/fu/wrapper/VDot.scala": "bf69510e71be20f14229e36908cb7a5f949b905748ef5a4794057e223e9de2ba",
+      "src/main/scala/xiangshan/backend/fu/wrapper/VDotElastic.scala": "93812d4776bdf390d60d4cd47f6fbc80debfff82d8a5e9d1a5676987365658db",
+      "src/main/scala/xiangshan/backend/fu/vector/VDotDatapath.scala": "161df70403fd131a3adf445230ed637dc7ad7c619d05c0a890aa8aa1791546d8",
+      "src/main/scala/xiangshan/backend/fu/wrapper/VDotO2.scala": "8a5e58c5d81b7c42fcd97452330e9477c2f52b5676aca47d45639ace726ebb59"
+    },
+    "dependency_audit_sha256": "63bc105beb1c89654ae7a81fa84cb07aea1019750d42f6720897355bf660dc78",
+    "commands": [
+      {
+        "args": [
+          "git",
+          "-C",
+          "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+          "apply",
+          "--check",
+          "--",
+          "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/dot16/rtl-integration/candidate.patch"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "args": [
+          "git",
+          "-C",
+          "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+          "apply",
+          "--",
+          "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/dot16/rtl-integration/candidate.patch"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "qualification": "DOT16_SIX_PATH_PATCH_APPLIED",
+    "after_sha256": {
+      "src/main/scala/xiangshan/backend/decode/Instructions.scala": "877b8d114a6e89ab847b6b8f9dbb2e9aa89a164d3eecff57795d259f98e9be7f",
+      "src/main/scala/xiangshan/backend/decode/VecDecoder.scala": "424be273935763ac17f23136a7428c2b06f4c8cfc84774cd1747e68bf9f0d011",
+      "src/main/scala/xiangshan/backend/decode/isa/bitfield/RiscvInst.scala": "4b051bc6d646eb619adfe51f8a3034684d8a87454fb0edbe5322d162a65ff90b",
+      "src/main/scala/xiangshan/backend/fu/wrapper/VDot.scala": "4e1707f0b76d8c66a09ab155bb052d829cca9b9db1ec5387847b6b08a5e7f8a3",
+      "src/main/scala/xiangshan/backend/fu/wrapper/VDot16Feature.scala": "abb51fd72dbf02201d5fd716ad3bc03a92a932df4452af46e269f09d88742dbe",
+      "src/main/scala/xiangshan/backend/fu/wrapper/VDotElastic.scala": "63911b937a526b97ddaa67e34526fd19bbd2fa2801eadfda10ae6c2fa4b9fe9e",
+      "src/main/scala/xiangshan/backend/fu/vector/VDotDatapath.scala": "161df70403fd131a3adf445230ed637dc7ad7c619d05c0a890aa8aa1791546d8",
+      "src/main/scala/xiangshan/backend/fu/wrapper/VDotO2.scala": "8a5e58c5d81b7c42fcd97452330e9477c2f52b5676aca47d45639ace726ebb59"
+    },
+    "tracked_changes": [
+      "src/main/scala/xiangshan/backend/decode/Instructions.scala",
+      "src/main/scala/xiangshan/backend/decode/VecDecoder.scala",
+      "src/main/scala/xiangshan/backend/decode/isa/bitfield/RiscvInst.scala",
+      "src/main/scala/xiangshan/backend/fu/wrapper/VDot.scala",
+      "src/main/scala/xiangshan/backend/fu/wrapper/VDotElastic.scala"
+    ],
+    "new_feature": [
+      "src/main/scala/xiangshan/backend/fu/wrapper/VDot16Feature.scala"
+    ],
+    "head_after": "c981529dc6e493fb7deee8429b9ce05fd197497b",
+    "finished": "2026-11-06T00:57:24.744154+00:00",
+    "protected_untracked_count": 35,
+    "state_path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/apply/state.json",
+    "state_sha256": "4b5ee8ff2ba64cd89d99b90514bd2d20e1866c31e4da9a1837e82d08102f2f92"
+  },
+  "dependency_post_audit": {
+    "file": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-dependencies-20261106-0047-pro2/post-audit-01.json",
+    "sha256": "63bc105beb1c89654ae7a81fa84cb07aea1019750d42f6720897355bf660dc78",
+    "pinned_dependencies": 126
+  },
+  "failed_attempt": {
+    "name": "flag0-01",
+    "classification": "VCS resource environment/cwd failure after Scala compilation; no FU simulation",
+    "controller": {
+      "schema": 1,
+      "started": "2026-11-06T00:59:42.043260+00:00",
+      "passed": false,
+      "feature": 0,
+      "cpu_affinity": [
+        1
+      ],
+      "budget_seconds": 900,
+      "repo": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+      "output": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/flag0-01",
+      "mill_output": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/mill-output",
+      "decode_qualified": false,
+      "parent_qualified": false,
+      "fullcore_qualified": false,
+      "ppa_qualified": false,
+      "head": "c981529dc6e493fb7deee8429b9ce05fd197497b",
+      "mill_launcher": {
+        "path": "/home/lizufan/riscv-tools/bin/mill",
+        "sha256": "86acc0b9869d09c8983ecfdbeb39682d47eb585e2b46d94148cc528fbb4b83b8"
+      },
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/flag0-01/source-snapshot/dot16_run_rtl.py",
+        "fu",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/flag0-01/campaign"
+      ],
+      "pid": 402,
+      "exit_code": 1,
+      "error": "RuntimeError: underlying O2 runner returned 1",
+      "finished": "2026-11-06T01:06:34.642487+00:00",
+      "process_returncode": 1,
+      "process_group_absent": true
+    },
+    "file_identity": {
+      "status.json": {
+        "bytes": 1321,
+        "sha256": "96cdc410bba6028c938475229cb90501b64fbe7c74f5ec8d000740a56d182e20"
+      },
+      "runner.log": {
+        "bytes": 8090,
+        "sha256": "5e6054838fb1e5e7de5a94ee40e8f085b26bee33f84b73c40314b0d5d1b34149"
+      },
+      "campaign/commands.json": {
+        "bytes": 3741,
+        "sha256": "98c0c105bdb018ea9624a6b8452b3ce37154b85da37fec96540790a3e7f08e18"
+      },
+      "campaign/elaboration.log": {
+        "bytes": 10732,
+        "sha256": "3b328e0fe5d235a52c111fb61d0ae4bba25701a3ecdd50c4fa0b9951f66bc28f"
+      },
+      "campaign/runner.status.json": {
+        "bytes": 146,
+        "sha256": "ab53beaa1176d38562252e897948f2d2046ab428d220fdf95e5ea5dcb852fa16"
+      }
+    },
+    "original_outputs_retained": true
+  },
+  "cache_recovery": {
+    "state": {
+      "schema": 1,
+      "at": "2026-11-06T01:18:05.181030+00:00",
+      "passed": true,
+      "qualification": "FU_CACHE_CWD_RECOVERY_PREFLIGHT_PASS",
+      "head": "c981529dc6e493fb7deee8429b9ce05fd197497b",
+      "cache": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2",
+      "cache_git_toplevel": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+      "cache_ignored": ".gitignore:219:/out/\tout/dot16-fu-20261106-pro2",
+      "submodule_status": "82079f4081bbc1f0221c790fbf8a29b1f23f48b8 ../../coupledL2 (v0.9-247-g82079f4)\n 62e4540c03c03aa947bdb67f4b6bf66f1a29c5d0 ../../difftest (62e4540c)\n e1bd4695ca7beb36a5ce7357e9527ad9e95b9ec1 ../../fudian (heads/pipeline)\n 90aaf5935206ff322e461c3d021436c20dd0ac85 ../../huancun (90aaf59)\n 614ceb4c5d39d32e6ae786693a35da429ea32c12 ../../openLLC (614ceb4)\n ed8c30e1ec8a9c9aa6b116ce54281235d00273fa ../../ready-to-run (nemu-ci-workloads-20250913~23)\n bea0af5d855a871699b907c1988961141bbf28e7 ../../rocket-chip (bea0af5d)\n 9464aee3c77b021a037f28aa1b3fe53c71b516f6 ../../src/main/resources/aia (heads/main)\n a8ca0c6564865ee69b564d431ecbc52074ba8060 ../../utility (a8ca0c6)\n cadd3c2f43096e253d61296b33ac697be8354e29 ../../yunsuan (cadd3c2)",
+      "controller_files": {
+        "run_fu.py": {
+          "before_sha256": "4367cf44f009e952d0eb5af8140ae80a95c17ff7365267a659005b5cd439a1ed",
+          "after_sha256": "db8fc437041c9b3580126ef8498085212313510ce96eb483f21a8c04e17479b3"
+        },
+        "VALIDATION_CONTRACT.md": {
+          "before_sha256": "923c2211b0b266dfae322fabd0943adfa5e8f096a7cbaf2edf03bc30edb7199e",
+          "after_sha256": "aa14f9c18152651f4ec5bfc3fe4765316d7e18f48e512411dfc557ab06b824a2"
+        }
+      },
+      "production_sha256": {
+        "src/main/scala/xiangshan/backend/decode/Instructions.scala": "877b8d114a6e89ab847b6b8f9dbb2e9aa89a164d3eecff57795d259f98e9be7f",
+        "src/main/scala/xiangshan/backend/decode/VecDecoder.scala": "424be273935763ac17f23136a7428c2b06f4c8cfc84774cd1747e68bf9f0d011",
+        "src/main/scala/xiangshan/backend/decode/isa/bitfield/RiscvInst.scala": "4b051bc6d646eb619adfe51f8a3034684d8a87454fb0edbe5322d162a65ff90b",
+        "src/main/scala/xiangshan/backend/fu/wrapper/VDot.scala": "4e1707f0b76d8c66a09ab155bb052d829cca9b9db1ec5387847b6b08a5e7f8a3",
+        "src/main/scala/xiangshan/backend/fu/wrapper/VDot16Feature.scala": "abb51fd72dbf02201d5fd716ad3bc03a92a932df4452af46e269f09d88742dbe",
+        "src/main/scala/xiangshan/backend/fu/wrapper/VDotElastic.scala": "63911b937a526b97ddaa67e34526fd19bbd2fa2801eadfda10ae6c2fa4b9fe9e",
+        "src/main/scala/xiangshan/backend/fu/vector/VDotDatapath.scala": "161df70403fd131a3adf445230ed637dc7ad7c619d05c0a890aa8aa1791546d8",
+        "src/main/scala/xiangshan/backend/fu/wrapper/VDotO2.scala": "8a5e58c5d81b7c42fcd97452330e9477c2f52b5676aca47d45639ace726ebb59"
+      },
+      "next_output": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/flag0-02",
+      "old_failed_output_untouched": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/flag0-01",
+      "old_failed_cache_untouched": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/mill-output"
+    },
+    "record": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/recovery-02/state.json",
+    "sha256": "312980fc7976d9644fb752e4e90fb55f2df03283b7db2fba5356ae3a71ee025b"
+  },
+  "runs": {
+    "flag0-02": {
+      "run_directory": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/flag0-02",
+      "observed_utc": "2026-11-06T01:27:44.532080+00:00",
+      "controller": {
+        "schema": 1,
+        "started": "2026-11-06T01:18:56.225488+00:00",
+        "passed": true,
+        "feature": 0,
+        "cpu_affinity": [
+          1
+        ],
+        "budget_seconds": 900,
+        "repo": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+        "output": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/flag0-02",
+        "mill_output": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2",
+        "decode_qualified": false,
+        "parent_qualified": false,
+        "fullcore_qualified": false,
+        "ppa_qualified": false,
+        "head": "c981529dc6e493fb7deee8429b9ce05fd197497b",
+        "mill_jvm_options": {
+          "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/flag0-02/source-snapshot/mill-jvm-opts",
+          "sha256": "7e266538e31b6d13c26e42792389207e6b9cdc2fbb9d95c2ba0e8db6bde83a98"
+        },
+        "mill_launcher": {
+          "path": "/home/lizufan/riscv-tools/bin/mill",
+          "sha256": "86acc0b9869d09c8983ecfdbeb39682d47eb585e2b46d94148cc528fbb4b83b8"
+        },
+        "command": [
+          "/usr/bin/python3",
+          "-B",
+          "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/flag0-02/source-snapshot/dot16_run_rtl.py",
+          "fu",
+          "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/flag0-02/campaign"
+        ],
+        "pid": 383,
+        "exit_code": 0,
+        "coverage": {
+          "extra": {
+            "schema": 1,
+            "new_op_rejected": 8,
+            "unknown_op_rejected": 8
+          },
+          "final": {
+            "vectors": "10022",
+            "cycles": "31595",
+            "accepted": "23327",
+            "responses": "22476",
+            "cancelled": "739",
+            "reset_dropped": "112",
+            "overlaps": "19856",
+            "stalls": "4932",
+            "full": "24901",
+            "partial_kill": "322",
+            "both_kill": "158",
+            "reset_cases": "8",
+            "ii1_intervals": "10021",
+            "latency2_probes": "1"
+          }
+        },
+        "qualification": "DOT16_FU_FEATURE_0_PASS",
+        "finished": "2026-11-06T01:27:04.067469+00:00",
+        "process_returncode": 0,
+        "process_group_absent": true
+      },
+      "positive_log": "DOT16_FU_DISABLED_EXTRA_PASS schema=1 new_op_rejected=8 unknown_op_rejected=8\nO2_FU_PASS vectors=10022 cycles=31595 accepted=23327 responses=22476 cancelled=739 reset_dropped=112 overlaps=19856 stalls=4932 full=24901 partial_kill=322 both_kill=158 reset_cases=8 ii1_intervals=10021 latency2_probes=1\n",
+      "inputs": {
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/dot16/rtl-integration/run_fu.py": "db8fc437041c9b3580126ef8498085212313510ce96eb483f21a8c04e17479b3",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/dot16/rtl-integration/derive_fu_test.py": "e5f5daa27840e69ac873d59466587de95721de0ba154308c0875e8ef6b4f6196",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/dot16/rtl-integration/source-manifest.json": "fd556a8c498ab4a3928ecd1cae46f4ac7af4fa8b319d3741d31713f5c2fdba89",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/dot16/rtl-integration/candidate.patch": "5b5824bac200c2a775598686e550854f8276d5db007b72f4b7be92437b4d3416",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/run_rtl.py": "125cd5a308fa0253c7bd0dbc6d9ea7593afea6e7a118e3b544bfd1dab0fd7922",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/fu/fu_test.cpp": "d4dc81c7c206f1d395856023b01a32e76bf1dbef957b9023f8debc0a549bc01d"
+      },
+      "test_derivation": {
+        "schema": 1,
+        "input_path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/flag0-02/source-snapshot/fu_test.cpp",
+        "input_sha256": "d4dc81c7c206f1d395856023b01a32e76bf1dbef957b9023f8debc0a549bc01d",
+        "output_path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/flag0-02/source-snapshot/dot16_fu_test.cpp",
+        "output_sha256": "6ecc823cfcca3b338ebde376c995a2da996282ce459f3a15ff7fea144bf0265c",
+        "edits": 3,
+        "original_reconstructed_byte_exact": true,
+        "source_modified": false,
+        "feature_required": "VDOT_DOT16=0",
+        "architectural_aliases_tested": false,
+        "parent_tested": false,
+        "old_observation_faults_retained": true
+      },
+      "runner_derivation": {
+        "edits": 5,
+        "original_reconstructed_byte_exact": true,
+        "original_sha256": "125cd5a308fa0253c7bd0dbc6d9ea7593afea6e7a118e3b544bfd1dab0fd7922",
+        "derived_sha256": "40cb98884bb60252c9a19455a7569d636cf8a7811bf23405bf645a6c098d276a"
+      },
+      "commands": [
+        {
+          "log": "git-version.log",
+          "start": "2026-11-06T01:18:56.345953+00:00",
+          "end": "2026-11-06T01:18:56.346844+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "java-version.log",
+          "start": "2026-11-06T01:18:56.347006+00:00",
+          "end": "2026-11-06T01:18:56.449085+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "mill-version.log",
+          "start": "2026-11-06T01:18:56.449289+00:00",
+          "end": "2026-11-06T01:18:57.202333+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "verilator-version.log",
+          "start": "2026-11-06T01:18:57.202557+00:00",
+          "end": "2026-11-06T01:18:57.282448+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "cxx-version.log",
+          "start": "2026-11-06T01:18:57.282682+00:00",
+          "end": "2026-11-06T01:18:57.287993+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "clang-version.log",
+          "start": "2026-11-06T01:18:57.288224+00:00",
+          "end": "2026-11-06T01:18:57.497544+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "make-version.log",
+          "start": "2026-11-06T01:18:57.497759+00:00",
+          "end": "2026-11-06T01:18:57.499471+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "firtool-version.log",
+          "start": "2026-11-06T01:18:57.499578+00:00",
+          "end": "2026-11-06T01:18:57.515833+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "source-commit.log",
+          "start": "2026-11-06T01:18:57.516082+00:00",
+          "end": "2026-11-06T01:18:57.517138+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "source-status.log",
+          "start": "2026-11-06T01:18:57.517247+00:00",
+          "end": "2026-11-06T01:19:01.714008+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "working-tree.patch",
+          "start": "2026-11-06T01:19:01.714328+00:00",
+          "end": "2026-11-06T01:19:02.394254+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "vectors.log",
+          "start": "2026-11-06T01:19:08.186547+00:00",
+          "end": "2026-11-06T01:19:08.240471+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "negative-gate-tests.log",
+          "start": "2026-11-06T01:19:08.240703+00:00",
+          "end": "2026-11-06T01:19:08.269270+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "elaboration.log",
+          "start": "2026-11-06T01:19:08.269482+00:00",
+          "end": "2026-11-06T01:26:52.268124+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "lint.log",
+          "start": "2026-11-06T01:26:52.269915+00:00",
+          "end": "2026-11-06T01:26:52.333096+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "verilator.log",
+          "start": "2026-11-06T01:26:52.333406+00:00",
+          "end": "2026-11-06T01:26:58.599828+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "result.log",
+          "start": "2026-11-06T01:26:58.600159+00:00",
+          "end": "2026-11-06T01:26:58.632069+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "inject-identity.log",
+          "start": "2026-11-06T01:26:58.632466+00:00",
+          "end": "2026-11-06T01:26:58.644445+00:00",
+          "exit_code": 1
+        },
+        {
+          "log": "check-identity.log",
+          "start": "2026-11-06T01:26:58.644779+00:00",
+          "end": "2026-11-06T01:26:58.662436+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "inject-wen.log",
+          "start": "2026-11-06T01:26:58.662784+00:00",
+          "end": "2026-11-06T01:26:58.675033+00:00",
+          "exit_code": 1
+        },
+        {
+          "log": "check-wen.log",
+          "start": "2026-11-06T01:26:58.675372+00:00",
+          "end": "2026-11-06T01:26:58.692520+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "inject-high.log",
+          "start": "2026-11-06T01:26:58.692835+00:00",
+          "end": "2026-11-06T01:26:58.704402+00:00",
+          "exit_code": 1
+        },
+        {
+          "log": "check-high.log",
+          "start": "2026-11-06T01:26:58.704701+00:00",
+          "end": "2026-11-06T01:26:58.720373+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "inject-cancel.log",
+          "start": "2026-11-06T01:26:58.720720+00:00",
+          "end": "2026-11-06T01:26:58.739579+00:00",
+          "exit_code": 1
+        },
+        {
+          "log": "check-cancel.log",
+          "start": "2026-11-06T01:26:58.739913+00:00",
+          "end": "2026-11-06T01:26:58.756227+00:00",
+          "exit_code": 0
+        }
+      ],
+      "file_identity": {
+        "status.json": {
+          "bytes": 2071,
+          "sha256": "ce754ed4351dae06120121a64f42a8d1e5f99546409bd5d838b06dcd2f1dd069"
+        },
+        "inputs.json": {
+          "bytes": 1148,
+          "sha256": "0a9f349920fdcfe333fa0782dc5b73336e2f361aefe59b340fbfeeb02d7e1289"
+        },
+        "test-derivation.json": {
+          "bytes": 727,
+          "sha256": "9bb65f3a8605cd02b91f854a5c3fe1cf4dd2d137ae18754029ede81d1156f422"
+        },
+        "runner-derivation.json": {
+          "bytes": 239,
+          "sha256": "26fe367d297eaa4ab5fd556a702ab246d673f87ef340999c6643b78aef0875fe"
+        },
+        "campaign/runner.status.json": {
+          "bytes": 145,
+          "sha256": "ef3fb51d07be2e7af5f89168088398187516f65cb3a74efeac028f3faadbb72e"
+        },
+        "campaign/commands.json": {
+          "bytes": 10269,
+          "sha256": "52d32ff6c37a34dab036ca5f9235f793d3285a042620a4b6b6ee5f9233b6aeb6"
+        },
+        "campaign/result.log": {
+          "bytes": 300,
+          "sha256": "a24135b76fb0398d8ccae9295bc9898c6661170147dd29dc5fc1b5c418782d5e"
+        },
+        "campaign/source-after.status": {
+          "bytes": 34,
+          "sha256": "78807531b9b32a8ad448a4311d42d998ba69a15d9f0574aee86cda0b8008aac1"
+        },
+        "campaign/source-commit.log": {
+          "bytes": 41,
+          "sha256": "4f0687ecf8e1dc28db6a1aaeb503892434c804b676f2f6dceec2f8f801f2fe26"
+        },
+        "campaign/artifacts.json": {
+          "bytes": 294,
+          "sha256": "ced1697a1f298a4b9e0a3c24926feaadea77c15f8e22721c97621bd4a5368fc5"
+        },
+        "campaign/generated-files.json": {
+          "bytes": 585,
+          "sha256": "a480171be9dda669533df0ed1eabc39faa96fead3c16712306c21fa769633c3d"
+        },
+        "campaign/check-identity.log": {
+          "bytes": 34,
+          "sha256": "40ec6e8b357ab8541eb2f6b1be89e0a267df1cdb7d6cbcdc7b00477826d6dff2"
+        },
+        "campaign/check-wen.log": {
+          "bytes": 29,
+          "sha256": "e98f867734db51d000ae2d249e395b0c368bed183fd6459a2d73c5946d87b280"
+        },
+        "campaign/check-high.log": {
+          "bytes": 30,
+          "sha256": "56890cc2808a648c7e497794817d55506a5dc1a7d5edde735f488d78a40ececc"
+        },
+        "campaign/check-cancel.log": {
+          "bytes": 32,
+          "sha256": "3551b9703d1e2e7f5cd89ce179f263c0a63b368a019a57c622ad4ebeb2d06cd5"
+        },
+        "campaign/source.json": {
+          "bytes": 54424,
+          "sha256": "80637d38348fbecd928f6442fd0c69fab763a918ac8da8642a5a3667dacdc9c2",
+          "entries": 433
+        },
+        "campaign/dependencies.json": {
+          "bytes": 24018,
+          "sha256": "de4cf9023b946028d6c50594e5faa2ef3d59d4d6031859e2ae84622819cf47ba",
+          "entries": 126
+        },
+        "runner.log": {
+          "bytes": 5828,
+          "sha256": "043a0c68e416f70864180fc5f12131c4b3b1c9c66f58e85f4eb6ec5640cf4bce"
+        },
+        "campaign/elaboration.log": {
+          "bytes": 10216,
+          "sha256": "cbf9d0dbde85931990891b37f9a022adb5bdf16be34898c980acd6f54f339066"
+        },
+        "campaign/verilator.log": {
+          "bytes": 4717,
+          "sha256": "eb2a156f7322fd5aa4efb41f7d49bdc1f605a216bdca14eb5e9eedea9cbecc38"
+        }
+      },
+      "generated_rtl": [
+        {
+          "path": "rtl/VDotElastic.sv",
+          "sha256": "f28ac5bc52d2e0736b3733f8a69756daf860480b72812472abad0bc1306eba2d",
+          "bytes": 13863
+        },
+        {
+          "path": "rtl/VDotElasticFuTestTop.sv",
+          "sha256": "47235cf3f7f7b80f62037c03fbddfc76d1f79ebc7cdb2652b6fe9441390510b9",
+          "bytes": 5995
+        },
+        {
+          "path": "rtl/VDotProducts.sv",
+          "sha256": "0c1e566dd820f80382c64b98a74882ff400e5cb63cd511bcd19831759597178a",
+          "bytes": 1812
+        },
+        {
+          "path": "rtl/VDotReduce.sv",
+          "sha256": "ed09c5ac8ca7a0a910ac8d51000ef1de8f01dadca4bec544467d1678ebeaaf85",
+          "bytes": 1709
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "vectors.tsv",
+          "sha256": "901a7be30e62b81bcd3df55b20538a5ba9c879ba9c7c34f28b8c0421d8e6a327",
+          "bytes": 1132502
+        },
+        {
+          "path": "obj/VVDotElasticFuTestTop",
+          "sha256": "e9aefc0f0406b79b8239bee34fb6b896f3f2f225b8e9632a7e6a281a978f43c9",
+          "bytes": 376728
+        }
+      ],
+      "artifact_bytes_independently_verified": true
+    },
+    "flag1-01": {
+      "run_directory": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/flag1-01",
+      "observed_utc": "2026-11-06T01:29:36.510317+00:00",
+      "controller": {
+        "schema": 1,
+        "started": "2026-11-06T01:28:04.413819+00:00",
+        "passed": true,
+        "feature": 1,
+        "cpu_affinity": [
+          1
+        ],
+        "budget_seconds": 900,
+        "repo": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+        "output": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/flag1-01",
+        "mill_output": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2",
+        "decode_qualified": false,
+        "parent_qualified": false,
+        "fullcore_qualified": false,
+        "ppa_qualified": false,
+        "head": "c981529dc6e493fb7deee8429b9ce05fd197497b",
+        "mill_jvm_options": {
+          "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/flag1-01/source-snapshot/mill-jvm-opts",
+          "sha256": "7e266538e31b6d13c26e42792389207e6b9cdc2fbb9d95c2ba0e8db6bde83a98"
+        },
+        "mill_launcher": {
+          "path": "/home/lizufan/riscv-tools/bin/mill",
+          "sha256": "86acc0b9869d09c8983ecfdbeb39682d47eb585e2b46d94148cc528fbb4b83b8"
+        },
+        "command": [
+          "/usr/bin/python3",
+          "-B",
+          "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/flag1-01/source-snapshot/dot16_run_rtl.py",
+          "fu",
+          "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/flag1-01/campaign"
+        ],
+        "pid": 5801,
+        "exit_code": 0,
+        "coverage": {
+          "extra": {
+            "schema": 1,
+            "paired_vectors": 10022,
+            "directed_inputs": 40,
+            "legal_compared": 20124,
+            "illegal_compared": 40,
+            "mixed_ii1_intervals": 20043,
+            "first_latency": 2,
+            "mixed_cancel_pairs": 96,
+            "additional_reset_cases": 16
+          },
+          "final": {
+            "vectors": "10022",
+            "cycles": "53205",
+            "accepted": "43699",
+            "responses": "42736",
+            "cancelled": "835",
+            "reset_dropped": "128",
+            "overlaps": "39898",
+            "stalls": "5532",
+            "full": "45340",
+            "partial_kill": "386",
+            "both_kill": "174",
+            "reset_cases": "24",
+            "ii1_intervals": "10021",
+            "latency2_probes": "1"
+          }
+        },
+        "qualification": "DOT16_FU_FEATURE_1_PASS",
+        "finished": "2026-11-06T01:28:34.075840+00:00",
+        "process_returncode": 0,
+        "process_group_absent": true
+      },
+      "positive_log": "DOT16_FU_EXTRA_PASS schema=1 paired_vectors=10022 directed_inputs=40 legal_compared=20124 illegal_compared=40 mixed_ii1_intervals=20043 first_latency=2 mixed_cancel_pairs=96 additional_reset_cases=16\nO2_FU_PASS vectors=10022 cycles=53205 accepted=43699 responses=42736 cancelled=835 reset_dropped=128 overlaps=39898 stalls=5532 full=45340 partial_kill=386 both_kill=174 reset_cases=24 ii1_intervals=10021 latency2_probes=1\n",
+      "inputs": {
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/dot16/rtl-integration/run_fu.py": "db8fc437041c9b3580126ef8498085212313510ce96eb483f21a8c04e17479b3",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/dot16/rtl-integration/derive_fu_test.py": "e5f5daa27840e69ac873d59466587de95721de0ba154308c0875e8ef6b4f6196",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/dot16/rtl-integration/source-manifest.json": "fd556a8c498ab4a3928ecd1cae46f4ac7af4fa8b319d3741d31713f5c2fdba89",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/dot16/rtl-integration/candidate.patch": "5b5824bac200c2a775598686e550854f8276d5db007b72f4b7be92437b4d3416",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/run_rtl.py": "125cd5a308fa0253c7bd0dbc6d9ea7593afea6e7a118e3b544bfd1dab0fd7922",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/fu/fu_test.cpp": "d4dc81c7c206f1d395856023b01a32e76bf1dbef957b9023f8debc0a549bc01d"
+      },
+      "test_derivation": {
+        "schema": 1,
+        "input_path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/flag1-01/source-snapshot/fu_test.cpp",
+        "input_sha256": "d4dc81c7c206f1d395856023b01a32e76bf1dbef957b9023f8debc0a549bc01d",
+        "output_path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/flag1-01/source-snapshot/dot16_fu_test.cpp",
+        "output_sha256": "0c6914a6d896dcb7e0c38c6ac826c295adc78d4655bfc9d043feec56c9c2dbbb",
+        "edits": 4,
+        "original_reconstructed_byte_exact": true,
+        "source_modified": false,
+        "feature_required": "VDOT_DOT16=1",
+        "architectural_aliases_tested": false,
+        "parent_tested": false,
+        "old_observation_faults_retained": true
+      },
+      "runner_derivation": {
+        "edits": 5,
+        "original_reconstructed_byte_exact": true,
+        "original_sha256": "125cd5a308fa0253c7bd0dbc6d9ea7593afea6e7a118e3b544bfd1dab0fd7922",
+        "derived_sha256": "6ee95c0fdffb7f7cd3286cf13bba4ad53751873d6e4b556d67f97ff006654d19"
+      },
+      "commands": [
+        {
+          "log": "git-version.log",
+          "start": "2026-11-06T01:28:04.501551+00:00",
+          "end": "2026-11-06T01:28:04.502392+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "java-version.log",
+          "start": "2026-11-06T01:28:04.502523+00:00",
+          "end": "2026-11-06T01:28:04.548673+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "mill-version.log",
+          "start": "2026-11-06T01:28:04.548881+00:00",
+          "end": "2026-11-06T01:28:05.217298+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "verilator-version.log",
+          "start": "2026-11-06T01:28:05.217563+00:00",
+          "end": "2026-11-06T01:28:05.249789+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "cxx-version.log",
+          "start": "2026-11-06T01:28:05.250042+00:00",
+          "end": "2026-11-06T01:28:05.251074+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "clang-version.log",
+          "start": "2026-11-06T01:28:05.251510+00:00",
+          "end": "2026-11-06T01:28:05.265613+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "make-version.log",
+          "start": "2026-11-06T01:28:05.265845+00:00",
+          "end": "2026-11-06T01:28:05.266790+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "firtool-version.log",
+          "start": "2026-11-06T01:28:05.266934+00:00",
+          "end": "2026-11-06T01:28:05.267961+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "source-commit.log",
+          "start": "2026-11-06T01:28:05.268346+00:00",
+          "end": "2026-11-06T01:28:05.269238+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "source-status.log",
+          "start": "2026-11-06T01:28:05.269352+00:00",
+          "end": "2026-11-06T01:28:05.988876+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "working-tree.patch",
+          "start": "2026-11-06T01:28:05.989120+00:00",
+          "end": "2026-11-06T01:28:06.636443+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "vectors.log",
+          "start": "2026-11-06T01:28:12.065296+00:00",
+          "end": "2026-11-06T01:28:12.124467+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "negative-gate-tests.log",
+          "start": "2026-11-06T01:28:12.124755+00:00",
+          "end": "2026-11-06T01:28:12.154917+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "elaboration.log",
+          "start": "2026-11-06T01:28:12.155246+00:00",
+          "end": "2026-11-06T01:28:23.094163+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "lint.log",
+          "start": "2026-11-06T01:28:23.095080+00:00",
+          "end": "2026-11-06T01:28:23.141448+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "verilator.log",
+          "start": "2026-11-06T01:28:23.141762+00:00",
+          "end": "2026-11-06T01:28:28.523451+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "result.log",
+          "start": "2026-11-06T01:28:28.523758+00:00",
+          "end": "2026-11-06T01:28:28.570135+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "inject-identity.log",
+          "start": "2026-11-06T01:28:28.570492+00:00",
+          "end": "2026-11-06T01:28:28.582536+00:00",
+          "exit_code": 1
+        },
+        {
+          "log": "check-identity.log",
+          "start": "2026-11-06T01:28:28.582802+00:00",
+          "end": "2026-11-06T01:28:28.599227+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "inject-wen.log",
+          "start": "2026-11-06T01:28:28.599519+00:00",
+          "end": "2026-11-06T01:28:28.611241+00:00",
+          "exit_code": 1
+        },
+        {
+          "log": "check-wen.log",
+          "start": "2026-11-06T01:28:28.611523+00:00",
+          "end": "2026-11-06T01:28:28.628585+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "inject-high.log",
+          "start": "2026-11-06T01:28:28.628906+00:00",
+          "end": "2026-11-06T01:28:28.640660+00:00",
+          "exit_code": 1
+        },
+        {
+          "log": "check-high.log",
+          "start": "2026-11-06T01:28:28.640971+00:00",
+          "end": "2026-11-06T01:28:28.657614+00:00",
+          "exit_code": 0
+        },
+        {
+          "log": "inject-cancel.log",
+          "start": "2026-11-06T01:28:28.658027+00:00",
+          "end": "2026-11-06T01:28:28.677135+00:00",
+          "exit_code": 1
+        },
+        {
+          "log": "check-cancel.log",
+          "start": "2026-11-06T01:28:28.677647+00:00",
+          "end": "2026-11-06T01:28:28.695828+00:00",
+          "exit_code": 0
+        }
+      ],
+      "file_identity": {
+        "status.json": {
+          "bytes": 2264,
+          "sha256": "3dd0b4a052e45c36b37512714442568b778a14db5944a6b2d205f018e0727156"
+        },
+        "inputs.json": {
+          "bytes": 1148,
+          "sha256": "0a9f349920fdcfe333fa0782dc5b73336e2f361aefe59b340fbfeeb02d7e1289"
+        },
+        "test-derivation.json": {
+          "bytes": 727,
+          "sha256": "79d550e872368dddbefa5a6e742010d1d119c8bad70599c10a0cc15d86c60493"
+        },
+        "runner-derivation.json": {
+          "bytes": 239,
+          "sha256": "7c2d453c696cfe6a93b26e49a3760270217ca0552019e1d9705e647bbdef1ef8"
+        },
+        "campaign/runner.status.json": {
+          "bytes": 145,
+          "sha256": "bbaf29f3e63186bd675692b0126ad45aaca0f651bed5bab585f714e830cdf4b8"
+        },
+        "campaign/commands.json": {
+          "bytes": 10269,
+          "sha256": "6bb94ce0161595f4ee94757ac3f52c75bb6c2874ca27d9e0bbff68a91b318fff"
+        },
+        "campaign/result.log": {
+          "bytes": 423,
+          "sha256": "90bde2c7d07ce7e0f7add924f2672feab70c37923ffebc334817ccfb20b133a5"
+        },
+        "campaign/source-after.status": {
+          "bytes": 34,
+          "sha256": "78807531b9b32a8ad448a4311d42d998ba69a15d9f0574aee86cda0b8008aac1"
+        },
+        "campaign/source-commit.log": {
+          "bytes": 41,
+          "sha256": "4f0687ecf8e1dc28db6a1aaeb503892434c804b676f2f6dceec2f8f801f2fe26"
+        },
+        "campaign/artifacts.json": {
+          "bytes": 294,
+          "sha256": "f75751a1a04cffbb77e637a56700234872a22ddf3581276d3c5469d5d05d6bf8"
+        },
+        "campaign/generated-files.json": {
+          "bytes": 585,
+          "sha256": "5ff23121e92970eb113acda2b6649c5264be767140ef383a7630c3c18d2e60bf"
+        },
+        "campaign/check-identity.log": {
+          "bytes": 34,
+          "sha256": "40ec6e8b357ab8541eb2f6b1be89e0a267df1cdb7d6cbcdc7b00477826d6dff2"
+        },
+        "campaign/check-wen.log": {
+          "bytes": 29,
+          "sha256": "e98f867734db51d000ae2d249e395b0c368bed183fd6459a2d73c5946d87b280"
+        },
+        "campaign/check-high.log": {
+          "bytes": 30,
+          "sha256": "56890cc2808a648c7e497794817d55506a5dc1a7d5edde735f488d78a40ececc"
+        },
+        "campaign/check-cancel.log": {
+          "bytes": 32,
+          "sha256": "3551b9703d1e2e7f5cd89ce179f263c0a63b368a019a57c622ad4ebeb2d06cd5"
+        },
+        "campaign/source.json": {
+          "bytes": 54424,
+          "sha256": "80637d38348fbecd928f6442fd0c69fab763a918ac8da8642a5a3667dacdc9c2",
+          "entries": 433
+        },
+        "campaign/dependencies.json": {
+          "bytes": 24018,
+          "sha256": "de4cf9023b946028d6c50594e5faa2ef3d59d4d6031859e2ae84622819cf47ba",
+          "entries": 126
+        },
+        "runner.log": {
+          "bytes": 5829,
+          "sha256": "28c1ff4eea64c3a5115715518d3ab7411950a05d6e6840502e42c447ad057cbe"
+        },
+        "campaign/elaboration.log": {
+          "bytes": 602,
+          "sha256": "4e7968f5ce3f159c14ae621a21134355446733feb5fd7e2f3bbee71f1a4f5004"
+        },
+        "campaign/verilator.log": {
+          "bytes": 4717,
+          "sha256": "6dbbe5b6b7370299adb134cf05c1ad580ac1c015223315eea93247ad62d94480"
+        }
+      },
+      "generated_rtl": [
+        {
+          "path": "rtl/VDotElastic.sv",
+          "sha256": "c15778eb5c7089af40422b7002fde00d552dd7274b88cecb5f132d15e984ed1e",
+          "bytes": 16328
+        },
+        {
+          "path": "rtl/VDotElasticFuTestTop.sv",
+          "sha256": "47235cf3f7f7b80f62037c03fbddfc76d1f79ebc7cdb2652b6fe9441390510b9",
+          "bytes": 5995
+        },
+        {
+          "path": "rtl/VDotProducts.sv",
+          "sha256": "0c1e566dd820f80382c64b98a74882ff400e5cb63cd511bcd19831759597178a",
+          "bytes": 1812
+        },
+        {
+          "path": "rtl/VDotReduce.sv",
+          "sha256": "ed09c5ac8ca7a0a910ac8d51000ef1de8f01dadca4bec544467d1678ebeaaf85",
+          "bytes": 1709
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "vectors.tsv",
+          "sha256": "901a7be30e62b81bcd3df55b20538a5ba9c879ba9c7c34f28b8c0421d8e6a327",
+          "bytes": 1132502
+        },
+        {
+          "path": "obj/VVDotElasticFuTestTop",
+          "sha256": "254bbd04909fbf6b730bd7c833a95d264a14dad899eba17a02cf5e4ec9621b01",
+          "bytes": 385272
+        }
+      ],
+      "artifact_bytes_independently_verified": true
+    }
+  },
+  "preserved_originals": {
+    "review_json": "7bf9161aaeb7a4f4905be27b26d7d251a62d56f3ed0a11f8a4bd4aeda4f5c1fb",
+    "old_fu_cpp": "d4dc81c7c206f1d395856023b01a32e76bf1dbef957b9023f8debc0a549bc01d",
+    "old_o2_runner": "125cd5a308fa0253c7bd0dbc6d9ea7593afea6e7a118e3b544bfd1dab0fd7922"
+  },
+  "public_primary_sources": [
+    {
+      "scope": "Mill 0.12.3 process working directory",
+      "url": "https://github.com/com-lihaoyi/mill/blob/a6b3b7225a989ff8e8aa548f1af74278dcaac18f/runner/client/src/mill/runner/client/MillProcessLauncher.java"
+    },
+    {
+      "scope": "VcsVersion 0.4.0 mixed explicit/default cwd Git calls",
+      "url": "https://github.com/lefou/mill-vcs-version/blob/55c7a025659895c00825d9cb7ea81f3f6d9031b5/core/src/de/tobiasroeser/mill/vcs/version/VcsVersion.scala"
+    }
+  ]
+}

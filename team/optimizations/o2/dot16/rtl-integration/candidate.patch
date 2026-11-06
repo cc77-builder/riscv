@@ -1,0 +1,198 @@
+diff --git a/src/main/scala/xiangshan/backend/decode/Instructions.scala b/src/main/scala/xiangshan/backend/decode/Instructions.scala
+--- a/src/main/scala/xiangshan/backend/decode/Instructions.scala
++++ b/src/main/scala/xiangshan/backend/decode/Instructions.scala
+@@ -6,6 +6,8 @@
+   // vdot-s8x8-r32-v0.1: MATCH=0x0200000b, MASK=0xfe00707f.
+   // Keep custom-0 neighbours on their existing/default decode paths.
+   def VDOT_VV = BitPat("b0000001??????????000?????0001011")
++  // Separate opt-in dot16 encoding; the decode table controls availability.
++  def VDOT16_VV = BitPat("b0000111??????????000?????0001011")
+ }
+ 
+ object Zvbb {
+diff --git a/src/main/scala/xiangshan/backend/decode/VecDecoder.scala b/src/main/scala/xiangshan/backend/decode/VecDecoder.scala
+--- a/src/main/scala/xiangshan/backend/decode/VecDecoder.scala
++++ b/src/main/scala/xiangshan/backend/decode/VecDecoder.scala
+@@ -13,7 +13,7 @@
+ import yunsuan.{VfpuType, VipuType, VimacType, VpermType, VialuFixType, VfaluType, VfmaType, VfdivType, VfcvtType, VidivType}
+ import xiangshan.backend.decode.Zvbb._
+ import xiangshan.backend.decode.VDotInstructions._
+-import xiangshan.backend.fu.wrapper.VDotOpType
++import xiangshan.backend.fu.wrapper.{VDot16Feature, VDotOpType}
+ 
+ abstract class VecDecode extends XSDecodeBase {
+   def generate() : List[BitPat]
+@@ -187,10 +187,16 @@
+ }
+ 
+ object VecDecoder extends DecodeConstants {
+-  val customVdot: Array[(BitPat, XSDecodeBase)] = Array(
+-    VDOT_VV -> OPIVV(FuType.vdot, VDotOpType.s8x8, T, F, F,
+-      uopSplitType = UopSplitType.VEC_VDOT, src3 = SrcType.no),
+-  )
++  val customVdot: Array[(BitPat, XSDecodeBase)] = {
++    val dot8 = Array[(BitPat, XSDecodeBase)](
++      VDOT_VV -> OPIVV(FuType.vdot, VDotOpType.s8x8, T, F, F,
++        uopSplitType = UopSplitType.VEC_VDOT, src3 = SrcType.no),
++    )
++    if (VDot16Feature.enabled) dot8 ++ Array[(BitPat, XSDecodeBase)](
++      VDOT16_VV -> OPIVV(FuType.vdot, VDotOpType.s8x16, T, F, F,
++        uopSplitType = UopSplitType.VEC_VDOT, src3 = SrcType.no),
++    ) else dot8
++  }
+ 
+   val opivv: Array[(BitPat, XSDecodeBase)] = Array(
+     VADD_VV         -> OPIVV(FuType.vialuF, VialuFixType.vadd_vv, T, F, F),
+diff --git a/src/main/scala/xiangshan/backend/decode/isa/bitfield/RiscvInst.scala b/src/main/scala/xiangshan/backend/decode/isa/bitfield/RiscvInst.scala
+--- a/src/main/scala/xiangshan/backend/decode/isa/bitfield/RiscvInst.scala
++++ b/src/main/scala/xiangshan/backend/decode/isa/bitfield/RiscvInst.scala
+@@ -90,7 +90,14 @@
+       (this.WIDTH === 0.U || this.WIDTH(2) === 1.B)
+   }
+ 
+-  def isVDot = xiangshan.backend.decode.VDotInstructions.VDOT_VV === this.ALL
++  def isVDot = {
++    if (xiangshan.backend.fu.wrapper.VDot16Feature.enabled) {
++      (xiangshan.backend.decode.VDotInstructions.VDOT_VV === this.ALL) ||
++        (xiangshan.backend.decode.VDotInstructions.VDOT16_VV === this.ALL)
++    } else {
++      xiangshan.backend.decode.VDotInstructions.VDOT_VV === this.ALL
++    }
++  }
+ 
+   def isVecArith = {
+     this.OPCODE5Bit === xiangshan.backend.decode.isa.bitfield.OPCODE5Bit.OP_V || isVDot
+diff --git a/src/main/scala/xiangshan/backend/fu/wrapper/VDot.scala b/src/main/scala/xiangshan/backend/fu/wrapper/VDot.scala
+--- a/src/main/scala/xiangshan/backend/fu/wrapper/VDot.scala
++++ b/src/main/scala/xiangshan/backend/fu/wrapper/VDot.scala
+@@ -11,6 +11,7 @@
+ object VDotOpType {
+   // Internal FU operation, separate from the custom instruction encoding.
+   def s8x8: UInt = 0.U(FuOpTypeWidth.W)
++  def s8x16: UInt = 1.U(FuOpTypeWidth.W)
+ }
+ 
+ /** Single-outstanding vdot-s8x8-r32-v0.1 functional unit.
+@@ -19,6 +20,7 @@
+   * variant captures products at E0 and responds at E2. Redirect kills precede response.
+   */
+ class VDot(cfg: FuConfig)(implicit p: Parameters) extends VecNonPipedFuncUnit(cfg) {
++  require(!VDot16Feature.enabled, "VDOT_DOT16=1 requires VDotElastic")
+   require(VLEN == 128, "VDot requires VLEN=128")
+   require(cfg.fuType == FuType.vdot && !cfg.piped && cfg.latency.latencyVal.isEmpty)
+   require(cfg.destDataBits == 128 && cfg.vconfigWakeUp && cfg.maskWakeUp)
+diff --git a/src/main/scala/xiangshan/backend/fu/wrapper/VDot16Feature.scala b/src/main/scala/xiangshan/backend/fu/wrapper/VDot16Feature.scala
+new file mode 100644
+--- /dev/null
++++ b/src/main/scala/xiangshan/backend/fu/wrapper/VDot16Feature.scala
+@@ -0,0 +1,19 @@
++package xiangshan.backend.fu.wrapper
++
++/** An opt-in ISA candidate, selected only when elaborating an elastic build.
++  * The same accessor gates instruction decode, vector classification and FU.
++  * No cached environment value or run-time enable is part of the hardware.
++  */
++object VDot16Feature {
++  def enabled: Boolean = {
++    val selected = sys.env.get("VDOT_DOT16") match {
++      case None | Some("0") => false
++      case Some("1") => true
++      case _ => throw new IllegalArgumentException("VDOT_DOT16 must be 0 or 1")
++    }
++    if (selected) {
++      require(VDotO2.enabled, "VDOT_DOT16=1 requires VDOT_O2_ELASTIC=1")
++    }
++    selected
++  }
++}
+diff --git a/src/main/scala/xiangshan/backend/fu/wrapper/VDotElastic.scala b/src/main/scala/xiangshan/backend/fu/wrapper/VDotElastic.scala
+--- a/src/main/scala/xiangshan/backend/fu/wrapper/VDotElastic.scala
++++ b/src/main/scala/xiangshan/backend/fu/wrapper/VDotElastic.scala
+@@ -35,9 +35,12 @@
+ 
+   val pipelineStatus = IO(Output(new VDotElasticStatus))
+ 
++  // Elaboration-only: disabled builds retain the original eight-product path.
++  private val dot16Enabled = VDot16Feature.enabled
++
+   private val pValid = RegInit(false.B)
+   private val rValid = RegInit(false.B)
+-  private val pProducts = Reg(Vec(8, SInt(16.W)))
++  private val pProducts = Reg(Vec(if (dot16Enabled) 16 else 8, SInt(16.W)))
+   private val pCtrl = Reg(chiselTypeOf(io.out.bits.ctrl))
+   private val pPerf = Reg(chiselTypeOf(io.out.bits.perfDebugInfo))
+   // H1 stores only the architectural low word; the public result stays 128 bits.
+@@ -54,8 +57,15 @@
+   pipelineStatus.rValid := rValid
+   pipelineStatus.occupancy := pValid.asUInt +& rValid.asUInt
+ 
+-  private val illegalInput = vill || vsew =/= VSew.e8 || vlmul =/= VLmul.m1 ||
+-    !vm || vstart =/= 0.U || vl =/= 8.U || fuOpType =/= VDotOpType.s8x8
++  private val isDot16 = if (dot16Enabled) fuOpType === VDotOpType.s8x16 else false.B
++  private val illegalInput = if (dot16Enabled) {
++    vill || vsew =/= VSew.e8 || vlmul =/= VLmul.m1 || !vm || vstart =/= 0.U ||
++      Mux(isDot16, vl =/= 16.U, vl =/= 8.U) ||
++      (fuOpType =/= VDotOpType.s8x8 && fuOpType =/= VDotOpType.s8x16)
++  } else {
++    vill || vsew =/= VSew.e8 || vlmul =/= VLmul.m1 ||
++      !vm || vstart =/= 0.U || vl =/= 8.U || fuOpType =/= VDotOpType.s8x8
++  }
+   private val killP = pValid && pCtrl.robIdx.needFlush(io.flush)
+   private val killR = rValid && rPacket.ctrl.robIdx.needFlush(io.flush)
+   private val liveP = pValid && !killP && !reset.asBool
+@@ -75,9 +85,28 @@
+ 
+   private val products = Module(new VDotProducts)
+   private val reduce = Module(new VDotReduce)
++  private val highProducts = if (dot16Enabled) Some(Module(new VDotProducts)) else None
++  private val highReduce = if (dot16Enabled) Some(Module(new VDotReduce)) else None
+   products.io.vs1 := inData.src(0)
+   products.io.vs2 := inData.src(1)
+-  reduce.io.products := pProducts
++  if (dot16Enabled) {
++    // Reuse the byte ordering and exact eight-term arithmetic in both halves.
++    highProducts.get.io.vs1 := Cat(0.U(64.W), inData.src(0)(127, 64))
++    highProducts.get.io.vs2 := Cat(0.U(64.W), inData.src(1)(127, 64))
++    reduce.io.products := VecInit(pProducts.take(8))
++    highReduce.get.io.products := VecInit(pProducts.drop(8))
++  } else {
++    reduce.io.products := pProducts
++  }
++  private val dot16Result32 = if (dot16Enabled) {
++    // Each existing reducer contains an exact signed 19-bit sum. Widen the
++    // final addition to 20 bits, then sign-extend only the low result word.
++    val sum20 = reduce.io.result(18, 0).asSInt +& highReduce.get.io.result(18, 0).asSInt
++    require(sum20.getWidth == 20, "dot16 requires an exact 20-bit reduction")
++    val extended = Wire(SInt(32.W))
++    extended := sum20
++    Some(extended.asUInt)
++  } else None
+ 
+   // One output-shaped control packet per slot. Every output control field is
+   // initialized, then the complete supported identity is captured on acceptance.
+@@ -95,7 +124,15 @@
+   rValid := (liveR && !io.out.fire) || move
+ 
+   when(io.in.fire) {
+-    pProducts := products.io.products
++    if (dot16Enabled) {
++      for (lane <- 0 until 8) {
++        pProducts(lane) := products.io.products(lane)
++        // The request type is encoded in accepted products, not a later input.
++        pProducts(lane + 8) := Mux(isDot16, highProducts.get.io.products(lane), 0.S(16.W))
++      }
++    } else {
++      pProducts := products.io.products
++    }
+     pCtrl := acceptedCtrl
+     pPerf := io.in.bits.perfDebugInfo
+   }
+@@ -104,7 +141,7 @@
+     rPacket.ctrl := pCtrl
+     rPacket.perfDebugInfo := pPerf
+     rPacket.res.data := Mux(pCtrl.exceptionVec.get(ExceptionNO.illegalInstr),
+-      0.U(32.W), reduce.io.result(31, 0))
++      0.U(32.W), if (dot16Enabled) dot16Result32.get else reduce.io.result(31, 0))
+   }
+ 
+   // Read-only handles for the separate G1/G2 observation harness. These carry

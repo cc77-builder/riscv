@@ -1,0 +1,216 @@
+{
+  "status": "ROWLANE32_FINITE_ELF_SCREEN_PASS",
+  "contract": "r2-s3-runq-rowlane32-screen-v1",
+  "observed_utc": "2026-11-06T00:22:42.902307+00:00",
+  "elf_sha256": "fdb39f36e351c3907b3184d52233d1ee16c33e94b98b1317046823045a41ed22",
+  "candidate_machine_sha256": "f74b1a753a731dec5d803c9fca6afb1e1ca293737a85414f974b715d5912ea00",
+  "candidate_bytes": 836,
+  "unchanged_fr_sha256": "66a12c0ec3cb7c0d1cdceadf04e4c658607438d83a2a958892100422343117ab",
+  "unchanged_fr_bytes": 592,
+  "normal_case_count": 8,
+  "normal_methods_per_case": 2,
+  "cases": [
+    {
+      "case": "x0",
+      "index": 0,
+      "byte_alignment": [
+        0,
+        0
+      ],
+      "output_sha256": "a26e602d26b7ca32ad7df4c04f376caee9c9e3347be8fc54a8e341ac82dcec21",
+      "slots_sha256": "ebdb04dc5f1a7b2c12bc1315aef2c4eb440b3afc25e6e3807f51ca60445a6316"
+    },
+    {
+      "case": "x1",
+      "index": 1,
+      "byte_alignment": [
+        0,
+        0
+      ],
+      "output_sha256": "9988bac575c9513069f188209e1e0fb76542e87ad0ddebc1cd4b8fe69a897edd",
+      "slots_sha256": "c688f8155ac1730cc7645ae90e80d1e118cfa72fda89a511ab49f60ee285f78c"
+    },
+    {
+      "case": "x0",
+      "index": 2,
+      "byte_alignment": [
+        0,
+        0
+      ],
+      "output_sha256": "a26e602d26b7ca32ad7df4c04f376caee9c9e3347be8fc54a8e341ac82dcec21",
+      "slots_sha256": "ebdb04dc5f1a7b2c12bc1315aef2c4eb440b3afc25e6e3807f51ca60445a6316"
+    },
+    {
+      "case": "x2",
+      "index": 3,
+      "byte_alignment": [
+        0,
+        0
+      ],
+      "output_sha256": "4cf9816ed1062189ff0c8d427fba5e912cc68fc9af76cf7f08fd255977de3b33",
+      "slots_sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca"
+    },
+    {
+      "case": "min-min",
+      "index": 4,
+      "byte_alignment": [
+        12,
+        12
+      ],
+      "output_sha256": "66c4c3af41f5c15c3228ce31c1bfc1be67e438e566d1def9499e6daa6b96e525",
+      "slots_sha256": "0f17fc2497c7567875cf2006ae87ae8b316972e7dd469c9fe024cd8e6c465f97"
+    },
+    {
+      "case": "max-max",
+      "index": 5,
+      "byte_alignment": [
+        15,
+        3
+      ],
+      "output_sha256": "31aaef01ba795e9d3832664b05978c34020a414fc37bd23bed971aefaa7e158b",
+      "slots_sha256": "f34dd990dba19c8a296444b36c9f636c8943150d836aab283dd7080db510c7db"
+    },
+    {
+      "case": "min-max",
+      "index": 6,
+      "byte_alignment": [
+        2,
+        10
+      ],
+      "output_sha256": "5a813cfd4e60183033d8a74b47369a19c3954b3f1c7d5e6ff4b53c79a589c6e5",
+      "slots_sha256": "c11a59fed2168f027eedaa18538265d0adb361d0468421353e1375f8441eaad9"
+    },
+    {
+      "case": "zero-weight",
+      "index": 7,
+      "byte_alignment": [
+        5,
+        1
+      ],
+      "output_sha256": "4cf9816ed1062189ff0c8d427fba5e912cc68fc9af76cf7f08fd255977de3b33",
+      "slots_sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca"
+    }
+  ],
+  "actual_function_instructions": {
+    "unchanged_fr": 35670,
+    "rowlane32_w8": 14361
+  },
+  "actual_instruction_counts": {
+    "ld": 6,
+    "csrwi": 2,
+    "addi": 2977,
+    "vsetvli": 163,
+    "vmv.v.i": 172,
+    "lb": 2592,
+    "vle8.v": 2592,
+    "vsext.vf2": 2592,
+    "vwmacc.vx": 2592,
+    "vadd.vv": 81,
+    "vfcvt.f.x.v": 81,
+    "vlse32.v": 81,
+    "vfmul.vv": 81,
+    "flw": 81,
+    "vfmul.vf": 81,
+    "vfadd.vv": 81,
+    "bne": 90,
+    "vse32.v": 9,
+    "vsetivli": 2,
+    "vsse32.v": 4,
+    "ret": 1
+  },
+  "fp_element_operations": {
+    "convert": 2592,
+    "mul": 5184,
+    "add": 2592
+  },
+  "controls": [
+    {
+      "name": "short-vl",
+      "error": "supported accumulator/slot immediate move",
+      "executed_instructions": 13
+    },
+    {
+      "name": "wrong-weight-step",
+      "error": "actual memory access outside exact caller buffers",
+      "executed_instructions": 13906
+    },
+    {
+      "name": "wrong-x-byte",
+      "error": "actual ELF full-Q bitwise output",
+      "executed_instructions": 14361
+    },
+    {
+      "name": "unsigned-extension",
+      "error": "unsupported row32 instruction 0x4b832e57",
+      "executed_instructions": 22
+    },
+    {
+      "name": "wrong-widening-source",
+      "error": "actual ELF full-Q bitwise output",
+      "executed_instructions": 14361
+    },
+    {
+      "name": "unaligned-widening-destination",
+      "error": "aligned bounded vector register group",
+      "executed_instructions": 23
+    },
+    {
+      "name": "missing-slot-high-zero",
+      "error": "actual ELF final complete slots",
+      "executed_instructions": 14361
+    },
+    {
+      "name": "missing-vcsr-reset",
+      "error": "final CSR/FRM state",
+      "executed_instructions": 14361
+    },
+    {
+      "name": "callee-saved-clobber",
+      "error": "full-width scalar/FP ABI preservation",
+      "executed_instructions": 14361
+    },
+    {
+      "name": "wrong-rounding-order",
+      "error": "actual ELF full-Q bitwise output",
+      "executed_instructions": 14361
+    }
+  ],
+  "old_packed_layout_control": {
+    "status": "REJECTED",
+    "error": "actual ELF full-Q bitwise output",
+    "packed_sha256": "1acefe24656272b4c81b72bb862f218f54204480507c6f5826031f443b38b005"
+  },
+  "primitives": {
+    "status": "FINITE_FP_PRIMITIVES_PASS",
+    "counts": {
+      "add": 4337,
+      "multiply": 3798
+    },
+    "integer_conversions": 4108,
+    "nonfinite_results_excluded": {
+      "add": 3,
+      "multiply": 542
+    },
+    "domain": "finite binary32 result, RNE; no fflags model"
+  },
+  "archive": {
+    "name": "raw.zip",
+    "sha256": "7a26ca8ae38603a125c3105ccebe741df709e19eb245d0e843b66db001005d1c",
+    "bytes": 124648,
+    "members": 87,
+    "expanded_bytes": 508143,
+    "all_member_bytes_verified": true,
+    "verification_operation": "bee1ca65369429068a98a24c112ef728.b0b5a8b088cfd257ad33514d2ba93f7d"
+  },
+  "archive_initial_failure": {
+    "operation_id": "bee1ca65369429068a98a24c112ef728.c605532c634c4331957fc2c1dae5b799",
+    "exit_code": 1,
+    "reason": "Path ordering was incorrectly compared to string ordering; archive member set and every byte subsequently verified equal; original ZIP preserved"
+  },
+  "new_emu_runs": 0,
+  "new_nemu_runs": 0,
+  "target_runtime_qualified": false,
+  "performance_qualified": false,
+  "fflags_modeled": false,
+  "source_snapshot_included": true
+}

@@ -1,0 +1,113 @@
+{
+  "api_report": {
+    "abi_size": 1400,
+    "counts": {
+      "addi": 1,
+      "dot16_legal": 132240,
+      "dot8_legal": 1168,
+      "ebreak": 1,
+      "illegal": 50,
+      "vadd": 1
+    },
+    "expected_feature": 1,
+    "final_rng_state": "4ffe0b4da36bb576",
+    "fullcore_qualified": false,
+    "regcpy_arguments": 2,
+    "state_injection": true,
+    "status": "PASS_NEMU_REFERENCE_API",
+    "unique_instruction_sites": 32797,
+    "xs_dot16_tval_enabled": false
+  },
+  "commands": [
+    {
+      "argv": [
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-nemu-reference-20261106-0105/reference-api",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-nemu-reference-20261106-0105/feature1-01/build/riscv64-nemu-interpreter-so",
+        "1"
+      ],
+      "finished": "2026-11-06T01:36:40.251941+00:00",
+      "name": "normal",
+      "pid": 14691,
+      "process_group_absent": true,
+      "process_started": true,
+      "returncode": 0,
+      "seconds": 0.17042572299988024,
+      "started": "2026-11-06T01:36:40.081422+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "f1849de0c1c5d9a8c5177d02f60ac4b551cf22b01c3c9894f3ef1c2b5c64187f"
+    },
+    {
+      "argv": [
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-nemu-reference-20261106-0105/reference-api",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-nemu-reference-20261106-0105/feature1-01/build/riscv64-nemu-interpreter-so",
+        "1",
+        "negative-oracle"
+      ],
+      "finished": "2026-11-06T01:36:40.256501+00:00",
+      "name": "negative-oracle",
+      "pid": 14692,
+      "process_group_absent": true,
+      "process_started": true,
+      "returncode": 2,
+      "seconds": 0.002391943999555224,
+      "started": "2026-11-06T01:36:40.253999+00:00",
+      "stderr_sha256": "1285e5ae0e8464427c6cc07b68cea0dbb51434860e0df807c8aacdd1323253af",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-nemu-reference-20261106-0105/reference-api",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-nemu-reference-20261106-0105/feature1-01/build/riscv64-nemu-interpreter-so",
+        "0"
+      ],
+      "finished": "2026-11-06T01:36:40.260051+00:00",
+      "name": "wrong-feature-identity",
+      "pid": 14693,
+      "process_group_absent": true,
+      "process_started": true,
+      "returncode": 2,
+      "seconds": 0.0031055280001055507,
+      "started": "2026-11-06T01:36:40.256868+00:00",
+      "stderr_sha256": "d0b4347c9fbeefacbac86a3b7e4195ce7d16ad5569239ed9c4696eb046945fb4",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "controls_sha256": "0834842dae2e35bfb76632e8c0d8a9f89fd7fcd1bcc522c8b6b39ede2baf78bb",
+  "cpu_affinity": [
+    0
+  ],
+  "dot16_platform_tval_qualified": false,
+  "finished": "2026-11-06T01:36:40.261501+00:00",
+  "fullcore_qualified": false,
+  "library": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-nemu-reference-20261106-0105/feature1-01/build/riscv64-nemu-interpreter-so",
+  "library_identity": {
+    "build_state_sha256": "c3860028e0825c59391ca72370ae11b171bb61bf4f3379ede6eea518b43a3db4",
+    "config_sha256": "fd61833b10efdf2cc1378196bc76c98ae10ea8db7a97f78516e46d5745889e67",
+    "kind": "feature1",
+    "sha256": "cc768488944941d59442727a96e0a19206e24872dcefed0052cf6cb3694a3fae"
+  },
+  "negative_controls": {
+    "negative-oracle": {
+      "case": "directed-and-random",
+      "field": "full-vector-result",
+      "got": "1",
+      "instruction": "0294050b",
+      "pc": "80001030",
+      "status": "DOT16_API_FAIL",
+      "want": "0"
+    },
+    "wrong-feature-identity": {
+      "case": "disabled-dot16",
+      "field": "trap-pc",
+      "got": "800010b4",
+      "instruction": "0e94050b",
+      "pc": "800010b0",
+      "status": "DOT16_API_FAIL",
+      "want": "80f00000"
+    }
+  },
+  "probe_sha256": "ddddcf8885b8d45fc842518d69fac9f1a7be94a938799e37e54f3820b74c729a",
+  "started": "2026-11-06T01:36:40.081221+00:00",
+  "status": "PASS_REFERENCE_API_STAGE",
+  "variant": "feature1"
+}

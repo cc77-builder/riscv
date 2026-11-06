@@ -1,0 +1,938 @@
+{
+  "contract": "r2-s3-runq-paired16-rvv-target-v1",
+  "source_results": {
+    "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/paired16-rvv-20261106-0740/campaign-01/results.json",
+    "bytes": 88457550,
+    "sha256": "2a2feb6cb093a4377116f62c19e6b97ba1ec50cddc4d0cc7eb6e8dc2cf82f89a"
+  },
+  "state": {
+    "contract": "r2-s3-runq-paired16-rvv-target-v1",
+    "status": "PAIRED16_TARGET_DIFFTEST_CAMPAIGN_PASS",
+    "started": "2026-11-06T01:19:22.812587+00:00",
+    "new_emu_runs": 3,
+    "required_runs": [
+      "negative",
+      "recovery",
+      "replay"
+    ],
+    "max_concurrent_emu": 2,
+    "cpu_affinity": [
+      2,
+      3
+    ],
+    "analysis_policy": "main-thread serial, only after both normal processes terminate",
+    "host_memory": "MemTotal:       16094256 kB\nMemFree:        13506120 kB\nMemAvailable:   14929184 kB\nBuffers:          139964 kB\nCached:          1377176 kB\nSwapCached:            0 kB\nActive:           787864 kB\nInactive:        1274156 kB\nActive(anon):       2968 kB\nInactive(anon):   545840 kB\nActive(file):     784896 kB\nInactive(file):   728316 kB\nUnevictable:           0 kB\nMlocked:               0 kB\nSwapTotal:       4194304 kB\nSwapFree:        4194304 kB\nDirty:             65856 kB\nWriteback:             0 kB\nAnonPages:        545296 kB\nMapped:           173812 kB\nShmem:              3604 kB\nKReclaimable:     156812 kB\nSlab:             252244 kB\nSReclaimable:     156812 kB\nSUnreclaim:        95432 kB\nKernelStack:        6096 kB\nPageTables:         4528 kB\nSecPageTables:         0 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:    12241432 kB\nCommitted_AS:    1654480 kB\nVmallocTotal:   34359738367 kB\nVmallocUsed:       31592 kB\nVmallocChunk:          0 kB\nPercpu:            11040 kB\nHardwareCorrupted:     0 kB\nAnonHugePages:         0 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:         0 kB\nFilePmdMapped:         0 kB\nUnaccepted:            0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nDirectMap4k:       68608 kB\nDirectMap2M:     4888576 kB\nDirectMap1G:    19922944 kB\n",
+    "negative_checked": true,
+    "replay_equal": true,
+    "candidate_qualified": false,
+    "finished": "2026-11-06T01:49:21.250911+00:00"
+  },
+  "records": [
+    {
+      "name": "negative",
+      "receipt": {
+        "contract": "r2-s3-runq-paired16-rvv-target-v1",
+        "name": "negative",
+        "negative": true,
+        "command": [
+          "/usr/bin/taskset",
+          "-c",
+          "2",
+          "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu",
+          "-i",
+          "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/paired16-rvv-20261106-0740/target-build-01/paired16-target.bin",
+          "--flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+          "--ram-size=128MB",
+          "--diff=/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/fullq-tail-target-20261026-1400/campaign-01/negative-fixture/negative-reference.so",
+          "--max-cycles=12000000",
+          "--seed=1"
+        ],
+        "cwd": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/paired16-rvv-20261106-0740/campaign-01/runs/negative/cwd",
+        "reference": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/fullq-tail-target-20261026-1400/campaign-01/negative-fixture/negative-reference.so",
+        "cpu_affinity": [
+          2
+        ],
+        "emu_threads": 1,
+        "started": "2026-11-06T01:19:22.843339+00:00",
+        "process_started": true,
+        "timed_out": false,
+        "exit_code": 1,
+        "negative_target": "vdot",
+        "analysis_in_worker": false,
+        "pid": 2793,
+        "finished": "2026-11-06T01:19:33.139667+00:00",
+        "raw_sha256": {
+          "stdout.log": "4bc392a839c2910f43118c1e53003c10fba0986ae41edbf5b0d4a4df8d1e939e",
+          "stderr.log": "a77da41f16ced240d2685ac1a5a2dd4f1e743437a11a554b6125293a2b33fdbd"
+        }
+      },
+      "result": {
+        "pc": "0x80001c04",
+        "status": "PAIRED16_EXPECTED_BIT100_REJECTION",
+        "reference_unchanged": true
+      }
+    },
+    {
+      "name": "recovery",
+      "receipt": {
+        "contract": "r2-s3-runq-paired16-rvv-target-v1",
+        "name": "recovery",
+        "negative": false,
+        "command": [
+          "/usr/bin/taskset",
+          "-c",
+          "2",
+          "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu",
+          "-i",
+          "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/paired16-rvv-20261106-0740/target-build-01/paired16-target.bin",
+          "--flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+          "--ram-size=128MB",
+          "--diff=/home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so",
+          "--max-cycles=12000000",
+          "--seed=1"
+        ],
+        "cwd": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/paired16-rvv-20261106-0740/campaign-01/runs/recovery/cwd",
+        "reference": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so",
+        "cpu_affinity": [
+          2
+        ],
+        "emu_threads": 1,
+        "started": "2026-11-06T01:19:33.231263+00:00",
+        "process_started": true,
+        "timed_out": false,
+        "exit_code": 0,
+        "negative_target": null,
+        "analysis_in_worker": false,
+        "pid": 2953,
+        "finished": "2026-11-06T01:47:33.965772+00:00",
+        "raw_sha256": {
+          "stdout.log": "ffbe73b57dd9180eda8f9b292915710f7365dd768e5c002d37635f8859e66ef0",
+          "stderr.log": "92a2b752c86a986e4bba9bc2af2611931077e4a342eb8e3415eb4467decb6b0d"
+        }
+      },
+      "result": {
+        "status": "PAIRED16_TARGET_DIFFTEST_COUNTER_PATH_PASS",
+        "windows": 10,
+        "full_q_calls": 29,
+        "judge_fault_controls": 5,
+        "outputs_checked": 8352,
+        "fullmin_functional_pass": true,
+        "fullmin_performance_sample": false,
+        "fullmin_retirement_trace_claim": false,
+        "committed_vdot": 62209,
+        "all_stage_custom_pc_sha256": "0a24e77d1a0c7c8d2c1fabf04a306b1b783572deead689ffa5d526a0669fc843",
+        "samples": [
+          {
+            "seq": 0,
+            "id": 3,
+            "scenario": "self-warmed-prepacked-full-Q",
+            "method": "rvv",
+            "n": 1,
+            "dots": 0,
+            "phase": "measured",
+            "repeat": 0,
+            "dataset": 0,
+            "cycles": 67770,
+            "instructions": 35681,
+            "counter_values": [
+              14784781538186502248,
+              16270799599947175550,
+              16270799599947243320,
+              14784781538186537929
+            ],
+            "sample_ticks": [
+              672020,
+              672054,
+              739824,
+              739858
+            ],
+            "block": 0,
+            "role": "anchor_start_method"
+          },
+          {
+            "seq": 1,
+            "id": 0,
+            "scenario": "self-warmed-prepacked-full-Q",
+            "method": "rvv",
+            "n": 1,
+            "dots": 0,
+            "phase": "measured",
+            "repeat": 0,
+            "dataset": 0,
+            "cycles": 43971,
+            "instructions": 22149,
+            "counter_values": [
+              14784781538186571249,
+              16270799599947296503,
+              16270799599947340474,
+              14784781538186593398
+            ],
+            "sample_ticks": [
+              792973,
+              793007,
+              836978,
+              837012
+            ],
+            "block": 0,
+            "role": "method"
+          },
+          {
+            "seq": 2,
+            "id": 1,
+            "scenario": "self-warmed-prepacked-full-Q",
+            "method": "rvv",
+            "n": 1,
+            "dots": 0,
+            "phase": "measured",
+            "repeat": 0,
+            "dataset": 0,
+            "cycles": 54054,
+            "instructions": 20134,
+            "counter_values": [
+              14784781538186624703,
+              16270799599947402334,
+              16270799599947456388,
+              14784781538186644837
+            ],
+            "sample_ticks": [
+              898804,
+              898838,
+              952892,
+              952926
+            ],
+            "block": 0,
+            "role": "method"
+          },
+          {
+            "seq": 3,
+            "id": 2,
+            "scenario": "self-warmed-prepacked-full-Q",
+            "method": "vdot",
+            "n": 1,
+            "dots": 10368,
+            "phase": "measured",
+            "repeat": 0,
+            "dataset": 0,
+            "cycles": 55459,
+            "instructions": 49613,
+            "counter_values": [
+              14784781538186705621,
+              16270799599947519457,
+              16270799599947574916,
+              14784781538186755234
+            ],
+            "sample_ticks": [
+              1015927,
+              1015961,
+              1071420,
+              1071454
+            ],
+            "block": 0,
+            "role": "method"
+          },
+          {
+            "seq": 4,
+            "id": 3,
+            "scenario": "self-warmed-prepacked-full-Q",
+            "method": "rvv",
+            "n": 1,
+            "dots": 0,
+            "phase": "measured",
+            "repeat": 0,
+            "dataset": 0,
+            "cycles": 62772,
+            "instructions": 35681,
+            "counter_values": [
+              14784781538186802086,
+              16270799599947645310,
+              16270799599947708082,
+              14784781538186837767
+            ],
+            "sample_ticks": [
+              1141780,
+              1141814,
+              1204586,
+              1204620
+            ],
+            "block": 0,
+            "role": "anchor_end"
+          },
+          {
+            "seq": 5,
+            "id": 3,
+            "scenario": "self-warmed-prepacked-full-Q",
+            "method": "rvv",
+            "n": 1,
+            "dots": 0,
+            "phase": "measured",
+            "repeat": 1,
+            "dataset": 0,
+            "cycles": 62786,
+            "instructions": 35681,
+            "counter_values": [
+              14784781538186884619,
+              16270799599947778380,
+              16270799599947841166,
+              14784781538186920300
+            ],
+            "sample_ticks": [
+              1274850,
+              1274884,
+              1337670,
+              1337704
+            ],
+            "block": 1,
+            "role": "anchor_start_method"
+          },
+          {
+            "seq": 6,
+            "id": 2,
+            "scenario": "self-warmed-prepacked-full-Q",
+            "method": "vdot",
+            "n": 1,
+            "dots": 10368,
+            "phase": "measured",
+            "repeat": 1,
+            "dataset": 0,
+            "cycles": 55414,
+            "instructions": 49613,
+            "counter_values": [
+              14784781538186981084,
+              16270799599947904145,
+              16270799599947959559,
+              14784781538187030697
+            ],
+            "sample_ticks": [
+              1400615,
+              1400649,
+              1456063,
+              1456097
+            ],
+            "block": 1,
+            "role": "method"
+          },
+          {
+            "seq": 7,
+            "id": 1,
+            "scenario": "self-warmed-prepacked-full-Q",
+            "method": "rvv",
+            "n": 1,
+            "dots": 0,
+            "phase": "measured",
+            "repeat": 1,
+            "dataset": 0,
+            "cycles": 53920,
+            "instructions": 20134,
+            "counter_values": [
+              14784781538187062002,
+              16270799599948020949,
+              16270799599948074869,
+              14784781538187082136
+            ],
+            "sample_ticks": [
+              1517419,
+              1517453,
+              1571373,
+              1571407
+            ],
+            "block": 1,
+            "role": "method"
+          },
+          {
+            "seq": 8,
+            "id": 0,
+            "scenario": "self-warmed-prepacked-full-Q",
+            "method": "rvv",
+            "n": 1,
+            "dots": 0,
+            "phase": "measured",
+            "repeat": 1,
+            "dataset": 0,
+            "cycles": 43076,
+            "instructions": 22149,
+            "counter_values": [
+              14784781538187115456,
+              16270799599948125496,
+              16270799599948168572,
+              14784781538187137605
+            ],
+            "sample_ticks": [
+              1621966,
+              1622000,
+              1665076,
+              1665110
+            ],
+            "block": 1,
+            "role": "method"
+          },
+          {
+            "seq": 9,
+            "id": 3,
+            "scenario": "self-warmed-prepacked-full-Q",
+            "method": "rvv",
+            "n": 1,
+            "dots": 0,
+            "phase": "measured",
+            "repeat": 1,
+            "dataset": 0,
+            "cycles": 62751,
+            "instructions": 35681,
+            "counter_values": [
+              14784781538187184457,
+              16270799599948238826,
+              16270799599948301577,
+              14784781538187220138
+            ],
+            "sample_ticks": [
+              1735296,
+              1735330,
+              1798081,
+              1798115
+            ],
+            "block": 1,
+            "role": "anchor_end"
+          }
+        ],
+        "selection": {
+          "decision": "HOLD_CONTEXT_VARIATION",
+          "methods": [
+            {
+              "id": 0,
+              "wrapper": "q288_paired16_rvv",
+              "cycles": [
+                43971,
+                43076
+              ],
+              "instructions": [
+                22149,
+                22149
+              ],
+              "mean_cycles": 43523.5
+            },
+            {
+              "id": 1,
+              "wrapper": "q288_gs32_rvv",
+              "cycles": [
+                54054,
+                53920
+              ],
+              "instructions": [
+                20134,
+                20134
+              ],
+              "mean_cycles": 53987.0
+            },
+            {
+              "id": 2,
+              "wrapper": "q288_tail_vdot",
+              "cycles": [
+                55459,
+                55414
+              ],
+              "instructions": [
+                49613,
+                49613
+              ],
+              "mean_cycles": 55436.5
+            },
+            {
+              "id": 3,
+              "wrapper": "q288_fused_rvv4",
+              "cycles": [
+                67770,
+                62772,
+                62786,
+                62751
+              ],
+              "instructions": [
+                35681,
+                35681,
+                35681,
+                35681
+              ],
+              "mean_cycles": 64019.75
+            }
+          ],
+          "anchors": [
+            67770,
+            62772,
+            62786,
+            62751
+          ],
+          "anchor_gate": false,
+          "comparisons": [
+            {
+              "candidate": 0,
+              "baseline": 1,
+              "worst_candidate": 43971,
+              "best_baseline": 53920,
+              "reduction": 0.18451409495548965,
+              "separation_gate": true,
+              "qualified": false
+            },
+            {
+              "candidate": 0,
+              "baseline": 2,
+              "worst_candidate": 43971,
+              "best_baseline": 55414,
+              "reduction": 0.2065001624138304,
+              "separation_gate": true,
+              "qualified": false
+            },
+            {
+              "candidate": 0,
+              "baseline": 3,
+              "worst_candidate": 43971,
+              "best_baseline": 62751,
+              "reduction": 0.2992780991537983,
+              "separation_gate": true,
+              "qualified": false
+            }
+          ],
+          "candidate_qualified": false,
+          "stable_default_changed": false,
+          "hardware_changed": false,
+          "statistical_scope": "two reversed P/G/TA observations and four FR anchors; replay is not an extra sample",
+          "application_scope": "synthetic prepacked Q288 dataset0 fast path with selfwarm; fullmin is untimed functionality"
+        },
+        "runtime_qualified": true,
+        "full_application_performance_qualified": false
+      }
+    },
+    {
+      "name": "replay",
+      "receipt": {
+        "contract": "r2-s3-runq-paired16-rvv-target-v1",
+        "name": "replay",
+        "negative": false,
+        "command": [
+          "/usr/bin/taskset",
+          "-c",
+          "3",
+          "/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/build/emu",
+          "-i",
+          "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/paired16-rvv-20261106-0740/target-build-01/paired16-target.bin",
+          "--flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+          "--ram-size=128MB",
+          "--diff=/home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so",
+          "--max-cycles=12000000",
+          "--seed=1"
+        ],
+        "cwd": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/paired16-rvv-20261106-0740/campaign-01/runs/replay/cwd",
+        "reference": "/home/lizufan/riscv-lab/t17-clean-20261024-0854/support-01/nemu/reference/build/riscv64-nemu-interpreter-so",
+        "cpu_affinity": [
+          3
+        ],
+        "emu_threads": 1,
+        "started": "2026-11-06T01:19:33.230346+00:00",
+        "process_started": true,
+        "timed_out": false,
+        "exit_code": 0,
+        "negative_target": null,
+        "analysis_in_worker": false,
+        "pid": 2952,
+        "finished": "2026-11-06T01:47:32.712417+00:00",
+        "raw_sha256": {
+          "stdout.log": "d24bfaf44f6d988df791d1e33c0374d0a9a7b624c32b5f46af872bfc6af705cb",
+          "stderr.log": "92a2b752c86a986e4bba9bc2af2611931077e4a342eb8e3415eb4467decb6b0d"
+        }
+      },
+      "result": {
+        "status": "PAIRED16_TARGET_DIFFTEST_COUNTER_PATH_PASS",
+        "windows": 10,
+        "full_q_calls": 29,
+        "judge_fault_controls": 5,
+        "outputs_checked": 8352,
+        "fullmin_functional_pass": true,
+        "fullmin_performance_sample": false,
+        "fullmin_retirement_trace_claim": false,
+        "committed_vdot": 62209,
+        "all_stage_custom_pc_sha256": "0a24e77d1a0c7c8d2c1fabf04a306b1b783572deead689ffa5d526a0669fc843",
+        "samples": [
+          {
+            "seq": 0,
+            "id": 3,
+            "scenario": "self-warmed-prepacked-full-Q",
+            "method": "rvv",
+            "n": 1,
+            "dots": 0,
+            "phase": "measured",
+            "repeat": 0,
+            "dataset": 0,
+            "cycles": 67770,
+            "instructions": 35681,
+            "counter_values": [
+              14784781538186502248,
+              16270799599947175550,
+              16270799599947243320,
+              14784781538186537929
+            ],
+            "sample_ticks": [
+              672020,
+              672054,
+              739824,
+              739858
+            ],
+            "block": 0,
+            "role": "anchor_start_method"
+          },
+          {
+            "seq": 1,
+            "id": 0,
+            "scenario": "self-warmed-prepacked-full-Q",
+            "method": "rvv",
+            "n": 1,
+            "dots": 0,
+            "phase": "measured",
+            "repeat": 0,
+            "dataset": 0,
+            "cycles": 43971,
+            "instructions": 22149,
+            "counter_values": [
+              14784781538186571249,
+              16270799599947296503,
+              16270799599947340474,
+              14784781538186593398
+            ],
+            "sample_ticks": [
+              792973,
+              793007,
+              836978,
+              837012
+            ],
+            "block": 0,
+            "role": "method"
+          },
+          {
+            "seq": 2,
+            "id": 1,
+            "scenario": "self-warmed-prepacked-full-Q",
+            "method": "rvv",
+            "n": 1,
+            "dots": 0,
+            "phase": "measured",
+            "repeat": 0,
+            "dataset": 0,
+            "cycles": 54054,
+            "instructions": 20134,
+            "counter_values": [
+              14784781538186624703,
+              16270799599947402334,
+              16270799599947456388,
+              14784781538186644837
+            ],
+            "sample_ticks": [
+              898804,
+              898838,
+              952892,
+              952926
+            ],
+            "block": 0,
+            "role": "method"
+          },
+          {
+            "seq": 3,
+            "id": 2,
+            "scenario": "self-warmed-prepacked-full-Q",
+            "method": "vdot",
+            "n": 1,
+            "dots": 10368,
+            "phase": "measured",
+            "repeat": 0,
+            "dataset": 0,
+            "cycles": 55459,
+            "instructions": 49613,
+            "counter_values": [
+              14784781538186705621,
+              16270799599947519457,
+              16270799599947574916,
+              14784781538186755234
+            ],
+            "sample_ticks": [
+              1015927,
+              1015961,
+              1071420,
+              1071454
+            ],
+            "block": 0,
+            "role": "method"
+          },
+          {
+            "seq": 4,
+            "id": 3,
+            "scenario": "self-warmed-prepacked-full-Q",
+            "method": "rvv",
+            "n": 1,
+            "dots": 0,
+            "phase": "measured",
+            "repeat": 0,
+            "dataset": 0,
+            "cycles": 62772,
+            "instructions": 35681,
+            "counter_values": [
+              14784781538186802086,
+              16270799599947645310,
+              16270799599947708082,
+              14784781538186837767
+            ],
+            "sample_ticks": [
+              1141780,
+              1141814,
+              1204586,
+              1204620
+            ],
+            "block": 0,
+            "role": "anchor_end"
+          },
+          {
+            "seq": 5,
+            "id": 3,
+            "scenario": "self-warmed-prepacked-full-Q",
+            "method": "rvv",
+            "n": 1,
+            "dots": 0,
+            "phase": "measured",
+            "repeat": 1,
+            "dataset": 0,
+            "cycles": 62786,
+            "instructions": 35681,
+            "counter_values": [
+              14784781538186884619,
+              16270799599947778380,
+              16270799599947841166,
+              14784781538186920300
+            ],
+            "sample_ticks": [
+              1274850,
+              1274884,
+              1337670,
+              1337704
+            ],
+            "block": 1,
+            "role": "anchor_start_method"
+          },
+          {
+            "seq": 6,
+            "id": 2,
+            "scenario": "self-warmed-prepacked-full-Q",
+            "method": "vdot",
+            "n": 1,
+            "dots": 10368,
+            "phase": "measured",
+            "repeat": 1,
+            "dataset": 0,
+            "cycles": 55414,
+            "instructions": 49613,
+            "counter_values": [
+              14784781538186981084,
+              16270799599947904145,
+              16270799599947959559,
+              14784781538187030697
+            ],
+            "sample_ticks": [
+              1400615,
+              1400649,
+              1456063,
+              1456097
+            ],
+            "block": 1,
+            "role": "method"
+          },
+          {
+            "seq": 7,
+            "id": 1,
+            "scenario": "self-warmed-prepacked-full-Q",
+            "method": "rvv",
+            "n": 1,
+            "dots": 0,
+            "phase": "measured",
+            "repeat": 1,
+            "dataset": 0,
+            "cycles": 53920,
+            "instructions": 20134,
+            "counter_values": [
+              14784781538187062002,
+              16270799599948020949,
+              16270799599948074869,
+              14784781538187082136
+            ],
+            "sample_ticks": [
+              1517419,
+              1517453,
+              1571373,
+              1571407
+            ],
+            "block": 1,
+            "role": "method"
+          },
+          {
+            "seq": 8,
+            "id": 0,
+            "scenario": "self-warmed-prepacked-full-Q",
+            "method": "rvv",
+            "n": 1,
+            "dots": 0,
+            "phase": "measured",
+            "repeat": 1,
+            "dataset": 0,
+            "cycles": 43076,
+            "instructions": 22149,
+            "counter_values": [
+              14784781538187115456,
+              16270799599948125496,
+              16270799599948168572,
+              14784781538187137605
+            ],
+            "sample_ticks": [
+              1621966,
+              1622000,
+              1665076,
+              1665110
+            ],
+            "block": 1,
+            "role": "method"
+          },
+          {
+            "seq": 9,
+            "id": 3,
+            "scenario": "self-warmed-prepacked-full-Q",
+            "method": "rvv",
+            "n": 1,
+            "dots": 0,
+            "phase": "measured",
+            "repeat": 1,
+            "dataset": 0,
+            "cycles": 62751,
+            "instructions": 35681,
+            "counter_values": [
+              14784781538187184457,
+              16270799599948238826,
+              16270799599948301577,
+              14784781538187220138
+            ],
+            "sample_ticks": [
+              1735296,
+              1735330,
+              1798081,
+              1798115
+            ],
+            "block": 1,
+            "role": "anchor_end"
+          }
+        ],
+        "selection": {
+          "decision": "HOLD_CONTEXT_VARIATION",
+          "methods": [
+            {
+              "id": 0,
+              "wrapper": "q288_paired16_rvv",
+              "cycles": [
+                43971,
+                43076
+              ],
+              "instructions": [
+                22149,
+                22149
+              ],
+              "mean_cycles": 43523.5
+            },
+            {
+              "id": 1,
+              "wrapper": "q288_gs32_rvv",
+              "cycles": [
+                54054,
+                53920
+              ],
+              "instructions": [
+                20134,
+                20134
+              ],
+              "mean_cycles": 53987.0
+            },
+            {
+              "id": 2,
+              "wrapper": "q288_tail_vdot",
+              "cycles": [
+                55459,
+                55414
+              ],
+              "instructions": [
+                49613,
+                49613
+              ],
+              "mean_cycles": 55436.5
+            },
+            {
+              "id": 3,
+              "wrapper": "q288_fused_rvv4",
+              "cycles": [
+                67770,
+                62772,
+                62786,
+                62751
+              ],
+              "instructions": [
+                35681,
+                35681,
+                35681,
+                35681
+              ],
+              "mean_cycles": 64019.75
+            }
+          ],
+          "anchors": [
+            67770,
+            62772,
+            62786,
+            62751
+          ],
+          "anchor_gate": false,
+          "comparisons": [
+            {
+              "candidate": 0,
+              "baseline": 1,
+              "worst_candidate": 43971,
+              "best_baseline": 53920,
+              "reduction": 0.18451409495548965,
+              "separation_gate": true,
+              "qualified": false
+            },
+            {
+              "candidate": 0,
+              "baseline": 2,
+              "worst_candidate": 43971,
+              "best_baseline": 55414,
+              "reduction": 0.2065001624138304,
+              "separation_gate": true,
+              "qualified": false
+            },
+            {
+              "candidate": 0,
+              "baseline": 3,
+              "worst_candidate": 43971,
+              "best_baseline": 62751,
+              "reduction": 0.2992780991537983,
+              "separation_gate": true,
+              "qualified": false
+            }
+          ],
+          "candidate_qualified": false,
+          "stable_default_changed": false,
+          "hardware_changed": false,
+          "statistical_scope": "two reversed P/G/TA observations and four FR anchors; replay is not an extra sample",
+          "application_scope": "synthetic prepacked Q288 dataset0 fast path with selfwarm; fullmin is untimed functionality"
+        },
+        "runtime_qualified": true,
+        "full_application_performance_qualified": false
+      }
+    }
+  ],
+  "counter_integer_note": "counter_values are uint64 JSON integers above 2^53; parse with exact integer support, never JavaScript Number",
+  "performance_status": "HOLD_CONTEXT_VARIATION; no default replacement",
+  "snapshot_dependency": {
+    "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/paired16-rvv-20261106-0740/target-inputs-01/source",
+    "consumer": "GS32 Pro3 postprocessing-v1",
+    "preserve": true,
+    "verified_inventory_sha256": "6df785a0a8dcd60bd1e5a11357977eeedbb3bb1911d518fada4c2279b3298fcc"
+  }
+}

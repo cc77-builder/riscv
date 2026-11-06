@@ -1,0 +1,897 @@
+{
+  "schema": 1,
+  "recorded_utc": "2026-11-06T02:43:12Z",
+  "result": "PRODUCTION_DECODE_BOTH_FEATURE_STATES_PASS",
+  "baseline_head": "c981529dc6e493fb7deee8429b9ce05fd197497b",
+  "production_patch_sha256": "5b5824bac200c2a775598686e550854f8276d5db007b72f4b7be92437b4d3416",
+  "sources": [
+    {
+      "name": "CONTRACT.md",
+      "bytes": 7333,
+      "sha256": "92b12eefa986c0b309d91cb72295746a10d538adba11da14ca77cff671f5a62d"
+    },
+    {
+      "name": "GenerateVDot16DecodeProbe.scala",
+      "bytes": 1120,
+      "sha256": "0076748d605c93172c5aa7bd7e663c4a4a8bfe5d805dfc1d47e88913f0db213c"
+    },
+    {
+      "name": "build.sc",
+      "bytes": 1062,
+      "sha256": "47aec9b103e2db4070d4d18e1b1b90fd68a7f1b8d3411496bab62e075140cad3"
+    },
+    {
+      "name": "derive_test.py",
+      "bytes": 4467,
+      "sha256": "77908888a86e5658dfd20b682f3c620fab62592d049d2108e0fd62934191e159"
+    },
+    {
+      "name": "extra_cases.cpp.inc",
+      "bytes": 2824,
+      "sha256": "e6387fd6be13d3a2a918f6136d7cc97b42ea27ef1c2bca5197286bc491deeced"
+    },
+    {
+      "name": "run.py",
+      "bytes": 19854,
+      "sha256": "0214e9a220b905156c9818342832a9226e3b7bfcce2a8f5340f0b659f7c68b7c"
+    }
+  ],
+  "frozen_inputs": {
+    "original_harness_sha256": "c4b275bbc5e8f63f189ad55fc646b15d27d9216fd4497537c5c4bec66e3f3204",
+    "original_cpp_sha256": "06ba8130d98de5521126ec26a2f7dd17b85aeba51085f38a07d184468f91095b",
+    "process_helper_sha256": "db8fc437041c9b3580126ef8498085212313510ce96eb483f21a8c04e17479b3"
+  },
+  "qualification": {
+    "production_decoder_dynamic": true,
+    "actual_fu_operation_observed": true,
+    "fullcore": false,
+    "architectural_illegal_instruction_trap": false,
+    "rf_rename_rob": false,
+    "application_performance": false,
+    "eda": false
+  },
+  "failed_attempts": [
+    {
+      "run": "decode-flag0-01",
+      "outer": {
+        "operation_id": "d9b025210fdcd3c1fd06c2f645cfad75.cbadff9e62afa83fd690de7795fd3873",
+        "started_at": "2026-11-06T02:26:56.6914759Z",
+        "finished_at": "2026-11-06T02:27:11.5894628Z",
+        "status": "failed",
+        "exit_code": 1,
+        "duration_ms": 14865,
+        "cleanup_complete": true,
+        "timed_out": false,
+        "cancelled": false,
+        "script_sha256": "8bf360cc5f63d3f124fd32b027c69092508aec2fc26d08527edb446373134fd2",
+        "execution_sha256": "d1556187aa67e5844a39de54ab2246f99927621548e258beb3fb3299c951f7e2",
+        "stdout": ""
+      },
+      "status": {
+        "schema": 1,
+        "started": "2026-11-06T02:26:57.229022+00:00",
+        "passed": false,
+        "feature": 0,
+        "cpu_affinity": [
+          1
+        ],
+        "budget_seconds": 900,
+        "repo": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+        "output": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/decode-flag0-01",
+        "core_mill_output": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2",
+        "decode_qualified": false,
+        "fullcore_qualified": false,
+        "performance_measured": false,
+        "head": "c981529dc6e493fb7deee8429b9ce05fd197497b",
+        "mill_launcher": {
+          "path": "/home/lizufan/riscv-tools/bin/mill",
+          "sha256": "86acc0b9869d09c8983ecfdbeb39682d47eb585e2b46d94148cc528fbb4b83b8"
+        },
+        "active_step": "core-classpath",
+        "last_pid": 2443,
+        "error": "ValueError: exported classpath path is missing or not absolute",
+        "finished": "2026-11-06T02:27:11.431110+00:00",
+        "last_process_returncode": 0,
+        "process_group_absent": true
+      },
+      "files": [
+        {
+          "name": "status.json",
+          "bytes": 1027,
+          "sha256": "cf7496cf574bb9838f0abaa3ba8b6c11d644a8c907ad91cbe364a5b107f375d5"
+        },
+        {
+          "name": "commands.json",
+          "bytes": 2035,
+          "sha256": "7e147322c6dac0409225ec744599f3e595c2fb6fd6bfead37df0fc304750ce38"
+        },
+        {
+          "name": "core-classpath.log",
+          "bytes": 19338,
+          "sha256": "afbc55fb5d5e3c026b9633ca71da4c0ce7006e368e5d6153ae6fa876c67fcf01"
+        },
+        {
+          "name": "core-classpath.stderr",
+          "bytes": 766,
+          "sha256": "2852823cd6d20da81809b5a239540e8479ebda3bb478ca42458d01a93815a033"
+        }
+      ],
+      "commands": [
+        {
+          "name": "java-version",
+          "cwd": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+          "started": "2026-11-06T02:27:03.086875+00:00",
+          "expected_exit_code": 0,
+          "exit_code": 0,
+          "process_group_absent": true,
+          "finished": "2026-11-06T02:27:03.202129+00:00",
+          "argument_count": 2
+        },
+        {
+          "name": "mill-version",
+          "cwd": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+          "started": "2026-11-06T02:27:03.202336+00:00",
+          "expected_exit_code": 0,
+          "exit_code": 0,
+          "process_group_absent": true,
+          "finished": "2026-11-06T02:27:03.924531+00:00",
+          "argument_count": 4
+        },
+        {
+          "name": "verilator-version",
+          "cwd": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+          "started": "2026-11-06T02:27:03.924716+00:00",
+          "expected_exit_code": 0,
+          "exit_code": 0,
+          "process_group_absent": true,
+          "finished": "2026-11-06T02:27:04.044641+00:00",
+          "argument_count": 2
+        },
+        {
+          "name": "firtool-version",
+          "cwd": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+          "started": "2026-11-06T02:27:04.044941+00:00",
+          "expected_exit_code": 0,
+          "exit_code": 0,
+          "process_group_absent": true,
+          "finished": "2026-11-06T02:27:04.077846+00:00",
+          "argument_count": 2
+        },
+        {
+          "name": "core-classpath",
+          "cwd": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+          "started": "2026-11-06T02:27:04.078000+00:00",
+          "expected_exit_code": 0,
+          "exit_code": 0,
+          "process_group_absent": true,
+          "finished": "2026-11-06T02:27:11.430070+00:00",
+          "argument_count": 7
+        }
+      ],
+      "classpath_entry_count": 135,
+      "missing_resources": [
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/cde/cde/compile-resources",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/cde/cde/resources",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/hardfloat/hardfloat/compile-resources",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/hardfloat/hardfloat/src/main/resources",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/macros/compile-resources",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/macros/src/main/resources",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/compile-resources",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/difftest/compile-resources",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/difftest/src/main/resources",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/utility/compile-resources",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/utility/src/main/resources",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/huancun/compile-resources",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/coupledL2/compile-resources",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/openLLC/openNCB/compile-resources",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/openLLC/openNCB/src/main/resources",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/openLLC/compile-resources",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/openLLC/src/main/resources",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/yunsuan/compile-resources",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/fudian/compile-resources",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/fudian/src/main/resources",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/macros/compile-resources",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/macros/resources",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/compile-resources"
+      ],
+      "process_group_absent_independent": true,
+      "runner_sha256": "31ea96df0490990109ac94fed89a51c1de8d6c5a86b79f9eec79ab69c35618f1",
+      "contract_sha256": "6d62f33d974619767aeb9c92119b5b6dd54b991dcd876d81dd70ad75047b2f69",
+      "classification": "runner-classpath-preflight-failure-before-probe-compilation"
+    }
+  ],
+  "runs": [
+    {
+      "feature": 0,
+      "outer": {
+        "operation_id": "d9b025210fdcd3c1fd06c2f645cfad75.fc58b4f3f2da51371cc47764b1caeb8d",
+        "started_at": "2026-11-06T02:35:47.9490955Z",
+        "finished_at": "2026-11-06T02:36:58.3229061Z",
+        "status": "succeeded",
+        "exit_code": 0,
+        "duration_ms": 70317,
+        "cleanup_complete": true,
+        "timed_out": false,
+        "cancelled": false,
+        "script_sha256": "c4cad8d5f5d1031daba9997fd6eafe8ea789b0b125a6190913d12d88af3d4df2",
+        "execution_sha256": "06f0fc033621c0cc95a2c289f7e533bd526381b4f5a1b7ee8c009dcddb3d4856",
+        "stdout": "DOT16_DECODE_FEATURE_0_PASS\n"
+      },
+      "evidence": {
+        "run": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/decode-flag0-02",
+        "status": {
+          "schema": 1,
+          "started": "2026-11-06T02:35:48.402266+00:00",
+          "passed": true,
+          "feature": 0,
+          "cpu_affinity": [
+            1
+          ],
+          "budget_seconds": 900,
+          "repo": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+          "output": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/decode-flag0-02",
+          "core_mill_output": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2",
+          "decode_qualified": true,
+          "fullcore_qualified": false,
+          "performance_measured": false,
+          "head": "c981529dc6e493fb7deee8429b9ce05fd197497b",
+          "mill_launcher": {
+            "path": "/home/lizufan/riscv-tools/bin/mill",
+            "sha256": "86acc0b9869d09c8983ecfdbeb39682d47eb585e2b46d94148cc528fbb4b83b8"
+          },
+          "active_step": null,
+          "last_pid": 3012,
+          "coverage": {
+            "schema": 1,
+            "feature": 0,
+            "old_transactions": 131109,
+            "new_transactions": 0,
+            "classification_rejects": 131072,
+            "neighbours": 0,
+            "simple_op0": 131109,
+            "complex_op0": 131373,
+            "simple_op1": 0,
+            "complex_op1": 0
+          },
+          "observation_negatives": [
+            "simple_op",
+            "complex_op"
+          ],
+          "qualification": "DOT16_DECODE_FEATURE_0_PASS",
+          "finished": "2026-11-06T02:36:58.185461+00:00",
+          "last_process_returncode": 1,
+          "process_group_absent": true
+        },
+        "process_group_absent_independent": true,
+        "files": [
+          {
+            "name": "status.json",
+            "bytes": 1323,
+            "sha256": "80f6db20a701ccb9ab802612e703b9934e9a9353c33442742b334d8eeac80341"
+          },
+          {
+            "name": "commands.json",
+            "bytes": 5664,
+            "sha256": "2c348eed5372a5ae06f550878ba223fc8bf69a3bafd4ca3be107e447d692ec16"
+          },
+          {
+            "name": "inputs.json",
+            "bytes": 2679,
+            "sha256": "72ef657d93d4a7054f20be818e65da8ceb9408b39b78abb64d6724965a810d97"
+          },
+          {
+            "name": "test-derivation.json",
+            "bytes": 360,
+            "sha256": "80b17d3cd97eea0d28386e0178c05904a30a452668260c44502cbc522ce089c7"
+          },
+          {
+            "name": "compiler-inputs.json",
+            "bytes": 54390,
+            "sha256": "0aa905be9b130f762b764c442df0d0c613ccdd0da03416b56296552764d473be"
+          },
+          {
+            "name": "dependencies.json",
+            "bytes": 24018,
+            "sha256": "de4cf9023b946028d6c50594e5faa2ef3d59d4d6031859e2ae84622819cf47ba"
+          },
+          {
+            "name": "core-classpath.log",
+            "bytes": 19338,
+            "sha256": "afbc55fb5d5e3c026b9633ca71da4c0ce7006e368e5d6153ae6fa876c67fcf01"
+          },
+          {
+            "name": "core-classpath.stderr",
+            "bytes": 766,
+            "sha256": "7a33dab6c7276d9ae677f0dc14bb1f0eaa66fccaa637326a24137a7ccbecdc84"
+          },
+          {
+            "name": "classpath-before.json",
+            "bytes": 1973013,
+            "sha256": "ab6aaa12cb8b9508d1a1bf994d63561a08f2112ea6d9d48b30ac7916fc1dfdde"
+          },
+          {
+            "name": "probe-inputs.json",
+            "bytes": 390,
+            "sha256": "a93a83e3aed6d75e2461161d82e59e5cdc349f4f1ce8e7779cf88bfeff3a1464"
+          },
+          {
+            "name": "generated-files.json",
+            "bytes": 155,
+            "sha256": "c31b88adee00984cdaafd003132699274337748dbcf5a1c586070f75469b444d"
+          },
+          {
+            "name": "artifact.json",
+            "bytes": 245,
+            "sha256": "c4d4dc383e4e98d9829ea7d0a62f3ce41bb619f6235dd530c153cd622985b15a"
+          },
+          {
+            "name": "result.log",
+            "bytes": 249,
+            "sha256": "1ff0ce51229c6bee942e0dff9785b23988adb0099a753d1a0f5a178428adc914"
+          },
+          {
+            "name": "inject-simple.log",
+            "bytes": 102,
+            "sha256": "862c19a7cbafb8080e994bacd13292677011d9406b1db942a2f10bee7fb01d58"
+          },
+          {
+            "name": "inject-complex.log",
+            "bytes": 104,
+            "sha256": "13d079900e4f3951f0f401dea2ca9db99750c69242dc3c9f9dcc8abcd2c1ee5f"
+          },
+          {
+            "name": "source-after.status",
+            "bytes": 50,
+            "sha256": "c710aa12e279d77f42e0644824d1e4019dea9c3bcfc780a17c52f1c546389674"
+          },
+          {
+            "name": "run.env.json",
+            "bytes": 2519,
+            "sha256": "a523c40638c3f7fd5601d33c8d4fc2724cdf0eb2a280486224b3ce50f31d1419"
+          }
+        ],
+        "commands": [
+          {
+            "name": "java-version",
+            "cwd": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+            "started": "2026-11-06T02:35:54.258091+00:00",
+            "expected_exit_code": 0,
+            "exit_code": 0,
+            "process_group_absent": true,
+            "finished": "2026-11-06T02:35:54.373124+00:00",
+            "argument_count": 2
+          },
+          {
+            "name": "mill-version",
+            "cwd": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+            "started": "2026-11-06T02:35:54.373339+00:00",
+            "expected_exit_code": 0,
+            "exit_code": 0,
+            "process_group_absent": true,
+            "finished": "2026-11-06T02:35:55.195490+00:00",
+            "argument_count": 4
+          },
+          {
+            "name": "verilator-version",
+            "cwd": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+            "started": "2026-11-06T02:35:55.196176+00:00",
+            "expected_exit_code": 0,
+            "exit_code": 0,
+            "process_group_absent": true,
+            "finished": "2026-11-06T02:35:55.313155+00:00",
+            "argument_count": 2
+          },
+          {
+            "name": "firtool-version",
+            "cwd": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+            "started": "2026-11-06T02:35:55.313556+00:00",
+            "expected_exit_code": 0,
+            "exit_code": 0,
+            "process_group_absent": true,
+            "finished": "2026-11-06T02:35:55.346580+00:00",
+            "argument_count": 2
+          },
+          {
+            "name": "core-classpath",
+            "cwd": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+            "started": "2026-11-06T02:35:55.346948+00:00",
+            "expected_exit_code": 0,
+            "exit_code": 0,
+            "process_group_absent": true,
+            "finished": "2026-11-06T02:36:01.340187+00:00",
+            "argument_count": 7
+          },
+          {
+            "name": "elaboration",
+            "cwd": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/decode-flag0-02/probe-workspace",
+            "started": "2026-11-06T02:36:02.949550+00:00",
+            "expected_exit_code": 0,
+            "exit_code": 0,
+            "process_group_absent": true,
+            "finished": "2026-11-06T02:36:43.179661+00:00",
+            "argument_count": 8
+          },
+          {
+            "name": "lint",
+            "cwd": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+            "started": "2026-11-06T02:36:43.183329+00:00",
+            "expected_exit_code": 0,
+            "exit_code": 0,
+            "process_group_absent": true,
+            "finished": "2026-11-06T02:36:43.741850+00:00",
+            "argument_count": 6
+          },
+          {
+            "name": "verilator",
+            "cwd": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+            "started": "2026-11-06T02:36:43.742149+00:00",
+            "expected_exit_code": 0,
+            "exit_code": 0,
+            "process_group_absent": true,
+            "finished": "2026-11-06T02:36:54.155367+00:00",
+            "argument_count": 15
+          },
+          {
+            "name": "result",
+            "cwd": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+            "started": "2026-11-06T02:36:54.155695+00:00",
+            "expected_exit_code": 0,
+            "exit_code": 0,
+            "process_group_absent": true,
+            "finished": "2026-11-06T02:36:54.372816+00:00",
+            "argument_count": 1
+          },
+          {
+            "name": "inject-simple",
+            "cwd": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+            "started": "2026-11-06T02:36:54.373318+00:00",
+            "expected_exit_code": 1,
+            "exit_code": 1,
+            "process_group_absent": true,
+            "finished": "2026-11-06T02:36:54.375192+00:00",
+            "argument_count": 2
+          },
+          {
+            "name": "inject-complex",
+            "cwd": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+            "started": "2026-11-06T02:36:54.375445+00:00",
+            "expected_exit_code": 1,
+            "exit_code": 1,
+            "process_group_absent": true,
+            "finished": "2026-11-06T02:36:54.376839+00:00",
+            "argument_count": 2
+          }
+        ],
+        "logs": {
+          "result.log": "DOT16_DECODE_EXTRA_PASS schema=1 feature=0 old_transactions=131109 new_transactions=0 classification_rejects=131072 neighbours=0 simple_op0=131109 complex_op0=131373 simple_op1=0 complex_op1=0\nVDOT_DECODE_PASS transactions=131109 (decoder RTL only)\n",
+          "inject-simple.log": "DOT16_DECODE_INJECT simple_op\nVDOT_DECODE_FAIL case=0 word=0x200000b reason=simple operation mismatch\n",
+          "inject-complex.log": "DOT16_DECODE_INJECT complex_op\nVDOT_DECODE_FAIL case=0 word=0x200000b reason=complex operation mismatch\n",
+          "source-after.status": "SOURCE_DEPENDENCIES_CLASSPATH_AND_PROBE_UNCHANGED\n"
+        },
+        "test_derivation": {
+          "schema": 1,
+          "feature": 0,
+          "edits": 11,
+          "original_sha256": "06ba8130d98de5521126ec26a2f7dd17b85aeba51085f38a07d184468f91095b",
+          "original_reconstructed_byte_exact": true,
+          "fragment_sha256": "e6387fd6be13d3a2a918f6136d7cc97b42ea27ef1c2bca5197286bc491deeced",
+          "derived_sha256": "ba143ca6f411ab5a3c20b2c7d505bdf3e284eb91f348af1554fcf2d026e51fe5"
+        },
+        "source_count": 435,
+        "dependency_count": 126,
+        "input_count": 14,
+        "probe_input_count": 4,
+        "classpath": {
+          "entries": 135,
+          "types": {
+            "file": 92,
+            "missing-resource": 23,
+            "directory": 20
+          },
+          "directories_file_count": 10165,
+          "missing_resource_paths": [
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/cde/cde/compile-resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/cde/cde/resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/hardfloat/hardfloat/compile-resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/hardfloat/hardfloat/src/main/resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/macros/compile-resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/macros/src/main/resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/compile-resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/difftest/compile-resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/difftest/src/main/resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/utility/compile-resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/utility/src/main/resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/huancun/compile-resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/coupledL2/compile-resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/openLLC/openNCB/compile-resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/openLLC/openNCB/src/main/resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/openLLC/compile-resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/openLLC/src/main/resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/yunsuan/compile-resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/fudian/compile-resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/fudian/src/main/resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/macros/compile-resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/macros/resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/compile-resources"
+          ]
+        },
+        "generated": [
+          {
+            "path": "rtl/VDot16DecodeProbe.sv",
+            "bytes": 1391693,
+            "sha256": "bf2bd8c5ab858f760d426ae131e8fa167c3bd5cc27874049d3a6049c5d47db1d"
+          }
+        ],
+        "artifact": {
+          "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/decode-flag0-02/obj/VVDot16DecodeProbe",
+          "bytes": 627232,
+          "sha256": "6e5087fd0a443bb7e6c4d5c587f720ae454c97650bb66325c8075b256217c336"
+        },
+        "actual_input_hashes_verified": true,
+        "all_generated_and_artifacts_verified": true,
+        "env": {
+          "VDOT_DOT16": "0",
+          "VDOT_O2_ELASTIC": "1",
+          "VDOT_T14_FUSED_INPUT": "1",
+          "VDOT_O2_TRACE": "0",
+          "VDOT_O1_HANDOFF": "0",
+          "VDOT_T12_TRACE": "0",
+          "VDOT_T13_TRACE": "0",
+          "VDOT_O1_TRACE": "0",
+          "MILL_OUTPUT_DIR": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2",
+          "MILL_JVM_OPTS_PATH": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/decode-flag0-02/source-snapshot/mill-jvm-opts",
+          "JAVA_HOME": "/home/lizufan/.local/share/graalvm-jdk-21.0.12",
+          "JAVA_OPTS": "-Xmx4G -Xss8m -XX:ActiveProcessorCount=1",
+          "JAVA_TOOL_OPTIONS": "-XX:ActiveProcessorCount=1",
+          "CHISEL_FIRTOOL_PATH": "/home/lizufan/riscv-tools/firtool-1.62.1/bin"
+        }
+      }
+    },
+    {
+      "feature": 1,
+      "outer": {
+        "operation_id": "d9b025210fdcd3c1fd06c2f645cfad75.a2ba998b8bb5e3cbf42a29518aea2cf1",
+        "started_at": "2026-11-06T02:38:41.264738Z",
+        "finished_at": "2026-11-06T02:39:52.1853055Z",
+        "status": "succeeded",
+        "exit_code": 0,
+        "duration_ms": 70865,
+        "cleanup_complete": true,
+        "timed_out": false,
+        "cancelled": false,
+        "script_sha256": "f20ff0ed6fb1c6f950232f95b2de49c3d837f57fe0de24d50e3ffbabbacf7541",
+        "execution_sha256": "1589197360d4f1dc12bae20c08177bda3b01fe57142f27f613c471dfca0cd220",
+        "stdout": "DOT16_DECODE_FEATURE_1_PASS\n"
+      },
+      "evidence": {
+        "run": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/decode-flag1-01",
+        "status": {
+          "schema": 1,
+          "started": "2026-11-06T02:38:41.613143+00:00",
+          "passed": true,
+          "feature": 1,
+          "cpu_affinity": [
+            1
+          ],
+          "budget_seconds": 900,
+          "repo": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+          "output": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/decode-flag1-01",
+          "core_mill_output": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2",
+          "decode_qualified": true,
+          "fullcore_qualified": false,
+          "performance_measured": false,
+          "head": "c981529dc6e493fb7deee8429b9ce05fd197497b",
+          "mill_launcher": {
+            "path": "/home/lizufan/riscv-tools/bin/mill",
+            "sha256": "86acc0b9869d09c8983ecfdbeb39682d47eb585e2b46d94148cc528fbb4b83b8"
+          },
+          "active_step": null,
+          "last_pid": 3019,
+          "coverage": {
+            "schema": 1,
+            "feature": 1,
+            "old_transactions": 131109,
+            "new_transactions": 131109,
+            "classification_rejects": 0,
+            "neighbours": 17,
+            "simple_op0": 131109,
+            "complex_op0": 131373,
+            "simple_op1": 131109,
+            "complex_op1": 131373
+          },
+          "observation_negatives": [
+            "simple_op",
+            "complex_op"
+          ],
+          "qualification": "DOT16_DECODE_FEATURE_1_PASS",
+          "finished": "2026-11-06T02:39:52.018152+00:00",
+          "last_process_returncode": 1,
+          "process_group_absent": true
+        },
+        "process_group_absent_independent": true,
+        "files": [
+          {
+            "name": "status.json",
+            "bytes": 1334,
+            "sha256": "0f2fada77b37ccbce9852aaf7b10bcf4305a5673ec3698890bce78cc1cd69c4a"
+          },
+          {
+            "name": "commands.json",
+            "bytes": 5664,
+            "sha256": "29ea464f2c0ca2d0a498146be64abedb88f5080b4f66caf10854bf24af574b8a"
+          },
+          {
+            "name": "inputs.json",
+            "bytes": 2679,
+            "sha256": "72ef657d93d4a7054f20be818e65da8ceb9408b39b78abb64d6724965a810d97"
+          },
+          {
+            "name": "test-derivation.json",
+            "bytes": 360,
+            "sha256": "d578aa58a396cff47e413ffdcb8e75b075f599ad5083e61c53d663c628f2b9a0"
+          },
+          {
+            "name": "compiler-inputs.json",
+            "bytes": 54390,
+            "sha256": "0aa905be9b130f762b764c442df0d0c613ccdd0da03416b56296552764d473be"
+          },
+          {
+            "name": "dependencies.json",
+            "bytes": 24018,
+            "sha256": "de4cf9023b946028d6c50594e5faa2ef3d59d4d6031859e2ae84622819cf47ba"
+          },
+          {
+            "name": "core-classpath.log",
+            "bytes": 19338,
+            "sha256": "afbc55fb5d5e3c026b9633ca71da4c0ce7006e368e5d6153ae6fa876c67fcf01"
+          },
+          {
+            "name": "core-classpath.stderr",
+            "bytes": 1004,
+            "sha256": "d374d286884785d858c93b03aaf11b83b008cca30de66ce68a6cac763f72b7b8"
+          },
+          {
+            "name": "classpath-before.json",
+            "bytes": 1973013,
+            "sha256": "ab6aaa12cb8b9508d1a1bf994d63561a08f2112ea6d9d48b30ac7916fc1dfdde"
+          },
+          {
+            "name": "probe-inputs.json",
+            "bytes": 390,
+            "sha256": "a93a83e3aed6d75e2461161d82e59e5cdc349f4f1ce8e7779cf88bfeff3a1464"
+          },
+          {
+            "name": "generated-files.json",
+            "bytes": 155,
+            "sha256": "ac7858c5a5fea745d3970ecc5cc679cedeb51c8500992ed27ba5e673701a8f02"
+          },
+          {
+            "name": "artifact.json",
+            "bytes": 245,
+            "sha256": "6538cd29c29330262fb2b29294b45d4323d0e7f26b9d2bc048aaa046a546dde6"
+          },
+          {
+            "name": "result.log",
+            "bytes": 260,
+            "sha256": "f893dc34c340c9925e0afba857ccdf092cb218cfce33e731e3658928cf493587"
+          },
+          {
+            "name": "inject-simple.log",
+            "bytes": 107,
+            "sha256": "31e8a0621a66a2f9dfe7cf9596864c5aa4aba84ab6998c4f774afc9552458628"
+          },
+          {
+            "name": "inject-complex.log",
+            "bytes": 109,
+            "sha256": "1f61130f0a622003605c9ddba55f9c5584288e9b82d39447a347c1ded8cb9290"
+          },
+          {
+            "name": "source-after.status",
+            "bytes": 50,
+            "sha256": "c710aa12e279d77f42e0644824d1e4019dea9c3bcfc780a17c52f1c546389674"
+          },
+          {
+            "name": "run.env.json",
+            "bytes": 2519,
+            "sha256": "efc83abcee72ebadb282c7180d730563644e73a43480a72626e0e8d0d823d1c0"
+          }
+        ],
+        "commands": [
+          {
+            "name": "java-version",
+            "cwd": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+            "started": "2026-11-06T02:38:47.456026+00:00",
+            "expected_exit_code": 0,
+            "exit_code": 0,
+            "process_group_absent": true,
+            "finished": "2026-11-06T02:38:47.571708+00:00",
+            "argument_count": 2
+          },
+          {
+            "name": "mill-version",
+            "cwd": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+            "started": "2026-11-06T02:38:47.571930+00:00",
+            "expected_exit_code": 0,
+            "exit_code": 0,
+            "process_group_absent": true,
+            "finished": "2026-11-06T02:38:48.396791+00:00",
+            "argument_count": 4
+          },
+          {
+            "name": "verilator-version",
+            "cwd": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+            "started": "2026-11-06T02:38:48.397040+00:00",
+            "expected_exit_code": 0,
+            "exit_code": 0,
+            "process_group_absent": true,
+            "finished": "2026-11-06T02:38:48.514076+00:00",
+            "argument_count": 2
+          },
+          {
+            "name": "firtool-version",
+            "cwd": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+            "started": "2026-11-06T02:38:48.514371+00:00",
+            "expected_exit_code": 0,
+            "exit_code": 0,
+            "process_group_absent": true,
+            "finished": "2026-11-06T02:38:48.547382+00:00",
+            "argument_count": 2
+          },
+          {
+            "name": "core-classpath",
+            "cwd": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+            "started": "2026-11-06T02:38:48.547652+00:00",
+            "expected_exit_code": 0,
+            "exit_code": 0,
+            "process_group_absent": true,
+            "finished": "2026-11-06T02:38:54.851174+00:00",
+            "argument_count": 7
+          },
+          {
+            "name": "elaboration",
+            "cwd": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/decode-flag1-01/probe-workspace",
+            "started": "2026-11-06T02:38:56.541765+00:00",
+            "expected_exit_code": 0,
+            "exit_code": 0,
+            "process_group_absent": true,
+            "finished": "2026-11-06T02:39:36.724697+00:00",
+            "argument_count": 8
+          },
+          {
+            "name": "lint",
+            "cwd": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+            "started": "2026-11-06T02:39:36.726622+00:00",
+            "expected_exit_code": 0,
+            "exit_code": 0,
+            "process_group_absent": true,
+            "finished": "2026-11-06T02:39:37.245597+00:00",
+            "argument_count": 6
+          },
+          {
+            "name": "verilator",
+            "cwd": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+            "started": "2026-11-06T02:39:37.245899+00:00",
+            "expected_exit_code": 0,
+            "exit_code": 0,
+            "process_group_absent": true,
+            "finished": "2026-11-06T02:39:47.635021+00:00",
+            "argument_count": 15
+          },
+          {
+            "name": "result",
+            "cwd": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+            "started": "2026-11-06T02:39:47.635667+00:00",
+            "expected_exit_code": 0,
+            "exit_code": 0,
+            "process_group_absent": true,
+            "finished": "2026-11-06T02:39:47.952841+00:00",
+            "argument_count": 1
+          },
+          {
+            "name": "inject-simple",
+            "cwd": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+            "started": "2026-11-06T02:39:47.953238+00:00",
+            "expected_exit_code": 1,
+            "exit_code": 1,
+            "process_group_absent": true,
+            "finished": "2026-11-06T02:39:48.122481+00:00",
+            "argument_count": 2
+          },
+          {
+            "name": "inject-complex",
+            "cwd": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source",
+            "started": "2026-11-06T02:39:48.122821+00:00",
+            "expected_exit_code": 1,
+            "exit_code": 1,
+            "process_group_absent": true,
+            "finished": "2026-11-06T02:39:48.290448+00:00",
+            "argument_count": 2
+          }
+        ],
+        "logs": {
+          "result.log": "DOT16_DECODE_EXTRA_PASS schema=1 feature=1 old_transactions=131109 new_transactions=131109 classification_rejects=0 neighbours=17 simple_op0=131109 complex_op0=131373 simple_op1=131109 complex_op1=131373\nVDOT_DECODE_PASS transactions=262218 (decoder RTL only)\n",
+          "inject-simple.log": "DOT16_DECODE_INJECT simple_op\nVDOT_DECODE_FAIL case=131109 word=0xe00000b reason=simple operation mismatch\n",
+          "inject-complex.log": "DOT16_DECODE_INJECT complex_op\nVDOT_DECODE_FAIL case=131109 word=0xe00000b reason=complex operation mismatch\n",
+          "source-after.status": "SOURCE_DEPENDENCIES_CLASSPATH_AND_PROBE_UNCHANGED\n"
+        },
+        "test_derivation": {
+          "schema": 1,
+          "feature": 1,
+          "edits": 11,
+          "original_sha256": "06ba8130d98de5521126ec26a2f7dd17b85aeba51085f38a07d184468f91095b",
+          "original_reconstructed_byte_exact": true,
+          "fragment_sha256": "e6387fd6be13d3a2a918f6136d7cc97b42ea27ef1c2bca5197286bc491deeced",
+          "derived_sha256": "98f3f41375e95c8b83d2ba48783aa7eafa6368794029cada15b1880a3e5c3658"
+        },
+        "source_count": 435,
+        "dependency_count": 126,
+        "input_count": 14,
+        "probe_input_count": 4,
+        "classpath": {
+          "entries": 135,
+          "types": {
+            "file": 92,
+            "missing-resource": 23,
+            "directory": 20
+          },
+          "directories_file_count": 10165,
+          "missing_resource_paths": [
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/cde/cde/compile-resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/cde/cde/resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/hardfloat/hardfloat/compile-resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/hardfloat/hardfloat/src/main/resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/macros/compile-resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/macros/src/main/resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/compile-resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/difftest/compile-resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/difftest/src/main/resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/utility/compile-resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/utility/src/main/resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/huancun/compile-resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/coupledL2/compile-resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/openLLC/openNCB/compile-resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/openLLC/openNCB/src/main/resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/openLLC/compile-resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/openLLC/src/main/resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/yunsuan/compile-resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/fudian/compile-resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/fudian/src/main/resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/macros/compile-resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/macros/resources",
+            "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/compile-resources"
+          ]
+        },
+        "generated": [
+          {
+            "path": "rtl/VDot16DecodeProbe.sv",
+            "bytes": 1392891,
+            "sha256": "641c1be092a5ccd317de09e7ad94018c0d91219d2e9c7988188ab889ec5f1a91"
+          }
+        ],
+        "artifact": {
+          "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/decode-flag1-01/obj/VVDot16DecodeProbe",
+          "bytes": 631376,
+          "sha256": "50cf43c7737f1d346022a085317fa5c524efd9af79783bf118410dee70154d9e"
+        },
+        "actual_input_hashes_verified": true,
+        "all_generated_and_artifacts_verified": true,
+        "env": {
+          "VDOT_DOT16": "1",
+          "VDOT_O2_ELASTIC": "1",
+          "VDOT_T14_FUSED_INPUT": "1",
+          "VDOT_O2_TRACE": "0",
+          "VDOT_O1_HANDOFF": "0",
+          "VDOT_T12_TRACE": "0",
+          "VDOT_T13_TRACE": "0",
+          "VDOT_O1_TRACE": "0",
+          "MILL_OUTPUT_DIR": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2",
+          "MILL_JVM_OPTS_PATH": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2/decode-flag1-01/source-snapshot/mill-jvm-opts",
+          "JAVA_HOME": "/home/lizufan/.local/share/graalvm-jdk-21.0.12",
+          "JAVA_OPTS": "-Xmx4G -Xss8m -XX:ActiveProcessorCount=1",
+          "JAVA_TOOL_OPTIONS": "-XX:ActiveProcessorCount=1",
+          "CHISEL_FIRTOOL_PATH": "/home/lizufan/riscv-tools/firtool-1.62.1/bin"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "kind": "raw_archive_operation_receipt",
+  "script": "$ErrorActionPreference='Stop'\nwsl.exe -d Ubuntu-22.04 -- taskset -c 1 python3 -B '/mnt/d/Projects/competitions/2026-10-CIE-RISCV-XiangShan/working-zufan-full-20261022/team/optimizations/o2/dot16/rtl-integration/evidence/production-validation-v1/archive_raw.py' --repo '/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source' --runs '/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-20261106-0014-pro2' --output '/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/dot16/rtl-integration/evidence/production-validation-v1' --windows-output '/mnt/d/Projects/competitions/2026-10-CIE-RISCV-XiangShan/working-zufan-full-20261022/team/optimizations/o2/dot16/rtl-integration/evidence/production-validation-v1' --receipts '/mnt/d/Projects/competitions/2026-10-CIE-RISCV-XiangShan/working-zufan-full-20261022/team/optimizations/o2/dot16/rtl-integration/evidence/production-validation-v1/operation-receipts.json'\nif ($LASTEXITCODE -ne 0) { throw 'Raw evidence packaging failed; preserve partial output and inspect original receipt.' }\n",
+  "proposal": {
+    "approval_id": "d9b025210fdcd3c1fd06c2f645cfad75.eaa2d50da280530eec01dce503428669",
+    "cwd": "D:\\Projects\\competitions\\2026-10-CIE-RISCV-XiangShan\\dot16-validation-20261106-0014",
+    "execution_sha256": "5e93f0cef36e911436e7bee2fa2a5b8dc6f1e21c898388abbe9faed696ff51a2",
+    "expires_at": "2026-11-06T11:04:52.7117807+08:00",
+    "identity": "S-1-5-21-3387859986-3281680922-187487810-1001 / session 1 / non-elevated",
+    "permission_scope": "full_current_user_not_three_root_sandbox",
+    "script_sha256": "708a750520e262861b50bb5ceb5c2405bebfff16edb4243d7e10b91d3d21eb4e",
+    "status": "prepared",
+    "timeout_ms": 600000
+  },
+  "terminal": {
+    "durable_logs": true,
+    "execution_environment": "windows_native",
+    "execution_sha256": "5e93f0cef36e911436e7bee2fa2a5b8dc6f1e21c898388abbe9faed696ff51a2",
+    "operation_id": "d9b025210fdcd3c1fd06c2f645cfad75.eaa2d50da280530eec01dce503428669",
+    "output_withheld": false,
+    "result": {
+      "cancelled": false,
+      "cleanup_complete": true,
+      "duration_ms": 1974,
+      "exit_code": 0,
+      "peak_job_commit_bytes": 34398208,
+      "peak_process_commit_bytes": 26374144,
+      "process_id": 162952,
+      "stderr": "w\u0000s\u0000l\u0000:\u0000 \u0000�hKm0R \u0000l\u0000o\u0000c\u0000a\u0000l\u0000h\u0000o\u0000s\u0000t\u0000 \u0000�N\u0006tM�n\f�FO*g\\�P0R \u0000W\u0000S\u0000L\u0000\u00020N\u0000A\u0000T\u0000 \u0000!j\u000f_\u000bN�v \u0000W\u0000S\u0000L\u0000 \u0000\rN/e\u0001c \u0000l\u0000o\u0000c\u0000a\u0000l\u0000h\u0000o\u0000s\u0000t\u0000 \u0000�N\u0006t\u00020\r\u0000\n\u0000",
+      "stderr_truncated": false,
+      "stdout": "{\n  \"status\": \"RAW_ARCHIVE_BYTE_VERIFIED\",\n  \"output\": \"/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/dot16/rtl-integration/evidence/production-validation-v1\",\n  \"windows_output\": \"/mnt/d/Projects/competitions/2026-10-CIE-RISCV-XiangShan/working-zufan-full-20261022/team/optimizations/o2/dot16/rtl-integration/evidence/production-validation-v1\",\n  \"members\": 619,\n  \"archive\": {\n    \"name\": \"raw.zip\",\n    \"bytes\": 11906425,\n    \"sha256\": \"d391f288f1a24796b5825e8b1a7e4481db115157d3ce3f93e5794c359d9d939a\"\n  },\n  \"files\": [\n    {\n      \"name\": \".gitattributes\",\n      \"bytes\": 14,\n      \"sha256\": \"448621a032f5c3c959814e9bf2d461c5844d37c9ea06d77208205a720a43bb98\"\n    },\n    {\n      \"name\": \"README.md\",\n      \"bytes\": 1145,\n      \"sha256\": \"c7e2ec749870ef8a06017f3b8af47ce5232d250ca0a12755c0267174969d8973\"\n    },\n    {\n      \"name\": \"archive_raw.py\",\n      \"bytes\": 9303,\n      \"sha256\": \"eccaa8b25e14f1cb34fd773ff946c98aee29f4db10a122cca0a8d820c3c7a414\"\n    },\n    {\n      \"name\": \"manifest.json\",\n      \"bytes\": 211938,\n      \"sha256\": \"b712a731d6c2e2b2d8692d14f2ae82d59a9d20715c8d55221954c06aec6844c7\"\n    },\n    {\n      \"name\": \"operation-receipts.json\",\n      \"bytes\": 15024,\n      \"sha256\": \"cf2c3d62852048b43c9afbec09d7c95ea716d9eb83e25cdb452b892b02366307\"\n    },\n    {\n      \"name\": \"raw.zip\",\n      \"bytes\": 11906425,\n      \"sha256\": \"d391f288f1a24796b5825e8b1a7e4481db115157d3ce3f93e5794c359d9d939a\"\n    }\n  ]\n}\n",
+      "stdout_truncated": false,
+      "timed_out": false,
+      "total_processes": 6
+    },
+    "script_sha256": "708a750520e262861b50bb5ceb5c2405bebfff16edb4243d7e10b91d3d21eb4e",
+    "started_at": "2026-11-06T03:03:55.685994Z",
+    "status": "succeeded",
+    "updated_at": "2026-11-06T03:03:57.696869Z",
+    "worker_pid": 170792
+  }
+}
