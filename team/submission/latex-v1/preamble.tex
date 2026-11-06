@@ -77,8 +77,11 @@
 \captionsetup[table]{font=small,labelsep=quad,justification=centering,singlelinecheck=false,position=top}
 \setlength{\LTcapwidth}{\textwidth}
 \captionsetup[figure]{font=small,labelsep=quad,hypcap=false,justification=centering,singlelinecheck=false,position=bottom}
+% Build10: unnumbered concept companions; exact figure code remains below.
+\input{report-concepts.tex}
 \newif\ifreportimagepresent
 \newcommand{\reportfigure}[5]{%
+\reportconcept{#1}%
 \begin{center}\begin{minipage}{\linewidth}\centering
 \reportimagepresentfalse
 \IfFileExists{figures/#1.pdf}{\reportimagepresenttrue\includegraphics[width=\linewidth,height=#3,keepaspectratio]{figures/#1.pdf}}{%

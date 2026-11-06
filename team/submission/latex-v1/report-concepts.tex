@@ -1,0 +1,46 @@
+% Build10: conceptual companions only. Exact figures retain their own numbering.
+% The two image blocks are separate; a page break is allowed between them.
+% Each declaration maps one existing reportfigure ID to one required final PNG.
+\newcommand{\reportconceptblock}[3]{%
+\IfFileExists{#2}{%
+\begin{center}\begin{minipage}{\linewidth}\centering
+\includegraphics[width=\linewidth,keepaspectratio]{#2}\par
+\vspace{4pt}%
+{\small 概念示意：#3。技术依据见图~\ref{fig:#1}。\par}%
+\end{minipage}\end{center}%
+\par\penalty0\relax
+}{%
+\PackageError{report-concepts}{Required concept PNG missing: #2}%
+{Add the reviewed final PNG at the mapped path, then rebuild. No placeholder or fallback is allowed.}%
+}}
+\newcommand{\DeclareReportConcept}[3]{%
+\expandafter\newcommand\csname reportconcept@#1\endcsname{%
+\reportconceptblock{#1}{#2}{#3}}}
+\newcommand{\reportconcept}[1]{%
+\ifcsname reportconcept@#1\endcsname
+\csname reportconcept@#1\endcsname
+\fi}
+
+% Explicit mapping: 4 first-stage, 9 second-stage, 9 third-stage companions.
+\DeclareReportConcept{S1-01}{figures/ai-concepts/S1-01.png}{共同输入与软硬件状态核对}
+\DeclareReportConcept{S1-02}{figures/ai-concepts/S1-02.png}{部署、运行与证据归档}
+\DeclareReportConcept{S1-07}{figures/ai-concepts/S1-07.png}{统一启动输入与差分恢复}
+\DeclareReportConcept{S1-06}{figures/ai-concepts/S1-06.png}{向量操作的执行与状态观察}
+\DeclareReportConcept{S2-01}{figures/ai-concepts/S2-01.png}{输入约束、点积与结果写回}
+\DeclareReportConcept{S2-02}{figures/ai-concepts/S2-02.png}{乘积暂存与结果保持}
+\DeclareReportConcept{S2-10}{figures/ai-concepts/S2-10.png}{保留、取消与继续处理}
+\DeclareReportConcept{S2-05}{figures/ai-concepts/S2-05.png}{接收、推进与输出的重叠}
+\DeclareReportConcept{S2-03}{figures/ai-concepts/S2-03.png}{VFEX4 父级派发与共享输出管理}
+\DeclareReportConcept{S2-04}{figures/ai-concepts/S2-04.png}{不同层级的验证视角}
+\DeclareReportConcept{S2-06}{figures/ai-concepts/S2-06.png}{等待期间保持事务}
+\DeclareReportConcept{S2-07}{figures/ai-concepts/S2-07.png}{取消与复位的处理边界}
+\DeclareReportConcept{S2-08}{figures/ai-concepts/S2-08.png}{功能切换与时钟管理}
+\DeclareReportConcept{S3-01}{figures/ai-concepts/S3-01.png}{独立求值与架构状态比较}
+\DeclareReportConcept{S3-02}{figures/ai-concepts/S3-02.png}{识别、检查与执行}
+\DeclareReportConcept{S3-03}{figures/ai-concepts/S3-03.png}{扰动检查与正常参考对照}
+\DeclareReportConcept{S3-04}{figures/ai-concepts/S3-04.png}{测量窗口与执行边界}
+\DeclareReportConcept{S3-05}{figures/ai-concepts/S3-05.png}{统一条件下的性能比较}
+\DeclareReportConcept{S3-06}{figures/ai-concepts/S3-06.png}{公共接口与缓冲区组织}
+\DeclareReportConcept{S3-08}{figures/ai-concepts/S3-08.png}{三种制品分别核对装载内容、有序调用表和输入身份}
+\DeclareReportConcept{S3-07}{figures/ai-concepts/S3-07.png}{面积与时序的不同约束}
+\DeclareReportConcept{S3-09}{figures/ai-concepts/S3-09.png}{已知证据与尚未覆盖的边界}
