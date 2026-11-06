@@ -1,0 +1,210 @@
+{
+  "contract": "r2-s3-first-forward-rvv-v1",
+  "core": {
+    "parent_sources": {
+      "consumer.c": "0510a0279b7a72692f0deb29eb70dd6f57f0d4b94a8b4f08cf766bc9f110f22e",
+      "consumer.inc": "028ee77b1fede4a8803b86302eaf705a7f62e7d5eb527da8586bc412f5fe8be0"
+    },
+    "clones": {
+      "gs32": {
+        "template_sha256": "1743efce24f0dfe0120c93a106a4115bf037657df32f602b93673d577fd24e4d",
+        "clone_sha256": "37ac578698a1a9cc4213fa08d91cd1f525632bb78f25cf48adde693dbddb10f3",
+        "exact_reverse": true,
+        "k288_static_routes": 7,
+        "retained_w2_fr_routes": 1
+      },
+      "paired16": {
+        "template_sha256": "1743efce24f0dfe0120c93a106a4115bf037657df32f602b93673d577fd24e4d",
+        "clone_sha256": "8b78b528a8cd05922b36c0768c6920a1cea13d169e27e64678074c3713cd63f4",
+        "exact_reverse": true,
+        "k288_static_routes": 7,
+        "retained_w2_fr_routes": 1
+      }
+    },
+    "original_c_exact_reverse": true,
+    "original_include_prefix_preserved": true,
+    "shared_initialization_and_model_globals": true,
+    "old_enum_0_to_4_and_method_5_domain_unchanged": true
+  },
+  "main": {
+    "parent_main_sha256": "4537a39c9b07bd4d2e61f6b7e48aae7f241b7905abd18fb198402fce356976ad",
+    "exact_inverse": true,
+    "edits": [
+      [
+        "/* Full forward measurement; all validation/UART are outside the pure call. */",
+        "/* First full forward: method load and dispatch are included; validation/UART are outside. */"
+      ],
+      [
+        "#include \"consumer_w2.h\"",
+        "#include \"consumer_w2.h\"\nextern float *r2_w2_gs32_forward(struct r2_consumer_state *,int,int);\nextern float *r2_w2_paired16_forward(struct r2_consumer_state *,int,int);\n"
+      ],
+      [
+        "/* FR_CACHE/TA_CACHE, actual application negative, UART enabled. */",
+        "/* Private experiment selector, application negative, UART; old public enum is unchanged. */"
+      ],
+      [
+        "={4,0,1};",
+        "={3,0,1};"
+      ],
+      [
+        "0x52324e5447543031",
+        "0x5232465752565631"
+      ],
+      [
+        "int team_forward_main(void) {",
+        "/* Method load, validation and dispatch are entirely inside the measured call. */\n__attribute__((noinline,noclone)) static float *first_forward_dispatch(void) {\n    method=target_control[0];\n    switch(method) {\n        case 3u: return r2_w2_forward(&target_state,R2_FR_CACHE,1,0);\n        case 0x47533332u: return r2_w2_gs32_forward(&target_state,1,0);\n        case 0x50313631u: return r2_w2_paired16_forward(&target_state,1,0);\n        default: reject(88,0);\n    }\n}\nint team_forward_main(void) {"
+      ],
+      [
+        "    method=target_control[0];negative=target_control[1];uart=target_control[2];",
+        "    negative=target_control[1];uart=target_control[2];"
+      ],
+      [
+        "target_report[1]=1;target_report[2]=method;target_report[3]=1;",
+        "target_report[1]=1;target_report[2]=0;target_report[3]=1;"
+      ],
+      [
+        "check((method==R2_FR_CACHE || method==R2_TA_CACHE) && negative<=1 && uart<=1,82);",
+        "check(negative<=1 && uart<=1,82);"
+      ],
+      [
+        "    if(uart)printf(\"CONSUMER_BEGIN method=%u token=1 position=0 negative=%u\\n\",method,negative);",
+        "    if(uart)printf(\"CONSUMER_BEGIN token=1 position=0\\n\");"
+      ],
+      [
+        "    float *logits=r2_w2_forward(&target_state,(enum r2_consumer_method)method,1,0);",
+        "    __asm__ volatile(\".global first_forward_call_begin\\nfirst_forward_call_begin:\":::\"memory\");\n    float *logits=first_forward_dispatch();\n    __asm__ volatile(\".global first_forward_call_end\\nfirst_forward_call_end:\":::\"memory\");"
+      ],
+      [
+        "    target_report[16]=c0;",
+        "    target_report[2]=method;target_report[16]=c0;"
+      ]
+    ],
+    "fixed_begin": "CONSUMER_BEGIN token=1 position=0",
+    "selector_load_and_dispatch_inside_window": true,
+    "method_report_after_four_reads": true,
+    "no_prestate_scan": true,
+    "exact_flags_guard": 1
+  },
+  "exact_flags_guard": 1,
+  "core_recompiled": true,
+  "original_compile_argv": [
+    "/usr/bin/riscv64-linux-gnu-gcc",
+    "-std=gnu11",
+    "-std=gnu11",
+    "-ffreestanding",
+    "-fno-builtin",
+    "-ffp-contract=off",
+    "-fno-fast-math",
+    "-fno-lto",
+    "-fno-tree-vectorize",
+    "-fno-tree-slp-vectorize",
+    "-fno-tree-loop-distribute-patterns",
+    "-fno-ipa-cp",
+    "-fno-ipa-icf",
+    "-mno-relax",
+    "-mabi=lp64d",
+    "-fno-stack-protector",
+    "-ffunction-sections",
+    "-fdata-sections",
+    "-U_FORTIFY_SOURCE",
+    "-D_FORTIFY_SOURCE=0",
+    "-Wno-error=unknown-pragmas",
+    "-Wno-error=unused-variable",
+    "-Wno-error=unused-function",
+    "-Wno-error=maybe-uninitialized",
+    "-DFULL_ERRNO_OFFSET=0",
+    "-fno-pic",
+    "-march=rv64gv",
+    "-mcmodel=medany",
+    "-static",
+    "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/am/src/nemu/include",
+    "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/am/src/xs/include",
+    "-DISA_H=\"riscv.h\"",
+    "-O2",
+    "-MMD",
+    "-Wall",
+    "-Werror",
+    "-ggdb",
+    "-I/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/norm-resume-20261027-2000/consumer-build-02/source",
+    "-I/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/norm-resume-20261027-2000/consumer-build-02/source/include/",
+    "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/libs/klib/include/",
+    "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/am/",
+    "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/am/include",
+    "-D__ISA__=\"riscv64\"",
+    "-D__ISA_RISCV64__",
+    "-D__PLATFORM__=\"xs\"",
+    "-D__PLATFORM_XS__",
+    "-D__ARCH__=riscv64-xs",
+    "-D__ARCH_RISCV64_XS",
+    "-DARCH_H=\"arch/riscv64-xs.h\"",
+    "-fno-asynchronous-unwind-tables",
+    "-fno-builtin",
+    "-fno-stack-protector",
+    "-Wno-main",
+    "-c",
+    "-o",
+    "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/norm-resume-20261027-2000/consumer-build-02/consumer-core.o",
+    "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/norm-resume-20261027-2000/consumer-build-02/source/consumer.c"
+  ],
+  "derived_compile_argv": [
+    "/usr/bin/riscv64-linux-gnu-gcc",
+    "-std=gnu11",
+    "-std=gnu11",
+    "-ffreestanding",
+    "-fno-builtin",
+    "-ffp-contract=off",
+    "-fno-fast-math",
+    "-fno-lto",
+    "-fno-tree-vectorize",
+    "-fno-tree-slp-vectorize",
+    "-fno-tree-loop-distribute-patterns",
+    "-fno-ipa-cp",
+    "-fno-ipa-icf",
+    "-mno-relax",
+    "-mabi=lp64d",
+    "-fno-stack-protector",
+    "-ffunction-sections",
+    "-fdata-sections",
+    "-U_FORTIFY_SOURCE",
+    "-D_FORTIFY_SOURCE=0",
+    "-Wno-error=unknown-pragmas",
+    "-Wno-error=unused-variable",
+    "-Wno-error=unused-function",
+    "-Wno-error=maybe-uninitialized",
+    "-DFULL_ERRNO_OFFSET=0",
+    "-fno-pic",
+    "-march=rv64gv",
+    "-mcmodel=medany",
+    "-static",
+    "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/am/src/nemu/include",
+    "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/am/src/xs/include",
+    "-DISA_H=\"riscv.h\"",
+    "-O2",
+    "-MMD",
+    "-Wall",
+    "-Werror",
+    "-ggdb",
+    "-I/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/first-forward-rvv-20261106-pro5/build-02/source",
+    "-I/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/first-forward-rvv-20261106-pro5/build-02/source/include/",
+    "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/libs/klib/include/",
+    "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/am/",
+    "-I/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/xs-env/nexus-am/am/include",
+    "-D__ISA__=\"riscv64\"",
+    "-D__ISA_RISCV64__",
+    "-D__PLATFORM__=\"xs\"",
+    "-D__PLATFORM_XS__",
+    "-D__ARCH__=riscv64-xs",
+    "-D__ARCH_RISCV64_XS",
+    "-DARCH_H=\"arch/riscv64-xs.h\"",
+    "-fno-asynchronous-unwind-tables",
+    "-fno-builtin",
+    "-fno-stack-protector",
+    "-Wno-main",
+    "-c",
+    "-o",
+    "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/first-forward-rvv-20261106-pro5/build-02/consumer-core.o",
+    "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/first-forward-rvv-20261106-pro5/build-02/source/consumer.c"
+  ],
+  "combined_object_sha256": "7a4b5aa4a0b0795f60e0ce57102ed83c7e62192d46ad9427a66a8fe656a20e6e",
+  "old_parent_qualification_scope": "source and golden provenance only; no inherited new-combination PASS"
+}

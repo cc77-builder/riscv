@@ -1,0 +1,24 @@
+Traceback (most recent call last):
+  File "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/first-forward-rvv-20261106-pro5/launch-preflight-03.py", line 113, in <module>
+    check() if sys.argv[1:] == ['--check'] else main()
+  File "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/first-forward-rvv-20261106-pro5/launch-preflight-03.py", line 35, in check
+    record, files, identity, hardware, profile, checker = run.qualified(
+  File "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/first-forward-rvv-20261106-pro5/controller-03/run.py", line 50, in qualified
+    identity, hardware, hardware_profile = b.physical_identity(identity_path, physical=True)
+  File "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/first-forward-rvv-20261106-pro5/controller-03/build.py", line 142, in physical_identity
+    files, profile = p.hardware_profile(TOOL_REPO, value['configuration'])
+  File "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/gs32-rvv-20261106-0640/consumer-support-02/team/optimizations/o2/repro/clean_profile.py", line 93, in hardware_profile
+    suite.hardware_guard(pins, root / "build/emu", root=root)
+  File "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/first-forward-rvv-20261106-pro5/controller-03/target-support/team/optimizations/o2/fullcore/run_suite.py", line 102, in hardware_guard
+    live_inputs.verify(root, pins)
+  File "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/first-forward-rvv-20261106-pro5/controller-03/target-support/team/optimizations/o2/fullcore/live_inputs.py", line 30, in verify
+    verify_hardware_files(root, pins["files"])
+  File "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/first-forward-rvv-20261106-pro5/controller-03/target-support/team/optimizations/o1/build_inputs.py", line 23, in verify_hardware_files
+    verify_dependencies(root)
+  File "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/first-forward-rvv-20261106-pro5/controller-03/target-support/team/optimizations/o1/build_inputs.py", line 30, in verify_dependencies
+    helper = runpy.run_path(str(root / 'team/scripts/prepare-core-baseline.py'))
+  File "/usr/lib/python3.10/runpy.py", line 288, in run_path
+    code, fname = _get_code_from_file(run_name, path_name)
+  File "/usr/lib/python3.10/runpy.py", line 252, in _get_code_from_file
+    with io.open_code(decoded_path) as f:
+FileNotFoundError: [Errno 2] No such file or directory: '/home/lizufan/riscv-lab/t17-clean-20261024-0854/clean-02/source/team/scripts/prepare-core-baseline.py'
