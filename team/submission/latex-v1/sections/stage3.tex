@@ -1,766 +1,280 @@
 \renewcommand{\stagefigureprefix}{3}\setcounter{figure}{0}
-\reporttitle{第三阶段协同仿真与性能分析文档}
+\reporttitle{第三阶段：协同仿真与性能评估}
 
+\section{从功能验证到工程评价}
+自定义指令需要在程序中产生正确结果，也需要与处理器的异常、状态和调度机制配合。本阶段使用独立NEMU参考模型和全核DiffTest核对架构行为，再以等价RVV程序比较完整测量窗口的周期。软件接入、综合面积和静态时序共同说明这项设计在不同场景下的收益与成本。
 
-团队名称（待团队确认）　成员（待团队确认）\par
-工程版本为0f＋firstdot V2＋原C8，初稿日期为2026年11月2日。\par
+报告分别给出固定八项点积实现的微基准、C8软件调用和正在推进的完整前向计算。每组结果均说明受测版本、输入与测量边界，便于从局部指令机制逐步理解其应用价值。
 
+\reportfigure{S3-01}{RTL与独立参考模型的协同仿真}{11cm}{同一程序驱动香山RTL与NEMU参考模型，在架构提交边界比较向量结果，并按测试约定核对CSR和异常状态。}{固定八项点积受测版本的DiffTest结构；版本与原始结果见本章证据索引。}
 
-\section{验证与评估目标}
+\section{NEMU参考语义与处理器接入}
+RTL通过并行乘法、归约网络和流水状态执行点积；NEMU参考模型则从指令字、源寄存器和向量配置出发，顺序计算八项有符号乘积之和。两个实现采用不同内部组织，对同一架构定义形成交叉核对。
 
+参考端首先匹配custom-0编码并检查合法配置，随后快照读取两个源寄存器，计算点积并构造完整128位目的值：低32位为整数结果，高96位为零。快照读取使源、目的寄存器重合时仍使用本条指令执行前的数据。合法运算保留约定的向量状态；非法配置进入异常处理。
 
-本阶段通过独立NEMU语义模型与香山RTL协同仿真验证指令行为，并采用等价RVV实现评估周期收益。工程评价同时考虑完整结果、异常、状态恢复、控制正确性、软件调用边界及硬件成本。\par
+八项点积受测组合使用基于NEMU固定版本的vdot补丁及配套平台适配。适配依据指令和架构状态对齐该香山版本的xTVAL行为，异常码、陷阱PC、xTVAL和目的寄存器状态均保留检查。现有特权测试记录覆盖M模式。参考库、故障注入库与独立运行的NEMU各自记录构建身份，复现时按用途选择对应制品。
 
+\reportfigure{S3-02}{参考模型的译码、状态检查与完整写回}{11cm}{参考端先检查编码与向量状态，再快照源值、求和并写回；非法状态沿异常路径完成。平台适配与对应受测版本共同固定。}{NEMU补丁说明及冻结参考模型。}
 
+\section{差分检验与错误检出}
+基础功能矩阵覆盖正数、负数、边界值、寄存器别名和非法向量配置。在八项点积两槽受测组合中，全核矩阵包含117个不同用例，按矩阵分片共执行124次；算术RTL的10022项测试和真实父级控制测试分别承担数值与握手覆盖。R5组合验收汇合13项已归档记录与1项新增控制诊断，并重新解析其原始输出。
 
-\reportfigure{S3-01}{RTL与NEMU独立模型的DiffTest框架}{12.0cm}{同一AM镜像分别驱动RTL DUT和固定NEMU独立模型，在架构提交边界比较完整128位向量结果及CSR，并归档版本、配置与运行证据。}{用户提供示意图；依据：冻结EMU/NEMU身份、差分协议和R5结果。版本范围：稳定0f＋固定reference；同一镜像。}
-\section{NEMU扩展}
-
-
-NEMU以\seqsplit{a48a11f208ff81ad765591d83271d1b339fb3861}为基点，使用vdot补丁1.1.0及\seqsplit{xs-16ae9dd-vdot-runtime-tval-v1}平台配置。补丁绑定7个变化文件，SHA256为\seqsplit{6c165bf5f94ef0bfb4f894a5f06eb6d620d4a7e0e12f3b1400fa72811f5d24db}。\par
-
-
-执行过程先匹配custom-0编码并检查合法向量状态，再快照读取两源，逐项转换signed int8、从零求和并写回完整128位结果。独立软件求和有助于与硬件乘法/归约结构交叉验证。\par
-
-
-平台适配对齐非法指令xTVAL行为。固定香山中，译码已知非法与FU发现VL非法的路径具有不同xTVAL表现，reference按同一架构谓词建模。对应检查仍覆盖异常码、陷阱PC、xTVAL及目的状态。全核实验使用已验证reference角色，特权验证范围以现有M模式记录为准。\par
-
-
-
-\reportfigure{S3-02}{NEMU的vdot译码与执行流程}{12.0cm}{精确匹配custom-0编码并检查合法状态后，先快照两个源，再完成signed int8点积和完整128位写回；非法配置进入异常路径，平台xTVAL限制按正文保留。}{用户提供示意图；依据：\seqsplit{team/patches/nemu}及冻结reference实现。版本范围：按已实现版本绘制；平台xTVAL范围按正文保留。}
-\section{差分、拒错与恢复}
-
-
-DiffTest将硬件提交后的架构状态与NEMU对应状态比较。除正常算术结果外，本项目检查完整向量写回、向量CSR、寄存器别名和非法状态路径。\par
-
-
-负控对vdot结果的bit100注入错误，检验高96位比较是否真正生效。成功的拒错记录应呈现对应PC/机器字、向量目的及差异位置，并以预期错误终止。随后恢复正常reference，运行同一镜像取得正常结果，再用独立重放确认验证结构一致。\par
-
-
-R5/G5选择原13项记录与1项新控制诊断组成验收，原始记录重新解析后通过。全核功能矩阵包含117个不同用例及124次分片执行。新控制诊断检查131072字节寄存器结果。算术模型、局部RTL、全核作业和应用矩阵的数量按其范围分别记账。\par
-
-
-
-
-clean-02原宿主UTC并发审计存在80.119ms表观四路重叠，旧FAIL记录保留。补证以同boot/PID单调包络完成所选审计，组合UTC峰3、补项单调峰1。系统UTC稳定性仍待建立，性能采用DUT guest周期。\par
-
-
+为了检验完整128位比较是否有效，负控在参考端的vdot结果中翻转bit100。差分器检测到目的寄存器高半区不一致并按预期终止；恢复正常参考模型后，同一程序完成15项检查并到达GOOD TRAP。图\ref{fig:S3-03}给出了这两个互补结果：前者检验错误检出能力，后者检验正常执行路径。
 
 \input{sections/rejection-stage3.tex}
 \input{sections/waveform-stage3.tex}
-\section{等价RVV基线与测量方法}
+
+\section{等价RVV对照与测量方法}
+8项点积微基准中的标准RVV对照，通过宽乘和宽归约计算与VDot相同的有符号点积。单次已知配置序列先以\texttt{vwmul.vv}得到16位乘积，再切换到\texttt{e16/m1/VL8}，清零整个目的寄存器并执行\texttt{vwredsum.vs}，最后恢复入口配置。高96位在归约过程中保留为零，低32位保存完整整数和。
+
+该微基准按使用场景组织：已知配置的单次点积为5条主体指令，通用入口增加\texttt{vl/vtype}保存，共7条；四个独立点积共享配置切换，主体合计14条。批处理中的配置复用使标准RVV也能充分利用独立计算，而比较仍覆盖双方实际执行的清零、搬运和状态管理。
+
+\subsection{完整窗口与配对统计}
+测量采用同一输入、循环次数、镜像配置和边界规则。每个微基准场景使用三组数据，每组统计四个正式窗口；首次、预热和独立重放分别保存。计时保留实际执行的配置切换、循环与边界开销，统计单位为DUT全局周期。
+
+香山是乱序处理器，计数器的读取时刻需要与指令执行位置对应。项目在固定受测实现上组合使用fence与cycle、instret读数，并通过观察器关联四条CSR指令的PC、机器字、ROB身份、采样和退休事件。cycle差与全核采样tick差相符，instret差与退休记录及ELF展开计数相符；绝对计数器使用整数解析。该方法的适用对象由受测硬件和测量合同共同确定。
+
+加速比与周期降低率分别定义为
+\[
+S=\frac{C_{\mathrm{RVV}}}{C_{\mathrm{VDot}}},\qquad
+R=\frac{C_{\mathrm{old}}-C_{\mathrm{new}}}{C_{\mathrm{old}}}.
+\]
+二者使用不同分母，表中同时给出原始周期与比较对象。完整窗口还包含调度、访存、循环和边界开销，因此与第二阶段的FU两拍最早响应分别报告。
+
+\reportfigure{S3-04}{CSR采样、退休与计时窗口的对应关系}{11cm}{依据观察器事件重绘。所示窗口的cycle差为71、instret差为12；图中分别标出进入ROB、CSR采样与退休事件。}{固定T13/O2观察记录与测量合同。}
 
 
-已知配置的RVV单次点积通过vwmul.vv得到宽化乘积，再切换到e16、清零目的向量，使用vwredsum.vs形成32位总和，最后恢复入口向量状态。目的清零覆盖完整向量，宽化归约保留已清零的高位。RVV批处理共享允许共享的配置开销。\par
-
-
-两路径计算相同输入和完整输出，检查声明的寄存器副作用、CSR以及缓冲区护栏。相同镜像使用相同窗口规则、数据和循环次数。正式周期按三组数据、每组四个正式窗口统计，首次及预热另存，独立重放用于一致性检查。\par
-
-
-加速比S = C\_RVV / C\_vdot。相对旧版的周期降低率R = (C\_old − C\_new) / C\_old。\par
-
-
-在固定香山实现中，fence与CSR读组成的测量边界经实际入队、采样、退休记录核验。每窗校验四条CSR指令的PC、机器字和ROB身份，cycle差与全核tick差对应，instret差与实际退休/ELF展开计数一致。绝对计数器按整数解析。原记录中的首次、预热和失败样本完整保存。\par
-
-
-
-\reportfigure{S3-04}{计时窗口CSR与退休边界}{12.0cm}{本图为既有观察器事件的时序重绘，并非原始波形截图。所示窗口cycle差为71、instret差为12；入ROB、CSR取样与退休事件分别标示。}{用户提供示意图；依据：\seqsplit{team/spec/measurement.md}及固定T13/O2观察器窗口证据。版本范围：按实际审核过的窗口绘制；不以局部FU周期替代全核计时。}
 \section{硬件微基准结果}
 
+四类微基准分别观察单次点积、连续数据依赖、独立任务吞吐，以及加载、计算与存储共同作用下的表现。表~\ref{tab:3-micro-results} 使用同镜像中的 VDot 与等价 RVV 路径；每个场景、每种实现使用三个数据集，每个数据集取四个正式窗口，共十二窗。
 
-下表来自0f同镜像对照合同，均为正式窗口均值。\par
-
-
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.25\linewidth}>{\raggedright\arraybackslash}p{0.21\linewidth}>{\raggedright\arraybackslash}p{0.21\linewidth}>{\raggedright\arraybackslash}p{0.23\linewidth}}
+{\small\setlength{\tabcolsep}{6pt}
+\begin{longtable}{lrrr}
+\caption{0f 受测实现的微基准结果（周期均值）}\label{tab:3-micro-results}\\
 \toprule
-\textbf{场景} & \textbf{vdot cycles} & \textbf{RVV cycles} & \textbf{加速比}\\ \midrule\endhead
-单次点积 & 71.000 & 85.250 & 1.200704×\\
-依赖链256 & 1857.000 & 5440.500 & 2.929725×\\
-四路独立batch128 & 221.000 & 678.000 & 3.067873×\\
-加载/计算/存储stream64 & 1127.500 & 1133.000 & 1.004878×\\
-\bottomrule\end{longtable}}
+场景 & VDot & RVV & 加速比\\
+\midrule\endhead
+单次点积 & 71.00 & 85.25 & 1.2007$\times$\\
+依赖链（256次） & 1,857.00 & 5,440.50 & 2.9297$\times$\\
+四路独立批量（128次） & 221.00 & 678.00 & 3.0679$\times$\\
+加载、计算、存储流（64次） & 1,127.50 & 1,133.00 & 1.0049$\times$\\
+\bottomrule
+\end{longtable}}
+
+加速比按同一场景的 RVV 周期总和除以 VDot 周期总和计算。独立批量由32轮四路点积组成，能够持续向流水线提供相互独立的工作；依赖链则要求每次点积使用前次结果。两者分别呈现了吞吐率和依赖关系对收益的影响。加入加载、存储与循环控制后，stream64 两条路径的周期接近，说明仅缩短整数点积还不足以决定整个计算循环的速度。
+
+在单独的 O1 与 O2 同镜像比较中，独立批量由362.5周期降至221周期，减少39.03\%。在0f与其修复前版本的独立复核中，对同一实现、同一输入、同一序号的96对正式窗口进行比较，周期差值均为零。这些结果提示，应用优化还需同时考察任务独立性、数据搬运和循环开销。
+
+\reportfigure{S3-05}{四类微基准周期与RVV归一化结果}{6.5cm}{每个场景以RVV周期为100\%；条内列正式窗口的平均DUT周期，条尾列VDot/RVV周期百分比。加速比见本节表格。}{本文0f实测表与原同镜像窗口CSV。版本范围：71/85.25、1857/5440.5、221/678、1127.5/1133均按原均值。}
 
 
-独立批量可以利用O2的连续接收能力，依赖链受到前后数据依赖约束，stream场景还承担访存及循环开销。结果显示收益随工作负载改变。\par
+\section{软件调用与C8优化}
 
+前述微基准考察8项点积的指令序列，本节转向8行、每行32项GEMV的完整函数调用。硬件点积单元要在矩阵运算中发挥作用，还需要减少相邻计算之间的配置和数据搬运。firstdot用首段点积直接初始化累加状态，随后接续其余分段；C8在复用输入向量的8行、每行32项GEMV路径中，进一步消除重复的向量配置。两者分别减少累加初始化与配置管理的开销。
 
-O1→O2的独立同镜像比较中，batch128由362.5降至221周期，减少39.0345\%。H1及0f修复分别保持各自96对正式窗口周期相同。阶段间比较采用各自冻结合同。\par
+C8提供普通RV64 C接口。调用者将行优先矩阵\(A[8][32]\)和输入向量\(x[32]\)连续存放，形成288字节输入；返回值写入8个16字节结果槽，每槽低32位保存INT32点积，高96位清零。固定槽布局与指令的完整结果格式一致，便于在功能检查和后续处理之间传递结果。
 
+VDot路径将每行分为四个8项点积段；RVV路径则处理两个16项半组，以\texttt{e8/m1/VL16}宽乘和\texttt{e16/m2/VL16}宽归约接续得到完整32项组和。两种实现共享输入布局与完整结果格式，各自采用适合的分组和配置复用方式。
 
-
-
-
-\reportfigure{S3-05}{四类微基准周期与加速比}{5.8cm}{按single、chain256、batch128、stream64列RVV与vdot周期；加速比逐项标注，保留单位/输入/统计合同；不同量级宜分面，不混成一个总体加速比。}{本文0f实测表与原同镜像窗口CSV。版本范围：71/85.25、1857/5440.5、221/678、1127.5/1133均按原均值。}
-\section{软件调用与C8结果}
-
-
-firstdot以首段点积初始化累加状态，后续段按约定求和。C8在已验证8×32路径中复用配置，提供普通C显式入口和RVV回退。输入为对齐的288字节A||x，输出为8个16字节完整槽。\par
-
-
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.25\linewidth}>{\raggedright\arraybackslash}p{0.69\linewidth}}
+\begin{center}
+\begin{tabular}{lrr}
 \toprule
-\textbf{同合同8×32实现} & \textbf{完整调用cycles}\\ \midrule\endhead
-firstdot & 282.25\\
-原C8配置复用vdot & 273.00\\
-本批最快合格RVV & 299.00\\
-\bottomrule\end{longtable}}
+8\(\times\)32整数GEMV调用 & 周期均值 & 对照意义\\
+\midrule
+firstdot & 282.25 & 首段直接初始化\\
+C8配置复用VDot & 273.00 & 本节选用实现\\
+同批较快合格RVV & 299.00 & 标准指令对照\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+在稳定八项两槽实现的这组8\(\times\)32配对测量中，输入已打包为INT8，输出为8个完整结果槽。C8相对firstdot减少3.2772\%的周期，相对较快RVV的加速比为1.095238。统计采用三个数据集、每组四个正式窗口，包含完整调用开销。这些结果说明，整数点积之外的软件组织仍然影响最终收益。\footnote{C8接口和结果见\href{https://github.com/cc77-builder/riscv/blob/a0f13456e0c3180fe9c4023f5cbe7874eb5d35a9/team/optimizations/o2/integration/firstdot-v2-0f/package/c8/RESULT.md}{C8软件包验收结果}及其固定输入清单。这里的周期对应该8\(\times\)32调用计划。}
+
+接入时，\texttt{xs\_c8\_gemv\_8x32}在编译期选择对应函数，显式RVV入口提供同接口对照。原合格程序、源码复制对照和SDK接入版的31,440字节BIN逐字节一致，装载段、48项调用表和12组输入也一致。\footnote{三方最终镜像比较见\href{https://github.com/cc77-builder/riscv/blob/cfb0010f379f13ac7732dfb98ae600cc7ee1d44b/team/optimizations/o2/integration/firstdot-v2-0f/package/c8/relink/RESULT.md}{C8最终镜像等价结果}。}这条从函数对象到最终镜像的核查链，使接口封装与实际执行代码建立了明确对应关系。新应用可据此复用固定函数，并针对自己的准备流程和调用窗口开展整体验证。
+
+\reportfigure{S3-06}{firstdot与C8的软件入口和结果布局}{12.0cm}{C8读取连续的INT8矩阵与向量，输出8个完整128位结果槽。编译期入口分别连接VDot或RVV函数，调用者使用同一缓冲区布局。}{C8接口合同、\seqsplit{selected\_gemv\_c8.h}及已核对的完整函数对象。}
 
 
-C8相对firstdot减少3.2772\%，相对同批最快RVV为1.095238×。该结果来自三数据集完整矩阵，普通C验证、软件包和回接分别补齐调用、ABI、拒错、搬移与最终镜像等价资格。\par
+\section{软件接入与复现说明}
 
+\subsection{固定平台与数据布局}
 
-原合格镜像、复制对照、SDK接入版BIN均为31440字节，SHA相同。PT\_LOAD、48条调用表项与12组输入数据一致，ELF差异位于调试节。627项保护输入支持复用原功能证据。后续任意新应用按实际输入生命周期和最终链接重新界定资格。\par
+C8软件包面向本项目已验证的RV64、lp64d、VLEN128裸机环境，调用前启用向量状态。VDot路径使用项目的自定义点积编码；RVV路径使用标准向量指令。输入、输出各按16字节对齐并独立存放，输入在调用期间保持有效。
 
-
-4×8和16×64采用原firstdot入口，4×13选择更快的RVV。C8普通调用接口、固定对象及最终镜像身份可由原接入记录核对。\par
-
-
-
-\reportfigure{S3-06}{firstdot/C8入口与最终镜像等价链}{12.0cm}{原C8入口读取对齐的288字节A与x，产生8个16字节结果槽，并保留RVV回退。原镜像、复制对照与SDK接入通过BIN、PT\_LOAD及调用表进行静态等价核查。}{用户提供示意图；依据：C8 CONTRACT、relink RESULT和对应冻结manifest。版本范围：原C8稳定入口；不引入split-input或分段归约候选。}
-\section{面积、时序与设计成本}
-
-
-使用Nangate45 Typical 1.10V/25°C，Yosys0.9、ABC1.01及OpenSTA2.0.17。主档周期1ns、负载5fF，采用固定线负载模型，另有0.5ns、2ns及1fF、20fF敏感性档。\par
-
-
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}p{0.3\linewidth}>{\raggedright\arraybackslash}p{0.35\linewidth}}
+\begin{center}
+\begin{tabular}{ll}
 \toprule
-\textbf{指标} & \textbf{FU} & \textbf{完整VFEX4父级}\\ \midrule\endhead
-标准单元面积 μm² & 17,298.246 & 284,614.946\\
-nominal r2r到达 ns & 1.163404 & 3.261218\\
-nominal最差setup裕量 ns & −0.268520 & −2.393998\\
-\bottomrule\end{longtable}}
-
-
-父级面积包含FU及DIV。负裕量表明1ns参考目标仍有时序违例，整核Fmax、功耗和布线后时序为待测。H1相对O2独立FU面积降低2.33386\%，父级降低0.137349\%，同时保留部分路径退化。0f的取消关钟修复以正确性为依据，其周期不退化与成本变化分别留档。\par
-
-
-
-\reportfigure{S3-07}{Nangate45面积与五档STA报告证据}{6.1cm}{分别展示FU及完整VFEX4父级综合面积、时钟/负载档位、最差setup路径和负slack；标明工艺角、布局前、父级包含FU，不能相加。}{0f \seqsplit{PERFORMANCE\_COST\_RESULT.md}、原综合/STA报告及timing.csv。版本范围：Nangate45 Typical 1.10V/25°C；1ns负裕量如实保留。}
-\section{优化探索及最终取舍}
-
-
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}p{0.3\linewidth}>{\raggedright\arraybackslash}p{0.35\linewidth}}
-\toprule
-\textbf{探索} & \textbf{结果} & \textbf{最终处理}\\ \midrule\endhead
-P1 / P1-R1输入分离 & 锚点超出1\%门槛 & HOLD\\
-P4一拍两槽 & 成本原47项中6项失败 & NO-GO\\
-P4唯一修订 & 47项中10项失败 & NO-GO\\
-C8分段归约 & 同轮观测273.75→273周期，锚点及3\%收益未过 & 关闭该候选\\
-P3 FP32→QKV & 正常校准在限额内取得前缀，0完整计时窗，7200秒完整上界未闭合 & 暂存HOLD\\
-\bottomrule\end{longtable}}
-
-
-上述试验支持最终选型，正式性能表使用已获资格的稳定结果。参数扩展提供INT16独立单元证据，当前工程的应用演示范围为点积微基准及固定GEMV调用。\par
-
-
-\section{结论}
-
-
-本项目完成自定义指令硬件接入、独立NEMU扩展、分层功能验证及等价RVV周期分析。O2提升独立吞吐，H1降低结果状态成本，0f处理DIV取消关钟，firstdot与C8改善固定软件调用。工程通过固定源、镜像、输入及原始证据绑定实现复核，材料中如实列出失败、时序违例和验证边界。\par
-
-
-\href{https://github.com/cc77-builder/riscv/blob/eca41d7cd959f5f3c4f240e382919c492d1ccb96/team/patches/nemu/README.md}{NEMU补丁说明} · \href{https://github.com/cc77-builder/riscv/blob/eca41d7cd959f5f3c4f240e382919c492d1ccb96/team/spec/measurement.md}{测量合同} · \href{https://github.com/cc77-builder/riscv/blob/eca41d7cd959f5f3c4f240e382919c492d1ccb96/team/optimizations/o2/r3-div-gate/PERFORMANCE\_COST\_RESULT.md}{0f性能与成本} · \href{https://github.com/cc77-builder/riscv/blob/eca41d7cd959f5f3c4f240e382919c492d1ccb96/team/docs/version-comparison-r5-g5-20261027.md}{版本数据对照}\par
-\section{最终版本与性能证据身份}
-\begin{itemize}
-\item 资料与稳定代码发布提交为eca41d7cd959f5f3c4f240e382919c492d1ccb96。
-\item 生产硬件提交为0f12df675378556670afd0dd2153f47fcb330610。
-\item clean-02 EMU的SHA256为\seqsplit{acf672eb39f836da4000b253849e3214089e9c8e5198060a57d2cc6bbd393da9}。
-\item reference的SHA256为\seqsplit{62b1707c52a4c323468481e0c1863b79f244d9a3fd54aeb7b7d2ecb5f01a35ca}。
-\item C8最终BIN的SHA256为\seqsplit{56805506eb98b68269c73a3645d8f75dff73b697e30dec5f93ccc4716089ad34}。
-\end{itemize}
-本稿保留最终版本、同合同测量和各层原始证据的关系，报告中的周期收益由已有实验支持。
-\section{工程实现与验证方法补充}
-
-
-\subsection{架构参考模型的独立性}
-
-
-NEMU参考实现从架构指令字、源向量和向量配置计算结果，按软件顺序完成八项有符号乘积求和。RTL以并行乘法、归约和寄存状态实现相同语义。两者采用不同内部组织，可以减少同一结构错误在参考和实现中同步出现的风险。\par
-
-
-参考模型必须独立确定目的结果、配置合法性和异常行为。它不得读取DUT输出反推正确值。平台适配可对齐架构允许的实现选择，例如固定平台的xTVAL规则，但应通过指令和架构状态描述条件，保留其他异常和目的状态检查。\par
-
-
-reference动态库、standalone可执行模型和故障注入参考库分别具有不同用途。最终差分使用已验收reference的真实二进制及来源，负控只对约定位置注入错误。仅凭相同文件名或基线提交，无法确定实际加载库是否相同，因此每次记录包含完整路径和SHA。\par
-
-
-\subsection{从全核日志判断完成状态}
-
-
-正常程序的有效证据至少包含实际启用DiffTest、约定测试数量和顺序、完整功能检查、GOOD TRAP及一致退出码。一个wrapper返回0，但内部日志在summary前截断时，仍可能属于中断或部分执行。项目保留历史失败，并在组合验收中明确选择哪些已完整闭合的记录。\par
-
-
-负控的完成条件与正常任务不同。bit100错误应绑定实际vdot的PC、机器字和目的寄存器，并出现预期差分。若只观察到注入标记而未观察到差异和终态，就只能说明执行到了注入附近。恢复正常库后，还需要同镜像正常完成，排除程序或环境本身已损坏。\par
-
-
-\subsection{为何要审计计时边界}
-
-
-乱序处理器可能在较早指令未完全提交时执行某些只读CSR。若直接把两次rdcycle包围的C函数耗时理解为严格串行范围，读数可能受到指令重排、边界等待和调用历史影响。本项目在固定香山实现上使用fence构建边界，并通过观察器核对实际分派、采样和退休。\par
-
-
-四条CSR分别承担cycle和instret的起止采样。cycle差需要与全核tick差一致，instret差需要与真实退休及有限循环展开一致。对大于2的53次方的绝对计数，先解析为整数再作差，避免浮点格式损失低位。UART和完整状态比较按既定计划安排在窗口外，窗口内工作量由ELF和调用计划确定。\par
-
-
-屏障和循环开销保留在两个实现的共同窗口中。小任务的固定开销占比更大，因此单次点积71周期不能直接解释为FU内部延迟。空窗口和整数/除法校准用于核对边界行为，报告遵循原合同统计完整窗口。\par
-
-
-\subsection{配对样本和加速比的含义}
-
-
-给定同一合同下的RVV周期C\_RVV和vdot周期C\_vdot，配对加速比为C\_RVV/C\_vdot。周期降低率与加速比之间存在换算关系，降低39.0345\%对应旧新周期比约1.6403，而相对另一条RVV基线的3.067873倍使用不同分母。表格必须同时写出原始周期和比较对象。\par
-
-
-每场景三个数据集各有四个正式窗口，首次和预热保留但不混入正式均值。重放核查同镜像、同序号和计数结果是否一致，不作为额外独立样本。跨合同的不同链接地址、调用入口和输入生命周期可改变测量上下文，不能把两张表中最好的一格随意拼成新结论。\par
-
-
-\subsection{四类微基准的瓶颈解释}
-
-
-独立batch128通过四个目的寄存器组织独立点积，使连续接收能力可以被利用。O1与O2的同镜像比较中，362.5降至221周期，对应39.0345\%的降低。该结果支持O2改善独立吞吐的目标。\par
-
-
-chain256把前一结果反馈为后续源，形成真实数据依赖。其完整窗口1857周期还包含调度、读数、执行、写回及下一条可发射的等待，不能只按算术响应2拍推导链应为512拍。链式输入可能收敛到零，但依赖关系依然存在。\par
-
-
-stream64包括加载、计算、存储和地址循环。其vdot为1127.5周期、RVV为1133周期，收益接近1，说明在该固定工作量中，缩短点积主体对全窗影响较小。没有直接逐级观测时，只能据此说明场景差异，不能确定所有额外周期都属于缓存或内存。\par
-
-
-\subsection{普通C调用和软件合同}
-
-
-C8使用编译期别名连接已验证的完整对象。调用者提供连续的A||x，输出按8个16字节槽保存。接口不会自动检测CPU是否支持自定义指令，调用环境、VS状态、VLEN128、对齐和生命周期由调用者负责。\par
-
-
-C8返回VL8、vtype0、vstart0、vcsr7，原向量配置不自动恢复。将该函数嵌入更大的软件时，要在调用合同中明确允许改变的状态。若新增dispatcher、CSR包装、对象裁剪或不同最终链接，即使底层函数体未变，也需要重新判断受影响的功能和性能范围。\par
-
-
-firstdot与C8在8×32同批中的282.25和273周期说明配置复用产生3.2772\%的改善。最快合格RVV299周期用于该批分母。其他尺寸没有全部采用C8，最终接口选择由已验证数据决定。\par
-
-
-\subsection{对象等价和镜像等价的层次}
-
-
-汇编源相同并不自动保证目标对象相同，工具链、参数和重定位都可能改变机器码。对象相同也不自动保证完整ELF相同，启动、库、数据和地址布局仍会变化。因此包化接入分为对象、可重定位链接、最终装载内容和真实调用几个层次。\par
-
-
-C8接入时真正从静态库抽取gemv.o，链接映射和依赖文件证明没有绕过SDK。最终比较先检查BIN、PT\_LOAD、BSS、符号、48项调用表及12组数据，再使用去调试ELF一致作为独立补充。这样既解释了调试路径变化，也保留了运行内容等价的严格依据。\par
-
-
-\subsection{面积和时序结果怎样支持取舍}
-
-
-综合面积是固定Liberty库下实际映射单元面积之和。FU包含点积和接口状态，VFEX4父级还包含DIV及共享控制。父级已包含FU，二者的数值不能相加。不同工艺库的面积变化应单独表述，当前最终成绩采用Nangate45同条件数据。\par
-
-
-STA的到达时间、要求时间和裕量共同描述路径。到达较小不一定意味着全设计最差裕量改善，因为起终点、时钟预算及输出延迟不同。最终报告同时列出整体、VDot子集、ready和门控使能，保留负裕量和端点切换。\par
-
-
-五档敏感性保持同一映射网表，改变周期或负载检验结果对约束的响应。它不能替代多工艺角、布线寄生、hold和物理实现检查。1ns主档仍有违例，后续若开展时序优化，应保持原对照并说明新约束。\par
-
-
-\subsection{优化失败也需要可复核结论}
-
-
-P1与R1有局部收益信号，但锚点超过冻结1\%门槛。P4一拍候选减少内部等待，却在父级ready等路径上产生代价。分段归约减少配置指令，但同轮点积完成进度并未相应提前，收益未过预设门槛。这些结果都支持保留稳定版，而不是继续扩大未闭合候选。\par
-
-
-P3的情况属于预算HOLD。正常校准取得首窗前缀但0完整窗，完整14调用的保守上界没有闭合。原供体收益和前缀吞吐不能直接成为0f的完整应用成绩。该方向保留证据并暂存，正式表采用已有合格结果。\par
-
-
-\subsection{同机干净复现和最终工程验收}
-
-
-干净复现从独立源码、依赖和构建目录恢复，核对EMU、reference、AM/klib及应用身份，并逐窗比较结果。firstdot的768窗口与96普通C输出已复现一致。该过程证明固定环境和输入下的可恢复性，执行者与缓存复用情况仍在记录中说明。\par
-
-
-R5总验收采用原13项和补充1项组合，保留原宿主墙钟审计失败。通过单调时钟补证收口所选占用审计后，系统UTC稳定性仍单列限制。工程版本、功能资格、性能数字、成本结果及人工复核分别表达，使最终交付可以逐项核对。\par\section{周期测量边界与统计合同}
-本节整理固定项目材料中的详细方法和原始合同。设计阶段的“拟实现”“必须验证”等表述属于原合同约束，当前完成状态以本报告正文和R5/P5证据为准。原日期、比较合同及未测边界按来源保留。
-\par\smallskip\noindent 来源：\href{https://github.com/cc77-builder/riscv/blob/347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e/team/spec/measurement.md}{\seqsplit{team/spec/measurement.md}}\par
-\subsection{两条路径必须计算同一结果}
-
-
-低 8 个 signed int8 元素分别相乘，在足够宽的有符号整数中求和；目的向量低 32 位存二补码结果，高 96 位清零。检查完整 128 位，不用截断标量或摘要替代。vdot 不修改其他向量寄存器；RVV 只允许破坏事先声明的 scratch。\par
-
-
-复用来源为 zufan@\seqsplit{f090665130107282be0990a7664aebf26e491b87}。原文件与 SHA-256 位于 \seqsplit{team/references/zufan-t13/}，本轮重新构建和运行，不继承对方的 PASS 为本轮验收结果。\par
-
-
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.2\linewidth}>{\raggedright\arraybackslash}p{0.24\linewidth}>{\raggedright\arraybackslash}p{0.24\linewidth}>{\raggedright\arraybackslash}p{0.22\linewidth}}
-\toprule
-\textbf{RVV 路径} & \textbf{点积主体指令数} & \textbf{向量 scratch} & \textbf{入口与出口}\\\midrule\endhead
-{已知配置单次} & {5} & {v2、v3} & {e8/m1/VL8、tu/mu；退出恢复相同配置}\\
-{通用配置单次} & {7} & {v2、v3，另用 t3/t4 保存 CSR} & {保留原 VL/vtype，测试四种 tail/mask policy}\\
-{独立四路批处理} & {14 / 4 个点积} & {v16–v23} & {e8/m1/VL8、tu/mu；退出恢复相同配置}\\
-\bottomrule\end{longtable}}
-
-
-已知配置序列：vwmul.vv \allowbreak{}→\allowbreak{} 设置 e16/m1/VL8 \allowbreak{}→\allowbreak{} vmv.v.i vd,0 \allowbreak{}→\allowbreak{} vwredsum.vs \allowbreak{}→\allowbreak{} 恢复 e8/m1/VL8。e16 下 8 个元素正好清零整个目的寄存器；宽化归约使用 tu，保留已经清零的高位。必须先乘后清目的寄存器，以支持源/目的别名。通用序列增加 csrr vl/vtype，末尾用 vsetvl 恢复。四路批处理共享两次 vtype 设置，不人为放大基线开销。\par
-
-
-每次调用保存并比较全部 32 个向量寄存器，按声明排除 RVV scratch；检查 VL、vtype、vstart、vxrm、vxsat、vcsr、实际循环次数以及缓冲区前后 canary。访存组逐个比较全部 128 位输出，并检查未使用输出空间。C 判定器使用真实源文件进行原生及 UBSan 位翻转测试。\par
-
-
-
-
-\subsection{为什么不能直接使用一对 rdcycle}
-
-
-\seqsplit{DecodeUnit.scala} 的普通 CSR 表带 \seqsplit{waitForward/blockBackward}；但 Rename.scala 282–299 行会解除大部分只读 CSR 的这些限制。本轮初始观测确实看到 cycle/instret 在 ROB 未清空时进入，标志为零。因此不能由解码表单独推导 rdcycle 串行化，更不能把旧无校准窗口当作指令延迟。\par
-
-
-本轮在\textbf{软件测量边界}加入 fence rw,rw，不改变生产核执行规则。该固定版本的 fence 使用等待旧指令、阻止后续分派和 flush 的实现，作用必须通过实际日志确认。这是针对固定香山实现的实验方法，不是声称 RISC-V ISA 的普通内存 fence 在任意处理器上都能序列化计算和 CSR。\par
-
-
-窗口结构如下（所有实验分支相同）：\par
-
-
-\begin{Verbatim}[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\small]
-fence; START; fence
-read instret_begin; fence
-read cycle_begin; fence
-执行显式汇编主体（含循环控制）
-fence; read cycle_end; fence
-read instret_end; fence
-STOP; fence
-保存结果；完整状态检查；打印
+项目 & 接口约定\\
+\midrule
+输入 & 行优先\(A[8][32]\)后接\(x[32]\)，共288字节\\
+输出 & 8个16字节槽，共128字节\\
+单槽 & 低32位INT32结果，高96位零\\
+返回向量配置 & \texttt{vl=8, vtype=0, vstart=0, vcsr=7}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+函数沿用普通RV64 C ABI保存栈和被调用者保存寄存器。向量寄存器按该接口供计算使用，返回配置固定为\texttt{e8/m1/tu/mu}。结果槽宽度对应VLEN128下的整寄存器存储，因此调用方按照16字节步长读取各行结果。
+
+\subsection{编译期选择与调用}
+
+头文件\texttt{selected\_gemv\_c8.h}提供两个入口。\texttt{xs\_c8\_gemv\_8x32}默认连接配置复用VDot；将\texttt{XS\_C8\_GEMV\_FORCE\_RVV}设为字面量1后，该名称连接RVV实现。\texttt{xs\_c8\_gemv\_8x32\_rvv}始终连接RVV。开关为0或1，选择过程在预处理阶段完成。切换版本或开关后，重新编译相关翻译单元并链接匹配的静态库。
+
+\begin{Verbatim}[fontsize=\small,breaklines=true]
+#include <stdint.h>
+#include "selected_gemv_c8.h"
+
+struct c8_slot {
+    int32_t value;
+    uint32_t upper_zero[3];
+};
+static _Alignas(16) int8_t packed_ax[288];
+static _Alignas(16) struct c8_slot result[8];
+
+/* Fill packed_ax with A[8][32] followed by x[32]. */
+void run_c8(void) {
+    xs_c8_gemv_8x32(packed_ax, result);
+}
 \end{Verbatim}
 
+需要标准RVV对照时，可在同一调用位置使用显式RVV入口。保留firstdot版本的应用继续使用其对应头文件和库；C8以独立名称加入软件包，便于按具体形状选择和回退。\footnote{头文件及对齐示例见\href{https://github.com/cc77-builder/riscv/blob/a0f13456e0c3180fe9c4023f5cbe7874eb5d35a9/team/optimizations/o2/integration/firstdot-v2-0f/package/c8/public/selected_gemv_c8.h}{C8编译期入口}与同目录\texttt{example.c}。接口细节见\href{https://github.com/cc77-builder/riscv/blob/a0f13456e0c3180fe9c4023f5cbe7874eb5d35a9/team/optimizations/o2/integration/firstdot-v2-0f/package/c8/CONTRACT.md}{C8合同}。}
 
-观察器以编译开关 \seqsplit{VDOT\_T13\_TRACE=1} 启用，仅打印 CSR 实际采样、计数器入 ROB 和窗口内退休信息。与 T12 观察器一起构建，不改数据通路、频率、复位、忙闲接口或 NEMU 计时。硬件源码提交为 \seqsplit{4460300e9557ad20ac152fa67b1827c5d62802dd}；工作负载另列实际构建提交，不能用后来的文档提交冒充重新构建。\par
+\subsection{从函数对象到可执行镜像}
 
+软件包保留一个完整\texttt{gemv.o}，由\texttt{libxs\_gemv\_c8.a}提供16个公共函数。固定GNU参数为\texttt{-march=rv64gcv -mabi=lp64d -mno-relax}。验证分别核对编译期别名、实际调用重定位、库成员抽取和最终装载内容，使每个公开入口都能追溯到被测试的函数。
 
-每个窗口必须同时满足：\par
+SDK接入的三方比较覆盖BIN、\texttt{PT\_LOAD}、BSS、函数地址与机器码、调用表及输入数据。三份BIN均为31,440字节且内容一致；去除调试节后的ELF也逐字节一致。源目录和头文件路径造成的调试信息差异单独保留。这使队友既能使用调试材料，又能核实接入前后的运行内容。\footnote{完整比较记录、链接映射及独立GNU复核见\href{https://github.com/cc77-builder/riscv/blob/cfb0010f379f13ac7732dfb98ae600cc7ee1d44b/team/optimizations/o2/integration/firstdot-v2-0f/package/c8/relink/RESULT.md}{C8最终镜像等价结果}。}
 
+\reportfigure{S3-08}{C8接口、静态库与最终镜像的核对流程}{12.0cm}{从头文件选择进入实际库成员，再比较最终装载段、调用记录及输入数据。三方对照连接了公开接口与已验证程序的运行内容。}{C8回接结果、固定输入清单、GNU链接映射与三方等价记录。}
 
-1. 精确匹配四条计数器指令的 PC、机器码、ROB 身份与顺序。\par
-2. CSR 读值与对应退休写回数据相等，采样位于入队和退休之间。\par
-3. 每条计数器的前一 fence 已退休，后一 fence 在计数器退休后才退休。\par
-4. cycle 差值等于硬件全核采样 tick 差值。\par
-5. instret 差值等于真实退休计数，也等于从 ELF 机器码展开有限循环得到的指令数。\par
-6. 完整窗口及 UART 记录数量、顺序与 manifest 一致；真实 exit0、DiffTest 启用、完整成功 summary 后 GOOD TRAP。\par
+复现时使用软件包的README、固定输入清单及其配套核验工具，在独立输出目录保留构建结果。新的应用接入把模型准备、数据打包和计时窗口一并列入验证计划，按同一数据生命周期比较VDot与较快的RVV实现。
 
 
-绝对计数器可能大于 2\textasciicircum{}53，所有解析与差值计算使用 Python 整数。禁止经过 JavaScript Number 或浮点再保存绝对值。FU 自身时钟存在门控，使用已验收 T12 的 parent VFEX4 accept 逐事务归一化，不能直接拿 FU 局部 tick 减 ROB tick。\par
+\section{完整前向计算的组织与验证}
 
+\subsection{从点积内核到模型计算链}
 
-空窗口、8 条整数指令、32 条依赖除法用于校准。\textbf{不从测量结果直接减掉空窗口开销}；小样本的屏障、取指和循环开销占比必须说明。\par
+应用验证将量化矩阵向量乘接入一个六层 Transformer 的完整 forward。固定合成模型的模型维度为288，前馈中间维度为768，注意力头数为6，词表大小为32,000；测试在规定初始化后，执行 token=1、position=0 的一次前向计算。权重与尺度预先完成打包，该准备成本不计入本次窗口。计数窗口包围一次完整 forward 调用，包含激活量化；计算依次经过嵌入读取、各层归一化、Q/K/V投影、位置编码、注意力、输出投影及前馈网络，最终生成32,000项分类器输出。
 
+本节的量化GEMV内核按每32项一组计算，直接生成FP32行输出。每组先求精确的 INT32 点积，再转换为 FP32，依次乘以权重尺度和激活尺度，最后按组号顺序累加到输出。不同内核共用权重、尺度数组及这一浮点计算顺序。Q、K、V投影复用同一份量化激活，前馈网络的两个输入投影也共享量化结果。
 
+\subsection{工作量与数据布局}
 
+表~\ref{tab:3-app-workload} 列出一次 forward 中的43个量化 GEMV。这里以一项乘加记一个 MAC，统计矩阵的有效维度；注意力、归一化、激活函数等运算另由完整 forward 承担。
 
-\subsection{工作负载矩阵}
-
-
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.2\linewidth}>{\raggedright\arraybackslash}p{0.24\linewidth}>{\raggedright\arraybackslash}p{0.24\linewidth}>{\raggedright\arraybackslash}p{0.22\linewidth}}
+{\small\setlength{\tabcolsep}{5pt}
+\begin{longtable}{lrrrr}
+\caption{固定模型一次 forward 的量化 GEMV 工作量}\label{tab:3-app-workload}\\
 \toprule
-\textbf{场景} & \textbf{n} & \textbf{点积数} & \textbf{含义}\\\midrule\endhead
-{single} & {1} & {1} & {已知配置完整调用窗口}\\
-{chain} & {16、64、256} & {n} & {目的向量作为下一次源，观察依赖限制}\\
-{batch} & {1、8、32} & {4n} & {每轮四个独立目的，比较共享配置的 RVV 批处理}\\
-{stream} & {1、16、64} & {n} & {两个 128 位加载、点积、128 位存储以及指针更新}\\
-{generic} & {1、16、64} & {n} & {原 vtype=192 的 CSR 保留对照}\\
-\bottomrule\end{longtable}}
+矩阵类别 & 数量 & 每个矩阵的形状 & 逻辑 MAC & 占比\\
+\midrule\endhead
+Q/K/V/O投影 & 24 & $288\times288$ & 1,990,656 & 13.11\%\\
+前馈 W1/W3 & 12 & $768\times288$ & 2,654,208 & 17.48\%\\
+前馈 W2 & 6 & $288\times768$ & 1,327,104 & 8.74\%\\
+分类器 & 1 & $32,000\times288$ & 9,216,000 & 60.68\%\\
+\midrule
+合计 & 43 & --- & 15,187,968 & 100.00\%\\
+\bottomrule
+\end{longtable}}
 
+分类器占逻辑 MAC 的60.68\%，因此大矩阵路径是有价值的优化对象。这个比例描述乘加工作量；其实际耗时还取决于访存、尺度处理、循环控制及处理器执行资源。
 
-链式实验的反馈值是上一结果的完整向量表示，后续数值可能收敛到零。它用于固定依赖关系的微基准，不代表真实模型的数值分布。批处理四个目的独立且共享输入，用于消除人为增加的配置开销；不将其宣传为任意矩阵乘法性能。\par
+现有布局将权重按八行和量化组打包，尺度沿每个输出行连续存放。输入维度为288的矩阵由288行面板处理，共调用172个面板；输入维度为768的六个 W2 矩阵使用对应内核。末面板保持相同计算形状，再复制有效输出。这种统一组织多计算1,408个填充行，使实际整数乘加项为15,593,472，比有效工作量多2.67\%。
 
+\subsection{完整计算链的验证结果}
 
-三组输入包括正极值、负极值和混合符号；高半区设置非零哨兵，访存组加入固定种子的随机数据。功能矩阵使用原始 22 组定向和前 32 组随机数据，轮换七种别名与四种 policy；这 54 对不是全部笛卡尔积。另用固定 NEMU 对全部 10,022 组数据重新检查精简基线，明确与全核执行层分开计数。\par
+固定模型已分别通过标准 RVV 路径 FR 和自定义 VDot 路径 TA 的目标机完整 forward 验证。两路均完成3,691,424字节的全状态比较，并核对输出保护区、调用状态及浮点异常标志。表~\ref{tab:3-app-target} 记录该正确性实验中各一次预设初始状态下的计数窗口；TA独立重放得到相同的完整验证结果和窗口计数。
 
-
-每个配置同一镜像内运行 6 轮配对：首次样本、预热、4 轮正式样本；顺序按 AB/BA 交替。首次不是人为清空缓存后的“冷缓存”；预热也不保证全部微架构状态完全相同。每种配置单独分片，两个实现的入口均 64 字节对齐；代码长度、地址和寄存器压力的自然差异保留并记录。\par
-
-
-每个性能镜像以固定 seed=1 在全新 EMU 中运行三次。重放比较同一镜像、同一 seq 的周期和退休指令数；用于确定性复核，不作为独立统计样本，不给 p 值或统计显著性。宿主允许 8 个进程并行；每个 DUT 仍是同一个单核、EMU\_THREADS=1 配置。宿主秒数仅用于安排任务，不参与加速比。\par
-
-
-
-
-\subsection{汇总与结论边界}
-
-
-保留全部首次、预热、正式窗口。逐配置、逐数据集报告原始周期、周期/点积、指令数、正式样本 min/median/max；配对加速比为 RVV cycles / vdot cycles，减少比例为 1 - vdot / RVV。不以最优个例冒充总体，不在不同场景、不同 n 或不同数据集之间错配。若 vdot 变慢，照实记录。\par
-
-
-报告层次区分：局部 FU accept\allowbreak{}→\allowbreak{}response；完整序列的窗口；独立批处理的点积吞吐；包含加载/存储的循环。FU 局部 E3/II4 不是全核指令周期。端到端窗口含相同的隔离与循环开销，不等同于纯算术单元延迟。\par
-
-
-本轮不推断 Fmax、面积、功耗、PPA、实际 LLM 加速或官方比赛得分。没有 STA/综合结果，不把周期减少转换成频率提升。正式规范及队友人工复核仍按团队流程处理。\par\section{O1与O2同镜像验证过程}
-本节整理固定项目材料中的详细方法和原始合同。设计阶段的“拟实现”“必须验证”等表述属于原合同约束，当前完成状态以本报告正文和R5/P5证据为准。原日期、比较合同及未测边界按来源保留。
-\par\smallskip\noindent 来源：\href{https://github.com/cc77-builder/riscv/blob/347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e/team/optimizations/o2/performance/README.md}{\seqsplit{team/optimizations/o2/performance/README.md}}\par
-\subsection{本次实测范围}
-
-
-两模式使用原16份冻结镜像，实际新跑36项（32次首次镜像运行＋4次代表batch镜像重放），478个校验窗口，192条正式性能窗口。每场景每模式每方法为3数据集×4measured＝12条样本；first/warmup和重放完整保留，重放不增加独立样本数。\par
-
-
-周期降低按1-sum(O2 custom)/sum(O1 custom)，加速比按该模式本次实测sum(RVV)/sum(custom)。每组逐\seqsplit{dataset/repeat/seq/}镜像配对，机器码、工作量及退休指令一致；未扣循环/屏障或空窗开销。历史362.50/678没有作为本次统计输入。single不是FU固有延迟，batch四路同输入独立目的不代表任意GEMV收益。\par
-
-
-每个作业通过真实DiffTest、约定输出/128位高位/非scratch寄存器/CSR/哨兵、计数器与全局周期窗口核验，以及各自O1/O2完整协议和有限排空门禁；致命错误文本显式拒绝。冻结manifest明确允许各内核的scratch寄存器范围，scratch\_control也须通过；不把允许破坏的scratch当成全部32寄存器逐位相同。额外4次batch重放逐seq周期与退休数一致。30项主机测试通过；全部原始stdout/stderr、真实退出码、版本、输入和检查器摘要保留。\par
-
-
-
-
-\subsection{硬件与工具身份}
-
-
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}p{0.3\linewidth}>{\raggedright\arraybackslash}p{0.35\linewidth}}
+{\small\setlength{\tabcolsep}{6pt}
+\begin{longtable}{lrr}
+\caption{完整 forward 正确性实验中的单窗口目标机观测}\label{tab:3-app-target}\\
 \toprule
-\textbf{项目} & \textbf{O1} & \textbf{O2}\\\midrule\endhead
-{实测EMU SHA-256} & {\seqsplit{6699225b76ceae479060741026683bb03de069c1e10a4a94e463304ba1e322d0}} & {\seqsplit{ac0123280bf6c742d27a7650505bc1d91db350d1519806edfd0be9c7ea208a57}}\\
-{构建源码提交} & {\seqsplit{a239dace720b32216e83fb5a514930d334c69a26}} & {\seqsplit{b218cbc6e6b135e4ff219a902a9284a59d3c82c9}}\\
-{来源} & {本轮从相同硬件输入重建} & {复用G3已验收固定EMU}\\
-{\seqsplit{O1\_HANDOFF/O2\_ELASTIC}} & {1/0} & {0/1}\\
-{\seqsplit{O1\_TRACE/O2\_TRACE}} & {1/0} & {0/1}\\
-\bottomrule\end{longtable}}
+实现 & 周期数 & 退休指令数\\
+\midrule\endhead
+FR：标准RVV & 20,258,039 & 7,502,872\\
+TA：自定义VDot & 19,774,245 & 10,122,100\\
+\bottomrule
+\end{longtable}}
 
+这组观测将量化 GEMV 与其余模型运算放入同一条计算链，也显示退休指令数和周期数应分别分析。这些单窗口记录用于完整执行与复现检查，稳定的应用性能比较还需进一步测量。
 
-429项硬件源码与21236项依赖逐字节相同，MinimalConfig/单核/VLEN128/单线程EMU；共同FUSED\_INPUT1、T12\_TRACE0、T13\_TRACE1。各自合法协议观察器只提供只读观察，共同T13提供全局周期/退休计数。\par
+在相同模型与共同程序上，进一步接入了两种标准 RVV 软件组织：GS32一次处理完整的32项量化组；paired16把前后半组对应的乘积在16个 INT16 通道中相加，再扩宽归约。paired16在入口检查激活值，遇到$-128$时执行完整 FR 路径，保持完整的 signed-int8 数值域。这些入口检测和回退属于实际调用的一部分。
 
+新生成的三路共同程序已完成 NEMU 参考验证，三个正常方法的完整输出与状态逐位一致。表~\ref{tab:3-app-reference} 给出该组参考执行的窗口退休指令数；其中 W2 保持 FR，实现差异集中在输入维度为288的矩阵路径。参考指令数用于评估软件组织；该组香山目标机周期结果尚待完成验证。
 
-路径归一化后的实际Verilator/C++命令、七类工具版本日志一致；实际LLVM19.1.7编译器由构建过程/proc记录并核对。j2、12G JVM、O3/O0；最多两个单线程EMU。新O1采用外置产品目录，原G3的1687份非对象生成文件已恢复并验证原始SHA，旧O2 EMU不覆盖。硬件构建身份、运行工具身份与后续文档/封存提交分别记录，不以文档提交冒称重构建。\par
-
-
-
-
-\subsection{交付复核}
-
-
-Windows原生Python 3.13.2全量离线复算通过，覆盖36项作业、478个窗口、192条正式性能窗口及4项重放。见原生复算回执。它复核封存记录，不另跑EMU，也不替代Linux构建来源审核。\par
-
-
-交付时补齐了原冻结功能生成器依赖的两份模型语料，逐字节取自运行工具提交63b95a5并绑定Git blob及SHA-256；原镜像、测量日志和646份主封存payload均未改变。原30项主机测试及新增3项语料绑定检查共33项通过；首次封装复算失败和修复后成功记录均保留。Windows请用Python UTF-8模式执行：\par
-
-
-python -X utf8 -B \seqsplit{performance/portable.py} --archive \seqsplit{evidence/20261019-performance-ab} --campaign campaign-01 --output \seqsplit{/absolute/new/portable-verification.json}\par
-
-
-上述相对路径适用于Windows交付目录；仓库内对应\seqsplit{team/optimizations/o2}下的路径。\par\section{0f硬件性能与五档成本详细记录}
-本节整理固定项目材料中的详细方法和原始合同。设计阶段的“拟实现”“必须验证”等表述属于原合同约束，当前完成状态以本报告正文和R5/P5证据为准。原日期、比较合同及未测边界按来源保留。
-\par\smallskip\noindent 来源：\href{https://github.com/cc77-builder/riscv/blob/347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e/team/optimizations/o2/r3-div-gate/PERFORMANCE\_COST\_RESULT.md}{\seqsplit{team/optimizations/o2/r3-div-gate/PERFORMANCE\_COST\_RESULT.md}}\par
-\subsection{受测身份与公平条件}
-
-
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}p{0.3\linewidth}>{\raggedright\arraybackslash}p{0.35\linewidth}}
+{\small\setlength{\tabcolsep}{6pt}
+\begin{longtable}{lrr}
+\caption{共同参考模型中的完整 forward 指令数}\label{tab:3-app-reference}\\
 \toprule
-\textbf{对象} & \textbf{修复前} & \textbf{修复后}\\\midrule\endhead
-{实现} & {O2两槽＋H1低32位保存} & {O2＋H1＋DIV取消关钟修复}\\
-{硬件源码} & {\seqsplit{8b5024fcbd96986871cc40ce8c9fb71a67c495eb}} & {\seqsplit{0f12df675378556670afd0dd2153f47fcb330610}}\\
-{EMU SHA256} & {\seqsplit{e37b3c267cae29036bda0b6952a17db2523ca0b3a573d45281341d4207df8747}} & {\seqsplit{2d1db77cc407486a2387a4a69da2498b68d44980239025eebcc02370c02826e8}}\\
-\bottomrule\end{longtable}}
+实现 & 窗口退休指令数 & 相对本组FR的指令数减少\\
+\midrule\endhead
+FR & 7,502,886 & ---\\
+GS32 & 4,828,788 & 35.64\%\\
+paired16 & 5,175,371 & 31.02\%\\
+\bottomrule
+\end{longtable}}
+
+共同验证还包含 paired16 重放与末项输出扰动负控，分别检查结果复现和比较器的拒错能力。
 
 
-硬件429份Git源码、21236份依赖、每版1672份生成产物、实际编译命令和七类工具版本均经核验。生产源码仅ExeUnit.scala不同。\par
-同一MinimalConfig/单核单线程/O2与T13观察配置、128MB、seed=1、正常NEMU和flash；208份冻结软件载荷不变。\par
-正常NEMU SHA256：\seqsplit{efbed0774addc27eac38af1a19ab5d9c9dd5f179b5015f25ae7b80b966185bd4}。\par
-完整生成物还包含已审查的Git标识、只读诊断日志、顶层注释及标量FDiv公共子表达式内联差异；没有声称全设计形式等价。\par
+\section{综合面积、时序与设计成本}
+设计成本使用Nangate45 Typical库，条件为1.10V、$25\,^{\circ}\mathrm{C}$，工具为Yosys 0.9、ABC 1.01和OpenSTA 2.0.17。受测对象是带32位结果保存和DIV取消修复的八项点积两槽版本。主档采用1\,ns时钟周期、5\,fF负载及固定线负载模型，另以0.5\,ns、2\,ns周期和1\,fF、20\,fF负载检查敏感性。
 
-
-
-
-\subsection{同镜像周期}
-
-
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.15\linewidth}>{\raggedright\arraybackslash}p{0.18\linewidth}>{\raggedright\arraybackslash}p{0.18\linewidth}>{\raggedright\arraybackslash}p{0.18\linewidth}>{\raggedright\arraybackslash}p{0.18\linewidth}}
+\begin{center}
+\small
+\begin{tabular}{p{0.45\linewidth}rr}
 \toprule
-\textbf{场景} & \textbf{修复前vdot均值} & \textbf{修复后vdot均值} & \textbf{两版RVV均值} & \textbf{两版RVV/vdot}\\\midrule\endhead
-{单次点积1} & {71.000} & {71.000} & {85.250} & {1.200704×}\\
-{依赖链256} & {1857.000} & {1857.000} & {5440.500} & {2.929725×}\\
-{四路独立批量128} & {221.000} & {221.000} & {678.000} & {3.067873×}\\
-{加载/计算/存储64} & {1127.500} & {1127.500} & {1133.000} & {1.004878×}\\
-\bottomrule\end{longtable}}
+指标 & 独立VDot FU & 共享VFEX4父级\\
+\midrule
+标准单元面积（$\mu\mathrm{m}^{2}$） & 17298.246 & 284614.946\\
+寄存器至寄存器到达时间（ns） & 1.163404 & 3.261218\\
+该类路径setup裕量（ns） & $-0.240117$ & $-2.341112$\\
+所报告路径最差setup裕量（i2r，ns） & $-0.268520$ & $-2.393998$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+两个统计范围具有包含关系：VFEX4覆盖VDot、DIV/SQRT及共享控制。最差setup裕量来自输入至寄存器路径，与表中的寄存器至寄存器路径分别列示。1\,ns主档下两种统计范围均存在setup违例，后续物理实现需要继续进行时序收敛；本组映射和STA数据用于比较相同工艺与约束下的结构成本。
+
+将结果状态从128位收窄为32位后，独立FU面积相对其前一版减少2.33386\%，共享父级减少0.137349\%。进一步加入DIV取消修复时，独立FU面积保持17298.246\,$\mu\mathrm{m}^{2}$，父级由284879.882降至284614.946\,$\mu\mathrm{m}^{2}$；对应96对正式微基准窗口的周期逐对相同。控制正确性、面积和各类时序路径共同支持设计取舍。
+
+\reportfigure{S3-07}{Nangate45模块面积与主档STA裕量}{9cm}{主档采用1ns周期、5fF负载。图中列出FU和包含FU的完整VFEX4父级面积，以及14类路径的setup裕量，其中10类为负值。}{固定八项两槽受测实现，Nangate45 Typical 1.10V、25摄氏度，原综合与STA记录。}
+
+\section{设计取舍与应用方向}
+两槽流水改善独立点积的持续供给，32位结果保存利用了指令布局中的常零高位，DIV取消修复完善共享资源的释放。软件侧则通过firstdot初始化、C8配置复用及更适合量化组的RVV组织减少实际调用开销。各项优化作用在不同环节，配对实验使其收益与代价能够分别解释。
+
+固定GEMV已经给出普通C调用的周期结果，完整前向计算进一步验证了量化内核与模型计算链的衔接。最新十六项点积候选完成了指令和执行通路的功能验证，后续应用比较将继续保留较快的标准RVV对照。布局后时序、整核频率和功耗则属于进一步物理实现的评价内容。
+
+\reportfigure{S3-09}{八项点积受测组合的验证与评估范围}{11cm}{实心点表示该对象已有对应记录，包含未收敛的STA结果；空心点标出后续评估项目。FU的局部握手拍与整核、C8的DUT周期分别计量。}{固定八项点积组合的既有功能、周期、面积和STA记录。十六项扩展与完整前向计算的当前结果见各自小节。}
+
+\input{sections/screenshots-stage3.tex}
 
 
-单位均为DUT全局cycles。每场景三组数据×四轮，vdot和RVV分别配对；192正式窗口形成96对，每对差值均为0，退休指令与工作量相同。\par
-共478个校验窗口，保留first/warmup；四次额外batch重放完全一致，不加入正式样本。36项实际EMU均通过完整128位结果、DiffTest、GOOD TRAP、窗口计数和O2生命周期/排空检查。\par
-加速比为本轮各场景sum(RVV cycles)/sum(vdot cycles)，不扣计时开销，不用宿主时间。\textbf{本修复没有提高cycles加速比，也没有使这些固定微基准退化。}\par
-详见逐窗差值、全部样本、复算回执。\par
+\section{评估对象与证据索引}
 
+报告按实际受测对象组织结果。四类微基准、普通 C 调用和完整 forward 各自对应固定的代码、程序与输入；可沿下列索引定位产生每组结果的实验。
 
-
-
-\subsection{同约束综合与面积}
-
-
-修复前复用已封存H1的205份完整原始生成/综合/STA载荷并逐字节核验；修复后实际重新生成、综合和STA，未拿旧值冒充新运行。\par
-两边使用相同完整生产接口、相同未修改O4脚本、\seqsplit{Yosys0.9/ABC1.01/OpenSTA2.0.17}及其动态库、Nangate45 typical 25°C/1.1V库。\par
-ABC目标1000ps、BUF\_X1驱动、5fF映射负载。面积是Liberty单元面积之和，单位μm²，非芯片布局面积。\par
-
-
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.12285714285714286\linewidth}>{\raggedright\arraybackslash}p{0.12285714285714286\linewidth}>{\raggedright\arraybackslash}p{0.12285714285714286\linewidth}>{\raggedright\arraybackslash}p{0.12285714285714286\linewidth}>{\raggedright\arraybackslash}p{0.12285714285714286\linewidth}>{\raggedright\arraybackslash}p{0.12285714285714286\linewidth}>{\raggedright\arraybackslash}p{0.12285714285714286\linewidth}}
+{\small\setlength{\tabcolsep}{4pt}
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.23\linewidth}>{\raggedright\arraybackslash}p{0.30\linewidth}>{\raggedright\arraybackslash}p{0.39\linewidth}}
 \toprule
-\textbf{边界} & \textbf{修复前面积} & \textbf{修复后面积} & \textbf{增量} & \textbf{增量比例} & \textbf{DFF数量} & \textbf{ICG数量}\\\midrule\endhead
-{fu} & {17298.246} & {17298.246} & {+0.000} & {+0.000000\%} & {1742\allowbreak{}→\allowbreak{}1742} & {0\allowbreak{}→\allowbreak{}0}\\
-{parent} & {284879.882} & {284614.946} & {-264.936} & {-0.092999\%} & {17171\allowbreak{}→\allowbreak{}17172} & {3\allowbreak{}→\allowbreak{}3}\\
-\bottomrule\end{longtable}}
+评估对象 & 固定身份 & 对应结果\\
+\midrule\endhead
+0f硬件微基准 & 硬件提交\texttt{0f12df6753}及该批冻结EMU & 四类微基准的正式窗口和同镜像比较\\
+R5工程复现 & \texttt{clean-02}构建及其参考模型 & 干净环境构建、差分和工程验收\\
+C8普通C入口 & 最终BIN的SHA256前缀\texttt{56805506eb98} & 固定GEMV、调用状态与最终镜像等价\\
+FR/TA完整forward & 固定T17环境与FR/TA消费者程序 & 首个token完整执行、全状态比较及目标机单窗口观测\\
+三路RVV完整forward & 共同FR/GS32/paired16程序及固定模型 & 全状态比较、重放、负控及参考指令数\\
+\bottomrule
+\end{longtable}}
 
+四类微基准可由\href{https://github.com/cc77-builder/riscv/blob/6fc3972158daec30bad37b97b72c4653155e1260/team/optimizations/o2/r3-div-gate/performance/results/samples.csv}{微基准原始窗口CSV}与\href{https://github.com/cc77-builder/riscv/blob/6fc3972158daec30bad37b97b72c4653155e1260/team/optimizations/o2/r3-div-gate/PERFORMANCE_COST_RESULT.md}{测量方法与成本汇总}复查；软件包的使用与版本选择见\href{https://github.com/cc77-builder/riscv/blob/6fc3972158daec30bad37b97b72c4653155e1260/team/docs/version-comparison-r5-g5-20261027.md}{C入口与版本间比较}。
 
-父级映射DFF增加1个，已回溯到既有整数DIV的\seqsplit{Bypass\_final\_rem\_plus\_d\_reg}[2]：旧网表该位无驱动和消费者，新网表保留DFF\_X1。两版对应DIV生成RTL相同，没有新增RTL寄存器声明或VDot状态位；这是整体综合优化/裁剪结果的差异，不能把总面积变化简单等同于新增几个门的局部成本。详情在归档dff-review.json。\par
+完整前向计算的\href{https://github.com/cc77-builder/riscv/blob/6fc3972158daec30bad37b97b72c4653155e1260/team/optimizations/o2/r2-config-reuse/caller/runq-q288/forward-host/stages/norm/evidence/first-token/analysis/target-summary.json}{FR/TA目标机记录}和\href{https://github.com/cc77-builder/riscv/blob/6fc3972158daec30bad37b97b72c4653155e1260/team/optimizations/o2/r2-config-reuse/caller/runq-q288/fused/first-forward-rvv/evidence/reference-v1/reference-summary.json}{FR/GS32/paired16共同参考结果}分别保存目标周期与参考指令计数。两个摘要也随LaTeX整合包提供；原始仓库路径与SHA256见同目录的\texttt{provenance.json}。各实验目录同时保存构建身份、输入清单和原始运行记录。
 
+\subsection{复现与图像来源}
+本报告在\texttt{zjhwork}文档与证据基础上，合入\texttt{zufan}的功能进展和已选插图，资料修订日期为2026年11月6日。实际产生测量的构建由前表单独标识，仓库合并与文档编辑不改变这些实验的身份。
 
-两版VDot结果仍保存32位，公开输出128位高96位清零，算术与控制/perf寄存器分组不变；父级DIV输出不能被误当作高位常零。\par
-FU生成5份文件完全相同。父级58份生成文件仅ExeUnit.sv和\seqsplit{LogPerfEndpoint.sv}不同；后者只改变打印顺序，并被实际SYNTHESIS定义排除。\par
+原始日志、失败记录及构建清单随各实验目录保存。R5组合验收保留原UTC占用审计记录，并使用同一启动环境下的单调时钟记录补充核对；性能表使用DUT周期。复现者可从各目录的RESULT、合同和输入清单进入对应原始记录。
 
-
-
-
-\subsection{STA及敏感性}
-
-
-同一映射的五档条件为1ns/5fF、0.5ns/5fF、2ns/5fF、1ns/1fF、1ns/20fF。理想时钟、0.05ns uncertainty与transition、0.1ns输入/输出delay、0.05ns输入transition、5K\_hvratio\_1\_1线负载。parent testEnable=0，不额外排除\seqsplit{ready/reset/flush}路径。\par
-每版70条类别/档位路径对照，父级网表规范化经逐bit拓扑绑定；未知单元和动态未约束端点拒收。以下nominal到达时间包含对应外部输入延迟；同类最差端点可以变化，不能解释为同一物理路径。\par
-
-
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.15\linewidth}>{\raggedright\arraybackslash}p{0.18\linewidth}>{\raggedright\arraybackslash}p{0.18\linewidth}>{\raggedright\arraybackslash}p{0.18\linewidth}>{\raggedright\arraybackslash}p{0.18\linewidth}}
-\toprule
-\textbf{边界/路径} & \textbf{修复前arrival(ns)} & \textbf{修复后arrival(ns)} & \textbf{差值(ps)} & \textbf{修复后slack(ns)}\\\midrule\endhead
-{fu/i2o} & {0.636728} & {0.636728} & {+0.000} & {0.213272}\\
-{fu/i2r} & {1.190323} & {1.190323} & {+0.000} & {-0.268520}\\
-{fu/r2o} & {0.611317} & {0.611317} & {+0.000} & {0.238683}\\
-{fu/r2r} & {1.163404} & {1.163404} & {+0.000} & {-0.240117}\\
-{fu/ready} & {0.253743} & {0.253743} & {+0.000} & {0.596257}\\
-{\seqsplit{parent/gate\_enable}} & {1.855397} & {1.888362} & {+32.965} & {-1.010883}\\
-{parent/i2o} & {3.128214} & {3.164359} & {+36.145} & {-2.314359}\\
-{parent/i2r} & {3.194971} & {3.314103} & {+119.132} & {-2.393998}\\
-{parent/r2o} & {3.185769} & {3.187058} & {+1.289} & {-2.337058}\\
-{parent/r2r} & {3.166914} & {3.261218} & {+94.304} & {-2.341112}\\
-{parent/ready} & {0.295424} & {0.247821} & {-47.603} & {0.602179}\\
-{parent/vdot\_i2r} & {1.511395} & {1.474949} & {-36.446} & {-0.549064}\\
-{parent/vdot\_r2o} & {2.832115} & {2.776701} & {-55.414} & {-1.926701}\\
-{parent/vdot\_r2r} & {1.345889} & {1.356106} & {+10.217} & {-0.433760}\\
-\bottomrule\end{longtable}}
-
-
-70条类别/档位比较中，到达时间变大30条、变小15条、相同25条。全部差值和端点见完整时序CSV。\par
-nominal所报路径中，修复前有10类负slack，修复后有10类。流程审计PASS不等于1ns收敛；本轮没有获得整核Fmax、布线后时序或功耗。\par
-
-
-最差端点回溯已保存\seqsplit{path-endpoint-review.json}：前后r2r均是VFDiv的fsm\_q[0]到\seqsplit{quo\_m1\_iter\_q\_f64\_0}[1]，i2r最差起点从vsew输入变为src输入；gate\_enable最差起点从vfdivs\_1切到vfdivs\_0，终点仍是浮点DIV的ICG。不能因其属于DIV就忽略父级时序退化，也不能把最差路径切换解释为同一固定路径的变化。\par
-
-
-
-
-\subsection{结论与限制}
-
-
-本次修复解决匹配DIV取消后的无效关钟保持；前轮严格局部测试已证明48取消窗口/144个后续采样拍无多余钟脉冲。新全核回归与本轮周期检查进一步支持保留其行为正确性和固定微基准性能。\par
-这是门控正确性修复，不是新的吞吐提速。面积/时序取舍必须按父级完整映射结果判断，不能将消除时钟脉冲直接换算成功耗百分比。\par
-建议保留这项修复作为工程候选：周期未退化、空闲关钟缺陷已消除、父级面积小幅下降；但它不是时序全面改善版。冻结版本前应由队友复核nominal父级r2r约+94ps、i2r约+119ps及门控使能约+33ps的取舍。若下一项专门做时序优化，应另立候选和同约束对照，不改写本轮结果。\par
-当前本地源码仍为0f12df6；未自动切换团队默认版本、未推送、未代签人工ACK；本轮不转授GEMV、LLM、T17或其他硬件版本的资格。\par
-
-
-
-
-\subsection{复查、失败记录与交付}
-
-
-新增主机检查共62项：周期配对30、验收身份6、沿用成本审计20、归档拒错6，均通过。保留首次预检的验收JSON字段适配失败，以及生成范围检查首次遗漏日志模块的拒绝；二者均发生在检查工具/范围审查，不是EMU或综合功能失败，未删除原记录。\par
-原始周期根：\seqsplit{/home/riscv/riscv-lab/o2-r3-div-gate-performance-20261025}。\par
-原始综合根：\seqsplit{/home/riscv/riscv-lab/o2-r3-div-gate-cost-20261025}。\par
-原H1完整build：\seqsplit{/home/riscv/riscv-lab/o2-h1-build-before-r3-div-gate-20261024}。\par
-原始stdout/stderr、真实退出码、命令、源/依赖/镜像/工具/库哈希及所有路径报告随归档保存；EMU/NEMU和EDA可执行文件保留在本地，用SHA绑定，不放进日常Git提交。\par
-只读复算入口为\seqsplit{performance/recheck.py}和cost/compare.py；必须传新的输出路径。归档字节核验使用\seqsplit{package\_evaluation.py} --verify ARCHIVE --receipt NEW\_JSON；字节检查不能冒充重新仿真或重新STA。\par
-下一步是依据本轮成本结果完成工程取舍与队友复核，用户授权后再发布zjhwork。本轮没有自动开展新的RTL优化。\par\section{C8调用ABI、对象及回退合同}
-本节整理固定项目材料中的详细方法和原始合同。设计阶段的“拟实现”“必须验证”等表述属于原合同约束，当前完成状态以本报告正文和R5/P5证据为准。原日期、比较合同及未测边界按来源保留。
-\par\smallskip\noindent 来源：\href{https://github.com/cc77-builder/riscv/blob/347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e/team/optimizations/o2/integration/firstdot-v2-0f/package/c8/CONTRACT.md}{\seqsplit{team/optimizations/o2/integration/firstdot-v2-0f/package/c8/CONTRACT.md}}\par
-\subsection{入口与选择}
-
-
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.29\linewidth}>{\raggedright\arraybackslash}p{0.65\linewidth}}
-\toprule
-\textbf{入口} & \textbf{目标}\\\midrule\endhead
-{xs\_c8\_gemv\_8x32，开关缺省或 0} & {\seqsplit{config\_reuse\_gemv\_8x32\_reuse\_vdot}}\\
-{xs\_c8\_gemv\_8x32，\seqsplit{XS\_C8\_GEMV\_FORCE\_RVV=1}} & {\seqsplit{config\_reuse\_gemv\_8x32\_reuse\_rvv}}\\
-{\seqsplit{xs\_c8\_gemv\_8x32\_rvv}} & {始终 \seqsplit{config\_reuse\_gemv\_8x32\_reuse\_rvv}}\\
-\bottomrule\end{longtable}}
-
-
-\seqsplit{XS\_C8\_GEMV\_FORCE\_RVV} 最终展开只能是字面量 0 或 1；空值、表达式和未知标识不受支持，编译时拒绝。独立 guard 为 \seqsplit{XS\_C8\_SELECTED\_GEMV\_H}，API 版本 \seqsplit{XS\_C8\_GEMV\_API\_VERSION=1}。\seqsplit{XS\_C8\_GEMV\_PROFILE} 是静态合同标签，不能检测 CPU 能力或不同翻译单元的旧对象。改变宏或版本后，完整重编所有相关翻译单元。\par
-
-
-旧 \seqsplit{XS\_GEMV\_FORCE\_RVV} 和 xs\_gemv\_* 不参与本包选择。包内不重新定义旧 guard、版本、别名。应用按所选版本使用匹配的旧库；C8 库不能代替 firstdot 库。\par
-
-
-\subsection{普通 C ABI}
-
-
-函数原型为 void entry(const int8\_t *packed\_ax, void *output\_slots)。已验证运行环境为当前香山昆明湖 V2/Nexus-AM 裸机 RV64、lp64d，\textbf{VLEN 恰好 128（vlenb=16）}，VS 已启用。默认路径要求该硬件实现项目的自定义 vdot 编码。编译器支持 RVV、misa.V 或本包标签均不足以证明自定义指令存在。无 Linux 用户态运行资格。\par
-
-
-\begin{itemize}
-\item 输入：有符号 INT8 行优先 A[8][32]，紧接 x[32]，共 288 字节。
-\item 输出：8 个 16 字节槽，共 128 字节。每槽低 32 位为 INT32 点积结果，高 96 位清零。不得改为紧密 int32\_t[8]。
-\item 两块缓冲区各自 16 字节对齐、有效且不重叠；输入不会被修改。调用者负责生命周期、数据打包及平台初始化。
-\item 沿用原 RV64 C ABI：栈及被调用者保存寄存器约束不变；向量寄存器和允许的调用者保存状态会改变。
-\item 返回状态为 vl=8、vtype=0（e8/m1/tu/mu）、vstart=0、vcsr=7，不保留原向量配置。
-\end{itemize}
-
-
-底层 vs1r.v 存整个向量寄存器，而输出行步长固定为 16。VLEN 256 会越过槽边界；不能把该包当作 VLEN≥128 通用实现。强制 RVV 只改变调用目标，完整库仍包含未使用的 vdot 函数，也不授予任意 RVV 平台运行资格。\par
-
-
-\subsection{构建与资格边界}
-
-
-独立 GNU 汇编参数固定为 -march=rv64gcv -mabi=lp64d -mno-relax -c。完整 gemv.o 为 27,160 字节，SHA256 为 \seqsplit{f8bc13daeead98a414f313600a5778c96ac95a66b5bcb5c714ea3b98e0d25ab3}。确定性 libxs\_gemv\_c8.a 只含一个 gemv.o，保留 16 个函数、原节和重定位；\seqsplit{config\_reuse\_gemv.h} 从合格 gemv.h 原字节复制，仅改产物文件名。\par
-
-
-当前资格链绑定软件源基点 \seqsplit{c823a8786e052c6e26f6915563c42b6d730dd8e3}、选中 RTL \seqsplit{0f12df675378556670afd0dd2153f47fcb330610} 和 clean-02 配套身份。完整输入、工具身份及验收结果以 INPUTS.json、验证器输出和版本数据档案记录为准。构建成功本身不代表资格链通过。\par
-
-
-静态验收覆盖完整对象、单库成员、缺省/0/1 两别名的 GNU 调用对象和可重定位链接等价、实际符号解析、错误配置拒绝及 SDK 搬移。它不产生新的最终 ELF、目标运行、周期、面积或 STA 数据；example.c 仅为编译/链接示例。只有上述完整等价及身份检查通过，才可明确复用原矩阵和 C8 普通调用证据，不能改写旧记录或当成新应用验证。\par
-
-
-新增 wrapper、分派、CSR 保存、裁剪/混合对象、编译参数或最终布局变化，以及新实际应用，需要按影响补独立目标运行和必要的公平性能比较。叶函数字节相等不能单独授予新最终映像的功能或周期资格。\par
-
-
-\subsection{回退}
-
-
-本包内设 \seqsplit{XS\_C8\_GEMV\_FORCE\_RVV=1} 或显式调用 \seqsplit{xs\_c8\_gemv\_8x32\_rvv} 后完整重编。撤销 C8 选用时，恢复原 firstdot 头和匹配库并完整重编。其余尺寸未提供 C8 稳定别名；不要将本包的 8×32 结论推广到其他形状。\par\section{C8最终链接和镜像等价验证}
-本节整理固定项目材料中的详细方法和原始合同。设计阶段的“拟实现”“必须验证”等表述属于原合同约束，当前完成状态以本报告正文和R5/P5证据为准。原日期、比较合同及未测边界按来源保留。
-\par\smallskip\noindent 来源：\href{https://github.com/cc77-builder/riscv/blob/347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e/team/optimizations/o2/integration/firstdot-v2-0f/package/c8/relink/RESULT.md}{\seqsplit{team/optimizations/o2/integration/firstdot-v2-0f/package/c8/relink/RESULT.md}}\par
-\subsection{接入内容}
-
-
-\begin{itemize}
-\item 原主程序只把底层头的包含改为 \seqsplit{selected\_gemv\_c8.h}。
-\item 8×32 reuse vdot/RVV × 三数据集，共6个函数表项改用 xs\_c8\_gemv\_8x32 / \seqsplit{xs\_c8\_gemv\_8x32\_rvv}。其余42项、数据、期望值、顺序和校验不变，没有重新生成测试向量。
-\item 真正从 libxs\_gemv\_c8.a(gemv.o) 链入完整合格对象；SDK程序源目录没有gemv.S，对象目录没有绕过库的gemv.o。GNU依赖文件和link map确认实际包含SDK头、实际抽取库成员。
-\item 在全新输出中分别构建原源码复制对照和SDK接入程序，保留原AM/klib和链接次序；只有输出路径和记录链接来源的选项不同。
-\end{itemize}
-
-
-源码见 source，重建和完整核验见 README。\par
-
-
-
-
-\subsection{三方等价结果}
-
-
-比较对象：原已通过全核的C8镜像 \allowbreak{}→\allowbreak{} 本轮原源码复制对照 \allowbreak{}→\allowbreak{} 本轮SDK接入版。\par
-
-
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.29\linewidth}>{\raggedright\arraybackslash}p{0.65\linewidth}}
-\toprule
-\textbf{项目} & \textbf{结果}\\\midrule\endhead
-{完整BIN} & {三者全字节一致，均31,440字节}\\
-{BIN SHA256} & {\seqsplit{56805506eb98b68269c73a3645d8f75dff73b697e30dec5f93ccc4716089ad34}}\\
-{入口} & {均0x80000000；ABI flags及ISA属性一致}\\
-{PT\_LOAD} & {同地址、权限、对齐及完整内容；file30,024B，memory31,440B，零填充1,416B}\\
-{装载节} & {所有SHF\_ALLOC节的位置、大小、权限、对齐及内容一致，包括BSS}\\
-{函数} & {16个公共函数及启动/主程序等5个函数的地址、大小和机器码一致}\\
-{测试表与数据} & {48条64字节调用记录与原计划逐项匹配；12组输入数组地址及内容一致}\\
-{GNU链接} & {无未解析符号；map与实际子命令证明使用SDK库成员}\\
-{完整ELF原字节} & {不同；差异仅在.debug\_info、.debug\_line、.debug\_line\_str}\\
-{独立GNU复核} & {分别objcopy --strip-debug后，三份完整ELF全字节一致}\\
-{去调试ELF SHA256} & {\seqsplit{7e26e295fb020a63334026f768ed4825372266465b4e6008973de966fefc04ab}}\\
-\bottomrule\end{longtable}}
-
-
-调试节保存源文件/头文件路径及行号等信息，构建目录与头文件发生变化会改变这些记录。保留原ELF，没有通过删除调试信息来掩盖装载差异：主检查器已先完整比较装载内容和计划，去调试检查是独立补充证据。\par
-
-
-原ELF SHA256：\seqsplit{02159c7ef78cb31eb24cf706bf2974eadea313710563f235f2b11a7bb922de56}。\par
-复制对照ELF SHA256：\seqsplit{cfad14278ee4a3590de9bcbe7589b808fd91959156cef93ba92a78a90db0d99b}。\par
-SDK接入ELF SHA256：\seqsplit{f0ddf1167c961101e70f58cfd012ae788d2965324ad057aa4ade5af1de5bc42e}。\par
-
-
-
-
-\subsection{检查器拒错与输入保护}
-
-
-7项负控全部被拒绝：实际ELF代码字节改坏、调用表改坏、启动入口改变、BSS大小改变、ISA属性改变、输入计划改变，以及真实GNU链接错误空库。另有只改调试字节的正控，确认不会将纯调试变化判为行为改变。错误镜像只用于主机检查，没有送入全核。\par
-
-
-627项完整输入与封存运行证据绑定当前0f、EMU/NEMU及GNU工具。原33个矩阵进程和3个C进程的审计关系及全部封存输出树保持；本轮没有重复解析相同原始日志或伪造新PASS。当前操作保存了真实新GNU构建和最终镜像等价证据。\par
-
-
-成功流水线：\seqsplit{2026-10-27T21:59:40.771873+08:00} 至 \seqsplit{2026-10-27T21:59:43.182911+08:00}，exit0。两次GNU构建，8份主流水线命令回执，另3份去调试GNU检查回执。流程首次通过，负控和原始文件全部保留。\par
-
-
-
-
-
-\reportfigure{S3-08}{完整C调用对象、链接与结果审计流程}{12.0cm}{审计流程示意图归纳627项保护检查，以及三方BIN、PT\_LOAD、48条调用记录和12组输入的一致性；完整ELF可因调试节不同而异，静态等价支持复用既有功能结果。}{用户提供示意图；依据：原C8 relink RESULT及三方等价结构化记录。版本范围：静态等价支持复用既有功能结果；不是新增全核运行。}
-\subsection{已完成与未新增的结论}
-
-
-当前C8包已从“对象/可重定位链接合格”推进到“接回原可运行C程序、完整镜像等价”。原16函数、48例/两轮96正常调用（8×32占12例/24调用）的功能资格可明确复用；不是本轮重新执行这些调用。\par
-
-
-新增EMU/NEMU/全核运行均为0。当前验证的是原测试夹具的包化接入，不是新的实际应用或LLM推理。没有新的周期、面积、STA或功耗测量。原273 cycles与1.095238×属于第25条性能矩阵，不是本C程序新测数据。\par
-
-
-最小软件包接入闭环已完成。后续选择具体应用后再固定新的输入/调用路径/最终镜像合同；需要新性能结论时使用同路径firstdot/RVV及必要的集成前对照。另可继续4×8、16×64控制差异只读归因；4×13保留RVV。生产RTL和旧默认均不因本次接入改变。\par\section{R5组合验收和证据复用}
-本节整理固定项目材料中的详细方法和原始合同。设计阶段的“拟实现”“必须验证”等表述属于原合同约束，当前完成状态以本报告正文和R5/P5证据为准。原日期、比较合同及未测边界按来源保留。
-\par\smallskip\noindent 来源：\href{https://github.com/cc77-builder/riscv/blob/347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e/team/optimizations/o2/integration/firstdot-v2-0f/acceptance/RESULT.md}{\seqsplit{team/optimizations/o2/integration/firstdot-v2-0f/acceptance/RESULT.md}}\par
-\subsection{clean-02 墙钟问题的处理}
-
-
-原14项全核的UTC容量检查出现80.119ms表观四路重叠，原\seqsplit{FAIL/WALL\_CLOCK\_LIMITED}记录永久保留，未修改时间戳或门槛。按事前合同仅重新执行\seqsplit{o2-control-diagnostic}，其余13项全部从原始日志重新解析。\par
-
-
-最终组合14项通过功能、NEMU差分、O2覆盖和负控后同镜像恢复。\textbf{13项复用＋1项新执行，不是重跑14项}。选定记录的严格UTC并发峰值为3（上限3）；新单进程以同boot/PID的单调时钟包络验证，峰值1，包络1497.000秒。该耗时是宿主审计数据，不用于DUT加速比。\par
-
-
-新控制诊断检查131072字节寄存器结果，退出0；独立离线审计再次通过。原13项没有单调时钟记录，不能追溯宣称原批次的实际OS并发已测量。\par
-
-
-本次UTC间隔与单调包络仍相差-62.888356秒（UTC更短）。因此墙钟稳定性仍未证实；新占用审计依赖同boot的单调包络，而非容差修正UTC。该现象如实留档，不把旧批次或系统时钟标为已修复。\par
-
-
-
-
-\subsection{验收矩阵}
-
-
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}p{0.3\linewidth}>{\raggedright\arraybackslash}p{0.35\linewidth}}
-\toprule
-\textbf{项目} & \textbf{状态} & \textbf{依据及范围}\\\midrule\endhead
-{identity} & {PASS} & {0f生产源码398项与clean副本、选定Git版本一致；完整工作树冻结24157项；冻结不等于提交；HEAD不能代表未提交软件材料}\\
-{stage1} & {PASS\_REUSED} & {当前hello/vadd原文重验；原阶段一12文件SHA及220295598B波形定位；波形为2026-10-09 vadd；团队标识仍是占位符，正式材料需成员确定}\\
-{spec} & {\seqsplit{IMPLEMENTED\_INTERNAL\_CONTRACT}} & {SEW8/VLEN128，8对signed int8低32结果、高96清零；编码与异常合同有设计说明；Q01–Q07待官方澄清；不声称官方确认全部内部语义}\\
-{model} & {\seqsplit{PASS\_NEW\_HOST\_CHECK}} & {原模型及确定性向量一致性重新检查；22定向+10000随机未变；主机模型不代替RTL}\\
-{fu-parent} & {\seqsplit{PASS\_REUSED\_RAW\_REPARSED}} & {0f真实FU与VFEX4父级；完整128位、反压/取消/身份/异常、严格DIV关钟及4+16负控；复用0f原167载荷；未新执行RTL仿真，不转授C1/C2/C3}\\
-{fullcore} & {\seqsplit{PASS\_COMPOSITE\_13\_REUSED\_PLUS\_1\_NEW}} & {固定原13项重新解析+新\seqsplit{o2-control-diagnostic}；117不同/124次功能例，O2覆盖及负控恢复；组合验收不是fresh14；原14项UTC容量FAIL保留；本次UTC间隔比单调时钟短62.888356秒，系统墙钟稳定性未证实，新占用审计采用单调包络}\\
-{microbench} & {PASS\_REUSED} & {0f相对修复前96对正式窗完全一致；独立batch128为221 vs RVV678 cycles，3.067873×；历史0f构建的固定微基准；不是当前GEMV或LLM端到端加速}\\
-{firstdot} & {\seqsplit{PASS\_REUSED\_INPUTS\_REVALIDATED}} & {干净firstdot四尺寸：768窗口/96普通C输出复现一致；前三选vdot、4×13选RVV；33矩阵+3普通C为既有运行，本轮没有新性能}\\
-{c8} & {\seqsplit{PASS\_REUSED\_FINAL\_IMAGE\_RECHECKED}} & {627项输入闭合、C8包与旧合格普通C最终BIN/PT\_LOAD/入口/48表项/12数据组一致；273 vs最快RVV299 cycles/1.095238×来自既有性能矩阵，不是本次新计时}\\
-{parameter} & {\seqsplit{PASS\_REUSED\_IN\_ORIGINAL\_SOURCE\_ENVIRONMENT}} & {独立s16x8/r64扩展归档复算；独立实验算术和包装；生产指令及NEMU仍INT8，未新增全核INT16}\\
-{cost} & {\seqsplit{EVIDENCE\_PASS\_TIMING\_NOT\_CLOSED}} & {0f同约束面积/五档STA资料1008文件回读；FU17298.246、父级284614.946微米平方；不是新综合；1ns负slack保留，整核Fmax/布线后时序/功耗NOT\_TESTED}\\
-{reproduction} & {\seqsplit{PASS\_REUSED\_SAME\_HOST}} & {独立源/依赖、\seqsplit{EMU/NEMU/AM/klib}及25应用实际重建已完成，身份再次核验；同机Agent复现，工具与下载缓存复用；不是另一成员/另一机器复现}\\
-{entry-rollback} & {\seqsplit{PASS\_EXPLICIT\_ENTRY}} & {C8独立静态库入口及RVV回退、firstdot原入口与O1/B0历史对照保留；不新增混合dispatcher、不变公共默认；改链接/数据/工具链需按影响再验}\\
-\bottomrule\end{longtable}}
-
-
-
-
-\subsection{当前可使用的性能结论}
-
-
-C8 8×32完整调用窗口为273 cycles，最快同场RVV为299，\textbf{1.095238×}；较firstdot 282.25少3.2772\%。这些来自既有4尺寸×3数据集矩阵，本次只是验收和身份复核，没有新增跑分。四路batch128的3.067873×来自另一固定微基准合同，不代表应用端到端收益，不能与1.095238×混为一个总分。\par
-
-
-
-
-
-\reportfigure{S3-09}{R5验收证据与P5选型收口流程}{12.0cm}{收口流程区分13项既有证据复用和1项补充执行；最终组合为0f加firstdot V2加原C8，P1/P3维持HOLD，P4及分段归约未采用，原FAIL与1ns负裕量边界保留。}{用户提供示意图；依据：R5验收矩阵、P5 RESULT和现有版本数据档案。版本范围：证据复用与新执行分开；不暗示未采用候选进入稳定代码。}
-\subsection{已知边界与下一步}
-
-
-1ns STA尚未收敛，功耗、整核Fmax和布线后时序未测；保留真实成本取舍。独立INT16参数扩展不等于生产全核INT16支持。4×8/16×64配置复用控制漂移仍未归因，未纳入新采用项；4×13保留RVV。规格Q01–Q07待官方澄清，团队名称仍待确定；正式报告/PPT/视频和成员复核由团队另行安排。\par
-
-
-工程可以以此冻结候选为保底版本，不再为了收尾新增应用或强行优化。后续可由用户安排发布zjhwork、成员复核与比赛材料，或另选一个有明确收益假设的优化。未授权的发布本轮不执行。\par
-
-
-冻结文件24157项，生产源码398项与0f及clean副本一致。快照在 \seqsplit{/home/riscv/riscv-lab/software-import-20261026/r5-g5-acceptance-01/frozen-workspace.tar.gz}，已逐项回读，含工作树文件但不含Git历史和外部依赖。使用/回退见README，逐项身份见数据记录，原始新增证据见manifest。各失败尝试也已封存，没有覆盖旧28条数据档案。\par
-\section{本轮已提供截图补充}
-本节仅收录已有截图，原始波形、框架图和其他缺图占位仍保留。各截图按照历史版本和证据层级解释。
-\evidencefigure{SUP-S3-SUMMARY}{历史验收与成本摘要画面}{9cm}{本图为历史报告摘要截图。截取验收矩阵的依据及范围列；局部/全核证据复用口径、1ns时序未收敛分别保留。不替代原bit100拒错、STA路径截图或性能图。}
+图中概念示意用于解释计算和验证流程，技术图依据源码、测试记录及测量数据绘制，终端与GTKWave截图保留实际观察内容。LaTeX整合包包含正文直接引用的图像与日志，完整工程证据按本节索引在团队仓库及对应归档中查询。

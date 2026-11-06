@@ -1,72 +1,73 @@
 \documentclass[UTF8,a4paper,11pt,fontset=none]{ctexart}
-\usepackage[margin=24mm,headheight=15pt]{geometry}
+\usepackage[left=24mm,right=24mm,top=24mm,bottom=24mm,headheight=16pt]{geometry}
 \usepackage{fontspec}
-\IfFileExists{fonts/times.ttf}{
-\setmainfont{times.ttf}[Path=fonts/,BoldFont=timesbd.ttf,ItalicFont=timesi.ttf,BoldItalicFont=timesbi.ttf]
-\setsansfont{times.ttf}[Path=fonts/,BoldFont=timesbd.ttf,ItalicFont=timesi.ttf]
-\setmonofont{times.ttf}[Path=fonts/]
-\setCJKmainfont{simsun.ttc}[Path=fonts/,FontIndex=0,AutoFakeBold=2]
-\setCJKsansfont{simsun.ttc}[Path=fonts/,FontIndex=0,AutoFakeBold=2]
-\setCJKmonofont{simsun.ttc}[Path=fonts/,FontIndex=0]
-}{
-\setmainfont{Times New Roman}
-\setsansfont{Times New Roman}
-\setmonofont{Times New Roman}
-\setCJKmainfont{SimSun}[AutoFakeBold=2]
-\setCJKsansfont{SimSun}[AutoFakeBold=2]
-\setCJKmonofont{SimSun}
-}
-\usepackage{booktabs,longtable,array,seqsplit}
-\usepackage{xcolor,graphicx,tikz}
-\usepackage{caption}
-\usepackage{pdflscape}
+% Open fonts distributed with TeX Live keep the source portable.
+\setmainfont{texgyretermes-regular.otf}[BoldFont=texgyretermes-bold.otf,ItalicFont=texgyretermes-italic.otf,BoldItalicFont=texgyretermes-bolditalic.otf]
+\setsansfont{texgyreheros-regular.otf}[BoldFont=texgyreheros-bold.otf]
+\setmonofont{texgyrecursor-regular.otf}[Scale=MatchLowercase]
+\setCJKmainfont{FandolSong-Regular.otf}[BoldFont=FandolSong-Bold.otf,ItalicFont=FandolKai-Regular.otf]
+\setCJKsansfont{FandolHei-Regular.otf}[BoldFont=FandolHei-Bold.otf]
+\setCJKmonofont{FandolFang-Regular.otf}
+\usepackage{amsmath,amssymb,booktabs,longtable,array,seqsplit}
+\usepackage{xcolor,graphicx,tikz,caption,pdflscape}
 \usetikzlibrary{arrows.meta,positioning}
-\usepackage{fvextra}
+\usepackage{fvextra,needspace}
+\fvset{fontsize=\footnotesize,baselinestretch=1,breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={}}
+\definecolor{reportblue}{HTML}{173B57}
+\definecolor{reportorange}{HTML}{BF671A}
 \usepackage{hyperref}
-\hypersetup{colorlinks=true,urlcolor=blue!45!black,linkcolor=black,unicode=true,hypertexnames=false}
+\hypersetup{colorlinks=true,urlcolor=reportblue,linkcolor=reportblue,unicode=true,hypertexnames=false,pdftitle={香山昆明湖V2自定义向量点积指令技术报告},pdfsubject={设计、验证与性能评估}}
 \urlstyle{same}
 \usepackage{fancyhdr}
 \pagestyle{fancy}\fancyhf{}
-\fancyhead[L]{\small 香山 VDot 参赛工程 V1.0}
-\fancyhead[R]{\small 技术文档扩充稿}
+\fancyhead[L]{\small 香山昆明湖 V2 · 自定义向量点积指令}
+\fancyhead[R]{\small 技术报告}
 \fancyfoot[C]{\thepage}
-\ctexset{section={format=\Large\bfseries\rmfamily},subsection={format=\large\bfseries\rmfamily}}
+\ctexset{section={format=\Large\bfseries\rmfamily\color{reportblue}},subsection={format=\large\bfseries\rmfamily},subsubsection={format=\normalsize\bfseries\rmfamily}}
 \setlength{\parindent}{2em}
-\setlength{\parskip}{4pt}
-\linespread{1.25}
+\setlength{\parskip}{3pt}
+\linespread{1.22}
 \setlength{\LTpre}{8pt}\setlength{\LTpost}{8pt}
-\renewcommand{\arraystretch}{1.25}
-\emergencystretch=4em
-\sloppy
-\newcommand{\reporttitle}[1]{\clearpage\setcounter{section}{0}\addcontentsline{toc}{part}{#1}\begin{center}{\LARGE\bfseries #1\par}\vspace{6pt}{\large 香山昆明湖 V2 自定义向量点积指令\par}\vspace{5pt}工程组合 0f＋firstdot V2＋原 C8\quad 材料日期 2026年11月2日\par\end{center}\vspace{8pt}}
-\setcounter{tocdepth}{1}
-% Fixed-position image blocks keep each placeholder next to its discussion.
-% Add a PDF/PNG/JPG under figures/<ID> to replace its blank frame automatically.
+\renewcommand{\arraystretch}{1.22}
+\emergencystretch=3em
+\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{2}
+\newcommand{\reportcover}[1]{%
+\begin{titlepage}\thispagestyle{empty}\centering
+\vspace*{17mm}
+{\Large\color{reportblue} 香山昆明湖 V2\par}\vspace{9mm}
+{\Huge\bfseries\color{reportblue} 自定义向量点积指令\par}\vspace{9mm}
+{\LARGE\bfseries #1\par}\vspace{7mm}
+{\large 设计、验证与性能评估\par}\vspace{12mm}
+\includegraphics[width=.92\linewidth,height=48mm,keepaspectratio]{figures/cover-concept.png}\par
+\vfill
+{\large 三阶段工程技术报告\par}\vspace{5mm}
+{\normalsize 2026年11月6日修订\par}\vspace{13mm}
+\end{titlepage}}
+\newcommand{\reportcontents}{\pagenumbering{Roman}\tableofcontents\clearpage\pagenumbering{arabic}}
+\newcommand{\reporttitle}[1]{%
+\clearpage\setcounter{section}{0}\setcounter{table}{0}
+\phantomsection\addcontentsline{toc}{part}{#1}
+\begin{center}{\LARGE\bfseries\color{reportblue} #1\par}\end{center}\vspace{6pt}}
 \newcommand{\stagefigureprefix}{1}
+\renewcommand{\thesection}{\stagefigureprefix.\arabic{section}}
 \renewcommand{\thefigure}{\stagefigureprefix-\arabic{figure}}
-\captionsetup[figure]{font=small,labelsep=quad,hypcap=false,justification=centering,singlelinecheck=false}
-\newif\ifreportimagepresent
+\renewcommand{\thetable}{\stagefigureprefix-\arabic{table}}
+\captionsetup[figure]{font=small,labelsep=quad,hypcap=false,justification=centering,singlelinecheck=false,position=bottom}
+\captionsetup[table]{font=small,labelsep=quad,justification=centering,singlelinecheck=false,position=top}
+\setlength{\LTcapwidth}{\textwidth}
+\input{report-concepts.tex}
 \newcommand{\reportfigure}[5]{%
+\reportconcept{#1}%
 \begin{center}\begin{minipage}{\linewidth}\centering
-\reportimagepresentfalse
-\IfFileExists{figures/#1.pdf}{\reportimagepresenttrue\includegraphics[width=\linewidth,height=#3,keepaspectratio]{figures/#1.pdf}}{%
-\IfFileExists{figures/#1.png}{\reportimagepresenttrue\includegraphics[width=\linewidth,height=#3,keepaspectratio]{figures/#1.png}}{%
-\IfFileExists{figures/#1.jpg}{\reportimagepresenttrue\includegraphics[width=\linewidth,height=#3,keepaspectratio]{figures/#1.jpg}}{%
-\setlength{\fboxsep}{8pt}\fbox{\begin{minipage}[c][#3][c]{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}
-\centering\small\textbf{待插入图片：#1}\par\vspace{8pt}#2\par\vspace{8pt}在此替换为正式图片
-\end{minipage}}}}}%
+\IfFileExists{figures/updated-20261106/#1.pdf}{\includegraphics[width=\linewidth,height=#3,keepaspectratio]{figures/updated-20261106/#1.pdf}}{%
+\IfFileExists{figures/#1.pdf}{\includegraphics[width=\linewidth,height=#3,keepaspectratio]{figures/#1.pdf}}{%
+\IfFileExists{figures/#1.png}{\includegraphics[width=\linewidth,height=#3,keepaspectratio]{figures/#1.png}}{%
+\IfFileExists{figures/#1.jpg}{\includegraphics[width=\linewidth,height=#3,keepaspectratio]{figures/#1.jpg}}{%
+\PackageError{report}{Missing figure #1}{Restore the referenced image before compiling.}}}}}%
 \captionof{figure}{#2}\label{fig:#1}
-\raggedright\footnotesize
-\ifreportimagepresent
-\textbf{注：}#4\par
-\textbf{来源与范围：}#5\par
-\else
-\textbf{插图要求：}#4\par
-\textbf{建议来源：}#5\par
-\fi
+\raggedright\footnotesize #4\par
 \end{minipage}\end{center}}
-
-% Supplemental supplied screenshots; not substitutes for unfilled original slots.
 \newcommand{\evidencefigure}[4]{%
 \begin{center}\begin{minipage}{\linewidth}\centering
 \includegraphics[width=\linewidth,height=#3,keepaspectratio]{figures/#1.pdf}

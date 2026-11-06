@@ -1,6 +1,7 @@
-\section{本轮已提供截图补充}
-本节仅收录已有截图，原始波形、框架图和其他缺图占位仍保留。各截图按照历史版本和证据层级解释。
-\evidencefigure{SUP-S2-ARITH}{固定0f算术实现源码摘录}{15cm}{源代码截图辅助解释8路乘法和归约；不替代S2-02数据通路图。}
-\evidencefigure{SUP-S2-MODEL}{主机端参考模型检查画面}{14cm}{35个测试方法通过；该命令只检查主机模型和数据，不授RTL或NEMU资格。}
-\evidencefigure{SUP-S2-OVERLAP}{两槽重叠事务日志摘录}{15cm}{保留10986周期ACCEPT seq2、MOVE seq1、RESPONSE seq0；本图是历史日志字段摘录，S2-05原始波形仍待补。原批次UTC容量审计FAIL保留。}
-\evidencefigure{SUP-S2-STATE}{固定0f两槽状态与控制源码摘录}{16cm}{依次展示寄存器、握手与取消条件、状态更新；源代码画面不替代S2-06至S2-08控制行为波形。}
+\section{实现与验证摘录}
+下列摘录把前文的数据通路、状态控制和验证方法对应到具体实现与运行记录。各图分别展示源码、主机模型和逐拍日志，便于结合正文复查。
+
+\evidencefigure{SUP-S2-ARITH}{八项点积算术实现摘录}{12cm}{八路有符号乘法和逐级归约，对应本章的中间位宽分析。}
+\evidencefigure{SUP-S2-STATE}{两槽状态与控制实现摘录}{13cm}{结果槽保存32位；有效位、握手、取消条件和状态更新共同管理请求。}
+\evidencefigure{SUP-S2-MODEL}{独立主机模型的测试输出}{11cm}{35个主机模型测试方法通过。该统计以测试方法为单位；算术RTL的10022组输入另见基础测试汇总。}
+\evidencefigure{SUP-S2-OVERLAP}{连续事务的同拍重叠记录}{11cm}{10986周期同时记录ACCEPT seq2、MOVE seq1与RESPONSE seq0，分别对应新输入、原P推进和原R响应。}

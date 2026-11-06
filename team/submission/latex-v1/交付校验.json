@@ -1,31 +1,72 @@
 {
-  "date": "2026-11-06",
-  "status": "PASS",
-  "reports": {
+  "schema": "build11-delivery-verification-v1",
+  "created_utc": "2026-11-06T06:58:12.947001+00:00",
+  "build": "Build11 compile-v3",
+  "status": "COMPILED_AND_VISUALLY_VERIFIED",
+  "integration_base": "cfb0010f379f13ac7732dfb98ae600cc7ee1d44b",
+  "reference_evidence_commit": "6fc3972158daec30bad37b97b72c4653155e1260",
+  "compiled_inputs": {
+    "count": 110,
+    "manifest": "qa/build11-20261106/source-input-manifest.json",
+    "all_current_source_hashes_match": true
+  },
+  "compile": {
+    "operation_id": "d9b025210fdcd3c1fd06c2f645cfad75.5fb44463e67627231f16ba2406f555b6",
+    "exit_code": 0,
+    "cleanup_complete": true,
+    "passes_per_document": 3,
+    "receipt": "output/build-receipt.json",
+    "metadata": "qa/build11-20261106/compile-v3-metadata.zip"
+  },
+  "outputs": {
+    "main": {
+      "path": "output/三阶段技术文档_合订本.pdf",
+      "bytes": 23947895,
+      "sha256": "efbe9620308bc69bfa12cefca6fdb54f14cfe63755aadfeea3affc5c452f43d0",
+      "pages": 65,
+      "entry": "main.tex"
+    },
     "stage1": {
-      "pages": 26,
-      "sha256": "27418eb29dcb05d37fc7a93b9d33fcfcd4933371ab4b2ff7d4e03362efc096da",
-      "local_source": "D:\\yanyi\\riscv大赛\\doc\\参赛提交材料_LaTeX_V1\\output\\第一阶段_执行日志与过程文档_阶段归属修订20261105.pdf",
-      "source_compile": "PASS_ALL_PAGE_TEXT_MATCH"
+      "path": "output/第一阶段_执行日志与过程文档.pdf",
+      "bytes": 5019674,
+      "sha256": "6e5f9becedd4c2303a20e9f4c4ceaded445091c24f05b5b5cc3872d786546c78",
+      "pages": 18,
+      "entry": "stage1.tex"
     },
     "stage2": {
-      "pages": 30,
-      "sha256": "00e090cd67e6052ad597f0f532b30f5739c9a5e22aea07d8ad0786f1a5295c64",
-      "local_source": "D:\\yanyi\\riscv大赛\\doc\\参赛提交材料_LaTeX_V1\\output\\第二阶段_设计与基础测试文档_算术测试汇总插图版20261105.pdf",
-      "source_compile": "PASS_ALL_PAGE_TEXT_MATCH"
+      "path": "output/第二阶段_设计与基础测试文档.pdf",
+      "bytes": 10590566,
+      "sha256": "9e97cd636b9c52a353949d2209df6e99d5dd1a53e8816b121f13b53638df0a95",
+      "pages": 23,
+      "entry": "stage2.tex"
     },
     "stage3": {
-      "pages": 30,
-      "sha256": "3dd8f935b38b9ec5e4ccd1abb42bd108a8a942d012248168150796c9706fe17e",
-      "local_source": "D:\\yanyi\\riscv大赛\\doc\\参赛提交材料_LaTeX_V1\\output\\第三阶段_协同仿真与性能分析_拒错恢复插图版20261105.pdf",
-      "source_compile": "PASS_ALL_PAGE_TEXT_MATCH"
-    },
-    "main": {
-      "pages": 88,
-      "sha256": "6d30b03bce900d2a8fe86334a3f9dc0ff617efc29d3ac8cdab2c240ec261f3ee",
-      "local_source": "D:\\yanyi\\riscv大赛\\doc\\参赛提交材料_LaTeX_V1\\output\\三阶段技术文档_合订本_算术测试汇总插图版20261105.pdf",
-      "source_compile": "PASS_ALL_PAGE_TEXT_MATCH"
+      "path": "output/第三阶段_协同仿真与性能分析.pdf",
+      "bytes": 10238678,
+      "sha256": "01fcea94b469b58c6b19275fc0f97283293dd0ae95d2e2366df3054c13003371",
+      "pages": 26,
+      "entry": "stage3.tex"
     }
   },
-  "no_implementation_or_python_changes": true
+  "numbered_figures": {
+    "main": 38,
+    "stage1": 7,
+    "stage2": 18,
+    "stage3": 13
+  },
+  "concept_images": {
+    "total": 22,
+    "stage1": 4,
+    "stage2": 9,
+    "stage3": 9
+  },
+  "visual_review": "qa/build11-20261106/visual-review-v3.json",
+  "source_portability": {
+    "fonts": "TeX Gyre + Fandol",
+    "build": "python -X utf8 build.py",
+    "network_required": false,
+    "observed_platform": "native Windows, TeX Live 2026; other platforms not recompiled"
+  },
+  "scope": "Report sources, figures, summaries, build utility and delivery metadata; official implementation and validation programs unchanged.",
+  "publication_receipt": "Actual Git push and Gmail delivery are recorded separately after those actions complete."
 }

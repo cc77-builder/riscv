@@ -1,28 +1,54 @@
-# 三阶段 LaTeX 与 PDF 报告
+# 香山昆明湖 V2 自定义向量点积指令技术报告
 
-2026年11月6日更新：第一阶段按环境、操作日志和vadd加法过程归属；第二阶段补齐正数、负数及边界点积三类测试截图，以及22项定向＋10000项随机算术RTL测试汇总；第三阶段补充真实vdot输入、响应、提交观察波形及bit100拒错／正常恢复日志截图。性能与PPA结论保持原测试范围。
+2026 年 11 月 6 日整合修订。报告以环境与运行、指令与硬件设计、差分验证与性能评估三个阶段组织，整合 zjhwork 的新增测试截图、真实波形与此前制作的 22 张概念插图。技术正文按已有源码和原始结果更新，图表中的测试范围与测量条件在相应章节说明。
 
-| 文档 | 页数 |
-| --- | ---: |
-| [第一阶段](output/第一阶段_执行日志与过程文档.pdf) | 26 |
-| [第二阶段](output/第二阶段_设计与基础测试文档.pdf) | 30 |
-| [第三阶段](output/第三阶段_协同仿真与性能分析.pdf) | 30 |
-| [合订本](output/三阶段技术文档_合订本.pdf) | 88 |
+## 阅读与编译
 
-第二阶段三类案例位于第10—11页，算术汇总位于第11页。第三阶段拒错／恢复截图位于第3页，真实vdot波形位于第5—7页。合订本对应算术汇总第39页、拒错／恢复第61页。以figures/page-map.json为准。
+`output/三阶段技术文档_合订本.pdf` 为完整报告；同目录另有三份分阶段 PDF。主文由 `sections/` 中的正文直接编译，全部必需图片和被引用的日志摘录均包含在包内。
 
-## 编译当前交付源码
+需要 Python 3.9 或更新版本，以及包含 XeLaTeX、ctex、Fandol 和 TeX Gyre 的完整 TeX Live。字体采用 TeX Live 所附开放字体，无需安装 Windows 专有字体。推荐 TeX Live 2026。
 
-main.tex、stage1.tex、stage2.tex、stage3.tex通过sections中的最终正文直接编译。安装XeLaTeX、合法授权的SimSun及Times New Roman字体后执行：
+在解压目录执行：
 
 ```bash
 python -X utf8 build.py
 ```
 
-本次所有既有Python脚本保持原状。旧expand_reports.py属于上轮再生流程，会覆盖本轮直接交付的正文；请直接编译当前.tex文件，不运行旧再生脚本。字体、FST/VCD大波形、编译缓存及渲染预览不随本次更新发布。
+若 XeLaTeX 未加入 PATH，可指定编译器：
 
-## 证据范围
+```bash
+python -X utf8 build.py --compiler /path/to/xelatex
+```
 
-原始截图保存在figures/source-screenshots；图下注明历史记录与本次波形的身份。10022项统计属于算术数据通路；历史negative-vdot及functional-0日志用于拒错／恢复；真实vdot波形补采仅证明所示正数事务，不新增性能或PPA测量。阶段一vadd不作为点积测试。
+只编译合订本可使用：
 
-当前PDF经过本地排版检查；本发布副本的LaTeX源码独立编译后核对全部页面文本。更新范围和文件SHA见publication-manifest.json、交付校验.json。源码、图片、PDF以外的项目实现及既有辅助代码均保持不变。
+```bash
+python -X utf8 build.py --documents main
+```
+
+脚本对每份文档执行三轮排版，前两轮更新目录和交叉引用，第三轮生成 PDF；记录位于 `output/build-receipt.json`，各轮日志保留在同目录。运行过程无需访问 GitHub 或网络。Windows PowerShell 可使用 `py -3 -X utf8 build.py`；带空格的编译器路径应使用引号。
+
+## 文件组织
+
+| 路径 | 内容 |
+| --- | --- |
+| `main.tex`、`stage1.tex`、`stage2.tex`、`stage3.tex` | 合订本及三份分阶段入口 |
+| `preamble.tex`、`report-concepts.tex` | 版式、开放字体与概念插图映射 |
+| `sections/` | 本次整合后的最终正文 |
+| `figures/` | 技术图、测试截图、真实波形及 22 张概念插图 |
+| `figures/updated-20261106/` | 按当前正文术语更新的覆盖范围图及来源说明 |
+| `evidence/` | 编译时使用的日志与关键数据摘要 |
+| `output/` | 四份 PDF 及编译记录 |
+| `qa/build11-20261106/` | 本次发布核验及编译元数据 |
+
+图片中的概念示意用于帮助理解，编号技术图及实测表保留可核对的接口、位宽、数值和条件。合订本与分阶段文档共享同一份正文和图件。仓库中的历史生成脚本不属于本整合包的构建流程；编译只需运行 `build.py`。
+
+## 数据与版本
+
+文档整合基于 `zufan` 与 `zjhwork` 合并提交 `cfb0010f379f13ac7732dfb98ae600cc7ee1d44b`；最新完整 forward 独立参考摘要对应提交 `6fc3972158daec30bad37b97b72c4653155e1260`。各测量使用的硬件和软件版本在正文证据索引中单独列出。
+
+`evidence/application-current-20261106/` 随包保留旧目标单窗口结果与新 FR/G/P 独立参考摘要，以及原始仓库路径和 SHA256。新参考的退休指令减少与目标处理器周期采用不同列和不同文字说明。
+
+`figures/ai-concepts/layout-map.json` 与 `selected-assets.json` 保留了沿用图片的 Build10 选择记录和内容校验，仅作为资产来源；当前文档的编译、页码和视觉检查以 Build11 发布元数据为准。
+
+文件清单、SHA256、实际编译环境和页面核验结果见发布元数据。完整工程、全部原始运行证据及实现源码见团队仓库 `cc77-builder/riscv` 的 `zufan` 分支。
