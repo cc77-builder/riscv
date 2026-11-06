@@ -1,20 +1,253 @@
 \renewcommand{\stagefigureprefix}{2}\setcounter{figure}{0}
+\reporttitle{第二阶段设计与基础测试文档}
 
-\reporttitle{第二阶段：向量点积设计与功能验证}
 
-本设计在香山昆明湖V2现有向量执行单元中接入自定义点积，采用乘积槽P和结果槽R保存两笔在途请求。下文依次说明指令语义、RTL实现、正数、负数与边界测试，以及取消和共享资源控制；完成取消关钟修复的最终工程版本记为0f。\par
+团队名称（待团队确认）　成员（待团队确认）\par
+工程采用0f硬件，材料版本V1.0，初稿日期为2026年11月2日。\par
 
-\section{指令语义与微架构设计}
 
-点积将多组乘法结果归约为一个和。本设计在昆明湖V2已有向量执行路径中接入vdot，复用译码、向量寄存器、调度、写回和精确提交机制。数据通路完成8项有符号乘加，控制通路维护请求身份、反压及取消。优化围绕独立点积吞吐、结果寄存器开销和与DIV共享父级资源的切换行为展开。\par
+\section{设计目标}
+阶段归属：设计、RTL及正数、负数、边界点积测试均属第二阶段（题目2.1至2.3.3）；第一阶段vadd仅作向量加法验证。\par
 
-\subsection{点积定义、位宽与结果布局}
+
+点积由多次乘法与累加构成。本设计在昆明湖V2已有向量路径中增加vdot功能，复用处理器的译码、向量寄存器、调度、写回和精确提交机制。优化集中于独立点积吞吐、结果保存成本及与DIV共用父级时的取消行为。\par
+
+
+\section{指令语义与编码}
+
+
+内部合同vdot-s8x8-r32-v0.1固定VLEN128、SEW8、LMUL1、VL8及vstart0。两个源各取低8个字节，按signed int8解释。\par
+
+
+S = Σ(i=0…7) signed8(vs1[i]) × signed8(vs2[i])\par
+
+
+目的低32位保存S的二补码，高96位清零。源高64位不参与计算。结果覆盖旧目的，源与目的允许别名。单项乘积范围为−16256～16384，总和范围为−130048～131072，32位结果能够完整保存。\par
+
+
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}p{0.3\linewidth}>{\raggedright\arraybackslash}p{0.35\linewidth}}
+\toprule
+\textbf{字段} & \textbf{位段} & \textbf{取值}\\ \midrule\endhead
+funct6 & 31～26 & 000000\\
+vm & 25 & 1\\
+vs2 / vs1 & 24～20 / 19～15 & 向量源寄存器编号\\
+funct3 & 14～12 & 000\\
+vd & 11～7 & 向量目的寄存器编号\\
+opcode & 6～0 & custom-0，0x0b\\
+\bottomrule\end{longtable}}
+
+
+MATCH为0x0200000b，MASK为0xfe00707f。汇编记法使用vdot.vv vd, vs2, vs1，程序通过校验后的机器字/汇编宏编码。示例vdot.vv v10,v8,v9对应0x0284850b。\par
+
+
+合法状态还要求vill=0和vm=1，接受四种vta/vma组合。非法配置通过异常路径处理，成功运算保留合同规定的向量CSR。对目的宽度、合法域等赛题歧义，按内部合同公开说明，并保留Q01～Q07待官方澄清状态。\par
+
+
+
+\reportfigure{S2-01}{vdot指令字段与完整结果布局}{12.0cm}{两个源寄存器均只读取低8个字节，按signed int8相乘并求和；完整128位目的结果的低32位为补码结果，高96位清零。}{用户提供示意图；依据：固定\seqsplit{team/spec/vdot.md}及本文编码表。版本范围：内部\seqsplit{vdot-s8x8-r32-v0.1}合同；保留歧义说明。}
+\section{数据通路和两槽微架构}
+
+
+数据通路由8路有符号乘法、乘积寄存器、归约加法网络及结果槽构成。乘积为16位有符号数，归约在足够宽度下累加。\par
+
+
+
+
+\reportfigure{S2-02}{0f点积算术与P/R两槽数据通路}{12.0cm}{8路乘积经P槽、足宽归约及R槽输出；ROB、pdest、控制和性能标记随事务传递。图示为稳定0f两槽实现，无阻塞时最早2拍响应，启动间隔为1拍。}{用户提供示意图；依据：0f固定提交的\seqsplit{VDotElastic/VDotO2}及算术模块；旧TikZ图可参考。版本范围：最终采用0f；不展示未采用P4一拍候选。}
+
+
+
+
+P槽保存8个乘积及对应控制信息，R槽保存完成结果和完整身份。无阻塞时，旧R输出、旧P转入R、新请求进入P可在同一拍发生。最早响应为接收后2拍，连续接受间隔为1拍。\par
+
+
+H1将结果状态保存宽度收窄到32位，输出处拼接96个零。ROB标识、目的物理寄存器、向量写使能和性能信息随事务一起推进，反压期间保持待输出数据及身份。flush分别匹配P、R的ROB标识，处理部分取消与同时取消。异常请求携带异常信息并关闭目的写使能。\par
+
+
+实现路径包括backend/fu/vector中的算术模块、\seqsplit{wrapper/VDotElastic.scala}及VDotO2.scala，父级调度和时钟控制位于\seqsplit{backend/exu/ExeUnit.scala}。实际浏览以固定0f提交的路径为准。\par
+
+
+
+
+\section{与DIV共用父级的处理}
+
+
+VFEX4在vdot及整数/浮点DIV之间管理分派、占用和时钟。0f修复匹配DIV取消之后保持状态未及时释放的问题。验证通过实际父级信号检查取消后的空闲时钟，并覆盖复位、两类DIV、反压和请求切换。两槽占用信息用于保持正确互斥，控制信号以实际事务身份为依据。\par
+
+
+
+\reportfigure{S2-03}{VFEX4父级的派发、互斥与门控结构}{12.0cm}{VFEX4共享资源的简化结构示意图，展示VDot、VIDiv、VfDivSqrt、门控及共享写回之间的关系；控制细节以稳定0f实现和正文说明为准。}{用户提供示意图；依据：0f ExeUnit.scala、父级验证及DIV取消修复证据。版本范围：0f生产逻辑；不得套用未采用C1/C2/C3/P4。}
+\section{第二阶段点积功能验证}
+
+
+测试从独立数学模型推进到算术RTL、FU、真实父级和全核差分。各层统计分别保存。\par
+
+
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}p{0.3\linewidth}>{\raggedright\arraybackslash}p{0.35\linewidth}}
+\toprule
+\textbf{层级} & \textbf{主要覆盖} & \textbf{已有结果}\\ \midrule\endhead
+模型/算术 & 22组定向＋10000组随机，完整128位 & 验证通过\\
+FU/真实父级 & 反压、取消、复位、身份、异常及DIV交互 & 0f原证据复用，4＋16项负控\\
+全核 & 正负边界、寄存器别名、非法向量状态等 & 117个不同用例，按原矩阵分片执行124次\\
+总验收 & 原13项与补1项组合、负控及恢复 & R5/G5组合验证通过\\
+\bottomrule\end{longtable}}
+
+
+下表为vdot数学预期；实际配对结果及最小值证据限制见后文题目2.3.1至2.3.3。\par
+
+
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}p{0.3\linewidth}>{\raggedright\arraybackslash}p{0.35\linewidth}}
+\toprule
+\textbf{输入} & \textbf{数学结果} & \textbf{目的低32位}\\ \midrule\endhead
+[1,2,3,4,5,6,7,8]与自身点积 & 204 & 0x000000cc\\
+8个−1与8个1点积 & −8 & 0xfffffff8\\
+8个−128与8个−128点积 & 131072 & 0x00020000\\
+8个−128与8个127点积 & −130048 & 0xfffe0400\\
+8个0与任意合法输入 & 0 & 0x00000000\\
+\bottomrule\end{longtable}}
+
+
+所有行还需检查高96位为零。测试对源高半区和旧目的设置哨兵，以发现错误lane选择、目的高位保留和源/目的别名处理问题。\par
+
+
+
+
+
+\reportfigure{S2-04}{基础验证层级与测试数据流}{12.0cm}{独立参考模型、算术RTL、FU、真实VFEX4父级和全核DiffTest分别核验；22定向加10000随机属于算术层，117独立用例、124次执行属于所列全核范围。}{用户提供示意图；依据：基础测试矩阵、模型数据manifest、R5验收矩阵。版本范围：各层覆盖独立记账；Agent检查不标成人工验收。}
+\section{设计取舍与扩展}
+
+
+O2以两槽容量提高独立吞吐，H1降低结果寄存器开销，0f完善DIV取消关钟行为。后续一拍P4候选经历局部验证和成本筛选，原版6项、唯一修订10项门槛未过，最终选择0f。\par
+
+
+参数扩展实验另行实现signed INT16×8、64位结果，完成94组定向和10000组随机验证。该证据说明算术与包装的参数化方法，生产实现的ISA域按INT8合同交付。\par
+
+
+\href{https://github.com/cc77-builder/riscv/blob/eca41d7cd959f5f3c4f240e382919c492d1ccb96/team/spec/vdot.md}{指令合同} · \href{https://github.com/cc77-builder/riscv/blob/0f12df675378556670afd0dd2153f47fcb330610/src/main/scala/xiangshan/backend/fu/wrapper/VDotElastic.scala}{稳定FU源码} · \href{https://github.com/cc77-builder/riscv/blob/eca41d7cd959f5f3c4f240e382919c492d1ccb96/team/optimizations/o2/integration/firstdot-v2-0f/acceptance/acceptance-matrix.json}{R5验收矩阵} · \href{https://github.com/cc77-builder/riscv/blob/eca41d7cd959f5f3c4f240e382919c492d1ccb96/team/docs/t15-parameter-extension.md}{参数扩展}\par\section{工程实现与验证方法补充}
+
+
+\subsection{从数学定义到硬件位宽}
+
+
+signed int8的范围为−128至127。最大正乘积由−128乘−128得到16384，最负乘积由−128乘127得到−16256。八项累加后的数学范围为−130048至131072。19位有符号表示覆盖该范围，18位正上限只有131071，因此正端点是检验归约位宽的必要案例。\par
+
+
+加法树每一级保留进位，宽度依次由16增加到17、18、19位。最终先形成32位补码，再在外部拼接96位零。负数结果的高96位仍为零，因为项目将低32位定义为结果字段，整个128位向量按照字段布局写回。完整128位检查能够同时发现符号扩展方向错误和高位残留。\par
+
+
+源寄存器高64位设置非零哨兵，可以检验实现是否误做16项点积。两个源的字段提取还需要独立核对，因为点积交换律会掩盖vs1与vs2交换的问题。数学结果正确、编码字段正确、实际寄存器依赖正确是三项分别检查的条件。\par
+
+
+\subsection{译码、微操作和配置依赖}
+
+
+精确编码匹配后，指令应进入向量类别并生成单个微操作、单次向量写回。编码中寄存器字段采用与R型相似的位置，但寄存器类别属于向量体系。若将字段直接按整数寄存器读取，简单数值案例可能偶然通过，架构状态和别名行为仍会错误。\par
+
+
+实际VL通过重命名后的依赖到达执行端。SEW、LMUL、vill等来自随指令携带的向量控制。对于乱序处理器，执行时读取一个全局当前CSR无法保证对应到本条指令的配置，尤其当多条vset与向量运算交错时。测试因此包含密集配置变化、合法非法交错和恢复。\par
+
+
+旧目的寄存器不参与点积累计，译码需要避免无用旧目的依赖。目的可能是v0，也可能与某个源相同，因此源快照和目的写回类型必须明确。完成标记、异常信息和写使能与这一次微操作绑定，防止推测执行在取消后留下架构可见更新。\par
+
+
+\subsection{P槽、R槽与同拍重叠}
+
+
+P槽包含乘积和完整身份，R槽包含归约结果和完整身份。两个valid描述各槽是否拥有有效事务，而不是描述算术结果是否非零。结果为零的合法事务仍必须完成一次响应。\par
+
+
+设旧P为A、旧R为B。当下游ready且有新请求C时，当前边沿可以同时完成B输出、A从P转入R、C进入P。非阻塞赋值和实际组合逻辑必须读取旧P的内容，使A的结果不会被C覆盖。验证通过相异数据及相异ROB/pdest组合来识别这类覆盖错误。\par
+
+
+当R被反压时，P可在空槽条件下接收一个请求，但满容量后必须停止接收。反压解除时，R响应与P推进可以重叠，避免恢复过程引入额外气泡。每次握手、推进和取消均在同一全局周期坐标中复算，不能从日志打印顺序推断真实边沿顺序。\par
+
+
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.2\linewidth}>{\raggedright\arraybackslash}p{0.24\linewidth}>{\raggedright\arraybackslash}p{0.24\linewidth}>{\raggedright\arraybackslash}p{0.22\linewidth}}
+\toprule
+\textbf{旧P} & \textbf{旧R} & \textbf{下游ready} & \textbf{可以发生的主要动作}\\\midrule\endhead
+{空} & {空} & {任意} & {接收新请求到P}\\
+{有效} & {空} & {任意} & {旧P推进到R，并可接收新请求}\\
+{空} & {有效} & {0} & {保持R，可接收新请求到P}\\
+{有效} & {有效} & {0} & {保持两槽并反压输入}\\
+{有效} & {有效} & {1} & {R输出、P推进、新输入接收重叠}\\
+\bottomrule\end{longtable}}
+
+
+上表说明正常流的容量关系。reset与redirect具有额外优先级，必须在完整状态转移中覆盖。\par
+
+
+
+\reportfigure{S2-05}{无阻塞连续接收的两槽重叠波形}{6.0cm}{展示clock、in/out valid-ready、P/R valid、seq或ROB/pdest及128位结果；标注旧R输出、旧P转R、新请求入P同拍，最早2拍响应和II=1。}{固定0f FU验证保存的波形/事务记录；按实际层级定位。版本范围：仅稳定0f；若没有波形，本轮保持空位并列为待采。}
+\subsection{反压期间的身份稳定性}
+
+
+io.out.valid表示R中存在可输出事务，其含义独立于io.out.ready。输出被阻塞时，结果、ROB标识、目的物理寄存器、异常向量、写使能及性能字段均保持。只检查data稳定而忽略控制包，可能产生数值正确但写入错误寄存器的问题。\par
+
+
+验证为每个接受事务记录独立身份，响应时与该身份的参考值对应。负控包括交换两事务pdest、改变ROB、篡改高位、制造重复响应或漏响应。实际硬件协议测试与检查器日志变异分别记账，前者验证设计，后者验证证据审查能力。\par
+
+
+
+\reportfigure{S2-06}{反压期间结果和事务身份保持}{6.0cm}{标出out.valid=1且out.ready=0区间，证明完整128位结果、ROB、pdest及控制保持；解除反压后仅响应一次。}{固定0f FU反压用例及真实父级反压记录。版本范围：对应同一请求及其原用例ID，不拼接不同时段。}
+\subsection{取消、复位及环形年龄}
+
+
+redirect按RobPtr的年龄语义分别判断P和R是否需要取消。ROB索引的数值在环回时不能直接代表年龄，测试需要覆盖flag变化、不同flushItself设置和接受顺序与年龄关系不同的情况。较老幸存事务继续完成，较年轻匹配事务释放有效状态。\par
+
+
+同一拍发生输出ready和匹配取消时，取消决定该事务是否仍可形成响应。reset则清除槽有效状态，并检查接口握手被抑制。真实父级还需验证已经关钟的空槽可以正确复位，以及取消后重新唤醒的第一笔请求不丢失。\par
+
+
+任意前缀都满足事务守恒。接受数等于已响应数、已取消数、复位丢弃数和当前在途数之和。当前在途数最大为2。这个关系能够发现尾部漏计、幽灵响应和被取消事务再次输出等错误，并要求正常结束时排空。\par
+
+
+
+\reportfigure{S2-07}{部分取消、全部取消与复位清空}{6.2cm}{采用分面展示仅P取消、仅R取消、P/R同时取消及reset；展开ROB年龄/flush、两槽valid和输出valid，标注取消后无错误写回。}{固定0f取消/复位/环形ROB定向用例与原日志。版本范围：与已验证0f绑定；分面各自标原用例ID。}
+\subsection{共享DIV资源与时钟使能}
+
+
+VFEX4父级在vdot和DIV之间保持资源互斥，输出选择要求有效完成来源唯一。仅在独立FU中验证ready/valid，无法证明父级在取消和切换时正确释放busy和时钟保持状态。最终验证包含VDot、VIDiv、VFDiv/SQRT以及真实ClockGate。\par
+
+
+0f处理的是匹配DIV取消后保持状态的释放。若取消后仍保持时钟使能，空闲期间会观察到多余时钟脉冲。若过早释放，又可能使仍在途的事务冻结。因此测试同时核对取消后的空闲采样和未取消事务的完成行为。\par
+
+
+
+\reportfigure{S2-08}{DIV/SQRT切换与取消后关钟}{6.2cm}{展示VDot→整数DIV、浮点双lane DIV/SQRT及取消恢复；展开父级选择、接收、占用、子ready、输出、flush和gate enable，定位取消后的清空及空闲关钟。}{0f真实VFEX4父级验证、DIV取消关钟修复证据。版本范围：区分各场景；不是只用子模块波形替代真实父级。}
+\subsection{定向、随机和全核测试的分工}
+
+
+定向测试用最小数据隔离某一类错误，随机测试扩大数据覆盖并检查确定性再生成，全核测试验证实际译码、依赖、异常和提交路径。完整128位数学比较贯穿各层，而配置、取消和写回身份需在对应控制层检查。\par
+
+
+22组定向和10000组随机描述算术层输入集合。117个不同功能/异常例描述架构测试矩阵，124次执行包含分片重复对照。这些计数保持各自单位，避免把重复执行累计为新的不同用例。\par
+
+
+基础测试报告应对每类输入说明初态、配置、指令字、预期结果、实际检查域和通过条件。负数案例核查低32位补码与高96位零，极值案例核查位宽正端点，别名案例核查源快照与目的分配，非法配置案例核查精确异常和写入抑制。\par
+
+
+
+\input{sections/stage2-required-tests.tex}
+\reportfigure{S2-09}{第二阶段vdot正数、负数与边界点积结果（异常截图待补）}{15.0cm}{(a)组合算术RTL统计；(b)-(d)历史全核观察器ACCEPT/RESPONSE配对的字段摘录，按seq、ROB和pdest绑定。actual来自原响应日志，expected按低8个signed int8重新计算；不是GTKWave波形或架构提交截图。非法配置异常码和目的不更新的图片仍待补。}{用户提供的算术统计截图及正数、负数、边界响应摘录截图；图中保留原日志路径、行号和SHA。版本范围：算术RTL统计为2026-10-12历史记录；0f全核响应为2026-10-27 UTC历史记录；原批次UTC容量审计FAIL保留。}
+\subsection{设计演进与最终采用}
+
+
+初版单请求控制提供功能闭环，T14改变乘积锁存位置，O1支持更及时的交接，O2通过两个弹性槽支持连续接受。H1将结果状态收窄至32位，0f进一步完善DIV取消行为。每项演进都对应其独立的验证和比较合同。\par
+
+
+后续P4尝试将内部算术缩为一拍，局部验证完成后进入同约束成本筛选。原47项门槛中，初版失败6项、唯一修订失败10项，因而最终报告仍采用0f。设计决策同时考虑协议、功能、资源与时序，单一指标改善不足以替代完整资格。\par\section{内部ISA合同、数学边界和测试向量}
+本节整理固定项目材料中的详细方法和原始合同。设计阶段的“拟实现”“必须验证”等表述属于原合同约束，当前完成状态以本报告正文和R5/P5证据为准。原日期、比较合同及未测边界按来源保留。
+\par\smallskip\noindent 来源：\href{https://github.com/cc77-builder/riscv/blob/347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e/team/spec/vdot.md}{\seqsplit{team/spec/vdot.md}}\par
+\subsection{数学语义与目的位布局}
+
+
+\subsubsection{源元素编号}
+
 
 从指令执行前的源寄存器状态读取：\par
 
 
-\Needspace{6\baselineskip}
-\begin{Verbatim}[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\footnotesize,baselinestretch=1]
+\begin{Verbatim}[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\small]
 byte_a[i] = vs1_before[8*i+7 : 8*i]
 byte_b[i] = vs2_before[8*i+7 : 8*i]       i = 0…7
 signed8(x) = x             if x < 128
@@ -22,25 +255,31 @@ signed8(x) = x             if x < 128
 \end{Verbatim}
 
 
-源[127:64]不参与运算。小端裸机加载将数组第0个字节映射到源[7:0]，后续字节依次对应更高的8位字段。向量十六进制打印通常从高位开始，检查时按位段还原lane编号，与数组下标逐项对应。\par
+源 [127:64] 不参与运算。内存加载测试使用既有小端裸机环境，数组的第 0 个字节对应源 [7:0]；不能把打印的高位十六进制组误认成 lane 0。\par
+
+
+\subsubsection{精确范围与位宽}
+
 
 单项乘积范围为 [-16256, 16384]，因此八项精确和为：\par
 
 
-\Needspace{4\baselineskip}
-\begin{Verbatim}[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\footnotesize,baselinestretch=1]
+\begin{Verbatim}[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\small]
 S_min = 8 × (-128) × 127    = -130048
 S_max = 8 × (-128) × (-128) =  131072
 \end{Verbatim}
 
 
-有符号18位的正上限为131071，八项精确和的正端点达到131072，因此归约至少使用19位有符号表示。架构结果使用32位补码，覆盖全部合法输入的精确范围。正端点由八项最大正乘积共同形成，是归约末级位宽的确定性边界。\par
+有符号 18 位最大值为 131071，不能覆盖 S\_max；至少需要 \textbf{19 位有符号数}。原型使用 32 位结果，合法输入不发生 32 位溢出。\par
 
 
-算术实现由8个signed 8×8乘积和归约树组成。乘积使用16位，二项、四项、八项归并分别保留17、18、19位，再扩展为32位结果。各级先按符号扩展操作数再相加，保留对应进位。采用32位中间和也满足同一数学定义；具体结构改变时，完整结果比较继续使用精确整数参考值。\par
+RTL 可先采用 8 个 signed 8×8 乘积与加法树：乘积 16 位，按二项、四项、八项归并时分别至少用 17、18、19 位，再符号扩展到 32 位。也可全部以 32 位求和。A 决定结构和流水级，但所有中间结果必须保留符号和足够位宽；不得先用窄位宽加法溢出，再扩展结果。\par
 
-\Needspace{6\baselineskip}
-\begin{Verbatim}[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\footnotesize,baselinestretch=1]
+
+\subsubsection{输出定义}
+
+
+\begin{Verbatim}[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\small]
 127                                  32 31                         0
 +--------------------------------------+----------------------------+
 |             全部为 0                 |      S 的 32 位补码         |
@@ -48,105 +287,19 @@ S_max = 8 × (-128) × (-128) =  131072
 \end{Verbatim}
 
 
-例如S=-8时，完整目的值为\seqsplit{0x00000000\_00000000\_00000000\_FFFFFFF8}。补码位于低32位结果字段，高96位为零。该字段按完整寄存器写回约定解释，结果读回以全部16字节为检查对象。\par
+示例：S=-8 时，完整目的值为 \seqsplit{0x00000000\_00000000\_00000000\_FFFFFFF8}。负数只在低 32 位内采用补码，高 96 位仍为零。本文中的“结果字段”固定为 32 位，不把它称为 SEW=8 下的普通第 0 个元素；否则容易错误截断为 0xF8。\par
 
 
-vl=8限定本指令的合法输入配置，输出则完整覆盖128位目的寄存器。通用tail/mask合并路径在接入时按这一规则配置或绕开，确保目的高96位取零，旧目的值不参与结果。四种vta/vma组合使用相同的输出定义。\par
-
-\subsection{指令编码与合法配置}
-
-本项目选择32位custom-0主opcode 0x0b，funct字段由内部v0.1合同定义。\href{https://docs.riscv.org/reference/isa/v20260120/unpriv/rv-32-64g.html}{标准opcode表}提供自定义扩展空间，编码分配在团队使用范围内固定。\par
+这是自定义指令的整寄存器写回约定。vl=8 用来限制合法输入配置，不控制目的只写低 8 个字节；不得由通用 tail/mask 合并逻辑保留旧目的高位，或把高位改成全 1。\par
 
 
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}p{0.3\linewidth}>{\raggedright\arraybackslash}p{0.35\linewidth}}
-\caption{指令编码与合法配置}\label{tab:2-1}\\
-\toprule
-\textbf{位段} & \textbf{字段} & \textbf{v0.1取值}\\\midrule\endfirsthead
-\caption[]{指令编码与合法配置（续）}\\
-\toprule
-\textbf{位段} & \textbf{字段} & \textbf{v0.1取值}\\\midrule\endhead
-{[31:26]} & {funct6} & {000000}\\
-{[25]} & {vm} & {1；本版只支持无掩码}\\
-{[24:20]} & {vs2} & {第二个编码源寄存器编号，0～31}\\
-{[19:15]} & {vs1} & {第一个编码源寄存器编号，0～31}\\
-{[14:12]} & {funct3} & {000}\\
-{[11:7]} & {vd} & {目的向量寄存器编号，0～31}\\
-{[6:0]} & {opcode} & {0001011（0x0b）}\\
-\bottomrule\end{longtable}}
+\subsubsection{参考伪代码}
 
 
-汇编记法沿用向量常用顺序 vdot.vv vd, vs2, vs1。数学公式中 vs1/vs2 的名称与位段一致；点积交换律会掩盖源颠倒，所以编码测试还必须检查字段提取本身。\par
+以下描述架构效果，不指定时钟周期和具体 NEMU 接口：\par
 
 
-\Needspace{7\baselineskip}
-\begin{Verbatim}[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\footnotesize,baselinestretch=1]
-MATCH_VDOT = 0x0200000b
-MASK_VDOT  = 0xfe00707f
-识别条件： (instruction & MASK_VDOT) == MATCH_VDOT
-编码公式： MATCH_VDOT | (vs2 << 20) | (vs1 << 15) | (vd << 7)
-BitPat：   b0000001??????????000?????0001011
-\end{Verbatim}
-
-
-vdot.vv v10, v8, v9编码为0x0284850b，小端字节序列为0b 85 84 02。三个寄存器编号均指向量寄存器。编码测试按位段提取vs2、vs1和vd，并核对译码产生的向量源、目的类型。\par
-
-
-vm=0或固定funct字段不符时不匹配本版vdot。精确mask/match只接受已定义模式，其余编码由其他已分配扩展或默认非法指令路径处理，邻近模式分别进入译码测试。\par
-
-\reportfigure{S2-01}{vdot指令字段与完整结果布局}{13.7cm}{低8个有符号字节逐项相乘并求和；结果低32位保存补码，高96位清零。 内部合同\seqsplit{vdot-s8x8-r32-v0.1}；Q01–Q07待官方澄清；先读源、后覆盖vd（允许别名）。}{确定性重绘；工程依据：固定\seqsplit{team/spec/vdot.md}及本文编码表；原图存档与所选资产身份见\seqsplit{figures/redesigned-20261105/selected-diagrams.json}。内部\seqsplit{vdot-s8x8-r32-v0.1}合同；保留歧义说明}
-
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.29\linewidth}>{\raggedright\arraybackslash}p{0.65\linewidth}}
-\caption{指令编码与合法配置}\label{tab:2-2}\\
-\toprule
-\textbf{条件} & \textbf{指令行为与测试条件}\\\midrule\endfirsthead
-\caption[]{指令编码与合法配置（续）}\\
-\toprule
-\textbf{条件} & \textbf{指令行为与测试条件}\\\midrule\endhead
-{VLEN} & {固定为128；RTL构建与NEMU配置使用相同常量，其他VLEN采用独立版本约定}\\
-{向量状态} & {运行环境支持并启用V，mstatus.VS不为Off；沿用既有特权态检查}\\
-{vtype} & {vill=0、vsew=000（e8）、vlmul=000（m1）；域外配置进入非法指令路径}\\
-{vl} & {等于8；vl=0、1、7、9、16等值属于域外配置，其中vl=0按非法配置处理}\\
-{vstart} & {等于0；非零值进入非法指令路径}\\
-{vm} & {等于1；vm=0相邻编码由默认译码及其他已分配扩展规则处理}\\
-{vta/vma} & {tu/mu、tu/ma、ta/mu、ta/ma 均合法；输出仍精确遵循“点积定义、位宽与结果布局”小节}\\
-\bottomrule\end{longtable}}
-
-
-基础测试使用vsetivli zero, 8, e8, m1, tu, mu建立配置，读取实际vl/vtype并核对vstart=0，再执行已匹配的vdot机器字。配置准备与自定义指令译码是两个步骤，测试分别保留其状态与指令身份。\par
-
-
-v0.1内部合同采用固定的custom指令合法域，并定义完整128位结果写回。标准向量状态、策略位和重启机制用于现有体系接入；vdot的低8项读取、域外异常和目的格式由本合同明确规定。相关背景见\href{https://github.com/riscvarchive/riscv-v-spec/blob/v1.0/v-spec.adoc}{RISC-V Vector 1.0文档}。\par
-
-vd/vs1/vs2 均为 v0…v31，每个操作数只占一个寄存器，无偶数寄存器对齐要求。v0 在本版 vm=1 下可作为普通源或目的，不是零寄存器。\par
-
-
-源值取自指令执行前的寄存器快照，再写回目的。NEMU先缓存所需源数据，RTL通过重命名维护源版本与目的映射；vd与任一源相同、两个源相同以及三者相同都遵循这个顺序。旧vd不参与数学累加，通用旧目的端口也不改变该结果。\par
-
-成功执行时：\par
-
-
-\begin{itemize}
-\item 只更新一个向量目的寄存器的完整 128 位；其余向量寄存器、标量寄存器、浮点寄存器、内存不变。
-\item vl、vtype、vlenb、vxrm、vxsat、vcsr保留原值；合法初态下vstart仍为0，原有vxsat=1同样保留。
-\item 沿用现有向量状态置脏机制；不产生浮点异常标志，不访问数据存储器。
-\item 正常进入下一条指令（本编码长度 4 字节），退休与计数行为沿用处理器正常指令机制。
-\end{itemize}
-
-
-编码匹配而配置不合法时，合同规定精确非法指令异常，异常码为2，陷阱PC指向该指令。目的寄存器、运算相关向量CSR和内存保持指令执行前状态。陷阱入口对特权CSR的正常更新、tval填写和异常优先级沿用现有机制。测试优先构造单一可达非法条件；vill与vl等联动条件按“数据布局、别名与异常测试”小节成组记录。\par
-
-
-VLEN一致性在构建或加载配置时检查。跨VLEN扩展需要独立规定读取范围、结果布局与异常条件，并以新的合同版本组织实现和测试。\par
-
-
-redirect/flush按ROB年龄取消乱序请求，被取消事务不产生已提交的目的更新。指令采用完整操作的精确提交，沿用现有中断与取消机制，不提供中间lane的架构恢复状态。全核验证以异常、取消和正常恢复用例核对这些行为。\par
-
-\subsection{架构参考伪代码}
-
-以下伪代码定义架构效果。它使用精确整数求和、先读源后写目的，并把合法性检查与数据运算分开；实际握手和时钟行为见“逐拍状态转移与握手”和“时钟门控、唤醒与写回”。\par
-
-
-\begin{Verbatim}[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\footnotesize,baselinestretch=1]
+\begin{Verbatim}[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\small]
 def execute_vdot(inst, state):
     # 必须先完成编码、向量状态和配置检查；失败则走非法指令路径。
     require_vdot_encoding_and_supported_state(inst, state)
@@ -167,53 +320,329 @@ def execute_vdot(inst, state):
 \end{Verbatim}
 
 
-独立数学模型负责输入数据与结果计算；完整指令模型在其外层加入编码匹配、向量状态、配置检查和精确异常处理。模型的输入检查用于识别测试数据是否合法，处理器异常则按指令模型和已有陷阱机制产生。\par
-
-\subsection{P/R两槽数据通路}
-
-两槽实现采用\seqsplit{FuConfig.piped=false}与\seqsplit{UncertainLatency}()框架接口。piped字段表达框架对确定时延的要求，P/R则表达FU内部缓冲状态；两槽弹性推进与不定时延响应在同一接口下配合。反压、取消和父级资源互斥共同决定实际完成时机。\par
+独立数学模型只计算输入数据与输出；完整指令模型另外实现编码、配置检查和异常，不能把 Python assert 当成处理器异常机制。\par
 
 
-VDot使用独立FuncUnit维护两笔请求的状态，输入可复用\seqsplit{VecFuncUnitAlias}，P、R分别保存各自的事务包。原单份\seqsplit{RegEnable/DataHoldBypass}身份结构按单在途设计，两槽路径因此独立管理有效位、结果和控制。原O2合同以完整128位结果定义逻辑接口；当前H1/0f将结果状态物理保存为32位，输出拼接高96位零。\par
 
 
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}p{0.3\linewidth}>{\raggedright\arraybackslash}p{0.35\linewidth}}
-\caption{P/R两槽数据通路}\label{tab:2-3}\\
+\subsection{合法配置、别名、异常与状态}
+
+
+\subsubsection{配置合同}
+
+
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.29\linewidth}>{\raggedright\arraybackslash}p{0.65\linewidth}}
 \toprule
-\textbf{槽位} & \textbf{有效状态与数据} & \textbf{必须一同保存的身份}\\\midrule\endfirsthead
-\caption[]{P/R两槽数据通路（续）}\\
-\toprule
-\textbf{槽位} & \textbf{有效状态与数据} & \textbf{必须一同保存的身份}\\\midrule\endhead
-{P：乘积槽} & {valid、8个16位有符号乘积、输入合法性} & {接受时的ROB、pdest、vecWen/v0Wen、需要输出的完整vpu控制及perfDebugInfo；字段清单按FuncUnitOutput逐项核对}\\
-{R：结果槽} & {valid、32位结果状态、异常向量；输出端拼接为完整128位} & {从P转移的同一包身份，与该结果状态一同保存}\\
+\textbf{条件} & \textbf{原型行为及测试要求}\\\midrule\endhead
+{VLEN} & {目标固定为 128；RTL 构建与 NEMU 配置均检查该常量。不承诺跨 VLEN 可移植性}\\
+{向量状态} & {运行环境支持并启用 V；mstatus.VS 不能为 Off；沿用处理器已有特权态检查}\\
+{vtype} & {vill=0，vsew=000（e8），vlmul=000（m1）；其他非法/保留 vtype 不接受}\\
+{vl} & {必须等于 8。vl=0、1、7、9、16 等域外值均不执行点积}\\
+{vstart} & {必须为 0；非零值不表示跳过前几个乘积，也不被静默清零后继续执行}\\
+{vm} & {必须为 1；vm=0 的相邻编码不属于本版合法指令}\\
+{vta/vma} & {tu/mu、tu/ma、ta/mu、ta/ma 均合法；输出仍精确遵循第 3.3 节}\\
 \bottomrule\end{longtable}}
 
 
-被接受的非法配置请求携带异常状态进入槽，并以对应身份终结一次。v0与普通向量目的分别使用匹配的写使能和pdest。输出数据、异常、vpu控制及perf信息统一取自R槽，在反压期间保持完整包稳定。\par
+推荐首个测试程序使用 vsetivli zero, 8, e8, m1, tu, mu，读取并核对实际 vl/vtype，并确保 vstart=0。该配置指令是准备工作，本身不能让未扩展的处理器识别 vdot。\par
 
 
-父级通过P、R真实valid或精确occupancy/empty归约获知VDot占用，派发和门控据此决策。观察seq用于关联日志，保持在硬件功能之外。若验证端另有计数副本，逐拍断言其与真实槽状态一致，使功能状态、父级选择和检查器账本可相互核对。\par
-
-\reportfigure{S2-02}{0f点积算术与P/R两槽数据通路}{13.7cm}{8路乘积经P槽、组合归约和R槽输出，事务身份随数据传递。持续ready、允许接收且无取消时，局部FU接口最早2拍响应，连续接收间隔为1拍。}{确定性重绘；工程依据：0f固定提交的\seqsplit{VDotElastic/VDotO2}及算术模块；旧TikZ图可参考；原图存档与所选资产身份见\seqsplit{figures/redesigned-20261105/selected-diagrams.json}。最终采用0f；不展示未采用P4一拍候选}
-
-\evidencefigure{SUP-S2-ARITH}{VDot乘法与归约代码}{15cm}{VDotProducts生成8路有符号乘积，VDotReduce完成归约求和。}
-
-\section{RTL功能单元扩展与父级接入}
-
-\subsection{译码、微操作与配置依赖}
-
-译码按照精确mask/match识别vdot，将vs1、vs2和vd解释为向量寄存器字段，并建立与本条指令对应的配置依赖。执行采用单个微操作、单次完整向量写回。编码测试同时检查字段位置和寄存器类别，使机器字、源读取与目的写回保持一致。\par
+\textbf{这是有意收窄的 custom 指令原型域。} 域外统一非法是团队选择；尤其 vl=0 在本版不作为空操作处理。标准 RVV 指令的通用循环、tail 和 restart 规则不能未经核对直接套入。有关标准向量状态、策略位和重启机制的背景参考 \href{https://github.com/riscvarchive/riscv-v-spec/blob/v1.0/v-spec.adoc}{RISC-V Vector 1.0 文档}；它没有定义本项目的 vdot 行为。\par
 
 
-实际VL通过重命名后的依赖传入执行端，SEW、LMUL、vill等控制信息随微操作传播。每条vdot据此使用自己的配置快照，支持vset与向量操作交错执行。配置测试覆盖密集切换、合法与非法状态交替及取消后的恢复，逐层核对配置、源值和事务身份的配对关系。\par
+\subsubsection{寄存器别名}
 
 
-旧目的寄存器不参与点积累计，译码需要避免无用旧目的依赖。目的可能是v0，也可能与某个源相同，因此源快照和目的写回类型必须明确。完成标记、异常信息和写使能与这一次微操作绑定，防止推测执行在取消后留下架构可见更新。\par
+vd/vs1/vs2 均为 v0…v31，每个操作数只占一个寄存器，无偶数寄存器对齐要求。v0 在本版 vm=1 下可作为普通源或目的，不是零寄存器。\par
 
 
-完整目的覆盖也使H1可以把结果寄存器收窄为32位。高96位对所有合法结果恒为零，可由输出端直接构造；ROB、pdest、异常和控制字段仍保存各自事务值。物理状态位数由实现结构决定，软件可见的128位结果宽度由指令合同决定，两者在写回接口处连接。\par
+所有源值以指令前状态为准，再写目的。NEMU 应先缓存所需源数据，不能先清空 vd 再逐项读取源。RTL 应正确维护源、目的重命名关系，不能把目的新物理寄存器当作输入。由于完整覆盖目的，算术上不需要旧 vd；物理接入是否存在通用旧目的端口由 A 审查，不得让它改变结果。\par
 
-\subsection{逐拍状态转移与握手}
+
+\subsubsection{成功执行与失败执行}
+
+
+成功执行时：\par
+
+
+\begin{itemize}
+\item 只更新一个向量目的寄存器的完整 128 位；其余向量寄存器、标量寄存器、浮点寄存器、内存不变。
+\item vl、vtype、vlenb、vxrm、vxsat、vcsr 不变；合法初态下 vstart 仍为 0，不能把原有 vxsat=1 清除。
+\item 沿用现有向量状态置脏机制；不产生浮点异常标志，不访问数据存储器。
+\item 正常进入下一条指令（本编码长度 4 字节），退休与计数行为沿用处理器正常指令机制。
+\end{itemize}
+
+
+匹配本指令但配置不合法时，\textbf{原型目标行为}为精确非法指令异常（异常码 2）。目的寄存器、运算相关向量 CSR 和内存不产生本指令的部分更新；陷阱 PC 指向该指令。陷阱入口对特权 CSR 的正常更新不属于“不变”范围，tval 填写和异常优先级沿用已验证的现有机制。测试在状态可达时优先使用单一非法条件，不在本版另造一套异常优先级；存在状态联动时按第 7.2 节记录。\par
+
+
+VLEN 不符优先在构建/加载配置时拒绝；若未来允许在其他 VLEN 机器执行相同编码，应另立版本规定其行为。\par
+
+
+乱序执行中的请求若被 redirect/flush 取消，不得形成已提交的目的更新。首版不提供从中间 lane 恢复的架构状态；中断与取消复用现有精确提交机制。这些均需全核验证后才能勾选完成。\par
+
+
+
+
+\subsection{候选机器编码}
+
+
+\subsubsection{编码选择}
+
+
+【原型约定】选择 32 位 custom-0 主 opcode 0x0b。官方 opcode 表为自定义扩展预留 custom 空间；这不表示下列 funct 字段由官方分配。\href{https://docs.riscv.org/reference/isa/v20260120/unpriv/rv-32-64g.html}{标准 opcode 表}\par
+
+
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}p{0.3\linewidth}>{\raggedright\arraybackslash}p{0.35\linewidth}}
+\toprule
+\textbf{位段} & \textbf{字段} & \textbf{v0.1 候选值}\\\midrule\endhead
+{[31:26]} & {funct6} & {000000}\\
+{[25]} & {vm} & {1；本版只支持无掩码}\\
+{[24:20]} & {vs2} & {第二个编码源寄存器编号，0～31}\\
+{[19:15]} & {vs1} & {第一个编码源寄存器编号，0～31}\\
+{[14:12]} & {funct3} & {000}\\
+{[11:7]} & {vd} & {目的向量寄存器编号，0～31}\\
+{[6:0]} & {opcode} & {0001011（0x0b）}\\
+\bottomrule\end{longtable}}
+
+
+汇编记法沿用向量常用顺序 vdot.vv vd, vs2, vs1。数学公式中 vs1/vs2 的名称与位段一致；点积交换律会掩盖源颠倒，所以编码测试还必须检查字段提取本身。\par
+
+
+\begin{Verbatim}[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\small]
+MATCH_VDOT = 0x0200000b
+MASK_VDOT  = 0xfe00707f
+识别条件： (instruction & MASK_VDOT) == MATCH_VDOT
+编码公式： MATCH_VDOT | (vs2 << 20) | (vs1 << 15) | (vd << 7)
+BitPat：   b0000001??????????000?????0001011
+\end{Verbatim}
+
+
+例：vdot.vv v10, v8, v9 的候选机器字为 0x0284850b；小端指令字节为 0b 85 84 02。寄存器编号为向量寄存器编号，即使字段位置与 R-type 相似，也不能在主译码中把它们当作通用整数寄存器。\par
+
+
+vm=0 或 funct 字段不符时不匹配本版 vdot；若未被其他合法扩展占用，应走默认非法指令路径。不得通过缩小 mask 接受未定义的相邻编码。\par
+
+
+\subsubsection{工具链与冲突检查边界}
+
+
+首版先用独立 .S 文件中的 .word 0x0284850b 或经过校验的编码宏生成上述机器字。后续封装由 B 负责；宏必须检查寄存器编号范围。未新增助记符支持前，反汇编可能显示原始字或未知指令，应核验机器字和字段，而不能以“打印出了 vdot 名称”作为前置条件。\par
+
+
+如使用 C 内联汇编，须另行处理寄存器绑定、clobber 与编译器重排；不要把 .word 放进没有约束的内联汇编后假定编译器知道它读写向量寄存器。\par
+
+
+2026-10-11 的只读静态检查在锁定版本的 \textbf{XiangShan 当前实际译码表和 NEMU 主译码表}中未发现与上述候选 mask/match 的交叠。已有 nemu\_trap/TRAP 使用 0x6b，并非 0x0b。rocket-chip 依赖中确有与候选重叠的 CUSTOM0 通配定义，但属于 Rocket RoCC 译码体系，未接入本版香山实际译码表；未来若启用该通路，必须重新审查分配与仲裁。此结论只覆盖已检查的静态模式，不能代替接入后的译码单测与全核回归；候选编码尚未实现。\par
+
+
+
+
+\subsection{RTL、NEMU 与验证共同遵守的接入要求}
+
+
+\subsubsection{锁定版本的阅读入口}
+
+
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}p{0.3\linewidth}>{\raggedright\arraybackslash}p{0.35\linewidth}}
+\toprule
+\textbf{子系统} & \textbf{相对路径} & \textbf{需要核查和完成的事情}\\\midrule\endhead
+{XiangShan 指令模式} & {\seqsplit{src/main/scala/xiangshan/backend/decode/Instructions.scala}} & {增加候选模式，检查邻近编码和与既有扩展的冲突}\\
+{XiangShan 向量分类} & {\seqsplit{src/main/scala/xiangshan/backend/decode/isa/bitfield/RiscvInst.scala}} & {isVecArith 当前只识别 OP-V；custom-0 不会自动被识别为向量算术}\\
+{XiangShan 译码控制} & {\seqsplit{src/main/scala/xiangshan/backend/decode/DecodeUnit.scala}} & {正确的向量源/目的类型、配置依赖、合法性检查、微操作和写回控制}\\
+{XiangShan 执行接入} & {\seqsplit{src/main/scala/xiangshan/backend/fu/FuConfig.scala}，fu/wrapper/，fu/vector/} & {选择可复用通路或新单元、执行资源、结果位宽、完整目的写回和取消机制}\\
+{NEMU 主译码} & {\seqsplit{src/isa/riscv64/instr/decode.c}} & {分派 custom 主 opcode；检查向量预分类和执行入口，不能只加 RVV 子表}\\
+{NEMU 向量实现} & {\seqsplit{src/isa/riscv64/instr/rvv/decode.h}、exec.h、vcompute.h、vcompute\_impl.c} & {编码、配置检查与独立算术实现；避免误复用通用 tail/restart 行为}\\
+{NEMU 寄存器访问} & {\seqsplit{src/isa/riscv64/instr/rvv/vreg.h}、vreg\_impl.c} & {有符号源读取、先读后写、完整 128 位写入}\\
+{NEMU 声明与差分状态} & {\seqsplit{src/isa/riscv64/include/isa-all-instr.h}、\seqsplit{src/isa/riscv64/difftest/ref.c}} & {执行入口声明、向量和 CSR 状态同步，确认实际比较范围}\\
+\bottomrule\end{longtable}}
+
+
+这些是源码阅读入口，不要求机械修改表中的每一个文件。来源：\href{https://github.com/OpenXiangShan/XiangShan/tree/16ae9ddcda54fc9a2fddffad73174cf793ac7814/src/main/scala/xiangshan/backend/decode}{固定 XiangShan 译码目录}、\href{https://github.com/OpenXiangShan/NEMU/blob/a48a11f208ff81ad765591d83271d1b339fb3861/src/isa/riscv64/instr/decode.c}{固定 NEMU 主译码}、\href{https://github.com/OpenXiangShan/NEMU/tree/a48a11f208ff81ad765591d83271d1b339fb3861/src/isa/riscv64/instr/rvv}{固定 NEMU RVV 目录}。\par
+
+
+以下是本版源码核查发现的具体接入风险；行号对应表中固定硬件/NEMU 提交：\par
+
+
+\begin{itemize}
+\item \seqsplit{RiscvInst.scala:93} 的向量分类需要识别精确 vdot 模式，不能把全部 custom-0 都归为向量。\seqsplit{DecodeUnit.scala:897} 的向量禁用检查还依赖 FU 分类，因此只加 BitPat 不够。
+\item \seqsplit{DecodeUnit.scala:775} 的输入带 vtype/vstart，未直接带实际 vl；vl=8 限制须通过正确的 VL 依赖，在能取得 srcVConfig.vl 的路径检查，例如 \seqsplit{fu/vector/VecPipedFuncUnit.scala:54}，并接通非法指令异常输出。
+\item \seqsplit{DecodeStage.scala:236} 对 v0 目的有单独写使能，重命名也有相应通路。允许 v0 就必须覆盖它，不能只测 v8/v9/v10 后认定全部寄存器均可用。
+\item NEMU 的 \seqsplit{instr/rvv/decode.h:167} 在既有 vopivv 子表中把 funct6=0 解释为 vadd，且不再检查主 opcode。\textbf{不能把 custom-0 直接分派到现有 OP\_V 执行子表}；应建立独立 vdot 执行分派，可以复用字段解析和寄存器访问。状态检查/置脏参考 instr/vp.c 的 vp\_enable()、vp\_set\_dirty()。
+\end{itemize}
+
+
+\subsubsection{硬件接口边界}
+
+
+A 在 T06 维护 RTL 接口与接入设计（2026-10-12 已形成第一版草案），B/C 复核具体端口与时序，人工评审待记录。本文只锁定必须实现的性质，不虚构固定周期数：\par
+
+
+1. 运算请求携带正确的两个向量源值和请求身份；配置检查必须使用与该指令对应的向量状态。\par
+2. 只有请求真正被接受后才进入执行；输出反压时保持结果及身份，不能丢失、重复响应。\par
+3. 正常完成形成一个完整 128 位架构目的结果；内部微操作数和流水级由接入设计决定。\par
+4. 结果与目的物理寄存器、ROB/取消标识保持一致；flush 后不能提交已取消的结果。\par
+5. 全寄存器写回绕开或正确配置通用 tail/mask 合并逻辑，保留高 96 位清零要求。\par
+6. 功能单元延迟和发射间隔分别定义、分别测量；本文不预先承诺“一周期”或加速倍数。\par
+
+
+\subsubsection{NEMU 与交付约束}
+
+
+B 先写独立数学模型，再实现 NEMU。不要把 RTL 的加法树、中间截断或共享错误复制成参考模型；不能通过跳过 vdot 的 DiffTest 比较获得“通过”。C 应注入一次可控错误，证明比较路径能发现目的值或高位清零错误。\par
+
+
+共享参考库与 standalone NEMU 应分开构建，保存各自提交、配置和实际加载路径，避免覆盖已有环境产物。NEMU 修改应提交至团队可访问的 NEMU 仓库或采用明确可复现的补丁交付；确定方式并更新版本引用后，其他成员才算能够完整复现。\par
+
+
+
+
+\subsection{测试与验收合同}
+
+
+本节是\textbf{待实现的测试清单}。表中期望值由数学定义得出，不是已完成的仿真结果。所有功能测试必须比较完整 128 位目的值。\par
+
+
+\subsubsection{定向算术向量}
+
+
+[x]×8 表示重复 8 次。列表按 lane 0\allowbreak{}→\allowbreak{}7 排列，未另行说明时源高 64 位为零；输出高 96 位在所有用例中均为零。\par
+
+
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.15\linewidth}>{\raggedright\arraybackslash}p{0.18\linewidth}>{\raggedright\arraybackslash}p{0.18\linewidth}>{\raggedright\arraybackslash}p{0.18\linewidth}>{\raggedright\arraybackslash}p{0.18\linewidth}}
+\toprule
+\textbf{ID} & \textbf{源 A 的低 8 项} & \textbf{源 B 的低 8 项} & \textbf{S（十进制）} & \textbf{目的低 32 位（十六进制）}\\\midrule\endhead
+{D00} & {[0]×8} & {[127]×8} & {0} & {00000000}\\
+{D01} & {[1]×8} & {[1]×8} & {8} & {00000008}\\
+{D02} & {[1,2,3,4,5,6,7,8]} & {同 A} & {204} & {000000CC}\\
+{D03} & {[-1]×8} & {[1]×8} & {-8} & {FFFFFFF8}\\
+{D04} & {[-1]×8} & {[-1]×8} & {8} & {00000008}\\
+{D05} & {[127]×8} & {[127]×8} & {129032} & {0001F808}\\
+{D06} & {[-128]×8} & {[127]×8} & {-130048} & {FFFE0400}\\
+{D07} & {[-128]×8} & {[-128]×8} & {131072} & {00020000}\\
+{D08} & {[1,-2,3,-4,5,-6,7,-8]} & {[8,7,6,5,4,3,2,1]} & {0} & {00000000}\\
+{D09} & {[-128,0,0,0,0,0,0,0]} & {[-1,0,0,0,0,0,0,0]} & {128} & {00000080}\\
+{D10} & {[0,0,0,0,0,0,0,-128]} & {[0,0,0,0,0,0,0,127]} & {-16256} & {FFFFC080}\\
+\bottomrule\end{longtable}}
+
+
+\subsubsection{数据布局、状态与控制}
+
+
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}p{0.3\linewidth}>{\raggedright\arraybackslash}p{0.35\linewidth}}
+\toprule
+\textbf{ID} & \textbf{测试内容} & \textbf{判定标准}\\\midrule\endhead
+{L01} & {逐 lane 一热：只令 A 的 lane i 非零，B 的 8 项互不相同，i 遍历 0～7} & {每次等于对应那一项乘积，检测遗漏和单侧错位}\\
+{L02} & {保持低 8 项不变，两个源高 64 位分别换成随机值、全 FF、交替 55/AA} & {结果完全相同}\\
+{L03} & {独立目的寄存器预填全 FF，再执行 D03} & {目的完整值为 \seqsplit{00000000\_00000000\_00000000\_FFFFFFF8}}\\
+{L04} & {不重叠、vd=vs1、vd=vs2、vs1=vs2、三者相同；含 v0/v31} & {使用实际执行前源快照算期望；别名不能使源被提前破坏}\\
+{L05} & {四种 vta/vma 组合} & {每种均得到相同完整目的值，保留原配置}\\
+{S01} & {vxrm 四种值、vxsat 0/1 组合，预置后执行合法指令} & {算术结果不变；上述状态及其 vcsr 映射保留}\\
+{S02} & {检查 vl/vtype/vstart、非目的寄存器与内存} & {除正常提交、向量置脏等既有机制外，无额外副作用}\\
+{E01} & {逐项改变 SEW、LMUL、vl、vstart、vill，或关闭向量状态} & {模型显式拒绝；完整指令实现发生非法指令异常，无部分结果}\\
+{E02} & {vm=0、逐个翻转固定 funct 位；合法寄存器字段遍历} & {只识别精确 mask/match；确认相邻模式未被误译码为 vdot}\\
+{C01} & {连续请求、输出反压、结果依赖、同一目的连续写、flush} & {无丢失/重复/错序提交，取消后无已提交写回}\\
+{R01} & {原 hello/vadd 及相关向量回归} & {保持正确；vdot 新路径不破坏旧指令}\\
+\bottomrule\end{longtable}}
+
+
+L01 无法检测“两侧同时采用相同排列”的内部置换，因为点积对这种置换本来就不变；不要为无法观察且不影响语义的内部排列编造失败标准。CSR/非法配置测试应使用合法准备指令并保存实际 CSR 值，避免测试准备过程就已失败。\par
+
+
+非法配置须通过实际可达状态构造：用标准 vset* 指令设置非法 vtype 时，vill=1 与 vl=0 联动，此例只验证目标 vdot 的非法异常及无部分更新，不能据此声称单独覆盖了 vill 检查或异常优先级。测试非零 vstart 时，应在向量配置、加载等准备完成后最后写入，避免被准备指令清零。向量状态关闭案例也应先完成向量数据准备，最后再关闭 VS。\par
+
+
+\subsubsection{随机验证与证据}
+
+
+\begin{itemize}
+\item 软件模型/算术单元起步使用固定种子 0x20261011，至少 10,000 组 signed int8 输入；全核冒烟先用上述定向用例，再选 32 组固定随机用例。数量是初始工程安排，不是官方评分门槛。
+\item 保存生成器版本、实际输入、完整期望值、合同版本。仅有随机种子不一定能跨语言复现随机数序列。
+\item 交叉检查交换两个源、同时重排两边低 8 项等不变量。涉及 int8 取负时排除 -128，避免把不可表示的 +128 当成合法输入。
+\item 失败应输出指令字、PC、配置、源/目的编号、指令前源值、完整实际/期望目的值；定向用例输出用例 ID。
+\item 独立模型、RTL 单元、NEMU、全核 DiffTest 分别保存结果，不能用某一层通过替代其他层。
+\end{itemize}
+
+
+软件读取结果时要覆盖全部 16 字节。例如执行后切换到 e32,m1,vl=4，保存四个 32 位元素，再恢复约定的配置；C 应区分“被测指令副作用”和“测试程序为读回结果而改变的配置”。只保存 e8 的 lane 0 会漏掉错误。\par
+
+
+
+
+\subsection{RVV 性能基线必须保持的等价性}
+
+
+【题目明确】需要用现有 RVV 指令组合完成相同功能，并比较延迟。候选基线按“8 位有符号输入 \allowbreak{}→\allowbreak{} 16 位精确乘积 \allowbreak{}→\allowbreak{} 32 位扩宽归约”设计，例如研究 vwmul.vv 与 vwredsum.vs 的组合；中间切换的 SEW/LMUL、寄存器分组和零初值必须匹配。这里不是已通过验证的汇编实现。\par
+
+
+B/C 验收基线时必须逐项确认：\par
+
+
+1. 只计算源低 8 项，从零开始，不把旧目的或源高半部分加入。\par
+2. 不使用会在 8/16 位提前截断的组合；D06、D07 必须通过。\par
+3. 最终目的低 32 位及高 96 位与第 3 节完全相同；普通归约指令的尾部策略不能代替显式验证。\par
+4. 双方按共同约定的可观察入口/出口状态验证功能等价：目的 128 位结果及向量 CSR 必须一致，vl/vtype 恢复实际入态。允许破坏的临时（scratch）寄存器必须预先列明并排除于比较集合，源/目的别名用例另行证明等价。该口径不能被称为“除目的外所有架构状态都保持不变”；第 4 节的严格副作用限制仍适用于单条 vdot 本身。\par
+5. 分别报告核心算术和上述合同范围内完整序列的周期；必要的清零、配置切换、恢复和搬运开销不得只从基线一侧隐藏。装载、存储是否计时，两边保持一致。\par
+6. 同一硬件基线、同一输入和测量边界下比较；声明测量的是依赖延迟还是吞吐。Verilator 主机运行秒数不能当作处理器周期加速比。\par
+
+
+具体序列与测量事件由 B/C 在后续 \seqsplit{team/spec/measurement.md}（待创建）中确定。本文不承诺加速比或获奖分数，先以完整性、正确性和可复现证据为验收顺序，再做流水线和扩展优化。\par
+
+
+
+
+\subsection{歧义清单与变更流程}
+
+
+下列清单供 B 整理后，通过比赛已有咨询渠道向命题方确认。\textbf{截至本版没有在仓库归档答复，也没有代表团队发出外部消息。}\par
+
+
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}p{0.3\linewidth}>{\raggedright\arraybackslash}p{0.35\linewidth}}
+\toprule
+\textbf{编号/优先级} & \textbf{需要确认的问题} & \textbf{本版候选及受影响内容}\\\midrule\endhead
+{Q01 / P0} & {图中的 8 项是否为最终验收语义？是否明确取低编号 8 项？} & {固定低 8 项；影响读取范围、算术规模、测试和基线}\\
+{Q02 / P0} & {“vd 第一个元素”的位宽是什么？是否接受低 32 位精确结果、高 96 位清零？} & {第 3.3 节；影响目的格式、写回和完整结果比较}\\
+{Q03 / P0} & {是否要求精确结果？是否另有截断、饱和或旧 vd 累加规则？} & {精确从零求和；影响数据通路与边界结果}\\
+{Q04 / P0} & {\seqsplit{vl/LMUL/mask/vstart} 的必测范围是什么？是否接受第 4 节的受限原型域？} & {固定 \seqsplit{e8/m1/vl8/vstart0}、无掩码；影响控制及异常范围}\\
+{Q05 / P1} & {vta/vma 是否影响“其他通道清零”？是否要求源目的重叠支持？} & {策略位不改变完整结果，全部单寄存器别名支持}\\
+{Q06 / P1} & {是否有指定或禁止的指令编码？是否允许使用 custom-0？} & {第 5 节；影响 RTL、NEMU 与汇编封装同步}\\
+{Q07 / P1} & {延迟比较是否有指定输入/出口状态、计时边界或基线要求？} & {按第 8 节先验证等价，再分别报告各项开销}\\
+\bottomrule\end{longtable}}
+
+
+如获得回复，在 \seqsplit{team/spec/clarifications/}（待创建）保存日期、来源和原文/截图，再在表中补充结果。没有答复不等于官方认可。等待期间可按明确标记的原型版本开展模型、算术单元和用例工作。\par
+
+
+行为变更流程：B 提出“旧行为\allowbreak{}→\allowbreak{}新行为、依据、受影响用例”；A/C 评审；升级合同标识；同一轮更新 RTL、NEMU、编码封装和测试数据。旧版本结果仍保留版本标签，不能混入新版性能统计。\par\section{两槽弹性状态、父级协议及验证不变量}
+本节整理固定项目材料中的详细方法和原始合同。设计阶段的“拟实现”“必须验证”等表述属于原合同约束，当前完成状态以本报告正文和R5/P5证据为准。原日期、比较合同及未测边界按来源保留。
+\par\smallskip\noindent 来源：\href{https://github.com/cc77-builder/riscv/blob/347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e/team/optimizations/o2/CONTRACT.md}{\seqsplit{team/optimizations/o2/CONTRACT.md}}\par
+\subsection{接口与状态}
+
+
+方案A保留 \seqsplit{FuConfig.piped=false}、\seqsplit{UncertainLatency}()；这里piped字段属于现有框架配置约束，不表示新模块内部不能有两个流水槽。该字段若为true，现有FuConfig要求certain latency，不能为名称好看而更改时序合同。\par
+
+
+新候选使用独立的FuncUnit实现（可复用\seqsplit{VecFuncUnitAlias}读取输入），不得直接依赖\seqsplit{VecNonPipedFuncUnit}的一份\seqsplit{RegEnable/DataHoldBypass}输出身份；也不得套用要求certain latency的\seqsplit{VecPipedFuncUnit}。\par
+
+
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}p{0.3\linewidth}>{\raggedright\arraybackslash}p{0.35\linewidth}}
+\toprule
+\textbf{槽位} & \textbf{有效状态与数据} & \textbf{必须一同保存的身份}\\\midrule\endhead
+{P：乘积槽} & {valid、8个16位有符号乘积、输入合法性} & {接受时的ROB、pdest、vecWen/v0Wen、需要输出的完整vpu控制及perfDebugInfo；字段清单按FuncUnitOutput逐项核对}\\
+{R：结果槽} & {valid、完整128位结果、异常向量} & {从P原样转移的同一包身份，不能从当前输入取得}\\
+\bottomrule\end{longtable}}
+
+
+非法请求照常占一个槽并终结一次，不能在算术或元数据通路上提前丢弃。v0与普通向量目的互相交替时，各自写使能及pdest不得串线。所有输出控制、异常及perf信息由R提供；输入在反压期间任意变化也不能改变旧响应。\par
+
+
+给父级提供明确的功能状态端口：两个实际valid或其精确occupancy/empty归约。时钟门控和派发使用这些功能状态，不能用printf、调试seq、tap日志或推测的最近一条ROB替代。若父级为验证而保存副本计数，必须每拍断言与FU真实状态一致。\par
+
+
+
+
+\subsection{每拍转移定义}
+
 
 以下量在同一时钟边沿前计算，ready/valid遵循Decoupled握手。P、R各自调用该请求的 \seqsplit{robIdx.needFlush}(io.flush)，保留硬件RobPtr的flag与环绕语义。\par
 
@@ -237,14 +666,10 @@ nextR.valid = (liveR \&\& !out.fire) || move\par
 nextP.valid = (liveP \&\& !move) || in.fire\par
 
 
-move为真时，R锁存边沿前P的归约结果与身份；in.fire为真时，P锁存新输入的乘积与身份。两者同拍时分别使用旧P与新输入。reset清除两个valid及父级占用，并抑制当拍握手；无效槽中的旧数据由有效位隔离。\par
+当move为真，R锁存P的归约结果和整包身份；当in.fire为真，P锁存新输入的乘积和整包身份。move使用边沿前的旧P，绝不使用同拍新输入。reset强制两个valid及父级占用清零；无效槽的数据无需清零，但不得影响可见输出。\par
 
 
 {\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.2\linewidth}>{\raggedright\arraybackslash}p{0.24\linewidth}>{\raggedright\arraybackslash}p{0.24\linewidth}>{\raggedright\arraybackslash}p{0.22\linewidth}}
-\caption{逐拍状态转移与握手}\label{tab:2-4}\\
-\toprule
-\textbf{边沿} & \textbf{接受} & \textbf{槽间转移} & \textbf{输出握手}\\\midrule\endfirsthead
-\caption[]{逐拍状态转移与握手（续）}\\
 \toprule
 \textbf{边沿} & \textbf{接受} & \textbf{槽间转移} & \textbf{输出握手}\\\midrule\endhead
 {E0} & {A进入P} & {无} & {无}\\
@@ -254,33 +679,31 @@ move为真时，R锁存边沿前P的归约结果与身份；in.fire为真时，P
 \bottomrule\end{longtable}}
 
 
-表中给出空管线、持续ready且无取消条件下的状态推导：E0接收A，E1推进A并接收B，E2开始逐拍响应。相应测量在本章无阻塞父级事件图中展示。R阻塞时由空P吸收一笔请求；两槽满后反压输入。部分取消保留未匹配事务，并允许幸存P进入已腾空R。\par
+表中为从空管线开始、持续ready且无取消的目标时序，不是测得的O2波形。已有R但输出阻塞时，空P仍可接收一条；两槽满且R阻塞时拒绝输入。R被取消而P幸存时允许P进入腾出的R；P被取消而R幸存时不能误清R。\par
 
 
-重定向当拍抑制新请求接收，幸存旧R可握手，幸存P可推进。终结优先级为reset、匹配取消、正常响应；同一事务只归入一个终结类别。reset当拍输入、输出均无握手，复位丢弃数取沿前有效槽数；\seqsplit{effectiveKillP=killP} \&\& !reset、\seqsplit{effectiveKillR=killR} \&\& !reset使取消计数与复位计数互斥。\par
+重定向当拍统一不接受新请求；未被取消的旧R可正常握手，幸存P可转移。被取消请求的KILL优先于它的RESPONSE，二者不能同时计数。无关重定向不能破坏已有停顿响应。RESET优先级最高，复位当拍无输入/输出握手。计数时使用\seqsplit{effectiveKillP=killP}\&\&!reset、\seqsplit{effectiveKillR=killR}\&\&!reset；RESET丢弃数取边沿前两个valid之和，reset与flush同拍不能把同一请求同时记为取消和复位丢弃。\par
 
-\reportfigure{S2-10}{P/R弹性状态与取消优先级}{16.9cm}{固定0f两槽行为：输入、旧P迁移和旧R响应可在同一边沿发生；move读取沿前P。P、R各按自身ROB判断取消。reset优先并抑制新入、迁移及响应；重定向当拍禁止新入，幸存P仍可填补空R，幸存R仍可按ready响应。}{确定性重绘；工程依据：本文状态方程、0f实现及O2合同不变量；原图存档与所选资产身份见\seqsplit{figures/redesigned-20261105/selected-diagrams.json}。历史合同仅作依据，图中所有行为以最终0f核对}
 
-\evidencefigure{SUP-S2-STATE}{两槽寄存器与控制代码}{16cm}{依次展示寄存状态、握手与取消条件，以及读取旧P数据的状态更新。}
 
-\reportfigure{S2-05}{两槽在同一拍的接收、移动与输出}{11.0cm}{cycle 12同时完成旧R响应、旧P迁移和新请求接收。槽位显示沿前状态，seq表示测试事务号。}{0f真实VFEX4父级\seqsplit{green-parent-01/result.log.gz}，原行12–19；\seqsplit{case=frozen-vdot-II1}。历史父级逐拍记录；响应为FU握手而非ROB提交；未伪造时钟或完整数据总线波形}
 
-\evidencefigure{SUP-S2-OVERLAP}{两槽重叠事务日志}{15cm}{clean-02 dense-batch128日志中，10986周期同时发生ACCEPT seq2、MOVE seq1与RESPONSE seq0，分别对应新请求接收、旧P迁移和旧R响应。}
 
-\subsection{VFEX4派发与共享资源}
+\reportfigure{S2-10}{P/R弹性状态与取消优先级}{12.0cm}{状态位按(P有效,R有效)排列，区分输入接收、P至R移动、输出握手和保持；reset及ROB取消优先处理，事务身份随数据移动。}{用户提供示意图；依据：本文状态方程、0f实现及O2合同不变量。版本范围：历史合同仅作依据，图中所有行为以最终0f核对。}
+\subsection{父级资源、派发与除法切换}
 
-VFEX4包含VDot、VIDiv和VFDivSqrt，共享输出采用one-hot选择和ready广播。两槽路径沿用互斥派发规则，确保任一时刻只有一个可完成来源：\par
+
+当前VFEX4含VDot、VIDiv、VFDivSqrt；共享输出是one-hot选择和ready广播，缺少多FU同时完成仲裁。本候选维持互斥：\par
 
 
 1. 有任意vdot在途时，只能向vdot追加请求；DIV禁止接收。\par
 2. 任意DIV在途时，vdot禁止接收，保持已有DIV串行行为。\par
 3. vdot最后响应或取消当拍不切换DIV；在下一拍确认两个槽确实空、无旧vdot输出后，才可接受DIV。\par
-4. DIV完成或取消后，确认旧输出撤销且子单元具备合法接收条件，再放行vdot；切换根据实际有效状态与握手推进。\par
-5. 跨FU切换保持输出有效来源唯一，DIV的取消当拍行为按对应历史运行记录及全核合同核对。\par
-6. 持续vdot供给可能推迟排空切换，沿用现有调度策略；混合负载记录等待，有限输入停止后检查排空与DIV最终完成。\par
+4. DIV完成/取消后也必须确认旧输出已经撤销、子单元具备合法接收状态，再放行vdot；不依赖取消当拍旧DIV valid立即变低的假设。\par
+5. 所有跨FU切换都不得出现两个out.valid同时有效。DIV自身已有取消当拍行为需原样观察并按现有全核合同解释；不能为了让新检查器通过而改写旧预期。\par
+6. 持续vdot到来可能使排空切换延迟；不承诺新的公平调度。混合负载测试须记录等待，有限输入停止后必须能排空并完成DIV。\par
 
 
-O2在VFEX4局部选择被选FU的ready，并保持父子握手原子性。原Dispatcher的总ready由多个ready相与形成，child.valid不与总ready同步相与，局部接入因此同时约束父级接收与子级接收。原有其他EXU派发语义保持不变，接口满足：\par
+在O2专用的VFEX4路径局部选择被选FU的ready，或采用等价的原子派发实现；不修改所有EXU共享的Dispatcher语义。现有Dispatcher把所有ready相与，但child.valid并未与总ready相与，不能仅放宽父级busy而让child单独接受。必须断言：\par
 
 
 parent.in.fire == OR(all child.in.fire)\par
@@ -288,250 +711,36 @@ PopCount(all child.in.fire) <= 1\par
 child.in.fire -> parent.in.fire \&\& selected(child)\par
 
 
-VDot占用从两个真实槽状态取得，DIV占用与身份独立保存。每次响应或取消只释放其对应事务，其他幸存槽继续有效。父级据此判断追加VDot、等待排空或切换DIV，保证双在途身份与资源占用一致。\par
+父级不能继续用单个busy和最近输入RobPtr表示多个vdot。vdot占用从真实槽状态取得；DIV占用及身份独立保存。任何一笔vdot响应/取消只释放该事务，不能把另一个在途请求一起“释放”。\par
 
 
-输入选择依赖已注册占用、当前合法选择和下游ready，valid/ready路径保持无组合环。请求被选择但尚未握手时仍由上游保存，FU在in.fire后才更新槽数据与身份。\par
+输入选择只依赖已注册占用、当前合法选择及下游ready；不得构成valid/ready组合环。选择后未握手的输入仍由上游保存，FU不得提前更新身份。\par
 
-\reportfigure{S2-03}{VFEX4父级的派发、互斥与门控结构}{14.6cm}{固定0f且VDotO2.enabled与EnableClockGate开启时，VDot、VIDiv和VFDivSqrt共享派发与写回资源，分别通过独立子时钟门控工作。VFDivSqrt列仅表示静态结构，不能据此增加动态验证结论。}{确定性重绘；工程依据：0f ExeUnit.scala、父级验证及DIV取消修复证据；原图存档与所选资产身份见\seqsplit{figures/redesigned-20261105/selected-diagrams.json}。0f生产逻辑；不得套用未采用C1/C2/C3/P4}
 
-\subsection{时钟门控、唤醒与写回}
+
+
+\subsection{门控、唤醒与写回}
+
 
 \begin{itemize}
-\item 原单在途路径使用uncer\_en\_reg，在out.fire且没有in.fire时清零。O2可能仍有P事务，专用使能因而覆盖任一槽有效、当前输入接收以及必要复位和清理边沿。
+\item 当前不定时延门控只用一个uncer\_en\_reg，out.fire且没有in.fire时会清零；O2仍有P请求时这会错误关钟。vdot专用使能必须覆盖当前任一槽有效、当前输入接受以及必要复位/清除边沿。
 \item 当前槽有效时，即使flush将其全部取消，也必须保留处理本次清除所需的时钟边沿；排空后再关门。父级状态逻辑位于未门控时钟域。
-\item 原O2接入首先扩展VDot占用与门控，保留既有DIV路径；后续0f修复匹配DIV取消后的保持状态释放。真实父级验证使用ClockGate，检查已关钟空槽复位、非空复位、cancel与reset同拍以及重新唤醒，使复位传播和门控寄存器状态在实际时钟路径上对应。
-\item 完成通知、调度唤醒和写回仲裁沿用既有不定时延机制。输出尚未被接受时，R持续保持完整数据和控制包，等待真实写回ready。
-\item 接入保持现有完成与唤醒关系，启动间隔通过实际父级输入握手测量；issue反馈或写回竞争引起的等待记录在相应运行窗口中。
-\item 执行路径如需改为确定时延结构，需同时评审FuConfig、控制流水、调度唤醒、寄存器读端口和写回预留；这些属于独立架构方案，采用单独合同。
-\end{itemize}
-
-\section{基础功能验证}
-
-基础验证覆盖独立数学模型、算术RTL、弹性FU、真实VFEX4父级和全核差分五个层次。算术集合包含22组定向与10000组随机输入；全核矩阵包含117个不同用例，按原矩阵分片执行124次。0f的FU与真实父级原记录及4＋16项负控纳入复核，R5/G5采用13项原记录与1项新控制诊断的组合验收。\par
-
-\reportfigure{S2-04}{基础验证层级与覆盖范围}{12.7cm}{嵌套框表示VDot相关实现范围由算术RTL扩展到FU、真实VFEX4父级和整核；各层分别核验并保留原证据。独立整数模型用于完整128位算术对照，NEMU用于对应架构状态比较。实现包含不表示测试集合全包含，也不合并为一次新的PASS。}{精确SVG工程图；工程依据：基础测试矩阵、模型数据manifest、R5验收矩阵；原图存档与所选资产身份见\seqsplit{figures/redesigned-20261105/selected-diagrams.json}。各层覆盖独立记账；Agent检查不标成人工验收}
-
-\evidencefigure{SUP-S2-MODEL}{主机参考模型测试结果}{14cm}{主机模型及测试数据检查共35个测试方法通过。}
-
-\subsection{正数点积测试}
-
-正数用例将[1,2,3,4,5,6,7,8]与自身相乘并求和，精确结果为204，目的低32位为0x000000CC，高96位为零。该输入用于检查八项乘法、归约和完整向量写回；对应的正数事务响应与期望值在本节结果图中展示。\par
-
-\subsection{负数点积测试}
-
-负数用例计算8个−1与8个1的点积，精确结果为−8，目的低32位为0xFFFFFFF8，高96位为零。检查同时覆盖有符号输入解释、低32位补码以及完整结果格式；结果图保留对应负数事务的完整响应。\par
-
-\subsection{边界点积测试}
-
-八个−128与自身点积得到正端点131072，目的低32位为0x00020000；该值超过18位有符号数的正上限，用于检查归约末级位宽。八个−128与八个127点积得到负端点−130048，低32位为0xFFFE0400。零输入、端点及其他定向向量的精确预期集中列于下表；结果图展示正端点事务的完整响应。\par
-
-\reportfigure{S2-09}{正数、负数与边界用例的完整128位结果}{15.0cm}{组合RTL测试统计与三类全核观察器事务摘录。actual取自响应记录，expected按低8个signed int8输入计算。}{用户提供的算术统计及正数、负数、边界响应原截图；完整日志路径、行号和SHA保留在原PNG与\seqsplit{screenshot-layout.json}，显示版保留对应事务和完整响应。。算术RTL统计为2026-10-12历史记录；0f全核响应为2026-10-27 UTC历史记录；原批次UTC容量审计FAIL保留}
-
-\subsection{完整定向向量与精确预期}
-
-[x]×8 表示重复 8 次。列表按 lane 0\allowbreak{}→\allowbreak{}7 排列，未另行说明时源高 64 位为零；输出高 96 位在所有用例中均为零。\par
-
-
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.15\linewidth}>{\raggedright\arraybackslash}p{0.18\linewidth}>{\raggedright\arraybackslash}p{0.18\linewidth}>{\raggedright\arraybackslash}p{0.18\linewidth}>{\raggedright\arraybackslash}p{0.18\linewidth}}
-\caption{完整定向向量与精确预期}\label{tab:2-5}\\
-\toprule
-\textbf{ID} & \textbf{源 A 的低 8 项} & \textbf{源 B 的低 8 项} & \textbf{S（十进制）} & \textbf{目的低 32 位（十六进制）}\\\midrule\endfirsthead
-\caption[]{完整定向向量与精确预期（续）}\\
-\toprule
-\textbf{ID} & \textbf{源 A 的低 8 项} & \textbf{源 B 的低 8 项} & \textbf{S（十进制）} & \textbf{目的低 32 位（十六进制）}\\\midrule\endhead
-{D00} & {[0]×8} & {[127]×8} & {0} & {00000000}\\
-{D01} & {[1]×8} & {[1]×8} & {8} & {00000008}\\
-{D02} & {[1,2,3,4,5,6,7,8]} & {同 A} & {204} & {000000CC}\\
-{D03} & {[-1]×8} & {[1]×8} & {-8} & {FFFFFFF8}\\
-{D04} & {[-1]×8} & {[-1]×8} & {8} & {00000008}\\
-{D05} & {[127]×8} & {[127]×8} & {129032} & {0001F808}\\
-{D06} & {[-128]×8} & {[127]×8} & {-130048} & {FFFE0400}\\
-{D07} & {[-128]×8} & {[-128]×8} & {131072} & {00020000}\\
-{D08} & {[1,-2,3,-4,5,-6,7,-8]} & {[8,7,6,5,4,3,2,1]} & {0} & {00000000}\\
-{D09} & {[-128,0,0,0,0,0,0,0]} & {[-1,0,0,0,0,0,0,0]} & {128} & {00000080}\\
-{D10} & {[0,0,0,0,0,0,0,-128]} & {[0,0,0,0,0,0,0,127]} & {-16256} & {FFFFC080}\\
-\bottomrule\end{longtable}}
-
-\subsection{数据布局、别名与异常测试}
-
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}p{0.3\linewidth}>{\raggedright\arraybackslash}p{0.35\linewidth}}
-\caption{数据布局、别名与异常测试}\label{tab:2-6}\\
-\toprule
-\textbf{ID} & \textbf{测试内容} & \textbf{判定标准}\\\midrule\endfirsthead
-\caption[]{数据布局、别名与异常测试（续）}\\
-\toprule
-\textbf{ID} & \textbf{测试内容} & \textbf{判定标准}\\\midrule\endhead
-{L01} & {逐 lane 一热：只令 A 的 lane i 非零，B 的 8 项互不相同，i 遍历 0～7} & {每次等于对应那一项乘积，检测遗漏和单侧错位}\\
-{L02} & {保持低 8 项不变，两个源高 64 位分别换成随机值、全 FF、交替 55/AA} & {结果完全相同}\\
-{L03} & {独立目的寄存器预填全 FF，再执行 D03} & {目的完整值为 \seqsplit{00000000\_00000000\_00000000\_FFFFFFF8}}\\
-{L04} & {不重叠、vd=vs1、vd=vs2、vs1=vs2、三者相同；含 v0/v31} & {使用实际执行前源快照算期望；别名不能使源被提前破坏}\\
-{L05} & {四种 vta/vma 组合} & {每种均得到相同完整目的值，保留原配置}\\
-{S01} & {vxrm 四种值、vxsat 0/1 组合，预置后执行合法指令} & {算术结果不变；上述状态及其 vcsr 映射保留}\\
-{S02} & {检查 vl/vtype/vstart、非目的寄存器与内存} & {除正常提交、向量置脏等既有机制外，无额外副作用}\\
-{E01} & {逐项改变 SEW、LMUL、vl、vstart、vill，或关闭向量状态} & {模型显式拒绝；完整指令实现发生非法指令异常，无部分结果}\\
-{E02} & {vm=0、逐个翻转固定 funct 位；合法寄存器字段遍历} & {只识别精确 mask/match；确认相邻模式未被误译码为 vdot}\\
-{C01} & {连续请求、输出反压、结果依赖、同一目的连续写、flush} & {无丢失/重复/错序提交，取消后无已提交写回}\\
-{R01} & {原 hello/vadd 及相关向量回归} & {保持正确；vdot 新路径不破坏旧指令}\\
-\bottomrule\end{longtable}}
-
-
-L01针对遗漏lane与单侧错位。两源同时采用相同排列时数学点积保持不变，这一情况归入模型不变量检查；源字段位置与寄存器依赖由译码、重命名观察点核对。CSR及非法配置用例使用合法准备指令，保存目标vdot执行前的实际CSR状态。\par
-
-
-非法配置通过架构可达状态构造。标准vset指令设置非法vtype时，vill=1与vl=0联动，记录按这一联合状态核对目标vdot的非法异常及无部分更新。非零vstart在向量配置和加载完成后写入；向量关闭用例先准备数据，再关闭VS，保证被测异常来自目标指令。\par
-
-\subsection{随机输入与完整结果读回}
-
-\begin{itemize}
-\item 初始数学模型和算术计划采用固定种子0x20261011及至少10000组signed int8输入，全核冒烟使用定向向量和32组固定随机输入。该计划记录与本章22+10000算术集合、117不同全核用例及124次执行的实际统计分别标识。
-\item 保存生成器版本、实际输入、完整期望值和合同版本，种子用于重新生成同一算法下的序列；跨语言复现直接对照归档输入。
-\item 交叉检查交换两个源、同时重排两边低 8 项等不变量。涉及 int8 取负时排除 -128，避免把不可表示的 +128 当成合法输入。
-\item 失败应输出指令字、PC、配置、源/目的编号、指令前源值、完整实际/期望目的值；定向用例输出用例 ID。
-\item 独立模型、算术RTL、FU/父级、NEMU和全核DiffTest分别记录观察对象与结果，使用同一数学定义连接各层检查。
+\item 只对O2 vdot改门控；DIV及其他EXU保持现状。真实父级测试使用真实ClockGate，不能用常开时钟替代最终验证。必须明确reset在实际门控使能/复位传播中的接法，并覆盖空槽且已关钟时reset、非空时reset、cancel/reset同拍及随后重新唤醒；抽象状态公式不能证明复位脉冲确实到达门控后的寄存器。
+\item A保留既有不定时延完成/唤醒与实际写回仲裁ready。某次输出未被接受时，R必须保持全包稳定；不得假定写回总是ready。
+\item 不新增固定延迟提前唤醒、写回预留或旁路承诺。若发现现有issue反馈限制II=1，先记录并评估，不自动扩大到调度重构。
+\item 若转选B，必须另修合同并重审FuConfig、ctrlPipe、调度/唤醒、寄存器读端口及写回预留；禁止在本合同下悄悄迁移执行路径。
 \end{itemize}
 
 
-软件读取结果覆盖全部16字节。例如指令执行后切换到e32,m1,vl=4，保存四个32位元素，再恢复约定的vl/vtype。读回程序记录准备、结果保存和状态恢复三个阶段；被测指令的副作用检查以执行前后指定观察点比较。\par
 
-\section{协议与系统验证}
 
-\subsection{反压期间的结果与身份保持}
+\subsection{观察协议与不变量}
 
-io.out.valid表示R中存在可响应事务，io.out.ready决定该拍能否完成握手。反压期间，R槽的结果、ROB标识、目的物理寄存器、异常向量、写使能和性能字段作为一个整体保持。检查器逐字段核对这个输出包，使数值与写回目标同时受约束。\par
 
+另立O2\_SCHEMA version=1，以未门控全局周期记录，不让O1单在途检查器“放宽后”兼任O2。每次父级接受产生唯一观察seq，槽间转移携带seq；seq仅用于观察，不参与硬件功能。\par
 
-验证为每个接受事务记录独立身份，响应时与该身份的参考值对应。负控包括交换两事务pdest、改变ROB、篡改高位、制造重复响应或漏响应。实际硬件协议测试与检查器日志变异分别记账，前者验证设计，后者验证证据审查能力。\par
 
-\reportfigure{S2-06}{反压期间的结果与事务保持}{12.0cm}{seq1321在181599—181605连续反压7拍，完整结果为\seqsplit{0x00000000000000000000000000001A87}。181606响应一次，同时旧P事务1322转入R；FU vready恢复，父级inready仍为0。}{0f \seqsplit{fullcore/core-01/control/run.log.gz}，原行15012–15044；raw SHA256 \seqsplit{c7351619b11e61171009c1dc997c08dd8a575f7c1508d79f7484df72711c6cb7}。历史EMU 2d1db77cc407…，非clean-02 acf672…；接收到响应9拍含7拍反压，不是ROB提交或新仿真}
-
-\subsection{ROB取消与复位优先级}
-
-redirect按RobPtr的index与环绕flag共同判断P、R的程序年龄。测试覆盖flag变化、flushItself两种取值以及接受顺序与年龄顺序不同的情况。每个窗口先确定应保留和应取消的身份集合，再核对幸存事务输出与被取消槽的有效位清除。\par
-
-
-同一拍发生输出ready和匹配取消时，取消决定该事务是否仍可形成响应。reset则清除槽有效状态，并检查接口握手被抑制。真实父级还需验证已经关钟的空槽可以正确复位，以及取消后重新唤醒的第一笔请求不丢失。\par
-
-
-任意前缀都满足事务守恒。接受数等于已响应数、已取消数、复位丢弃数和当前在途数之和。当前在途数最大为2。这个关系能够发现尾部漏计、幽灵响应和被取消事务再次输出等错误，并要求正常结束时排空。\par
-
-
-例如沿前两槽有效且reset与匹配redirect同拍时，优先级使两项计入复位丢弃，取消和响应不再重复计数。仅R取消而P幸存时，取消集合增加一项，P转入R保持原身份，在途数随之减一；槽间移动本身不增加接受数。守恒式把这些不同动作统一到同一个数量关系中。\par
-
-\reportfigure{S2-07}{取消与复位的槽位变化}{14.3cm}{四个独立场景分别展示仅P取消、仅R取消、两槽取消和reset优先清除。A/B为各场景内的事务标记，取消依据ROB年龄。}{\seqsplit{green-parent-01/result.log.gz}；\seqsplit{partial-ROB-48/54/12}及TE0-reset-7；原行与逐行值见\seqsplit{figures/evidence-20261105/figure-data.json}。仅0f真实父级已记录窗口；被取消请求无错误响应，幸存请求按原身份输出}
-
-\subsection{DIV切换、取消清理与关钟}
-
-VFEX4负责VDot与DIV的互斥派发、唯一完成源选择和占用释放。动态验证使用真实ClockGate，覆盖VDot、整数DIV、浮点DIV之间的切换，以及反压、取消、复位和重新唤醒；SQRT取消路径采用静态检查。图中以时钟上升沿后的子时钟采样状态展示取消清理和后续空闲关钟。\par
-
-
-资源切换可按占用、派发和完成三个观察点理解。占用说明旧操作是否仍在途，派发说明新操作是否真正握手，完成说明共享输出当前来自哪一类FU。切换前核对旧输出撤销与子单元接收条件，切换后核对首次接收与响应身份，能够把busy释放问题与结果选择问题分开定位。\par
-
-
-0f修复匹配DIV取消之后保持状态的释放：取消当拍保留完成清理所需的时钟边沿，随后解除旧占用；仍在途的有效事务继续获得时钟。测试同时观察空闲采样与幸存事务完成，核对取消、资源释放和新请求进入之间的顺序。\par
-
-\reportfigure{S2-08}{DIV切换、取消清理与关钟}{14.7cm}{VDot排空后接收整数或浮点DIV，取消清理完成后子时钟归零，再接收新VDot。图中clocks为沿后采样的子时钟位掩码。}{\seqsplit{green-parent-01/result.log.gz}；switch-0-1-0、switch-0-2-0、\seqsplit{DIV-cancel-92/110}；完整行号见图数据附件。动态覆盖DIV；SQRT仅静态取消路径检查。事件箭头不表示时间比例；不宣称功耗测量}
-
-\subsection{写回身份与全核结果检查}
-
-向量点积的数学参考值可以由两个源向量独立计算，但它不能告诉检查器该值是否写入了正确目的。测试平台因此为每个接受事务绑定一个身份记录，包含目的物理寄存器、ROB位置、指令控制及期望结果。响应到达时先核对身份，再核对完整一百二十八位数据。若先按结果值寻找匹配事务，两笔恰好得到同一结果的请求可能被错误互换而不被发现。零结果、相同源向量和不同目的寄存器的交错请求尤其适合暴露这一盲点。\par
-
-
-写回使能与异常字段同样需要随身份核查。异常指令可以在执行路径中占有状态，但不能以正常结果覆盖架构目的；被取消的指令在局部槽位里保留旧数据，也不能因ready恢复而重新输出。检查器在每次接受、响应和取消时更新账本，并在结束时核对所有身份的去向。该账本提供了比单纯比较输出顺序更强的约束，也能分辨协议漏响应与结果错误。\par
-
-
-完整路径复验还应覆盖目的别名和连续配置变化。若两条指令的源与目的存在交叉别名，重命名阶段必须固定各自的源版本；若配置指令夹在两条点积之间，执行端必须持有各自对应的VL与vtype快照。最终软件结果可能在少数输入上偶然相同，因而需要结合调度记录、响应身份和异常状态判断。只有这些字段与数学结果共同成立，才可将局部算术通过提升为全核写回路径通过。\par
-
-\subsection{控制场景的组合与回归覆盖}
-
-回归矩阵按失效机理组织：极值与随机输入覆盖算术，配置交错覆盖依赖，别名覆盖源快照，反压覆盖包稳定，取消覆盖年龄和复位优先级，混合操作覆盖共享资源。每项记录主断言及额外观察点，失败时据此定位输入和轨迹，实现变化时据此选择受影响的回归范围。\par
-
-
-为了避免组合爆炸，可先对每一维构造最小可区分情境，再挑选交叉点。比如正常单事务可检查基础算术和响应格式；双事务且不同目的寄存器可检查连续接受；双事务加反压可检查载荷稳定；环回ROB加选择性取消可检查年龄语义；取消后首笔DIV和点积交替可检查父级释放。并不是所有输入值都要与所有控制状态笛卡尔相乘，但每个高风险交叉都应能在矩阵中定位到明确的用例和预期。\par
-
-
-随机测试以种子、生成规则和实际输入共同确定可重放序列，并覆盖正负数、零、高位哨兵及别名组合。精确的18位溢出正端点由定向用例构造，随机输入补充一般数据分布。两类记录在同一数学定义下分别提供可解释的边界检查和较宽的数据覆盖。\par
-
-\section{设计演进、参数扩展与取舍}
-
-O2通过两槽容量支持连续接收，H1降低结果寄存器开销，0f完善DIV取消后的关钟行为。冻结0f构建按clean-02配置启用O2/T14、关闭O1；通用源码默认开关与该冻结构建分别记录。一拍P4候选完成局部验证后进入47项同约束筛选，初版6项、唯一修订10项未通过，因此生产版本选择0f。\par
-
-参数扩展实验实现signed INT16×8和64位结果，完成94组定向及10000组随机验证，用于检查算术与包装层的参数化方法。当前生产ISA仍采用INT8×8、低32位结果及高96位清零的合同。\par
-
-\href{https://github.com/cc77-builder/riscv/blob/eca41d7cd959f5f3c4f240e382919c492d1ccb96/team/spec/vdot.md}{指令合同} · \href{https://github.com/cc77-builder/riscv/blob/0f12df675378556670afd0dd2153f47fcb330610/src/main/scala/xiangshan/backend/fu/wrapper/VDotElastic.scala}{稳定FU源码} · \href{https://github.com/cc77-builder/riscv/blob/eca41d7cd959f5f3c4f240e382919c492d1ccb96/team/optimizations/o2/integration/firstdot-v2-0f/acceptance/acceptance-matrix.json}{R5验收矩阵} · \href{https://github.com/cc77-builder/riscv/blob/eca41d7cd959f5f3c4f240e382919c492d1ccb96/team/docs/t15-parameter-extension.md}{参数扩展}\par
-
-\subsection{吞吐与实现成本}
-
-弹性槽提供的是输入与输出之间的缓冲容量，它改善持续请求或短暂下游阻塞时的利用率，却引入额外的状态寄存器和ready路径。对独立指令流，流水重叠可以降低平均每条指令的间隔；对严格依赖链，下一条必须等前一条写回，缓冲容量不一定产生同样收益。独立流与依赖链分别测量，使用各自的周期结果解释流水收益。\par
-
-
-综合成本也有层级。乘法树位宽、P/R寄存器规模、控制比较器以及父级选择逻辑分别贡献不同路径和面积。H1收窄结果状态可能减少寄存器位数，但若增加末端拼接或改变布线，最差时序端点可能转移。P4缩短内部算术拍数也可能使组合路径穿越更多逻辑，导致父级ready或门控使能的余量变差。综合记录同时列出路径端点、约束、面积和裕量，解释各项成本变化。\par
-
-\subsection{本阶段小结与接口衔接}
-
-阶段间接口以架构语义冻结：参考模型接收指令字、源向量、控制状态和异常条件，返回完整目的向量及异常结果。数学和指令模型独立于P/R具体拍数，允许硬件在保持架构效果的前提下调整内部流水。性能记录则绑定实际硬件版本和开关，描述该实现的周期与成本。\par
-
-
-软件输入镜像、编译器与汇编路径、配置前置条件一同冻结。C接口或链接布局变化后，检查最终指令字与调用、返回约定，分别记录裸指令部分和软件包装部分的开销。差分验证沿用数学与异常合同，性能测量明确入口、出口和状态恢复要求，两类记录通过同一指令语义衔接。\par
-
-\section{复现资料与接口索引}
-
-\subsection{汇编封装与编码冲突记录}
-
-软件通过独立.S文件中的.word 0x0284850b或校验后的编码宏生成机器字，宏同时检查寄存器编号范围。反汇编工具可显示机器字或识别后的名称；指令身份以机器字、字段和最终链接映像为准。C接口的调用和返回约定见第三阶段软件集成说明。\par
-
-
-C内联汇编需要明确寄存器绑定、clobber和编译器重排约束，使编译器可见的读写集合与实际向量操作一致。独立汇编封装则通过显式入口、出口与保存恢复约定表达这些关系。两种路径都检查最终目标指令和结果读回。\par
-
-
-2026-10-11在固定XiangShan实际译码表和NEMU主译码表进行的静态检查未发现与vdot mask/match交叠的已接入模式。已有nemu\_trap/TRAP使用0x6b。rocket-chip依赖中CUSTOM0通配项属于Rocket RoCC译码体系，当时未接入香山实际译码表；启用该路径时需重新核对分配与仲裁。这份记录说明接入前的编码空间，后续译码和全核结果由本章功能验证给出。\par
-
-\subsection{源码接入位置与职责}
-
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}p{0.3\linewidth}>{\raggedright\arraybackslash}p{0.35\linewidth}}
-\caption{源码接入位置与职责}\label{tab:2-7}\\
-\toprule
-\textbf{子系统} & \textbf{相对路径} & \textbf{接入职责}\\\midrule\endfirsthead
-\caption[]{源码接入位置与职责（续）}\\
-\toprule
-\textbf{子系统} & \textbf{相对路径} & \textbf{接入职责}\\\midrule\endhead
-{XiangShan 指令模式} & {\seqsplit{src/main/scala/xiangshan/backend/decode/Instructions.scala}} & {精确vdot模式、相邻编码及既有扩展的模式关系}\\
-{XiangShan 向量分类} & {\seqsplit{src/main/scala/xiangshan/backend/decode/isa/bitfield/RiscvInst.scala}} & {将精确vdot模式纳入向量分类；同时保留其他custom编码的独立分派}\\
-{XiangShan 译码控制} & {\seqsplit{src/main/scala/xiangshan/backend/decode/DecodeUnit.scala}} & {正确的向量源/目的类型、配置依赖、合法性检查、微操作和写回控制}\\
-{XiangShan 执行接入} & {\seqsplit{src/main/scala/xiangshan/backend/fu/FuConfig.scala}，fu/wrapper/，fu/vector/} & {执行资源、结果位宽、完整目的写回、取消和不定时延接口}\\
-{NEMU 主译码} & {\seqsplit{src/isa/riscv64/instr/decode.c}} & {custom主opcode分派、向量状态检查及独立vdot执行入口}\\
-{NEMU 向量实现} & {\seqsplit{src/isa/riscv64/instr/rvv/decode.h}、exec.h、vcompute.h、vcompute\_impl.c} & {字段解析、配置检查、精确算术及本指令的完整目的写回规则}\\
-{NEMU 寄存器访问} & {\seqsplit{src/isa/riscv64/instr/rvv/vreg.h}、vreg\_impl.c} & {有符号源读取、先读后写、完整 128 位写入}\\
-{NEMU 声明与差分状态} & {\seqsplit{src/isa/riscv64/include/isa-all-instr.h}、\seqsplit{src/isa/riscv64/difftest/ref.c}} & {执行入口声明、向量和 CSR 状态同步，确认实际比较范围}\\
-\bottomrule\end{longtable}}
-
-
-表中路径用于定位接入职责，源代码行号对应当时固定的硬件和NEMU提交。参考入口：\href{https://github.com/OpenXiangShan/XiangShan/tree/16ae9ddcda54fc9a2fddffad73174cf793ac7814/src/main/scala/xiangshan/backend/decode}{XiangShan译码目录}、\href{https://github.com/OpenXiangShan/NEMU/blob/a48a11f208ff81ad765591d83271d1b339fb3861/src/isa/riscv64/instr/decode.c}{NEMU主译码}、\href{https://github.com/OpenXiangShan/NEMU/tree/a48a11f208ff81ad765591d83271d1b339fb3861/src/isa/riscv64/instr/rvv}{NEMU RVV目录}。\par
-
-
-固定版本源码显示以下接入关系：\par
-
-
-\begin{itemize}
-\item \seqsplit{RiscvInst.scala:93}的向量分类需包含精确vdot模式；\seqsplit{DecodeUnit.scala:897}的向量禁用检查同时依赖FU分类。编码匹配与功能分类分别完成后，合法性检查才能覆盖该指令。
-\item \seqsplit{DecodeUnit.scala:775} 的输入带 vtype/vstart，未直接带实际 vl；vl=8 限制须通过正确的 VL 依赖，在能取得 srcVConfig.vl 的路径检查，例如 \seqsplit{fu/vector/VecPipedFuncUnit.scala:54}，并接通非法指令异常输出。
-\item \seqsplit{DecodeStage.scala:236}对v0目的使用独立写使能，重命名也有相应通路；寄存器测试因此包含v0及v31，并核对目的物理映射。
-\item 原NEMU的\seqsplit{instr/rvv/decode.h:167}在vopivv子表中将funct6=0解释为vadd，不再检查主opcode。vdot使用独立执行分派，复用字段解析和寄存器访问；向量状态检查与置脏沿用instr/vp.c的vp\_enable()和vp\_set\_dirty()。
-\end{itemize}
-
-\subsection{参考模型的构建与运行身份}
-
-独立数学模型按精确整数定义计算参考值，NEMU在其外层实现编码、配置、异常和架构状态更新。差分比较包含完整目的结果及约定状态；可控故障参考与正常参考恢复分别检查错误检出和正常运行。参考模型与DUT使用独立的数据计算路径。\par
-
-
-共享参考库与standalone NEMU分别构建，记录各自提交、配置、产物摘要和实际加载路径。团队维护可访问的源码版本或可复现补丁，运行记录绑定所加载的具体库，保证其他工作区能够还原同一指令模型。\par
-
-\subsection{事件记录与检查不变量}
-
-O2\_SCHEMA version=1按未门控全局cycle记录两槽事件。每次父级接收产生唯一观察seq，P至R转移保持同一seq，检查器以此串联接收、等待、取消与响应；seq只服务于观察，功能决策使用真实槽状态和ROB身份。\par
-
-
-事件集合包含父级接收与等待、请求种类及选择、ready及阻塞原因、P\_ACCEPT、P\_TO\_R、R\_STALL、R\_RESPONSE、P\_KILL、R\_KILL、RESET丢弃、槽占用、DIV开始结束和重定向。检查按统一cycle处理旧事务终结、移动和新接收，同时保留原始输出顺序以便定位日志。\par
+最低事件：父级接受与等待（请求种类、选择、ready及阻塞原因）、P\_ACCEPT、P\_TO\_R、R\_STALL、R\_RESPONSE、P\_KILL、R\_KILL、RESET丢弃、槽占用、DIV开始/结束和重定向。按周期处理旧事务终结、移动和新接受，保留原始输出顺序，不假设printf先后决定硬件先后。\par
 
 
 必须满足：\par
@@ -542,78 +751,34 @@ O2\_SCHEMA version=1按未门控全局cycle记录两槽事件。每次父级接�
 \item 多槽取消逐笔按ROB年龄判断，覆盖年龄顺序与接受顺序相反、flag环绕、flushItself两种情况。
 \item 反压保持整个R包稳定；只有匹配取消/reset可以撤销旧响应。
 \item 父子握手一致，父级out与被选子输出一致，FU输出one-hot，门控不能冻结未终结请求。
-\item 正常运行结束时所有已接收事务均有终结记录；主动故障终止保留已检查前缀与停止位置，单独记录运行状态。
+\item 正常运行结束无悬空请求；主动故障终止只能标部分检查，不能记为完整通过。
 \end{itemize}
 
-\subsection{原O2分阶段判据与负控}
 
-下表保留原O2从设计到采用的分阶段判据，说明各类验证之间的衔接。当前0f的完成情况由本章功能验证汇总及R5验收矩阵记录；动态父级记录覆盖VDot、整数DIV和浮点DIV，SQRT保留静态取消路径检查的状态。\par
+
+
+\subsection{分阶段验收与负控}
 
 
 {\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}p{0.3\linewidth}>{\raggedright\arraybackslash}p{0.35\linewidth}}
-\caption{原O2分阶段判据与负控}\label{tab:2-8}\\
 \toprule
-\textbf{门禁} & \textbf{核验内容} & \textbf{判据}\\\midrule\endfirsthead
-\caption[]{原O2分阶段判据与负控（续）}\\
-\toprule
-\textbf{门禁} & \textbf{核验内容} & \textbf{判据}\\\midrule\endhead
-{G0 评估/合同} & {旧轨迹复算、两条接入路线审查、候选范围及停止条件} & {形成隔离原型的输入合同与停止条件}\\
+\textbf{门禁} & \textbf{必须实际完成的内容} & \textbf{进入下一步的条件}\\\midrule\endhead
+{G0 评估/合同} & {旧轨迹复算、两条接入路线审查、候选范围及停止条件} & {允许做隔离原型，不代表O2采用}\\
 {G1 算术与弹性FU} & {原22+10000完整128位向量；连续满管线、两槽反压/腾空；合法非法交错、v0交错；部分/全部取消、reset和环绕} & {无反压时真实II=1且最早响应2拍；事务守恒与反例检出通过}\\
 {G2 真实父级} & {真\seqsplit{ExeUnit+VDot+VIDiv+VFDivSqrt+ClockGate}；全部FU切换、满管线反压、cancel与切换重合、持续供给及最终排空} & {无误派发/双完成/误关钟；其他FU受影响范围回归通过}\\
 {G3 全核} & {新O2 EMU、正常NEMU；hello/vadd、117唯一功能/异常矩阵、T12等价控制压力；故障参考库及正常恢复} & {全部DiffTest/完整状态通过，新观察事件覆盖达标}\\
 {G4 公平性能} & {冻结相同16镜像、参考库、工具配置，O1/O2各自实测custom与RVV；同合同四场景和相同样本规则} & {有实际净收益、退化可解释、结果与身份绑定可复算}\\
-{G5 采用与交付} & {O3应用数据、O4结构/时序证据、O5/T17独立干净检出构建及相应复核记录} & {形成最终模式、冻结版本与交付记录}\\
+{G5 采用与交付} & {O3应用数据、O4结构/时序证据、O5/T17队友干净检出构建和人工复核} & {选择最终模式、冻结后再集中编写T16/T18材料}\\
 \bottomrule\end{longtable}}
 
 
-定向负控覆盖P/R身份交换、结果高位篡改、漏取消或误杀幸存事务、重复或丢失响应、反压字段变化、父子握手不一致、双FU有效及在途误关钟。硬件注入与日志/检查器注入分别记录故障位置、预期断言和实际检出，保持各自的观察层级。\par
+定向负控至少包括：交换P/R的pdest或ROB；篡改高位结果；漏取消其中一槽；误杀另一个幸存槽；重复/丢失响应；R反压时修改字段；父子握手不一致；双FU输出有效；有请求时误关钟。区分真实硬件故障注入与日志/检查器故障注入，不以后一种冒充前一种。\par
 
 
-原O2成本筛选将冻结batch128相对O1降低至少10\%设为工程目标，即由362.50降至不高于326.25 cycles，同时检查其他保留场景是否出现超过2\%的均值退化。若RVV为678，该目标约对应2.078×；正式加速比使用同一候选自身实测RVV。该目标属于当时的性能筛选条件，采用判断还结合功能、协议、资源、时序和复现结果。\par
-
-\subsection{RVV对照的功能等价条件}
-
-RVV对照以8位有符号输入、16位精确乘积和32位扩宽归约完成相同功能。序列围绕vwmul.vv与vwredsum.vs组织，中间SEW/LMUL、寄存器分组、零初值和最终高位清零共同构成功能等价条件。具体冻结序列与计时结果见第三阶段“RVV对照与周期测量方法”。\par
-
-
-基线按以下条件核对：\par
-
-
-1. 只计算源低 8 项，从零开始，不把旧目的或源高半部分加入。\par
-2. 不使用会在 8/16 位提前截断的组合；D06、D07 必须通过。\par
-3. 最终目的低 32 位及高 96 位与“点积定义、位宽与结果布局”小节完全相同；普通归约指令的尾部策略不能代替显式验证。\par
-4. 双方在共同入口、出口比较完整128位目的结果及约定向量CSR，vl/vtype恢复实际入态。临时scratch寄存器预先列明并排除于该比较集合，源目的别名用例单独核对源快照。单条vdot的严格副作用规则与多指令序列的临时寄存器约定分别定义。\par
-5. 分别记录核心算术窗口和完整等价序列的周期；清零、配置切换、恢复及搬运按共同边界计入，两边的装载、存储计时口径一致。\par
-6. 使用同一硬件基线、输入和测量边界，分别说明依赖链延迟与独立流吞吐。性能指标采用DUT周期，主机运行时间用于执行资源记录。\par
-
-
-冻结测量记录保存具体序列、入口出口、计时事件和样本规则，详见第三阶段“RVV对照与周期测量方法”。设计语义确定功能比较集合，测量约定确定周期比较范围，两者共同连接裸指令测试与软件调用实验。\par
-
-\subsection{待确认规格与变更记录}
-
-下表集中列出内部v0.1合同涉及的赛事待确认问题。现有归档尚无命题方正式答复，当前实现和测试依表中内部约定组织；官方口径如有更新，再按变更流程调整对应合同。\par
-
-
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}p{0.3\linewidth}>{\raggedright\arraybackslash}p{0.35\linewidth}}
-\caption{待确认规格与变更记录}\label{tab:2-9}\\
-\toprule
-\textbf{编号/优先级} & \textbf{需要确认的问题} & \textbf{本版约定及受影响内容}\\\midrule\endfirsthead
-\caption[]{待确认规格与变更记录（续）}\\
-\toprule
-\textbf{编号/优先级} & \textbf{需要确认的问题} & \textbf{本版约定及受影响内容}\\\midrule\endhead
-{Q01 / P0} & {图中的 8 项是否为最终验收语义？是否明确取低编号 8 项？} & {固定低 8 项；影响读取范围、算术规模、测试和基线}\\
-{Q02 / P0} & {“vd 第一个元素”的位宽是什么？是否接受低 32 位精确结果、高 96 位清零？} & {“点积定义、位宽与结果布局”小节；影响目的格式、写回和完整结果比较}\\
-{Q03 / P0} & {是否要求精确结果？是否另有截断、饱和或旧 vd 累加规则？} & {精确从零求和；影响数据通路与边界结果}\\
-{Q04 / P0} & {\seqsplit{vl/LMUL/mask/vstart} 的必测范围是什么？是否接受“指令编码与合法配置”小节的受限原型域？} & {固定 \seqsplit{e8/m1/vl8/vstart0}、无掩码；影响控制及异常范围}\\
-{Q05 / P1} & {vta/vma 是否影响“其他通道清零”？是否要求源目的重叠支持？} & {策略位不改变完整结果，全部单寄存器别名支持}\\
-{Q06 / P1} & {是否有指定或禁止的指令编码？是否允许使用 custom-0？} & {“指令编码与合法配置”小节；影响 RTL、NEMU 与汇编封装同步}\\
-{Q07 / P1} & {延迟比较是否有指定输入/出口状态、计时边界或基线要求？} & {按“RVV对照的功能等价条件”小节先验证等价，再分别报告各项开销}\\
-\bottomrule\end{longtable}}
-
-
-正式答复按日期、来源及原文归档到\seqsplit{team/spec/clarifications}，并与Q01～Q07逐项关联。记录同时保留现有约定、答复后的约定和受影响测试，便于重新核对实现与评分口径。\par
-
-
-行为变更记录旧行为、新行为、依据和受影响用例，经评审后升级合同标识，同步更新RTL、NEMU、编码封装与数据。原版本输入和结果继续保留原标识，新版本使用自己的验证与性能记录。\par
-\subsection{技术资料索引}
-{\small\noindent \href{https://github.com/cc77-builder/riscv/blob/347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e/team/spec/vdot.md}{内部ISA合同、数学边界和测试向量}；\href{https://github.com/cc77-builder/riscv/blob/347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e/team/optimizations/o2/CONTRACT.md}{两槽弹性状态、父级协议及验证不变量}。\par}
+性能采用条件：先争取冻结batch128相对O1再降至少10\%（362.50\allowbreak{}→\allowbreak{}不高于326.25 cycles），这是本合同新增的工程投入目标，不是预言、官方标准或正确性通过线；必须同时报告全部场景，其他保留场景均值退化超过2\%先调查。若RVV保持678，这个目标约对应2.078×，正式加速比仍用候选自身实测RVV。达到2×本身不自动通过采用门禁。\par
+\section{本轮已提供截图补充}
+本节仅收录已有截图，原始波形、框架图和其他缺图占位仍保留。各截图按照历史版本和证据层级解释。
+\evidencefigure{SUP-S2-ARITH}{固定0f算术实现源码摘录}{15cm}{源代码截图辅助解释8路乘法和归约；不替代S2-02数据通路图。}
+\evidencefigure{SUP-S2-MODEL}{主机端参考模型检查画面}{14cm}{35个测试方法通过；该命令只检查主机模型和数据，不授RTL或NEMU资格。}
+\evidencefigure{SUP-S2-OVERLAP}{两槽重叠事务日志摘录}{15cm}{保留10986周期ACCEPT seq2、MOVE seq1、RESPONSE seq0；本图是历史日志字段摘录，S2-05原始波形仍待补。原批次UTC容量审计FAIL保留。}
+\evidencefigure{SUP-S2-STATE}{固定0f两槽状态与控制源码摘录}{16cm}{依次展示寄存器、握手与取消条件、状态更新；源代码画面不替代S2-06至S2-08控制行为波形。}

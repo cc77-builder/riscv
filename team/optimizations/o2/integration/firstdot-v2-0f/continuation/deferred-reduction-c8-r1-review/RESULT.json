@@ -1,0 +1,171 @@
+{
+  "status": "C8_R1_READONLY_NO_GO_CLOSE",
+  "decision": "Close this exact8x32 deferred candidate; no retries or expansion",
+  "new_target_runs": 0,
+  "new_builds": 0,
+  "new_rtl_changes": 0,
+  "github_writes": 0,
+  "default": "0f + firstdot V2 + original C8",
+  "head": "10b71ad4bff25cd2070e775c74a4717b01602f75",
+  "src_patch_sha256": "9327fa6f472f1869a41d04ceb515a7f8b76bae338279719568512571f88610d5",
+  "operator": "@cc77-builder / Agent",
+  "operation_id": "20261030-cc77-builder-c8-r1-attribution",
+  "audit_started_at": "2026-10-30T12:12:59.476552+00:00",
+  "completed_at": "2026-10-30T20:30:21.563691+08:00",
+  "original_campaign_status": "HOLD_ANCHOR_AND_GAIN_SCREEN",
+  "original_version_record": 42,
+  "new_version_measurement": false,
+  "new_metrics": {
+    "speedup": "NOT_TESTED",
+    "area": "NOT_TESTED",
+    "timing": "NOT_TESTED"
+  },
+  "formal_means": {
+    "OV": {
+      "cycles": 273.75,
+      "instret": 175,
+      "leaf_first_retire": 42,
+      "body_retirement_span": 193,
+      "leaf_ret_retire": 235,
+      "last_vset_retire": 220,
+      "first_store_retire": 220,
+      "tail_to_end_sample": 38.75,
+      "dot_metrics": {
+        "first_accept": 93,
+        "last_accept": 210,
+        "accept_span": 117,
+        "last_response": 212,
+        "last_commit": 214,
+        "mean_queue_to_accept": 23.59375
+      }
+    },
+    "NV": {
+      "cycles": 273,
+      "instret": 167,
+      "leaf_first_retire": 42,
+      "body_retirement_span": 193.25,
+      "leaf_ret_retire": 235.25,
+      "last_vset_retire": 220,
+      "first_store_retire": 220.75,
+      "tail_to_end_sample": 37.75,
+      "dot_metrics": {
+        "first_accept": 93,
+        "last_accept": 210,
+        "accept_span": 117,
+        "last_response": 212,
+        "last_commit": 214,
+        "mean_queue_to_accept": 25.40625
+      }
+    },
+    "OR": {
+      "cycles": 301,
+      "instret": 123,
+      "leaf_first_retire": 42,
+      "body_retirement_span": 222,
+      "leaf_ret_retire": 264,
+      "last_vset_retire": 248,
+      "first_store_retire": 249,
+      "tail_to_end_sample": 37
+    },
+    "NR": {
+      "cycles": 278,
+      "instret": 119,
+      "leaf_first_retire": 42,
+      "body_retirement_span": 200.5,
+      "leaf_ret_retire": 242.5,
+      "last_vset_retire": 227,
+      "first_store_retire": 228,
+      "tail_to_end_sample": 35.5
+    }
+  },
+  "anchor": {
+    "reference_seq": 20,
+    "comparison_seq": 30,
+    "cycles": [
+      274,
+      268
+    ],
+    "delta": -6,
+    "begin_to_call_delta": 1,
+    "call_to_leaf_delta": -6,
+    "prefix_delta": -5,
+    "body_delta": 1,
+    "tail_delta": -2,
+    "uniform_accept_move_response_shift": -5,
+    "enqueue_shift_histogram": {
+      "-5": 30,
+      "-6": 2
+    },
+    "commit_shift_histogram": {
+      "-5": 31,
+      "-4": 1
+    },
+    "underlying_frontend_cause": "NOT_ATTRIBUTED: no fetch/prediction/cache/issue-ready trace"
+  },
+  "original_gates": {
+    "anchors": {
+      "OV": {
+        "values": [
+          273,
+          274,
+          274,
+          268
+        ],
+        "passed": false,
+        "range_percent": 2.2388059701492535
+      },
+      "OR": {
+        "values": [
+          301,
+          301,
+          301,
+          301
+        ],
+        "passed": true,
+        "range_percent": 0.0
+      }
+    },
+    "gain": {
+      "forward": {
+        "mean_cycles": {
+          "OV": 273.5,
+          "NV": 273.0,
+          "OR": 301.0,
+          "NR": 278.0
+        },
+        "passed": false,
+        "speedup_fastest_rvv": 1.0183150183150182,
+        "saving_vs_old_vdot_percent": 0.18281535648994515
+      },
+      "reverse": {
+        "mean_cycles": {
+          "OV": 274.0,
+          "NV": 273.0,
+          "OR": 301.0,
+          "NR": 278.0
+        },
+        "passed": false,
+        "speedup_fastest_rvv": 1.0183150183150182,
+        "saving_vs_old_vdot_percent": 0.36496350364963503
+      }
+    },
+    "anchor_pass": false,
+    "gain_pass": false
+  },
+  "p3": {
+    "decision": "GO_MINIMAL_MIGRATION_HOST_ONLY",
+    "target_runtime": "NOT_READY",
+    "donor_ref": "ffd668bf1bc80850d382f514d13bb00316c85582",
+    "source_documents_verified": 7,
+    "full_source_closure": "NOT_YET_VERIFIED",
+    "donor_performance_transfer": false
+  },
+  "next_instruction": "开始 P3 最小迁入与宿主门禁：固定供体 ffd668bf1bc80850d382f514d13bb00316c85582，在独立目录补齐 FP32→QKV 的最小源闭包并冻结新合同，只迁入共同量化边界、TA和强FR投影、输入及必要检查器。完成GNU构建、最终对象/链接审计、量化与完整输出、CSR/ABI及负控；通过后给出复用0f的有界目标探针合同。保持1%锚点与3%收益原则，先不运行EMU/NEMU、不改RTL、不构建新核、不上传GitHub，完成后给我GO/NO-GO和下一轮指令。",
+  "limits": [
+    "Retirement coordinates are not execution latency or causal component costs.",
+    "Queue-to-accept includes source readiness, scheduling and FU availability; not a pure scheduler or memory metric.",
+    "Only A ran; no cross-image calibration or replay. No new qualified speedup.",
+    "All 64 redirects inside the measured cycle intervals bind fences; no observed JAL/RET misprediction inside these intervals.",
+    "No fetch/ICache prediction or RVV execute-stage trace; deeper cause is not proven."
+  ]
+}

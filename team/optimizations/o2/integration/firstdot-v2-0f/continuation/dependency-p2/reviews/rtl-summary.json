@@ -1,0 +1,92 @@
+{
+  "status": "P2_DEPENDENCY_STATIC_ATTRIBUTION_COMPLETE",
+  "mode": "read_only_source_and_existing_evidence",
+  "new_rtl_changes": false,
+  "new_emu_runs": 0,
+  "new_synthesis_runs": 0,
+  "new_sta_runs": 0,
+  "hardware_source_commit": "0f12df675378556670afd0dd2153f47fcb330610",
+  "current_head": "10b71ad4bff25cd2070e775c74a4717b01602f75",
+  "selected_source_files_verified": 19,
+  "trace_observations": {
+    "formal_windows": 12,
+    "formal_vdots": 3072,
+    "formal_edges": 3060,
+    "accept_to_move": 1,
+    "move_to_response": 1,
+    "accept_to_response": 2,
+    "response_to_next_accept": 5,
+    "accept_to_next_accept": 7,
+    "source": "../trace/analysis-01/summary.json",
+    "qualification": "reanalysis_of_historical_trace"
+  },
+  "static_claims": [
+    {
+      "claim": "child_response_parent_output_vector_WB_grant_have_no_intermediate_register",
+      "qualification": "static_source_derivation"
+    },
+    {
+      "claim": "five_cycle_no_contention_path_WB_ready_capture_deqDelay_OG1_OG2_final_input_register",
+      "qualification": "static_schedule_not_individual_event_measurement",
+      "preconditions": [
+        "consumer_resident_in_target_IQ",
+        "other_sources_ready",
+        "no_port_conflict",
+        "no_flush_cancel",
+        "no_backpressure"
+      ]
+    },
+    {
+      "claim": "VFEX4_not_IQ_early_wakeup_source_or_sink_and_latency_maps_empty",
+      "qualification": "static_config"
+    }
+  ],
+  "observation_limits": [
+    "O2_ENQUEUE_is_ROB_allocation_not_IQ_enqueue",
+    "O2_COMMIT_is_retirement_not_writeback",
+    "no_explicit_WB_wakeup_OG_events",
+    "no_new_candidate_measured"
+  ],
+  "recommendation": {
+    "next": "P4-G0_READ_ONLY_SINGLE_CANDIDATE_FEASIBILITY",
+    "candidate": "VDot_one_cycle_arithmetic_with_two_completed_result_slots_and_full_protocol",
+    "observer_rebuild_needed_before_scoped_G0": false,
+    "shared_backend_candidate_requires_minimal_observer_contract": true,
+    "not_approved": [
+      "metadata_only_latency_change",
+      "delete_one_slot_without_contract",
+      "delete_nonexistent_parent_output_register"
+    ]
+  },
+  "conditional_models": [
+    {
+      "name": "FU_2_to_1_only",
+      "formula": "37+255*6+1+33",
+      "cycles": 1601,
+      "cycles_saved": 256,
+      "relative_speedup_model": 1.159900062460962,
+      "measured": false
+    },
+    {
+      "name": "backend_5_to_4_only",
+      "formula": "37+255*6+2+33",
+      "cycles": 1602,
+      "cycles_saved": 255,
+      "relative_speedup_model": 1.1591760299625469,
+      "measured": false
+    }
+  ],
+  "existing_ppa": {
+    "source": "team/optimizations/o2/r3-div-gate/cost/results/RESULT.md",
+    "qualification": "historical_local_pre_layout_Nangate45_nominal_1ns_not_whole_core_or_new_measurement",
+    "fu_area_um2": 17298.246,
+    "parent_area_um2": 284614.946,
+    "fu_i2r_arrival_ns": 1.190323,
+    "fu_i2r_slack_ns": -0.26852,
+    "fu_r2r_arrival_ns": 1.163404,
+    "fu_r2r_slack_ns": -0.240117,
+    "parent_vdot_r2o_arrival_ns": 2.776701,
+    "parent_vdot_r2o_slack_ns": -1.926701,
+    "no_arithmetic_sum_used_as_new_STA": true
+  }
+}

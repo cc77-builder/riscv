@@ -1,0 +1,155 @@
+{
+  "schema": "p4-g2r0-result-v1",
+  "status": "P4_G2R0_GO_ONE_BOUNDED_REVISION",
+  "recorded_at": "2026-10-30T13:03:20.575600+08:00",
+  "started_at": "2026-10-30T04:45:36.473427+00:00",
+  "operator": "@cc77-builder / Agent",
+  "operation_id": "20261030-cc77-builder-p4-g2r0-readonly",
+  "decision_scope": "Worth one future metadata-only revision trial, not implementation/adoption/fullcore authorization",
+  "current_candidate_qualification": "P4_G2_NO_GO",
+  "adopt_candidate": false,
+  "go_to_fullcore": false,
+  "source_commit": "10b71ad4bff25cd2070e775c74a4717b01602f75",
+  "branch": "local/zjhwork-integration-20261024",
+  "hardware_reference": "0f12df675378556670afd0dd2153f47fcb330610",
+  "candidate_patch_sha256": "86b34d6117d8f36609e152847a0cda763b3aeb5411908194489e5be882a47243",
+  "comparison_contract": "p4-short-latency-g0-v1",
+  "contract_sha256": "0209a06fed5f3d996308c62bcf4cab2f79c25d65af87449f406c12387b0cbf7e",
+  "caps_sha256": "8a6b923eb77a16055c5ac0d2838834af76742fd80f4bcebc750a25b99b47fe40",
+  "frozen_g2_gate_count": 47,
+  "frozen_g2_pass": 41,
+  "frozen_g2_failures": [
+    {
+      "name": "fu.area_um2",
+      "value": 18322.878,
+      "cap": 18163.1583,
+      "pass_gate": false,
+      "baseline": 17298.246,
+      "unit": "um2"
+    },
+    {
+      "name": "parent.nominal.ready",
+      "value": 0.303064,
+      "cap": 0.297821,
+      "pass_gate": false,
+      "baseline": 0.247821,
+      "unit": "ns"
+    },
+    {
+      "name": "parent.period050.ready",
+      "value": 0.303064,
+      "cap": 0.297821,
+      "pass_gate": false,
+      "baseline": 0.247821,
+      "unit": "ns"
+    },
+    {
+      "name": "parent.period200.ready",
+      "value": 0.303064,
+      "cap": 0.297821,
+      "pass_gate": false,
+      "baseline": 0.247821,
+      "unit": "ns"
+    },
+    {
+      "name": "parent.load001.ready",
+      "value": 0.294129,
+      "cap": 0.288594,
+      "pass_gate": false,
+      "baseline": 0.238594,
+      "unit": "ns"
+    },
+    {
+      "name": "parent.load020.ready",
+      "value": 0.365843,
+      "cap": 0.358999,
+      "pass_gate": false,
+      "baseline": 0.308999,
+      "unit": "ns"
+    }
+  ],
+  "analysis": {
+    "fu_metadata_bits": 790,
+    "fu_regular_two_mux_bits": 784,
+    "fu_regular_unique_mux_cells": 1568,
+    "parent_metadata_bits": 595,
+    "parent_regular_two_mux_bits": 593,
+    "parent_regular_unique_mux_cells": 1186,
+    "analytic_area": {
+      "kind": "ANALYTIC_CELL_ONLY_NOT_SYNTHESIS_OR_BOUND",
+      "regular_bits": 784,
+      "old_two_mux_area_per_bit_um2": 3.724,
+      "g2_fu_area_um2": 18322.878,
+      "frozen_fu_cap_um2": 18163.1583,
+      "saving_needed_um2": 159.7197,
+      "excluded": "shared decode, added hold fanout, buffers, polarity, mapper restructuring, nonregular bits, all timing",
+      "hand_mappings": [
+        {
+          "cells": "3 NAND2 + NAND3",
+          "area_per_bit_um2": 3.458,
+          "saving_per_bit_um2": 0.266,
+          "gross_saving_um2": 208.544,
+          "margin_after_area_deficit_um2": 48.8243
+        },
+        {
+          "cells": "AOI22 + 2 NAND2",
+          "area_per_bit_um2": 2.926,
+          "saving_per_bit_um2": 0.798,
+          "gross_saving_um2": 625.632,
+          "margin_after_area_deficit_um2": 465.9123
+        }
+      ],
+      "example_control_pin_capacitance_ff": {
+        "old_move_plus_direct_mux_S": 3.839884,
+        "compact_hold_AOI_A1": 1.687512,
+        "compact_move_AOI_B1": 1.58401,
+        "compact_direct_NAND_A1": 1.599032,
+        "compact_three_sum": 4.870554,
+        "interpretation": "Total select-pin capacitance can increase. This is not input ready load or a timing estimate."
+      }
+    },
+    "ready_recovery_needed_ps": [
+      5.243,
+      5.243,
+      5.243,
+      5.535,
+      6.844
+    ],
+    "ready_interpretation": "Shared mapped control/load evidence; metadata is not proved sole cause; no timing improvement prediction",
+    "host_boolean_cases": 2048,
+    "negative_controls_rejected": 4
+  },
+  "three_primary_metrics": {
+    "new_revision_speedup": "NOT_TESTED",
+    "new_revision_fu_area_um2": "NOT_TESTED",
+    "new_revision_parent_area_um2": "NOT_TESTED",
+    "new_revision_timing": "NOT_TESTED",
+    "g2_reference_only": {
+      "fu_area_um2": 18322.878,
+      "parent_area_um2": 285241.642,
+      "nominal_fu_slack_ns": -0.790381,
+      "nominal_parent_slack_ns": -2.337809,
+      "nominal_parent_ready_ns": 0.303064,
+      "speedup": "NOT_TESTED"
+    },
+    "stable_0f_reference_only": {
+      "chain256_speedup": 2.9297253634894993,
+      "fu_area_um2": 17298.246,
+      "parent_area_um2": 284614.946,
+      "nominal_parent_slack_ns": -2.393998
+    }
+  },
+  "scope": {
+    "new_production_RTL_edits": 0,
+    "new_elaboration_synthesis_STA": 0,
+    "new_fullcore_nemu_runs": 0,
+    "commit_push": false,
+    "default_selection_changed": false
+  },
+  "proposal": "oneCycle branch R ctrl/perf complete hold/move/directR one-hot selection only; no data/state/ready/ExeUnit/DIV edits",
+  "next_instruction": "开始 P4-G2R1：先说明具体 RTL 改法，仅把一拍候选的 R 槽 ctrl/perf 改为包含保持项的三路互斥选择，其他数据、状态、ready 和 DIV 协议保持。按 R0 合同完成完整128位结果、FU、真实父级 DIV/SQRT、反压、取消、身份、异常及默认关闭验证。保持 G0 原门槛，先不做综合、STA、全核或上传 GitHub，完成后给我下一轮指令。",
+  "stop": "After one candidate revision, any original G0 cost gate failure stops this P4 revision; no automatic second search",
+  "evidence_manifest": "evidence/manifest.json",
+  "original_g2_manifest_sha256": "ff4224cfcd193e78b9c221864220c005d9f99f0dc818698e9a0491f27644754c",
+  "raw_output": "/home/riscv/riscv-lab/software-import-20261026/p4-g2r0-readonly-20261030-01"
+}

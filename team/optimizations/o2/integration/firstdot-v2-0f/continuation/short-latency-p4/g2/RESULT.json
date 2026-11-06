@@ -1,0 +1,388 @@
+{
+  "record_id": "P4-G2-SAME-CONSTRAINT-COST-20261030-01",
+  "status": "P4_G2_NO_GO",
+  "started_at": "2026-10-30T03:51:08.193120+00:00",
+  "recorded_at": "2026-10-30T12:31:24.863291+08:00",
+  "operator": "@cc77-builder / Agent",
+  "operation_id": "20261030-cc77-builder-p4-g2-cost",
+  "source_commit": "10b71ad4bff25cd2070e775c74a4717b01602f75",
+  "hardware_reference": "0f12df675378556670afd0dd2153f47fcb330610",
+  "source_state": "same G1 uncommitted default-off two-file candidate patch; no RTL edits in G2",
+  "candidate_patch": {
+    "path": "team/optimizations/o2/integration/firstdot-v2-0f/continuation/short-latency-p4/g1/candidate.patch",
+    "sha256": "86b34d6117d8f36609e152847a0cda763b3aeb5411908194489e5be882a47243"
+  },
+  "candidate_source_manifest": {
+    "path": "team/optimizations/o2/integration/firstdot-v2-0f/continuation/short-latency-p4/g1/source-candidate.json",
+    "sha256": "adf71ca63ddd394412eb20195c8458b14df916a801ba59e0a23ffcae5e235c1d"
+  },
+  "comparison_contract": "p4-short-latency-g0-v1",
+  "contract_sha256": "0209a06fed5f3d996308c62bcf4cab2f79c25d65af87449f406c12387b0cbf7e",
+  "caps_sha256": "8a6b923eb77a16055c5ac0d2838834af76742fd80f4bcebc750a25b99b47fe40",
+  "configuration": {
+    "baseline": "VDOT_P4_ONE_CYCLE=0",
+    "candidate": "VDOT_P4_ONE_CYCLE=1",
+    "VDOT_O2_ELASTIC": 1,
+    "VDOT_T14_FUSED_INPUT": 1,
+    "trace_flags": 0,
+    "VLEN": 128,
+    "RobSize": 48,
+    "config": "MinimalConfig(1)",
+    "FU": "CommonFuCostTop",
+    "parent": "CommonParentCostTop real VFEX4 including FU + DIV/SQRT + 3 ICG"
+  },
+  "qualification": {
+    "g1_function_and_protocol": "PASS_REUSED_SAME_445_SOURCE_FILES",
+    "synthesis": "PASS_4_NEW_MAPPINGS",
+    "sta_execution": "PASS_40_PROFILE_RUNS_20_LEGACY_PLUS_20_COVERAGE",
+    "analysis_integrity": "PASS",
+    "cost_screening": "FAIL",
+    "new_candidate_speedup": "NOT_TESTED",
+    "new_fullcore_builds_runs": 0,
+    "new_nemu_runs": 0,
+    "new_RTL_edits": 0,
+    "github_upload": false,
+    "default_selected_hardware_changed": false
+  },
+  "three_primary_metrics": {
+    "candidate_speedup": "NOT_TESTED",
+    "baseline_reference_only": {
+      "hardware": "0f",
+      "chain256_cycles": 1857,
+      "chain256_speedup": 2.9297253634894993,
+      "fu_area_um2": 17298.246,
+      "parent_area_um2": 284614.946,
+      "nominal_parent_worst_setup_slack_ns": -2.393998
+    },
+    "candidate_fu_area_um2": 18322.878,
+    "candidate_parent_area_um2": 285241.642,
+    "candidate_nominal_fu_slack_ns": -0.790381,
+    "candidate_nominal_parent_slack_ns": -2.337809,
+    "candidate_five_profile_Q_ns": {
+      "fu": {
+        "nominal": 1.790381,
+        "period050": 1.790381,
+        "period200": 1.790381,
+        "load001": 1.790381,
+        "load020": 1.790381
+      },
+      "parent": {
+        "nominal": 3.337809,
+        "period050": 3.337809,
+        "period200": 3.337809,
+        "load001": 3.337809,
+        "load020": 3.391613
+      }
+    }
+  },
+  "gates": {
+    "total": 47,
+    "pass": 41,
+    "fail": 6,
+    "failures": [
+      {
+        "name": "fu.area_um2",
+        "value": 18322.878,
+        "cap": 18163.1583,
+        "pass_gate": false,
+        "baseline": 17298.246,
+        "unit": "um2"
+      },
+      {
+        "name": "parent.nominal.ready",
+        "value": 0.303064,
+        "cap": 0.297821,
+        "pass_gate": false,
+        "baseline": 0.247821,
+        "unit": "ns"
+      },
+      {
+        "name": "parent.period050.ready",
+        "value": 0.303064,
+        "cap": 0.297821,
+        "pass_gate": false,
+        "baseline": 0.247821,
+        "unit": "ns"
+      },
+      {
+        "name": "parent.period200.ready",
+        "value": 0.303064,
+        "cap": 0.297821,
+        "pass_gate": false,
+        "baseline": 0.247821,
+        "unit": "ns"
+      },
+      {
+        "name": "parent.load001.ready",
+        "value": 0.294129,
+        "cap": 0.288594,
+        "pass_gate": false,
+        "baseline": 0.238594,
+        "unit": "ns"
+      },
+      {
+        "name": "parent.load020.ready",
+        "value": 0.365843,
+        "cap": 0.358999,
+        "pass_gate": false,
+        "baseline": 0.308999,
+        "unit": "ns"
+      }
+    ]
+  },
+  "calibration": [
+    {
+      "boundary": "fu",
+      "default_off_frozen_histogram_equal": true,
+      "five_profile_legacy_numbers_equal": true,
+      "canonical_topology_equal": true,
+      "ports_equal": true,
+      "complete_slot_coverage": true
+    },
+    {
+      "boundary": "parent",
+      "default_off_frozen_histogram_equal": true,
+      "five_profile_legacy_numbers_equal": true,
+      "canonical_topology_equal": true,
+      "ports_equal": true,
+      "complete_slot_coverage": true
+    }
+  ],
+  "boundary_area_and_cells": {
+    "fu": {
+      "baseline_area_um2": 17298.246,
+      "candidate_area_um2": 18322.878,
+      "area_change_pct": 5.923328873921663,
+      "area_composition": {
+        "DFF": {
+          "off_um2": 7877.324,
+          "p4_um2": 7443.212,
+          "delta_um2": -434.112
+        },
+        "MUX": {
+          "off_um2": 3061.128,
+          "p4_um2": 4433.422,
+          "delta_um2": 1372.294
+        },
+        "BUF": {
+          "off_um2": 363.622,
+          "p4_um2": 361.494,
+          "delta_um2": -2.128
+        },
+        "CLKBUF": {
+          "off_um2": 2.394,
+          "p4_um2": 72.884,
+          "delta_um2": 70.49
+        },
+        "ICG": {
+          "off_um2": 0,
+          "p4_um2": 0,
+          "delta_um2": 0
+        },
+        "other": {
+          "off_um2": 5993.778,
+          "p4_um2": 6011.866,
+          "delta_um2": 18.088
+        }
+      },
+      "baseline_cells": {
+        "DFF": 1742,
+        "MUX": 1644,
+        "BUF": 397,
+        "CLKBUF": 3,
+        "ICG": 0
+      },
+      "candidate_cells": {
+        "DFF": 1646,
+        "MUX": 2381,
+        "BUF": 396,
+        "CLKBUF": 90,
+        "ICG": 0
+      },
+      "structure": {
+        "off": {
+          "VDotProducts_instances": 1,
+          "VDotReduce_instances": 1,
+          "signed_multipliers": 8,
+          "balanced_adders": 7,
+          "slots": {
+            "p_data": 128,
+            "p_ctrl": 213,
+            "p_perf": 577,
+            "p_valid": 1,
+            "r_data": 32,
+            "r_ctrl": 213,
+            "r_perf": 577,
+            "r_valid": 1,
+            "p_slot": 919,
+            "r_slot": 823
+          }
+        },
+        "p4": {
+          "VDotProducts_instances": 1,
+          "VDotReduce_instances": 1,
+          "signed_multipliers": 8,
+          "balanced_adders": 7,
+          "slots": {
+            "p_data": 32,
+            "p_ctrl": 213,
+            "p_perf": 577,
+            "p_valid": 1,
+            "r_data": 32,
+            "r_ctrl": 213,
+            "r_perf": 577,
+            "r_valid": 1,
+            "p_slot": 823,
+            "r_slot": 823
+          }
+        }
+      }
+    },
+    "parent": {
+      "baseline_area_um2": 284614.946,
+      "candidate_area_um2": 285241.642,
+      "area_change_pct": 0.22019082581841154,
+      "area_composition": {
+        "DFF": {
+          "off_um2": 77651.784,
+          "p4_um2": 77222.194,
+          "delta_um2": -429.59
+        },
+        "MUX": {
+          "off_um2": 18871.902,
+          "p4_um2": 20118.91,
+          "delta_um2": 1247.008
+        },
+        "BUF": {
+          "off_um2": 11206.846,
+          "p4_um2": 11142.474,
+          "delta_um2": -64.372
+        },
+        "CLKBUF": {
+          "off_um2": 2437.092,
+          "p4_um2": 2537.906,
+          "delta_um2": 100.814
+        },
+        "ICG": {
+          "off_um2": 11.97,
+          "p4_um2": 11.97,
+          "delta_um2": 0.0
+        },
+        "other": {
+          "off_um2": 174435.352,
+          "p4_um2": 174208.188,
+          "delta_um2": -227.164
+        }
+      },
+      "baseline_cells": {
+        "DFF": 17172,
+        "MUX": 10135,
+        "BUF": 14025,
+        "CLKBUF": 3052,
+        "ICG": 3
+      },
+      "candidate_cells": {
+        "DFF": 17077,
+        "MUX": 10805,
+        "BUF": 13946,
+        "CLKBUF": 3177,
+        "ICG": 3
+      },
+      "structure": {
+        "off": {
+          "VDotProducts_instances": 1,
+          "VDotReduce_instances": 1,
+          "signed_multipliers": 8,
+          "balanced_adders": 7,
+          "slots": {
+            "p_data": 128,
+            "p_ctrl": 18,
+            "p_perf": 577,
+            "p_valid": 1,
+            "r_data": 32,
+            "r_ctrl": 18,
+            "r_perf": 577,
+            "r_valid": 1,
+            "p_slot": 724,
+            "r_slot": 628
+          }
+        },
+        "p4": {
+          "VDotProducts_instances": 1,
+          "VDotReduce_instances": 1,
+          "signed_multipliers": 8,
+          "balanced_adders": 7,
+          "slots": {
+            "p_data": 32,
+            "p_ctrl": 18,
+            "p_perf": 577,
+            "p_valid": 1,
+            "r_data": 32,
+            "r_ctrl": 18,
+            "r_perf": 577,
+            "r_valid": 1,
+            "p_slot": 628,
+            "r_slot": 628
+          }
+        }
+      }
+    }
+  },
+  "mapped_DFF_note": {
+    "parent_before_mapping": [
+      17184,
+      17088
+    ],
+    "parent_after_mapping": [
+      17172,
+      17077
+    ],
+    "vdot_delta": -96,
+    "total_parent_delta": -95,
+    "non_vdot_delta": 1,
+    "non_vdot_production_HDL_byte_equal": true,
+    "qualification": "reported mapping/cleanup difference, not a G0 numerical gate revision"
+  },
+  "analysis_negative_checks": {
+    "unit_guards": 10,
+    "corrupted_summary_campaign": 4,
+    "all_rejected_as_expected": true
+  },
+  "path_coverage": {
+    "legacy_candidate_reports": 70,
+    "supplementary_candidate_reports": 70,
+    "baseline_expected_absences": 10,
+    "valid_timing_csv_rows": 270,
+    "no_unexpected_unconstrained_endpoints": true,
+    "no_new_false_or_multicycle_paths": true
+  },
+  "retained_tooling_failure": {
+    "path": "/home/riscv/riscv-lab/software-import-20261026/p4-g2-cost-20261030-01/off-fu-coverage-01",
+    "reason": "analysis alias mismatch; strict missing-group assertion rejected before STA",
+    "repair": "analysis only: generated actual rPacket_res_data/perfDebugInfo and parent src ports; no RTL or threshold edits",
+    "passed_replacement": "/home/riscv/riscv-lab/software-import-20261026/p4-g2-cost-20261030-01/off-fu-coverage-02"
+  },
+  "evidence_manifest": {
+    "path": "team/optimizations/o2/integration/firstdot-v2-0f/continuation/short-latency-p4/g2/evidence/20261030-p4-g2/manifest.json",
+    "sha256": "ff4224cfcd193e78b9c221864220c005d9f99f0dc818698e9a0491f27644754c"
+  },
+  "screening": {
+    "path": "team/optimizations/o2/integration/firstdot-v2-0f/continuation/short-latency-p4/g2/screening.json",
+    "sha256": "10f5b5a28807604532fe16c02cc5d5b21ec001c59273ad77cb8f2bb21430b585"
+  },
+  "input_lock": {
+    "path": "team/optimizations/o2/integration/firstdot-v2-0f/continuation/short-latency-p4/g2/input-lock.json",
+    "sha256": "f8ae1ad1d316d2782cb03c1ec77293d4691e27411c9b044b1a7f18fd86bb94a0"
+  },
+  "decision": {
+    "adopt_candidate": false,
+    "go_to_fullcore": false,
+    "stable_default": "0f behavior + firstdot V2 + explicit C8",
+    "next": "P4-G2R0 read-only failed-path/MUX attribution and bounded minimal-revision feasibility; only if user starts, no automatic RTL changes"
+  },
+  "limits": [
+    "Local pre-layout standard-cell area and setup STA only; baseline and candidate do not close 1 ns.",
+    "Q is a screening proxy, not fullcore Fmax. No new program speedup or power estimate.",
+    "A local one-cycle protocol is not a twofold program speedup. Failed gates remain unchanged."
+  ]
+}

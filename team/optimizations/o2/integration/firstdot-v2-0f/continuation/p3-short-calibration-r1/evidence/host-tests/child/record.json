@@ -1,0 +1,240 @@
+{
+  "argv": [
+    "/usr/bin/taskset",
+    "-c",
+    "4",
+    "/usr/bin/python3",
+    "-B",
+    "-c",
+    "import subprocess,time;subprocess.Popen(['/usr/bin/sleep','5']);time.sleep(5)"
+  ],
+  "cwd": "/home/riscv/riscv-lab/software-import-20261026/p3-runner-revision-20261031-01",
+  "environment": {
+    "PATH": "/usr/bin:/bin",
+    "LC_ALL": "C"
+  },
+  "start_utc": "2026-10-30T16:11:16.096544+00:00",
+  "monotonic_start_ns": 78598543401,
+  "boot_id": "63d30490-2917-4512-bdbb-614d9bfd3568",
+  "timeout_seconds": 0.4,
+  "log_cap_bytes": 2147483648,
+  "rss_cap_bytes": 12884901888,
+  "thread_cap": 4,
+  "process_started": true,
+  "limit": "MONOTONIC_TIMEOUT",
+  "peak_rss_bytes": 11141120,
+  "max_threads_observed": 2,
+  "observed_cpu_masks": [
+    [
+      4
+    ]
+  ],
+  "cleanup_complete": true,
+  "pid": 418,
+  "proc_stat_at_start": "418 (python3) R 404 418 418 0 -1 4194304 703 0 0 0 0 0 0 0 20 0 1 0 7859 13529088 1696 18446744073709551615 95640099999744 95640102839821 140729146524160 0 0 0 0 16781312 2 0 0 0 17 4 0 0 0 0 0 95640105211952 95640105496024 95640814051328 140729146531686 140729146531787 140729146531787 140729146531815 0\n",
+  "elapsed_seconds": 0.519785735,
+  "raw_bytes": {
+    "stdout": 0,
+    "stderr": 0
+  },
+  "progress": {
+    "max_observer_cycle": 0,
+    "o2_commit_count": 0,
+    "t13_retire_rows": 0,
+    "uart_fragments": 0
+  },
+  "last_periodic_sample": {
+    "monotonic_ns": 78605033851,
+    "elapsed_seconds": 0.005766126,
+    "raw_bytes": {
+      "stdout": 0,
+      "stderr": 0
+    },
+    "rss_bytes": 6946816,
+    "threads": 1,
+    "processes": [
+      {
+        "state": "R",
+        "ppid": 404,
+        "pgid": 418,
+        "sid": 418,
+        "start_ticks": 7859,
+        "cpu_seconds": 0.0,
+        "pid": 418,
+        "comm": "python3",
+        "exe": "/usr/bin/python3.10",
+        "cmdline": "/usr/bin/python3 -B -c import subprocess,time;subprocess.Popen(['/usr/bin/sleep','5']);time.sleep(5) ",
+        "rss_bytes": 6946816,
+        "threads": 1,
+        "tasks": [
+          {
+            "tid": 418,
+            "start_ticks": 7859,
+            "comm": "python3",
+            "affinity": [
+              4
+            ]
+          }
+        ],
+        "masks": [
+          [
+            4
+          ]
+        ],
+        "disappeared_tids": [],
+        "sample_start_ns": 78604844754,
+        "sample_end_ns": 78605024676
+      }
+    ],
+    "progress": {
+      "max_observer_cycle": 0,
+      "o2_commit_count": 0,
+      "t13_retire_rows": 0,
+      "uart_fragments": 0
+    }
+  },
+  "limit_detected_ns": 79010179033,
+  "trigger": {
+    "schema": "p3-trigger-r1",
+    "reason": "MONOTONIC_TIMEOUT",
+    "detected_ns": 79010179033,
+    "boot_id": "63d30490-2917-4512-bdbb-614d9bfd3568",
+    "owned_pgid": 418,
+    "source": "last available sample",
+    "processes": [
+      {
+        "state": "S",
+        "ppid": 404,
+        "pgid": 418,
+        "sid": 418,
+        "start_ticks": 7859,
+        "cpu_seconds": 0.0,
+        "pid": 418,
+        "comm": "python3",
+        "exe": "/usr/bin/python3.10",
+        "cmdline": "/usr/bin/python3 -B -c import subprocess,time;subprocess.Popen(['/usr/bin/sleep','5']);time.sleep(5) ",
+        "rss_bytes": 9699328,
+        "threads": 1,
+        "tasks": [
+          {
+            "tid": 418,
+            "start_ticks": 7859,
+            "comm": "python3",
+            "affinity": [
+              4
+            ]
+          }
+        ],
+        "masks": [
+          [
+            4
+          ]
+        ],
+        "disappeared_tids": [],
+        "sample_start_ns": 78909500964,
+        "sample_end_ns": 78909759319
+      },
+      {
+        "state": "S",
+        "ppid": 418,
+        "pgid": 418,
+        "sid": 418,
+        "start_ticks": 7861,
+        "cpu_seconds": 0.0,
+        "pid": 419,
+        "comm": "sleep",
+        "exe": "/usr/bin/sleep",
+        "cmdline": "/usr/bin/sleep 5 ",
+        "rss_bytes": 1441792,
+        "threads": 1,
+        "tasks": [
+          {
+            "tid": 419,
+            "start_ticks": 7861,
+            "comm": "sleep",
+            "affinity": [
+              4
+            ]
+          }
+        ],
+        "masks": [
+          [
+            4
+          ]
+        ],
+        "disappeared_tids": [],
+        "sample_start_ns": 78909762741,
+        "sample_end_ns": 78909971528
+      }
+    ],
+    "observed_threads": 2,
+    "observed_rss_bytes": 11141120,
+    "limits": {
+      "threads": 4,
+      "rss_bytes": 12884901888,
+      "raw_bytes": 2147483648,
+      "seconds": 0.4
+    },
+    "last_periodic_sample": {
+      "monotonic_ns": 78605033851,
+      "elapsed_seconds": 0.005766126,
+      "raw_bytes": {
+        "stdout": 0,
+        "stderr": 0
+      },
+      "rss_bytes": 6946816,
+      "threads": 1,
+      "processes": [
+        {
+          "state": "R",
+          "ppid": 404,
+          "pgid": 418,
+          "sid": 418,
+          "start_ticks": 7859,
+          "cpu_seconds": 0.0,
+          "pid": 418,
+          "comm": "python3",
+          "exe": "/usr/bin/python3.10",
+          "cmdline": "/usr/bin/python3 -B -c import subprocess,time;subprocess.Popen(['/usr/bin/sleep','5']);time.sleep(5) ",
+          "rss_bytes": 6946816,
+          "threads": 1,
+          "tasks": [
+            {
+              "tid": 418,
+              "start_ticks": 7859,
+              "comm": "python3",
+              "affinity": [
+                4
+              ]
+            }
+          ],
+          "masks": [
+            [
+              4
+            ]
+          ],
+          "disappeared_tids": [],
+          "sample_start_ns": 78604844754,
+          "sample_end_ns": 78605024676
+        }
+      ],
+      "progress": {
+        "max_observer_cycle": 0,
+        "o2_commit_count": 0,
+        "t13_retire_rows": 0,
+        "uart_fragments": 0
+      }
+    }
+  },
+  "trigger_persisted": true,
+  "signal_sent_ns": 79013280276,
+  "returncode": -9,
+  "remaining_group": [],
+  "monotonic_end_ns": 79118329136,
+  "end_utc": "2026-10-30T16:11:16.616330+00:00",
+  "raw_sha256": {
+    "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "cleanup_after_detection_seconds": 0.108150103
+}

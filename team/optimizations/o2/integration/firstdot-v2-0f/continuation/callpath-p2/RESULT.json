@@ -1,0 +1,7039 @@
+{
+  "record_id": "P2-CALLPATH-0F-P1-STEADY-D0-20261028-01",
+  "status": "P2_CALLPATH_READONLY_COMPLETE",
+  "recorded_at": "2026-10-28T17:57:12.483077+08:00",
+  "operator": "@cc77-builder / Agent",
+  "operation_id": "20261028-cc77-builder-p2-callpath",
+  "source_commit": "10b71ad4bff25cd2070e775c74a4717b01602f75",
+  "selected_hardware_commit": "0f12df675378556670afd0dd2153f47fcb330610",
+  "comparison_contract": "p2-callpath-p1-steady-d0-readonly-v1",
+  "p1_contract": "zjhwork-0f-c8-split-fixed-a-8x32-v1",
+  "source_state": "P1 and P2 remain local uncommitted; source HEAD is provenance, not a commit containing them",
+  "qualification": {
+    "new_target_runs": 0,
+    "new_nemu_runs": 0,
+    "new_hardware_builds": 0,
+    "new_performance_measurement": "NOT_TESTED",
+    "new_area_sta": "NOT_TESTED",
+    "all_84_normal_replay_attribution_equal": true,
+    "seven_mutation_rejections": "PASS",
+    "static_elf_and_history": "PASS",
+    "observer_semantics": "PASS",
+    "root_recompute": "PASS",
+    "old_p1_adoption_status": "HOLD",
+    "default_changed": false,
+    "rtl_changed": false
+  },
+  "scope": "P2 callpath leaf only; no dependency-chain/Jade work and no claim to complete every P2 direction",
+  "input_lock": {
+    "path": "team/optimizations/o2/integration/firstdot-v2-0f/continuation/callpath-p2/input-lock.json",
+    "sha256": "ff39c102131d0940fa7eff1915adbf79b7495ce44ce3c1cc6442729dd48f5c8b",
+    "inputs": 62
+  },
+  "p1_evidence_manifest": "team/optimizations/o2/integration/firstdot-v2-0f/continuation/split-input-v1/evidence/20261028-p1/manifest.json",
+  "p1_evidence_manifest_sha256": "b4713776247348ed7c8c4745e5c1f5b46254272af307cdee11a2048011e687b2",
+  "trace_summary": {
+    "status": "P2_CALLPATH_READONLY_ATTRIBUTION_PASS",
+    "normal_replay_all_84_equal": true,
+    "slow_formal_sequences": [
+      41,
+      48,
+      69,
+      76
+    ],
+    "inner_call_redirect_formal_sequences": [
+      41,
+      48,
+      69,
+      76
+    ],
+    "formal_before_first_accept": [
+      97,
+      98,
+      106,
+      96,
+      106,
+      97,
+      96,
+      97,
+      106,
+      97,
+      106,
+      97
+    ],
+    "formal_leaf_first_retire": [
+      46,
+      47,
+      55,
+      45,
+      55,
+      46,
+      45,
+      46,
+      55,
+      46,
+      55,
+      46
+    ],
+    "formal_leaf_to_accept": [
+      51,
+      51,
+      51,
+      51,
+      51,
+      51,
+      51,
+      51,
+      51,
+      51,
+      51,
+      51
+    ],
+    "formal_enqueue_to_accept": [
+      19,
+      19,
+      19,
+      19,
+      19,
+      19,
+      19,
+      19,
+      19,
+      19,
+      19,
+      19
+    ],
+    "formal_partition": [
+      {
+        "begin_to_leaf_first_retire": 46,
+        "leaf_to_vstart_retire": 9,
+        "vstart_to_vcsr_retire": 9,
+        "vcsr_to_vsetivli_retire": 9,
+        "vsetivli_retire_to_vdot_enqueue": 5,
+        "vdot_enqueue_to_accept": 19
+      },
+      {
+        "begin_to_leaf_first_retire": 47,
+        "leaf_to_vstart_retire": 9,
+        "vstart_to_vcsr_retire": 9,
+        "vcsr_to_vsetivli_retire": 9,
+        "vsetivli_retire_to_vdot_enqueue": 5,
+        "vdot_enqueue_to_accept": 19
+      },
+      {
+        "begin_to_leaf_first_retire": 55,
+        "leaf_to_vstart_retire": 9,
+        "vstart_to_vcsr_retire": 9,
+        "vcsr_to_vsetivli_retire": 9,
+        "vsetivli_retire_to_vdot_enqueue": 5,
+        "vdot_enqueue_to_accept": 19
+      },
+      {
+        "begin_to_leaf_first_retire": 45,
+        "leaf_to_vstart_retire": 9,
+        "vstart_to_vcsr_retire": 9,
+        "vcsr_to_vsetivli_retire": 9,
+        "vsetivli_retire_to_vdot_enqueue": 5,
+        "vdot_enqueue_to_accept": 19
+      },
+      {
+        "begin_to_leaf_first_retire": 55,
+        "leaf_to_vstart_retire": 9,
+        "vstart_to_vcsr_retire": 9,
+        "vcsr_to_vsetivli_retire": 9,
+        "vsetivli_retire_to_vdot_enqueue": 5,
+        "vdot_enqueue_to_accept": 19
+      },
+      {
+        "begin_to_leaf_first_retire": 46,
+        "leaf_to_vstart_retire": 9,
+        "vstart_to_vcsr_retire": 9,
+        "vcsr_to_vsetivli_retire": 9,
+        "vsetivli_retire_to_vdot_enqueue": 5,
+        "vdot_enqueue_to_accept": 19
+      },
+      {
+        "begin_to_leaf_first_retire": 45,
+        "leaf_to_vstart_retire": 9,
+        "vstart_to_vcsr_retire": 9,
+        "vcsr_to_vsetivli_retire": 9,
+        "vsetivli_retire_to_vdot_enqueue": 5,
+        "vdot_enqueue_to_accept": 19
+      },
+      {
+        "begin_to_leaf_first_retire": 46,
+        "leaf_to_vstart_retire": 9,
+        "vstart_to_vcsr_retire": 9,
+        "vcsr_to_vsetivli_retire": 9,
+        "vsetivli_retire_to_vdot_enqueue": 5,
+        "vdot_enqueue_to_accept": 19
+      },
+      {
+        "begin_to_leaf_first_retire": 55,
+        "leaf_to_vstart_retire": 9,
+        "vstart_to_vcsr_retire": 9,
+        "vcsr_to_vsetivli_retire": 9,
+        "vsetivli_retire_to_vdot_enqueue": 5,
+        "vdot_enqueue_to_accept": 19
+      },
+      {
+        "begin_to_leaf_first_retire": 46,
+        "leaf_to_vstart_retire": 9,
+        "vstart_to_vcsr_retire": 9,
+        "vcsr_to_vsetivli_retire": 9,
+        "vsetivli_retire_to_vdot_enqueue": 5,
+        "vdot_enqueue_to_accept": 19
+      },
+      {
+        "begin_to_leaf_first_retire": 55,
+        "leaf_to_vstart_retire": 9,
+        "vstart_to_vcsr_retire": 9,
+        "vcsr_to_vsetivli_retire": 9,
+        "vsetivli_retire_to_vdot_enqueue": 5,
+        "vdot_enqueue_to_accept": 19
+      },
+      {
+        "begin_to_leaf_first_retire": 46,
+        "leaf_to_vstart_retire": 9,
+        "vstart_to_vcsr_retire": 9,
+        "vcsr_to_vsetivli_retire": 9,
+        "vsetivli_retire_to_vdot_enqueue": 5,
+        "vdot_enqueue_to_accept": 19
+      }
+    ],
+    "timer_admission_all_84": "empty=1 wait=0 block=0; c00 enqueue -> sample 3 cycles",
+    "formal_prefix_sequence_sha256": "45c9b3103c9aaa43798c44115eb51dced4166c29a632e7f97c5eead1d91b5a4d",
+    "new_target_runs": 0,
+    "new_hardware_or_performance_qualification": false,
+    "p1_hold_preserved": true,
+    "limitations": [
+      "Retirement intervals are observation partitions, not individual instruction execution latency.",
+      "No general non-VDot dispatch/issue or predicted-target/taken trace exists.",
+      "Redirect-to-JALR binding uses unique near subsequent matching ROB retirement within the audited ROI; S-V early prefixes have fewer than48 unique ROB identities and no reuse.",
+      "JALR prediction-correction inference also requires source semantics; this script does not read a predictor reason bit.",
+      "No exact BTB/RAS/cache mechanism or fixed pure recovery latency is proven."
+    ]
+  },
+  "formal_SV_windows": [
+    {
+      "seq": 28,
+      "round": 2,
+      "method": 6,
+      "kind": 1,
+      "order_group": 0,
+      "profile": "steady",
+      "dataset": 0,
+      "phase": "formal",
+      "custom_count": 32,
+      "method_label": "S-V",
+      "cycles": 303,
+      "instret": 235,
+      "begin_cycle": 1132826,
+      "end_cycle": 1133129,
+      "leaf": "split_gemv_8x32_vdot",
+      "leaf_entry_pc": "0x800015f0",
+      "leaf_first_retired_bundle_offset": 46,
+      "inner_call_pc": "0x800015ac",
+      "inner_call_retire_offset": 46,
+      "inner_call_to_leaf_retirement_gap": 0,
+      "leaf_call_redirect": false,
+      "prefix_redirects": [
+        {
+          "cycle": 1132840,
+          "rob": "1:36",
+          "ftq": "1:7",
+          "self": 0,
+          "offset": 14,
+          "retired_pc": "0x80000a80",
+          "retired_word": "0x330000f",
+          "retire_cycle": 1132846,
+          "retire_offset": 20,
+          "kind": "fence",
+          "binding": "unique subsequent same-ROB RETIRE within16 cycles; no intervening killing redirect"
+        }
+      ],
+      "timer_csr_enqueue": {
+        "cycle": 1132823,
+        "rob": "1:35",
+        "pc": 2147486332,
+        "word": 3221235827,
+        "empty": 1,
+        "wait": 0,
+        "block": 0,
+        "offset": -3
+      },
+      "first_custom": {
+        "enqueue": {
+          "cycle": 1132904,
+          "rob": "0:23",
+          "pc": 2147489348,
+          "ftq": "0:5",
+          "word": 59244555
+        },
+        "accept": {
+          "cycle": 1132923,
+          "seq": 1920,
+          "rob": "0:23"
+        },
+        "commit": {
+          "cycle": 1132927,
+          "rob": "0:23",
+          "pc": 2147489348,
+          "ftq": "0:5"
+        }
+      },
+      "before_first_accept": 97,
+      "leaf_retirement_to_first_enqueue": 32,
+      "first_enqueue_to_accept": 19,
+      "leaf_retirement_to_accept": 51,
+      "pre_accept_vfex_waits": [],
+      "retired_milestones": {
+        "0x80000a7c": {
+          "cycle": 1132829,
+          "slot": 0,
+          "rob": "1:35",
+          "pc": 2147486332,
+          "word": 3221235827,
+          "count": 1,
+          "data": 16270799599947636322,
+          "offset": 3
+        },
+        "0x80000a80": {
+          "cycle": 1132846,
+          "slot": 0,
+          "rob": "1:36",
+          "pc": 2147486336,
+          "word": 53477391,
+          "count": 1,
+          "data": 0,
+          "offset": 20
+        },
+        "0x80000a90": {
+          "cycle": 1132863,
+          "slot": 0,
+          "rob": "1:38",
+          "pc": 2147486352,
+          "word": 655591,
+          "count": 1,
+          "data": 2147486356,
+          "offset": 37
+        },
+        "0x80001580": {
+          "cycle": 1132864,
+          "slot": 0,
+          "rob": "1:39",
+          "pc": 2147489152,
+          "word": 4261478675,
+          "count": 1,
+          "data": 2147569376,
+          "offset": 38
+        },
+        "0x800015ac": {
+          "cycle": 1132872,
+          "slot": 1,
+          "rob": "0:2",
+          "pc": 2147489196,
+          "word": 458983,
+          "count": 1,
+          "data": 2147489200,
+          "offset": 46
+        },
+        "0x800015f0": {
+          "cycle": 1132872,
+          "slot": 2,
+          "rob": "0:3",
+          "pc": 2147489264,
+          "word": 394899,
+          "count": 2,
+          "data": 0,
+          "offset": 46
+        },
+        "0x800015f8": {
+          "cycle": 1132881,
+          "slot": 0,
+          "rob": "0:4",
+          "pc": 2147489272,
+          "word": 8409203,
+          "count": 1,
+          "data": 0,
+          "offset": 55
+        },
+        "0x800015fc": {
+          "cycle": 1132890,
+          "slot": 0,
+          "rob": "0:5",
+          "pc": 2147489276,
+          "word": 15978611,
+          "count": 1,
+          "data": 7,
+          "offset": 64
+        },
+        "0x80001600": {
+          "cycle": 1132899,
+          "slot": 0,
+          "rob": "0:6",
+          "pc": 2147489280,
+          "word": 3221516375,
+          "count": 1,
+          "data": 8,
+          "offset": 73
+        },
+        "0x80001608": {
+          "cycle": 1132915,
+          "slot": 0,
+          "rob": "0:8",
+          "pc": 2147489288,
+          "word": 34573319,
+          "count": 1,
+          "data": 9187483429707480960,
+          "offset": 89
+        },
+        "0x80001644": {
+          "cycle": 1132927,
+          "slot": 0,
+          "rob": "0:23",
+          "pc": 2147489348,
+          "word": 59244555,
+          "count": 1,
+          "data": 32450,
+          "offset": 101
+        }
+      },
+      "prefix_retire_events": [
+        {
+          "cycle": 1132829,
+          "slot": 0,
+          "rob": "1:35",
+          "pc": 2147486332,
+          "word": 3221235827,
+          "count": 1,
+          "data": 16270799599947636322
+        },
+        {
+          "cycle": 1132846,
+          "slot": 0,
+          "rob": "1:36",
+          "pc": 2147486336,
+          "word": 53477391,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1132860,
+          "slot": 0,
+          "rob": "1:37",
+          "pc": 2147486340,
+          "word": 461075,
+          "count": 3,
+          "data": 2147519632
+        },
+        {
+          "cycle": 1132863,
+          "slot": 0,
+          "rob": "1:38",
+          "pc": 2147486352,
+          "word": 655591,
+          "count": 1,
+          "data": 2147486356
+        },
+        {
+          "cycle": 1132864,
+          "slot": 0,
+          "rob": "1:39",
+          "pc": 2147489152,
+          "word": 4261478675,
+          "count": 1,
+          "data": 2147569376
+        },
+        {
+          "cycle": 1132869,
+          "slot": 0,
+          "rob": "1:40",
+          "pc": 2147489156,
+          "word": 8468515,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1132869,
+          "slot": 1,
+          "rob": "1:41",
+          "pc": 2147489160,
+          "word": 25506819,
+          "count": 1,
+          "data": 2147530944
+        },
+        {
+          "cycle": 1132869,
+          "slot": 2,
+          "rob": "1:42",
+          "pc": 2147489164,
+          "word": 329619,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1132869,
+          "slot": 3,
+          "rob": "1:43",
+          "pc": 2147489168,
+          "word": 33896195,
+          "count": 1,
+          "data": 2147489264
+        },
+        {
+          "cycle": 1132869,
+          "slot": 4,
+          "rob": "1:44",
+          "pc": 2147489172,
+          "word": 8729987,
+          "count": 1,
+          "data": 2147528480
+        },
+        {
+          "cycle": 1132869,
+          "slot": 5,
+          "rob": "1:45",
+          "pc": 2147489176,
+          "word": 341251,
+          "count": 1,
+          "data": 2147528544
+        },
+        {
+          "cycle": 1132870,
+          "slot": 0,
+          "rob": "1:46",
+          "pc": 2147489180,
+          "word": 9516067,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1132870,
+          "slot": 1,
+          "rob": "1:47",
+          "pc": 2147489184,
+          "word": 17282179,
+          "count": 1,
+          "data": 2147531104
+        },
+        {
+          "cycle": 1132871,
+          "slot": 0,
+          "rob": "0:0",
+          "pc": 2147489188,
+          "word": 263699,
+          "count": 1,
+          "data": 2147519632
+        },
+        {
+          "cycle": 1132872,
+          "slot": 0,
+          "rob": "0:1",
+          "pc": 2147489192,
+          "word": 1129507,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1132872,
+          "slot": 1,
+          "rob": "0:2",
+          "pc": 2147489196,
+          "word": 458983,
+          "count": 1,
+          "data": 2147489200
+        },
+        {
+          "cycle": 1132872,
+          "slot": 2,
+          "rob": "0:3",
+          "pc": 2147489264,
+          "word": 394899,
+          "count": 2,
+          "data": 0
+        },
+        {
+          "cycle": 1132881,
+          "slot": 0,
+          "rob": "0:4",
+          "pc": 2147489272,
+          "word": 8409203,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1132890,
+          "slot": 0,
+          "rob": "0:5",
+          "pc": 2147489276,
+          "word": 15978611,
+          "count": 1,
+          "data": 7
+        },
+        {
+          "cycle": 1132899,
+          "slot": 0,
+          "rob": "0:6",
+          "pc": 2147489280,
+          "word": 3221516375,
+          "count": 1,
+          "data": 8
+        },
+        {
+          "cycle": 1132899,
+          "slot": 1,
+          "rob": "0:7",
+          "pc": 2147489284,
+          "word": 364435,
+          "count": 1,
+          "data": 7
+        },
+        {
+          "cycle": 1132915,
+          "slot": 0,
+          "rob": "0:8",
+          "pc": 2147489288,
+          "word": 34573319,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1132915,
+          "slot": 1,
+          "rob": "0:9",
+          "pc": 2147489292,
+          "word": 8753043,
+          "count": 1,
+          "data": 2147528488
+        },
+        {
+          "cycle": 1132916,
+          "slot": 0,
+          "rob": "0:10",
+          "pc": 2147489296,
+          "word": 34573447,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1132916,
+          "slot": 1,
+          "rob": "0:11",
+          "pc": 2147489300,
+          "word": 17141651,
+          "count": 1,
+          "data": 2147528496
+        },
+        {
+          "cycle": 1132917,
+          "slot": 0,
+          "rob": "0:12",
+          "pc": 2147489304,
+          "word": 34573575,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1132917,
+          "slot": 1,
+          "rob": "0:13",
+          "pc": 2147489308,
+          "word": 25530259,
+          "count": 1,
+          "data": 2147528504
+        },
+        {
+          "cycle": 1132918,
+          "slot": 0,
+          "rob": "0:14",
+          "pc": 2147489312,
+          "word": 34573703,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1132918,
+          "slot": 1,
+          "rob": "0:15",
+          "pc": 2147489316,
+          "word": 397203,
+          "count": 1,
+          "data": 2147490356
+        },
+        {
+          "cycle": 1132919,
+          "slot": 0,
+          "rob": "0:16",
+          "pc": 2147489320,
+          "word": 34572295,
+          "count": 1,
+          "data": 9277484505927483264
+        },
+        {
+          "cycle": 1132919,
+          "slot": 1,
+          "rob": "0:17",
+          "pc": 2147489324,
+          "word": 33951635,
+          "count": 1,
+          "data": 2147528576
+        },
+        {
+          "cycle": 1132920,
+          "slot": 0,
+          "rob": "0:18",
+          "pc": 2147489328,
+          "word": 34572423,
+          "count": 1,
+          "data": 71916310019113216
+        },
+        {
+          "cycle": 1132920,
+          "slot": 1,
+          "rob": "0:19",
+          "pc": 2147489332,
+          "word": 67506067,
+          "count": 1,
+          "data": 2147528608
+        },
+        {
+          "cycle": 1132922,
+          "slot": 0,
+          "rob": "0:20",
+          "pc": 2147489336,
+          "word": 34572551,
+          "count": 1,
+          "data": 13852792082613108928
+        },
+        {
+          "cycle": 1132922,
+          "slot": 1,
+          "rob": "0:21",
+          "pc": 2147489340,
+          "word": 101060499,
+          "count": 1,
+          "data": 2147528640
+        },
+        {
+          "cycle": 1132923,
+          "slot": 0,
+          "rob": "0:22",
+          "pc": 2147489344,
+          "word": 34572679,
+          "count": 1,
+          "data": 18410575364892983551
+        },
+        {
+          "cycle": 1132927,
+          "slot": 0,
+          "rob": "0:23",
+          "pc": 2147489348,
+          "word": 59244555,
+          "count": 1,
+          "data": 32450
+        }
+      ],
+      "prefix_pc_word_count_sha256": "45c9b3103c9aaa43798c44115eb51dced4166c29a632e7f97c5eead1d91b5a4d",
+      "ordered_observed_intervals": {
+        "begin_to_leaf_first_retire": 46,
+        "leaf_to_vstart_retire": 9,
+        "vstart_to_vcsr_retire": 9,
+        "vcsr_to_vsetivli_retire": 9,
+        "vsetivli_retire_to_vdot_enqueue": 5,
+        "vdot_enqueue_to_accept": 19
+      }
+    },
+    {
+      "seq": 35,
+      "round": 2,
+      "method": 6,
+      "kind": 0,
+      "order_group": 0,
+      "profile": "steady",
+      "dataset": 0,
+      "phase": "formal",
+      "custom_count": 32,
+      "method_label": "S-V",
+      "cycles": 304,
+      "instret": 235,
+      "begin_cycle": 1156472,
+      "end_cycle": 1156776,
+      "leaf": "split_gemv_8x32_vdot",
+      "leaf_entry_pc": "0x800015f0",
+      "leaf_first_retired_bundle_offset": 47,
+      "inner_call_pc": "0x800015ac",
+      "inner_call_retire_offset": 47,
+      "inner_call_to_leaf_retirement_gap": 0,
+      "leaf_call_redirect": false,
+      "prefix_redirects": [
+        {
+          "cycle": 1156486,
+          "rob": "1:37",
+          "ftq": "1:4",
+          "self": 0,
+          "offset": 14,
+          "retired_pc": "0x80000a80",
+          "retired_word": "0x330000f",
+          "retire_cycle": 1156492,
+          "retire_offset": 20,
+          "kind": "fence",
+          "binding": "unique subsequent same-ROB RETIRE within16 cycles; no intervening killing redirect"
+        }
+      ],
+      "timer_csr_enqueue": {
+        "cycle": 1156469,
+        "rob": "1:36",
+        "pc": 2147486332,
+        "word": 3221235827,
+        "empty": 1,
+        "wait": 0,
+        "block": 0,
+        "offset": -3
+      },
+      "first_custom": {
+        "enqueue": {
+          "cycle": 1156551,
+          "rob": "0:24",
+          "pc": 2147489348,
+          "ftq": "0:2",
+          "word": 59244555
+        },
+        "accept": {
+          "cycle": 1156570,
+          "seq": 1984,
+          "rob": "0:24"
+        },
+        "commit": {
+          "cycle": 1156574,
+          "rob": "0:24",
+          "pc": 2147489348,
+          "ftq": "0:2"
+        }
+      },
+      "before_first_accept": 98,
+      "leaf_retirement_to_first_enqueue": 32,
+      "first_enqueue_to_accept": 19,
+      "leaf_retirement_to_accept": 51,
+      "pre_accept_vfex_waits": [],
+      "retired_milestones": {
+        "0x80000a7c": {
+          "cycle": 1156475,
+          "slot": 0,
+          "rob": "1:36",
+          "pc": 2147486332,
+          "word": 3221235827,
+          "count": 1,
+          "data": 16270799599947659968,
+          "offset": 3
+        },
+        "0x80000a80": {
+          "cycle": 1156492,
+          "slot": 0,
+          "rob": "1:37",
+          "pc": 2147486336,
+          "word": 53477391,
+          "count": 1,
+          "data": 0,
+          "offset": 20
+        },
+        "0x80000a90": {
+          "cycle": 1156510,
+          "slot": 0,
+          "rob": "1:39",
+          "pc": 2147486352,
+          "word": 655591,
+          "count": 1,
+          "data": 2147486356,
+          "offset": 38
+        },
+        "0x80001580": {
+          "cycle": 1156511,
+          "slot": 0,
+          "rob": "1:40",
+          "pc": 2147489152,
+          "word": 4261478675,
+          "count": 1,
+          "data": 2147569376,
+          "offset": 39
+        },
+        "0x800015ac": {
+          "cycle": 1156519,
+          "slot": 1,
+          "rob": "0:3",
+          "pc": 2147489196,
+          "word": 458983,
+          "count": 1,
+          "data": 2147489200,
+          "offset": 47
+        },
+        "0x800015f0": {
+          "cycle": 1156519,
+          "slot": 2,
+          "rob": "0:4",
+          "pc": 2147489264,
+          "word": 394899,
+          "count": 2,
+          "data": 0,
+          "offset": 47
+        },
+        "0x800015f8": {
+          "cycle": 1156528,
+          "slot": 0,
+          "rob": "0:5",
+          "pc": 2147489272,
+          "word": 8409203,
+          "count": 1,
+          "data": 0,
+          "offset": 56
+        },
+        "0x800015fc": {
+          "cycle": 1156537,
+          "slot": 0,
+          "rob": "0:6",
+          "pc": 2147489276,
+          "word": 15978611,
+          "count": 1,
+          "data": 7,
+          "offset": 65
+        },
+        "0x80001600": {
+          "cycle": 1156546,
+          "slot": 0,
+          "rob": "0:7",
+          "pc": 2147489280,
+          "word": 3221516375,
+          "count": 1,
+          "data": 8,
+          "offset": 74
+        },
+        "0x80001608": {
+          "cycle": 1156562,
+          "slot": 0,
+          "rob": "0:9",
+          "pc": 2147489288,
+          "word": 34573319,
+          "count": 1,
+          "data": 9187483429707480960,
+          "offset": 90
+        },
+        "0x80001644": {
+          "cycle": 1156574,
+          "slot": 0,
+          "rob": "0:24",
+          "pc": 2147489348,
+          "word": 59244555,
+          "count": 1,
+          "data": 32450,
+          "offset": 102
+        }
+      },
+      "prefix_retire_events": [
+        {
+          "cycle": 1156475,
+          "slot": 0,
+          "rob": "1:36",
+          "pc": 2147486332,
+          "word": 3221235827,
+          "count": 1,
+          "data": 16270799599947659968
+        },
+        {
+          "cycle": 1156492,
+          "slot": 0,
+          "rob": "1:37",
+          "pc": 2147486336,
+          "word": 53477391,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1156507,
+          "slot": 0,
+          "rob": "1:38",
+          "pc": 2147486340,
+          "word": 461075,
+          "count": 3,
+          "data": 2147519632
+        },
+        {
+          "cycle": 1156510,
+          "slot": 0,
+          "rob": "1:39",
+          "pc": 2147486352,
+          "word": 655591,
+          "count": 1,
+          "data": 2147486356
+        },
+        {
+          "cycle": 1156511,
+          "slot": 0,
+          "rob": "1:40",
+          "pc": 2147489152,
+          "word": 4261478675,
+          "count": 1,
+          "data": 2147569376
+        },
+        {
+          "cycle": 1156516,
+          "slot": 0,
+          "rob": "1:41",
+          "pc": 2147489156,
+          "word": 8468515,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1156516,
+          "slot": 1,
+          "rob": "1:42",
+          "pc": 2147489160,
+          "word": 25506819,
+          "count": 1,
+          "data": 2147530944
+        },
+        {
+          "cycle": 1156516,
+          "slot": 2,
+          "rob": "1:43",
+          "pc": 2147489164,
+          "word": 329619,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1156516,
+          "slot": 3,
+          "rob": "1:44",
+          "pc": 2147489168,
+          "word": 33896195,
+          "count": 1,
+          "data": 2147489264
+        },
+        {
+          "cycle": 1156516,
+          "slot": 4,
+          "rob": "1:45",
+          "pc": 2147489172,
+          "word": 8729987,
+          "count": 1,
+          "data": 2147528480
+        },
+        {
+          "cycle": 1156516,
+          "slot": 5,
+          "rob": "1:46",
+          "pc": 2147489176,
+          "word": 341251,
+          "count": 1,
+          "data": 2147528544
+        },
+        {
+          "cycle": 1156517,
+          "slot": 0,
+          "rob": "1:47",
+          "pc": 2147489180,
+          "word": 9516067,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1156518,
+          "slot": 0,
+          "rob": "0:0",
+          "pc": 2147489184,
+          "word": 17282179,
+          "count": 1,
+          "data": 2147531104
+        },
+        {
+          "cycle": 1156518,
+          "slot": 1,
+          "rob": "0:1",
+          "pc": 2147489188,
+          "word": 263699,
+          "count": 1,
+          "data": 2147519632
+        },
+        {
+          "cycle": 1156519,
+          "slot": 0,
+          "rob": "0:2",
+          "pc": 2147489192,
+          "word": 1129507,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1156519,
+          "slot": 1,
+          "rob": "0:3",
+          "pc": 2147489196,
+          "word": 458983,
+          "count": 1,
+          "data": 2147489200
+        },
+        {
+          "cycle": 1156519,
+          "slot": 2,
+          "rob": "0:4",
+          "pc": 2147489264,
+          "word": 394899,
+          "count": 2,
+          "data": 0
+        },
+        {
+          "cycle": 1156528,
+          "slot": 0,
+          "rob": "0:5",
+          "pc": 2147489272,
+          "word": 8409203,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1156537,
+          "slot": 0,
+          "rob": "0:6",
+          "pc": 2147489276,
+          "word": 15978611,
+          "count": 1,
+          "data": 7
+        },
+        {
+          "cycle": 1156546,
+          "slot": 0,
+          "rob": "0:7",
+          "pc": 2147489280,
+          "word": 3221516375,
+          "count": 1,
+          "data": 8
+        },
+        {
+          "cycle": 1156547,
+          "slot": 0,
+          "rob": "0:8",
+          "pc": 2147489284,
+          "word": 364435,
+          "count": 1,
+          "data": 7
+        },
+        {
+          "cycle": 1156562,
+          "slot": 0,
+          "rob": "0:9",
+          "pc": 2147489288,
+          "word": 34573319,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1156562,
+          "slot": 1,
+          "rob": "0:10",
+          "pc": 2147489292,
+          "word": 8753043,
+          "count": 1,
+          "data": 2147528488
+        },
+        {
+          "cycle": 1156563,
+          "slot": 0,
+          "rob": "0:11",
+          "pc": 2147489296,
+          "word": 34573447,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1156563,
+          "slot": 1,
+          "rob": "0:12",
+          "pc": 2147489300,
+          "word": 17141651,
+          "count": 1,
+          "data": 2147528496
+        },
+        {
+          "cycle": 1156564,
+          "slot": 0,
+          "rob": "0:13",
+          "pc": 2147489304,
+          "word": 34573575,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1156564,
+          "slot": 1,
+          "rob": "0:14",
+          "pc": 2147489308,
+          "word": 25530259,
+          "count": 1,
+          "data": 2147528504
+        },
+        {
+          "cycle": 1156565,
+          "slot": 0,
+          "rob": "0:15",
+          "pc": 2147489312,
+          "word": 34573703,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1156566,
+          "slot": 0,
+          "rob": "0:16",
+          "pc": 2147489316,
+          "word": 397203,
+          "count": 1,
+          "data": 2147490356
+        },
+        {
+          "cycle": 1156566,
+          "slot": 1,
+          "rob": "0:17",
+          "pc": 2147489320,
+          "word": 34572295,
+          "count": 1,
+          "data": 9277484505927483264
+        },
+        {
+          "cycle": 1156566,
+          "slot": 2,
+          "rob": "0:18",
+          "pc": 2147489324,
+          "word": 33951635,
+          "count": 1,
+          "data": 2147528576
+        },
+        {
+          "cycle": 1156567,
+          "slot": 0,
+          "rob": "0:19",
+          "pc": 2147489328,
+          "word": 34572423,
+          "count": 1,
+          "data": 71916310019113216
+        },
+        {
+          "cycle": 1156567,
+          "slot": 1,
+          "rob": "0:20",
+          "pc": 2147489332,
+          "word": 67506067,
+          "count": 1,
+          "data": 2147528608
+        },
+        {
+          "cycle": 1156569,
+          "slot": 0,
+          "rob": "0:21",
+          "pc": 2147489336,
+          "word": 34572551,
+          "count": 1,
+          "data": 13852792082613108928
+        },
+        {
+          "cycle": 1156569,
+          "slot": 1,
+          "rob": "0:22",
+          "pc": 2147489340,
+          "word": 101060499,
+          "count": 1,
+          "data": 2147528640
+        },
+        {
+          "cycle": 1156570,
+          "slot": 0,
+          "rob": "0:23",
+          "pc": 2147489344,
+          "word": 34572679,
+          "count": 1,
+          "data": 18410575364892983551
+        },
+        {
+          "cycle": 1156574,
+          "slot": 0,
+          "rob": "0:24",
+          "pc": 2147489348,
+          "word": 59244555,
+          "count": 1,
+          "data": 32450
+        }
+      ],
+      "prefix_pc_word_count_sha256": "45c9b3103c9aaa43798c44115eb51dced4166c29a632e7f97c5eead1d91b5a4d",
+      "ordered_observed_intervals": {
+        "begin_to_leaf_first_retire": 47,
+        "leaf_to_vstart_retire": 9,
+        "vstart_to_vcsr_retire": 9,
+        "vcsr_to_vsetivli_retire": 9,
+        "vsetivli_retire_to_vdot_enqueue": 5,
+        "vdot_enqueue_to_accept": 19
+      }
+    },
+    {
+      "seq": 41,
+      "round": 2,
+      "method": 6,
+      "kind": 2,
+      "order_group": 0,
+      "profile": "steady",
+      "dataset": 0,
+      "phase": "formal",
+      "custom_count": 32,
+      "method_label": "S-V",
+      "cycles": 312,
+      "instret": 235,
+      "begin_cycle": 1176336,
+      "end_cycle": 1176648,
+      "leaf": "split_gemv_8x32_vdot",
+      "leaf_entry_pc": "0x800015f0",
+      "leaf_first_retired_bundle_offset": 55,
+      "inner_call_pc": "0x800015ac",
+      "inner_call_retire_offset": 48,
+      "inner_call_to_leaf_retirement_gap": 7,
+      "leaf_call_redirect": true,
+      "prefix_redirects": [
+        {
+          "cycle": 1176350,
+          "rob": "1:29",
+          "ftq": "0:6",
+          "self": 0,
+          "offset": 14,
+          "retired_pc": "0x80000a80",
+          "retired_word": "0x330000f",
+          "retire_cycle": 1176356,
+          "retire_offset": 20,
+          "kind": "fence",
+          "binding": "unique subsequent same-ROB RETIRE within16 cycles; no intervening killing redirect"
+        },
+        {
+          "cycle": 1176378,
+          "rob": "1:43",
+          "ftq": "1:1",
+          "self": 0,
+          "offset": 42,
+          "retired_pc": "0x800015ac",
+          "retired_word": "0x700e7",
+          "retire_cycle": 1176384,
+          "retire_offset": 48,
+          "kind": "jalr",
+          "binding": "unique subsequent same-ROB RETIRE within16 cycles; no intervening killing redirect"
+        }
+      ],
+      "timer_csr_enqueue": {
+        "cycle": 1176333,
+        "rob": "1:28",
+        "pc": 2147486332,
+        "word": 3221235827,
+        "empty": 1,
+        "wait": 0,
+        "block": 0,
+        "offset": -3
+      },
+      "first_custom": {
+        "enqueue": {
+          "cycle": 1176423,
+          "rob": "0:16",
+          "pc": 2147489348,
+          "ftq": "1:4",
+          "word": 59244555
+        },
+        "accept": {
+          "cycle": 1176442,
+          "seq": 2016,
+          "rob": "0:16"
+        },
+        "commit": {
+          "cycle": 1176446,
+          "rob": "0:16",
+          "pc": 2147489348,
+          "ftq": "1:4"
+        }
+      },
+      "before_first_accept": 106,
+      "leaf_retirement_to_first_enqueue": 32,
+      "first_enqueue_to_accept": 19,
+      "leaf_retirement_to_accept": 51,
+      "pre_accept_vfex_waits": [],
+      "retired_milestones": {
+        "0x80000a7c": {
+          "cycle": 1176339,
+          "slot": 0,
+          "rob": "1:28",
+          "pc": 2147486332,
+          "word": 3221235827,
+          "count": 1,
+          "data": 16270799599947679832,
+          "offset": 3
+        },
+        "0x80000a80": {
+          "cycle": 1176356,
+          "slot": 0,
+          "rob": "1:29",
+          "pc": 2147486336,
+          "word": 53477391,
+          "count": 1,
+          "data": 0,
+          "offset": 20
+        },
+        "0x80000a90": {
+          "cycle": 1176373,
+          "slot": 0,
+          "rob": "1:31",
+          "pc": 2147486352,
+          "word": 655591,
+          "count": 1,
+          "data": 2147486356,
+          "offset": 37
+        },
+        "0x80001580": {
+          "cycle": 1176374,
+          "slot": 0,
+          "rob": "1:32",
+          "pc": 2147489152,
+          "word": 4261478675,
+          "count": 1,
+          "data": 2147569376,
+          "offset": 38
+        },
+        "0x800015ac": {
+          "cycle": 1176384,
+          "slot": 3,
+          "rob": "1:43",
+          "pc": 2147489196,
+          "word": 458983,
+          "count": 1,
+          "data": 2147489200,
+          "offset": 48
+        },
+        "0x800015f0": {
+          "cycle": 1176391,
+          "slot": 0,
+          "rob": "1:44",
+          "pc": 2147489264,
+          "word": 394899,
+          "count": 2,
+          "data": 0,
+          "offset": 55
+        },
+        "0x800015f8": {
+          "cycle": 1176400,
+          "slot": 0,
+          "rob": "1:45",
+          "pc": 2147489272,
+          "word": 8409203,
+          "count": 1,
+          "data": 0,
+          "offset": 64
+        },
+        "0x800015fc": {
+          "cycle": 1176409,
+          "slot": 0,
+          "rob": "1:46",
+          "pc": 2147489276,
+          "word": 15978611,
+          "count": 1,
+          "data": 7,
+          "offset": 73
+        },
+        "0x80001600": {
+          "cycle": 1176418,
+          "slot": 0,
+          "rob": "1:47",
+          "pc": 2147489280,
+          "word": 3221516375,
+          "count": 1,
+          "data": 8,
+          "offset": 82
+        },
+        "0x80001608": {
+          "cycle": 1176434,
+          "slot": 0,
+          "rob": "0:1",
+          "pc": 2147489288,
+          "word": 34573319,
+          "count": 1,
+          "data": 9187483429707480960,
+          "offset": 98
+        },
+        "0x80001644": {
+          "cycle": 1176446,
+          "slot": 0,
+          "rob": "0:16",
+          "pc": 2147489348,
+          "word": 59244555,
+          "count": 1,
+          "data": 32450,
+          "offset": 110
+        }
+      },
+      "prefix_retire_events": [
+        {
+          "cycle": 1176339,
+          "slot": 0,
+          "rob": "1:28",
+          "pc": 2147486332,
+          "word": 3221235827,
+          "count": 1,
+          "data": 16270799599947679832
+        },
+        {
+          "cycle": 1176356,
+          "slot": 0,
+          "rob": "1:29",
+          "pc": 2147486336,
+          "word": 53477391,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1176370,
+          "slot": 0,
+          "rob": "1:30",
+          "pc": 2147486340,
+          "word": 461075,
+          "count": 3,
+          "data": 2147519632
+        },
+        {
+          "cycle": 1176373,
+          "slot": 0,
+          "rob": "1:31",
+          "pc": 2147486352,
+          "word": 655591,
+          "count": 1,
+          "data": 2147486356
+        },
+        {
+          "cycle": 1176374,
+          "slot": 0,
+          "rob": "1:32",
+          "pc": 2147489152,
+          "word": 4261478675,
+          "count": 1,
+          "data": 2147569376
+        },
+        {
+          "cycle": 1176383,
+          "slot": 0,
+          "rob": "1:33",
+          "pc": 2147489156,
+          "word": 8468515,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1176383,
+          "slot": 1,
+          "rob": "1:34",
+          "pc": 2147489160,
+          "word": 25506819,
+          "count": 1,
+          "data": 2147530944
+        },
+        {
+          "cycle": 1176383,
+          "slot": 2,
+          "rob": "1:35",
+          "pc": 2147489164,
+          "word": 329619,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1176383,
+          "slot": 3,
+          "rob": "1:36",
+          "pc": 2147489168,
+          "word": 33896195,
+          "count": 1,
+          "data": 2147489264
+        },
+        {
+          "cycle": 1176383,
+          "slot": 4,
+          "rob": "1:37",
+          "pc": 2147489172,
+          "word": 8729987,
+          "count": 1,
+          "data": 2147528480
+        },
+        {
+          "cycle": 1176383,
+          "slot": 5,
+          "rob": "1:38",
+          "pc": 2147489176,
+          "word": 341251,
+          "count": 1,
+          "data": 2147528544
+        },
+        {
+          "cycle": 1176383,
+          "slot": 6,
+          "rob": "1:39",
+          "pc": 2147489180,
+          "word": 9516067,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1176384,
+          "slot": 0,
+          "rob": "1:40",
+          "pc": 2147489184,
+          "word": 17282179,
+          "count": 1,
+          "data": 2147531104
+        },
+        {
+          "cycle": 1176384,
+          "slot": 1,
+          "rob": "1:41",
+          "pc": 2147489188,
+          "word": 263699,
+          "count": 1,
+          "data": 2147519632
+        },
+        {
+          "cycle": 1176384,
+          "slot": 2,
+          "rob": "1:42",
+          "pc": 2147489192,
+          "word": 1129507,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1176384,
+          "slot": 3,
+          "rob": "1:43",
+          "pc": 2147489196,
+          "word": 458983,
+          "count": 1,
+          "data": 2147489200
+        },
+        {
+          "cycle": 1176391,
+          "slot": 0,
+          "rob": "1:44",
+          "pc": 2147489264,
+          "word": 394899,
+          "count": 2,
+          "data": 0
+        },
+        {
+          "cycle": 1176400,
+          "slot": 0,
+          "rob": "1:45",
+          "pc": 2147489272,
+          "word": 8409203,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1176409,
+          "slot": 0,
+          "rob": "1:46",
+          "pc": 2147489276,
+          "word": 15978611,
+          "count": 1,
+          "data": 7
+        },
+        {
+          "cycle": 1176418,
+          "slot": 0,
+          "rob": "1:47",
+          "pc": 2147489280,
+          "word": 3221516375,
+          "count": 1,
+          "data": 8
+        },
+        {
+          "cycle": 1176419,
+          "slot": 0,
+          "rob": "0:0",
+          "pc": 2147489284,
+          "word": 364435,
+          "count": 1,
+          "data": 7
+        },
+        {
+          "cycle": 1176434,
+          "slot": 0,
+          "rob": "0:1",
+          "pc": 2147489288,
+          "word": 34573319,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1176434,
+          "slot": 1,
+          "rob": "0:2",
+          "pc": 2147489292,
+          "word": 8753043,
+          "count": 1,
+          "data": 2147528488
+        },
+        {
+          "cycle": 1176435,
+          "slot": 0,
+          "rob": "0:3",
+          "pc": 2147489296,
+          "word": 34573447,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1176435,
+          "slot": 1,
+          "rob": "0:4",
+          "pc": 2147489300,
+          "word": 17141651,
+          "count": 1,
+          "data": 2147528496
+        },
+        {
+          "cycle": 1176436,
+          "slot": 0,
+          "rob": "0:5",
+          "pc": 2147489304,
+          "word": 34573575,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1176436,
+          "slot": 1,
+          "rob": "0:6",
+          "pc": 2147489308,
+          "word": 25530259,
+          "count": 1,
+          "data": 2147528504
+        },
+        {
+          "cycle": 1176437,
+          "slot": 0,
+          "rob": "0:7",
+          "pc": 2147489312,
+          "word": 34573703,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1176438,
+          "slot": 0,
+          "rob": "0:8",
+          "pc": 2147489316,
+          "word": 397203,
+          "count": 1,
+          "data": 2147490356
+        },
+        {
+          "cycle": 1176438,
+          "slot": 1,
+          "rob": "0:9",
+          "pc": 2147489320,
+          "word": 34572295,
+          "count": 1,
+          "data": 9277484505927483264
+        },
+        {
+          "cycle": 1176438,
+          "slot": 2,
+          "rob": "0:10",
+          "pc": 2147489324,
+          "word": 33951635,
+          "count": 1,
+          "data": 2147528576
+        },
+        {
+          "cycle": 1176439,
+          "slot": 0,
+          "rob": "0:11",
+          "pc": 2147489328,
+          "word": 34572423,
+          "count": 1,
+          "data": 71916310019113216
+        },
+        {
+          "cycle": 1176439,
+          "slot": 1,
+          "rob": "0:12",
+          "pc": 2147489332,
+          "word": 67506067,
+          "count": 1,
+          "data": 2147528608
+        },
+        {
+          "cycle": 1176441,
+          "slot": 0,
+          "rob": "0:13",
+          "pc": 2147489336,
+          "word": 34572551,
+          "count": 1,
+          "data": 13852792082613108928
+        },
+        {
+          "cycle": 1176441,
+          "slot": 1,
+          "rob": "0:14",
+          "pc": 2147489340,
+          "word": 101060499,
+          "count": 1,
+          "data": 2147528640
+        },
+        {
+          "cycle": 1176442,
+          "slot": 0,
+          "rob": "0:15",
+          "pc": 2147489344,
+          "word": 34572679,
+          "count": 1,
+          "data": 18410575364892983551
+        },
+        {
+          "cycle": 1176446,
+          "slot": 0,
+          "rob": "0:16",
+          "pc": 2147489348,
+          "word": 59244555,
+          "count": 1,
+          "data": 32450
+        }
+      ],
+      "prefix_pc_word_count_sha256": "45c9b3103c9aaa43798c44115eb51dced4166c29a632e7f97c5eead1d91b5a4d",
+      "ordered_observed_intervals": {
+        "begin_to_leaf_first_retire": 55,
+        "leaf_to_vstart_retire": 9,
+        "vstart_to_vcsr_retire": 9,
+        "vcsr_to_vsetivli_retire": 9,
+        "vsetivli_retire_to_vdot_enqueue": 5,
+        "vdot_enqueue_to_accept": 19
+      }
+    },
+    {
+      "seq": 42,
+      "round": 3,
+      "method": 6,
+      "kind": 1,
+      "order_group": 1,
+      "profile": "steady",
+      "dataset": 0,
+      "phase": "formal",
+      "custom_count": 32,
+      "method_label": "S-V",
+      "cycles": 302,
+      "instret": 235,
+      "begin_cycle": 1179559,
+      "end_cycle": 1179861,
+      "leaf": "split_gemv_8x32_vdot",
+      "leaf_entry_pc": "0x800015f0",
+      "leaf_first_retired_bundle_offset": 45,
+      "inner_call_pc": "0x800015ac",
+      "inner_call_retire_offset": 45,
+      "inner_call_to_leaf_retirement_gap": 0,
+      "leaf_call_redirect": false,
+      "prefix_redirects": [
+        {
+          "cycle": 1179573,
+          "rob": "1:24",
+          "ftq": "1:7",
+          "self": 0,
+          "offset": 14,
+          "retired_pc": "0x80000a80",
+          "retired_word": "0x330000f",
+          "retire_cycle": 1179579,
+          "retire_offset": 20,
+          "kind": "fence",
+          "binding": "unique subsequent same-ROB RETIRE within16 cycles; no intervening killing redirect"
+        }
+      ],
+      "timer_csr_enqueue": {
+        "cycle": 1179556,
+        "rob": "1:23",
+        "pc": 2147486332,
+        "word": 3221235827,
+        "empty": 1,
+        "wait": 0,
+        "block": 0,
+        "offset": -3
+      },
+      "first_custom": {
+        "enqueue": {
+          "cycle": 1179636,
+          "rob": "0:11",
+          "pc": 2147489348,
+          "ftq": "0:5",
+          "word": 59244555
+        },
+        "accept": {
+          "cycle": 1179655,
+          "seq": 2048,
+          "rob": "0:11"
+        },
+        "commit": {
+          "cycle": 1179659,
+          "rob": "0:11",
+          "pc": 2147489348,
+          "ftq": "0:5"
+        }
+      },
+      "before_first_accept": 96,
+      "leaf_retirement_to_first_enqueue": 32,
+      "first_enqueue_to_accept": 19,
+      "leaf_retirement_to_accept": 51,
+      "pre_accept_vfex_waits": [],
+      "retired_milestones": {
+        "0x80000a7c": {
+          "cycle": 1179562,
+          "slot": 0,
+          "rob": "1:23",
+          "pc": 2147486332,
+          "word": 3221235827,
+          "count": 1,
+          "data": 16270799599947683055,
+          "offset": 3
+        },
+        "0x80000a80": {
+          "cycle": 1179579,
+          "slot": 0,
+          "rob": "1:24",
+          "pc": 2147486336,
+          "word": 53477391,
+          "count": 1,
+          "data": 0,
+          "offset": 20
+        },
+        "0x80000a90": {
+          "cycle": 1179596,
+          "slot": 0,
+          "rob": "1:26",
+          "pc": 2147486352,
+          "word": 655591,
+          "count": 1,
+          "data": 2147486356,
+          "offset": 37
+        },
+        "0x80001580": {
+          "cycle": 1179597,
+          "slot": 0,
+          "rob": "1:27",
+          "pc": 2147489152,
+          "word": 4261478675,
+          "count": 1,
+          "data": 2147569376,
+          "offset": 38
+        },
+        "0x800015ac": {
+          "cycle": 1179604,
+          "slot": 1,
+          "rob": "1:38",
+          "pc": 2147489196,
+          "word": 458983,
+          "count": 1,
+          "data": 2147489200,
+          "offset": 45
+        },
+        "0x800015f0": {
+          "cycle": 1179604,
+          "slot": 2,
+          "rob": "1:39",
+          "pc": 2147489264,
+          "word": 394899,
+          "count": 2,
+          "data": 0,
+          "offset": 45
+        },
+        "0x800015f8": {
+          "cycle": 1179613,
+          "slot": 0,
+          "rob": "1:40",
+          "pc": 2147489272,
+          "word": 8409203,
+          "count": 1,
+          "data": 0,
+          "offset": 54
+        },
+        "0x800015fc": {
+          "cycle": 1179622,
+          "slot": 0,
+          "rob": "1:41",
+          "pc": 2147489276,
+          "word": 15978611,
+          "count": 1,
+          "data": 7,
+          "offset": 63
+        },
+        "0x80001600": {
+          "cycle": 1179631,
+          "slot": 0,
+          "rob": "1:42",
+          "pc": 2147489280,
+          "word": 3221516375,
+          "count": 1,
+          "data": 8,
+          "offset": 72
+        },
+        "0x80001608": {
+          "cycle": 1179647,
+          "slot": 0,
+          "rob": "1:44",
+          "pc": 2147489288,
+          "word": 34573319,
+          "count": 1,
+          "data": 9187483429707480960,
+          "offset": 88
+        },
+        "0x80001644": {
+          "cycle": 1179659,
+          "slot": 0,
+          "rob": "0:11",
+          "pc": 2147489348,
+          "word": 59244555,
+          "count": 1,
+          "data": 32450,
+          "offset": 100
+        }
+      },
+      "prefix_retire_events": [
+        {
+          "cycle": 1179562,
+          "slot": 0,
+          "rob": "1:23",
+          "pc": 2147486332,
+          "word": 3221235827,
+          "count": 1,
+          "data": 16270799599947683055
+        },
+        {
+          "cycle": 1179579,
+          "slot": 0,
+          "rob": "1:24",
+          "pc": 2147486336,
+          "word": 53477391,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1179593,
+          "slot": 0,
+          "rob": "1:25",
+          "pc": 2147486340,
+          "word": 461075,
+          "count": 3,
+          "data": 2147530252
+        },
+        {
+          "cycle": 1179596,
+          "slot": 0,
+          "rob": "1:26",
+          "pc": 2147486352,
+          "word": 655591,
+          "count": 1,
+          "data": 2147486356
+        },
+        {
+          "cycle": 1179597,
+          "slot": 0,
+          "rob": "1:27",
+          "pc": 2147489152,
+          "word": 4261478675,
+          "count": 1,
+          "data": 2147569376
+        },
+        {
+          "cycle": 1179602,
+          "slot": 0,
+          "rob": "1:28",
+          "pc": 2147489156,
+          "word": 8468515,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1179602,
+          "slot": 1,
+          "rob": "1:29",
+          "pc": 2147489160,
+          "word": 25506819,
+          "count": 1,
+          "data": 2147530944
+        },
+        {
+          "cycle": 1179602,
+          "slot": 2,
+          "rob": "1:30",
+          "pc": 2147489164,
+          "word": 329619,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1179602,
+          "slot": 3,
+          "rob": "1:31",
+          "pc": 2147489168,
+          "word": 33896195,
+          "count": 1,
+          "data": 2147489264
+        },
+        {
+          "cycle": 1179603,
+          "slot": 0,
+          "rob": "1:32",
+          "pc": 2147489172,
+          "word": 8729987,
+          "count": 1,
+          "data": 2147528480
+        },
+        {
+          "cycle": 1179603,
+          "slot": 1,
+          "rob": "1:33",
+          "pc": 2147489176,
+          "word": 341251,
+          "count": 1,
+          "data": 2147528544
+        },
+        {
+          "cycle": 1179603,
+          "slot": 2,
+          "rob": "1:34",
+          "pc": 2147489180,
+          "word": 9516067,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1179603,
+          "slot": 3,
+          "rob": "1:35",
+          "pc": 2147489184,
+          "word": 17282179,
+          "count": 1,
+          "data": 2147531104
+        },
+        {
+          "cycle": 1179603,
+          "slot": 4,
+          "rob": "1:36",
+          "pc": 2147489188,
+          "word": 263699,
+          "count": 1,
+          "data": 2147489264
+        },
+        {
+          "cycle": 1179604,
+          "slot": 0,
+          "rob": "1:37",
+          "pc": 2147489192,
+          "word": 1129507,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1179604,
+          "slot": 1,
+          "rob": "1:38",
+          "pc": 2147489196,
+          "word": 458983,
+          "count": 1,
+          "data": 2147489200
+        },
+        {
+          "cycle": 1179604,
+          "slot": 2,
+          "rob": "1:39",
+          "pc": 2147489264,
+          "word": 394899,
+          "count": 2,
+          "data": 0
+        },
+        {
+          "cycle": 1179613,
+          "slot": 0,
+          "rob": "1:40",
+          "pc": 2147489272,
+          "word": 8409203,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1179622,
+          "slot": 0,
+          "rob": "1:41",
+          "pc": 2147489276,
+          "word": 15978611,
+          "count": 1,
+          "data": 7
+        },
+        {
+          "cycle": 1179631,
+          "slot": 0,
+          "rob": "1:42",
+          "pc": 2147489280,
+          "word": 3221516375,
+          "count": 1,
+          "data": 8
+        },
+        {
+          "cycle": 1179631,
+          "slot": 1,
+          "rob": "1:43",
+          "pc": 2147489284,
+          "word": 364435,
+          "count": 1,
+          "data": 8
+        },
+        {
+          "cycle": 1179647,
+          "slot": 0,
+          "rob": "1:44",
+          "pc": 2147489288,
+          "word": 34573319,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1179647,
+          "slot": 1,
+          "rob": "1:45",
+          "pc": 2147489292,
+          "word": 8753043,
+          "count": 1,
+          "data": 2147528488
+        },
+        {
+          "cycle": 1179648,
+          "slot": 0,
+          "rob": "1:46",
+          "pc": 2147489296,
+          "word": 34573447,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1179648,
+          "slot": 1,
+          "rob": "1:47",
+          "pc": 2147489300,
+          "word": 17141651,
+          "count": 1,
+          "data": 2147528496
+        },
+        {
+          "cycle": 1179650,
+          "slot": 0,
+          "rob": "0:0",
+          "pc": 2147489304,
+          "word": 34573575,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1179650,
+          "slot": 1,
+          "rob": "0:1",
+          "pc": 2147489308,
+          "word": 25530259,
+          "count": 1,
+          "data": 2147528504
+        },
+        {
+          "cycle": 1179650,
+          "slot": 2,
+          "rob": "0:2",
+          "pc": 2147489312,
+          "word": 34573703,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1179650,
+          "slot": 3,
+          "rob": "0:3",
+          "pc": 2147489316,
+          "word": 397203,
+          "count": 1,
+          "data": 2147489152
+        },
+        {
+          "cycle": 1179651,
+          "slot": 0,
+          "rob": "0:4",
+          "pc": 2147489320,
+          "word": 34572295,
+          "count": 1,
+          "data": 9277484505927483264
+        },
+        {
+          "cycle": 1179651,
+          "slot": 1,
+          "rob": "0:5",
+          "pc": 2147489324,
+          "word": 33951635,
+          "count": 1,
+          "data": 2147528576
+        },
+        {
+          "cycle": 1179652,
+          "slot": 0,
+          "rob": "0:6",
+          "pc": 2147489328,
+          "word": 34572423,
+          "count": 1,
+          "data": 71916310019113216
+        },
+        {
+          "cycle": 1179652,
+          "slot": 1,
+          "rob": "0:7",
+          "pc": 2147489332,
+          "word": 67506067,
+          "count": 1,
+          "data": 2147528608
+        },
+        {
+          "cycle": 1179654,
+          "slot": 0,
+          "rob": "0:8",
+          "pc": 2147489336,
+          "word": 34572551,
+          "count": 1,
+          "data": 13852792082613108928
+        },
+        {
+          "cycle": 1179654,
+          "slot": 1,
+          "rob": "0:9",
+          "pc": 2147489340,
+          "word": 101060499,
+          "count": 1,
+          "data": 2147528640
+        },
+        {
+          "cycle": 1179655,
+          "slot": 0,
+          "rob": "0:10",
+          "pc": 2147489344,
+          "word": 34572679,
+          "count": 1,
+          "data": 18410575364892983551
+        },
+        {
+          "cycle": 1179659,
+          "slot": 0,
+          "rob": "0:11",
+          "pc": 2147489348,
+          "word": 59244555,
+          "count": 1,
+          "data": 32450
+        }
+      ],
+      "prefix_pc_word_count_sha256": "45c9b3103c9aaa43798c44115eb51dced4166c29a632e7f97c5eead1d91b5a4d",
+      "ordered_observed_intervals": {
+        "begin_to_leaf_first_retire": 45,
+        "leaf_to_vstart_retire": 9,
+        "vstart_to_vcsr_retire": 9,
+        "vcsr_to_vsetivli_retire": 9,
+        "vsetivli_retire_to_vdot_enqueue": 5,
+        "vdot_enqueue_to_accept": 19
+      }
+    },
+    {
+      "seq": 48,
+      "round": 3,
+      "method": 6,
+      "kind": 0,
+      "order_group": 1,
+      "profile": "steady",
+      "dataset": 0,
+      "phase": "formal",
+      "custom_count": 32,
+      "method_label": "S-V",
+      "cycles": 315,
+      "instret": 235,
+      "begin_cycle": 1199305,
+      "end_cycle": 1199620,
+      "leaf": "split_gemv_8x32_vdot",
+      "leaf_entry_pc": "0x800015f0",
+      "leaf_first_retired_bundle_offset": 55,
+      "inner_call_pc": "0x800015ac",
+      "inner_call_retire_offset": 48,
+      "inner_call_to_leaf_retirement_gap": 7,
+      "leaf_call_redirect": true,
+      "prefix_redirects": [
+        {
+          "cycle": 1199319,
+          "rob": "1:20",
+          "ftq": "1:1",
+          "self": 0,
+          "offset": 14,
+          "retired_pc": "0x80000a80",
+          "retired_word": "0x330000f",
+          "retire_cycle": 1199325,
+          "retire_offset": 20,
+          "kind": "fence",
+          "binding": "unique subsequent same-ROB RETIRE within16 cycles; no intervening killing redirect"
+        },
+        {
+          "cycle": 1199347,
+          "rob": "1:34",
+          "ftq": "1:4",
+          "self": 0,
+          "offset": 42,
+          "retired_pc": "0x800015ac",
+          "retired_word": "0x700e7",
+          "retire_cycle": 1199353,
+          "retire_offset": 48,
+          "kind": "jalr",
+          "binding": "unique subsequent same-ROB RETIRE within16 cycles; no intervening killing redirect"
+        }
+      ],
+      "timer_csr_enqueue": {
+        "cycle": 1199302,
+        "rob": "1:19",
+        "pc": 2147486332,
+        "word": 3221235827,
+        "empty": 1,
+        "wait": 0,
+        "block": 0,
+        "offset": -3
+      },
+      "first_custom": {
+        "enqueue": {
+          "cycle": 1199392,
+          "rob": "0:7",
+          "pc": 2147489348,
+          "ftq": "1:7",
+          "word": 59244555
+        },
+        "accept": {
+          "cycle": 1199411,
+          "seq": 2080,
+          "rob": "0:7"
+        },
+        "commit": {
+          "cycle": 1199415,
+          "rob": "0:7",
+          "pc": 2147489348,
+          "ftq": "1:7"
+        }
+      },
+      "before_first_accept": 106,
+      "leaf_retirement_to_first_enqueue": 32,
+      "first_enqueue_to_accept": 19,
+      "leaf_retirement_to_accept": 51,
+      "pre_accept_vfex_waits": [],
+      "retired_milestones": {
+        "0x80000a7c": {
+          "cycle": 1199308,
+          "slot": 0,
+          "rob": "1:19",
+          "pc": 2147486332,
+          "word": 3221235827,
+          "count": 1,
+          "data": 16270799599947702801,
+          "offset": 3
+        },
+        "0x80000a80": {
+          "cycle": 1199325,
+          "slot": 0,
+          "rob": "1:20",
+          "pc": 2147486336,
+          "word": 53477391,
+          "count": 1,
+          "data": 0,
+          "offset": 20
+        },
+        "0x80000a90": {
+          "cycle": 1199342,
+          "slot": 0,
+          "rob": "1:22",
+          "pc": 2147486352,
+          "word": 655591,
+          "count": 1,
+          "data": 2147486356,
+          "offset": 37
+        },
+        "0x80001580": {
+          "cycle": 1199343,
+          "slot": 0,
+          "rob": "1:23",
+          "pc": 2147489152,
+          "word": 4261478675,
+          "count": 1,
+          "data": 2147569376,
+          "offset": 38
+        },
+        "0x800015ac": {
+          "cycle": 1199353,
+          "slot": 2,
+          "rob": "1:34",
+          "pc": 2147489196,
+          "word": 458983,
+          "count": 1,
+          "data": 2147489200,
+          "offset": 48
+        },
+        "0x800015f0": {
+          "cycle": 1199360,
+          "slot": 0,
+          "rob": "1:35",
+          "pc": 2147489264,
+          "word": 394899,
+          "count": 2,
+          "data": 0,
+          "offset": 55
+        },
+        "0x800015f8": {
+          "cycle": 1199369,
+          "slot": 0,
+          "rob": "1:36",
+          "pc": 2147489272,
+          "word": 8409203,
+          "count": 1,
+          "data": 0,
+          "offset": 64
+        },
+        "0x800015fc": {
+          "cycle": 1199378,
+          "slot": 0,
+          "rob": "1:37",
+          "pc": 2147489276,
+          "word": 15978611,
+          "count": 1,
+          "data": 7,
+          "offset": 73
+        },
+        "0x80001600": {
+          "cycle": 1199387,
+          "slot": 0,
+          "rob": "1:38",
+          "pc": 2147489280,
+          "word": 3221516375,
+          "count": 1,
+          "data": 8,
+          "offset": 82
+        },
+        "0x80001608": {
+          "cycle": 1199403,
+          "slot": 0,
+          "rob": "1:40",
+          "pc": 2147489288,
+          "word": 34573319,
+          "count": 1,
+          "data": 9187483429707480960,
+          "offset": 98
+        },
+        "0x80001644": {
+          "cycle": 1199415,
+          "slot": 0,
+          "rob": "0:7",
+          "pc": 2147489348,
+          "word": 59244555,
+          "count": 1,
+          "data": 32450,
+          "offset": 110
+        }
+      },
+      "prefix_retire_events": [
+        {
+          "cycle": 1199308,
+          "slot": 0,
+          "rob": "1:19",
+          "pc": 2147486332,
+          "word": 3221235827,
+          "count": 1,
+          "data": 16270799599947702801
+        },
+        {
+          "cycle": 1199325,
+          "slot": 0,
+          "rob": "1:20",
+          "pc": 2147486336,
+          "word": 53477391,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1199339,
+          "slot": 0,
+          "rob": "1:21",
+          "pc": 2147486340,
+          "word": 461075,
+          "count": 3,
+          "data": 2147519632
+        },
+        {
+          "cycle": 1199342,
+          "slot": 0,
+          "rob": "1:22",
+          "pc": 2147486352,
+          "word": 655591,
+          "count": 1,
+          "data": 2147486356
+        },
+        {
+          "cycle": 1199343,
+          "slot": 0,
+          "rob": "1:23",
+          "pc": 2147489152,
+          "word": 4261478675,
+          "count": 1,
+          "data": 2147569376
+        },
+        {
+          "cycle": 1199352,
+          "slot": 0,
+          "rob": "1:24",
+          "pc": 2147489156,
+          "word": 8468515,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1199352,
+          "slot": 1,
+          "rob": "1:25",
+          "pc": 2147489160,
+          "word": 25506819,
+          "count": 1,
+          "data": 2147530944
+        },
+        {
+          "cycle": 1199352,
+          "slot": 2,
+          "rob": "1:26",
+          "pc": 2147489164,
+          "word": 329619,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1199352,
+          "slot": 3,
+          "rob": "1:27",
+          "pc": 2147489168,
+          "word": 33896195,
+          "count": 1,
+          "data": 2147489264
+        },
+        {
+          "cycle": 1199352,
+          "slot": 4,
+          "rob": "1:28",
+          "pc": 2147489172,
+          "word": 8729987,
+          "count": 1,
+          "data": 2147528480
+        },
+        {
+          "cycle": 1199352,
+          "slot": 5,
+          "rob": "1:29",
+          "pc": 2147489176,
+          "word": 341251,
+          "count": 1,
+          "data": 2147528544
+        },
+        {
+          "cycle": 1199352,
+          "slot": 6,
+          "rob": "1:30",
+          "pc": 2147489180,
+          "word": 9516067,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1199352,
+          "slot": 7,
+          "rob": "1:31",
+          "pc": 2147489184,
+          "word": 17282179,
+          "count": 1,
+          "data": 2147531104
+        },
+        {
+          "cycle": 1199353,
+          "slot": 0,
+          "rob": "1:32",
+          "pc": 2147489188,
+          "word": 263699,
+          "count": 1,
+          "data": 2147519632
+        },
+        {
+          "cycle": 1199353,
+          "slot": 1,
+          "rob": "1:33",
+          "pc": 2147489192,
+          "word": 1129507,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1199353,
+          "slot": 2,
+          "rob": "1:34",
+          "pc": 2147489196,
+          "word": 458983,
+          "count": 1,
+          "data": 2147489200
+        },
+        {
+          "cycle": 1199360,
+          "slot": 0,
+          "rob": "1:35",
+          "pc": 2147489264,
+          "word": 394899,
+          "count": 2,
+          "data": 0
+        },
+        {
+          "cycle": 1199369,
+          "slot": 0,
+          "rob": "1:36",
+          "pc": 2147489272,
+          "word": 8409203,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1199378,
+          "slot": 0,
+          "rob": "1:37",
+          "pc": 2147489276,
+          "word": 15978611,
+          "count": 1,
+          "data": 7
+        },
+        {
+          "cycle": 1199387,
+          "slot": 0,
+          "rob": "1:38",
+          "pc": 2147489280,
+          "word": 3221516375,
+          "count": 1,
+          "data": 8
+        },
+        {
+          "cycle": 1199387,
+          "slot": 1,
+          "rob": "1:39",
+          "pc": 2147489284,
+          "word": 364435,
+          "count": 1,
+          "data": 7
+        },
+        {
+          "cycle": 1199403,
+          "slot": 0,
+          "rob": "1:40",
+          "pc": 2147489288,
+          "word": 34573319,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1199403,
+          "slot": 1,
+          "rob": "1:41",
+          "pc": 2147489292,
+          "word": 8753043,
+          "count": 1,
+          "data": 2147528488
+        },
+        {
+          "cycle": 1199404,
+          "slot": 0,
+          "rob": "1:42",
+          "pc": 2147489296,
+          "word": 34573447,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1199404,
+          "slot": 1,
+          "rob": "1:43",
+          "pc": 2147489300,
+          "word": 17141651,
+          "count": 1,
+          "data": 2147528496
+        },
+        {
+          "cycle": 1199405,
+          "slot": 0,
+          "rob": "1:44",
+          "pc": 2147489304,
+          "word": 34573575,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1199405,
+          "slot": 1,
+          "rob": "1:45",
+          "pc": 2147489308,
+          "word": 25530259,
+          "count": 1,
+          "data": 2147528504
+        },
+        {
+          "cycle": 1199406,
+          "slot": 0,
+          "rob": "1:46",
+          "pc": 2147489312,
+          "word": 34573703,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1199406,
+          "slot": 1,
+          "rob": "1:47",
+          "pc": 2147489316,
+          "word": 397203,
+          "count": 1,
+          "data": 2147490356
+        },
+        {
+          "cycle": 1199408,
+          "slot": 0,
+          "rob": "0:0",
+          "pc": 2147489320,
+          "word": 34572295,
+          "count": 1,
+          "data": 9277484505927483264
+        },
+        {
+          "cycle": 1199408,
+          "slot": 1,
+          "rob": "0:1",
+          "pc": 2147489324,
+          "word": 33951635,
+          "count": 1,
+          "data": 2147528576
+        },
+        {
+          "cycle": 1199408,
+          "slot": 2,
+          "rob": "0:2",
+          "pc": 2147489328,
+          "word": 34572423,
+          "count": 1,
+          "data": 71916310019113216
+        },
+        {
+          "cycle": 1199408,
+          "slot": 3,
+          "rob": "0:3",
+          "pc": 2147489332,
+          "word": 67506067,
+          "count": 1,
+          "data": 2147528608
+        },
+        {
+          "cycle": 1199410,
+          "slot": 0,
+          "rob": "0:4",
+          "pc": 2147489336,
+          "word": 34572551,
+          "count": 1,
+          "data": 13852792082613108928
+        },
+        {
+          "cycle": 1199410,
+          "slot": 1,
+          "rob": "0:5",
+          "pc": 2147489340,
+          "word": 101060499,
+          "count": 1,
+          "data": 2147528640
+        },
+        {
+          "cycle": 1199411,
+          "slot": 0,
+          "rob": "0:6",
+          "pc": 2147489344,
+          "word": 34572679,
+          "count": 1,
+          "data": 18410575364892983551
+        },
+        {
+          "cycle": 1199415,
+          "slot": 0,
+          "rob": "0:7",
+          "pc": 2147489348,
+          "word": 59244555,
+          "count": 1,
+          "data": 32450
+        }
+      ],
+      "prefix_pc_word_count_sha256": "45c9b3103c9aaa43798c44115eb51dced4166c29a632e7f97c5eead1d91b5a4d",
+      "ordered_observed_intervals": {
+        "begin_to_leaf_first_retire": 55,
+        "leaf_to_vstart_retire": 9,
+        "vstart_to_vcsr_retire": 9,
+        "vcsr_to_vsetivli_retire": 9,
+        "vsetivli_retire_to_vdot_enqueue": 5,
+        "vdot_enqueue_to_accept": 19
+      }
+    },
+    {
+      "seq": 55,
+      "round": 3,
+      "method": 6,
+      "kind": 2,
+      "order_group": 1,
+      "profile": "steady",
+      "dataset": 0,
+      "phase": "formal",
+      "custom_count": 32,
+      "method_label": "S-V",
+      "cycles": 303,
+      "instret": 235,
+      "begin_cycle": 1223082,
+      "end_cycle": 1223385,
+      "leaf": "split_gemv_8x32_vdot",
+      "leaf_entry_pc": "0x800015f0",
+      "leaf_first_retired_bundle_offset": 46,
+      "inner_call_pc": "0x800015ac",
+      "inner_call_retire_offset": 46,
+      "inner_call_to_leaf_retirement_gap": 0,
+      "leaf_call_redirect": false,
+      "prefix_redirects": [
+        {
+          "cycle": 1223096,
+          "rob": "1:21",
+          "ftq": "0:6",
+          "self": 0,
+          "offset": 14,
+          "retired_pc": "0x80000a80",
+          "retired_word": "0x330000f",
+          "retire_cycle": 1223102,
+          "retire_offset": 20,
+          "kind": "fence",
+          "binding": "unique subsequent same-ROB RETIRE within16 cycles; no intervening killing redirect"
+        }
+      ],
+      "timer_csr_enqueue": {
+        "cycle": 1223079,
+        "rob": "1:20",
+        "pc": 2147486332,
+        "word": 3221235827,
+        "empty": 1,
+        "wait": 0,
+        "block": 0,
+        "offset": -3
+      },
+      "first_custom": {
+        "enqueue": {
+          "cycle": 1223160,
+          "rob": "0:8",
+          "pc": 2147489348,
+          "ftq": "1:4",
+          "word": 59244555
+        },
+        "accept": {
+          "cycle": 1223179,
+          "seq": 2144,
+          "rob": "0:8"
+        },
+        "commit": {
+          "cycle": 1223183,
+          "rob": "0:8",
+          "pc": 2147489348,
+          "ftq": "1:4"
+        }
+      },
+      "before_first_accept": 97,
+      "leaf_retirement_to_first_enqueue": 32,
+      "first_enqueue_to_accept": 19,
+      "leaf_retirement_to_accept": 51,
+      "pre_accept_vfex_waits": [],
+      "retired_milestones": {
+        "0x80000a7c": {
+          "cycle": 1223085,
+          "slot": 0,
+          "rob": "1:20",
+          "pc": 2147486332,
+          "word": 3221235827,
+          "count": 1,
+          "data": 16270799599947726578,
+          "offset": 3
+        },
+        "0x80000a80": {
+          "cycle": 1223102,
+          "slot": 0,
+          "rob": "1:21",
+          "pc": 2147486336,
+          "word": 53477391,
+          "count": 1,
+          "data": 0,
+          "offset": 20
+        },
+        "0x80000a90": {
+          "cycle": 1223120,
+          "slot": 0,
+          "rob": "1:23",
+          "pc": 2147486352,
+          "word": 655591,
+          "count": 1,
+          "data": 2147486356,
+          "offset": 38
+        },
+        "0x80001580": {
+          "cycle": 1223121,
+          "slot": 0,
+          "rob": "1:24",
+          "pc": 2147489152,
+          "word": 4261478675,
+          "count": 1,
+          "data": 2147569376,
+          "offset": 39
+        },
+        "0x800015ac": {
+          "cycle": 1223128,
+          "slot": 3,
+          "rob": "1:35",
+          "pc": 2147489196,
+          "word": 458983,
+          "count": 1,
+          "data": 2147489200,
+          "offset": 46
+        },
+        "0x800015f0": {
+          "cycle": 1223128,
+          "slot": 4,
+          "rob": "1:36",
+          "pc": 2147489264,
+          "word": 394899,
+          "count": 2,
+          "data": 0,
+          "offset": 46
+        },
+        "0x800015f8": {
+          "cycle": 1223137,
+          "slot": 0,
+          "rob": "1:37",
+          "pc": 2147489272,
+          "word": 8409203,
+          "count": 1,
+          "data": 0,
+          "offset": 55
+        },
+        "0x800015fc": {
+          "cycle": 1223146,
+          "slot": 0,
+          "rob": "1:38",
+          "pc": 2147489276,
+          "word": 15978611,
+          "count": 1,
+          "data": 7,
+          "offset": 64
+        },
+        "0x80001600": {
+          "cycle": 1223155,
+          "slot": 0,
+          "rob": "1:39",
+          "pc": 2147489280,
+          "word": 3221516375,
+          "count": 1,
+          "data": 8,
+          "offset": 73
+        },
+        "0x80001608": {
+          "cycle": 1223171,
+          "slot": 0,
+          "rob": "1:41",
+          "pc": 2147489288,
+          "word": 34573319,
+          "count": 1,
+          "data": 9187483429707480960,
+          "offset": 89
+        },
+        "0x80001644": {
+          "cycle": 1223183,
+          "slot": 0,
+          "rob": "0:8",
+          "pc": 2147489348,
+          "word": 59244555,
+          "count": 1,
+          "data": 32450,
+          "offset": 101
+        }
+      },
+      "prefix_retire_events": [
+        {
+          "cycle": 1223085,
+          "slot": 0,
+          "rob": "1:20",
+          "pc": 2147486332,
+          "word": 3221235827,
+          "count": 1,
+          "data": 16270799599947726578
+        },
+        {
+          "cycle": 1223102,
+          "slot": 0,
+          "rob": "1:21",
+          "pc": 2147486336,
+          "word": 53477391,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1223117,
+          "slot": 0,
+          "rob": "1:22",
+          "pc": 2147486340,
+          "word": 461075,
+          "count": 3,
+          "data": 2147519632
+        },
+        {
+          "cycle": 1223120,
+          "slot": 0,
+          "rob": "1:23",
+          "pc": 2147486352,
+          "word": 655591,
+          "count": 1,
+          "data": 2147486356
+        },
+        {
+          "cycle": 1223121,
+          "slot": 0,
+          "rob": "1:24",
+          "pc": 2147489152,
+          "word": 4261478675,
+          "count": 1,
+          "data": 2147569376
+        },
+        {
+          "cycle": 1223126,
+          "slot": 0,
+          "rob": "1:25",
+          "pc": 2147489156,
+          "word": 8468515,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1223126,
+          "slot": 1,
+          "rob": "1:26",
+          "pc": 2147489160,
+          "word": 25506819,
+          "count": 1,
+          "data": 2147530944
+        },
+        {
+          "cycle": 1223126,
+          "slot": 2,
+          "rob": "1:27",
+          "pc": 2147489164,
+          "word": 329619,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1223126,
+          "slot": 3,
+          "rob": "1:28",
+          "pc": 2147489168,
+          "word": 33896195,
+          "count": 1,
+          "data": 2147489264
+        },
+        {
+          "cycle": 1223126,
+          "slot": 4,
+          "rob": "1:29",
+          "pc": 2147489172,
+          "word": 8729987,
+          "count": 1,
+          "data": 2147528480
+        },
+        {
+          "cycle": 1223126,
+          "slot": 5,
+          "rob": "1:30",
+          "pc": 2147489176,
+          "word": 341251,
+          "count": 1,
+          "data": 2147528544
+        },
+        {
+          "cycle": 1223127,
+          "slot": 0,
+          "rob": "1:31",
+          "pc": 2147489180,
+          "word": 9516067,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1223128,
+          "slot": 0,
+          "rob": "1:32",
+          "pc": 2147489184,
+          "word": 17282179,
+          "count": 1,
+          "data": 2147531104
+        },
+        {
+          "cycle": 1223128,
+          "slot": 1,
+          "rob": "1:33",
+          "pc": 2147489188,
+          "word": 263699,
+          "count": 1,
+          "data": 2147519632
+        },
+        {
+          "cycle": 1223128,
+          "slot": 2,
+          "rob": "1:34",
+          "pc": 2147489192,
+          "word": 1129507,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1223128,
+          "slot": 3,
+          "rob": "1:35",
+          "pc": 2147489196,
+          "word": 458983,
+          "count": 1,
+          "data": 2147489200
+        },
+        {
+          "cycle": 1223128,
+          "slot": 4,
+          "rob": "1:36",
+          "pc": 2147489264,
+          "word": 394899,
+          "count": 2,
+          "data": 0
+        },
+        {
+          "cycle": 1223137,
+          "slot": 0,
+          "rob": "1:37",
+          "pc": 2147489272,
+          "word": 8409203,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1223146,
+          "slot": 0,
+          "rob": "1:38",
+          "pc": 2147489276,
+          "word": 15978611,
+          "count": 1,
+          "data": 7
+        },
+        {
+          "cycle": 1223155,
+          "slot": 0,
+          "rob": "1:39",
+          "pc": 2147489280,
+          "word": 3221516375,
+          "count": 1,
+          "data": 8
+        },
+        {
+          "cycle": 1223156,
+          "slot": 0,
+          "rob": "1:40",
+          "pc": 2147489284,
+          "word": 364435,
+          "count": 1,
+          "data": 7
+        },
+        {
+          "cycle": 1223171,
+          "slot": 0,
+          "rob": "1:41",
+          "pc": 2147489288,
+          "word": 34573319,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1223171,
+          "slot": 1,
+          "rob": "1:42",
+          "pc": 2147489292,
+          "word": 8753043,
+          "count": 1,
+          "data": 2147528488
+        },
+        {
+          "cycle": 1223172,
+          "slot": 0,
+          "rob": "1:43",
+          "pc": 2147489296,
+          "word": 34573447,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1223172,
+          "slot": 1,
+          "rob": "1:44",
+          "pc": 2147489300,
+          "word": 17141651,
+          "count": 1,
+          "data": 2147528496
+        },
+        {
+          "cycle": 1223173,
+          "slot": 0,
+          "rob": "1:45",
+          "pc": 2147489304,
+          "word": 34573575,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1223173,
+          "slot": 1,
+          "rob": "1:46",
+          "pc": 2147489308,
+          "word": 25530259,
+          "count": 1,
+          "data": 2147528504
+        },
+        {
+          "cycle": 1223174,
+          "slot": 0,
+          "rob": "1:47",
+          "pc": 2147489312,
+          "word": 34573703,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1223175,
+          "slot": 0,
+          "rob": "0:0",
+          "pc": 2147489316,
+          "word": 397203,
+          "count": 1,
+          "data": 2147490356
+        },
+        {
+          "cycle": 1223176,
+          "slot": 0,
+          "rob": "0:1",
+          "pc": 2147489320,
+          "word": 34572295,
+          "count": 1,
+          "data": 9277484505927483264
+        },
+        {
+          "cycle": 1223176,
+          "slot": 1,
+          "rob": "0:2",
+          "pc": 2147489324,
+          "word": 33951635,
+          "count": 1,
+          "data": 2147528576
+        },
+        {
+          "cycle": 1223176,
+          "slot": 2,
+          "rob": "0:3",
+          "pc": 2147489328,
+          "word": 34572423,
+          "count": 1,
+          "data": 71916310019113216
+        },
+        {
+          "cycle": 1223176,
+          "slot": 3,
+          "rob": "0:4",
+          "pc": 2147489332,
+          "word": 67506067,
+          "count": 1,
+          "data": 2147528608
+        },
+        {
+          "cycle": 1223178,
+          "slot": 0,
+          "rob": "0:5",
+          "pc": 2147489336,
+          "word": 34572551,
+          "count": 1,
+          "data": 13852792082613108928
+        },
+        {
+          "cycle": 1223178,
+          "slot": 1,
+          "rob": "0:6",
+          "pc": 2147489340,
+          "word": 101060499,
+          "count": 1,
+          "data": 2147528640
+        },
+        {
+          "cycle": 1223179,
+          "slot": 0,
+          "rob": "0:7",
+          "pc": 2147489344,
+          "word": 34572679,
+          "count": 1,
+          "data": 18410575364892983551
+        },
+        {
+          "cycle": 1223183,
+          "slot": 0,
+          "rob": "0:8",
+          "pc": 2147489348,
+          "word": 59244555,
+          "count": 1,
+          "data": 32450
+        }
+      ],
+      "prefix_pc_word_count_sha256": "45c9b3103c9aaa43798c44115eb51dced4166c29a632e7f97c5eead1d91b5a4d",
+      "ordered_observed_intervals": {
+        "begin_to_leaf_first_retire": 46,
+        "leaf_to_vstart_retire": 9,
+        "vstart_to_vcsr_retire": 9,
+        "vcsr_to_vsetivli_retire": 9,
+        "vsetivli_retire_to_vdot_enqueue": 5,
+        "vdot_enqueue_to_accept": 19
+      }
+    },
+    {
+      "seq": 56,
+      "round": 4,
+      "method": 6,
+      "kind": 1,
+      "order_group": 0,
+      "profile": "steady",
+      "dataset": 0,
+      "phase": "formal",
+      "custom_count": 32,
+      "method_label": "S-V",
+      "cycles": 302,
+      "instret": 235,
+      "begin_cycle": 1226310,
+      "end_cycle": 1226612,
+      "leaf": "split_gemv_8x32_vdot",
+      "leaf_entry_pc": "0x800015f0",
+      "leaf_first_retired_bundle_offset": 45,
+      "inner_call_pc": "0x800015ac",
+      "inner_call_retire_offset": 45,
+      "inner_call_to_leaf_retirement_gap": 0,
+      "leaf_call_redirect": false,
+      "prefix_redirects": [
+        {
+          "cycle": 1226324,
+          "rob": "1:15",
+          "ftq": "1:7",
+          "self": 0,
+          "offset": 14,
+          "retired_pc": "0x80000a80",
+          "retired_word": "0x330000f",
+          "retire_cycle": 1226330,
+          "retire_offset": 20,
+          "kind": "fence",
+          "binding": "unique subsequent same-ROB RETIRE within16 cycles; no intervening killing redirect"
+        }
+      ],
+      "timer_csr_enqueue": {
+        "cycle": 1226307,
+        "rob": "1:14",
+        "pc": 2147486332,
+        "word": 3221235827,
+        "empty": 1,
+        "wait": 0,
+        "block": 0,
+        "offset": -3
+      },
+      "first_custom": {
+        "enqueue": {
+          "cycle": 1226387,
+          "rob": "0:2",
+          "pc": 2147489348,
+          "ftq": "0:5",
+          "word": 59244555
+        },
+        "accept": {
+          "cycle": 1226406,
+          "seq": 2176,
+          "rob": "0:2"
+        },
+        "commit": {
+          "cycle": 1226410,
+          "rob": "0:2",
+          "pc": 2147489348,
+          "ftq": "0:5"
+        }
+      },
+      "before_first_accept": 96,
+      "leaf_retirement_to_first_enqueue": 32,
+      "first_enqueue_to_accept": 19,
+      "leaf_retirement_to_accept": 51,
+      "pre_accept_vfex_waits": [],
+      "retired_milestones": {
+        "0x80000a7c": {
+          "cycle": 1226313,
+          "slot": 0,
+          "rob": "1:14",
+          "pc": 2147486332,
+          "word": 3221235827,
+          "count": 1,
+          "data": 16270799599947729806,
+          "offset": 3
+        },
+        "0x80000a80": {
+          "cycle": 1226330,
+          "slot": 0,
+          "rob": "1:15",
+          "pc": 2147486336,
+          "word": 53477391,
+          "count": 1,
+          "data": 0,
+          "offset": 20
+        },
+        "0x80000a90": {
+          "cycle": 1226347,
+          "slot": 0,
+          "rob": "1:17",
+          "pc": 2147486352,
+          "word": 655591,
+          "count": 1,
+          "data": 2147486356,
+          "offset": 37
+        },
+        "0x80001580": {
+          "cycle": 1226348,
+          "slot": 0,
+          "rob": "1:18",
+          "pc": 2147489152,
+          "word": 4261478675,
+          "count": 1,
+          "data": 2147569376,
+          "offset": 38
+        },
+        "0x800015ac": {
+          "cycle": 1226355,
+          "slot": 1,
+          "rob": "1:29",
+          "pc": 2147489196,
+          "word": 458983,
+          "count": 1,
+          "data": 2147489200,
+          "offset": 45
+        },
+        "0x800015f0": {
+          "cycle": 1226355,
+          "slot": 2,
+          "rob": "1:30",
+          "pc": 2147489264,
+          "word": 394899,
+          "count": 2,
+          "data": 0,
+          "offset": 45
+        },
+        "0x800015f8": {
+          "cycle": 1226364,
+          "slot": 0,
+          "rob": "1:31",
+          "pc": 2147489272,
+          "word": 8409203,
+          "count": 1,
+          "data": 0,
+          "offset": 54
+        },
+        "0x800015fc": {
+          "cycle": 1226373,
+          "slot": 0,
+          "rob": "1:32",
+          "pc": 2147489276,
+          "word": 15978611,
+          "count": 1,
+          "data": 7,
+          "offset": 63
+        },
+        "0x80001600": {
+          "cycle": 1226382,
+          "slot": 0,
+          "rob": "1:33",
+          "pc": 2147489280,
+          "word": 3221516375,
+          "count": 1,
+          "data": 8,
+          "offset": 72
+        },
+        "0x80001608": {
+          "cycle": 1226398,
+          "slot": 0,
+          "rob": "1:35",
+          "pc": 2147489288,
+          "word": 34573319,
+          "count": 1,
+          "data": 9187483429707480960,
+          "offset": 88
+        },
+        "0x80001644": {
+          "cycle": 1226410,
+          "slot": 0,
+          "rob": "0:2",
+          "pc": 2147489348,
+          "word": 59244555,
+          "count": 1,
+          "data": 32450,
+          "offset": 100
+        }
+      },
+      "prefix_retire_events": [
+        {
+          "cycle": 1226313,
+          "slot": 0,
+          "rob": "1:14",
+          "pc": 2147486332,
+          "word": 3221235827,
+          "count": 1,
+          "data": 16270799599947729806
+        },
+        {
+          "cycle": 1226330,
+          "slot": 0,
+          "rob": "1:15",
+          "pc": 2147486336,
+          "word": 53477391,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1226344,
+          "slot": 0,
+          "rob": "1:16",
+          "pc": 2147486340,
+          "word": 461075,
+          "count": 3,
+          "data": 2147519632
+        },
+        {
+          "cycle": 1226347,
+          "slot": 0,
+          "rob": "1:17",
+          "pc": 2147486352,
+          "word": 655591,
+          "count": 1,
+          "data": 2147486356
+        },
+        {
+          "cycle": 1226348,
+          "slot": 0,
+          "rob": "1:18",
+          "pc": 2147489152,
+          "word": 4261478675,
+          "count": 1,
+          "data": 2147569376
+        },
+        {
+          "cycle": 1226353,
+          "slot": 0,
+          "rob": "1:19",
+          "pc": 2147489156,
+          "word": 8468515,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1226353,
+          "slot": 1,
+          "rob": "1:20",
+          "pc": 2147489160,
+          "word": 25506819,
+          "count": 1,
+          "data": 2147530944
+        },
+        {
+          "cycle": 1226353,
+          "slot": 2,
+          "rob": "1:21",
+          "pc": 2147489164,
+          "word": 329619,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1226353,
+          "slot": 3,
+          "rob": "1:22",
+          "pc": 2147489168,
+          "word": 33896195,
+          "count": 1,
+          "data": 2147489264
+        },
+        {
+          "cycle": 1226353,
+          "slot": 4,
+          "rob": "1:23",
+          "pc": 2147489172,
+          "word": 8729987,
+          "count": 1,
+          "data": 2147528480
+        },
+        {
+          "cycle": 1226354,
+          "slot": 0,
+          "rob": "1:24",
+          "pc": 2147489176,
+          "word": 341251,
+          "count": 1,
+          "data": 2147528544
+        },
+        {
+          "cycle": 1226354,
+          "slot": 1,
+          "rob": "1:25",
+          "pc": 2147489180,
+          "word": 9516067,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1226354,
+          "slot": 2,
+          "rob": "1:26",
+          "pc": 2147489184,
+          "word": 17282179,
+          "count": 1,
+          "data": 2147531104
+        },
+        {
+          "cycle": 1226354,
+          "slot": 3,
+          "rob": "1:27",
+          "pc": 2147489188,
+          "word": 263699,
+          "count": 1,
+          "data": 2147519632
+        },
+        {
+          "cycle": 1226355,
+          "slot": 0,
+          "rob": "1:28",
+          "pc": 2147489192,
+          "word": 1129507,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1226355,
+          "slot": 1,
+          "rob": "1:29",
+          "pc": 2147489196,
+          "word": 458983,
+          "count": 1,
+          "data": 2147489200
+        },
+        {
+          "cycle": 1226355,
+          "slot": 2,
+          "rob": "1:30",
+          "pc": 2147489264,
+          "word": 394899,
+          "count": 2,
+          "data": 0
+        },
+        {
+          "cycle": 1226364,
+          "slot": 0,
+          "rob": "1:31",
+          "pc": 2147489272,
+          "word": 8409203,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1226373,
+          "slot": 0,
+          "rob": "1:32",
+          "pc": 2147489276,
+          "word": 15978611,
+          "count": 1,
+          "data": 7
+        },
+        {
+          "cycle": 1226382,
+          "slot": 0,
+          "rob": "1:33",
+          "pc": 2147489280,
+          "word": 3221516375,
+          "count": 1,
+          "data": 8
+        },
+        {
+          "cycle": 1226382,
+          "slot": 1,
+          "rob": "1:34",
+          "pc": 2147489284,
+          "word": 364435,
+          "count": 1,
+          "data": 7
+        },
+        {
+          "cycle": 1226398,
+          "slot": 0,
+          "rob": "1:35",
+          "pc": 2147489288,
+          "word": 34573319,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1226398,
+          "slot": 1,
+          "rob": "1:36",
+          "pc": 2147489292,
+          "word": 8753043,
+          "count": 1,
+          "data": 2147528488
+        },
+        {
+          "cycle": 1226399,
+          "slot": 0,
+          "rob": "1:37",
+          "pc": 2147489296,
+          "word": 34573447,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1226399,
+          "slot": 1,
+          "rob": "1:38",
+          "pc": 2147489300,
+          "word": 17141651,
+          "count": 1,
+          "data": 2147528496
+        },
+        {
+          "cycle": 1226400,
+          "slot": 0,
+          "rob": "1:39",
+          "pc": 2147489304,
+          "word": 34573575,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1226401,
+          "slot": 0,
+          "rob": "1:40",
+          "pc": 2147489308,
+          "word": 25530259,
+          "count": 1,
+          "data": 2147528504
+        },
+        {
+          "cycle": 1226401,
+          "slot": 1,
+          "rob": "1:41",
+          "pc": 2147489312,
+          "word": 34573703,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1226401,
+          "slot": 2,
+          "rob": "1:42",
+          "pc": 2147489316,
+          "word": 397203,
+          "count": 1,
+          "data": 2147490356
+        },
+        {
+          "cycle": 1226402,
+          "slot": 0,
+          "rob": "1:43",
+          "pc": 2147489320,
+          "word": 34572295,
+          "count": 1,
+          "data": 9277484505927483264
+        },
+        {
+          "cycle": 1226402,
+          "slot": 1,
+          "rob": "1:44",
+          "pc": 2147489324,
+          "word": 33951635,
+          "count": 1,
+          "data": 2147528576
+        },
+        {
+          "cycle": 1226403,
+          "slot": 0,
+          "rob": "1:45",
+          "pc": 2147489328,
+          "word": 34572423,
+          "count": 1,
+          "data": 71916310019113216
+        },
+        {
+          "cycle": 1226403,
+          "slot": 1,
+          "rob": "1:46",
+          "pc": 2147489332,
+          "word": 67506067,
+          "count": 1,
+          "data": 2147528608
+        },
+        {
+          "cycle": 1226405,
+          "slot": 0,
+          "rob": "1:47",
+          "pc": 2147489336,
+          "word": 34572551,
+          "count": 1,
+          "data": 13852792082613108928
+        },
+        {
+          "cycle": 1226406,
+          "slot": 0,
+          "rob": "0:0",
+          "pc": 2147489340,
+          "word": 101060499,
+          "count": 1,
+          "data": 2147528640
+        },
+        {
+          "cycle": 1226407,
+          "slot": 0,
+          "rob": "0:1",
+          "pc": 2147489344,
+          "word": 34572679,
+          "count": 1,
+          "data": 18410575364892983551
+        },
+        {
+          "cycle": 1226410,
+          "slot": 0,
+          "rob": "0:2",
+          "pc": 2147489348,
+          "word": 59244555,
+          "count": 1,
+          "data": 32450
+        }
+      ],
+      "prefix_pc_word_count_sha256": "45c9b3103c9aaa43798c44115eb51dced4166c29a632e7f97c5eead1d91b5a4d",
+      "ordered_observed_intervals": {
+        "begin_to_leaf_first_retire": 45,
+        "leaf_to_vstart_retire": 9,
+        "vstart_to_vcsr_retire": 9,
+        "vcsr_to_vsetivli_retire": 9,
+        "vsetivli_retire_to_vdot_enqueue": 5,
+        "vdot_enqueue_to_accept": 19
+      }
+    },
+    {
+      "seq": 63,
+      "round": 4,
+      "method": 6,
+      "kind": 0,
+      "order_group": 0,
+      "profile": "steady",
+      "dataset": 0,
+      "phase": "formal",
+      "custom_count": 32,
+      "method_label": "S-V",
+      "cycles": 303,
+      "instret": 235,
+      "begin_cycle": 1249933,
+      "end_cycle": 1250236,
+      "leaf": "split_gemv_8x32_vdot",
+      "leaf_entry_pc": "0x800015f0",
+      "leaf_first_retired_bundle_offset": 46,
+      "inner_call_pc": "0x800015ac",
+      "inner_call_retire_offset": 46,
+      "inner_call_to_leaf_retirement_gap": 0,
+      "leaf_call_redirect": false,
+      "prefix_redirects": [
+        {
+          "cycle": 1249947,
+          "rob": "1:16",
+          "ftq": "1:4",
+          "self": 0,
+          "offset": 14,
+          "retired_pc": "0x80000a80",
+          "retired_word": "0x330000f",
+          "retire_cycle": 1249953,
+          "retire_offset": 20,
+          "kind": "fence",
+          "binding": "unique subsequent same-ROB RETIRE within16 cycles; no intervening killing redirect"
+        }
+      ],
+      "timer_csr_enqueue": {
+        "cycle": 1249930,
+        "rob": "1:15",
+        "pc": 2147486332,
+        "word": 3221235827,
+        "empty": 1,
+        "wait": 0,
+        "block": 0,
+        "offset": -3
+      },
+      "first_custom": {
+        "enqueue": {
+          "cycle": 1250011,
+          "rob": "0:3",
+          "pc": 2147489348,
+          "ftq": "0:2",
+          "word": 59244555
+        },
+        "accept": {
+          "cycle": 1250030,
+          "seq": 2240,
+          "rob": "0:3"
+        },
+        "commit": {
+          "cycle": 1250034,
+          "rob": "0:3",
+          "pc": 2147489348,
+          "ftq": "0:2"
+        }
+      },
+      "before_first_accept": 97,
+      "leaf_retirement_to_first_enqueue": 32,
+      "first_enqueue_to_accept": 19,
+      "leaf_retirement_to_accept": 51,
+      "pre_accept_vfex_waits": [],
+      "retired_milestones": {
+        "0x80000a7c": {
+          "cycle": 1249936,
+          "slot": 0,
+          "rob": "1:15",
+          "pc": 2147486332,
+          "word": 3221235827,
+          "count": 1,
+          "data": 16270799599947753429,
+          "offset": 3
+        },
+        "0x80000a80": {
+          "cycle": 1249953,
+          "slot": 0,
+          "rob": "1:16",
+          "pc": 2147486336,
+          "word": 53477391,
+          "count": 1,
+          "data": 0,
+          "offset": 20
+        },
+        "0x80000a90": {
+          "cycle": 1249971,
+          "slot": 0,
+          "rob": "1:18",
+          "pc": 2147486352,
+          "word": 655591,
+          "count": 1,
+          "data": 2147486356,
+          "offset": 38
+        },
+        "0x80001580": {
+          "cycle": 1249972,
+          "slot": 0,
+          "rob": "1:19",
+          "pc": 2147489152,
+          "word": 4261478675,
+          "count": 1,
+          "data": 2147569376,
+          "offset": 39
+        },
+        "0x800015ac": {
+          "cycle": 1249979,
+          "slot": 1,
+          "rob": "1:30",
+          "pc": 2147489196,
+          "word": 458983,
+          "count": 1,
+          "data": 2147489200,
+          "offset": 46
+        },
+        "0x800015f0": {
+          "cycle": 1249979,
+          "slot": 2,
+          "rob": "1:31",
+          "pc": 2147489264,
+          "word": 394899,
+          "count": 2,
+          "data": 0,
+          "offset": 46
+        },
+        "0x800015f8": {
+          "cycle": 1249988,
+          "slot": 0,
+          "rob": "1:32",
+          "pc": 2147489272,
+          "word": 8409203,
+          "count": 1,
+          "data": 0,
+          "offset": 55
+        },
+        "0x800015fc": {
+          "cycle": 1249997,
+          "slot": 0,
+          "rob": "1:33",
+          "pc": 2147489276,
+          "word": 15978611,
+          "count": 1,
+          "data": 7,
+          "offset": 64
+        },
+        "0x80001600": {
+          "cycle": 1250006,
+          "slot": 0,
+          "rob": "1:34",
+          "pc": 2147489280,
+          "word": 3221516375,
+          "count": 1,
+          "data": 8,
+          "offset": 73
+        },
+        "0x80001608": {
+          "cycle": 1250022,
+          "slot": 0,
+          "rob": "1:36",
+          "pc": 2147489288,
+          "word": 34573319,
+          "count": 1,
+          "data": 9187483429707480960,
+          "offset": 89
+        },
+        "0x80001644": {
+          "cycle": 1250034,
+          "slot": 0,
+          "rob": "0:3",
+          "pc": 2147489348,
+          "word": 59244555,
+          "count": 1,
+          "data": 32450,
+          "offset": 101
+        }
+      },
+      "prefix_retire_events": [
+        {
+          "cycle": 1249936,
+          "slot": 0,
+          "rob": "1:15",
+          "pc": 2147486332,
+          "word": 3221235827,
+          "count": 1,
+          "data": 16270799599947753429
+        },
+        {
+          "cycle": 1249953,
+          "slot": 0,
+          "rob": "1:16",
+          "pc": 2147486336,
+          "word": 53477391,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1249968,
+          "slot": 0,
+          "rob": "1:17",
+          "pc": 2147486340,
+          "word": 461075,
+          "count": 3,
+          "data": 2147519632
+        },
+        {
+          "cycle": 1249971,
+          "slot": 0,
+          "rob": "1:18",
+          "pc": 2147486352,
+          "word": 655591,
+          "count": 1,
+          "data": 2147486356
+        },
+        {
+          "cycle": 1249972,
+          "slot": 0,
+          "rob": "1:19",
+          "pc": 2147489152,
+          "word": 4261478675,
+          "count": 1,
+          "data": 2147569376
+        },
+        {
+          "cycle": 1249977,
+          "slot": 0,
+          "rob": "1:20",
+          "pc": 2147489156,
+          "word": 8468515,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1249977,
+          "slot": 1,
+          "rob": "1:21",
+          "pc": 2147489160,
+          "word": 25506819,
+          "count": 1,
+          "data": 2147530944
+        },
+        {
+          "cycle": 1249977,
+          "slot": 2,
+          "rob": "1:22",
+          "pc": 2147489164,
+          "word": 329619,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1249977,
+          "slot": 3,
+          "rob": "1:23",
+          "pc": 2147489168,
+          "word": 33896195,
+          "count": 1,
+          "data": 2147489264
+        },
+        {
+          "cycle": 1249978,
+          "slot": 0,
+          "rob": "1:24",
+          "pc": 2147489172,
+          "word": 8729987,
+          "count": 1,
+          "data": 2147528480
+        },
+        {
+          "cycle": 1249978,
+          "slot": 1,
+          "rob": "1:25",
+          "pc": 2147489176,
+          "word": 341251,
+          "count": 1,
+          "data": 2147528544
+        },
+        {
+          "cycle": 1249978,
+          "slot": 2,
+          "rob": "1:26",
+          "pc": 2147489180,
+          "word": 9516067,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1249978,
+          "slot": 3,
+          "rob": "1:27",
+          "pc": 2147489184,
+          "word": 17282179,
+          "count": 1,
+          "data": 2147531104
+        },
+        {
+          "cycle": 1249978,
+          "slot": 4,
+          "rob": "1:28",
+          "pc": 2147489188,
+          "word": 263699,
+          "count": 1,
+          "data": 2147519632
+        },
+        {
+          "cycle": 1249979,
+          "slot": 0,
+          "rob": "1:29",
+          "pc": 2147489192,
+          "word": 1129507,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1249979,
+          "slot": 1,
+          "rob": "1:30",
+          "pc": 2147489196,
+          "word": 458983,
+          "count": 1,
+          "data": 2147489200
+        },
+        {
+          "cycle": 1249979,
+          "slot": 2,
+          "rob": "1:31",
+          "pc": 2147489264,
+          "word": 394899,
+          "count": 2,
+          "data": 0
+        },
+        {
+          "cycle": 1249988,
+          "slot": 0,
+          "rob": "1:32",
+          "pc": 2147489272,
+          "word": 8409203,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1249997,
+          "slot": 0,
+          "rob": "1:33",
+          "pc": 2147489276,
+          "word": 15978611,
+          "count": 1,
+          "data": 7
+        },
+        {
+          "cycle": 1250006,
+          "slot": 0,
+          "rob": "1:34",
+          "pc": 2147489280,
+          "word": 3221516375,
+          "count": 1,
+          "data": 8
+        },
+        {
+          "cycle": 1250006,
+          "slot": 1,
+          "rob": "1:35",
+          "pc": 2147489284,
+          "word": 364435,
+          "count": 1,
+          "data": 7
+        },
+        {
+          "cycle": 1250022,
+          "slot": 0,
+          "rob": "1:36",
+          "pc": 2147489288,
+          "word": 34573319,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1250022,
+          "slot": 1,
+          "rob": "1:37",
+          "pc": 2147489292,
+          "word": 8753043,
+          "count": 1,
+          "data": 2147528488
+        },
+        {
+          "cycle": 1250023,
+          "slot": 0,
+          "rob": "1:38",
+          "pc": 2147489296,
+          "word": 34573447,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1250023,
+          "slot": 1,
+          "rob": "1:39",
+          "pc": 2147489300,
+          "word": 17141651,
+          "count": 1,
+          "data": 2147528496
+        },
+        {
+          "cycle": 1250024,
+          "slot": 0,
+          "rob": "1:40",
+          "pc": 2147489304,
+          "word": 34573575,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1250024,
+          "slot": 1,
+          "rob": "1:41",
+          "pc": 2147489308,
+          "word": 25530259,
+          "count": 1,
+          "data": 2147528504
+        },
+        {
+          "cycle": 1250025,
+          "slot": 0,
+          "rob": "1:42",
+          "pc": 2147489312,
+          "word": 34573703,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1250025,
+          "slot": 1,
+          "rob": "1:43",
+          "pc": 2147489316,
+          "word": 397203,
+          "count": 1,
+          "data": 2147490356
+        },
+        {
+          "cycle": 1250026,
+          "slot": 0,
+          "rob": "1:44",
+          "pc": 2147489320,
+          "word": 34572295,
+          "count": 1,
+          "data": 9277484505927483264
+        },
+        {
+          "cycle": 1250026,
+          "slot": 1,
+          "rob": "1:45",
+          "pc": 2147489324,
+          "word": 33951635,
+          "count": 1,
+          "data": 2147528576
+        },
+        {
+          "cycle": 1250027,
+          "slot": 0,
+          "rob": "1:46",
+          "pc": 2147489328,
+          "word": 34572423,
+          "count": 1,
+          "data": 71916310019113216
+        },
+        {
+          "cycle": 1250027,
+          "slot": 1,
+          "rob": "1:47",
+          "pc": 2147489332,
+          "word": 67506067,
+          "count": 1,
+          "data": 2147528608
+        },
+        {
+          "cycle": 1250029,
+          "slot": 0,
+          "rob": "0:0",
+          "pc": 2147489336,
+          "word": 34572551,
+          "count": 1,
+          "data": 13852792082613108928
+        },
+        {
+          "cycle": 1250029,
+          "slot": 1,
+          "rob": "0:1",
+          "pc": 2147489340,
+          "word": 101060499,
+          "count": 1,
+          "data": 2147528640
+        },
+        {
+          "cycle": 1250030,
+          "slot": 0,
+          "rob": "0:2",
+          "pc": 2147489344,
+          "word": 34572679,
+          "count": 1,
+          "data": 18410575364892983551
+        },
+        {
+          "cycle": 1250034,
+          "slot": 0,
+          "rob": "0:3",
+          "pc": 2147489348,
+          "word": 59244555,
+          "count": 1,
+          "data": 32450
+        }
+      ],
+      "prefix_pc_word_count_sha256": "45c9b3103c9aaa43798c44115eb51dced4166c29a632e7f97c5eead1d91b5a4d",
+      "ordered_observed_intervals": {
+        "begin_to_leaf_first_retire": 46,
+        "leaf_to_vstart_retire": 9,
+        "vstart_to_vcsr_retire": 9,
+        "vcsr_to_vsetivli_retire": 9,
+        "vsetivli_retire_to_vdot_enqueue": 5,
+        "vdot_enqueue_to_accept": 19
+      }
+    },
+    {
+      "seq": 69,
+      "round": 4,
+      "method": 6,
+      "kind": 2,
+      "order_group": 0,
+      "profile": "steady",
+      "dataset": 0,
+      "phase": "formal",
+      "custom_count": 32,
+      "method_label": "S-V",
+      "cycles": 314,
+      "instret": 235,
+      "begin_cycle": 1269781,
+      "end_cycle": 1270095,
+      "leaf": "split_gemv_8x32_vdot",
+      "leaf_entry_pc": "0x800015f0",
+      "leaf_first_retired_bundle_offset": 55,
+      "inner_call_pc": "0x800015ac",
+      "inner_call_retire_offset": 48,
+      "inner_call_to_leaf_retirement_gap": 7,
+      "leaf_call_redirect": true,
+      "prefix_redirects": [
+        {
+          "cycle": 1269795,
+          "rob": "1:8",
+          "ftq": "0:6",
+          "self": 0,
+          "offset": 14,
+          "retired_pc": "0x80000a80",
+          "retired_word": "0x330000f",
+          "retire_cycle": 1269801,
+          "retire_offset": 20,
+          "kind": "fence",
+          "binding": "unique subsequent same-ROB RETIRE within16 cycles; no intervening killing redirect"
+        },
+        {
+          "cycle": 1269823,
+          "rob": "1:22",
+          "ftq": "1:1",
+          "self": 0,
+          "offset": 42,
+          "retired_pc": "0x800015ac",
+          "retired_word": "0x700e7",
+          "retire_cycle": 1269829,
+          "retire_offset": 48,
+          "kind": "jalr",
+          "binding": "unique subsequent same-ROB RETIRE within16 cycles; no intervening killing redirect"
+        }
+      ],
+      "timer_csr_enqueue": {
+        "cycle": 1269778,
+        "rob": "1:7",
+        "pc": 2147486332,
+        "word": 3221235827,
+        "empty": 1,
+        "wait": 0,
+        "block": 0,
+        "offset": -3
+      },
+      "first_custom": {
+        "enqueue": {
+          "cycle": 1269868,
+          "rob": "1:43",
+          "pc": 2147489348,
+          "ftq": "1:4",
+          "word": 59244555
+        },
+        "accept": {
+          "cycle": 1269887,
+          "seq": 2272,
+          "rob": "1:43"
+        },
+        "commit": {
+          "cycle": 1269891,
+          "rob": "1:43",
+          "pc": 2147489348,
+          "ftq": "1:4"
+        }
+      },
+      "before_first_accept": 106,
+      "leaf_retirement_to_first_enqueue": 32,
+      "first_enqueue_to_accept": 19,
+      "leaf_retirement_to_accept": 51,
+      "pre_accept_vfex_waits": [],
+      "retired_milestones": {
+        "0x80000a7c": {
+          "cycle": 1269784,
+          "slot": 0,
+          "rob": "1:7",
+          "pc": 2147486332,
+          "word": 3221235827,
+          "count": 1,
+          "data": 16270799599947773277,
+          "offset": 3
+        },
+        "0x80000a80": {
+          "cycle": 1269801,
+          "slot": 0,
+          "rob": "1:8",
+          "pc": 2147486336,
+          "word": 53477391,
+          "count": 1,
+          "data": 0,
+          "offset": 20
+        },
+        "0x80000a90": {
+          "cycle": 1269818,
+          "slot": 0,
+          "rob": "1:10",
+          "pc": 2147486352,
+          "word": 655591,
+          "count": 1,
+          "data": 2147486356,
+          "offset": 37
+        },
+        "0x80001580": {
+          "cycle": 1269819,
+          "slot": 0,
+          "rob": "1:11",
+          "pc": 2147489152,
+          "word": 4261478675,
+          "count": 1,
+          "data": 2147569376,
+          "offset": 38
+        },
+        "0x800015ac": {
+          "cycle": 1269829,
+          "slot": 6,
+          "rob": "1:22",
+          "pc": 2147489196,
+          "word": 458983,
+          "count": 1,
+          "data": 2147489200,
+          "offset": 48
+        },
+        "0x800015f0": {
+          "cycle": 1269836,
+          "slot": 0,
+          "rob": "1:23",
+          "pc": 2147489264,
+          "word": 394899,
+          "count": 2,
+          "data": 0,
+          "offset": 55
+        },
+        "0x800015f8": {
+          "cycle": 1269845,
+          "slot": 0,
+          "rob": "1:24",
+          "pc": 2147489272,
+          "word": 8409203,
+          "count": 1,
+          "data": 0,
+          "offset": 64
+        },
+        "0x800015fc": {
+          "cycle": 1269854,
+          "slot": 0,
+          "rob": "1:25",
+          "pc": 2147489276,
+          "word": 15978611,
+          "count": 1,
+          "data": 7,
+          "offset": 73
+        },
+        "0x80001600": {
+          "cycle": 1269863,
+          "slot": 0,
+          "rob": "1:26",
+          "pc": 2147489280,
+          "word": 3221516375,
+          "count": 1,
+          "data": 8,
+          "offset": 82
+        },
+        "0x80001608": {
+          "cycle": 1269879,
+          "slot": 0,
+          "rob": "1:28",
+          "pc": 2147489288,
+          "word": 34573319,
+          "count": 1,
+          "data": 9187483429707480960,
+          "offset": 98
+        },
+        "0x80001644": {
+          "cycle": 1269891,
+          "slot": 0,
+          "rob": "1:43",
+          "pc": 2147489348,
+          "word": 59244555,
+          "count": 1,
+          "data": 32450,
+          "offset": 110
+        }
+      },
+      "prefix_retire_events": [
+        {
+          "cycle": 1269784,
+          "slot": 0,
+          "rob": "1:7",
+          "pc": 2147486332,
+          "word": 3221235827,
+          "count": 1,
+          "data": 16270799599947773277
+        },
+        {
+          "cycle": 1269801,
+          "slot": 0,
+          "rob": "1:8",
+          "pc": 2147486336,
+          "word": 53477391,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1269815,
+          "slot": 0,
+          "rob": "1:9",
+          "pc": 2147486340,
+          "word": 461075,
+          "count": 3,
+          "data": 2147530252
+        },
+        {
+          "cycle": 1269818,
+          "slot": 0,
+          "rob": "1:10",
+          "pc": 2147486352,
+          "word": 655591,
+          "count": 1,
+          "data": 2147486356
+        },
+        {
+          "cycle": 1269819,
+          "slot": 0,
+          "rob": "1:11",
+          "pc": 2147489152,
+          "word": 4261478675,
+          "count": 1,
+          "data": 2147569376
+        },
+        {
+          "cycle": 1269828,
+          "slot": 0,
+          "rob": "1:12",
+          "pc": 2147489156,
+          "word": 8468515,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1269828,
+          "slot": 1,
+          "rob": "1:13",
+          "pc": 2147489160,
+          "word": 25506819,
+          "count": 1,
+          "data": 2147530944
+        },
+        {
+          "cycle": 1269828,
+          "slot": 2,
+          "rob": "1:14",
+          "pc": 2147489164,
+          "word": 329619,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1269828,
+          "slot": 3,
+          "rob": "1:15",
+          "pc": 2147489168,
+          "word": 33896195,
+          "count": 1,
+          "data": 2147489264
+        },
+        {
+          "cycle": 1269829,
+          "slot": 0,
+          "rob": "1:16",
+          "pc": 2147489172,
+          "word": 8729987,
+          "count": 1,
+          "data": 2147528480
+        },
+        {
+          "cycle": 1269829,
+          "slot": 1,
+          "rob": "1:17",
+          "pc": 2147489176,
+          "word": 341251,
+          "count": 1,
+          "data": 2147528544
+        },
+        {
+          "cycle": 1269829,
+          "slot": 2,
+          "rob": "1:18",
+          "pc": 2147489180,
+          "word": 9516067,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1269829,
+          "slot": 3,
+          "rob": "1:19",
+          "pc": 2147489184,
+          "word": 17282179,
+          "count": 1,
+          "data": 2147531104
+        },
+        {
+          "cycle": 1269829,
+          "slot": 4,
+          "rob": "1:20",
+          "pc": 2147489188,
+          "word": 263699,
+          "count": 1,
+          "data": 2147489264
+        },
+        {
+          "cycle": 1269829,
+          "slot": 5,
+          "rob": "1:21",
+          "pc": 2147489192,
+          "word": 1129507,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1269829,
+          "slot": 6,
+          "rob": "1:22",
+          "pc": 2147489196,
+          "word": 458983,
+          "count": 1,
+          "data": 2147489200
+        },
+        {
+          "cycle": 1269836,
+          "slot": 0,
+          "rob": "1:23",
+          "pc": 2147489264,
+          "word": 394899,
+          "count": 2,
+          "data": 0
+        },
+        {
+          "cycle": 1269845,
+          "slot": 0,
+          "rob": "1:24",
+          "pc": 2147489272,
+          "word": 8409203,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1269854,
+          "slot": 0,
+          "rob": "1:25",
+          "pc": 2147489276,
+          "word": 15978611,
+          "count": 1,
+          "data": 7
+        },
+        {
+          "cycle": 1269863,
+          "slot": 0,
+          "rob": "1:26",
+          "pc": 2147489280,
+          "word": 3221516375,
+          "count": 1,
+          "data": 8
+        },
+        {
+          "cycle": 1269863,
+          "slot": 1,
+          "rob": "1:27",
+          "pc": 2147489284,
+          "word": 364435,
+          "count": 1,
+          "data": 8
+        },
+        {
+          "cycle": 1269879,
+          "slot": 0,
+          "rob": "1:28",
+          "pc": 2147489288,
+          "word": 34573319,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1269879,
+          "slot": 1,
+          "rob": "1:29",
+          "pc": 2147489292,
+          "word": 8753043,
+          "count": 1,
+          "data": 2147528488
+        },
+        {
+          "cycle": 1269880,
+          "slot": 0,
+          "rob": "1:30",
+          "pc": 2147489296,
+          "word": 34573447,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1269880,
+          "slot": 1,
+          "rob": "1:31",
+          "pc": 2147489300,
+          "word": 17141651,
+          "count": 1,
+          "data": 2147528496
+        },
+        {
+          "cycle": 1269881,
+          "slot": 0,
+          "rob": "1:32",
+          "pc": 2147489304,
+          "word": 34573575,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1269881,
+          "slot": 1,
+          "rob": "1:33",
+          "pc": 2147489308,
+          "word": 25530259,
+          "count": 1,
+          "data": 2147528504
+        },
+        {
+          "cycle": 1269882,
+          "slot": 0,
+          "rob": "1:34",
+          "pc": 2147489312,
+          "word": 34573703,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1269882,
+          "slot": 1,
+          "rob": "1:35",
+          "pc": 2147489316,
+          "word": 397203,
+          "count": 1,
+          "data": 2147489152
+        },
+        {
+          "cycle": 1269883,
+          "slot": 0,
+          "rob": "1:36",
+          "pc": 2147489320,
+          "word": 34572295,
+          "count": 1,
+          "data": 9277484505927483264
+        },
+        {
+          "cycle": 1269883,
+          "slot": 1,
+          "rob": "1:37",
+          "pc": 2147489324,
+          "word": 33951635,
+          "count": 1,
+          "data": 2147528576
+        },
+        {
+          "cycle": 1269884,
+          "slot": 0,
+          "rob": "1:38",
+          "pc": 2147489328,
+          "word": 34572423,
+          "count": 1,
+          "data": 71916310019113216
+        },
+        {
+          "cycle": 1269884,
+          "slot": 1,
+          "rob": "1:39",
+          "pc": 2147489332,
+          "word": 67506067,
+          "count": 1,
+          "data": 2147528608
+        },
+        {
+          "cycle": 1269886,
+          "slot": 0,
+          "rob": "1:40",
+          "pc": 2147489336,
+          "word": 34572551,
+          "count": 1,
+          "data": 13852792082613108928
+        },
+        {
+          "cycle": 1269886,
+          "slot": 1,
+          "rob": "1:41",
+          "pc": 2147489340,
+          "word": 101060499,
+          "count": 1,
+          "data": 2147528640
+        },
+        {
+          "cycle": 1269887,
+          "slot": 0,
+          "rob": "1:42",
+          "pc": 2147489344,
+          "word": 34572679,
+          "count": 1,
+          "data": 18410575364892983551
+        },
+        {
+          "cycle": 1269891,
+          "slot": 0,
+          "rob": "1:43",
+          "pc": 2147489348,
+          "word": 59244555,
+          "count": 1,
+          "data": 32450
+        }
+      ],
+      "prefix_pc_word_count_sha256": "45c9b3103c9aaa43798c44115eb51dced4166c29a632e7f97c5eead1d91b5a4d",
+      "ordered_observed_intervals": {
+        "begin_to_leaf_first_retire": 55,
+        "leaf_to_vstart_retire": 9,
+        "vstart_to_vcsr_retire": 9,
+        "vcsr_to_vsetivli_retire": 9,
+        "vsetivli_retire_to_vdot_enqueue": 5,
+        "vdot_enqueue_to_accept": 19
+      }
+    },
+    {
+      "seq": 70,
+      "round": 5,
+      "method": 6,
+      "kind": 1,
+      "order_group": 1,
+      "profile": "steady",
+      "dataset": 0,
+      "phase": "formal",
+      "custom_count": 32,
+      "method_label": "S-V",
+      "cycles": 303,
+      "instret": 235,
+      "begin_cycle": 1273008,
+      "end_cycle": 1273311,
+      "leaf": "split_gemv_8x32_vdot",
+      "leaf_entry_pc": "0x800015f0",
+      "leaf_first_retired_bundle_offset": 46,
+      "inner_call_pc": "0x800015ac",
+      "inner_call_retire_offset": 46,
+      "inner_call_to_leaf_retirement_gap": 0,
+      "leaf_call_redirect": false,
+      "prefix_redirects": [
+        {
+          "cycle": 1273022,
+          "rob": "1:2",
+          "ftq": "1:7",
+          "self": 0,
+          "offset": 14,
+          "retired_pc": "0x80000a80",
+          "retired_word": "0x330000f",
+          "retire_cycle": 1273028,
+          "retire_offset": 20,
+          "kind": "fence",
+          "binding": "unique subsequent same-ROB RETIRE within16 cycles; no intervening killing redirect"
+        }
+      ],
+      "timer_csr_enqueue": {
+        "cycle": 1273005,
+        "rob": "1:1",
+        "pc": 2147486332,
+        "word": 3221235827,
+        "empty": 1,
+        "wait": 0,
+        "block": 0,
+        "offset": -3
+      },
+      "first_custom": {
+        "enqueue": {
+          "cycle": 1273086,
+          "rob": "1:37",
+          "pc": 2147489348,
+          "ftq": "0:5",
+          "word": 59244555
+        },
+        "accept": {
+          "cycle": 1273105,
+          "seq": 2304,
+          "rob": "1:37"
+        },
+        "commit": {
+          "cycle": 1273109,
+          "rob": "1:37",
+          "pc": 2147489348,
+          "ftq": "0:5"
+        }
+      },
+      "before_first_accept": 97,
+      "leaf_retirement_to_first_enqueue": 32,
+      "first_enqueue_to_accept": 19,
+      "leaf_retirement_to_accept": 51,
+      "pre_accept_vfex_waits": [],
+      "retired_milestones": {
+        "0x80000a7c": {
+          "cycle": 1273011,
+          "slot": 0,
+          "rob": "1:1",
+          "pc": 2147486332,
+          "word": 3221235827,
+          "count": 1,
+          "data": 16270799599947776504,
+          "offset": 3
+        },
+        "0x80000a80": {
+          "cycle": 1273028,
+          "slot": 0,
+          "rob": "1:2",
+          "pc": 2147486336,
+          "word": 53477391,
+          "count": 1,
+          "data": 0,
+          "offset": 20
+        },
+        "0x80000a90": {
+          "cycle": 1273045,
+          "slot": 0,
+          "rob": "1:4",
+          "pc": 2147486352,
+          "word": 655591,
+          "count": 1,
+          "data": 2147486356,
+          "offset": 37
+        },
+        "0x80001580": {
+          "cycle": 1273046,
+          "slot": 0,
+          "rob": "1:5",
+          "pc": 2147489152,
+          "word": 4261478675,
+          "count": 1,
+          "data": 2147569376,
+          "offset": 38
+        },
+        "0x800015ac": {
+          "cycle": 1273054,
+          "slot": 0,
+          "rob": "1:16",
+          "pc": 2147489196,
+          "word": 458983,
+          "count": 1,
+          "data": 2147489200,
+          "offset": 46
+        },
+        "0x800015f0": {
+          "cycle": 1273054,
+          "slot": 1,
+          "rob": "1:17",
+          "pc": 2147489264,
+          "word": 394899,
+          "count": 2,
+          "data": 0,
+          "offset": 46
+        },
+        "0x800015f8": {
+          "cycle": 1273063,
+          "slot": 0,
+          "rob": "1:18",
+          "pc": 2147489272,
+          "word": 8409203,
+          "count": 1,
+          "data": 0,
+          "offset": 55
+        },
+        "0x800015fc": {
+          "cycle": 1273072,
+          "slot": 0,
+          "rob": "1:19",
+          "pc": 2147489276,
+          "word": 15978611,
+          "count": 1,
+          "data": 7,
+          "offset": 64
+        },
+        "0x80001600": {
+          "cycle": 1273081,
+          "slot": 0,
+          "rob": "1:20",
+          "pc": 2147489280,
+          "word": 3221516375,
+          "count": 1,
+          "data": 8,
+          "offset": 73
+        },
+        "0x80001608": {
+          "cycle": 1273097,
+          "slot": 0,
+          "rob": "1:22",
+          "pc": 2147489288,
+          "word": 34573319,
+          "count": 1,
+          "data": 9187483429707480960,
+          "offset": 89
+        },
+        "0x80001644": {
+          "cycle": 1273109,
+          "slot": 0,
+          "rob": "1:37",
+          "pc": 2147489348,
+          "word": 59244555,
+          "count": 1,
+          "data": 32450,
+          "offset": 101
+        }
+      },
+      "prefix_retire_events": [
+        {
+          "cycle": 1273011,
+          "slot": 0,
+          "rob": "1:1",
+          "pc": 2147486332,
+          "word": 3221235827,
+          "count": 1,
+          "data": 16270799599947776504
+        },
+        {
+          "cycle": 1273028,
+          "slot": 0,
+          "rob": "1:2",
+          "pc": 2147486336,
+          "word": 53477391,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1273042,
+          "slot": 0,
+          "rob": "1:3",
+          "pc": 2147486340,
+          "word": 461075,
+          "count": 3,
+          "data": 2147519632
+        },
+        {
+          "cycle": 1273045,
+          "slot": 0,
+          "rob": "1:4",
+          "pc": 2147486352,
+          "word": 655591,
+          "count": 1,
+          "data": 2147486356
+        },
+        {
+          "cycle": 1273046,
+          "slot": 0,
+          "rob": "1:5",
+          "pc": 2147489152,
+          "word": 4261478675,
+          "count": 1,
+          "data": 2147569376
+        },
+        {
+          "cycle": 1273051,
+          "slot": 0,
+          "rob": "1:6",
+          "pc": 2147489156,
+          "word": 8468515,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1273051,
+          "slot": 1,
+          "rob": "1:7",
+          "pc": 2147489160,
+          "word": 25506819,
+          "count": 1,
+          "data": 2147530944
+        },
+        {
+          "cycle": 1273052,
+          "slot": 0,
+          "rob": "1:8",
+          "pc": 2147489164,
+          "word": 329619,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1273052,
+          "slot": 1,
+          "rob": "1:9",
+          "pc": 2147489168,
+          "word": 33896195,
+          "count": 1,
+          "data": 2147489264
+        },
+        {
+          "cycle": 1273052,
+          "slot": 2,
+          "rob": "1:10",
+          "pc": 2147489172,
+          "word": 8729987,
+          "count": 1,
+          "data": 2147528480
+        },
+        {
+          "cycle": 1273052,
+          "slot": 3,
+          "rob": "1:11",
+          "pc": 2147489176,
+          "word": 341251,
+          "count": 1,
+          "data": 2147528544
+        },
+        {
+          "cycle": 1273052,
+          "slot": 4,
+          "rob": "1:12",
+          "pc": 2147489180,
+          "word": 9516067,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1273052,
+          "slot": 5,
+          "rob": "1:13",
+          "pc": 2147489184,
+          "word": 17282179,
+          "count": 1,
+          "data": 2147531104
+        },
+        {
+          "cycle": 1273052,
+          "slot": 6,
+          "rob": "1:14",
+          "pc": 2147489188,
+          "word": 263699,
+          "count": 1,
+          "data": 2147519632
+        },
+        {
+          "cycle": 1273053,
+          "slot": 0,
+          "rob": "1:15",
+          "pc": 2147489192,
+          "word": 1129507,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1273054,
+          "slot": 0,
+          "rob": "1:16",
+          "pc": 2147489196,
+          "word": 458983,
+          "count": 1,
+          "data": 2147489200
+        },
+        {
+          "cycle": 1273054,
+          "slot": 1,
+          "rob": "1:17",
+          "pc": 2147489264,
+          "word": 394899,
+          "count": 2,
+          "data": 0
+        },
+        {
+          "cycle": 1273063,
+          "slot": 0,
+          "rob": "1:18",
+          "pc": 2147489272,
+          "word": 8409203,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1273072,
+          "slot": 0,
+          "rob": "1:19",
+          "pc": 2147489276,
+          "word": 15978611,
+          "count": 1,
+          "data": 7
+        },
+        {
+          "cycle": 1273081,
+          "slot": 0,
+          "rob": "1:20",
+          "pc": 2147489280,
+          "word": 3221516375,
+          "count": 1,
+          "data": 8
+        },
+        {
+          "cycle": 1273081,
+          "slot": 1,
+          "rob": "1:21",
+          "pc": 2147489284,
+          "word": 364435,
+          "count": 1,
+          "data": 7
+        },
+        {
+          "cycle": 1273097,
+          "slot": 0,
+          "rob": "1:22",
+          "pc": 2147489288,
+          "word": 34573319,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1273097,
+          "slot": 1,
+          "rob": "1:23",
+          "pc": 2147489292,
+          "word": 8753043,
+          "count": 1,
+          "data": 2147528488
+        },
+        {
+          "cycle": 1273098,
+          "slot": 0,
+          "rob": "1:24",
+          "pc": 2147489296,
+          "word": 34573447,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1273098,
+          "slot": 1,
+          "rob": "1:25",
+          "pc": 2147489300,
+          "word": 17141651,
+          "count": 1,
+          "data": 2147528496
+        },
+        {
+          "cycle": 1273099,
+          "slot": 0,
+          "rob": "1:26",
+          "pc": 2147489304,
+          "word": 34573575,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1273099,
+          "slot": 1,
+          "rob": "1:27",
+          "pc": 2147489308,
+          "word": 25530259,
+          "count": 1,
+          "data": 2147528504
+        },
+        {
+          "cycle": 1273100,
+          "slot": 0,
+          "rob": "1:28",
+          "pc": 2147489312,
+          "word": 34573703,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1273100,
+          "slot": 1,
+          "rob": "1:29",
+          "pc": 2147489316,
+          "word": 397203,
+          "count": 1,
+          "data": 2147490356
+        },
+        {
+          "cycle": 1273101,
+          "slot": 0,
+          "rob": "1:30",
+          "pc": 2147489320,
+          "word": 34572295,
+          "count": 1,
+          "data": 9277484505927483264
+        },
+        {
+          "cycle": 1273101,
+          "slot": 1,
+          "rob": "1:31",
+          "pc": 2147489324,
+          "word": 33951635,
+          "count": 1,
+          "data": 2147528576
+        },
+        {
+          "cycle": 1273102,
+          "slot": 0,
+          "rob": "1:32",
+          "pc": 2147489328,
+          "word": 34572423,
+          "count": 1,
+          "data": 71916310019113216
+        },
+        {
+          "cycle": 1273102,
+          "slot": 1,
+          "rob": "1:33",
+          "pc": 2147489332,
+          "word": 67506067,
+          "count": 1,
+          "data": 2147528608
+        },
+        {
+          "cycle": 1273104,
+          "slot": 0,
+          "rob": "1:34",
+          "pc": 2147489336,
+          "word": 34572551,
+          "count": 1,
+          "data": 13852792082613108928
+        },
+        {
+          "cycle": 1273104,
+          "slot": 1,
+          "rob": "1:35",
+          "pc": 2147489340,
+          "word": 101060499,
+          "count": 1,
+          "data": 2147528640
+        },
+        {
+          "cycle": 1273105,
+          "slot": 0,
+          "rob": "1:36",
+          "pc": 2147489344,
+          "word": 34572679,
+          "count": 1,
+          "data": 18410575364892983551
+        },
+        {
+          "cycle": 1273109,
+          "slot": 0,
+          "rob": "1:37",
+          "pc": 2147489348,
+          "word": 59244555,
+          "count": 1,
+          "data": 32450
+        }
+      ],
+      "prefix_pc_word_count_sha256": "45c9b3103c9aaa43798c44115eb51dced4166c29a632e7f97c5eead1d91b5a4d",
+      "ordered_observed_intervals": {
+        "begin_to_leaf_first_retire": 46,
+        "leaf_to_vstart_retire": 9,
+        "vstart_to_vcsr_retire": 9,
+        "vcsr_to_vsetivli_retire": 9,
+        "vsetivli_retire_to_vdot_enqueue": 5,
+        "vdot_enqueue_to_accept": 19
+      }
+    },
+    {
+      "seq": 76,
+      "round": 5,
+      "method": 6,
+      "kind": 0,
+      "order_group": 1,
+      "profile": "steady",
+      "dataset": 0,
+      "phase": "formal",
+      "custom_count": 32,
+      "method_label": "S-V",
+      "cycles": 312,
+      "instret": 235,
+      "begin_cycle": 1292808,
+      "end_cycle": 1293120,
+      "leaf": "split_gemv_8x32_vdot",
+      "leaf_entry_pc": "0x800015f0",
+      "leaf_first_retired_bundle_offset": 55,
+      "inner_call_pc": "0x800015ac",
+      "inner_call_retire_offset": 48,
+      "inner_call_to_leaf_retirement_gap": 7,
+      "leaf_call_redirect": true,
+      "prefix_redirects": [
+        {
+          "cycle": 1292822,
+          "rob": "0:45",
+          "ftq": "1:1",
+          "self": 0,
+          "offset": 14,
+          "retired_pc": "0x80000a80",
+          "retired_word": "0x330000f",
+          "retire_cycle": 1292828,
+          "retire_offset": 20,
+          "kind": "fence",
+          "binding": "unique subsequent same-ROB RETIRE within16 cycles; no intervening killing redirect"
+        },
+        {
+          "cycle": 1292850,
+          "rob": "1:11",
+          "ftq": "1:4",
+          "self": 0,
+          "offset": 42,
+          "retired_pc": "0x800015ac",
+          "retired_word": "0x700e7",
+          "retire_cycle": 1292856,
+          "retire_offset": 48,
+          "kind": "jalr",
+          "binding": "unique subsequent same-ROB RETIRE within16 cycles; no intervening killing redirect"
+        }
+      ],
+      "timer_csr_enqueue": {
+        "cycle": 1292805,
+        "rob": "0:44",
+        "pc": 2147486332,
+        "word": 3221235827,
+        "empty": 1,
+        "wait": 0,
+        "block": 0,
+        "offset": -3
+      },
+      "first_custom": {
+        "enqueue": {
+          "cycle": 1292895,
+          "rob": "1:32",
+          "pc": 2147489348,
+          "ftq": "1:7",
+          "word": 59244555
+        },
+        "accept": {
+          "cycle": 1292914,
+          "seq": 2336,
+          "rob": "1:32"
+        },
+        "commit": {
+          "cycle": 1292918,
+          "rob": "1:32",
+          "pc": 2147489348,
+          "ftq": "1:7"
+        }
+      },
+      "before_first_accept": 106,
+      "leaf_retirement_to_first_enqueue": 32,
+      "first_enqueue_to_accept": 19,
+      "leaf_retirement_to_accept": 51,
+      "pre_accept_vfex_waits": [],
+      "retired_milestones": {
+        "0x80000a7c": {
+          "cycle": 1292811,
+          "slot": 0,
+          "rob": "0:44",
+          "pc": 2147486332,
+          "word": 3221235827,
+          "count": 1,
+          "data": 16270799599947796304,
+          "offset": 3
+        },
+        "0x80000a80": {
+          "cycle": 1292828,
+          "slot": 0,
+          "rob": "0:45",
+          "pc": 2147486336,
+          "word": 53477391,
+          "count": 1,
+          "data": 0,
+          "offset": 20
+        },
+        "0x80000a90": {
+          "cycle": 1292845,
+          "slot": 0,
+          "rob": "0:47",
+          "pc": 2147486352,
+          "word": 655591,
+          "count": 1,
+          "data": 2147486356,
+          "offset": 37
+        },
+        "0x80001580": {
+          "cycle": 1292847,
+          "slot": 0,
+          "rob": "1:0",
+          "pc": 2147489152,
+          "word": 4261478675,
+          "count": 1,
+          "data": 2147569376,
+          "offset": 39
+        },
+        "0x800015ac": {
+          "cycle": 1292856,
+          "slot": 3,
+          "rob": "1:11",
+          "pc": 2147489196,
+          "word": 458983,
+          "count": 1,
+          "data": 2147489200,
+          "offset": 48
+        },
+        "0x800015f0": {
+          "cycle": 1292863,
+          "slot": 0,
+          "rob": "1:12",
+          "pc": 2147489264,
+          "word": 394899,
+          "count": 2,
+          "data": 0,
+          "offset": 55
+        },
+        "0x800015f8": {
+          "cycle": 1292872,
+          "slot": 0,
+          "rob": "1:13",
+          "pc": 2147489272,
+          "word": 8409203,
+          "count": 1,
+          "data": 0,
+          "offset": 64
+        },
+        "0x800015fc": {
+          "cycle": 1292881,
+          "slot": 0,
+          "rob": "1:14",
+          "pc": 2147489276,
+          "word": 15978611,
+          "count": 1,
+          "data": 7,
+          "offset": 73
+        },
+        "0x80001600": {
+          "cycle": 1292890,
+          "slot": 0,
+          "rob": "1:15",
+          "pc": 2147489280,
+          "word": 3221516375,
+          "count": 1,
+          "data": 8,
+          "offset": 82
+        },
+        "0x80001608": {
+          "cycle": 1292906,
+          "slot": 0,
+          "rob": "1:17",
+          "pc": 2147489288,
+          "word": 34573319,
+          "count": 1,
+          "data": 9187483429707480960,
+          "offset": 98
+        },
+        "0x80001644": {
+          "cycle": 1292918,
+          "slot": 0,
+          "rob": "1:32",
+          "pc": 2147489348,
+          "word": 59244555,
+          "count": 1,
+          "data": 32450,
+          "offset": 110
+        }
+      },
+      "prefix_retire_events": [
+        {
+          "cycle": 1292811,
+          "slot": 0,
+          "rob": "0:44",
+          "pc": 2147486332,
+          "word": 3221235827,
+          "count": 1,
+          "data": 16270799599947796304
+        },
+        {
+          "cycle": 1292828,
+          "slot": 0,
+          "rob": "0:45",
+          "pc": 2147486336,
+          "word": 53477391,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1292842,
+          "slot": 0,
+          "rob": "0:46",
+          "pc": 2147486340,
+          "word": 461075,
+          "count": 3,
+          "data": 2147519632
+        },
+        {
+          "cycle": 1292845,
+          "slot": 0,
+          "rob": "0:47",
+          "pc": 2147486352,
+          "word": 655591,
+          "count": 1,
+          "data": 2147486356
+        },
+        {
+          "cycle": 1292847,
+          "slot": 0,
+          "rob": "1:0",
+          "pc": 2147489152,
+          "word": 4261478675,
+          "count": 1,
+          "data": 2147569376
+        },
+        {
+          "cycle": 1292855,
+          "slot": 0,
+          "rob": "1:1",
+          "pc": 2147489156,
+          "word": 8468515,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1292855,
+          "slot": 1,
+          "rob": "1:2",
+          "pc": 2147489160,
+          "word": 25506819,
+          "count": 1,
+          "data": 2147530944
+        },
+        {
+          "cycle": 1292855,
+          "slot": 2,
+          "rob": "1:3",
+          "pc": 2147489164,
+          "word": 329619,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1292855,
+          "slot": 3,
+          "rob": "1:4",
+          "pc": 2147489168,
+          "word": 33896195,
+          "count": 1,
+          "data": 2147489264
+        },
+        {
+          "cycle": 1292855,
+          "slot": 4,
+          "rob": "1:5",
+          "pc": 2147489172,
+          "word": 8729987,
+          "count": 1,
+          "data": 2147528480
+        },
+        {
+          "cycle": 1292855,
+          "slot": 5,
+          "rob": "1:6",
+          "pc": 2147489176,
+          "word": 341251,
+          "count": 1,
+          "data": 2147528544
+        },
+        {
+          "cycle": 1292855,
+          "slot": 6,
+          "rob": "1:7",
+          "pc": 2147489180,
+          "word": 9516067,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1292856,
+          "slot": 0,
+          "rob": "1:8",
+          "pc": 2147489184,
+          "word": 17282179,
+          "count": 1,
+          "data": 2147531104
+        },
+        {
+          "cycle": 1292856,
+          "slot": 1,
+          "rob": "1:9",
+          "pc": 2147489188,
+          "word": 263699,
+          "count": 1,
+          "data": 2147519632
+        },
+        {
+          "cycle": 1292856,
+          "slot": 2,
+          "rob": "1:10",
+          "pc": 2147489192,
+          "word": 1129507,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1292856,
+          "slot": 3,
+          "rob": "1:11",
+          "pc": 2147489196,
+          "word": 458983,
+          "count": 1,
+          "data": 2147489200
+        },
+        {
+          "cycle": 1292863,
+          "slot": 0,
+          "rob": "1:12",
+          "pc": 2147489264,
+          "word": 394899,
+          "count": 2,
+          "data": 0
+        },
+        {
+          "cycle": 1292872,
+          "slot": 0,
+          "rob": "1:13",
+          "pc": 2147489272,
+          "word": 8409203,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1292881,
+          "slot": 0,
+          "rob": "1:14",
+          "pc": 2147489276,
+          "word": 15978611,
+          "count": 1,
+          "data": 7
+        },
+        {
+          "cycle": 1292890,
+          "slot": 0,
+          "rob": "1:15",
+          "pc": 2147489280,
+          "word": 3221516375,
+          "count": 1,
+          "data": 8
+        },
+        {
+          "cycle": 1292891,
+          "slot": 0,
+          "rob": "1:16",
+          "pc": 2147489284,
+          "word": 364435,
+          "count": 1,
+          "data": 7
+        },
+        {
+          "cycle": 1292906,
+          "slot": 0,
+          "rob": "1:17",
+          "pc": 2147489288,
+          "word": 34573319,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1292906,
+          "slot": 1,
+          "rob": "1:18",
+          "pc": 2147489292,
+          "word": 8753043,
+          "count": 1,
+          "data": 2147528488
+        },
+        {
+          "cycle": 1292907,
+          "slot": 0,
+          "rob": "1:19",
+          "pc": 2147489296,
+          "word": 34573447,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1292907,
+          "slot": 1,
+          "rob": "1:20",
+          "pc": 2147489300,
+          "word": 17141651,
+          "count": 1,
+          "data": 2147528496
+        },
+        {
+          "cycle": 1292908,
+          "slot": 0,
+          "rob": "1:21",
+          "pc": 2147489304,
+          "word": 34573575,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1292908,
+          "slot": 1,
+          "rob": "1:22",
+          "pc": 2147489308,
+          "word": 25530259,
+          "count": 1,
+          "data": 2147528504
+        },
+        {
+          "cycle": 1292909,
+          "slot": 0,
+          "rob": "1:23",
+          "pc": 2147489312,
+          "word": 34573703,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1292910,
+          "slot": 0,
+          "rob": "1:24",
+          "pc": 2147489316,
+          "word": 397203,
+          "count": 1,
+          "data": 2147490356
+        },
+        {
+          "cycle": 1292910,
+          "slot": 1,
+          "rob": "1:25",
+          "pc": 2147489320,
+          "word": 34572295,
+          "count": 1,
+          "data": 9277484505927483264
+        },
+        {
+          "cycle": 1292910,
+          "slot": 2,
+          "rob": "1:26",
+          "pc": 2147489324,
+          "word": 33951635,
+          "count": 1,
+          "data": 2147528576
+        },
+        {
+          "cycle": 1292911,
+          "slot": 0,
+          "rob": "1:27",
+          "pc": 2147489328,
+          "word": 34572423,
+          "count": 1,
+          "data": 71916310019113216
+        },
+        {
+          "cycle": 1292911,
+          "slot": 1,
+          "rob": "1:28",
+          "pc": 2147489332,
+          "word": 67506067,
+          "count": 1,
+          "data": 2147528608
+        },
+        {
+          "cycle": 1292913,
+          "slot": 0,
+          "rob": "1:29",
+          "pc": 2147489336,
+          "word": 34572551,
+          "count": 1,
+          "data": 13852792082613108928
+        },
+        {
+          "cycle": 1292913,
+          "slot": 1,
+          "rob": "1:30",
+          "pc": 2147489340,
+          "word": 101060499,
+          "count": 1,
+          "data": 2147528640
+        },
+        {
+          "cycle": 1292914,
+          "slot": 0,
+          "rob": "1:31",
+          "pc": 2147489344,
+          "word": 34572679,
+          "count": 1,
+          "data": 18410575364892983551
+        },
+        {
+          "cycle": 1292918,
+          "slot": 0,
+          "rob": "1:32",
+          "pc": 2147489348,
+          "word": 59244555,
+          "count": 1,
+          "data": 32450
+        }
+      ],
+      "prefix_pc_word_count_sha256": "45c9b3103c9aaa43798c44115eb51dced4166c29a632e7f97c5eead1d91b5a4d",
+      "ordered_observed_intervals": {
+        "begin_to_leaf_first_retire": 55,
+        "leaf_to_vstart_retire": 9,
+        "vstart_to_vcsr_retire": 9,
+        "vcsr_to_vsetivli_retire": 9,
+        "vsetivli_retire_to_vdot_enqueue": 5,
+        "vdot_enqueue_to_accept": 19
+      }
+    },
+    {
+      "seq": 83,
+      "round": 5,
+      "method": 6,
+      "kind": 2,
+      "order_group": 1,
+      "profile": "steady",
+      "dataset": 0,
+      "phase": "formal",
+      "custom_count": 32,
+      "method_label": "S-V",
+      "cycles": 303,
+      "instret": 235,
+      "begin_cycle": 1316540,
+      "end_cycle": 1316843,
+      "leaf": "split_gemv_8x32_vdot",
+      "leaf_entry_pc": "0x800015f0",
+      "leaf_first_retired_bundle_offset": 46,
+      "inner_call_pc": "0x800015ac",
+      "inner_call_retire_offset": 46,
+      "inner_call_to_leaf_retirement_gap": 0,
+      "leaf_call_redirect": false,
+      "prefix_redirects": [
+        {
+          "cycle": 1316554,
+          "rob": "0:45",
+          "ftq": "0:6",
+          "self": 0,
+          "offset": 14,
+          "retired_pc": "0x80000a80",
+          "retired_word": "0x330000f",
+          "retire_cycle": 1316560,
+          "retire_offset": 20,
+          "kind": "fence",
+          "binding": "unique subsequent same-ROB RETIRE within16 cycles; no intervening killing redirect"
+        }
+      ],
+      "timer_csr_enqueue": {
+        "cycle": 1316537,
+        "rob": "0:44",
+        "pc": 2147486332,
+        "word": 3221235827,
+        "empty": 1,
+        "wait": 0,
+        "block": 0,
+        "offset": -3
+      },
+      "first_custom": {
+        "enqueue": {
+          "cycle": 1316618,
+          "rob": "1:32",
+          "pc": 2147489348,
+          "ftq": "1:4",
+          "word": 59244555
+        },
+        "accept": {
+          "cycle": 1316637,
+          "seq": 2400,
+          "rob": "1:32"
+        },
+        "commit": {
+          "cycle": 1316641,
+          "rob": "1:32",
+          "pc": 2147489348,
+          "ftq": "1:4"
+        }
+      },
+      "before_first_accept": 97,
+      "leaf_retirement_to_first_enqueue": 32,
+      "first_enqueue_to_accept": 19,
+      "leaf_retirement_to_accept": 51,
+      "pre_accept_vfex_waits": [],
+      "retired_milestones": {
+        "0x80000a7c": {
+          "cycle": 1316543,
+          "slot": 0,
+          "rob": "0:44",
+          "pc": 2147486332,
+          "word": 3221235827,
+          "count": 1,
+          "data": 16270799599947820036,
+          "offset": 3
+        },
+        "0x80000a80": {
+          "cycle": 1316560,
+          "slot": 0,
+          "rob": "0:45",
+          "pc": 2147486336,
+          "word": 53477391,
+          "count": 1,
+          "data": 0,
+          "offset": 20
+        },
+        "0x80000a90": {
+          "cycle": 1316578,
+          "slot": 0,
+          "rob": "0:47",
+          "pc": 2147486352,
+          "word": 655591,
+          "count": 1,
+          "data": 2147486356,
+          "offset": 38
+        },
+        "0x80001580": {
+          "cycle": 1316580,
+          "slot": 0,
+          "rob": "1:0",
+          "pc": 2147489152,
+          "word": 4261478675,
+          "count": 1,
+          "data": 2147569376,
+          "offset": 40
+        },
+        "0x800015ac": {
+          "cycle": 1316586,
+          "slot": 3,
+          "rob": "1:11",
+          "pc": 2147489196,
+          "word": 458983,
+          "count": 1,
+          "data": 2147489200,
+          "offset": 46
+        },
+        "0x800015f0": {
+          "cycle": 1316586,
+          "slot": 4,
+          "rob": "1:12",
+          "pc": 2147489264,
+          "word": 394899,
+          "count": 2,
+          "data": 0,
+          "offset": 46
+        },
+        "0x800015f8": {
+          "cycle": 1316595,
+          "slot": 0,
+          "rob": "1:13",
+          "pc": 2147489272,
+          "word": 8409203,
+          "count": 1,
+          "data": 0,
+          "offset": 55
+        },
+        "0x800015fc": {
+          "cycle": 1316604,
+          "slot": 0,
+          "rob": "1:14",
+          "pc": 2147489276,
+          "word": 15978611,
+          "count": 1,
+          "data": 7,
+          "offset": 64
+        },
+        "0x80001600": {
+          "cycle": 1316613,
+          "slot": 0,
+          "rob": "1:15",
+          "pc": 2147489280,
+          "word": 3221516375,
+          "count": 1,
+          "data": 8,
+          "offset": 73
+        },
+        "0x80001608": {
+          "cycle": 1316629,
+          "slot": 0,
+          "rob": "1:17",
+          "pc": 2147489288,
+          "word": 34573319,
+          "count": 1,
+          "data": 9187483429707480960,
+          "offset": 89
+        },
+        "0x80001644": {
+          "cycle": 1316641,
+          "slot": 0,
+          "rob": "1:32",
+          "pc": 2147489348,
+          "word": 59244555,
+          "count": 1,
+          "data": 32450,
+          "offset": 101
+        }
+      },
+      "prefix_retire_events": [
+        {
+          "cycle": 1316543,
+          "slot": 0,
+          "rob": "0:44",
+          "pc": 2147486332,
+          "word": 3221235827,
+          "count": 1,
+          "data": 16270799599947820036
+        },
+        {
+          "cycle": 1316560,
+          "slot": 0,
+          "rob": "0:45",
+          "pc": 2147486336,
+          "word": 53477391,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1316575,
+          "slot": 0,
+          "rob": "0:46",
+          "pc": 2147486340,
+          "word": 461075,
+          "count": 3,
+          "data": 2147519632
+        },
+        {
+          "cycle": 1316578,
+          "slot": 0,
+          "rob": "0:47",
+          "pc": 2147486352,
+          "word": 655591,
+          "count": 1,
+          "data": 2147486356
+        },
+        {
+          "cycle": 1316580,
+          "slot": 0,
+          "rob": "1:0",
+          "pc": 2147489152,
+          "word": 4261478675,
+          "count": 1,
+          "data": 2147569376
+        },
+        {
+          "cycle": 1316584,
+          "slot": 0,
+          "rob": "1:1",
+          "pc": 2147489156,
+          "word": 8468515,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1316584,
+          "slot": 1,
+          "rob": "1:2",
+          "pc": 2147489160,
+          "word": 25506819,
+          "count": 1,
+          "data": 2147530944
+        },
+        {
+          "cycle": 1316584,
+          "slot": 2,
+          "rob": "1:3",
+          "pc": 2147489164,
+          "word": 329619,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1316584,
+          "slot": 3,
+          "rob": "1:4",
+          "pc": 2147489168,
+          "word": 33896195,
+          "count": 1,
+          "data": 2147489264
+        },
+        {
+          "cycle": 1316584,
+          "slot": 4,
+          "rob": "1:5",
+          "pc": 2147489172,
+          "word": 8729987,
+          "count": 1,
+          "data": 2147528480
+        },
+        {
+          "cycle": 1316584,
+          "slot": 5,
+          "rob": "1:6",
+          "pc": 2147489176,
+          "word": 341251,
+          "count": 1,
+          "data": 2147528544
+        },
+        {
+          "cycle": 1316585,
+          "slot": 0,
+          "rob": "1:7",
+          "pc": 2147489180,
+          "word": 9516067,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1316586,
+          "slot": 0,
+          "rob": "1:8",
+          "pc": 2147489184,
+          "word": 17282179,
+          "count": 1,
+          "data": 2147531104
+        },
+        {
+          "cycle": 1316586,
+          "slot": 1,
+          "rob": "1:9",
+          "pc": 2147489188,
+          "word": 263699,
+          "count": 1,
+          "data": 2147519632
+        },
+        {
+          "cycle": 1316586,
+          "slot": 2,
+          "rob": "1:10",
+          "pc": 2147489192,
+          "word": 1129507,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1316586,
+          "slot": 3,
+          "rob": "1:11",
+          "pc": 2147489196,
+          "word": 458983,
+          "count": 1,
+          "data": 2147489200
+        },
+        {
+          "cycle": 1316586,
+          "slot": 4,
+          "rob": "1:12",
+          "pc": 2147489264,
+          "word": 394899,
+          "count": 2,
+          "data": 0
+        },
+        {
+          "cycle": 1316595,
+          "slot": 0,
+          "rob": "1:13",
+          "pc": 2147489272,
+          "word": 8409203,
+          "count": 1,
+          "data": 0
+        },
+        {
+          "cycle": 1316604,
+          "slot": 0,
+          "rob": "1:14",
+          "pc": 2147489276,
+          "word": 15978611,
+          "count": 1,
+          "data": 7
+        },
+        {
+          "cycle": 1316613,
+          "slot": 0,
+          "rob": "1:15",
+          "pc": 2147489280,
+          "word": 3221516375,
+          "count": 1,
+          "data": 8
+        },
+        {
+          "cycle": 1316614,
+          "slot": 0,
+          "rob": "1:16",
+          "pc": 2147489284,
+          "word": 364435,
+          "count": 1,
+          "data": 7
+        },
+        {
+          "cycle": 1316629,
+          "slot": 0,
+          "rob": "1:17",
+          "pc": 2147489288,
+          "word": 34573319,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1316629,
+          "slot": 1,
+          "rob": "1:18",
+          "pc": 2147489292,
+          "word": 8753043,
+          "count": 1,
+          "data": 2147528488
+        },
+        {
+          "cycle": 1316630,
+          "slot": 0,
+          "rob": "1:19",
+          "pc": 2147489296,
+          "word": 34573447,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1316630,
+          "slot": 1,
+          "rob": "1:20",
+          "pc": 2147489300,
+          "word": 17141651,
+          "count": 1,
+          "data": 2147528496
+        },
+        {
+          "cycle": 1316631,
+          "slot": 0,
+          "rob": "1:21",
+          "pc": 2147489304,
+          "word": 34573575,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1316631,
+          "slot": 1,
+          "rob": "1:22",
+          "pc": 2147489308,
+          "word": 25530259,
+          "count": 1,
+          "data": 2147528504
+        },
+        {
+          "cycle": 1316632,
+          "slot": 0,
+          "rob": "1:23",
+          "pc": 2147489312,
+          "word": 34573703,
+          "count": 1,
+          "data": 9187483429707480960
+        },
+        {
+          "cycle": 1316633,
+          "slot": 0,
+          "rob": "1:24",
+          "pc": 2147489316,
+          "word": 397203,
+          "count": 1,
+          "data": 2147490356
+        },
+        {
+          "cycle": 1316633,
+          "slot": 1,
+          "rob": "1:25",
+          "pc": 2147489320,
+          "word": 34572295,
+          "count": 1,
+          "data": 9277484505927483264
+        },
+        {
+          "cycle": 1316633,
+          "slot": 2,
+          "rob": "1:26",
+          "pc": 2147489324,
+          "word": 33951635,
+          "count": 1,
+          "data": 2147528576
+        },
+        {
+          "cycle": 1316634,
+          "slot": 0,
+          "rob": "1:27",
+          "pc": 2147489328,
+          "word": 34572423,
+          "count": 1,
+          "data": 71916310019113216
+        },
+        {
+          "cycle": 1316634,
+          "slot": 1,
+          "rob": "1:28",
+          "pc": 2147489332,
+          "word": 67506067,
+          "count": 1,
+          "data": 2147528608
+        },
+        {
+          "cycle": 1316636,
+          "slot": 0,
+          "rob": "1:29",
+          "pc": 2147489336,
+          "word": 34572551,
+          "count": 1,
+          "data": 13852792082613108928
+        },
+        {
+          "cycle": 1316636,
+          "slot": 1,
+          "rob": "1:30",
+          "pc": 2147489340,
+          "word": 101060499,
+          "count": 1,
+          "data": 2147528640
+        },
+        {
+          "cycle": 1316637,
+          "slot": 0,
+          "rob": "1:31",
+          "pc": 2147489344,
+          "word": 34572679,
+          "count": 1,
+          "data": 18410575364892983551
+        },
+        {
+          "cycle": 1316641,
+          "slot": 0,
+          "rob": "1:32",
+          "pc": 2147489348,
+          "word": 59244555,
+          "count": 1,
+          "data": 32450
+        }
+      ],
+      "prefix_pc_word_count_sha256": "45c9b3103c9aaa43798c44115eb51dced4166c29a632e7f97c5eead1d91b5a4d",
+      "ordered_observed_intervals": {
+        "begin_to_leaf_first_retire": 46,
+        "leaf_to_vstart_retire": 9,
+        "vstart_to_vcsr_retire": 9,
+        "vcsr_to_vsetivli_retire": 9,
+        "vsetivli_retire_to_vdot_enqueue": 5,
+        "vdot_enqueue_to_accept": 19
+      }
+    }
+  ],
+  "all18_SV_history": [
+    {
+      "seq": 0,
+      "round": 0,
+      "formal": false,
+      "kind": 1,
+      "order": "forward",
+      "before_first_accept": 120,
+      "cycles": 355,
+      "previous_timed_method": "NONE_WITHIN_TIMING_PHASE",
+      "previous_timed_wrapper": null,
+      "immediately_preceding_conditioner": {
+        "wrapper": "split_full",
+        "leaf": "split_gemv_8x32_rvv3",
+        "inner_call_pc": "0x800015ac",
+        "leaf_entry": "0x80002250"
+      },
+      "current_inner_call_pc": "0x800015ac",
+      "current_leaf_entry": "0x800015f0"
+    },
+    {
+      "seq": 7,
+      "round": 0,
+      "formal": false,
+      "kind": 0,
+      "order": "forward",
+      "before_first_accept": 112,
+      "cycles": 341,
+      "previous_timed_method": "P-R4",
+      "previous_timed_wrapper": "packed_full",
+      "immediately_preceding_conditioner": {
+        "wrapper": "split_full",
+        "leaf": "split_gemv_8x32_rvv3",
+        "inner_call_pc": "0x800015ac",
+        "leaf_entry": "0x80002250"
+      },
+      "current_inner_call_pc": "0x800015ac",
+      "current_leaf_entry": "0x800015f0"
+    },
+    {
+      "seq": 13,
+      "round": 0,
+      "formal": false,
+      "kind": 2,
+      "order": "forward",
+      "before_first_accept": 106,
+      "cycles": 313,
+      "previous_timed_method": "S-R4",
+      "previous_timed_wrapper": "split_full",
+      "immediately_preceding_conditioner": {
+        "wrapper": "split_full",
+        "leaf": "split_gemv_8x32_rvv3",
+        "inner_call_pc": "0x800015ac",
+        "leaf_entry": "0x80002250"
+      },
+      "current_inner_call_pc": "0x800015ac",
+      "current_leaf_entry": "0x800015f0"
+    },
+    {
+      "seq": 14,
+      "round": 1,
+      "formal": false,
+      "kind": 1,
+      "order": "reverse",
+      "before_first_accept": 96,
+      "cycles": 302,
+      "previous_timed_method": "S-V",
+      "previous_timed_wrapper": "split_full",
+      "immediately_preceding_conditioner": {
+        "wrapper": "split_full",
+        "leaf": "split_gemv_8x32_rvv3",
+        "inner_call_pc": "0x800015ac",
+        "leaf_entry": "0x80002250"
+      },
+      "current_inner_call_pc": "0x800015ac",
+      "current_leaf_entry": "0x800015f0"
+    },
+    {
+      "seq": 20,
+      "round": 1,
+      "formal": false,
+      "kind": 0,
+      "order": "reverse",
+      "before_first_accept": 106,
+      "cycles": 315,
+      "previous_timed_method": "S-R0",
+      "previous_timed_wrapper": "split_full",
+      "immediately_preceding_conditioner": {
+        "wrapper": "split_full",
+        "leaf": "split_gemv_8x32_rvv3",
+        "inner_call_pc": "0x800015ac",
+        "leaf_entry": "0x80002250"
+      },
+      "current_inner_call_pc": "0x800015ac",
+      "current_leaf_entry": "0x800015f0"
+    },
+    {
+      "seq": 27,
+      "round": 1,
+      "formal": false,
+      "kind": 2,
+      "order": "reverse",
+      "before_first_accept": 98,
+      "cycles": 304,
+      "previous_timed_method": "P-V",
+      "previous_timed_wrapper": "packed_full",
+      "immediately_preceding_conditioner": {
+        "wrapper": "split_full",
+        "leaf": "split_gemv_8x32_rvv3",
+        "inner_call_pc": "0x800015ac",
+        "leaf_entry": "0x80002250"
+      },
+      "current_inner_call_pc": "0x800015ac",
+      "current_leaf_entry": "0x800015f0"
+    },
+    {
+      "seq": 28,
+      "round": 2,
+      "formal": true,
+      "kind": 1,
+      "order": "forward",
+      "before_first_accept": 97,
+      "cycles": 303,
+      "previous_timed_method": "S-V",
+      "previous_timed_wrapper": "split_full",
+      "immediately_preceding_conditioner": {
+        "wrapper": "split_full",
+        "leaf": "split_gemv_8x32_rvv3",
+        "inner_call_pc": "0x800015ac",
+        "leaf_entry": "0x80002250"
+      },
+      "current_inner_call_pc": "0x800015ac",
+      "current_leaf_entry": "0x800015f0"
+    },
+    {
+      "seq": 35,
+      "round": 2,
+      "formal": true,
+      "kind": 0,
+      "order": "forward",
+      "before_first_accept": 98,
+      "cycles": 304,
+      "previous_timed_method": "P-R4",
+      "previous_timed_wrapper": "packed_full",
+      "immediately_preceding_conditioner": {
+        "wrapper": "split_full",
+        "leaf": "split_gemv_8x32_rvv3",
+        "inner_call_pc": "0x800015ac",
+        "leaf_entry": "0x80002250"
+      },
+      "current_inner_call_pc": "0x800015ac",
+      "current_leaf_entry": "0x800015f0"
+    },
+    {
+      "seq": 41,
+      "round": 2,
+      "formal": true,
+      "kind": 2,
+      "order": "forward",
+      "before_first_accept": 106,
+      "cycles": 312,
+      "previous_timed_method": "S-R4",
+      "previous_timed_wrapper": "split_full",
+      "immediately_preceding_conditioner": {
+        "wrapper": "split_full",
+        "leaf": "split_gemv_8x32_rvv3",
+        "inner_call_pc": "0x800015ac",
+        "leaf_entry": "0x80002250"
+      },
+      "current_inner_call_pc": "0x800015ac",
+      "current_leaf_entry": "0x800015f0"
+    },
+    {
+      "seq": 42,
+      "round": 3,
+      "formal": true,
+      "kind": 1,
+      "order": "reverse",
+      "before_first_accept": 96,
+      "cycles": 302,
+      "previous_timed_method": "S-V",
+      "previous_timed_wrapper": "split_full",
+      "immediately_preceding_conditioner": {
+        "wrapper": "split_full",
+        "leaf": "split_gemv_8x32_rvv3",
+        "inner_call_pc": "0x800015ac",
+        "leaf_entry": "0x80002250"
+      },
+      "current_inner_call_pc": "0x800015ac",
+      "current_leaf_entry": "0x800015f0"
+    },
+    {
+      "seq": 48,
+      "round": 3,
+      "formal": true,
+      "kind": 0,
+      "order": "reverse",
+      "before_first_accept": 106,
+      "cycles": 315,
+      "previous_timed_method": "S-R0",
+      "previous_timed_wrapper": "split_full",
+      "immediately_preceding_conditioner": {
+        "wrapper": "split_full",
+        "leaf": "split_gemv_8x32_rvv3",
+        "inner_call_pc": "0x800015ac",
+        "leaf_entry": "0x80002250"
+      },
+      "current_inner_call_pc": "0x800015ac",
+      "current_leaf_entry": "0x800015f0"
+    },
+    {
+      "seq": 55,
+      "round": 3,
+      "formal": true,
+      "kind": 2,
+      "order": "reverse",
+      "before_first_accept": 97,
+      "cycles": 303,
+      "previous_timed_method": "P-V",
+      "previous_timed_wrapper": "packed_full",
+      "immediately_preceding_conditioner": {
+        "wrapper": "split_full",
+        "leaf": "split_gemv_8x32_rvv3",
+        "inner_call_pc": "0x800015ac",
+        "leaf_entry": "0x80002250"
+      },
+      "current_inner_call_pc": "0x800015ac",
+      "current_leaf_entry": "0x800015f0"
+    },
+    {
+      "seq": 56,
+      "round": 4,
+      "formal": true,
+      "kind": 1,
+      "order": "forward",
+      "before_first_accept": 96,
+      "cycles": 302,
+      "previous_timed_method": "S-V",
+      "previous_timed_wrapper": "split_full",
+      "immediately_preceding_conditioner": {
+        "wrapper": "split_full",
+        "leaf": "split_gemv_8x32_rvv3",
+        "inner_call_pc": "0x800015ac",
+        "leaf_entry": "0x80002250"
+      },
+      "current_inner_call_pc": "0x800015ac",
+      "current_leaf_entry": "0x800015f0"
+    },
+    {
+      "seq": 63,
+      "round": 4,
+      "formal": true,
+      "kind": 0,
+      "order": "forward",
+      "before_first_accept": 97,
+      "cycles": 303,
+      "previous_timed_method": "P-R4",
+      "previous_timed_wrapper": "packed_full",
+      "immediately_preceding_conditioner": {
+        "wrapper": "split_full",
+        "leaf": "split_gemv_8x32_rvv3",
+        "inner_call_pc": "0x800015ac",
+        "leaf_entry": "0x80002250"
+      },
+      "current_inner_call_pc": "0x800015ac",
+      "current_leaf_entry": "0x800015f0"
+    },
+    {
+      "seq": 69,
+      "round": 4,
+      "formal": true,
+      "kind": 2,
+      "order": "forward",
+      "before_first_accept": 106,
+      "cycles": 314,
+      "previous_timed_method": "S-R4",
+      "previous_timed_wrapper": "split_full",
+      "immediately_preceding_conditioner": {
+        "wrapper": "split_full",
+        "leaf": "split_gemv_8x32_rvv3",
+        "inner_call_pc": "0x800015ac",
+        "leaf_entry": "0x80002250"
+      },
+      "current_inner_call_pc": "0x800015ac",
+      "current_leaf_entry": "0x800015f0"
+    },
+    {
+      "seq": 70,
+      "round": 5,
+      "formal": true,
+      "kind": 1,
+      "order": "reverse",
+      "before_first_accept": 97,
+      "cycles": 303,
+      "previous_timed_method": "S-V",
+      "previous_timed_wrapper": "split_full",
+      "immediately_preceding_conditioner": {
+        "wrapper": "split_full",
+        "leaf": "split_gemv_8x32_rvv3",
+        "inner_call_pc": "0x800015ac",
+        "leaf_entry": "0x80002250"
+      },
+      "current_inner_call_pc": "0x800015ac",
+      "current_leaf_entry": "0x800015f0"
+    },
+    {
+      "seq": 76,
+      "round": 5,
+      "formal": true,
+      "kind": 0,
+      "order": "reverse",
+      "before_first_accept": 106,
+      "cycles": 312,
+      "previous_timed_method": "S-R0",
+      "previous_timed_wrapper": "split_full",
+      "immediately_preceding_conditioner": {
+        "wrapper": "split_full",
+        "leaf": "split_gemv_8x32_rvv3",
+        "inner_call_pc": "0x800015ac",
+        "leaf_entry": "0x80002250"
+      },
+      "current_inner_call_pc": "0x800015ac",
+      "current_leaf_entry": "0x800015f0"
+    },
+    {
+      "seq": 83,
+      "round": 5,
+      "formal": true,
+      "kind": 2,
+      "order": "reverse",
+      "before_first_accept": 97,
+      "cycles": 303,
+      "previous_timed_method": "P-V",
+      "previous_timed_wrapper": "packed_full",
+      "immediately_preceding_conditioner": {
+        "wrapper": "split_full",
+        "leaf": "split_gemv_8x32_rvv3",
+        "inner_call_pc": "0x800015ac",
+        "leaf_entry": "0x80002250"
+      },
+      "current_inner_call_pc": "0x800015ac",
+      "current_leaf_entry": "0x800015f0"
+    }
+  ],
+  "all20_formal_split_RVV_have_inner_redirect": true,
+  "source_semantics": {
+    "files": 11,
+    "interpretation": "Additional self=0 redirects are bound to the normally retired wrapper-to-leaf JALR. Source semantics supports call prediction correction, not a particular predictor table or exact pure recovery latency."
+  },
+  "inferred_mechanism": "Indirect-call prediction correction is associated with the call-to-leaf arrival interval carrying the formal fast/slow difference.",
+  "unproven": [
+    "specific BTB/TAGE/RAS or cache mechanism",
+    "wrong predicted target versus not predicted taken",
+    "conditioning as the sole cause",
+    "fixed 9-cycle pure redirect recovery penalty",
+    "speedup after intervention"
+  ],
+  "retained_observed_metrics": {
+    "S_V_cycles": 308.5,
+    "fastest_observed_rvv": "S-R4",
+    "S_R4_cycles": 340.5,
+    "P_V_cycles": 408.75,
+    "rvv_over_split": 1.1037277147487845,
+    "packed_over_split": 1.3249594813614263,
+    "scope": "same new ELF steady-d0 4 formal windows/method; OBSERVED_ONLY_HOLD",
+    "comparison_with_old_273_299": "NOT_COMPARABLE_DIFFERENT_WINDOW"
+  },
+  "retained_ppa": {
+    "status": "RETAINED_0F_NO_NEW_SYNTHESIS_OR_STA",
+    "selected_hardware_commit": "0f12df675378556670afd0dd2153f47fcb330610",
+    "area_um2": {
+      "FU": 17298.246,
+      "VFEX4_parent": 284614.946
+    },
+    "nominal_ns": {
+      "FU_i2r": 1.190323,
+      "FU_r2r": 1.163404,
+      "FU_worst_slack": -0.26852,
+      "parent_global_r2r": 3.261218,
+      "parent_vdot_r2r": 1.356106,
+      "parent_reported_worst_slack": -2.393998
+    },
+    "conditions": "Nangate45 typical/25C/1.1V; nominal 1ns, 5fF; pre-layout reference",
+    "source": "team/optimizations/o2/r3-div-gate/PERFORMANCE_COST_RESULT.md",
+    "limits": "FU is contained by parent; do not add areas; not core Fmax, 1ns not closed",
+    "new_area": "NOT_TESTED",
+    "new_sta": "NOT_TESTED",
+    "power": "NOT_TESTED",
+    "pnr_cts_spef": "NOT_TESTED",
+    "core_fmax": "NOT_TESTED"
+  },
+  "decision": {
+    "revise_p1_once_worth_testing": true,
+    "selected_candidate": "A_CONDITIONING_CALLSITE_ISOLATION_ONLY",
+    "candidate_implemented": false,
+    "candidate_built": false,
+    "candidate_target_tested": false,
+    "design_path": "team/optimizations/o2/integration/firstdot-v2-0f/continuation/callpath-p2/REVISION_PLAN.md",
+    "design_sha256": "b294fb923bb625010f41d100e44e82ada771042611ded62914cb1b89250bb62a",
+    "next": "P1-R1 static implementation and final ELF/layout comparison first, then a newly frozen bounded same-layout control/candidate probe.",
+    "old_thresholds_retained": "anchor <=1%; per-order benefit >=3%; full correctness/path/replay; expand only after pass",
+    "production_default": "0f + firstdot V2 + explicit C8",
+    "github_upload": false
+  },
+  "analysis_tools": {
+    "trace.py": {
+      "source": "/home/riscv/riscv-lab/software-import-20261026/p2-callpath-20261028-01/trace/analyze.py",
+      "sha256": "eff9dbeaf79f3761001d68b36449e83eea66673a9b31c2de529bfa7b5e6cdc5b"
+    },
+    "static.py": {
+      "source": "/home/riscv/riscv-lab/software-import-20261026/p2-callpath-20261028-01/static/analyze.py",
+      "sha256": "af4e6a804d8afef582337c81f5793e7152501252ffa1fe96057e2e7340119e76"
+    },
+    "observer.py": {
+      "source": "/home/riscv/riscv-lab/software-import-20261026/p2-callpath-20261028-01/semantics/audit_observer.py",
+      "sha256": "2548866e9cac37b414570468f3c1242d9e291f7431ce8b7197d704c1b36c92d7"
+    }
+  },
+  "archive_manifest_path": "team/optimizations/o2/integration/firstdot-v2-0f/continuation/callpath-p2/evidence/20261028-p2/manifest.json",
+  "archive_hash_note": "Result is archived before manifest creation; manifest SHA is subsequently appended in ledger record31."
+}

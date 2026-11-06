@@ -1,0 +1,39 @@
+\section{vdot全核波形与事务核对}
+2026年11月5日补充一次真实全核波形捕获。复用稳定0f对应clean-02封存生成RTL，1681项生成输入与原清单一致，在独立目录编译启用FST的新EMU，运行原functional-2镜像与正常NEMU。DiffTest开启，程序最终GOOD TRAP、真实退出码0。本次增加波形证据，不新增性能、面积或STA结论，也不改写原R5组合验收范围。\par
+
+\subsection{输入、结果与事务身份}
+两源均为\seqsplit{0xa5a5a5a5a5a5a5a50807060504030201}，低八个signed int8元素为1至8。数学预期为$1^2+2^2+\cdots+8^2=204$；实际128位响应为\seqsplit{0x000000000000000000000000000000cc}，高96位清零。源高64位A5哨兵不参与计算。\par
+{\small\begin{longtable}{p{.24\linewidth}p{.68\linewidth}}\toprule
+字段 & 核对值\\\midrule
+事务身份 & ROB0:39；物理目的103（十六进制67）\\
+提交观察 & io\_valid=1、io\_vecwen=1；架构目的v10（十六进制0A）\\
+PC与机器字 & PC=0x80001b8c；机器字0x0294050b\\
+原始FST & \seqsplit{/home/riscv/riscv-lab/vdot-wave-0f-20261105-02/run/vdot-positive.fst}\\
+FST SHA256 & \seqsplit{14822fb02ea28319253cb9ea118c6df143844f1c057c54a610c34865ff03bcb2}\\
+新EMU SHA256 & \seqsplit{76271f56044e61feb924ebf249f1708838279e7f9881c75b89d4f59626e14146}\\
+\bottomrule\end{longtable}}
+旧clean-02不启用波形的EMU与本次trace版EMU分别记录二进制身份；本次使用相同封存生成RTL，不以旧EMU哈希冒充新构建。命令、运行回执、事务采样与截图SHA见\seqsplit{evidence/vdot-wave-20261105/}。\par
+
+\subsection{有效区间、握手边沿与提交观察}
+{\small\begin{longtable}{p{.25\linewidth}p{.17\linewidth}p{.48\linewidth}}\toprule
+事件 & 显示坐标（ps） & 判定依据\\\midrule
+输入有效（A） & 678694 & 输入valid与ready均为1，源数据及身份有效\\
+输入接受边沿 & 678696 & 边沿前握手有效，边沿后pValid=1\\
+输出有效（B） & 678698 & rValid=1，输出valid/ready=1，结果为204\\
+输出握手边沿 & 678700 & 边沿前输出有效，边沿后R槽清空\\
+DiffTest提交观察（C） & 678710 & 提交io\_valid=1，PC、编码、ROB与目的匹配\\
+\bottomrule\end{longtable}}
+O2日志中同一事务的接受、响应和内部ROB提交周期分别为339296、339298、339301。接受与响应边沿间隔两个全局模型周期；有效区间起点与实际采样边沿分别说明。按两处握手边沿与日志对齐，本窗口内部ROB提交对应模型坐标678706，而DiffTest提交观察口在678710有效，存在两拍观察流水延迟。不能将C-A或C-B直接当作指令latency。\par
+图中上方clock为全局时钟，下方clock为vdot局部门控时钟。空闲时局部时钟停止并不表示全核停止。显示ps是模型坐标，全局周期相隔2个坐标单位；不据此宣称芯片实际周期为2ps或得到物理频率。程序性能继续采用既有计时合同中的DUT周期。\par
+运行日志存在UART与O2观察器stdout交错，保留原始字节和汇总片段，没有拼造干净UART输出。正常终态、完整128位响应、事务身份和波形采样分别核验。后续三图是实际GTKWave截图；仅裁去左侧层级栏及空白边缘，完整原图保留于\seqsplit{figures/source-screenshots/}。\par
+
+\begin{landscape}
+\subsection{输入有效与接受边沿波形}
+\reportfigure{S3-WAVE-01}{vdot正数事务输入有效与接受边沿}{10.4cm}{游标678694处输入valid/ready均为1，低八个源元素为1至8，ROB值27、物理目的67均按十六进制显示。随后678696局部时钟上升沿接收请求，P槽有效。}{2026年11月5日实际全核trace运行；原图S3-VDOT-01-positive-input.png。稳定0f生成RTL，正常NEMU；不是示意图或旧vadd波形。}
+\clearpage
+\subsection{输出有效与响应握手波形}
+\reportfigure{S3-WAVE-02}{vdot完整128位输出及响应握手}{10.4cm}{游标678698处rValid与输出valid/ready均为1，完整结果为204，高96位清零，物理目的67匹配。678700边沿完成响应握手，R槽清空；当前提交观察io\_valid为0，PC总线值不构成提交证明。}{2026年11月5日实际全核trace运行；原图S3-VDOT-02-positive-output.png。仅证明该正常事务的结果及响应，不新增性能测量。}
+\clearpage
+\subsection{DiffTest提交观察波形}
+\reportfigure{S3-WAVE-03}{vdot提交观察与架构目的核对}{10.4cm}{游标678710处提交io\_valid=1，PC80001B8C、机器字0294050B、ROB027、物理目的67、架构目的0A（v10）、向量写使能1。执行单元输出valid已回到0，结果总线保留CC；提交观察口带流水延迟。}{2026年11月5日实际全核trace运行；原图S3-VDOT-03-positive-commit.png。按PC、编码、ROB及目的与前两图关联，不以总线保持值判定新事件。}
+\end{landscape}

@@ -1,0 +1,123 @@
+{
+  "record_id": "P4-G1-ONE-CYCLE-TWO-SLOT-LOCAL-20261029-01",
+  "status": "P4_G1_LOCAL_VALIDATION_PASS",
+  "recorded_at": "2026-10-29T01:14:23.782861+08:00",
+  "started_at": "2026-10-28T16:45:22.476061+00:00",
+  "operator": "@cc77-builder / Agent",
+  "operation_id": "20261029-cc77-builder-p4-g1-one-cycle",
+  "source_commit": "10b71ad4bff25cd2070e775c74a4717b01602f75",
+  "hardware_reference": "0f12df675378556670afd0dd2153f47fcb330610",
+  "source_state": "HEAD + uncommitted default-off two-file RTL patch + independent local test package",
+  "candidate_patch": {
+    "path": "team/optimizations/o2/integration/firstdot-v2-0f/continuation/short-latency-p4/g1/candidate.patch",
+    "sha256": "86b34d6117d8f36609e152847a0cda763b3aeb5411908194489e5be882a47243"
+  },
+  "candidate_source_manifest": {
+    "path": "team/optimizations/o2/integration/firstdot-v2-0f/continuation/short-latency-p4/g1/source-candidate.json",
+    "sha256": "adf71ca63ddd394412eb20195c8458b14df916a801ba59e0a23ffcae5e235c1d"
+  },
+  "configuration": {
+    "VDOT_P4_ONE_CYCLE": "1 for candidate; absent/0 preserves baseline",
+    "VDOT_O2_ELASTIC": 1,
+    "VDOT_T14_FUSED_INPUT": 1,
+    "all_legacy_trace_flags": 0,
+    "VLEN": 128,
+    "RobSize": 48,
+    "config": "MinimalConfig(1)",
+    "compiler": "Verilator 5.052 with assertions; real ClockGate and real DIV"
+  },
+  "comparison_contract": "p4-short-latency-g0-v1 + P4-G1 IMPLEMENTATION.md; local functional validation only",
+  "qualification": {
+    "fu": "PASS",
+    "real_parent": "PASS",
+    "sqrt_supplement": "PASS",
+    "default_off_regression": "PASS",
+    "default_off_generated_functional_logic": "PASS_WITH_EXPLICIT_DIAGNOSTIC_NORMALIZATION",
+    "configuration_cases": 9,
+    "illegal_configurations_rejected": 8,
+    "candidate_full_core": "NOT_TESTED",
+    "candidate_nemu": "NOT_TESTED",
+    "candidate_performance": "NOT_TESTED",
+    "candidate_area": "NOT_TESTED",
+    "candidate_sta": "NOT_TESTED",
+    "new_full_core_builds_runs": 0,
+    "new_synthesis_sta_runs": 0,
+    "new_nemu_runs": 0,
+    "github_upload": false,
+    "default_selected_hardware_changed": false
+  },
+  "local_protocol_metrics": {
+    "directed_vectors": 22,
+    "random_vectors": 10000,
+    "full_result_bits": 128,
+    "no_stall_latency1_responses": 10022,
+    "ii1_intervals": 10021,
+    "fu_negative_observation_faults": 9,
+    "parent_negative_observation_faults": 20,
+    "fu_accepted": 24215,
+    "fu_responded": 23545,
+    "fu_cancelled": 600,
+    "fu_reset_dropped": 70,
+    "parent_groups": 14,
+    "parent_accepted": 13468,
+    "parent_responded": 12959,
+    "parent_cancelled": 446,
+    "parent_reset_dropped": 63,
+    "parent_cancel_idle_clock_on": 0,
+    "sqrt_scenarios": 115,
+    "sqrt_cancelled": 54,
+    "sqrt_immediate_idle_samples": 162,
+    "sqrt_trace_negative_mutations": 7,
+    "real_lane_finish1_cycles": 27,
+    "real_lane_finish2_cycles": 56
+  },
+  "three_primary_metrics": {
+    "candidate_speedup": "NOT_TESTED",
+    "candidate_fu_parent_area": "NOT_TESTED",
+    "candidate_sta": "NOT_TESTED",
+    "baseline_reference_only": {
+      "hardware": "0f",
+      "chain256_cycles": 1857,
+      "chain256_speedup": 2.9297253634894993,
+      "fu_area_um2": 17298.246,
+      "parent_area_um2": 284614.946,
+      "nominal_parent_worst_setup_slack_ns": -2.393998
+    },
+    "warning": "local latency 2->1 does not imply program 2x; old area/timing not candidate measurements"
+  },
+  "retained_failure": {
+    "path": "/home/riscv/riscv-lab/software-import-20261026/p4-g1-short-latency-20261029-01/p4-parent-01",
+    "reason": "identity observation corrupted while held; stability fired before expected identity category; exact gate rejected",
+    "repair": "only injection trigger changed to fresh non-held R; strict gate and DUT checks unchanged",
+    "superseded_by": "p4-parent-02",
+    "original_source_verified": true
+  },
+  "positive_log_byte_equal_after_test_trigger_repair": true,
+  "evidence_manifest": {
+    "path": "team/optimizations/o2/integration/firstdot-v2-0f/continuation/short-latency-p4/g1/evidence/20261029-p4-g1/manifest.json",
+    "sha256": "48ebb60bcf92745577cc3b80bdeeb0109a04fd9b460f883e23ffacdbddd19033"
+  },
+  "input_lock": {
+    "path": "team/optimizations/o2/integration/firstdot-v2-0f/continuation/short-latency-p4/g1/input-lock.json",
+    "sha256": "3f5593718fe00efef60d99f23ad68a1d67e1e89207d913e974b8f3bbe23f197f",
+    "pins": 536
+  },
+  "aggregate": {
+    "path": "team/optimizations/o2/integration/firstdot-v2-0f/continuation/short-latency-p4/g1/aggregate.json",
+    "sha256": "43713473263e8337317ba13adc4459668b93fea233c1978d0d65bddf1d94d58e"
+  },
+  "decision": {
+    "next": "P4-G2 same-constraint FU/parent synthesis and five-profile STA only after user starts",
+    "go_to_cost_screening": true,
+    "go_to_full_core": false,
+    "adopt_candidate": false,
+    "stable_default": "0f behavior + firstdot V2 + explicit C8",
+    "rtl_modified_after_prior_notice": true
+  },
+  "limits": [
+    "No new whole-core speedup/area/STA/Fmax/power qualification",
+    "Observation/log mutations are not RTL fault injection or formal proof",
+    "TE0 dynamic reset is fixture simulation, not electrical signoff",
+    "Old O2 fullcore observer intentionally rejected until a separate P4-G3 schema is implemented"
+  ]
+}

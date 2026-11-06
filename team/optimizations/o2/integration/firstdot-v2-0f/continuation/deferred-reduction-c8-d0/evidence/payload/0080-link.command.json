@@ -1,0 +1,41 @@
+{
+  "argv": [
+    "/usr/bin/riscv64-linux-gnu-ld",
+    "-melf64lriscv",
+    "-L",
+    "/home/riscv/riscv-lab/software-import-20261026/clean-02/checkout/xs-env/nexus-am/am/src/nemu/ldscript",
+    "-T",
+    "/home/riscv/riscv-lab/software-import-20261026/clean-02/checkout/xs-env/nexus-am/am/src/nemu/isa/riscv/boot/loader64.ld",
+    "--no-relax",
+    "-Map=/home/riscv/riscv-lab/software-import-20261026/c8-deferred-d0-20261030-01/image-B/link.map",
+    "--trace",
+    "--gc-sections",
+    "-o",
+    "/home/riscv/riscv-lab/software-import-20261026/c8-deferred-d0-20261030-01/image-B/probe.elf",
+    "--start-group",
+    "/home/riscv/riscv-lab/software-import-20261026/c8-deferred-d0-20261030-01/image-B/main.o",
+    "/home/riscv/riscv-lab/software-import-20261026/c8-deferred-d0-20261030-01/image-B/kernels.o",
+    "/home/riscv/riscv-lab/software-import-20261026/clean-02/checkout/xs-env/nexus-am/am/build/am-riscv64-xs.a",
+    "/home/riscv/riscv-lab/software-import-20261026/clean-02/checkout/xs-env/nexus-am/libs/klib/build/klib-riscv64-xs.a",
+    "--end-group"
+  ],
+  "cwd": "/home/riscv/riscv-lab/software-import-20261026/c8-deferred-d0-20261030-01/image-B",
+  "environment": {
+    "PATH": "/usr/bin:/bin",
+    "LC_ALL": "C",
+    "LANG": "C",
+    "TZ": "UTC",
+    "AM_HOME": "/home/riscv/riscv-lab/software-import-20261026/clean-02/checkout/xs-env/nexus-am",
+    "LINUX_GNU_TOOLCHAIN": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "SOURCE_DATE_EPOCH": "1793318400"
+  },
+  "started": "2026-10-30T08:24:29.432445+00:00",
+  "monotonic_started_ns": 350750904236,
+  "timeout_seconds": 900,
+  "exit_code": 0,
+  "stdout_sha256": "ec33274abe3f8f62fbc65dd9bedcfbfb5275e01e47433d2445eaf57b2bd1ae3f",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "finished": "2026-10-30T08:24:29.437280+00:00",
+  "monotonic_finished_ns": 350755751656
+}

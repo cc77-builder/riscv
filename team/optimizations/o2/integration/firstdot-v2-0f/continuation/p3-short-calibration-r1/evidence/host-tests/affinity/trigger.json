@@ -1,0 +1,100 @@
+{
+  "schema": "p3-trigger-r1",
+  "reason": "AFFINITY_LIMIT",
+  "detected_ns": 78490880157,
+  "boot_id": "63d30490-2917-4512-bdbb-614d9bfd3568",
+  "owned_pgid": 417,
+  "source": "most recent resource sample",
+  "processes": [
+    {
+      "state": "S",
+      "ppid": 404,
+      "pgid": 417,
+      "sid": 417,
+      "start_ticks": 7838,
+      "cpu_seconds": 0.0,
+      "pid": 417,
+      "comm": "python3",
+      "exe": "/usr/bin/python3.10",
+      "cmdline": "/usr/bin/python3 -B -c import os,time;os.sched_setaffinity(0,{5});time.sleep(3) ",
+      "rss_bytes": 8912896,
+      "threads": 1,
+      "tasks": [
+        {
+          "tid": 417,
+          "start_ticks": 7838,
+          "comm": "python3",
+          "affinity": [
+            5
+          ]
+        }
+      ],
+      "masks": [
+        [
+          5
+        ]
+      ],
+      "disappeared_tids": [],
+      "sample_start_ns": 78490623763,
+      "sample_end_ns": 78490864745
+    }
+  ],
+  "observed_threads": 1,
+  "observed_rss_bytes": 8912896,
+  "limits": {
+    "threads": 4,
+    "rss_bytes": 12884901888,
+    "raw_bytes": 2147483648,
+    "seconds": 2
+  },
+  "last_periodic_sample": {
+    "monotonic_ns": 78389316061,
+    "elapsed_seconds": 0.004867469,
+    "raw_bytes": {
+      "stdout": 0,
+      "stderr": 0
+    },
+    "rss_bytes": 6291456,
+    "threads": 1,
+    "processes": [
+      {
+        "state": "R",
+        "ppid": 404,
+        "pgid": 417,
+        "sid": 417,
+        "start_ticks": 7838,
+        "cpu_seconds": 0.0,
+        "pid": 417,
+        "comm": "python3",
+        "exe": "/usr/bin/python3.10",
+        "cmdline": "/usr/bin/python3 -B -c import os,time;os.sched_setaffinity(0,{5});time.sleep(3) ",
+        "rss_bytes": 6291456,
+        "threads": 1,
+        "tasks": [
+          {
+            "tid": 417,
+            "start_ticks": 7838,
+            "comm": "python3",
+            "affinity": [
+              4
+            ]
+          }
+        ],
+        "masks": [
+          [
+            4
+          ]
+        ],
+        "disappeared_tids": [],
+        "sample_start_ns": 78389103537,
+        "sample_end_ns": 78389304912
+      }
+    ],
+    "progress": {
+      "max_observer_cycle": 0,
+      "o2_commit_count": 0,
+      "t13_retire_rows": 0,
+      "uart_fragments": 0
+    }
+  }
+}

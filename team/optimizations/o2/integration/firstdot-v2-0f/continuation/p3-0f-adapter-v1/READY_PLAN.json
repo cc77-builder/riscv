@@ -1,0 +1,75 @@
+{
+  "schema": "p3-0f-adapter-readiness-v1",
+  "contract": "p3-qkv-0f-bounded-probe-v1",
+  "status": "HOLD_BUDGET_NOT_DEMONSTRATED",
+  "budget_admitted": false,
+  "target_launch_authorized_this_round": false,
+  "target_launcher_in_this_package": false,
+  "next_role": null,
+  "gates": {
+    "frozen_images": "PASS",
+    "physical_0f": "PASS",
+    "host_adapters": "PASS",
+    "fail_stop_controls": "PASS",
+    "budget": "HOLD",
+    "P3_target_function": "NOT_TESTED",
+    "P3_target_cycles": "NOT_TESTED"
+  },
+  "processes": [
+    {
+      "ordinal": 1,
+      "role": "negative_bit100",
+      "reference": "nemu_negative",
+      "guest_cycle_cap": 1000000,
+      "monotonic_seconds_cap": 300,
+      "success": "known first custom, only bit100 mismatch and explicit injection evidence; general crash is not PASS",
+      "state": "NOT_STARTED",
+      "prerequisite_gate_state": "HOLD_BUDGET"
+    },
+    {
+      "ordinal": 2,
+      "role": "normal_recovery",
+      "reference": "nemu_normal",
+      "guest_cycle_cap": 18000000,
+      "monotonic_seconds_cap": 7200,
+      "precondition": "negative PASS plus budget admission PASS",
+      "success": "complete functional + exact plan + DiffTest + observer + all controls + anchor + >=3pct gain",
+      "state": "NOT_STARTED",
+      "prerequisite_gate_state": "HOLD_BUDGET"
+    },
+    {
+      "ordinal": 3,
+      "role": "same_bin_replay",
+      "reference": "nemu_normal",
+      "guest_cycle_cap": 18000000,
+      "monotonic_seconds_cap": 7200,
+      "precondition": "all normal gates including anchor/gain PASS",
+      "success": "same exact functional/plan/instret/cycles/CSR and custom signatures, all corresponding windows equal",
+      "state": "NOT_STARTED",
+      "prerequisite_gate_state": "HOLD_BUDGET"
+    }
+  ],
+  "resource_limits": {
+    "max_processes": 3,
+    "serial": true,
+    "threads": 4,
+    "cpu_affinity": [
+      4,
+      5,
+      6,
+      7
+    ],
+    "guest_ram_bytes": 134217728,
+    "rss_per_process_bytes": 12884901888,
+    "raw_logs_per_process_bytes": 2147483648,
+    "sum_monotonic_process_seconds": 14700,
+    "budget_may_auto_grow": false,
+    "extra_calibration_process": false
+  },
+  "actual_EMU_THREADS": 1,
+  "allowed_OS_threads": 4,
+  "strict_no_automatic_calibration": true,
+  "input_freeze": "INPUT_FREEZE.json",
+  "source_contract_sha256": "d506be6c308df8e0ba4bcda3d80f491ccbf93b540851a6adf8e40bdc1025888f",
+  "current_decision": "Preserve stable 0f + firstdot V2 + original C8. No P3 default adoption."
+}

@@ -1,0 +1,35 @@
+
+/home/riscv/riscv-lab/software-import-20261026/c8-deferred-reduction-host-20261030-02/build-01/caller.o:     file format elf64-littleriscv
+
+
+Disassembly of section .text.c8_host_link_fixture:
+
+0000000000000000 <c8_host_link_fixture>:
+   0:	1101                	addi	sp,sp,-32
+   2:	ec06                	sd	ra,24(sp)
+   4:	e822                	sd	s0,16(sp)
+   6:	e426                	sd	s1,8(sp)
+   8:	842a                	mv	s0,a0
+   a:	84ae                	mv	s1,a1
+   c:	00000097          	auipc	ra,0x0
+			c: R_RISCV_CALL	c8_current_vdot
+  10:	000080e7          	jalr	ra # c <c8_host_link_fixture+0xc>
+  14:	85a6                	mv	a1,s1
+  16:	8522                	mv	a0,s0
+  18:	00000097          	auipc	ra,0x0
+			18: R_RISCV_CALL	c8_deferred_vdot
+  1c:	000080e7          	jalr	ra # 18 <c8_host_link_fixture+0x18>
+  20:	85a6                	mv	a1,s1
+  22:	8522                	mv	a0,s0
+  24:	00000097          	auipc	ra,0x0
+			24: R_RISCV_CALL	c8_current_rvv
+  28:	000080e7          	jalr	ra # 24 <c8_host_link_fixture+0x24>
+  2c:	8522                	mv	a0,s0
+  2e:	6442                	ld	s0,16(sp)
+  30:	60e2                	ld	ra,24(sp)
+  32:	85a6                	mv	a1,s1
+  34:	64a2                	ld	s1,8(sp)
+  36:	6105                	addi	sp,sp,32
+  38:	00000317          	auipc	t1,0x0
+			38: R_RISCV_CALL	c8_deferred_rvv
+  3c:	00030067          	jr	t1 # 38 <c8_host_link_fixture+0x38>

@@ -1,0 +1,244 @@
+{
+  "status": "P3_LOG_CONTENT_PASS",
+  "contract": "p3-qkv-0f-bounded-probe-v1",
+  "samples": [
+    {
+      "seq": 0,
+      "id": 1,
+      "scenario": "actual-fp32-shared-quantization-qkv",
+      "method": "FR",
+      "n": 1,
+      "dots": 0,
+      "phase": "measured",
+      "repeat": 0,
+      "dataset": 0,
+      "cycles": 663426,
+      "instructions": 110575,
+      "counter_values": [
+        1000000,
+        249035,
+        912461,
+        1110575
+      ],
+      "sample_ticks": [
+        249023,
+        249035,
+        912461,
+        912473
+      ],
+      "block": 0,
+      "role": "anchor_start"
+    },
+    {
+      "seq": 1,
+      "id": 0,
+      "scenario": "actual-fp32-shared-quantization-qkv",
+      "method": "TA",
+      "n": 1,
+      "dots": 31104,
+      "phase": "measured",
+      "repeat": 0,
+      "dataset": 0,
+      "cycles": 609468,
+      "instructions": 152371,
+      "counter_values": [
+        2000000,
+        1161379,
+        1770847,
+        2152371
+      ],
+      "sample_ticks": [
+        1161371,
+        1161379,
+        1770847,
+        1770855
+      ],
+      "block": 0,
+      "role": "candidate"
+    },
+    {
+      "seq": 2,
+      "id": 1,
+      "scenario": "actual-fp32-shared-quantization-qkv",
+      "method": "FR",
+      "n": 1,
+      "dots": 0,
+      "phase": "measured",
+      "repeat": 0,
+      "dataset": 0,
+      "cycles": 663426,
+      "instructions": 110575,
+      "counter_values": [
+        3000000,
+        1770931,
+        2434357,
+        3110575
+      ],
+      "sample_ticks": [
+        1770919,
+        1770931,
+        2434357,
+        2434369
+      ],
+      "block": 0,
+      "role": "anchor_end"
+    },
+    {
+      "seq": 3,
+      "id": 1,
+      "scenario": "actual-fp32-shared-quantization-qkv",
+      "method": "FR",
+      "n": 1,
+      "dots": 0,
+      "phase": "measured",
+      "repeat": 1,
+      "dataset": 0,
+      "cycles": 663426,
+      "instructions": 110575,
+      "counter_values": [
+        4000000,
+        2434451,
+        3097877,
+        4110575
+      ],
+      "sample_ticks": [
+        2434439,
+        2434451,
+        3097877,
+        3097889
+      ],
+      "block": 1,
+      "role": "anchor_start"
+    },
+    {
+      "seq": 4,
+      "id": 0,
+      "scenario": "actual-fp32-shared-quantization-qkv",
+      "method": "TA",
+      "n": 1,
+      "dots": 31104,
+      "phase": "measured",
+      "repeat": 1,
+      "dataset": 0,
+      "cycles": 609468,
+      "instructions": 152371,
+      "counter_values": [
+        5000000,
+        3346795,
+        3956263,
+        5152371
+      ],
+      "sample_ticks": [
+        3346787,
+        3346795,
+        3956263,
+        3956271
+      ],
+      "block": 1,
+      "role": "candidate"
+    },
+    {
+      "seq": 5,
+      "id": 1,
+      "scenario": "actual-fp32-shared-quantization-qkv",
+      "method": "FR",
+      "n": 1,
+      "dots": 0,
+      "phase": "measured",
+      "repeat": 1,
+      "dataset": 0,
+      "cycles": 663426,
+      "instructions": 110575,
+      "counter_values": [
+        6000000,
+        3956347,
+        4619773,
+        6110575
+      ],
+      "sample_ticks": [
+        3956335,
+        3956347,
+        4619773,
+        4619785
+      ],
+      "block": 1,
+      "role": "anchor_end"
+    }
+  ],
+  "selection": {
+    "status": "GO_CYCLE_SCREEN_ONLY",
+    "anchor_pass": true,
+    "gain_pass": true,
+    "conservative_cycle_reduction": 0.08133235658536142,
+    "conservative_speedup": 1.0885329500482388,
+    "fr_all": [
+      663426,
+      663426,
+      663426,
+      663426
+    ],
+    "ta_all": [
+      609468,
+      609468
+    ],
+    "scope": "conditional cycle screen; no target correctness qualification"
+  },
+  "o2_counts": {
+    "STATE": 622084,
+    "VFEX4_ACCEPT": 155521,
+    "VFEX4_WAIT": 0,
+    "VFEX4_REDIRECT": 0,
+    "ACCEPT": 155521,
+    "MOVE": 155521,
+    "RESPONSE": 155521,
+    "STALL": 0,
+    "KILL": 0,
+    "DIV_ACCEPT": 0,
+    "DIV_KILL": 0,
+    "DIV_OUTPUT": 0,
+    "ENQUEUE": 155521,
+    "COMMIT": 155521,
+    "REDIRECT": 0,
+    "MULTI_INFLIGHT": 0,
+    "OVERLAP": 0,
+    "TRIPLE_OVERLAP": 0,
+    "FULL_STALL": 0,
+    "KILL_P": 0,
+    "KILL_R": 0,
+    "PARTIAL_KILL": 0,
+    "BOTH_KILL": 0,
+    "R_KILL_P_SURVIVES": 0,
+    "P_KILL_R_SURVIVES": 0,
+    "UNRELATED_FLUSH": 0,
+    "ROB_WRAP": 3240,
+    "FTQ_WRAP": 19440,
+    "DIV_RESPONSE": 0,
+    "ACCEPTED_THEN_SQUASHED": 0,
+    "ACCEPTED_YOUNGER_SQUASHED": 0
+  },
+  "timed_o2_retirement_bindings": 62208,
+  "all_custom_pc_sha256": "eaa328860c062bc5aa63039f0e4fbf1131c915ec533c9a0c65d55ca0debd6bb5",
+  "relative_o2_sha256": "a1902d1e1b8aa15ced42a56a7d0bd6175aa88eb4966f7fa84e07f7adb21a1df6",
+  "architecture_markers_sha256": "58988141a9684aeeb70560f754681b6051d58be89173835564e79acea77cc0df",
+  "target_qualification": "requires independently validated process receipt and frozen input identity",
+  "provenance": "SYNTHETIC_CHECKER_TEST_NOT_TARGET",
+  "host_seconds": 183.47396899499995,
+  "peak_rss_bytes": 6664052736,
+  "checker_pins": {
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/p3-0f-adapter-v1/test_adapter.py": "715134f2d6688e462fc3533fd9a8e8aeac428e01660dd83d31ecd0eac3d4b504",
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/p3-0f-adapter-v1/budget.py": "be0c3455066ee21ad7d3c5755d54599a1ad4ac1d696dc3ec83e0d147cea3d647",
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/p3-0f-adapter-v1/synthetic.py": "fa27194bfb2f7e2293ed9b9b52661cd73973d1c139aa9d09c4ec7f31113ec81b",
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/p3-0f-adapter-v1/historical_check.py": "612e001af421069bc230d64c3fe742161cced66a369d69ee51fb62388729da93",
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/p3-0f-adapter-v1/common.py": "eabdfe04b097155ba533426fa7f58b45ecf16aa8a158d7821b32c555eba50743",
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/p3-0f-adapter-v1/identity.py": "f566c2f13950646cca85e0d90724dd779c92f8fe0fe03951b64e6d5cb7c02e21",
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/p3-0f-adapter-v1/adapter.py": "21d453b54439a8bbe7ba3f89d44c87b6ae9c422d888bbe9c00b17f34705a65aa",
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/p3-0f-adapter-v1/paths.py": "ab6284ce450a724ef2290f51a96b61b7fd3e918384a1dcf627f1429152854429"
+  },
+  "input_sha256": {
+    "stdout.log": "1b3791a98911db1880127357b9da78bd687643513df96ce8061e8af0f560a0d4",
+    "stderr.log": "5a09b0728ef738e52bbb01eb8ffe196687e186c4065e5b4d1ab8e9f1e941f93e",
+    "provenance.json": "04366816ae73ad3afdf0b9855af20eb0bd1c8bcfd35fa9ea6ef7ffd55342b4bb"
+  },
+  "sample_cycles_are_artificial": true,
+  "target_runs": 0
+}

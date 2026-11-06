@@ -1,3 +1,5 @@
+> 2026-10-24：本用户工作分支为zjhwork，已评审并本地整合zufan/c9132b8d（包含zjhwork2）；James_Hotten独立RTL修复暂缓。[分支进度、验证与接续](docs/branch-integration-20261024.md)。实际发布以远端回读为准。
+
 # 香山 vdot 团队工程入口
 
 本目录保存自定义向量点积的实现配套、测试、优化实验和交付证据。团队集成目标为 cc77-builder/riscv:zufan；各成员独立工作区并行开发，运行与发布按当前协作约定执行。
@@ -11,8 +13,8 @@
 | 当前基线、工程达标与持续优化的全部工作包、下一决策 | [当前开发路线](docs/development-route-current.md) |
 | 谁在做什么、保护哪些运行、如何集成 | [协作约定与真实 Issue 状态](docs/collaboration-current.md) |
 | 开发时间、GitHub 身份、成果和路线历史 | [开发计分板](../开发计分板.md) |
-| 当前稳定 GEMV C 入口、库构建与回退 | [firstdot V2稳定入口](optimizations/o2/r2-select/FIRSTDOT_STABLE.md)、[V1回退](optimizations/o2/r2-select/STABLE.md)、[干净构建与真实运行](optimizations/o2/repro/CLEAN_REPRODUCE.md) |
-| 独立0f/C8资料（验收包缺29成员，完整恢复BLOCKED；不等于James硬件资格） | [C8使用](optimizations/o2/integration/firstdot-v2-0f/package/c8/README.md)、[已发布的0f验收](docs/r5-g5-publication-20261027.md) |
+| 每版周期、成本、功能资格及后续追加记录 | [版本数据档案](docs/version-data-ledger.md) |
+| 本地zjhwork的0f组合、firstdot与配置复用证据入口 | [当前组合](optimizations/o2/integration/firstdot-v2-0f/RESULT.md)、[配置复用筛选](optimizations/o2/integration/firstdot-v2-0f/continuation/config-reuse-v3/README.md) |
 | 工具与依赖、可复现输入 | [环境](docs/environment.md)、[版本清单](versions.env)、[O2 复现入口](optimizations/o2/repro/README.md) |
 
 ## 按任务阅读
@@ -30,3 +32,15 @@
 | 历史汇总和发布 | [2026-10-20 状态快照](docs/project-status-20261020.md)、[H1 发布记录](docs/o2-h1-publication-20261021.md)、[原入口归档](docs/history/entrypoints-before-consolidation-20261023.md) |
 
 新机器先按实际任务选择基线和配置、恢复依赖并预检，不默认重跑旧阶段或复用来源不匹配的 EMU。代码进入仓库、单元通过、整核通过、独立成员复现和比赛提交是不同结果。这里只维护导航，新增进度写计分板，路线改变写当前路线，不再向本文件叠加“最新进度”。
+
+- [配置复用四尺寸、三数据集扩展](optimizations/o2/integration/firstdot-v2-0f/continuation/config-reuse-expanded-v1/RESULT.md)：完整实测与逐尺寸采用判断，版本档案第25条。
+
+- [8×32配置复用普通C调用](optimizations/o2/integration/firstdot-v2-0f/continuation/config-reuse-c8-v2/RESULT.md)：真实调用、全宽差分与重放；数据档案第26条。
+
+- [8×32稳定调用入口评审与最小集成设计](optimizations/o2/integration/firstdot-v2-0f/package/C8_DESIGN.md)：独立C8包的历史设计、ABI边界及回退；已完成的包与接入证据见下两项。
+
+- [独立8×32 C8软件包：构建、选用与验收](optimizations/o2/integration/firstdot-v2-0f/package/c8/RESULT.md)。
+
+- [C8接回普通C：最终镜像等价与原回归复用](optimizations/o2/integration/firstdot-v2-0f/package/c8/relink/RESULT.md)。
+
+- [三阶段LaTeX与PDF技术文档](submission/latex-v1/README.md)：三份阶段报告、合订本、源码和原始日志附件。
