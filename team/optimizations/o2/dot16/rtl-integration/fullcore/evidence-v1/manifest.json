@@ -1,0 +1,933 @@
+{
+  "schema": 1,
+  "kind": "dot16-fullcore-existing-evidence-v1",
+  "started_utc": "2026-11-06T05:00:19.984237+00:00",
+  "finished_utc": "2026-11-06T05:00:21.217849+00:00",
+  "archive": {
+    "name": "raw.zip",
+    "bytes": 23182665,
+    "sha256": "dc2929eb9399b7274ec7111a87b5ac00f7a9aecc89bbbf6c3cab31d95e60449c"
+  },
+  "runs": {
+    "image-01": {
+      "status": "DOT16_SMOKE_IMAGE_PASS",
+      "operation_id": "d9b025210fdcd3c1fd06c2f645cfad75.57a669fd7de8b5678f6cd7609ed216e6",
+      "started_at": "2026-11-06T03:31:43.8299712Z",
+      "updated_at": "2026-11-06T03:31:45.0613169Z",
+      "exit_code": 0,
+      "cleanup_complete": true,
+      "status_sha256": "dac699b691bf75063af179059b5220e67e07d32feaeecb117fad74d8fb5836c7"
+    },
+    "build-01": {
+      "status": "FAILED",
+      "operation_id": "d9b025210fdcd3c1fd06c2f645cfad75.0cc4d3d6ad26a4c5175a80d7d10ddfc7",
+      "started_at": "2026-11-06T03:32:21.5484871Z",
+      "updated_at": "2026-11-06T03:43:44.4139533Z",
+      "exit_code": 1,
+      "cleanup_complete": true,
+      "status_sha256": "5f95c43a4297def9972f6907441e59613df228baab45c2eaa1e2003e3c90d07a"
+    },
+    "native-01": {
+      "status": "FAILED",
+      "operation_id": "d9b025210fdcd3c1fd06c2f645cfad75.f2a23a0d9024847ea701dbd9ea1b9bc6",
+      "started_at": "2026-11-06T04:10:52.0748442Z",
+      "updated_at": "2026-11-06T04:11:03.1725334Z",
+      "exit_code": 1,
+      "cleanup_complete": true,
+      "status_sha256": "970b0b7fbf31c1897c228d9f48acd6b24f1b6ca9d99b05433f15934385866103"
+    },
+    "native-02": {
+      "status": "DOT16_FULLCORE_BUILD_PASS",
+      "operation_id": "d9b025210fdcd3c1fd06c2f645cfad75.b1c348d9d54ceef14c9eca05489f8438",
+      "started_at": "2026-11-06T04:16:32.7005634Z",
+      "updated_at": "2026-11-06T04:21:04.4135965Z",
+      "exit_code": 0,
+      "cleanup_complete": true,
+      "status_sha256": "0e395db0a0428558f01c88d89852c4996130f2a95d55edb7787cf7aa2677f9f3"
+    },
+    "smoke-01": {
+      "status": "DOT16_FULLCORE_SMOKE_PASS",
+      "operation_id": "d9b025210fdcd3c1fd06c2f645cfad75.1b4cf50c4e2bb621e4179020b732bd06",
+      "started_at": "2026-11-06T04:23:04.1686113Z",
+      "updated_at": "2026-11-06T04:24:05.0466583Z",
+      "exit_code": 0,
+      "cleanup_complete": true,
+      "status_sha256": "71ecac13317bd55f20402ea04a703b5ab709ed75f4a3db0b1611cab631c03454"
+    }
+  },
+  "member_count": 144,
+  "member_uncompressed_bytes": 89127207,
+  "members": [
+    {
+      "name": "delivery/candidate.patch",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/dot16/rtl-integration/candidate.patch",
+      "bytes": 9252,
+      "sha256": "5b5824bac200c2a775598686e550854f8276d5db007b72f4b7be92437b4d3416"
+    },
+    {
+      "name": "delivery/fullcore/CONTRACT.md",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/dot16/rtl-integration/fullcore/CONTRACT.md",
+      "bytes": 9499,
+      "sha256": "00d33b9daf560871c17e7290f76afbc302013913a67f7546fac9f8b294b2552e"
+    },
+    {
+      "name": "delivery/fullcore/Makefile",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/dot16/rtl-integration/fullcore/Makefile",
+      "bytes": 246,
+      "sha256": "85ac419b21f13c2a05680e0d5d0886d2bdd49602174b35570d9e9c6275d7f0c0"
+    },
+    {
+      "name": "delivery/fullcore/RESUME_NATIVE_CONTRACT.md",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/dot16/rtl-integration/fullcore/RESUME_NATIVE_CONTRACT.md",
+      "bytes": 7663,
+      "sha256": "a29093557beb7f3065ff7e87301c305626a2ce9d090d83cf83e21fd394516f37"
+    },
+    {
+      "name": "delivery/fullcore/abi_probe.cpp",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/dot16/rtl-integration/fullcore/abi_probe.cpp",
+      "bytes": 1141,
+      "sha256": "709fd1d0a130b905da505a6fc1defa660a5c6006ec4572f5384c45d9befd2bdf"
+    },
+    {
+      "name": "delivery/fullcore/build.py",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/dot16/rtl-integration/fullcore/build.py",
+      "bytes": 15253,
+      "sha256": "38d27240c83763a265dbc1b2d01b65639bc1b7984782bd289d6e6b7d7b0c7ebb"
+    },
+    {
+      "name": "delivery/fullcore/kernels.S",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/dot16/rtl-integration/fullcore/kernels.S",
+      "bytes": 1153,
+      "sha256": "35854fa6f3431680c95559725bcf1d2ffff33c4ff52ee316a5ce2e2ccc3dead6"
+    },
+    {
+      "name": "delivery/fullcore/main.c",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/dot16/rtl-integration/fullcore/main.c",
+      "bytes": 2730,
+      "sha256": "60354d15f51f9f33d542deda4ef0591ba8c266288131ed06970f9a9f4269862e"
+    },
+    {
+      "name": "delivery/fullcore/resume_native.py",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/dot16/rtl-integration/fullcore/resume_native.py",
+      "bytes": 19179,
+      "sha256": "62b8f99f69cb60992c9f242f1f00d22d5b54d0874359dabb8de6d8847a603815"
+    },
+    {
+      "name": "delivery/fullcore/smoke.py",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/dot16/rtl-integration/fullcore/smoke.py",
+      "bytes": 18293,
+      "sha256": "363725f7a54ed367c7302108bc73f70266c68674a25a72587aaa04bc80e9e755"
+    },
+    {
+      "name": "delivery/source-manifest.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o2/dot16/rtl-integration/source-manifest.json",
+      "bytes": 3438,
+      "sha256": "fd556a8c498ab4a3928ecd1cae46f4ac7af4fa8b319d3741d31713f5c2fdba89"
+    },
+    {
+      "name": "operation-receipts.json",
+      "source": "/mnt/d/Projects/competitions/2026-10-CIE-RISCV-XiangShan/dot16-validation-20261106-0014/dot16-fullcore-operation-receipts.json",
+      "bytes": 60592,
+      "sha256": "e4e393c4637179e2a0541d8bed852bbb8b61acea3146133737381c4f6ae7cb82"
+    },
+    {
+      "name": "pack_evidence.py",
+      "source": "/mnt/d/Projects/competitions/2026-10-CIE-RISCV-XiangShan/dot16-validation-20261106-0014/dot16-fullcore-pack-evidence.py",
+      "bytes": 8128,
+      "sha256": "927a4a88fd5061818974049d33acafc8e2d4e253753df0f1ea9be16620384862"
+    },
+    {
+      "name": "records/build-01/build-command.sh",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/build-01/build-command.sh",
+      "bytes": 507,
+      "sha256": "7f15a13398f2c5ca68fe1d884bdca01760200726f73a8163a2ead78feb3422b8"
+    },
+    {
+      "name": "records/build-01/commands.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/build-01/commands.json",
+      "bytes": 3929,
+      "sha256": "83a3e7d1056124314d09f663de4cb17f2d0d96cc77d20a349125a168d1e1ece0"
+    },
+    {
+      "name": "records/build-01/compile-command.sh",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/build-01/compile-command.sh",
+      "bytes": 166,
+      "sha256": "0fa8edaaa8117c5f1186e30a59c908d99645726f87419922495c1d72c84a52bc"
+    },
+    {
+      "name": "records/build-01/emu-build-memory.jsonl",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/build-01/emu-build-memory.jsonl",
+      "bytes": 59610,
+      "sha256": "d9cbfc949d0d928f66db57e36b26c261c4f9281c5324db1eeb191e6246e2bc1b"
+    },
+    {
+      "name": "records/build-01/emu-build.log",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/build-01/emu-build.log",
+      "bytes": 285231,
+      "sha256": "a700694214f771653c9f2402e9214bfa458ff0c73c1e2ac2c68e20cf4eed7f30"
+    },
+    {
+      "name": "records/build-01/environment.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/build-01/environment.json",
+      "bytes": 5201,
+      "sha256": "a17b63c1c7daa97ac09b1d39db239a782ac1a7e329f3ba7fbcd37b0f03d65884"
+    },
+    {
+      "name": "records/build-01/inputs-before.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/build-01/inputs-before.json",
+      "bytes": 3309549,
+      "sha256": "d3e670cc8e8bb14038dac7ab9e05118a1467d4ced07171475081b820abea6f21"
+    },
+    {
+      "name": "records/build-01/mill-compile.opts",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/build-01/mill-compile.opts",
+      "bytes": 41,
+      "sha256": "6a17ebaa93dd8de87a0bddad8f9ca05bd7779c19ec4ff91c40b6117792852448"
+    },
+    {
+      "name": "records/build-01/mill-make.opts",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/build-01/mill-make.opts",
+      "bytes": 41,
+      "sha256": "a277d3ff113c7afdb01511e79fa57d11b35892df5642869ac0f82f7d1ecd9d99"
+    },
+    {
+      "name": "records/build-01/scala-compile-memory.jsonl",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/build-01/scala-compile-memory.jsonl",
+      "bytes": 1895,
+      "sha256": "f7a9d91756386526b1799f71f194695fe72320e7d6e19a637bd1ed573777797b"
+    },
+    {
+      "name": "records/build-01/scala-compile.log",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/build-01/scala-compile.log",
+      "bytes": 949,
+      "sha256": "1fd007f3cc5ed1b7157f06c1b1e9fb80b688b4509cc66ff2d8788f0f0b828a57"
+    },
+    {
+      "name": "records/build-01/source-snapshot/src/main/scala/xiangshan/backend/decode/Instructions.scala",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/build-01/source-snapshot/src/main/scala/xiangshan/backend/decode/Instructions.scala",
+      "bytes": 1543,
+      "sha256": "877b8d114a6e89ab847b6b8f9dbb2e9aa89a164d3eecff57795d259f98e9be7f"
+    },
+    {
+      "name": "records/build-01/source-snapshot/src/main/scala/xiangshan/backend/decode/VecDecoder.scala",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/build-01/source-snapshot/src/main/scala/xiangshan/backend/decode/VecDecoder.scala",
+      "bytes": 60738,
+      "sha256": "424be273935763ac17f23136a7428c2b06f4c8cfc84774cd1747e68bf9f0d011"
+    },
+    {
+      "name": "records/build-01/source-snapshot/src/main/scala/xiangshan/backend/decode/isa/bitfield/RiscvInst.scala",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/build-01/source-snapshot/src/main/scala/xiangshan/backend/decode/isa/bitfield/RiscvInst.scala",
+      "bytes": 5749,
+      "sha256": "4b051bc6d646eb619adfe51f8a3034684d8a87454fb0edbe5322d162a65ff90b"
+    },
+    {
+      "name": "records/build-01/source-snapshot/src/main/scala/xiangshan/backend/fu/vector/VDotDatapath.scala",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/build-01/source-snapshot/src/main/scala/xiangshan/backend/fu/vector/VDotDatapath.scala",
+      "bytes": 2122,
+      "sha256": "161df70403fd131a3adf445230ed637dc7ad7c619d05c0a890aa8aa1791546d8"
+    },
+    {
+      "name": "records/build-01/source-snapshot/src/main/scala/xiangshan/backend/fu/wrapper/VDot.scala",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/build-01/source-snapshot/src/main/scala/xiangshan/backend/fu/wrapper/VDot.scala",
+      "bytes": 7956,
+      "sha256": "4e1707f0b76d8c66a09ab155bb052d829cca9b9db1ec5387847b6b08a5e7f8a3"
+    },
+    {
+      "name": "records/build-01/source-snapshot/src/main/scala/xiangshan/backend/fu/wrapper/VDot16Feature.scala",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/build-01/source-snapshot/src/main/scala/xiangshan/backend/fu/wrapper/VDot16Feature.scala",
+      "bytes": 648,
+      "sha256": "abb51fd72dbf02201d5fd716ad3bc03a92a932df4452af46e269f09d88742dbe"
+    },
+    {
+      "name": "records/build-01/source-snapshot/src/main/scala/xiangshan/backend/fu/wrapper/VDotElastic.scala",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/build-01/source-snapshot/src/main/scala/xiangshan/backend/fu/wrapper/VDotElastic.scala",
+      "bytes": 8575,
+      "sha256": "63911b937a526b97ddaa67e34526fd19bbd2fa2801eadfda10ae6c2fa4b9fe9e"
+    },
+    {
+      "name": "records/build-01/source-snapshot/src/main/scala/xiangshan/backend/fu/wrapper/VDotO2.scala",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/build-01/source-snapshot/src/main/scala/xiangshan/backend/fu/wrapper/VDotO2.scala",
+      "bytes": 1365,
+      "sha256": "8a5e58c5d81b7c42fcd97452330e9477c2f52b5676aca47d45639ace726ebb59"
+    },
+    {
+      "name": "records/build-01/source-snapshot/team/optimizations/o1/build_inputs.py",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/build-01/source-snapshot/team/optimizations/o1/build_inputs.py",
+      "bytes": 1390,
+      "sha256": "5378f6e81d1b802effe6ba2605996bc2500d6f7c2134ad97f0b8968c40db00cb"
+    },
+    {
+      "name": "records/build-01/source-snapshot/team/optimizations/o1/build_recipe.py",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/build-01/source-snapshot/team/optimizations/o1/build_recipe.py",
+      "bytes": 18588,
+      "sha256": "c7a92b27b3c7caf75828e99006322fdd271bc896fc9f0b83ad9033509219fa3f"
+    },
+    {
+      "name": "records/build-01/source-snapshot/team/optimizations/o2/dot16/rtl-integration/candidate.patch",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/build-01/source-snapshot/team/optimizations/o2/dot16/rtl-integration/candidate.patch",
+      "bytes": 9252,
+      "sha256": "5b5824bac200c2a775598686e550854f8276d5db007b72f4b7be92437b4d3416"
+    },
+    {
+      "name": "records/build-01/source-snapshot/team/optimizations/o2/dot16/rtl-integration/fullcore/CONTRACT.md",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/build-01/source-snapshot/team/optimizations/o2/dot16/rtl-integration/fullcore/CONTRACT.md",
+      "bytes": 9499,
+      "sha256": "00d33b9daf560871c17e7290f76afbc302013913a67f7546fac9f8b294b2552e"
+    },
+    {
+      "name": "records/build-01/source-snapshot/team/optimizations/o2/dot16/rtl-integration/fullcore/build.py",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/build-01/source-snapshot/team/optimizations/o2/dot16/rtl-integration/fullcore/build.py",
+      "bytes": 15253,
+      "sha256": "38d27240c83763a265dbc1b2d01b65639bc1b7984782bd289d6e6b7d7b0c7ebb"
+    },
+    {
+      "name": "records/build-01/source-snapshot/team/optimizations/o2/dot16/rtl-integration/run_fu.py",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/build-01/source-snapshot/team/optimizations/o2/dot16/rtl-integration/run_fu.py",
+      "bytes": 12865,
+      "sha256": "db8fc437041c9b3580126ef8498085212313510ce96eb483f21a8c04e17479b3"
+    },
+    {
+      "name": "records/build-01/source-snapshot/team/optimizations/o2/dot16/rtl-integration/source-manifest.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/build-01/source-snapshot/team/optimizations/o2/dot16/rtl-integration/source-manifest.json",
+      "bytes": 3438,
+      "sha256": "fd556a8c498ab4a3928ecd1cae46f4ac7af4fa8b319d3741d31713f5c2fdba89"
+    },
+    {
+      "name": "records/build-01/source-snapshot/team/optimizations/o2/fullcore/live_inputs.py",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/build-01/source-snapshot/team/optimizations/o2/fullcore/live_inputs.py",
+      "bytes": 1280,
+      "sha256": "021825f4fde88a7151ec57bddbbb20c398512391527cefb68d96f557a7f4d9b4"
+    },
+    {
+      "name": "records/build-01/source-status.txt",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/build-01/source-status.txt",
+      "bytes": 1123,
+      "sha256": "781a718fb5a37f0df5059dca1267978578827b5328916a7c1ff5f6dcf505e717"
+    },
+    {
+      "name": "records/build-01/status.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/build-01/status.json",
+      "bytes": 1976,
+      "sha256": "5f95c43a4297def9972f6907441e59613df228baab45c2eaa1e2003e3c90d07a"
+    },
+    {
+      "name": "records/build-01/tool-probe-memory.jsonl",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/build-01/tool-probe-memory.jsonl",
+      "bytes": 1895,
+      "sha256": "b653ac5423d7b7b1045fc6aa0ae3ed1b153ee4a5b563896021d22c4e244b3123"
+    },
+    {
+      "name": "records/build-01/tool-probe.log",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/build-01/tool-probe.log",
+      "bytes": 4045,
+      "sha256": "c190c3ecb25571688ffe93280799d23f2f90c7e52931ed5836e188ee3cfacaa5"
+    },
+    {
+      "name": "records/build-01/tools.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/build-01/tools.json",
+      "bytes": 4245,
+      "sha256": "8d28997b92358fa2dbad38fda0b6600c3481193379dbe452b7d360819ce0b881"
+    },
+    {
+      "name": "records/build-01/tools/mill",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/build-01/tools/mill",
+      "bytes": 122,
+      "sha256": "9e33a4ee140fc1570f2db46427a390fd017e542d33642826eea878b9963b8b5d"
+    },
+    {
+      "name": "records/build-01/working-tree.patch",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/build-01/working-tree.patch",
+      "bytes": 9133,
+      "sha256": "cdafb54a540df026ec4a5bb916ce1378343b8db0386eb6cbad23d5fad24ac33d"
+    },
+    {
+      "name": "records/image-01/am-before.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/image-01/am-before.json",
+      "bytes": 78571,
+      "sha256": "1ee646f88340d90470b8de48b01ab8095b5e14e37062bcb4036a56d95b422138"
+    },
+    {
+      "name": "records/image-01/boot-flash.bin",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/image-01/boot-flash.bin",
+      "bytes": 12,
+      "sha256": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994"
+    },
+    {
+      "name": "records/image-01/boot-flash.o",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/image-01/boot-flash.o",
+      "bytes": 888,
+      "sha256": "3137c32ab55b0a6dadc70f072fa64192c4e923c711785e08d5f14eb6608685c4"
+    },
+    {
+      "name": "records/image-01/build-command.sh",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/image-01/build-command.sh",
+      "bytes": 1441,
+      "sha256": "421ebb77ed2879834573dfeb08e43108c5cd2318de0aa080681108b7d59f10d9"
+    },
+    {
+      "name": "records/image-01/commands.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/image-01/commands.json",
+      "bytes": 1502,
+      "sha256": "ac369c9675ea775523b52f3ced788ee2697c1b800a1aa99a0a1857b40a37ffab"
+    },
+    {
+      "name": "records/image-01/dot16-core-smoke.bin",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/image-01/dot16-core-smoke.bin",
+      "bytes": 6848,
+      "sha256": "6f800620b3ed6e504691ef1a060e701d781f2c888765d006a04cf0a4cfce3a49"
+    },
+    {
+      "name": "records/image-01/dot16-core-smoke.elf",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/image-01/dot16-core-smoke.elf",
+      "bytes": 60032,
+      "sha256": "4623ec8d908671f0c619117af288e6773203ef4520a5ac4daefb0fa26e7d8adb"
+    },
+    {
+      "name": "records/image-01/dot16-core-smoke.txt",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/image-01/dot16-core-smoke.txt",
+      "bytes": 91971,
+      "sha256": "c2bc03c69fad17b0e49cf67d97a1b5ba4242056fafa882564c2bc3fa58c1bd59"
+    },
+    {
+      "name": "records/image-01/image-build.log",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/image-01/image-build.log",
+      "bytes": 795,
+      "sha256": "02c1943a5e91018d50e7eaf34d56d55358c33fd4fe2de5845e8c2310d9fb1060"
+    },
+    {
+      "name": "records/image-01/objects/kernels.d",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/image-01/objects/kernels.d",
+      "bytes": 234,
+      "sha256": "829e405a96db89b59c3a866386a45e86a80353abf67112afc83dd30ff4022e7d"
+    },
+    {
+      "name": "records/image-01/objects/kernels.o",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/image-01/objects/kernels.o",
+      "bytes": 2296,
+      "sha256": "7855ec79688c4fed614c1fd9ec3c0141e0a47582f8830b6100673927aa2af427"
+    },
+    {
+      "name": "records/image-01/objects/main.d",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/image-01/objects/main.d",
+      "bytes": 835,
+      "sha256": "6b8e5259ddf4c39079b3df8bf94403a15276ec4846280e48ccbce2b5bfb82f3e"
+    },
+    {
+      "name": "records/image-01/objects/main.o",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/image-01/objects/main.o",
+      "bytes": 24608,
+      "sha256": "65e7c0b8284fab53887ddc867fd6d9207db1de057dff62ab8e2dee0466c58bdb"
+    },
+    {
+      "name": "records/image-01/source-inputs.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/image-01/source-inputs.json",
+      "bytes": 1409,
+      "sha256": "df56be7c209265fe28b9f56a00816721b5de77badc203a50599846b6b78118d9"
+    },
+    {
+      "name": "records/image-01/source-snapshot/CONTRACT.md",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/image-01/source-snapshot/CONTRACT.md",
+      "bytes": 9499,
+      "sha256": "00d33b9daf560871c17e7290f76afbc302013913a67f7546fac9f8b294b2552e"
+    },
+    {
+      "name": "records/image-01/source-snapshot/Makefile",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/image-01/source-snapshot/Makefile",
+      "bytes": 246,
+      "sha256": "85ac419b21f13c2a05680e0d5d0886d2bdd49602174b35570d9e9c6275d7f0c0"
+    },
+    {
+      "name": "records/image-01/source-snapshot/abi_probe.cpp",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/image-01/source-snapshot/abi_probe.cpp",
+      "bytes": 1141,
+      "sha256": "709fd1d0a130b905da505a6fc1defa660a5c6006ec4572f5384c45d9befd2bdf"
+    },
+    {
+      "name": "records/image-01/source-snapshot/boot-flash.S",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/image-01/source-snapshot/boot-flash.S",
+      "bytes": 168,
+      "sha256": "1771e3e0ef670084df491c7e5fddd1ae189cc8e2ccd4ee6d4a4af585ac98eeb3"
+    },
+    {
+      "name": "records/image-01/source-snapshot/kernels.S",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/image-01/source-snapshot/kernels.S",
+      "bytes": 1153,
+      "sha256": "35854fa6f3431680c95559725bcf1d2ffff33c4ff52ee316a5ce2e2ccc3dead6"
+    },
+    {
+      "name": "records/image-01/source-snapshot/main.c",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/image-01/source-snapshot/main.c",
+      "bytes": 2730,
+      "sha256": "60354d15f51f9f33d542deda4ef0591ba8c266288131ed06970f9a9f4269862e"
+    },
+    {
+      "name": "records/image-01/source-snapshot/run_fu.py",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/image-01/source-snapshot/run_fu.py",
+      "bytes": 12865,
+      "sha256": "db8fc437041c9b3580126ef8498085212313510ce96eb483f21a8c04e17479b3"
+    },
+    {
+      "name": "records/image-01/source-snapshot/smoke.py",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/image-01/source-snapshot/smoke.py",
+      "bytes": 18293,
+      "sha256": "363725f7a54ed367c7302108bc73f70266c68674a25a72587aaa04bc80e9e755"
+    },
+    {
+      "name": "records/image-01/status.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/image-01/status.json",
+      "bytes": 81996,
+      "sha256": "dac699b691bf75063af179059b5220e67e07d32feaeecb117fad74d8fb5836c7"
+    },
+    {
+      "name": "records/image-01/symbols.txt",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/image-01/symbols.txt",
+      "bytes": 1456,
+      "sha256": "5100a6eaea0f09a053efa293b1d203a6c361e3b5b3b51e7c9818ce960b1b4329"
+    },
+    {
+      "name": "records/image-01/tool-probe.log",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/image-01/tool-probe.log",
+      "bytes": 3185,
+      "sha256": "f11c8ac0c427dc32af389797c46515480036070cfb3640c3d78c35f118dc6fd8"
+    },
+    {
+      "name": "records/image-01/tools.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/image-01/tools.json",
+      "bytes": 3313,
+      "sha256": "6693280dae600e11bcc443965c649c274ceaae3db103a0d85899dacaefb32452"
+    },
+    {
+      "name": "records/native-01/commands.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-01/commands.json",
+      "bytes": 709,
+      "sha256": "c6627044644bdb3e177193beedec9f3f8fff58474291e24abb2ca0ef6209c6ed"
+    },
+    {
+      "name": "records/native-01/generated-before.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-01/generated-before.json",
+      "bytes": 278775,
+      "sha256": "680f4e82139d55199a9c1eeb81a47ce1593685398f2fadd9a07b750b33c095f7"
+    },
+    {
+      "name": "records/native-01/inputs-before.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-01/inputs-before.json",
+      "bytes": 1599,
+      "sha256": "2e718bc3449bb79ac59624201ebd6316e4fabfaca0b0848d37abb082dca02f9f"
+    },
+    {
+      "name": "records/native-01/parent-files.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-01/parent-files.json",
+      "bytes": 5292,
+      "sha256": "9fbe046040474deda1ee7d0a8a7acdd75712d8af28e0a091ed833833971e934f"
+    },
+    {
+      "name": "records/native-01/source-snapshot/RESUME_NATIVE_CONTRACT.md",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-01/source-snapshot/RESUME_NATIVE_CONTRACT.md",
+      "bytes": 6693,
+      "sha256": "e8691b545cb40bace2132d7f4fd1ac4e4fd61f0f4433f3372474903d148017df"
+    },
+    {
+      "name": "records/native-01/source-snapshot/build.py",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-01/source-snapshot/build.py",
+      "bytes": 15253,
+      "sha256": "38d27240c83763a265dbc1b2d01b65639bc1b7984782bd289d6e6b7d7b0c7ebb"
+    },
+    {
+      "name": "records/native-01/source-snapshot/build_recipe.py",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-01/source-snapshot/build_recipe.py",
+      "bytes": 18588,
+      "sha256": "c7a92b27b3c7caf75828e99006322fdd271bc896fc9f0b83ad9033509219fa3f"
+    },
+    {
+      "name": "records/native-01/source-snapshot/pre-native-freeze.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-01/source-snapshot/pre-native-freeze.json",
+      "bytes": 300998,
+      "sha256": "5f67b21a879e23e734683293ce5bfdd418559e5488e37b90bf17569d2196ff6d"
+    },
+    {
+      "name": "records/native-01/source-snapshot/resume_native.py",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-01/source-snapshot/resume_native.py",
+      "bytes": 17443,
+      "sha256": "883078e734cc209c885fc8c896fa25b9ea02b4e1b4afd64475fdb287858b53ad"
+    },
+    {
+      "name": "records/native-01/source-snapshot/run_fu.py",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-01/source-snapshot/run_fu.py",
+      "bytes": 12865,
+      "sha256": "db8fc437041c9b3580126ef8498085212313510ce96eb483f21a8c04e17479b3"
+    },
+    {
+      "name": "records/native-01/status.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-01/status.json",
+      "bytes": 875,
+      "sha256": "970b0b7fbf31c1897c228d9f48acd6b24f1b6ca9d99b05433f15934385866103"
+    },
+    {
+      "name": "records/native-01/tool-probe-memory.jsonl",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-01/tool-probe-memory.jsonl",
+      "bytes": 1907,
+      "sha256": "9f769c119123c03fa92a3b8b09cf175d9ebb6a2c3602df1c2288d432af3b2f1b"
+    },
+    {
+      "name": "records/native-01/tool-probe.log",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-01/tool-probe.log",
+      "bytes": 346,
+      "sha256": "153de9a870920a69331c875ecd29afcf93b41d399a89c828e0ffa59d7d39a3ea"
+    },
+    {
+      "name": "records/native-02/build-inputs.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-02/build-inputs.json",
+      "bytes": 3311847,
+      "sha256": "76853412c2c2f27e3e91fbdb0c25b89064023c908d648aa33491372fb5d6231e"
+    },
+    {
+      "name": "records/native-02/commands.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-02/commands.json",
+      "bytes": 1984,
+      "sha256": "39234e72bceb383f32790d2959756212cd847290e18afb5f8fce3184efb90e15"
+    },
+    {
+      "name": "records/native-02/compiler-runtime.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-02/compiler-runtime.json",
+      "bytes": 3061,
+      "sha256": "f2f55423103afa27568398668b86c930681f89a5bff31889c21f077b5d444dbe"
+    },
+    {
+      "name": "records/native-02/environment.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-02/environment.json",
+      "bytes": 1929,
+      "sha256": "1eff99f7e5e3addac543edcad0585c4d65d9e93dad41defa78601c8f7f315f42"
+    },
+    {
+      "name": "records/native-02/generated-artifacts.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-02/generated-artifacts.json",
+      "bytes": 256301,
+      "sha256": "dd7fe618a0773e9468d4e5ad42fa7850bc308c74994a5af3af38da34720f37af"
+    },
+    {
+      "name": "records/native-02/generated-before.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-02/generated-before.json",
+      "bytes": 278775,
+      "sha256": "680f4e82139d55199a9c1eeb81a47ce1593685398f2fadd9a07b750b33c095f7"
+    },
+    {
+      "name": "records/native-02/inputs-before.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-02/inputs-before.json",
+      "bytes": 1599,
+      "sha256": "e1e538cf39c12c22d4ace12fcaabfd4a6e60da5bae32af5518f92018f245298a"
+    },
+    {
+      "name": "records/native-02/native-command.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-02/native-command.json",
+      "bytes": 507,
+      "sha256": "eb4024024d0f4370830c731bb399594492da9c04fc0c7e48306a241013338083"
+    },
+    {
+      "name": "records/native-02/native-compile-memory.jsonl",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-02/native-compile-memory.jsonl",
+      "bytes": 22283,
+      "sha256": "9a12defb4f9dd64776eb7a8b2ddf88d78e6f685aa89c67e65f440f898923ba21"
+    },
+    {
+      "name": "records/native-02/native-compile.log",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-02/native-compile.log",
+      "bytes": 622930,
+      "sha256": "a19342f463c3a37aa73c24f6f4f2add07dab31a432a8ee3112ddf58240592ecc"
+    },
+    {
+      "name": "records/native-02/native.time.log",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-02/native.time.log",
+      "bytes": 1156,
+      "sha256": "0422b891e19d17a3835dabe35a19d37228b09846cd08a1598cdad287877515d9"
+    },
+    {
+      "name": "records/native-02/parent-files.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-02/parent-files.json",
+      "bytes": 5292,
+      "sha256": "9fbe046040474deda1ee7d0a8a7acdd75712d8af28e0a091ed833833971e934f"
+    },
+    {
+      "name": "records/native-02/source-snapshot/RESUME_NATIVE_CONTRACT.md",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-02/source-snapshot/RESUME_NATIVE_CONTRACT.md",
+      "bytes": 7663,
+      "sha256": "a29093557beb7f3065ff7e87301c305626a2ce9d090d83cf83e21fd394516f37"
+    },
+    {
+      "name": "records/native-02/source-snapshot/build.py",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-02/source-snapshot/build.py",
+      "bytes": 15253,
+      "sha256": "38d27240c83763a265dbc1b2d01b65639bc1b7984782bd289d6e6b7d7b0c7ebb"
+    },
+    {
+      "name": "records/native-02/source-snapshot/build_recipe.py",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-02/source-snapshot/build_recipe.py",
+      "bytes": 18588,
+      "sha256": "c7a92b27b3c7caf75828e99006322fdd271bc896fc9f0b83ad9033509219fa3f"
+    },
+    {
+      "name": "records/native-02/source-snapshot/pre-native-freeze.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-02/source-snapshot/pre-native-freeze.json",
+      "bytes": 300998,
+      "sha256": "5f67b21a879e23e734683293ce5bfdd418559e5488e37b90bf17569d2196ff6d"
+    },
+    {
+      "name": "records/native-02/source-snapshot/resume_native.py",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-02/source-snapshot/resume_native.py",
+      "bytes": 19179,
+      "sha256": "62b8f99f69cb60992c9f242f1f00d22d5b54d0874359dabb8de6d8847a603815"
+    },
+    {
+      "name": "records/native-02/source-snapshot/run_fu.py",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-02/source-snapshot/run_fu.py",
+      "bytes": 12865,
+      "sha256": "db8fc437041c9b3580126ef8498085212313510ce96eb483f21a8c04e17479b3"
+    },
+    {
+      "name": "records/native-02/status.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-02/status.json",
+      "bytes": 2388,
+      "sha256": "0e395db0a0428558f01c88d89852c4996130f2a95d55edb7787cf7aa2677f9f3"
+    },
+    {
+      "name": "records/native-02/tool-probe-memory.jsonl",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-02/tool-probe-memory.jsonl",
+      "bytes": 1907,
+      "sha256": "d49e80c5c3cd95f7c28e29afb860ed1444cd1b53b45bb6619277b2729158c781"
+    },
+    {
+      "name": "records/native-02/tool-probe.log",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-02/tool-probe.log",
+      "bytes": 17017,
+      "sha256": "056c867e3be2963fe83672b11967f22d6760266a5ea7723dacc37113e5f88295"
+    },
+    {
+      "name": "records/native-02/tools.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-02/tools.json",
+      "bytes": 6184,
+      "sha256": "c1a800e5d7c54f057fb3ee0036b1f3199f07125150cd8df996825ca9faa5dbb8"
+    },
+    {
+      "name": "records/native-02/verilator-config.txt",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-02/verilator-config.txt",
+      "bytes": 1137,
+      "sha256": "7f7e04895c1cdbf5edea9ad36b6d26a511039a54ad08aac1ca130b5ba27972de"
+    },
+    {
+      "name": "records/native-02/verilator-root-binding.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-02/verilator-root-binding.json",
+      "bytes": 345,
+      "sha256": "fe9149312bc858a2583c0822a5bd9df3f6b60e044adf696b6b390557d92a1a74"
+    },
+    {
+      "name": "records/native-02/verilator-support.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-02/verilator-support.json",
+      "bytes": 6870,
+      "sha256": "92d587b1a4f81421c1eac77f9d88ed3f2b5b85f2dd6bd90ec1ab35ef0f6651cf"
+    },
+    {
+      "name": "records/native-preflight-02.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-preflight-02.json",
+      "bytes": 18143,
+      "sha256": "4a6e79fe7179bf386d0f7639947df3cbd0dcedaae8402e08cb2ab342dbd50e3d"
+    },
+    {
+      "name": "records/native-preflight-02.stderr",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-preflight-02.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "records/native-preflight-02.stdout",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-preflight-02.stdout",
+      "bytes": 17017,
+      "sha256": "056c867e3be2963fe83672b11967f22d6760266a5ea7723dacc37113e5f88295"
+    },
+    {
+      "name": "records/pre-native-freeze.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/pre-native-freeze.json",
+      "bytes": 300998,
+      "sha256": "5f67b21a879e23e734683293ce5bfdd418559e5488e37b90bf17569d2196ff6d"
+    },
+    {
+      "name": "records/smoke-01/abi-build.log",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/smoke-01/abi-build.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "records/smoke-01/abi-layout.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/smoke-01/abi-layout.json",
+      "bytes": 170,
+      "sha256": "6a4ec3322731720f73f878c2211620a17fffb4b7e0a1c454ebae642261e39137"
+    },
+    {
+      "name": "records/smoke-01/abi-probe",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/smoke-01/abi-probe",
+      "bytes": 16088,
+      "sha256": "d4e5499f87578521abb78345238fc537235d64e280e9b73f2b5255f40dab746a"
+    },
+    {
+      "name": "records/smoke-01/abi-run.log",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/smoke-01/abi-run.log",
+      "bytes": 129,
+      "sha256": "5d6e133fb80be4c75e3453364f6515b2a33ede5db81f4294f441fedb1238151e"
+    },
+    {
+      "name": "records/smoke-01/abi-type-blocks.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/smoke-01/abi-type-blocks.json",
+      "bytes": 1075,
+      "sha256": "c9ea0387d4ba10e46c92c4a0fa26ce3a266f7be12fe929b6b65d1caefea2af07"
+    },
+    {
+      "name": "records/smoke-01/commands.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/smoke-01/commands.json",
+      "bytes": 2521,
+      "sha256": "e4fa590d656602771f07858acfa55d43f723e96f2407590cb501934a8250d4fa"
+    },
+    {
+      "name": "records/smoke-01/emulator.log",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/smoke-01/emulator.log",
+      "bytes": 1724,
+      "sha256": "dfc165fabe8304a55269fef3a778740b38e2f1156ced8a2cee86ec05ffce3e80"
+    },
+    {
+      "name": "records/smoke-01/emulator.stderr",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/smoke-01/emulator.stderr",
+      "bytes": 3065676,
+      "sha256": "8d25b13bdfed791f39b42a8a308853493fe526954bf6eee8734a7293d5c3d53b"
+    },
+    {
+      "name": "records/smoke-01/run.log",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/smoke-01/run.log",
+      "bytes": 3067400,
+      "sha256": "73d8ab9ce15c66e01e9463dd5e9e014521f2b3a1d8c3c23b31ae16ffd70719cb"
+    },
+    {
+      "name": "records/smoke-01/runtime-inputs.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/smoke-01/runtime-inputs.json",
+      "bytes": 2187,
+      "sha256": "1a582e03d3fe321b744558dcc7b1e5f07ee128c1f67145f3560a25c2f38e5064"
+    },
+    {
+      "name": "records/smoke-01/source-inputs.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/smoke-01/source-inputs.json",
+      "bytes": 1409,
+      "sha256": "df56be7c209265fe28b9f56a00816721b5de77badc203a50599846b6b78118d9"
+    },
+    {
+      "name": "records/smoke-01/source-snapshot/CONTRACT.md",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/smoke-01/source-snapshot/CONTRACT.md",
+      "bytes": 9499,
+      "sha256": "00d33b9daf560871c17e7290f76afbc302013913a67f7546fac9f8b294b2552e"
+    },
+    {
+      "name": "records/smoke-01/source-snapshot/Makefile",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/smoke-01/source-snapshot/Makefile",
+      "bytes": 246,
+      "sha256": "85ac419b21f13c2a05680e0d5d0886d2bdd49602174b35570d9e9c6275d7f0c0"
+    },
+    {
+      "name": "records/smoke-01/source-snapshot/abi_probe.cpp",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/smoke-01/source-snapshot/abi_probe.cpp",
+      "bytes": 1141,
+      "sha256": "709fd1d0a130b905da505a6fc1defa660a5c6006ec4572f5384c45d9befd2bdf"
+    },
+    {
+      "name": "records/smoke-01/source-snapshot/kernels.S",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/smoke-01/source-snapshot/kernels.S",
+      "bytes": 1153,
+      "sha256": "35854fa6f3431680c95559725bcf1d2ffff33c4ff52ee316a5ce2e2ccc3dead6"
+    },
+    {
+      "name": "records/smoke-01/source-snapshot/main.c",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/smoke-01/source-snapshot/main.c",
+      "bytes": 2730,
+      "sha256": "60354d15f51f9f33d542deda4ef0591ba8c266288131ed06970f9a9f4269862e"
+    },
+    {
+      "name": "records/smoke-01/source-snapshot/run_fu.py",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/smoke-01/source-snapshot/run_fu.py",
+      "bytes": 12865,
+      "sha256": "db8fc437041c9b3580126ef8498085212313510ce96eb483f21a8c04e17479b3"
+    },
+    {
+      "name": "records/smoke-01/source-snapshot/smoke.py",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/smoke-01/source-snapshot/smoke.py",
+      "bytes": 18293,
+      "sha256": "363725f7a54ed367c7302108bc73f70266c68674a25a72587aaa04bc80e9e755"
+    },
+    {
+      "name": "records/smoke-01/status.json",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/smoke-01/status.json",
+      "bytes": 3592,
+      "sha256": "71ecac13317bd55f20402ea04a703b5ab709ed75f4a3db0b1611cab631c03454"
+    },
+    {
+      "name": "runtime/external/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-nemu-reference-20261106-0105/feature1-01/build/riscv64-nemu-interpreter-so",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-nemu-reference-20261106-0105/feature1-01/build/riscv64-nemu-interpreter-so",
+      "bytes": 1463176,
+      "sha256": "cc768488944941d59442727a96e0a19206e24872dcefed0052cf6cb3694a3fae"
+    },
+    {
+      "name": "runtime/external/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-nemu-reference-20261106-0105/inputs/diffstate.h",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-nemu-reference-20261106-0105/inputs/diffstate.h",
+      "bytes": 8446,
+      "sha256": "6a2ce3ab51893908f74452522ab03c553cf7fa7e8aa25f74ea84d79aa45f044d"
+    },
+    {
+      "name": "runtime/external/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-nemu-reference-20261106-0105/inputs/reference_api.cpp",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-nemu-reference-20261106-0105/inputs/reference_api.cpp",
+      "bytes": 14324,
+      "sha256": "23056586264f8aacff65ba7ab5ceca6f8e5fddf680da8dd3e731c2a5673a7012"
+    },
+    {
+      "name": "runtime/source/build/emu",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/build/emu",
+      "bytes": 71043280,
+      "sha256": "f14918658fcd2f19c9fb6c1d493025d98f727ac985ea73129edc58270fa6977d"
+    },
+    {
+      "name": "runtime/source/build/emu-compile/VSimTop.mk",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/build/emu-compile/VSimTop.mk",
+      "bytes": 8806,
+      "sha256": "60e83de481c10859af494d354652c48f3cca8e661a3afd1655da7d7e298703e5"
+    },
+    {
+      "name": "runtime/source/build/emu-compile/VSimTop_classes.mk",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/build/emu-compile/VSimTop_classes.mk",
+      "bytes": 10699,
+      "sha256": "839eac59653997b9f1ef3c746106d05afb7cbcdca69849dc3e1fcabf7b19f115"
+    },
+    {
+      "name": "runtime/source/build/generated-src/diffstate.h",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/build/generated-src/diffstate.h",
+      "bytes": 8446,
+      "sha256": "6a2ce3ab51893908f74452522ab03c553cf7fa7e8aa25f74ea84d79aa45f044d"
+    },
+    {
+      "name": "runtime/source/build/generated-src/difftest-dpic.h",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/build/generated-src/difftest-dpic.h",
+      "bytes": 13566,
+      "sha256": "2c2fc74844cf0ee3fb3b5ed47ee1ee7dcab6a61a84d9af183478b20fbe547718"
+    },
+    {
+      "name": "runtime/source/build/time.log",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/build/time.log",
+      "bytes": 8355,
+      "sha256": "58bae1b648884dd30211f8663d57580ed6fd1e4fbb9acf547ebabda546e72986"
+    },
+    {
+      "name": "runtime/source/team/optimizations/o1/audit/runtime_gate.py",
+      "source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o1/audit/runtime_gate.py",
+      "bytes": 10679,
+      "sha256": "172551fb537e93f33937819b1a7625e39986726c039266750adadb73e8ccc05c"
+    }
+  ],
+  "original_runs_modified": false,
+  "tests_rerun": false,
+  "excluded": {
+    "generated_intermediates": "Existing ROOT/build C++/RTL/objects/PCH/caches remain at original paths; full pre-native file identities retained in pre-native-freeze.json. Only EMU and selected headers/Make/time records included.",
+    "external_build_dependencies": "Original dependency identities retained; tool/JAR/library payloads are not duplicated except bound test runtime files."
+  },
+  "verification": "Each archived member streamed and SHA/size compared, then each source SHA rechecked."
+}

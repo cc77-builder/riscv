@@ -1,0 +1,323 @@
+{
+  "schema": 1,
+  "kind": "dot16-production-fullcore-smoke-result-v1",
+  "status": "DOT16_FULLCORE_SMOKE_PASS",
+  "qualification_scope": "Only the fixed six-legal-case AM image with this frozen candidate, EMU, and feature1 reference.",
+  "source_identity": {
+    "base_head": "c981529dc6e493fb7deee8429b9ce05fd197497b",
+    "uncommitted_candidate_at_run": true,
+    "candidate_patch_sha256": "5b5824bac200c2a775598686e550854f8276d5db007b72f4b7be92437b4d3416",
+    "source_manifest_sha256": "fd556a8c498ab4a3928ecd1cae46f4ac7af4fa8b319d3741d31713f5c2fdba89",
+    "flags": {
+      "VDOT_DOT16": "1",
+      "VDOT_O2_ELASTIC": "1",
+      "VDOT_T14_FUSED_INPUT": "1",
+      "VDOT_O1_HANDOFF": "0",
+      "VDOT_O1_TRACE": "0",
+      "VDOT_O2_TRACE": "0",
+      "VDOT_T12_TRACE": "0",
+      "VDOT_T13_TRACE": "0"
+    }
+  },
+  "emu": {
+    "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/build/emu",
+    "bytes": 71043280,
+    "sha256": "f14918658fcd2f19c9fb6c1d493025d98f727ac985ea73129edc58270fa6977d"
+  },
+  "runtime_inputs": {
+    "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/build/emu": "f14918658fcd2f19c9fb6c1d493025d98f727ac985ea73129edc58270fa6977d",
+    "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/image-01/dot16-core-smoke.bin": "6f800620b3ed6e504691ef1a060e701d781f2c888765d006a04cf0a4cfce3a49",
+    "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/image-01/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+    "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-nemu-reference-20261106-0105/feature1-01/build/riscv64-nemu-interpreter-so": "cc768488944941d59442727a96e0a19206e24872dcefed0052cf6cb3694a3fae",
+    "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/team/optimizations/o1/audit/runtime_gate.py": "172551fb537e93f33937819b1a7625e39986726c039266750adadb73e8ccc05c",
+    "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-02/status.json": "0e395db0a0428558f01c88d89852c4996130f2a95d55edb7787cf7aa2677f9f3",
+    "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-02/build-inputs.json": "76853412c2c2f27e3e91fbdb0c25b89064023c908d648aa33491372fb5d6231e",
+    "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/image-01/status.json": "dac699b691bf75063af179059b5220e67e07d32feaeecb117fad74d8fb5836c7",
+    "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/build/generated-src/diffstate.h": "6a2ce3ab51893908f74452522ab03c553cf7fa7e8aa25f74ea84d79aa45f044d",
+    "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-nemu-reference-20261106-0105/inputs/diffstate.h": "6a2ce3ab51893908f74452522ab03c553cf7fa7e8aa25f74ea84d79aa45f044d",
+    "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-nemu-reference-20261106-0105/inputs/reference_api.cpp": "23056586264f8aacff65ba7ab5ceca6f8e5fddf680da8dd3e731c2a5673a7012",
+    "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/native-02/generated-artifacts.json": "dd7fe618a0773e9468d4e5ad42fa7850bc308c74994a5af3af38da34720f37af"
+  },
+  "runs": {
+    "image-01": {
+      "status": "DOT16_SMOKE_IMAGE_PASS",
+      "operation_id": "d9b025210fdcd3c1fd06c2f645cfad75.57a669fd7de8b5678f6cd7609ed216e6",
+      "started_at": "2026-11-06T03:31:43.8299712Z",
+      "updated_at": "2026-11-06T03:31:45.0613169Z",
+      "exit_code": 0,
+      "cleanup_complete": true,
+      "status_sha256": "dac699b691bf75063af179059b5220e67e07d32feaeecb117fad74d8fb5836c7",
+      "duration_ms": 1195,
+      "timed_out": false,
+      "cancelled": false
+    },
+    "build-01": {
+      "status": "FAILED",
+      "operation_id": "d9b025210fdcd3c1fd06c2f645cfad75.0cc4d3d6ad26a4c5175a80d7d10ddfc7",
+      "started_at": "2026-11-06T03:32:21.5484871Z",
+      "updated_at": "2026-11-06T03:43:44.4139533Z",
+      "exit_code": 1,
+      "cleanup_complete": true,
+      "status_sha256": "5f95c43a4297def9972f6907441e59613df228baab45c2eaa1e2003e3c90d07a",
+      "duration_ms": 682810,
+      "timed_out": false,
+      "cancelled": false
+    },
+    "native-01": {
+      "status": "FAILED",
+      "operation_id": "d9b025210fdcd3c1fd06c2f645cfad75.f2a23a0d9024847ea701dbd9ea1b9bc6",
+      "started_at": "2026-11-06T04:10:52.0748442Z",
+      "updated_at": "2026-11-06T04:11:03.1725334Z",
+      "exit_code": 1,
+      "cleanup_complete": true,
+      "status_sha256": "970b0b7fbf31c1897c228d9f48acd6b24f1b6ca9d99b05433f15934385866103",
+      "duration_ms": 11065,
+      "timed_out": false,
+      "cancelled": false
+    },
+    "native-02": {
+      "status": "DOT16_FULLCORE_BUILD_PASS",
+      "operation_id": "d9b025210fdcd3c1fd06c2f645cfad75.b1c348d9d54ceef14c9eca05489f8438",
+      "started_at": "2026-11-06T04:16:32.7005634Z",
+      "updated_at": "2026-11-06T04:21:04.4135965Z",
+      "exit_code": 0,
+      "cleanup_complete": true,
+      "status_sha256": "0e395db0a0428558f01c88d89852c4996130f2a95d55edb7787cf7aa2677f9f3",
+      "duration_ms": 271670,
+      "timed_out": false,
+      "cancelled": false
+    },
+    "smoke-01": {
+      "status": "DOT16_FULLCORE_SMOKE_PASS",
+      "operation_id": "d9b025210fdcd3c1fd06c2f645cfad75.1b4cf50c4e2bb621e4179020b732bd06",
+      "started_at": "2026-11-06T04:23:04.1686113Z",
+      "updated_at": "2026-11-06T04:24:05.0466583Z",
+      "exit_code": 0,
+      "cleanup_complete": true,
+      "status_sha256": "71ecac13317bd55f20402ea04a703b5ab709ed75f4a3db0b1611cab631c03454",
+      "duration_ms": 60815,
+      "timed_out": false,
+      "cancelled": false
+    }
+  },
+  "checks": {
+    "cases": 6,
+    "dot8": 2,
+    "dot16": 4,
+    "failures": 0,
+    "loaded_reference": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-nemu-reference-20261106-0105/feature1-01/build/riscv64-nemu-interpreter-so"
+  },
+  "cases": [
+    {
+      "case": 0,
+      "instruction": "dot8",
+      "vl": 8,
+      "alias": "vd=v10; vs1=v8; vs2=v9",
+      "coverage": "low 8 all zero; upper 8 must be ignored",
+      "low32": "00000000",
+      "high96": "zero",
+      "vtype": "0xc0",
+      "vstart": 0,
+      "passed": true
+    },
+    {
+      "case": 1,
+      "instruction": "dot16",
+      "vl": 16,
+      "alias": "vd=vs1=v8; vs2=v9",
+      "coverage": "upper 8 contribute; vd=vs1",
+      "low32": "00020000",
+      "high96": "zero",
+      "vtype": "0xc0",
+      "vstart": 0,
+      "passed": true
+    },
+    {
+      "case": 2,
+      "instruction": "dot16",
+      "vl": 16,
+      "alias": "vd=v0; vs1=v8; vs2=v9",
+      "coverage": "all -128 inputs; positive endpoint; vd=v0",
+      "low32": "00040000",
+      "high96": "zero",
+      "vtype": "0xc0",
+      "vstart": 0,
+      "passed": true
+    },
+    {
+      "case": 3,
+      "instruction": "dot16",
+      "vl": 16,
+      "alias": "vd=vs2=v9; vs1=v8",
+      "coverage": "-128 times 127; negative endpoint; vd=vs2",
+      "low32": "fffc0800",
+      "high96": "zero",
+      "vtype": "0xc0",
+      "vstart": 0,
+      "passed": true
+    },
+    {
+      "case": 4,
+      "instruction": "dot16",
+      "vl": 16,
+      "alias": "vd=vs1=vs2=v0",
+      "coverage": "mixed signed self-product; all three registers v0",
+      "low32": "0000fe28",
+      "high96": "zero",
+      "vtype": "0xc0",
+      "vstart": 0,
+      "passed": true
+    },
+    {
+      "case": 5,
+      "instruction": "dot8",
+      "vl": 8,
+      "alias": "vd=v10; vs1=v8; vs2=v9",
+      "coverage": "return to old dot8 after dot16; signed negative",
+      "low32": "fffe0400",
+      "high96": "zero",
+      "vtype": "0xc0",
+      "vstart": 0,
+      "passed": true
+    }
+  ],
+  "abi": {
+    "generated_header": {
+      "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/build/generated-src/diffstate.h",
+      "bytes": 8446,
+      "sha256": "6a2ce3ab51893908f74452522ab03c553cf7fa7e8aa25f74ea84d79aa45f044d"
+    },
+    "layout": {
+      "bytes": 1400,
+      "regs_int": 0,
+      "regs_fp": 256,
+      "csr": 512,
+      "pc": 656,
+      "hcsr": 664,
+      "regs_vec": 800,
+      "vcsr": 1312,
+      "fcsr": 1368,
+      "triggercsr": 1376
+    },
+    "type_blocks": {
+      "DifftestHCSRState": "uint64_t virtMode; uint64_t mtval2; uint64_t mtinst; uint64_t hstatus; uint64_t hideleg; uint64_t hedeleg; uint64_t hcounteren; uint64_t htval; uint64_t htinst; uint64_t hgatp; uint64_t vsstatus; uint64_t vstvec; uint64_t vsepc; uint64_t vscause; uint64_t vstval; uint64_t vsatp; uint64_t vsscratch;",
+      "DifftestArchIntRegState": "uint64_t value[32];",
+      "DifftestVecCSRState": "uint64_t vstart; uint64_t vxsat; uint64_t vxrm; uint64_t vcsr; uint64_t vl; uint64_t vtype; uint64_t vlenb;",
+      "DifftestArchVecRegState": "uint64_t value[64];",
+      "DifftestArchFpRegState": "uint64_t value[32];",
+      "DifftestCSRState": "uint64_t privilegeMode; uint64_t mstatus; uint64_t sstatus; uint64_t mepc; uint64_t sepc; uint64_t mtval; uint64_t stval; uint64_t mtvec; uint64_t stvec; uint64_t mcause; uint64_t scause; uint64_t satp; uint64_t mip; uint64_t mie; uint64_t mscratch; uint64_t sscratch; uint64_t mideleg; uint64_t medeleg;",
+      "DifftestFpCSRState": "uint64_t fcsr;",
+      "DifftestTriggerCSRState": "uint64_t tselect; uint64_t tdata1; uint64_t tinfo;"
+    },
+    "actual_dynamic_difftest_passed": true
+  },
+  "qualification": {
+    "fixed_six_legal_case_fullcore_difftest": true,
+    "complete_G3": false,
+    "illegal_instruction_and_exception_matrix": false,
+    "all_alias_and_random_cases": false,
+    "application_performance": false,
+    "asic_ppa": false
+  },
+  "observed_execution_statistics": {
+    "core_instrCnt": 16342,
+    "core_cycleCnt": 57332,
+    "guest_cycle_spent": 57336,
+    "emu_reported_host_ms": 55382,
+    "outer_smoke_operation_ms": 60815,
+    "interpretation": "Whole validation image including startup, checks and printing. Different counters are not interchangeable and do not measure dot16 kernel latency or application speedup."
+  },
+  "failures_preserved": {
+    "build_01": "GNU GCC rejected flags from the installed Clang-configured Verilator support after successful elaboration and Verilator generation.",
+    "native_01": "Tool preflight used the compiled-in Verilator default root rather than the active environment root. No native make was started.",
+    "successful_continuation": "native-02 reused frozen generated files, used explicit Clang 19 / GNU ld.bfd, and preserved original failed records.",
+    "generated_files": 2014,
+    "generated_bytes": 2018152258,
+    "parent_record_files": 34,
+    "parent_record_bytes": 3849919,
+    "generation_freeze_sha256": "5f67b21a879e23e734683293ce5bfdd418559e5488e37b90bf17569d2196ff6d"
+  },
+  "raw_logs": {
+    "run.log": {
+      "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/smoke-01/run.log",
+      "bytes": 3067400,
+      "sha256": "73d8ab9ce15c66e01e9463dd5e9e014521f2b3a1d8c3c23b31ae16ffd70719cb"
+    },
+    "emulator.log": {
+      "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/smoke-01/emulator.log",
+      "bytes": 1724,
+      "sha256": "dfc165fabe8304a55269fef3a778740b38e2f1156ced8a2cee86ec05ffce3e80"
+    },
+    "emulator.stderr": {
+      "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/smoke-01/emulator.stderr",
+      "bytes": 3065676,
+      "sha256": "8d25b13bdfed791f39b42a8a308853493fe526954bf6eee8734a7293d5c3d53b"
+    }
+  },
+  "evidence": {
+    "directory": "evidence-v1",
+    "archive": {
+      "name": "raw.zip",
+      "bytes": 23182665,
+      "sha256": "dc2929eb9399b7274ec7111a87b5ac00f7a9aecc89bbbf6c3cab31d95e60449c"
+    },
+    "manifest_sha256": "b90e47d28bdee7c93a39252f48d1a90479be1f2e12c9f05f87f23501e4a5f94c",
+    "member_count": 144,
+    "member_uncompressed_bytes": 89127207,
+    "archive_operation_id": "d9b025210fdcd3c1fd06c2f645cfad75.55aa8247ff028d09f8949bcc7a5d07f9",
+    "archive_started_utc": "2026-11-06T05:00:17.9769693Z",
+    "archive_finished_utc": "2026-11-06T05:00:21.3760445Z",
+    "archive_duration_ms": 3363,
+    "archive_exit_code": 0,
+    "archive_cleanup_complete": true,
+    "tests_rerun": false,
+    "windows_and_wsl_archive_bytes_match": true
+  },
+  "source_entries": [
+    {
+      "name": "CONTRACT.md",
+      "bytes": 9499,
+      "sha256": "00d33b9daf560871c17e7290f76afbc302013913a67f7546fac9f8b294b2552e"
+    },
+    {
+      "name": "Makefile",
+      "bytes": 246,
+      "sha256": "85ac419b21f13c2a05680e0d5d0886d2bdd49602174b35570d9e9c6275d7f0c0"
+    },
+    {
+      "name": "RESUME_NATIVE_CONTRACT.md",
+      "bytes": 7663,
+      "sha256": "a29093557beb7f3065ff7e87301c305626a2ce9d090d83cf83e21fd394516f37"
+    },
+    {
+      "name": "abi_probe.cpp",
+      "bytes": 1141,
+      "sha256": "709fd1d0a130b905da505a6fc1defa660a5c6006ec4572f5384c45d9befd2bdf"
+    },
+    {
+      "name": "build.py",
+      "bytes": 15253,
+      "sha256": "38d27240c83763a265dbc1b2d01b65639bc1b7984782bd289d6e6b7d7b0c7ebb"
+    },
+    {
+      "name": "kernels.S",
+      "bytes": 1153,
+      "sha256": "35854fa6f3431680c95559725bcf1d2ffff33c4ff52ee316a5ce2e2ccc3dead6"
+    },
+    {
+      "name": "main.c",
+      "bytes": 2730,
+      "sha256": "60354d15f51f9f33d542deda4ef0591ba8c266288131ed06970f9a9f4269862e"
+    },
+    {
+      "name": "resume_native.py",
+      "bytes": 19179,
+      "sha256": "62b8f99f69cb60992c9f242f1f00d22d5b54d0874359dabb8de6d8847a603815"
+    },
+    {
+      "name": "smoke.py",
+      "bytes": 18293,
+      "sha256": "363725f7a54ed367c7302108bc73f70266c68674a25a72587aaa04bc80e9e755"
+    }
+  ]
+}
