@@ -32,31 +32,31 @@
     "kind": "终端截图",
     "content": "已插入用户提供的历史运行日志截图，包含DiffTest、三类vadd输出、GOOD TRAP及原退出状态。团队名仍为占位标识，正式团队标识输出待补。",
     "source": "用户截图 WindowsTerminal_m5hXeDJnV1.png；原hello-vadd-summary.log",
-    "scope": "2026-10-09历史运行回放，不是本次重新运行",
+    "scope": "2026-10-09历史运行回放，不是本次重新运行；属于第一阶段加法环境验证，不作为第二阶段点积测试证据",
     "priority": "必备"
   },
   {
     "id": "S1-04",
     "stage": 1,
-    "title": "vadd正数用例的执行与提交波形",
+    "title": "vadd向量加法执行与提交示例（正数输入）",
     "height_cm": 16.0,
     "anchor": "原波形提取的vadd提交PC为",
     "kind": "波形截图",
     "content": "(a)输出事件及输入/提交位置；(b)输入游标处信号值；(c)提交游标处信号值。截图来自原FST提取的selected VCD，未显示时钟；19625/19626/19631为文件中事件坐标，截图单位为ps，不能据此推断芯片物理时钟或实际延迟。",
     "source": "用户上传正数输出截图及riscv-lab/picture中的输入、提交截图；保留原始图并仅裁剪外部空白",
-    "scope": "2026-10-09原基线vadd；时钟截图仍待补，不是0f vdot",
+    "scope": "2026-10-09原基线vadd；时钟截图仍待补，不是0f vdot；属于第一阶段加法环境验证，不作为第二阶段点积测试证据",
     "priority": "必备"
   },
   {
     "id": "S1-05",
     "stage": 1,
-    "title": "vadd负数与边界用例结果波形",
+    "title": "vadd加法补充自检：补码与回绕",
     "height_cm": 10.0,
     "anchor": "\\section{结论及附件}",
     "kind": "波形截图",
     "content": "(a)负数输出低64位F0F2F4F6F8FAFCFE；(b)边界输出低64位FEFE000000007F80。两图保留各自输入、输出和提交事件位置；未显示时钟，坐标单位按截图为ps。",
     "source": "用户上传 msrdc_yWBpPeYM8q.png 与 msrdc_6cIzJ9aIVJ.png",
-    "scope": "同一2026-10-09历史vadd波形；低64位按有效8个元素解释",
+    "scope": "同一2026-10-09历史vadd波形；低64位按有效8个元素解释；属于第一阶段加法环境验证，不作为第二阶段点积测试证据",
     "priority": "必备"
   },
   {
@@ -182,13 +182,13 @@
   {
     "id": "S2-09",
     "stage": 2,
-    "title": "完整128位算术结果证据（异常截图待补）",
+    "title": "第二阶段vdot正数、负数与边界点积结果（异常截图待补）",
     "height_cm": 15.0,
     "anchor": "\\subsection{设计演进与最终采用}",
     "kind": "测试结果截图",
     "content": "(a)组合算术RTL统计；(b)-(d)历史全核观察器ACCEPT/RESPONSE配对的字段摘录，按seq、ROB和pdest绑定。actual来自原响应日志，expected按低8个signed int8重新计算；不是GTKWave波形或架构提交截图。非法配置异常码和目的不更新的图片仍待补。",
     "source": "用户提供的算术统计截图及正数、负数、边界响应摘录截图；图中保留原日志路径、行号和SHA",
-    "scope": "算术RTL统计为2026-10-12历史记录；0f全核响应为2026-10-27 UTC历史记录；原批次UTC容量审计FAIL保留",
+    "scope": "算术RTL统计为2026-10-12历史记录；0f全核响应为2026-10-27 UTC历史记录；原批次UTC容量审计FAIL保留；对应赛题2.3.1、2.3.2、2.3.3",
     "priority": "必备"
   },
   {
@@ -234,10 +234,11 @@
     "height_cm": 6.0,
     "anchor": "\\section{等价RVV基线与测量方法}",
     "kind": "对照截图",
-    "content": "左侧原bit100注入差分失败，右侧恢复reference后的正常完成；显示PC/机器字、完整结果差异、GOOD TRAP/summary与真实退出状态。",
-    "source": "R5原拒错、恢复、重放记录及新控制诊断证据",
-    "scope": "每个截图绑定其运行ID；不把有界P3前缀当成功记录",
-    "priority": "必备"
+    "content": "上下排列用户原始截图：negative-vdot高位差异、ABORT及退出码1；functional-0的15项通过、GOOD TRAP及退出码0。未展示的机器字与完整结果以原始记录为准。",
+    "source": "用户截图回读clean-02/fullcore-run-01/runs下negative-vdot与functional-0历史日志",
+    "scope": "本次仅补图，未重跑仿真；不是独立重放或新控制诊断的截图",
+    "priority": "必备",
+    "render_source": "sections/rejection-stage3.tex"
   },
   {
     "id": "S3-04",

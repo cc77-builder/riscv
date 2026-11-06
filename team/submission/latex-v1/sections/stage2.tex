@@ -7,6 +7,7 @@
 
 
 \section{设计目标}
+阶段归属：设计、RTL及正数、负数、边界点积测试均属第二阶段（题目2.1至2.3.3）；第一阶段vadd仅作向量加法验证。\par
 
 
 点积由多次乘法与累加构成。本设计在昆明湖V2已有向量路径中增加vdot功能，复用处理器的译码、向量寄存器、调度、写回和精确提交机制。优化集中于独立点积吞吐、结果保存成本及与DIV共用父级时的取消行为。\par
@@ -76,7 +77,7 @@ VFEX4在vdot及整数/浮点DIV之间管理分派、占用和时钟。0f修复�
 
 
 \reportfigure{S2-03}{VFEX4父级的派发、互斥与门控结构}{12.0cm}{VFEX4共享资源的简化结构示意图，展示VDot、VIDiv、VfDivSqrt、门控及共享写回之间的关系；控制细节以稳定0f实现和正文说明为准。}{用户提供示意图；依据：0f ExeUnit.scala、父级验证及DIV取消修复证据。版本范围：0f生产逻辑；不得套用未采用C1/C2/C3/P4。}
-\section{功能验证}
+\section{第二阶段点积功能验证}
 
 
 测试从独立数学模型推进到算术RTL、FU、真实父级和全核差分。各层统计分别保存。\par
@@ -92,7 +93,7 @@ FU/真实父级 & 反压、取消、复位、身份、异常及DIV交互 & 0f原
 \bottomrule\end{longtable}}
 
 
-下面列出便于评审阅读的定向预期值，完整执行证据见原测试归档。\par
+下表为vdot数学预期；实际配对结果及最小值证据限制见后文题目2.3.1至2.3.3。\par
 
 
 {\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}p{0.3\linewidth}>{\raggedright\arraybackslash}p{0.35\linewidth}}
@@ -226,7 +227,8 @@ VFEX4父级在vdot和DIV之间保持资源互斥，输出选择要求有效完�
 
 
 
-\reportfigure{S2-09}{完整128位算术结果证据（异常截图待补）}{15.0cm}{(a)组合算术RTL统计；(b)-(d)历史全核观察器ACCEPT/RESPONSE配对的字段摘录，按seq、ROB和pdest绑定。actual来自原响应日志，expected按低8个signed int8重新计算；不是GTKWave波形或架构提交截图。非法配置异常码和目的不更新的图片仍待补。}{用户提供的算术统计截图及正数、负数、边界响应摘录截图；图中保留原日志路径、行号和SHA。版本范围：算术RTL统计为2026-10-12历史记录；0f全核响应为2026-10-27 UTC历史记录；原批次UTC容量审计FAIL保留。}
+\input{sections/stage2-required-tests.tex}
+\reportfigure{S2-09}{第二阶段vdot正数、负数与边界点积结果（异常截图待补）}{15.0cm}{(a)组合算术RTL统计；(b)-(d)历史全核观察器ACCEPT/RESPONSE配对的字段摘录，按seq、ROB和pdest绑定。actual来自原响应日志，expected按低8个signed int8重新计算；不是GTKWave波形或架构提交截图。非法配置异常码和目的不更新的图片仍待补。}{用户提供的算术统计截图及正数、负数、边界响应摘录截图；图中保留原日志路径、行号和SHA。版本范围：算术RTL统计为2026-10-12历史记录；0f全核响应为2026-10-27 UTC历史记录；原批次UTC容量审计FAIL保留。}
 \subsection{设计演进与最终采用}
 
 

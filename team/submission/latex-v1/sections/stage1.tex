@@ -7,6 +7,7 @@
 
 
 \section{实验目的}
+阶段归属：本阶段对应赛题1.1环境部署验证、1.2操作日志和1.3向量加法执行过程。下文vadd按元素相加，输出八个字节；赛题2.3.1正数点积、2.3.2负数点积及2.3.3边界值点积测试统一见第二阶段，不能用本阶段加法结果代替。\par
 
 
 本阶段建立香山硬件仿真、NEMU参考模型与裸机程序之间的协同验证环境。以hello输出检查程序启动和串口链路，以向量加法检查向量状态、访存、执行、写回及提交过程，为后续自定义点积指令提供基线。\par
@@ -56,7 +57,7 @@ bash team/scripts/stage1.sh run
 
 
 \reportfigure{S1-02}{环境部署与验证执行流程}{12.0cm}{流程依次包括环境配置、命令检查、工具核查、NEMU/EMU与工作负载构建，以及DiffTest验证和证据归档；失败时返回相应定位环节。}{用户提供示意图；依据：阶段一真实执行顺序、构建和运行日志。版本范围：2026-10-09阶段一流程。}
-\section{hello与vadd验证结果}
+\section{hello输出与vadd加法环境自检}
 
 
 hello输出包含团队标识和WSL IPv4。历史记录使用riscv-vdot-team，正式录屏应呈现确认后的团队标识及相应真实输出。下文附真实历史输出，正式团队标识由成员确认后补入。\par
@@ -68,9 +69,9 @@ vadd程序设置SEW8、LMUL1、VL8，执行两次向量加载、一次vadd.vv和
 {\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.25\linewidth}>{\raggedright\arraybackslash}p{0.69\linewidth}}
 \toprule
 \textbf{用例} & \textbf{输出字节}\\ \midrule\endhead
-正数 & 9 9 9 9 9 9 9 9\\
-负数补码 & 254 252 250 248 246 244 242 240\\
-边界回绕 & 128 127 0 0 0 0 254 254\\
+vadd正数相加 & 9 9 9 9 9 9 9 9\\
+vadd补码相加 & 254 252 250 248 246 244 242 240\\
+vadd加法回绕 & 128 127 0 0 0 0 254 254\\
 \bottomrule\end{longtable}}
 
 
@@ -79,27 +80,27 @@ vadd程序设置SEW8、LMUL1、VL8，执行两次向量加载、一次vadd.vv和
 
 
 \reportfigure{S1-03}{hello与vadd正常结束输出}{8.5cm}{已插入用户提供的历史运行日志截图，包含DiffTest、三类vadd输出、GOOD TRAP及原退出状态。团队名仍为占位标识，正式团队标识输出待补。}{用户截图 \seqsplit{WindowsTerminal\_m5hXeDJnV1.png}；原\seqsplit{hello-vadd-summary.log}。版本范围：2026-10-09历史运行回放，不是本次重新运行。}
-\section{波形与执行过程}
+\section{vadd向量加法波形与执行过程}
 
 
 处理器完成取指和译码后，由重命名、调度和操作数准备驱动向量执行。两个vle8.v提供输入，vadd.vv完成按元素加法，结果经写回进入目的向量寄存器并在ROB提交。DiffTest在架构状态层与NEMU对应执行结果比较。\par
 
 
 
-\reportfigure{S1-04}{vadd正数用例的执行与提交波形}{16.0cm}{(a)输出事件及输入/提交位置；(b)输入游标处信号值；(c)提交游标处信号值。截图来自原FST提取的selected VCD，未显示时钟；\seqsplit{19625/19626/19631}为文件中事件坐标，截图单位为ps，不能据此推断芯片物理时钟或实际延迟。}{用户上传正数输出截图及\seqsplit{riscv-lab/picture}中的输入、提交截图；保留原始图并仅裁剪外部空白。版本范围：2026-10-09原基线vadd；时钟截图仍待补，不是0f vdot。}
+\reportfigure{S1-04}{vadd向量加法执行与提交示例（正数输入）}{16.0cm}{(a)输出事件及输入/提交位置；(b)输入游标处信号值；(c)提交游标处信号值。截图来自原FST提取的selected VCD，未显示时钟；\seqsplit{19625/19626/19631}为文件中事件坐标，截图单位为ps，不能据此推断芯片物理时钟或实际延迟。}{用户上传正数输出截图及\seqsplit{riscv-lab/picture}中的输入、提交截图；保留原始图并仅裁剪外部空白。版本范围：2026-10-09原基线vadd；时钟截图仍待补，不是0f vdot。}
 原波形提取的vadd提交PC为0x80000138，机器码为0x021101d7，vecwen=1、wdest=3。\par
 
 
 {\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.1\linewidth}>{\raggedright\arraybackslash}p{0.16\linewidth}>{\raggedright\arraybackslash}p{0.16\linewidth}>{\raggedright\arraybackslash}p{0.16\linewidth}>{\raggedright\arraybackslash}p{0.34\linewidth}}
 \toprule
-\textbf{用例} & \textbf{输入握手周期} & \textbf{输出握手周期} & \textbf{提交周期} & \textbf{写回低64位}\\ \midrule\endhead
-正数 & 19625 & 19626 & 19631 & \seqsplit{0x0909090909090909}\\
-负数 & 25460 & 25461 & 25466 & \seqsplit{0xf0f2f4f6f8fafcfe}\\
-边界 & 33009 & 33010 & 33015 & \seqsplit{0xfefe000000007f80}\\
+\textbf{用例} & \textbf{输入事件坐标} & \textbf{输出事件坐标} & \textbf{提交事件坐标} & \textbf{写回低64位}\\ \midrule\endhead
+vadd正数相加 & 19625 & 19626 & 19631 & \seqsplit{0x0909090909090909}\\
+vadd补码相加 & 25460 & 25461 & 25466 & \seqsplit{0xf0f2f4f6f8fafcfe}\\
+vadd加法回绕 & 33009 & 33010 & 33015 & \seqsplit{0xfefe000000007f80}\\
 \bottomrule\end{longtable}}
 
 
-按原波形展开时，应展示时钟、valid/ready、提交PC和结果信号，并用游标标注表内事件。具体信号层级以原波形与事件提取脚本为准。表内周期是采样事件坐标，结果可说明运算单元输出早于架构提交的流水关系。\par
+按原波形展开时，应展示时钟、valid/ready、提交PC和结果信号，并用游标标注表内事件。具体信号层级以原波形与事件提取脚本为准。表内数值是原文件中的采样事件坐标，结果可说明运算单元输出早于架构提交的流水关系。\par
 
 
 
@@ -108,7 +109,7 @@ vadd程序设置SEW8、LMUL1、VL8，执行两次向量加载、一次vadd.vv和
 
 
 
-\reportfigure{S1-05}{vadd负数与边界用例结果波形}{10.0cm}{(a)负数输出低64位\seqsplit{F0F2F4F6F8FAFCFE}；(b)边界输出低64位\seqsplit{FEFE000000007F80}。两图保留各自输入、输出和提交事件位置；未显示时钟，坐标单位按截图为ps。}{用户上传 \seqsplit{msrdc\_yWBpPeYM8q.png} 与 \seqsplit{msrdc\_6cIzJ9aIVJ.png}。版本范围：同一2026-10-09历史vadd波形；低64位按有效8个元素解释。}
+\reportfigure{S1-05}{vadd加法补充自检：补码与回绕}{10.0cm}{(a)负数输出低64位\seqsplit{F0F2F4F6F8FAFCFE}；(b)边界输出低64位\seqsplit{FEFE000000007F80}。两图保留各自输入、输出和提交事件位置；未显示时钟，坐标单位按截图为ps。}{用户上传 \seqsplit{msrdc\_yWBpPeYM8q.png} 与 \seqsplit{msrdc\_6cIzJ9aIVJ.png}。版本范围：同一2026-10-09历史vadd波形；低64位按有效8个元素解释。}
 \section{结论及附件}
 
 
@@ -136,7 +137,7 @@ vadd程序设置SEW8、LMUL1、VL8，执行两次向量加载、一次vadd.vv和
 
 \reportfigure{S1-06}{vadd输入、输出与提交事件时间线}{4.8cm}{按原事件CSV绘制三类用例的输入握手、输出握手及ROB提交；保留周期和结果标注，明确这是事件重绘图，不是原始波形截图。}{\seqsplit{evidence/vadd-commit-events.csv}与\seqsplit{vector-fix-alu-events.csv}；旧TikZ图可参考。版本范围：历史事件重绘；不可用于宣称新硬件延迟。}
 
-图中坐标来自原FST提取CSV，为事件重绘示意。负数和边界用例的对应坐标列于正文表格，完整原波形以SHA绑定。
+图中坐标来自原FST提取CSV，为事件重绘示意。vadd补码相加和回绕自检的对应坐标列于正文表格，完整原波形以SHA绑定。
 \section{日志附件索引}
 evidence目录保留NEMU构建、EMU构建、workload构建、原正常运行、原启动失败及并行度调整日志，并包含工具版本、子模块锁、两份事件CSV及信号索引。原始日志用于追溯实际操作，本文摘录用于阅读。
 \section{工程实现与验证方法补充}
@@ -225,7 +226,7 @@ hello输出先确认程序已经经过启动代码到达C入口，并检查UART�
 SEW8下每个元素保存8位加法结果，运算按模256保留低8位。负数补码的无符号打印值应结合原输入解释。例如十进制254对应8位补码−2，打印成254不表示数学结果变为正数。边界用例专门包含回绕，以检查程序的参考计算与向量指令行为一致。\par
 
 
-结果进入执行单元输出后，仍需经过写回和乱序提交。本项目把输入握手、输出握手和ROB提交分别标出。正数用例的输入19625、输出19626、提交19631说明三个事件属于不同流水位置。表中单次差值用于解释该次观测，不据此给出所有操作的固定提交延迟。\par
+结果进入执行单元输出后，仍需经过写回和乱序提交。本项目把输入握手、输出握手和ROB提交分别标出。vadd正数相加示例的输入19625、输出19626、提交19631说明三个事件属于不同流水位置。表中单次差值用于解释该次观测，不据此给出所有操作的固定提交延迟。\par
 
 
 \subsection{日志附件的阅读和复查顺序}
