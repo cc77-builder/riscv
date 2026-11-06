@@ -1,18 +1,18 @@
-# FR / GS32 / paired16 首次完整 forward：参考资格与交付入口
+# FR / GS32 / paired16 首次完整 forward：参考资格、目标观察与交付入口
 
 合同：`r2-s3-first-forward-rvv-v1`。
 
-**最新运行状态（2026-11-06 05:37 UTC）：目标外层作业处于 running，资源 profile 已冻结。** 本次已经实证的新组合 GNU 构建、五例参考和原 T17 完整物理身份预检可独立交付；三臂实际回执与周期结果将在原 owner 终态导出后汇总。运行身份和观察范围见[第6节](#target-run-status)。
+**最新运行状态（2026-11-06 12:06 UTC）：原三臂目标运行已完成，目标正确性通过，全部进程已清理。** 本次同公共 ELF 的完整 forward 单窗口观测为 FR 22,244,288、GS32 19,996,570、paired16 17,382,632 cycles；paired16 的窗口周期最低。`performance_qualified=false`、`full_retirement_window_audited=false` 保持。原始日志、身份、资源闭合及解释边界见[第7节](#target-result-01)。
 
 **04:15 UTC 参考与预检检查点：新组合 GNU 构建、五个独立参考进程及原 T17 完整物理身份预检已经通过；当时目标整核尚未运行，性能未合格。** 三种方法共用一份实际 core、ELF、模型和初始化逻辑。controller-05 使用原 first-token 的92项冻结目标闭包和原NEMU manifest；全部原校验保持启用。
 
 ## 1. 交付对象与语义边界
 
-本候选比较 token=1、position=0 的一次完整 forward。FR、GS32、paired16 只在七个 K288 静态调用点选择不同的 RVV 内核，唯一 W2 静态调用点继续使用原 FR 路由。三个消费者共用模型指针、初始化和状态布局；FP 运算顺序、量化、scale 消费与既有结果合同保持不变。没有修改生产 RTL、官方程序、赛事材料或稳定默认选择，也没有解除旧 paired16 性能实验的 HOLD。
+本候选采用既有合成 D288/H768/L6/GS32 模型，比较共同规定 prepare 之后 token=1、position=0 的一次完整 forward。FR、GS32、paired16 只在七个 K288 静态调用点选择不同的 RVV 内核，唯一 W2 静态调用点继续使用原 FR 路由。三个消费者共用模型指针、初始化和状态布局；FP 运算顺序、量化、scale 消费与既有结果合同保持不变。没有修改生产 RTL、官方程序、赛事材料或稳定默认选择，也没有解除旧 paired16 性能实验的 HOLD。
 
 正常目标镜像共 77,115,360 字节，只允许偏移 `[73421464, 73421468)` 的方法控制字不同。其余字节全部相同，negative=0、UART=1。截至04:15检查点，三个目标镜像身份已经在内存中实际构造并逐字节比较，当时尚未生成并启动三份目标 EMU 输入；参考用镜像的 UART=0。当前目标作业的启动记录见第6节。固定 BEGIN 文本在计数器窗口之前；方法控制字读取、校验和实际分派位于窗口内。四个有 fence 的 CSR 读取按 cycle、instret、instret、cycle 排列，全部读取完成后才写报告。没有引入 GS32 正确性专用 wrapper 的两次全状态预扫描。
 
-计时范围是既定准备状态下的完整 forward，不含模型载入或离线 packing。不能将该窗口称为包含预处理的端到端首次 token 延迟。当前所有 instret 数字来自 NEMU 参考执行，不能替代 XiangShan cycles、IPC 或应用加速比。
+计时范围是既定准备状态下的完整 forward，不含模型生成/载入、离线 packing、启动、初始化及此前的共同 prepare。不能将该窗口称为包含预处理的端到端首次 token 延迟。第2节的 instret 数字来自 NEMU 参考执行，不能替代 XiangShan cycles、IPC 或应用加速比；第7节另列本轮实际目标 CSR 窗口数据及其有限资格。
 
 ## 2. 实际参考结果
 
@@ -91,7 +91,7 @@ FileNotFoundError
 
 05在 `2026-11-06T04:07:34.1749595Z` 启动、`04:07:49.5925249Z` 终态退出0，外层15.370秒，cleanup=true、输入无变更。`qualified()`重新审查原五参考并通过完整物理身份检查：429项硬件源码、21,236项依赖、1,672项生成物、十九metadata、原EMU与NEMU provenance均保持父身份；运行输入共651项。实际exec记录有81份工程Python，当前软件仓库exec来源0，533次子命令全部为Git。没有重建客体或重跑NEMU，也没有启动目标EMU。在04:15检查点，CPU0已释放，三路目标资源profile尚未建立；后续启动记录见第6节。
 
-两位独立 Pro 已核查最终 ELF 的三分派入口、全部24个静态 route 调用、W2保留FR、共享模型/状态、四个CSR链和控制字读取边界，并回读五参考实际回执。其结论限定于这些客体身份与测量窗口；05物理预检为另一次实际执行，目标运行仍待完成。
+两位独立 Pro 已核查最终 ELF 的三分派入口、全部24个静态 route 调用、W2保留FR、共享模型/状态、四个CSR链和控制字读取边界，并回读五参考实际回执。其结论限定于这些客体身份与测量窗口；05物理预检为另一次实际执行。上述检查点发生于目标运行之前，后续实际目标结果见第7节。
 
 ## 5. 证据与复现入口
 
@@ -105,13 +105,13 @@ D:\Projects\competitions\2026-10-CIE-RISCV-XiangShan\runs\first-forward-rvv-2026
 
 复现入口为已通过预检的 `controller-05/run.py`，使用已有 `build-02` 和 `reference-02`；adapter/identity 精确路径在根目录 `config-01.json`。下面描述新的独立复现流程：取得共享CPU协调窗口后，以新 operation ID、fresh output/profile 和明确 CPU 槽调用 `--freeze`，随后执行同一 profile 的三例正常 campaign。本轮已启动作业的原身份与路径见第6节。目标计划只有 FR、GS32、P 三个新进程，没有追加负例或第四个重放目标进程。原四CSR退休链、custom协议、DiffTest、trap、资源和清理检查继续生效；`full_retirement_window_audited=false` 保持。
 
-本节交付的是已闭合的参考结果与物理身份预检。目标 DiffTest 和完整 forward 的周期观察将在原作业完成后分别报告；GS32 与 P 的周期排序以该实际结果为依据。
+本节保留已闭合的参考结果与物理身份预检入口。第7节记录随后真实完成的目标 DiffTest 和完整 forward 周期观察；参考指令数与目标周期分别报告。
 
 <a id="target-run-status"></a>
 
-## 6. 三臂目标作业已启动（2026-11-06 05:01 UTC）
+## 6. 三臂目标作业的启动记录（2026-11-06 05:01 UTC 历史检查点）
 
-在上文04:15检查点之后，共享CPU正式交接；人工要求的协作研究汇报完成后，主端于04:56:23 UTC恢复原合同。本节是新的运行状态，前述原始失败、预检和五参考记录保持原样。
+在上文04:15检查点之后，共享CPU正式交接；人工要求的协作研究汇报完成后，主端于04:56:23 UTC恢复原合同。本节保留当时的启动状态，前述原始失败、预检和五参考记录保持原样。
 
 唯一外层ChatPC作业 `d9b025210fdcd3c1fd06c2f645cfad75.9ff2bf48040065fbc99e3c3509bc2522` 于 `2026-11-06T05:01:06.0549488Z` 实际启动；实验操作ID为 `f3e06512-04c6-427c-a0cf-5bfe42a2120c`。原 `--freeze` 于05:01:20.421730 UTC产出 `FROZEN_BEFORE_EMU`，资源合同926434字节、SHA `16c27202595792f3bd80eba42e8f1664877ba1128d46bdda541a6d262b97c1e3`。它声明FR/GS32/P分别使用CPU0/2/3，仍为每臂40M cycles/28800秒、单线程、seed1/128MB、每个原始输出流4GiB；`performance_qualified=false`。
 
@@ -119,4 +119,75 @@ D:\Projects\competitions\2026-10-CIE-RISCV-XiangShan\runs\first-forward-rvv-2026
 
 输出为上述WSL运行根的 `target-01/`；owner记录为 `target-launch-01/`，冻结profile为同根 `target-01.resource-contract.json`。Windows同名运行目录的 `target-launch-01/resource-contract.json` 已回读字节与SHA；owner终态会回存小回执。运行保护已登记并回读 [Issue #2 comment 6677347729](https://github.com/cc77-builder/riscv/issues/2#issuecomment-6677347729)。
 
-05:05 UTC可确认外层running和profile冻结；各臂实际PID及进展尚未获得合法读取结果，不把外层状态当作三个EMU均已启动。只读PowerShell观察请求因同目录长作业锁被拒绝且未启动；专用FileOps不接受该WSL UNC路径。没有换目录或资源声明绕过锁，没有重放外层。原作业继续受其超时、输出上限和清理约束；后续以原进程回执和原始输出给出结论。
+05:05 UTC可确认外层running和profile冻结；各臂实际PID及进展尚未获得合法读取结果，不把外层状态当作三个EMU均已启动。只读PowerShell观察请求因同目录长作业锁被拒绝且未启动；专用FileOps不接受该WSL UNC路径。没有换目录或资源声明绕过锁，没有重放外层。当时原作业继续受其超时、输出上限和清理约束；现已按原合同完成，终态与资源闭合见第7节。
+
+
+<a id="target-result-01"></a>
+
+## 7. 原三臂目标实际终态与单窗口观察（2026-11-06 12:06 UTC）
+
+### 7.1 结果与可解释范围
+
+原外层作业从 `2026-11-06T05:01:06.0549488Z` 启动，至 `2026-11-06T12:06:25.7428206Z` 终态为 `succeeded`，退出码0、`cleanup_complete=true`，未取消、未超时。原 owner 在12:06:23 UTC记录 `FIRST_FORWARD_RVV_TARGET_OBSERVATIONS_COMPLETE`。运行期间没有换 ELF、改变预算或重复启动目标进程。
+
+| 本轮方法 | 完整 forward 窗口 cycles | 同一窗口 instret | 原目标审计 |
+| --- | ---: | ---: | --- |
+| FR | 22,244,288 | 7,502,886 | `FIRST_FORWARD_RVV_TARGET_DIFFTEST_PASS` |
+| GS32（G） | 19,996,570 | 4,828,788 | 同上 |
+| paired16（P） | 17,382,632 | 5,175,371 | 同上 |
+
+三臂同用第3节的公共 ELF `be6c3ead…`，实际目标镜像除4字节 selector 外逐字节相等。完整3,691,424字节状态比较的 PASS、flags=1、原 DiffTest、good trap、原 O2 协议以及四个有 fence 的 CSR 采样/退休链均通过。三个窗口 instret 与本次既有参考记录分别相同。每臂的 custom COMMIT 观测数为0；本节比较的是三种标准 RVV 消费路径，不是 VDot 指令的性能结果。
+
+本固定窗口中，G相对FR周期少10.1047%，P相对FR少21.8558%，P相对G少13.0719%。同时，P比G多退休346,583条指令，即增加7.1774%；因此本轮实际周期排序与按指令数排序不同。后续选择继续保留P这个较快的 RVV 对照。
+
+上述百分比仅为本轮单次、既定 prepare 后、position=0/token=1 的完整 forward 窗口算术。窗口包含应用消费者的既定工作，不含模型载入及离线 packing；全部 guest 运行、宿主耗时和窗口 cycles 是不同指标。本轮保持：
+
+- `target_correctness_qualified=true`；
+- `performance_qualified=false`；
+- `full_retirement_window_audited=false`。
+
+四个 CSR 读取的采样和退休链通过，不代表已经逐条审计整个退休窗口。本合同本来只有三个正常观察，没有第四次目标重放；本次交付不补造重复样本，也不把额外覆盖检查变成该观察合同的新增验收条件。这些数据不能直接证明正式应用加速、其他工作负载上的收益或 VDot 收益。旧 TA/FR 以及另一个 ELF 的 GQ/PQ 记录仍需保留各自身份与范围，不能直接拼成同一周期对照。
+
+### 7.2 实际进程与资源闭合
+
+| 方法 | EMU PID | CPU | 原每臂终态时间（UTC） | 实际退出与清理 |
+| --- | ---: | ---: | --- | --- |
+| P | 4910 | 3 | 10:56:15.607562 | exit0，直接子进程回收，进程组消失 |
+| G | 4912 | 2 | 11:34:10.841958 | 同上 |
+| FR | 4911 | 0 | 12:06:21.936448 | 同上 |
+
+原三个 launcher PID2200/2199/2198也均退出0、进程组消失，回执清理核验全部通过。最终 `active`、`cleanup_unknown`、`cleanup_errors` 和 `launch_state_unknown` 均为空，`new_emu_runs=known_started_emu_runs=3`。资源profile仍为 `16c27202595792f3bd80eba42e8f1664877ba1128d46bdda541a6d262b97c1e3`，owner的 `changed_inputs=[]`。
+
+[Issue #2 RUN END 6684726338](https://github.com/cc77-builder/riscv/issues/2#issuecomment-6684726338)已登记并回读，CPU0/2/3的本RUN活动占用结束。原冻结输入、失败目录与原始输出继续保留。原观察阶段只看到某个EMU PID缺项时，没有据此提前判定某臂成功或释放其资源；这里的完成结论来自原每臂和owner终态。
+
+### 7.3 原始证据与读回
+
+本次完整轻量证据包为 [evidence/target-v1/raw.zip](evidence/target-v1/raw.zip)，配套 [manifest.json](evidence/target-v1/manifest.json) 与 [external-operation.json](evidence/target-v1/external-operation.json)。
+
+| 文件 | 字节数 | SHA256 |
+| --- | ---: | --- |
+| `raw.zip` | 2,554,250 | `f839b6bbab77acb54303f42c175cba6646bceaacd1ba0ab3fb89a315efac94c5` |
+| `manifest.json` | 59,452 | `489d73df9cf12b7461d0065917083fcdb575f82e1a0124eb1222ff8d8f3e8cde` |
+| `external-operation.json` | 10,827 | `47d768fbd1b2316afb5a2fcc85940a215811a8204e610e5284075abeb3113e80` |
+
+归档含277个成员、14,714,638字节原内容，包括完整三臂stdout/stderr、每臂validation/result/CSR原始审计文件、运行与硬件身份、owner记录、冻结资源合同及完整成功的 `controller-05`。归档逐成员读回字节数和SHA；六份原始日志、三份validation的SHA均与原目标进程回执相符，收集过程中来源文件未变化。收集本身新增guest执行数为0。三份各77,115,360字节的目标镜像仍留在原WSL输出目录，归档清单明确记录其身份与省略理由，没有删除或移动它们。
+
+核心原字节记录在ZIP内的逻辑位置如下：
+
+| 原记录 | ZIP内位置 | SHA256 |
+| --- | --- | --- |
+| 三臂结果 | `source/target-01/results.json` | `1bd3cb9e63068bc94ed3f0b72c731b0b8bd5d09d162d8ff056c57fb39ff05c54` |
+| campaign终态 | `source/target-01/state.json` | `61f11816700945316b0bbdb0d4781f4c3f322275d5e6bf189ae012689b1ef029` |
+| owner终态 | `source/target-launch-01/state.json` | `ef1355038a2bd76584a96e89cfec866e9e41018e1a55df4693fc51f96da2c3e3` |
+
+每臂 `audit/counter-source.txt`、`audit/counter-audit.json` 与原UART均保留。独立读回已使用UART十六进制按uint64求差，并核对同一CSR样本链及global tick差；未把超出JavaScript Number精度的CSR初值重写成证据。原始JSON按字节保存；后续解析可使用Python整数，或直接对原UART十六进制使用BigInt。
+
+Windows交付暂存为同名run根 `target-evidence-01`；原运行记录为WSL `target-01` / `target-launch-01`，当前三份轻量JSON也位于Windows `target-launch-01`。原外层operation、脚本SHA、durable log读取与归档前的来源清单均可从证据包追溯。
+
+### 7.4 后续复用成功的历史T17支持闭包
+
+本次实际执行的 `controller-05/run.py` SHA仍为 `976cacfb48631042e57e9d2393ddca4653866cc07142e1b0b49185b7719e18f6`；实际helper ROOT为该控制器下的 `target-support`。它包含原published的92文件，加一份原NEMU provenance manifest数据，共93文件。完整控制器原字节已进入本次归档。
+
+原92文件来源为 `norm-resume-20261027-2000/first-token-target-01/runtime-source`，原发布manifest SHA为 `df00872b6b493d9a89c37ca72c226d96bf7d5ed2882afc232186e765d68475ef`，对应 `closures/target/repo/` 与 `target/runtime-source/` 两个条目前缀。第93项 `team/patches/nemu/manifest.json` 为1062字节、SHA `1fee8f48616d7d09f46fd5924fb677f4a042ab7a6e2098a4af93e5e4e6a495a1`，来源T17提交 `34bae6d4acceac939f958199dae53c14bc1f6183` 的原文件。这是原物理守卫的非代码数据依赖，不是新的NEMU补丁。
+
+后续新组合应按新身份复用这些已明确来源的支持文件，并执行其适用核验。本次旧RVV合同的成功不能直接迁移为新GQ/PQ消费者、改过的控制器或新目标镜像的PASS。

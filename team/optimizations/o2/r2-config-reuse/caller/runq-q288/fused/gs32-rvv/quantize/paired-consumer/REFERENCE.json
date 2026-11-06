@@ -1,0 +1,306 @@
+{
+  "schema": "paired-consumer-reference-evidence-v1",
+  "contract": "r2-s3-first-forward-psq-v1",
+  "status": "FIRST_FORWARD_PSQ_REFERENCE_CAMPAIGN_PASS",
+  "created_utc": "2026-11-06T12:38:29.246499+00:00",
+  "scope": "fixed synthetic model; prescribed prepare then first p0/token1 full forward; excludes generation/packing/start/init",
+  "metrics": {
+    "p_instret": 5175368,
+    "pq_instret": 4784311,
+    "retired_reduction": 391057,
+    "reduction_fraction": 0.07556119680764731
+  },
+  "cases": {
+    "negative": {
+      "status": "EXPECTED_FIRST_FORWARD_PSQ_REFERENCE_REJECTION",
+      "method": 1347637553,
+      "negative": true,
+      "pid": 486,
+      "exit_code": 2,
+      "retired": 4938804,
+      "api_calls": 4938805,
+      "flags": 1,
+      "state_bytes": 0,
+      "normal_comparator_rejection": "complete_state_mismatch position=0 byte=152476",
+      "raw_sha256": {
+        "report.bin": "486ff00a3a7b62dc7c6bce884579f1ecbab017658b9e9ee488d578a67874a638",
+        "guarded-state.bin": "c09aad44fc2cbca5084859d923bc361d066ef73b614783fd45cf4be038623e03",
+        "tls.bin": "4fd999bbd22031f9c0cc582fbc89b4854cb59f0b3a553de8d49e1a7f1d98218c",
+        "weights-after.bin": "fa35f4bc1046fbce2b9f3d43391c5a225827ea508a01dd80ab03b295cd0c11e7",
+        "embedding-after.bin": "cc005ce4bb3aa2bf848ec540965b486997d24dcea982935e632d37543c8f626a",
+        "packed-after.bin": "fd77e2e929690e1096dcf937f902e2e6bcac0df460c96376b4be2bc479924dfa",
+        "tail-scales-after.bin": "a4257b6f2304145265ede0e5f1157a0e397c4ee01a8cd720a1944a40a0e831bb",
+        "w2-packed-after.bin": "18856e176e15f7caeab03267ce6d3b8113dc4c82455c533c0e357d68db895242",
+        "gold-after.bin": "7cc7fb1135fa9107ad4aeaa2dabf2551c00c49a489452df7afe41e93ea92eee3",
+        "control.bin": "a6940cc8cf69a38d89bf896109de452c6bf695d53ae4cbf8e0f66439ef6cf16e",
+        "initial-registers.bin": "5e49c01c8243e17fd2f8334458a195233de13b5babe80d8a9181e0364692e62e",
+        "final-registers.bin": "2c1b3a5f65cdc98a7bcc6eca50def51477dc9c50f0ed3e2d3117bdff56c1fa7a",
+        "initial-csrs.bin": "139f6e3a20092927381ec330cb7fb5b3802a548edb00280223615e1a5407d55c",
+        "final-csrs.bin": "d861d92c3a85e94a003475e4f03a89abe914f830fbdcca46cbf88cfe6a9af81d"
+      },
+      "counter_words_decimal": [
+        "1766",
+        "1769",
+        "4786080",
+        "4786083"
+      ],
+      "counter_words_hex": [
+        "0x6e6",
+        "0x6e9",
+        "0x4907a0",
+        "0x4907a3"
+      ],
+      "instret": 4784311,
+      "reference_cycle_delta": 4784317,
+      "outside_window_retired": 154493
+    },
+    "paired16": {
+      "status": "FIRST_FORWARD_PSQ_COMPLETE_REFERENCE_PASS",
+      "method": 1345402417,
+      "negative": false,
+      "pid": 490,
+      "exit_code": 0,
+      "retired": 8868762,
+      "api_calls": 8868763,
+      "flags": 1,
+      "state_bytes": 3691424,
+      "normal_comparator_rejection": null,
+      "raw_sha256": {
+        "report.bin": "51c998be8659d143616eff6740ae1dfbb690aedc43eac2c4cab0f581076b5d6d",
+        "guarded-state.bin": "027e4200fcbbd6453806591c355b616df27acbd219d4008d24893ac685bd814a",
+        "tls.bin": "4fd999bbd22031f9c0cc582fbc89b4854cb59f0b3a553de8d49e1a7f1d98218c",
+        "weights-after.bin": "fa35f4bc1046fbce2b9f3d43391c5a225827ea508a01dd80ab03b295cd0c11e7",
+        "embedding-after.bin": "cc005ce4bb3aa2bf848ec540965b486997d24dcea982935e632d37543c8f626a",
+        "packed-after.bin": "fd77e2e929690e1096dcf937f902e2e6bcac0df460c96376b4be2bc479924dfa",
+        "tail-scales-after.bin": "a4257b6f2304145265ede0e5f1157a0e397c4ee01a8cd720a1944a40a0e831bb",
+        "w2-packed-after.bin": "18856e176e15f7caeab03267ce6d3b8113dc4c82455c533c0e357d68db895242",
+        "gold-after.bin": "7cc7fb1135fa9107ad4aeaa2dabf2551c00c49a489452df7afe41e93ea92eee3",
+        "control.bin": "6a95f0fa7720b45f60dc62ea92c6b8a39895565c69b6a5f722f63e57dfc9f974",
+        "initial-registers.bin": "5e49c01c8243e17fd2f8334458a195233de13b5babe80d8a9181e0364692e62e",
+        "final-registers.bin": "4c987db593fab8e07a735c054847084219839912631871cdcfcb4d5f53f9d0b2",
+        "initial-csrs.bin": "139f6e3a20092927381ec330cb7fb5b3802a548edb00280223615e1a5407d55c",
+        "final-csrs.bin": "d861d92c3a85e94a003475e4f03a89abe914f830fbdcca46cbf88cfe6a9af81d"
+      },
+      "counter_words_decimal": [
+        "1766",
+        "1769",
+        "5177137",
+        "5177140"
+      ],
+      "counter_words_hex": [
+        "0x6e6",
+        "0x6e9",
+        "0x4eff31",
+        "0x4eff34"
+      ],
+      "instret": 5175368,
+      "reference_cycle_delta": 5175374,
+      "outside_window_retired": 3693394
+    },
+    "paired16_quantize": {
+      "status": "FIRST_FORWARD_PSQ_COMPLETE_REFERENCE_PASS",
+      "method": 1347637553,
+      "negative": false,
+      "pid": 491,
+      "exit_code": 0,
+      "retired": 8477705,
+      "api_calls": 8477706,
+      "flags": 1,
+      "state_bytes": 3691424,
+      "normal_comparator_rejection": null,
+      "raw_sha256": {
+        "report.bin": "9b7cb853c82586d7feb9d889bc3c1646a940f16556aae7334097afeca70da71f",
+        "guarded-state.bin": "027e4200fcbbd6453806591c355b616df27acbd219d4008d24893ac685bd814a",
+        "tls.bin": "4fd999bbd22031f9c0cc582fbc89b4854cb59f0b3a553de8d49e1a7f1d98218c",
+        "weights-after.bin": "fa35f4bc1046fbce2b9f3d43391c5a225827ea508a01dd80ab03b295cd0c11e7",
+        "embedding-after.bin": "cc005ce4bb3aa2bf848ec540965b486997d24dcea982935e632d37543c8f626a",
+        "packed-after.bin": "fd77e2e929690e1096dcf937f902e2e6bcac0df460c96376b4be2bc479924dfa",
+        "tail-scales-after.bin": "a4257b6f2304145265ede0e5f1157a0e397c4ee01a8cd720a1944a40a0e831bb",
+        "w2-packed-after.bin": "18856e176e15f7caeab03267ce6d3b8113dc4c82455c533c0e357d68db895242",
+        "gold-after.bin": "7cc7fb1135fa9107ad4aeaa2dabf2551c00c49a489452df7afe41e93ea92eee3",
+        "control.bin": "3fe124dd8632208e1d4294f3146d87620437df62fc8b1bc4f93bf7db22395be3",
+        "initial-registers.bin": "5e49c01c8243e17fd2f8334458a195233de13b5babe80d8a9181e0364692e62e",
+        "final-registers.bin": "c20fd4c6b382111f9ef5e532a88d2d24d70daabf01c33a529cf982a993ad80d4",
+        "initial-csrs.bin": "139f6e3a20092927381ec330cb7fb5b3802a548edb00280223615e1a5407d55c",
+        "final-csrs.bin": "d861d92c3a85e94a003475e4f03a89abe914f830fbdcca46cbf88cfe6a9af81d"
+      },
+      "counter_words_decimal": [
+        "1766",
+        "1769",
+        "4786080",
+        "4786083"
+      ],
+      "counter_words_hex": [
+        "0x6e6",
+        "0x6e9",
+        "0x4907a0",
+        "0x4907a3"
+      ],
+      "instret": 4784311,
+      "reference_cycle_delta": 4784317,
+      "outside_window_retired": 3693394
+    }
+  },
+  "counter_layout": {
+    "source_main_sha256": "64cff9efe3b5d7d558392d92ebfb8b1d271906fbe0fe3235403b66f0759adc08",
+    "source_lines": [
+      "    uint64_t c0=cycle(),i0=instret();",
+      "    uint64_t i1=instret(),c1=cycle();unsigned flags=fcsr();",
+      "    target_report[2]=method;target_report[16]=c0;target_report[17]=i0;target_report[18]=i1;target_report[19]=c1;target_report[20]=flags;"
+    ],
+    "report16": "cycle_start",
+    "report17": "instret_start",
+    "report18": "instret_end",
+    "report19": "cycle_end",
+    "instret_formula": "report[18]-report[17]",
+    "cycle_formula": "report[19]-report[16]",
+    "previous_informal_metric_error": "Early message used report[19]-report[17], overcounting each P/PQ instret by 3. Delta 391057 is unchanged."
+  },
+  "source_manifest": {
+    "contract": "r2-s3-first-forward-psq-v1",
+    "payload_sha256": "1b77e874baf87b5e607c9f2622487378507654b1315061ffdc796e06379c828e",
+    "parent_source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/quantize-gs32-20261106-pro3/consumer-source-01",
+    "main_authorization": "34cc3967bfdd444fa337f48e15624462",
+    "issue_update": 6684873121,
+    "files": {
+      "config.json": {
+        "bytes": 1298,
+        "sha256": "e61b8c0aba99e40d20b90c8c5f7745f640e407c5e0b7ec0ca87601ded105b6a6"
+      },
+      "source-delta-from-gq.json": {
+        "bytes": 2751,
+        "sha256": "e11d0b0394eb1bd801d4331165d62dd607d2ab2474199b73e9a73f478d85432b"
+      },
+      "paired-consumer/derive_extension.py": {
+        "bytes": 3951,
+        "sha256": "65bbf59f8784295daa384a646b0b68a0c320e524463fba4ae38c72288649e49e"
+      },
+      "paired-consumer/inspect_quantize.py": {
+        "bytes": 4148,
+        "sha256": "76c248339ad4a2f2fac4b2256b2139c3147c771f53e41b378ea92297e58feef5"
+      },
+      "paired-consumer/CONTRACT.md": {
+        "bytes": 3765,
+        "sha256": "1b56065bcb4c41156ac3d4e16fe549f5ec5f60b7a81f9fd6b2ac2b087bd43cea"
+      },
+      "paired-consumer/prepare.py": {
+        "bytes": 12163,
+        "sha256": "4e8ed98eb776092e35bbef0cd6b47df667ffd8322434bb52b3db2e96485d3605"
+      },
+      "base/build.py": {
+        "bytes": 28285,
+        "sha256": "a508d5b0d22f73aa198a66f9da7f62e24c8d3a4cf3a00ac11e9a6a57e8624a5c"
+      },
+      "base/BUDGET.md": {
+        "bytes": 2490,
+        "sha256": "b1a02f82536c7235476ab0cdf3f760bb808ccc4974b054a7ebce3934ae06af6a"
+      },
+      "base/bind.py": {
+        "bytes": 17374,
+        "sha256": "7794317256c641688ed60eeccb268ecb9c65f69c04aa4c166cbbc79919585381"
+      },
+      "base/derive.py": {
+        "bytes": 7878,
+        "sha256": "eabb68810a9f0fbfbddb58774b85f1fe37e6cf18a6e0f00452df5ea651d5cfb7"
+      },
+      "base/CONTRACT.md": {
+        "bytes": 7982,
+        "sha256": "fa78799c2d89131d646f160667fd3990bebc0b56926a2779219ec9648a604332"
+      }
+    }
+  },
+  "identities": {
+    "elf_sha256": "c4c541678e4b844d75a1e9f1bdbc4357eae267b88d5cd516ad8a6d4ea051d3df",
+    "bin_sha256": "76f67cb7fe8b0cca96a8dd8b20e5fae2b1432a96759717b81fed67bba0efd0d6",
+    "build_result_sha256": "4aba7b5151d35e69021f650253cec63a72a5482c83ef1fe202637b0e14062750",
+    "reference_state_sha256": "fd8944829f1491a5b055159c163ad3cdc739857afdddfaa4ae4c2c0346596a93",
+    "reference_results_sha256": "505408482b195f9db318490ccb44035d85783d70d5073b1b766261bfc6ac683c",
+    "readback_summary_sha256": "4868bea30ffeb38c62ab092ccc99e30e1f55ae60ea2b11029fff2a65e0868499"
+  },
+  "same_normal_images_except_method_word": {
+    "image_bytes": 77118304,
+    "method_word_offset": 73424408,
+    "changed_byte_offsets": [
+      73424409,
+      73424410
+    ],
+    "p_sha256": "2b52d80e0f995a866176b78fe481075099754a2e43dd89135407426597dd39b3",
+    "pq_sha256": "7514f6bfa4ccc49633d1a5c911b1e2ceb36a8c20fd7b9368bf01fe07c2c86382"
+  },
+  "original_validator_reaudit": true,
+  "input_files_verified": 414,
+  "host_epilogue": {
+    "original_status": "FAILED",
+    "original_error": "ValueError('exact fresh three-reference qualification')",
+    "original_batch_state_sha256": "a111c6206bb3c804a8759c73704cb5ff5ce6f0632fa8038ef0db6e7ef7d0ac37",
+    "reason": "One-off host driver expected missing CAMPAIGN in success status name; original reference campaign itself passed. Its subsequent unexecuted reaped/group_absent check also used wrapper field names, not original reference receipt fields.",
+    "corrected_readback_only": true,
+    "original_raw_modified": false,
+    "new_guest_runs": 0,
+    "real_reference_cleanup_fields": [
+      "direct_child_reaped",
+      "process_group_absent_after_exit"
+    ]
+  },
+  "archive": {
+    "directory": "/mnt/d/Projects/competitions/2026-10-CIE-RISCV-XiangShan/runs/quantize-gs32-20261106-pro3/paired-consumer-evidence-01",
+    "original_file_count": 351,
+    "original_bytes": 781081272,
+    "included_raw_file_count": 327,
+    "excluded_raw_file_count": 24,
+    "files": {
+      "archive-readback.json": {
+        "bytes": 517,
+        "sha256": "4c2e34391cc54f661f8788b0d1496f66f877d848c8d90b1c6cea47fce2ba6168"
+      },
+      "manifest.json": {
+        "bytes": 207482,
+        "sha256": "6983e4b32f29126b729602a2150abbab7f43e811a4dbf786bc3a64161e6efec8"
+      },
+      "p-pq-consumer-reference-01.zip": {
+        "bytes": 5870479,
+        "sha256": "5e35395c107c4a5cb9fc8c76fa9f5d951a1c6b9b024ad61184a92264a17aabf2"
+      }
+    },
+    "readback": {
+      "status": "PSQ_ARCHIVE_FULL_READBACK_PASS",
+      "at": "2026-11-06T12:40:50.773788+00:00",
+      "zip": {
+        "name": "p-pq-consumer-reference-01.zip",
+        "bytes": 5870479,
+        "sha256": "5e35395c107c4a5cb9fc8c76fa9f5d951a1c6b9b024ad61184a92264a17aabf2",
+        "members": 344
+      },
+      "manifest_sha256": "6983e4b32f29126b729602a2150abbab7f43e811a4dbf786bc3a64161e6efec8",
+      "all_members_crc_and_sha256_verified": true,
+      "original_files_deleted": 0,
+      "guest_runs_added": 0,
+      "reference_runs": 3,
+      "target_emu_runs": 0
+    }
+  },
+  "reference_runs": 3,
+  "target_emu_runs": 0,
+  "performance_qualified": false,
+  "stable_default_changed": false,
+  "old_paired16_hold_preserved": true,
+  "fast_path_rate": "unknown",
+  "published_parent_commit": "26737b68b94d39c26c5d18c46efa5806c18604ad",
+  "write_scope": "team/optimizations/o2/r2-config-reuse/caller/runq-q288/fused/gs32-rvv/quantize/paired-consumer",
+  "main_authorization": "34cc3967bfdd444fa337f48e15624462",
+  "issue_update": 6684873121,
+  "prior_gq_counter_crosscheck": {
+    "gs32": {
+      "report_sha256": "f65f96deda7f1c93605e337e30a11b5587b687c2f414e771035e0f55c0625338",
+      "instret": 4828794,
+      "reference_cycle_delta": 4828800,
+      "outside_window_retired": 3693394
+    },
+    "gs32_quantize": {
+      "report_sha256": "a0ab2d29fd6821936e69ac178303b35c40a63cd2753f7aecc3b0824b3a50aa1a",
+      "instret": 4437727,
+      "reference_cycle_delta": 4437733,
+      "outside_window_retired": 3693394
+    }
+  }
+}

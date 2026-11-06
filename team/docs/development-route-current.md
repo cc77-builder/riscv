@@ -1,6 +1,6 @@
 # 香山 vdot 工程开发路线：满足赛题技术要求，持续提高性能
 
-> 2026-10-31 更新：**P5稳定版只读收口完成：继续0f＋firstdot V2＋原C8，既有R5/G5资格可复用；没有必须新增实现或目标运行的缺项。** P1保持HOLD、P4/分段归约关闭、P3暂存HOLD；下一步可按发布需求整理提交范围，不继续自动试验。[P5结论与必要缺项](../optimizations/o2/integration/firstdot-v2-0f/continuation/p5-stable-closeout-v1/RESULT.md)。
+> 2026-11-06 更新：本轮未改变生产默认，P5稳定版结论及其历史边界保留。**FR/G/P首次完整forward的目标正确性已闭合，P是本次共同镜像窗口较快的RVV；正式性能资格尚未取得。** G/GQ与P/PQ独立同镜像有限参考均已完成；当前准备P/PQ两臂目标观察，以实际周期判断量化组合价值。旧P0～P5记录保留各自冻结合同，当前研究次序以下节为准。
 >
 > 研究基点：zjhwork `10b71ad4bff25cd2070e775c74a4717b01602f75`；生产硬件 `0f12df675378556670afd0dd2153f47fcb330610`，`src` 树 `78a0c93852dced038f645205e33d36a520fedfcd`。参考[公开项目与分支研究](public-vdot-review-and-plan-20261028.md)、[评分要求](../../赛题要求与评分总览.md)、[最终验收](../optimizations/o2/integration/firstdot-v2-0f/acceptance/RESULT.md)和[历版三指标](version-comparison-r5-g5-20261027.md)。研究文件中的供体成绩是选题依据，不是当前版本的新成绩。
 
@@ -9,7 +9,25 @@
 ## 0. 下一轮优化计划：先优化真实调用，再有条件改硬件
 
 
-### 当前决定：P5收口通过，保持稳定版；无必须重跑项（2026-10-31）
+### 当前决定：保留较快RVV对照，接续P/PQ量化组合（2026-11-06）
+
+固定既有合成模型D288/H768/L6、p0/token1，规定共同prepare后的首次完整forward，FR/G/P三臂实际目标运行已全部结束并清理。原DiffTest、3,691,424B完整state、flags=1及四CSR采样退休链通过，custom COMMIT=0；`target_correctness_qualified=true`。窗口不含模型生成/packing、启动/init及此前prepare，不能称为生产模型整程应用测量。
+
+| 同一公共镜像的方法 | forward cycles | forward instret |
+| --- | ---: | ---: |
+| FR | 22,244,288 | 7,502,886 |
+| G（GS32） | 19,996,570 | 4,828,788 |
+| P（paired16） | 17,382,632 | 5,175,371 |
+
+P相对G少13.071932%周期，但多7.177433%退休指令。后续候选优选必须保留这个实际较快的RVV对照；指令数不能代替周期排序，也不能把差额全归因于某一个局部内核。原合同的`performance_qualified=false`、`full_retirement_window_audited=false`保持：这是本固定窗口的目标正确性与周期观测，没有目标重放/跨输入稳定性、全位置、ASIC PPA或VDot应用收益资格。详见[首次forward证据入口](../optimizations/o2/r2-config-reuse/caller/runq-q288/fused/first-forward-rvv/REFERENCE.md)。
+
+[G/GQ独立同镜像参考](../optimizations/o2/r2-config-reuse/caller/runq-q288/fused/gs32-rvv/quantize/consumer/RESULT.md)已完成三个原NEMU正常/指定负控，窗口instret为4,828,794→4,437,727，减量8.098647%。这份新ELF尚无对应目标周期；旧G的目标值不能用作其分母，参考指令减量也不能直接折算周期。
+
+[P/PQ独立同镜像参考](../optimizations/o2/r2-config-reuse/caller/runq-q288/fused/gs32-rvv/quantize/paired-consumer/RESULT.md)也已闭合：保留原P，以同一Q替换新增PQ clone的五处量化调用，七处K288矩阵乘仍P、W2矩阵乘仍FR，W2 hq量化属于预期变化。PQ指定负控、P正常、PQ正常三个原NEMU均满足合同，实际ELF路由、完整状态/FCSR、414项输入身份及进程清理已核。正确四CSR口径`report[18]-report[17]`为5,175,368→4,784,311，少391,057条（7.556120%）；两臂窗口外退休量相同。原一次性host驱动在成功运行后因状态常量漏写`CAMPAIGN`而exit1，随后0新guest的原始数据独立复核通过；原失败回执及早期CSR索引数字更正均保留，不把原host失败改写为成功。GQ结果未转授PQ，旧目标P数值不能作新ELF分母。
+
+下一步准备P/PQ两臂目标观察：显式限定两种方法，复用成熟owner、完整状态比较器及93项已闭合支持文件，先核新参考和实际调用绑定，再按实际资源冻结独立预算。当前尚无P/PQ目标周期，不能由参考指令减量预判胜负；若安排后续TA公平比较，另核共同镜像、custom审计与原大日志成本，不自动扩成四臂。保持`performance_qualified=false`及既有P的`HOLD_CONTEXT_VARIATION`，不切换稳定默认、不重开历史P3/P4或追加无关门槛。
+
+### P5稳定版收口历史决定（2026-10-31；稳定结论继续有效）
 
 P5的12组只读核查全部通过：稳定clean-02的398项生产src、429项构建源、627项C8保护输入、实际EMU/NEMU/SDK/最终镜像和R5/G5证据匹配。原13＋补1组合验收与C8最终镜像等价可复用，旧clean-02 UTC失败和系统时钟限制仍保留，不再次补跑。
 
