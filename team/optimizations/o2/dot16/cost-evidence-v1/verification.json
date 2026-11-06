@@ -1,0 +1,162 @@
+{
+  "schema": 1,
+  "scope": "read-only verification of historical independent prototype cost evidence; no new EDA, build or guest execution",
+  "completed_at_utc": "2026-11-06T14:54:34.639059+00:00",
+  "source_root": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-cost-v5-pro2-8951c67e",
+  "source_result_sha256": "12fa34225823f298aa61d972e6124019d2435ac4aea425a6297c54cd85aee0a5",
+  "original_operation_id": "626659bd04cf00cf6a5fd074939373bd.5c5a36475a641149cfc5dee4a4751425",
+  "original_operation_receipt_sha256": "8f819fc3ca52f3311386276296cf93bbf9c2200af11aaf7a0fdd3e2abca0de27",
+  "original_tool_started_at": "2026-11-05T22:56:25.4558856Z",
+  "original_tool_updated_at": "2026-11-05T22:56:37.1147982Z",
+  "historical_runner_started_at": "2026-11-05T22:56:27.942423+00:00",
+  "historical_runner_finished_at": "2026-11-05T22:56:38.059823+00:00",
+  "timestamp_note": "Host receipt and original WSL runner clocks retained separately; no synthesized combined interval.",
+  "read_only_source_unchanged": true,
+  "raw_sta_paths_reparsed": 15,
+  "saved_graph_comparisons": 1,
+  "area_recheck": "raw Yosys stat agrees with saved Liberty-area sum; library not reloaded or redistributed",
+  "variants": [
+    {
+      "variant": "baseline8",
+      "cell_area": 7173.221999999998,
+      "cell_count": 5420,
+      "dff_cells": 230,
+      "timing": {
+        "r2r": {
+          "exists": true,
+          "arrival_ns": 1.155945,
+          "slack_ns": -0.235853,
+          "startpoint": "_10490_ (rising edge-triggered flip-flop clocked by core_clk)",
+          "endpoint": "_10607_ (rising edge-triggered flip-flop clocked by core_clk)"
+        },
+        "i2r": {
+          "exists": true,
+          "arrival_ns": 1.165737,
+          "slack_ns": -0.240952,
+          "startpoint": "io_vs1[52] (input port clocked by core_clk)",
+          "endpoint": "_10504_ (rising edge-triggered flip-flop clocked by core_clk)"
+        },
+        "r2o": {
+          "exists": true,
+          "arrival_ns": 0.323454,
+          "slack_ns": 0.526546,
+          "startpoint": "_10392_ (rising edge-triggered flip-flop clocked by core_clk)",
+          "endpoint": "io_in_ready (output port clocked by core_clk)"
+        },
+        "i2o": {
+          "exists": true,
+          "arrival_ns": 0.319318,
+          "slack_ns": 0.530682,
+          "startpoint": "reset (input port clocked by core_clk)",
+          "endpoint": "io_in_ready (output port clocked by core_clk)"
+        },
+        "ready": {
+          "exists": true,
+          "arrival_ns": 0.302887,
+          "slack_ns": 0.547113,
+          "startpoint": "io_out_ready (input port clocked by core_clk)",
+          "endpoint": "io_in_ready (output port clocked by core_clk)"
+        }
+      },
+      "raw_reports_match_saved_result": true,
+      "saved_representation_graph_identity_verified": true
+    },
+    {
+      "variant": "split16",
+      "cell_area": 13867.112000000001,
+      "cell_count": 10845,
+      "dff_cells": 364,
+      "timing": {
+        "r2r": {
+          "exists": true,
+          "arrival_ns": 1.150119,
+          "slack_ns": -0.228127,
+          "startpoint": "_21045_ (rising edge-triggered flip-flop clocked by core_clk)",
+          "endpoint": "_21305_ (rising edge-triggered flip-flop clocked by core_clk)"
+        },
+        "i2r": {
+          "exists": true,
+          "arrival_ns": 1.194682,
+          "slack_ns": -0.273507,
+          "startpoint": "io_vs1[100] (input port clocked by core_clk)",
+          "endpoint": "_21171_ (rising edge-triggered flip-flop clocked by core_clk)"
+        },
+        "r2o": {
+          "exists": true,
+          "arrival_ns": 1.259741,
+          "slack_ns": -0.409741,
+          "startpoint": "_21308_ (rising edge-triggered flip-flop clocked by core_clk)",
+          "endpoint": "io_result[19] (output port clocked by core_clk)"
+        },
+        "i2o": {
+          "exists": true,
+          "arrival_ns": 0.319318,
+          "slack_ns": 0.530682,
+          "startpoint": "reset (input port clocked by core_clk)",
+          "endpoint": "io_in_ready (output port clocked by core_clk)"
+        },
+        "ready": {
+          "exists": true,
+          "arrival_ns": 0.302887,
+          "slack_ns": 0.547113,
+          "startpoint": "io_out_ready (input port clocked by core_clk)",
+          "endpoint": "io_in_ready (output port clocked by core_clk)"
+        }
+      },
+      "raw_reports_match_saved_result": true,
+      "saved_representation_graph_identity_verified": true
+    },
+    {
+      "variant": "direct16",
+      "cell_area": 13850.886000000002,
+      "cell_count": 10693,
+      "dff_cells": 358,
+      "timing": {
+        "r2r": {
+          "exists": true,
+          "arrival_ns": 1.226258,
+          "slack_ns": -0.30064,
+          "startpoint": "_20724_ (rising edge-triggered flip-flop clocked by core_clk)",
+          "endpoint": "_21035_ (rising edge-triggered flip-flop clocked by core_clk)"
+        },
+        "i2r": {
+          "exists": true,
+          "arrival_ns": 1.242222,
+          "slack_ns": -0.317437,
+          "startpoint": "io_vs2[50] (input port clocked by core_clk)",
+          "endpoint": "_20802_ (rising edge-triggered flip-flop clocked by core_clk)"
+        },
+        "r2o": {
+          "exists": true,
+          "arrival_ns": 0.332286,
+          "slack_ns": 0.517714,
+          "startpoint": "_20690_ (rising edge-triggered flip-flop clocked by core_clk)",
+          "endpoint": "io_in_ready (output port clocked by core_clk)"
+        },
+        "i2o": {
+          "exists": true,
+          "arrival_ns": 0.329131,
+          "slack_ns": 0.520869,
+          "startpoint": "reset (input port clocked by core_clk)",
+          "endpoint": "io_in_ready (output port clocked by core_clk)"
+        },
+        "ready": {
+          "exists": true,
+          "arrival_ns": 0.311696,
+          "slack_ns": 0.538304,
+          "startpoint": "io_out_ready (input port clocked by core_clk)",
+          "endpoint": "io_in_ready (output port clocked by core_clk)"
+        }
+      },
+      "raw_reports_match_saved_result": true,
+      "saved_representation_graph_identity_verified": true
+    }
+  ],
+  "new_eda_runs": 0,
+  "new_builds": 0,
+  "new_guest_runs": 0,
+  "production_fu": false,
+  "parent": false,
+  "core": false,
+  "power_measured": false
+}
