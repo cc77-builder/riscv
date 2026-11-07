@@ -302,3 +302,159 @@ the value of the hardware cost.** Any future candidate needs a distinct
 identity and its applicable equivalence, functional and cost validation;
 that future work is not an added acceptance gate for the already qualified
 N software or the running four-arm experiment.
+
+## 2026-11-07 follow-up: exact arithmetic expression screens
+
+The human update at 14:49/14:53 UTC requested continued optimization toward
+more than 50% improvement over the current LaTeX metrics, with a library-area
+preference of 20,000 and a possible exception for substantial benefit. For this
+screen the working area boundary is the complete independent FU. This changed the investigation priority after the earlier defer note;
+it did not change the frozen four-arm full-forward experiment or its acceptance.
+
+Three separately identified, bounded screens changed only team-generated
+arithmetic expressions. The comparator remains the feature1 common-top point
+24,017.406 above, with the same complete CommonFuCostTop, library, tools,
+constraints and mapping/STA scripts. The mapping and STA scripts differ only by reversible path relocation. Each screen retained all 220 ports / 2,888 port bits and
+1,870 functional DFFs. No production Scala, authoritative program, guest,
+clock/reset/flush rule, response pipeline, or public interface was modified.
+
+### Measured results and selection
+
+Areas are library units; arrivals/slacks are ns at the same nominal 1 ns period.
+These are independent-FU synthesis/STA screens, not placed core cost or operating
+frequency results.
+
+| Expression | Area | Cells | r2r arrival / slack | i2r arrival / slack | Decision |
+|---|---:|---:|---:|---:|---|
+| Original common feature1 | 24017.406 | 14161 | 1.206332 / -0.280714 | 1.234132 / -0.311787 | Comparator |
+| Direct signed8 product | 20990.060 | 11874 | 1.207203 / -0.281585 | 1.220549 / -0.298209 | Retain as arithmetic candidate |
+| signed low15 + explicit sign | 21170.674 | 11935 | 1.204557 / -0.282828 | 1.185067 / -0.263741 | Not selected for the area objective |
+| signed8 + flat signed19 reducer | 20879.670 | 12035 | 1.404662 / -0.483700 | 1.332073 / -0.408483 | Reject this timing/area tradeoff |
+
+Direct signed8 saves 3,027.346 area units (12.604800%) against the matched
+feature1 comparator. It is still 990.060 above 20,000: 4.950300% of the budget,
+or a further 4.716804% reduction from this candidate. No area-budget PASS is
+claimed. The flat reducer saves only another 110.390 (0.525916%) but raises
+r2r arrival by 16.356735%; its small area saving does not justify that timing
+cost here. All four points fail the nominal period.
+
+| Expression | r2o arrival / slack | i2o arrival / slack | ready arrival / slack |
+|---|---:|---:|---:|
+| Original | 0.545810 / +0.304190 | 0.541437 / +0.308563 | 0.229774 / +0.620226 |
+| signed8 | 0.616472 / +0.233528 | 0.619019 / +0.230981 | 0.229774 / +0.620226 |
+| sign15 | 0.610531 / +0.239469 | 0.623721 / +0.226279 | 0.239169 / +0.610831 |
+| signed8 + flat19 | 0.560924 / +0.289076 | 0.585440 / +0.264560 | 0.229774 / +0.620226 |
+
+The current signed8 i2r path ends at `dut.pProducts_9[14]`, from
+`src1[73]`; its mapped endpoint is `_22036_/D`. The r2r path is
+`pProducts_0[2]` to `rPacket_res_data[20]`. Thus the original nominal
+bit15 endpoint is no longer the current worst i2r path. In particular, the
+sign15 idea cannot be described as directly removing the selected candidate's
+worst endpoint.
+
+### What was proved, and what remains unqualified
+
+The original product is a modulo-16-bit multiplication of sign-extended
+bytes. signed8 expresses the same eight full 16-bit outputs as
+`$signed(byte_a) * $signed(byte_b)`. sign15 retains the signed product's
+low 15 bits and sets bit15 to
+`(a[7] XOR b[7]) AND (a != 0) AND (b != 0)`.
+Unconstrained Yosys SAT miters compare the actual original and each edited
+expression over every input and every output bit; they do not compare a
+candidate with itself. The product proof returned SUCCESS before mapping in all three runs.
+
+flat19 sums eight signed16 values in signed19, whose exact arbitrary-input
+range is [-262144,262136]. Its separate unconstrained miter compares all 128
+reducer output bits, including input combinations unreachable from int8
+multiplication. That proof also returned SUCCESS. Exact inverse edits recover
+each original SV source, and the other generated files are byte-identical.
+
+| Run | UTC start–finish (outer tool) | SAT work | Tool receipt / closure |
+|---|---|---|---|
+| signed8-01 | 15:09:01–15:09:45 | product: 21829 variables / 64303 clauses | `.2a94c098e68c5827ab9088f13a227065`; exit0, cleanup true |
+| sign15-01 | 15:16:54–15:17:49 | product: 22013 / 64887 | `.bbb61e65b1a08650154d77784a5e09ac`; exit0, cleanup true |
+| flat19-01 | 15:21:18–15:23:04 | product plus reducer: 3229 / 8808 for reducer | `.8ed4c89ffcb67fe3cefa702fe5c63e94`; exit0, cleanup true |
+
+All receipt suffixes share prefix
+`49cbde030e5643f0cccfca5cec8a79c1`.
+Independent terminal audits confirmed all input pins unchanged and all
+screen child process groups absent. The 15:25:36 UTC audit also observed the
+same four original full-forward EMUs, one thread each on CPUs0–3. Screen subprocesses used CPU1 / nice5 / one worker.
+
+The untouched state and register boundaries structurally retain earliest E2
+response and unstalled II1. This is not a new sequential-equivalence or
+full-core runtime qualification. Every screen explicitly leaves
+`functional_runtime_qualified`, `application_performance_qualified`, and
+`core_cost_qualified` false, with zero new elaborations/core simulations.
+The existing Scala datapath already multiplies 8-bit SInt operands; adding
+another Scala `asSInt` alone is not established to reproduce the improved
+generated SV. Production adoption needs an explicit, reproducible generation
+route and its applicable validation. No existing runtime PASS is transferred.
+
+A future feature0/feature1 incremental-cost claim also requires the same
+arithmetic treatment on both sides. Comparing this optimized feature1 with
+the old unoptimized feature0 is not a fair new feature-cost estimate.
+
+### Reproduction and preserved evidence
+
+`arithmetic_probe.py` and `ARITHMETIC_CONTRACT.md` are the v3 reusable
+controller/contract. From the directory containing those two files, a fresh
+signed8 reproduction after restoring the existing common-cost inputs at their
+recorded paths is:
+
+```sh
+python3 -B arithmetic_probe.py \
+  --repo /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source \
+  --cost-root /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-production-cost-20261107-main \
+  --output /absolute/fresh/output-directory \
+  --expression signed8 --reduction unchanged --cpu 1 --budget-seconds 540
+```
+
+Use `--expression sign15 --reduction unchanged` or
+`--expression signed8 --reduction flat19` only to reproduce the recorded
+alternatives. Fresh outputs must not overlap either frozen input tree.
+The controller verifies source/tool identities, inverse edits, complete ports,
+DFF count, all five path classes and constant-only setup warnings.
+
+The actual selected signed8 result used preserved v1; sign15 used v2;
+flat19 used v3. v1 did not install a soft-signal cleanup handler; v2 raised from its
+handler, leaving Popen/cleanup interruption windows. Those limitations do not
+invalidate their observed normal closures, and the original receipts/scripts
+are retained. v3 fixes the
+controller by latching TERM/INT and entering cleanup at bounded safe points
+after Popen returns, without asynchronous exceptions during cleanup.
+The selected signed8 experiment has not been rerun with v3.
+
+`arithmetic-screen-20261107.zip` is 1,749,369 bytes, SHA256
+`c60ea8a815533f56a9070a1d9b895b5fe45ef250cc7d8d0191a3267793ae3b28`.
+Its 88 members contain 87 raw files / 32,168,643 raw bytes, all three full
+screen outputs, original controller snapshots, proof/mapping/STA logs and
+netlists, terminal audits, tool receipts and a manifest. Every member's CRC,
+SHA and source-byte identity was checked after creation. The manifest points
+to the unchanged common-cost archive above for the original generation and
+nominal inputs.
+
+| Result | result.json SHA256 |
+|---|---|
+| signed8-01 | `c340169387915cb9d2cda0d0757292e94abad1262bfd3e61c3facb6d142b6654` |
+| sign15-01 | `24bb9bc901be7c7a9d552d1b5dfda6217a28a982492fad70ff3bd50b7e781952` |
+| flat19-01 | `7bbaa1540283993d3b04f589fcf1bc5f78a79a5d60dcdc1fe3c2e1bdcaa42725` |
+
+Stop expanding this arithmetic screen matrix. Keep signed8 as the measured
+candidate; defer II2 multiplier reuse and perf-register clock gating because
+their protocol/test-enable changes need separate decisions and validation.
+Prioritize software and complete-forward evidence before trading throughput
+for the remaining small area gap. The human's possible area exception is retained. This round does not yet
+invoke it: the local Q288 and isolated cost results do not adequately establish
+an advantageous application/area tradeoff. This is an engineering selection
+decision, not an additional human-imposed acceptance condition.
+
+The current main-worktree LaTeX stage3 (29,191 bytes, SHA256
+`6b2bfc3d343b2b41639b9b3cee7db095bdc92d964205f551354a1546aae51dc3`)
+records its latest P forward at 17,382,632 cycles, G at 19,996,570 and FR at
+22,244,288 in that historical common ELF. A 1.5x throughput planning threshold
+relative to P is at most 11,588,421 cycles; a 50% cycle reduction is the
+different, stricter threshold 8,691,316. These are planning anchors only.
+The report itself leaves performance qualification false. New results must
+compare matching application/ELF/hardware/windows and retain the faster
+qualified RVV baseline; this screen establishes neither threshold.
