@@ -1,5 +1,7 @@
 # Production FU nominal cost result — 2026-11-07
 
+> Current source-candidate evidence is in the final **real signed8 source candidate** section: feature1 area 21,147.798, local FU-qualified; production adoption remains pending parent/full-core validation.
+
 **Result: two comparable CommonFuCostTop cost points were recorded.**
 Enabling dot16 increases mapped standard-cell area from **17,246.376** to
 **24,017.406 library area units**, a delta of **6,771.030 (+39.2606%)**.
@@ -458,3 +460,151 @@ different, stricter threshold 8,691,316. These are planning anchors only.
 The report itself leaves performance qualification false. New results must
 compare matching application/ELF/hardware/windows and retain the faster
 qualified RVV baseline; this screen establishes neither threshold.
+
+## 2026-11-07 real signed8 source candidate: local validation and matched costs
+
+**Candidate result: 21,147.798 library area units for feature1, down 11.9480%
+from the original 24,017.406 under the same full-FU boundary and constraints.**
+This is the result of the actual Scala candidate and generated inline resource.
+It supersedes the earlier 20,990.060 direct-SV screen as the cost of this source
+candidate. Production `src/main` remains unchanged. The candidate is published
+separately in [signed8/](signed8/) with its frozen procedure and evidence.
+
+The authoritative successful receipt is `raw/local-03/result.json` in
+[signed8/raw.zip](signed8/raw.zip), SHA256
+`19f90c867022ba2259b83fb2600bb56ef7066eda54023cead03c6e35bf23b7d7`.
+Its status is `INLINE_SIGNED8_GENERATED_EQUIVALENT_FU_AND_COST_COMPLETE`.
+This grants the local-v3 arithmetic/FU/cost qualifications below. It grants
+no new real-parent, full-core, application-performance or core-cost qualification.
+
+### Implementation and actual generation
+
+[VDotDatapath.scala](signed8/VDotDatapath.scala) adds a pure combinational
+`VDotSignedByteProduct` inline module. Its two 8-bit operands are interpreted
+as signed values and multiplied into the complete 16-bit result. Each actual
+`VDotProducts` contains eight such instances. There are no new clocks, resets,
+state elements or protocol signals. Existing positive-edge/synchronous-reset
+P/R registers, 128-bit operand interface, result sign extension, redirect and
+backpressure behavior remain in the unchanged surrounding modules. Both feature
+modes retain the existing two-cycle unstalled response and one-cycle acceptance
+interval in the actual FU tests.
+
+The finite controller compiles the candidate outside the resident source/cache
+and places the complete new class overlay first on the verified classpath.
+Four independent elaborations cover cost/FU times feature0/feature1. All four
+emit the same Products and inline bytes; their Elastic, Reduce and Top modules
+are byte-identical to the corresponding original generated consumers. Exact
+filelists and resource manifests include the implementation. The extra
+`extern_modules.sv` is checked as the exact comment-only CIRCT artifact.
+
+The unconstrained SAT miter reads the actual original and candidate Products
+modules plus the actual inline implementation, flattens the implementation,
+and compares **all eight complete 16-bit outputs**. It passes for all binary
+inputs. This is a combinational arithmetic equivalence proof, not a sequential
+formal proof of the entire FU or an uninterpreted-blackbox comparison.
+
+### Actual FU evidence
+
+Both original FU suites execute against freshly compiled candidate test tops.
+Their existing checkers and all four observation-fault controls are unchanged.
+The controls test checker rejection; they are not RTL mutation experiments.
+
+| Actual test result | feature0 | feature1 |
+|---|---:|---:|
+| Base arithmetic vectors | 10022 | 10022 |
+| Accepted transactions | 23327 | 43699 |
+| Responses | 22476 | 42736 |
+| Canceled | 739 | 835 |
+| Reset-discarded | 112 | 128 |
+| Simulated cycles | 31595 | 53205 |
+
+The transaction totals close in both modes. Feature0 records 10021 II1
+intervals and its latency2 probe. Feature1 additionally records 20124 legal
+comparisons, 40 illegal comparisons, 20043 mixed II1 intervals, first latency2,
+96 mixed cancellation pairs and 16 additional reset cases. All eight
+observation-fault executions return the expected exit1 and their corresponding
+unchanged checker accepts the exact rejection evidence.
+
+### Same arithmetic treatment on both cost points
+
+Both new points apply the candidate multiplication. The complete 220 named
+ports / 2888 bits, existing tool/library identities and all nominal constraints
+above are preserved; mapped DFF counts are unchanged from their matched
+originals. Thus a fair new feature increment is 5413.100 library area units
+(+34.4023% from candidate feature0), rather than mixing the optimized feature1
+with the old feature0.
+
+| Point | Area | Cells | DFF | Area change from matched original |
+|---|---:|---:|---:|---:|
+| Original feature0 | 17246.376 | 8929 | 1742 | — |
+| Candidate feature0 | 15734.698 | 7743 | 1742 | -1511.678 / -8.7652% |
+| Original feature1 | 24017.406 | 14161 | 1870 | — |
+| Candidate feature1 | **21147.798** | 11938 | 1870 | **-2869.608 / -11.9480%** |
+
+Feature1 is still 1147.798 above 20000 (5.7390% of that target).
+It would need a further 5.4275% reduction from its current area to reach 20000.
+The human's possible exception for substantial benefit has not been invoked:
+these local results do not establish the necessary application benefit.
+
+| Path class | Candidate feature0 arrival / slack, ns | Candidate feature1 arrival / slack, ns |
+|---|---:|---:|
+| Register → register | 1.140952 / -0.217666 | 1.191679 / -0.269956 |
+| Input → register | 1.173625 / -0.252393 | 1.226397 / -0.302071 |
+| Register → output | 0.611266 / +0.238734 | 0.545695 / +0.304305 |
+| Input → output | 0.638092 / +0.211908 | 0.568890 / +0.281110 |
+| Output ready → input ready | 0.223799 / +0.626201 | 0.229774 / +0.620226 |
+
+**Neither candidate point meets the fixed nominal 1 ns setup constraint.**
+The feature1 r2r endpoint is `pProducts_1[2]` to `rPacket_res_data[18]`;
+i2r runs from `src0[86]` to `pProducts_10[15]`. The 119 unconstrained
+endpoints in each point are individually mapped to the same constant outputs
+as the original contract; there are no unexamined dynamic endpoints.
+No new clock-frequency, power, parent/core-area or application claim follows.
+
+### Execution, preserved failures and source identity
+
+| Attempt | Actual scope and result | Outer UTC interval / closure |
+|---|---|---|
+| local-01 | Candidate compile and cost0 generation passed; controller incorrectly required only five SV files and rejected the comment-only extra artifact. No SAT/FU/cost qualification. | 16:11:18.941–16:11:59.053; exit1, cleanup true |
+| local-02 | Four generations and SAT passed; first FU C++ build failed because g++ was paired with installed Clang-specific Verilator flags. No FU/cost qualification. | 16:14:20.522–16:15:19.332; exit1, cleanup true |
+| local-03 | Exact manifest handling and actual installed Clang binding; all required local checks and two matched cost points completed. Same candidate and unchanged tests. | 16:17:18.459–16:20:03.915; exit0, cleanup true |
+
+Successful operation:
+`49cbde030e5643f0cccfca5cec8a79c1.7db5a56744694244fa097e0476778197`.
+Its 32 commands all close and are reaped: eight intentional fault executions
+return exit1, the remaining commands return exit0. The controller uses CPU1,
+nice5, one worker and a 1200-second total budget. The actual outer duration is
+165.381 seconds. No production-source/cache write, parent build, full-core
+simulation or official-program modification occurs.
+
+| Published input | Bytes | SHA256 |
+|---|---:|---|
+| `signed8/VDotDatapath.scala` | 2925 | `50522c0cd2700f7f852872049533bc31f79ce811ad2ed53da2c1d333cece45e2` |
+| `signed8/inline_signed8.py` | 22421 | `301d49f50f07c6f8bc208040fa60df64fc5eb965a329c3c7a4fc46ce97631bae` |
+| `signed8/INLINE_CONTRACT.md` | 4982 | `a72c5251eda5bf7f5d7428b6831620e4bc848af3a014ea72517355bc5f5abad2` |
+| Generated Products (four copies) | — | `408856505a97565531f567d25840ed4d02ec54b5d53b8b2bbb01e00dab9406a5` |
+| Generated inline SV (four copies) | 207 | `98f3972c5d5fe0d638cf7ac45940e1556138e14877dbc2a5817b48f0c2682c5a` |
+
+The independently audited source archive is **4708945 bytes**, SHA256
+`e35fb3b60eb9a15bf3d5ec0c8cfa4119394a91162111f75273a785482d27369c`.
+Its 241 members contain 240 raw files / 29919281 raw bytes plus a manifest,
+including all three attempts, source snapshots, compiled overlays, generated
+SV/resources, SAT logs, FU binaries/checker logs, mapped netlists and STA.
+Archive creation checks every CRC, member length/SHA and original source bytes,
+then rechecks all 627 original/snapshot pins across the attempts and absence
+of all 42 child process groups. Audit SHA256:
+`425a9408b05396b055b2cf0b4c6b0a23595aaf2ae969e8951d17fe31a5a14e66`.
+Reproducible object intermediates and temporary directories are omitted from
+the ZIP; their original run directories remain untouched.
+
+Follow [INLINE_CONTRACT.md](signed8/INLINE_CONTRACT.md) and
+`inline_signed8.py --help` for reproduction using fresh isolated outputs and
+the recorded original cost/FU/source/classpath inputs. Do not replace the
+successful receipt with a new run's identity, relabel either failed attempt,
+or transfer old parent/full-core PASS to this candidate.
+
+**Adoption decision:** retain this separately published, locally qualified
+source candidate. The repository requires real-parent and affected full-core
+validation before adopting RTL in production. Those are the remaining adoption
+steps, not missing prerequisites for publishing this bounded candidate evidence.
+The source change alone does not establish the requested 50% application gain.
