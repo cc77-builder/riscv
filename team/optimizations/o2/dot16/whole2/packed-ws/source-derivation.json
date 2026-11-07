@@ -1,0 +1,107 @@
+{
+  "contract": "r3-dot16-np-packed-ws-v1",
+  "status": "SOURCE_DERIVED_NOT_COMPILED",
+  "parents": {
+    "dot16.S": "40d263b68ead735b84cb626086674463fbb81154ed9898eb8a340f95f102d671",
+    "paired16.S": "452ecab3ae3122dd8ea3d5ae05140197a10bb14a9a5ab76437f7591b00b29caf",
+    "w2_np.S": "fbe3a93f642ec3468da92ae776e1b547c29c527d4dffc30456191b437d1272c5"
+  },
+  "sources": {
+    "dot16.S": {
+      "parent_sha256": "40d263b68ead735b84cb626086674463fbb81154ed9898eb8a340f95f102d671",
+      "derived_sha256": "77807510f2605f55f2e653dc072e997da41c00217a92ab030873fa9005c45d7c",
+      "edits": [
+        {
+          "before": "q288_dot16_whole8_narrow",
+          "after": "q288_dot16_whole8_narrow_packed_ws",
+          "count": 5
+        },
+        {
+          "before": "  vlse32.v v12, (a4), t3\n",
+          "after": "  vle32.v v12, (a4)\n",
+          "count": 1
+        },
+        {
+          "before": "  addi a4, a4, 4\n",
+          "after": "  addi a4, a4, 32\n",
+          "count": 1
+        },
+        {
+          "before": "  addi a4, a4, 252\n",
+          "after": "  addi a4, a4, 0\n",
+          "count": 1
+        }
+      ],
+      "reconstructed_parent_byte_exact": true
+    },
+    "paired16.S": {
+      "parent_sha256": "452ecab3ae3122dd8ea3d5ae05140197a10bb14a9a5ab76437f7591b00b29caf",
+      "derived_sha256": "055025373cd99daeff5a8f5a03d7ced5e3f9eb8e4aa4c1f9fedb4c82be98f953",
+      "edits": [
+        {
+          "before": "q288_paired16_rvv",
+          "after": "q288_paired16_rvv_packed_ws",
+          "count": 17
+        },
+        {
+          "before": "  vlse32.v v12, (a4), t3\n",
+          "after": "  vle32.v v12, (a4)\n",
+          "count": 2
+        },
+        {
+          "before": "  addi a4, a4, 4\n",
+          "after": "  addi a4, a4, 32\n",
+          "count": 2
+        },
+        {
+          "before": "  addi a4, a4, 252\n",
+          "after": "  addi a4, a4, 0\n",
+          "count": 2
+        }
+      ],
+      "reconstructed_parent_byte_exact": true
+    },
+    "w2_np.S": {
+      "parent_sha256": "fbe3a93f642ec3468da92ae776e1b547c29c527d4dffc30456191b437d1272c5",
+      "derived_sha256": "048aea6340d78532d9f744a343fbbeabff8c43b112d1a7b1e79183e38b6d21bd",
+      "edits": [
+        {
+          "before": "q768_dot16_whole8_narrow",
+          "after": "q768_dot16_whole8_narrow_packed_ws",
+          "count": 5
+        },
+        {
+          "before": "q768_paired16_rvv",
+          "after": "q768_paired16_rvv_packed_ws",
+          "count": 17
+        },
+        {
+          "before": "  vlse32.v v12, (a4), t3\n",
+          "after": "  vle32.v v12, (a4)\n",
+          "count": 3
+        },
+        {
+          "before": "  addi a4, a4, 4\n",
+          "after": "  addi a4, a4, 32\n",
+          "count": 3
+        },
+        {
+          "before": "  addi a4, a4, 672\n",
+          "after": "  addi a4, a4, 0\n",
+          "count": 3
+        }
+      ],
+      "reconstructed_parent_byte_exact": true
+    }
+  },
+  "packed_source_sha256": "445ff9a47f182e8f876caf1dcd89eac2d13a25ebccd3ceb91d21a194d31edb15",
+  "expected_changed_words": {
+    "q288_dot16_whole8_narrow_packed_ws": 3,
+    "q288_paired16_rvv_packed_ws": 6,
+    "q768_dot16_whole8_narrow_packed_ws": 3,
+    "q768_paired16_rvv_packed_ws": 6
+  },
+  "target_runs": 0,
+  "performance_qualified": false,
+  "source_preparer_sha256": "d03bab8fec1863597ccfc2ec74d9f6e75af1c8f7207cf22ad81a940f7d47fd19"
+}

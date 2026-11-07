@@ -206,3 +206,80 @@ GNU operation `.df141f7a5b1b778de1ac9a42d89bf24b` 于
 本结果授予上述两个K768实现及两套fixture的参考资格，
 `target_runtime_qualified`、`performance_qualified`、
 `application_performance_qualified`仍为false，新的EMU次数为0。
+
+## 2026-11-07：N/P packed-Ws 完整源码、GNU 与两代参考通过；K288 目标小试已启动
+
+**已完成四个独立 packed-Ws 函数及其位保持准备函数，取得 K288/K768 的真实 GNU 与固定参考资格。** 目标是减少原跨行尺度读取的访存开销，实际周期收益尚待本节末尾的 K288 小试。这里没有完整 consumer 接入、准备成本摊销或正式应用性能结论；原生产路由保持。
+
+### 实现、接口与完整机器体
+
+新增 [packed.S](packed-ws/packed.S)、[packed_ws.h](packed-ws/packed_ws.h) 与 [pack.c](packed-ws/pack.c)，合同见 [CONTRACT.md](packed-ws/CONTRACT.md)。固定 RV64/lp64d、VLEN128、M288、GS32、RNE，K 为288或768。原 row-major context 和入口继续保留；新尺度对象使用不同类型，大小为10,368/27,648B、64B对齐，新 context 仍56B、字段偏移0/8/16/24/32/40/48，slot为16B且16B对齐。不存在把旧尺度指针强转为新布局的兼容承诺。
+
+令 `G=K/32`，完整映射为：
+
+```text
+packed[(tile*G + group)*8 + lane] = bits(Ws[(tile*8 + lane)*G + group])
+```
+
+准备函数通过字符访问复制每项原始4B表示，不求值浮点，不预乘尺度；覆盖全部填充行。必须在首次使用前及每次权重尺度更新后重新准备。原 `INT32→FP32→乘Ws→乘Xs→按组左折叠相加` 次序逐字保留，没有FMA或重新结合。P的完整−128保护和fallback均保留。
+
+每个N只修改三个机器字：`vlse32.v`改为`vle32.v`、组步进4→32、tile额外步进252/672→0；每个P在fast和fallback各做同样三项。保留不再需要的stride初始化和零加法，以固定函数长度并核查其余全部字节。新旧函数必须分别汇编成对象再链接，内部 `.L` 标签没有改名，不能直接把新旧源码拼入同一个 `.S`。
+
+实际 GNU 构建先将四个父函数与完整 N/P forward ELF `62a73b9d16cea43ad03eec3ec09b27edfab7da90ce895d33baa72bf9d84723c4` 对齐，再独立构造允许改变的编码，并比较整个函数及GNU符号长度：
+
+| 新函数 | 字节 | 允许改变的机器字索引（从0计） | 完整新函数 SHA256 |
+|---|---:|---|---|
+| K288 N | 312 | 43、50、56 | `4d53878105559d9bbc9d4b221f22a8bfcbd919507ceda0620d80feab81e368db` |
+| K288 P | 1096 | 91、98、104、239、246、252 | `7c14ed922c8d914f0fde2013531aef2fc40729115be96a5301114589a59e3214` |
+| K768 N | 312 | 43、50、56 | `99db793d14f8691a20444523402814569d287b71f493d5d432459252219fcf34` |
+| K768 P | 1096 | 91、98、104、239、246、252 | `2e0c4920dfd8777c74f3a7aceaa3b748428065e3da0c90baf24193a14f20a816` |
+
+GNU阶段10条命令均exit0，实际RV64编译通过typed ABI断言；原输入、快照和完整机器体保持身份。另有独立host位复制检查：实际未改的pack.c以ASan/UBSan及poisoned guards验证10组位模式，全部47,520 words / 190,080B一致。首次LeakSanitizer因ptrace环境限制失败；第二次仅关闭leak检测，ASan/UBSan保留。两次完整源码、binary、退出与日志均收入 [cloud-reviews.zip](packed-ws/cloud-reviews.zip)，不把host测试当作RV64运行。
+
+### 两代固定参考及缩减理由
+
+第一代九窗口依次包含scalar、原P/N和packedP/N，完整标量交叉已通过。K288 fixture从原冻结narrow ELF的完整符号提取，并保留三套normal与fullmin；K768复用已冻结W2 normal/edge。提取阶段只验证binary32数值，flags明确未解决；后续独立host flags与RISC-V参考交叉后，才为每个fixture绑定唯一精确值：K288 normal-0/1/fullmin为1、normal-2为0，K768 normal为1、edge为0。
+
+第一代正常guest参考退休数为K288 2,032,427、K768 5,057,095，其中scalar测量窗分别636,520/1,731,532条。以两倍窗口估计其warm+measurement，约占62.64%/68.48%；这只是参考指令成本估算，不是目标周期比例。为避免小试重复支付已完成的scalar交叉，第二代main仅四处可逆修改：samples长度9→8、顺序去掉scalar、循环9→8、成功计数9/18→8/16。第二代重新构建独立ELF并完整运行同一十例参考，没有沿用旧ELF的PASS。
+
+第二代固定顺序 `[P,N,packedP,packedN,packedN,packedP,N,P]`，每个测量窗前先warm；16次完整调用分别检查全部288个输出、完整活动/非活动slots、guards、向量CSR及精确FCSR。实际准备数据在测量前与独立完整排列逐字节比较，结束后再次核对；4处CSR读取保留两侧fence，结果校验和UART位于窗口之外。没有从old/new输出中互选gold或放宽flags。
+
+| 实际参考记录 | 九窗v1 | 八窗v2 |
+|---|---:|---:|
+| 命令 / NEMU案例 | 21 / 10 | 21 / 10 |
+| 退出情况 | 19×exit0；2×预期exit2 | 19×exit0；2×预期exit2 |
+| K288 normal-0整体退休 | 2,032,427 | 731,770 |
+| K768 normal整体退休 | 5,057,095 | 1,566,414 |
+| K288 P/packedP窗口instret | 各22,173 | 各22,173 |
+| K288 N/packedN窗口instret | 各13,025 | 各13,025 |
+| K768 P/packedP窗口instret | 各58,458 | 各58,458 |
+| K768 N/packedN窗口instret | 各34,085 | 各34,085 |
+
+每代十例包括两K的normal/独立replay、K288额外normal-1/2/fullmin、K768末组edge及每K一个共享比较器负控。负控完成一次warm后，在原N的测量调用结束、取完计数及FCSR后翻转output byte1148，准确进入BAD/code91，warm=1、samples=0；预期exit2并不是任意非零退出即可通过。normal/replay的完整validation及raw dump身份相同。完整输出、双slots与guards、全部prepared表示及原fixture逐项比较；初末寄存器/CSR均完整导出，核对长度、原始身份及normal/replay一致性，末态FCSR与实际trap另作精确检查。每例保存15份完整memory dump和4份register/CSR dump。
+
+两代共八个完整leaf机器体SHA及对应八窗instret逐项相同。单位步长仍是一条架构load换另一条load，故这里没有指令数量收益；实际访存拆分和依赖是否改善由目标周期判断，不能先验声称四倍访存或应用加速。
+
+### 已闭合原件与复现入口
+
+下列host operation共同前缀为 `0250d6044ba18f5fd71831ae3131d2ce`，均exit0、cleanup=true；内部命令亦按对应合同全部回收、源/工具pins不变。
+
+| 阶段 | host operation后缀 | UTC实际起止 | 主要原结果 SHA256 |
+|---|---|---|---|
+| GNU | `.599c35c7b05b66c4b70df0fe592c25ff` | 20:16:06.832–20:16:11.121 | `369307b6a392df26e1e34f5a643feb2cadb96f84ada8006214625ba6e27ebb8e` |
+| K288提取 | `.736be37ddbbf39848d313c2165d01b81` | 20:39:47.755–20:39:49.336 | manifest `13d05882e6f1876993a6e6b63c8d5041c1067bdfb73ba061adf41f91d66f2bd1` |
+| 九窗参考 | `.972f8367a36e9cd4d393ae1dae2d4f82` | 21:03:10.467–21:03:30.717 | `cec287cff44cdda1070539515a3d426fd81e6a4025e0a84ac6bcb632ef7f1f5a` |
+| 八窗参考 | `.61f2f6c1d821afda6e1f2489cb063d3c` | 21:12:56.948–21:13:12.620 | `65de4aca20b86d7faaed7c11863297930d571ee2c97b2ad54bb15bdd4c72e4d0` |
+
+[reference-raw.zip](packed-ws/reference-raw.zip) 为11,059,275B，SHA256 `20598d3ee465ce7fab91180d1172efc7d83680b04a6ac75c39dbefe3ee77a0b1`。归档operation `.614e4cd47435bdbff612f4d2654e3a21` 于21:36:03.990–21:36:25.144 UTC闭合：1047文件、94目录、1142成员，完整原始字节41,495,393B；753个执行pin、380份完整raw dump、全成员CRC/长度/SHA及原件after-scan均通过，没有省略文件。使用最终result的snapshots/generated_inputs，而非只用早期inputs.json；两代原件、负控、GNU对象和所有日志均保留。137项外部依赖按原path/SHA记录，未重新打包工具链或旧工程，不宣称证据包能脱离环境运行。
+
+归档命名空间为 `wsl/{source-01,gnu-01,q288-fixtures-01,reference-01,reference-02}` 与 `windows/{source-01,fixture-source-01,screen-source-01,screen-source-02,archive-source-01}`。源级派生、原程序和全部构建输入均可从对应snapshot定位；GNU用 [check_gnu.py](packed-ws/check_gnu.py)，新参考用 [screen.py](packed-ws/reference/screen.py) 及 [REFERENCE_CONTRACT.md](packed-ws/reference/REFERENCE_CONTRACT.md)。旧 result/profile 含原绝对路径及其 pins，改CLI根目录或ZIP解压位置不会自动重定位这些依赖；应恢复对应环境和原固定身份。恢复匹配依赖后按CLI传入原固定输入、全新的隔离输出；不要覆盖原运行目录，也不要把固定记录SHA替换成无关版本以绕过身份检查。
+
+### K288目标小试：截至21:38 UTC为已启动、未闭合
+
+启动前operation `.c4f2c397c1ac74d03b657b3c41297f78` 于21:31:42.290–21:31:45.698 UTC完成，重新核对432个实际输入；没有新build、ABI probe或guest。profile 88,784B、SHA256 `b48e4dfd3f6d1bc13c741f6cacc00b9097c946844abeb24c3ffd52d0a1100181`。运行器 [run.py](packed-ws/target/run.py) SHA `df95f6a05dbf3ffdf4314de38ecd8bce13ff3a7b63ef2583bb99d00f77e29655`，复用原完整Q288进程组、deadline、TERM/KILL/reap及最终pins检查；独立审查发现并修正了cycles=UINT32_MAX的单点边界。合成parser检查保存在cloud-reviews，不算实际target运行。
+
+实际target host operation `.be44a4d254afc57af4be96e78c6f3a08` 于 **21:37:33.146 UTC** 启动，原回执记录EMU PID/PGID=8067、CPU1。新K288 ELF为 `7b164fd3a6e08840f1bcc5824f48295e310e4d19544d41000740a8742fd58426`，BIN为 `5efdb3f53786490fd2752b44e0ec48053bbfab98ce829a82ec7fcc8b5db2a756`；使用已固定EMU `f1491865…`、reference `cc768488…`、1400B ABI、D16/O2/T14=1及TRACE0，未应用新CSA/prefix硬件。正常目标BIN与已跑reference image仅UART控制字不同，完整ELF/BIN及全部机器体再次核对。
+
+合同见 [TARGET_CONTRACT.md](packed-ws/target/TARGET_CONTRACT.md)：CPU1、绝对nice5、单额外worker，4M guest cycles / 9000s内层 / 16MiB每流 / 9600s外层；只跑normal-0，不自动重试、延期或扩跑K768。原四臂N/P完整应用operation与输入保护保持；新保护记录为Issue #2 comment6713336725。启动/profile副本见 [target-launch.json](packed-ws/target-launch.json) 与 [target-profile.json](packed-ws/target-profile.json)，活跃输出仍归原operation所有。
+
+只有完整八窗协议、精确flags/hash/instret、唯一GOOD PC、原DiffTest、正常退出与全部回收/输入复核通过后，才能授予这次固定完整调用的target资格。窗口排除prepare，保留原P与packedP中实际较快的合格RVV，并分别比较P→packedP、N→packedN；不能跨ELF拼分母、合并历史百分比或把超时/截断解释成某臂较慢。target内存完整dump、target replay/negative及完整退休审计未列为本小试已完成事项，正式performance/application资格仍为false。K768须依据本次实际结果和剩余资源另作决策。

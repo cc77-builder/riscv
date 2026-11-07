@@ -1,0 +1,47 @@
+{
+  "contract": "r3-packed-ws-eight-window-target-v1",
+  "parent_sha256": "ed585cfa849358b4ee28eae0cd46afeb56ca089a77c09acdc359b36e765fb55e",
+  "run_function_complete_inverse": true,
+  "run_edits": [
+    {
+      "before": "    os.sched_setaffinity(0, {profile[\"cpu\"]})",
+      "after": "    need(profile[\"cpu\"] == 1 and profile[\"nice\"] == 5, \"fixed shared CPU policy\")\n    os.sched_setaffinity(0, {1})\n    os.setpriority(os.PRIO_PROCESS, 0, 5)\n    need(os.sched_getaffinity(0) == {1} and os.getpriority(os.PRIO_PROCESS, 0) == 5, \"actual CPU1 absolute nice5\")",
+      "count": 1
+    },
+    {
+      "before": "cpu_affinity=sorted(os.sched_getaffinity(0)), budget_seconds=profile[\"budget_seconds\"],",
+      "after": "cpu_affinity=sorted(os.sched_getaffinity(0)), nice=os.getpriority(os.PRIO_PROCESS, 0), k=profile[\"k\"],\n        budget_seconds=profile[\"budget_seconds\"],",
+      "count": 1
+    },
+    {
+      "before": "DOT16_WHOLE2_Q288_PROCESS_STARTED",
+      "after": "PACKED_WS_EIGHT_WINDOW_PROCESS_STARTED",
+      "count": 1
+    },
+    {
+      "before": "DOT16_WHOLE2_Q288_FULLCORE_PASS",
+      "after": "PACKED_WS_EIGHT_WINDOW_TARGET_PASS",
+      "count": 2
+    },
+    {
+      "before": "this fixed complete-Q288 AM correctness and CSR observations only",
+      "after": "this fixed packed-Ws eight-window complete-call correctness and CSR observations only",
+      "count": 1
+    },
+    {
+      "before": "full_retirement_window_audited=False, asic_ppa_qualified=False)",
+      "after": "full_retirement_window_audited=False, asic_ppa_qualified=False,\n        application_performance_qualified=False, full_target_memory_dump=False)",
+      "count": 1
+    }
+  ],
+  "unchanged_helpers": {
+    "need": "4b3a697e0d6c229d054eb933137631f3eec63797433cf8a40cb5f41231911d04",
+    "digest": "8e24d363804fa5ad7499cf4f9a518203ef5b1ffb8e8d81c635d39a130b020277",
+    "save": "dea761f1d79c538a0de093c6d08f5a47ba1a99c498f1fe0348729acc2fc673cb",
+    "read": "966cfdcb6ef4917f11cd7808a1f7373418b111dc043f8f1e957f233ef6ff36a5",
+    "module": "a8884c4af38abd6a70e1ec91c5b6228ad67bfff9bb12409479c31a89b8c0aa43",
+    "check_pins": "baf052c5942d601a2fccbf83180da69dc27eb40ed00cce3f7fd01dc7df68aecc"
+  },
+  "new_preflight_and_parser_sha256": "dc0e2b28dd342b65ff204aea5475c4d937646a969c3c348a3f041d490392d5da",
+  "derived_sha256": "df95f6a05dbf3ffdf4314de38ecd8bce13ff3a7b63ef2583bb99d00f77e29655"
+}

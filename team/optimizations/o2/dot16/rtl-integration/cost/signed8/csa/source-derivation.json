@@ -1,0 +1,41 @@
+{
+  "baseline": "R19/R20 source candidate; local result qualification is recorded independently",
+  "baseline_wrapper_sha256": "70dcc27381d3e7226eeff333c943d35b982ec1fdd37b75b680060a13aaf94e2a",
+  "candidate_wrapper_sha256": "4a525d2e8ead5cc10a193d9724342162af4ffebd130c58ad7c606093849ac1c8",
+  "baseline_datapath_sha256": "50522c0cd2700f7f852872049533bc31f79ce811ad2ed53da2c1d333cece45e2",
+  "candidate_datapath_sha256": "62ace0342070bc2a40f57b999c8aa94d376543a4cc79d455cf69e6083742488c",
+  "old_datapath_exact_prefix_bytes": 2925,
+  "exact_inverse": true,
+  "edits": [
+    {
+      "before": "import xiangshan.backend.fu.vector.{VDotProducts, VDotReduce, VecFuncUnitAlias}",
+      "after": "import xiangshan.backend.fu.vector.{VDotCarrySaveRows, VecFuncUnitAlias}"
+    },
+    {
+      "before": "/** Two elastic slots: E0 captures products/control, E1 transfers the reduced",
+      "after": "/** Two elastic slots: E0 captures carry-save rows/control, E1 transfers the reduced"
+    },
+    {
+      "before": "  // Elaboration-only: disabled builds retain the original eight-product path.",
+      "after": "  // Elaboration-only: disabled builds retain exactly eight signed-byte terms."
+    },
+    {
+      "before": "  private val pProducts = Reg(Vec(if (dot16Enabled) 16 else 8, SInt(16.W)))",
+      "after": "  private val pRows = Reg(Vec(if (dot16Enabled) 2 else 1, Vec(2, UInt(19.W))))"
+    },
+    {
+      "before": "  private val products = Module(new VDotProducts)\n  private val reduce = Module(new VDotReduce)\n  private val highProducts = if (dot16Enabled) Some(Module(new VDotProducts)) else None\n  private val highReduce = if (dot16Enabled) Some(Module(new VDotReduce)) else None\n  products.io.vs1 := inData.src(0)\n  products.io.vs2 := inData.src(1)\n  if (dot16Enabled) {\n    // Reuse the byte ordering and exact eight-term arithmetic in both halves.\n    highProducts.get.io.vs1 := Cat(0.U(64.W), inData.src(0)(127, 64))\n    highProducts.get.io.vs2 := Cat(0.U(64.W), inData.src(1)(127, 64))\n    reduce.io.products := VecInit(pProducts.take(8))\n    highReduce.get.io.products := VecInit(pProducts.drop(8))\n  } else {\n    reduce.io.products := pProducts\n  }\n  private val dot16Result32 = if (dot16Enabled) {\n    // Each existing reducer contains an exact signed 19-bit sum. Widen the\n    // final addition to 20 bits, then sign-extend only the low result word.\n    val sum20 = reduce.io.result(18, 0).asSInt +& highReduce.get.io.result(18, 0).asSInt\n    require(sum20.getWidth == 20, \"dot16 requires an exact 20-bit reduction\")\n    val extended = Wire(SInt(32.W))\n    extended := sum20\n    Some(extended.asUInt)\n  } else None\n\n",
+      "after": "  private val products = Module(new VDotCarrySaveRows)\n  private val highProducts = if (dot16Enabled) Some(Module(new VDotCarrySaveRows)) else None\n  products.io.vs1 := inData.src(0)(63, 0)\n  products.io.vs2 := inData.src(1)(63, 0)\n  if (dot16Enabled) {\n    highProducts.get.io.vs1 := inData.src(0)(127, 64)\n    highProducts.get.io.vs2 := inData.src(1)(127, 64)\n  }\n  // This fixed heap has row0[18]=1, row1[18]=0 and no discarded high carry.\n  // Thus signed19(row0)+signed19(row1) is the exact eight-term sum. Both\n  // zero rows also encode zero for dot8's disabled high half. The emitted\n  // arithmetic verifier must establish these stronger representation facts.\n  private val rowWords = for {\n    half <- 0 until (if (dot16Enabled) 2 else 1)\n    row <- 0 until 2\n  } yield pRows(half)(row).asSInt.pad(storedResultBits)\n  require(rowWords.forall(_.getWidth == storedResultBits), \"signed rows share the exact sum width\")\n  // Fixed-width additions are associative modulo 2^19/2^20. The true final\n  // eight/sixteen-term result fits that signed width, so reconstruction is exact.\n  private val compressedSum = rowWords.reduce(_ + _)\n  require(compressedSum.getWidth == storedResultBits, \"exact fixed-width carry-save finish\")\n\n"
+    },
+    {
+      "before": "    if (dot16Enabled) {\n      for (lane <- 0 until 8) {\n        pProducts(lane) := products.io.products(lane)\n        // The request type is encoded in accepted products, not a later input.\n        pProducts(lane + 8) := Mux(isDot16, highProducts.get.io.products(lane), 0.S(16.W))\n      }\n    } else {\n      pProducts := products.io.products\n    }\n",
+      "after": "    pRows(0)(0) := products.io.row0\n    pRows(0)(1) := products.io.row1\n    if (dot16Enabled) {\n      // Encode this accepted request's mode before P. Both zero rows decode to\n      // zero; no later mode input or extra correction enters the saved result.\n      pRows(1)(0) := Mux(isDot16, highProducts.get.io.row0, 0.U(19.W))\n      pRows(1)(1) := Mux(isDot16, highProducts.get.io.row1, 0.U(19.W))\n    }\n"
+    },
+    {
+      "before": "(if (dot16Enabled) dot16Result32.get else reduce.io.result(31, 0))(storedResultBits - 1, 0)",
+      "after": "compressedSum.asUInt"
+    }
+  ],
+  "prior_unrun_csa_wrapper_sha256": "1b1ebb5673c5ad73691572370d21d6004613585084d8e13f82fc0cdc82a8a4de",
+  "post_p_representation": "Direct signed-row sum; no discarded high carry and row0[18]=1,row1[18]=0 required in actual emitted proof."
+}

@@ -1,6 +1,6 @@
 # Production FU nominal cost result — 2026-11-07
 
-> Current source-candidate evidence is in the final **real signed8 source candidate** section: feature1 area 21,147.798, local FU-qualified; production adoption remains pending parent/full-core validation.
+> Current local-candidate evidence is in the final **CSA / prefix** section: prefix feature1 area 17,965.374, arithmetic- and FU-qualified, nominal 1ns still unmet. Its parent/full-core/application qualification is pending; the earlier signed8 parent PASS applies only to that earlier source identity.
 
 **Result: two comparable CommonFuCostTop cost points were recorded.**
 Enabling dot16 increases mapped standard-cell area from **17,246.376** to
@@ -675,3 +675,60 @@ Archive operation `.3803508ee874c2f3985c93c3604ffef5` (same host prefix) exited0
 归档终态 `RWIDTH_RAW_ARCHIVE_VERIFIED` 证明运输完整性，不增加功能、父模块、整核或 PPA 资格。
 
 复现源码与合同见 [rwidth.py](signed8/rwidth/rwidth.py)、[RWIDTH_CONTRACT.md](signed8/rwidth/RWIDTH_CONTRACT.md)；同目录保留实际两份Scala和精确来源变换。归档发布为 [raw.zip](signed8/rwidth/raw.zip)。原执行host operation为 `49cbde030e5643f0cccfca5cec8a79c1.926cd84ea8935f7415fe78984c8987b8`，18:40:39.029003–18:43:29.133862 UTC、exit0/cleanuptrue。保持原源码作为可回退局部候选，面积收益不足以单独触发生产采用。
+
+## 2026-11-07：CSA 与后 P 前缀候选完成局部算术、FU 和匹配成本验证
+
+**保留 prefix 作为后续接入验证的局部候选。** feature1 的完整独立 FU 库面积为 **17,965.374**，低于 20,000 目标 2,034.626；相对直接 CSA 增加 0.5778%，换得更低的最坏 r2r arrival。两种 feature 的名义 1ns 约束仍未满足。这里没有真实 parent、整核、应用性能或 core PPA 的新资格，前文 signed8 的 parent PASS 不迁移到这两项候选。
+
+### 修改与证明边界
+
+CSA 把每个八项 signed8 half 的部分积压缩到两行 19bit，在原 P 边沿保存这 38bit，替代八个 16bit 乘积；R 继续采用前述 19/20bit 表示。实际固定树包含 512 个部分积、477 个 FA 和 17 个 HA。独立结构检查完整解析生成模块，核对符号取反、校正常数、DAG、每位权重和唯一消费，并逐单元验证布尔恒等，证明该模块全部 (2^{128}) 个二态输入的组合算术。实际还核实无高 carry 舍弃、row0[18]=1、row1[18]=0，支撑 P 后将各行有符号扩展后直接求和。它不是随机 FU 测试，也没有声称 X/Z 或全 FU 顺序等价。
+
+prefix 保留完整 CSA 源码及四套实际 `VDotCarrySaveRows.sv` 字节，只改后 P 的收尾加法：19bit 两行直接做前缀加法；20bit 四行先经过两次 3:2 压缩，再经距离 1/2/4/8/16 的固定前缀网络求模和。实际生成的 `VDotPrefixFinish19/20` 分别与普通模加法进行无约束 SAT，**两个明确 PASS 的范围分别是任意 2×19bit、4×20bit 输入的组合模和**。这不意味着旧乘法 miter 也已通过：后者仍为 **`UNKNOWN_EXTERNAL_TIMEOUT`**，没有反例结论、没有 solver 等价结论，也未重试或延长预算。
+
+两候选都保留原128bit架构输入/输出、低32bit结果扩展及高96bit零、上升沿与同步高有效 valid reset、P/R 两槽、ready/valid、redirect/kill 和完整 control/perf。dot8 在接受时将高 half 两行捕获为零，非法结果由保存的异常状态置零。实际四消费者绑定检查和新 FU 运行核实原 E0 接收、E1 转移、E2 最早响应及无阻塞 II=1；未增加流水级，数据与 metadata 未增复位。
+
+两轮均分别重新构建并运行原完整 feature0/1 FU 套件，计数一致，未转用旧 binary 的 PASS：
+
+| 每轮的实际覆盖 | feature0 | feature1 |
+| --- | ---: | ---: |
+| 基础算术向量 / 仿真周期 | 10,022 / 31,595 | 10,022 / 53,205 |
+| 接受 / 响应 | 23,327 / 22,476 | 43,699 / 42,736 |
+| 取消 / reset 丢弃 | 739 / 112 | 835 / 128 |
+
+feature1 另有 20,124 次合法比较、40 次非法比较和 20,043 个混合 II1 区间，首次响应为2周期。每轮两态各执行 identity/wen/high/cancel 四类观察负控：8次预期 exit1 均被原分类器接受。它们验证观察检查器能拒绝错误，不是 RTL 变异覆盖率。
+
+### 同一边界下的实测面积与时序
+
+以下均为完整 `CommonFuCostTop`，220 个命名端口 / 2,888 port bits，使用前文相同 Nangate45 库、工具、ABC 驱动/负载和名义1ns五类 STA 约束。面积单位仍为 **library area units**，arrival/slack 单位为 ns；未做布局布线、功耗或整核综合。
+
+| 候选 | feature | 库面积 | DFF | r2r arrival / slack | i2r arrival / slack |
+| --- | --- | ---: | ---: | ---: | ---: |
+| CSA local-03 | 0：dot8 | 14,151.998 | 1,639 | 0.902189 / +0.019135 | 1.169631 / −0.243977 |
+| CSA local-03 | 1：dot8+dot16 | 17,862.166 | 1,678 | 1.148367 / −0.224108 | 1.246406 / −0.324680 |
+| prefix local-01 | 0：dot8 | 14,171.948 | 1,639 | 0.862744 / +0.061775 | 1.172514 / −0.251286 |
+| prefix local-01 | 1：dot8+dot16 | 17,965.374 | 1,678 | 1.079437 / −0.156976 | 1.163662 / −0.238006 |
+
+CSA 相对真实 R19/R20 基线的面积分别减少 **1,457.680（9.3383%）**、**3,178.700（15.1073%）**。prefix 相对 CSA 增加 **19.950（0.1410%）**、**103.208（0.5778%）**，DFF 数不变；feature1 的最坏 r2r/i2r arrival 分别下降 68.930ps / 82.744ps。相对本文件原始同 `CommonFuCostTop` 的 feature1 基线 **24,017.406**，prefix feature1 面积累计减少 **6,052.032（25.1985%）**。prefix feature0 的 i2r arrival 反而增加 2.883ps。其余 r2o/i2o/ready 类在这四点均有正 slack，完整五类报告和119个已核恒定端点保留在原证据中；所有 `nominal_setup_met` 仍为 false。
+
+**这些是各次映射后最坏路径类别的比较。** prefix feature0 的最坏 r2r 已迁到控制链：实际 mapped.v 的 `_12323_` / `_12838_` 分别为 `rPacket_ctrl_robIdx_value[4]` / `pPerf_renameTime[0]`，直接摘录与原文件SHA见 [endpoint-map.json](signed8/prefix/endpoint-map.json)。不能把 0.862744ns 当作原加法路径的新延迟。前 P 源码未变，i2r 最坏起点却从 feature0 src0[19] 迁到 src0[4]、feature1 src1[73] 迁到 src1[75]；综合映射和端点变化不能表述为同一前 P 算法路径获得等量加速。arrival 也不能直接取倒数作为芯片频率。
+
+### 真实执行、失败保留与证据入口
+
+CSA `local-01` 因结构 parser 不接受唯一 firtool 文件头而失败；`local-02` 在编译、四次生成和结构证明通过后，独立乘法 miter 达到外部120s期限，保持 FAILED/UNKNOWN。两个原 result、完整日志和输入均保留，未追认 PASS。固定 v4 `local-03` 原样复用已闭合的六步生成/结构证据，只执行尚未开始的26条 FU/cost 命令（18个 exit0、8个预期注错 exit1），没有重跑生成或乘法 SAT。
+
+- CSA 成功控制器区间为 **19:48:23.106–19:53:41.367 UTC**，终态 `CSA_REUSED_GENERATION_ARITHMETIC_FU_AND_COST_COMPLETE`。原 `local-03/result.json` 109,822B，SHA256 `21510c330817f12c03426ac0ca262331c4ff088d90e33b2be1fefae0c605707a`。
+- prefix 控制器区间为 **20:47:37.822–20:51:24.035 UTC**，终态 `PREFIX_GENERATED_ARITHMETIC_FU_AND_COST_COMPLETE`。33条实际命令（25个 exit0、8个预期注错 exit1）包含新的编译、四次生成和两个加法 SAT。原 `local-01/result.json` 205,865B，SHA256 `a0c4dd60fddc001f368b71ec283327f2d7fe0874080ac35304e3debe783116d0`。
+
+两次均使用 CPU1、absolute nice5、单 worker 和1200s总预算；所有子进程均回收、进程组消失，源/工具/classpath/生成物终态身份核对通过。上述时间是内层控制器区间。
+
+| 原始证据包 | 字节数 | 成员 / 已核本地 pin | SHA256 |
+| --- | ---: | ---: | --- |
+| [CSA raw.zip](signed8/csa/raw.zip) | 33,360,816 | 429 / 203 | `448c21c5ab692ade045ac21d0c15d5e4a3738a1aa9701b62360f80b1d33bcaa0` |
+| [prefix raw.zip](signed8/prefix/raw.zip) | 30,765,219 | 242 / 96 | `a711b159fdc6e92805f8c4760ee7d72fd1382691c8c797809382b8572391b0ab` |
+
+两包均完成完整成员 CRC/SHA、原件前后 SHA 与库存一致性核验；各18份可重建 `.o/.a` 未重复入包，原件仍保留。CSA 包含 local-01/02 两次失败及 local-03 固定续接；prefix 保留原乘法 UNKNOWN 日志并指向对应 CSA 包。归档证明运输完整性，不增加功能或 PPA 资格；外部工具链和库依赖由固定清单定位，不宣称包可脱离环境独立运行。
+
+复现入口位于 [CSA](signed8/csa/) 的 `csa.py` / `CSA_CONTRACT.md`（固定续接使用 `--previous-local`）及 [prefix.py](signed8/prefix/controller/prefix.py) / [PREFIX_CONTRACT.md](signed8/prefix/controller/PREFIX_CONTRACT.md)（使用 `--csa-local`，保留 `controller/../source/` 布局）；恢复包内对应 source/controller 布局、匹配原依赖，并选择全新隔离输出。详细源逆变换保存在原包中：prefix 可恢复完整 CSA 父源码，CSA 可恢复 R19/R20 父源码。回退须恢复匹配的完整源码组合和输入身份，不把某一候选的 PASS 移给另一候选。
+
+**当前选择：**保留 prefix 的局部结果及其较低的 feature1 最坏 r2r arrival，同时保留面积更小的 CSA 回退点；生产默认和原应用实验硬件保持原版本。本轮暂不追加 EDA 或新 parent，工程重心回到 packed-Ws 的真实 EMU 验证。这些库面积与时序结果尚不证明完整应用的50%改善。

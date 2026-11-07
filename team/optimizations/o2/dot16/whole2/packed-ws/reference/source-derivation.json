@@ -1,0 +1,90 @@
+{
+  "contract": "r3-packed-ws-eight-window-reference-v2",
+  "prior_reference_result_sha256": "cec287cff44cdda1070539515a3d426fd81e6a4025e0a84ac6bcb632ef7f1f5a",
+  "changes": {
+    "main.c": {
+      "before_sha256": "3bb643c350b6b676766c14fd49d0642fc7a4631b95787b6bf1693ee0acea58be",
+      "after_sha256": "6933f5a75a9b61b4b6ee96cdaae1f2e4649312ef0ef726272c7d521c08bc2b4d",
+      "complete_inverse_reconstructs_original": true,
+      "edits": [
+        {
+          "before": "volatile uint64_t w2_report[64],w2_samples[9][8];",
+          "after": "volatile uint64_t w2_report[64],w2_samples[8][8];"
+        },
+        {
+          "before": "const unsigned order[9]={0,1,2,3,4,4,3,2,1};",
+          "after": "const unsigned order[8]={1,2,3,4,4,3,2,1};"
+        },
+        {
+          "before": "sample<(negative?1u:9u)",
+          "after": "sample<(negative?1u:8u)"
+        },
+        {
+          "before": "PWS_PASS k=%u samples=9 full_comparisons=18 prepared_bytes=%u",
+          "after": "PWS_PASS k=%u samples=8 full_comparisons=16 prepared_bytes=%u"
+        }
+      ]
+    },
+    "screen.py": {
+      "before_sha256": "cadd154b2c04960f02651c0f3ce50a65e8e63441e71922c87886281d1be6095a",
+      "after_sha256": "41907943f78825afb3accde2ead8f9952e01b60770fe76cec8e2b6436b4ea76e",
+      "complete_inverse_reconstructs_original": true,
+      "edits": [
+        {
+          "before": "\"\"\"Fixed K288/K768 packed-Ws build and bounded independent reference screen.\"\"\"",
+          "after": "\"\"\"Eight-window K288/K768 packed-Ws reference screen; scalar crossing is a fixed prerequisite.\"\"\""
+        },
+        {
+          "before": "CONTRACT = \"r3-packed-ws-two-geometry-reference-v1\"",
+          "after": "CONTRACT = \"r3-packed-ws-eight-window-reference-v2\""
+        },
+        {
+          "before": "ORDER = [0,1,2,3,4,4,3,2,1]",
+          "after": "ORDER = [1,2,3,4,4,3,2,1]"
+        },
+        {
+          "before": "narrow,w2,gnu,fixtures,adapter,hwpath,template,support,out=(getattr(a,n).resolve() for n in\n        ('narrow_build','w2_reference','gnu','q288_fixtures','adapter','hardware','reference_template','support_adapter_source','output'))",
+          "after": "narrow,w2,gnu,fixtures,adapter,hwpath,template,support,prior,out=(getattr(a,n).resolve() for n in\n        ('narrow_build','w2_reference','gnu','q288_fixtures','adapter','hardware','reference_template','support_adapter_source','prior_reference','output'))"
+        },
+        {
+          "before": "for p in (here,narrow,w2,gnu,fixtures,adapter,hwpath.parent,template.parent,support.parent):",
+          "after": "for p in (here,narrow,w2,gnu,fixtures,adapter,hwpath.parent,template.parent,support.parent,prior):"
+        },
+        {
+          "before": "set(manifest['files'])=={'screen.py','main.c','flags_host.c','REFERENCE_CONTRACT.md'}",
+          "after": "set(manifest['files'])=={'screen.py','main.c','flags_host.c','REFERENCE_CONTRACT.md','source-derivation.json'}"
+        },
+        {
+          "before": "    for name,h in manifest['files'].items():pin(here/name,h)\n    need(manifest['files']['screen.py']==digest(Path(__file__)),'actual controller source')",
+          "after": "    for name,h in manifest['files'].items():pin(here/name,h)\n    need(manifest['files']['screen.py']==digest(Path(__file__)),'actual controller source')\n    pin(prior/'result.json','cec287cff44cdda1070539515a3d426fd81e6a4025e0a84ac6bcb632ef7f1f5a')\n    previous=read(prior/'result.json')\n    need(previous['contract']=='r3-packed-ws-two-geometry-reference-v1'\n         and previous['status']=='PACKED_WS_BOTH_GEOMETRIES_REFERENCE_PASS'\n         and previous['reference_qualified'] and previous['all_inputs_unchanged'] and previous['all_children_reaped']\n         and previous['reference_runs']==10 and previous['target_emu_runs']==0,'closed full scalar/four-arm reference')\n    for path,h in {**previous['snapshots'],**previous['generated_inputs']}.items():pin(path,h)\n    for k,case in (('288','normal-0'),('768','normal')):\n        v=previous['campaigns'][k]['validations'][case]\n        need(v['samples'][0][0]==0 and len(v['samples'])==9 and v['prepared_all_bytes']\n             and v['packed_slots_all_bytes'] and v['final_fcsr']==1,'prior complete scalar crossing')\n"
+        },
+        {
+          "before": "           ('flags==1 and fnv==',\"flags==record['expected_flags'] and fnv==\")]",
+          "after": "           ('flags==1 and fnv==',\"flags==record['expected_flags'] and fnv==\"),\n           ('1 if negative else 9,0 if negative else 9','1 if negative else 8,0 if negative else 8')]"
+        },
+        {
+          "before": "('w2_samples',576,'samples.bin')",
+          "after": "('w2_samples',512,'samples.bin')"
+        },
+        {
+          "before": "result['host_oracle_expected_flags']=host_flags;save(out/'result.json',result)",
+          "after": "need(host_flags==previous['host_oracle_expected_flags'],'same independently crossed host flags')\n        result['host_oracle_expected_flags']=host_flags;result['prior_reference_result_sha256']=digest(prior/'result.json');save(out/'result.json',result)"
+        },
+        {
+          "before": "result.update(status='PACKED_WS_BOTH_GEOMETRIES_REFERENCE_PASS',reference_qualified=True,campaigns=campaigns,",
+          "after": "result.update(status='PACKED_WS_EIGHT_WINDOWS_REFERENCE_PASS',reference_qualified=True,campaigns=campaigns,"
+        },
+        {
+          "before": "for name in ('narrow-build','w2-reference','gnu','q288-fixtures','adapter','hardware','reference-template','support-adapter-source','output'):",
+          "after": "for name in ('narrow-build','w2-reference','gnu','q288-fixtures','adapter','hardware','reference-template','support-adapter-source','prior-reference','output'):"
+        }
+      ]
+    },
+    "flags_host.c": {
+      "before_sha256": "619bfcd30fe8112280cd449eb7bfb1e2c5b6972daf75cd11d29c844e6909a477",
+      "after_sha256": "619bfcd30fe8112280cd449eb7bfb1e2c5b6972daf75cd11d29c844e6909a477",
+      "complete_inverse_reconstructs_original": true,
+      "edits": []
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "contract": "dot16-csa-prefix-local-v1",
+  "status": "SOURCE_PREPARED_NOT_GENERATED",
+  "baseline_datapath_sha256": "62ace0342070bc2a40f57b999c8aa94d376543a4cc79d455cf69e6083742488c",
+  "baseline_wrapper_sha256": "4a525d2e8ead5cc10a193d9724342162af4ffebd130c58ad7c606093849ac1c8",
+  "candidate_datapath_sha256": "1d02d8a34772e7d9b9947f997f32465f3e946f4b24cacc66159eef7ee10ab3bb",
+  "candidate_wrapper_sha256": "912c1a038ef8e9a1ac56cfa349161ae1c582d763acfce5352b08ebde2a227f92",
+  "old_datapath_exact_prefix_bytes": 6454,
+  "appended_text": "\n/** Fixed-width modulo sum of the saved carry-save rows. No state or clock.\n  * The W20 form first compresses four rows to two; W19 already has two rows.\n  * A fixed parallel prefix computes the final carry using only the old layer.\n  */\nclass VDotPrefixFinish(val width: Int, val rowCount: Int)\n  extends BlackBox with HasBlackBoxInline {\n  require((width == 19 && rowCount == 2) || (width == 20 && rowCount == 4))\n  override def desiredName: String = s\"VDotPrefixFinish$width\"\n  val io = IO(new Bundle {\n    val rows = Input(Vec(rowCount, UInt(width.W)))\n    val result = Output(UInt(width.W))\n  })\n  setInline(s\"VDotPrefixFinish$width.sv\", VDotPrefixFinish.inlineText(width, rowCount))\n}\n\nobject VDotPrefixFinish {\n  def inlineText(width: Int, rowCount: Int): String = {\n    require((width == 19 && rowCount == 2) || (width == 20 && rowCount == 4))\n    val lines = scala.collection.mutable.ArrayBuffer[String](s\"module VDotPrefixFinish$width(\")\n    for (row <- 0 until rowCount) lines += s\"  input wire [${width - 1}:0] rows_$row,\"\n    lines += s\"  output wire [${width - 1}:0] result\"\n    lines += \");\"\n    def wire(name: String, expression: String): Unit = {\n      lines += s\"  wire [${width - 1}:0] $name;\"\n      lines += s\"  assign $name = $expression;\"\n    }\n    if (rowCount == 4) {\n      wire(\"cs0_sum\", \"rows_0 ^ rows_1 ^ rows_2\")\n      wire(\"cs0_raw\", \"(rows_0 & rows_1) | ((rows_0 ^ rows_1) & rows_2)\")\n      wire(\"cs0_carry\", s\"{cs0_raw[${width - 2}:0], 1'b0}\")\n      wire(\"x\", \"cs0_sum ^ cs0_carry ^ rows_3\")\n      wire(\"cs1_raw\", \"(cs0_sum & cs0_carry) | ((cs0_sum ^ cs0_carry) & rows_3)\")\n      wire(\"y\", s\"{cs1_raw[${width - 2}:0], 1'b0}\")\n    } else {\n      wire(\"x\", \"rows_0\")\n      wire(\"y\", \"rows_1\")\n    }\n    wire(\"p0\", \"x ^ y\")\n    wire(\"g0\", \"x & y\")\n    for ((distance, index) <- Seq(1, 2, 4, 8, 16).zipWithIndex) {\n      val old = index\n      val next = index + 1\n      val upper = s\"${width - 1}:$distance\"\n      val lower = s\"${width - distance - 1}:0\"\n      val bypass = s\"${distance - 1}:0\"\n      wire(s\"p$next\", s\"{p$old[$upper] & p$old[$lower], p$old[$bypass]}\")\n      wire(s\"g$next\", s\"{g$old[$upper] | (p$old[$upper] & g$old[$lower]), g$old[$bypass]}\")\n    }\n    lines += s\"  assign result = p0 ^ {g5[${width - 2}:0], 1'b0};\"\n    lines += \"endmodule\"\n    lines.mkString(\"\\n\") + \"\\n\"\n  }\n}\n",
+  "exact_inverse": true,
+  "edits": [
+    {
+      "before": "{VDotCarrySaveRows, VecFuncUnitAlias}",
+      "after": "{VDotCarrySaveRows, VDotPrefixFinish, VecFuncUnitAlias}"
+    },
+    {
+      "before": "  private val compressedSum = rowWords.reduce(_ + _)\n",
+      "after": "  private val prefixSum = Module(new VDotPrefixFinish(storedResultBits, if (dot16Enabled) 4 else 2))\n  for ((word, index) <- rowWords.zipWithIndex) prefixSum.io.rows(index) := word.asUInt\n  private val compressedSum = prefixSum.io.result.asSInt\n"
+    }
+  ],
+  "width_rows": [
+    [
+      19,
+      2
+    ],
+    [
+      20,
+      4
+    ]
+  ],
+  "prefix_distances": [
+    1,
+    2,
+    4,
+    8,
+    16
+  ],
+  "no_state_added": true,
+  "no_production_change": true,
+  "new_emu_runs": 0
+}
