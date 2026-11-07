@@ -93,3 +93,70 @@
 已经成立的是这个固定合成D288/H768/L6、共同prepare后首次p0/token1组合的**参考正确性**。目标正确性、完整应用周期排序仍未取得；formal-performance、full-retirement、ASIC PPA均false。正式LaTeX的dot8微基准、C8调用、旧FR/G/P及生产dot8面积/STA继续各自保留原范围，本次不替换它们的数值。
 
 下一步读取唯一在途操作的真实终态，核四臂完整原日志、DiffTest、GOOD TRAP、全过程输入及资源清理，再用本次较快合格RVV作分母报告实测收益。若失败，保存原始失败并按具体原因决定修复，不自动扩预算或重跑。稳定默认入口未切换，无部署。
+
+## 2026-11-07：N 与 K768 N/P 已完成完整应用 GNU 和参考验证
+
+新实验合同为 `r3-dot16-first-forward-w2np-v1`，权威源码入口在 [w2-np/W2_CONTRACT.md](w2-np/W2_CONTRACT.md)。本节是独立的新共同镜像；上文 P/PQ/W/WQ 实验已于18:09:29 UTC结束；原 operation、输入、预算和结果仍保持独立归属。新实验的 `dot16`/`dot16_quantize` 方法字分别表示 N/NQ，不能与上文 W/WQ 标签混用。
+
+| 臂 | 七处 K288 | W2 的 K768 | 激活量化 |
+| --- | --- | --- | --- |
+| P | paired16 RVV | paired16 RVV | 原 helper |
+| PQ | paired16 RVV | paired16 RVV | 同一 Q helper |
+| N | whole8 narrow dot16 | whole8 narrow dot16 | 原 helper |
+| NQ | whole8 narrow dot16 | whole8 narrow dot16 | 同一 Q helper |
+
+接入只改变四个既有 clone 的 W2 路由，并加入已实际通过 K768 数值/末组边界/负控参考验证的完整 N/P 汇编函数。保持七处 K288 调用、五处量化、FP 运算次序、模型及层数、56B context、221184B packed W2、方法字和四 CSR 测量窗口。旧 FR/GS32 与兼容 TA 入口保留。逐项逆向变换恢复完整旧源码，最终 ELF 中 K768 N 的312B及 P 的1096B与实际 GNU 和参考 ELF 逐字节一致。
+
+### 实际完成的验证
+
+准备器产出86个生成文件并绑定295项输入，binding SHA `e4ccd6e74c31a8b30e9b89088067a5e7364a67f0a2d3e2530ab2eed9bbc687a9`。GNU 阶段内部实际时间17:40:46.054450–17:40:57.908744 UTC，host operation `49cbde030e5643f0cccfca5cec8a79c1.6d7a9c466be394ee701325144fcb810d`；10个命令全部exit0，得到 `FIRST_FORWARD_W2NP_STATIC_PASS_NOT_RUNTIME`。
+
+最终机器码中，四个正常 clone 的8处 kernel-pointer 调用均逐点核对。W2 selector 的76B实际指令片段对 FR、P、N、有效旧TA四个固定输入分别指向正确 K768 函数；并核 incoming a5 到callee-saved x20的唯一复制、支配关系、相关路径上的寄存器保留及外部跳转边界。检查依赖通常 RV64 调用约定，不宣称任意指针或全程序形式化证明，也不把静态8调用称作动态退休次数。
+
+参考阶段内部实际时间17:42:49.056044–17:43:17.465758 UTC，operation `49cbde030e5643f0cccfca5cec8a79c1.5a0ad3cf304ce8170048f04b75e921a1`；五例由原完整 reference/validate 检查，结果 `FIRST_FORWARD_W2NP_REFERENCE_CAMPAIGN_PASS`。原 reference.py 12,537B，SHA `586fdc74ccfdb640ec30703ec9efab048fc9a19048a679dd5d20dcdc3a363ad7`，逐字节未改。仅使用 [run_stage.py](w2-np/run_stage.py) 的有限命令/进程包装，CPU1、nice5、单worker，GNU总预算1200s、reference3600s。
+
+四个正常臂完整3,691,424B state与同一gold相等，两侧共32B guards、96B TLS、errno=12345、flags/FCSR=1及六项完整模型/gold dump保持。正常 `guarded-state.bin` 均SHA `027e4200fcbbd6453806591c355b616df27acbd219d4008d24893ac685bd814a`。负例先运行，在预设byte152476处被原比较器拒绝，BAD TRAP94/PC0x80002a74；负例仍执行完整forward，不应说它在forward之前终止。正常均GOOD TRAP0/PC0x8000013c。
+
+| 参考臂 | 窗口 instret（report[18]−report[17]） | 窗口外总退休数 | 完整状态 |
+| --- | ---: | ---: | --- |
+| P | 4,958,760 | 3,693,394 | PASS |
+| PQ | 4,567,702 | 3,693,394 | PASS |
+| N | 3,239,096 | 3,693,394 | PASS |
+| NQ | 2,848,037 | 3,693,394 | PASS |
+
+这些是参考模型的指令观察，不能当作香山周期或应用加速比。15个外部命令/参考进程全部回收，进程组消失；两阶段各480项固定输入前后SHA复核一致。独立只读审查再次核全部实际state、寄存器/CSR/report、镜像12B控制差异、输入清单覆盖和原始trap日志。GNU保留原忽略OpenMP、未使用prev_token、上游chat可能未初始化next的警告，未改官方上游代码；五例reference stderr全空。
+
+### 身份、原件与目标入口
+
+| 实物 | SHA256 |
+| --- | --- |
+| 共同 ELF（74,849,960B） | `62a73b9d16cea43ad03eec3ec09b27edfab7da90ce895d33baa72bf9d84723c4` |
+| 共同 BIN（77,125,408B） | `fcc05cf2d1ccd2cc80c74e259d007da86b7758a626f58b7cb63dc6793c698365` |
+| GNU result.json | `3d855fa040c05c91e079a5b7c52e6ce783510332369e297150f301fb3d64b4c7` |
+| reference results.json | `181145ca820ed345bcb2a0f319e8d3af200ee9e1602d2589f7721b6c4a93f983` |
+| 新 target-controller binding | `11925922dc1faf7a8a03b97f368e28cf260c2f53ff304369370867316548eb69` |
+
+原件位于常驻WSL `runs/dot16-w2-forward-20261107-main/{controller-01,build-01,reference-01,target-controller-01}`，Windows同名runs目录保留三组冻结源码。`prepare_target.py`/`launch_target.py`只对原入口作workload/resource/status字面身份变更，逆向可恢复原文件；保留原owner、检查器和进程回收。目标准备operation `.143b812d121fa2d1a646b816da452d05` 实际exit0/cleanuptrue，**未冻结新resource profile，未启动新EMU**。目标合同见 [TARGET_CONTRACT.md](w2-np/TARGET_CONTRACT.md)。
+
+原四路operation `.1b999cf43afaaebd09ab95c1e9fd28cd` 已于18:09:29 UTC实际完成，exit0、cleanup_complete=true，四个目标正确性PASS且CPU资源回收；TRACE0性能仍为UART观察，未收集完整退休窗口证据。接续本新镜像前仍须冻结实际profile及核实时资源；不要重放或扩大旧预算。本新实验的主要比较为同ELF中合格的 `min(P,PQ)/min(N,NQ)`，保持较快合格RVV分母。新的reference PASS不转移到在途旧镜像，也不把旧目标结果转移到本镜像。稳定默认入口未切换；无新signed8整核构建或应用性能资格。
+
+[原始完整应用证据 raw.tar.zst](w2-np/raw.tar.zst) 为 **31,715,244B**，SHA `7c7c792c2a38238ee1bd58f3b30b9a9d4bb02994c68ab960f7bfa81aec6cd5dc`，含546个文件、1,020,793,811B原始内容。用标准tar/zstd保留新共同ELF/BIN、全部五份实际参考镜像和完整原始dump，不用补丁替代原始数据。仅省12个可重建build对象，原件未删除；所有archive member的长度/SHA、源文件前后字节与归档进程回收均核验。外部仓库、工具链及历史冻结输入按manifest定位，不宣称单包自含全部环境。解包到新目录可用：
+
+```sh
+tar --use-compress-program='zstd -d --long=29' -xf raw.tar.zst -C /absolute/fresh/restore
+```
+
+## 人工50%目标的工程测算（不修改正式LaTeX）
+
+依据当时当前 `team/submission/latex-v1/sections/stage3.tex`（SHA `6b2bfc3d343b2b41639b9b3cee7db095bdc92d964205f551354a1546aae51dc3`）和 `team/optimizations/o2/r3-div-gate/performance/results/samples.csv`（SHA `ad0577b1908e99b84d7a1e6016f28efb46b096b49c5ce46a48cd96e05fe8a18f`）核算。下面按CSV中after且纳入统计的12个窗口计算。若保持同一参考周期R，要求旧加速倍率R/V再乘1.5，新的VDot周期必须≤原V的2/3；这与周期减少50%不同。
+
+| 旧dot8场景 | VDot周期V | RVV周期R | R/V | 倍率再×1.5要求的新V上限 |
+| --- | ---: | ---: | ---: | ---: |
+| 单发 | 71 | 85.25 | 1.200704 | 47.333 |
+| 256依赖链 | 1,857 | 5,440.5 | 2.929725 | 1,238 |
+| 128点吞吐批次 | 221 | 678 | 3.067873 | 147.333 |
+| 64项流式 | 1,127.5 | 1,133 | 1.004878 | 751.667 |
+
+59-cycle空窗口是另一个实际镜像的观测，不是可直接扣除的开销或跨镜像形式化下界；单发47.333目标比这一观测还小，因此不能承诺仅靠改FU达成。依赖链要看完整issue/read/execute/writeback/wakeup环，不只是FU的E2。当前II1下128个点乘的理想服务数已有128拍量级，吞吐批次147.333的目标余量很紧；不能机械地把空窗口59与128相加。流式包含load/store/地址/分支，接近1x不能单独证明有或没有50%优化空间。旧dot8表和新dot16 Q288/完整应用必须分别核验。
+
+对局部P→N的实测Q288比例 `s=43473/26275=1.6545385`，Amdahl计算 `S=1/(1-p+p/s)` 的p必须是真实应用时间占比；达到整体1.5x要求p至少84.2598%，不能用MAC数或指令比例替代。对已优化W→N的局部 `s=28222.5/26275=1.0741199`，即使p=1也只有7.4120%的这一项增量。当前新W2接入扩大了优化覆盖，但仍要等实际同ELF目标周期，不能将参考指令减少、局部内核周期、FU面积下降相乘成为整应用性能结论。**本轮没有宣称全部旧倍率再提升50%，也没有宣称实际FU面积已≤20000。**

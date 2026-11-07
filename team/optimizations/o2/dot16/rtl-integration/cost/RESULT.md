@@ -608,3 +608,40 @@ source candidate. The repository requires real-parent and affected full-core
 validation before adopting RTL in production. Those are the remaining adoption
 steps, not missing prerequisites for publishing this bounded candidate evidence.
 The source change alone does not establish the requested 50% application gain.
+
+## 2026-11-07 follow-up: signed8 candidate passes the real parent
+
+The same actual Scala candidate `50522c0cd2700f7f852872049533bc31f79ce811ad2ed53da2c1d333cece45e2` now passes the real VFEX4/ClockGate/VDot/DIV/FPDIV parent with feature0 and feature1. The independent FU cost above is unchanged. This result adds parent functional qualification; it does not qualify decode, full-core execution, application speed, parent/core area, or operating frequency. Production `src/main` and the resident frozen core inputs were not replaced.
+
+Reproduction entry: [inline_parent.py](signed8/parent/inline_parent.py) and [PARENT_CONTRACT.md](signed8/parent/PARENT_CONTRACT.md), contract `dot16-inline-signed8-real-parent-v3`. Actual original outputs remain under WSL `runs/dot16-inline-signed8-20261107-main/parent-{01,02,03}`; each Windows `parent-source-*` version is retained.
+
+| Attempt | Actual outcome | Original result SHA256 |
+| --- | --- | --- |
+| parent-01 / v1 | FAILED after three successful commands; diagnostic object-label bytes differed | `a675857fc8a6e0ae354e6d9243b7ae8a7c90a8882f670857ae3760a0ade95295` |
+| parent-02 / v2 | FAILED after three successful commands; the three independent diagnostic blocks also changed order | `42d39383cfca7b4005fa6afb342b289635e2534e2a03bc457c78bd9caf24c01d` |
+| parent-03 / v3 | `INLINE_SIGNED8_REAL_PARENT_PASS`; 96 completed child commands | `a122603c7979c66d44dd79ba7a9f11c1cf5538231797d887c743986e136b124f` |
+
+The successful host operation is `49cbde030e5643f0cccfca5cec8a79c1.fa72a5671a2746cf324188a86c330a45`, 2026-11-07T17:29:26.5447096Z–17:33:09.6629969Z, 222.982 s, exit0 and cleanup complete. CPU1 / absolute nice5 / one worker and the original finite 1200 s campaign budget were used. All 96 child process groups closed: 56 commands exited0, and the 40 expected observation injections exited1. Their 40 original classifiers exited0. The two earlier failed outputs were not rewritten or retroactively qualified.
+
+### Actual generated boundary and checks
+
+Both feature settings regenerate the actual complete parent. Of the old 56 SV/V files, 53 remain byte-identical, including ClockGate, ExeUnit, VDotElastic and divider logic. The new complete set has 57 SV/V files. Products adds only the exact unused 255-byte PRINTF header outside the module to the already proved implementation; its body and eight inline instances are identical to local-03. The signed product module and sole external-module declaration are explicitly bound.
+
+`LogPerfEndpoint.sv` differs in the JVM object labels and the order of exactly three adjacent four-line diagnostic print blocks. v3 requires each known block exactly once; after only its object-label normalization, the full condition/file descriptor/format/arguments/whitespace must match its original block. Prefix and suffix outside the three-block region must remain byte-identical. Only the six permutations are accepted. Actual generated RTL is never rewritten. Simultaneous error messages may print in a different order, and that visible diagnostic difference is recorded rather than described as byte identity. Twelve bounded helper checks covered both observed failures, all six permutations, and rejection of semantic/outside/duplicate/insertion changes.
+
+| Actual parent coverage | feature0 | feature1 |
+| --- | ---: | ---: |
+| Cycles | 38,602 | 39,100 |
+| Accepted / responses | 14,781 / 14,292 | 14,931 / 14,414 |
+| Cancelled / reset-dropped | 426 / 63 | 446 / 71 |
+| Metadata output observations | 17,567 | 17,815 |
+| Metadata walking-one / walking-zero | 577 / 577 | 577 / 577 |
+| Original observation-negative classes | 20 | 20 |
+
+The original 59 checker tests, generated C++ byte identity, lint/build, complete positive trace, transaction replay, 577-bit metadata audit and added coverage all pass. feature1 retains 166 added accepts = 138 responses + 20 cancellations + 8 reset drops, 63 mixed II1 intervals at latency2, and eight additional reset-state cases. These are parent stimulus/coverage counts, not application timing or RTL-fault coverage. Independent review checked the actual traces, all 21 source snapshots, 179 final artifacts, 13 candidate overlay classes, both generated boundaries and original negative classifications.
+
+### Preserved evidence
+
+[raw.zip](signed8/parent/raw.zip): **10,482,736 B**, SHA256 `05f9ba6062f3bb61e2e18021330ca9f4c4affcc26fdc9d12e52a0f2d058bd303`. Its 467 members include all three original results and tool receipts, source/contract versions, generated RTL/resources, raw positive and negative logs, metadata, class manifests, actual parent binaries and an archive manifest. Only 102 reproducible Verilator object-cache files are omitted; their original files remain in place. The archive verifies 242 local snapshot/final-output pins, every member CRC/SHA and retained source bytes before/after packaging. External tool/classpath dependencies remain referenced by the original manifests; the package is not a standalone toolchain.
+
+Archive operation `.3803508ee874c2f3985c93c3604ffef5` (same host prefix) exited0 with cleanup complete at 17:56:34 UTC. It ran no checker, build or guest. The new qualification does not change the measured feature1 FU area **21,147.798**, the **1,147.798** gap above 20,000, or the failing nominal 1 ns timing result. Actual full-core validation of this signed8 source remains pending.
