@@ -1,0 +1,93 @@
+{
+  "schema": 1,
+  "contract": "r3-dot16-whole2-q288-v1",
+  "base_path": "../../q288-consumer/run.py",
+  "base_sha256": "79c58eb8bc2821d82f4b0daf74f0ac9f6f9f8a35a25cde35373607e48bda396b",
+  "edits": [
+    {
+      "find": "\"\"\"Freeze/review, then run the fixed dot16 Q288 AM once. No build or ABI probe.\"\"\"",
+      "replace": "\"\"\"Freeze/review, then run one P/whole2/plain-D/FR Q288 AM. No build or ABI probe.\"\"\"",
+      "count": 1
+    },
+    {
+      "find": "CONTRACT = \"r3-dot16-q288-consumer-v1\"",
+      "replace": "CONTRACT = \"r3-dot16-whole2-q288-v1\"",
+      "count": 1
+    },
+    {
+      "find": "IMAGE_BUILDER_SHA = \"ddf9052875b9de67d8a93209a70a90a835fdeba8d91b11317c0b4e24f80b761e\"",
+      "replace": "IMAGE_BUILDER_SHA = \"211e35d232bc941950e20dee1633a1bea90148ba3b02e90ae3e540e0cf4e4d0d\"",
+      "count": 1
+    },
+    {
+      "find": "IMAGE_ELF_SHA = \"216ed0418829bed5be00732670aed8d09532ca6f9615a68f9ea720fd05649fe5\"",
+      "replace": "IMAGE_ELF_SHA = \"9f7978f3d4be2b8793d979c2e6b84636476fc3547bd7da17441e2076ca9ffde0\"",
+      "count": 1
+    },
+    {
+      "find": "IMAGE_BIN_SHA = \"dd78e058f8acf29db8da47863bff8587608b333d3809dab2c5d04128fd6a02ac\"",
+      "replace": "IMAGE_BIN_SHA = \"ec900613377b8a023435a4eb88b9d3134e0da011675fc0dc4a45aae57d3149eb\"",
+      "count": 1
+    },
+    {
+      "find": "\"DOT16_Q288_IMAGE_STATIC_PASS\"",
+      "replace": "\"DOT16_WHOLE2_Q288_IMAGE_STATIC_PASS\"",
+      "count": 1
+    },
+    {
+      "find": "dict(P=6, G=6, D=7, FR=10)",
+      "replace": "dict(P=6, W=7, D=6, FR=10)",
+      "count": 1
+    },
+    {
+      "find": "fullmin_arm=2,",
+      "replace": "fullmin_arm=1,",
+      "count": 1
+    },
+    {
+      "find": "expected_dot16_from_plan=36288",
+      "replace": "expected_dot16_from_plan=67392",
+      "count": 1
+    },
+    {
+      "find": "DOT16_Q288_PREFLIGHT_PASS",
+      "replace": "DOT16_WHOLE2_Q288_PREFLIGHT_PASS",
+      "count": 1
+    },
+    {
+      "find": "DOT16_Q288_PROCESS_STARTED",
+      "replace": "DOT16_WHOLE2_Q288_PROCESS_STARTED",
+      "count": 1
+    },
+    {
+      "find": "DOT16_Q288_FULLCORE_PASS",
+      "replace": "DOT16_WHOLE2_Q288_FULLCORE_PASS",
+      "count": 2
+    }
+  ],
+  "inverse_exact": true,
+  "behavioral_scope": "Bind new image and P/W/D/FR call plan only; process cleanup, failure checks and protocol parsing unchanged.",
+  "derived_sha256": "ed585cfa849358b4ee28eae0cd46afeb56ca089a77c09acdc359b36e765fb55e",
+  "image_build": {
+    "schema": 1,
+    "contract": "r3-dot16-whole2-q288-v1",
+    "status": "DOT16_WHOLE2_Q288_IMAGE_STATIC_PASS",
+    "cpu": 1,
+    "compile_workers": 1,
+    "target_runtime_qualified": false,
+    "performance_qualified": false,
+    "started": "2026-11-07T08:59:37.301055+00:00",
+    "elf": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-whole2-q288-20261107-main/image-01/paired16-target.elf",
+    "elf_sha256": "9f7978f3d4be2b8793d979c2e6b84636476fc3547bd7da17441e2076ca9ffde0",
+    "binary": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-whole2-q288-20261107-main/image-01/paired16-target.bin",
+    "binary_sha256": "ec900613377b8a023435a4eb88b9d3134e0da011675fc0dc4a45aae57d3149eb",
+    "inputs_unchanged": true,
+    "generated_inputs_unchanged": true,
+    "qualification": "source derivation and real GNU ELF; no new guest executed",
+    "last_process_reaped": true,
+    "last_process_group_absent": true,
+    "finished": "2026-11-07T08:59:37.617392+00:00"
+  },
+  "target_executed": false,
+  "recorded_on": "2026-11-07"
+}

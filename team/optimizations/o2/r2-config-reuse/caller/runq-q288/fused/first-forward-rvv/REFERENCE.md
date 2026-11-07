@@ -4,6 +4,8 @@
 
 **最新运行状态（2026-11-06 12:06 UTC）：原三臂目标运行已完成，目标正确性通过，全部进程已清理。** 本次同公共 ELF 的完整 forward 单窗口观测为 FR 22,244,288、GS32 19,996,570、paired16 17,382,632 cycles；paired16 的窗口周期最低。`performance_qualified=false`、`full_retirement_window_audited=false` 保持。原始日志、身份、资源闭合及解释边界见[第7节](#target-result-01)。
 
+**后续 P/PQ 状态（2026-11-07 回读）：旧目标作业外层超时，两臂未完成验收；原始失败证据与诊断计数见[第8节](#pq-interrupted-01)。**
+
 **04:15 UTC 参考与预检检查点：新组合 GNU 构建、五个独立参考进程及原 T17 完整物理身份预检已经通过；当时目标整核尚未运行，性能未合格。** 三种方法共用一份实际 core、ELF、模型和初始化逻辑。controller-05 使用原 first-token 的92项冻结目标闭包和原NEMU manifest；全部原校验保持启用。
 
 ## 1. 交付对象与语义边界
@@ -191,3 +193,26 @@ Windows交付暂存为同名run根 `target-evidence-01`；原运行记录为WSL 
 原92文件来源为 `norm-resume-20261027-2000/first-token-target-01/runtime-source`，原发布manifest SHA为 `df00872b6b493d9a89c37ca72c226d96bf7d5ed2882afc232186e765d68475ef`，对应 `closures/target/repo/` 与 `target/runtime-source/` 两个条目前缀。第93项 `team/patches/nemu/manifest.json` 为1062字节、SHA `1fee8f48616d7d09f46fd5924fb677f4a042ab7a6e2098a4af93e5e4e6a495a1`，来源T17提交 `34bae6d4acceac939f958199dae53c14bc1f6183` 的原文件。这是原物理守卫的非代码数据依赖，不是新的NEMU补丁。
 
 后续新组合应按新身份复用这些已明确来源的支持文件，并执行其适用核验。本次旧RVV合同的成功不能直接迁移为新GQ/PQ消费者、改过的控制器或新目标镜像的PASS。
+
+<a id="pq-interrupted-01"></a>
+
+## 8. 后续 P/PQ 目标中断：保留原失败，未取得目标资格（2026-11-07）
+
+后续 P/PQ 使用另一共同 ELF `c4c541678e4b844d75a1e9f1bdbc4357eae267b88d5cd516ad8a6d4ea051d3df`，原独立参考资格见[paired-consumer结果](../gs32-rvv/quantize/paired-consumer/RESULT.md)。它与第7节是不同实验，不能把旧三臂的P窗口作为新PQ分母。
+
+原 ChatPC operation `0844a5921b2fa4d9e47903bfc930fdee.ed242368865ac5da0771e8e56eae7564` 于2026-11-06 14:05:22.149 UTC启动，22:25:22.263 UTC外层达到30000秒硬截止，回执为 `timed_out`、exit1、`cleanup_complete=true`。这只证明Windows外层终态，不补造历史WSL guest回收证据。
+
+2026-11-07主端与独立专家实读两臂完整原日志。两份 `result.json` 仍为 `RUNNING/exit_code=null`；campaign未写完成案例，owner未写最终状态。stdout均已有下表四CSR，但尚无 `CONSUMER_PASS`、GOOD TRAP、完整状态比较完成及最终audit/results。计数行位于完整3,691,424B状态比较之前；最后日志修改时间不能证明进程当时已停止。
+
+| 同一旧P/PQ ELF中的臂 | 原UART cycle差 | 原UART instret差 | 资格 |
+| --- | ---: | ---: | --- |
+| P | 17,382,507 | 5,175,368 | 部分诊断，未验收 |
+| PQ | 16,590,465 | 4,784,311 | 部分诊断，未验收 |
+
+主端使用原16位十六进制字与BigInt复算 `c1-c0`、`i1-i0`，原值及SHA见[PQ_TARGET_INTERRUPTED.json](PQ_TARGET_INTERRUPTED.json)。计数差只用于后续研究优先级，不能据其宣布目标正确性、正式性能、生产采用或跨ELF加速比。原state/raw没有重写为PASS，没有重跑旧guest。
+
+[失败证据包](evidence/pq-interrupted-v1/raw.zip)为1,916,252B，SHA `e3c39cbc5b4369f67377522b1d46433b131fc6194ed38123b5bf9c38a5e2251e`；[清单](evidence/pq-interrupted-v1/manifest.json)完整记录136个收录成员及2个保留在原路径的大镜像。包内包含两臂完整stdout/stderr、原状态、运行闭包、profile、owner记录和本轮读回；逐成员CRC/SHA与来源前后身份通过。归档只读操作exit0/cleanup=true，新增guest/build均为0。原始路径仍为本页运行根的 `pq-target-01`、`pq-target-launch-01` 及同根profile。
+
+本轮新boot和/proc已确认原P/PQ进程不存在，旧CPU0/2活动占用按[RUN END 6705002459](https://github.com/cc77-builder/riscv/issues/2#issuecomment-6705002459)关闭；原WORK、冻结输入和失败证据继续保留。此当前资源事实与历史reap缺口分别记录。
+
+具体内层未收尾原因尚未建立。本轮另一次同boot区间观测中，REALTIME增量约167.615秒、MONOTONIC约157.415秒；两个端点不足以区分持续速率差与日历时钟调整，也不能倒推旧作业根因。[原采样回执](evidence/pq-interrupted-v1/clock-observations.json)保留完整数值。后续新运行保留成熟内层时钟和进程机制，按完整guest验证尾段、前后核验、四路清理及跨环境计时分别预留预算；时钟根因追溯不成为功能或性能合同的新门槛。

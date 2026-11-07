@@ -1,0 +1,508 @@
+{
+  "schema": 1,
+  "record_kind": "derived_evidence_index",
+  "contract": "r3-dot16-q288-consumer-v1",
+  "recorded_at": "2026-11-06 15:59:52 UTC",
+  "conclusion": "Fixed complete-Q288 correctness and CSR observations accepted by offline re-audit of the single original target run. Original host/runtime failure remains unchanged.",
+  "qualification": {
+    "target_runtime_qualified": true,
+    "basis": "offline-audit-01/result.json; original runtime target_runtime_qualified remains false",
+    "performance_qualified": false,
+    "full_application_measured": false,
+    "full_retirement_window_audited": false,
+    "retired_custom_count_verified": false,
+    "asic_ppa_qualified": false
+  },
+  "repository_source": {
+    "windows_repository": "D:\\Projects\\competitions\\2026-10-CIE-RISCV-XiangShan\\working-zufan-full-20261022",
+    "delivery_scope": "team/optimizations/o2/dot16/q288-consumer",
+    "contract_sha256": "76f900836df12bf0bb5f494e32b3524537a9cc320689592b2a7b927e8ccdd6b9",
+    "image_py_sha256": "ddf9052875b9de67d8a93209a70a90a835fdeba8d91b11317c0b4e24f80b761e",
+    "published_run_py_sha256": "79c58eb8bc2821d82f4b0daf74f0ac9f6f9f8a35a25cde35373607e48bda396b",
+    "original_run_py_sha256": "745337dfc8759bfd9ff28e06ed907693a1d68a7009cf6a7420de2c6a039eb772"
+  },
+  "image": {
+    "elf_sha256": "216ed0418829bed5be00732670aed8d09532ca6f9615a68f9ea720fd05649fe5",
+    "bin_sha256": "dd78e058f8acf29db8da47863bff8587608b333d3809dab2c5d04128fd6a02ac",
+    "source_archive_sha256": "ade9abcd36b904cd84847b6246b4057edc5d88cfebbb612c534952b0206e7aff",
+    "dot16_source_sha256": "f0aa30d96e4519a238b88c5fa3911080ec99d267af24579ded3ae754faf3a730",
+    "functions": {
+      "P": {
+        "bytes": 1096,
+        "sha256": "a06e377e88a230929cc971acf91b0adf3ac27e52fd17ec72956ae7890ed7e73c"
+      },
+      "G": {
+        "bytes": 420,
+        "sha256": "2d95481faa1c79f7a8a06ef65fc02154e30cf731e6ba5c990a7209c2e90c32ab"
+      },
+      "D": {
+        "bytes": 484,
+        "sha256": "ee92c07b7803b04c5340ba4412cb36326b8f5ed42fbf0677fc2f210bcd6711bb"
+      },
+      "FR": {
+        "bytes": 592,
+        "sha256": "66a12c0ec3cb7c0d1cdceadf04e4c658607438d83a2a958892100422343117ab"
+      }
+    }
+  },
+  "hardware": {
+    "emu_sha256": "f14918658fcd2f19c9fb6c1d493025d98f727ac985ea73129edc58270fa6977d",
+    "reference_sha256": "cc768488944941d59442727a96e0a19206e24872dcefed0052cf6cb3694a3fae",
+    "flash_sha256": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+    "flags": {
+      "VDOT_DOT16": "1",
+      "VDOT_O2_ELASTIC": "1",
+      "VDOT_T14_FUSED_INPUT": "1",
+      "VDOT_O1_HANDOFF": "0",
+      "VDOT_O1_TRACE": "0",
+      "VDOT_O2_TRACE": "0",
+      "VDOT_T12_TRACE": "0",
+      "VDOT_T13_TRACE": "0"
+    },
+    "existing_abi": {
+      "bytes": 1400,
+      "regs_int": 0,
+      "regs_fp": 256,
+      "csr": 512,
+      "pc": 656,
+      "hcsr": 664,
+      "regs_vec": 800,
+      "vcsr": 1312,
+      "fcsr": 1368,
+      "triggercsr": 1376
+    },
+    "new_hardware_builds": 0,
+    "new_abi_probes": 0
+  },
+  "launch": {
+    "run_begin_issue_comment": 6687675746,
+    "run_end_issue_comment": 6688977013,
+    "logical_operation": "4f2ec6b0-c72d-47dd-ba53-b96aa3d4df57",
+    "operation": "0844a5921b2fa4d9e47903bfc930fdee.b9e59cdda838f6aab491673b143c9389",
+    "started": "2026-11-06T14:50:57.0654386Z",
+    "finished": "2026-11-06T15:26:02.4016843Z",
+    "host_status": "failed",
+    "host_exit_code": 1,
+    "cleanup_complete": true,
+    "cancelled": false,
+    "timed_out": false,
+    "script_sha256": "285cc3eb785f48003a28bd70c3760e266593d24f860695842a51992def555928",
+    "new_target_guests": 1,
+    "cpu": 1,
+    "max_cycles": 6000000,
+    "budget_seconds": 7200,
+    "stream_limit_bytes": 67108864,
+    "ram_size": "128MB",
+    "seed": 1,
+    "original_profile_sha256": "bb6c3be58e5c3992302952cb6684722494c501078b5d38fe419198cc27766c2a",
+    "profile_pin_count": 80
+  },
+  "original_runtime_status": {
+    "schema": 1,
+    "contract": "r3-dot16-q288-consumer-v1",
+    "status": "FAILED",
+    "started": "2026-11-06T14:50:57.631297+00:00",
+    "profile": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-q288-20261106-pro3/preflight-02/profile.json",
+    "profile_sha256": "bb6c3be58e5c3992302952cb6684722494c501078b5d38fe419198cc27766c2a",
+    "command": [
+      "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/build/emu",
+      "-i",
+      "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-q288-20261106-pro3/image-01/paired16-target.bin",
+      "--flash=/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/image-01/boot-flash.bin",
+      "--ram-size=128MB",
+      "--diff=/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-nemu-reference-20261106-0105/feature1-01/build/riscv64-nemu-interpreter-so",
+      "--max-cycles=6000000",
+      "--seed=1"
+    ],
+    "cwd": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-q288-20261106-pro3/target-01/cwd",
+    "cpu_affinity": [
+      1
+    ],
+    "budget_seconds": 7200,
+    "stream_limit_bytes": 67108864,
+    "process_started": true,
+    "target_runtime_qualified": false,
+    "performance_qualified": false,
+    "full_retirement_window_audited": false,
+    "asic_ppa_qualified": false,
+    "pid": 5697,
+    "pgid": 5697,
+    "exit_code": 0,
+    "error": "ValueError('complete ordered guest inventory')",
+    "process_reaped": true,
+    "process_group_absent": true,
+    "changed_inputs": [],
+    "input_identities_unchanged": true,
+    "raw_logs": {
+      "stdout.log": {
+        "bytes": 2128,
+        "sha256": "11f0408f2f50686a85ea16d272c33fa44bc29f6fd21d2f55a786fc0bde6c30dc"
+      },
+      "stderr.log": {
+        "bytes": 3065676,
+        "sha256": "63955f99a4c567167f6f6e528558b2d2805af50cfdae18cba7eeba93b885895d"
+      }
+    },
+    "signals": {
+      "first": null,
+      "count": 0
+    },
+    "finished": "2026-11-06T15:26:01.613463+00:00"
+  },
+  "offline_audit": {
+    "operation": "0844a5921b2fa4d9e47903bfc930fdee.c189e2a0a8190b38732de506fd4dd2cc",
+    "host_exit_code": 0,
+    "cleanup_complete": true,
+    "result": {
+      "schema": 1,
+      "contract": "r3-dot16-q288-consumer-v1",
+      "status": "DOT16_Q288_OFFLINE_AUDIT_PASS",
+      "started": "2026-11-06T15:40:21.015303+00:00",
+      "original_operation": "0844a5921b2fa4d9e47903bfc930fdee.b9e59cdda838f6aab491673b143c9389",
+      "original_host_status": "failed",
+      "original_host_exit_code": 1,
+      "original_runtime_status": "FAILED",
+      "original_emu_exit_code": 0,
+      "original_runtime_status_rewritten": false,
+      "new_guest_runs": 0,
+      "new_builds": 0,
+      "process_check_before": {
+        "original_pgid": 5697,
+        "process_group_absent": true,
+        "original_pid_absent": true
+      },
+      "original_profile_sha256": "bb6c3be58e5c3992302952cb6684722494c501078b5d38fe419198cc27766c2a",
+      "original_auditor_sha256": "745337dfc8759bfd9ff28e06ed907693a1d68a7009cf6a7420de2c6a039eb772",
+      "anchored_auditor_sha256": "79c58eb8bc2821d82f4b0daf74f0ac9f6f9f8a35a25cde35373607e48bda396b",
+      "whole_file_inverse_equal": true,
+      "profile_pin_count": 80,
+      "target_runtime_qualified": true,
+      "performance_qualified": false,
+      "full_retirement_window_audited": false,
+      "asic_ppa_qualified": false,
+      "original_failure_reproduced": {
+        "error": "complete ordered guest inventory",
+        "selected_lines": 45,
+        "protocol_lines": 43,
+        "first_selected": "[PERF ][time=             1706344] SimTop.l_soc.core_with_l2.l2top.inner.l2cache.slices_0.a_reqBuf: chosenQ_cancel,                    0",
+        "expected_first": "Q_BEGIN contract=r3-dot16-q288-consumer-v1 windows=10",
+        "extras": [
+          "[PERF ][time=             1706344] SimTop.l_soc.core_with_l2.l2top.inner.l2cache.slices_0.a_reqBuf: chosenQ_cancel,                    0",
+          "[PERF ][time=             1706344] SimTop.l_soc.core_with_l2.l2top.inner.l2cache.slices_1.a_reqBuf: chosenQ_cancel,                    0"
+        ]
+      },
+      "checks_sha256": "c961478bb72f6921f766e502b4d9527151f97ad80eca6db733deee8400f38fde",
+      "negative_controls": [
+        {
+          "name": "missing-q-call",
+          "status": "EXPECTED_REJECTION",
+          "change": "delete one complete actual Q_CALL line",
+          "error": "complete ordered guest inventory",
+          "selected_lines": 42,
+          "stdout_sha256": "6fa24fb1c69512c1625417219ee75adbd8883dee46f8a8458bb3c6ce19506369",
+          "unchanged_stderr_sha256": "63955f99a4c567167f6f6e528558b2d2805af50cfdae18cba7eeba93b885895d",
+          "new_guest_runs": 0
+        },
+        {
+          "name": "duplicate-qw-index",
+          "status": "EXPECTED_REJECTION",
+          "change": "replace QW1 with actual QW0; count stays43, index0 duplicated and index1 missing",
+          "error": "QW order or counter range",
+          "selected_lines": 43,
+          "stdout_sha256": "525c26020f6e64b8ff23635333cc3854c801b2649466a8e374ddf551e18dc050",
+          "unchanged_stderr_sha256": "63955f99a4c567167f6f6e528558b2d2805af50cfdae18cba7eeba93b885895d",
+          "new_guest_runs": 0
+        },
+        {
+          "name": "unknown-q-line",
+          "status": "EXPECTED_REJECTION",
+          "change": "insert an unknown protocol-prefix line before Q_END",
+          "error": "complete ordered guest inventory",
+          "selected_lines": 44,
+          "stdout_sha256": "ae16bd2ceadc88a0fd77b88ba20b18149261cc85ca5a887d668fefb66cbe3462",
+          "unchanged_stderr_sha256": "63955f99a4c567167f6f6e528558b2d2805af50cfdae18cba7eeba93b885895d",
+          "new_guest_runs": 0
+        }
+      ],
+      "process_check_after": {
+        "original_pgid": 5697,
+        "process_group_absent": true,
+        "original_pid_absent": true
+      },
+      "input_identities_unchanged": true,
+      "raw_output_identities_unchanged": true,
+      "qualification": "offline re-audit of this fixed original complete-Q288 AM run; correctness and CSR observations only",
+      "changed_inputs": [],
+      "finished": "2026-11-06T15:40:24.070822+00:00"
+    },
+    "checks": {
+      "full_q_calls": 29,
+      "outputs_checked": 8352,
+      "judge_fault_controls": 5,
+      "judge_fault_controls_scope": "shared judge; original first P/dataset1 call",
+      "fullmin_arm": 2,
+      "fullmin_kind": 0,
+      "fullmin_outputs": 288,
+      "fullmin_performance_sample": false,
+      "samples": [
+        {
+          "index": 0,
+          "arm": 3,
+          "cycles": 67600,
+          "instructions": 35681
+        },
+        {
+          "index": 1,
+          "arm": 0,
+          "cycles": 43994,
+          "instructions": 22149
+        },
+        {
+          "index": 2,
+          "arm": 1,
+          "cycles": 54102,
+          "instructions": 20134
+        },
+        {
+          "index": 3,
+          "arm": 2,
+          "cycles": 33505,
+          "instructions": 26933
+        },
+        {
+          "index": 4,
+          "arm": 3,
+          "cycles": 62804,
+          "instructions": 35681
+        },
+        {
+          "index": 5,
+          "arm": 3,
+          "cycles": 62776,
+          "instructions": 35681
+        },
+        {
+          "index": 6,
+          "arm": 2,
+          "cycles": 33504,
+          "instructions": 26933
+        },
+        {
+          "index": 7,
+          "arm": 1,
+          "cycles": 53958,
+          "instructions": 20134
+        },
+        {
+          "index": 8,
+          "arm": 0,
+          "cycles": 42928,
+          "instructions": 22149
+        },
+        {
+          "index": 9,
+          "arm": 3,
+          "cycles": 62744,
+          "instructions": 35681
+        }
+      ],
+      "expected_dot16_from_plan": 36288,
+      "expected_dot8_probe_from_plan": 1,
+      "retired_custom_count_verified": false,
+      "full_retirement_window_audited": false,
+      "loaded_reference": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-nemu-reference-20261106-0105/feature1-01/build/riscv64-nemu-interpreter-so",
+      "complete_guest_sequence": true
+    }
+  },
+  "observations": {
+    "statistic": "arithmetic mean of all per-arm original CSR windows; no warm-anchor deletion",
+    "stats": {
+      "P": {
+        "count": 2,
+        "cycles": [
+          43994,
+          42928
+        ],
+        "instructions": [
+          22149,
+          22149
+        ],
+        "mean_cycles": 43461,
+        "min_cycles": 42928,
+        "max_cycles": 43994,
+        "range_over_mean_percent": 2.452773751179218
+      },
+      "G": {
+        "count": 2,
+        "cycles": [
+          54102,
+          53958
+        ],
+        "instructions": [
+          20134,
+          20134
+        ],
+        "mean_cycles": 54030,
+        "min_cycles": 53958,
+        "max_cycles": 54102,
+        "range_over_mean_percent": 0.2665186007773459
+      },
+      "D": {
+        "count": 2,
+        "cycles": [
+          33505,
+          33504
+        ],
+        "instructions": [
+          26933,
+          26933
+        ],
+        "mean_cycles": 33504.5,
+        "min_cycles": 33504,
+        "max_cycles": 33505,
+        "range_over_mean_percent": 0.0029846737005476878
+      },
+      "FR": {
+        "count": 4,
+        "cycles": [
+          67600,
+          62804,
+          62776,
+          62744
+        ],
+        "instructions": [
+          35681,
+          35681,
+          35681,
+          35681
+        ],
+        "mean_cycles": 63981,
+        "min_cycles": 62744,
+        "max_cycles": 67600,
+        "range_over_mean_percent": 7.5897532079836205
+      }
+    },
+    "comparisons": {
+      "P": {
+        "d_cycle_reduction_percent": 22.909044890821658,
+        "d_speedup_ratio": 1.2971690369950306
+      },
+      "G": {
+        "d_cycle_reduction_percent": 37.989080140662594,
+        "d_speedup_ratio": 1.6126192004059157
+      },
+      "FR": {
+        "d_cycle_reduction_percent": 47.63367249652241,
+        "d_speedup_ratio": 1.909624080347416
+      }
+    },
+    "rounds": [
+      {
+        "p_index": 1,
+        "g_index": 2,
+        "d_index": 3,
+        "P": 43994,
+        "G": 54102,
+        "D": 33505,
+        "d_vs_p_reduction_percent": 23.841887530117745,
+        "d_vs_g_reduction_percent": 38.07068130568186
+      },
+      {
+        "p_index": 8,
+        "g_index": 7,
+        "d_index": 6,
+        "P": 42928,
+        "G": 53958,
+        "D": 33504,
+        "d_vs_p_reduction_percent": 21.95303764442788,
+        "d_vs_g_reduction_percent": 37.907261203158015
+      }
+    ],
+    "instruction_change_d_vs_p_percent": 21.599169262720665,
+    "performance_qualified": false,
+    "full_application_measured": false
+  },
+  "operations": {
+    "image_build": "0844a5921b2fa4d9e47903bfc930fdee.e7ca28ec1a61ac01158cd97f1284f63f",
+    "latch_probe_and_preflight02": "0844a5921b2fa4d9e47903bfc930fdee.c1c415a494eb0b2070d0df16a04b7024",
+    "evidence_packaging": "0844a5921b2fa4d9e47903bfc930fdee.33573b01fbe3d530c1098d3251cb6f8a"
+  },
+  "evidence": {
+    "archive": "evidence-v1/evidence-01.zip",
+    "archive_bytes": 1495216,
+    "archive_sha256": "9056f62f93718b2afbe1dcea103b15b64f70292ae27546b78f544bb2249915f9",
+    "manifest": "evidence-v1/manifest.json",
+    "manifest_sha256": "c2b51be3df377f76cf631bc2d2e6b9bbb42a7af93f853f75c86f5d7493a4a7ce",
+    "file_count": 111,
+    "uncompressed_file_bytes": 9918838,
+    "original_sources_unchanged": true,
+    "external_inputs": "Physical EMU, feature1 reference, compiler and original AM inputs remain at profile-pinned locations; not duplicated in this archive.",
+    "important_artifacts": [
+      {
+        "archive_path": "files/image-01/status.json",
+        "bytes": 941,
+        "sha256": "e1a9c9dd154ab2beb95fc19ffeb699e51e5151e5add041873dae6dcedf835f48"
+      },
+      {
+        "archive_path": "files/image-01/elf-check.json",
+        "bytes": 3120,
+        "sha256": "baf4547961bcc1ad0cf8ef4a605f22fdafab0512da3847d99572984f1be86b37"
+      },
+      {
+        "archive_path": "files/preflight-02/profile.json",
+        "bytes": 18645,
+        "sha256": "bb6c3be58e5c3992302952cb6684722494c501078b5d38fe419198cc27766c2a"
+      },
+      {
+        "archive_path": "files/target-01/status.json",
+        "bytes": 1899,
+        "sha256": "a1e65a5a4eba9b2cd377ec349fb6dba3592bf1d047d7996aaf71b3634caa0c85"
+      },
+      {
+        "archive_path": "files/target-01/stdout.log",
+        "bytes": 2128,
+        "sha256": "11f0408f2f50686a85ea16d272c33fa44bc29f6fd21d2f55a786fc0bde6c30dc"
+      },
+      {
+        "archive_path": "files/target-01/stderr.log",
+        "bytes": 3065676,
+        "sha256": "63955f99a4c567167f6f6e528558b2d2805af50cfdae18cba7eeba93b885895d"
+      },
+      {
+        "archive_path": "files/controller-03/run.py",
+        "bytes": 17246,
+        "sha256": "79c58eb8bc2821d82f4b0daf74f0ac9f6f9f8a35a25cde35373607e48bda396b"
+      },
+      {
+        "archive_path": "files/controller-03/audit.py",
+        "bytes": 12261,
+        "sha256": "5b4c5b212daf8c34abb39719d18304052c28ac71ca78ce93e05b25fecab6015a"
+      },
+      {
+        "archive_path": "files/controller-03/derivation.json",
+        "bytes": 660,
+        "sha256": "c0573c7ed7d535700256a9b441c806df345c020df18cfa454f238056bf5f0696"
+      },
+      {
+        "archive_path": "files/controller-03/host-final-receipt.json",
+        "bytes": 2624,
+        "sha256": "80f364cae47b60295876f9fb69e0dc815322291056ad498658597ab2aeae5ca5"
+      },
+      {
+        "archive_path": "files/offline-audit-01/result.json",
+        "bytes": 3677,
+        "sha256": "d84a0f00fb6f7846e08c33ab2ade76499dd6469f88bc70929194fcbaac53eb81"
+      },
+      {
+        "archive_path": "files/offline-audit-01/checks.json",
+        "bytes": 1622,
+        "sha256": "c961478bb72f6921f766e502b4d9527151f97ad80eca6db733deee8400f38fde"
+      },
+      {
+        "archive_path": "files/windows/observations-01/offline-host-receipt.json",
+        "bytes": 5240,
+        "sha256": "20bbe8e7d6f12a745d5ba1eb5cd66ccec8bf37a3d6ebe0d2ad412821aeebbe94"
+      }
+    ]
+  }
+}

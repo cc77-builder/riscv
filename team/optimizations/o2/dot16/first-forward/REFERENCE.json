@@ -1,0 +1,258 @@
+{
+  "schema": 1,
+  "contract": "r3-dot16-first-forward-v1",
+  "status": "REFERENCE_PASS_TARGET_RUNNING",
+  "run_root": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-first-forward-20261107-main",
+  "selected_kernel": "whole2",
+  "selected_kernel_evidence": "../whole2/q288-consumer/REFERENCE.json",
+  "build": {
+    "status": "FIRST_FORWARD_DOT16_STATIC_PASS_NOT_RUNTIME",
+    "result_sha256": "d933cd08c8815bddbcfffad731beafd426fa01623a997268802065054e234683",
+    "artifacts": {
+      "first-forward-dot16.elf": "5ba0cd0756a16f38c2747c625bf8fb53d5ba4c9ba9b2bbf222c146df4859b959",
+      "first-forward-dot16.bin": "359587450bc0630f5dd3128f66f871f43a467fea21c5f1db24194e7230dd2afc",
+      "routing-review.json": "b06b77782103d7fe8195cee270578e8d32eea968ab632788f69aaef5e7952e5b"
+    },
+    "counter_sites": [
+      {
+        "pc": "0x800028d0",
+        "csr": "0xc00"
+      },
+      {
+        "pc": "0x800028dc",
+        "csr": "0xc02"
+      },
+      {
+        "pc": "0x800028f0",
+        "csr": "0xc02"
+      },
+      {
+        "pc": "0x800028fc",
+        "csr": "0xc00"
+      }
+    ],
+    "selected_dot16_kernel": {
+      "choice": "whole2",
+      "symbol": "q288_dot16_whole2",
+      "bytes": 412,
+      "function_sha256": "b2b5b7fa44ecf9646a7c07fdaf971df8fad6430aec58161ffc3e2c3332d934a6",
+      "source_sha256": "df2983a21ab85d982b51e7faa0710d536d2bd4afe5bc9c2b91577dd3450972c8",
+      "elf_sha256": "0ea09990c578faccab105afd1942d66a3f6f9905876b2e5462ae7e0f7a0e2adc"
+    }
+  },
+  "reference": {
+    "status": "FIRST_FORWARD_DOT16_REFERENCE_CAMPAIGN_PASS",
+    "results_sha256": "21dc99a65b9d8d20a99dd71186a0e19980c2de3ca3f05ec30f8c356ec99ac5b4",
+    "cases": [
+      {
+        "name": "negative",
+        "method": 1144075857,
+        "negative": true,
+        "started": "2026-11-07T09:52:11.217840+00:00",
+        "finished": "2026-11-07T09:52:12.473129+00:00",
+        "status": "EXPECTED_FIRST_FORWARD_DOT16_REFERENCE_REJECTION",
+        "pid": 386,
+        "exit_code": 2,
+        "direct_child_reaped": true,
+        "process_group_absent_after_exit": true
+      },
+      {
+        "name": "paired16",
+        "method": 1345402417,
+        "negative": false,
+        "started": "2026-11-07T09:52:13.148159+00:00",
+        "finished": "2026-11-07T09:52:14.846495+00:00",
+        "status": "FIRST_FORWARD_DOT16_COMPLETE_REFERENCE_PASS",
+        "pid": 387,
+        "exit_code": 0,
+        "direct_child_reaped": true,
+        "process_group_absent_after_exit": true
+      },
+      {
+        "name": "paired16_quantize",
+        "method": 1347637553,
+        "negative": false,
+        "started": "2026-11-07T09:52:15.426839+00:00",
+        "finished": "2026-11-07T09:52:17.027364+00:00",
+        "status": "FIRST_FORWARD_DOT16_COMPLETE_REFERENCE_PASS",
+        "pid": 398,
+        "exit_code": 0,
+        "direct_child_reaped": true,
+        "process_group_absent_after_exit": true
+      },
+      {
+        "name": "dot16",
+        "method": 1144075825,
+        "negative": false,
+        "started": "2026-11-07T09:52:17.568463+00:00",
+        "finished": "2026-11-07T09:52:18.824212+00:00",
+        "status": "FIRST_FORWARD_DOT16_COMPLETE_REFERENCE_PASS",
+        "pid": 399,
+        "exit_code": 0,
+        "direct_child_reaped": true,
+        "process_group_absent_after_exit": true
+      },
+      {
+        "name": "dot16_quantize",
+        "method": 1144075857,
+        "negative": false,
+        "started": "2026-11-07T09:52:19.338087+00:00",
+        "finished": "2026-11-07T09:52:20.695112+00:00",
+        "status": "FIRST_FORWARD_DOT16_COMPLETE_REFERENCE_PASS",
+        "pid": 400,
+        "exit_code": 0,
+        "direct_child_reaped": true,
+        "process_group_absent_after_exit": true
+      }
+    ],
+    "validations": {
+      "negative": {
+        "status": "EXPECTED_FIRST_FORWARD_DOT16_REFERENCE_REJECTION",
+        "retired": 4758550,
+        "api_calls": 4758551,
+        "normal_comparator_rejection": "complete_state_mismatch position=0 byte=152476",
+        "compared_state_bytes": 0,
+        "window_instret": 4604057
+      },
+      "paired16": {
+        "status": "FIRST_FORWARD_DOT16_COMPLETE_REFERENCE_PASS",
+        "retired": 8868766,
+        "api_calls": 8868767,
+        "normal_comparator_rejection": null,
+        "compared_state_bytes": 3691424,
+        "window_instret": 5175372
+      },
+      "paired16_quantize": {
+        "status": "FIRST_FORWARD_DOT16_COMPLETE_REFERENCE_PASS",
+        "retired": 8477708,
+        "api_calls": 8477709,
+        "normal_comparator_rejection": null,
+        "compared_state_bytes": 3691424,
+        "window_instret": 4784314
+      },
+      "dot16": {
+        "status": "FIRST_FORWARD_DOT16_COMPLETE_REFERENCE_PASS",
+        "retired": 8688510,
+        "api_calls": 8688511,
+        "normal_comparator_rejection": null,
+        "compared_state_bytes": 3691424,
+        "window_instret": 4995116
+      },
+      "dot16_quantize": {
+        "status": "FIRST_FORWARD_DOT16_COMPLETE_REFERENCE_PASS",
+        "retired": 8297451,
+        "api_calls": 8297452,
+        "normal_comparator_rejection": null,
+        "compared_state_bytes": 3691424,
+        "window_instret": 4604057
+      }
+    },
+    "reference_runs": 5,
+    "target_emu_runs": 0
+  },
+  "target": {
+    "status": "RUNNING_NOT_QUALIFIED",
+    "operation_id": "49cbde030e5643f0cccfca5cec8a79c1.1b999cf43afaaebd09ab95c1e9fd28cd",
+    "logical_operation_id": "f3ec0e2f-4dc5-4d18-a8a7-4b7ec375e217",
+    "host_started_at": "2026-11-07T10:00:28.8813534Z",
+    "profile_sha256": "b650534b8c14fe3ecb813232be47decc3a550e279352859c7ec4a1d4d4046d0b",
+    "input_count": 686,
+    "cpu_slots": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "per_emu_max_cycles": 40000000,
+    "per_emu_timeout_seconds": 43200,
+    "per_stream_max_bytes": 16777216,
+    "owner_work_seconds": 45000,
+    "term_grace_seconds": 300,
+    "owner_hard_seconds": 45600,
+    "external_tool_seconds": 57600,
+    "automatic_extension": false,
+    "initial_proc_observation": {
+      "operation_id": "49cbde030e5643f0cccfca5cec8a79c1.e20d944f2190ce5d5bc290df6b4cce35",
+      "boot_id": "40c12de6-0f93-4bda-8ae9-187f8bf54da2",
+      "emus": [
+        {
+          "pid": 380,
+          "cpu": [
+            3
+          ],
+          "cpu_jiffies": 4693,
+          "state": "R",
+          "threads_rss": [
+            "VmRSS:\t  285440 kB",
+            "Threads:\t1"
+          ]
+        },
+        {
+          "pid": 381,
+          "cpu": [
+            2
+          ],
+          "cpu_jiffies": 4690,
+          "state": "R",
+          "threads_rss": [
+            "VmRSS:\t  285300 kB",
+            "Threads:\t1"
+          ]
+        },
+        {
+          "pid": 382,
+          "cpu": [
+            0
+          ],
+          "cpu_jiffies": 4693,
+          "state": "R",
+          "threads_rss": [
+            "VmRSS:\t  285544 kB",
+            "Threads:\t1"
+          ]
+        },
+        {
+          "pid": 383,
+          "cpu": [
+            1
+          ],
+          "cpu_jiffies": 4692,
+          "state": "R",
+          "threads_rss": [
+            "VmRSS:\t  285264 kB",
+            "Threads:\t1"
+          ]
+        }
+      ]
+    },
+    "run_begin": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6705355479"
+  },
+  "qualification": {
+    "reference_fixed_first_forward": true,
+    "target_fixed_first_forward": false,
+    "formal_performance": false,
+    "full_retirement": false,
+    "asic_ppa": false,
+    "stable_default_changed": false
+  },
+  "comparison_contract": {
+    "primary": "min(qualified P,PQ) / min(qualified D,DQ), all from this shared ELF and hardware",
+    "conditional": [
+      "P->PQ",
+      "D->DQ",
+      "P->D",
+      "PQ->DQ",
+      "P->DQ"
+    ],
+    "D_means": "selected whole2; not plain D from the Q288 screen",
+    "old_pq_interrupted": "../../r2-config-reuse/caller/runq-q288/fused/first-forward-rvv/PQ_TARGET_INTERRUPTED.json",
+    "no_cross_elf_denominator": true,
+    "no_additive_percentages": true,
+    "no_pure_hardware_attribution": true
+  },
+  "preserved_work": {
+    "official_sources_unchanged": true,
+    "previous_failures_unchanged": true,
+    "report_files_not_modified": true
+  }
+}

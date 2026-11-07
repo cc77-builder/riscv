@@ -1,0 +1,285 @@
+{
+  "schema": "pq-partial-target-readonly-index-v1",
+  "reviewed_utc": "2026-11-07T09:21:48Z",
+  "original_operation": "0844a5921b2fa4d9e47903bfc930fdee.ed242368865ac5da0771e8e56eae7564",
+  "logical_operation": "e7b8c8ab-b18f-4d6a-97e5-67493f953eff",
+  "source_root": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/first-forward-rvv-20261106-pro5",
+  "qualification": "PARTIAL_COUNTER_DIAGNOSTIC_ONLY_NO_COMPLETED_ARM",
+  "original_outer": {
+    "started_utc": "2026-11-06T14:05:22.1493386Z",
+    "ended_utc": "2026-11-06T22:25:22.2628833Z",
+    "status": "timed_out",
+    "duration_ms": 30000063,
+    "exit_code": 1,
+    "cleanup_complete": true,
+    "scope": "Windows outer job receipt; not historical WSL guest reap proof"
+  },
+  "root_files": {
+    "pq-target-01/state.json": "b38aaa0f10a9b376130c0bc4893d470ba2c9aef1ed9784b0a2a645b2ce0c5ead",
+    "pq-target-launch-01/state.json": "84eb46ae614d5b1ca838f8f6aa3f4a424995b06ba618f95090fb0888048200f1",
+    "pq-target-launch-01/campaign.command.json": "93c078f2ea9e894c40ab3dc4c2102f584c81d49b9429adc3a818688a0b178f10",
+    "pq-target-controller-01/run.py": "b8ab0c2bafaa7f329fec72537541fa621e1b428436ce587eb893e57d636e69a8",
+    "pq-target-controller-01/audit.py": "ffc32d13a5fc1d8483f3050d286fc80c26e970e585ec33255fd590a67a63694f"
+  },
+  "common_raw_counter_words": [
+    "e1cd7e079e6134d9",
+    "cd2e1879d1561c13"
+  ],
+  "cases": {
+    "paired16": {
+      "method": 1345402417,
+      "cycles": 17382507,
+      "instret": 5175368,
+      "i1": "cd2e1879d1a5145b",
+      "c1": "e1cd7e079f6a7144",
+      "csr_sample_cycles": [
+        8081,
+        8140,
+        17390529,
+        17390588
+      ],
+      "raw_bytes": {
+        "stdout": 1048,
+        "stderr": 2351104
+      },
+      "hashes": {
+        "stdout.log": "b45fecd9677ad24f0c0459860e0de8f714ee705d1b3cca9800e0ad84ccfe2428",
+        "stderr.log": "8ed076709b4a3a2789c70041b53674a3934d9214a247de5fe94dd045207300a9",
+        "result.json": "597fa5554ecd9cd99d75fb394caed07d1ba989d2fb1cccefaccdc05153682e7f",
+        "image.bin": "ca0bf6d23021b543b232f7407392e651999a05094731e859bd607bee674244bd"
+      }
+    },
+    "paired16_quantize": {
+      "method": 1347637553,
+      "cycles": 16590465,
+      "instret": 4784311,
+      "i1": "cd2e1879d19f1cca",
+      "c1": "e1cd7e079f5e5b5a",
+      "csr_sample_cycles": [
+        8081,
+        8140,
+        16598487,
+        16598546
+      ],
+      "raw_bytes": {
+        "stdout": 1057,
+        "stderr": 9715712
+      },
+      "hashes": {
+        "stdout.log": "c29cdaf2ac4fc4ca3672a3fec6ee3a7f8c604c1bb2150960e7067057c75e045b",
+        "stderr.log": "eb36b848b811702f01825ac19d22c913d84f9b796cc9658b2977b403c4377d9f",
+        "result.json": "feb5f90851fe1165cbd9c98125c123594bb8b3bb0f5400800c33dee0f685e7cc",
+        "image.bin": "c0a7fb46344b4d913a52f72baa3fab81e0fbd2a5d71bbad1b9c4d3f95e7ddf69"
+      }
+    }
+  },
+  "final_elf": {
+    "path": "../quantize-gs32-20261106-pro3/paired-consumer-build-01/first-forward-psq.elf",
+    "sha256": "c4c541678e4b844d75a1e9f1bdbc4357eae267b88d5cd516ad8a6d4ea051d3df"
+  },
+  "main_source": {
+    "path": "../quantize-gs32-20261106-pro3/paired-consumer-build-01/source/main.c",
+    "sha256": "64cff9efe3b5d7d558392d92ebfb8b1d271906fbe0fe3235403b66f0759adc08"
+  },
+  "missing": [
+    "CONSUMER_PASS",
+    "GOOD TRAP",
+    "complete_state comparison completion",
+    "final exit/reap receipts",
+    "per-case validation/audit",
+    "campaign results.json",
+    "owner terminal/TERM/deadline records"
+  ],
+  "reusable": [
+    "frozen source/build/reference evidence after identity checks",
+    "raw counter trend only for research prioritization",
+    "failed/stale original receipts"
+  ],
+  "not_reusable_as_pass": [
+    "either target arm",
+    "target correctness",
+    "formal performance",
+    "historical WSL process cleanup"
+  ],
+  "status": "INTERRUPTED_TARGET_NOT_QUALIFIED",
+  "target_correctness_qualified": false,
+  "performance_qualified": false,
+  "full_retirement_window_audited": false,
+  "original_files_modified": false,
+  "root_readback": {
+    "operation": "49cbde030e5643f0cccfca5cec8a79c1.2aa9f64f5110a7b417dab00d656dcf35",
+    "status": "succeeded",
+    "exit_code": 0,
+    "records": [
+      {
+        "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/first-forward-rvv-20261106-pro5/pq-target-01/state.json",
+        "bytes": 843,
+        "sha256": "b38aaa0f10a9b376130c0bc4893d470ba2c9aef1ed9784b0a2a645b2ce0c5ead",
+        "state": {
+          "status": "RUNNING",
+          "new_emu_runs": 0,
+          "completed": [],
+          "records": [],
+          "launcher_receipts": [],
+          "active": [
+            {
+              "pid": 2199,
+              "case": "paired16",
+              "cpu": 0
+            },
+            {
+              "pid": 2200,
+              "case": "paired16_quantize",
+              "cpu": 2
+            }
+          ]
+        }
+      },
+      {
+        "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/first-forward-rvv-20261106-pro5/pq-target-01/paired16_quantize/stderr.log",
+        "bytes": 9715712,
+        "sha256": "eb36b848b811702f01825ac19d22c913d84f9b796cc9658b2977b403c4377d9f"
+      },
+      {
+        "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/first-forward-rvv-20261106-pro5/pq-target-01/paired16_quantize/result.json",
+        "bytes": 1649,
+        "sha256": "feb5f90851fe1165cbd9c98125c123594bb8b3bb0f5400800c33dee0f685e7cc",
+        "state": {
+          "status": "RUNNING",
+          "exit_code": null,
+          "pid": 4017,
+          "process_group": 4017
+        }
+      },
+      {
+        "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/first-forward-rvv-20261106-pro5/pq-target-01/paired16_quantize/stdout.log",
+        "bytes": 1057,
+        "sha256": "c29cdaf2ac4fc4ca3672a3fec6ee3a7f8c604c1bb2150960e7067057c75e045b",
+        "has_consumer_pass": false,
+        "has_good_trap": false
+      },
+      {
+        "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/first-forward-rvv-20261106-pro5/pq-target-01/paired16/stderr.log",
+        "bytes": 2351104,
+        "sha256": "8ed076709b4a3a2789c70041b53674a3934d9214a247de5fe94dd045207300a9"
+      },
+      {
+        "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/first-forward-rvv-20261106-pro5/pq-target-01/paired16/result.json",
+        "bytes": 1622,
+        "sha256": "597fa5554ecd9cd99d75fb394caed07d1ba989d2fb1cccefaccdc05153682e7f",
+        "state": {
+          "status": "RUNNING",
+          "exit_code": null,
+          "pid": 4018,
+          "process_group": 4018
+        }
+      },
+      {
+        "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/first-forward-rvv-20261106-pro5/pq-target-01/paired16/stdout.log",
+        "bytes": 1048,
+        "sha256": "b45fecd9677ad24f0c0459860e0de8f714ee705d1b3cca9800e0ad84ccfe2428",
+        "has_consumer_pass": false,
+        "has_good_trap": false
+      }
+    ]
+  },
+  "current_resource_observation": {
+    "operation": "49cbde030e5643f0cccfca5cec8a79c1.e4f1368cbfb00d392f791d4d4b6f4e77",
+    "boot_id": "f5db7616-e24f-4c40-9513-03f3dc9cd58a",
+    "utc_epoch": 1794042771.5223088,
+    "old_pq_processes_present": false,
+    "new_whole2_processes_present": [
+      309,
+      385
+    ],
+    "historical_wsl_reap_proven": false
+  },
+  "counter_diagnostic": {
+    "cycle_reduction": 792042,
+    "cycle_reduction_percent": 4.556546417613984,
+    "instret_reduction": 391057,
+    "denominator": "same original P/PQ ELF; partial unqualified observations only",
+    "adoption_decision_allowed": false
+  },
+  "cause": {
+    "confirmed": "Windows outer hard deadline; guest/campaign/owner terminal evidence absent",
+    "specific_inner_cleanup_cause": "NOT_ESTABLISHED",
+    "trace_last_write_not_process_stop_proof": true
+  },
+  "clock_followup": {
+    "scope": "new-round separate same-boot interval; not proof of old-run cause",
+    "samples": [
+      {
+        "utc_epoch": 1794042771.5223088,
+        "monotonic": 323.007051952,
+        "clk_tck": 100,
+        "boot_id": "f5db7616-e24f-4c40-9513-03f3dc9cd58a",
+        "processes": [
+          {
+            "pid": 309,
+            "ppid": 308,
+            "pgid": 309,
+            "state": "S",
+            "cpu_jiffies": 19,
+            "start_jiffies": 220,
+            "affinity": [
+              1
+            ],
+            "cmd": "/usr/bin/python3 -B /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-whole2-q288-20261107-main/preflight-01/inputs/run.py run --profile /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-whole2-q288-20261107-main/preflight-01/profile.json --profile-sha256 c279366b5bb6f9a153714452209da7a7affdc29d3154a55b82bc6c3983032769 --output /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-whole2-q288-20261107-main/target-01 "
+          },
+          {
+            "pid": 385,
+            "ppid": 309,
+            "pgid": 385,
+            "state": "R",
+            "cpu_jiffies": 33741,
+            "start_jiffies": 287,
+            "affinity": [
+              1
+            ],
+            "cmd": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/build/emu -i /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-whole2-q288-20261107-main/image-01/paired16-target.bin --flash=/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-fullcore-20261106-pro2/image-01/boot-flash.bin --ram-size=128MB --diff=/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-nemu-reference-20261106-0105/feature1-01/build/riscv64-nemu-interpreter-so --max-cycles=6000000 --seed=1 "
+          }
+        ]
+      },
+      {
+        "sample": {
+          "CLOCK_REALTIME": 1794042939.1377296,
+          "CLOCK_MONOTONIC": 480.42187108,
+          "CLOCK_MONOTONIC_RAW": 507.73425586,
+          "CLOCK_BOOTTIME": 480.421871811
+        },
+        "utc_epoch": 1794042939.137732,
+        "monotonic": 480.421875904,
+        "boot_id": "f5db7616-e24f-4c40-9513-03f3dc9cd58a",
+        "proc_uptime": "480.42 9121.64",
+        "emu": {
+          "pid": 385,
+          "state": "R",
+          "cpu_jiffies": 50477,
+          "start_jiffies": 287,
+          "affinity": [
+            1
+          ]
+        }
+      }
+    ],
+    "windows_second_sample": [
+      {
+        "host_before": "2026-11-07T09:15:38.1041878+00:00"
+      },
+      {
+        "host_after": "2026-11-07T09:15:38.2682180+00:00"
+      }
+    ],
+    "delta_realtime_seconds": 167.61542320251465,
+    "delta_monotonic_seconds": 157.414823952,
+    "stable_frequency_error_proven": false,
+    "old_run_causation_proven": false,
+    "decision": "retain current inner clocks; budget sufficient independent external headroom for future operations",
+    "sources": [
+      "https://docs.kernel.org/core-api/timekeeping.html",
+      "https://docs.python.org/3/library/time.html",
+      "https://learn.microsoft.com/en-us/windows/win32/sysinfo/acquiring-high-resolution-time-stamps"
+    ]
+  }
+}

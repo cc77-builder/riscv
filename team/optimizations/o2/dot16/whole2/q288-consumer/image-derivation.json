@@ -1,0 +1,165 @@
+{
+  "schema": 1,
+  "contract": "r3-dot16-whole2-q288-v1",
+  "kind": "literal_source_derivation_only",
+  "base_source": "../../q288-consumer/image.py",
+  "base_sha256": "ddf9052875b9de67d8a93209a70a90a835fdeba8d91b11317c0b4e24f80b761e",
+  "derived_source": "image.py",
+  "derived_sha256": "211e35d232bc941950e20dee1633a1bea90148ba3b02e90ae3e540e0cf4e4d0d",
+  "edits": [
+    {
+      "find": "\"\"\"Derive and build one fixed dot16/P/G/FR complete-Q288 image. No EMU.\"\"\"",
+      "replace": "\"\"\"Derive one fixed P/whole2/plain-D/FR complete-Q288 image. No EMU.\"\"\"",
+      "expected_occurrences": 1
+    },
+    {
+      "find": "CONTRACT = \"r3-dot16-q288-consumer-v1\"",
+      "replace": "CONTRACT = \"r3-dot16-whole2-q288-v1\"",
+      "expected_occurrences": 1
+    },
+    {
+      "find": "BASE_ZIP_SHA = \"ade9abcd36b904cd84847b6246b4057edc5d88cfebbb612c534952b0206e7aff\"",
+      "replace": "BASE_ZIP_SHA = \"9056f62f93718b2afbe1dcea103b15b64f70292ae27546b78f544bb2249915f9\"",
+      "expected_occurrences": 1
+    },
+    {
+      "find": "BASE_ELF_SHA = \"889aedd64a1a80ed5e3bfdfe5530ca2f8b4105d40b3ffb0559e6a64201746b1e\"",
+      "replace": "BASE_ELF_SHA = \"216ed0418829bed5be00732670aed8d09532ca6f9615a68f9ea720fd05649fe5\"",
+      "expected_occurrences": 1
+    },
+    {
+      "find": "D_SOURCE_SHA = \"f0aa30d96e4519a238b88c5fa3911080ec99d267af24579ded3ae754faf3a730\"",
+      "replace": "WHOLE2_ZIP_SHA = \"4e1167fc4b1c635c56ef104201489c9f24e85af624ff0f0c73461e4b8fcbe05b\"\nWHOLE2_SOURCE_SHA = \"df2983a21ab85d982b51e7faa0710d536d2bd4afe5bc9c2b91577dd3450972c8\"",
+      "expected_occurrences": 1
+    },
+    {
+      "find": "WRAPPERS = (\"q288_paired16_rvv\", \"q288_gs32_rvv\", \"q288_dot16_vdot\", \"q288_fused_rvv4\")",
+      "replace": "WRAPPERS = (\"q288_paired16_rvv\", \"q288_dot16_whole2\", \"q288_dot16_vdot\", \"q288_fused_rvv4\")",
+      "expected_occurrences": 1
+    },
+    {
+      "find": "\"2d95481faa1c79f7a8a06ef65fc02154e30cf731e6ba5c990a7209c2e90c32ab\"",
+      "replace": "\"b2b5b7fa44ecf9646a7c07fdaf971df8fad6430aec58161ffc3e2c3332d934a6\"",
+      "expected_occurrences": 1
+    },
+    {
+      "find": "METHODS = (5, 5, 0, 5)",
+      "replace": "METHODS = (5, 0, 0, 5)",
+      "expected_occurrences": 1
+    },
+    {
+      "find": "07aaf824d814112b29a7880fab2a693ddc72ec8a7843cec804501d47c836feb1",
+      "replace": "65dd7fe726ebf49dd7d9cfb90e73e4e4d2c66775743e8ffd3af86571778051c5",
+      "expected_occurrences": 1
+    },
+    {
+      "find": "ac8f935a2d47efd0ad1906bda57f7fd4e5b40fcda011fd874498e9b3ece284f2",
+      "replace": "65f3f2b310a6f9c3e9a8b613e8dcafe41e9d2532ea5879ba6b3820492c7a2038",
+      "expected_occurrences": 1
+    },
+    {
+      "find": "61eaa37db8c4b7e05f794ff9afeb863a3a488cb80d50ca7406c3cee3b4214411",
+      "replace": "d4df1b76da77b4b288e2cf9309d4dce075d6acc0d2b01fca654f5548b00c7346",
+      "expected_occurrences": 1
+    },
+    {
+      "find": "rows.append(dict(stage=0, arm=2, dataset=3))",
+      "replace": "rows.append(dict(stage=0, arm=1, dataset=3))",
+      "expected_occurrences": 1
+    },
+    {
+      "find": "        if index != 2:\n",
+      "replace": "        if index != 1:\n",
+      "expected_occurrences": 1
+    },
+    {
+      "find": "            need(len(data) == 484, \"D function length\")",
+      "replace": "            need(len(data) == 412, \"whole2 function length including unchanged +32 footer\")",
+      "expected_occurrences": 1
+    },
+    {
+      "find": "expected_dot16_from_plan=36288",
+      "replace": "expected_dot16_from_plan=67392",
+      "expected_occurrences": 2
+    },
+    {
+      "find": "args.dot16_source.resolve()",
+      "replace": "args.whole2_archive.resolve()",
+      "expected_occurrences": 1
+    },
+    {
+      "find": "(BASE_ZIP_SHA, D_SOURCE_SHA, HELPER_SHA)",
+      "replace": "(BASE_ZIP_SHA, WHOLE2_ZIP_SHA, HELPER_SHA)",
+      "expected_occurrences": 1
+    },
+    {
+      "find": "(\"base.zip\", \"dot16.S\", \"process_helper.py\", \"image.py\", \"CONTRACT.md\")",
+      "replace": "(\"base.zip\", \"whole2.zip\", \"process_helper.py\", \"image.py\", \"CONTRACT.md\")",
+      "expected_occurrences": 1
+    },
+    {
+      "find": "\"target-build-01/source/\" + name",
+      "replace": "\"files/image-01/source/\" + name",
+      "expected_occurrences": 1
+    },
+    {
+      "find": "\"target-build-01/paired16-target.elf\"",
+      "replace": "\"files/image-01/paired16-target.elf\"",
+      "expected_occurrences": 1
+    },
+    {
+      "find": "\"target-build-01/build.json\"",
+      "replace": "\"files/image-01/inputs/base-build.json\"",
+      "expected_occurrences": 1
+    },
+    {
+      "find": "\"target-inputs-01/source/team/optimizations/o2/r2-config-reuse/caller/runq-q288/fused/model.py\"",
+      "replace": "\"files/image-01/inputs/model.py\"",
+      "expected_occurrences": 1
+    },
+    {
+      "find": "\"target-build-01/source/manifest.json\"",
+      "replace": "\"files/image-01/manifest.json\"",
+      "expected_occurrences": 1
+    },
+    {
+      "find": "        d_text = (inputs / \"dot16.S\").read_text()\n        matches = re.findall(r\"(?ms)^\\.global q288_dot16_vdot\\n.*?^\\.size q288_dot16_vdot, \\.-q288_dot16_vdot\\n\", d_text)\n        need(len(matches) == 1 and d_text.endswith(matches[0]), \"unique complete existing D function\")\n        append = \"\\n.option norvc\\n.option norelax\\n.text\\n.balign 64\\n\" + matches[0]\n        (source / \"fused.S\").write_bytes(base_sources[\"fused.S\"] + append.encode())\n        edits_main = [\n            (\"const unsigned d=0,kind=5;\", \"const unsigned d=0,kind=0;\"),\n            (\"    prepare(0,5);\\n    q_context.packed=q_min_packed.value;\",\n             \"    prepare(0,0);\\n    q_context.packed=q_min_packed.value;\"),\n            (\"    q_wrappers[0](&q_context);\", \"    q_wrappers[2](&q_context);\"),\n            (\"    record(0,0,3);\", \"    record(0,2,3);\")]\n        edits_data = [\n            ('#define Q_CONTRACT \"r2-s3-runq-paired16-rvv-target-v1\"',\n             '#define Q_CONTRACT \"' + CONTRACT + '\"'),\n            (\"extern void q288_tail_vdot(struct q288_context *);\",\n             \"extern void q288_tail_vdot(struct q288_context *);\\nextern void q288_dot16_vdot(struct q288_context *);\"),\n            (\"q_wrapper const q_wrappers[4] = {q288_paired16_rvv,q288_gs32_rvv,q288_tail_vdot,q288_fused_rvv4};\",\n             \"q_wrapper const q_wrappers[4] = {q288_paired16_rvv,q288_gs32_rvv,q288_dot16_vdot,q288_fused_rvv4};\")]\n",
+      "replace": "        with zipfile.ZipFile(inputs / \"whole2.zip\") as z:\n            need(len(z.namelist()) == len(set(z.namelist())), \"duplicate whole2 ZIP entries\")\n            whole2_raw = z.read(\"files/host-01/generated/whole2.S\")\n            need(sha(whole2_raw) == WHOLE2_SOURCE_SHA, \"existing complete whole2 source identity\")\n            (inputs / \"whole2.S\").write_bytes(whole2_raw)\n        whole2_text = whole2_raw.decode()\n        matches = re.findall(r\"(?ms)^\\.global q288_dot16_whole2\\n.*?^\\.size q288_dot16_whole2, \\.-q288_dot16_whole2\\n\", whole2_text)\n        need(len(matches) == 1 and whole2_text.endswith(matches[0]),\n             \"unique complete existing whole2 function\")\n        append = \"\\n.option norvc\\n.option norelax\\n.text\\n.balign 64\\n\" + matches[0]\n        (source / \"fused.S\").write_bytes(base_sources[\"fused.S\"] + append.encode())\n        edits_main = [\n            (\"    q_wrappers[2](&q_context);\", \"    q_wrappers[1](&q_context);\"),\n            (\"    record(0,2,3);\", \"    record(0,1,3);\")]\n        edits_data = [\n            ('#define Q_CONTRACT \"r3-dot16-q288-consumer-v1\"',\n             '#define Q_CONTRACT \"' + CONTRACT + '\"'),\n            (\"extern void q288_dot16_vdot(struct q288_context *);\",\n             \"extern void q288_dot16_vdot(struct q288_context *);\\nextern void q288_dot16_whole2(struct q288_context *);\"),\n            (\"q_wrapper const q_wrappers[4] = {q288_paired16_rvv,q288_gs32_rvv,q288_dot16_vdot,q288_fused_rvv4};\",\n             \"q_wrapper const q_wrappers[4] = {q288_paired16_rvv,q288_dot16_whole2,q288_dot16_vdot,q288_fused_rvv4};\"),\n            (\"static const unsigned q_methods[4] __attribute__((aligned(16),used)) = {5,5,0,5};\",\n             \"static const unsigned q_methods[4] __attribute__((aligned(16),used)) = {5,0,0,5};\")]\n",
+      "expected_occurrences": 1
+    },
+    {
+      "find": "only_existing_D_appended=True",
+      "replace": "only_existing_whole2_appended=True",
+      "expected_occurrences": 1
+    },
+    {
+      "find": "enumerate((\"P\", \"G\", \"D\", \"FR\"))",
+      "replace": "enumerate((\"P\", \"W\", \"D\", \"FR\"))",
+      "expected_occurrences": 1
+    },
+    {
+      "find": "fullmin=dict(dataset=3, arm=2, kind=0",
+      "replace": "fullmin=dict(dataset=3, arm=1, kind=0",
+      "expected_occurrences": 1
+    },
+    {
+      "find": "base_manifest[\"fixture_sha256\"]",
+      "replace": "base_manifest[\"ordinary_fixture_sha256\"]",
+      "expected_occurrences": 1
+    },
+    {
+      "find": "\"DOT16_Q288_IMAGE_STATIC_PASS\"",
+      "replace": "\"DOT16_WHOLE2_Q288_IMAGE_STATIC_PASS\"",
+      "expected_occurrences": 1
+    },
+    {
+      "find": "p.add_argument(\"--dot16-source\", required=True, type=Path)",
+      "replace": "p.add_argument(\"--whole2-archive\", required=True, type=Path)",
+      "expected_occurrences": 1
+    }
+  ],
+  "forward_and_inverse_equal": true,
+  "verification": "Literal replacements in listed order and exact reverse in the orchestration runtime. No Python, GNU, guest or host preflight executed for this leaf.",
+  "new_builds": 0,
+  "new_guests": 0
+}
