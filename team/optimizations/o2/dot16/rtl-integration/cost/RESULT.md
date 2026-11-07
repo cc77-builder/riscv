@@ -232,3 +232,73 @@ its application benefit still depends on its own frozen full-core correctness
 and performance evidence. This cost branch therefore ends at these two
 nominal points. Further RTL restructuring or constraint sweeps require a
 separate, justified experiment; neither is necessary to interpret this result.
+
+
+## 2026-11-07 read-only path interpretation
+
+This section interprets the existing two-point result and archived netlists.
+No RTL was changed, no new elaboration/synthesis/STA or simulation was run,
+and none of the qualification flags above changed.
+
+Feature1 adds the upper eight signed-int8 products (`highProducts`),
+eight 16-bit P-stage product registers `pProducts_8..15`, an upper-group
+reduction, and a 20-bit combination of the lower and upper sums.
+The mapped DFF count rises by exactly 128; non-DFF cells rise from
+7,187 to 12,291, a difference of 5,104. These observations are consistent
+with that added structure. The existing report does not provide a module-level
+area attribution, so the +6,771.030 library area units cannot be allocated
+exactly among multiplication, reduction, enables and buffers.
+
+The original feature1 `mapped.v` has SHA
+`d53e3a0a10610a9f6353e153e7c5340105f239107707f66f701d454c65ca2245`;
+`mapped.json` has SHA
+`f4c9aeb459027122c0293e398dda0c6ed6f19eeb08b7dac7cc359b056b55ec16`.
+STA's automatic Verilog instance names are not the JSON cell keys.
+Reading the actual mapped Verilog ties the reported endpoints to these
+RTL registers:
+
+| Existing path | Actual endpoint mapping | Interpretation |
+| --- | --- | --- |
+| i2r: `io_in_bits_data_src_1[95]` to `_26643_/D` | `DFF_X1 _26643_`: D=`_11247_`, Q=`dut.pProducts_11[15]` | Sign bit of the product for byte lane 11 (zero-based, the twelfth byte), in the upper-half multiply/P-capture stage |
+| r2r: `dut.pProducts_0[0]` to `_27731_/D` | `DFF_X1 _27731_`: D=`_12268_`, Q=`dut.rPacket_res_data[20]` | Product-register to reduction/result-capture path; output bit 20 extends `sum20[19]` |
+
+The i2r arrival of 1.234132 ns includes the declared 0.100000 ns external
+input delay; its slack is -0.311787 ns. Its multiplication/capture endpoint
+precedes the final sixteen-product reduction, so that later reduction does
+not explain this i2r path. The r2r arrival/slack is
+1.206332/-0.280714 ns and traverses the reduction logic. The ready path
+retains +0.620226 ns slack under this same nominal setup.
+Both feature0 and feature1 fail this nominal period; this evidence supports
+neither a claim that dot16 caused all timing failure nor a core-frequency
+estimate obtained by inverting one arrival time.
+
+The source used here is the new common-top generation:
+`generation-01/feature1/rtl/VDotElastic.sv`, SHA
+`18dc26ef821c0f2561214f66e09f8a373675b584a8f7246f38e9c56c3e937087`,
+and `VDotProducts.sv`, SHA
+`0c1e566dd820f80382c64b98a74882ff400e5cb63cd511bcd19831759597178a`.
+All these files, the full `i2r.rpt` and `r2r.rpt`, and the mapped
+netlists are already in the unchanged evidence archive above.
+
+Two bounded ideas are retained for later investigation:
+
+1. **Product sign generation.** An exact signed-int8 product ranges from
+   -16,256 to +16,384, so its 16-bit sign can be expressed as
+   `(a[7] XOR b[7]) AND (a != 0) AND (b != 0)`.
+   A candidate could retain the existing lower 15 product bits and all
+   mode masking/enables while expressing this one sign bit directly.
+   This is a mathematical candidate, not an implemented or measured
+   improvement. The critical path may move to another bit, and synthesis
+   may reconstruct the logic. The current sign-extended multiply expression
+   alone does not prove that the mapped multiplier has redundant width.
+2. **Carry-save reduction.** The current source already uses pairwise
+   reduction trees. A distinct candidate would compress the signed
+   products without carry propagation at every level, followed by one
+   final 20-bit adder within the same P-to-R register boundary.
+   This targets r2r and would not by itself remove the existing i2r failure.
+
+**Defer both RTL changes until the fixed full-forward comparison informs
+the value of the hardware cost.** Any future candidate needs a distinct
+identity and its applicable equivalence, functional and cost validation;
+that future work is not an added acceptance gate for the already qualified
+N software or the running four-arm experiment.
