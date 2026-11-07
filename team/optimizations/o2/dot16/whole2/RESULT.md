@@ -1,5 +1,7 @@
 # dot16 whole2：实际 GNU ELF 与完整函数主机筛选通过
 
+> **2026-11-07 K768 接续：** N/P 的 M=288、K=768 派生已完成新 GNU 几何与真实 W2/末组边界参考资格，见本文末节及 [w2-np/REFERENCE_CONTRACT.md](w2-np/REFERENCE_CONTRACT.md)。尚无 K768 新目标周期或完整应用资格。
+
 > **2026-11-07 接续：** 同一 412B whole2 函数已完成[固定 Q288 整核筛选](q288-consumer/RESULT.md)，29 次 Q / 8,352 个输出、DiffTest、判错控制及 GOOD TRAP 通过；相对同镜像 plain dot16 两窗平均少 15.7665% 周期，相对同镜像 P 少 35.2684%。已选择 whole2 进入[新的 P/PQ/D/DQ 完整 first-forward](../first-forward/RESULT.md)；后者参考已通过，目标运行仍在进行，尚无完整应用周期结论。下文保留 2026-11-06 主机合同的历史边界。
 >
 > 新增[whole8 源级候选](WHOLE8_CONTRACT.md)与[窄派生器](whole8.py)：仅合并两批连续 W 加载，源级账本为 43→30 条核心指令、21,090→16,878 条完整函数动态指令。实际生成及可逆/字节映射检查已完成，保留源 SHA 为 `df2983a2…`、新组合源 SHA 为 `c0c5a99561500894453b1fd04d310195ab0f0cea29f89dbf1a394b3be410fdce`。目前 **SOURCE_DERIVED_UNBUILT**，没有 GNU、参考、整核或性能资格，不替换当前运行的 whole2。
@@ -105,3 +107,102 @@ taskset -c 2 python3 -B \
 ```
 
 本叶六文件供主端统一集成；冻结输入和原运行证据保持。提交/推送状态以实际Git和协调Issue为准，本报告不将文件保存等同发布完成。
+
+## 2026-11-07 K768 N/P：真实 GNU 几何与固定 W2 参考资格通过
+
+**结论：已把 N（whole8+narrow）和合格 RVV P 从 K288 窄派生到
+M=288、K=768、GS=32，并完成新的真实 GNU 构建及四例 NEMU 参考验证。**
+这两份函数可以作为后续完整 consumer 的明确候选；本次没有新目标核运行，
+不把 Q288 周期、NEMU 指令计数或本次墙钟当作 K768/完整应用加速。
+
+权威入口为 [w2-np/raw.zip](w2-np/raw.zip) 内
+`raw/reference-01/result.json`，SHA256
+`7d46f70b4cb105bd468577815e21c97fe9fa249fb447eeec3c977d9236e3b8c1`；
+状态 `K768_N_P_REAL_FIXTURE_AND_EDGE_REFERENCE_PASS`。
+派生和验证分别使用 [W2_NP_CONTRACT.md](w2-np/W2_NP_CONTRACT.md)、
+[REFERENCE_CONTRACT.md](w2-np/REFERENCE_CONTRACT.md)。
+
+### 实现与适用边界
+
+复用原56B context、VLEN128、RV64/lp64d、FS/VS开启与RNE。
+W采用[36][24][8][32] packed布局（221184B），行尺度[288][24]，
+X为768个signed byte及24个FP32尺度。完整输出为288个FP32值；
+最后八个slots均比较完整128bit。每组保留原INT32转换、乘Ws、乘Xs、
+左折叠累加顺序，无FMA、无跨组重排。返回vl=8、vtype=0、vstart=0、
+固定profile的vcsr=7，不宣称任意vcsr保持。
+
+派生只将原整函数中的36/9/252几何常量改为96/24/672，并重命名独立符号。
+实际GNU ELF对比覆盖完整函数，而不是源码中某个循环片段：
+
+| 实际函数 | 字节 | 允许变化的机器字索引（从0计数） | 新完整函数SHA256 |
+|---|---:|---|---|
+| N：`q768_dot16_whole8_narrow` | 312 | 9、14、56 | `b4a0e512feafd3ae8ea7e4531e13e1a23b12f97d80b3b007be6c52c3bdea56be` |
+| P：`q768_paired16_rvv` | 1096 | 3、25、34、104、135、140、252 | `26f972751fb9882f92118ac30b98f2d0b4d1df9225be5d9cd136e7ed5c4629d3` |
+
+P的保护分支、快速路径和完整fallback全部在上述比较内。其余机器字完全相同，
+源级逆变换恢复原字节；父函数先与各自已冻结Q288实际ELF核验。
+新参考镜像再次汇编并核对相同的两个完整函数SHA、RX段、无动态/TLS段、
+完整ELF/BIN含BSS一致性、栈/堆范围、实际好/坏trap及四个带fence计数读点。
+
+### 复用真实 fixture 的四个独立参考进程
+
+原 W2 build-06 的 position2/layer5 数据、八份fixture和gold保持冻结；
+不重跑三位置host exporter。原权威matmul及AM库/构建规则只读。
+团队main只做四处可逆改动：声明N/P及expected-flags、method1/2路由改为P/N、
+两处flags比较绑定所选fixture的精确期望。保持`0xa5`输出/slots初始化、
+完整比较器、guards、CSR、原九调用顺序、两控制字和byte1148负控。
+
+完整复用原W2 `validate` 函数，逆变换检查通过。只增加第八份
+expected-flags fixture的不可变比较，并将flags字面值替换为固定record值；
+没有接受“0或1均可”，也没有让DUT输出选择gold。各例独立镜像由host选择
+完整数据集合，每个镜像与唯一确定的完整字节构造对应。
+
+| 用例 | 实际结果 | 边界 |
+|---|---|---|
+| negative | 预期BAD/code91，adapter exit2；精确output byte1148差异、实际拒绝PC | 精确负控，非任意非零退出 |
+| normal | GOOD/code0；完整输出/slots/guards/CSR/fixture通过，FCSR=1 | 真实W2数据，X没有−128，覆盖P快速路径 |
+| replay | 新进程再次通过，完整validation对象与normal完全相同 | 独立重复身份与结果 |
+| edge | GOOD/code0；FCSR精确为0，全部输出/slots逐字节通过 | 最后GS32组的两个−128配对 |
+
+edge其余X/W为零，只令X[751]、X[767]及W[287][751]、W[287][767]为−128，
+全部尺度为精确+1.0。最后输出应为32768.0（FP32 `0x47000000`），
+最后slot低32位为32768（`0x00008000`），高96位及其余输出/slots全零。
+完整packed重新按原公式生成，仅偏移221167/221183非零。该用例针对旧9组
+保护若遗漏末组时的两项int16归约溢出，不能外推为所有输入的证明。
+`0xa5`初始化防止大量零gold掩盖漏写。
+
+原adapter、参考库、1400B ABI及现有硬件身份全部固定，新运行没有替换旧参考
+合同的SHA来借用资格。各例检查完整寄存器/CSR转储、actual trap PC及无异常；
+normal/replay各执行4430650条退休指令，edge为4720922，负控为86498。
+这些是NEMU该验证程序的指令计数，不是香山周期或应用性能。
+
+### 实际执行、归档和接续
+
+GNU operation `.df141f7a5b1b778de1ac9a42d89bf24b` 于
+15:51:47.896–15:51:50.959Z完成，8条命令全exit0，11个原输入pins稳定。
+参考operation `.4c764ad5d34d3e1fb69f3045d88ff283` 于
+16:33:35.033–16:33:52.833Z完成，outer17.724s/exit0/cleanup true。
+两者共同前缀为 `49cbde030e5643f0cccfca5cec8a79c1`。
+参考的7条命令均按预期闭合：负控exit2，其余exit0；无超时、取消或遗留组。
+内层参考结束时间为16:33:52.779Z；采用CPU1/nice5、单worker、
+总1200s及各命令既定有限预算，没有修改在途四臂的输入或执行方式。
+
+- 参考ELF SHA：`8d7c7b95b45d4e555912f914ee5d72482123ff4e10cd534112681824939dc86c`。
+- 参考BIN：484692B，SHA `fce72a766a5c681bca09111da54f7b8f04c50608838a0257711a6b0e8c855eb3`。
+- GNU组合源 `w2_np.S`：8361B，SHA `fbe3a93f642ec3468da92ae776e1b547c29c527d4dffc30456191b437d1272c5`，另存为 [w2_np.S](w2-np/w2_np.S)，并保存在归档与参考source快照。
+- `raw.zip`：3198360B，SHA `d70f90f41f8bf9a467404ee685b2ad360a0696c939f04ae10a26cb18bcba1a1d`。
+  178成员（177原始/审计文件，共10305807原始字节，另含manifest），
+  全部CRC、长度、SHA和原件字节逐一核验；165个合并输入/生成pins再次检查，
+  15个原子进程组均不存在。只省略可重建reference对象/依赖中间件；
+  原始运行目录不删改。
+- [derive_w2.py](w2-np/derive_w2.py) 与
+  [qualify_np.py](w2-np/qualify_np.py) 保留实际执行版本及合同。
+  在新隔离输出中按各自 `--help` 与固定输入身份复现；
+  不直接覆盖冻结gnu-01/reference-01目录。
+
+**后续关键接入点：** 当前完整consumer的非FR K768分支仍会走旧TA；
+只换Q288 N函数不会自动让W2使用N/P。应在新的明确身份下修改这一选择，
+保留合格RVV P对照，并重新核实际ELF路由和完整state参考。
+本结果授予上述两个K768实现及两套fixture的参考资格，
+`target_runtime_qualified`、`performance_qualified`、
+`application_performance_qualified`仍为false，新的EMU次数为0。
