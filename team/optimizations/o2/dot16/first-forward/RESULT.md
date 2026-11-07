@@ -160,3 +160,57 @@ tar --use-compress-program='zstd -d --long=29' -xf raw.tar.zst -C /absolute/fres
 59-cycle空窗口是另一个实际镜像的观测，不是可直接扣除的开销或跨镜像形式化下界；单发47.333目标比这一观测还小，因此不能承诺仅靠改FU达成。依赖链要看完整issue/read/execute/writeback/wakeup环，不只是FU的E2。当前II1下128个点乘的理想服务数已有128拍量级，吞吐批次147.333的目标余量很紧；不能机械地把空窗口59与128相加。流式包含load/store/地址/分支，接近1x不能单独证明有或没有50%优化空间。旧dot8表和新dot16 Q288/完整应用必须分别核验。
 
 对局部P→N的实测Q288比例 `s=43473/26275=1.6545385`，Amdahl计算 `S=1/(1-p+p/s)` 的p必须是真实应用时间占比；达到整体1.5x要求p至少84.2598%，不能用MAC数或指令比例替代。对已优化W→N的局部 `s=28222.5/26275=1.0741199`，即使p=1也只有7.4120%的这一项增量。当前新W2接入扩大了优化覆盖，但仍要等实际同ELF目标周期，不能将参考指令减少、局部内核周期、FU面积下降相乘成为整应用性能结论。**本轮没有宣称全部旧倍率再提升50%，也没有宣称实际FU面积已≤20000。**
+
+## 2026-11-07：原 P/PQ/W/WQ 四臂目标已完成并保存完整原件
+
+本节接续原合同 `r3-dot16-first-forward-v1`，只更新其已闭合目标状态；共同 ELF 仍为 `5ba0cd0756a16f38c2747c625bf8fb53d5ba4c9ba9b2bbf222c146df4859b959`。上文“目标未取得”描述的是较早检查点，不再代表这一旧实验的当前状态。本节的 W/WQ 不是新共同镜像 `62a73b9d…` 的 N/NQ，不能跨镜像拼接分母。
+
+原 host operation `49cbde030e5643f0cccfca5cec8a79c1.1b999cf43afaaebd09ab95c1e9fd28cd` 实际从2026-11-07T10:00:28.8813534Z运行至18:09:29.8473281Z，exit0、cleanup_complete=true。对应逻辑 operation 为 `f3ec0e2f-4dc5-4d18-a8a7-4b7ec375e217`；没有为补报告重跑目标，也没有扩大原预算。
+
+### 正确性与同镜像窗口观察
+
+四个原始目标均得到 `FIRST_FORWARD_DOT16_TARGET_DIFFTEST_PASS`：原 DiffTest、完整3,691,424B state比较、固定程序flags==1门、三条完整CONSUMER记录及GOOD TRAP0/PC0x8000013c通过；四路stderr为空。各直接子进程均回收、进程组消失，原owner/campaign完成且固定输入未变。原目标摘要为 `FIRST_FORWARD_DOT16_TARGET_OBSERVATIONS_COMPLETE`。
+
+| 原实验臂 | UART CSR窗口cycles | UART CSR窗口instret | EMU guest总cycles |
+| --- | ---: | ---: | ---: |
+| P | 17,378,319 | 5,175,372 | 23,962,961 |
+| PQ | 16,594,945 | 4,784,314 | 23,178,721 |
+| W | 15,139,851 | 4,995,116 | 21,724,206 |
+| WQ | 14,351,452 | 4,604,057 | 20,934,496 |
+
+完整64位counter_hex按整数差分核算，不能经过浮点JSON转换再回写原值。四路窗口instret另与原参考报告的report[18]−report[17]逐项相等；该一致性不是独立CSR采样时点证明。原始窗口与guest总周期范围不同，不能混用。
+
+在这次同ELF、同硬件、同输入的四臂集合内，较快RVV为PQ、较快dot16为WQ；其**观察倍率**为 `16594945/14351452 = 1.1563251579003992`，窗口cycles减少13.5191348932%。这覆盖固定合成D288/H768/L6模型、按合同准备后的首次p0/token1完整forward；不含模型准备，也不代表真实模型、多token端到端或其他工作负载。
+
+原资格字段继续原样保留：
+
+- `target_correctness_qualified=true`；
+- `counter_retirement_verified=false`、`full_retirement_window_audited=false`、`performance_qualified=false`；
+- custom动态退休与事件协议为 `NOT_COLLECTED_TRACE0`。
+
+实际TRACE0没有四CSR入队/采样/退休关联和完整有序窗口记录，不能从静态函数、DiffTest或instret总量相同追溯补出。上述限定的观察可用于优化方向判断；缺失的扩展资格不自动成为所有下一项优化的新增阻塞条件。它不改变已有dot8正式微基准、参考正确性或此前局部Q结果的适用范围，也没有达到“旧倍率再×1.5”的结论。
+
+### 真实原件与可复现入口
+
+| 实物 | 字节数 / SHA256 |
+| --- | --- |
+| 原campaign-results.json | 21,791B；`1b1a1532d74387f2b211a82e51ca1b872a074693f7172e1b875170afd354f1a8` |
+| 原resource profile | `b650534b8c14fe3ecb813232be47decc3a550e279352859c7ec4a1d4d4046d0b` |
+| 原目标EMU | `f14918658fcd2f19c9fb6c1d493025d98f727ac985ea73129edc58270fa6977d` |
+| [完整目标原件 raw.tar.zst](target-20261107/raw.tar.zst) | 26,365,231B；`809a93b5a44f899145b6833e34758c3bf0eb6ed235815c1ee8bb7b6bcaa9b8b8` |
+
+归档包含179个文件、310,807,901B原始内容，保留全部四份完整目标镜像、原stdout/stderr、验证结果、原owner/campaign/profile、执行回执、独立counter复核和归档控制器。没有省略文件，没有修改原目录，没有将原始数据替换为可重建差分。每个成员长度/SHA、源文件集合和前后字节、原完成/进程清理、镜像控制字与原日志均核验。
+
+归档操作 `.f60eb58b75929330be455ebb9a274d45`（同host前缀）于18:46:31.9420683–18:46:51.4654244 UTC完成，exit0/cleanuptrue；只验证运输完整性，没有新guest、构建或性能资格。原件保留在常驻WSL `runs/dot16-first-forward-20261107-main/{target-01,owner-01,resource-01}` 及Windows同名runs的 `target-owner-01`、`archive-target-source-01`、`archive-target-01`。标准解包命令：
+
+```sh
+tar --use-compress-program='zstd -d --long=29' -xf raw.tar.zst -C /absolute/fresh/restore
+```
+
+外部冻结源、EMU、参考模型及工具链仍按原manifest定位；本包不宣称包含全部开发环境。
+
+### 新 N/P 实验的独立运行状态
+
+新共同ELF `62a73b9d…` 的P/PQ/N/NQ目标已在完成自己的GNU/原参考验证后另行启动。新profile `5574eb19932197186f9ea587020bc6909a6142ad7169f886b7d93eb90d5d2575` 绑定863项输入；四份77,125,408B镜像只在方法字的4B处不同，保留同一EMU和原检查器。CPU0–3各一例、原40M guest cycles/43,200s/16MiB日志上限，未扩大原单例预算。
+
+新host operation为 `49cbde030e5643f0cccfca5cec8a79c1.ed135ec164a525ededcc42c31676ba4a`，2026-11-07T18:21:18.276683Z启动；逻辑operation `3eaaab12-1f79-42b3-86d9-586bdebd642c`。19:21 UTC原status回执仍为running，尚未取得新目标终态或周期排序。这个状态只说明当时的原作业，不把旧四臂PASS或周期转给新镜像。后续沿原operation读取状态，不能因会话更换或工具暂时失败而重复启动。

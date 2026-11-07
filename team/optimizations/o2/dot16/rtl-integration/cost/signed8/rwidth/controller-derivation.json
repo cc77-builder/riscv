@@ -1,0 +1,90 @@
+{
+  "template_sha256": "301d49f50f07c6f8bc208040fa60df64fc5eb965a329c3c7a4fc46ce97631bae",
+  "edits": [
+    {
+      "before": "\"\"\"Compile a real signed8 source overlay, prove it, and run existing FU/cost checks.\"\"\"",
+      "after": "\"\"\"Compile exact R20/R19 result storage and run the unchanged full FU/cost checks.\"\"\"",
+      "count": 1
+    },
+    {
+      "before": "CONTRACT = 'dot16-inline-signed8-local-v3'",
+      "after": "CONTRACT = 'dot16-signed8-result-width-local-v1'\nWRAPPER_SHA = '70dcc27381d3e7226eeff333c943d35b982ec1fdd37b75b680060a13aaf94e2a'\nORIGINAL_WRAPPER_SHA = '63911b937a526b97ddaa67e34526fd19bbd2fa2801eadfda10ae6c2fa4b9fe9e'\nREL_WRAPPER = 'src/main/scala/xiangshan/backend/fu/wrapper/VDotElastic.scala'\nBASELINE_SHA = '19f90c867022ba2259b83fb2600bb56ef7066eda54023cead03c6e35bf23b7d7'",
+      "count": 1
+    },
+    {
+      "before": "os.sched_setaffinity(0,{a.cpu});os.nice(5)",
+      "after": "os.sched_setaffinity(0,{a.cpu});os.setpriority(os.PRIO_PROCESS,0,5)",
+      "count": 1
+    },
+    {
+      "before": "    candidate=here/'VDotDatapath.scala'\n",
+      "after": "    candidate=here/'VDotDatapath.scala'\n    wrapper=here/'VDotElastic.scala'\n    baseline=a.signed8_local.resolve()\n",
+      "count": 1
+    },
+    {
+      "before": "    for d in (repo,cost,fu,here):",
+      "after": "    for d in (repo,cost,fu,here,baseline):",
+      "count": 1
+    },
+    {
+      "before": "    pin(candidate,SOURCE_SHA);pin(repo/REL_SOURCE,ORIGINAL_SOURCE_SHA)\n    pin(Path(__file__));pin(here/'INLINE_CONTRACT.md')",
+      "after": "    pin(candidate,SOURCE_SHA);pin(repo/REL_SOURCE,ORIGINAL_SOURCE_SHA)\n    pin(wrapper,WRAPPER_SHA);pin(repo/REL_WRAPPER,ORIGINAL_WRAPPER_SHA)\n    pin(Path(__file__));pin(here/'RWIDTH_CONTRACT.md');pin(here/'source-derivation.json')\n    pin(baseline/'result.json',BASELINE_SHA)\n    base=json.loads((baseline/'result.json').read_bytes())\n    need(base['status']=='INLINE_SIGNED8_GENERATED_EQUIVALENT_FU_AND_COST_COMPLETE'\n         and base['arithmetic_equivalent'] and base['inputs_unchanged'] and base['all_children_reaped'],\n         'completed applicable signed8 source proof and cost')\n    proof=json.loads((here/'source-derivation.json').read_bytes())\n    need(proof['original_source_sha256']==ORIGINAL_WRAPPER_SHA and\n         proof['candidate_source_sha256']==WRAPPER_SHA and proof['exact_inverse'] is True, 'fixed source derivation')\n    restored=wrapper.read_text()\n    for edit in reversed(proof['edits']):\n        need(restored.count(edit['after'])==1, 'unique wrapper inverse edit')\n        restored=restored.replace(edit['after'],edit['before'],1)\n    need(restored.encode()==(repo/REL_WRAPPER).read_bytes(), 'entire actual original wrapper recovered')\n    for feature in (0,1):\n        for kind in ('cost','fu'):\n            for name in ('VDotProducts.sv','VDotSignedByteProduct.sv','VDotReduce.sv'):\n                path=baseline/f'{kind}-feature{feature}'/'rtl'/name\n                entry=next(x for x in base['generated'] if x['feature']==feature and x['kind']==kind)\n                expected=next(x['sha256'] for x in entry['files'] if x['path']==path.relative_to(baseline).as_posix())\n                pin(path,expected)",
+      "count": 1
+    },
+    {
+      "before": "        'inline_signed8.py':Path(__file__),'INLINE_CONTRACT.md':here/'INLINE_CONTRACT.md',",
+      "after": "        'rwidth.py':Path(__file__),'RWIDTH_CONTRACT.md':here/'RWIDTH_CONTRACT.md',\n        'VDotElastic.scala':wrapper,'original-VDotElastic.scala':repo/REL_WRAPPER,\n        'source-derivation.json':here/'source-derivation.json',",
+      "count": 1
+    },
+    {
+      "before": "        candidate_source_sha256=SOURCE_SHA,original_source_sha256=ORIGINAL_SOURCE_SHA,",
+      "after": "        candidate_source_sha256=SOURCE_SHA,original_source_sha256=ORIGINAL_SOURCE_SHA,\n        candidate_wrapper_sha256=WRAPPER_SHA,original_wrapper_sha256=ORIGINAL_WRAPPER_SHA,\n        signed8_baseline_result_sha256=BASELINE_SHA,result_widths={0:19,1:20},\n        representation_equivalence_basis='Exact source-expression identity and move-enabled state induction after first write; full FU validation. No whole-FU sequential formal claim.',",
+      "count": 1
+    },
+    {
+      "before": "            snap/'VDotDatapath.scala',snap/'GenerateVDotCost.scala'],300)",
+      "after": "            snap/'VDotDatapath.scala',snap/'VDotElastic.scala',snap/'GenerateVDotCost.scala'],300)",
+      "count": 1
+    },
+    {
+      "before": "             and (classes/'xiangshan/backend/fu/vector/VDotProducts.class').is_file(),'real new compiled classes')",
+      "after": "             and (classes/'xiangshan/backend/fu/vector/VDotProducts.class').is_file()\n             and (classes/'xiangshan/backend/fu/wrapper/VDotElastic.class').is_file(),'real new compiled classes')",
+      "count": 1
+    },
+    {
+      "before": "                for name in ('VDotElastic.sv','VDotReduce.sv',top+'.sv'):",
+      "after": "                for name in ('VDotReduce.sv',top+'.sv'):",
+      "count": 1
+    },
+    {
+      "before": "                for p in files+[resource,filelist]:generated_pins[str(p)]=sha(p)",
+      "after": "                for name in ('VDotProducts.sv','VDotSignedByteProduct.sv','VDotReduce.sv'):\n                    need((rtl/name).read_bytes()==(baseline/f'{kind}-feature{feature}'/'rtl'/name).read_bytes(),\n                         'all actual signed8 arithmetic unchanged from proved baseline '+name)\n                storage=re.findall(r'\\breg\\s+\\[(\\d+):0\\]\\s+rPacket_res_data\\s*;', (rtl/'VDotElastic.sv').read_text())\n                need(storage==[str(19 if feature else 18)], 'exact actual result storage width')\n                for p in files+[resource,filelist]:generated_pins[str(p)]=sha(p)",
+      "count": 1
+    },
+    {
+      "before": "        gold=(gen/'feature1/rtl/VDotProducts.sv').read_text()\n        gate=(first/'VDotProducts.sv').read_text()\n        need(gold.count('module VDotProducts(')==1 and gate.count('module VDotProducts(')==1,'unique real proof modules')\n        (out/'gold.sv').write_text(gold.replace('module VDotProducts(','module Gold(',1))\n        (out/'gate.sv').write_text(gate.replace('module VDotProducts(','module Gate(',1))\n        prove=out/'prove.ys'\n        prove.write_text('\\n'.join(['read_verilog -sv '+str(p) for p in (out/'gold.sv',out/'gate.sv',first/'VDotSignedByteProduct.sv')]+\n            ['miter -equiv -flatten Gold Gate miter','hierarchy -check -top miter','proc','opt','flatten',\n             'sat -verify -prove trigger 0 -show-inputs -show-outputs'])+'\\n')\n        for p in (out/'gold.sv',out/'gate.sv',prove):generated_pins[str(p)]=sha(p)\n        log,_=command('actual-products-equivalence',[old_cost['tools']['yosys']['path'],'-T','-s',prove],120)\n        need('SAT proof finished - no model found: SUCCESS!' in log,'unconstrained actual full product proof')\n        result['arithmetic_proof_completed']=True\n",
+      "after": "        # Reuse the already completed unconstrained product proof only after byte identity\n        # of Products, inline multiplier and Reduce in all four newly emitted consumers.\n        result['arithmetic_proof_reused']=dict(result_sha256=BASELINE_SHA,actual_generated_bytes_equal=True)\n        result['arithmetic_proof_completed']=True\n",
+      "count": 1
+    },
+    {
+      "before": "            need(sum(v for k,v in cells.items() if k.startswith('DFF'))==point['dff_cells'],'unchanged complete state width')",
+      "after": "            actual_dff=sum(v for k,v in cells.items() if k.startswith('DFF'))\n            expected_dff=point['dff_cells']-(12 if feature else 13)\n            need(actual_dff==expected_dff, 'only the exact redundant result state bits removed')",
+      "count": 1
+    },
+    {
+      "before": "                dff_cells=point['dff_cells'],cell_histogram=dict(sorted(cells.items())),ports=ports,",
+      "after": "                dff_cells=actual_dff,original_dff_cells=point['dff_cells'],\n                result_storage_bits=20 if feature else 19,cell_histogram=dict(sorted(cells.items())),ports=ports,\n                area_delta_from_signed8=area-base['cost_results'][feature]['cell_area'],",
+      "count": 1
+    },
+    {
+      "before": "status='INLINE_SIGNED8_GENERATED_EQUIVALENT_FU_AND_COST_COMPLETE'",
+      "after": "status='SIGNED8_RESULT_WIDTH_GENERATED_FU_AND_COST_COMPLETE'",
+      "count": 1
+    },
+    {
+      "before": "for name in ('repo','cost-root','fu-root','output')",
+      "after": "for name in ('repo','cost-root','fu-root','signed8-local','output')",
+      "count": 1
+    }
+  ]
+}

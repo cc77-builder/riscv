@@ -1,0 +1,29 @@
+{
+  "original_source_sha256": "63911b937a526b97ddaa67e34526fd19bbd2fa2801eadfda10ae6c2fa4b9fe9e",
+  "candidate_source_sha256": "70dcc27381d3e7226eeff333c943d35b982ec1fdd37b75b680060a13aaf94e2a",
+  "candidate_bytes": 8782,
+  "unchanged_datapath_sha256": "50522c0cd2700f7f852872049533bc31f79ce811ad2ed53da2c1d333cece45e2",
+  "exact_inverse": true,
+  "edits": [
+    {
+      "before": "  private val dot16Enabled = VDot16Feature.enabled\n",
+      "after": "  private val dot16Enabled = VDot16Feature.enabled\n  private val storedResultBits = if (dot16Enabled) 20 else 19\n"
+    },
+    {
+      "before": "  // H1 stores only the architectural low word; the public result stays 128 bits.\n",
+      "after": "  // Store the exact signed sum; extend to the architectural word at the output.\n"
+    },
+    {
+      "before": "      val data = UInt(32.W)\n",
+      "after": "      val data = UInt(storedResultBits.W)\n"
+    },
+    {
+      "before": "  io.out.bits.res.data := Cat(0.U(96.W), rPacket.res.data)\n",
+      "after": "  private val outputWord = Wire(SInt(32.W))\n  outputWord := rPacket.res.data.asSInt\n  io.out.bits.res.data := Cat(0.U(96.W), outputWord.asUInt)\n"
+    },
+    {
+      "before": "      0.U(32.W), if (dot16Enabled) dot16Result32.get else reduce.io.result(31, 0))\n",
+      "after": "      0.U(storedResultBits.W),\n      (if (dot16Enabled) dot16Result32.get else reduce.io.result(31, 0))(storedResultBits - 1, 0))\n"
+    }
+  ]
+}

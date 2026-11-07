@@ -645,3 +645,33 @@ The original 59 checker tests, generated C++ byte identity, lint/build, complete
 [raw.zip](signed8/parent/raw.zip): **10,482,736 B**, SHA256 `05f9ba6062f3bb61e2e18021330ca9f4c4affcc26fdc9d12e52a0f2d058bd303`. Its 467 members include all three original results and tool receipts, source/contract versions, generated RTL/resources, raw positive and negative logs, metadata, class manifests, actual parent binaries and an archive manifest. Only 102 reproducible Verilator object-cache files are omitted; their original files remain in place. The archive verifies 242 local snapshot/final-output pins, every member CRC/SHA and retained source bytes before/after packaging. External tool/classpath dependencies remain referenced by the original manifests; the package is not a standalone toolchain.
 
 Archive operation `.3803508ee874c2f3985c93c3604ffef5` (same host prefix) exited0 with cleanup complete at 17:56:34 UTC. It ran no checker, build or guest. The new qualification does not change the measured feature1 FU area **21,147.798**, the **1,147.798** gap above 20,000, or the failing nominal 1 ns timing result. Actual full-core validation of this signed8 source remains pending.
+
+## 2026-11-07：R19/R20 结果存储候选完成局部源码、FU 与成本验证
+
+隔离实验 `dot16-signed8-result-width-local-v1` 已于 **18:40:48.397–18:43:28.828 UTC** 完成，终态为 `SIGNED8_RESULT_WIDTH_GENERATED_FU_AND_COST_COMPLETE`。实际 `local-01/result.json` 为 **193,611 B**，SHA256 `f42f7285ff8a357877c546d433251b1dc8c8eef66ee9218c9e3b2c002ca0a261`。
+
+候选只改变 VDotElastic 的 R 级结果表示：feature0 保存19位、feature1保存20位有符号和，输出时重建原32位低字，高96位仍为零。原时钟/复位、两槽 ready/valid、redirect/kill、完整控制和 perf 身份保持原设计；本轮未改变生产默认或当前应用实验的冻结硬件。候选 wrapper SHA 为 `70dcc27381d3e7226eeff333c943d35b982ec1fdd37b75b680060a13aaf94e2a`，复用的 signed8 datapath SHA 为 `50522c0cd2700f7f852872049533bc31f79ce811ad2ed53da2c1d333cece45e2`。
+
+**本轮实际完成的资格：**外部 Scala overlay 编译，cost/FU × feature0/1 四套真实生成，两态原完整 FU 正例与 identity/wen/high/cancel 负控，以及同 common-FU 边界、同 Nangate45 库/ABC 约束/名义1ns模板的 mapping/STA。31条命令全部结束并回收，其中8次注入返回预期 rc=1，原检查器均通过。四套实际 Products、SignedByteProduct、Reduce 与已合格 signed8 local-03逐字节一致后，才复用其 product SAT；本轮没有重新运行该 SAT，也没有宣称完成全 FU 顺序形式化证明。输入、快照、overlay classes、生成物及原 classpath 的终态检查通过。
+
+| 特性 | signed8 local-03 库面积 | R19/R20 库面积 | 面积变化 | DFF数变化 | r2r arrival / slack（ns） | i2r arrival / slack（ns） |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| feature0：dot16关闭 | 15,734.698 | **15,609.678** | −125.020（−0.795%） | 1742→1729（−13） | 1.115933 / −0.194639 | 1.160761 / −0.239520 |
+| feature1：dot16开启 | 21,147.798 | **21,040.866** | −106.932（−0.506%） | 1870→1858（−12） | 1.189326 / −0.267167 | 1.209418 / −0.287918 |
+
+面积按同库映射口径保留3位小数；比较基线为真实 signed8 local-03，原 result SHA `19f90c867022ba2259b83fb2600bb56ef7066eda54023cead03c6e35bf23b7d7`。**两态名义1ns均未满足；feature1面积仍比20,000高1,040.866（5.204%）。**五类时序路径和失败 slack 的完整原始报告均保留。该候选取得了小幅实测面积改善，尚未达到面积与时序目标。
+
+**资格边界：**本候选有新的实际源码生成/FU证据和独立 FU 成本记录；尚未做该 R19/R20 候选的真实 parent、整核回归或完整应用测量，既有 signed8 parent PASS 不自动迁移。整核/应用性能和 core PPA 资格保持未授予，也未新增整核构建或运行。
+
+### 证据保全
+
+原始运行目录为 `/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-rwidth-20261107-main/local-01`。同名 Windows 运行根的 `archive-01/raw.zip` 已于 **19:02:09.042–19:02:16.030 UTC** 完成运输核验，原 host operation 尾号 `888c5d39ff6f0dcc3a199d8547ce8862`，exit=0、cleanup=true。
+
+- ZIP **2,531,093 B**，SHA256 `56eaf882818a8e4dfbc8dd47b2411aaf32ec47b3a4155dab926d974e20397a10`。
+- 169份文件、25个目录及1份 manifest，共195个成员；70个已记录 pin 通过，完整成员 CRC/SHA、原件前后 SHA及库存一致性检查通过。
+- 源码、生成 SV、映射/STA、原始日志、清单、overlay classes和两份完整 FU binary 均保留；仅10份可重建 `.o/.a` 未重复装入运输包，原件仍在。
+- 六份 source-01 文件中，五份与原执行输入及快照对应；`controller-derivation.json` 完整保存，但它未被原执行器 pin/快照，仅作为补充来源文档。外部 baseline/工具链仍通过原输入清单定位，未重新打包或授予资格。
+
+归档终态 `RWIDTH_RAW_ARCHIVE_VERIFIED` 证明运输完整性，不增加功能、父模块、整核或 PPA 资格。
+
+复现源码与合同见 [rwidth.py](signed8/rwidth/rwidth.py)、[RWIDTH_CONTRACT.md](signed8/rwidth/RWIDTH_CONTRACT.md)；同目录保留实际两份Scala和精确来源变换。归档发布为 [raw.zip](signed8/rwidth/raw.zip)。原执行host operation为 `49cbde030e5643f0cccfca5cec8a79c1.926cd84ea8935f7415fe78984c8987b8`，18:40:39.029003–18:43:29.133862 UTC、exit0/cleanuptrue。保持原源码作为可回退局部候选，面积收益不足以单独触发生产采用。
