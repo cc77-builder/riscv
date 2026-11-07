@@ -4,6 +4,8 @@
 >
 > 新增[whole8 源级候选](WHOLE8_CONTRACT.md)与[窄派生器](whole8.py)：仅合并两批连续 W 加载，源级账本为 43→30 条核心指令、21,090→16,878 条完整函数动态指令。实际生成及可逆/字节映射检查已完成，保留源 SHA 为 `df2983a2…`、新组合源 SHA 为 `c0c5a99561500894453b1fd04d310195ab0f0cea29f89dbf1a394b3be410fdce`。目前 **SOURCE_DERIVED_UNBUILT**，没有 GNU、参考、整核或性能资格，不替换当前运行的 whole2。
 
+> **2026-11-07 N 组合候选：** whole8+narrow 已完成新的[完整 Q288 整核筛选](NARROW_Q288_RESULT.md)：同镜像 W=28,430/28,015、N=26,385/26,165 cycles，两序均改善，均值少 **6.9005%**；29Q/8,352 输出、满幅、CSR/guards、五项共享判错控制、DiffTest/GOOD TRAP、85 pins 和回收通过。保留 N 为后续完整 forward 候选，先等已在途四臂的完整结果；没有新的应用性能或完整退休资格，也没有将 N 的通过赋给独立 whole8-only H。原始[87 成员证据](narrow-evidence-v1/raw.zip)与新代码、合同均保留。
+
 2026-11-06 UTC；合同 [CONTRACT.md](CONTRACT.md) 为 `r3-dot16-whole2-host-v1`；工作包 `20261106-LiZufan001-paired16-rvv-pro6`，范围登记及回读见 [Issue #2 / 6674886539](https://github.com/cc77-builder/riscv/issues/2#issuecomment-6674886539)。
 
 **结论：独立符号 `q288_dot16_whole2` 首次真实 GNU/主机筛选通过。整数核心43条，新完整函数412B；八组实际ELF路径均执行21090条指令，完整Y、128B最终slots、FP顺序、足迹和ABI/CSR通过。三个合法机器字反例均正常返回后由完整Y比较拒绝；五个保留函数与独立构建的旧集合逐字节相同。当前没有新目标核、DiffTest、周期或完整应用性能资格，不修改稳定默认入口。**
