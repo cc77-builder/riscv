@@ -1,6 +1,14 @@
 # dot16 四臂首个完整 forward 合同 v1
 
-合同：`r3-dot16-first-forward-v1`。状态：**SOURCE_PREPARED / UNBUILT / UNVERIFIED**。本叶仅准备新实验的合同与源码，当前未选择 dot16 kernel、未生成新控制器或镜像，也没有参考模型、preflight 或目标 EMU 运行结果。人工重启暂停期间只做文件操作和只读审查；本合同不解除暂停。
+合同：`r3-dot16-first-forward-v1`。创建时状态为 **SOURCE_PREPARED / UNBUILT / UNVERIFIED**；原暂停阶段的源码准备记录保留在冻结快照中。当前实际运行与证据见[RESULT.md](RESULT.md)，不能用本合同的计划描述代替运行回执。
+
+## 2026-11-07：N候选登记的有限扩展
+
+已有whole2四臂使用外部冻结副本及profile运行，其输入、预算和结果归属保持独立。公共入口新增显式候选`narrow`，绑定已经通过[固定Q288](../whole2/NARROW_Q288_RESULT.md)的N=whole8+narrow完整函数。本次只更新候选表、符号白名单和说明，并在独立新输出进行一次source-only控制器准备；不执行GNU构建、参考或目标EMU，不修改原在途作业。
+
+准备成功仅表示`FIRST_FORWARD_DOT16_CONTROLLER_BOUND_NOT_RUNTIME`：输入身份、派生控制器文本、逆向证明及Python语法检查通过；`reference_runs=0`、`target_emu_runs=0`、`target_cases=[]`、`performance_qualified=false`。prepare没有执行derive.core/main、构建阶段函数提取、GNU函数字节相等检查或新的完整forward，因此不能据此声称N完整forward已静态验收或运行通过。
+
+现有准备模板仍列四个正常参考臂及一个DQ反例，并让D/DQ共用一个显式内核；该清单只是生成配置。此次登记既未选择新的目标清单，也不自动提供W与N同ELF双内核比较。下一轮先依据原四臂真实结果决定最小公平比较及独立预算；旧ELF的周期不能成为新ELF的分母。PARENT_PINS、硬件身份、方法字、MAGIC及既有plain/whole2表项保持原样，新输出如实记录更新后公共文件SHA。
 
 ## 目标与范围
 
@@ -21,14 +29,17 @@
 
 表中位点数是源码与最终 ELF 的静态范围，不声明动态调用或自定义指令退休次数。W2 的量化在 PQ/DQ 中使用 Q helper，但其矩阵乘仍明确走 FR。
 
-选择参数不得默认：`prepare.py --kernel plain|whole2` 必填。优先完成独立 [whole2 Q288 筛选](../whole2/q288-consumer/CONTRACT.md)；whole2 正确且优势清楚时选择它，否则按其停止边界保留 plain D，不为接入完整应用连续增加微优化。两种候选的源码和函数身份分别保留，不能互相替代：
+选择参数不得默认：`prepare.py --kernel plain|whole2|narrow` 必填。原四臂已根据独立[whole2 Q288筛选](../whole2/q288-consumer/RESULT.md)选用whole2；新增narrow只登记N的冻结函数身份，不更改原选择。每个新实验另行固定候选、共同镜像与实际运行清单。三种候选的源码和函数身份分别保留，不能互相替代：
 
 | 候选 | 完整函数 | 长度 | 函数 SHA-256 |
 | --- | --- | ---: | --- |
 | plain | q288_dot16_vdot | 484B | ee92c07b7803b04c5340ba4412cb36326b8f5ed42fbf0677fc2f210bcd6711bb |
 | whole2 | q288_dot16_whole2 | 412B | b2b5b7fa44ecf9646a7c07fdaf971df8fad6430aec58161ffc3e2c3332d934a6 |
+| narrow | q288_dot16_whole8_narrow | 312B | 050bc3db3e2a70bd6e5409cbf9c139868008e8ccb18776b7e0e7104e6a554b75 |
 
 plain 输入沿用已闭合 Q 镜像及其原 dot16.S；whole2 输入沿用已有 host ELF 和完整 whole2.S，包含 X+=32 后缀。它们仅提供候选函数身份；选择依据仍须来自适用的真实 Q 结果，旧 host 或 Q PASS 不授予新完整 forward 资格。
+
+narrow输入为固定Q288实际GNU构建的完整`fused.S`（SHA `4df1d70ddc5efadc202f20817d43cbc70c1601a2261549820308ed3fe02a315e`）和ELF（SHA `82281d6fab843190321cdb21189f2feae848e2c1220e6a1ad0ec8bd883011b91`）。函数仍须满足唯一`.global`—`.size`完整段且位于来源文件末尾的既有提取条件；不放松提取器或构建时整段机器码相等检查。N的固定Q资格不继承为新的forward资格。
 
 ## 最小实现
 
@@ -64,7 +75,7 @@ plain 输入沿用已闭合 Q 镜像及其原 dot16.S；whole2 输入沿用已�
 
 ## 目标运行与证据边界
 
-参考端 `prepare.py` 仍只生成参考控制器。新增 `prepare_target.py` 准备独立目标控制器：逐字保留新参考端的构建、派生、镜像检查和比较器，复用原 P/PQ 目标运行器的进程 owner、调度和清理流程，并将案例清单、新硬件身份与 TRACE0 审计做有限可逆派生。当前只有这份源码，未执行生成过程，尚无新实际 run.py/audit.py 或目标 profile。
+参考端 `prepare.py` 仍只生成参考控制器。新增 `prepare_target.py` 准备独立目标控制器：逐字保留新参考端的构建、派生、镜像检查和比较器，复用原 P/PQ 目标运行器的进程 owner、调度和清理流程，并将案例清单、新硬件身份与 TRACE0 审计做有限可逆派生。合同创建时尚无生成的run.py/audit.py或目标profile；后续whole2实际生成、参考与在途目标记录见RESULT.md。新增narrow的source-only准备不生成目标控制器或profile。
 
 原 P/PQ 目标源以实际运行 profile 中的 binding `abab046e22508c6287b1ea9a9e91ece6d994ca6dd3c5d596d8d99e6ae3032972`、run `b8ab0c2bafaa7f329fec72537541fa621e1b428436ce587eb893e57d636e69a8` 和 audit `ffc32d13a5fc1d8483f3050d286fc80c26e970e585ec33255fd590a67a63694f` 固定。复用其93件 target-support 源闭包，保留新参考端56件来源及其输入 pin；沿用原7件替换、3件排除、40件添加的明确来源关系。此关系仅用于选择既有团队 helper，不授予新工作负载运行资格。
 
@@ -72,7 +83,7 @@ plain 输入沿用已闭合 Q 镜像及其原 dot16.S；whole2 输入沿用已�
 
 外层入口 `launch_target.py` 直接导入固定原 owner（完整源码 SHA `25758520f36b83d3ca5feb25ece444b963d1e673f7a375096ffe3f60a5f3eafd`）的 `owned_campaign()` 与 `case_closure()`，不调用其带旧路径和两案例配置的 main。启动前显式提供入口源码SHA、已审核profile的SHA、原owner源路径以及work/TERM/hard/external四层预算；先认证完整冻结输入，再导入运行器。从profile读取实际新identity及全部运行根目录，不沿用旧CFG identity。原有目录级隔离检查保护仓库、build/reference/adapter、硬件、AM、owner和入口所在目录；phase/export/campaign三者也不能重叠。
 
-外层入口要求实际CPU集合恰等于profile声明的1至4槽，不隐式改槽；工作预算须覆盖按案例数与槽数计算的完整波次数和清理余量。外层工具的超时必须与external声明一致，脚本不能代替工具施加此上限。最终资源释放仍依赖原真实Popen/launcher/EMU回执、实际回收与进程组消失，缺失或未知记录不自动释放。当前仅有入口源码，没有绑定实际profile或资源值，也没有新运行。
+外层入口要求实际CPU集合恰等于profile声明的1至4槽，不隐式改槽；工作预算须覆盖按案例数与槽数计算的完整波次数和清理余量。外层工具的超时必须与external声明一致，脚本不能代替工具施加此上限。最终资源释放仍依赖原真实Popen/launcher/EMU回执、实际回收与进程组消失，缺失或未知记录不自动释放。whole2原作业已按RESULT.md绑定独立profile并启动；narrow候选登记不绑定新的目标profile、资源值或运行。
 
 TRACE0 审计覆盖完整原 stdout/stderr 的故障标记、实际 DiffTest banner/reference、唯一且正确的 GOOD trap PC/word、正常 exit、无超时、输入未漂移和真实进程清理。 完整文本复用原 stream.Reader.lines() 的跨流顺序与读取语义，保留原64 KiB单行和16 MiB文本边界；完整读到EOF，超限或解码失败拒绝，不截断、不按白名单丢行。不调用要求SCHEMA的 events()/analyze_reader()。应用协议仅匹配行首 CONSUMER_ 并核对完整三行，四个16位十六进制 CSR 原值须完整保存，周期取c1−c0，指令取i1−i0，不能用整 guest 或参考模型计数替代窗口。
 

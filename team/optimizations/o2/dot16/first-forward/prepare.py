@@ -28,6 +28,10 @@ KERNELS = {
         function_sha256='b2b5b7fa44ecf9646a7c07fdaf971df8fad6430aec58161ffc3e2c3332d934a6',
         source_sha256='df2983a21ab85d982b51e7faa0710d536d2bd4afe5bc9c2b91577dd3450972c8',
         elf_sha256='0ea09990c578faccab105afd1942d66a3f6f9905876b2e5462ae7e0f7a0e2adc'),
+    'narrow': dict(symbol='q288_dot16_whole8_narrow', bytes=312,
+        function_sha256='050bc3db3e2a70bd6e5409cbf9c139868008e8ccb18776b7e0e7104e6a554b75',
+        source_sha256='4df1d70ddc5efadc202f20817d43cbc70c1601a2261549820308ed3fe02a315e',
+        elf_sha256='82281d6fab843190321cdb21189f2feae848e2c1220e6a1ad0ec8bd883011b91'),
 }
 HARDWARE_RESULT_SHA = 'e825fff45feb5afa9952140d9832ec8afe9393c02ebd1ab1558ddcfb4a63ae8f'
 ACTIVE = ('paired16', 'paired16_quantize', 'dot16', 'dot16_quantize')

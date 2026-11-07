@@ -67,6 +67,27 @@
 
 原件统一位于常驻WSL `runs/dot16-first-forward-20261107-main/`：`controller-01/`、`build-01/`、`reference-01/`、`target-controller-01/`、`resource-01/profile.json`；在途 `target-01/`、`owner-01/`。完整绝对路径及回执在REFERENCE.json。运行闭合后再归档目标原始证据，当前文件保存不等于发布或独立复现。
 
+## 2026-11-07：N候选已接入准备入口，未启动新forward
+
+原四臂仍使用上文whole2共同镜像和原operation。公共 `prepare.py --kernel` 新增显式选项 `narrow`，登记[固定Q288已通过的N](../whole2/NARROW_Q288_RESULT.md)，并在原符号白名单增加 `q288_dot16_whole8_narrow`。原plain/whole2表项、父输入pins、硬件、方法字、MAGIC与选择器规则保持；没有新增派生层或切换默认入口。
+
+**实际完成一次source-only准备，状态为 `FIRST_FORWARD_DOT16_CONTROLLER_BOUND_NOT_RUNTIME`。** ChatPC operation `49cbde030e5643f0cccfca5cec8a79c1.95ab816dfd09b4496fc74f7ab4166a43` 于14:29:08.7395759Z启动，外层5.002s、exit0/cleanuptrue，无超时或取消；Python准备14:29:10.225131Z–14:29:13.521183Z，CPU1/nice5。未执行GNU、reference或目标EMU；`new_build_runs=reference_runs=target_emu_runs=0`、`target_cases=[]`、`performance_qualified=false`。
+
+输入使用真实冻结父P/PQ准备器、原config/base/quantize/hardware，以及N的实际 `image-01/source/fused.S` 和 `paired16-target.elf`。N完整函数312B、SHA `050bc3db3e2a70bd6e5409cbf9c139868008e8ccb18776b7e0e7104e6a554b75`；汇编来源和ELF身份与N固定Q记录相同。既有提取格式另作只读检查，完整函数在来源文件尾部唯一；新forward中的函数提取、GNU机器码相等和运行正确性尚未执行。
+
+| 本次准备实物 | SHA256 / 范围 |
+| --- | --- |
+| 公共prepare.py | `e6f8149f2471d1ca3688583dcc64a3e5e0345552b6900fdad2c39832c9e595b7` |
+| 公共derive_extension.py | `b6aa50371a908573450f884e8fc43da33f226cb0f866228811cf6630cc62c0a1` |
+| 本次合同快照 | `735df8d8053f6ff948135cd4f6b2188138d751b1f0ad9e1842ca59a44166ea59` |
+| 新binding.json | 88,411B；`f67ed9e3831ecd58748ec9bcb23565ff38ce95b566a88cc1d746836306a66364` |
+| 输入与输出闭合 | 94项输入pin；80件generated文件读回一致；顶层无run.py/audit.py |
+| 原四臂profile | 前后仍为 `b650534b8c14fe3ecb813232be47decc3a550e279352859c7ec4a1d4d4046d0b` |
+
+原件位于 `runs/dot16-whole8-narrow-q288-20261107-main/` 的 `forward-source-01/`、`forward-controller-01/`、`forward-prepare-01/`。本次[原始准备归档](narrow-source-prepare-20261107.zip)包含87原始文件、91成员，474,080B，SHA `429e247cd150fdddf5bc0a41996db582b6ba36ef0ba9b80e0c6e90bc39e27130`；CRC、逐成员SHA、来源前后字节及独立文件读回通过。含原调用脚本、参数、终态回执、完整控制器与manifest；外部94项输入仍按binding指向原冻结实物，本ZIP不是自包含运行镜像。
+
+本次prepare核对了输入身份、控制器变换的逆向证明和Python语法，未执行 `derive.core/main`。生成的四个正常参考臂和DQ负例只是模板配置，不表示已运行或选定下一轮目标矩阵；D/DQ共用一个内核的现有接口也不自动提供同ELF的W/N比较。先取得原四臂终态，再确定固定量化的W/N比较或保留较快RVV的有限新实验。没有把N的Q局部6.90%收益、这次绑定结果或旧ELF周期升级为N完整应用结论。
+
 ## 结论边界与接续
 
 已经成立的是这个固定合成D288/H768/L6、共同prepare后首次p0/token1组合的**参考正确性**。目标正确性、完整应用周期排序仍未取得；formal-performance、full-retirement、ASIC PPA均false。正式LaTeX的dot8微基准、C8调用、旧FR/G/P及生产dot8面积/STA继续各自保留原范围，本次不替换它们的数值。

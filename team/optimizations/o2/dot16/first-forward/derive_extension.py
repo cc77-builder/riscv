@@ -13,7 +13,7 @@ ACTIVE_METHODS = ('paired16', 'paired16_quantize', 'dot16', 'dot16_quantize')
 
 
 def core(c_raw, inc_raw):
-    need(DOT16_SYMBOL in ('q288_dot16_vdot', 'q288_dot16_whole2'),
+    need(DOT16_SYMBOL in ('q288_dot16_vdot', 'q288_dot16_whole2', 'q288_dot16_whole8_narrow'),
          'explicit selected complete dot16 kernel')
     generated, parent_proof = PRE_DOT16_CORE(c_raw, inc_raw)
     old_c = generated['consumer.c'].decode()
