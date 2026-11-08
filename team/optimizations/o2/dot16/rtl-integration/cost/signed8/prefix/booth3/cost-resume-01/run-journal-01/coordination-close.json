@@ -1,0 +1,58 @@
+{
+  "begin": {
+    "url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6718462118",
+    "body": "[RUN BEGIN] LiZufan001 / prefix-Booth3 one-shot cost continuation 01 (2026-11-08 UTC)\n\n延续本账号 prefix 候选工程。原 local-01 / local-02 保持 FAILED，后一轮算术与两 feature FU 阶段实际已完成，但 f0 STA 因 concat-LHS 解析错误未形成成本资格。原结果 63cee9334942c7e60405cef939ef3020b1817e5ee147cc7e12b22339884d9121 及失败证据已在 zufan c4020b3 发布，本次不修改它们。\n\n唯一合同 dot16-booth3-one-shot-cost-continuation-v1：f0 复用原 mapping，经原 splitnets（不-ports）和同库重解析，使用未改 circuit() 加完整显式 cell-name 双射核对全图；通过后才做一次30s STA。f0任一步失败立即停止，只有完整f0成本通过才执行f1首次固定D1000映射及同一转换/STA。不重跑RTL/Gold/FU/core，不增加第二格式、工具版本或延时。\n\n冻结 input-cost-01：8 files / 79644 B，SOURCE_STAGING SHA 9d874b240e85db056d0aed0bcd6162beca73b11909a60ac4b7cae9e34044a6bf，controller 317f1919138e0c2e69c9d48514667fe82a871a0ec4caf8d6cc5fb206390f594a。唯一新输出 cost-resume-01；原local-01/02及输入只读。CPU2单核、nice5、总300s/外层360s，启动器复核总四核/占用/内存；最迟07:10Z实际启动，否则停止准备。\n\n独立控制器与图审查完成。未占用共享分支集成窗口；Windows主仓及resident源码只读。日志与回执在 runs/dot16-prefix-booth3-20261108-main/cost-resume-01/run-journal-01。",
+    "user": {
+      "login": "LiZufan001",
+      "name": "LiZufan001",
+      "email": null,
+      "avatar_url": "https://avatars.githubusercontent.com/u/128899229?v=4",
+      "id": 128899229
+    },
+    "id": 6718462118,
+    "pull_request_review_id": null,
+    "in_reply_to_id": null,
+    "created_at": null,
+    "updated_at": null,
+    "review": null,
+    "side": null,
+    "line": null,
+    "start_line": null,
+    "path": null,
+    "body_html": "<p dir=\"auto\">[RUN BEGIN] LiZufan001 / prefix-Booth3 one-shot cost continuation 01 (2026-11-08 UTC)</p>\n<p dir=\"auto\">延续本账号 prefix 候选工程。原 local-01 / local-02 保持 FAILED，后一轮算术与两 feature FU 阶段实际已完成，但 f0 STA 因 concat-LHS 解析错误未形成成本资格。原结果 63cee9334942c7e60405cef939ef3020b1817e5ee147cc7e12b22339884d9121 及失败证据已在 zufan <a class=\"commit-link\" data-hovercard-type=\"commit\" data-hovercard-url=\"https://github.com/cc77-builder/riscv/commit/c4020b316fa029c0abeb9844b7273483d6c7b7eb/hovercard\" href=\"https://github.com/cc77-builder/riscv/commit/c4020b316fa029c0abeb9844b7273483d6c7b7eb\"><tt>c4020b3</tt></a> 发布，本次不修改它们。</p>\n<p dir=\"auto\">唯一合同 dot16-booth3-one-shot-cost-continuation-v1：f0 复用原 mapping，经原 splitnets（不-ports）和同库重解析，使用未改 circuit() 加完整显式 cell-name 双射核对全图；通过后才做一次30s STA。f0任一步失败立即停止，只有完整f0成本通过才执行f1首次固定D1000映射及同一转换/STA。不重跑RTL/Gold/FU/core，不增加第二格式、工具版本或延时。</p>\n<p dir=\"auto\">冻结 input-cost-01：8 files / 79644 B，SOURCE_STAGING SHA 9d874b240e85db056d0aed0bcd6162beca73b11909a60ac4b7cae9e34044a6bf，controller 317f1919138e0c2e69c9d48514667fe82a871a0ec4caf8d6cc5fb206390f594a。唯一新输出 cost-resume-01；原local-01/02及输入只读。CPU2单核、nice5、总300s/外层360s，启动器复核总四核/占用/内存；最迟07:10Z实际启动，否则停止准备。</p>\n<p dir=\"auto\">独立控制器与图审查完成。未占用共享分支集成窗口；Windows主仓及resident源码只读。日志与回执在 runs/dot16-prefix-booth3-20261108-main/cost-resume-01/run-journal-01。</p>"
+  },
+  "end": {
+    "url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6718496546",
+    "body": "[RUN RELEASE] LiZufan001 / prefix-Booth3 one-shot cost continuation 01 — FAILED / STOP\n\nBEGIN #issuecomment-6718462118 已闭合。本次实际 operation 0250d6044ba18f5fd71831ae3131d2ce.34f43c7fb29a8bce9cf04a25956c818e：2026-11-08T06:55:55.2315827Z–06:56:28.5902577Z，33.319s，exit1/cleanup_complete=true；无外层timeout/cancel。CPU2、nice5，启动时无其他重任务。新 result 2782B / SHA256 0bf4fc5a537394179bd347518c2adfe6d9631e3fda34b0ef2b0635a673a1b8d2。\n\nf0 serialize/reparse均rc0；6236cells、220ports、9840nets、25655terminals在6236个明确改名的完整双射下图相等。随后STA达到固定30秒上限，仅351B banner，没有五类报告；local_cost_recorded=false、cost_results=[]，f1映射未启动，f0/f1新mapping计数均0。按合同停止，不加时、不换第二格式、不重跑FU/RTL或新候选。旧local-01/02 FAILED原件与资格保持。\n\n归档 operation 0250d6044ba18f5fd71831ae3131d2ce.f6ced38669417e2d6fff0f09b7f53cd1 于06:57:24Z完成，exit0/cleanup true。32payload / 18021977B，33ZIP members，0遗漏；raw.zip 871985B / SHA256 437a83c57165a701c356017eea8cd45046a6c778d349b44374ee4ae294a5f27b；全部成员SHA/CRC核验，850原输入pin、8冻结输入、21产物pin不变，原进程组37118及3子组均不存在。证据位于 runs/dot16-prefix-booth3-20261108-main/cost-resume-01/{archive-01,run-journal-01,source}。\n\n运行保护释放；未占用共享分支集成窗口。候选仍未采用，现有prefix与稳定默认不切换。后续仅提交本次失败证据和当前导航，保持原保护文件、他人修改和正式材料。",
+    "user": {
+      "login": "LiZufan001",
+      "name": "LiZufan001",
+      "email": null,
+      "avatar_url": "https://avatars.githubusercontent.com/u/128899229?v=4",
+      "id": 128899229
+    },
+    "id": 6718496546,
+    "pull_request_review_id": null,
+    "in_reply_to_id": null,
+    "created_at": null,
+    "updated_at": null,
+    "review": null,
+    "side": null,
+    "line": null,
+    "start_line": null,
+    "path": null,
+    "body_html": "<p dir=\"auto\">[RUN RELEASE] LiZufan001 / prefix-Booth3 one-shot cost continuation 01 — FAILED / STOP</p>\n<p dir=\"auto\">BEGIN #issuecomment-6718462118 已闭合。本次实际 operation 0250d6044ba18f5fd71831ae3131d2ce.34f43c7fb29a8bce9cf04a25956c818e：2026-11-08T06:55:55.2315827Z–06:56:28.5902577Z，33.319s，exit1/cleanup_complete=true；无外层timeout/cancel。CPU2、nice5，启动时无其他重任务。新 result 2782B / SHA256 0bf4fc5a537394179bd347518c2adfe6d9631e3fda34b0ef2b0635a673a1b8d2。</p>\n<p dir=\"auto\">f0 serialize/reparse均rc0；6236cells、220ports、9840nets、25655terminals在6236个明确改名的完整双射下图相等。随后STA达到固定30秒上限，仅351B banner，没有五类报告；local_cost_recorded=false、cost_results=[]，f1映射未启动，f0/f1新mapping计数均0。按合同停止，不加时、不换第二格式、不重跑FU/RTL或新候选。旧local-01/02 FAILED原件与资格保持。</p>\n<p dir=\"auto\">归档 operation 0250d6044ba18f5fd71831ae3131d2ce.f6ced38669417e2d6fff0f09b7f53cd1 于06:57:24Z完成，exit0/cleanup true。32payload / 18021977B，33ZIP members，0遗漏；raw.zip 871985B / SHA256 437a83c57165a701c356017eea8cd45046a6c778d349b44374ee4ae294a5f27b；全部成员SHA/CRC核验，850原输入pin、8冻结输入、21产物pin不变，原进程组37118及3子组均不存在。证据位于 runs/dot16-prefix-booth3-20261108-main/cost-resume-01/{archive-01,run-journal-01,source}。</p>\n<p dir=\"auto\">运行保护释放；未占用共享分支集成窗口。候选仍未采用，现有prefix与稳定默认不切换。后续仅提交本次失败证据和当前导航，保持原保护文件、他人修改和正式材料。</p>"
+  },
+  "both_exact": true,
+  "first_close_delivery_error": {
+    "error": "RemoteProtocolError: Server disconnected without sending a response.",
+    "error_code": "UNKNOWN"
+  },
+  "readback_recovery": {
+    "first_lookup_found": 0,
+    "second_lookup_found": 0,
+    "after_absence_confirmed_retry_id": 6718496546
+  },
+  "run_operation": "0250d6044ba18f5fd71831ae3131d2ce.34f43c7fb29a8bce9cf04a25956c818e",
+  "archive_operation": "0250d6044ba18f5fd71831ae3131d2ce.f6ced38669417e2d6fff0f09b7f53cd1"
+}

@@ -2,7 +2,7 @@
 
 > 2026-11-08 后续结果导航：[K768固定完整调用](../optimizations/o2/dot16/rtl-integration/cost/signed8/prefix/core/k768/RESULT.md)已由同一prefix EMU实际通过，N打包周期少13.4340%；同次较快RVV packedP／较快custom packedN为1.500131×（周期少33.33916%，prepare窗外）。此前K288八样本与旧f149相同，只支持该固定例周期保持，没有新增硬件周期收益。
 >
-> [Booth2局部筛选](../optimizations/o2/dot16/rtl-integration/cost/signed8/prefix/booth/RESULT.md)的库面积17,190.516较prefix少4.313%，但关键I2R slack由−0.238006退步至−0.254728ns，差16.722ps，未采用。[Booth3原local-01](../optimizations/o2/dot16/rtl-integration/cost/signed8/prefix/booth3/failed-local-01/RESULT.md)的R19/3通过，R20/6在固定30秒SAT限制内超时；原FAILED及FU/cost未运行的事实保留。后继[balanced-Gold02](../optimizations/o2/dot16/rtl-integration/cost/signed8/prefix/booth3/balanced-local-02/RESULT.md)保持RTL及实际DUT/top SV不变，新R19/R20证明与两态FU/八负控已完成，但旧OpenSTA报告5处网表语法错误，整体仍FAILED、无完整成本资格，feature1未映射；该候选未采用，任何后继成本续接须另立合同。
+> [Booth2局部筛选](../optimizations/o2/dot16/rtl-integration/cost/signed8/prefix/booth/RESULT.md)的库面积17,190.516较prefix少4.313%，但关键I2R slack由−0.238006退步至−0.254728ns，差16.722ps，未采用。[Booth3原local-01](../optimizations/o2/dot16/rtl-integration/cost/signed8/prefix/booth3/failed-local-01/RESULT.md)的R19/3通过，R20/6在固定30秒SAT限制内超时；原FAILED及FU/cost未运行的事实保留。后继[balanced-Gold02](../optimizations/o2/dot16/rtl-integration/cost/signed8/prefix/booth3/balanced-local-02/RESULT.md)保持RTL及实际DUT/top SV不变，新R19/R20证明与两态FU/八负控已完成，但旧OpenSTA报告5处网表语法错误，整体仍FAILED、无完整成本资格，feature1未映射；该候选未采用。独立合同下的[唯一成本续接](../optimizations/o2/dot16/rtl-integration/cost/signed8/prefix/booth3/cost-resume-01/RESULT.md)已核实f0序列化后的完整连接图相等，但STA在固定30秒内仍未完成、仅有banner，f1映射没有启动；本轮按合同停止该成本适配，仍无完整成本或新增时序结论。
 >
 > NQ软件交付、原prefix及稳定生产默认保持；旧f149完整forward不转授，正式性能、完整退休与整核PPA均无新增资格。下方原“当前决定”及更早段落保留各自记录时点，本段补充后继已闭合证据。
 >

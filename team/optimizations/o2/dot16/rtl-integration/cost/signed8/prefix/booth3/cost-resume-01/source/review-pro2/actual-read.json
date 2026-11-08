@@ -1,0 +1,112 @@
+{
+  "records": [
+    {
+      "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/result.json",
+      "bytes": 132331,
+      "sha256": "63cee9334942c7e60405cef939ef3020b1817e5ee147cc7e12b22339884d9121"
+    },
+    {
+      "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/cost-feature0/mapped/mapped.json",
+      "bytes": 5418334,
+      "sha256": "a0625a8f7d9f79d69e6118cfa84ec787c02e4dbb3c951c2bd2eb5a340d057a5d"
+    },
+    {
+      "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/cost-feature0/mapped/mapped.v",
+      "bytes": 828368,
+      "sha256": "b01481db8a1db4d2acff2cc7d91bf32bcdb8aa551f9c2036c3346c074eeeaa15"
+    },
+    {
+      "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/cost-feature0/mapped/timing.tcl",
+      "bytes": 2674,
+      "sha256": "db69ed1d8252fe69f93fd60302108ce09821d6a708a44c2da3ceaaf5b1a4ff62"
+    },
+    {
+      "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/cost-feature0/mapped/map.ys",
+      "bytes": 1580,
+      "sha256": "9b382d57e13c08485a9f6bd3a936699b8df81951ac901ca9f5a9ea0767ce59d6"
+    }
+  ],
+  "status": "FAILED",
+  "all_children_closed": true,
+  "concat_lhs": [
+    {
+      "line": 42133,
+      "text": "  assign { \\dut.prefixSum.g0 [18], \\dut.prefixSum.g0 [0] } = 2'bx0;"
+    },
+    {
+      "line": 42134,
+      "text": "  assign { \\dut.prefixSum.g1 [18], \\dut.prefixSum.g1 [1:0] } = { 1'hx, \\dut.prefixSum.g0 [1], 1'h0 };"
+    },
+    {
+      "line": 42135,
+      "text": "  assign { \\dut.prefixSum.g2 [18], \\dut.prefixSum.g2 [2:0] } = { 1'hx, \\dut.prefixSum.g1 [2], \\dut.prefixSum.g0 [1], 1'h0 };"
+    },
+    {
+      "line": 42136,
+      "text": "  assign { \\dut.prefixSum.g3 [18], \\dut.prefixSum.g3 [4:0] } = { 1'hx, \\dut.prefixSum.g2 [4:3], \\dut.prefixSum.g1 [2], \\dut.prefixSum.g0 [1], 1'h0 };"
+    },
+    {
+      "line": 42137,
+      "text": "  assign { \\dut.prefixSum.g4 [18], \\dut.prefixSum.g4 [8:0] } = { 1'hx, \\dut.prefixSum.g3 [8:5], \\dut.prefixSum.g2 [4:3], \\dut.prefixSum.g1 [2], \\dut.prefixSum.g0 [1], 1'h0 };"
+    },
+    {
+      "line": 42138,
+      "text": "  assign { \\dut.prefixSum.g5 [18], \\dut.prefixSum.g5 [16:0] } = { 1'hx, \\dut.prefixSum.g4 [16:9], \\dut.prefixSum.g3 [8:5], \\dut.prefixSum.g2 [4:3], \\dut.prefixSum.g1 [2], \\dut.prefixSum.g0 [1], 1'h0 };"
+    },
+    {
+      "line": 42142,
+      "text": "  assign { \\dut.prefixSum.p2 [18], \\dut.prefixSum.p2 [1] } = { 1'hx, \\dut.prefixSum.p1 [1] };"
+    },
+    {
+      "line": 42143,
+      "text": "  assign { \\dut.prefixSum.p3 [18], \\dut.prefixSum.p3 [3:1] } = { 1'hx, \\dut.prefixSum.p2 [3:2], \\dut.prefixSum.p1 [1] };"
+    },
+    {
+      "line": 42144,
+      "text": "  assign { \\dut.prefixSum.p4 [18], \\dut.prefixSum.p4 [7:1] } = { 1'hx, \\dut.prefixSum.p3 [7:4], \\dut.prefixSum.p2 [3:2], \\dut.prefixSum.p1 [1] };"
+    }
+  ],
+  "cell_count": 6236,
+  "cell_types": {
+    "INV_X1": 191,
+    "NAND2_X1": 331,
+    "OAI22_X1": 13,
+    "NOR2_X1": 216,
+    "AOI22_X1": 165,
+    "OAI222_X1": 2,
+    "XOR2_X1": 297,
+    "OAI21_X1": 266,
+    "AOI21_X1": 297,
+    "NAND3_X1": 31,
+    "AOI211_X1": 17,
+    "BUF_X1": 319,
+    "AND2_X1": 107,
+    "OAI211_X1": 86,
+    "OR2_X1": 81,
+    "NOR3_X1": 29,
+    "XNOR2_X1": 424,
+    "BUF_X2": 3,
+    "AND3_X1": 49,
+    "MUX2_X1": 1604,
+    "OR3_X1": 19,
+    "XOR2_X2": 1,
+    "CLKBUF_X1": 5,
+    "NOR4_X1": 9,
+    "NAND4_X1": 5,
+    "OR4_X1": 5,
+    "OAI221_X1": 2,
+    "AOI221_X1": 3,
+    "AOI21_X2": 1,
+    "DFF_X1": 1658
+  },
+  "dollar_cells": 6236,
+  "backslash_dollar_cells": 0,
+  "init_nets": 0,
+  "memories": false,
+  "processes": false,
+  "module_ports": 220,
+  "timing_tcl": "fconfigure stdout -buffering line\nread_liberty /home/lizufan/riscv-tools/nangate45/NangateOpenCellLibrary_typical.lib\nset_cmd_units -time ns -capacitance fF\nset_wire_load_mode top\nset_wire_load_model -name 5K_hvratio_1_1\nread_verilog /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/cost-feature0/mapped/mapped.v\nlink_design CommonFuCostTop\nset inputs {}\nforeach p [all_inputs] {if {[get_full_name $p] ne \"clock\"} {lappend inputs $p}}\nset outputs [all_outputs]\ncreate_clock -name core_clk -period 1.0 [get_ports clock]\nset_clock_uncertainty 0.05 [get_clocks core_clk]\nset_clock_transition 0.05 [get_clocks core_clk]\nset_input_delay -max 0.1 -clock core_clk $inputs\nset_output_delay -max 0.1 -clock core_clk $outputs\nset_input_transition 0.05 $inputs\nset_load 5.0 $outputs\ncheck_setup -verbose > /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/cost-feature0/mapped/setup-checks.rpt\nset q [all_registers -output_pins]\nset d [all_registers -data_pins]\nreport_checks -from $q -to $d -path_delay max -group_count 1 -endpoint_count 1 -format full_clock_expanded -fields {capacitance slew input_pin net} -digits 6 -no_line_splits > /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/cost-feature0/mapped/r2r.rpt\nreport_checks -from $inputs -to $d -path_delay max -group_count 1 -endpoint_count 1 -format full_clock_expanded -fields {capacitance slew input_pin net} -digits 6 -no_line_splits > /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/cost-feature0/mapped/i2r.rpt\nreport_checks -from $q -to $outputs -path_delay max -group_count 1 -endpoint_count 1 -format full_clock_expanded -fields {capacitance slew input_pin net} -digits 6 -no_line_splits > /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/cost-feature0/mapped/r2o.rpt\nreport_checks -from $inputs -to $outputs -path_delay max -group_count 1 -endpoint_count 1 -format full_clock_expanded -fields {capacitance slew input_pin net} -digits 6 -no_line_splits > /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/cost-feature0/mapped/i2o.rpt\nreport_checks -from [get_ports io_out_ready] -to [get_ports io_in_ready] -path_delay max -group_count 1 -endpoint_count 1 -format full_clock_expanded -fields {capacitance slew input_pin net} -digits 6 -no_line_splits > /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/cost-feature0/mapped/ready.rpt\nputs \"DOT16_GENERATED_FU_STA_COMPLETE\"\nexit\n",
+  "feature1_mapped_files": [],
+  "map0": "read_liberty -lib /home/lizufan/riscv-tools/nangate45/NangateOpenCellLibrary_typical.lib\nread_verilog -sv -DSYNTHESIS /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/cost-feature0/rtl/VDotCarrySaveRows.sv\nread_verilog -sv -DSYNTHESIS /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/cost-feature0/rtl/VDotPrefixFinish19.sv\nread_verilog -sv -DSYNTHESIS /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/cost-feature0/rtl/VDotElastic.sv\nread_verilog -sv -DSYNTHESIS /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/cost-feature0/rtl/CommonFuCostTop.sv\nhierarchy -check -top CommonFuCostTop\nproc\nopt\nsynth -top CommonFuCostTop -flatten -noabc\ndfflibmap -liberty /home/lizufan/riscv-tools/nangate45/NangateOpenCellLibrary_typical.lib\nabc -exe /usr/bin/berkeley-abc -liberty /home/lizufan/riscv-tools/nangate45/NangateOpenCellLibrary_typical.lib -D 1000 -constr /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/cost-feature0/mapped/abc.constr\nclean\ncheck -assert\nstat -liberty /home/lizufan/riscv-tools/nangate45/NangateOpenCellLibrary_typical.lib\nwrite_json /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/cost-feature0/mapped/mapped.json\nwrite_verilog -noattr /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/cost-feature0/mapped/mapped.v\n",
+  "unchanged_after": true
+}

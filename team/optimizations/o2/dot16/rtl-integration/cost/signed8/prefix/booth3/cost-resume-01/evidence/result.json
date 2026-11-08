@@ -1,0 +1,86 @@
+{
+  "contract": "dot16-booth3-one-shot-cost-continuation-v1",
+  "status": "FAILED",
+  "started": "2026-11-08T06:55:56.024593+00:00",
+  "commands": [
+    {
+      "label": "serialize-0",
+      "argv": [
+        "/usr/bin/yosys",
+        "-T",
+        "-s",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/cost-resume-01/feature0/serialized/serialize.ys"
+      ],
+      "started": "2026-11-08T06:55:56.111983+00:00",
+      "budget_seconds": 30,
+      "pid": 37119,
+      "exit_code": 0,
+      "reaped": true,
+      "group_absent": true,
+      "finished": "2026-11-08T06:55:57.031132+00:00"
+    },
+    {
+      "label": "reparse-0",
+      "argv": [
+        "/usr/bin/yosys",
+        "-T",
+        "-s",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/cost-resume-01/feature0/serialized/reparse.ys"
+      ],
+      "started": "2026-11-08T06:55:57.144562+00:00",
+      "budget_seconds": 30,
+      "pid": 37120,
+      "exit_code": 0,
+      "reaped": true,
+      "group_absent": true,
+      "finished": "2026-11-08T06:55:57.899045+00:00"
+    },
+    {
+      "label": "sta-0",
+      "argv": [
+        "/usr/bin/sta",
+        "-no_init",
+        "-exit",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/cost-resume-01/feature0/serialized/timing.tcl"
+      ],
+      "started": "2026-11-08T06:55:58.191528+00:00",
+      "budget_seconds": 30,
+      "pid": 37121,
+      "cleanup_complete": true,
+      "exit_code": -15,
+      "reaped": true,
+      "group_absent": true,
+      "finished": "2026-11-08T06:56:28.293113+00:00"
+    }
+  ],
+  "cost_results": [],
+  "prior_result_sha256": "63cee9334942c7e60405cef939ef3020b1817e5ee147cc7e12b22339884d9121",
+  "prior_status_preserved": "FAILED",
+  "reused_source_stage_evidence": true,
+  "new_rtl": false,
+  "new_gold": false,
+  "new_fu_runs": 0,
+  "new_core_runs": 0,
+  "feature0_new_mapping_runs": 0,
+  "feature1_new_mapping_runs": 0,
+  "local_cost_recorded": false,
+  "rtl_to_mapped_equivalence_claimed": false,
+  "parent_qualified": false,
+  "fullcore_qualified": false,
+  "application_performance_qualified": false,
+  "core_cost_qualified": false,
+  "production_default_changed": false,
+  "cpu_affinity": [
+    2
+  ],
+  "nice": 5,
+  "budget_seconds": 300,
+  "sta_budget_seconds": 30,
+  "error": "TimeoutExpired(['/usr/bin/sta', '-no_init', '-exit', '/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/cost-resume-01/feature0/serialized/timing.tcl'], 30)",
+  "changed_inputs": [],
+  "inputs_unchanged": true,
+  "all_children_reaped": true,
+  "elapsed_seconds": 32.479272440003115,
+  "total_budget_exceeded": false,
+  "finished": "2026-11-08T06:56:28.359967+00:00"
+}
