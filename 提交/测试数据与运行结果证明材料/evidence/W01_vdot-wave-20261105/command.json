@@ -1,0 +1,40 @@
+{
+  "started": "2026-11-05T11:40:52.023294+00:00",
+  "command": [
+    "timeout",
+    "120m",
+    "stdbuf",
+    "-o0",
+    "-e0",
+    "/home/riscv/riscv-lab/vdot-wave-0f-20261105-02/build/emu",
+    "-i",
+    "/home/riscv/riscv-lab/t12-regression-20261013/runs/t11-matrix-canonical/build-2/vdot-exceptions.bin",
+    "--flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+    "--ram-size=128MB",
+    "--diff=/home/riscv/riscv-lab/software-import-20261026/clean-02/support/nemu/reference/build/riscv64-nemu-interpreter-so",
+    "--max-cycles=5000000",
+    "--seed=0",
+    "--no-snapshot",
+    "--dump-wave-full",
+    "--wave-path=/home/riscv/riscv-lab/vdot-wave-0f-20261105-02/run/vdot-positive.fst",
+    "-b",
+    "330000",
+    "-e",
+    "350000"
+  ],
+  "cwd": "/home/riscv/riscv-lab/vdot-wave-0f-20261105-02/run",
+  "original_result": "/home/riscv/riscv-lab/software-import-20261026/clean-02/fullcore-run-01/runs/functional-2/result.json",
+  "new_emu_sha256": "76271f56044e61feb924ebf249f1708838279e7f9881c75b89d4f59626e14146",
+  "historical_input_hashes": {
+    "/home/riscv/riscv-lab/software-import-20261026/clean-02/checkout/source/build/emu": "acf672eb39f836da4000b253849e3214089e9c8e5198060a57d2cc6bbd393da9",
+    "/home/riscv/riscv-lab/software-import-20261026/clean-02/support/nemu/reference/build/riscv64-nemu-interpreter-so": "62b1707c52a4c323468481e0c1863b79f244d9a3fd54aeb7b7d2ecb5f01a35ca",
+    "/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+    "/home/riscv/riscv-lab/t12-regression-20261013/runs/t11-matrix-canonical/build-2/vdot-exceptions.bin": "a5e6663a9e2cb7348a3bcd2f719ba802c7d5af173f371e9278ec2435a8478923"
+  },
+  "trace_window": [
+    330000,
+    350000
+  ],
+  "performance_measured": false,
+  "purpose": "New waveform capture; original binary replaced by FST-enabled build from copied RTL"
+}

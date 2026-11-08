@@ -1,0 +1,49 @@
+{
+  "status": "BUILD_AND_RELOCATABLE_LINK_PASS",
+  "commands": [
+    {
+      "command": [
+        "riscv64-linux-gnu-gcc",
+        "-std=c11",
+        "-O2",
+        "-ffreestanding",
+        "-fno-builtin",
+        "-fno-pic",
+        "-fno-pie",
+        "-fno-stack-protector",
+        "-march=rv64gcv",
+        "-mabi=lp64d",
+        "-mno-relax",
+        "-I/home/riscv/riscv-lab/cie2026-v1-final-audit/firstdot-sdk/include",
+        "-c",
+        "/home/riscv/riscv-lab/cie2026-v1-release/team/optimizations/o2/r2-select/public/firstdot/example.c",
+        "-o",
+        "/home/riscv/riscv-lab/cie2026-v1-final-audit/firstdot-link/example.o"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "riscv64-linux-gnu-ld",
+        "-r",
+        "--no-relax",
+        "/home/riscv/riscv-lab/cie2026-v1-final-audit/firstdot-link/example.o",
+        "/home/riscv/riscv-lab/cie2026-v1-final-audit/firstdot-sdk/libxs_gemv_firstdot.a",
+        "-o",
+        "/home/riscv/riscv-lab/cie2026-v1-final-audit/firstdot-link/example-linked.o"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "riscv64-linux-gnu-nm",
+        "-u",
+        "/home/riscv/riscv-lab/cie2026-v1-final-audit/firstdot-link/example-linked.o"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "object_sha256": "b65d4ca4faf3550ad2e95d3fb7d1d452923b71ae50776420bfcd679d098238af",
+  "unresolved_symbols": 0,
+  "runtime": "NOT_TESTED"
+}

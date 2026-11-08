@@ -1,0 +1,152 @@
+{
+  "microbench": [
+    {
+      "scenario": "single",
+      "windows_per_method": 12,
+      "vdot_mean": 71,
+      "rvv_mean": 85.25,
+      "speedup": 1.2007042253521127,
+      "vdot_min": 71,
+      "vdot_max": 71,
+      "rvv_min": 85,
+      "rvv_max": 86
+    },
+    {
+      "scenario": "chain",
+      "windows_per_method": 12,
+      "vdot_mean": 1857,
+      "rvv_mean": 5440.5,
+      "speedup": 2.9297253634894993,
+      "vdot_min": 1857,
+      "vdot_max": 1857,
+      "rvv_min": 5440,
+      "rvv_max": 5441
+    },
+    {
+      "scenario": "batch",
+      "windows_per_method": 12,
+      "vdot_mean": 221,
+      "rvv_mean": 678,
+      "speedup": 3.067873303167421,
+      "vdot_min": 221,
+      "vdot_max": 221,
+      "rvv_min": 678,
+      "rvv_max": 678
+    },
+    {
+      "scenario": "stream",
+      "windows_per_method": 12,
+      "vdot_mean": 1127.5,
+      "rvv_mean": 1133,
+      "speedup": 1.0048780487804878,
+      "vdot_min": 1119,
+      "vdot_max": 1131,
+      "rvv_min": 1133,
+      "rvv_max": 1133
+    }
+  ],
+  "c8": [
+    {
+      "implementation": "firstdot V2",
+      "windows": 12,
+      "mean": 282.25,
+      "minimum": 282,
+      "maximum": 283
+    },
+    {
+      "implementation": "C8",
+      "windows": 12,
+      "mean": 273,
+      "minimum": 273,
+      "maximum": 273
+    },
+    {
+      "implementation": "最快 RVV",
+      "windows": 12,
+      "mean": 299,
+      "minimum": 296,
+      "maximum": 302
+    }
+  ],
+  "c8_decisions": {
+    "4x8": "INCONCLUSIVE",
+    "8x32": "PERFORMANCE_CANDIDATE",
+    "16x64": "INCONCLUSIVE",
+    "4x13": "INCONCLUSIVE"
+  },
+  "trace_recheck": {
+    "status": "HISTORICAL_TRACE_ARITHMETIC_RECHECK_PASS",
+    "checked_at": "2026-11-08T20:34:29.083272+08:00",
+    "source_log_sha256": "1a0051b9bda0d9567cc20a9cc1f01b2d2f0a6b03356a54dbfaf2c91b1fe1d9bd",
+    "source_uncompressed_sha256": "550adf01b1b9b8dcac485e23b9664a868a3ddaf6cff80bcb70e4e6dd026bae61",
+    "counts": {
+      "ACCEPT": 1643,
+      "MOVE": 1615,
+      "RESPONSE": 1590,
+      "KILL": 53
+    },
+    "legal_responses_checked": 1590,
+    "all_full128_results_match": true,
+    "new_emu_runs": 0,
+    "sample": {
+      "seq": 1,
+      "accept_cycle": 9171,
+      "response_cycle": 9173,
+      "vs1": "0x598c25cadaa1ea08d4052297636ea8cc",
+      "vs2": "0x2cd842e658f5801fea38e1f2dbacdcee",
+      "expected_signed": -7135,
+      "actual_full128": "0x000000000000000000000000ffffe421",
+      "accept_line": 63,
+      "response_line": 72
+    }
+  },
+  "sta": [
+    {
+      "profile": "nominal",
+      "period_ns": 1.0,
+      "load_ff": 5,
+      "parent_r2r_slack_ns": -2.341112,
+      "vdot_r2r_slack_ns": -0.43376,
+      "ready_slack_ns": 0.602179
+    },
+    {
+      "profile": "period050",
+      "period_ns": 0.5,
+      "load_ff": 5,
+      "parent_r2r_slack_ns": -2.841112,
+      "vdot_r2r_slack_ns": -0.93376,
+      "ready_slack_ns": 0.102179
+    },
+    {
+      "profile": "period200",
+      "period_ns": 2.0,
+      "load_ff": 5,
+      "parent_r2r_slack_ns": -1.341112,
+      "vdot_r2r_slack_ns": 0.56624,
+      "ready_slack_ns": 1.602179
+    },
+    {
+      "profile": "load001",
+      "period_ns": 1.0,
+      "load_ff": 1,
+      "parent_r2r_slack_ns": -2.341112,
+      "vdot_r2r_slack_ns": -0.43376,
+      "ready_slack_ns": 0.611406
+    },
+    {
+      "profile": "load020",
+      "period_ns": 1.0,
+      "load_ff": 20,
+      "parent_r2r_slack_ns": -2.341112,
+      "vdot_r2r_slack_ns": -0.43376,
+      "ready_slack_ns": 0.541001
+    }
+  ],
+  "mapped_parent": {
+    "cell_count": 203020,
+    "cell_area_sum": 284614.94599999994,
+    "library_sha256": "8d540a4d4cf6d09d27c87ad067857a9c0c2eeb023ab7a56e058cd3113db4e9b1",
+    "pass": true
+  },
+  "dataset_seed_hex": "0x20261011"
+}
