@@ -1,0 +1,1937 @@
+{
+  "status": "COMPUTATION_COMPLETE_TIMING_FAIL",
+  "scope": "XSCore MinimalConfig SP1, ASAP7 RVT TT 0.7V 25C, standard-cell memories; ideal clock, pin capacitances only, zero interconnect",
+  "source_commit": "ffb52e4504244b7d833d311d0ce0589f883abaf8",
+  "netlist_sha256": "0354c9aeaed5ca49ce1a5d7de33ea5dcec608542ac92a01561b4fc8c119f0fbe",
+  "crpr": false,
+  "elapsed_seconds": 692.2801203489998,
+  "peak_rss_KiB": 13636880,
+  "coverage": {
+    "status": "INCOMPLETE",
+    "total": 4865,
+    "counts": {
+      "UNRESOLVED": 3649,
+      "PROPAGATED_CONSTANT": 1216
+    },
+    "method": "Exact same timing netlist and 1 ns constraints; check_setup list byte-identical; each listed endpoint resolved by STA find_pin and pin_sim_logic_value. Fixed configuration and reset=0 apply. Direct structural constants cross-checked. No automatic dynamic endpoint waiver.",
+    "constants_sha256": "9f22cc586bea31961348692fbf0ed806471460ec7460603bdf0c0b93990afded"
+  },
+  "profiles": [
+    {
+      "period_ns": 1,
+      "worst_slack_ns": -10.441136,
+      "tns_ns": -540956.38,
+      "timing_status": "FAIL",
+      "reported_paths": 40,
+      "group_worst_slack_ns": {
+        "clk": -10.441136,
+        "**async_default**": -0.906195
+      },
+      "worst_path": {
+        "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+        "endpoint": "backend/inner_ctrlBlock/dispatch/rcTagTable/MemRCTagTable/_4844_",
+        "group": "clk",
+        "slack_ns": -10.441136,
+        "largest_cell_increments": [
+          {
+            "delay_ns": 8.537562,
+            "arrival_ns": 10.522412,
+            "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+          },
+          {
+            "delay_ns": 1.610828,
+            "arrival_ns": 1.98485,
+            "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+          },
+          {
+            "delay_ns": 0.415354,
+            "arrival_ns": 10.937767,
+            "pin_and_cell": "^ backend/inner_ctrlBlock/dispatch/rcTagTable/MemRCTagTable/_2578_/Y (INVxp67_ASAP7_75t_R)"
+          }
+        ]
+      },
+      "paths": [
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19443_",
+          "group": "**async_default**",
+          "slack_ns": -0.906195,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19444_",
+          "group": "**async_default**",
+          "slack_ns": -0.906195,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19445_",
+          "group": "**async_default**",
+          "slack_ns": -0.906195,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19446_",
+          "group": "**async_default**",
+          "slack_ns": -0.906195,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19447_",
+          "group": "**async_default**",
+          "slack_ns": -0.906195,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19448_",
+          "group": "**async_default**",
+          "slack_ns": -0.906195,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19449_",
+          "group": "**async_default**",
+          "slack_ns": -0.906195,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19450_",
+          "group": "**async_default**",
+          "slack_ns": -0.906195,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19451_",
+          "group": "**async_default**",
+          "slack_ns": -0.906195,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19452_",
+          "group": "**async_default**",
+          "slack_ns": -0.906195,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19453_",
+          "group": "**async_default**",
+          "slack_ns": -0.906195,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19454_",
+          "group": "**async_default**",
+          "slack_ns": -0.906195,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19455_",
+          "group": "**async_default**",
+          "slack_ns": -0.906195,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19456_",
+          "group": "**async_default**",
+          "slack_ns": -0.906195,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19457_",
+          "group": "**async_default**",
+          "slack_ns": -0.906195,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19458_",
+          "group": "**async_default**",
+          "slack_ns": -0.906195,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19459_",
+          "group": "**async_default**",
+          "slack_ns": -0.906195,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19460_",
+          "group": "**async_default**",
+          "slack_ns": -0.906195,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19461_",
+          "group": "**async_default**",
+          "slack_ns": -0.906195,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19462_",
+          "group": "**async_default**",
+          "slack_ns": -0.906195,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_ctrlBlock/dispatch/rcTagTable/MemRCTagTable/_4844_",
+          "group": "clk",
+          "slack_ns": -10.441136,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.415354,
+              "arrival_ns": 10.937767,
+              "pin_and_cell": "^ backend/inner_ctrlBlock/dispatch/rcTagTable/MemRCTagTable/_2578_/Y (INVxp67_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_ctrlBlock/dispatch/rcTagTable/MemRCTagTable/_4753_",
+          "group": "clk",
+          "slack_ns": -10.439858,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.415354,
+              "arrival_ns": 10.937767,
+              "pin_and_cell": "^ backend/inner_ctrlBlock/dispatch/rcTagTable/MemRCTagTable/_2578_/Y (INVxp67_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_ctrlBlock/dispatch/rcTagTable/MemRCTagTable/_4754_",
+          "group": "clk",
+          "slack_ns": -10.439479,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.415354,
+              "arrival_ns": 10.937767,
+              "pin_and_cell": "^ backend/inner_ctrlBlock/dispatch/rcTagTable/MemRCTagTable/_2578_/Y (INVxp67_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_ctrlBlock/dispatch/rcTagTable/MemRCTagTable/_4755_",
+          "group": "clk",
+          "slack_ns": -10.439118,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.415354,
+              "arrival_ns": 10.937767,
+              "pin_and_cell": "^ backend/inner_ctrlBlock/dispatch/rcTagTable/MemRCTagTable/_2578_/Y (INVxp67_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_memScheduler/IssueQueueStaMou/entries/othersEntriesComp_0/_1281_",
+          "group": "clk",
+          "slack_ns": -10.429763,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.558336,
+              "arrival_ns": 11.08075,
+              "pin_and_cell": "v backend/inner_memScheduler/IssueQueueStaMou/entries/enqEntries_0/_1880_/Y (OA211x2_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_memScheduler/IssueQueueStaMou/entries/othersEntriesComp_1/_1281_",
+          "group": "clk",
+          "slack_ns": -10.429763,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.558336,
+              "arrival_ns": 11.08075,
+              "pin_and_cell": "v backend/inner_memScheduler/IssueQueueStaMou/entries/enqEntries_0/_1880_/Y (OA211x2_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_memScheduler/IssueQueueStaMou/entries/othersEntriesComp_2/_1281_",
+          "group": "clk",
+          "slack_ns": -10.429763,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.558336,
+              "arrival_ns": 11.08075,
+              "pin_and_cell": "v backend/inner_memScheduler/IssueQueueStaMou/entries/enqEntries_0/_1880_/Y (OA211x2_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_memScheduler/IssueQueueStaMou/entries/othersEntriesComp_3/_1281_",
+          "group": "clk",
+          "slack_ns": -10.429763,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.558336,
+              "arrival_ns": 11.08075,
+              "pin_and_cell": "v backend/inner_memScheduler/IssueQueueStaMou/entries/enqEntries_0/_1880_/Y (OA211x2_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_memScheduler/IssueQueueStaMou/entries/othersEntriesComp_4/_1281_",
+          "group": "clk",
+          "slack_ns": -10.429763,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.558336,
+              "arrival_ns": 11.08075,
+              "pin_and_cell": "v backend/inner_memScheduler/IssueQueueStaMou/entries/enqEntries_0/_1880_/Y (OA211x2_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_memScheduler/IssueQueueStaMou/entries/othersEntriesComp_5/_1281_",
+          "group": "clk",
+          "slack_ns": -10.429763,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.558336,
+              "arrival_ns": 11.08075,
+              "pin_and_cell": "v backend/inner_memScheduler/IssueQueueStaMou/entries/enqEntries_0/_1880_/Y (OA211x2_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_memScheduler/IssueQueueStaMou/entries/othersEntriesComp_6/_1281_",
+          "group": "clk",
+          "slack_ns": -10.429763,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.558336,
+              "arrival_ns": 11.08075,
+              "pin_and_cell": "v backend/inner_memScheduler/IssueQueueStaMou/entries/enqEntries_0/_1880_/Y (OA211x2_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_memScheduler/IssueQueueStaMou/entries/othersEntriesComp_7/_1281_",
+          "group": "clk",
+          "slack_ns": -10.429763,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.558336,
+              "arrival_ns": 11.08075,
+              "pin_and_cell": "v backend/inner_memScheduler/IssueQueueStaMou/entries/enqEntries_0/_1880_/Y (OA211x2_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_memScheduler/IssueQueueStaMou/entries/othersEntriesComp_8/_1281_",
+          "group": "clk",
+          "slack_ns": -10.429763,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.558336,
+              "arrival_ns": 11.08075,
+              "pin_and_cell": "v backend/inner_memScheduler/IssueQueueStaMou/entries/enqEntries_0/_1880_/Y (OA211x2_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_memScheduler/IssueQueueStaMou/entries/othersEntriesComp_9/_1281_",
+          "group": "clk",
+          "slack_ns": -10.429759,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.558336,
+              "arrival_ns": 11.08075,
+              "pin_and_cell": "v backend/inner_memScheduler/IssueQueueStaMou/entries/enqEntries_0/_1880_/Y (OA211x2_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_memScheduler/IssueQueueStaMou_1/entries/othersEntriesComp_0/_1281_",
+          "group": "clk",
+          "slack_ns": -10.429763,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.558336,
+              "arrival_ns": 11.08075,
+              "pin_and_cell": "v backend/inner_memScheduler/IssueQueueStaMou_1/entries/enqEntries_0/_1880_/Y (OA211x2_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_memScheduler/IssueQueueStaMou_1/entries/othersEntriesComp_1/_1281_",
+          "group": "clk",
+          "slack_ns": -10.429763,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.558336,
+              "arrival_ns": 11.08075,
+              "pin_and_cell": "v backend/inner_memScheduler/IssueQueueStaMou_1/entries/enqEntries_0/_1880_/Y (OA211x2_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_memScheduler/IssueQueueStaMou_1/entries/othersEntriesComp_2/_1281_",
+          "group": "clk",
+          "slack_ns": -10.429763,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.558336,
+              "arrival_ns": 11.08075,
+              "pin_and_cell": "v backend/inner_memScheduler/IssueQueueStaMou_1/entries/enqEntries_0/_1880_/Y (OA211x2_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_memScheduler/IssueQueueStaMou_1/entries/othersEntriesComp_3/_1281_",
+          "group": "clk",
+          "slack_ns": -10.429763,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.558336,
+              "arrival_ns": 11.08075,
+              "pin_and_cell": "v backend/inner_memScheduler/IssueQueueStaMou_1/entries/enqEntries_0/_1880_/Y (OA211x2_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_memScheduler/IssueQueueStaMou_1/entries/othersEntriesComp_4/_1281_",
+          "group": "clk",
+          "slack_ns": -10.429763,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.558336,
+              "arrival_ns": 11.08075,
+              "pin_and_cell": "v backend/inner_memScheduler/IssueQueueStaMou_1/entries/enqEntries_0/_1880_/Y (OA211x2_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_memScheduler/IssueQueueStaMou_1/entries/othersEntriesComp_5/_1281_",
+          "group": "clk",
+          "slack_ns": -10.429763,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.558336,
+              "arrival_ns": 11.08075,
+              "pin_and_cell": "v backend/inner_memScheduler/IssueQueueStaMou_1/entries/enqEntries_0/_1880_/Y (OA211x2_ASAP7_75t_R)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "period_ns": 2,
+      "worst_slack_ns": -9.441136,
+      "tns_ns": -102188.14,
+      "timing_status": "FAIL",
+      "reported_paths": 40,
+      "group_worst_slack_ns": {
+        "clk": -9.441136,
+        "**async_default**": 0.093805
+      },
+      "worst_path": {
+        "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+        "endpoint": "backend/inner_ctrlBlock/dispatch/rcTagTable/MemRCTagTable/_4844_",
+        "group": "clk",
+        "slack_ns": -9.441136,
+        "largest_cell_increments": [
+          {
+            "delay_ns": 8.537562,
+            "arrival_ns": 10.522412,
+            "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+          },
+          {
+            "delay_ns": 1.610828,
+            "arrival_ns": 1.98485,
+            "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+          },
+          {
+            "delay_ns": 0.415354,
+            "arrival_ns": 10.937767,
+            "pin_and_cell": "^ backend/inner_ctrlBlock/dispatch/rcTagTable/MemRCTagTable/_2578_/Y (INVxp67_ASAP7_75t_R)"
+          }
+        ]
+      },
+      "paths": [
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19443_",
+          "group": "**async_default**",
+          "slack_ns": 0.093805,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19444_",
+          "group": "**async_default**",
+          "slack_ns": 0.093805,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19445_",
+          "group": "**async_default**",
+          "slack_ns": 0.093805,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19446_",
+          "group": "**async_default**",
+          "slack_ns": 0.093805,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19447_",
+          "group": "**async_default**",
+          "slack_ns": 0.093805,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19448_",
+          "group": "**async_default**",
+          "slack_ns": 0.093805,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19449_",
+          "group": "**async_default**",
+          "slack_ns": 0.093805,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19450_",
+          "group": "**async_default**",
+          "slack_ns": 0.093805,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19451_",
+          "group": "**async_default**",
+          "slack_ns": 0.093805,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19452_",
+          "group": "**async_default**",
+          "slack_ns": 0.093805,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19453_",
+          "group": "**async_default**",
+          "slack_ns": 0.093805,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19454_",
+          "group": "**async_default**",
+          "slack_ns": 0.093805,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19455_",
+          "group": "**async_default**",
+          "slack_ns": 0.093805,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19456_",
+          "group": "**async_default**",
+          "slack_ns": 0.093805,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19457_",
+          "group": "**async_default**",
+          "slack_ns": 0.093805,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19458_",
+          "group": "**async_default**",
+          "slack_ns": 0.093805,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19459_",
+          "group": "**async_default**",
+          "slack_ns": 0.093805,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19460_",
+          "group": "**async_default**",
+          "slack_ns": 0.093805,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19461_",
+          "group": "**async_default**",
+          "slack_ns": 0.093805,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_resetGen_2/_10_",
+          "endpoint": "backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_19462_",
+          "group": "**async_default**",
+          "slack_ns": 0.093805,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 1.322172,
+              "arrival_ns": 1.385369,
+              "pin_and_cell": "v backend/inner_resetGen_2/_06_/Y (INVx1_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.316271,
+              "arrival_ns": 1.70164,
+              "pin_and_cell": "v backend/inner_vfExuBlock/exus_1/Vipu/vialu/vMaskAlu/_15386_/Y (HB1xp67_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.063198,
+              "arrival_ns": 0.063198,
+              "pin_and_cell": "^ backend/inner_resetGen_2/_10_/QN (DFFASRHQNx1_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_ctrlBlock/dispatch/rcTagTable/MemRCTagTable/_4844_",
+          "group": "clk",
+          "slack_ns": -9.441136,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.415354,
+              "arrival_ns": 10.937767,
+              "pin_and_cell": "^ backend/inner_ctrlBlock/dispatch/rcTagTable/MemRCTagTable/_2578_/Y (INVxp67_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_ctrlBlock/dispatch/rcTagTable/MemRCTagTable/_4753_",
+          "group": "clk",
+          "slack_ns": -9.439858,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.415354,
+              "arrival_ns": 10.937767,
+              "pin_and_cell": "^ backend/inner_ctrlBlock/dispatch/rcTagTable/MemRCTagTable/_2578_/Y (INVxp67_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_ctrlBlock/dispatch/rcTagTable/MemRCTagTable/_4754_",
+          "group": "clk",
+          "slack_ns": -9.439479,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.415354,
+              "arrival_ns": 10.937767,
+              "pin_and_cell": "^ backend/inner_ctrlBlock/dispatch/rcTagTable/MemRCTagTable/_2578_/Y (INVxp67_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_ctrlBlock/dispatch/rcTagTable/MemRCTagTable/_4755_",
+          "group": "clk",
+          "slack_ns": -9.439119,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.415354,
+              "arrival_ns": 10.937767,
+              "pin_and_cell": "^ backend/inner_ctrlBlock/dispatch/rcTagTable/MemRCTagTable/_2578_/Y (INVxp67_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_memScheduler/IssueQueueStaMou/entries/othersEntriesComp_0/_1281_",
+          "group": "clk",
+          "slack_ns": -9.429763,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.558336,
+              "arrival_ns": 11.08075,
+              "pin_and_cell": "v backend/inner_memScheduler/IssueQueueStaMou/entries/enqEntries_0/_1880_/Y (OA211x2_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_memScheduler/IssueQueueStaMou/entries/othersEntriesComp_1/_1281_",
+          "group": "clk",
+          "slack_ns": -9.429763,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.558336,
+              "arrival_ns": 11.08075,
+              "pin_and_cell": "v backend/inner_memScheduler/IssueQueueStaMou/entries/enqEntries_0/_1880_/Y (OA211x2_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_memScheduler/IssueQueueStaMou/entries/othersEntriesComp_2/_1281_",
+          "group": "clk",
+          "slack_ns": -9.429763,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.558336,
+              "arrival_ns": 11.08075,
+              "pin_and_cell": "v backend/inner_memScheduler/IssueQueueStaMou/entries/enqEntries_0/_1880_/Y (OA211x2_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_memScheduler/IssueQueueStaMou/entries/othersEntriesComp_3/_1281_",
+          "group": "clk",
+          "slack_ns": -9.429763,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.558336,
+              "arrival_ns": 11.08075,
+              "pin_and_cell": "v backend/inner_memScheduler/IssueQueueStaMou/entries/enqEntries_0/_1880_/Y (OA211x2_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_memScheduler/IssueQueueStaMou/entries/othersEntriesComp_4/_1281_",
+          "group": "clk",
+          "slack_ns": -9.429763,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.558336,
+              "arrival_ns": 11.08075,
+              "pin_and_cell": "v backend/inner_memScheduler/IssueQueueStaMou/entries/enqEntries_0/_1880_/Y (OA211x2_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_memScheduler/IssueQueueStaMou/entries/othersEntriesComp_5/_1281_",
+          "group": "clk",
+          "slack_ns": -9.429763,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.558336,
+              "arrival_ns": 11.08075,
+              "pin_and_cell": "v backend/inner_memScheduler/IssueQueueStaMou/entries/enqEntries_0/_1880_/Y (OA211x2_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_memScheduler/IssueQueueStaMou/entries/othersEntriesComp_6/_1281_",
+          "group": "clk",
+          "slack_ns": -9.429763,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.558336,
+              "arrival_ns": 11.08075,
+              "pin_and_cell": "v backend/inner_memScheduler/IssueQueueStaMou/entries/enqEntries_0/_1880_/Y (OA211x2_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_memScheduler/IssueQueueStaMou/entries/othersEntriesComp_7/_1281_",
+          "group": "clk",
+          "slack_ns": -9.429763,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.558336,
+              "arrival_ns": 11.08075,
+              "pin_and_cell": "v backend/inner_memScheduler/IssueQueueStaMou/entries/enqEntries_0/_1880_/Y (OA211x2_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_memScheduler/IssueQueueStaMou/entries/othersEntriesComp_8/_1281_",
+          "group": "clk",
+          "slack_ns": -9.429763,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.558336,
+              "arrival_ns": 11.08075,
+              "pin_and_cell": "v backend/inner_memScheduler/IssueQueueStaMou/entries/enqEntries_0/_1880_/Y (OA211x2_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_memScheduler/IssueQueueStaMou/entries/othersEntriesComp_9/_1281_",
+          "group": "clk",
+          "slack_ns": -9.429759,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.558336,
+              "arrival_ns": 11.08075,
+              "pin_and_cell": "v backend/inner_memScheduler/IssueQueueStaMou/entries/enqEntries_0/_1880_/Y (OA211x2_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_memScheduler/IssueQueueStaMou_1/entries/othersEntriesComp_0/_1281_",
+          "group": "clk",
+          "slack_ns": -9.429763,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.558336,
+              "arrival_ns": 11.08075,
+              "pin_and_cell": "v backend/inner_memScheduler/IssueQueueStaMou_1/entries/enqEntries_0/_1880_/Y (OA211x2_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_memScheduler/IssueQueueStaMou_1/entries/othersEntriesComp_1/_1281_",
+          "group": "clk",
+          "slack_ns": -9.429763,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.558336,
+              "arrival_ns": 11.08075,
+              "pin_and_cell": "v backend/inner_memScheduler/IssueQueueStaMou_1/entries/enqEntries_0/_1880_/Y (OA211x2_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_memScheduler/IssueQueueStaMou_1/entries/othersEntriesComp_2/_1281_",
+          "group": "clk",
+          "slack_ns": -9.429763,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.558336,
+              "arrival_ns": 11.08075,
+              "pin_and_cell": "v backend/inner_memScheduler/IssueQueueStaMou_1/entries/enqEntries_0/_1880_/Y (OA211x2_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_memScheduler/IssueQueueStaMou_1/entries/othersEntriesComp_3/_1281_",
+          "group": "clk",
+          "slack_ns": -9.429763,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.558336,
+              "arrival_ns": 11.08075,
+              "pin_and_cell": "v backend/inner_memScheduler/IssueQueueStaMou_1/entries/enqEntries_0/_1880_/Y (OA211x2_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_memScheduler/IssueQueueStaMou_1/entries/othersEntriesComp_4/_1281_",
+          "group": "clk",
+          "slack_ns": -9.429763,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.558336,
+              "arrival_ns": 11.08075,
+              "pin_and_cell": "v backend/inner_memScheduler/IssueQueueStaMou_1/entries/enqEntries_0/_1880_/Y (OA211x2_ASAP7_75t_R)"
+            }
+          ]
+        },
+        {
+          "start": "backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_1089_",
+          "endpoint": "backend/inner_memScheduler/IssueQueueStaMou_1/entries/othersEntriesComp_5/_1281_",
+          "group": "clk",
+          "slack_ns": -9.429763,
+          "largest_cell_increments": [
+            {
+              "delay_ns": 8.537562,
+              "arrival_ns": 10.522412,
+              "pin_and_cell": "v backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0936_/Y (NOR4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 1.610828,
+              "arrival_ns": 1.98485,
+              "pin_and_cell": "^ backend/inner_dataPath/regCache/MemRegCacheRepRCIdx_age/_0907_/Y (NAND4xp25_ASAP7_75t_R)"
+            },
+            {
+              "delay_ns": 0.558336,
+              "arrival_ns": 11.08075,
+              "pin_and_cell": "v backend/inner_memScheduler/IssueQueueStaMou_1/entries/enqEntries_0/_1880_/Y (OA211x2_ASAP7_75t_R)"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "physical_signoff": false,
+  "power_measured": false,
+  "functional_equivalence": "NOT_TESTED",
+  "interpretation": "Measured pre-layout timing of this hierarchical standard-cell implementation. Not a technology-independent core Fmax, routed result, silicon measurement or same-RTL cross-library comparison."
+}

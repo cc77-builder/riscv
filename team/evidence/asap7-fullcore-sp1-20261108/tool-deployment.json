@@ -1,0 +1,326 @@
+{
+  "created": "2026-11-08T05:39:12.364966+00:00",
+  "versions": {
+    "yosys": "Yosys 0.33 (git sha1 2584903a060)",
+    "openroad": "v2.0-17598-ga008522d8",
+    "sv2v": "sv2v v0.0.13",
+    "opensta": "2.0.17"
+  },
+  "ldd": {
+    "yosys": "\tlinux-vdso.so.1 (0x00007fff51dfa000)\n\tlibstdc++.so.6 => /lib/x86_64-linux-gnu/libstdc++.so.6 (0x000071d288800000)\n\tlibm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x000071d289435000)\n\tlibreadline.so.8 => /lib/x86_64-linux-gnu/libreadline.so.8 (0x000071d288bab000)\n\tlibffi.so.8 => /lib/x86_64-linux-gnu/libffi.so.8 (0x000071d289429000)\n\tlibz.so.1 => /lib/x86_64-linux-gnu/libz.so.1 (0x000071d28940d000)\n\tlibtcl8.6.so => /home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/runtime/usr/lib/x86_64-linux-gnu/libtcl8.6.so (0x000071d288653000)\n\tlibgcc_s.so.1 => /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x000071d288b7d000)\n\tlibc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x000071d288400000)\n\t/lib64/ld-linux-x86-64.so.2 (0x000071d289528000)\n\tlibtinfo.so.6 => /lib/x86_64-linux-gnu/libtinfo.so.6 (0x000071d288b49000)\n",
+    "openroad": "\tlinux-vdso.so.1 (0x00007ffc2f3f1000)\n\tlibtcl8.6.so => /home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/runtime/usr/lib/x86_64-linux-gnu/libtcl8.6.so (0x00007f4150730000)\n\tlibtclreadline-2.3.8.so => /home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/runtime/usr/lib/x86_64-linux-gnu/libtclreadline-2.3.8.so (0x00007f4150729000)\n\tlibz.so.1 => /lib/x86_64-linux-gnu/libz.so.1 (0x00007f4150705000)\n\tlibortools.so.9 => /home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/openroad/opt/or-tools/lib/libortools.so.9 (0x00007f4148e00000)\n\tlibgomp.so.1 => /lib/x86_64-linux-gnu/libgomp.so.1 (0x00007f414b3aa000)\n\tlibQt5Charts.so.5 => /home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/runtime/usr/lib/x86_64-linux-gnu/libQt5Charts.so.5 (0x00007f4148c3b000)\n\tlibQt5Widgets.so.5 => /home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/runtime/usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5 (0x00007f4148400000)\n\tlibQt5Gui.so.5 => /home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/runtime/usr/lib/x86_64-linux-gnu/libQt5Gui.so.5 (0x00007f4147c00000)\n\tlibQt5Core.so.5 => /home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/runtime/usr/lib/x86_64-linux-gnu/libQt5Core.so.5 (0x00007f4147600000)\n\tlibpython3.10.so.1.0 => /home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/runtime/usr/lib/x86_64-linux-gnu/libpython3.10.so.1.0 (0x00007f4147000000)\n\tlibstdc++.so.6 => /lib/x86_64-linux-gnu/libstdc++.so.6 (0x00007f4146c00000)\n\tlibm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007f4148b52000)\n\tlibgcc_s.so.1 => /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007f414b37c000)\n\tlibc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f4146800000)\n\t/lib64/ld-linux-x86-64.so.2 (0x00007f41508df000)\n\tlibreadline.so.8 => /lib/x86_64-linux-gnu/libreadline.so.8 (0x00007f414b327000)\n\tlibdl.so.2 => /lib/x86_64-linux-gnu/libdl.so.2 (0x00007f41506fa000)\n\tlibpthread.so.0 => /lib/x86_64-linux-gnu/libpthread.so.0 (0x00007f41506f5000)\n\tlibGL.so.1 => /lib/x86_64-linux-gnu/libGL.so.1 (0x00007f4148acb000)\n\tlibpng16.so.16 => /lib/x86_64-linux-gnu/libpng16.so.16 (0x00007f414b2ef000)\n\tlibharfbuzz.so.0 => /lib/x86_64-linux-gnu/libharfbuzz.so.0 (0x00007f4146ef3000)\n\tlibmd4c.so.0 => /home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/runtime/usr/lib/x86_64-linux-gnu/libmd4c.so.0 (0x00007f41483ee000)\n\tlibdouble-conversion.so.3 => /home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/runtime/usr/lib/x86_64-linux-gnu/libdouble-conversion.so.3 (0x00007f41483d9000)\n\tlibicui18n.so.74 => /lib/x86_64-linux-gnu/libicui18n.so.74 (0x00007f4146400000)\n\tlibicuuc.so.74 => /lib/x86_64-linux-gnu/libicuuc.so.74 (0x00007f4146000000)\n\tlibpcre2-16.so.0 => /lib/x86_64-linux-gnu/libpcre2-16.so.0 (0x00007f414834d000)\n\tlibzstd.so.1 => /lib/x86_64-linux-gnu/libzstd.so.1 (0x00007f4146b46000)\n\tlibglib-2.0.so.0 => /lib/x86_64-linux-gnu/libglib-2.0.so.0 (0x00007f41462b7000)\n\tlibexpat.so.1 => /lib/x86_64-linux-gnu/libexpat.so.1 (0x00007f414831f000)\n\tlibtinfo.so.6 => /lib/x86_64-linux-gnu/libtinfo.so.6 (0x00007f4147bcc000)\n\tlibGLdispatch.so.0 => /lib/x86_64-linux-gnu/libGLdispatch.so.0 (0x00007f4146a8e000)\n\tlibGLX.so.0 => /lib/x86_64-linux-gnu/libGLX.so.0 (0x00007f4147b99000)\n\tlibfreetype.so.6 => /lib/x86_64-linux-gnu/libfreetype.so.6 (0x00007f4145f34000)\n\tlibgraphite2.so.3 => /lib/x86_64-linux-gnu/libgraphite2.so.3 (0x00007f41482f9000)\n\tlibicudata.so.74 => /lib/x86_64-linux-gnu/libicudata.so.74 (0x00007f4144000000)\n\tlibpcre2-8.so.0 => /lib/x86_64-linux-gnu/libpcre2-8.so.0 (0x00007f4146766000)\n\tlibX11.so.6 => /lib/x86_64-linux-gnu/libX11.so.6 (0x00007f4145df6000)\n\tlibbz2.so.1.0 => /lib/x86_64-linux-gnu/libbz2.so.1.0 (0x00007f4147b85000)\n\tlibbrotlidec.so.1 => /lib/x86_64-linux-gnu/libbrotlidec.so.1 (0x00007f4148abb000)\n\tlibxcb.so.1 => /lib/x86_64-linux-gnu/libxcb.so.1 (0x00007f41475d7000)\n\tlibbrotlicommon.so.1 => /lib/x86_64-linux-gnu/libbrotlicommon.so.1 (0x00007f4146ed0000)\n\tlibXau.so.6 => /lib/x86_64-linux-gnu/libXau.so.6 (0x00007f4147b7d000)\n\tlibXdmcp.so.6 => /lib/x86_64-linux-gnu/libXdmcp.so.6 (0x00007f4147b75000)\n\tlibbsd.so.0 => /lib/x86_64-linux-gnu/libbsd.so.0 (0x00007f4146eba000)\n\tlibmd.so.0 => /lib/x86_64-linux-gnu/libmd.so.0 (0x00007f4146eab000)\n",
+    "sv2v": "\tlinux-vdso.so.1 (0x00007ffc6cbfd000)\n\tlibm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007d21b461a000)\n\tlibgmp.so.10 => /lib/x86_64-linux-gnu/libgmp.so.10 (0x00007d21b4596000)\n\tlibc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007d21b4200000)\n\t/lib64/ld-linux-x86-64.so.2 (0x00007d21b470d000)\n",
+    "opensta": "\tlinux-vdso.so.1 (0x00007fffcf9ea000)\n\tlibtcl8.6.so => /home/amesotten/.cache/codex-rvinno/eda-asap7-20261028-03/tools/usr/lib/x86_64-linux-gnu/libtcl8.6.so (0x00007552b4bdc000)\n\tlibz.so.1 => /lib/x86_64-linux-gnu/libz.so.1 (0x00007552b4bb8000)\n\tlibreadline.so.8 => /lib/x86_64-linux-gnu/libreadline.so.8 (0x00007552b47ab000)\n\tlibstdc++.so.6 => /lib/x86_64-linux-gnu/libstdc++.so.6 (0x00007552b4400000)\n\tlibm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007552b46c2000)\n\tlibgcc_s.so.1 => /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007552b4694000)\n\tlibpthread.so.0 => /lib/x86_64-linux-gnu/libpthread.so.0 (0x00007552b4bb1000)\n\tlibc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007552b4000000)\n\tlibtinfo.so.6 => /lib/x86_64-linux-gnu/libtinfo.so.6 (0x00007552b43cc000)\n\t/lib64/ld-linux-x86-64.so.2 (0x00007552b4d8b000)\n"
+  },
+  "files": {
+    "/home/amesotten/.cache/codex-rvinno/eda-asap7-20261028-03/tools/usr/bin/sta": {
+      "bytes": 3846144,
+      "sha256": "9630070fdbcfd2a92a9d0dc6b6e5480f7be8e216b720f1fb32f447fb4cedc2ff"
+    },
+    "/home/amesotten/.cache/codex-rvinno/eda-asap7-20261028-03/tools/usr/lib/x86_64-linux-gnu/libtcl8.6.so": {
+      "bytes": 1753856,
+      "sha256": "2d072235d4a518cb02fd8c6a2dd052119545a9a4406cb69e8cdeef156571dec2"
+    },
+    "/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/platform/fastroute.tcl": {
+      "bytes": 290,
+      "sha256": "0513fb0efd632b4bc3c16882b09d64ce227e48f4bc71486f4d05aec62fe7b0e1"
+    },
+    "/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/platform/lef/asap7_tech_1x_201209.lef": {
+      "bytes": 20141,
+      "sha256": "7694bf4f8ef2f9745e4579f454788a0cf048e8605320f32d1d83ec540ed4ca41"
+    },
+    "/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/platform/lef/asap7sc7p5t_28_R_1x_220121a.lef": {
+      "bytes": 391403,
+      "sha256": "4eb73f825720d95eba4da455c7b2e7a28e444e88e9d8595d13492cf5eecfc0d1"
+    },
+    "/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/platform/openRoad/make_tracks.tcl": {
+      "bytes": 1235,
+      "sha256": "4693c8fc81cf9095ed7fba61e778ec81c16c3cadc747f9ce388acf38f8331632"
+    },
+    "/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/platform/probe.tcl": {
+      "bytes": 385,
+      "sha256": "c7f89b740d3425aa91f045f746c6d43ab4c08b0c4a6db7581c74c34b08be2474"
+    },
+    "/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/platform/setRC.tcl": {
+      "bytes": 1159,
+      "sha256": "ce6e29fe23b648839009c53035901066653d5850f9419ba85169c715b2cebd14"
+    },
+    "/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/debs/libdouble-conversion3_3.3.0-1build1_amd64.deb": {
+      "bytes": 40294,
+      "sha256": "856f534738da20fa9d8c271e17781fba3dc180bbbab116c22a0b569f6f506e25"
+    },
+    "/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/debs/libmd4c0_0.4.8-1build1_amd64.deb": {
+      "bytes": 42274,
+      "sha256": "34fd2e7a7aa62ada2597cffd4529f086cb5058a6d7ac0048695254bd9fd882d7"
+    },
+    "/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/debs/libpython3.10.deb": {
+      "bytes": 1949752,
+      "sha256": "cd9ffe066be6207dd4fcb25fe037222e90429b0923d1a5eb6e897afcbb151833"
+    },
+    "/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/debs/libqt5charts5_5.15.13-1_amd64.deb": {
+      "bytes": 482186,
+      "sha256": "ecbe66ccf9ad309f0874c12c0cb15a888b4de61933ea175543753a03b5209fd5"
+    },
+    "/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/debs/libqt5core5t64_5.15.13+dfsg-1ubuntu1_amd64.deb": {
+      "bytes": 2010540,
+      "sha256": "8fb5c6a51ae436fefc41e0c9ad7a363ba8ab6b35db727eff5a469de2ee9f52bc"
+    },
+    "/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/debs/libqt5gui5t64_5.15.13+dfsg-1ubuntu1_amd64.deb": {
+      "bytes": 3747576,
+      "sha256": "e2c8a969c3566bdad2b692c611ec0e6bbeaeed88db55e71bbd4f61a414b89252"
+    },
+    "/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/debs/libqt5widgets5t64_5.15.13+dfsg-1ubuntu1_amd64.deb": {
+      "bytes": 2560968,
+      "sha256": "bdcb4395194d5062fcbda9ba70ae6d4deef75671d70140543d58ef34728dff53"
+    },
+    "/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/debs/libtcl8.6_8.6.14+dfsg-1build1_amd64.deb": {
+      "bytes": 987614,
+      "sha256": "7534eb825f6317514d747ce53b4d6c23bf24df1dc1785f9599610ece5515e685"
+    },
+    "/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/debs/tcl-tclreadline_2.3.8-2build2_amd64.deb": {
+      "bytes": 51300,
+      "sha256": "7f61dca1a7f55c445babfd2c718ff5359de8a61288125089c1c8a9e788c11f00"
+    },
+    "/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/debs/yosys_0.33-5build2_amd64.deb": {
+      "bytes": 3222052,
+      "sha256": "94247f2157ec6ce63c6638326e419975d911ace5356b3dc276d1d8b36659efbd"
+    },
+    "/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/openroad/opt/or-tools/lib/libortools.so.9.11.4210": {
+      "bytes": 38660240,
+      "sha256": "e362f5d8acebd1bc3485d270e20a0801991f6ec4829245ecf1ff92ac4f0c059f"
+    },
+    "/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/openroad/usr/bin/openroad": {
+      "bytes": 83704232,
+      "sha256": "93fe61454a52b927602fd6c798c4402214c19e80e7d614636345f0f427ea2f46"
+    },
+    "/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/openroad.deb": {
+      "bytes": 56971996,
+      "sha256": "40ed178396b0276a5d5dfbbe695c9de9aac9088157a6655be02b39a0cef07207"
+    },
+    "/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/runtime/usr/bin/yosys": {
+      "bytes": 8174408,
+      "sha256": "88c0a12bb814a1a8716b1ae10b482e35d3005ed558e1f5f626b3dc983ea3abd0"
+    },
+    "/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/runtime/usr/lib/x86_64-linux-gnu/libQt5Charts.so.5.15.13": {
+      "bytes": 1849800,
+      "sha256": "8f30d41dfe0f7541409b5e7be761eed38d79b412b718765e23eebbe68d14166f"
+    },
+    "/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/runtime/usr/lib/x86_64-linux-gnu/libQt5Core.so.5.15.13": {
+      "bytes": 5699976,
+      "sha256": "f3a46b3517fdcd82d70b9a2c01ba707499860e2eab328bb98445d8afce59ca37"
+    },
+    "/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/runtime/usr/lib/x86_64-linux-gnu/libQt5Gui.so.5.15.13": {
+      "bytes": 7256408,
+      "sha256": "75b66a3edcbc7f3013b4180b76919b49c22ce652372eba45ead8aac9121625e0"
+    },
+    "/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/runtime/usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5.15.13": {
+      "bytes": 7057536,
+      "sha256": "8e03815f581781fc8b0ef931335493f8f2fcb48ee855f0be2258bbfbd06e62ee"
+    },
+    "/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/runtime/usr/lib/x86_64-linux-gnu/libdouble-conversion.so.3.1": {
+      "bytes": 79952,
+      "sha256": "d1c9583dc7c1fce6f0a0701dd4356448425e45afe15c0946c23edeaf93d9397c"
+    },
+    "/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/runtime/usr/lib/x86_64-linux-gnu/libmd4c.so.0.4.8": {
+      "bytes": 67656,
+      "sha256": "d5f418d0ea9aec6b41efbb924580a1fb61e9113bcae36d5ad3f322269822d1b3"
+    },
+    "/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/runtime/usr/lib/x86_64-linux-gnu/libpython3.10.so.1.0": {
+      "bytes": 5834688,
+      "sha256": "d7bc028c6a98ac8c17edeada13609ea36db324d7f49c26b6ca93994e8c830453"
+    },
+    "/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/runtime/usr/lib/x86_64-linux-gnu/libtcl8.6.so": {
+      "bytes": 1753856,
+      "sha256": "2d072235d4a518cb02fd8c6a2dd052119545a9a4406cb69e8cdeef156571dec2"
+    },
+    "/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/runtime/usr/lib/x86_64-linux-gnu/libtclreadline-2.3.8.so": {
+      "bytes": 22976,
+      "sha256": "b1ed1fa34b7712e5c14666f75c667984905ab08f15ef30220171690a719bc2b5"
+    },
+    "/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/sv2v/sv2v-Linux/sv2v": {
+      "bytes": 10395000,
+      "sha256": "b80a8ac6212aa72a196d9d6129cda35f16dbfa799ec61848c46321f845b6b635"
+    },
+    "/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/sv2v.zip": {
+      "bytes": 2197565,
+      "sha256": "552799a1d76cd177b9b4cc63a3e77823a3d2a6eb4ec006569288abeff28e1ff8"
+    },
+    "/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/wheels/ijson-3.6.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl": {
+      "bytes": 150188,
+      "sha256": "c14d568d31a322e8ed7e9735f6e355608a23cc6ff4b5da843515089dae4cbf5f"
+    },
+    "/usr/lib/x86_64-linux-gnu/libGL.so.1.7.0": {
+      "bytes": 547136,
+      "sha256": "67f471213576d225d38347a0b6d2a08a231980685301ff6461bd74d3994e5027"
+    },
+    "/usr/lib/x86_64-linux-gnu/libGLX.so.0.0.0": {
+      "bytes": 137792,
+      "sha256": "16fc8a37eea9210dc83c57eeff5aedc10ab4c6673f2f97e8bb6ee103df657b40"
+    },
+    "/usr/lib/x86_64-linux-gnu/libGLdispatch.so.0.0.0": {
+      "bytes": 719304,
+      "sha256": "ca01a91104c8887b3d8e59499b58cbb8f604cc285666b50d9ec888eb0c915182"
+    },
+    "/usr/lib/x86_64-linux-gnu/libX11.so.6.4.0": {
+      "bytes": 1302184,
+      "sha256": "edd2ddf6e00a81c40b8645f7dbb6d6603c6a0a78d583bdbe7491d8a84de6e3b6"
+    },
+    "/usr/lib/x86_64-linux-gnu/libXau.so.6.0.0": {
+      "bytes": 18696,
+      "sha256": "8040da3f8516c1acfe39f04ff022480cdb273705ba5e7a4ca70bbdb1527cd67a"
+    },
+    "/usr/lib/x86_64-linux-gnu/libXdmcp.so.6.0.0": {
+      "bytes": 26776,
+      "sha256": "667d97d6da16016400ab10de9f83ef4ab209ceb6adf68ff9650225ec13e723b0"
+    },
+    "/usr/lib/x86_64-linux-gnu/libbrotlicommon.so.1.1.0": {
+      "bytes": 141640,
+      "sha256": "f8cd338ec62f719333abd5cba29a6e0bdb4597dfdffed000ffb868b47e02f2e9"
+    },
+    "/usr/lib/x86_64-linux-gnu/libbrotlidec.so.1.1.0": {
+      "bytes": 51512,
+      "sha256": "d5060475e7259904af3600d01e809710305b296441815bcaa540119a66530a70"
+    },
+    "/usr/lib/x86_64-linux-gnu/libbsd.so.0.12.1": {
+      "bytes": 80888,
+      "sha256": "e86cd4f0019f42c2ba5e60602e0edc8694d2948377d98c3654d0f6bddb5254bb"
+    },
+    "/usr/lib/x86_64-linux-gnu/libbz2.so.1.0.4": {
+      "bytes": 78944,
+      "sha256": "cc08c9f50a8009ffd6391e0116a100369b11ca9238fa52392c019e6645b122a1"
+    },
+    "/usr/lib/x86_64-linux-gnu/libc.so.6": {
+      "bytes": 2129424,
+      "sha256": "3a15d66867d83762c7f2f1e37359cb8f6c5743edb369c65285cb0b1c4f7498bf"
+    },
+    "/usr/lib/x86_64-linux-gnu/libdl.so.2": {
+      "bytes": 14408,
+      "sha256": "c2994527172cc23b7fb0f7d611b71e00a37da27af12c2e5e9e0dc1a742886c96"
+    },
+    "/usr/lib/x86_64-linux-gnu/libexpat.so.1.9.1": {
+      "bytes": 186624,
+      "sha256": "286682ecbc5e59a638963b1a4e6351e65eb32fcf4bdcb9cb7569b6a61fe06a8d"
+    },
+    "/usr/lib/x86_64-linux-gnu/libffi.so.8.1.4": {
+      "bytes": 47672,
+      "sha256": "00f593fe192f2851b8ce23b25cec2488d769beb5a8f63e8c9e563071e1075153"
+    },
+    "/usr/lib/x86_64-linux-gnu/libfreetype.so.6.20.1": {
+      "bytes": 833608,
+      "sha256": "992dac80abe3a3854f3eb2668da4207c029664ceca5f122ddb46e2a8169e9499"
+    },
+    "/usr/lib/x86_64-linux-gnu/libgcc_s.so.1": {
+      "bytes": 183024,
+      "sha256": "d93224d2b0dab4247598be683adca02f5cf00586f99c187579cd7e92058fb7cb"
+    },
+    "/usr/lib/x86_64-linux-gnu/libglib-2.0.so.0.8000.0": {
+      "bytes": 1343056,
+      "sha256": "96ef9163aee942bdc09e6f4a1acd2fd6b178c03af824c569741440d63ac9f4f4"
+    },
+    "/usr/lib/x86_64-linux-gnu/libgmp.so.10.5.0": {
+      "bytes": 534896,
+      "sha256": "0ccdfb6d6f5c039465f6d002cf7e4c072d48ac6a2cffc8dd6c748dec31592804"
+    },
+    "/usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0": {
+      "bytes": 352304,
+      "sha256": "135f3c8f006d2fe5e68e51281c7974cb991a03de3bfb3593d68d174dfcf854d1"
+    },
+    "/usr/lib/x86_64-linux-gnu/libgraphite2.so.3.2.1": {
+      "bytes": 149776,
+      "sha256": "fcfaf843b25b58b88319ced52f826fc8213a661f3693c916f88641eddffe05b8"
+    },
+    "/usr/lib/x86_64-linux-gnu/libharfbuzz.so.0.60830.0": {
+      "bytes": 1101752,
+      "sha256": "4562cfcfd18935324ba3ac74a944898b867ab87a56e925ab3e351ba773f1513e"
+    },
+    "/usr/lib/x86_64-linux-gnu/libicudata.so.74.2": {
+      "bytes": 30795392,
+      "sha256": "ddbb3718b8bd9cbd780e5ab08b4503c30a6c4fa0706ebe5d074ed6b596c1714e"
+    },
+    "/usr/lib/x86_64-linux-gnu/libicui18n.so.74.2": {
+      "bytes": 3455304,
+      "sha256": "3550b194eb2cf2e6f798f033eb9ca279d498c21296b4a18790ce158d2023e47b"
+    },
+    "/usr/lib/x86_64-linux-gnu/libicuuc.so.74.2": {
+      "bytes": 2140336,
+      "sha256": "7560aadde38e5f4237a47a1ddd5891f9b36768a77a60faae30beee003ac01901"
+    },
+    "/usr/lib/x86_64-linux-gnu/libm.so.6": {
+      "bytes": 952616,
+      "sha256": "fce00b6f25f459cf4ae0b7fae4257909a1a8a86f9149e7c029a5d617baf1ccd0"
+    },
+    "/usr/lib/x86_64-linux-gnu/libmd.so.0.1.0": {
+      "bytes": 55536,
+      "sha256": "423e18586b6ea740f4465afd64f7a9a4cb7264ed979c8e7256f9085af5345fef"
+    },
+    "/usr/lib/x86_64-linux-gnu/libpcre2-16.so.0.11.2": {
+      "bytes": 572064,
+      "sha256": "526bbf0d9467d22451d04bfdb585cd7b84a22c9978dace5501704125ec2972f9"
+    },
+    "/usr/lib/x86_64-linux-gnu/libpcre2-8.so.0.11.2": {
+      "bytes": 625344,
+      "sha256": "6075a70c30fd7216b9214ae50f2def0ce835092b034088ed9bd64c6a376c740f"
+    },
+    "/usr/lib/x86_64-linux-gnu/libpng16.so.16.43.0": {
+      "bytes": 223304,
+      "sha256": "89c0c6569a8c00480d451401ad4c0a74942e62dc57f229a970592fdc5adb29e8"
+    },
+    "/usr/lib/x86_64-linux-gnu/libpthread.so.0": {
+      "bytes": 14408,
+      "sha256": "90491a21ce44efcf3bd4b65ec82501c091d7ebe7f8d9b341dd01d721001d9ecd"
+    },
+    "/usr/lib/x86_64-linux-gnu/libreadline.so.8.2": {
+      "bytes": 344096,
+      "sha256": "0a079f958147699f7bb5bf228406a5d878dc2387fe9cdc5cce6f3e35e20380fc"
+    },
+    "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33": {
+      "bytes": 2592224,
+      "sha256": "1fd75fe70354a416d75aef22bcae68c47bd25d20e2d0568c30b1a9838cf62f11"
+    },
+    "/usr/lib/x86_64-linux-gnu/libtinfo.so.6.4": {
+      "bytes": 208328,
+      "sha256": "e6089d7bb95eee5b545f3770dd69095b0bca47d26701cad145af429561d16306"
+    },
+    "/usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0": {
+      "bytes": 162392,
+      "sha256": "7958a0136b121bdc4c708968569ad152a9ed208ab026e2537b1005dde64ca440"
+    },
+    "/usr/lib/x86_64-linux-gnu/libz.so.1.3": {
+      "bytes": 113000,
+      "sha256": "f61677c7bdb7c2aa2a243ea781bfd16afcb361cede7b4ef76127a9d8eb9a5242"
+    },
+    "/usr/lib/x86_64-linux-gnu/libzstd.so.1.5.5": {
+      "bytes": 755864,
+      "sha256": "0a2128bc10841fb29e76d08d945864dfb0b6a66da5df6df5d8299197439e54bb"
+    }
+  },
+  "provenance": {
+    "openroad": "https://github.com/Precision-Innovations/OpenROAD/releases/tag/2024-12-14",
+    "sv2v": "https://github.com/zachjs/sv2v/releases/tag/v0.0.13",
+    "platform_commit": "bf3f9b344bf7d9d999f199778a722833bccbd33c",
+    "ubuntu_packages": "apt download from Ubuntu noble mirror; libpython3.10 from jammy-updates, verified against Ubuntu package SHA256",
+    "environment_scope": "project-local extracted packages; no system installation or global PATH change"
+  },
+  "environments": {
+    "yosys": {
+      "LD_LIBRARY_PATH": "/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/runtime/usr/lib/x86_64-linux-gnu:/home/amesotten/.cache/codex-rvinno/eda-asap7-20261028-03/tools/usr/lib/x86_64-linux-gnu",
+      "TCL_LIBRARY": "/home/amesotten/.cache/codex-rvinno/eda-asap7-20261028-03/tools/usr/share/tcltk/tcl8.6",
+      "OMP_NUM_THREADS": "2"
+    },
+    "openroad": {
+      "LD_LIBRARY_PATH": "/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/runtime/usr/lib/x86_64-linux-gnu:/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/runtime/usr/lib/tcltk/x86_64-linux-gnu:/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/runtime/usr/lib:/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/openroad/opt/or-tools/lib",
+      "TCL_LIBRARY": "/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/runtime/usr/share/tcltk/tcl8.6",
+      "OMP_NUM_THREADS": null
+    },
+    "sv2v": {
+      "LD_LIBRARY_PATH": "/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/runtime/usr/lib/x86_64-linux-gnu:/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/runtime/usr/lib/tcltk/x86_64-linux-gnu:/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/runtime/usr/lib:/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/openroad/opt/or-tools/lib",
+      "TCL_LIBRARY": "/home/amesotten/.cache/codex-rvinno/sp1-fullcore-asap7-20261108/tools/runtime/usr/share/tcltk/tcl8.6",
+      "OMP_NUM_THREADS": null
+    },
+    "opensta": {
+      "LD_LIBRARY_PATH": "/home/amesotten/.cache/codex-rvinno/eda-asap7-20261028-03/tools/usr/lib/x86_64-linux-gnu",
+      "TCL_LIBRARY": "/home/amesotten/.cache/codex-rvinno/eda-asap7-20261028-03/tools/usr/share/tcltk/tcl8.6",
+      "OMP_NUM_THREADS": null
+    }
+  }
+}
