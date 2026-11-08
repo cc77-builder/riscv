@@ -1,0 +1,39 @@
+[
+  {
+    "boundary": "fu",
+    "identical_fixed_constraints": [
+      "set_cmd_units -time ns -capacitance fF",
+      "set_wire_load_mode top",
+      "set_wire_load_model -name 5K_hvratio_1_1",
+      "create_clock -name core_clk -period 4.0 [get_ports clock]",
+      "set_clock_uncertainty 0.05 [get_clocks core_clk]",
+      "set_clock_transition 0.05 [get_clocks core_clk]",
+      "set_input_delay -max 0.1 -clock core_clk $inputs",
+      "set_output_delay -max 0.1 -clock core_clk $outputs",
+      "set_input_transition 0.05 $inputs",
+      "set_load 5 $outputs",
+      "sta::set_crpr_enabled false"
+    ],
+    "same_tools": true,
+    "same_ports": true
+  },
+  {
+    "boundary": "parent",
+    "identical_fixed_constraints": [
+      "set_cmd_units -time ns -capacitance fF",
+      "set_wire_load_mode top",
+      "set_wire_load_model -name 5K_hvratio_1_1",
+      "create_clock -name core_clk -period 4.0 [get_ports clock]",
+      "set_clock_uncertainty 0.05 [get_clocks core_clk]",
+      "set_clock_transition 0.05 [get_clocks core_clk]",
+      "set_input_delay -max 0.1 -clock core_clk $inputs",
+      "set_output_delay -max 0.1 -clock core_clk $outputs",
+      "set_input_transition 0.05 $inputs",
+      "set_load 5 $outputs",
+      "set_case_analysis 0 [get_ports testEnable]",
+      "sta::set_crpr_enabled false"
+    ],
+    "same_tools": true,
+    "same_ports": true
+  }
+]

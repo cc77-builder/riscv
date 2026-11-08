@@ -1,0 +1,43 @@
+\documentclass[UTF8,a4paper,11pt,fontset=none]{ctexart}
+\usepackage[left=24mm,right=24mm,top=24mm,bottom=24mm,headheight=16pt]{geometry}
+\usepackage{fontspec}
+% 与三阶段报告相同的开源字体，随 TeX Live 提供。
+\setmainfont{texgyretermes-regular.otf}[BoldFont=texgyretermes-bold.otf,ItalicFont=texgyretermes-italic.otf,BoldItalicFont=texgyretermes-bolditalic.otf]
+\setsansfont{texgyreheros-regular.otf}[BoldFont=texgyreheros-bold.otf]
+\setmonofont{texgyrecursor-regular.otf}[Scale=MatchLowercase]
+\setCJKmainfont{FandolSong-Regular.otf}[BoldFont=FandolSong-Bold.otf,ItalicFont=FandolKai-Regular.otf]
+\setCJKsansfont{FandolHei-Regular.otf}[BoldFont=FandolHei-Bold.otf]
+\setCJKmonofont{FandolFang-Regular.otf}
+\usepackage{amsmath,booktabs,longtable,array,seqsplit}
+\usepackage{xcolor,graphicx,caption,placeins,needspace}
+\usepackage{fvextra}
+\fvset{fontsize=\footnotesize,baselinestretch=1,breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},breakanywheresymbolpre={}}
+\definecolor{reportblue}{HTML}{173B57}
+\usepackage{url}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,urlcolor=reportblue,linkcolor=black,unicode=true,hypertexnames=false,pdftitle={香山昆明湖V2自定义向量点积指令：测试数据与运行结果},pdfsubject={三阶段报告的测试数据与原始运行记录}}
+\urlstyle{tt}
+\usepackage{fancyhdr}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small 香山昆明湖 V2 · 自定义向量点积指令}
+\fancyhead[R]{\small 测试数据与运行结果}
+\fancyfoot[C]{\thepage}
+\ctexset{section={format=\Large\bfseries\rmfamily},subsection={format=\large\bfseries\rmfamily}}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{3pt}
+\linespread{1.22}
+\setlength{\LTpre}{6pt}\setlength{\LTpost}{6pt}
+\setlength{\LTcapwidth}{\textwidth}
+\renewcommand{\arraystretch}{1.2}
+\emergencystretch=3em
+\setcounter{tocdepth}{2}
+\captionsetup[figure]{font=small,labelsep=quad,justification=centering,position=bottom}
+\captionsetup[table]{font=small,labelsep=quad,justification=centering,position=top}
+\renewcommand{\topfraction}{0.9}\renewcommand{\bottomfraction}{0.6}
+\renewcommand{\textfraction}{0.08}\renewcommand{\floatpagefraction}{0.75}
+\graphicspath{{../figures/}{../evidence/G01_report-screenshots/}}
+% 本材料内的文件路径，相对于材料根目录。
+\newcommand{\ev}[1]{\texttt{\expandafter\seqsplit\expandafter{\detokenize{#1}}}}
+% 团队仓库固定提交中的文件。
+\newcommand{\repo}[3]{\href{https://github.com/cc77-builder/riscv/blob/#1/#2}{#3}}
+\newcommand{\Rel}{f985cfecfa3b3760286d532d142878fd63cca6f1}

@@ -1,0 +1,221 @@
+{
+  "record_id": "R5-G5-DIVFIX0F-FIRSTDOT-C8-20261027-01",
+  "status": "R5_G5_ENGINEERING_ACCEPTED_WITH_DECLARED_LIMITS",
+  "recorded_at": "2026-10-27T22:58:45.908838+08:00",
+  "label": "冻结0f＋firstdot V2＋显式C8候选，R5/G5工程总验收",
+  "source_commit": "c823a8786e052c6e26f6915563c42b6d730dd8e3",
+  "selected_hardware_commit": "0f12df675378556670afd0dd2153f47fcb330610",
+  "source_snapshot": {
+    "path": "team/optimizations/o2/integration/firstdot-v2-0f/acceptance/freeze.json",
+    "sha256": "a72721ee743df41882b4b72b9adf26ae4090c37ae986eab8d60071abbffd5d4b",
+    "files": 24157,
+    "dirty_snapshot": true,
+    "local_archive": {
+      "status": "FROZEN_WORKSPACE_ARCHIVE_READBACK_PASS",
+      "files": 24157,
+      "path": "/home/riscv/riscv-lab/software-import-20261026/r5-g5-acceptance-01/frozen-workspace.tar.gz",
+      "sha256": "6f3a5bdb23e0640932609c28ee0072c71b5eefae8d234d0c46445d31d4de617c",
+      "bytes": 583353312,
+      "freeze_sha256": "a72721ee743df41882b4b72b9adf26ae4090c37ae986eab8d60071abbffd5d4b",
+      "contains_git_history": false,
+      "contains_external_dependencies": false
+    }
+  },
+  "configuration": {
+    "hardware_source": "/home/riscv/riscv-lab/software-import-20261026/clean-02/checkout/source",
+    "build_record": "/home/riscv/riscv-lab/software-import-20261026/clean-02/build",
+    "build_driver": "/home/riscv/riscv-lab/software-import-20261026/clean-02/build/executed-builder.py",
+    "reference": "/home/riscv/riscv-lab/software-import-20261026/clean-02/support/nemu/reference/build/riscv64-nemu-interpreter-so",
+    "am_home": "/home/riscv/riscv-lab/software-import-20261026/clean-02/checkout/xs-env/nexus-am",
+    "flash": "/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+    "cross_prefix": "riscv64-linux-gnu-",
+    "source_commit": "c823a8786e052c6e26f6915563c42b6d730dd8e3",
+    "support_record": "/home/riscv/riscv-lab/software-import-20261026/clean-02/support"
+  },
+  "hardware_identity": {
+    "path": "/home/riscv/riscv-lab/software-import-20261026/clean-02/identity/current.json",
+    "sha256": "3b9d9332720b6d21a52c979d84c3398bf9c3070812094da29431575a4e7a7451"
+  },
+  "comparison_contract": {
+    "path": "team/optimizations/o2/integration/firstdot-v2-0f/acceptance/CONTRACT.md",
+    "sha256": "3e40d1c81d1049a7e6e95ef8cb59ed2ee0ba77652fbb356bacae681b38f137a1",
+    "clock_scope": "13 old raw rechecks + 1 preselected new control diagnostic; not fresh14"
+  },
+  "actual_execution": {
+    "new_emu_runs": 1,
+    "reused_fullcore_runs": 13,
+    "selected_fullcore_runs": 14,
+    "new_process_result": {
+      "name": "o2-control-diagnostic",
+      "status": "O2_SUPPLEMENT_PASS",
+      "started": "2026-10-27T14:32:57.746969+00:00",
+      "finished": "2026-10-27T14:56:51.979833+00:00",
+      "files": {
+        "/home/riscv/riscv-lab/software-import-20261026/clean-02/checkout/source/build/emu": "acf672eb39f836da4000b253849e3214089e9c8e5198060a57d2cc6bbd393da9",
+        "/home/riscv/riscv-lab/software-import-20261026/clean-02/support/nemu/reference/build/riscv64-nemu-interpreter-so": "62b1707c52a4c323468481e0c1863b79f244d9a3fd54aeb7b7d2ecb5f01a35ca",
+        "/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994",
+        "/home/riscv/riscv-lab/o2-fullcore-20261019/control-diagnostic-build-04/o2-control.bin": "45cdf2a6cb6848b3bcb56d860c36bc26a975a8aa96bfe1411d33dce6036bd305"
+      },
+      "raw_logs_sha256": {
+        "stdout.log": "cc07ac3e68b1aa4e81a440492c65e42a3141f080085ee3cd76c8ce190835ef2d",
+        "stderr.log": "f132ad85f6e75173eb814db0b5e543302f31e736e307786a76297054ba39b041",
+        "run.log": "550adf01b1b9b8dcac485e23b9664a868a3ddaf6cff80bcb70e4e6dd026bae61"
+      },
+      "exit_code": 0,
+      "observation_status": "O2_TRACE_PASS",
+      "observation_counts": {
+        "STATE": 5619,
+        "VFEX4_ACCEPT": 1899,
+        "VFEX4_WAIT": 1406,
+        "VFEX4_REDIRECT": 307,
+        "ACCEPT": 1643,
+        "MOVE": 1615,
+        "RESPONSE": 1590,
+        "STALL": 0,
+        "KILL": 53,
+        "DIV_ACCEPT": 256,
+        "DIV_KILL": 0,
+        "DIV_OUTPUT": 256,
+        "ENQUEUE": 1752,
+        "COMMIT": 1208,
+        "REDIRECT": 307,
+        "MULTI_INFLIGHT": 984,
+        "OVERLAP": 1004,
+        "TRIPLE_OVERLAP": 744,
+        "FULL_STALL": 0,
+        "KILL_P": 28,
+        "KILL_R": 25,
+        "PARTIAL_KILL": 1,
+        "BOTH_KILL": 16,
+        "R_KILL_P_SURVIVES": 0,
+        "P_KILL_R_SURVIVES": 1,
+        "UNRELATED_FLUSH": 0,
+        "ROB_WRAP": 258,
+        "FTQ_WRAP": 151,
+        "DIV_RESPONSE": 256,
+        "ACCEPTED_THEN_SQUASHED": 435,
+        "ACCEPTED_YOUNGER_SQUASHED": 435
+      },
+      "expected_vdot_commits": 1208,
+      "workload_status": "O2_CONTROL_DIAGNOSTIC_PASS",
+      "checked_register_bytes": 131072,
+      "performance_measured": false
+    },
+    "clock": {
+      "status": "PASS",
+      "process_envelope_seconds": 1496.999822583,
+      "monotonic_peak": 1,
+      "utc_nondecreasing": true,
+      "utc_minus_monotonic_seconds": -62.88835558300002
+    },
+    "selected_utc_capacity": {
+      "status": "PASS",
+      "limit": 3,
+      "peak": 3,
+      "violations": []
+    },
+    "failed_preflight_new_emu_runs": 0,
+    "failed_attempts": {
+      "status": "PRESERVED",
+      "attempts": [
+        {
+          "attempt": "clock-supplement-01",
+          "category": "PREFLIGHT_BINDING_ERROR",
+          "reason": "准备目录同名适配器的路径身份不同；换用实际clean源码中的适配器，未改旧身份。",
+          "new_emu_runs": 0,
+          "receipt": "clock-supplement-01.command.json"
+        },
+        {
+          "attempt": "clock-supplement-02",
+          "category": "PREFLIGHT_RECEIPT_SCHEMA_ERROR",
+          "reason": "旧成功回执未写timed_out字段；按冻结原检查器接受缺省/False，同时拒绝True；旧回执未改。",
+          "new_emu_runs": 0,
+          "receipt": "clock-supplement-02.command.json"
+        },
+        {
+          "attempt": "selected-inputs-01",
+          "category": "READONLY_GITLINK_HANDLING_ERROR",
+          "reason": "把src资源子库Gitlink当作blob读取被Git拒绝；补充显式Gitlink HEAD校验，常规源码逐blob校验。",
+          "new_emu_runs": 0,
+          "receipt": "selected-inputs.command.json"
+        },
+        {
+          "attempt": "t15-offline-audit-01",
+          "category": "EXPECTED_HISTORICAL_SOURCE_IDENTITY_REJECTION",
+          "reason": "当前build.sc不满足T15旧实验锁；在原冻结T15源码环境中重算相同归档，未改当前build.sc或旧锁。",
+          "new_emu_runs": 0,
+          "receipt": "t15-offline-audit.command.json"
+        }
+      ],
+      "semantics_threshold_changed": false,
+      "original_evidence_modified": false
+    }
+  },
+  "verification": {
+    "production_source_identity": "PASS_398_FILES",
+    "host_model": "PASS_35_TESTS",
+    "fu_parent": "PASS_REUSED_RAW_REPARSED",
+    "fullcore": "PASS_COMPOSITE_13_PLUS_1",
+    "fullcore_raw_audit": "PASS",
+    "old_clean02_wall_clock": "FAIL_PRESERVED",
+    "selected_set_utc_capacity": "PASS",
+    "new_supplement_monotonic_capacity": "PASS",
+    "host_utc_clock_stability": "NOT_ESTABLISHED_DELTA_MINUS_62_888356_SECONDS",
+    "clean_build": "PASS_REUSED_SAME_HOST_AGENT",
+    "c8_final_image": "PASS_RECHECKED",
+    "t15": "PASS_REUSED_INDEPENDENT_UNIT_ONLY",
+    "historical_area_sta": "EVIDENCE_VALID_TIMING_NOT_CLOSED",
+    "new_performance": "NOT_TESTED",
+    "new_ppa": "NOT_TESTED",
+    "power": "NOT_TESTED",
+    "fullcore_fmax": "NOT_TESTED",
+    "human_reproduction": "NOT_TESTED"
+  },
+  "retained_performance": [
+    {
+      "record_id": "CONFIG-REUSE-MATRIX-DIVFIX0F-CLEAN02-20261027-01",
+      "shape": "8x32",
+      "vdot_cycles": 273,
+      "fastest_rvv_cycles": 299,
+      "speedup": 1.0952380952380953,
+      "prior_firstdot_cycles": 282.25,
+      "new_measurement": false
+    },
+    {
+      "record_id": "DIV-fix0f-20261025",
+      "scenario": "batch128",
+      "vdot_cycles": 221,
+      "rvv_cycles": 678,
+      "speedup": 3.067873303167421,
+      "new_measurement": false
+    }
+  ],
+  "evidence_manifest": {
+    "path": "team/optimizations/o2/integration/firstdot-v2-0f/acceptance/evidence/manifest.json",
+    "sha256": "e5122e1c3eb5a4f25ca608ee87ed2e432b16758775d76ccb132599434e23137c",
+    "files": 184
+  },
+  "decision": {
+    "current": "FREEZE_EXPLICIT_CANDIDATE_FOR_TEAM_USE",
+    "default_changed": false,
+    "rtl_changed": false,
+    "github_uploaded": false,
+    "git_commit_created": false,
+    "next": "Engineering candidate is frozen; no mandatory next optimization. Await user-directed release or one scoped new hypothesis."
+  },
+  "limits": [
+    "冻结不等于提交；HEAD不能代表未提交软件材料",
+    "波形为2026-10-09 vadd；团队标识仍是占位符，正式材料需成员确定",
+    "Q01–Q07待官方澄清；不声称官方确认全部内部语义",
+    "主机模型不代替RTL",
+    "复用0f原167载荷；未新执行RTL仿真，不转授C1/C2/C3",
+    "组合验收不是fresh14；原14项UTC容量FAIL保留；本次UTC间隔比单调时钟短62.888356秒，系统墙钟稳定性未证实，新占用审计采用单调包络",
+    "历史0f构建的固定微基准；不是当前GEMV或LLM端到端加速",
+    "33矩阵+3普通C为既有运行，本轮没有新性能",
+    "273 vs最快RVV299 cycles/1.095238×来自既有性能矩阵，不是本次新计时",
+    "独立实验算术和包装；生产指令及NEMU仍INT8，未新增全核INT16",
+    "不是新综合；1ns负slack保留，整核Fmax/布线后时序/功耗NOT_TESTED",
+    "同机Agent复现，工具与下载缓存复用；不是另一成员/另一机器复现",
+    "不新增混合dispatcher、不变公共默认；改链接/数据/工具链需按影响再验"
+  ]
+}

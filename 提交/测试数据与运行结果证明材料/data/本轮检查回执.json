@@ -1,0 +1,102 @@
+{
+  "timezone": "Asia/Shanghai",
+  "checks": [
+    {
+      "id": "R01",
+      "command": [
+        "python3",
+        "-B",
+        "submission/verify.py"
+      ],
+      "cwd": "/home/riscv/riscv-lab/cie2026-v1-release",
+      "release_commit": "f985cfecfa3b3760286d532d142878fd63cca6f1",
+      "started": "2026-11-08T20:28:26.167955+08:00",
+      "finished": "2026-11-08T20:28:27.380644+08:00",
+      "duration_seconds": 1.213,
+      "exit_code": 0,
+      "log": "evidence/R01-package.log",
+      "sha256": "1d4b762f24d36589ec5718bebb740b0f65f7889727684ca916a33246fd433a91",
+      "new_hardware_run": false
+    },
+    {
+      "id": "R02",
+      "command": [
+        "bash",
+        "team/scripts/check-vdot-model.sh"
+      ],
+      "cwd": "/home/riscv/riscv-lab/cie2026-v1-release",
+      "release_commit": "f985cfecfa3b3760286d532d142878fd63cca6f1",
+      "started": "2026-11-08T20:28:26.168532+08:00",
+      "finished": "2026-11-08T20:28:30.071212+08:00",
+      "duration_seconds": 3.903,
+      "exit_code": 0,
+      "log": "evidence/R02-model.log",
+      "sha256": "1528d8438343b68959160be4ec15d59c5816f721e1bc29517c4429451bf8b84b",
+      "new_hardware_run": false
+    },
+    {
+      "id": "R03",
+      "command": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "team/tests",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "cwd": "/home/riscv/riscv-lab/cie2026-v1-release",
+      "release_commit": "f985cfecfa3b3760286d532d142878fd63cca6f1",
+      "started": "2026-11-08T20:28:26.169088+08:00",
+      "finished": "2026-11-08T20:28:38.378709+08:00",
+      "duration_seconds": 12.21,
+      "exit_code": 0,
+      "log": "evidence/R03-host.log",
+      "sha256": "906ba246d33c727df1fca4d03e436e10e7950ad2c7f709e09ada689c2be8007c",
+      "new_hardware_run": false
+    },
+    {
+      "id": "R04",
+      "command": [
+        "python3",
+        "-B",
+        "team/scripts/check-vdot-integration-source.py"
+      ],
+      "cwd": "/home/riscv/riscv-lab/cie2026-v1-release",
+      "release_commit": "f985cfecfa3b3760286d532d142878fd63cca6f1",
+      "started": "2026-11-08T20:28:27.388232+08:00",
+      "finished": "2026-11-08T20:28:27.924153+08:00",
+      "duration_seconds": 0.536,
+      "exit_code": 0,
+      "log": "evidence/R04-static.log",
+      "sha256": "e73e89a99e00902995e0fe9aec28650b2267bac250ae7d7e51ffeed96398e392",
+      "new_hardware_run": false
+    },
+    {
+      "id": "R05",
+      "command": [
+        "python3",
+        "-B",
+        "submission/logs/read_log.py",
+        "verify"
+      ],
+      "cwd": "/home/riscv/riscv-lab/cie2026-v1-release",
+      "release_commit": "f985cfecfa3b3760286d532d142878fd63cca6f1",
+      "started": "2026-11-08T20:28:27.931753+08:00",
+      "finished": "2026-11-08T20:28:29.710849+08:00",
+      "duration_seconds": 1.779,
+      "exit_code": 0,
+      "log": "evidence/R05-logs.log",
+      "sha256": "ef59c3289d8051b4d147115e2fe021d5ebc533c7f4b35f4e86b69dbd303d5766",
+      "new_hardware_run": false
+    }
+  ],
+  "all_passed": true,
+  "repository_clean": true,
+  "new_rtl_runs": 0,
+  "new_nemu_runs": 0,
+  "new_performance_measurements": 0
+}
