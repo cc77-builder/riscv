@@ -1,6 +1,6 @@
 # 香山 vdot 工程开发路线：满足赛题技术要求，持续提高性能
 
-> 2026-11-08 更新：新P/PQ/N/NQ四臂首次完整forward目标正确性已闭合，同镜像较快对照PQ/NQ观察倍率为1.196049×；prefix在已有局部算术、FU和真实父级证据基础上，已完成core-build-02并通过新EMU的ABI与原六例合法差分smoke，新增资格仅为`fullcore_smoke_qualified=true`。生产默认保持，正式性能与整核PPA资格不由这些结果推定。当前决策和证据入口见下节，旧记录保留历史范围。
+> 2026-11-08 更新：新P/PQ/N/NQ四臂首次完整forward目标正确性已闭合，同镜像较快对照PQ/NQ观察倍率为1.196049×；prefix已完成新core-build-02、真实ABI/原六例smoke，并通过新EMU的固定K288八窗口完整调用回归。K288与旧硬件逐样本保持一致，没有新增硬件周期收益；FA映射筛查因STA未完成而停止、未采用。生产默认保持，正式性能与整核PPA资格不由这些结果推定。当前决策和证据入口见下节，旧记录保留历史范围。
 >
 > 研究基点：zjhwork `10b71ad4bff25cd2070e775c74a4717b01602f75`；生产硬件 `0f12df675378556670afd0dd2153f47fcb330610`，`src` 树 `78a0c93852dced038f645205e33d36a520fedfcd`。参考[公开项目与分支研究](public-vdot-review-and-plan-20261028.md)、[评分要求](../../赛题要求与评分总览.md)、[最终验收](../optimizations/o2/integration/firstdot-v2-0f/acceptance/RESULT.md)和[历版三指标](version-comparison-r5-g5-20261027.md)。研究文件中的供体成绩是选题依据，不是当前版本的新成绩。
 
@@ -9,7 +9,7 @@
 ## 0. 下一轮优化计划：先优化真实调用，再有条件改硬件
 
 
-### 当前决定：保留已验证范围内的NQ软件交付，prefix新整核六例差分smoke通过（2026-11-08）
+### 当前决定：保留NQ软件交付，prefix六例与K288完整调用通过，FA筛查停止（2026-11-08）
 
 最新工程包、可回退源码及指标边界见[11月8日工程交付](../evidence/dot16-engineering-delivery-20261108/README.md)。下方11月6日及更早记录保留各自历史时点；其中“尚无目标周期”等文字不表示当前仍未完成。
 
@@ -28,7 +28,9 @@
 
 core-build-02已完成，独立新EMU（SHA-256前缀`6387d998`）于11月8日03:20–03:21 UTC通过实际1400B ABI对齐和原2例dot8/4例dot16合法差分smoke；`core-smoke-02/result.json` SHA-256前缀为`2ec96993`。新增资格仅为`fullcore_smoke_qualified=true`；更广整核、G3、非法指令/trap矩阵、应用性能及PPA资格仍为false。旧f149上的NQ/PQ观察结果不转授给新EMU。见[新整核构建与六例smoke](../optimizations/o2/dot16/rtl-integration/cost/signed8/prefix/core/RESULT.md)及[硬件成本与资格入口](../optimizations/o2/dot16/rtl-integration/cost/RESULT.md)。
 
-packed-Ws在固定K288完整调用中使N平均周期减少6.207615%，但目前仍是该局部调用证据，不把它与NQ完整forward或prefix面积合成一套已测结果。新的P层重分组筛选虽通过局部算术/FU，dot16最差输入路径及面积未改善，故不替换prefix。原prefix feature1的唯一D800映射对照也已完成：保持同RTL与1ns STA，仅将ABC目标1000→800ps，I2R slack改善1.757ps但仍为−0.236249ns，库面积增加71.554，R2R及其余三类路径不变。保留D1000参考，停止P层排序与该映射参数扫描；不以这两项未获采用的试验重复扩围。后继功能回归与新映射试验分别按独立合同和证据判断，不转授旧PASS。[局部软件结果](../optimizations/o2/dot16/whole2/RESULT.md)
+新prefix EMU随后于04:07–04:19 UTC实际完成固定K288 normal-0八窗口回归，16次完整调用/4608个输出及活动/非活动槽、guards、CSR/FCSR均通过，457项输入保持。四方法P/N/packedP/packedN平均周期为45639.5/27353.5/45047.5/25655.5，同次较快RVV/较快custom=1.7558613163×，窗口周期少43.047894%；prepare在窗外，仍仅为局部观察。八样本及checks原件与旧f149记录相同，只证明这一固定例保持周期，不能把约12分钟宿主耗时当成DUT加速，也不转授旧完整forward。见[新prefix K288原始证据](../optimizations/o2/dot16/rtl-integration/cost/signed8/prefix/core/k288/RESULT.md)。
+
+packed-Ws在固定K288完整调用中使N平均周期减少6.207615%，但目前仍是该局部调用证据，不把它与NQ完整forward或prefix面积合成一套已测结果。新的P层重分组筛选虽通过局部算术/FU，dot16最差输入路径及面积未改善，故不替换prefix。原prefix feature1的唯一D800映射对照也已完成：保持同RTL与1ns STA，仅将ABC目标1000→800ps，I2R slack改善1.757ps但仍为−0.236249ns，库面积增加71.554，R2R及其余三类路径不变。保留D1000参考，停止P层排序与该映射参数扫描；不以这两项未获采用的试验重复扩围。另一次显式FA_X1映射经历原网表concat-LHS解析失败、序列化原始cell名比较失败，再经完整名称双射核验后，唯一STA续接仍触及30秒上限；缺少setup及五类路径报告。16542.806仅为未取得STA资格的映射库面积统计；三段原FAILED及77文件完整原件保留，FA路线停止、未采用，不重跑或自动加时。见[FA失败链与停止决定](../optimizations/o2/dot16/rtl-integration/cost/signed8/prefix/fa/RESULT.md)。后继更长归约回归仍按独立合同与实际证据判断，不转授旧PASS。[局部软件结果](../optimizations/o2/dot16/whole2/RESULT.md)
 
 稳定生产默认0f＋firstdot V2＋原C8不自动切换。上述研究交付不替代旧dot8正式微基准、父级PPA或人工最终验收；没有证明技术文档各项指标均再提高50%。正式PDF、LaTeX、PPT、视频和赛事提交仍由人工维护。
 

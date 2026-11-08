@@ -2,6 +2,8 @@
 
 日期：2026-11-08 UTC。**外置 prefix 整核构建已完成；新 EMU 的 ABI 与原固定 reference 对齐，并实际通过同一六例合法差分 smoke。** 本记录不授予完整整核、G3、非法指令/trap 矩阵、应用性能或 PPA 资格。
 
+> 后继固定K288回归已于2026-11-08 04:19 UTC由同一新EMU实际通过，详见[K288完整调用证据](k288/RESULT.md)。该独立结果只增加此固定例的target_runtime资格和局部CSR观察；本页继续记录构建与原六例smoke的各自范围，不将两者合并为更广整核、应用或PPA资格。
+
 ## 范围与最小修订
 
 沿用已闭合 prefix 候选及 `MinimalConfig` 单核、DiffTest 启用配置。source-02 仅在 Java generation 环境补回官方 `forkEnv` 已有的仓库 Espresso 资源 PATH，并固定该原工具身份；native PATH 未改，官方代码和工具未改。
