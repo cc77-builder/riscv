@@ -37,6 +37,6 @@
 | C8 库入口 | [Makefile / 头文件 / 示例](../team/optimizations/o2/integration/firstdot-v2-0f/package/c8/public/) |
 | C8 汇编及数据接口 | [public](../team/optimizations/o2/integration/firstdot-v2-0f/continuation/config-reuse-c8-v2/public/) |
 
-为保持原构建和 include 关系，源码路径不作大范围改名。`optimizations` 中只留下最终软件、构建目标引用的 harness 和当前 EMU 构建器，旧候选实验、旧报告及历史快照不在提交目录中。
+源码路径沿用开发时的目录，保证原有构建和 include 关系不变。`team/optimizations` 中保存最终软件库、最终 FU/父级测试顶层和 EMU 构建器。
 
-三份阶段 PDF 是不同阶段的提交材料，合订本是同一套内容的便于查看版本，不是多个历史版本。
+三份阶段 PDF 分别对应三个阶段的提交，合订本把三部分合在一起便于整体阅读。
