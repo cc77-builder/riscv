@@ -221,10 +221,12 @@ VDot占用由\texttt{pValid}或\texttt{rValid}表示；DIV侧还保留在途ROB�
 另一组独立模块实验把输入元素扩展为INT16，计算8项点积，并使用低64位结果字段、高64位清零的输出布局。该配置的最大正和为$2^{33}$，精确累加至少需要35位。参数化乘法与归约模块完成94项定向输入和10000项随机输入的完整128位结果检查，并验证单请求包装中的反压、取消与复位行为。这组实验说明，改变元素位宽时，可以按同样的方法重新确定中间位宽、结果字段和测试向量。
 
 
+% 本节标题、说明和表格放在同一页，排不下时整体移到下一页顶部。
+\needspace{0.42\textheight}
 \section{源码与证据入口}
-表\ref{tab:s2-entries}按内容列出本章涉及的源码与证据入口。
-\begin{table}[!htbp]\centering
-\small
+表\ref{tab:s2-entries}按内容列出本章涉及的源码与证据入口。各入口下保存完整源码版本、运行输入、原始日志和失败记录，可用于复查实现细节与测量依据。
+\begin{center}
+\small\captionsetup{type=table}
 \caption{第二阶段源码与证据入口}\label{tab:s2-entries}
 \begin{tabular}{p{0.25\linewidth}p{0.64\linewidth}}
 \toprule
@@ -238,5 +240,4 @@ VDot占用由\texttt{pValid}或\texttt{rValid}表示；DIV侧还保留在途ROB�
 元素位宽参数化 & \href{https://github.com/cc77-builder/riscv/blob/a0f13456e0c3180fe9c4023f5cbe7874eb5d35a9/team/docs/t15-parameter-extension.md}{八项INT16独立模块及完整结果验证}\\
 \bottomrule
 \end{tabular}
-\end{table}
-各入口下保存完整源码版本、运行输入、原始日志和失败记录，可用于复查实现细节与测量依据。
+\end{center}
