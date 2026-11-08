@@ -7,8 +7,8 @@ L, B, T, O, P, G, INK = C["line"], C["blue"], C["teal"], C["orange"], C["purple"
 LC, RC = 48, 127.5
 
 s.box(6, 1.5, 148, 8.5, "plain")
-s.text(80, 5.4, "627 项文件保护检查", S_TITLE, INK)
-s.text(80, 8.7, "固定输入与封存证据 • 0f / EMU / NEMU / GNU 工具 • SHA256 核对", S_NOTE, G)
+s.text(80, 5.4, "固定全部输入文件", S_TITLE, INK)
+s.text(80, 8.7, "固定输入与封存证据 • 受测版本 EMU / NEMU / GNU 工具 • SHA256 核对", S_NOTE, G)
 s.line([(80, 10), (80, 12.3)], L, arrow=False)
 s.line([(LC, 12.3), (RC, 12.3)], L, arrow=False)
 s.circle(80, 12.3, 0.45, L)
@@ -27,7 +27,7 @@ s.text(64, 25.4, "libxs_gemv_c8.a(gemv.o)", S_BODY, B)
 s.text(64, 28.9, "实际抽取 • GNU 依赖文件 + link map", S_NOTE, G, within=(39, 89))
 
 # 三方镜像
-row = [(17, 4, 30, "原合格镜像", "blue", B), (48, 33, 63, "原源码复制对照", "plain", INK), (79, 66, 92, "SDK 接入版", "teal", T)]
+row = [(17, 4, 30, "原测试镜像", "blue", B), (48, 33, 63, "原源码复制对照", "plain", INK), (79, 66, 92, "SDK 接入版", "teal", T)]
 for cx, x0, x1, t, kind, col in row:
     s.box(x0, 37, x1 - x0, 7, kind)
     s.text(cx, 41.6, t, S_TITLE, col)
@@ -76,7 +76,7 @@ s.text(RC, 82.0, "7 项负控 + 1 项正控均符合预期", S_NOTE, G)
 s.line([(LC, 87), (LC, 89.6), (77.5, 89.6), (77.5, 92)], L)
 s.line([(RC, 87.5), (RC, 89.6), (82.5, 89.6), (82.5, 92)], P, dash="0.9 0.6")
 s.box(30, 92, 100, 9.5, "teal")
-s.text(80, 96.0, "复用原夹具的既有运行资格", S_TITLE, T)
+s.text(80, 96.0, "原测试的运行结果同样适用", S_TITLE, T)
 s.text(80, 99.6, "功能 / DiffTest / bit100 拒错 / 恢复", S_LABEL, INK)
 
 s.save("S3-08.svg")

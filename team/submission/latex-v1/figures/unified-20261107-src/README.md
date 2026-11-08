@@ -9,13 +9,13 @@
 | 位置 | 内容 |
 | --- | --- |
 | `tukit.py` | 公共绘图工具：画布单位 mm，字号单位 pt；中文 Noto Serif SC（字重 400），西文 Times New Roman；配色、线宽、箭头 |
-| `s1_01.py` … `s3_09_sup.py` | 23 张技术图，每个脚本对应一张，文件头注明图中数值的来源 |
+| `s1_01.py` … `s3_09_sup.py` | 24 张技术图，每个脚本对应一张，文件头注明图中数值的来源 |
 | `build_figs.py` | 运行上述脚本，用 Inkscape 导出文字转曲线的 PDF |
 | `svg/` | 各技术图的可编辑 SVG（由 `build_figs.py` 生成） |
 | `screenshot_figs.py` | 8 张截图组图（S1-03、S1-04、S1-05、SUP-S2-*、SUP-S3-SUMMARY）：只重排版并加中文子标题，截图像素不变 |
 | `shots/` | 截图原图，从原组图 PDF 无损提取 |
 
-`S3-09-SUP` 和 `SUP-S3-SUMMARY` 两张图已不在正文中使用，脚本与 PDF 保留备查。
+`S3-09-SUP` 和 `SUP-S3-SUMMARY` 两张图已不在正文中使用，脚本保留；它们的 PDF 已从工程中移出，需要时可用脚本重新生成。
 
 ## 统一规格
 
@@ -36,7 +36,7 @@
 在本目录执行：
 
 ```
-python -X utf8 build_figs.py                  # 重新生成全部 23 张技术图
+python -X utf8 build_figs.py                  # 重新生成全部 24 张技术图
 python -X utf8 build_figs.py S2-03 S2-10      # 只生成指定的图
 python -X utf8 screenshot_figs.py             # 重新生成 8 张截图组图
 ```
@@ -44,3 +44,11 @@ python -X utf8 screenshot_figs.py             # 重新生成 8 张截图组图
 两个脚本默认直接覆盖 `../unified-20261107/` 中的 PDF。想先比对，可加 `--out 其他目录`；加 `--png 目录` 可另存预览图。
 
 `build_figs.py` 会报告每张图在正文中的印刷缩放比例；脚本检测到文字超出框体时会输出 `WARN`。重新生成后，回到工程根目录运行 `python -X utf8 build.py` 重新编译报告。即使图的内容没变，重新导出的 PDF 字节也可能不同，这是导出时间等元数据造成的。
+
+## 2026-11-08 的4 ns结果更新
+
+`s3_07.py` 直接读取 `../../evidence/nangate45-4ns-20261108/RESULT.json`，更新面积、14类setup裕量、条件和坐标刻度；`s3_09.py` 同步更新时序状态。字体、字号、线宽及配色继续使用原 `tukit.py`。当时所用机器未安装 Inkscape，以 Chrome 无界面打印 SVG 导出矢量 PDF；之后这两张图已改回用 `build_figs.py` 经 Inkscape 导出。
+
+同日稍后润色了 `s3_07.py`、`s3_09.py` 的图内文字（数值与版式不变），并用 `build_figs.py S3-07 S3-09` 经 Inkscape 1.4 重新导出，`../unified-20261107/` 中这两张 PDF 已替换。
+
+之后又新增 `s2_11.py`（vdot 在昆明湖 V2 流水线中的位置，已在 `report-figure-overrides.tex` 登记），并去掉 `s2_03.py`、`s2_04.py`、`s3_01.py`、`s3_06.py`、`s3_08.py` 图内的内部代号和流程用语，六张图均已重新导出。现有技术图共 24 张。

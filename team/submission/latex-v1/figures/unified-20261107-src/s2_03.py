@@ -12,7 +12,6 @@ DASH = "0.9 0.6"
 FX0, FX1, FY0, FY1 = 16, 145, 1.5, 78.5
 s.rect(FX0, FY0, FX1 - FX0, FY1 - FY0, stroke=C["blue_s"], sw=0.3, rx=1.0)
 s.text(19.5, 6.4, "VFEX4 / ExeUnit", S_PANEL, C["blue"], "start")
-s.text(19.5, 10.2, "固定 0f", S_NOTE, C["grey"], "start")
 
 # 几何
 ROWS = [(14.5, "VDot", "P / R 两槽", "blue"), (31.5, "VIDiv", "整数除法", "white"),

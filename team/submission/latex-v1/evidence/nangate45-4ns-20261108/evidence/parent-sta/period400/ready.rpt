@@ -1,0 +1,39 @@
+Startpoint: io_out_ready (input port clocked by core_clk)
+Endpoint: io_in_ready (output port clocked by core_clk)
+Path Group: core_clk
+Path Type: max
+
+Fanout         Cap        Slew       Delay        Time   Description
+--------------------------------------------------------------------------------------------
+                     0.050000    0.000000    0.000000   clock core_clk (rise edge)
+                                 0.000000    0.000000   clock network delay (ideal)
+                                 0.100000    0.100000 v input external delay
+                     0.050000    0.000000    0.100000 v io_out_ready (in)
+    4    6.984174                                       io_out_ready (net)
+                     0.050000    0.000015    0.100015 v c86553/A1 (NOR2_X1)
+                     0.035819    0.061209    0.161224 ^ c86553/ZN (NOR2_X1)
+    3    5.406782                                       n103950 (net)
+                     0.035819    0.000015    0.161239 ^ c86580/A1 (NAND2_X1)
+                     0.016851    0.028135    0.189374 v c86580/ZN (NAND2_X1)
+    3    5.056053                                       n103990 (net)
+                     0.016851    0.000014    0.189388 v c86600/A3 (NAND3_X1)
+                     0.019479    0.032944    0.222332 ^ c86600/ZN (NAND3_X1)
+    3    5.416602                                       n104010 (net)
+                     0.019479    0.000016    0.222348 ^ c183626/B2 (AOI21_X1)
+                     0.014847    0.025472    0.247819 v c183626/ZN (AOI21_X1)
+    1    5.000000                                       n499 (net)
+                     0.014847    0.000002    0.247821 v io_in_ready (out)
+                                             0.247821   data arrival time
+
+                     0.050000    4.000000    4.000000   clock core_clk (rise edge)
+                                 0.000000    4.000000   clock network delay (ideal)
+                                -0.050000    3.950000   clock uncertainty
+                                -0.100000    3.850000   output external delay
+                                             3.850000   data required time
+--------------------------------------------------------------------------------------------
+                                             3.850000   data required time
+                                            -0.247821   data arrival time
+--------------------------------------------------------------------------------------------
+                                             3.602179   slack (MET)
+
+

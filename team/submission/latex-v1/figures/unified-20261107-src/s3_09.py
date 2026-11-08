@@ -22,7 +22,7 @@ def na(x, y):
 
 done(83, 4.6); s.text(85.6, 5.6, "已有记录", S_LABEL, INK, "start")
 todo(108, 4.6); s.text(110.6, 5.6, "待评估", S_LABEL, INK, "start")
-na(130, 4.6); s.text(132.6, 5.6, "随所属硬件评估", S_LABEL, INK, "start")
+na(130, 4.6); s.text(132.6, 5.6, "随硬件评估", S_LABEL, INK, "start")
 
 COLX = [58, 79, 103, 124, 145]
 s.line([(2, 9.5), (158, 9.5)], C["rule"], sw=0.22, arrow=False)
@@ -30,8 +30,8 @@ s.text((COLX[0] + COLX[1]) / 2, 14.0, "逻辑与执行", S_BODY, T)
 s.line([(COLX[0] - 9, 15.6), (COLX[1] + 9, 15.6)], T, sw=0.3, arrow=False)
 s.text((COLX[2] + COLX[4]) / 2, 14.0, "物理实现", S_BODY, G)
 s.line([(COLX[2] - 9, 15.6), (COLX[4] + 9, 15.6)], C["plain_s"], sw=0.3, arrow=False)
-s.text(2, 22.0, "证据层级", S_LABEL, G, "start")
-for x, (a, b) in zip(COLX, [("功能", "正确性"), ("周期", "观察"), ("单元", "面积"), ("布局前", "STA"), ("功耗", "")]):
+s.text(2, 22.0, "评估对象", S_LABEL, G, "start")
+for x, (a, b) in zip(COLX, [("功能", "正确性"), ("周期", "测量"), ("单元", "面积"), ("布局前", "STA"), ("功耗", "")]):
     if b:
         s.text(x, 20.2, a, S_LABEL, INK)
         s.text(x, 23.8, b, S_LABEL, INK)
@@ -51,9 +51,9 @@ for i, (a, b, marks) in enumerate(rows):
     s.line([(2, y + 9), (158, y + 9)], C["rule"], sw=0.18, arrow=False)
 s.line([(92.5, 26.5), (92.5, 62.5)], C["rule"], sw=0.18, arrow=False)
 
-notes = [("周期单位", "FU 握手拍；整核与 C8 为 DUT 周期"), ("功能记录", "全核 117 用例／124 次；C8 最终镜像等价"),
-         ("时序结果", "1 ns／5 fF：14 类中 10 类 setup 裕量为负"), ("后续评估", "整核 Fmax、布线后时序与功耗"),
-         ("复现方式", "固定源码、镜像、输入及配套原始记录")]
+notes = [("周期单位", "FU 按握手拍计；整核与 C8 按 DUT 周期计"), ("功能验证", "全核 117 个用例共运行 124 次；C8 最终镜像与测试版一致"),
+         ("时序结果", "4 ns／5 fF 约束下，14 类路径 setup 全部满足"), ("后续评估", "整核最高频率、布线后时序与功耗"),
+         ("复现方式", "源码、镜像、输入和原始记录均已归档")]
 for k, (key, val) in enumerate(notes):
     y = 68.0 + 6.0 * k
     s.text(2, y, key, S_LABEL, G, "start")

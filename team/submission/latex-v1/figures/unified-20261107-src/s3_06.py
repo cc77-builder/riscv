@@ -58,12 +58,12 @@ s.text(138.5, 30.6, "每槽：低 32 位结果", S_LABEL, INK)
 s.text(138.5, 34.6, "高 96 位清零", S_LABEL, INK)
 
 s.text(2, 46.4, "输入 / 输出：各自 16 B 对齐，互不重叠", S_NOTE, G, "start")
-s.text(158, 46.4, "撤销 C8：恢复 firstdot 头与匹配库，完整重编", S_NOTE, G, "end")
+s.text(158, 46.4, "撤销 C8：恢复首段初始化版头文件与库，完整重编", S_NOTE, G, "end")
 s.line([(2, 49.4), (158, 49.4)], C["rule"], sw=0.2, arrow=False)
 
 # ---------- B ----------
-s.text(2, 54.6, "B 原测试夹具的最终镜像等价", S_PANEL, B, "start")
-srcs = [(28, "原合格 C8 镜像", "已有全核功能证据", "blue", B), (80, "原源码复制对照", "原源码重新构建", "plain", INK),
+s.text(2, 54.6, "B 封装前后的最终镜像一致性", S_PANEL, B, "start")
+srcs = [(28, "原测试镜像", "已完成全核功能验证", "blue", B), (80, "原源码复制对照", "原源码重新构建", "plain", INK),
         (132, "SDK 接入版", "libxs_gemv_c8.a(gemv.o)", "teal", T)]
 for cx, t1, t2, kind, col in srcs:
     s.box(cx - 22, 57, 44, 9, kind)
@@ -86,7 +86,7 @@ for i, (t, lines) in enumerate(cells):
         s.line([(6 + cw * i, 74), (6 + cw * i, 83.5)], C["panel_s"], sw=0.18, arrow=False)
 s.line([(80, 85.5), (80, 88.5)], L)
 s.box(42, 88.5, 76, 6.6, "teal")
-s.text(80, 92.8, "复用原夹具的既有功能证据", S_TITLE, T)
-s.text(80, 98.8, "完整 ELF 差异仅在调试节 • 本次无新增全核运行", S_NOTE, G)
+s.text(80, 92.8, "原测试的功能结果同样适用", S_TITLE, T)
+s.text(80, 98.8, "完整 ELF 差异仅在调试节", S_NOTE, G)
 
 s.save("S3-06.svg")

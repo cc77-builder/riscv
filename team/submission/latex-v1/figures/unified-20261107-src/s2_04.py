@@ -14,8 +14,8 @@ for x, t, col in [((IX0 + IX1) / 2, "测试输入", INK), ((VX0 + VX1) / 2, "五
     s.text(x, 5.2, t, S_TITLE, col)
 
 LAYER = [("01 独立数学模型", "signed int8 精确求和"), ("02 算术 RTL", "8 路乘法 • 归约"),
-         ("03 VDot FU", "0f • P/R 两槽 • ready/valid"), ("04 真实 VFEX4 父级", "0f • DIV/SQRT • ClockGate"),
-         ("05 全核 EMU / NEMU", "固定 0f • 同镜像提交对齐")]
+         ("03 VDot FU", "P/R 两槽 • ready/valid"), ("04 真实 VFEX4 父级", "DIV/SQRT • ClockGate"),
+         ("05 全核 EMU / NEMU", "同一镜像 • 按提交对齐")]
 CHECK = [("完整 128 位期望", "低 32 位补码 • 高 96 位零"), ("完整 128 位比较", "实际值 / 期望值"),
          ("128 位 / 协议检查", "反压 • 取消 • 复位 • 身份"), ("128 位 / 父级协议", "互斥 • 切换 • 空闲关钟"),
          ("DiffTest + 程序自检", "128 位 / CSR / 异常")]
@@ -75,6 +75,6 @@ AY = 74.5
 s.line([(156.5, YS[0] + H / 2), (156.5, AY + 4.5), (110, AY + 4.5)], C["faint"], dash=DASH)
 s.rect(48, AY, 62, 9.4, fill=C["panel"], stroke=C["panel_s"], sw=0.22)
 s.text(79, AY + 4.1, "分层证据归档", S_TITLE, INK)
-s.text(79, AY + 7.6, "用例 ID • 原始日志 • SHA256 • R5", S_LABEL, G)
+s.text(79, AY + 7.6, "用例 ID • 原始日志 • SHA256", S_LABEL, G)
 
 s.save("S2-04.svg")

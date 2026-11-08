@@ -29,8 +29,8 @@ FIGS = {
     "SUP-S2-STATE": (13.0, [[("SUP-S2-STATE-1.png", "（a）槽寄存器与32位结果状态", 1.0)],
                             [("SUP-S2-STATE-2.png", "（b）握手与取消条件", 1.0)],
                             [("SUP-S2-STATE-3.png", "（c）状态更新与原P内容转入R", 1.0)]]),
-    "SUP-S2-MODEL": (11.0, [[("SUP-S2-MODEL-1.png", "仅运行主机模型检查，本命令不执行RTL或NEMU", 1.0)]]),
-    "SUP-S2-OVERLAP": (11.0, [[("SUP-S2-OVERLAP-1.png", "两槽观察器的历史日志摘录（非GTKWave波形）", 1.0)]]),
+    "SUP-S2-MODEL": (11.0, [[("SUP-S2-MODEL-1.png", "主机参考模型的单元测试输出", 1.0)]]),
+    "SUP-S2-OVERLAP": (11.0, [[("SUP-S2-OVERLAP-1.png", "全核运行中两槽观察器的日志摘录", 1.0)]]),
     "SUP-S3-SUMMARY": (9.0, [[("SUP-S3-SUMMARY-1.png", "（a）FU、父级与全核范围：R5验收矩阵的证据列", 1.0)],
                              [("SUP-S3-SUMMARY-2.png", "（b）成本范围：R5验收矩阵的证据列", 1.0)]]),
 }

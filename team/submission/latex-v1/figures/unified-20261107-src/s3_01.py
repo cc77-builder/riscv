@@ -11,7 +11,7 @@ W = 50
 # 顶部输入
 s.box(LC - W / 2, 2, W, 9.5, "plain")
 s.text(LC, 6.2, "RTL 源码", S_TITLE, INK)
-s.text(LC, 9.6, "0f12df6", S_LABEL, G)
+s.text(LC, 9.6, "受测版本", S_LABEL, G)
 s.box(MC - 19, 2, 38, 9.5, "blue")
 s.text(MC, 6.2, "同一 AM 镜像", S_TITLE, B)
 s.text(MC, 9.6, "共同 boot-flash", S_LABEL, G)
@@ -30,7 +30,7 @@ s.line([(MC, 16.5), (RC - 15, 16.5), (RC - 15, Y0)], L)
 
 s.box(LC - W / 2, Y0, W, H, "blue")
 s.text(LC, Y0 + 4.6, "香山 DUT", S_PANEL, B)
-s.text(LC, Y0 + 8.4, "0f EMU / Verilator", S_BODY, INK)
+s.text(LC, Y0 + 8.4, "EMU / Verilator", S_BODY, INK)
 s.text(LC, Y0 + 11.7, "MinimalConfig", S_LABEL, G)
 s.line([(LC - W / 2 + 3, Y0 + 13.6), (LC + W / 2 - 3, Y0 + 13.6)], C["blue_s"], sw=0.18, arrow=False)
 s.text(LC, Y0 + 17.6, "架构提交", S_BODY, B)
@@ -64,8 +64,8 @@ AY = 70.5
 s.line([(MC, DY0 + DH), (MC, AY)], L)
 s.text(MC + 1.5, DY0 + DH + 2.8, "通过 / 差异", S_NOTE, G, "start")
 s.rect(MC - 42, AY, 84, 12.5, fill=C["panel"], stroke=C["panel_s"], sw=0.22)
-s.text(MC, AY + 4.4, "身份与证据归档", S_TITLE, INK)
+s.text(MC, AY + 4.4, "版本与证据归档", S_TITLE, INK)
 s.text(MC, AY + 7.8, "源码 • 二进制 • 配置 • SHA256", S_LABEL, G)
-s.text(MC, AY + 11.0, "原始日志 • summary • 真实退出码 • R5", S_LABEL, G)
+s.text(MC, AY + 11.0, "原始日志 • 摘要 • 真实退出码", S_LABEL, G)
 
 s.save("S3-01.svg")

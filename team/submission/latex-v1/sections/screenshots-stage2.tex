@@ -1,9 +1,0 @@
-\section{实现与验证摘录}
-下列摘录把前文的数据通路、状态控制和验证方法对应到具体实现与运行记录。图\ref{fig:SUP-S2-ARITH}为八路有符号乘法和逐级归约的源码，对应前文的中间位宽分析；图\ref{fig:SUP-S2-STATE}为两槽状态与控制的源码，依次为32位结果槽寄存器、握手与取消条件，以及状态更新和原P内容转入R的逻辑。
-
-图\ref{fig:SUP-S2-MODEL}为独立主机模型的测试输出，35个测试方法全部通过；该统计以测试方法为单位，与算术RTL的10022组输入分别计数。图\ref{fig:SUP-S2-OVERLAP}为连续事务的逐拍日志：10986周期同时记录了ACCEPT seq2、MOVE seq1和RESPONSE seq0，分别对应新请求进入P、原P推进至R和原R响应，与图\ref{fig:S2-05}所示的同拍重叠一致。
-
-\evidencefigure{SUP-S2-ARITH}{八项点积算术实现摘录}{12cm}{八路有符号乘法和逐级归约，对应本章的中间位宽分析。}
-\evidencefigure{SUP-S2-STATE}{两槽状态与控制实现摘录}{13cm}{结果槽保存32位；有效位、握手、取消条件和状态更新共同管理请求。}
-\evidencefigure{SUP-S2-MODEL}{独立主机模型的测试输出}{11cm}{35个主机模型测试方法通过。该统计以测试方法为单位；算术RTL的10022组输入另见基础测试汇总。}
-\evidencefigure{SUP-S2-OVERLAP}{连续事务的同拍重叠记录}{11cm}{10986周期同时记录ACCEPT seq2、MOVE seq1与RESPONSE seq0，分别对应新输入、原P推进和原R响应。}
