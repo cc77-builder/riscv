@@ -1,0 +1,6 @@
+mkdir -p "/home/riscv/riscv-lab/cie2026-v1-final-audit/firstdot-sdk"
+/usr/bin/riscv64-linux-gnu-gcc -march=rv64gcv -mabi=lp64d -mno-relax -c "/home/riscv/riscv-lab/cie2026-v1-release/team/optimizations/o2/r2-vector-accum/firstdot/public/gemv.S" -o "/home/riscv/riscv-lab/cie2026-v1-final-audit/firstdot-sdk/gemv.o"
+/usr/bin/riscv64-linux-gnu-ar rcsD "/home/riscv/riscv-lab/cie2026-v1-final-audit/firstdot-sdk/libxs_gemv_firstdot.a" "/home/riscv/riscv-lab/cie2026-v1-final-audit/firstdot-sdk/gemv.o"
+mkdir -p "/home/riscv/riscv-lab/cie2026-v1-final-audit/firstdot-sdk/include"
+cp "/home/riscv/riscv-lab/cie2026-v1-release/team/optimizations/o2/r2-select/public/firstdot/selected_gemv.h" "/home/riscv/riscv-lab/cie2026-v1-final-audit/firstdot-sdk/include/selected_gemv.h"
+cp "/home/riscv/riscv-lab/cie2026-v1-release/team/optimizations/o2/r2-vector-accum/firstdot/public/gemv.h" "/home/riscv/riscv-lab/cie2026-v1-final-audit/firstdot-sdk/include/firstdot_gemv.h"

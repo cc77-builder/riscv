@@ -1,0 +1,108 @@
+[
+  {
+    "name": "package-check",
+    "command": [
+      "python3",
+      "-B",
+      "submission/verify.py"
+    ],
+    "exit_code": 0,
+    "seconds": 0.325
+  },
+  {
+    "name": "model",
+    "command": [
+      "bash",
+      "team/scripts/check-vdot-model.sh"
+    ],
+    "exit_code": 0,
+    "seconds": 1.876
+  },
+  {
+    "name": "static",
+    "command": [
+      "python3",
+      "-B",
+      "team/scripts/check-vdot-integration-source.py"
+    ],
+    "exit_code": 0,
+    "seconds": 0.237
+  },
+  {
+    "name": "host-tests",
+    "command": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "team/tests",
+      "-p",
+      "test_*.py",
+      "-v"
+    ],
+    "exit_code": 0,
+    "seconds": 6.195
+  },
+  {
+    "name": "log-tool-tests",
+    "command": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "submission/logs",
+      "-p",
+      "test_read_log.py",
+      "-v"
+    ],
+    "exit_code": 0,
+    "seconds": 0.062
+  },
+  {
+    "name": "logs-content",
+    "command": [
+      "python3",
+      "-B",
+      "submission/logs/read_log.py",
+      "verify"
+    ],
+    "exit_code": 0,
+    "seconds": 0.867
+  },
+  {
+    "name": "firstdot-build",
+    "command": [
+      "bash",
+      "submission/reproduce.sh",
+      "firstdot",
+      "/home/riscv/riscv-lab/cie2026-v1-final-audit/firstdot-sdk"
+    ],
+    "exit_code": 0,
+    "seconds": 0.33
+  },
+  {
+    "name": "c8-build",
+    "command": [
+      "bash",
+      "submission/reproduce.sh",
+      "c8",
+      "/home/riscv/riscv-lab/cie2026-v1-final-audit/c8-sdk"
+    ],
+    "exit_code": 0,
+    "seconds": 0.139
+  },
+  {
+    "name": "entry-shell",
+    "command": [
+      "bash",
+      "-n",
+      "submission/reproduce.sh"
+    ],
+    "exit_code": 0,
+    "seconds": 0.003
+  }
+]

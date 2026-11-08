@@ -1,6 +1,0 @@
-help all_registers
-help report_checks
-help check_setup
-help set_input_transition
-help report_clock_properties
-exit
