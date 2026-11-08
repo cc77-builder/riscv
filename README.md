@@ -103,7 +103,7 @@ build.sc、Makefile        香山原构建入口；子模块固定在 .gitmodule
 ## 快速开始
 
 ```bash
-git clone --recurse-submodules -b release/cie2026-v1 https://github.com/cc77-builder/riscv.git
+git clone --depth 1 --single-branch -b release/cie2026-v1 --recurse-submodules https://github.com/cc77-builder/riscv.git
 cd riscv
 python3 -B submission/verify.py          # 交付文件、源码树与子模块校验
 bash submission/reproduce.sh check       # 参考模型、编码与静态接入
