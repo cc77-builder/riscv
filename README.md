@@ -49,6 +49,8 @@ LaTeX 源码与编译方法见 [submission/reports](submission/reports/README.md
 
 | 查看内容 | 入口 |
 | --- | --- |
+| 提交材料（技术文档、演示视频、证明材料、复现步骤） | [提交/](提交/README.md) |
+| 复现操作步骤 | [复现操作步骤.pdf](提交/复现操作步骤.pdf) |
 | 目录结构和代码位置 | [提交总览](submission/README.md) |
 | 构建、检查、复现命令 | [复现说明](submission/REPRODUCE.md) |
 | 原始运行日志（含失败记录） | [日志目录](submission/logs/README.md) |

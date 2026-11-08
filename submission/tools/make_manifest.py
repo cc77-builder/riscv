@@ -20,11 +20,16 @@ def git(*args):
 def main():
     old = json.loads(MANIFEST.read_text(encoding="utf-8"))
     files = []
-    for entry in git("ls-files", "-s", "-z").split(b"\0"):
-        if not entry:
-            continue
-        meta, path = entry.decode("utf-8").split("\t", 1)
-        if meta.split()[0] == "160000" or path == "submission/MANIFEST.json":
+    entries = [e.decode("utf-8") for e in git("ls-files", "-s", "-z").split(b"\0") if e]
+    paths = [e.split("\t", 1)[1] for e in entries]
+    attrs = subprocess.run(["git", "-C", str(ROOT), "check-attr", "-z", "--stdin", "filter"],
+                           input=b"\0".join(p.encode("utf-8") for p in paths) + b"\0",
+                           stdout=subprocess.PIPE, check=True).stdout.split(b"\0")
+    lfs = {attrs[i].decode("utf-8") for i in range(0, len(attrs) - 2, 3) if attrs[i + 2] == b"lfs"}
+    for entry in entries:
+        meta, path = entry.split("\t", 1)
+        # Gitlinks, LFS objects (checked in 提交/manifest.json) and this file itself are excluded.
+        if meta.split()[0] == "160000" or path in lfs or path == "submission/MANIFEST.json":
             continue
         data = (ROOT / path).read_bytes()
         files.append({"path": path, "size": len(data), "sha256": hashlib.sha256(data).hexdigest()})
