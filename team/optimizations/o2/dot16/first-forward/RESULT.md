@@ -1,4 +1,6 @@
-# dot16 四臂完整 forward：参考通过，目标运行中
+# dot16 四臂完整 forward：两套镜像目标正确性均已闭合
+
+**当前状态（2026-11-08 UTC）：旧W与新N实验各自四臂正确性、DiffTest及进程回收已闭合；同镜像较快对照的观察倍率分别为1.156325×和1.196049×。TRACE0正式性能资格仍为false。最新终态与证据见本文最后两节；下面早期“在途”文字保留为历史检查点。**
 
 合同：[CONTRACT.md](CONTRACT.md)，`r3-dot16-first-forward-v1`。身份与状态索引：[REFERENCE.json](REFERENCE.json)。
 
@@ -214,3 +216,49 @@ tar --use-compress-program='zstd -d --long=29' -xf raw.tar.zst -C /absolute/fres
 新共同ELF `62a73b9d…` 的P/PQ/N/NQ目标已在完成自己的GNU/原参考验证后另行启动。新profile `5574eb19932197186f9ea587020bc6909a6142ad7169f886b7d93eb90d5d2575` 绑定863项输入；四份77,125,408B镜像只在方法字的4B处不同，保留同一EMU和原检查器。CPU0–3各一例、原40M guest cycles/43,200s/16MiB日志上限，未扩大原单例预算。
 
 新host operation为 `49cbde030e5643f0cccfca5cec8a79c1.ed135ec164a525ededcc42c31676ba4a`，2026-11-07T18:21:18.276683Z启动；逻辑operation `3eaaab12-1f79-42b3-86d9-586bdebd642c`。19:21 UTC原status回执仍为running，尚未取得新目标终态或周期排序。这个状态只说明当时的原作业，不把旧四臂PASS或周期转给新镜像。后续沿原operation读取状态，不能因会话更换或工具暂时失败而重复启动。
+
+## 2026-11-08：新 P/PQ/N/NQ 四臂目标正确性闭合，观察倍率1.196049×
+
+本节更新独立合同 `r3-dot16-first-forward-w2np-v1` 的实际终态。共同ELF仍为 `62a73b9d16cea43ad03eec3ec09b27edfab7da90ce895d33baa72bf9d84723c4`，共用BIN为 `fcc05cf2d1ccd2cc80c74e259d007da86b7758a626f58b7cb63dc6793c698365`。上文的新N“在途”记载属于较早检查点，不再表示当前运行状态；旧W/WQ实验保持自身身份与结果。
+
+原host operation `49cbde030e5643f0cccfca5cec8a79c1.ed135ec164a525ededcc42c31676ba4a` 从2026-11-07T18:21:18.276683Z运行至2026-11-08T01:26:19.2622268Z，状态succeeded、exit0、cleanup_complete=true，无取消或超时。逻辑operation仍为 `3eaaab12-1f79-42b3-86d9-586bdebd642c`；原40M cycles/43200s单例与45000/300/45600/46200s owner边界没有延长，未重启或补跑。
+
+### 原始目标结果与比较
+
+四路均为 `FIRST_FORWARD_W2NP_TARGET_DIFFTEST_PASS`，campaign为 `FIRST_FORWARD_W2NP_TARGET_OBSERVATIONS_COMPLETE`。原DiffTest、完整3,691,424B state比较、guards与约定CSR门、flags=1、三条完整CONSUMER记录和GOOD TRAP0/PC0x8000013c通过。四个原EMU407–410及对应launcher已回收，进程组消失，固定输入未变；Issue #2的6715717931记录了原运行资源释放，冻结证据继续保留。
+
+| 本次同镜像方法 | UART窗口cycles | UART窗口instret | EMU guest总cycles |
+| --- | ---: | ---: | ---: |
+| P | 16,920,555 | 4,958,760 | 23,504,848 |
+| PQ | 16,129,141 | 4,567,702 | 22,713,500 |
+| N | 14,276,120 | 3,239,096 | 20,860,018 |
+| NQ | 13,485,355 | 2,848,037 | 20,068,095 |
+
+四路counter_hex、原始stdout与validation逐项一致，完整64位数使用整数差分复核；没有经过浮点JSON往返后改写原件。窗口instret与此前该镜像的参考观察分别一致，但这种一致性不补出CSR退休关联。窗口周期和EMU guest总周期是不同范围。
+
+比较仍取本次同镜像、同硬件、同输入的较快合格RVV：PQ比P快，NQ比N快，故主观察为 `16129141/13485355 = 1.1960486765087015×`，窗口cycles减少16.3913626894%。工作负载仍是D288/H768/L6固定合成模型、合同准备后的首次p0/token1完整forward；模型准备不在窗口内，不等于真实模型或多token端到端性能。
+
+新实验将K288与K768同时接入N/P路线，RVV和dot16两侧都改变。因此不能用旧W实验更慢的PQ 16,594,945作为新NQ的分母，也不能把两次实验的倍率相乘、全部归于硬件或与prefix面积组合。旧同镜像PQ/WQ为1.156325×，新同镜像PQ/NQ为1.196049×，分别留证。
+
+资格原样保留：`target_correctness_qualified=true`；`counter_retirement_verified=false`、`full_retirement_window_audited=false`、`performance_qualified=false`；custom退休与事件协议仍为 `NOT_COLLECTED_TRACE0`。原完整退休窗口未采集，不从静态源或DiffTest倒推出正式性能资格；这一额外资格边界也不自行升级为其他优化的新阻塞门槛。现有证据没有证明人工提出的旧技术文档各项性能再提高50%。
+
+### 终态摘要、原件与后续采用
+
+录制方于01:53 UTC明确解除临时避让后，已完成[完整原始目标归档](w2-np/target-20261108/raw.tar.zst)：**26,374,766 B**，SHA256 `cff9a569518a6437b5bb6f14f847b684debb6ded53b03159b7d7e142337fb66d`，179个文件、311,076,225 B原始内容，零省略。包含全部四份原image.bin、完整stdout/stderr、原campaign/owner/profile、归档源与原host回执。完整归档与下面的轻量终态摘要用途不同。
+
+原归档host `0250d6044ba18f5fd71831ae3131d2ce.a0334be27653c6dc0d1ba03d406580ee` 于01:55:40.7393972–01:55:46.0261094Z闭合，exit0/cleanuptrue；内部create与流式verify两子进程均回收、组消失。CPU1/nice5、tar/zstd单线程、600秒总上限，实际3.508秒；源集合/前后SHA与每个归档成员均核验，所有原件保留，无新guest/build。此运输不增加目标功能或性能资格。[archive-audit.json](w2-np/target-20261108/archive-audit.json)保留实际回执；标准解包为 `tar --use-compress-program='zstd -d --long=29' -xf raw.tar.zst -C /absolute/fresh/restore`。
+
+| 实物 | 字节数 / SHA256 |
+| --- | --- |
+| 原target results.json | 21,805B；`13c45f846a8a26ad27996c6cd41faabd942da541131282f024c09dd5bb7e38f0` |
+| 原target state.json | 12,672B；`10f2a7a4d09ecfcecdec77cabbd8bb2b96cf3a08214c03e3a43479bc8b90f79c` |
+| 原owner state.json | 5,403B；`0c179518076d6b23cbf4b77926a1a7f3161a63a1929fd05b47714be7ef5bab4c` |
+| 原profile | `5574eb19932197186f9ea587020bc6909a6142ad7169f886b7d93eb90d5d2575` |
+| 原目标EMU | `f14918658fcd2f19c9fb6c1d493025d98f727ac985ea73129edc58270fa6977d` |
+| [终态摘要 summary.zip](w2-np/target-20261108/summary.zip) | 23,290B；`011a48db16cb5a4656298bca724961e4a4f7b997ec1e9d5bee3002ad41ab23c1` |
+
+摘要包含16个成员、78,031B原始内容：原campaign/owner/host终态、四份完整stdout及validation、只读整数复核器和其结果、成员清单。所有成员逐字节读回，原results/state/owner的完整SHA与原owner/host相符。摘要不包含四份完整目标镜像、空stderr文件、原resource profile或全部环境，不称作完整运行归档。
+
+完整原件继续保留在常驻WSL `runs/dot16-w2-forward-20261107-main/{target-01,owner-01,resource-01}`；Windows同名runs的 `target-closure-01` 保存上述摘要原件，`archive-target-source-01` 保存有界完整归档入口和原host回执。录制保护期间未启动新的重构建、仿真或大内存压缩。摘要只是运输与复核，不重跑guest/checker，不增加资格。解压到新目录后，`python3 -B audit_closed_summary.py` 可重算摘要中的原始整数关系；它明确不验证缺席的目标镜像或完整环境。
+
+本次工程交接优先保留NQ和同镜像PQ对照，旧W/WQ及原RVV入口继续作为回退参考。该选择限于已验证的固定工作负载；不因此切换生产默认或声称任意应用收益。prefix仍另需独立整核验证，packed-Ws仍只有其局部完整调用结果。代码和对当前技术PDF的指标说明统一见 [工程交付](../../../../evidence/dot16-engineering-delivery-20261108/README.md)，正式PDF/LaTeX由人工维护。
