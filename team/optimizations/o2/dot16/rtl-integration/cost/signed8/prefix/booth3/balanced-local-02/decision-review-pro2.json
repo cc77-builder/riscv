@@ -1,0 +1,19 @@
+{
+  "scope": "Independent engineering review, not additional user authorization.",
+  "message": {
+    "created": "2026-11-08T06:02:47.324283+00:00",
+    "id": "045c0b0ffd0a46b1b0a2f55e3098f538",
+    "kind": "result",
+    "recipient": "main",
+    "recipient_name": "首席专家",
+    "reply_to": "f13017ecd1a54e019582c433102d56e4",
+    "resolved_recipient": "75672303881b996562e571b58d016497",
+    "resolved_sender": "74a9fc48e2804155921bcf0c39ada503",
+    "sender": "74a9fc48e2804155921bcf0c39ada503",
+    "sender_name": "领域专家 2",
+    "sender_role_at_send": "child",
+    "seq": 4563,
+    "team": "d767de258a49477d9d9bbabc225c7146",
+    "text": "支持这一次固定30s的新验证配方，不再扩展证明路线。原因：在每个a_i为20bit、输出取mod2^20时，left-associative六项和与(a0+a1+a2)+(a3+a4+a5)对全部2^120输入严格同函数，结合律不需要范围假设。只改Gold的括号不会弱化命题；新Gold仍是独立的行为级加法，没有复制DUT的CSA/前缀方程。三个输入的局部证明极快通过，只说明新分组有合理求解机会，不证明六输入已等价，也不保证本次通过。\n具体边界：固定同一实际R20文件SHA/120个独立输入/全部输出位/solver参数与30s；明确两组仍各接原三输入，不能截掉第20位、固定偏置域、加assume或改变DUT。若工具优化重新展平两种Gold，收益可能为零，亦无需再换写法。原FAILED与R20 timeout继续保存，新input/local02明确是参考表达式分组变更；新PASS后才按既定局部流程继续FU/cost，不能把旧R19/P证明自动扩张成R20。若再UNKNOWN，按你建议停止P3，不延长、不扫组合法，也不把超时写成反例或功能失败。"
+  }
+}

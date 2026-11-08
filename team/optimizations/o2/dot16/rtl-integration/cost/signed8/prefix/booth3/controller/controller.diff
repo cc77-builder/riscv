@@ -1,0 +1,237 @@
+--- booth2/booth9.py
++++ booth3/booth3.py
+@@ -1,5 +1,5 @@
+ #!/usr/bin/env python3
+-"""Compile one Booth9 candidate; prove actual biased CSA arithmetic, then run FU/cost."""
++"""Compile one three-row Booth candidate; prove new P and R arithmetic, then FU/cost."""
+ import argparse
+ from collections import Counter
+ import hashlib
+@@ -15,8 +15,8 @@
+ import time
+ 
+ sys.dont_write_bytecode = True
+-CONTRACT = 'dot16-prefix-booth9-local-v1'
+-CONTROLLER_BASELINE_SHA = '794544ddfb3455b05deaffe8588d3c9715d02446ac04c50fe2710c6caaaafc0e'
++CONTRACT = 'dot16-prefix-booth3-local-v1'
++CONTROLLER_BASELINE_SHA = '6681fce5cc739206c5922e025d76ae0a75334d57502b089902b5a7a72f05ea60'
+ PREFIX_BASELINE_SHA = 'a0c4dd60fddc001f368b71ec283327f2d7fe0874080ac35304e3debe783116d0'
+ PREFIX_BASELINE_BYTES = 205865
+ PREFIX_DATAPATH_SHA = '1d02d8a34772e7d9b9947f997f32465f3e946f4b24cacc66159eef7ee10ab3bb'
+@@ -26,13 +26,13 @@
+ CSA_WRAPPER_SHA = '4a525d2e8ead5cc10a193d9724342162af4ffebd130c58ad7c606093849ac1c8'
+ CSA_STRUCTURE_SHA = '9483d70f24876e7c89281e559d3d062355c0787e38a7f3fd7ab9cf36d3cd8ad6'
+ CSA_MULTIPLICATION_LOG_SHA = 'a9175ff5e52888f37d8cf8eeeb1673f6975e32cc8e08687be91f3db2cc845b2b'
+-SOURCE_DERIVATION_SHA = '72b19ecbc899c0175c86a31e1032607b65897999c17117e2de21f21fac7c7eae'
++SOURCE_DERIVATION_SHA = '202bc499e58ee12cac8986a65d2ec9a4e5ccd78b0e530370c22516b6edbac876'
+ CSA_DFF_CELLS = {0: 1639, 1: 1678}
+ RWIDTH_BASELINE_SHA = 'f42f7285ff8a357877c546d433251b1dc8c8eef66ee9218c9e3b2c002ca0a261'
+ RWIDTH_WRAPPER_SHA = '70dcc27381d3e7226eeff333c943d35b982ec1fdd37b75b680060a13aaf94e2a'
+ RWIDTH_DATAPATH_SHA = '50522c0cd2700f7f852872049533bc31f79ce811ad2ed53da2c1d333cece45e2'
+-VERIFY_SHA = 'b3044e637a5f312b71497de1eaa44503e27894cb7fd313ee389208a8fc351dc5'
+-WRAPPER_SHA = '0fcc5df10355ee1e6382678ba40bc9d7ddf830b560dcc469c46e6a6888441556'
++VERIFY_SHA = 'c0181c3c099a4a4e3ce4fcfcd1af3c34d337031675b6533ad303327ad632d587'
++WRAPPER_SHA = '1bc162257ab7d53671a06b0d24015045026330c8680ee25dae482dbf7a316238'
+ PREFIX_WRAPPER_SHA = '912c1a038ef8e9a1ac56cfa349161ae1c582d763acfce5352b08ebde2a227f92'
+ ORIGINAL_WRAPPER_SHA = '63911b937a526b97ddaa67e34526fd19bbd2fa2801eadfda10ae6c2fa4b9fe9e'
+ REL_WRAPPER = 'src/main/scala/xiangshan/backend/fu/wrapper/VDotElastic.scala'
+@@ -41,7 +41,7 @@
+ GEN_INPUTS_SHA = 'ec29dc8725cf3a1c04ea684e2753debc1a9b2a04d37b4adadcdfe96f85ec20d8'
+ CP_SHA = 'd9a3071fc4f2cb1fb6766bcf3d3efdc0571bfc09986bace0b432b3b82d445902'
+ COST_SHA = '8c9a22771594565bfaa812309f68c84de4e8a213b02b9aba03440373f61e2e51'
+-SOURCE_SHA = 'f0a8bbe58440c6113aa56f848387c6b4e4a487d71ec2832a1e43fca55d3a8245'
++SOURCE_SHA = '880ba4c2046721985560b788bf871cc69d930ebfe27561628ba7b930370ff680'
+ ORIGINAL_SOURCE_SHA = '161df70403fd131a3adf445230ed637dc7ad7c619d05c0a890aa8aa1791546d8'
+ REL_SOURCE = 'src/main/scala/xiangshan/backend/fu/vector/VDotDatapath.scala'
+ HELPERS = {
+@@ -86,14 +86,14 @@
+     for name,body in instances.items():
+         pairs=re.findall(r'\.(\w+)\s*\(([^()]*)\)',body)
+         rest=re.sub(r'\.(\w+)\s*\(([^()]*)\)','',body)
+-        need(not rest.replace(',','').strip() and len(pairs)==4 and len(dict(pairs))==4,
+-             'closed four CSA instance ports')
++        need(not rest.replace(',','').strip() and len(pairs)==5 and len(dict(pairs))==5,
++             'closed five CSA instance ports')
+         ports={k:compact(v) for k,v in pairs}
+         high=name=='highProducts'; hi,lo=(127,64) if high else (63,0)
+         need(ports=={'vs1':f'io_in_bits_data_src_0[{hi}:{lo}]',
+                      'vs2':f'io_in_bits_data_src_1[{hi}:{lo}]',
+-                     'row0':f'_{name}_row0','row1':f'_{name}_row1'},'exact input halves and output wires')
+-    pnames=[f'pRows_{half}_{row}' for half in range(2 if feature else 1) for row in range(2)]
++                     'row0':f'_{name}_row0','row1':f'_{name}_row1','row2':f'_{name}_row2'},'exact input halves and all three output wires')
++    pnames=[f'pRows_{half}_{row}' for half in range(2 if feature else 1) for row in range(3)]
+     declarations=re.findall(r'\breg\s+\[(\d+):0\]\s+(pRows_\d+_\d+)\s*;',text)
+     need(declarations==[(str(19 if feature else 18),name) for name in pnames],
+          'actual complete P rows: feature0 low19, feature1 full20')
+@@ -104,7 +104,7 @@
+          [(n,compact(e)) for n,e in previous_updates if not data(n)],
+          'all actual non-data sequential assignments unchanged')
+     for half in range(2 if feature else 1):
+-        for row in range(2):
++        for row in range(3):
+             name=f'pRows_{half}_{row}'; expressions=[compact(e) for n,e in updates if n==name]
+             if half:
+                 constant="20'h80000" if row==0 else "20'h0"
+@@ -184,7 +184,7 @@
+         need(restored_controller.count(edit['after'])==1,'unique controller inverse edit')
+         restored_controller=restored_controller.replace(edit['after'],edit['before'],1)
+     need(hashlib.sha256(restored_controller.encode()).hexdigest()==CONTROLLER_BASELINE_SHA,
+-         'entire completed Pgroup controller recovered')
++         'entire completed Booth2 controller recovered')
+     pin(cbase/'result.json',CSA_BASELINE_SHA)
+     need((cbase/'result.json').stat().st_size==CSA_BASELINE_BYTES,'exact closed CSA result bytes')
+     pin(cbase/'source-snapshot/VDotDatapath.scala',CSA_DATAPATH_SHA)
+@@ -276,9 +276,9 @@
+     need(proof['contract']==CONTRACT and proof['baseline_datapath_sha256']==PREFIX_DATAPATH_SHA and
+          proof['candidate_datapath_sha256']==SOURCE_SHA and proof['baseline_wrapper_sha256']==PREFIX_WRAPPER_SHA and
+          proof['candidate_wrapper_sha256']==WRAPPER_SHA and proof['wrapper_byte_identical'] is False and
+-         proof['exact_inverse'] is True and len(proof['edits'])==5,
+-         'one heap replacement and four explicit wrapper data-representation edits')
+-    need(Counter(e['file'] for e in proof['edits'])=={'VDotDatapath.scala':1,'VDotElastic.scala':4},
++         proof['exact_inverse'] is True and len(proof['edits'])==16,
++         'complete prefix-to-Booth2-to-Booth3 inverse, sixteen exact hunks')
++    need(Counter(e['file'] for e in proof['edits'])=={'VDotDatapath.scala':7,'VDotElastic.scala':9},
+          'closed per-source edit counts')
+     for name,path in (('VDotDatapath.scala',candidate),('VDotElastic.scala',wrapper)):
+         restored=path.read_bytes().decode('utf-8')
+@@ -288,8 +288,9 @@
+         need(restored.encode()==(pbase/'source-snapshot'/name).read_bytes(),
+              'full frozen prefix source recovered '+name)
+     need(proof['external_interface_unchanged'] and proof['clock_reset_slot_protocol_unchanged'] and
+-         proof['old_prefix_finish_source_retained'],
+-         'P representation changes only; clock/reset/control and R prefix source retained')
++         proof['old_prefix_finish_source_retained'] is False and proof['old_prefix_network_suffix_retained'] and
++         proof['fresh_three_six_row_unconstrained_proofs_required'] and proof['p_rows_per_half']==3,
++         'one P/R boundary change, preserved slot control, fresh R arithmetic proof required')
+     old_gen=json.loads((gen/'result.json').read_bytes())
+     cfg=json.loads((gen/'inputs.json').read_bytes())
+     old_cost=json.loads((nominal/'result.json').read_bytes())
+@@ -328,7 +329,7 @@
+     copies={name:repo/rel for name,(rel,_) in HELPERS.items()}
+     copies.update({'VDotDatapath.scala':candidate,'original-VDotDatapath.scala':repo/REL_SOURCE,
+         'GenerateVDotCost.scala':gen/'source-snapshot/GenerateVDotCost.scala',
+-        'booth9.py':Path(__file__),'BOOTH_CONTRACT.md':here/'BOOTH_CONTRACT.md',
++        'booth3.py':Path(__file__),'BOOTH_CONTRACT.md':here/'BOOTH_CONTRACT.md',
+         'verify_booth.py':here/'verify_booth.py',
+         'prefix-result.json':pbase/'result.json',
+         'prefix-VDotDatapath.scala':pbase/'source-snapshot/VDotDatapath.scala',
+@@ -368,8 +369,8 @@
+         signed8_gold_result_sha256=BASELINE_SHA,rwidth_baseline_result_sha256=RWIDTH_BASELINE_SHA,
+         csa_baseline_result_sha256=CSA_BASELINE_SHA,csa_baseline_result_bytes=CSA_BASELINE_BYTES,
+         prefix_baseline_result_sha256=PREFIX_BASELINE_SHA,prefix_baseline_result_bytes=PREFIX_BASELINE_BYTES,
+-        result_widths={0:19,1:20},p_row_bits={0:19,1:20},p_rows_per_half=2,
+-        representation_equivalence_basis='New complete proof of actual Booth recoder/biased CSA bytes; exact-byte reuse of unconstrained prefix SAT proofs; full source inverse, new emitted wrapper binding and new FU tests. No whole-FU sequential or RTL-to-mapped SAT claim.',
++        result_widths={0:19,1:20},p_row_bits={0:19,1:20},p_rows_per_half=3,
++        representation_equivalence_basis='New complete proof of actual three-row Booth heap; fresh actual unconstrained three/six-row R SAT; full source inverse, emitted wrapper binding and new FU tests. No whole-FU sequential or RTL-to-mapped SAT claim.',
+         cpu_affinity=[a.cpu],nice=5,budget_seconds=a.budget_seconds,resident_modified=False,
+         original_cache_modified=False,production_default_changed=False,new_core_builds=0,new_core_runs=0,
+         arithmetic_equivalent=False,fu_qualified=False,parent_qualified=False,
+@@ -481,9 +482,8 @@
+         for feature in (0,1):
+             name=f'VDotPrefixFinish{20 if feature else 19}.sv'
+             need((out/f'cost-feature{feature}/rtl'/name).read_bytes()==
+-                 (out/f'fu-feature{feature}/rtl'/name).read_bytes()==
+-                 (pbase/f'cost-feature{feature}/rtl'/name).read_bytes(),
+-                 'actual new cost/FU R prefix bytes exactly match the previously proved modules')
++                 (out/f'fu-feature{feature}/rtl'/name).read_bytes(),
++                 'actual new cost/FU R bytes are identical and require fresh SAT proofs')
+         need(len(result['wrapper_bindings'])==4 and
+              all(x['post_p_actual_expression_verified'] for x in result['wrapper_bindings']),
+              'all four actual post-P expressions bound')
+@@ -494,13 +494,13 @@
+         command('actual-booth-structure',[sys.executable,'-B',snap/'verify_booth.py',
+             '--rtl',first/'VDotCarrySaveRows.sv','--output',report],60)
+         structure=json.loads(report.read_bytes())
+-        need(structure['status']=='BOOTH_CSA_STRUCTURAL_EQUIVALENCE_PASS' and
++        need(structure['status']=='BOOTH3_CSA_STRUCTURAL_EQUIVALENCE_PASS' and
+              structure['all_inputs_equivalent'] is True and structure['parsed_entire_module'] is True and
+              structure['verifier']['sha256']==VERIFY_SHA and
+              structure['rtl_sha256']==sha(first/'VDotCarrySaveRows.sv') and
+-             structure['full_adders']==288 and structure['half_adders']==20 and
++             structure['full_adders']==272 and structure['half_adders']==19 and
+              structure['actual_recode_cases']==7168 and structure['signed_byte_decomposition_cases']==256 and
+-             structure['layers']==list(range(8)) and structure['total_correction']==350208 and
++             structure['layers']==list(range(7)) and structure['total_correction']==350208 and
+              structure['disabled_high_half_sum']==1<<19,
+              'new complete actual Booth proof with exact recode, bias and FA/HA counts')
+         result['arithmetic_structure_proof']=structure
+@@ -513,12 +513,55 @@
+         result['independent_miter']=dict(status='NOT_RUN',solver_equivalence_proved=False,
+             retried=False,qualification_scope='new P candidate',
+             reason='New actual structural proof is used; no new monolithic multiplication solver run.')
+-        result['prefix_miters']=json.loads(json.dumps(pb['prefix_miters']))
+-        result['prefix_miters_reused_from']=str(pbase)
+-        result['prefix_miters_reuse_basis']='Exact actual finish SV bytes, complete prior gold/gate/script/log pins and unconstrained-input SAT scope.'
+-        for miter in result['prefix_miters']:
+-            actual=out/f"cost-feature{miter['feature']}/rtl/VDotPrefixFinish{miter['width']}.sv"
+-            need(sha(actual)==miter['actual_rtl_sha256'],'new emitted R module matches the exact reused SAT proof')
++        result['prefix_miters_reused']=False
++        for feature,width,row_count in ((0,19,3),(1,20,6)):
++            env['VDOT_DOT16']=str(feature)
++            actual=out/f'cost-feature{feature}/rtl/VDotPrefixFinish{width}.sv'
++            # Exact header/ports close the harness width and input-count binding.
++            # The arithmetic is read only from the real emitted DUT below.
++            header=(f'module VDotPrefixFinish{width}(\n'+''.join(
++                f'  input wire [{width-1}:0] rows_{i},\n' for i in range(row_count))+
++                f'  output wire [{width-1}:0] result\n);\n')
++            need(actual.read_bytes().startswith(b'// Generated by CIRCT firtool-1.62.1\n'+header.encode()),
++                 'actual prefix module name and complete exact-width input/output header')
++            folder=out/f'prefix-proof-{width}';folder.mkdir()
++            gold,gate,prove=folder/'gold.sv',folder/'gate.sv',folder/'prove.ys'
++            inputs=', '.join(f'input wire [{width-1}:0] a{i}' for i in range(row_count))
++            ports=inputs+f', output wire [{width-1}:0] result'
++            gold.write_text('module Gold('+ports+');\nassign result='+
++                '+'.join(f'a{i}' for i in range(row_count))+';\nendmodule\n')
++            gate.write_text('module Gate('+ports+');\n'+f'VDotPrefixFinish{width} actual('+ 
++                ', '.join(f'.rows_{i}(a{i})' for i in range(row_count))+
++                ', .result(result));\nendmodule\n')
++            prove.write_text('\n'.join(['read_verilog -sv '+str(p) for p in (gold,gate,actual)]+
++                ['miter -equiv -flatten Gold Gate miter','hierarchy -check -top miter','proc','opt','flatten',
++                 'sat -verify -timeout 30 -prove trigger 0 -show-inputs -show-outputs'])+'\n')
++            for p in (gold,gate,prove):generated_pins[str(p)]=sha(p)
++            record=dict(feature=feature,width=width,row_count=row_count,status='RUNNING',
++                actual_rtl_sha256=sha(actual),gold_sha256=sha(gold),gate_sha256=sha(gate),script_sha256=sha(prove),
++                unconstrained_inputs=True,solver_timeout_seconds=30,total_command_budget_seconds=60,
++                qualification_scope='actual prefix combinational modular sum only',retried=False)
++            result['prefix_miters'].append(record);save(out/'result.json',result)
++            label=f'actual-prefix-{width}-miter'
++            try:
++                log,rc=command(label,[old_cost['tools']['yosys']['path'],'-T','-s',prove],60,expected=None)
++                record['exit_code']=rc
++                record['log_sha256']=sha(out/(label+'.log'))
++                counterexample='SAT proof finished - model found: FAIL!' in log
++                solved=log.count('SAT proof finished - no model found: SUCCESS!')==1
++                record['counterexample_found']=counterexample
++                need(rc==0 and solved and not counterexample and 'ERROR:' not in log,
++                     'new actual prefix SAT must explicitly succeed; timeout/tool error/counterexample blocks FU/cost')
++                record['status']='PASS';record['solver_equivalence_proved']=True
++                generated_pins[str(out/(label+'.log'))]=record['log_sha256']
++            except BaseException as exc:
++                record.update(status='FAILED',solver_equivalence_proved=False,error=repr(exc))
++                if (out/(label+'.log')).exists():record['log_sha256']=sha(out/(label+'.log'))
++                raise
++            finally:
++                save(out/'result.json',result)
++        need(len(result['prefix_miters'])==2 and all(x['status']=='PASS' for x in result['prefix_miters']),
++             'both actual emitted prefix modules proved before any FU/cost command')
+         result['arithmetic_proof_completed']=True
+         save(out/'result.json',result)
+         for feature in (0,1):
+@@ -619,7 +662,7 @@
+         save(out/'final-artifact-pins.json',{**snapshots,**class_pins,**generated_pins})
+         check()
+         need(time.monotonic()<deadline,'total budget after final manifest and pending-signal check')
+-        result.update(status='BOOTH_GENERATED_ARITHMETIC_FU_AND_COST_COMPLETE',
++        result.update(status='BOOTH3_GENERATED_ARITHMETIC_FU_AND_COST_COMPLETE',
+             arithmetic_equivalent=True,fu_qualified=True,local_cost_recorded=True,
+             inputs_unchanged=True,generated_inputs_unchanged=True,original_classpath_unchanged=True,
+             all_children_reaped=all(r['reaped'] and r['group_absent'] for r in result['commands']))
+@@ -627,7 +670,7 @@
+         result.update(status='FAILED',error=repr(exc));raise
+     finally:
+         result['finished']=util.stamp();save(out/'result.json',result)
+-        if result.get('status')=='BOOTH_GENERATED_ARITHMETIC_FU_AND_COST_COMPLETE':
++        if result.get('status')=='BOOTH3_GENERATED_ARITHMETIC_FU_AND_COST_COMPLETE':
+             try:check()
+             except BaseException as exc:
+                 result.update(status='FAILED',error=repr(exc),finished=util.stamp())

@@ -1,0 +1,138 @@
+{
+  "contract": "dot16-prefix-booth9-local-v1",
+  "baseline_sha256": "794544ddfb3455b05deaffe8588d3c9715d02446ac04c50fe2710c6caaaafc0e",
+  "candidate_sha256": "6681fce5cc739206c5922e025d76ae0a75334d57502b089902b5a7a72f05ea60",
+  "exact_inverse": true,
+  "edits": [
+    {
+      "before": "\"\"\"Compile one P-group candidate; prove actual CSA arithmetic, then run full FU/cost.\"\"\"",
+      "after": "\"\"\"Compile one Booth9 candidate; prove actual biased CSA arithmetic, then run FU/cost.\"\"\""
+    },
+    {
+      "before": "CONTRACT = 'dot16-prefix-pgroup-local-v1'",
+      "after": "CONTRACT = 'dot16-prefix-booth9-local-v1'"
+    },
+    {
+      "before": "CONTROLLER_BASELINE_SHA = '8f33f550c9b7e74e8190cb5f5a2cfdcc693a783d86ae905ec3e60c7ad10d148c'",
+      "after": "CONTROLLER_BASELINE_SHA = '794544ddfb3455b05deaffe8588d3c9715d02446ac04c50fe2710c6caaaafc0e'"
+    },
+    {
+      "before": "SOURCE_DERIVATION_SHA = 'b757bddd341c5dae1188b6a45a1a88ba32ed7b856864e4fbc6e503283b13a630'",
+      "after": "SOURCE_DERIVATION_SHA = '72b19ecbc899c0175c86a31e1032607b65897999c17117e2de21f21fac7c7eae'"
+    },
+    {
+      "before": "VERIFY_SHA = 'e6924e406792fe9e2b82f27be5a591b37466fb7b3ee23ec93935698934e397de'",
+      "after": "VERIFY_SHA = 'b3044e637a5f312b71497de1eaa44503e27894cb7fd313ee389208a8fc351dc5'"
+    },
+    {
+      "before": "WRAPPER_SHA = '912c1a038ef8e9a1ac56cfa349161ae1c582d763acfce5352b08ebde2a227f92'",
+      "after": "WRAPPER_SHA = '0fcc5df10355ee1e6382678ba40bc9d7ddf830b560dcc469c46e6a6888441556'\nPREFIX_WRAPPER_SHA = '912c1a038ef8e9a1ac56cfa349161ae1c582d763acfce5352b08ebde2a227f92'"
+    },
+    {
+      "before": "SOURCE_SHA = '1f9a4c807b30b8aa769e65595ce6b54619b190a5f2b5af1d531413de9970b90c'",
+      "after": "SOURCE_SHA = 'f0a8bbe58440c6113aa56f848387c6b4e4a487d71ec2832a1e43fca55d3a8245'"
+    },
+    {
+      "before": "    need(declarations==[('18',name) for name in pnames],'actual complete 19-bit P rows')",
+      "after": "    need(declarations==[(str(19 if feature else 18),name) for name in pnames],\n         'actual complete P rows: feature0 low19, feature1 full20')"
+    },
+    {
+      "before": "            expected=f'isDot16?_highProducts_row{row}:19\\'h0' if half else f'_products_row{row}'\n            need(expressions==[expected],'exact P capture and dot8 zero encoding')",
+      "after": "            if half:\n                constant=\"20'h80000\" if row==0 else \"20'h0\"\n                expected=f'isDot16?_highProducts_row{row}:{constant}'\n            else:\n                expected=f'_products_row{row}'+('' if feature else '[18:0]')\n            need(expressions==[expected],'exact P capture and dot8 biased-zero encoding')"
+    },
+    {
+      "before": "        expected_ports[f'rows_{i}']='{'+name+'[18],'+name+'}' if feature else name\n    need(ports==expected_ports,'exact saved low0/low1/high0/high1 rows with required sign extension')",
+      "after": "        expected_ports[f'rows_{i}']=name\n    need(ports==expected_ports,'exact saved unsigned rows, no signed extension or post-P correction')"
+    },
+    {
+      "before": "        p_capture_and_dot8_zero_verified=True,non_data_sequential_assignments_unchanged=True,",
+      "after": "        p_capture_and_dot8_biased_zero_verified=True,p_row_bits=20 if feature else 19,\n        non_data_sequential_assignments_unchanged=True,"
+    },
+    {
+      "before": "         'entire completed prefix controller recovered')",
+      "after": "         'entire completed Pgroup controller recovered')"
+    },
+    {
+      "before": "         pb['candidate_source_sha256']==PREFIX_DATAPATH_SHA and pb['candidate_wrapper_sha256']==WRAPPER_SHA,",
+      "after": "         pb['candidate_source_sha256']==PREFIX_DATAPATH_SHA and pb['candidate_wrapper_sha256']==PREFIX_WRAPPER_SHA,"
+    },
+    {
+      "before": "    pin(pbase/'source-snapshot/VDotElastic.scala',WRAPPER_SHA)",
+      "after": "    pin(pbase/'source-snapshot/VDotElastic.scala',PREFIX_WRAPPER_SHA)"
+    },
+    {
+      "before": "    proof=json.loads((source/'source-derivation.json').read_bytes())\n    need(proof['contract']==CONTRACT and proof['baseline_datapath_sha256']==PREFIX_DATAPATH_SHA and\n         proof['candidate_datapath_sha256']==SOURCE_SHA and proof['baseline_wrapper_sha256']==WRAPPER_SHA and\n         proof['candidate_wrapper_sha256']==WRAPPER_SHA and proof['wrapper_byte_identical'] is True and\n         proof['exact_inverse'] is True and len(proof['edits'])==1,'single exact P-object source derivation')\n    prior_datapath=(pbase/'source-snapshot/VDotDatapath.scala').read_bytes()\n    restored=candidate.read_bytes().decode('utf-8')\n    for edit in reversed(proof['edits']):\n        need(restored.count(edit['after'])==1,'unique P-object inverse')\n        restored=restored.replace(edit['after'],edit['before'],1)\n    need(restored.encode()==prior_datapath,'all original prefix source outside P object retained')\n    need(wrapper.read_bytes()==(pbase/'source-snapshot/VDotElastic.scala').read_bytes(),\n         'entire prefix wrapper unchanged including state, clock, reset, R finish and control')\n",
+      "after": "    proof=json.loads((source/'source-derivation.json').read_bytes())\n    need(proof['contract']==CONTRACT and proof['baseline_datapath_sha256']==PREFIX_DATAPATH_SHA and\n         proof['candidate_datapath_sha256']==SOURCE_SHA and proof['baseline_wrapper_sha256']==PREFIX_WRAPPER_SHA and\n         proof['candidate_wrapper_sha256']==WRAPPER_SHA and proof['wrapper_byte_identical'] is False and\n         proof['exact_inverse'] is True and len(proof['edits'])==5,\n         'one heap replacement and four explicit wrapper data-representation edits')\n    need(Counter(e['file'] for e in proof['edits'])=={'VDotDatapath.scala':1,'VDotElastic.scala':4},\n         'closed per-source edit counts')\n    for name,path in (('VDotDatapath.scala',candidate),('VDotElastic.scala',wrapper)):\n        restored=path.read_bytes().decode('utf-8')\n        for edit in reversed([e for e in proof['edits'] if e['file']==name]):\n            need(restored.count(edit['after'])==1,'unique source inverse '+name)\n            restored=restored.replace(edit['after'],edit['before'],1)\n        need(restored.encode()==(pbase/'source-snapshot'/name).read_bytes(),\n             'full frozen prefix source recovered '+name)\n    need(proof['external_interface_unchanged'] and proof['clock_reset_slot_protocol_unchanged'] and\n         proof['old_prefix_finish_source_retained'],\n         'P representation changes only; clock/reset/control and R prefix source retained')\n"
+    },
+    {
+      "before": "        result_widths={0:19,1:20},p_row_bits=19,p_rows_per_half=2,",
+      "after": "        result_widths={0:19,1:20},p_row_bits={0:19,1:20},p_rows_per_half=2,"
+    },
+    {
+      "before": "        representation_equivalence_basis='New strict complete proof of actual P CSA bytes; exact-byte reuse of two unconstrained prefix SAT proofs; source inverse, emitted wrapper binding and actual new FU checks. No whole-FU sequential SAT claim.',",
+      "after": "        representation_equivalence_basis='New complete proof of actual Booth recoder/biased CSA bytes; exact-byte reuse of unconstrained prefix SAT proofs; full source inverse, new emitted wrapper binding and new FU tests. No whole-FU sequential or RTL-to-mapped SAT claim.',"
+    },
+    {
+      "before": "        no_state_clock_latency_change=True)",
+      "after": "        no_clock_reset_latency_or_slot_protocol_change=True,internal_P_row_width_changed=True)"
+    },
+    {
+      "before": "    def check():\n        if pending[0] is not None:raise InterruptedError('received signal '+str(pending[0]))",
+      "after": "    def check():\n        if pending[0] is not None:raise InterruptedError('received signal '+str(pending[0]))\n        if time.monotonic()>=deadline:raise TimeoutError('total success budget exhausted')"
+    },
+    {
+      "before": "        check();remaining=deadline-time.monotonic();need(remaining>0,'total deadline before '+label)\n        rec=dict(label=label,argv=list(map(str,argv)),started=util.stamp(),budget_seconds=min(limit,remaining),",
+      "after": "        check();now=time.monotonic();until=min(deadline,now+limit)\n        need(until>now,'total deadline before '+label)\n        rec=dict(label=label,argv=list(map(str,argv)),started=util.stamp(),budget_seconds=until-now,"
+    },
+    {
+      "before": "                rec['pid']=proc.pid;save(out/'result.json',result)\n                until=time.monotonic()+rec['budget_seconds']",
+      "after": "                rec['pid']=proc.pid;save(out/'result.json',result)\n                # Absolute command deadline was fixed before Popen, including launch/log overhead."
+    },
+    {
+      "before": "    finally:\n        result['finished']=util.stamp();save(out/'result.json',result)\n    print(json.dumps({k:v for k,v in result.items() if k not in ('commands','generated','cost_results')},indent=2))",
+      "after": "    finally:\n        result['finished']=util.stamp();save(out/'result.json',result)\n        if result.get('status')=='PGROUP_GENERATED_ARITHMETIC_FU_AND_COST_COMPLETE':\n            try:check()\n            except BaseException as exc:\n                result.update(status='FAILED',error=repr(exc),finished=util.stamp())\n                save(out/'result.json',result)\n                raise\n    print(json.dumps({k:v for k,v in result.items() if k not in ('commands','generated','cost_results')},indent=2))"
+    },
+    {
+      "before": "                need((rtl/'VDotElastic.sv').read_bytes()==(pbase/f'{kind}-feature{feature}/rtl/VDotElastic.sv').read_bytes(),\n                     'entire emitted prefix wrapper remains byte-identical')\n",
+      "after": "                # The changed P representation is bound below; whole-wrapper byte reuse is not claimed.\n"
+    },
+    {
+      "before": "        # A new heap grouping needs a new proof over its real generated bytes.\n        # The existing team verifier accepts arbitrary earlier-layer FA/HA grouping.\n        report=out/'arithmetic-structure.json'\n        command('actual-csa-structure',[sys.executable,'-B',snap/'verify_csa.py',\n            '--rtl',first/'VDotCarrySaveRows.sv','--output',report],60)\n        structure=json.loads(report.read_bytes())\n        need(structure['status']=='CSA_STRUCTURAL_EQUIVALENCE_PASS' and\n             structure['all_inputs_equivalent'] is True and structure['parsed_entire_module'] is True and\n             structure['verifier']['sha256']==VERIFY_SHA and\n             structure['rtl_sha256']==sha(first/'VDotCarrySaveRows.sv') and\n             structure['full_adders']==477 and structure['half_adders']==17,\n             'new complete actual CSA proof with fixed FA/HA counts')\n        need(structure['discarded_carries']==[] and structure['rows_msb_to_lsb']['row0'][0]==\"1'b1\" and\n             structure['rows_msb_to_lsb']['row1'][0]==\"1'b0\",\n             'new integer signed-row invariant: no discarded carries and exact MSB1/0')\n        result['arithmetic_structure_proof']=structure\n        result['arithmetic_structure_proof_reused']=False\n        result['direct_signed_row_encoding_verified']=True\n        generated_pins[str(report)]=sha(report)\n",
+      "after": "        # Prove the actual emitted recoder, biased heap, compressor graph and rows.\n        # This verifier accepts no unparsed SV statements or hidden arithmetic.\n        report=out/'arithmetic-structure.json'\n        command('actual-booth-structure',[sys.executable,'-B',snap/'verify_booth.py',\n            '--rtl',first/'VDotCarrySaveRows.sv','--output',report],60)\n        structure=json.loads(report.read_bytes())\n        need(structure['status']=='BOOTH_CSA_STRUCTURAL_EQUIVALENCE_PASS' and\n             structure['all_inputs_equivalent'] is True and structure['parsed_entire_module'] is True and\n             structure['verifier']['sha256']==VERIFY_SHA and\n             structure['rtl_sha256']==sha(first/'VDotCarrySaveRows.sv') and\n             structure['full_adders']==288 and structure['half_adders']==20 and\n             structure['actual_recode_cases']==7168 and structure['signed_byte_decomposition_cases']==256 and\n             structure['layers']==list(range(8)) and structure['total_correction']==350208 and\n             structure['disabled_high_half_sum']==1<<19,\n             'new complete actual Booth proof with exact recode, bias and FA/HA counts')\n        result['arithmetic_structure_proof']=structure\n        result['arithmetic_structure_proof_reused']=False\n        result['biased_unsigned_row_encoding_verified']=True\n        result['direct_signed_row_encoding_verified']=False\n        generated_pins[str(report)]=sha(report)\n"
+    },
+    {
+      "before": "    pin(Path(__file__));pin(here/'PGROUP_CONTRACT.md');pin(here/'verify_csa.py',VERIFY_SHA)\n",
+      "after": "    pin(Path(__file__));pin(here/'BOOTH_CONTRACT.md');pin(here/'verify_csa.py',VERIFY_SHA)\n"
+    },
+    {
+      "before": "        'pgroup.py':Path(__file__),'PGROUP_CONTRACT.md':here/'PGROUP_CONTRACT.md',\n",
+      "after": "        'pgroup.py':Path(__file__),'BOOTH_CONTRACT.md':here/'BOOTH_CONTRACT.md',\n"
+    },
+    {
+      "before": "        'pgroup.py':Path(__file__),'BOOTH_CONTRACT.md':here/'BOOTH_CONTRACT.md',\n",
+      "after": "        'booth9.py':Path(__file__),'BOOTH_CONTRACT.md':here/'BOOTH_CONTRACT.md',\n"
+    },
+    {
+      "before": "    pin(Path(__file__));pin(here/'BOOTH_CONTRACT.md');pin(here/'verify_csa.py',VERIFY_SHA)\n",
+      "after": "    pin(Path(__file__));pin(here/'BOOTH_CONTRACT.md');pin(here/'verify_booth.py',VERIFY_SHA)\n"
+    },
+    {
+      "before": "        'verify_csa.py':here/'verify_csa.py',\n",
+      "after": "        'verify_booth.py':here/'verify_booth.py',\n"
+    },
+    {
+      "before": "        result.update(status='PGROUP_GENERATED_ARITHMETIC_FU_AND_COST_COMPLETE',\n",
+      "after": "        result.update(status='BOOTH_GENERATED_ARITHMETIC_FU_AND_COST_COMPLETE',\n"
+    },
+    {
+      "before": "        if result.get('status')=='PGROUP_GENERATED_ARITHMETIC_FU_AND_COST_COMPLETE':\n",
+      "after": "        if result.get('status')=='BOOTH_GENERATED_ARITHMETIC_FU_AND_COST_COMPLETE':\n"
+    }
+  ],
+  "official_code_changed": false,
+  "budget_seconds": 1200,
+  "cpu": 2,
+  "source_candidate": "f0a8bbe58440c6113aa56f848387c6b4e4a487d71ec2832a1e43fca55d3a8245",
+  "new_fu_and_cost_run": true,
+  "new_parent_or_core_run": false
+}

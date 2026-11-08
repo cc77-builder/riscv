@@ -1,0 +1,84 @@
+{
+  "baseline_sha256": "bcde44c580003a0a99e18cc30a2795a9c7a9af08ed56ef38a8f740987ec8241f",
+  "candidate_sha256": "9ced0b6414e37af9369e7ae5793f3dc8d1b6cb0f6a2f3e38c003c36f688e7bcd",
+  "exact_inverse": true,
+  "edits": [
+    {
+      "before": "\"\"\"Compile one three-row Booth candidate; prove new P and R arithmetic, then FU/cost.\"\"\"",
+      "after": "\"\"\"Recheck unchanged Booth3 with a balanced independent Gold, then bounded FU/cost.\"\"\""
+    },
+    {
+      "before": "CONTRACT = 'dot16-prefix-booth3-local-v1'",
+      "after": "CONTRACT = 'dot16-prefix-booth3-balanced-gold-v1'"
+    },
+    {
+      "before": "CONTROLLER_BASELINE_SHA = '6681fce5cc739206c5922e025d76ae0a75334d57502b089902b5a7a72f05ea60'",
+      "after": "CONTROLLER_BASELINE_SHA = 'bcde44c580003a0a99e18cc30a2795a9c7a9af08ed56ef38a8f740987ec8241f'"
+    },
+    {
+      "before": "    pbase=a.prefix_local.resolve()",
+      "after": "    pbase=a.prefix_local.resolve()\n    previous_failed=a.previous_failed.resolve()"
+    },
+    {
+      "before": "    need(a.cpu==2 and a.budget_seconds==1200 and not out.exists(), 'CPU2, exact 1200s work budget, fresh output')",
+      "after": "    need(a.cpu==2 and a.budget_seconds==300 and not out.exists(), 'CPU2, exact 300s work budget, fresh output')"
+    },
+    {
+      "before": "    for d in (repo,cost,fu,here,source,baseline,rbase,cbase,pbase):",
+      "after": "    for d in (repo,cost,fu,here,source,baseline,rbase,cbase,pbase,previous_failed):"
+    },
+    {
+      "before": "         'entire completed Booth2 controller recovered')",
+      "after": "         'entire original failed Booth3 controller recovered')"
+    },
+    {
+      "before": "    pin(cbase/'result.json',CSA_BASELINE_SHA)",
+      "after": "    prior_path=pin(previous_failed/'result.json','7eb958143cc41f98cad195e0e7089b8924f827af340c51abca18ba573174d050')\n    prior=json.loads(prior_path.read_bytes())\n    need(prior['status']=='FAILED' and prior['contract']=='dot16-prefix-booth3-local-v1' and\n         prior['candidate_source_sha256']==SOURCE_SHA and prior['candidate_wrapper_sha256']==WRAPPER_SHA and\n         len(prior['commands'])==8 and all(c['reaped'] and c['group_absent'] for c in prior['commands']) and\n         not prior['fu_results'] and not prior['cost_results'] and\n         prior['prefix_miters'][0]['status']=='PASS' and prior['prefix_miters'][1]['status']=='FAILED',\n         'exact closed predecessor retained; no FU/cost qualified')\n    failure_log=pin(previous_failed/'actual-prefix-20-miter.log','957987acdcf4a9a90f8762444b0bad0c65b4618b19cf7e563201fb99094486a8')\n    need('ERROR: Called with -verify and proof did time out!' in failure_log.read_text() and\n         not prior['prefix_miters'][1]['counterexample_found'], 'prior solver timeout, not a counterexample')\n    for old in prior['generated']:\n        for f in old['files']:pin(previous_failed/f['path'],f['sha256'])\n    pin(cbase/'result.json',CSA_BASELINE_SHA)"
+    },
+    {
+      "before": "    need(proof['contract']==CONTRACT and proof['baseline_datapath_sha256']==PREFIX_DATAPATH_SHA and",
+      "after": "    need(proof['contract']=='dot16-prefix-booth3-local-v1' and proof['baseline_datapath_sha256']==PREFIX_DATAPATH_SHA and"
+    },
+    {
+      "before": "        'prefix-result.json':pbase/'result.json',",
+      "after": "        'prefix-result.json':pbase/'result.json',\n        'prior-failed-result.json':prior_path,'prior-r20-timeout.log':failure_log,"
+    },
+    {
+      "before": "    result=dict(contract=CONTRACT,status='RUNNING',started=util.stamp(),commands=[],",
+      "after": "    result=dict(contract=CONTRACT,status='RUNNING',started=util.stamp(),commands=[],\n        prior_failed_result_sha256=sha(prior_path),prior_run_remains_failed=True,\n        reference_change='R20 Gold: (a0+a1+a2)+(a3+a4+a5); all120 input bits remain unconstrained.',\n        dut_source_unchanged_from_prior=True,proof_formulation_attempt=2,"
+    },
+    {
+      "before": "        first=out/'cost-feature0/rtl'",
+      "after": "        for old in prior['generated']:\n            for f in old['files']:\n                if Path(f['path']).name=='extern_modules.sv':continue\n                need(sha(out/f['path'])==f['sha256'],\n                     'complete regenerated DUT/top SV bytes unchanged from failed attempt '+f['path'])\n        result['all_actual_DUT_SV_bytes_match_previous_failed_attempt']=True\n        first=out/'cost-feature0/rtl'"
+    },
+    {
+      "before": "            gold.write_text('module Gold('+ports+');\\nassign result='+\n                '+'.join(f'a{i}' for i in range(row_count))+';\\nendmodule\\n')",
+      "after": "            gold_expression='a0+a1+a2' if row_count==3 else '(a0+a1+a2)+(a3+a4+a5)'\n            gold.write_text('module Gold('+ports+');\\nassign result='+gold_expression+';\\nendmodule\\n')"
+    },
+    {
+      "before": "                qualification_scope='actual prefix combinational modular sum only',retried=False)",
+      "after": "                qualification_scope='actual prefix combinational modular sum only',retried=True,\n                retry_kind='new frozen contract; R20 Gold association changed, no original operation replay',\n                prior_attempt_contract='dot16-prefix-booth3-local-v1',gold_expression=gold_expression)"
+    },
+    {
+      "before": "        result.update(status='BOOTH3_GENERATED_ARITHMETIC_FU_AND_COST_COMPLETE',\n",
+      "after": "        result.update(status='BOOTH3_BALANCED_GOLD_ARITHMETIC_FU_AND_COST_COMPLETE',\n"
+    },
+    {
+      "before": "        if result.get('status')=='BOOTH3_GENERATED_ARITHMETIC_FU_AND_COST_COMPLETE':\n",
+      "after": "        if result.get('status')=='BOOTH3_BALANCED_GOLD_ARITHMETIC_FU_AND_COST_COMPLETE':\n"
+    },
+    {
+      "before": "    for name in ('repo','cost-root','fu-root','signed8-local','rwidth-local','csa-local','prefix-local','output'):p.add_argument('--'+name,type=Path,required=True)",
+      "after": "    for name in ('repo','cost-root','fu-root','signed8-local','rwidth-local','csa-local','prefix-local','previous-failed','output'):p.add_argument('--'+name,type=Path,required=True)"
+    },
+    {
+      "before": "    p.add_argument('--budget-seconds',type=int,default=1200)",
+      "after": "    p.add_argument('--budget-seconds',type=int,default=300)"
+    }
+  ],
+  "DUT_source_changes": 0,
+  "all_actual_DUT_SV_bytes_must_match_prior": true,
+  "original_failed_result_retained": true,
+  "new_solver_timeout_seconds": 30,
+  "new_total_budget_seconds": 300
+}

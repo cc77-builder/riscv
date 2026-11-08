@@ -1,0 +1,106 @@
+{
+  "baseline_sha256": "6681fce5cc739206c5922e025d76ae0a75334d57502b089902b5a7a72f05ea60",
+  "candidate_sha256": "bcde44c580003a0a99e18cc30a2795a9c7a9af08ed56ef38a8f740987ec8241f",
+  "exact_inverse": true,
+  "edits": [
+    {
+      "before": "\"\"\"Compile one Booth9 candidate; prove actual biased CSA arithmetic, then run FU/cost.\"\"\"",
+      "after": "\"\"\"Compile one three-row Booth candidate; prove new P and R arithmetic, then FU/cost.\"\"\""
+    },
+    {
+      "before": "CONTRACT = 'dot16-prefix-booth9-local-v1'",
+      "after": "CONTRACT = 'dot16-prefix-booth3-local-v1'"
+    },
+    {
+      "before": "CONTROLLER_BASELINE_SHA = '794544ddfb3455b05deaffe8588d3c9715d02446ac04c50fe2710c6caaaafc0e'",
+      "after": "CONTROLLER_BASELINE_SHA = '6681fce5cc739206c5922e025d76ae0a75334d57502b089902b5a7a72f05ea60'"
+    },
+    {
+      "before": "SOURCE_DERIVATION_SHA = '72b19ecbc899c0175c86a31e1032607b65897999c17117e2de21f21fac7c7eae'",
+      "after": "SOURCE_DERIVATION_SHA = '202bc499e58ee12cac8986a65d2ec9a4e5ccd78b0e530370c22516b6edbac876'"
+    },
+    {
+      "before": "VERIFY_SHA = 'b3044e637a5f312b71497de1eaa44503e27894cb7fd313ee389208a8fc351dc5'",
+      "after": "VERIFY_SHA = 'c0181c3c099a4a4e3ce4fcfcd1af3c34d337031675b6533ad303327ad632d587'"
+    },
+    {
+      "before": "SOURCE_SHA = 'f0a8bbe58440c6113aa56f848387c6b4e4a487d71ec2832a1e43fca55d3a8245'",
+      "after": "SOURCE_SHA = '880ba4c2046721985560b788bf871cc69d930ebfe27561628ba7b930370ff680'"
+    },
+    {
+      "before": "WRAPPER_SHA = '0fcc5df10355ee1e6382678ba40bc9d7ddf830b560dcc469c46e6a6888441556'",
+      "after": "WRAPPER_SHA = '1bc162257ab7d53671a06b0d24015045026330c8680ee25dae482dbf7a316238'"
+    },
+    {
+      "before": "len(pairs)==4 and len(dict(pairs))==4,\n             'closed four CSA instance ports'",
+      "after": "len(pairs)==5 and len(dict(pairs))==5,\n             'closed five CSA instance ports'"
+    },
+    {
+      "before": "                     'row0':f'_{name}_row0','row1':f'_{name}_row1'},'exact input halves and output wires')",
+      "after": "                     'row0':f'_{name}_row0','row1':f'_{name}_row1','row2':f'_{name}_row2'},'exact input halves and all three output wires')"
+    },
+    {
+      "before": "    pnames=[f'pRows_{half}_{row}' for half in range(2 if feature else 1) for row in range(2)]",
+      "after": "    pnames=[f'pRows_{half}_{row}' for half in range(2 if feature else 1) for row in range(3)]"
+    },
+    {
+      "before": "        for row in range(2):",
+      "after": "        for row in range(3):"
+    },
+    {
+      "before": "         'entire completed Pgroup controller recovered')",
+      "after": "         'entire completed Booth2 controller recovered')"
+    },
+    {
+      "before": "         proof['exact_inverse'] is True and len(proof['edits'])==5,\n         'one heap replacement and four explicit wrapper data-representation edits')\n    need(Counter(e['file'] for e in proof['edits'])=={'VDotDatapath.scala':1,'VDotElastic.scala':4},",
+      "after": "         proof['exact_inverse'] is True and len(proof['edits'])==16,\n         'complete prefix-to-Booth2-to-Booth3 inverse, sixteen exact hunks')\n    need(Counter(e['file'] for e in proof['edits'])=={'VDotDatapath.scala':7,'VDotElastic.scala':9},"
+    },
+    {
+      "before": "    need(proof['external_interface_unchanged'] and proof['clock_reset_slot_protocol_unchanged'] and\n         proof['old_prefix_finish_source_retained'],\n         'P representation changes only; clock/reset/control and R prefix source retained')",
+      "after": "    need(proof['external_interface_unchanged'] and proof['clock_reset_slot_protocol_unchanged'] and\n         proof['old_prefix_finish_source_retained'] is False and proof['old_prefix_network_suffix_retained'] and\n         proof['fresh_three_six_row_unconstrained_proofs_required'] and proof['p_rows_per_half']==3,\n         'one P/R boundary change, preserved slot control, fresh R arithmetic proof required')"
+    },
+    {
+      "before": "        result_widths={0:19,1:20},p_row_bits={0:19,1:20},p_rows_per_half=2,",
+      "after": "        result_widths={0:19,1:20},p_row_bits={0:19,1:20},p_rows_per_half=3,"
+    },
+    {
+      "before": "        representation_equivalence_basis='New complete proof of actual Booth recoder/biased CSA bytes; exact-byte reuse of unconstrained prefix SAT proofs; full source inverse, new emitted wrapper binding and new FU tests. No whole-FU sequential or RTL-to-mapped SAT claim.',",
+      "after": "        representation_equivalence_basis='New complete proof of actual three-row Booth heap; fresh actual unconstrained three/six-row R SAT; full source inverse, emitted wrapper binding and new FU tests. No whole-FU sequential or RTL-to-mapped SAT claim.',"
+    },
+    {
+      "before": "            need((out/f'cost-feature{feature}/rtl'/name).read_bytes()==\n                 (out/f'fu-feature{feature}/rtl'/name).read_bytes()==\n                 (pbase/f'cost-feature{feature}/rtl'/name).read_bytes(),\n                 'actual new cost/FU R prefix bytes exactly match the previously proved modules')",
+      "after": "            need((out/f'cost-feature{feature}/rtl'/name).read_bytes()==\n                 (out/f'fu-feature{feature}/rtl'/name).read_bytes(),\n                 'actual new cost/FU R bytes are identical and require fresh SAT proofs')"
+    },
+    {
+      "before": "structure['status']=='BOOTH_CSA_STRUCTURAL_EQUIVALENCE_PASS'",
+      "after": "structure['status']=='BOOTH3_CSA_STRUCTURAL_EQUIVALENCE_PASS'"
+    },
+    {
+      "before": "structure['full_adders']==288 and structure['half_adders']==20",
+      "after": "structure['full_adders']==272 and structure['half_adders']==19"
+    },
+    {
+      "before": "structure['layers']==list(range(8))",
+      "after": "structure['layers']==list(range(7))"
+    },
+    {
+      "before": "        result['prefix_miters']=json.loads(json.dumps(pb['prefix_miters']))\n        result['prefix_miters_reused_from']=str(pbase)\n        result['prefix_miters_reuse_basis']='Exact actual finish SV bytes, complete prior gold/gate/script/log pins and unconstrained-input SAT scope.'\n        for miter in result['prefix_miters']:\n            actual=out/f\"cost-feature{miter['feature']}/rtl/VDotPrefixFinish{miter['width']}.sv\"\n            need(sha(actual)==miter['actual_rtl_sha256'],'new emitted R module matches the exact reused SAT proof')\n",
+      "after": "        result['prefix_miters_reused']=False\n        for feature,width,row_count in ((0,19,3),(1,20,6)):\n            env['VDOT_DOT16']=str(feature)\n            actual=out/f'cost-feature{feature}/rtl/VDotPrefixFinish{width}.sv'\n            # Exact header/ports close the harness width and input-count binding.\n            # The arithmetic is read only from the real emitted DUT below.\n            header=(f'module VDotPrefixFinish{width}(\\n'+''.join(\n                f'  input wire [{width-1}:0] rows_{i},\\n' for i in range(row_count))+\n                f'  output wire [{width-1}:0] result\\n);\\n')\n            need(actual.read_bytes().startswith(b'// Generated by CIRCT firtool-1.62.1\\n'+header.encode()),\n                 'actual prefix module name and complete exact-width input/output header')\n            folder=out/f'prefix-proof-{width}';folder.mkdir()\n            gold,gate,prove=folder/'gold.sv',folder/'gate.sv',folder/'prove.ys'\n            inputs=', '.join(f'input wire [{width-1}:0] a{i}' for i in range(row_count))\n            ports=inputs+f', output wire [{width-1}:0] result'\n            gold.write_text('module Gold('+ports+');\\nassign result='+\n                '+'.join(f'a{i}' for i in range(row_count))+';\\nendmodule\\n')\n            gate.write_text('module Gate('+ports+');\\n'+f'VDotPrefixFinish{width} actual('+ \n                ', '.join(f'.rows_{i}(a{i})' for i in range(row_count))+\n                ', .result(result));\\nendmodule\\n')\n            prove.write_text('\\n'.join(['read_verilog -sv '+str(p) for p in (gold,gate,actual)]+\n                ['miter -equiv -flatten Gold Gate miter','hierarchy -check -top miter','proc','opt','flatten',\n                 'sat -verify -timeout 30 -prove trigger 0 -show-inputs -show-outputs'])+'\\n')\n            for p in (gold,gate,prove):generated_pins[str(p)]=sha(p)\n            record=dict(feature=feature,width=width,row_count=row_count,status='RUNNING',\n                actual_rtl_sha256=sha(actual),gold_sha256=sha(gold),gate_sha256=sha(gate),script_sha256=sha(prove),\n                unconstrained_inputs=True,solver_timeout_seconds=30,total_command_budget_seconds=60,\n                qualification_scope='actual prefix combinational modular sum only',retried=False)\n            result['prefix_miters'].append(record);save(out/'result.json',result)\n            label=f'actual-prefix-{width}-miter'\n            try:\n                log,rc=command(label,[old_cost['tools']['yosys']['path'],'-T','-s',prove],60,expected=None)\n                record['exit_code']=rc\n                record['log_sha256']=sha(out/(label+'.log'))\n                counterexample='SAT proof finished - model found: FAIL!' in log\n                solved=log.count('SAT proof finished - no model found: SUCCESS!')==1\n                record['counterexample_found']=counterexample\n                need(rc==0 and solved and not counterexample and 'ERROR:' not in log,\n                     'new actual prefix SAT must explicitly succeed; timeout/tool error/counterexample blocks FU/cost')\n                record['status']='PASS';record['solver_equivalence_proved']=True\n                generated_pins[str(out/(label+'.log'))]=record['log_sha256']\n            except BaseException as exc:\n                record.update(status='FAILED',solver_equivalence_proved=False,error=repr(exc))\n                if (out/(label+'.log')).exists():record['log_sha256']=sha(out/(label+'.log'))\n                raise\n            finally:\n                save(out/'result.json',result)\n        need(len(result['prefix_miters'])==2 and all(x['status']=='PASS' for x in result['prefix_miters']),\n             'both actual emitted prefix modules proved before any FU/cost command')\n"
+    },
+    {
+      "before": "        result.update(status='BOOTH_GENERATED_ARITHMETIC_FU_AND_COST_COMPLETE',\n",
+      "after": "        result.update(status='BOOTH3_GENERATED_ARITHMETIC_FU_AND_COST_COMPLETE',\n"
+    },
+    {
+      "before": "        if result.get('status')=='BOOTH_GENERATED_ARITHMETIC_FU_AND_COST_COMPLETE':\n",
+      "after": "        if result.get('status')=='BOOTH3_GENERATED_ARITHMETIC_FU_AND_COST_COMPLETE':\n"
+    },
+    {
+      "before": "        'booth9.py':Path(__file__),'BOOTH_CONTRACT.md':here/'BOOTH_CONTRACT.md',\n",
+      "after": "        'booth3.py':Path(__file__),'BOOTH_CONTRACT.md':here/'BOOTH_CONTRACT.md',\n"
+    }
+  ],
+  "new_unconstrained_actual_prefix_SAT_required": true,
+  "old_prefix_proofs_not_reused": true,
+  "absolute_total_success_deadline_preserved": true
+}

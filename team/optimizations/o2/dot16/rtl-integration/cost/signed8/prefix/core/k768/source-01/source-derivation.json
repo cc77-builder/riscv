@@ -1,0 +1,52 @@
+{
+  "parent_path": "../prefix-k288-preparation-01/run.py",
+  "parent_bytes": 25519,
+  "parent_sha256": "d49d657f536d2cae77cbf14a01640799280e6fafb260529b8a22853fa7417ce3",
+  "derived_bytes": 25519,
+  "derived_sha256": "984ff535756419240db26deaea96214b3ee98d65e30b0e10476abcd9cab06ac9",
+  "contract_sha256": "379fb985f0c403bea0245c7ffbebbc15a1177e1273a4ef34ba8519a3c3d655b3",
+  "replacements": [
+    {
+      "find": "CONTRACT = 'r3-prefix-k288-eight-window-regression-v1'",
+      "replace": "CONTRACT = 'r3-prefix-k768-eight-window-regression-v1'",
+      "expected_occurrences": 1
+    },
+    {
+      "find": "need(args.k==288 and args.max_cycles==4000000 and args.budget_seconds==9000\n         and args.stream_limit==16777216,'one fixed K288 regression budget')",
+      "replace": "need(args.k==768 and args.max_cycles==6000000 and args.budget_seconds==7200\n         and args.stream_limit==16777216,'one fixed K768 regression budget')",
+      "expected_occurrences": 1
+    },
+    {
+      "find": "qualification='New prefix hardware with unchanged fixed K288 eight-window reference; no target execution yet'",
+      "replace": "qualification='New prefix hardware with unchanged fixed K768 eight-window reference; no target execution yet'",
+      "expected_occurrences": 1
+    },
+    {
+      "find": "status='PREFIX_K288_PREFLIGHT_PASS'",
+      "replace": "status='PREFIX_K768_PREFLIGHT_PASS'",
+      "expected_occurrences": 1
+    },
+    {
+      "find": "a.add_argument('--k',type=int,choices=(288,),required=True)",
+      "replace": "a.add_argument('--k',type=int,choices=(768,),required=True)",
+      "expected_occurrences": 1
+    }
+  ],
+  "complete_inverse_equal": true,
+  "unchanged_functions": {
+    "prefix_hardware": {
+      "bytes": 3961,
+      "sha256": "badf2f5f7f876cd8c082ab00c2c37c4caf02b6da4cc9c2da579098fc56129e9c"
+    },
+    "guest_check": {
+      "bytes": 3798,
+      "sha256": "28de34469b9ffaffbb5614921a5a8010623a915f6541b64f039bd2fe7adb107e"
+    },
+    "run": {
+      "bytes": 6953,
+      "sha256": "06341a7b0ed75ee94a9ebaa42cba8b9d447cca3f53f2a3e2a839f7d755dc91aa"
+    }
+  },
+  "new_emu_runs": 0,
+  "new_builds": 0
+}

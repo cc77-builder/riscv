@@ -1,0 +1,1323 @@
+{
+  "contract": "dot16-prefix-booth3-balanced-gold-v1",
+  "status": "FAILED",
+  "started": "2026-11-08T06:16:40.282639+00:00",
+  "commands": [
+    {
+      "label": "compile-source-overlay",
+      "argv": [
+        "/home/lizufan/.local/share/graalvm-jdk-21.0.12/bin/java",
+        "-Xmx4G",
+        "-Xss8m",
+        "-XX:ActiveProcessorCount=1",
+        "-XX:+UseSerialGC",
+        "-XX:-UsePerfData",
+        "-Djava.io.tmpdir=/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/tmp",
+        "-cp",
+        "/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-compiler/2.13.15/scala-compiler-2.13.15.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.13.15/scala-reflect-2.13.15.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.15/scala-library-2.13.15.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/github/java-diff-utils/java-diff-utils/4.12/java-diff-utils-4.12.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/jline/jline/3.26.3/jline-3.26.3.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/net/java/dev/jna/jna/5.14.0/jna-5.14.0.jar",
+        "scala.tools.nsc.Main",
+        "-classpath",
+        "/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/chipsalliance/chisel_2.13/6.6.0/chisel_2.13-6.6.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.15/scala-library-2.13.15.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/edu/berkeley/cs/chiseltest_2.13/6.0.0/chiseltest_2.13-6.0.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-yaml_2.13/1.15.0/circe-yaml_2.13-1.15.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-generic-extras_2.13/0.14.4/circe-generic-extras_2.13-0.14.4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/mainargs_2.13/0.7.0/mainargs_2.13-0.7.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/json4s/json4s-jackson_2.13/4.0.7/json4s-jackson_2.13-4.0.7.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.13.15/scala-reflect-2.13.15.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/sourcecode_2.13/0.4.2/sourcecode_2.13-0.4.2.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/github/scopt/scopt_2.13/4.1.0/scopt_2.13-4.1.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/net/jcazevedo/moultingyaml_2.13/0.4.2/moultingyaml_2.13-0.4.2.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/json4s/json4s-native_2.13/4.1.0-M4/json4s-native_2.13-4.1.0-M4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/commons/commons-text/1.10.0/commons-text-1.10.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/github/alexarchambault/data-class_2.13/0.2.6/data-class_2.13-0.2.6.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/os-lib_2.13/0.9.2/os-lib_2.13-0.9.2.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-parallel-collections_2.13/1.0.4/scala-parallel-collections_2.13-1.0.4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/upickle_2.13/3.1.0/upickle_2.13-3.1.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/chipsalliance/firtool-resolver_2.13/1.3.0/firtool-resolver_2.13-1.3.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/edu/berkeley/cs/firrtl2_2.13/6.0.0/firrtl2_2.13-6.0.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest_2.13/3.2.17/scalatest_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/net/java/dev/jna/jna/5.14.0/jna-5.14.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-yaml-common_2.13/1.15.0/circe-yaml-common_2.13-1.15.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/yaml/snakeyaml/2.0/snakeyaml-2.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-generic_2.13/0.14.9/circe-generic_2.13-0.14.9.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-collection-compat_2.13/2.12.0/scala-collection-compat_2.13-2.12.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/json4s/json4s-core_2.13/4.1.0-M4/json4s-core_2.13-4.1.0-M4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/json4s/json4s-jackson-core_2.13/4.0.7/json4s-jackson-core_2.13-4.0.7.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/github/nscala-time/nscala-time_2.13/2.22.0/nscala-time_2.13-2.22.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/json4s/json4s-native-core_2.13/4.1.0-M4/json4s-native-core_2.13-4.1.0-M4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/geny_2.13/1.0.0/geny_2.13-1.0.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/ujson_2.13/3.1.0/ujson_2.13-3.1.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/upack_2.13/3.1.0/upack_2.13-3.1.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/upickle-implicits_2.13/3.1.0/upickle-implicits_2.13-3.1.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/dev/dirs/directories/26/directories-26.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/outr/scribe_2.13/3.13.0/scribe_2.13-3.13.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/get-coursier/coursier_2.13/2.1.8/coursier_2.13-2.1.8.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/antlr/antlr4-runtime/4.9.3/antlr4-runtime-4.9.3.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-core_2.13/3.2.17/scalatest-core_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-featurespec_2.13/3.2.17/scalatest-featurespec_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-flatspec_2.13/3.2.17/scalatest-flatspec_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-freespec_2.13/3.2.17/scalatest-freespec_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-funsuite_2.13/3.2.17/scalatest-funsuite_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-funspec_2.13/3.2.17/scalatest-funspec_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-propspec_2.13/3.2.17/scalatest-propspec_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-refspec_2.13/3.2.17/scalatest-refspec_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-wordspec_2.13/3.2.17/scalatest-wordspec_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-diagrams_2.13/3.2.17/scalatest-diagrams_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-matchers-core_2.13/3.2.17/scalatest-matchers-core_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-shouldmatchers_2.13/3.2.17/scalatest-shouldmatchers_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-mustmatchers_2.13/3.2.17/scalatest-mustmatchers_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-core_2.13/0.14.9/circe-core_2.13-0.14.9.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/chuusai/shapeless_2.13/2.3.12/shapeless_2.13-2.3.12.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/json4s/json4s-ast_2.13/4.1.0-M4/json4s-ast_2.13-4.1.0-M4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/json4s/json4s-scalap_2.13/4.1.0-M4/json4s-scalap_2.13-4.1.0-M4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.12.7/jackson-databind-2.12.7.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/joda-time/joda-time/2.10.1/joda-time-2.10.1.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/joda/joda-convert/2.2.0/joda-convert-2.2.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/upickle-core_2.13/3.1.0/upickle-core_2.13-3.1.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/outr/perfolation_2.13/1.2.9/perfolation_2.13-1.2.9.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/outr/moduload_2.13/1.1.7/moduload_2.13-1.1.7.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/github/plokhotnyuk/jsoniter-scala/jsoniter-scala-core_2.13/2.13.5.2/jsoniter-scala-core_2.13-2.13.5.2.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/get-coursier/coursier-core_2.13/2.1.8/coursier-core_2.13-2.1.8.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/get-coursier/coursier-cache_2.13/2.1.8/coursier-cache_2.13-2.1.8.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/get-coursier/coursier-proxy-setup/2.1.8/coursier-proxy-setup-2.1.8.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-compatible/3.2.17/scalatest-compatible-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalactic/scalactic_2.13/3.2.17/scalactic_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_2.13/2.2.0/scala-xml_2.13-2.2.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-numbers_2.13/0.14.9/circe-numbers_2.13-0.14.9.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/cats-core_2.13/2.12.0/cats-core_2.13-2.12.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.12.7/jackson-annotations-2.12.7.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.12.7/jackson-core-2.12.7.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/github/alexarchambault/concurrent-reference-hash-map/1.1.0/concurrent-reference-hash-map-1.1.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/get-coursier/coursier-util_2.13/2.1.8/coursier-util_2.13-2.1.8.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/get-coursier/jniutils/windows-jni-utils/0.3.3/windows-jni-utils-0.3.3.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/codehaus/plexus/plexus-archiver/4.9.0/plexus-archiver-4.9.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/codehaus/plexus/plexus-container-default/2.1.1/plexus-container-default-2.1.1.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/virtuslab/scala-cli/config_2.13/0.2.1/config_2.13-0.2.1.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/github/alexarchambault/windows-ansi/windows-ansi/0.0.5/windows-ansi-0.0.5.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/cats-kernel_2.13/2.12.0/cats-kernel_2.13-2.12.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/javax/inject/javax.inject/1/javax.inject-1.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/codehaus/plexus/plexus-utils/4.0.0/plexus-utils-4.0.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/codehaus/plexus/plexus-io/3.4.1/plexus-io-3.4.1.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/commons-io/commons-io/2.15.0/commons-io-2.15.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/commons/commons-compress/1.24.0/commons-compress-1.24.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/iq80/snappy/snappy/0.4/snappy-0.4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/tukaani/xz/1.9/xz-1.9.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/github/luben/zstd-jni/1.5.5-10/zstd-jni-1.5.5-10.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/codehaus/plexus/plexus-classworlds/2.6.0/plexus-classworlds-2.6.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/xbean/xbean-reflect/3.7/xbean-reflect-3.7.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/fusesource/jansi/jansi/1.18/jansi-1.18.jar:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/macros/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/macros/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/macros/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/fudian/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/fudian/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/fudian/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/yunsuan/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/yunsuan/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/yunsuan/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/openLLC/openNCB/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/openLLC/openNCB/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/openNCB/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/openLLC/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/openLLC/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/openLLC/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/coupledL2/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/coupledL2/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/coupledL2/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/utility/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/utility/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/utility/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/huancun/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/huancun/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/huancun/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/difftest/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/difftest/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/difftest/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/cde/cde/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/cde/cde/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/rocketchip/cde/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/hardfloat/hardfloat/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/hardfloat/hardfloat/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/rocketchip/hardfloat/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/macros/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/macros/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/rocketchip/macros/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/rocketchip/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/xiangshan/resources.dest:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/xiangshan/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/vdotElasticFu/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/vdotElasticFu/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/vdotElasticFu/compile.dest/classes",
+        "-d",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/overlay-classes",
+        "-Xplugin:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/chipsalliance/chisel-plugin_2.13.15/6.6.0/chisel-plugin_2.13.15-6.6.0.jar",
+        "-language:reflectiveCalls",
+        "-Ymacro-annotations",
+        "-Ytasty-reader",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/source-snapshot/VDotDatapath.scala",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/source-snapshot/VDotElastic.scala",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/source-snapshot/GenerateVDotCost.scala"
+      ],
+      "started": "2026-11-08T06:16:40.283542+00:00",
+      "budget_seconds": 299.6360981110047,
+      "feature": "1",
+      "expected_exit": 0,
+      "pid": 35291,
+      "exit_code": 0,
+      "reaped": true,
+      "group_absent": true,
+      "finished": "2026-11-08T06:16:48.771419+00:00"
+    },
+    {
+      "label": "generate-cost-0",
+      "argv": [
+        "/home/lizufan/.local/share/graalvm-jdk-21.0.12/bin/java",
+        "-Xmx4G",
+        "-Xss8m",
+        "-XX:ActiveProcessorCount=1",
+        "-XX:+UseSerialGC",
+        "-XX:-UsePerfData",
+        "-Djava.io.tmpdir=/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/tmp",
+        "-cp",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/overlay-classes:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/chipsalliance/chisel_2.13/6.6.0/chisel_2.13-6.6.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.15/scala-library-2.13.15.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/edu/berkeley/cs/chiseltest_2.13/6.0.0/chiseltest_2.13-6.0.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-yaml_2.13/1.15.0/circe-yaml_2.13-1.15.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-generic-extras_2.13/0.14.4/circe-generic-extras_2.13-0.14.4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/mainargs_2.13/0.7.0/mainargs_2.13-0.7.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/json4s/json4s-jackson_2.13/4.0.7/json4s-jackson_2.13-4.0.7.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.13.15/scala-reflect-2.13.15.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/sourcecode_2.13/0.4.2/sourcecode_2.13-0.4.2.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/github/scopt/scopt_2.13/4.1.0/scopt_2.13-4.1.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/net/jcazevedo/moultingyaml_2.13/0.4.2/moultingyaml_2.13-0.4.2.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/json4s/json4s-native_2.13/4.1.0-M4/json4s-native_2.13-4.1.0-M4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/commons/commons-text/1.10.0/commons-text-1.10.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/github/alexarchambault/data-class_2.13/0.2.6/data-class_2.13-0.2.6.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/os-lib_2.13/0.9.2/os-lib_2.13-0.9.2.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-parallel-collections_2.13/1.0.4/scala-parallel-collections_2.13-1.0.4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/upickle_2.13/3.1.0/upickle_2.13-3.1.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/chipsalliance/firtool-resolver_2.13/1.3.0/firtool-resolver_2.13-1.3.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/edu/berkeley/cs/firrtl2_2.13/6.0.0/firrtl2_2.13-6.0.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest_2.13/3.2.17/scalatest_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/net/java/dev/jna/jna/5.14.0/jna-5.14.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-yaml-common_2.13/1.15.0/circe-yaml-common_2.13-1.15.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/yaml/snakeyaml/2.0/snakeyaml-2.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-generic_2.13/0.14.9/circe-generic_2.13-0.14.9.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-collection-compat_2.13/2.12.0/scala-collection-compat_2.13-2.12.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/json4s/json4s-core_2.13/4.1.0-M4/json4s-core_2.13-4.1.0-M4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/json4s/json4s-jackson-core_2.13/4.0.7/json4s-jackson-core_2.13-4.0.7.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/github/nscala-time/nscala-time_2.13/2.22.0/nscala-time_2.13-2.22.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/json4s/json4s-native-core_2.13/4.1.0-M4/json4s-native-core_2.13-4.1.0-M4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/geny_2.13/1.0.0/geny_2.13-1.0.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/ujson_2.13/3.1.0/ujson_2.13-3.1.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/upack_2.13/3.1.0/upack_2.13-3.1.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/upickle-implicits_2.13/3.1.0/upickle-implicits_2.13-3.1.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/dev/dirs/directories/26/directories-26.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/outr/scribe_2.13/3.13.0/scribe_2.13-3.13.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/get-coursier/coursier_2.13/2.1.8/coursier_2.13-2.1.8.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/antlr/antlr4-runtime/4.9.3/antlr4-runtime-4.9.3.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-core_2.13/3.2.17/scalatest-core_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-featurespec_2.13/3.2.17/scalatest-featurespec_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-flatspec_2.13/3.2.17/scalatest-flatspec_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-freespec_2.13/3.2.17/scalatest-freespec_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-funsuite_2.13/3.2.17/scalatest-funsuite_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-funspec_2.13/3.2.17/scalatest-funspec_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-propspec_2.13/3.2.17/scalatest-propspec_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-refspec_2.13/3.2.17/scalatest-refspec_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-wordspec_2.13/3.2.17/scalatest-wordspec_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-diagrams_2.13/3.2.17/scalatest-diagrams_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-matchers-core_2.13/3.2.17/scalatest-matchers-core_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-shouldmatchers_2.13/3.2.17/scalatest-shouldmatchers_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-mustmatchers_2.13/3.2.17/scalatest-mustmatchers_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-core_2.13/0.14.9/circe-core_2.13-0.14.9.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/chuusai/shapeless_2.13/2.3.12/shapeless_2.13-2.3.12.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/json4s/json4s-ast_2.13/4.1.0-M4/json4s-ast_2.13-4.1.0-M4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/json4s/json4s-scalap_2.13/4.1.0-M4/json4s-scalap_2.13-4.1.0-M4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.12.7/jackson-databind-2.12.7.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/joda-time/joda-time/2.10.1/joda-time-2.10.1.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/joda/joda-convert/2.2.0/joda-convert-2.2.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/upickle-core_2.13/3.1.0/upickle-core_2.13-3.1.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/outr/perfolation_2.13/1.2.9/perfolation_2.13-1.2.9.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/outr/moduload_2.13/1.1.7/moduload_2.13-1.1.7.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/github/plokhotnyuk/jsoniter-scala/jsoniter-scala-core_2.13/2.13.5.2/jsoniter-scala-core_2.13-2.13.5.2.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/get-coursier/coursier-core_2.13/2.1.8/coursier-core_2.13-2.1.8.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/get-coursier/coursier-cache_2.13/2.1.8/coursier-cache_2.13-2.1.8.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/get-coursier/coursier-proxy-setup/2.1.8/coursier-proxy-setup-2.1.8.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-compatible/3.2.17/scalatest-compatible-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalactic/scalactic_2.13/3.2.17/scalactic_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_2.13/2.2.0/scala-xml_2.13-2.2.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-numbers_2.13/0.14.9/circe-numbers_2.13-0.14.9.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/cats-core_2.13/2.12.0/cats-core_2.13-2.12.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.12.7/jackson-annotations-2.12.7.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.12.7/jackson-core-2.12.7.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/github/alexarchambault/concurrent-reference-hash-map/1.1.0/concurrent-reference-hash-map-1.1.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/get-coursier/coursier-util_2.13/2.1.8/coursier-util_2.13-2.1.8.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/get-coursier/jniutils/windows-jni-utils/0.3.3/windows-jni-utils-0.3.3.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/codehaus/plexus/plexus-archiver/4.9.0/plexus-archiver-4.9.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/codehaus/plexus/plexus-container-default/2.1.1/plexus-container-default-2.1.1.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/virtuslab/scala-cli/config_2.13/0.2.1/config_2.13-0.2.1.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/github/alexarchambault/windows-ansi/windows-ansi/0.0.5/windows-ansi-0.0.5.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/cats-kernel_2.13/2.12.0/cats-kernel_2.13-2.12.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/javax/inject/javax.inject/1/javax.inject-1.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/codehaus/plexus/plexus-utils/4.0.0/plexus-utils-4.0.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/codehaus/plexus/plexus-io/3.4.1/plexus-io-3.4.1.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/commons-io/commons-io/2.15.0/commons-io-2.15.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/commons/commons-compress/1.24.0/commons-compress-1.24.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/iq80/snappy/snappy/0.4/snappy-0.4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/tukaani/xz/1.9/xz-1.9.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/github/luben/zstd-jni/1.5.5-10/zstd-jni-1.5.5-10.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/codehaus/plexus/plexus-classworlds/2.6.0/plexus-classworlds-2.6.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/xbean/xbean-reflect/3.7/xbean-reflect-3.7.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/fusesource/jansi/jansi/1.18/jansi-1.18.jar:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/macros/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/macros/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/macros/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/fudian/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/fudian/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/fudian/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/yunsuan/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/yunsuan/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/yunsuan/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/openLLC/openNCB/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/openLLC/openNCB/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/openNCB/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/openLLC/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/openLLC/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/openLLC/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/coupledL2/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/coupledL2/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/coupledL2/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/utility/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/utility/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/utility/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/huancun/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/huancun/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/huancun/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/difftest/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/difftest/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/difftest/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/cde/cde/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/cde/cde/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/rocketchip/cde/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/hardfloat/hardfloat/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/hardfloat/hardfloat/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/rocketchip/hardfloat/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/macros/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/macros/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/rocketchip/macros/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/rocketchip/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/xiangshan/resources.dest:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/xiangshan/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/vdotElasticFu/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/vdotElasticFu/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/vdotElasticFu/compile.dest/classes",
+        "team.vdot.GenerateVDotCost",
+        "fu",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/cost-feature0/rtl"
+      ],
+      "started": "2026-11-08T06:16:48.772559+00:00",
+      "budget_seconds": 180.0,
+      "feature": "0",
+      "expected_exit": 0,
+      "pid": 35305,
+      "exit_code": 0,
+      "reaped": true,
+      "group_absent": true,
+      "finished": "2026-11-08T06:16:51.646429+00:00"
+    },
+    {
+      "label": "generate-fu-0",
+      "argv": [
+        "/home/lizufan/.local/share/graalvm-jdk-21.0.12/bin/java",
+        "-Xmx4G",
+        "-Xss8m",
+        "-XX:ActiveProcessorCount=1",
+        "-XX:+UseSerialGC",
+        "-XX:-UsePerfData",
+        "-Djava.io.tmpdir=/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/tmp",
+        "-cp",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/overlay-classes:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/chipsalliance/chisel_2.13/6.6.0/chisel_2.13-6.6.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.15/scala-library-2.13.15.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/edu/berkeley/cs/chiseltest_2.13/6.0.0/chiseltest_2.13-6.0.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-yaml_2.13/1.15.0/circe-yaml_2.13-1.15.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-generic-extras_2.13/0.14.4/circe-generic-extras_2.13-0.14.4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/mainargs_2.13/0.7.0/mainargs_2.13-0.7.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/json4s/json4s-jackson_2.13/4.0.7/json4s-jackson_2.13-4.0.7.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.13.15/scala-reflect-2.13.15.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/sourcecode_2.13/0.4.2/sourcecode_2.13-0.4.2.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/github/scopt/scopt_2.13/4.1.0/scopt_2.13-4.1.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/net/jcazevedo/moultingyaml_2.13/0.4.2/moultingyaml_2.13-0.4.2.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/json4s/json4s-native_2.13/4.1.0-M4/json4s-native_2.13-4.1.0-M4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/commons/commons-text/1.10.0/commons-text-1.10.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/github/alexarchambault/data-class_2.13/0.2.6/data-class_2.13-0.2.6.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/os-lib_2.13/0.9.2/os-lib_2.13-0.9.2.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-parallel-collections_2.13/1.0.4/scala-parallel-collections_2.13-1.0.4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/upickle_2.13/3.1.0/upickle_2.13-3.1.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/chipsalliance/firtool-resolver_2.13/1.3.0/firtool-resolver_2.13-1.3.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/edu/berkeley/cs/firrtl2_2.13/6.0.0/firrtl2_2.13-6.0.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest_2.13/3.2.17/scalatest_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/net/java/dev/jna/jna/5.14.0/jna-5.14.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-yaml-common_2.13/1.15.0/circe-yaml-common_2.13-1.15.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/yaml/snakeyaml/2.0/snakeyaml-2.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-generic_2.13/0.14.9/circe-generic_2.13-0.14.9.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-collection-compat_2.13/2.12.0/scala-collection-compat_2.13-2.12.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/json4s/json4s-core_2.13/4.1.0-M4/json4s-core_2.13-4.1.0-M4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/json4s/json4s-jackson-core_2.13/4.0.7/json4s-jackson-core_2.13-4.0.7.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/github/nscala-time/nscala-time_2.13/2.22.0/nscala-time_2.13-2.22.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/json4s/json4s-native-core_2.13/4.1.0-M4/json4s-native-core_2.13-4.1.0-M4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/geny_2.13/1.0.0/geny_2.13-1.0.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/ujson_2.13/3.1.0/ujson_2.13-3.1.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/upack_2.13/3.1.0/upack_2.13-3.1.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/upickle-implicits_2.13/3.1.0/upickle-implicits_2.13-3.1.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/dev/dirs/directories/26/directories-26.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/outr/scribe_2.13/3.13.0/scribe_2.13-3.13.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/get-coursier/coursier_2.13/2.1.8/coursier_2.13-2.1.8.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/antlr/antlr4-runtime/4.9.3/antlr4-runtime-4.9.3.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-core_2.13/3.2.17/scalatest-core_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-featurespec_2.13/3.2.17/scalatest-featurespec_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-flatspec_2.13/3.2.17/scalatest-flatspec_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-freespec_2.13/3.2.17/scalatest-freespec_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-funsuite_2.13/3.2.17/scalatest-funsuite_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-funspec_2.13/3.2.17/scalatest-funspec_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-propspec_2.13/3.2.17/scalatest-propspec_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-refspec_2.13/3.2.17/scalatest-refspec_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-wordspec_2.13/3.2.17/scalatest-wordspec_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-diagrams_2.13/3.2.17/scalatest-diagrams_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-matchers-core_2.13/3.2.17/scalatest-matchers-core_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-shouldmatchers_2.13/3.2.17/scalatest-shouldmatchers_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-mustmatchers_2.13/3.2.17/scalatest-mustmatchers_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-core_2.13/0.14.9/circe-core_2.13-0.14.9.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/chuusai/shapeless_2.13/2.3.12/shapeless_2.13-2.3.12.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/json4s/json4s-ast_2.13/4.1.0-M4/json4s-ast_2.13-4.1.0-M4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/json4s/json4s-scalap_2.13/4.1.0-M4/json4s-scalap_2.13-4.1.0-M4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.12.7/jackson-databind-2.12.7.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/joda-time/joda-time/2.10.1/joda-time-2.10.1.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/joda/joda-convert/2.2.0/joda-convert-2.2.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/upickle-core_2.13/3.1.0/upickle-core_2.13-3.1.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/outr/perfolation_2.13/1.2.9/perfolation_2.13-1.2.9.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/outr/moduload_2.13/1.1.7/moduload_2.13-1.1.7.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/github/plokhotnyuk/jsoniter-scala/jsoniter-scala-core_2.13/2.13.5.2/jsoniter-scala-core_2.13-2.13.5.2.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/get-coursier/coursier-core_2.13/2.1.8/coursier-core_2.13-2.1.8.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/get-coursier/coursier-cache_2.13/2.1.8/coursier-cache_2.13-2.1.8.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/get-coursier/coursier-proxy-setup/2.1.8/coursier-proxy-setup-2.1.8.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-compatible/3.2.17/scalatest-compatible-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalactic/scalactic_2.13/3.2.17/scalactic_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_2.13/2.2.0/scala-xml_2.13-2.2.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-numbers_2.13/0.14.9/circe-numbers_2.13-0.14.9.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/cats-core_2.13/2.12.0/cats-core_2.13-2.12.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.12.7/jackson-annotations-2.12.7.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.12.7/jackson-core-2.12.7.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/github/alexarchambault/concurrent-reference-hash-map/1.1.0/concurrent-reference-hash-map-1.1.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/get-coursier/coursier-util_2.13/2.1.8/coursier-util_2.13-2.1.8.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/get-coursier/jniutils/windows-jni-utils/0.3.3/windows-jni-utils-0.3.3.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/codehaus/plexus/plexus-archiver/4.9.0/plexus-archiver-4.9.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/codehaus/plexus/plexus-container-default/2.1.1/plexus-container-default-2.1.1.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/virtuslab/scala-cli/config_2.13/0.2.1/config_2.13-0.2.1.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/github/alexarchambault/windows-ansi/windows-ansi/0.0.5/windows-ansi-0.0.5.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/cats-kernel_2.13/2.12.0/cats-kernel_2.13-2.12.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/javax/inject/javax.inject/1/javax.inject-1.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/codehaus/plexus/plexus-utils/4.0.0/plexus-utils-4.0.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/codehaus/plexus/plexus-io/3.4.1/plexus-io-3.4.1.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/commons-io/commons-io/2.15.0/commons-io-2.15.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/commons/commons-compress/1.24.0/commons-compress-1.24.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/iq80/snappy/snappy/0.4/snappy-0.4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/tukaani/xz/1.9/xz-1.9.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/github/luben/zstd-jni/1.5.5-10/zstd-jni-1.5.5-10.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/codehaus/plexus/plexus-classworlds/2.6.0/plexus-classworlds-2.6.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/xbean/xbean-reflect/3.7/xbean-reflect-3.7.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/fusesource/jansi/jansi/1.18/jansi-1.18.jar:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/macros/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/macros/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/macros/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/fudian/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/fudian/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/fudian/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/yunsuan/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/yunsuan/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/yunsuan/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/openLLC/openNCB/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/openLLC/openNCB/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/openNCB/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/openLLC/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/openLLC/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/openLLC/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/coupledL2/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/coupledL2/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/coupledL2/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/utility/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/utility/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/utility/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/huancun/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/huancun/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/huancun/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/difftest/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/difftest/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/difftest/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/cde/cde/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/cde/cde/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/rocketchip/cde/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/hardfloat/hardfloat/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/hardfloat/hardfloat/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/rocketchip/hardfloat/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/macros/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/macros/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/rocketchip/macros/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/rocketchip/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/xiangshan/resources.dest:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/xiangshan/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/vdotElasticFu/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/vdotElasticFu/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/vdotElasticFu/compile.dest/classes",
+        "team.vdot.GenerateVDotElasticFu",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-feature0/rtl"
+      ],
+      "started": "2026-11-08T06:16:51.650603+00:00",
+      "budget_seconds": 180.0,
+      "feature": "0",
+      "expected_exit": 0,
+      "pid": 35327,
+      "exit_code": 0,
+      "reaped": true,
+      "group_absent": true,
+      "finished": "2026-11-08T06:16:54.620614+00:00"
+    },
+    {
+      "label": "generate-cost-1",
+      "argv": [
+        "/home/lizufan/.local/share/graalvm-jdk-21.0.12/bin/java",
+        "-Xmx4G",
+        "-Xss8m",
+        "-XX:ActiveProcessorCount=1",
+        "-XX:+UseSerialGC",
+        "-XX:-UsePerfData",
+        "-Djava.io.tmpdir=/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/tmp",
+        "-cp",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/overlay-classes:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/chipsalliance/chisel_2.13/6.6.0/chisel_2.13-6.6.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.15/scala-library-2.13.15.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/edu/berkeley/cs/chiseltest_2.13/6.0.0/chiseltest_2.13-6.0.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-yaml_2.13/1.15.0/circe-yaml_2.13-1.15.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-generic-extras_2.13/0.14.4/circe-generic-extras_2.13-0.14.4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/mainargs_2.13/0.7.0/mainargs_2.13-0.7.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/json4s/json4s-jackson_2.13/4.0.7/json4s-jackson_2.13-4.0.7.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.13.15/scala-reflect-2.13.15.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/sourcecode_2.13/0.4.2/sourcecode_2.13-0.4.2.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/github/scopt/scopt_2.13/4.1.0/scopt_2.13-4.1.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/net/jcazevedo/moultingyaml_2.13/0.4.2/moultingyaml_2.13-0.4.2.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/json4s/json4s-native_2.13/4.1.0-M4/json4s-native_2.13-4.1.0-M4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/commons/commons-text/1.10.0/commons-text-1.10.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/github/alexarchambault/data-class_2.13/0.2.6/data-class_2.13-0.2.6.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/os-lib_2.13/0.9.2/os-lib_2.13-0.9.2.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-parallel-collections_2.13/1.0.4/scala-parallel-collections_2.13-1.0.4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/upickle_2.13/3.1.0/upickle_2.13-3.1.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/chipsalliance/firtool-resolver_2.13/1.3.0/firtool-resolver_2.13-1.3.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/edu/berkeley/cs/firrtl2_2.13/6.0.0/firrtl2_2.13-6.0.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest_2.13/3.2.17/scalatest_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/net/java/dev/jna/jna/5.14.0/jna-5.14.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-yaml-common_2.13/1.15.0/circe-yaml-common_2.13-1.15.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/yaml/snakeyaml/2.0/snakeyaml-2.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-generic_2.13/0.14.9/circe-generic_2.13-0.14.9.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-collection-compat_2.13/2.12.0/scala-collection-compat_2.13-2.12.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/json4s/json4s-core_2.13/4.1.0-M4/json4s-core_2.13-4.1.0-M4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/json4s/json4s-jackson-core_2.13/4.0.7/json4s-jackson-core_2.13-4.0.7.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/github/nscala-time/nscala-time_2.13/2.22.0/nscala-time_2.13-2.22.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/json4s/json4s-native-core_2.13/4.1.0-M4/json4s-native-core_2.13-4.1.0-M4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/geny_2.13/1.0.0/geny_2.13-1.0.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/ujson_2.13/3.1.0/ujson_2.13-3.1.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/upack_2.13/3.1.0/upack_2.13-3.1.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/upickle-implicits_2.13/3.1.0/upickle-implicits_2.13-3.1.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/dev/dirs/directories/26/directories-26.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/outr/scribe_2.13/3.13.0/scribe_2.13-3.13.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/get-coursier/coursier_2.13/2.1.8/coursier_2.13-2.1.8.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/antlr/antlr4-runtime/4.9.3/antlr4-runtime-4.9.3.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-core_2.13/3.2.17/scalatest-core_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-featurespec_2.13/3.2.17/scalatest-featurespec_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-flatspec_2.13/3.2.17/scalatest-flatspec_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-freespec_2.13/3.2.17/scalatest-freespec_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-funsuite_2.13/3.2.17/scalatest-funsuite_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-funspec_2.13/3.2.17/scalatest-funspec_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-propspec_2.13/3.2.17/scalatest-propspec_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-refspec_2.13/3.2.17/scalatest-refspec_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-wordspec_2.13/3.2.17/scalatest-wordspec_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-diagrams_2.13/3.2.17/scalatest-diagrams_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-matchers-core_2.13/3.2.17/scalatest-matchers-core_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-shouldmatchers_2.13/3.2.17/scalatest-shouldmatchers_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-mustmatchers_2.13/3.2.17/scalatest-mustmatchers_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-core_2.13/0.14.9/circe-core_2.13-0.14.9.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/chuusai/shapeless_2.13/2.3.12/shapeless_2.13-2.3.12.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/json4s/json4s-ast_2.13/4.1.0-M4/json4s-ast_2.13-4.1.0-M4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/json4s/json4s-scalap_2.13/4.1.0-M4/json4s-scalap_2.13-4.1.0-M4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.12.7/jackson-databind-2.12.7.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/joda-time/joda-time/2.10.1/joda-time-2.10.1.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/joda/joda-convert/2.2.0/joda-convert-2.2.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/upickle-core_2.13/3.1.0/upickle-core_2.13-3.1.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/outr/perfolation_2.13/1.2.9/perfolation_2.13-1.2.9.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/outr/moduload_2.13/1.1.7/moduload_2.13-1.1.7.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/github/plokhotnyuk/jsoniter-scala/jsoniter-scala-core_2.13/2.13.5.2/jsoniter-scala-core_2.13-2.13.5.2.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/get-coursier/coursier-core_2.13/2.1.8/coursier-core_2.13-2.1.8.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/get-coursier/coursier-cache_2.13/2.1.8/coursier-cache_2.13-2.1.8.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/get-coursier/coursier-proxy-setup/2.1.8/coursier-proxy-setup-2.1.8.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-compatible/3.2.17/scalatest-compatible-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalactic/scalactic_2.13/3.2.17/scalactic_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_2.13/2.2.0/scala-xml_2.13-2.2.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-numbers_2.13/0.14.9/circe-numbers_2.13-0.14.9.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/cats-core_2.13/2.12.0/cats-core_2.13-2.12.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.12.7/jackson-annotations-2.12.7.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.12.7/jackson-core-2.12.7.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/github/alexarchambault/concurrent-reference-hash-map/1.1.0/concurrent-reference-hash-map-1.1.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/get-coursier/coursier-util_2.13/2.1.8/coursier-util_2.13-2.1.8.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/get-coursier/jniutils/windows-jni-utils/0.3.3/windows-jni-utils-0.3.3.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/codehaus/plexus/plexus-archiver/4.9.0/plexus-archiver-4.9.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/codehaus/plexus/plexus-container-default/2.1.1/plexus-container-default-2.1.1.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/virtuslab/scala-cli/config_2.13/0.2.1/config_2.13-0.2.1.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/github/alexarchambault/windows-ansi/windows-ansi/0.0.5/windows-ansi-0.0.5.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/cats-kernel_2.13/2.12.0/cats-kernel_2.13-2.12.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/javax/inject/javax.inject/1/javax.inject-1.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/codehaus/plexus/plexus-utils/4.0.0/plexus-utils-4.0.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/codehaus/plexus/plexus-io/3.4.1/plexus-io-3.4.1.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/commons-io/commons-io/2.15.0/commons-io-2.15.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/commons/commons-compress/1.24.0/commons-compress-1.24.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/iq80/snappy/snappy/0.4/snappy-0.4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/tukaani/xz/1.9/xz-1.9.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/github/luben/zstd-jni/1.5.5-10/zstd-jni-1.5.5-10.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/codehaus/plexus/plexus-classworlds/2.6.0/plexus-classworlds-2.6.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/xbean/xbean-reflect/3.7/xbean-reflect-3.7.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/fusesource/jansi/jansi/1.18/jansi-1.18.jar:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/macros/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/macros/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/macros/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/fudian/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/fudian/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/fudian/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/yunsuan/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/yunsuan/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/yunsuan/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/openLLC/openNCB/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/openLLC/openNCB/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/openNCB/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/openLLC/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/openLLC/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/openLLC/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/coupledL2/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/coupledL2/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/coupledL2/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/utility/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/utility/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/utility/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/huancun/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/huancun/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/huancun/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/difftest/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/difftest/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/difftest/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/cde/cde/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/cde/cde/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/rocketchip/cde/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/hardfloat/hardfloat/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/hardfloat/hardfloat/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/rocketchip/hardfloat/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/macros/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/macros/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/rocketchip/macros/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/rocketchip/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/xiangshan/resources.dest:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/xiangshan/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/vdotElasticFu/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/vdotElasticFu/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/vdotElasticFu/compile.dest/classes",
+        "team.vdot.GenerateVDotCost",
+        "fu",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/cost-feature1/rtl"
+      ],
+      "started": "2026-11-08T06:16:54.623629+00:00",
+      "budget_seconds": 180.0,
+      "feature": "1",
+      "expected_exit": 0,
+      "pid": 35359,
+      "exit_code": 0,
+      "reaped": true,
+      "group_absent": true,
+      "finished": "2026-11-08T06:16:57.242392+00:00"
+    },
+    {
+      "label": "generate-fu-1",
+      "argv": [
+        "/home/lizufan/.local/share/graalvm-jdk-21.0.12/bin/java",
+        "-Xmx4G",
+        "-Xss8m",
+        "-XX:ActiveProcessorCount=1",
+        "-XX:+UseSerialGC",
+        "-XX:-UsePerfData",
+        "-Djava.io.tmpdir=/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/tmp",
+        "-cp",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/overlay-classes:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/chipsalliance/chisel_2.13/6.6.0/chisel_2.13-6.6.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.15/scala-library-2.13.15.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/edu/berkeley/cs/chiseltest_2.13/6.0.0/chiseltest_2.13-6.0.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-yaml_2.13/1.15.0/circe-yaml_2.13-1.15.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-generic-extras_2.13/0.14.4/circe-generic-extras_2.13-0.14.4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/mainargs_2.13/0.7.0/mainargs_2.13-0.7.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/json4s/json4s-jackson_2.13/4.0.7/json4s-jackson_2.13-4.0.7.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.13.15/scala-reflect-2.13.15.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/sourcecode_2.13/0.4.2/sourcecode_2.13-0.4.2.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/github/scopt/scopt_2.13/4.1.0/scopt_2.13-4.1.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/net/jcazevedo/moultingyaml_2.13/0.4.2/moultingyaml_2.13-0.4.2.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/json4s/json4s-native_2.13/4.1.0-M4/json4s-native_2.13-4.1.0-M4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/commons/commons-text/1.10.0/commons-text-1.10.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/github/alexarchambault/data-class_2.13/0.2.6/data-class_2.13-0.2.6.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/os-lib_2.13/0.9.2/os-lib_2.13-0.9.2.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-parallel-collections_2.13/1.0.4/scala-parallel-collections_2.13-1.0.4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/upickle_2.13/3.1.0/upickle_2.13-3.1.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/chipsalliance/firtool-resolver_2.13/1.3.0/firtool-resolver_2.13-1.3.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/edu/berkeley/cs/firrtl2_2.13/6.0.0/firrtl2_2.13-6.0.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest_2.13/3.2.17/scalatest_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/net/java/dev/jna/jna/5.14.0/jna-5.14.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-yaml-common_2.13/1.15.0/circe-yaml-common_2.13-1.15.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/yaml/snakeyaml/2.0/snakeyaml-2.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-generic_2.13/0.14.9/circe-generic_2.13-0.14.9.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-collection-compat_2.13/2.12.0/scala-collection-compat_2.13-2.12.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/json4s/json4s-core_2.13/4.1.0-M4/json4s-core_2.13-4.1.0-M4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/json4s/json4s-jackson-core_2.13/4.0.7/json4s-jackson-core_2.13-4.0.7.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/github/nscala-time/nscala-time_2.13/2.22.0/nscala-time_2.13-2.22.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/json4s/json4s-native-core_2.13/4.1.0-M4/json4s-native-core_2.13-4.1.0-M4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/geny_2.13/1.0.0/geny_2.13-1.0.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/ujson_2.13/3.1.0/ujson_2.13-3.1.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/upack_2.13/3.1.0/upack_2.13-3.1.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/upickle-implicits_2.13/3.1.0/upickle-implicits_2.13-3.1.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/dev/dirs/directories/26/directories-26.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/outr/scribe_2.13/3.13.0/scribe_2.13-3.13.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/get-coursier/coursier_2.13/2.1.8/coursier_2.13-2.1.8.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/antlr/antlr4-runtime/4.9.3/antlr4-runtime-4.9.3.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-core_2.13/3.2.17/scalatest-core_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-featurespec_2.13/3.2.17/scalatest-featurespec_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-flatspec_2.13/3.2.17/scalatest-flatspec_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-freespec_2.13/3.2.17/scalatest-freespec_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-funsuite_2.13/3.2.17/scalatest-funsuite_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-funspec_2.13/3.2.17/scalatest-funspec_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-propspec_2.13/3.2.17/scalatest-propspec_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-refspec_2.13/3.2.17/scalatest-refspec_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-wordspec_2.13/3.2.17/scalatest-wordspec_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-diagrams_2.13/3.2.17/scalatest-diagrams_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-matchers-core_2.13/3.2.17/scalatest-matchers-core_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-shouldmatchers_2.13/3.2.17/scalatest-shouldmatchers_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-mustmatchers_2.13/3.2.17/scalatest-mustmatchers_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-core_2.13/0.14.9/circe-core_2.13-0.14.9.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/chuusai/shapeless_2.13/2.3.12/shapeless_2.13-2.3.12.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/json4s/json4s-ast_2.13/4.1.0-M4/json4s-ast_2.13-4.1.0-M4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/json4s/json4s-scalap_2.13/4.1.0-M4/json4s-scalap_2.13-4.1.0-M4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.12.7/jackson-databind-2.12.7.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/joda-time/joda-time/2.10.1/joda-time-2.10.1.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/joda/joda-convert/2.2.0/joda-convert-2.2.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/upickle-core_2.13/3.1.0/upickle-core_2.13-3.1.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/outr/perfolation_2.13/1.2.9/perfolation_2.13-1.2.9.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/outr/moduload_2.13/1.1.7/moduload_2.13-1.1.7.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/github/plokhotnyuk/jsoniter-scala/jsoniter-scala-core_2.13/2.13.5.2/jsoniter-scala-core_2.13-2.13.5.2.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/get-coursier/coursier-core_2.13/2.1.8/coursier-core_2.13-2.1.8.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/get-coursier/coursier-cache_2.13/2.1.8/coursier-cache_2.13-2.1.8.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/get-coursier/coursier-proxy-setup/2.1.8/coursier-proxy-setup-2.1.8.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest-compatible/3.2.17/scalatest-compatible-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scalactic/scalactic_2.13/3.2.17/scalactic_2.13-3.2.17.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_2.13/2.2.0/scala-xml_2.13-2.2.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-numbers_2.13/0.14.9/circe-numbers_2.13-0.14.9.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/cats-core_2.13/2.12.0/cats-core_2.13-2.12.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.12.7/jackson-annotations-2.12.7.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.12.7/jackson-core-2.12.7.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/github/alexarchambault/concurrent-reference-hash-map/1.1.0/concurrent-reference-hash-map-1.1.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/get-coursier/coursier-util_2.13/2.1.8/coursier-util_2.13-2.1.8.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/get-coursier/jniutils/windows-jni-utils/0.3.3/windows-jni-utils-0.3.3.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/codehaus/plexus/plexus-archiver/4.9.0/plexus-archiver-4.9.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/codehaus/plexus/plexus-container-default/2.1.1/plexus-container-default-2.1.1.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/virtuslab/scala-cli/config_2.13/0.2.1/config_2.13-0.2.1.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/io/github/alexarchambault/windows-ansi/windows-ansi/0.0.5/windows-ansi-0.0.5.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/cats-kernel_2.13/2.12.0/cats-kernel_2.13-2.12.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/javax/inject/javax.inject/1/javax.inject-1.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/codehaus/plexus/plexus-utils/4.0.0/plexus-utils-4.0.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/codehaus/plexus/plexus-io/3.4.1/plexus-io-3.4.1.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/commons-io/commons-io/2.15.0/commons-io-2.15.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/commons/commons-compress/1.24.0/commons-compress-1.24.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/iq80/snappy/snappy/0.4/snappy-0.4.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/tukaani/xz/1.9/xz-1.9.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/com/github/luben/zstd-jni/1.5.5-10/zstd-jni-1.5.5-10.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/codehaus/plexus/plexus-classworlds/2.6.0/plexus-classworlds-2.6.0.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/xbean/xbean-reflect/3.7/xbean-reflect-3.7.jar:/home/lizufan/.cache/coursier/v1/https/repo1.maven.org/maven2/org/fusesource/jansi/jansi/1.18/jansi-1.18.jar:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/macros/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/macros/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/macros/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/fudian/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/fudian/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/fudian/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/yunsuan/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/yunsuan/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/yunsuan/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/openLLC/openNCB/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/openLLC/openNCB/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/openNCB/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/openLLC/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/openLLC/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/openLLC/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/coupledL2/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/coupledL2/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/coupledL2/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/utility/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/utility/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/utility/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/huancun/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/huancun/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/huancun/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/difftest/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/difftest/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/difftest/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/cde/cde/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/cde/cde/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/rocketchip/cde/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/hardfloat/hardfloat/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/hardfloat/hardfloat/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/rocketchip/hardfloat/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/macros/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/macros/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/rocketchip/macros/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/rocket-chip/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/rocketchip/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/xiangshan/resources.dest:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/xiangshan/compile.dest/classes:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/vdotElasticFu/compile-resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/vdotElasticFu/src/main/resources:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/checkout/source/out/dot16-fu-20261106-pro2/vdotElasticFu/compile.dest/classes",
+        "team.vdot.GenerateVDotElasticFu",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-feature1/rtl"
+      ],
+      "started": "2026-11-08T06:16:57.246279+00:00",
+      "budget_seconds": 180.0,
+      "feature": "1",
+      "expected_exit": 0,
+      "pid": 35381,
+      "exit_code": 0,
+      "reaped": true,
+      "group_absent": true,
+      "finished": "2026-11-08T06:17:00.068731+00:00"
+    },
+    {
+      "label": "actual-booth-structure",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/source-snapshot/verify_booth.py",
+        "--rtl",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/cost-feature0/rtl/VDotCarrySaveRows.sv",
+        "--output",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/arithmetic-structure.json"
+      ],
+      "started": "2026-11-08T06:17:00.072037+00:00",
+      "budget_seconds": 60.0,
+      "feature": "1",
+      "expected_exit": 0,
+      "pid": 35403,
+      "exit_code": 0,
+      "reaped": true,
+      "group_absent": true,
+      "finished": "2026-11-08T06:17:00.240617+00:00"
+    },
+    {
+      "label": "actual-prefix-19-miter",
+      "argv": [
+        "/usr/bin/yosys",
+        "-T",
+        "-s",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/prefix-proof-19/prove.ys"
+      ],
+      "started": "2026-11-08T06:17:00.243175+00:00",
+      "budget_seconds": 60.0,
+      "feature": "0",
+      "expected_exit": null,
+      "pid": 35404,
+      "exit_code": 0,
+      "reaped": true,
+      "group_absent": true,
+      "finished": "2026-11-08T06:17:00.310469+00:00"
+    },
+    {
+      "label": "actual-prefix-20-miter",
+      "argv": [
+        "/usr/bin/yosys",
+        "-T",
+        "-s",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/prefix-proof-20/prove.ys"
+      ],
+      "started": "2026-11-08T06:17:00.313930+00:00",
+      "budget_seconds": 60.0,
+      "feature": "1",
+      "expected_exit": null,
+      "pid": 35405,
+      "exit_code": 0,
+      "reaped": true,
+      "group_absent": true,
+      "finished": "2026-11-08T06:17:13.619470+00:00"
+    },
+    {
+      "label": "fu-0-lint",
+      "argv": [
+        "/home/lizufan/riscv-tools/verilator-5.052/bin/verilator",
+        "--lint-only",
+        "--assert",
+        "--top-module",
+        "VDotElasticFuTestTop",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-feature0/rtl/VDotCarrySaveRows.sv",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-feature0/rtl/VDotElastic.sv",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-feature0/rtl/VDotElasticFuTestTop.sv",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-feature0/rtl/VDotPrefixFinish19.sv",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-feature0/rtl/extern_modules.sv"
+      ],
+      "started": "2026-11-08T06:17:13.621290+00:00",
+      "budget_seconds": 120.0,
+      "feature": "0",
+      "expected_exit": 0,
+      "pid": 35413,
+      "exit_code": 0,
+      "reaped": true,
+      "group_absent": true,
+      "finished": "2026-11-08T06:17:13.793357+00:00"
+    },
+    {
+      "label": "fu-0-build",
+      "argv": [
+        "/home/lizufan/riscv-tools/verilator-5.052/bin/verilator",
+        "--cc",
+        "--exe",
+        "--build",
+        "--assert",
+        "--top-module",
+        "VDotElasticFuTestTop",
+        "--Mdir",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-feature0/obj",
+        "--compiler",
+        "clang",
+        "-j",
+        "1",
+        "-MAKEFLAGS",
+        "CXX=/usr/local/bin/clang++ LINK=/usr/local/bin/clang++ AR=/usr/bin/ar",
+        "-CFLAGS",
+        "-std=c++17 -O2",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-feature0/rtl/VDotCarrySaveRows.sv",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-feature0/rtl/VDotElastic.sv",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-feature0/rtl/VDotElasticFuTestTop.sv",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-feature0/rtl/VDotPrefixFinish19.sv",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-feature0/rtl/extern_modules.sv",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/source-snapshot/feature0-fu_test.cpp"
+      ],
+      "started": "2026-11-08T06:17:13.794153+00:00",
+      "budget_seconds": 266.12548944200535,
+      "feature": "0",
+      "expected_exit": 0,
+      "pid": 35417,
+      "exit_code": 0,
+      "reaped": true,
+      "group_absent": true,
+      "finished": "2026-11-08T06:17:20.774796+00:00"
+    },
+    {
+      "label": "fu-0-positive",
+      "argv": [
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-feature0/obj/VVDotElasticFuTestTop",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/source-snapshot/vectors.tsv"
+      ],
+      "started": "2026-11-08T06:17:20.776213+00:00",
+      "budget_seconds": 60.0,
+      "feature": "0",
+      "expected_exit": 0,
+      "pid": 35463,
+      "exit_code": 0,
+      "reaped": true,
+      "group_absent": true,
+      "finished": "2026-11-08T06:17:20.844100+00:00"
+    },
+    {
+      "label": "fu-0-inject-identity",
+      "argv": [
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-feature0/obj/VVDotElasticFuTestTop",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/source-snapshot/vectors.tsv",
+        "identity"
+      ],
+      "started": "2026-11-08T06:17:20.844991+00:00",
+      "budget_seconds": 60.0,
+      "feature": "0",
+      "expected_exit": null,
+      "pid": 35464,
+      "exit_code": 1,
+      "reaped": true,
+      "group_absent": true,
+      "finished": "2026-11-08T06:17:20.859735+00:00"
+    },
+    {
+      "label": "fu-0-check-identity",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/source-snapshot/check_negative_fu.py",
+        "--fault",
+        "identity",
+        "--return-code",
+        "1",
+        "--log",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-0-inject-identity.log"
+      ],
+      "started": "2026-11-08T06:17:20.860348+00:00",
+      "budget_seconds": 30.0,
+      "feature": "0",
+      "expected_exit": 0,
+      "pid": 35465,
+      "exit_code": 0,
+      "reaped": true,
+      "group_absent": true,
+      "finished": "2026-11-08T06:17:20.880066+00:00"
+    },
+    {
+      "label": "fu-0-inject-wen",
+      "argv": [
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-feature0/obj/VVDotElasticFuTestTop",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/source-snapshot/vectors.tsv",
+        "wen"
+      ],
+      "started": "2026-11-08T06:17:20.880725+00:00",
+      "budget_seconds": 60.0,
+      "feature": "0",
+      "expected_exit": null,
+      "pid": 35466,
+      "exit_code": 1,
+      "reaped": true,
+      "group_absent": true,
+      "finished": "2026-11-08T06:17:20.899781+00:00"
+    },
+    {
+      "label": "fu-0-check-wen",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/source-snapshot/check_negative_fu.py",
+        "--fault",
+        "wen",
+        "--return-code",
+        "1",
+        "--log",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-0-inject-wen.log"
+      ],
+      "started": "2026-11-08T06:17:20.900445+00:00",
+      "budget_seconds": 30.0,
+      "feature": "0",
+      "expected_exit": 0,
+      "pid": 35467,
+      "exit_code": 0,
+      "reaped": true,
+      "group_absent": true,
+      "finished": "2026-11-08T06:17:20.919856+00:00"
+    },
+    {
+      "label": "fu-0-inject-high",
+      "argv": [
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-feature0/obj/VVDotElasticFuTestTop",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/source-snapshot/vectors.tsv",
+        "high"
+      ],
+      "started": "2026-11-08T06:17:20.920590+00:00",
+      "budget_seconds": 60.0,
+      "feature": "0",
+      "expected_exit": null,
+      "pid": 35468,
+      "exit_code": 1,
+      "reaped": true,
+      "group_absent": true,
+      "finished": "2026-11-08T06:17:20.939956+00:00"
+    },
+    {
+      "label": "fu-0-check-high",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/source-snapshot/check_negative_fu.py",
+        "--fault",
+        "high",
+        "--return-code",
+        "1",
+        "--log",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-0-inject-high.log"
+      ],
+      "started": "2026-11-08T06:17:20.941012+00:00",
+      "budget_seconds": 30.0,
+      "feature": "0",
+      "expected_exit": 0,
+      "pid": 35469,
+      "exit_code": 0,
+      "reaped": true,
+      "group_absent": true,
+      "finished": "2026-11-08T06:17:20.964269+00:00"
+    },
+    {
+      "label": "fu-0-inject-cancel",
+      "argv": [
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-feature0/obj/VVDotElasticFuTestTop",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/source-snapshot/vectors.tsv",
+        "cancel"
+      ],
+      "started": "2026-11-08T06:17:20.965065+00:00",
+      "budget_seconds": 60.0,
+      "feature": "0",
+      "expected_exit": null,
+      "pid": 35470,
+      "exit_code": 1,
+      "reaped": true,
+      "group_absent": true,
+      "finished": "2026-11-08T06:17:21.004284+00:00"
+    },
+    {
+      "label": "fu-0-check-cancel",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/source-snapshot/check_negative_fu.py",
+        "--fault",
+        "cancel",
+        "--return-code",
+        "1",
+        "--log",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-0-inject-cancel.log"
+      ],
+      "started": "2026-11-08T06:17:21.005032+00:00",
+      "budget_seconds": 30.0,
+      "feature": "0",
+      "expected_exit": 0,
+      "pid": 35471,
+      "exit_code": 0,
+      "reaped": true,
+      "group_absent": true,
+      "finished": "2026-11-08T06:17:21.028076+00:00"
+    },
+    {
+      "label": "fu-1-lint",
+      "argv": [
+        "/home/lizufan/riscv-tools/verilator-5.052/bin/verilator",
+        "--lint-only",
+        "--assert",
+        "--top-module",
+        "VDotElasticFuTestTop",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-feature1/rtl/VDotCarrySaveRows.sv",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-feature1/rtl/VDotElastic.sv",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-feature1/rtl/VDotElasticFuTestTop.sv",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-feature1/rtl/VDotPrefixFinish20.sv",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-feature1/rtl/extern_modules.sv"
+      ],
+      "started": "2026-11-08T06:17:21.030877+00:00",
+      "budget_seconds": 120.0,
+      "feature": "1",
+      "expected_exit": 0,
+      "pid": 35472,
+      "exit_code": 0,
+      "reaped": true,
+      "group_absent": true,
+      "finished": "2026-11-08T06:17:21.251446+00:00"
+    },
+    {
+      "label": "fu-1-build",
+      "argv": [
+        "/home/lizufan/riscv-tools/verilator-5.052/bin/verilator",
+        "--cc",
+        "--exe",
+        "--build",
+        "--assert",
+        "--top-module",
+        "VDotElasticFuTestTop",
+        "--Mdir",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-feature1/obj",
+        "--compiler",
+        "clang",
+        "-j",
+        "1",
+        "-MAKEFLAGS",
+        "CXX=/usr/local/bin/clang++ LINK=/usr/local/bin/clang++ AR=/usr/bin/ar",
+        "-CFLAGS",
+        "-std=c++17 -O2",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-feature1/rtl/VDotCarrySaveRows.sv",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-feature1/rtl/VDotElastic.sv",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-feature1/rtl/VDotElasticFuTestTop.sv",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-feature1/rtl/VDotPrefixFinish20.sv",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-feature1/rtl/extern_modules.sv",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/source-snapshot/feature1-fu_test.cpp"
+      ],
+      "started": "2026-11-08T06:17:21.252770+00:00",
+      "budget_seconds": 258.66687618100696,
+      "feature": "1",
+      "expected_exit": 0,
+      "pid": 35476,
+      "exit_code": 0,
+      "reaped": true,
+      "group_absent": true,
+      "finished": "2026-11-08T06:17:28.270312+00:00"
+    },
+    {
+      "label": "fu-1-positive",
+      "argv": [
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-feature1/obj/VVDotElasticFuTestTop",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/source-snapshot/vectors.tsv"
+      ],
+      "started": "2026-11-08T06:17:28.271404+00:00",
+      "budget_seconds": 60.0,
+      "feature": "1",
+      "expected_exit": 0,
+      "pid": 35508,
+      "exit_code": 0,
+      "reaped": true,
+      "group_absent": true,
+      "finished": "2026-11-08T06:17:28.388858+00:00"
+    },
+    {
+      "label": "fu-1-inject-identity",
+      "argv": [
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-feature1/obj/VVDotElasticFuTestTop",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/source-snapshot/vectors.tsv",
+        "identity"
+      ],
+      "started": "2026-11-08T06:17:28.389815+00:00",
+      "budget_seconds": 60.0,
+      "feature": "1",
+      "expected_exit": null,
+      "pid": 35509,
+      "exit_code": 1,
+      "reaped": true,
+      "group_absent": true,
+      "finished": "2026-11-08T06:17:28.404096+00:00"
+    },
+    {
+      "label": "fu-1-check-identity",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/source-snapshot/check_negative_fu.py",
+        "--fault",
+        "identity",
+        "--return-code",
+        "1",
+        "--log",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-1-inject-identity.log"
+      ],
+      "started": "2026-11-08T06:17:28.405853+00:00",
+      "budget_seconds": 30.0,
+      "feature": "1",
+      "expected_exit": 0,
+      "pid": 35510,
+      "exit_code": 0,
+      "reaped": true,
+      "group_absent": true,
+      "finished": "2026-11-08T06:17:28.428118+00:00"
+    },
+    {
+      "label": "fu-1-inject-wen",
+      "argv": [
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-feature1/obj/VVDotElasticFuTestTop",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/source-snapshot/vectors.tsv",
+        "wen"
+      ],
+      "started": "2026-11-08T06:17:28.428947+00:00",
+      "budget_seconds": 60.0,
+      "feature": "1",
+      "expected_exit": null,
+      "pid": 35511,
+      "exit_code": 1,
+      "reaped": true,
+      "group_absent": true,
+      "finished": "2026-11-08T06:17:28.447941+00:00"
+    },
+    {
+      "label": "fu-1-check-wen",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/source-snapshot/check_negative_fu.py",
+        "--fault",
+        "wen",
+        "--return-code",
+        "1",
+        "--log",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-1-inject-wen.log"
+      ],
+      "started": "2026-11-08T06:17:28.448815+00:00",
+      "budget_seconds": 30.0,
+      "feature": "1",
+      "expected_exit": 0,
+      "pid": 35512,
+      "exit_code": 0,
+      "reaped": true,
+      "group_absent": true,
+      "finished": "2026-11-08T06:17:28.468129+00:00"
+    },
+    {
+      "label": "fu-1-inject-high",
+      "argv": [
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-feature1/obj/VVDotElasticFuTestTop",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/source-snapshot/vectors.tsv",
+        "high"
+      ],
+      "started": "2026-11-08T06:17:28.469003+00:00",
+      "budget_seconds": 60.0,
+      "feature": "1",
+      "expected_exit": null,
+      "pid": 35513,
+      "exit_code": 1,
+      "reaped": true,
+      "group_absent": true,
+      "finished": "2026-11-08T06:17:28.483930+00:00"
+    },
+    {
+      "label": "fu-1-check-high",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/source-snapshot/check_negative_fu.py",
+        "--fault",
+        "high",
+        "--return-code",
+        "1",
+        "--log",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-1-inject-high.log"
+      ],
+      "started": "2026-11-08T06:17:28.484661+00:00",
+      "budget_seconds": 30.0,
+      "feature": "1",
+      "expected_exit": 0,
+      "pid": 35514,
+      "exit_code": 0,
+      "reaped": true,
+      "group_absent": true,
+      "finished": "2026-11-08T06:17:28.504184+00:00"
+    },
+    {
+      "label": "fu-1-inject-cancel",
+      "argv": [
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-feature1/obj/VVDotElasticFuTestTop",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/source-snapshot/vectors.tsv",
+        "cancel"
+      ],
+      "started": "2026-11-08T06:17:28.505214+00:00",
+      "budget_seconds": 60.0,
+      "feature": "1",
+      "expected_exit": null,
+      "pid": 35515,
+      "exit_code": 1,
+      "reaped": true,
+      "group_absent": true,
+      "finished": "2026-11-08T06:17:28.544249+00:00"
+    },
+    {
+      "label": "fu-1-check-cancel",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/source-snapshot/check_negative_fu.py",
+        "--fault",
+        "cancel",
+        "--return-code",
+        "1",
+        "--log",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/fu-1-inject-cancel.log"
+      ],
+      "started": "2026-11-08T06:17:28.545181+00:00",
+      "budget_seconds": 30.0,
+      "feature": "1",
+      "expected_exit": 0,
+      "pid": 35516,
+      "exit_code": 0,
+      "reaped": true,
+      "group_absent": true,
+      "finished": "2026-11-08T06:17:28.568119+00:00"
+    },
+    {
+      "label": "map-0",
+      "argv": [
+        "/usr/bin/yosys",
+        "-T",
+        "-s",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/cost-feature0/mapped/map.ys"
+      ],
+      "started": "2026-11-08T06:17:28.570252+00:00",
+      "budget_seconds": 240.0,
+      "feature": "0",
+      "expected_exit": 0,
+      "pid": 35517,
+      "exit_code": 0,
+      "reaped": true,
+      "group_absent": true,
+      "finished": "2026-11-08T06:17:32.581049+00:00"
+    },
+    {
+      "label": "sta-0",
+      "argv": [
+        "/usr/bin/sta",
+        "-no_init",
+        "-exit",
+        "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/cost-feature0/mapped/timing.tcl"
+      ],
+      "started": "2026-11-08T06:17:32.609108+00:00",
+      "budget_seconds": 60.0,
+      "feature": "0",
+      "expected_exit": 0,
+      "pid": 35520,
+      "exit_code": 0,
+      "reaped": true,
+      "group_absent": true,
+      "finished": "2026-11-08T06:17:33.077129+00:00"
+    }
+  ],
+  "prior_failed_result_sha256": "7eb958143cc41f98cad195e0e7089b8924f827af340c51abca18ba573174d050",
+  "prior_run_remains_failed": true,
+  "reference_change": "R20 Gold: (a0+a1+a2)+(a3+a4+a5); all120 input bits remain unconstrained.",
+  "dut_source_unchanged_from_prior": true,
+  "proof_formulation_attempt": 2,
+  "candidate_source_sha256": "880ba4c2046721985560b788bf871cc69d930ebfe27561628ba7b930370ff680",
+  "original_source_sha256": "161df70403fd131a3adf445230ed637dc7ad7c619d05c0a890aa8aa1791546d8",
+  "candidate_wrapper_sha256": "1bc162257ab7d53671a06b0d24015045026330c8680ee25dae482dbf7a316238",
+  "original_wrapper_sha256": "63911b937a526b97ddaa67e34526fd19bbd2fa2801eadfda10ae6c2fa4b9fe9e",
+  "signed8_gold_result_sha256": "19f90c867022ba2259b83fb2600bb56ef7066eda54023cead03c6e35bf23b7d7",
+  "rwidth_baseline_result_sha256": "f42f7285ff8a357877c546d433251b1dc8c8eef66ee9218c9e3b2c002ca0a261",
+  "csa_baseline_result_sha256": "21510c330817f12c03426ac0ca262331c4ff088d90e33b2be1fefae0c605707a",
+  "csa_baseline_result_bytes": 109822,
+  "prefix_baseline_result_sha256": "a0c4dd60fddc001f368b71ec283327f2d7fe0874080ac35304e3debe783116d0",
+  "prefix_baseline_result_bytes": 205865,
+  "result_widths": {
+    "0": 19,
+    "1": 20
+  },
+  "p_row_bits": {
+    "0": 19,
+    "1": 20
+  },
+  "p_rows_per_half": 3,
+  "representation_equivalence_basis": "New complete proof of actual three-row Booth heap; fresh actual unconstrained three/six-row R SAT; full source inverse, emitted wrapper binding and new FU tests. No whole-FU sequential or RTL-to-mapped SAT claim.",
+  "cpu_affinity": [
+    2
+  ],
+  "nice": 5,
+  "budget_seconds": 300,
+  "resident_modified": false,
+  "original_cache_modified": false,
+  "production_default_changed": false,
+  "new_core_builds": 0,
+  "new_core_runs": 0,
+  "arithmetic_equivalent": false,
+  "fu_qualified": false,
+  "parent_qualified": false,
+  "wrapper_post_p_decode_review_completed": true,
+  "fullcore_qualified": false,
+  "application_performance_qualified": false,
+  "core_cost_qualified": false,
+  "prefix_miters": [
+    {
+      "feature": 0,
+      "width": 19,
+      "row_count": 3,
+      "status": "PASS",
+      "actual_rtl_sha256": "48c5946c60753e2aa9123ea5aef035214618327050e30ce895ba5e373fe2e691",
+      "gold_sha256": "d842a3059ced4b648269b910de9172c405fe3134c9c96d9db9df46e564afec33",
+      "gate_sha256": "cf91ec0c8719f7b6f22df7061d6980ad7e80df6b7279c843ce9e735dba613f2d",
+      "script_sha256": "228863e7d154e6751828dc593995afa690561faaf11c1e5e892a1bd75d08ad9c",
+      "unconstrained_inputs": true,
+      "solver_timeout_seconds": 30,
+      "total_command_budget_seconds": 60,
+      "qualification_scope": "actual prefix combinational modular sum only",
+      "retried": true,
+      "retry_kind": "new frozen contract; R20 Gold association changed, no original operation replay",
+      "prior_attempt_contract": "dot16-prefix-booth3-local-v1",
+      "gold_expression": "a0+a1+a2",
+      "exit_code": 0,
+      "log_sha256": "89782ffcefbd3e3ae8cdf7a478a72b471885667e1025149936cad57c6227fc05",
+      "counterexample_found": false,
+      "solver_equivalence_proved": true
+    },
+    {
+      "feature": 1,
+      "width": 20,
+      "row_count": 6,
+      "status": "PASS",
+      "actual_rtl_sha256": "bee47acb860892ca52e081750a29eb8668ecf7551b4e46404d68a5748c6a18e2",
+      "gold_sha256": "3f5eca6811d073320691652dab5588171552bc8538ea0a2760caad7c03f21889",
+      "gate_sha256": "b0e4e2d84b156c3ce2fcc0e8daaa780506ca41a6ef5d23437c87e5025800bb83",
+      "script_sha256": "663309a6a5307f7efbe9fdea99c12df63a78a1f7512460fd71f8087becef8bf6",
+      "unconstrained_inputs": true,
+      "solver_timeout_seconds": 30,
+      "total_command_budget_seconds": 60,
+      "qualification_scope": "actual prefix combinational modular sum only",
+      "retried": true,
+      "retry_kind": "new frozen contract; R20 Gold association changed, no original operation replay",
+      "prior_attempt_contract": "dot16-prefix-booth3-local-v1",
+      "gold_expression": "(a0+a1+a2)+(a3+a4+a5)",
+      "exit_code": 0,
+      "log_sha256": "555808427ed3fdf6a2c4a994b23eea0a33342f4fe1618ba226224a7171d499d6",
+      "counterexample_found": false,
+      "solver_equivalence_proved": true
+    }
+  ],
+  "generated": [
+    {
+      "feature": 0,
+      "kind": "cost",
+      "files": [
+        {
+          "path": "cost-feature0/rtl/CommonFuCostTop.sv",
+          "bytes": 23074,
+          "sha256": "60fea45c63aa9d172a3e26d091ba13ac24241888792a50cc9b9ccbb5eb48e943"
+        },
+        {
+          "path": "cost-feature0/rtl/VDotCarrySaveRows.sv",
+          "bytes": 78845,
+          "sha256": "2ff5f11e28694d2b3bdfbb24303fc4dd5a0b47255c4daf24af0c8d3ee7256c4e"
+        },
+        {
+          "path": "cost-feature0/rtl/VDotElastic.sv",
+          "bytes": 28531,
+          "sha256": "f49a535558a92e34801ac1b7be2357cdad24be2e06ce6084e79187d79aef4279"
+        },
+        {
+          "path": "cost-feature0/rtl/VDotPrefixFinish19.sv",
+          "bytes": 1325,
+          "sha256": "48c5946c60753e2aa9123ea5aef035214618327050e30ce895ba5e373fe2e691"
+        },
+        {
+          "path": "cost-feature0/rtl/extern_modules.sv",
+          "bytes": 776,
+          "sha256": "a5531793e64bd9b9fb8ff2423c47b0448d69ebf138d1932b3df16791c89f954c"
+        }
+      ],
+      "resource_manifest_sha256": "b68326d6b3ad0f4d1bb793f31651ed41a8266e27fab89607e81c94e720937467",
+      "filelist_sha256": "4ae22235d809ee340d7bc8282177e8ffcce41aa47acfabbe4d911ef0e36162ea"
+    },
+    {
+      "feature": 0,
+      "kind": "fu",
+      "files": [
+        {
+          "path": "fu-feature0/rtl/VDotCarrySaveRows.sv",
+          "bytes": 78845,
+          "sha256": "2ff5f11e28694d2b3bdfbb24303fc4dd5a0b47255c4daf24af0c8d3ee7256c4e"
+        },
+        {
+          "path": "fu-feature0/rtl/VDotElastic.sv",
+          "bytes": 12857,
+          "sha256": "e5e1fd2ebb760fc97097fafa5eca1dbcc7d97e28bbe33186b9c4ccdc2e98ec17"
+        },
+        {
+          "path": "fu-feature0/rtl/VDotElasticFuTestTop.sv",
+          "bytes": 5995,
+          "sha256": "47235cf3f7f7b80f62037c03fbddfc76d1f79ebc7cdb2652b6fe9441390510b9"
+        },
+        {
+          "path": "fu-feature0/rtl/VDotPrefixFinish19.sv",
+          "bytes": 1325,
+          "sha256": "48c5946c60753e2aa9123ea5aef035214618327050e30ce895ba5e373fe2e691"
+        },
+        {
+          "path": "fu-feature0/rtl/extern_modules.sv",
+          "bytes": 776,
+          "sha256": "a5531793e64bd9b9fb8ff2423c47b0448d69ebf138d1932b3df16791c89f954c"
+        }
+      ],
+      "resource_manifest_sha256": "b68326d6b3ad0f4d1bb793f31651ed41a8266e27fab89607e81c94e720937467",
+      "filelist_sha256": "09b63a28a7aa0e5397feb5581419f42071222aa0c5cf27f1c4d0d0ee2e3e5fe4"
+    },
+    {
+      "feature": 1,
+      "kind": "cost",
+      "files": [
+        {
+          "path": "cost-feature1/rtl/CommonFuCostTop.sv",
+          "bytes": 23074,
+          "sha256": "60fea45c63aa9d172a3e26d091ba13ac24241888792a50cc9b9ccbb5eb48e943"
+        },
+        {
+          "path": "cost-feature1/rtl/VDotCarrySaveRows.sv",
+          "bytes": 78845,
+          "sha256": "2ff5f11e28694d2b3bdfbb24303fc4dd5a0b47255c4daf24af0c8d3ee7256c4e"
+        },
+        {
+          "path": "cost-feature1/rtl/VDotElastic.sv",
+          "bytes": 29310,
+          "sha256": "2f97d4e0e79b6e788d00d7c2cff60515f8d545f4e2fb376a9c77c17bb02002f3"
+        },
+        {
+          "path": "cost-feature1/rtl/VDotPrefixFinish20.sv",
+          "bytes": 2031,
+          "sha256": "bee47acb860892ca52e081750a29eb8668ecf7551b4e46404d68a5748c6a18e2"
+        },
+        {
+          "path": "cost-feature1/rtl/extern_modules.sv",
+          "bytes": 776,
+          "sha256": "995f91f43a61615df8dfd0d46f70a685288327905e8e9eb463f20fa28235122c"
+        }
+      ],
+      "resource_manifest_sha256": "692faa9c15d412dfb8ac1f8f7f57d73ae4c1d162cd54c17b57d39eb8180a0151",
+      "filelist_sha256": "a6b61ef87620a34f94b52f875128a27c4b6b4ce38007b6257274237d6fd28353"
+    },
+    {
+      "feature": 1,
+      "kind": "fu",
+      "files": [
+        {
+          "path": "fu-feature1/rtl/VDotCarrySaveRows.sv",
+          "bytes": 78845,
+          "sha256": "2ff5f11e28694d2b3bdfbb24303fc4dd5a0b47255c4daf24af0c8d3ee7256c4e"
+        },
+        {
+          "path": "fu-feature1/rtl/VDotElastic.sv",
+          "bytes": 13647,
+          "sha256": "646ca661917ef5898910b07de825256e074430060cb34a72af6e1885a0adb1b2"
+        },
+        {
+          "path": "fu-feature1/rtl/VDotElasticFuTestTop.sv",
+          "bytes": 5995,
+          "sha256": "47235cf3f7f7b80f62037c03fbddfc76d1f79ebc7cdb2652b6fe9441390510b9"
+        },
+        {
+          "path": "fu-feature1/rtl/VDotPrefixFinish20.sv",
+          "bytes": 2031,
+          "sha256": "bee47acb860892ca52e081750a29eb8668ecf7551b4e46404d68a5748c6a18e2"
+        },
+        {
+          "path": "fu-feature1/rtl/extern_modules.sv",
+          "bytes": 776,
+          "sha256": "995f91f43a61615df8dfd0d46f70a685288327905e8e9eb463f20fa28235122c"
+        }
+      ],
+      "resource_manifest_sha256": "692faa9c15d412dfb8ac1f8f7f57d73ae4c1d162cd54c17b57d39eb8180a0151",
+      "filelist_sha256": "9f1bbcf56bd56c9e0f11a2349b79e285f4f55e852a2e81b5d07d2c6ee840ad63"
+    }
+  ],
+  "fu_results": [
+    {
+      "feature": 0,
+      "coverage": {
+        "extra": {
+          "schema": 1,
+          "new_op_rejected": 8,
+          "unknown_op_rejected": 8
+        },
+        "final": {
+          "vectors": "10022",
+          "cycles": "31595",
+          "accepted": "23327",
+          "responses": "22476",
+          "cancelled": "739",
+          "reset_dropped": "112",
+          "overlaps": "19856",
+          "stalls": "4932",
+          "full": "24901",
+          "partial_kill": "322",
+          "both_kill": "158",
+          "reset_cases": "8",
+          "ii1_intervals": "10021",
+          "latency2_probes": "1"
+        }
+      },
+      "binary_sha256": "f67c88f861a83aaa093771bdad6176eb67645af65a1326e9e832b779fcd89db9",
+      "faults": [
+        "identity",
+        "wen",
+        "high",
+        "cancel"
+      ],
+      "passed": true
+    },
+    {
+      "feature": 1,
+      "coverage": {
+        "extra": {
+          "schema": 1,
+          "paired_vectors": 10022,
+          "directed_inputs": 40,
+          "legal_compared": 20124,
+          "illegal_compared": 40,
+          "mixed_ii1_intervals": 20043,
+          "first_latency": 2,
+          "mixed_cancel_pairs": 96,
+          "additional_reset_cases": 16
+        },
+        "final": {
+          "vectors": "10022",
+          "cycles": "53205",
+          "accepted": "43699",
+          "responses": "42736",
+          "cancelled": "835",
+          "reset_dropped": "128",
+          "overlaps": "39898",
+          "stalls": "5532",
+          "full": "45340",
+          "partial_kill": "386",
+          "both_kill": "174",
+          "reset_cases": "24",
+          "ii1_intervals": "10021",
+          "latency2_probes": "1"
+        }
+      },
+      "binary_sha256": "76044ef61102539c48f2b9f9cb47c3f21cc268c1bbd242d02ba682632d14fbcc",
+      "faults": [
+        "identity",
+        "wen",
+        "high",
+        "cancel"
+      ],
+      "passed": true
+    }
+  ],
+  "cost_results": [],
+  "local_cost_recorded": false,
+  "no_clock_reset_latency_or_slot_protocol_change": true,
+  "internal_P_row_width_changed": true,
+  "wrapper_bindings": [
+    {
+      "feature": 0,
+      "kind": "cost",
+      "instances": [
+        "products"
+      ],
+      "p_row_registers": [
+        "pRows_0_0",
+        "pRows_0_1",
+        "pRows_0_2"
+      ],
+      "input_halves_verified": true,
+      "p_capture_and_dot8_biased_zero_verified": true,
+      "p_row_bits": 19,
+      "non_data_sequential_assignments_unchanged": true,
+      "architectural_output_unchanged": true,
+      "r_data_write": {
+        "name": "rPacket_res_data",
+        "expression": "pCtrl_exceptionVec_2 ? 19'h0 : _prefixSum_result"
+      },
+      "prefix_module": "VDotPrefixFinish19",
+      "prefix_instance": "prefixSum",
+      "prefix_ports": {
+        "rows_0": "pRows_0_0",
+        "rows_1": "pRows_0_1",
+        "rows_2": "pRows_0_2",
+        "result": "_prefixSum_result"
+      },
+      "prefix_result_width": 19,
+      "post_p_actual_expression_verified": true,
+      "post_p_actual_expression_review_pending": false
+    },
+    {
+      "feature": 0,
+      "kind": "fu",
+      "instances": [
+        "products"
+      ],
+      "p_row_registers": [
+        "pRows_0_0",
+        "pRows_0_1",
+        "pRows_0_2"
+      ],
+      "input_halves_verified": true,
+      "p_capture_and_dot8_biased_zero_verified": true,
+      "p_row_bits": 19,
+      "non_data_sequential_assignments_unchanged": true,
+      "architectural_output_unchanged": true,
+      "r_data_write": {
+        "name": "rPacket_res_data",
+        "expression": "pCtrl_exceptionVec_2 ? 19'h0 : _prefixSum_result"
+      },
+      "prefix_module": "VDotPrefixFinish19",
+      "prefix_instance": "prefixSum",
+      "prefix_ports": {
+        "rows_0": "pRows_0_0",
+        "rows_1": "pRows_0_1",
+        "rows_2": "pRows_0_2",
+        "result": "_prefixSum_result"
+      },
+      "prefix_result_width": 19,
+      "post_p_actual_expression_verified": true,
+      "post_p_actual_expression_review_pending": false
+    },
+    {
+      "feature": 1,
+      "kind": "cost",
+      "instances": [
+        "highProducts",
+        "products"
+      ],
+      "p_row_registers": [
+        "pRows_0_0",
+        "pRows_0_1",
+        "pRows_0_2",
+        "pRows_1_0",
+        "pRows_1_1",
+        "pRows_1_2"
+      ],
+      "input_halves_verified": true,
+      "p_capture_and_dot8_biased_zero_verified": true,
+      "p_row_bits": 20,
+      "non_data_sequential_assignments_unchanged": true,
+      "architectural_output_unchanged": true,
+      "r_data_write": {
+        "name": "rPacket_res_data",
+        "expression": "pCtrl_exceptionVec_2 ? 20'h0 : _prefixSum_result"
+      },
+      "prefix_module": "VDotPrefixFinish20",
+      "prefix_instance": "prefixSum",
+      "prefix_ports": {
+        "rows_0": "pRows_0_0",
+        "rows_1": "pRows_0_1",
+        "rows_2": "pRows_0_2",
+        "rows_3": "pRows_1_0",
+        "rows_4": "pRows_1_1",
+        "rows_5": "pRows_1_2",
+        "result": "_prefixSum_result"
+      },
+      "prefix_result_width": 20,
+      "post_p_actual_expression_verified": true,
+      "post_p_actual_expression_review_pending": false
+    },
+    {
+      "feature": 1,
+      "kind": "fu",
+      "instances": [
+        "highProducts",
+        "products"
+      ],
+      "p_row_registers": [
+        "pRows_0_0",
+        "pRows_0_1",
+        "pRows_0_2",
+        "pRows_1_0",
+        "pRows_1_1",
+        "pRows_1_2"
+      ],
+      "input_halves_verified": true,
+      "p_capture_and_dot8_biased_zero_verified": true,
+      "p_row_bits": 20,
+      "non_data_sequential_assignments_unchanged": true,
+      "architectural_output_unchanged": true,
+      "r_data_write": {
+        "name": "rPacket_res_data",
+        "expression": "pCtrl_exceptionVec_2 ? 20'h0 : _prefixSum_result"
+      },
+      "prefix_module": "VDotPrefixFinish20",
+      "prefix_instance": "prefixSum",
+      "prefix_ports": {
+        "rows_0": "pRows_0_0",
+        "rows_1": "pRows_0_1",
+        "rows_2": "pRows_0_2",
+        "rows_3": "pRows_1_0",
+        "rows_4": "pRows_1_1",
+        "rows_5": "pRows_1_2",
+        "result": "_prefixSum_result"
+      },
+      "prefix_result_width": 20,
+      "post_p_actual_expression_verified": true,
+      "post_p_actual_expression_review_pending": false
+    }
+  ],
+  "all_actual_DUT_SV_bytes_match_previous_failed_attempt": true,
+  "arithmetic_structure_proof": {
+    "actual_recode_cases": 7168,
+    "all_inputs_equivalent": true,
+    "all_internal_nodes_acyclic": true,
+    "application_qualified": false,
+    "arithmetic_destinations": "Each recoded pp/neg/s/c weighted token used once; only carry of weight>=20 may be discarded modulo 2^20.",
+    "booth_partial_product_bits": 288,
+    "combinational_identity_proved": true,
+    "correction_tokens_by_bit": {
+      "11": 1,
+      "12": 1,
+      "14": 1,
+      "16": 1,
+      "18": 1
+    },
+    "disabled_high_half_sum": 524288,
+    "discarded_carries": [],
+    "exact_signed_dot8_range": [
+      -130048,
+      131072
+    ],
+    "full_adders": 272,
+    "full_core_qualified": false,
+    "half_adders": 19,
+    "heap_identity": "(row0+row1+row2) mod 2^20 = (signed_dot8+2^19) mod 2^20",
+    "independent_neg_tokens": 32,
+    "layers": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "local_boolean_cases": 2252,
+    "mapped_equivalence_proved": false,
+    "module": "VDotCarrySaveRows",
+    "only_earlier_layer_inputs": true,
+    "parsed_entire_module": true,
+    "per_lane_complement_bias": 21760,
+    "performance_qualified": false,
+    "proof_domain": "All 2^128 binary operand assignments by exact recode truth tables, signed-byte decomposition and weighted FA/HA conservation. No X/Z claim.",
+    "real_parent_qualified": false,
+    "recode_controls": 96,
+    "required_external_binding": [
+      "Actual SV SHA and one/two instance count.",
+      "Operand byte halves, full20 P saves for feature1 or low19 saves for feature0.",
+      "Dot8 disabled high half encodes 2^19, saved on acceptance.",
+      "Unsigned R19/R20 modular prefix and unchanged architectural sign/zero extension."
+    ],
+    "result_identity": "signed19(low19(row0+row1+row2))=signed_dot8; two biased halves sum modulo2^20 to signed_dot16",
+    "rows_msb_to_lsb": {
+      "row0": [
+        "1'b0",
+        "1'b1",
+        "c_6_16_0",
+        "c_6_15_0",
+        "c_6_14_0",
+        "c_6_13_0",
+        "c_6_12_0",
+        "c_6_11_0",
+        "c_6_10_0",
+        "c_6_9_0",
+        "c_6_8_0",
+        "c_6_7_0",
+        "c_6_6_0",
+        "c_6_5_0",
+        "c_6_4_0",
+        "c_6_3_0",
+        "c_6_2_0",
+        "c_6_1_0",
+        "c_6_0_0",
+        "s_6_0_0"
+      ],
+      "row1": [
+        "1'b0",
+        "1'b0",
+        "1'b0",
+        "s_6_16_0",
+        "s_6_15_0",
+        "s_6_14_0",
+        "s_6_13_0",
+        "s_6_12_0",
+        "s_6_11_0",
+        "s_6_10_0",
+        "s_6_9_0",
+        "s_6_8_0",
+        "s_6_7_0",
+        "s_6_6_0",
+        "s_6_5_0",
+        "s_6_4_0",
+        "s_6_3_0",
+        "s_6_2_0",
+        "s_6_1_0",
+        "pp_7_0_0"
+      ],
+      "row2": [
+        "1'b0",
+        "1'b0",
+        "1'b0",
+        "1'b1",
+        "s_5_15_1",
+        "s_5_14_1",
+        "s_5_13_1",
+        "s_5_12_1",
+        "s_5_11_1",
+        "s_5_10_1",
+        "s_5_9_1",
+        "s_5_8_1",
+        "s_5_7_1",
+        "s_5_6_1",
+        "s_5_5_1",
+        "s_5_4_1",
+        "s_5_3_1",
+        "s_5_2_1",
+        "pp_7_0_1",
+        "neg_7_0"
+      ]
+    },
+    "rtl": {
+      "bytes": 78845,
+      "path": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/cost-feature0/rtl/VDotCarrySaveRows.sv",
+      "sha256": "2ff5f11e28694d2b3bdfbb24303fc4dd5a0b47255c4daf24af0c8d3ee7256c4e"
+    },
+    "rtl_sha256": "2ff5f11e28694d2b3bdfbb24303fc4dd5a0b47255c4daf24af0c8d3ee7256c4e",
+    "scalar_wires": 966,
+    "sequential_fu_qualified": false,
+    "signed_byte_decomposition_cases": 256,
+    "status": "BOOTH3_CSA_STRUCTURAL_EQUIVALENCE_PASS",
+    "total_correction": 350208,
+    "verifier": {
+      "bytes": 17469,
+      "sha256": "c0181c3c099a4a4e3ce4fcfcd1af3c34d337031675b6533ad303327ad632d587"
+    },
+    "wrapper_binding_verified": false
+  },
+  "arithmetic_structure_proof_reused": false,
+  "biased_unsigned_row_encoding_verified": true,
+  "direct_signed_row_encoding_verified": false,
+  "historical_multiplication_miter": {
+    "status": "UNKNOWN_EXTERNAL_TIMEOUT",
+    "solver_timeout_seconds": 60,
+    "total_command_budget_seconds": 120,
+    "log_sha256": "a9175ff5e52888f37d8cf8eeeb1673f6975e32cc8e08687be91f3db2cc845b2b",
+    "unconstrained_inputs": true,
+    "counterexample_found": false,
+    "solver_equivalence_proved": false,
+    "baseline_result_sha256": "19f90c867022ba2259b83fb2600bb56ef7066eda54023cead03c6e35bf23b7d7",
+    "reused_from": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-csa-20261107-main/local-02",
+    "retried": false
+  },
+  "historical_multiplication_miter_source": "/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-csa-20261107-main/local-03",
+  "independent_miter": {
+    "status": "NOT_RUN",
+    "solver_equivalence_proved": false,
+    "retried": false,
+    "qualification_scope": "new P candidate",
+    "reason": "New actual structural proof is used; no new monolithic multiplication solver run."
+  },
+  "prefix_miters_reused": false,
+  "arithmetic_proof_completed": true,
+  "fu_tests_completed": true,
+  "error": "ValueError('complete error-free same-template STA')",
+  "finished": "2026-11-08T06:17:33.078245+00:00"
+}

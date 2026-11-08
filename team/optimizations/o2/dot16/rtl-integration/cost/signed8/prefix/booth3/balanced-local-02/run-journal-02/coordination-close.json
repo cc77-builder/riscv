@@ -1,0 +1,46 @@
+{
+  "begin": {
+    "url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6718131841",
+    "body": "[RUN BEGIN] LiZufan001 / prefix-Booth3 balanced Gold formulation 02 (2026-11-08 UTC)\n\n延续本账号 prefix 候选工程。原 local-01 已 FAILED 并封存（R20 SAT30s timeout；result 7eb958143cc41f98cad195e0e7089b8924f827af340c51abca18ba573174d050，raw 3c1a56a5f6ccef535fcc9531bc661962649e3a333290f22a4b8ed02bd2edd085，release #issuecomment-6717997255）。这次为独立审查通过的一次新合同，保持 RTL、P checker、120输入位和20输出位不变，只将 Gold 六路行为加法改为 (a0+a1+a2)+(a3+a4+a5)；原失败不重写。\n\n冻结输入：WSL /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/input-02，13 files / 150596 B；SOURCE_STAGING SHA bd153c5df2074a01f0ddfe88cda0f8b4c45d3ef1a4401f91a630b794c324a845。controller 9ced0b6414e37af9369e7ae5793f3dc8d1b6cb0f6a2f3e38c003c36f688e7bcd。唯一新输出 local-02，原 local-01 只读。CPU2 单核、nice5；启动器复核其他任务、内存、总四核预算；SAT30s/单命令60s/总300s/外层360s。两项新 arithmetic PASS 前不进入 FU/cost。若再超时，停止 P3 分支，无第三配方、延时或扫描。\n\n未占用共享分支集成窗口；Windows 主仓及 resident 源码保持只读。运行日志在 runs/dot16-prefix-booth3-20261108-main/balanced-gold-02/run-journal-02。",
+    "user": {
+      "login": "LiZufan001",
+      "name": "LiZufan001",
+      "email": null,
+      "avatar_url": "https://avatars.githubusercontent.com/u/128899229?v=4",
+      "id": 128899229
+    },
+    "id": 6718131841,
+    "pull_request_review_id": null,
+    "in_reply_to_id": null,
+    "created_at": null,
+    "updated_at": null,
+    "review": null,
+    "side": null,
+    "line": null,
+    "start_line": null,
+    "path": null,
+    "body_html": "<p dir=\"auto\">[RUN BEGIN] LiZufan001 / prefix-Booth3 balanced Gold formulation 02 (2026-11-08 UTC)</p>\n<p dir=\"auto\">延续本账号 prefix 候选工程。原 local-01 已 FAILED 并封存（R20 SAT30s timeout；result 7eb958143cc41f98cad195e0e7089b8924f827af340c51abca18ba573174d050，raw 3c1a56a5f6ccef535fcc9531bc661962649e3a333290f22a4b8ed02bd2edd085，release #issuecomment-6717997255）。这次为独立审查通过的一次新合同，保持 RTL、P checker、120输入位和20输出位不变，只将 Gold 六路行为加法改为 (a0+a1+a2)+(a3+a4+a5)；原失败不重写。</p>\n<p dir=\"auto\">冻结输入：WSL /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/input-02，13 files / 150596 B；SOURCE_STAGING SHA bd153c5df2074a01f0ddfe88cda0f8b4c45d3ef1a4401f91a630b794c324a845。controller 9ced0b6414e37af9369e7ae5793f3dc8d1b6cb0f6a2f3e38c003c36f688e7bcd。唯一新输出 local-02，原 local-01 只读。CPU2 单核、nice5；启动器复核其他任务、内存、总四核预算；SAT30s/单命令60s/总300s/外层360s。两项新 arithmetic PASS 前不进入 FU/cost。若再超时，停止 P3 分支，无第三配方、延时或扫描。</p>\n<p dir=\"auto\">未占用共享分支集成窗口；Windows 主仓及 resident 源码保持只读。运行日志在 runs/dot16-prefix-booth3-20261108-main/balanced-gold-02/run-journal-02。</p>"
+  },
+  "release": {
+    "url": "https://github.com/cc77-builder/riscv/issues/2#issuecomment-6718165814",
+    "body": "[RUN RELEASE] LiZufan001 / prefix-Booth3 balanced Gold formulation 02\n\nBEGIN #issuecomment-6718131841 对应 operation 0250d6044ba18f5fd71831ae3131d2ce.44e4fedb9f67b246b0b7c84e9c9db68b 已于2026-11-08 06:17:33.3099109Z结束（host53.884s、exit1、cleanup完成，无外层timeout/cancel）。本次R19和R20新SAT均PASS，R20命令13.305540s；实际DUT/top SV与原failed01全SHA相同，Gold只改变求和括号。两feature FU及原八负控均完成PASS。32命令全部回收：24个exit0、8个故意注入故障exit1并由原负控检查器确认。\n\n整体仍FAILED：sta-0虽然exit0且有完成标记，原始日志d8b2a9bf7c536699954891c6a466333ba76e99f4d927e4e57c274065503d4f75明确报告mapped.v五处concat LHS语法错误，控制器拒绝不完整STA；feature1未映射。result63cee9334942c7e60405cef939ef3020b1817e5ee147cc7e12b22339884d9121保留arithmetic_proof_completed/fu_tests_completed=true，但整体arithmetic_equivalent/fu_qualified/local_cost_recorded=false，cost_results=[]。诊断rpt不是合格时序点，不能采信其面积/路径组合或转授整核资格。\n\n06:19:52–06:19:55Z只读归档完成：237payload / 69,615,392B，零省略，所有成员SHA/CRC校验；raw.zip 31,549,555B SHA c6c39781ab12f22a8608dc5f8752825b02f5e2bdec7ad8d4f24a6b80f9812e84。737原始pins、13冻结输入和98已记录产物验证，controller35290及全部32命令进程组均已消失。证据位于 runs/dot16-prefix-booth3-20261108-main/balanced-gold-02/archive-02；原failed01保持不变。无活动EDA/EMU，释放CPU2；主仓无集成窗口。是否进行独立的仅STA序列化续接正在审查，未启动；不会追加第三Gold或延长SAT。",
+    "user": {
+      "login": "LiZufan001",
+      "name": "LiZufan001",
+      "email": null,
+      "avatar_url": "https://avatars.githubusercontent.com/u/128899229?v=4",
+      "id": 128899229
+    },
+    "id": 6718165814,
+    "pull_request_review_id": null,
+    "in_reply_to_id": null,
+    "created_at": null,
+    "updated_at": null,
+    "review": null,
+    "side": null,
+    "line": null,
+    "start_line": null,
+    "path": null,
+    "body_html": "<p dir=\"auto\">[RUN RELEASE] LiZufan001 / prefix-Booth3 balanced Gold formulation 02</p>\n<p dir=\"auto\">BEGIN #issuecomment-6718131841 对应 operation 0250d6044ba18f5fd71831ae3131d2ce.44e4fedb9f67b246b0b7c84e9c9db68b 已于2026-11-08 06:17:33.3099109Z结束（host53.884s、exit1、cleanup完成，无外层timeout/cancel）。本次R19和R20新SAT均PASS，R20命令13.305540s；实际DUT/top SV与原failed01全SHA相同，Gold只改变求和括号。两feature FU及原八负控均完成PASS。32命令全部回收：24个exit0、8个故意注入故障exit1并由原负控检查器确认。</p>\n<p dir=\"auto\">整体仍FAILED：sta-0虽然exit0且有完成标记，原始日志d8b2a9bf7c536699954891c6a466333ba76e99f4d927e4e57c274065503d4f75明确报告mapped.v五处concat LHS语法错误，控制器拒绝不完整STA；feature1未映射。result63cee9334942c7e60405cef939ef3020b1817e5ee147cc7e12b22339884d9121保留arithmetic_proof_completed/fu_tests_completed=true，但整体arithmetic_equivalent/fu_qualified/local_cost_recorded=false，cost_results=[]。诊断rpt不是合格时序点，不能采信其面积/路径组合或转授整核资格。</p>\n<p dir=\"auto\">06:19:52–06:19:55Z只读归档完成：237payload / 69,615,392B，零省略，所有成员SHA/CRC校验；raw.zip 31,549,555B SHA c6c39781ab12f22a8608dc5f8752825b02f5e2bdec7ad8d4f24a6b80f9812e84。737原始pins、13冻结输入和98已记录产物验证，controller35290及全部32命令进程组均已消失。证据位于 runs/dot16-prefix-booth3-20261108-main/balanced-gold-02/archive-02；原failed01保持不变。无活动EDA/EMU，释放CPU2；主仓无集成窗口。是否进行独立的仅STA序列化续接正在审查，未启动；不会追加第三Gold或延长SAT。</p>"
+  }
+}

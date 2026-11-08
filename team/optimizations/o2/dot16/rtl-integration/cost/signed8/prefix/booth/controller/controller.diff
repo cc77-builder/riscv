@@ -1,0 +1,284 @@
+--- completed-pgroup/pgroup.py
++++ booth9/booth9.py
+@@ -1,5 +1,5 @@
+ #!/usr/bin/env python3
+-"""Compile one P-group candidate; prove actual CSA arithmetic, then run full FU/cost."""
++"""Compile one Booth9 candidate; prove actual biased CSA arithmetic, then run FU/cost."""
+ import argparse
+ from collections import Counter
+ import hashlib
+@@ -15,8 +15,8 @@
+ import time
+ 
+ sys.dont_write_bytecode = True
+-CONTRACT = 'dot16-prefix-pgroup-local-v1'
+-CONTROLLER_BASELINE_SHA = '8f33f550c9b7e74e8190cb5f5a2cfdcc693a783d86ae905ec3e60c7ad10d148c'
++CONTRACT = 'dot16-prefix-booth9-local-v1'
++CONTROLLER_BASELINE_SHA = '794544ddfb3455b05deaffe8588d3c9715d02446ac04c50fe2710c6caaaafc0e'
+ PREFIX_BASELINE_SHA = 'a0c4dd60fddc001f368b71ec283327f2d7fe0874080ac35304e3debe783116d0'
+ PREFIX_BASELINE_BYTES = 205865
+ PREFIX_DATAPATH_SHA = '1d02d8a34772e7d9b9947f997f32465f3e946f4b24cacc66159eef7ee10ab3bb'
+@@ -26,13 +26,14 @@
+ CSA_WRAPPER_SHA = '4a525d2e8ead5cc10a193d9724342162af4ffebd130c58ad7c606093849ac1c8'
+ CSA_STRUCTURE_SHA = '9483d70f24876e7c89281e559d3d062355c0787e38a7f3fd7ab9cf36d3cd8ad6'
+ CSA_MULTIPLICATION_LOG_SHA = 'a9175ff5e52888f37d8cf8eeeb1673f6975e32cc8e08687be91f3db2cc845b2b'
+-SOURCE_DERIVATION_SHA = 'b757bddd341c5dae1188b6a45a1a88ba32ed7b856864e4fbc6e503283b13a630'
++SOURCE_DERIVATION_SHA = '72b19ecbc899c0175c86a31e1032607b65897999c17117e2de21f21fac7c7eae'
+ CSA_DFF_CELLS = {0: 1639, 1: 1678}
+ RWIDTH_BASELINE_SHA = 'f42f7285ff8a357877c546d433251b1dc8c8eef66ee9218c9e3b2c002ca0a261'
+ RWIDTH_WRAPPER_SHA = '70dcc27381d3e7226eeff333c943d35b982ec1fdd37b75b680060a13aaf94e2a'
+ RWIDTH_DATAPATH_SHA = '50522c0cd2700f7f852872049533bc31f79ce811ad2ed53da2c1d333cece45e2'
+-VERIFY_SHA = 'e6924e406792fe9e2b82f27be5a591b37466fb7b3ee23ec93935698934e397de'
+-WRAPPER_SHA = '912c1a038ef8e9a1ac56cfa349161ae1c582d763acfce5352b08ebde2a227f92'
++VERIFY_SHA = 'b3044e637a5f312b71497de1eaa44503e27894cb7fd313ee389208a8fc351dc5'
++WRAPPER_SHA = '0fcc5df10355ee1e6382678ba40bc9d7ddf830b560dcc469c46e6a6888441556'
++PREFIX_WRAPPER_SHA = '912c1a038ef8e9a1ac56cfa349161ae1c582d763acfce5352b08ebde2a227f92'
+ ORIGINAL_WRAPPER_SHA = '63911b937a526b97ddaa67e34526fd19bbd2fa2801eadfda10ae6c2fa4b9fe9e'
+ REL_WRAPPER = 'src/main/scala/xiangshan/backend/fu/wrapper/VDotElastic.scala'
+ BASELINE_SHA = '19f90c867022ba2259b83fb2600bb56ef7066eda54023cead03c6e35bf23b7d7'
+@@ -40,7 +41,7 @@
+ GEN_INPUTS_SHA = 'ec29dc8725cf3a1c04ea684e2753debc1a9b2a04d37b4adadcdfe96f85ec20d8'
+ CP_SHA = 'd9a3071fc4f2cb1fb6766bcf3d3efdc0571bfc09986bace0b432b3b82d445902'
+ COST_SHA = '8c9a22771594565bfaa812309f68c84de4e8a213b02b9aba03440373f61e2e51'
+-SOURCE_SHA = '1f9a4c807b30b8aa769e65595ce6b54619b190a5f2b5af1d531413de9970b90c'
++SOURCE_SHA = 'f0a8bbe58440c6113aa56f848387c6b4e4a487d71ec2832a1e43fca55d3a8245'
+ ORIGINAL_SOURCE_SHA = '161df70403fd131a3adf445230ed637dc7ad7c619d05c0a890aa8aa1791546d8'
+ REL_SOURCE = 'src/main/scala/xiangshan/backend/fu/vector/VDotDatapath.scala'
+ HELPERS = {
+@@ -94,7 +95,8 @@
+                      'row0':f'_{name}_row0','row1':f'_{name}_row1'},'exact input halves and output wires')
+     pnames=[f'pRows_{half}_{row}' for half in range(2 if feature else 1) for row in range(2)]
+     declarations=re.findall(r'\breg\s+\[(\d+):0\]\s+(pRows_\d+_\d+)\s*;',text)
+-    need(declarations==[('18',name) for name in pnames],'actual complete 19-bit P rows')
++    need(declarations==[(str(19 if feature else 18),name) for name in pnames],
++         'actual complete P rows: feature0 low19, feature1 full20')
+     updates=re.findall(r'(?m)^\s*(\w+)\s*<=\s*(.*?);',text,re.S)
+     previous_updates=re.findall(r'(?m)^\s*(\w+)\s*<=\s*(.*?);',previous,re.S)
+     data=lambda name: name.startswith('pRows_') or name.startswith('pProducts_') or name=='rPacket_res_data'
+@@ -104,8 +106,12 @@
+     for half in range(2 if feature else 1):
+         for row in range(2):
+             name=f'pRows_{half}_{row}'; expressions=[compact(e) for n,e in updates if n==name]
+-            expected=f'isDot16?_highProducts_row{row}:19\'h0' if half else f'_products_row{row}'
+-            need(expressions==[expected],'exact P capture and dot8 zero encoding')
++            if half:
++                constant="20'h80000" if row==0 else "20'h0"
++                expected=f'isDot16?_highProducts_row{row}:{constant}'
++            else:
++                expected=f'_products_row{row}'+('' if feature else '[18:0]')
++            need(expressions==[expected],'exact P capture and dot8 biased-zero encoding')
+     output=re.search(r'\bassign\s+io_out_bits_res_data\s*=\s*(.*?);',text,re.S)
+     previous_output=re.search(r'\bassign\s+io_out_bits_res_data\s*=\s*(.*?);',previous,re.S)
+     need(output and previous_output and compact(output[1])==compact(previous_output[1]),
+@@ -124,8 +130,8 @@
+     ports={k:compact(v) for k,v in pairs}
+     expected_ports={'result':'_prefixSum_result'}
+     for i,name in enumerate(pnames):
+-        expected_ports[f'rows_{i}']='{'+name+'[18],'+name+'}' if feature else name
+-    need(ports==expected_ports,'exact saved low0/low1/high0/high1 rows with required sign extension')
++        expected_ports[f'rows_{i}']=name
++    need(ports==expected_ports,'exact saved unsigned rows, no signed extension or post-P correction')
+     declared=re.findall(r'\bwire\s+\[(\d+):0\]\s+_prefixSum_result\s*;',text)
+     need(declared==[str(width-1)],'actual exact prefix result width')
+     expressions=[dict(name=n,expression=e) for n,e in updates if n=='rPacket_res_data']
+@@ -133,7 +139,8 @@
+     need(compact(expressions[0]['expression'])==f"pCtrl_exceptionVec_2?{width}'h0:_prefixSum_result",
+          'exact illegal-zero or prefix result R expression')
+     return dict(instances=sorted(instances),p_row_registers=pnames,input_halves_verified=True,
+-        p_capture_and_dot8_zero_verified=True,non_data_sequential_assignments_unchanged=True,
++        p_capture_and_dot8_biased_zero_verified=True,p_row_bits=20 if feature else 19,
++        non_data_sequential_assignments_unchanged=True,
+         architectural_output_unchanged=True,r_data_write=expressions[0],prefix_module=f'VDotPrefixFinish{width}',
+         prefix_instance='prefixSum',prefix_ports=ports,prefix_result_width=width,
+         post_p_actual_expression_verified=True,post_p_actual_expression_review_pending=False)
+@@ -166,7 +173,7 @@
+     pin(gen/'classpath-before.json',CP_SHA);pin(nominal/'result.json',COST_SHA)
+     pin(candidate,SOURCE_SHA);pin(repo/REL_SOURCE,ORIGINAL_SOURCE_SHA)
+     pin(wrapper,WRAPPER_SHA);pin(repo/REL_WRAPPER,ORIGINAL_WRAPPER_SHA)
+-    pin(Path(__file__));pin(here/'PGROUP_CONTRACT.md');pin(here/'verify_csa.py',VERIFY_SHA)
++    pin(Path(__file__));pin(here/'BOOTH_CONTRACT.md');pin(here/'verify_booth.py',VERIFY_SHA)
+     pin(here/'controller-derivation.json');pin(source/'source-derivation.json',SOURCE_DERIVATION_SHA)
+     controller_proof=json.loads((here/'controller-derivation.json').read_bytes())
+     need(controller_proof['baseline_sha256']==CONTROLLER_BASELINE_SHA and
+@@ -177,7 +184,7 @@
+         need(restored_controller.count(edit['after'])==1,'unique controller inverse edit')
+         restored_controller=restored_controller.replace(edit['after'],edit['before'],1)
+     need(hashlib.sha256(restored_controller.encode()).hexdigest()==CONTROLLER_BASELINE_SHA,
+-         'entire completed prefix controller recovered')
++         'entire completed Pgroup controller recovered')
+     pin(cbase/'result.json',CSA_BASELINE_SHA)
+     need((cbase/'result.json').stat().st_size==CSA_BASELINE_BYTES,'exact closed CSA result bytes')
+     pin(cbase/'source-snapshot/VDotDatapath.scala',CSA_DATAPATH_SHA)
+@@ -232,10 +239,10 @@
+     need(pb['status']=='PREFIX_GENERATED_ARITHMETIC_FU_AND_COST_COMPLETE' and
+          all(pb[k] is True for k in ('arithmetic_equivalent','fu_qualified','inputs_unchanged',
+              'generated_inputs_unchanged','original_classpath_unchanged','all_children_reaped')) and
+-         pb['candidate_source_sha256']==PREFIX_DATAPATH_SHA and pb['candidate_wrapper_sha256']==WRAPPER_SHA,
++         pb['candidate_source_sha256']==PREFIX_DATAPATH_SHA and pb['candidate_wrapper_sha256']==PREFIX_WRAPPER_SHA,
+          'completed applicable exact prefix arithmetic, FU and local cost')
+     pin(pbase/'source-snapshot/VDotDatapath.scala',PREFIX_DATAPATH_SHA)
+-    pin(pbase/'source-snapshot/VDotElastic.scala',WRAPPER_SHA)
++    pin(pbase/'source-snapshot/VDotElastic.scala',PREFIX_WRAPPER_SHA)
+     need(len(pb['generated'])==4 and {(x['feature'],x['kind']) for x in pb['generated']}==
+          {(f,k) for f in (0,1) for k in ('cost','fu')},'complete prior prefix consumer set')
+     for entry in pb['generated']:
+@@ -267,17 +274,22 @@
+              'actual preserved original successful prefix solver log')
+     proof=json.loads((source/'source-derivation.json').read_bytes())
+     need(proof['contract']==CONTRACT and proof['baseline_datapath_sha256']==PREFIX_DATAPATH_SHA and
+-         proof['candidate_datapath_sha256']==SOURCE_SHA and proof['baseline_wrapper_sha256']==WRAPPER_SHA and
+-         proof['candidate_wrapper_sha256']==WRAPPER_SHA and proof['wrapper_byte_identical'] is True and
+-         proof['exact_inverse'] is True and len(proof['edits'])==1,'single exact P-object source derivation')
+-    prior_datapath=(pbase/'source-snapshot/VDotDatapath.scala').read_bytes()
+-    restored=candidate.read_bytes().decode('utf-8')
+-    for edit in reversed(proof['edits']):
+-        need(restored.count(edit['after'])==1,'unique P-object inverse')
+-        restored=restored.replace(edit['after'],edit['before'],1)
+-    need(restored.encode()==prior_datapath,'all original prefix source outside P object retained')
+-    need(wrapper.read_bytes()==(pbase/'source-snapshot/VDotElastic.scala').read_bytes(),
+-         'entire prefix wrapper unchanged including state, clock, reset, R finish and control')
++         proof['candidate_datapath_sha256']==SOURCE_SHA and proof['baseline_wrapper_sha256']==PREFIX_WRAPPER_SHA and
++         proof['candidate_wrapper_sha256']==WRAPPER_SHA and proof['wrapper_byte_identical'] is False and
++         proof['exact_inverse'] is True and len(proof['edits'])==5,
++         'one heap replacement and four explicit wrapper data-representation edits')
++    need(Counter(e['file'] for e in proof['edits'])=={'VDotDatapath.scala':1,'VDotElastic.scala':4},
++         'closed per-source edit counts')
++    for name,path in (('VDotDatapath.scala',candidate),('VDotElastic.scala',wrapper)):
++        restored=path.read_bytes().decode('utf-8')
++        for edit in reversed([e for e in proof['edits'] if e['file']==name]):
++            need(restored.count(edit['after'])==1,'unique source inverse '+name)
++            restored=restored.replace(edit['after'],edit['before'],1)
++        need(restored.encode()==(pbase/'source-snapshot'/name).read_bytes(),
++             'full frozen prefix source recovered '+name)
++    need(proof['external_interface_unchanged'] and proof['clock_reset_slot_protocol_unchanged'] and
++         proof['old_prefix_finish_source_retained'],
++         'P representation changes only; clock/reset/control and R prefix source retained')
+     old_gen=json.loads((gen/'result.json').read_bytes())
+     cfg=json.loads((gen/'inputs.json').read_bytes())
+     old_cost=json.loads((nominal/'result.json').read_bytes())
+@@ -316,8 +328,8 @@
+     copies={name:repo/rel for name,(rel,_) in HELPERS.items()}
+     copies.update({'VDotDatapath.scala':candidate,'original-VDotDatapath.scala':repo/REL_SOURCE,
+         'GenerateVDotCost.scala':gen/'source-snapshot/GenerateVDotCost.scala',
+-        'pgroup.py':Path(__file__),'PGROUP_CONTRACT.md':here/'PGROUP_CONTRACT.md',
+-        'verify_csa.py':here/'verify_csa.py',
++        'booth9.py':Path(__file__),'BOOTH_CONTRACT.md':here/'BOOTH_CONTRACT.md',
++        'verify_booth.py':here/'verify_booth.py',
+         'prefix-result.json':pbase/'result.json',
+         'prefix-VDotDatapath.scala':pbase/'source-snapshot/VDotDatapath.scala',
+         'prefix-VDotElastic.scala':pbase/'source-snapshot/VDotElastic.scala',
+@@ -356,15 +368,15 @@
+         signed8_gold_result_sha256=BASELINE_SHA,rwidth_baseline_result_sha256=RWIDTH_BASELINE_SHA,
+         csa_baseline_result_sha256=CSA_BASELINE_SHA,csa_baseline_result_bytes=CSA_BASELINE_BYTES,
+         prefix_baseline_result_sha256=PREFIX_BASELINE_SHA,prefix_baseline_result_bytes=PREFIX_BASELINE_BYTES,
+-        result_widths={0:19,1:20},p_row_bits=19,p_rows_per_half=2,
+-        representation_equivalence_basis='New strict complete proof of actual P CSA bytes; exact-byte reuse of two unconstrained prefix SAT proofs; source inverse, emitted wrapper binding and actual new FU checks. No whole-FU sequential SAT claim.',
++        result_widths={0:19,1:20},p_row_bits={0:19,1:20},p_rows_per_half=2,
++        representation_equivalence_basis='New complete proof of actual Booth recoder/biased CSA bytes; exact-byte reuse of unconstrained prefix SAT proofs; full source inverse, new emitted wrapper binding and new FU tests. No whole-FU sequential or RTL-to-mapped SAT claim.',
+         cpu_affinity=[a.cpu],nice=5,budget_seconds=a.budget_seconds,resident_modified=False,
+         original_cache_modified=False,production_default_changed=False,new_core_builds=0,new_core_runs=0,
+         arithmetic_equivalent=False,fu_qualified=False,parent_qualified=False,
+         wrapper_post_p_decode_review_completed=False,
+         fullcore_qualified=False,application_performance_qualified=False,core_cost_qualified=False,
+         prefix_miters=[],generated=[],fu_results=[],cost_results=[],local_cost_recorded=False,
+-        no_state_clock_latency_change=True)
++        no_clock_reset_latency_or_slot_protocol_change=True,internal_P_row_width_changed=True)
+     save(out/'inputs.json',dict(originals=pins,snapshots=snapshots,recipe_sha256=GEN_INPUTS_SHA))
+     save(out/'result.json',result)
+     pending=[None]
+@@ -372,6 +384,7 @@
+         if pending[0] is None:pending[0]=signum
+     def check():
+         if pending[0] is not None:raise InterruptedError('received signal '+str(pending[0]))
++        if time.monotonic()>=deadline:raise TimeoutError('total success budget exhausted')
+     signal.signal(signal.SIGTERM,interrupt);signal.signal(signal.SIGINT,interrupt)
+     env={**os.environ,**cfg['flags'],'LANG':'C','LC_ALL':'C','OMP_NUM_THREADS':'1',
+         'OPENBLAS_NUM_THREADS':'1','MKL_NUM_THREADS':'1','PYTHONDONTWRITEBYTECODE':'1',
+@@ -382,15 +395,16 @@
+                 'MAKEFILES','MFLAGS','MAKEOVERRIDES'):env.pop(key,None)
+     java_base=[x if not x.startswith('-Djava.io.tmpdir=') else '-Djava.io.tmpdir='+str(tmp) for x in cfg['java_base']]
+     def command(label,argv,limit=120,expected=0):
+-        check();remaining=deadline-time.monotonic();need(remaining>0,'total deadline before '+label)
+-        rec=dict(label=label,argv=list(map(str,argv)),started=util.stamp(),budget_seconds=min(limit,remaining),
++        check();now=time.monotonic();until=min(deadline,now+limit)
++        need(until>now,'total deadline before '+label)
++        rec=dict(label=label,argv=list(map(str,argv)),started=util.stamp(),budget_seconds=until-now,
+                  feature=env['VDOT_DOT16'],expected_exit=expected)
+         result['commands'].append(rec);proc=None
+         try:
+             with (out/(label+'.log')).open('wb') as log:
+                 proc=subprocess.Popen(rec['argv'],cwd=out,env=env,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
+                 rec['pid']=proc.pid;save(out/'result.json',result)
+-                until=time.monotonic()+rec['budget_seconds']
++                # Absolute command deadline was fixed before Popen, including launch/log overhead.
+                 while True:
+                     check();left=until-time.monotonic()
+                     if left<=0:raise subprocess.TimeoutExpired(rec['argv'],rec['budget_seconds'])
+@@ -450,8 +464,7 @@
+                 old_rtl=gen/f'feature{feature}'/'rtl' if kind=='cost' else fu/CPP[feature][0]/'campaign/rtl'
+                 need((rtl/(top+'.sv')).read_bytes()==(old_rtl/(top+'.sv')).read_bytes(),
+                      'unchanged entire public common-FU consumer top')
+-                need((rtl/'VDotElastic.sv').read_bytes()==(pbase/f'{kind}-feature{feature}/rtl/VDotElastic.sv').read_bytes(),
+-                     'entire emitted prefix wrapper remains byte-identical')
++                # The changed P representation is bound below; whole-wrapper byte reuse is not claimed.
+                 binding=wrapper_binding((rtl/'VDotElastic.sv').read_text(),
+                     (previous_rtl/'VDotElastic.sv').read_text(),feature)
+                 result.setdefault('wrapper_bindings',[]).append(dict(feature=feature,kind=kind,**binding))
+@@ -475,24 +488,25 @@
+              all(x['post_p_actual_expression_verified'] for x in result['wrapper_bindings']),
+              'all four actual post-P expressions bound')
+         result['wrapper_post_p_decode_review_completed']=True
+-        # A new heap grouping needs a new proof over its real generated bytes.
+-        # The existing team verifier accepts arbitrary earlier-layer FA/HA grouping.
++        # Prove the actual emitted recoder, biased heap, compressor graph and rows.
++        # This verifier accepts no unparsed SV statements or hidden arithmetic.
+         report=out/'arithmetic-structure.json'
+-        command('actual-csa-structure',[sys.executable,'-B',snap/'verify_csa.py',
++        command('actual-booth-structure',[sys.executable,'-B',snap/'verify_booth.py',
+             '--rtl',first/'VDotCarrySaveRows.sv','--output',report],60)
+         structure=json.loads(report.read_bytes())
+-        need(structure['status']=='CSA_STRUCTURAL_EQUIVALENCE_PASS' and
++        need(structure['status']=='BOOTH_CSA_STRUCTURAL_EQUIVALENCE_PASS' and
+              structure['all_inputs_equivalent'] is True and structure['parsed_entire_module'] is True and
+              structure['verifier']['sha256']==VERIFY_SHA and
+              structure['rtl_sha256']==sha(first/'VDotCarrySaveRows.sv') and
+-             structure['full_adders']==477 and structure['half_adders']==17,
+-             'new complete actual CSA proof with fixed FA/HA counts')
+-        need(structure['discarded_carries']==[] and structure['rows_msb_to_lsb']['row0'][0]=="1'b1" and
+-             structure['rows_msb_to_lsb']['row1'][0]=="1'b0",
+-             'new integer signed-row invariant: no discarded carries and exact MSB1/0')
++             structure['full_adders']==288 and structure['half_adders']==20 and
++             structure['actual_recode_cases']==7168 and structure['signed_byte_decomposition_cases']==256 and
++             structure['layers']==list(range(8)) and structure['total_correction']==350208 and
++             structure['disabled_high_half_sum']==1<<19,
++             'new complete actual Booth proof with exact recode, bias and FA/HA counts')
+         result['arithmetic_structure_proof']=structure
+         result['arithmetic_structure_proof_reused']=False
+-        result['direct_signed_row_encoding_verified']=True
++        result['biased_unsigned_row_encoding_verified']=True
++        result['direct_signed_row_encoding_verified']=False
+         generated_pins[str(report)]=sha(report)
+         result['historical_multiplication_miter']=dict(cb['independent_miter'])
+         result['historical_multiplication_miter_source']=str(cbase)
+@@ -605,7 +619,7 @@
+         save(out/'final-artifact-pins.json',{**snapshots,**class_pins,**generated_pins})
+         check()
+         need(time.monotonic()<deadline,'total budget after final manifest and pending-signal check')
+-        result.update(status='PGROUP_GENERATED_ARITHMETIC_FU_AND_COST_COMPLETE',
++        result.update(status='BOOTH_GENERATED_ARITHMETIC_FU_AND_COST_COMPLETE',
+             arithmetic_equivalent=True,fu_qualified=True,local_cost_recorded=True,
+             inputs_unchanged=True,generated_inputs_unchanged=True,original_classpath_unchanged=True,
+             all_children_reaped=all(r['reaped'] and r['group_absent'] for r in result['commands']))
+@@ -613,6 +627,12 @@
+         result.update(status='FAILED',error=repr(exc));raise
+     finally:
+         result['finished']=util.stamp();save(out/'result.json',result)
++        if result.get('status')=='BOOTH_GENERATED_ARITHMETIC_FU_AND_COST_COMPLETE':
++            try:check()
++            except BaseException as exc:
++                result.update(status='FAILED',error=repr(exc),finished=util.stamp())
++                save(out/'result.json',result)
++                raise
+     print(json.dumps({k:v for k,v in result.items() if k not in ('commands','generated','cost_results')},indent=2))
+     print(json.dumps(dict(cost_results=[{k:v for k,v in x.items() if k not in ('cell_histogram','ports','reviewed_constant_endpoints')} for x in result['cost_results']]),indent=2))
+     return result

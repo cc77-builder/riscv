@@ -1,0 +1,147 @@
+--- booth2/VDotDatapath.scala
++++ booth3/VDotDatapath.scala
+@@ -92,7 +92,7 @@
+   io.result := reduce.io.result
+ }
+ 
+-/** Two unsigned 20-bit carry-save rows encoding signed dot8 + 2^19.
++/** Three unsigned 20-bit carry-save rows encoding signed dot8 + 2^19.
+   * Radix-4 Booth uses 9-bit selected/complemented rows and separate neg carries.
+   * There is no carry-propagate addition, clock or state inside this module.
+   * Dot8 takes the low 19-bit modular sum. Dot16 adds two biased halves modulo
+@@ -104,6 +104,7 @@
+     val vs2 = Input(UInt(64.W))
+     val row0 = Output(UInt(20.W))
+     val row1 = Output(UInt(20.W))
++    val row2 = Output(UInt(20.W))
+   })
+ 
+   setInline("VDotCarrySaveRows.sv", VDotCarrySaveRows.inlineText)
+@@ -119,7 +120,8 @@
+       "  input wire [63:0] vs1,",
+       "  input wire [63:0] vs2,",
+       "  output wire [19:0] row0,",
+-      "  output wire [19:0] row1",
++      "  output wire [19:0] row1,",
++      "  output wire [19:0] row2",
+       ");")
+     def wire(name: String, expression: String): Unit = {
+       lines += s"  wire $name;"
+@@ -154,7 +156,7 @@
+     for (column <- Seq(18, 16, 14, 12, 11)) {
+       columns = columns.updated(column, columns(column) :+ "1'b1")
+     }
+-    for ((limit, level) <- Seq(28, 19, 13, 9, 6, 4, 3, 2).zipWithIndex) {
++    for ((limit, level) <- Seq(28, 19, 13, 9, 6, 4, 3).zipWithIndex) {
+       val next = Array.fill(width)(scala.collection.mutable.ArrayBuffer.empty[String])
+       for (column <- 0 until width) {
+         val old = columns(column)
+@@ -187,8 +189,8 @@
+       }
+       columns = next.toVector.map(_.toVector)
+     }
+-    require(columns.forall(_.size <= 2), "exactly two final rows")
+-    for (row <- 0 until 2) {
++    require(columns.forall(_.size <= 3), "at most three final rows")
++    for (row <- 0 until 3) {
+       val bits = (width - 1 to 0 by -1).map(column => columns(column).lift(row).getOrElse("1'b0"))
+       lines += s"  assign row$row = " + bits.mkString("{", ", ", "};")
+     }
+@@ -197,13 +199,14 @@
+   }
+ }
+ 
+-/** Fixed-width modulo sum of the saved carry-save rows. No state or clock.
+-  * The W20 form first compresses four rows to two; W19 already has two rows.
+-  * A fixed parallel prefix computes the final carry using only the old layer.
++/** Fixed-width modulo sum of three/six saved carry-save rows. No state or clock.
++  * Each half first compresses three rows to two. W20 combines its four remaining
++  * rows using two further CSA layers; W19 directly uses its compressed pair.
++  * The fixed parallel prefix network after that pair is byte-for-byte retained.
+   */
+ class VDotPrefixFinish(val width: Int, val rowCount: Int)
+   extends BlackBox with HasBlackBoxInline {
+-  require((width == 19 && rowCount == 2) || (width == 20 && rowCount == 4))
++  require((width == 19 && rowCount == 3) || (width == 20 && rowCount == 6))
+   override def desiredName: String = s"VDotPrefixFinish$width"
+   val io = IO(new Bundle {
+     val rows = Input(Vec(rowCount, UInt(width.W)))
+@@ -214,7 +217,7 @@
+ 
+ object VDotPrefixFinish {
+   def inlineText(width: Int, rowCount: Int): String = {
+-    require((width == 19 && rowCount == 2) || (width == 20 && rowCount == 4))
++    require((width == 19 && rowCount == 3) || (width == 20 && rowCount == 6))
+     val lines = scala.collection.mutable.ArrayBuffer[String](s"module VDotPrefixFinish$width(")
+     for (row <- 0 until rowCount) lines += s"  input wire [${width - 1}:0] rows_$row,"
+     lines += s"  output wire [${width - 1}:0] result"
+@@ -223,16 +226,22 @@
+       lines += s"  wire [${width - 1}:0] $name;"
+       lines += s"  assign $name = $expression;"
+     }
+-    if (rowCount == 4) {
+-      wire("cs0_sum", "rows_0 ^ rows_1 ^ rows_2")
+-      wire("cs0_raw", "(rows_0 & rows_1) | ((rows_0 ^ rows_1) & rows_2)")
++    wire("low_sum", "rows_0 ^ rows_1 ^ rows_2")
++    wire("low_raw", "(rows_0 & rows_1) | ((rows_0 ^ rows_1) & rows_2)")
++    wire("low_carry", s"{low_raw[${width - 2}:0], 1'b0}")
++    if (rowCount == 6) {
++      wire("high_sum", "rows_3 ^ rows_4 ^ rows_5")
++      wire("high_raw", "(rows_3 & rows_4) | ((rows_3 ^ rows_4) & rows_5)")
++      wire("high_carry", s"{high_raw[${width - 2}:0], 1'b0}")
++      wire("cs0_sum", "low_sum ^ low_carry ^ high_sum")
++      wire("cs0_raw", "(low_sum & low_carry) | ((low_sum ^ low_carry) & high_sum)")
+       wire("cs0_carry", s"{cs0_raw[${width - 2}:0], 1'b0}")
+-      wire("x", "cs0_sum ^ cs0_carry ^ rows_3")
+-      wire("cs1_raw", "(cs0_sum & cs0_carry) | ((cs0_sum ^ cs0_carry) & rows_3)")
++      wire("x", "cs0_sum ^ cs0_carry ^ high_carry")
++      wire("cs1_raw", "(cs0_sum & cs0_carry) | ((cs0_sum ^ cs0_carry) & high_carry)")
+       wire("y", s"{cs1_raw[${width - 2}:0], 1'b0}")
+     } else {
+-      wire("x", "rows_0")
+-      wire("y", "rows_1")
++      wire("x", "low_sum")
++      wire("y", "low_carry")
+     }
+     wire("p0", "x ^ y")
+     wire("g0", "x & y")
+--- booth2/VDotElastic.scala
++++ booth3/VDotElastic.scala
+@@ -41,7 +41,7 @@
+ 
+   private val pValid = RegInit(false.B)
+   private val rValid = RegInit(false.B)
+-  private val pRows = Reg(Vec(if (dot16Enabled) 2 else 1, Vec(2, UInt(storedResultBits.W))))
++  private val pRows = Reg(Vec(if (dot16Enabled) 2 else 1, Vec(3, UInt(storedResultBits.W))))
+   private val pCtrl = Reg(chiselTypeOf(io.out.bits.ctrl))
+   private val pPerf = Reg(chiselTypeOf(io.out.bits.perfDebugInfo))
+   // Store the exact signed sum; extend to the architectural word at the output.
+@@ -100,12 +100,12 @@
+   // A disabled high half is biased zero, saved with the accepted request.
+   private val rowWords = for {
+     half <- 0 until (if (dot16Enabled) 2 else 1)
+-    row <- 0 until 2
++    row <- 0 until 3
+   } yield pRows(half)(row)
+   require(rowWords.forall(_.getWidth == storedResultBits), "unsigned rows share the exact sum width")
+   // Fixed-width additions are associative modulo 2^19/2^20. The true final
+   // eight/sixteen-term result fits that signed width, so reconstruction is exact.
+-  private val prefixSum = Module(new VDotPrefixFinish(storedResultBits, if (dot16Enabled) 4 else 2))
++  private val prefixSum = Module(new VDotPrefixFinish(storedResultBits, if (dot16Enabled) 6 else 3))
+   for ((word, index) <- rowWords.zipWithIndex) prefixSum.io.rows(index) := word.asUInt
+   private val compressedSum = prefixSum.io.result.asSInt
+   require(compressedSum.getWidth == storedResultBits, "exact fixed-width carry-save finish")
+@@ -128,11 +128,13 @@
+   when(io.in.fire) {
+     pRows(0)(0) := products.io.row0(storedResultBits - 1, 0)
+     pRows(0)(1) := products.io.row1(storedResultBits - 1, 0)
++    pRows(0)(2) := products.io.row2(storedResultBits - 1, 0)
+     if (dot16Enabled) {
+       // Both modes save a half with the same +2^19 bias. Dot8 masks all high
+       // operand bits by saving biased zero, without a post-P mode or correction.
+       pRows(1)(0) := Mux(isDot16, highProducts.get.io.row0, (BigInt(1) << 19).U(20.W))
+       pRows(1)(1) := Mux(isDot16, highProducts.get.io.row1, 0.U(20.W))
++      pRows(1)(2) := Mux(isDot16, highProducts.get.io.row2, 0.U(20.W))
+     }
+     pCtrl := acceptedCtrl
+     pPerf := io.in.bits.perfDebugInfo

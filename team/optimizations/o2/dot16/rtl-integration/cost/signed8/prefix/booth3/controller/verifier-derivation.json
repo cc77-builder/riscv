@@ -1,0 +1,47 @@
+{
+  "baseline_sha256": "b3044e637a5f312b71497de1eaa44503e27894cb7fd313ee389208a8fc351dc5",
+  "candidate_sha256": "c0181c3c099a4a4e3ce4fcfcd1af3c34d337031675b6533ad303327ad632d587",
+  "exact_inverse": true,
+  "edits": [
+    {
+      "before": "and two explicit 20-bit concatenations.",
+      "after": "and three explicit 20-bit concatenations.",
+      "count": 1
+    },
+    {
+      "before": "output wire [19:0] row0, output wire [19:0] row1",
+      "after": "output wire [19:0] row0, output wire [19:0] row1, output wire [19:0] row2",
+      "count": 1
+    },
+    {
+      "before": "{'row0', 'row1'}",
+      "after": "{'row0', 'row1', 'row2'}",
+      "count": 1
+    },
+    {
+      "before": "{'vs1', 'vs2', 'row0', 'row1'}",
+      "after": "{'vs1', 'vs2', 'row0', 'row1', 'row2'}",
+      "count": 1
+    },
+    {
+      "before": "for name in ('row0','row1'):",
+      "after": "for name in ('row0','row1','row2'):",
+      "count": 1
+    },
+    {
+      "before": "BOOTH_CSA_STRUCTURAL_EQUIVALENCE_PASS",
+      "after": "BOOTH3_CSA_STRUCTURAL_EQUIVALENCE_PASS",
+      "count": 1
+    },
+    {
+      "before": "BOOTH_CSA_STRUCTURAL_EQUIVALENCE_REJECTED",
+      "after": "BOOTH3_CSA_STRUCTURAL_EQUIVALENCE_REJECTED",
+      "count": 1
+    },
+    {
+      "before": "(row0+row1)",
+      "after": "(row0+row1+row2)",
+      "count": 2
+    }
+  ]
+}

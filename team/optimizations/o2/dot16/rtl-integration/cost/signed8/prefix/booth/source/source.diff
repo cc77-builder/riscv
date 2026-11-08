@@ -1,0 +1,145 @@
+--- prefix/VDotDatapath.scala
++++ booth9/VDotDatapath.scala
+@@ -92,51 +92,69 @@
+   io.result := reduce.io.result
+ }
+ 
+-/** Two unsigned carry-save rows encoding eight signed-byte products modulo 2^19.
++/** Two unsigned 20-bit carry-save rows encoding signed dot8 + 2^19.
++  * Radix-4 Booth uses 9-bit selected/complemented rows and separate neg carries.
+   * There is no carry-propagate addition, clock or state inside this module.
+-  * Finish with a 19-bit modular sum, then interpret that sum as signed.
++  * Dot8 takes the low 19-bit modular sum. Dot16 adds two biased halves modulo
++  * 2^20; the two biases cancel. A disabled high half must encode 2^19.
+   */
+ class VDotCarrySaveRows extends BlackBox with HasBlackBoxInline {
+   val io = IO(new Bundle {
+     val vs1 = Input(UInt(64.W))
+     val vs2 = Input(UInt(64.W))
+-    val row0 = Output(UInt(19.W))
+-    val row1 = Output(UInt(19.W))
++    val row0 = Output(UInt(20.W))
++    val row1 = Output(UInt(20.W))
+   })
+ 
+   setInline("VDotCarrySaveRows.sv", VDotCarrySaveRows.inlineText)
+ }
+ 
+ object VDotCarrySaveRows {
+-  // This fixed schedule consumes only bits from the previous level. A carry
+-  // belongs to the next level, so no ripple path is hidden inside a level.
++  // Each compressor consumes only previous-layer bits. Recoding and negation
++  // use scalar Boolean equations; the +1 for a negative digit stays in the heap.
+   val inlineText: String = {
+-    val width = 19
++    val width = 20
+     val lines = scala.collection.mutable.ArrayBuffer[String](
+       "module VDotCarrySaveRows(",
+       "  input wire [63:0] vs1,",
+       "  input wire [63:0] vs2,",
+-      "  output wire [18:0] row0,",
+-      "  output wire [18:0] row1",
++      "  output wire [19:0] row0,",
++      "  output wire [19:0] row1",
+       ");")
+     def wire(name: String, expression: String): Unit = {
+       lines += s"  wire $name;"
+       lines += s"  assign $name = $expression;"
+     }
+     var columns = Vector.fill(width)(Vector.empty[String])
+-    for (lane <- 0 until 8; i <- 0 until 8; j <- 0 until 8) {
+-      val name = s"pp_${lane}_${i}_${j}"
+-      val term = s"(vs1[${8 * lane + i}] & vs2[${8 * lane + j}])"
+-      wire(name, if ((i == 7) != (j == 7)) s"~$term" else term)
+-      columns = columns.updated(i + j, columns(i + j) :+ name)
+-    }
+-    // Each complemented signed product heap is a*b + 32512.
+-    // Eight heaps plus bits 18 and 11 equal the exact signed sum + 2^19.
+-    // All later arithmetic is modulo 2^19; there is no post-P correction.
+-    for (column <- Seq(18, 11)) {
++    for (lane <- 0 until 8; group <- 0 until 4) {
++      val low = if (group == 0) "1'b0" else s"vs2[${8 * lane + 2 * group - 1}]"
++      val mid = s"vs2[${8 * lane + 2 * group}]"
++      val high = s"vs2[${8 * lane + 2 * group + 1}]"
++      val one = s"one_${lane}_${group}"
++      val two = s"two_${lane}_${group}"
++      val neg = s"neg_${lane}_${group}"
++      wire(one, s"$low ^ $mid")
++      wire(two, s"(~$high & $mid & $low) | ($high & ~$mid & ~$low)")
++      wire(neg, high)
++      for (bit <- 0 until 9) {
++        val name = s"pp_${lane}_${group}_${bit}"
++        val a = s"vs1[${8 * lane + math.min(bit, 7)}]"
++        val twiceA = if (bit == 0) "1'b0" else s"vs1[${8 * lane + bit - 1}]"
++        val q = s"(($one & $a) | ($two & $twiceA)) ^ $neg"
++        wire(name, if (bit == 8) s"~($q)" else q)
++        val column = 2 * group + bit
++        columns = columns.updated(column, columns(column) :+ name)
++      }
++      columns = columns.updated(2 * group, columns(2 * group) :+ neg)
++    }
++    // The complemented sign bit makes each row q+256, where q+neg is the
++    // signed Booth digit product. Four shifted rows add bias 21760 per lane.
++    // 8*21760 + 350208 = 2^19. Keep the neg carry outside the 9-bit row:
++    // a=-128,digit=-2 uses q=255 and neg=1, giving the exact product +256.
++    for (column <- Seq(18, 16, 14, 12, 11)) {
+       columns = columns.updated(column, columns(column) :+ "1'b1")
+     }
+-    for ((limit, level) <- Seq(63, 42, 28, 19, 13, 9, 6, 4, 3, 2).zipWithIndex) {
++    for ((limit, level) <- Seq(28, 19, 13, 9, 6, 4, 3, 2).zipWithIndex) {
+       val next = Array.fill(width)(scala.collection.mutable.ArrayBuffer.empty[String])
+       for (column <- 0 until width) {
+         val old = columns(column)
+--- prefix/VDotElastic.scala
++++ booth9/VDotElastic.scala
+@@ -41,7 +41,7 @@
+ 
+   private val pValid = RegInit(false.B)
+   private val rValid = RegInit(false.B)
+-  private val pRows = Reg(Vec(if (dot16Enabled) 2 else 1, Vec(2, UInt(19.W))))
++  private val pRows = Reg(Vec(if (dot16Enabled) 2 else 1, Vec(2, UInt(storedResultBits.W))))
+   private val pCtrl = Reg(chiselTypeOf(io.out.bits.ctrl))
+   private val pPerf = Reg(chiselTypeOf(io.out.bits.perfDebugInfo))
+   // Store the exact signed sum; extend to the architectural word at the output.
+@@ -94,15 +94,15 @@
+     highProducts.get.io.vs1 := inData.src(0)(127, 64)
+     highProducts.get.io.vs2 := inData.src(1)(127, 64)
+   }
+-  // This fixed heap has row0[18]=1, row1[18]=0 and no discarded high carry.
+-  // Thus signed19(row0)+signed19(row1) is the exact eight-term sum. Both
+-  // zero rows also encode zero for dot8's disabled high half. The emitted
+-  // arithmetic verifier must establish these stronger representation facts.
++  // Each unsigned 20-bit half encodes signed dot8 + 2^19 modulo 2^20.
++  // Feature0 stores only low19, so that bias vanishes. Feature1 stores both
++  // full halves; their biases add to 2^20 and vanish in the exact R finish.
++  // A disabled high half is biased zero, saved with the accepted request.
+   private val rowWords = for {
+     half <- 0 until (if (dot16Enabled) 2 else 1)
+     row <- 0 until 2
+-  } yield pRows(half)(row).asSInt.pad(storedResultBits)
+-  require(rowWords.forall(_.getWidth == storedResultBits), "signed rows share the exact sum width")
++  } yield pRows(half)(row)
++  require(rowWords.forall(_.getWidth == storedResultBits), "unsigned rows share the exact sum width")
+   // Fixed-width additions are associative modulo 2^19/2^20. The true final
+   // eight/sixteen-term result fits that signed width, so reconstruction is exact.
+   private val prefixSum = Module(new VDotPrefixFinish(storedResultBits, if (dot16Enabled) 4 else 2))
+@@ -126,13 +126,13 @@
+   rValid := (liveR && !io.out.fire) || move
+ 
+   when(io.in.fire) {
+-    pRows(0)(0) := products.io.row0
+-    pRows(0)(1) := products.io.row1
++    pRows(0)(0) := products.io.row0(storedResultBits - 1, 0)
++    pRows(0)(1) := products.io.row1(storedResultBits - 1, 0)
+     if (dot16Enabled) {
+-      // Encode this accepted request's mode before P. Both zero rows decode to
+-      // zero; no later mode input or extra correction enters the saved result.
+-      pRows(1)(0) := Mux(isDot16, highProducts.get.io.row0, 0.U(19.W))
+-      pRows(1)(1) := Mux(isDot16, highProducts.get.io.row1, 0.U(19.W))
++      // Both modes save a half with the same +2^19 bias. Dot8 masks all high
++      // operand bits by saving biased zero, without a post-P mode or correction.
++      pRows(1)(0) := Mux(isDot16, highProducts.get.io.row0, (BigInt(1) << 19).U(20.W))
++      pRows(1)(1) := Mux(isDot16, highProducts.get.io.row1, 0.U(20.W))
+     }
+     pCtrl := acceptedCtrl
+     pPerf := io.in.bits.perfDebugInfo

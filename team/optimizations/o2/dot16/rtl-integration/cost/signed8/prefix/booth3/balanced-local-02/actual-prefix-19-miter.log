@@ -1,0 +1,152 @@
+
+ /----------------------------------------------------------------------------\
+ |                                                                            |
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |                                                                            |
+ |  Copyright (C) 2012 - 2019  Clifford Wolf <clifford@clifford.at>           |
+ |                                                                            |
+ |  Permission to use, copy, modify, and/or distribute this software for any  |
+ |  purpose with or without fee is hereby granted, provided that the above    |
+ |  copyright notice and this permission notice appear in all copies.         |
+ |                                                                            |
+ |  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES  |
+ |  WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF          |
+ |  MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR   |
+ |  ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES    |
+ |  WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN     |
+ |  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF   |
+ |  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.            |
+ |                                                                            |
+ \----------------------------------------------------------------------------/
+
+ Yosys 0.9 (git sha1 1979e0b)
+
+
+-- Executing script file `/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/prefix-proof-19/prove.ys' --
+
+1. Executing Verilog-2005 frontend: /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/prefix-proof-19/gold.sv
+Parsing SystemVerilog input from `/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/prefix-proof-19/gold.sv' to AST representation.
+Generating RTLIL representation for module `\Gold'.
+Successfully finished Verilog frontend.
+
+2. Executing Verilog-2005 frontend: /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/prefix-proof-19/gate.sv
+Parsing SystemVerilog input from `/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/prefix-proof-19/gate.sv' to AST representation.
+Generating RTLIL representation for module `\Gate'.
+Successfully finished Verilog frontend.
+
+3. Executing Verilog-2005 frontend: /home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/cost-feature0/rtl/VDotPrefixFinish19.sv
+Parsing SystemVerilog input from `/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-booth3-20261108-main/local-02/cost-feature0/rtl/VDotPrefixFinish19.sv' to AST representation.
+Generating RTLIL representation for module `\VDotPrefixFinish19'.
+Successfully finished Verilog frontend.
+
+4. Executing MITER pass (creating miter circuit).
+Creating miter cell "miter" with gold cell "Gold" and gate cell "Gate".
+
+4.1. Executing FLATTEN pass (flatten design).
+Using template Gold for cells of type Gold.
+Using template Gate for cells of type Gate.
+Using template VDotPrefixFinish19 for cells of type VDotPrefixFinish19.
+<suppressed ~3 debug messages>
+No more expansions possible.
+
+4.2. Executing OPT_EXPR pass (perform const folding).
+Optimizing module miter.
+Removed 1 unused cells and 16 unused wires.
+
+5. Executing HIERARCHY pass (managing design hierarchy).
+
+5.1. Analyzing design hierarchy..
+Top module:  \miter
+
+5.2. Analyzing design hierarchy..
+Top module:  \miter
+Removing unused module `\Gate'.
+Removing unused module `\Gold'.
+Removing unused module `\VDotPrefixFinish19'.
+Removed 3 unused modules.
+
+6. Executing PROC pass (convert processes to netlists).
+
+6.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+6.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Removed a total of 0 dead cases.
+
+6.3. Executing PROC_INIT pass (extract init attributes).
+
+6.4. Executing PROC_ARST pass (detect async resets in processes).
+
+6.5. Executing PROC_MUX pass (convert decision trees to multiplexers).
+
+6.6. Executing PROC_DLATCH pass (convert process syncs to latches).
+
+6.7. Executing PROC_DFF pass (convert process syncs to FFs).
+
+6.8. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+7. Executing OPT pass (performing simple optimizations).
+
+7.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module miter.
+
+7.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\miter'.
+<suppressed ~3 debug messages>
+Removed a total of 1 cells.
+
+7.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \miter..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Removed 0 multiplexer ports.
+
+7.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \miter.
+Performed a total of 0 changes.
+
+7.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\miter'.
+Removed a total of 0 cells.
+
+7.6. Executing OPT_RMDFF pass (remove dff with constant values).
+
+7.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \miter..
+Removed 0 unused cells and 1 unused wires.
+<suppressed ~1 debug messages>
+
+7.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module miter.
+
+7.9. Finished OPT passes. (There is nothing left to do.)
+
+8. Executing FLATTEN pass (flatten design).
+No more expansions possible.
+
+9. Executing SAT pass (solving SAT problems in the circuit).
+
+Setting up SAT problem:
+Final constraint equation: { } = { }
+Imported 26 cells to SAT database.
+Import proof-constraint: \trigger = 1'0
+Final proof equation: \trigger = 1'0
+Import show expression: \in_a0
+Import show expression: \in_a1
+Import show expression: \in_a2
+Import show expression: \trigger
+
+Solving problem with 2385 variables and 6237 clauses..
+SAT proof finished - no model found: SUCCESS!
+
+                  /$$$$$$      /$$$$$$$$     /$$$$$$$    
+                 /$$__  $$    | $$_____/    | $$__  $$   
+                | $$  \ $$    | $$          | $$  \ $$   
+                | $$  | $$    | $$$$$       | $$  | $$   
+                | $$  | $$    | $$__/       | $$  | $$   
+                | $$/$$ $$    | $$          | $$  | $$   
+                |  $$$$$$/ /$$| $$$$$$$$ /$$| $$$$$$$//$$
+                 \____ $$$|__/|________/|__/|_______/|__/
+                       \__/                              
+

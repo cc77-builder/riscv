@@ -1,0 +1,144 @@
+--- failed01/booth3.py
++++ balanced02/booth3.py
+@@ -1,5 +1,5 @@
+ #!/usr/bin/env python3
+-"""Compile one three-row Booth candidate; prove new P and R arithmetic, then FU/cost."""
++"""Recheck unchanged Booth3 with a balanced independent Gold, then bounded FU/cost."""
+ import argparse
+ from collections import Counter
+ import hashlib
+@@ -15,8 +15,8 @@
+ import time
+ 
+ sys.dont_write_bytecode = True
+-CONTRACT = 'dot16-prefix-booth3-local-v1'
+-CONTROLLER_BASELINE_SHA = '6681fce5cc739206c5922e025d76ae0a75334d57502b089902b5a7a72f05ea60'
++CONTRACT = 'dot16-prefix-booth3-balanced-gold-v1'
++CONTROLLER_BASELINE_SHA = 'bcde44c580003a0a99e18cc30a2795a9c7a9af08ed56ef38a8f740987ec8241f'
+ PREFIX_BASELINE_SHA = 'a0c4dd60fddc001f368b71ec283327f2d7fe0874080ac35304e3debe783116d0'
+ PREFIX_BASELINE_BYTES = 205865
+ PREFIX_DATAPATH_SHA = '1d02d8a34772e7d9b9947f997f32465f3e946f4b24cacc66159eef7ee10ab3bb'
+@@ -158,8 +158,9 @@
+     rbase=a.rwidth_local.resolve()
+     cbase=a.csa_local.resolve()
+     pbase=a.prefix_local.resolve()
+-    need(a.cpu==2 and a.budget_seconds==1200 and not out.exists(), 'CPU2, exact 1200s work budget, fresh output')
+-    for d in (repo,cost,fu,here,source,baseline,rbase,cbase,pbase):
++    previous_failed=a.previous_failed.resolve()
++    need(a.cpu==2 and a.budget_seconds==300 and not out.exists(), 'CPU2, exact 300s work budget, fresh output')
++    for d in (repo,cost,fu,here,source,baseline,rbase,cbase,pbase,previous_failed):
+         need(out!=d and not out.is_relative_to(d) and not d.is_relative_to(out),'separate input/output trees')
+     gen,nominal=cost/'generation-01',cost/'nominal-01'
+     pins={}
+@@ -184,7 +185,20 @@
+         need(restored_controller.count(edit['after'])==1,'unique controller inverse edit')
+         restored_controller=restored_controller.replace(edit['after'],edit['before'],1)
+     need(hashlib.sha256(restored_controller.encode()).hexdigest()==CONTROLLER_BASELINE_SHA,
+-         'entire completed Booth2 controller recovered')
++         'entire original failed Booth3 controller recovered')
++    prior_path=pin(previous_failed/'result.json','7eb958143cc41f98cad195e0e7089b8924f827af340c51abca18ba573174d050')
++    prior=json.loads(prior_path.read_bytes())
++    need(prior['status']=='FAILED' and prior['contract']=='dot16-prefix-booth3-local-v1' and
++         prior['candidate_source_sha256']==SOURCE_SHA and prior['candidate_wrapper_sha256']==WRAPPER_SHA and
++         len(prior['commands'])==8 and all(c['reaped'] and c['group_absent'] for c in prior['commands']) and
++         not prior['fu_results'] and not prior['cost_results'] and
++         prior['prefix_miters'][0]['status']=='PASS' and prior['prefix_miters'][1]['status']=='FAILED',
++         'exact closed predecessor retained; no FU/cost qualified')
++    failure_log=pin(previous_failed/'actual-prefix-20-miter.log','957987acdcf4a9a90f8762444b0bad0c65b4618b19cf7e563201fb99094486a8')
++    need('ERROR: Called with -verify and proof did time out!' in failure_log.read_text() and
++         not prior['prefix_miters'][1]['counterexample_found'], 'prior solver timeout, not a counterexample')
++    for old in prior['generated']:
++        for f in old['files']:pin(previous_failed/f['path'],f['sha256'])
+     pin(cbase/'result.json',CSA_BASELINE_SHA)
+     need((cbase/'result.json').stat().st_size==CSA_BASELINE_BYTES,'exact closed CSA result bytes')
+     pin(cbase/'source-snapshot/VDotDatapath.scala',CSA_DATAPATH_SHA)
+@@ -273,7 +287,7 @@
+              'SAT proof finished - model found: FAIL!' not in log and 'ERROR:' not in log,
+              'actual preserved original successful prefix solver log')
+     proof=json.loads((source/'source-derivation.json').read_bytes())
+-    need(proof['contract']==CONTRACT and proof['baseline_datapath_sha256']==PREFIX_DATAPATH_SHA and
++    need(proof['contract']=='dot16-prefix-booth3-local-v1' and proof['baseline_datapath_sha256']==PREFIX_DATAPATH_SHA and
+          proof['candidate_datapath_sha256']==SOURCE_SHA and proof['baseline_wrapper_sha256']==PREFIX_WRAPPER_SHA and
+          proof['candidate_wrapper_sha256']==WRAPPER_SHA and proof['wrapper_byte_identical'] is False and
+          proof['exact_inverse'] is True and len(proof['edits'])==16,
+@@ -332,6 +346,7 @@
+         'booth3.py':Path(__file__),'BOOTH_CONTRACT.md':here/'BOOTH_CONTRACT.md',
+         'verify_booth.py':here/'verify_booth.py',
+         'prefix-result.json':pbase/'result.json',
++        'prior-failed-result.json':prior_path,'prior-r20-timeout.log':failure_log,
+         'prefix-VDotDatapath.scala':pbase/'source-snapshot/VDotDatapath.scala',
+         'prefix-VDotElastic.scala':pbase/'source-snapshot/VDotElastic.scala',
+         'controller-derivation.json':here/'controller-derivation.json',
+@@ -364,6 +379,9 @@
+          'original absent resource paths')
+     save(out/'classpath-before.json',cp_old)
+     result=dict(contract=CONTRACT,status='RUNNING',started=util.stamp(),commands=[],
++        prior_failed_result_sha256=sha(prior_path),prior_run_remains_failed=True,
++        reference_change='R20 Gold: (a0+a1+a2)+(a3+a4+a5); all120 input bits remain unconstrained.',
++        dut_source_unchanged_from_prior=True,proof_formulation_attempt=2,
+         candidate_source_sha256=SOURCE_SHA,original_source_sha256=ORIGINAL_SOURCE_SHA,
+         candidate_wrapper_sha256=WRAPPER_SHA,original_wrapper_sha256=ORIGINAL_WRAPPER_SHA,
+         signed8_gold_result_sha256=BASELINE_SHA,rwidth_baseline_result_sha256=RWIDTH_BASELINE_SHA,
+@@ -474,6 +492,12 @@
+                 for p in files+[resource,filelist]:generated_pins[str(p)]=sha(p)
+                 result['generated'].append(dict(feature=feature,kind=kind,files=[dict(path=str(p.relative_to(out)),bytes=p.stat().st_size,sha256=sha(p)) for p in files],resource_manifest_sha256=sha(resource),filelist_sha256=sha(filelist)))
+                 save(out/'result.json',result)
++        for old in prior['generated']:
++            for f in old['files']:
++                if Path(f['path']).name=='extern_modules.sv':continue
++                need(sha(out/f['path'])==f['sha256'],
++                     'complete regenerated DUT/top SV bytes unchanged from failed attempt '+f['path'])
++        result['all_actual_DUT_SV_bytes_match_previous_failed_attempt']=True
+         first=out/'cost-feature0/rtl'
+         for row in result['generated']:
+             rtl=out/f"{row['kind']}-feature{row['feature']}"/'rtl'
+@@ -528,8 +552,8 @@
+             gold,gate,prove=folder/'gold.sv',folder/'gate.sv',folder/'prove.ys'
+             inputs=', '.join(f'input wire [{width-1}:0] a{i}' for i in range(row_count))
+             ports=inputs+f', output wire [{width-1}:0] result'
+-            gold.write_text('module Gold('+ports+');\nassign result='+
+-                '+'.join(f'a{i}' for i in range(row_count))+';\nendmodule\n')
++            gold_expression='a0+a1+a2' if row_count==3 else '(a0+a1+a2)+(a3+a4+a5)'
++            gold.write_text('module Gold('+ports+');\nassign result='+gold_expression+';\nendmodule\n')
+             gate.write_text('module Gate('+ports+');\n'+f'VDotPrefixFinish{width} actual('+ 
+                 ', '.join(f'.rows_{i}(a{i})' for i in range(row_count))+
+                 ', .result(result));\nendmodule\n')
+@@ -540,7 +564,9 @@
+             record=dict(feature=feature,width=width,row_count=row_count,status='RUNNING',
+                 actual_rtl_sha256=sha(actual),gold_sha256=sha(gold),gate_sha256=sha(gate),script_sha256=sha(prove),
+                 unconstrained_inputs=True,solver_timeout_seconds=30,total_command_budget_seconds=60,
+-                qualification_scope='actual prefix combinational modular sum only',retried=False)
++                qualification_scope='actual prefix combinational modular sum only',retried=True,
++                retry_kind='new frozen contract; R20 Gold association changed, no original operation replay',
++                prior_attempt_contract='dot16-prefix-booth3-local-v1',gold_expression=gold_expression)
+             result['prefix_miters'].append(record);save(out/'result.json',result)
+             label=f'actual-prefix-{width}-miter'
+             try:
+@@ -662,7 +688,7 @@
+         save(out/'final-artifact-pins.json',{**snapshots,**class_pins,**generated_pins})
+         check()
+         need(time.monotonic()<deadline,'total budget after final manifest and pending-signal check')
+-        result.update(status='BOOTH3_GENERATED_ARITHMETIC_FU_AND_COST_COMPLETE',
++        result.update(status='BOOTH3_BALANCED_GOLD_ARITHMETIC_FU_AND_COST_COMPLETE',
+             arithmetic_equivalent=True,fu_qualified=True,local_cost_recorded=True,
+             inputs_unchanged=True,generated_inputs_unchanged=True,original_classpath_unchanged=True,
+             all_children_reaped=all(r['reaped'] and r['group_absent'] for r in result['commands']))
+@@ -670,7 +696,7 @@
+         result.update(status='FAILED',error=repr(exc));raise
+     finally:
+         result['finished']=util.stamp();save(out/'result.json',result)
+-        if result.get('status')=='BOOTH3_GENERATED_ARITHMETIC_FU_AND_COST_COMPLETE':
++        if result.get('status')=='BOOTH3_BALANCED_GOLD_ARITHMETIC_FU_AND_COST_COMPLETE':
+             try:check()
+             except BaseException as exc:
+                 result.update(status='FAILED',error=repr(exc),finished=util.stamp())
+@@ -683,7 +709,7 @@
+ 
+ if __name__=='__main__':
+     p=argparse.ArgumentParser(description=__doc__)
+-    for name in ('repo','cost-root','fu-root','signed8-local','rwidth-local','csa-local','prefix-local','output'):p.add_argument('--'+name,type=Path,required=True)
++    for name in ('repo','cost-root','fu-root','signed8-local','rwidth-local','csa-local','prefix-local','previous-failed','output'):p.add_argument('--'+name,type=Path,required=True)
+     p.add_argument('--cpu',type=int,choices=[2],default=2)
+-    p.add_argument('--budget-seconds',type=int,default=1200)
++    p.add_argument('--budget-seconds',type=int,default=300)
+     run(p.parse_args())

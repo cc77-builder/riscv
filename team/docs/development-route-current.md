@@ -1,6 +1,10 @@
 # 香山 vdot 工程开发路线：满足赛题技术要求，持续提高性能
 
-> 2026-11-08 更新：新P/PQ/N/NQ四臂首次完整forward目标正确性已闭合，同镜像较快对照PQ/NQ观察倍率为1.196049×；prefix已完成新core-build-02、真实ABI/原六例smoke，并通过新EMU的固定K288八窗口完整调用回归。K288与旧硬件逐样本保持一致，没有新增硬件周期收益；FA映射筛查因STA未完成而停止、未采用。生产默认保持，正式性能与整核PPA资格不由这些结果推定。当前决策和证据入口见下节，旧记录保留历史范围。
+> 2026-11-08 后续结果导航：[K768固定完整调用](../optimizations/o2/dot16/rtl-integration/cost/signed8/prefix/core/k768/RESULT.md)已由同一prefix EMU实际通过，N打包周期少13.4340%；同次较快RVV packedP／较快custom packedN为1.500131×（周期少33.33916%，prepare窗外）。此前K288八样本与旧f149相同，只支持该固定例周期保持，没有新增硬件周期收益。
+>
+> [Booth2局部筛选](../optimizations/o2/dot16/rtl-integration/cost/signed8/prefix/booth/RESULT.md)的库面积17,190.516较prefix少4.313%，但关键I2R slack由−0.238006退步至−0.254728ns，差16.722ps，未采用。[Booth3原local-01](../optimizations/o2/dot16/rtl-integration/cost/signed8/prefix/booth3/failed-local-01/RESULT.md)的R19/3通过，R20/6在固定30秒SAT限制内超时；原FAILED及FU/cost未运行的事实保留。后继[balanced-Gold02](../optimizations/o2/dot16/rtl-integration/cost/signed8/prefix/booth3/balanced-local-02/RESULT.md)保持RTL及实际DUT/top SV不变，新R19/R20证明与两态FU/八负控已完成，但旧OpenSTA报告5处网表语法错误，整体仍FAILED、无完整成本资格，feature1未映射；该候选未采用，任何后继成本续接须另立合同。
+>
+> NQ软件交付、原prefix及稳定生产默认保持；旧f149完整forward不转授，正式性能、完整退休与整核PPA均无新增资格。下方原“当前决定”及更早段落保留各自记录时点，本段补充后继已闭合证据。
 >
 > 研究基点：zjhwork `10b71ad4bff25cd2070e775c74a4717b01602f75`；生产硬件 `0f12df675378556670afd0dd2153f47fcb330610`，`src` 树 `78a0c93852dced038f645205e33d36a520fedfcd`。参考[公开项目与分支研究](public-vdot-review-and-plan-20261028.md)、[评分要求](../../赛题要求与评分总览.md)、[最终验收](../optimizations/o2/integration/firstdot-v2-0f/acceptance/RESULT.md)和[历版三指标](version-comparison-r5-g5-20261027.md)。研究文件中的供体成绩是选题依据，不是当前版本的新成绩。
 
