@@ -1,6 +1,6 @@
 # Production FU nominal cost result — 2026-11-07
 
-> Current prefix evidence is in the final **23:41 UTC real-parent closure** section: the same prefix source is arithmetic-, FU- and parent-qualified, with feature1 local area 17,965.374. Nominal 1ns remains unmet; prefix full-core/application and parent/core PPA qualification are pending. Earlier source-specific results retain their original boundaries.
+> Current prefix status is recorded in [core-build-02 / smoke-02](signed8/prefix/core/RESULT.md): the isolated full-core build completed, and its new EMU passed the 1400-byte ABI check and the original six legal differential smoke cases (two dot8, four dot16) at 03:20–03:21 UTC on 2026-11-08. This adds only `fullcore_smoke_qualified=true`; broader full-core, G3, illegal-instruction/trap, application-performance and PPA qualification remain false. The original prefix retains its arithmetic, FU and parent qualification, with feature1 local area 17,965.374 library area units; nominal 1ns remains unmet. The old f149 NQ/PQ observations do not transfer to this EMU. The **2026-11-08 02:52 UTC Pgroup / D800 closure** section remains the historical record for those completed, unadopted trials. Later regression and mapping experiments retain their own contracts and evidence. Production defaults and earlier source-specific result boundaries remain unchanged.
 
 **Result: two comparable CommonFuCostTop cost points were recorded.**
 Enabling dot16 increases mapped standard-cell area from **17,246.376** to
@@ -784,3 +784,48 @@ extern仅增加两个精确模块注释；LogPerf沿用原v3三独立完整块�
 前节feature1 FU库面积 **17,965.374** 及r2r/i2r arrival **1.079437 / 1.163662ns**仍是相同prefix的局部结果；本次父级PASS增加采用依据，但不改变名义1ns负slack，也不把局部库面积与旧EMU应用周期拼成已测组合。
 
 当前未启动新prefix整核：现有build入口会写resident的build/out及根目录元数据，旧resume又绑定原FAILED、生成物和原初态；单独覆盖BUILD_DIR尚不能证明完整隔离。复用原classpath/overlay、在外部cwd生成SimTop再接原后处理与Clang链，是可研究的窄路线，目前未实测。11-07 23:59 UTC依据人工补充授权，仅安排独立目录中的薄适配入口准备，未把它视为已经可靠的一次执行命令，也未启动新生成或整核任务；后续依据实际实现和资源另作判断，不阻塞当前交付。即便新六例smoke通过，也不自动取得完整随机/非法/退休、应用性能或时序资格。保留当前已闭合证据及CSA回退点，优先完成原四臂forward和人工要求的代码/指标整理。
+
+## 2026-11-08 02:52 UTC：Pgroup 与唯一 D800 对照闭合，保留原 prefix
+
+**不替换原 prefix，不继续 P 层排序或 ABC 目标扫描。** Pgroup 的新算术/FU证据成立，但目标 feature1 的最差输入路径和面积均退步；D800 的同RTL对照只改善1.757ps输入路径slack，不能抵偿新增库面积，也没有解决1ns约束。两项原件保留为可追溯的未采用试验，不能把“不采用”改写成算术或FU失败。
+
+### Pgroup 的实现与真实验证
+
+Pgroup 只调整原 CSA 压缩树的列内分组顺序：以压缩深度、门深度及稳定次序排序，将最晚输入置于全加器的第三输入。仍是每半区512个部分积、477个FA、17个HA及原Baugh–Wooley符号修正；P的两条19bit row、R19/R20、128bit架构接口、原上升沿/同步有效位复位、两弹性槽、E2最早响应与无阻塞II1保持。后P前缀源码及wrapper不变。源级最长压缩链10→9、单位门深30→22是结构统计，不是映射时延或应用收益。
+
+候选 datapath SHA256 `1f9a4c807b30b8aa769e65595ce6b54619b190a5f2b5af1d531413de9970b90c`；实际新CSA SV SHA256 `889066a85ec8c169dca78c4532c5e3cc6a1b458decbad3e2d452b2355e052213`。结构检查完整解析新生成模块、验证逐单元布尔恒等、权重、唯一消费及DAG，覆盖全部2^128个二态输入；核实无高carry舍弃及row0[18]=1、row1[18]=0。两个实际Finish19/20模块与原prefix已证明字节相同，严格复用其无约束组合加法SAT；新乘法miter未运行，旧 `UNKNOWN_EXTERNAL_TIMEOUT` 仍保留，未转写为PASS。
+
+本次实际重新编译overlay，生成cost/FU × feature0/1，运行两态原完整FU套件与8个观察注错，并完成两态mapping/STA。32个子命令中24个exit0、8个注错exit1，原分类器均接受；全部reaped/group_absent，输入、生成物和原classpath未变。两态各10,022条基础算术向量，feature1额外20,124次合法和40次非法比较；不把观察注错数量当作RTL变异覆盖率。没有新的parent、整核、应用或core PPA资格。
+
+原host operation `0250d6044ba18f5fd71831ae3131d2ce.b4ac282ef8b9fff93694e3a5263d0bb5` 于02:31:53.7487—02:32:43.804 UTC结束，exit0/cleanup=true，未超时或取消。内层02:31:55.595912—02:32:44.022702 UTC；CPU affinity[2]为**单核**、nice5。原 `local-01/result.json` 为208,017B，SHA256 `0502f877c833cc4d25ab955ed4273f3e54b3b48ed9acbc57677bfdc0ffabc026`，状态 `PGROUP_GENERATED_ARITHMETIC_FU_AND_COST_COMPLETE`。
+
+### 同边界映射/STA的选择依据
+
+仍使用完整CommonFuCostTop的220端口/2,888bit，原Nangate45典型库、工具身份、驱动/负载和1ns五类setup模板。**面积单位为library area units，不能自行标为μm²。** 到达时间和slack单位为ns，未做布局布线、功耗或整核综合。
+
+| 实际候选 / 映射目标 | feature | 库面积 | DFF | r2r arrival / slack | i2r arrival / slack |
+| --- | --- | ---: | ---: | ---: | ---: |
+| 原prefix / D1000 | 0 | 14,171.948 | 1,639 | 0.862744 / +0.061775 | 1.172514 / −0.251286 |
+| Pgroup / D1000 | 0 | 14,171.682 | 1,639 | 0.886941 / +0.035033 | 1.167782 / −0.247012 |
+| 原prefix / D1000 | 1 | 17,965.374 | 1,678 | 1.079437 / −0.156976 | 1.163662 / −0.238006 |
+| Pgroup / D1000 | 1 | 18,006.338 | 1,678 | 1.039090 / −0.113918 | 1.167922 / −0.247152 |
+| 原prefix / D800 | 1 | 18,036.928 | 1,678 | 1.079437 / −0.156976 | 1.161906 / −0.236249 |
+
+Pgroup feature1库面积增加40.964（约0.2280%），r2r slack改善43.058ps，但更差的i2r slack恶化9.146ps。feature0存在小幅面积及i2r改善、r2r退步，不能笼统写成所有指标都变差。Pgroup最坏i2r起点换成src0[30]；虽然单元输出弧数22→19，路径仍出现连续8个XOR/XNOR，合计0.499031ns，单元弧总delay反增4.269ps，端点setup要求也更严。R源码及实际Finish模块未变，r2r差异包括后续映射和最坏路径选择，不能归因为新的R算法加速。两态仍未满足名义1ns。
+
+唯一D800试验严格复用原prefix feature1四份RTL，工具、库和STA约束不变，仅把ABC `-D 1000` 改为 `-D 800` 并使用隔离输出。它的两条map/STA命令均exit0并回收，原输入未变。库面积增加71.554（约0.3983%），i2r slack只改善1.757ps，仍差236.249ps；r2r仍差156.976ps，另外三类路径均与D1000相同。最坏i2r起点变为src0[83]，不能称为同一输入路径提速。ABC目标是映射参数，不替代包含I/O delay、uncertainty及setup的OpenSTA判断。
+
+D800原host operation `0250d6044ba18f5fd71831ae3131d2ce.f29e7345c762e39ad12bf4facf976aca` 于02:52:13.3950894—02:52:22.4671668 UTC结束，9.013秒、exit0/cleanup=true，CPU affinity[2]单核nice5；两条实际子命令均reaped/group_absent。原 `local-01/result.json` 为69,083B，SHA256 `ccf63f790256bdc37f74550012d0fe037490523e8dd35d42064dc0f2ad271735`，状态 `PREFIX_FEATURE1_MAP800_COST_COMPLETE`。`mapped_netlist_equivalence_tested=false`明确保持：原RTL功能证据不转授为新映射网表等价PASS；没有新RTL编译、FU、EMU或应用测量。
+
+### 证据与复现身份
+
+| 完整原始包 | 字节数 | 原始文件 / 原始字节 | SHA256 |
+| --- | ---: | ---: | --- |
+| [Pgroup raw.zip](signed8/prefix/pgroup/raw.zip) | 32,287,296 | 244 / 79,632,916 | `a68751a9a188a2d3cdfc084b09a11470a2b75cbc9522370c7ef8cbc3bf267919` |
+| [D800 raw.zip](signed8/prefix/map800/raw.zip) | 651,174 | 34 / 9,462,839 | `6cc26a67697aa5ac02c2c99110e3850592a615e5f362d8e862c0fdb27c663892` |
+
+两包均零省略、原件零删除；逐成员长度/SHA/CRC及原树前后库存和内容核验通过，记录的全部进程组不存在。Pgroup归档operation尾号 `.97eebcc1efc08d580921c5c4130e0b07`，D800为 `.fc1b60fde2ae4c8c92734d00cc62d581`，均exit0/cleanup=true，未重跑EDA或guest。归档只证明运输完整性，不增加功能资格。
+
+原件分别保存在resident的 `runs/dot16-prefix-pgroup-20261108-main/{input-01,local-01}` 与 `runs/dot16-prefix-map800-20261108-main/{input-01,local-01}`，Windows对应runs根保存archive、原host回执、启动/归档脚本和审查。Pgroup复现入口见 [pgroup.py](signed8/prefix/pgroup/controller/pgroup.py) 与 [PGROUP_CONTRACT.md](signed8/prefix/pgroup/controller/PGROUP_CONTRACT.md)，保留controller/../source布局；D800见 [map800.py](signed8/prefix/map800/map800.py) 与 [CONTRACT.md](signed8/prefix/map800/CONTRACT.md)。脚本保留实际执行时的固定身份和路径；再现必须使用新隔离输出及对应的新实验身份，不覆盖既有输出、不自动重放已经闭合的控制器。外部baseline、库、工具链和classpath仍由原清单绑定，不宣称脱离原环境独立重建。
+
+原prefix源码、已取得的局部算术/FU/真实parent资格及CSA回退点保持。当前整核主线为单独的core-build-02；本节没有为在途构建或后继六用例预先赋予PASS，也不改变稳定生产默认或已交付的NQ/f149软件结果。

@@ -1,6 +1,6 @@
 # 香山 vdot 工程开发路线：满足赛题技术要求，持续提高性能
 
-> 2026-11-06 更新：本轮未改变生产默认，P5稳定版结论及其历史边界保留。**FR/G/P首次完整forward的目标正确性已闭合，P是本次共同镜像窗口较快的RVV；正式性能资格尚未取得。** G/GQ与P/PQ独立同镜像有限参考均已完成；当前准备P/PQ两臂目标观察，以实际周期判断量化组合价值。旧P0～P5记录保留各自冻结合同，当前研究次序以下节为准。
+> 2026-11-08 更新：新P/PQ/N/NQ四臂首次完整forward目标正确性已闭合，同镜像较快对照PQ/NQ观察倍率为1.196049×；prefix在已有局部算术、FU和真实父级证据基础上，已完成core-build-02并通过新EMU的ABI与原六例合法差分smoke，新增资格仅为`fullcore_smoke_qualified=true`。生产默认保持，正式性能与整核PPA资格不由这些结果推定。当前决策和证据入口见下节，旧记录保留历史范围。
 >
 > 研究基点：zjhwork `10b71ad4bff25cd2070e775c74a4717b01602f75`；生产硬件 `0f12df675378556670afd0dd2153f47fcb330610`，`src` 树 `78a0c93852dced038f645205e33d36a520fedfcd`。参考[公开项目与分支研究](public-vdot-review-and-plan-20261028.md)、[评分要求](../../赛题要求与评分总览.md)、[最终验收](../optimizations/o2/integration/firstdot-v2-0f/acceptance/RESULT.md)和[历版三指标](version-comparison-r5-g5-20261027.md)。研究文件中的供体成绩是选题依据，不是当前版本的新成绩。
 
@@ -9,7 +9,31 @@
 ## 0. 下一轮优化计划：先优化真实调用，再有条件改硬件
 
 
-### 当前决定：保留较快RVV对照，接续P/PQ量化组合（2026-11-06）
+### 当前决定：保留已验证范围内的NQ软件交付，prefix新整核六例差分smoke通过（2026-11-08）
+
+最新工程包、可回退源码及指标边界见[11月8日工程交付](../evidence/dot16-engineering-delivery-20261108/README.md)。下方11月6日及更早记录保留各自历史时点；其中“尚无目标周期”等文字不表示当前仍未完成。
+
+新P/PQ/N/NQ实验使用自身同一公共ELF、旧f149目标硬件和D288/H768/L6固定合成模型，测量共同prepare后的首次p0/token1完整forward。四臂原DiffTest、完整3,691,424B状态比较、guards和约定CSR检查均通过，输入未变且进程已回收：
+
+| 本次共同镜像的方法 | forward cycles | forward instret |
+| --- | ---: | ---: |
+| P | 16,920,555 | 4,958,760 |
+| PQ | 16,129,141 | 4,567,702 |
+| N | 14,276,120 | 3,239,096 |
+| NQ | 13,485,355 | 2,848,037 |
+
+本次较快RVV为PQ，较快dot16为NQ；观察倍率`16,129,141 / 13,485,355 = 1.196049×`，窗口周期减少16.391363%。工程交付优先保留NQ及同镜像PQ对照。模型准备不在测量窗口内，不能扩展为真实模型、多token或任意应用收益；TRACE0未取得CSR退休关联和完整退休窗口，`performance_qualified=false`保持。旧W/WQ实验另有同镜像PQ/WQ=1.156325×；禁止使用旧PQ作新NQ分母，或把新旧两次倍率相乘。完整证据见[首次forward结果](../optimizations/o2/dot16/first-forward/RESULT.md)。
+
+硬件继续分开验证。prefix候选保持两槽、E2最早响应、无阻塞II1和128bit架构接口，已完成新算术、FU及真实父级检查。其dot8+dot16同边界FU库面积17,965.374，较对应原dot16 24,017.406降低25.1985%；1ns下R2R/I2R slack仍为−0.156976/−0.238006ns，不能宣称时序收敛、整核频率或功耗收益。
+
+core-build-02已完成，独立新EMU（SHA-256前缀`6387d998`）于11月8日03:20–03:21 UTC通过实际1400B ABI对齐和原2例dot8/4例dot16合法差分smoke；`core-smoke-02/result.json` SHA-256前缀为`2ec96993`。新增资格仅为`fullcore_smoke_qualified=true`；更广整核、G3、非法指令/trap矩阵、应用性能及PPA资格仍为false。旧f149上的NQ/PQ观察结果不转授给新EMU。见[新整核构建与六例smoke](../optimizations/o2/dot16/rtl-integration/cost/signed8/prefix/core/RESULT.md)及[硬件成本与资格入口](../optimizations/o2/dot16/rtl-integration/cost/RESULT.md)。
+
+packed-Ws在固定K288完整调用中使N平均周期减少6.207615%，但目前仍是该局部调用证据，不把它与NQ完整forward或prefix面积合成一套已测结果。新的P层重分组筛选虽通过局部算术/FU，dot16最差输入路径及面积未改善，故不替换prefix。原prefix feature1的唯一D800映射对照也已完成：保持同RTL与1ns STA，仅将ABC目标1000→800ps，I2R slack改善1.757ps但仍为−0.236249ns，库面积增加71.554，R2R及其余三类路径不变。保留D1000参考，停止P层排序与该映射参数扫描；不以这两项未获采用的试验重复扩围。后继功能回归与新映射试验分别按独立合同和证据判断，不转授旧PASS。[局部软件结果](../optimizations/o2/dot16/whole2/RESULT.md)
+
+稳定生产默认0f＋firstdot V2＋原C8不自动切换。上述研究交付不替代旧dot8正式微基准、父级PPA或人工最终验收；没有证明技术文档各项指标均再提高50%。正式PDF、LaTeX、PPT、视频和赛事提交仍由人工维护。
+
+
+### 历史接续：保留较快RVV对照，接续P/PQ量化组合（2026-11-06）
 
 固定既有合成模型D288/H768/L6、p0/token1，规定共同prepare后的首次完整forward，FR/G/P三臂实际目标运行已全部结束并清理。原DiffTest、3,691,424B完整state、flags=1及四CSR采样退休链通过，custom COMMIT=0；`target_correctness_qualified=true`。窗口不含模型生成/packing、启动/init及此前prepare，不能称为生产模型整程应用测量。
 

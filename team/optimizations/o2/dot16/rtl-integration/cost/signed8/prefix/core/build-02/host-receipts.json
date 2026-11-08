@@ -1,0 +1,228 @@
+{
+  "schema": "prefix-core02-archive-host-receipts-v1",
+  "mkdir": {
+    "all_or_nothing": false,
+    "items": [
+      {
+        "applied": "true",
+        "index": 0,
+        "operation": "mkdir",
+        "path": "D:\\Projects\\competitions\\2026-10-CIE-RISCV-XiangShan\\runs\\dot16-prefix-20261107-main\\core-build-02-archive-01",
+        "status": "succeeded"
+      }
+    ],
+    "operation_id": "0250d6044ba18f5fd71831ae3131d2ce.8ec874f9748dd2d7a68c4efab0b38be6",
+    "partial": false,
+    "status": "succeeded"
+  },
+  "preparation_write": {
+    "all_or_nothing": false,
+    "items": [
+      {
+        "after_sha256": "25b4c2401dd81ec05e58b4ab887ae437b238d24f20e0a3e7681ae752fbd17b44",
+        "applied": "true",
+        "bytes_written": 17130,
+        "index": 0,
+        "operation": "write_text",
+        "path": "D:\\Projects\\competitions\\2026-10-CIE-RISCV-XiangShan\\runs\\dot16-prefix-20261107-main\\core-build-02-archive-01\\archive.py",
+        "status": "succeeded"
+      },
+      {
+        "after_sha256": "6f144e90f38b5bf41b338a1e83430d9c10efe05b80835134dc261e6ee45bac3c",
+        "applied": "true",
+        "bytes_written": 793,
+        "index": 1,
+        "operation": "write_text",
+        "path": "D:\\Projects\\competitions\\2026-10-CIE-RISCV-XiangShan\\runs\\dot16-prefix-20261107-main\\core-build-02-archive-01\\PREPARATION.json",
+        "status": "succeeded"
+      }
+    ],
+    "operation_id": "0250d6044ba18f5fd71831ae3131d2ce.2fdce7aa9793f58daf2c9402029dd476",
+    "partial": false,
+    "status": "succeeded"
+  },
+  "preparation_readback": [
+    {
+      "path": "D:\\Projects\\competitions\\2026-10-CIE-RISCV-XiangShan\\runs\\dot16-prefix-20261107-main\\core-build-02-archive-01\\archive.py",
+      "bytes": 17130,
+      "sha256": "25b4c2401dd81ec05e58b4ab887ae437b238d24f20e0a3e7681ae752fbd17b44",
+      "truncated": false
+    },
+    {
+      "path": "D:\\Projects\\competitions\\2026-10-CIE-RISCV-XiangShan\\runs\\dot16-prefix-20261107-main\\core-build-02-archive-01\\PREPARATION.json",
+      "bytes": 793,
+      "sha256": "6f144e90f38b5bf41b338a1e83430d9c10efe05b80835134dc261e6ee45bac3c",
+      "truncated": false
+    }
+  ],
+  "parameter_rejection_before_execution": {
+    "tool": "powershell_propose",
+    "category": "invalid_parameters",
+    "next_action": "correct_arguments",
+    "guidance": "\u8bf7\u6c42\u53c2\u6570\u6216\u6240\u9700\u7684 SHA/\u7248\u672c\u6761\u4ef6\u4e0d\u6ee1\u8db3\u5408\u540c\u3002\u6838\u5b9e\u9650\u5236\u5e76\u91cd\u65b0\u51c6\u5907\u5408\u6cd5\u8bf7\u6c42\uff0c\u4e0d\u653e\u5bbd\u4fdd\u62a4\u63aa\u65bd\u3002",
+    "source": "chatpc",
+    "code": "invalid_resource",
+    "retryable": false,
+    "applied": "false",
+    "request_id": "\u672a\u8fd4\u56de",
+    "error_code": "INVALID_ARGUMENT"
+  },
+  "corrected_proposal": {
+    "approval_id": "0250d6044ba18f5fd71831ae3131d2ce.f8b3e8c7f6f791cb6695b309fdc23f59",
+    "cwd": "D:\\Projects\\competitions\\2026-10-CIE-RISCV-XiangShan\\working-zufan-full-20261022",
+    "execution_sha256": "63aabedb127814e09fdca203b8a0257f89167a41a59d20e0351d5120fe4c1630",
+    "expires_at": "2026-11-08T11:42:44.3246379+08:00",
+    "identity": "S-1-5-21-3387859986-3281680922-187487810-1001 / session 1 / non-elevated",
+    "permission_scope": "full_current_user_not_three_root_sandbox",
+    "resources": [
+      {
+        "mode": "write",
+        "path": "unverified_wsl_mount_alias",
+        "role": "WSL access to same sole Windows output, declared alias",
+        "scope": "legacy"
+      },
+      {
+        "mode": "write",
+        "path": "d:\\projects\\competitions\\2026-10-cie-riscv-xiangshan\\runs\\dot16-prefix-20261107-main\\core-build-02-archive-01",
+        "role": "sole new archive output, prepared source, ZIP, manifests, audit",
+        "scope": "path"
+      },
+      {
+        "mode": "read",
+        "path": "d:\\projects\\competitions\\2026-10-cie-riscv-xiangshan\\runs\\dot16-prefix-20261107-main\\core-build-02-review",
+        "role": "closed chief review originals; four hash-bound audit/receipt/script files",
+        "scope": "path"
+      },
+      {
+        "mode": "read",
+        "path": "ubuntu-22.04:/etc",
+        "role": "runtime configuration",
+        "scope": "wsl"
+      },
+      {
+        "mode": "read",
+        "path": "ubuntu-22.04:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-20261107-main/core-build-01",
+        "role": "all original failed core01 files",
+        "scope": "wsl"
+      },
+      {
+        "mode": "read",
+        "path": "ubuntu-22.04:/home/lizufan/riscv-lab/r5-firstdot-20261026-0056/runs/dot16-prefix-20261107-main/core-build-02",
+        "role": "closed actual core02 selected outputs, control records, inventory metadata; omitted contents not read",
+        "scope": "wsl"
+      },
+      {
+        "mode": "read",
+        "path": "ubuntu-22.04:/lib",
+        "role": "runtime libraries",
+        "scope": "wsl"
+      },
+      {
+        "mode": "read",
+        "path": "ubuntu-22.04:/lib64",
+        "role": "runtime loader",
+        "scope": "wsl"
+      },
+      {
+        "mode": "read",
+        "path": "ubuntu-22.04:/proc",
+        "role": "fresh CPU3 heavy-task and four-core-domain preflight",
+        "scope": "wsl"
+      },
+      {
+        "mode": "read",
+        "path": "ubuntu-22.04:/usr",
+        "role": "Python/taskset/nice/standard-library runtime",
+        "scope": "wsl"
+      }
+    ],
+    "script_sha256": "bf07fa816c9326fff814d238f6ead570b78a9fb6da4c8e4b75b371b769c450c0",
+    "status": "prepared",
+    "timeout_ms": 240000
+  },
+  "launch_script": "$ErrorActionPreference='Stop'\n$prefixArchiveSource='D:\\Projects\\competitions\\2026-10-CIE-RISCV-XiangShan\\runs\\dot16-prefix-20261107-main\\core-build-02-archive-01\\archive.py'\nif ((Get-FileHash -LiteralPath $prefixArchiveSource -Algorithm SHA256).Hash.ToLowerInvariant() -ne '25b4c2401dd81ec05e58b4ab887ae437b238d24f20e0a3e7681ae752fbd17b44') { throw 'archive source identity changed' }\n& wsl.exe -d Ubuntu-22.04 --exec /usr/bin/taskset -c 3 /usr/bin/nice -n 5 /usr/bin/python3.10 -B '/mnt/d/Projects/competitions/2026-10-CIE-RISCV-XiangShan/runs/dot16-prefix-20261107-main/core-build-02-archive-01/archive.py' '25b4c2401dd81ec05e58b4ab887ae437b238d24f20e0a3e7681ae752fbd17b44'\nif ($LASTEXITCODE -ne 0) { throw 'prefix core02 selected archive failed; preserve output and inspect original receipt' }\n",
+  "terminal": {
+    "expires_at": "2026-12-08T03:41:59.0650775Z",
+    "kind": "shell",
+    "operation_id": "0250d6044ba18f5fd71831ae3131d2ce.f8b3e8c7f6f791cb6695b309fdc23f59",
+    "shell": {
+      "durable_logs": true,
+      "execution_environment": "windows_native",
+      "execution_sha256": "63aabedb127814e09fdca203b8a0257f89167a41a59d20e0351d5120fe4c1630",
+      "operation_id": "0250d6044ba18f5fd71831ae3131d2ce.f8b3e8c7f6f791cb6695b309fdc23f59",
+      "output_withheld": false,
+      "result": {
+        "cancelled": false,
+        "cleanup_complete": true,
+        "duration_ms": 5238,
+        "exit_code": 0,
+        "peak_job_commit_bytes": 36630528,
+        "peak_process_commit_bytes": 27058176,
+        "process_id": 46608,
+        "stderr": "w\u0000s\u0000l\u0000:\u0000 \u0000\ufffdhKm0R \u0000l\u0000o\u0000c\u0000a\u0000l\u0000h\u0000o\u0000s\u0000t\u0000 \u0000\ufffdN\u0006tM\ufffdn\u007f\f\ufffdFO*g\\\ufffdP0R \u0000W\u0000S\u0000L\u0000\u00020N\u0000A\u0000T\u0000 \u0000!j\u000f_\u000bN\ufffdv \u0000W\u0000S\u0000L\u0000 \u0000\rN/e\u0001c \u0000l\u0000o\u0000c\u0000a\u0000l\u0000h\u0000o\u0000s\u0000t\u0000 \u0000\ufffdN\u0006t\u00020\r\u0000\n\u0000",
+        "stderr_truncated": false,
+        "stdout": "{\"event\": \"PREFIX_CORE02_ARCHIVE_LAUNCH\", \"at\": \"2026-11-08T03:42:00.369080+00:00\", \"pid\": 32019, \"pgid\": 32019, \"cpu_affinity\": [3], \"nice\": 5, \"observed_heavy\": [], \"observation_scope\": \"WSL process metadata; no command lines\"}\n{\"status\": \"PREFIX_CORE02_SELECTED_ARCHIVE_PASS\", \"started\": \"2026-11-08T03:42:00.369167+00:00\", \"source_sha256\": \"25b4c2401dd81ec05e58b4ab887ae437b238d24f20e0a3e7681ae752fbd17b44\", \"launch\": {\"at\": \"2026-11-08T03:42:00.369080+00:00\", \"pid\": 32019, \"pgid\": 32019, \"cpu_affinity\": [3], \"nice\": 5, \"observed_heavy\": [], \"observation_scope\": \"WSL process metadata; no command lines\"}, \"internal_budget_seconds\": 210, \"external_budget_seconds\": 240, \"independent_rebuild_verified\": false, \"original_sources_deleted\": false, \"omitted_file_contents_rehashed\": false, \"new_eda_runs\": 0, \"new_guest_runs\": 0, \"selected_generated_files\": 1687, \"selected_generated_bytes\": 207136616, \"omitted_generated_files\": 1035, \"omitted_generated_bytes\": 2415811194, \"controller_files\": 13, \"failed_files\": 7, \"review_files\": 4, \"source_files\": 1711, \"source_bytes\": 208239924, \"archive_members\": 1713, \"zip\": {\"path\": \"/mnt/d/Projects/competitions/2026-10-CIE-RISCV-XiangShan/runs/dot16-prefix-20261107-main/core-build-02-archive-01/raw.zip\", \"bytes\": 31214736, \"sha256\": \"2349b27a4f5ef7ad8cba3dd451e6fb49adcb7c1a5733b43f7b1810a9043829f8\", \"crc32\": 1954553593}, \"within_95_decimal_mb\": true, \"all_member_sha_crc_verified\": true, \"selected_original_contents_unchanged\": true, \"complete_source_inventory_metadata_unchanged\": true, \"original_inventory\": {\"path\": \"/mnt/d/Projects/competitions/2026-10-CIE-RISCV-XiangShan/runs/dot16-prefix-20261107-main/core-build-02-archive-01/source-inventory-before.json\", \"bytes\": 653701, \"sha256\": \"3c11abce12e9defa317ef96ae1a7ea5258d20388c39e8c19a276110f7a28a04e\"}, \"selection\": {\"path\": \"/mnt/d/Projects/competitions/2026-10-CIE-RISCV-XiangShan/runs/dot16-prefix-20261107-main/core-build-02-archive-01/archive-selection.json\", \"bytes\": 550182, \"sha256\": \"d383e0f10fc8ec4e101d6e8395654448e66bdad5a44b5f53c25bd3e87347b7b5\"}, \"members\": {\"path\": \"/mnt/d/Projects/competitions/2026-10-CIE-RISCV-XiangShan/runs/dot16-prefix-20261107-main/core-build-02-archive-01/archive-members.json\", \"bytes\": 584174, \"sha256\": \"d79531d7cc38be3e2273f9dc751fec7e5b1b50507ed278130693f510825491ca\"}, \"output_files_before_host_receipts\": [\"PREPARATION.json\", \"archive-members.json\", \"archive-selection.json\", \"archive.py\", \"raw.zip\", \"source-inventory-before.json\", \"audit.json\"], \"finished\": \"2026-11-08T03:42:04.771146+00:00\", \"elapsed_seconds\": 4.41141063699979}\n",
+        "stdout_truncated": false,
+        "timed_out": false,
+        "total_processes": 6
+      },
+      "script_sha256": "bf07fa816c9326fff814d238f6ead570b78a9fb6da4c8e4b75b371b769c450c0",
+      "started_at": "2026-11-08T03:41:59.1369164Z",
+      "status": "succeeded",
+      "updated_at": "2026-11-08T03:42:04.4168586Z",
+      "worker_pid": 61164
+    },
+    "status": "succeeded"
+  },
+  "windows_file_identity_checks": [
+    {
+      "bytes": 31214736,
+      "is_directory": false,
+      "path": "D:\\Projects\\competitions\\2026-10-CIE-RISCV-XiangShan\\runs\\dot16-prefix-20261107-main\\core-build-02-archive-01\\raw.zip",
+      "sha256": "2349b27a4f5ef7ad8cba3dd451e6fb49adcb7c1a5733b43f7b1810a9043829f8",
+      "version": "c1d49dc45f7b436197c61a1e4db46fc42db065fb313433a01a912a714e3fdbb3"
+    },
+    {
+      "bytes": 550182,
+      "is_directory": false,
+      "path": "D:\\Projects\\competitions\\2026-10-CIE-RISCV-XiangShan\\runs\\dot16-prefix-20261107-main\\core-build-02-archive-01\\archive-selection.json",
+      "sha256": "d383e0f10fc8ec4e101d6e8395654448e66bdad5a44b5f53c25bd3e87347b7b5",
+      "text_format": {
+        "bom": false,
+        "encoding": "utf-8",
+        "eol": "lf"
+      },
+      "version": "c53782ee8f6fbcb718467a10c63337a6b0f1e53cdb852c1d46118b862c844220"
+    },
+    {
+      "bytes": 584174,
+      "is_directory": false,
+      "path": "D:\\Projects\\competitions\\2026-10-CIE-RISCV-XiangShan\\runs\\dot16-prefix-20261107-main\\core-build-02-archive-01\\archive-members.json",
+      "sha256": "d79531d7cc38be3e2273f9dc751fec7e5b1b50507ed278130693f510825491ca",
+      "text_format": {
+        "bom": false,
+        "encoding": "utf-8",
+        "eol": "lf"
+      },
+      "version": "b880f8e153a8dfcd7f30f32aaca8f8c324d161a952f6db4f996a159438254157"
+    },
+    {
+      "bytes": 653701,
+      "is_directory": false,
+      "path": "D:\\Projects\\competitions\\2026-10-CIE-RISCV-XiangShan\\runs\\dot16-prefix-20261107-main\\core-build-02-archive-01\\source-inventory-before.json",
+      "sha256": "3c11abce12e9defa317ef96ae1a7ea5258d20388c39e8c19a276110f7a28a04e",
+      "text_format": {
+        "bom": false,
+        "encoding": "utf-8",
+        "eol": "lf"
+      },
+      "version": "3afa9fb6e09a3318a10175e227c9de37edf63a92adb585807c247e86f937ec08"
+    }
+  ],
+  "audit_identity": {
+    "path": "D:\\Projects\\competitions\\2026-10-CIE-RISCV-XiangShan\\runs\\dot16-prefix-20261107-main\\core-build-02-archive-01\\audit.json",
+    "bytes": 2569,
+    "sha256": "79c61ca85a6b667458e279b03c258af961860d798c6ef98c95c2a0650fe77c5e"
+  },
+  "audit_stdout_and_file_semantically_equal": true
+}
