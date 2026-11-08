@@ -1,0 +1,17 @@
+read_liberty -lib /home/riscv/riscv-lab/o4-cost-20261020/library/NangateOpenCellLibrary_typical.lib
+read_verilog -sv -DSYNTHESIS /home/riscv/riscv-lab/o2-r3-div-gate-cost-20261025/fu-cost-01/rtl/CommonFuCostTop.sv
+read_verilog -sv -DSYNTHESIS /home/riscv/riscv-lab/o2-r3-div-gate-cost-20261025/fu-cost-01/rtl/VDotElastic.sv
+read_verilog -sv -DSYNTHESIS /home/riscv/riscv-lab/o2-r3-div-gate-cost-20261025/fu-cost-01/rtl/VDotProducts.sv
+read_verilog -sv -DSYNTHESIS /home/riscv/riscv-lab/o2-r3-div-gate-cost-20261025/fu-cost-01/rtl/VDotReduce.sv
+hierarchy -check -top CommonFuCostTop
+proc
+opt
+write_json /home/riscv/riscv-lab/nangate45-zjhwork-4ns-20261108/run-02/fu-map/structure.json
+synth -top CommonFuCostTop -flatten -noabc
+dfflibmap -liberty /home/riscv/riscv-lab/o4-cost-20261020/library/NangateOpenCellLibrary_typical.lib
+abc -exe /home/riscv/riscv-lab/o4-cost-20261020/tools/root/usr/bin/berkeley-abc -liberty /home/riscv/riscv-lab/o4-cost-20261020/library/NangateOpenCellLibrary_typical.lib -D 4000 -constr /home/riscv/riscv-lab/nangate45-zjhwork-4ns-20261108/run-02/fu-map/abc.constr
+clean
+check -assert
+stat -liberty /home/riscv/riscv-lab/o4-cost-20261020/library/NangateOpenCellLibrary_typical.lib
+write_json /home/riscv/riscv-lab/nangate45-zjhwork-4ns-20261108/run-02/fu-map/mapped.json
+write_verilog -noattr /home/riscv/riscv-lab/nangate45-zjhwork-4ns-20261108/run-02/fu-map/mapped.v

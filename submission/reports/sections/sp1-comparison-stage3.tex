@@ -1,0 +1,55 @@
+\subsection{SP1一拍运算方案的对比}\label{subsec:3-sp1-comparison}
+稳定版的点积运算分两拍完成，结果经两个槽位弹性输出。为缩短单条点积的延迟，SP1方案把乘法和归约合并到一拍，两槽结构以及反压、取消和与DIV/SQRT共用执行单元的协议保持不变。两版的提交标识见表\ref{tab:3-eval-index}。SP1已通过项目验收清单的全部20项检查，清单涵盖微基准性能、C8调用的功能与性能、控制协议和DIV/SQRT共用测试。
+
+表\ref{tab:3-sp1-performance}的周期来自此前的配对测量：两版运行同一程序镜像，d0、d1、d2三组数据的结果相同，C8软件也完全相同。加速比等于同一负载下RVV平均周期除以VDot平均周期。
+
+\begin{table}[!htbp]\centering
+\small\setlength{\tabcolsep}{5pt}
+\caption{稳定版与SP1的周期及相对RVV加速比}\label{tab:3-sp1-performance}
+\begin{tabular}{lrrrr}
+\toprule
+负载 & 稳定版周期 & SP1周期 & 稳定版加速比 & SP1加速比\\
+\midrule
+依赖链（256次） & 1857 & 1601.25 & 2.9297$\times$ & 3.3977$\times$\\
+单次点积 & 71 & 70 & 1.2007$\times$ & 1.2179$\times$\\
+四路独立批量（128次） & 221 & 221 & 3.0679$\times$ & 3.0679$\times$\\
+加载、计算、存储流（64次） & 1127.5 & 1126.25 & 1.0049$\times$ & 1.0060$\times$\\
+C8配置复用调用 & 273 & 272 & 1.0952$\times$ & 1.0993$\times$\\
+\bottomrule
+\end{tabular}
+\par\smallskip
+\begin{minipage}{0.96\linewidth}\footnotesize
+注：周期为测量窗口内的平均DUT周期。五行对应的RVV周期依次为5440.5、85.25、678、1133、299，两版相同。
+\end{minipage}
+\end{table}
+
+SP1的收益集中在串行依赖链：VDot周期减少13.8\%，加速比由2.93倍提高到3.40倍。批量场景中的点积彼此独立，两槽结构本来就能连续发起，缩短单条延迟不再提高吞吐，因此周期不变；C8配置复用调用只从273降到272周期，减少0.37\%。
+
+成本比较沿用第\ref{sec:3-cost}节的工具、工艺库和约束：两版都以4\,ns为目标综合，再做4\,ns、5\,fF的STA，分析脚本完全相同，SP1同样关闭调试追踪。只看父级最差裕量会掩盖VDot路径本身的变化，所以表\ref{tab:3-sp1-cost}同时列出全局最差路径和与VDot直接相关的路径。
+
+\begin{table}[!htbp]\centering
+\small\setlength{\tabcolsep}{5pt}
+\caption{两版的4 ns综合面积与4 ns／5 fF时序}\label{tab:3-sp1-cost}
+\begin{tabular}{lrr}
+\toprule
+指标 & 稳定版 & SP1\\
+\midrule
+独立FU面积（$\mu\mathrm{m}^{2}$） & 17112.578 & 18156.628\\
+完整VFEX4父级面积（$\mu\mathrm{m}^{2}$） & 284562.278 & 285182.058\\
+独立FU全局最差setup裕量（ns） & $+2.601416$ & $+1.951567$\\
+父级全局最差setup裕量（ns） & $+0.422254$ & $+0.493821$\\
+父级VDot输入至寄存器裕量（ns） & $+2.450936$ & $+1.742610$\\
+父级ready返回到达时间（ns） & 0.247821 & 0.303064\\
+各类路径及全局setup检查 & 全部通过 & 全部通过\\
+\bottomrule
+\end{tabular}
+\par\smallskip
+\begin{minipage}{0.96\linewidth}\footnotesize
+注：父级包含FU，两项面积不能相加。裕量越大越宽松，到达时间越小越快。到达时间包含约束设定的输入到达和时钟条件，不等于纯组合逻辑延迟。
+\end{minipage}
+\end{table}
+
+与稳定版相比，SP1的FU面积增加6.1\%，父级面积增加0.22\%。把运算压进一拍后，VDot从输入到寄存器的单拍组合路径变长：FU最差裕量减少0.65\,ns，父级中VDot输入至寄存器路径的裕量减少0.71\,ns，ready返回路径的到达时间增加0.055\,ns。父级全局最差路径不在VDot上，其裕量略增0.072\,ns。两版在4\,ns下都满足setup要求，但SP1的VDot路径余量明显缩小。
+
+逐路径数据、约束一致性检查和周期数据的出处见\seqsplit{evidence/sp1-4ns-comparison-20261108/}。
+\FloatBarrier

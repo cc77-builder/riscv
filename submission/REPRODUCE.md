@@ -1,52 +1,64 @@
-# 最终版复现入口
+# 复现说明
 
-从仓库根目录运行。`submission/reproduce.sh` 只调用保留的原构建/检查实现，提供统一入口，不修改生产代码逻辑。
+以下命令均在仓库根目录执行。`submission/reproduce.sh` 是统一入口，内部调用原有的构建和检查脚本。
 
-## 材料与主机检查
+## 交付文件与宿主检查
 
 ```bash
 bash submission/reproduce.sh check
 bash submission/reproduce.sh logs-check
 ```
 
-第一条检查当前交付文件、参考模型、确定性向量、编码和静态接入；第二条逐项校验全部归档日志及其元数据。两者均不启动 RTL/全核仿真。
+`check` 校验交付文件清单、参考模型、确定性测试向量、指令编码和静态接入；`logs-check` 逐项校验全部归档日志及其元数据。两者只需要 Python 3.10+，几秒内完成。
 
 ## 构建软件库
 
-输出必须是仓库外的新绝对路径，工具链须与固定身份匹配：
+输出目录须为仓库外的新绝对路径：
 
 ```bash
 bash submission/reproduce.sh firstdot /absolute/new/firstdot-sdk
 bash submission/reproduce.sh c8 /absolute/new/c8-sdk
 ```
 
-firstdot 提供四尺寸的软件接口；C8 是独立显式选用的 8×32 静态库，默认入口和 RVV 回退语义保持原样。C8 原 Makefile 会核对源文件和生成对象的固定哈希。构建成功只证明软件构建，不证明新应用实际运行或周期收益。
+firstdot 提供四种尺寸的软件接口；C8 是 8×32 GEMV 静态库，默认入口和 RVV 回退语义保持不变。C8 的 Makefile 会核对源文件和生成对象的固定哈希。
 
 ## 硬件与 NEMU
 
-先按[环境说明](docs/ENVIRONMENT.md)准备固定工具、子模块和外部依赖，然后：
+先按[环境说明](docs/ENVIRONMENT.md)准备固定版本的工具和子模块，然后：
 
 ```bash
+export TEAM_XS_ENV_ROOT=/absolute/xs-env
+bash team/scripts/prepare-dependencies.sh
+source team/scripts/activate.sh
 bash submission/reproduce.sh environment
+
+# 构建最终 EMU（O2 两槽 + T14 融合输入，O1 关闭）
 bash submission/reproduce.sh build-emu --output /absolute/new/emu-record --profile observe --firtool-dir /absolute/firtool/bin
+
+# 构建带 vdot 扩展的 NEMU reference，并让后续命令使用它
 export TEAM_NEMU_VDOT_ROOT=/absolute/new/nemu-vdot
 export TEAM_EVIDENCE_DIR=/absolute/new/nemu-build-record
 bash team/scripts/prepare-nemu-vdot.sh reference
+export NEMU_HOME="$TEAM_NEMU_VDOT_ROOT"
+export VDOT_NEMU_REF="$NEMU_HOME/build/riscv64-nemu-interpreter-so"
+export VDOT_EMU_BIN=/absolute/path/to/final/emu
 ```
 
-最终硬件使用原 O2/H1/DIV 修复源码，构建器显式启用 O2/T14 并关闭 O1。不要用不带该配置的其他构建结果代替最终 EMU。原构建器拒绝覆盖已有 `build/` 和已有输出记录。
+`activate.sh` 默认把 `NEMU_HOME` 指向 xs-env 中未扩展的 NEMU；`prepare-nemu-vdot.sh` 在子进程中运行，不会修改当前 shell，所以构建完 reference 后要按上面显式导出 `NEMU_HOME` 和 `VDOT_NEMU_REF`。构建器拒绝覆盖已有的 `build/` 和输出记录。
 
 ## 按阶段执行
 
-| 目标 | 原入口 |
+| 目标 | 入口 |
 | --- | --- |
 | hello/vadd 工作负载与运行 | `team/scripts/stage1.sh workload`、`team/scripts/stage1.sh run` |
-| 算术 RTL | `team/scripts/check-vdot-datapath.sh` |
-| FU / 译码检查 | `team/scripts/check-vdot-fu.sh`、`team/scripts/check-vdot-decode.sh`；使用对应配置与范围 |
-| vdot 测试数据、程序与全核运行 | `team/scripts/vdot-tests.sh`，按其 `host / build-xs / run-rtl` 模式 |
+| 乘积与归约算术 RTL（最终硬件共用） | `team/scripts/check-vdot-datapath.sh` |
+| 译码接入 | `team/scripts/check-vdot-decode.sh` |
+| 基础单槽 VDot FU | `team/scripts/check-vdot-fu.sh` |
+| 最终两槽 FU 与 VFEX4 父级 | 测试顶层 `team/optimizations/o2/fu/`、`team/optimizations/o2/parent/`，构建目标 `vdotElasticFu`、`vdotElasticParent`，检查器 `check_trace.py`、`check_negative.py`；需设置 `VDOT_O2_ELASTIC=1 VDOT_T14_FUSED_INPUT=1 VDOT_O1_HANDOFF=0` |
+| vdot 测试程序与整核差分 | `team/scripts/vdot-tests.sh host`、`build-xs full`、`run-rtl full` |
 | RVV 等价基线 | `team/scripts/baseline-tests.sh` 与 `team/workloads/rvv-baseline/` |
-| 控制与性能工作负载 | `team/workloads/vdot-regression/`、`team/workloads/unified-vdot/` 及对应原检查器 |
+| 控制与性能工作负载 | `team/workloads/vdot-regression/`、`team/workloads/unified-vdot/`、`team/workloads/o3-gemv/` |
 
-`VDOT_EMU_BIN`、`VDOT_NEMU_REF`、数据目录、镜像及 `TEAM_EVIDENCE_DIR` 要指向本次明确准备的输入和新输出目录，不能依靠原机器的默认绝对路径。运行前按原 `artifact_guard.py` 检查来源；迁移生成的新镜像须记录新身份，不改旧哈希伪造通过。
+整核运行前，`VDOT_EMU_BIN`、`VDOT_NEMU_REF`、数据目录、镜像和 `TEAM_EVIDENCE_DIR` 都要指向本次准备的输入和新的输出目录。`artifact_guard.py` 会核对 NEMU、镜像和输入的来源身份。
 
-本轮进行了材料、主机检查和软件库重建。完整硬件构建/全核运行未因目录整理而重跑；正式交付前建议从干净检出按上述入口复核，并保留新的命令、退出码、源码/依赖/配置/镜像身份及完整日志。
+报告中各项数据对应的原始日志可用 `python3 -B submission/logs/read_log.py list --contains <关键字>` 查找，用 `show <路径>` 阅读。

@@ -1,24 +1,17 @@
-# 精简验证结果
+# 验证结果
 
-核查日期：2026-11-08。以下是本次整理后实际执行的检查；没有重新运行 RTL、NEMU 或全核仿真，也没有新增性能实测结论。
+2026-11-08 在本分支最终提交上执行的检查。命令见[复现说明](REPRODUCE.md)，整理阶段的命令记录和日志在 [verification/](verification/)。
 
-| 检查 | 实际结果 |
+| 检查 | 结果 |
 | --- | --- |
-| 保留源码及构建/测试数据 | 678 个原文件逐个 SHA-256 对照，内容不变 |
-| 生产源码 | `src` Git 树固定为 `78a0c93852dced038f645205e33d36a520fedfcd` |
-| 报告 | 112 个原报告/LaTeX/图片/正文证据文件迁移后字节不变；正式缺项见待补清单 |
-| 模型与确定性数据 | 35 项测试通过；5 个数据文件重生成比对一致，未改写原数据 |
-| 静态接入 | 32,768 个寄存器编码、17 个固定位邻域、22 个定向和 10,000 个随机向量检查通过 |
-| 宿主检查器 | `team/tests` 的 146 项测试通过 |
-| 日志读取工具 | 7 项单元测试通过；9,679 个归档成员校验通过 |
-| 日志完整保留 | 原索引 5,356 个日志全部保留，另含 1,199 个文本日志和 3,124 个配套元数据文件，共 7 个 ZIP |
-| firstdot / C8 | 两套原软件库均构建成功；示例编译、可重定位链接通过，无未解析符号 |
-| C8 对象身份 | `gemv.o` SHA-256 为 `f8bc13daeead98a414f313600a5778c96ac95a66b5bcb5c714ea3b98e0d25ab3`，与原固定身份一致 |
-| 构建入口 | `build.sc` 引用的 team 源文件均存在；新复现入口 Bash 语法通过 |
-| 原开发目录 | HEAD、全部 Git refs 及原先 10 个已修改文件内容均未改变 |
+| 交付文件清单 | `python3 -B submission/verify.py`：全部文件 SHA-256 与 [MANIFEST.json](MANIFEST.json) 一致；`src` 树为 `78a0c93852dced038f645205e33d36a520fedfcd`，与受测硬件提交 `0f12df6753` 相同；10 个子模块固定提交一致 |
+| 参考模型与确定性数据 | `team/scripts/check-vdot-model.sh`：35 项测试通过，5 个数据文件重新生成后逐字节一致 |
+| 静态接入 | `team/scripts/check-vdot-integration-source.py`：32,768 个寄存器编码组合、17 个固定位邻域、22 个定向与 10,000 个随机向量全部通过；NEMU 补丁 SHA-256 `6c165bf5…5f24db` |
+| 宿主检查器 | `team/tests`：146 项通过 |
+| GEMV 工作负载工具 | `team/workloads/o3-gemv`：35 项通过 |
+| 日志读取工具 | `submission/logs/test_read_log.py`：7 项通过 |
+| 归档日志 | `read_log.py verify`：9,679 个归档成员校验通过 |
+| firstdot / C8 | 两套软件库重建成功，示例编译与可重定位链接通过，C8 `gemv.o` SHA-256 为 `f8bc13daeead98a414f313600a5778c96ac95a66b5bcb5c714ea3b98e0d25ab3`，与固定身份一致（见 [verification/](verification/)） |
+| 报告 | 四份 PDF 的 SHA-256 与 `reports/output/build-receipt.json` 一致；封面队名“啊对对对对”；正文无占位 |
 
-命令、退出码及日志见 [verification](verification/)，软件构建和链接不代表运行验证。删除的 `test_archived_vdot_acceptance.py` 专门依赖旧版全量历史证据夹具，随旧实验包一起移除；保留的测试没有修改判定逻辑。
-
-当前交付文件身份由 [MANIFEST.json](MANIFEST.json) 固定，运行 `python3 -B submission/verify.py` 可重新检查。历史日志保留原版本身份，不将其直接算作此最终提交目录的新运行结果。
-
-三份 PDF 仍缺真实团队信息及 8 处图片，项目目录未找到三段录屏及 PPT，详见 [正式提交待补清单](SUBMISSION_CHECKLIST.md)。以上是目录整理时的验证记录；后续仓库发布不改变验证范围，也不代表正式参赛递交已完成。
+报告中的周期、面积和时序数据来自各实验的原始运行，日志按原路径保存在 [logs/](logs/README.md)，可用 `read_log.py` 查找和阅读。

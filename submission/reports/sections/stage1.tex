@@ -1,333 +1,61 @@
 \renewcommand{\stagefigureprefix}{1}\setcounter{figure}{0}
-\reporttitle{第一阶段执行日志与过程文档}
+\reporttitle{第一阶段：环境部署与向量执行过程}
 
+本阶段对应赛题的环境部署验证、操作日志和向量加法执行过程，主要结果有三项：一是在WSL2中搭建了香山处理器仿真、NEMU参考模型和测试程序的完整构建与协同仿真环境；二是定位并修复了两端启动代码不一致导致的差分失败；三是三类vadd用例共24个元素在DiffTest下全部通过，并用波形观察了向量加法从执行到提交的过程。
 
-团队名称（待团队确认）　成员（待团队确认）　学校（待团队确认）\par
-赛题为面向边缘AI大语言模型推理的RISC-V自定义vdot指令设计。本文初稿日期为2026年11月2日，阶段一原实验日期为2026年10月9日，最终工程版本按《最终版本确认》绑定。\par
+实验分两次进行：10月9日完成环境搭建和首次验证，10月25日复核了英文hello输出、两种仿真模型的差分运行和含时钟的波形。第\ref{sec:1-index}、\ref{sec:1-logs}节集中列出版本信息和日志摘录，供复核使用。自定义vdot点积的设计与测试见第二阶段。
 
+\section{协同验证框架与实验环境}
 
-\section{实验目的}
-阶段归属：本阶段对应赛题1.1环境部署验证、1.2操作日志和1.3向量加法执行过程。下文vadd按元素相加，输出八个字节；赛题2.3.1正数点积、2.3.2负数点积及2.3.3边界值点积测试统一见第二阶段，不能用本阶段加法结果代替。\par
+香山EMU、NEMU参考模型和裸机程序共同构成验证环境。EMU模拟硬件执行，NEMU按指令语义更新参考状态，DiffTest在指令提交时比较两者的架构状态。裸机程序提供可重复的输入和结果检查；共同启动flash负责在复位后跳转到程序入口。hello检查程序启动与串口输出，vadd则覆盖向量配置、加载、按元素加法、存储和提交。
 
+硬件侧由Java与Mill解析Scala/Chisel工程，firtool处理硬件中间表示，Verilator与宿主C++编译器生成EMU。目标程序使用RISC-V GCC和binutils编译、链接并生成ELF、BIN及反汇编。NEMU在宿主侧构建为参考库，由运行参数显式加载。三条构建链的产物在同一次差分运行中汇合，构建记录和运行记录通过产物的SHA-256摘要对应起来。表\ref{tab:s1-artifacts}列出各类产物的作用，以及复核时需要查看的主要记录。
 
-本阶段建立香山硬件仿真、NEMU参考模型与裸机程序之间的协同验证环境。以hello输出检查程序启动和串口链路，以向量加法检查向量状态、访存、执行、写回及提交过程，为后续自定义点积指令提供基线。\par
-
-
-
-\reportfigure{S1-01}{开发环境与软硬件协同验证框架}{12.0cm}{示意图展示Windows/WSL环境中RTL、AM程序、NEMU与DiffTest之间的构建依赖和运行数据流。阶段一历史环境日期为2026-10-09。}{用户提供示意图；依据：环境记录、\seqsplit{team/scripts/stage1.sh}及已固定版本表。版本范围：阶段一历史环境；与最终0f组合分别标注。}
-\section{环境与部署过程}
-
-
-实验使用Windows下的WSL2 Ubuntu 22.04.5，处理器为Ryzen 7 7840H。原机器物理内存约27.7GiB，WSL配置20GB内存及16GB swap。硬件与仿真工作放在WSL原生文件系统。\par
-
-
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.25\linewidth}>{\raggedright\arraybackslash}p{0.69\linewidth}}
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.19\linewidth}>{\raggedright\arraybackslash}p{0.34\linewidth}>{\raggedright\arraybackslash}p{0.39\linewidth}}
+\caption{构建产物与复核入口}\label{tab:s1-artifacts}\\
 \toprule
-\textbf{组件} & \textbf{固定版本或设置}\\ \midrule\endhead
-xs-env & \seqsplit{b0b506481e839a5df8a580e76f5aa246dc60fe7c}\\
-原香山基线 & \seqsplit{16ae9ddcda54fc9a2fddffad73174cf793ac7814}\\
-原NEMU基线 & \seqsplit{a48a11f208ff81ad765591d83271d1b339fb3861}\\
-nexus-am & \seqsplit{086a238062fdfb3281b745a537b361983d0154b5}\\
-JDK / Mill / firtool & 21.0.12 / 0.12.3 / 1.62.1\\
-Verilator & 5.052，固定ea338be提交\\
-RISC-V GCC / binutils & 11.4.0 / 2.38\\
-DUT & MinimalConfig、单核、VLEN128\\
-原波形构建 & EMU\_THREADS=1、EMU\_TRACE=fst\\
+\textbf{产物} & \textbf{作用} & \textbf{主要记录}\\\midrule\endfirsthead
+\caption[]{构建产物与复核入口（续）}\\
+\toprule
+\textbf{产物} & \textbf{作用} & \textbf{主要记录}\\\midrule\endhead
+香山EMU & 执行DUT仿真 & 硬件源码、DUT配置、生成命令、编译工具与文件SHA-256\\
+NEMU参考库 & 提供架构状态参考 & 固定源码、构建配置、实际加载路径与文件SHA-256\\
+程序ELF/BIN & 执行hello和vadd用例 & ISA/ABI、入口、装载段、反汇编、镜像摘要\\
+共同flash & 建立一致的启动输入 & 启动汇编、12字节镜像、反汇编与显式加载参数\\
+运行记录 & 关联输入、结果及结束状态 & 原始日志、退出码、波形、事件CSV与信号索引\\
 \bottomrule\end{longtable}}
 
+图\ref{fig:S1-01}给出这一协同验证框架的整体结构。上半区为WSL2中的三条编译链：香山工程经JDK、Mill、firtool和Verilator生成EMU，AM程序与启动代码经RISC-V GCC生成共同的程序BIN和boot-flash，NEMU源码由宿主编译器构建为参考动态库。下半区为差分运行：EMU与NEMU加载同一镜像，DUT按架构提交推进参考模型，两端状态送入DiffTest比较，串口输出、波形、比较结果和退出状态统一归档。
 
-部署依次完成WSL资源调整、固定仓库与递归依赖检出、工具版本核对、NEMU reference构建、香山仿真器构建、hello/vadd编译和差分运行。各步保存命令、标准输出、退出码、版本与SHA。环境配置详情与完整锁文件作为附件交付。\par
+\reportfigure{S1-01}{开发环境与软硬件协同验证框架}{10cm}{上半区展示WSL2中的三条编译链，下半区展示共同程序与启动输入驱动的差分运行。紫色虚线表示按架构提交推进参考模型；DUT与参考端的状态进入DiffTest，日志、波形和退出状态统一归档。}{2026-10-09历史环境的结构重绘；共同启动flash与程序BIN为分别记录的输入，固定版本见本章。}
 
+10月9日实验在Windows下的WSL2 Ubuntu 22.04.5运行，宿主处理器为Ryzen 7 7840H，可用物理内存约27.7GiB。WSL配置20GB内存和16GB swap，构建与仿真放在WSL原生文件系统。DUT为MinimalConfig、单核、VLEN128，原波形构建采用\seqsplit{EMU\_THREADS=1}和\seqsplit{EMU\_TRACE=fst}。运行时显式指定128MB RAM、共同flash和固定参考库。
 
-以下是既有脚本的操作顺序，实际操作应在已核对身份的专用输出目录执行。\par
+本阶段的源码版本、工具版本和10月25日复核的产物摘要集中列于本章末尾，两次实验所用的构建分开标注。
 
+\section{部署与构建过程}
 
-\begin{Verbatim}[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\small]
-source team/scripts/activate.sh
-bash team/scripts/check-environment.sh
-bash team/scripts/stage1.sh nemu
-bash team/scripts/stage1.sh emu
-TEAM_ID=正式团队标识 bash team/scripts/stage1.sh workload
-bash team/scripts/stage1.sh run
-\end{Verbatim}
+环境按本节步骤搭建。10月9日依次完成了NEMU参考库、香山EMU、测试程序和共同启动flash的构建，并完成首次差分运行，过程记录见表\ref{tab:s1-operations}。
 
+\subsection{资源配置与工具位置}
 
-原始启动曾在PC 0x10000004发生寄存器差异。定位发现两端默认flash分别含3条和6条启动指令，随后由同一boot-flash.S生成12字节镜像，并显式传入共同flash、128MB RAM和固定reference。保存的失败与修复日志可说明启动条件对差分验证的影响。\par
-
-
-
-\reportfigure{S1-02}{环境部署与验证执行流程}{12.0cm}{流程依次包括环境配置、命令检查、工具核查、NEMU/EMU与工作负载构建，以及DiffTest验证和证据归档；失败时返回相应定位环节。}{用户提供示意图；依据：阶段一真实执行顺序、构建和运行日志。版本范围：2026-10-09阶段一流程。}
-\section{hello输出与vadd加法环境自检}
-
-
-hello输出包含团队标识和WSL IPv4。历史记录使用riscv-vdot-team，正式录屏应呈现确认后的团队标识及相应真实输出。下文附真实历史输出，正式团队标识由成员确认后补入。\par
-
-
-vadd程序设置SEW8、LMUL1、VL8，执行两次向量加载、一次vadd.vv和一次向量存储，逐字节对比标量参考。\par
-
-
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.25\linewidth}>{\raggedright\arraybackslash}p{0.69\linewidth}}
-\toprule
-\textbf{用例} & \textbf{输出字节}\\ \midrule\endhead
-vadd正数相加 & 9 9 9 9 9 9 9 9\\
-vadd补码相加 & 254 252 250 248 246 244 242 240\\
-vadd加法回绕 & 128 127 0 0 0 0 254 254\\
-\bottomrule\end{longtable}}
-
-
-原运行同时具备HELLO\_VADD\_PASS cases=3 lanes=24、GOOD TRAP、启用DiffTest及exit0。程序整体统计为16557条指令、42962周期，包含启动、UART和校验。真实日志摘录见附录。\par
-
-
-
-\reportfigure{S1-03}{hello与vadd正常结束输出}{8.5cm}{已插入用户提供的历史运行日志截图，包含DiffTest、三类vadd输出、GOOD TRAP及原退出状态。团队名仍为占位标识，正式团队标识输出待补。}{用户截图 \seqsplit{WindowsTerminal\_m5hXeDJnV1.png}；原\seqsplit{hello-vadd-summary.log}。版本范围：2026-10-09历史运行回放，不是本次重新运行。}
-\section{vadd向量加法波形与执行过程}
-
-
-处理器完成取指和译码后，由重命名、调度和操作数准备驱动向量执行。两个vle8.v提供输入，vadd.vv完成按元素加法，结果经写回进入目的向量寄存器并在ROB提交。DiffTest在架构状态层与NEMU对应执行结果比较。\par
-
-
-
-\reportfigure{S1-04}{vadd向量加法执行与提交示例（正数输入）}{16.0cm}{(a)输出事件及输入/提交位置；(b)输入游标处信号值；(c)提交游标处信号值。截图来自原FST提取的selected VCD，未显示时钟；\seqsplit{19625/19626/19631}为文件中事件坐标，截图单位为ps，不能据此推断芯片物理时钟或实际延迟。}{用户上传正数输出截图及\seqsplit{riscv-lab/picture}中的输入、提交截图；保留原始图并仅裁剪外部空白。版本范围：2026-10-09原基线vadd；时钟截图仍待补，不是0f vdot。}
-原波形提取的vadd提交PC为0x80000138，机器码为0x021101d7，vecwen=1、wdest=3。\par
-
-
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.1\linewidth}>{\raggedright\arraybackslash}p{0.16\linewidth}>{\raggedright\arraybackslash}p{0.16\linewidth}>{\raggedright\arraybackslash}p{0.16\linewidth}>{\raggedright\arraybackslash}p{0.34\linewidth}}
-\toprule
-\textbf{用例} & \textbf{输入事件坐标} & \textbf{输出事件坐标} & \textbf{提交事件坐标} & \textbf{写回低64位}\\ \midrule\endhead
-vadd正数相加 & 19625 & 19626 & 19631 & \seqsplit{0x0909090909090909}\\
-vadd补码相加 & 25460 & 25461 & 25466 & \seqsplit{0xf0f2f4f6f8fafcfe}\\
-vadd加法回绕 & 33009 & 33010 & 33015 & \seqsplit{0xfefe000000007f80}\\
-\bottomrule\end{longtable}}
-
-
-按原波形展开时，应展示时钟、valid/ready、提交PC和结果信号，并用游标标注表内事件。具体信号层级以原波形与事件提取脚本为准。表内数值是原文件中的采样事件坐标，结果可说明运算单元输出早于架构提交的流水关系。\par
-
-
-
-
-完整FST位于本机\seqsplit{/home/riscv/riscv-lab/stage1-evidence/hello-vadd.fst}，大小220295598字节。历史波形按2026年10月9日基线标注。最终0f环境的hello/vadd资格由R5组合验收另行绑定。\par
-
-
-
-\reportfigure{S1-05}{vadd加法补充自检：补码与回绕}{10.0cm}{(a)负数输出低64位\seqsplit{F0F2F4F6F8FAFCFE}；(b)边界输出低64位\seqsplit{FEFE000000007F80}。两图保留各自输入、输出和提交事件位置；未显示时钟，坐标单位按截图为ps。}{用户上传 \seqsplit{msrdc\_yWBpPeYM8q.png} 与 \seqsplit{msrdc\_6cIzJ9aIVJ.png}。版本范围：同一2026-10-09历史vadd波形；低64位按有效8个元素解释。}
-\section{结论及附件}
-
-
-阶段一已完成部署、共同启动条件、3类向量加法用例与差分检查。提交报告应附操作日志索引、工具/子模块版本、源文件、反汇编、事件CSV及波形定位信息。本稿提供原波形提取表与事件时间线，团队标识待确认。\par
-
-
-附件位置为\seqsplit{team/evidence/stage1-20261009}，包含\seqsplit{hello-vadd-summary.log}、工具版本、子模块锁、boot-flash反汇编、\seqsplit{vadd-commit-events.csv}及\seqsplit{vector-fix-alu-events.csv}。运行源码位于\seqsplit{team/workloads/hello-vadd}。\par
-
-
-\href{https://github.com/cc77-builder/riscv/blob/eca41d7cd959f5f3c4f240e382919c492d1ccb96/team/docs/stage1.md}{阶段一原记录} · \href{https://github.com/cc77-builder/riscv/blob/eca41d7cd959f5f3c4f240e382919c492d1ccb96/team/docs/environment.md}{环境记录}\par
-\section{实际执行日志摘录}
-下列片段直接取自原始归档，日期及路径按原记录保留。完整日志随本文源文件的evidence目录提供。
-\subsection{构建和运行时间记录}
-\begin{itemize}
-\item 2026年10月9日20:42:15，主动中断并恢复C++构建，将并行度调为4，已完成对象保留。
-\item 2026年10月9日20:53:32，EMU构建结束，状态文件记录exit\_code=0。
-\item 2026年10月9日20:55:26，workload与共同flash构建结束，记录\seqsplit{WORKLOAD\_BUILD\_PASS}。
-\item 原正常运行至21:00:28结束，退出状态为0。
-\end{itemize}
-\subsection{程序构建}
-\VerbatimInput[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\small]{evidence/workload-build.log}
-\subsection{差分运行与结果}
-\VerbatimInput[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\small]{evidence/hello-vadd-summary.log}
-\section{从原波形提取的事件时间线}
-
-\reportfigure{S1-06}{vadd输入、输出与提交事件时间线}{4.8cm}{按原事件CSV绘制三类用例的输入握手、输出握手及ROB提交；保留周期和结果标注，明确这是事件重绘图，不是原始波形截图。}{\seqsplit{evidence/vadd-commit-events.csv}与\seqsplit{vector-fix-alu-events.csv}；旧TikZ图可参考。版本范围：历史事件重绘；不可用于宣称新硬件延迟。}
-
-图中坐标来自原FST提取CSV，为事件重绘示意。vadd补码相加和回绕自检的对应坐标列于正文表格，完整原波形以SHA绑定。
-\section{日志附件索引}
-evidence目录保留NEMU构建、EMU构建、workload构建、原正常运行、原启动失败及并行度调整日志，并包含工具版本、子模块锁、两份事件CSV及信号索引。原始日志用于追溯实际操作，本文摘录用于阅读。
-\section{工程实现与验证方法补充}
-
-
-\subsection{部署任务的依赖关系}
-
-
-环境部署包含宿主运行时、硬件生成工具、RISC-V程序工具链和参考模型四条依赖链。Java与Mill负责解析Scala和Chisel工程，firtool将中间表示转换为可仿真的硬件描述，Verilator与宿主C++编译器生成EMU。RISC-V GCC和binutils处理目标程序及启动镜像。NEMU在参考侧执行同一条架构指令，为差分检查提供状态。\par
-
-
-四条依赖最终在一次真实运行中汇合。若只验证各工具能够打印版本，仍无法确认其组合产物相互兼容。因此阶段一把工具检查、实际构建、共同启动镜像、程序执行及差分结果串成完整链路。各层分别保存输入和输出摘要，使后续故障能够定位到对应环节。\par
-
-
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.2\linewidth}>{\raggedright\arraybackslash}p{0.24\linewidth}>{\raggedright\arraybackslash}p{0.24\linewidth}>{\raggedright\arraybackslash}p{0.22\linewidth}}
-\toprule
-\textbf{部署对象} & \textbf{上游依赖} & \textbf{主要产物} & \textbf{核对内容}\\\midrule\endhead
-{NEMU参考库} & {固定源码、配置、宿主编译器} & {动态参考库} & {配置、编译退出码、加载路径、SHA}\\
-{香山EMU} & {固定硬件与子模块、Java/Mill、firtool、Verilator} & {宿主仿真器} & {DUT参数、生成命令、编译器、SHA}\\
-{裸机程序} & {nexus-am、klib、RISC-V工具链} & {ELF/BIN、反汇编} & {ISA/ABI、入口地址、段、机器字}\\
-{共同flash} & {启动汇编与binutils} & {12字节启动镜像} & {两端加载同一实物}\\
-{差分运行} & {上述四类产物} & {原始日志、退出状态、波形} & {完整通过标记及实际状态比较}\\
-\bottomrule\end{longtable}}
-
-
-\subsection{内存、swap与并发的工程含义}
-
-
-香山仿真器构建会同时消耗Java堆、硬件生成工具内存、多个C++编译进程及文件缓存。仅提高Java堆并不能保证构建更快，反而可能挤压宿主和其他阶段可用内存。本项目在约27.7GiB物理内存的个人电脑上，将WSL上限配置为20GB，并设置16GB swap作为资源缓冲。\par
-
-
-并发度需要结合当前阶段选择。原始记录中将C++构建调整到-j4，并明确保留已完成对象。日常复现脚本采用较低默认并发，以便控制内存压力。两种配置的具体发生时间和真实命令分别记录，报告只据此说明实际操作。运行阶段每个DUT仍按单核、单仿真线程进行，宿主同时管理多个任务的数量另按对应合同约束。\par
-
-
-swap发生时，墙钟耗时可能显著增加。构建速度和模拟吞吐用于安排工作，性能表中的cycles由处理器仿真内部计数器给出。对于较长作业，还应保存内存峰值、日志大小、单调时钟限额和进程回收结果，以便判断完成状态。\par
-
-
-\subsection{固定源码与依赖恢复}
-
-
-xs-env协调硬件、NEMU、nexus-am和DRAMsim3等依赖。项目记录每个组件的完整提交，而不是只记录分支名。相同分支在后续日期可能移动，固定提交则可以明确回答当时使用了哪一份代码。\par
-
-
-恢复环境时先读取版本锁，再检查已有目录的提交与修改状态。遇到不一致时应保留现场并使用隔离目录，避免覆盖旧实验。递归子模块的身份同样属于硬件输入，单独更新主仓库并不能保证恢复了同一设计。\par
-
-
-新成员需要区别三种版本信息。第一种是香山上游基线，说明开发起点。第二种是包含vdot修改的硬件提交，说明最终设计。第三种是后续文档与封存提交，说明交付材料。三者共同构成可追溯记录，后两者之间必须通过源码树和产物摘要连接。\par
-
-
-\subsection{程序装载、启动与串口输出}
-
-
-目标程序以ELF承载符号、段信息和调试资料，以BIN供加载器装入。反汇编用于核对实际机器字和指令地址。即使C源代码未变，链接参数、数据布局或库版本发生变化，也可能改变指令PC，因此观察波形时应使用与被测BIN同次构建的反汇编。\par
-
-
-hello输出先确认程序已经经过启动代码到达C入口，并检查UART可见结果。随后程序启用并核对向量状态，执行三类vadd用例。输入数据、标量期望和完整输出比较均由程序实际执行，输出PASS之前已完成逐元素检查。\par
-
-
-原hello包含WSL宿主IPv4，该地址用于识别当时开发环境。它与仿真处理器中的网络设备能力分别表述。团队标识目前仍使用历史占位符，填写正式队名后应保留新镜像和输出的身份，原历史记录继续作为原实验凭据。\par
-
-
-\subsection{启动差分故障的定位过程}
-
-
-原故障发生在启动阶段PC 0x10000004，程序尚未进入用户向量运算。检查差分首次不一致的位置后，进一步比较两端启动flash，发现默认启动指令数量不同。若直接调整测试期望，无法解决两端起始状态和执行序列的根本差异。\par
-
-
-最终处理使用一份boot-flash.S构建共同镜像，并在启动命令中显式指定该文件。修复之后，两端经过相同启动序列，再加载同一程序，在保持DiffTest启用的条件下完成验证。该过程说明最早的差分错误应先从共同输入、复位和装载条件检查。\par
-
-
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}p{0.3\linewidth}>{\raggedright\arraybackslash}p{0.35\linewidth}}
-\toprule
-\textbf{排查步骤} & \textbf{所查证据} & \textbf{得到的判断}\\\midrule\endhead
-{定位首次差分} & {原失败日志、PC、整数状态} & {发生在启动代码}\\
-{比较输入} & {默认flash及反汇编} & {两端默认序列不一致}\\
-{统一启动实物} & {共同boot-flash.bin及SHA} & {输入条件明确}\\
-{使用原比较域恢复运行} & {正常输出、GOOD TRAP、退出状态} & {hello/vadd通过}\\
-\bottomrule\end{longtable}}
-
-
-
-\reportfigure{S1-07}{共同启动镜像修复前后的差分定位}{5.3cm}{左侧呈现原PC 0x10000004差异与启动反汇编，右侧呈现共同12字节flash和恢复证据；注明两端flash原差异，避免只截错误最后一行。}{保存的启动失败/修复日志、boot-flash.S和反汇编。版本范围：历史问题定位过程；不新增运行。}
-\subsection{向量加法结果的解释}
-
-
-SEW8下每个元素保存8位加法结果，运算按模256保留低8位。负数补码的无符号打印值应结合原输入解释。例如十进制254对应8位补码−2，打印成254不表示数学结果变为正数。边界用例专门包含回绕，以检查程序的参考计算与向量指令行为一致。\par
-
-
-结果进入执行单元输出后，仍需经过写回和乱序提交。本项目把输入握手、输出握手和ROB提交分别标出。vadd正数相加示例的输入19625、输出19626、提交19631说明三个事件属于不同流水位置。表中单次差值用于解释该次观测，不据此给出所有操作的固定提交延迟。\par
-
-
-\subsection{日志附件的阅读和复查顺序}
-
-
-建议先查看退出状态和通过摘要，确定记录是否完整。再沿日志开头的镜像、reference与flash路径核对输入。随后检查反汇编和事件CSV，最后在需要时打开完整波形。这样可以避免仅凭局部PASS文本就扩大结论，也能减少在大波形中盲目搜索的时间。\par
-
-
-本报告将精简日志放在正文，原始构建和运行日志作为附件保存。构建日志中的工具调用与运行日志中的架构输出承担不同用途，不能互相替代。附后的工具版本和子模块锁用于重建依赖身份，完整FST按SHA定位，便于他人核对真实信号。\par\section{环境部署详细方法}
-本节整理固定项目材料中的详细方法和原始合同。设计阶段的“拟实现”“必须验证”等表述属于原合同约束，当前完成状态以本报告正文和R5/P5证据为准。原日期、比较合同及未测边界按来源保留。
-\par\smallskip\noindent 来源：\href{https://github.com/cc77-builder/riscv/blob/347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e/team/docs/environment.md}{\seqsplit{team/docs/environment.md}}\par
-\subsection{Windows/WSL 原生文件系统与工具分工（工程实践）}
-
-
-此处是工程执行的默认选择，不改变任务包、验证合同或资源预算，也不把原生工具选择本身视为功能、性能或 T17 验收。\par
-
-
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}p{0.3\linewidth}>{\raggedright\arraybackslash}p{0.35\linewidth}}
-\toprule
-\textbf{源码／工作树和任务} & \textbf{默认执行位置} & \textbf{注意事项}\\\midrule\endhead
-{Windows NTFS（如 D:\textbackslash{}...）工作树上的 Git status/diff、完整索引检查、commit/push} & {\textbf{Windows 原生 Git}，直接使用 Windows 路径} & {避免经 /mnt/d 跨文件系统遍历大型 Git 工作树；发布仍遵守 Issue 短集成窗口、远端核对和快进规则}\\
-{Linux/WSL 原生目录（如 /home/...）中的 Git} & {\textbf{Linux 原生 Git}} & {不因“统一用 Windows Git”而倒置跨文件系统访问}\\
-{Chisel/Scala、硬件生成、RISC-V 工具链编译、EMU/NEMU、波形／综合时序等重型任务} & {\textbf{Linux/WSL 原生文件系统}，使用 Linux 工具} & {以当前工作包的固定工具和真实硬件／软件输入为准；受总体 CPU、内存和其他 Agent 的资源保护约束}\\
-{Windows 工作树与 Linux 运行目录之间的源码、二进制及证据交换} & {独立检出或固定快照，并在目标环境核验} & {记录完整 HEAD、未提交差异／源码快照、外部依赖和关键文件 SHA-256；不可直接把另一个工作树的 PASS 当作本次 PASS}\\
-\bottomrule\end{longtable}}
-
-
-执行前先确认实际仓库根、工作树位置、分支、完整 HEAD、Git common-dir、未提交改动和正在使用的输入／输出；选择\textbf{与工作树所在文件系统一致}的 Git。需要 Linux 构建时在原生目录准备独立源码与输出，核对身份后执行已有合同；不要仅为省一次复制就反复扫描 Windows 挂载目录。回写报告、准备提交时由目标 Windows 工作树使用原生 Git 检查实际落盘字节与索引，必要时按实验合同核对 Linux 运行快照。多个 Agent 不共用可写工作树或 Git index，既有运行和冻结证据保持受保护。\par
-
-
-\textbf{来源与限制：} 2026-10-24 R4 调用入口发布前，一次从 WSL 跨到 Windows 工作树的最终检查在约 300 秒超时，确认未提交、无残留进程和索引锁后，使用 Windows 原生 Git 完成剩余检查与提交（原始发布检查、\href{https://github.com/cc77-builder/riscv/issues/2\#issuecomment-6376672788}{Issue 记录}）。两次执行并非严格的同命令 A/B 基准，不能据此宣称任意 Git 操作有固定加速比例。若某任务实测另一种放置更合理，可保留证据后调整；正确性与可复现性优先。\par
-
-
-\subsection{WSL 内存}
-
-
-在 Windows 的 \%UserProfile\%\textbackslash{}.wslconfig 中设置：\par
-
-
-\begin{Verbatim}[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\small]
+WSL资源设置位于Windows用户目录的\seqsplit{\%UserProfile\%\textbackslash{}.wslconfig}：
+\begin{Verbatim}[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\footnotesize,baselinestretch=1]
 [wsl2]
 memory=20GB
 swap=16GB
 \end{Verbatim}
 
+保存正在进行的WSL工作后，在PowerShell执行\Verb|wsl --shutdown|，重新进入Ubuntu并用\Verb|free -h|核对。原机器的交换文件位于\seqsplit{D:\textbackslash{}WSL\textbackslash{}wsl-swap.vhdx}，其他机器按本机磁盘布局配置。内存规划同时覆盖JVM、硬件生成工具、C++编译进程和文件缓存；频繁换页会增加构建时间，因此应根据可用物理内存调整JVM堆与编译并发。
 
-保存正在进行的 WSL 工作后，在 PowerShell 执行 wsl --shutdown，重新进入 Ubuntu，用 free -h 核对。原机器 swap 文件放在 D:\textbackslash{}WSL\textbackslash{}wsl-swap.vhdx，新成员无需照搬该路径。较小内存的机器相应降低 JVM 堆和构建并行度，不能同时把 JVM 堆和构建进程占满可用内存。\par
+Scala/Chisel、RISC-V程序、EMU/NEMU和波形处理都在WSL的Linux原生目录中执行。Windows目录下的工作树则用Windows原生Git管理：从WSL跨文件系统访问Windows目录很慢，实测一次Git检查约300秒仍未完成。源码与产物跨环境交换时，在接收端核对提交号和关键文件的SHA-256，运行输出使用独立目录。
 
+\subsection{固定源码与工具安装}
 
-\subsection{固定源码}
+在团队仓库执行\Verb|bash team/scripts/prepare-dependencies.sh|，按版本锁初始化xs-env、NEMU、nexus-am、DRAMsim3及递归依赖。团队仓库的香山子模块使用\Verb|git clone --recurse-submodules|恢复；NEMU的SimPoint按子模块记录初始化，其余下载依赖按锁定脚本检出。已有目录的版本不一致时，先保留现场并核对输入；每次构建前记录所用的分支、提交号和未提交改动，便于事后复现。
 
-
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.29\linewidth}>{\raggedright\arraybackslash}p{0.65\linewidth}}
-\toprule
-\textbf{组件} & \textbf{已验证提交}\\\midrule\endhead
-{xs-env} & {\seqsplit{b0b506481e839a5df8a580e76f5aa246dc60fe7c}}\\
-{香山硬件基线} & {\seqsplit{16ae9ddcda54fc9a2fddffad73174cf793ac7814}}\\
-{NEMU} & {\seqsplit{a48a11f208ff81ad765591d83271d1b339fb3861}}\\
-{nexus-am} & {\seqsplit{086a238062fdfb3281b745a537b361983d0154b5}}\\
-{DRAMsim3} & {\seqsplit{1d2a9bf6da8e050d975ef2669c42faa93943f489}}\\
-{DiffTest} & {\seqsplit{62e4540c03c03aa947bdb67f4b6bf66f1a29c5d0}}\\
-{yunsuan} & {\seqsplit{cadd3c2f43096e253d61296b33ac697be8354e29}}\\
-\bottomrule\end{longtable}}
-
-
-在团队仓库运行 bash \seqsplit{team/scripts/prepare-dependencies.sh}：固定检出 xs-env，仅初始化配套 NEMU、nexus-am、DRAMsim3 及其递归子模块，然后锁定 NEMU 额外依赖。团队仓库自己的香山子模块通过 git clone \seqsplit{--recurse-submodules} 获取。脚本遇到已有依赖版本不同或已跟踪文件修改会停止，不丢弃队友修改。\par
-
-
-NEMU 额外依赖的实际提交见 锁定脚本。SimPoint 是 NEMU 已记录的子模块，通过递归初始化固定；其他额外下载仓库不能依赖当天默认分支，构建前必须执行锁定脚本。\par
-
-
-\subsection{已验证工具}
-
-
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.29\linewidth}>{\raggedright\arraybackslash}p{0.65\linewidth}}
-\toprule
-\textbf{工具} & \textbf{版本}\\\midrule\endhead
-{Oracle GraalVM JDK / javac} & {21.0.12}\\
-{LLVM / Clang} & {19.1.7}\\
-{Mill 项目版本} & {0.12.3}\\
-{Scala / Chisel} & {2.13.15 / 6.6.0，由项目解析}\\
-{firtool} & {1.62.1，由本次项目依赖解析}\\
-{Verilator} & {5.052，提交 \seqsplit{ea338be98e1e838d3518809ce8899f85a009963c}}\\
-{RISC-V GCC} & {11.4.0，\seqsplit{riscv64-linux-gnu-} 前缀}\\
-{GNU binutils} & {2.38}\\
-{宿主 GCC / G++} & {11.4.0}\\
-{Make / CMake / Ninja} & {4.3 / 3.22.1 / 1.10.1}\\
-{Python / GTKWave} & {3.10.12 / 3.3.104}\\
-\bottomrule\end{longtable}}
-
-
-完整工具输出见 \seqsplit{tool-versions.txt}。Ubuntu 软件包版本清单提供历史来源信息，不建议无差别恢复整台主机的软件包。\par
-
-
-\subsection{新机器安装}
-
-
-先完成配套源码检出，然后加载路径。在团队仓库根目录执行：\par
-
-
-\begin{Verbatim}[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\small]
+基础工具的安装入口如下。这里的命令用于恢复固定环境，安装后再核对实际工具版本。
+\begin{Verbatim}[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\footnotesize,baselinestretch=1]
 source team/scripts/activate.sh
 sudo bash "$TEAM_XS_ENV_ROOT/setup-tools.sh" --target base
 sudo bash "$TEAM_XS_ENV_ROOT/setup-tools.sh" --target llvm
@@ -335,27 +63,19 @@ sudo bash "$TEAM_XS_ENV_ROOT/setup-tools.sh" --target mill
 sudo apt-get install -y cmake ninja-build gtkwave
 \end{Verbatim}
 
+该入口来自固定xs-env的\href{https://github.com/OpenXiangShan/xs-env/blob/b0b506481e839a5df8a580e76f5aa246dc60fe7c/setup-tools.sh}{setup-tools.sh}。软件源中的补丁版本会变化，环境检查负责记录安装后实际使用的版本。Mill读取仓库的\seqsplit{.mill-version}选择项目版本，Scala、Chisel和firtool按项目解析结果核对。
 
-以上安装入口来自固定 xs-env 的 \href{https://github.com/OpenXiangShan/xs-env/blob/b0b506481e839a5df8a580e76f5aa246dc60fe7c/setup-tools.sh}{setup-tools.sh}。软件源提供的补丁版本可能变化，因此安装后必须运行团队环境检查。\par
-
-
-JDK 原安装脚本使用 Oracle 21/latest URL；它会随时间变化，不能据此保证重装仍是 21.0.12。本队提供 固定 GraalVM 安装脚本，使用已核对可下载的官方 21.0.12 Linux x64 归档和官方 SHA-256，安装到用户目录，不需要 sudo：\par
-
-
-\begin{Verbatim}[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\small]
+xs-env原有的JDK安装入口指向Oracle的“21/latest”地址，版本会随时间变化。团队改为固定安装21.0.12 Linux x64归档，并用官方SHA-256校验，安装到用户目录：
+\begin{Verbatim}[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\footnotesize,baselinestretch=1]
 export JAVA_HOME="$HOME/.local/share/graalvm-jdk-21.0.12"
 bash team/scripts/install-graalvm.sh
 source team/scripts/activate.sh
 \end{Verbatim}
 
+新终端沿用相同的JAVA\_HOME；脚本不会覆盖已有的其他版本。参考资料为\href{https://docs.oracle.com/en/graalvm/jdk/21/docs/getting-started/installation-linux/}{Oracle安装说明}、\href{https://download.oracle.com/graalvm/21/archive/graalvm-jdk-21.0.12\_linux-x64\_bin.tar.gz}{固定归档}和\href{https://download.oracle.com/graalvm/21/archive/graalvm-jdk-21.0.12\_linux-x64\_bin.tar.gz.sha256}{官方校验值}。
 
-新终端中继续导出相同的 JAVA\_HOME；已安装原本机 \seqsplit{/opt/graalvm-jdk-21} 的成员可使用默认路径，无需重装。脚本遇到已有 JDK 版本不同会停止，不能覆盖现有安装。新版本需要单独验证后更新团队记录。安装方法参考 \href{https://docs.oracle.com/en/graalvm/jdk/21/docs/getting-started/installation-linux/}{Oracle GraalVM 安装说明}；固定归档为 \href{https://download.oracle.com/graalvm/21/archive/graalvm-jdk-21.0.12\_linux-x64\_bin.tar.gz}{21.0.12 Linux x64}，校验来源为 \href{https://download.oracle.com/graalvm/21/archive/graalvm-jdk-21.0.12\_linux-x64\_bin.tar.gz.sha256}{官方 SHA-256}。\par
-
-
-Verilator 在用户目录源码编译，避免官方脚本默认 -j\$(nproc) 导致个人电脑资源不足。先安装依赖，再使用已安装的 Clang：\par
-
-
-\begin{Verbatim}[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\small]
+Verilator从固定提交构建，显式选择已安装的Clang，并按资源情况控制编译并发：
+\begin{Verbatim}[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\footnotesize,baselinestretch=1]
 sudo apt-get install -y help2man perl autoconf flex bison libgoogle-perftools-dev \
   libjemalloc-dev numactl perl-doc zlib1g-dev liblz4-dev libfl2 libfl-dev
 mkdir -p "$HOME/riscv-tools"
@@ -369,37 +89,254 @@ make -j2
 sudo make install
 \end{Verbatim}
 
+安装后回到团队仓库根目录，运行\seqsplit{activate.sh}和\seqsplit{check-environment.sh}。原环境目录为\seqsplit{/home/riscv/riscv-lab/xs-env/XiangShan}；\seqsplit{activate.sh}将实际团队仓库设为NOOP\_HOME，依据TEAM\_XS\_ENV\_ROOT选择NEMU和AM，并设置\seqsplit{LINUX\_GNU\_TOOLCHAIN=1}。向量工作负载构建显式使用\Verb|MARCH=rv64gcv|。
 
-回到团队仓库根目录：\par
+\subsection{集成构建与操作记录}
 
-
-\begin{Verbatim}[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\small]
+确认源码、工具和输出目录后，依次构建参考库、EMU、目标程序及共同flash，再执行差分运行：
+\begin{Verbatim}[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\footnotesize,baselinestretch=1]
 source team/scripts/activate.sh
 bash team/scripts/check-environment.sh
+bash team/scripts/stage1.sh nemu
+bash team/scripts/stage1.sh emu
+TEAM_ID=<团队或个人标识> bash team/scripts/stage1.sh workload
+bash team/scripts/stage1.sh run
 \end{Verbatim}
 
+图\ref{fig:S1-02}展示上述命令对应的执行流程。环境准备、按序构建和DiffTest运行依次进行，验证通过后确认结果并归档证据；检查、构建或运行未通过时，分别定位配置与依赖、构建日志或运行差分的原因，修正后返回对应环节重新执行。每一步无论成功或失败，都保留命令、日志、退出码和SHA-256。
 
-此检查核对配套源码提交、香山递归子模块与关键工具版本；香山 HEAD 可以包含本队新增文档提交，但必须保留硬件基线祖先。检查通过不等于新硬件改动已通过仿真。不要手动升级全局 Scala；项目 Mill 会读取仓库 .mill-version，启动器来源版本不等于项目版本。\par
+\reportfigure{S1-02}{环境部署与验证执行流程}{11cm}{依次完成环境准备、NEMU与EMU及程序构建、DiffTest运行和证据归档。检查、构建或运行失败时，按原因定位后返回对应环节；成功与失败记录均保留命令、退出码和摘要。}{2026-10-09部署记录与共同flash恢复过程的流程重绘。}
 
+表\ref{tab:s1-operations}摘录10月9日构建后半段的主要操作及结果，时间为UTC+8。20:42时根据实际资源中断C++编译，把并行度调整为4后继续，已完成的目标文件全部保留。
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.20\linewidth}>{\raggedright\arraybackslash}p{0.72\linewidth}}
+\caption{2026年10月9日主要操作记录}\label{tab:s1-operations}\\
+\toprule
+\textbf{时间} & \textbf{操作与结果}\\\midrule\endfirsthead
+\caption[]{2026年10月9日主要操作记录（续）}\\
+\toprule
+\textbf{时间} & \textbf{操作与结果}\\\midrule\endhead
+20:42:15 & 中断并恢复C++构建，并行度调整为4，保留已完成对象。\\
+20:53:32 & EMU构建完成，状态文件记录exit\_code=0。\\
+20:55:26 & 工作负载与共同flash构建完成，记录\seqsplit{WORKLOAD\_BUILD\_PASS}。\\
+21:00:28 & 正常差分运行结束，退出状态为0。\\
+\bottomrule\end{longtable}}
 
-\subsection{使用现有环境}
+这里的并行度只影响宿主机上的编译速度，与被测处理器的核数和EMU仿真线程数无关。
 
+\section{共同启动输入与差分故障定位}
 
-现有主机只需从 \seqsplit{/home/riscv/riscv-lab/xs-env/XiangShan} 运行脚本。activate.sh 会设置当前团队仓库为 NOOP\_HOME，按 \seqsplit{TEAM\_XS\_ENV\_ROOT} 指定 NEMU 和 AM，设置 \seqsplit{LINUX\_GNU\_TOOLCHAIN=1}。AM 默认不会自动启用向量 ISA，因此构建 workload 仍需显式设置 MARCH=rv64gcv。\par\section{NEMU构建原始日志}
-以下为对应历史记录的原始输出，日期、路径和提交身份保留原值。
-\VerbatimInput[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\small]{evidence/rendered/nemu-build.txt}
-\section{EMU构建原始日志}
-以下为对应历史记录的原始输出，日期、路径和提交身份保留原值。
-\VerbatimInput[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\small]{evidence/emu-build-20261009-204228.log}
-\section{工具与编译链版本原始输出}
-以下为对应历史记录的原始输出，日期、路径和提交身份保留原值。
-\VerbatimInput[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\small]{evidence/tool-versions.txt}
-\section{固定子模块版本清单}
-以下为对应历史记录的原始输出，日期、路径和提交身份保留原值。
-\VerbatimInput[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\small]{evidence/submodules-after-build.lock.txt}
-\section{原始波形事件记录}
-以下为对应历史记录的原始输出，日期、路径和提交身份保留原值。
-\VerbatimInput[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\small]{evidence/vadd-commit-events.csv}
-\section{向量运算单元事件记录}
-以下为对应历史记录的原始输出，日期、路径和提交身份保留原值。
-\VerbatimInput[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\small]{evidence/vector-fix-alu-events.csv}
+初次运行在PC\seqsplit{0x10000004}出现t0寄存器差异，记录的instrCnt为2，尚处于启动代码。比较默认flash和反汇编后发现，两端分别使用了3条与6条启动指令。修复由同一份\seqsplit{boot-flash.S}生成12字节\seqsplit{boot-flash.bin}，并通过运行参数显式提供给DUT与NEMU。随后两端以共同启动输入进入同一工作负载，在DiffTest启用的条件下完成hello/vadd检查。
+
+\reportfigure{S1-07}{共同启动镜像与差分恢复}{12.1cm}{首次差异位于PC 0x10000004、instrCnt=2。共同启动文件由三条机器指令组成，图中0--3、4--7和8--11标示文件字节偏移。显式加载同一12字节flash后，三类共24个元素完成比较，并以GOOD TRAP、exit 0结束。}{2026-10-09原始失败和恢复日志、\seqsplit{boot-flash-disassembly.txt}、\seqsplit{hello-vadd-summary.log}；出处与摘要见\seqsplit{figures/evidence-20261105/figure-data.json}。}
+
+图\ref{fig:S1-07}对照了修正前后的情况。上部表格逐字节列出共同启动文件：三条指令依次令t0=1、将其左移为0x80000000并跳转至该地址，0--3、4--7和8--11为文件内的字节偏移。下部左侧为修正前两端各用默认启动序列时的首次差异，右侧为两端显式加载同一文件后的结果：三类共24个元素通过比较，程序以GOOD TRAP和exit 0结束。
+
+\section{hello输出与三类vadd结果}
+
+\subsection{输入配置与结果解释}
+
+vadd程序设置SEW8、LMUL1、VL8，执行两次\Verb|vle8.v|、一次\Verb|vadd.vv|和一次向量存储，再逐字节比较标量参考。三个用例检查基本加法、负数补码和8位回绕，合计比较24个活动元素。表\ref{tab:s1-vadd-values}给出三个用例的输出，分别以日志中的逐元素字节和波形中的低64位十六进制两种形式表示。
+
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.18\linewidth}>{\raggedright\arraybackslash}p{0.43\linewidth}>{\raggedright\arraybackslash}p{0.31\linewidth}}
+\caption{vadd输出的两种表示}\label{tab:s1-vadd-values}\\
+\toprule
+\textbf{用例} & \textbf{按元素顺序输出的字节} & \textbf{结果低64位}\\\midrule\endfirsthead
+\caption[]{vadd输出的两种表示（续）}\\
+\toprule
+\textbf{用例} & \textbf{按元素顺序输出的字节} & \textbf{结果低64位}\\\midrule\endhead
+正数相加 & 9 9 9 9 9 9 9 9 & \seqsplit{0x0909090909090909}\\
+负数补码 & 254 252 250 248 246 244 242 240 & \seqsplit{0xf0f2f4f6f8fafcfe}\\
+边界回绕 & 128 127 0 0 0 0 254 254 & \seqsplit{0xfefe000000007f80}\\
+\bottomrule\end{longtable}}
+
+每个元素按模256保留低8位。例如打印值254对应十六进制FE，按8位补码解释为$-2$。波形将多个字节合并显示为十六进制，右端为最低字节；日志按元素序号递增输出，因此两种书写顺序应按字节位置对应。VLEN128给出寄存器宽度，VL8给出本用例的活动元素数，表中结果覆盖低64位的八个元素。
+
+\subsection{10月9日环境验证}
+
+10月9日首次运行时团队标识尚未确定，hello程序使用临时标识\seqsplit{riscv-vdot-team}，因此输出中带有\texttt{identity\_status=placeholder}；显示的IPv4为\seqsplit{10.198.93.97}，对应当时WSL宿主。10月25日复核改用确定的标识重新构建，见下一小节。正常记录包含\seqsplit{HELLO\_VADD\_PASS cases=3 lanes=24}、DiffTest启用标记、GOOD TRAP和退出状态0；整程序统计为16557条指令、42962周期，覆盖启动、UART和结果校验。图\ref{fig:S1-03}为当次运行结束时的终端输出，可以看到身份行、三类vadd的PASS结果、DiffTest启用标记、GOOD TRAP以及退出状态0。
+
+\reportfigure{S1-03}{hello与vadd正常结束输出}{8.5cm}{日志展示三类vadd结果、DiffTest运行和GOOD TRAP终态，输出中的身份与地址按原实验保留。}{用户截图\seqsplit{WindowsTerminal\_m5hXeDJnV1.png}及\seqsplit{evidence/hello-vadd-summary.log}；2026-10-09运行记录。}
+
+\subsection{10月25日双模型复核}
+
+10月25日（UTC+8）的复核以成员标识LiZufan001重新构建英文hello程序，输出格式为赛题要求的“hello xiangshan, I am xxx, IP address”，并标注地址来自构建宿主：
+\begin{Verbatim}[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\footnotesize,baselinestretch=1]
+hello xiangshan, I am LiZufan001, IP address=172.27.184.54
+identity_status=configured; IP address is build-host IPv4
+\end{Verbatim}
+
+同一BIN分别在封存生产EMU和独立FST模型上运行，均加载普通NEMU参考库并启用DiffTest。两次运行都通过三组、24个元素检查，命中GOOD TRAP并正常退出；每次为16621条指令、43249周期。这里的周期同样对应完整hello/vadd程序。表\ref{tab:s1-t04-runs}列出两次运行的实际起止时间与结果，时间取自各自的运行回执。
+
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.22\linewidth}>{\raggedright\arraybackslash}p{0.38\linewidth}>{\raggedright\arraybackslash}p{0.32\linewidth}}
+\caption{10月25日双模型运行记录（UTC+8）}\label{tab:s1-t04-runs}\\
+\toprule
+\textbf{模型} & \textbf{实际起止时间} & \textbf{运行结果}\\\midrule\endfirsthead
+\caption[]{10月25日双模型运行记录（UTC+8）（续）}\\
+\toprule
+\textbf{模型} & \textbf{实际起止时间} & \textbf{运行结果}\\\midrule\endhead
+生产EMU & 01:09:21--01:10:18 & DiffTest通过，GOOD TRAP，exit 0\\
+独立FST模型 & 01:28:57--01:31:24 & DiffTest通过，GOOD TRAP，exit 0\\
+\bottomrule\end{longtable}}
+
+FST波形模型复用已有构建的1807个生成文件单独编译；用发布的源码重新编译得到的程序BIN和flash，与实际运行时的输入逐字节相同。对应的\href{https://github.com/cc77-builder/riscv/blob/2690c7370fb7c94111b4619bbac352e9be4ccc4d/team/evidence/stage1-current-20261025/acceptance.json}{验收记录}、\href{https://github.com/cc77-builder/riscv/blob/2690c7370fb7c94111b4619bbac352e9be4ccc4d/team/evidence/stage1-current-20261025/production-run/run.json}{生产运行回执}和\href{https://github.com/cc77-builder/riscv/blob/2690c7370fb7c94111b4619bbac352e9be4ccc4d/team/evidence/stage1-current-20261025/trace-run/run.json}{FST运行回执}见团队仓库。
+
+\section{向量执行与波形观察}
+
+向量指令经取指、译码、重命名与调度进入执行单元。两个\Verb|vle8.v|提供输入，\Verb|vadd.vv|产生结果，随后经过写回与ROB提交。本文用提交PC\seqsplit{0x80000138}、机器字\seqsplit{0x021101d7}及\Verb|vecwen=1, wdest=3|关联三类用例，并分别记录结果输出和架构提交两个观察点。
+
+\subsection{10月9日事件与原始截图}
+
+表\ref{tab:s1-original-events}沿用原FST提取CSV的事件坐标，列出三类用例在执行输入、结果输出和ROB提交三处的位置以及输出低64位。局部截图未显示时钟；截图中的ps只是波形工具的显示单位，数值为仿真记录的时间坐标，不代表实际时间。本表只用于定位事件，指令时延与性能在第三阶段用专门的测量窗口评估。
+
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.15\linewidth}>{\raggedright\arraybackslash}p{0.16\linewidth}>{\raggedright\arraybackslash}p{0.16\linewidth}>{\raggedright\arraybackslash}p{0.16\linewidth}>{\raggedright\arraybackslash}p{0.29\linewidth}}
+\caption{10月9日vadd事件坐标}\label{tab:s1-original-events}\\
+\toprule
+\textbf{用例} & \textbf{输入} & \textbf{输出} & \textbf{提交} & \textbf{输出低64位}\\\midrule\endfirsthead
+\caption[]{10月9日vadd事件坐标（续）}\\
+\toprule
+\textbf{用例} & \textbf{输入} & \textbf{输出} & \textbf{提交} & \textbf{输出低64位}\\\midrule\endhead
+正数 & 19625 & 19626 & 19631 & \seqsplit{0x0909090909090909}\\
+负数 & 25460 & 25461 & 25466 & \seqsplit{0xf0f2f4f6f8fafcfe}\\
+边界 & 33009 & 33010 & 33015 & \seqsplit{0xfefe000000007f80}\\
+\bottomrule\end{longtable}}
+
+图\ref{fig:S1-06}把表\ref{tab:s1-original-events}的坐标画成时间线。三类用例都在输入后1个周期给出结果，再经5个周期完成ROB提交；每个用例的三个事件都属于同一条vadd指令。
+
+\reportfigure{S1-06}{vadd输入、输出与提交事件时间线}{8.2cm}{三类用例按指令身份关联执行端输入、结果输出和ROB提交；数值沿用事件CSV坐标。}{\seqsplit{evidence/vadd-commit-events.csv}与\seqsplit{evidence/vector-fix-alu-events.csv}；2026-10-09事件重绘，生成数据见\seqsplit{figures/evidence-20261105}。}
+
+图\ref{fig:S1-04}是正数用例的原始GTKWave截图：子图（a）的游标位于19626处的输出事件，三个事件的位置同时可见；子图（b）、（c）分别给出19625输入游标和19631提交游标处的信号值。图\ref{fig:S1-05}为负数与边界用例的输出波形，两者的输出低64位分别为\seqsplit{F0F2F4F6F8FAFCFE}和\seqsplit{FEFE000000007F80}，与表\ref{tab:s1-vadd-values}一致。
+
+\reportfigure{S1-04}{vadd正数用例的执行与提交波形}{16.0cm}{(a)输出事件及相关位置；(b)输入游标处信号值；(c)提交游标处信号值。19625、19626和19631对应表中的三个事件坐标。}{用户上传的正数输出截图及\seqsplit{riscv-lab/picture}中的输入、提交截图；2026-10-09原基线波形，保留原始图并裁剪外部空白。}
+
+\reportfigure{S1-05}{vadd负数与边界用例结果波形}{10.0cm}{负数和边界样例输出低64位分别为\seqsplit{F0F2F4F6F8FAFCFE}与\seqsplit{FEFE000000007F80}，游标对应各自输入、输出和提交位置。}{用户上传\seqsplit{msrdc\_yWBpPeYM8q.png}与\seqsplit{msrdc\_6cIzJ9aIVJ.png}；同一2026-10-09波形的八个活动元素。}
+
+原完整FST路径记录为\seqsplit{/home/riscv/riscv-lab/stage1-evidence/hello-vadd.fst}，大小220295598字节。复核可先从提交PC定位同次反汇编，再根据CSV打开波形窗口，最后联合查看时钟、valid/ready、操作数、结果及事务标识。事件CSV和波形提取记录见团队仓库的\seqsplit{team/evidence/stage1-20261009/}。
+
+\subsection{10月25日含时钟的调试记录}
+
+10月25日的FST波形模型保留了实际时钟信号。从中选取两个向量ALU（VIAluFix）实例和八个提交槽，共127个信号，逐个检查33249个时钟上升沿，得到九条事件：三次FU输入、三次FU输出和三次DPI-C提交观测。三笔vadd都在\seqsplit{exus\_2}中的VIAluFix执行。
+
+采样取每个上升沿之前、时钟低电平期间的稳定值，周期字段取当时的\seqsplit{DifftestTrapEvent.io\_cycleCnt}，FST原始时戳另存。DPI-C是仿真模型调用C函数的接口，提交记录经过\seqsplit{Rob.scala}中\Verb|delay=3|的观察路径，表内DPI-C列因此表示提交接口的观测时刻。按上述规则得到的九条事件列于表\ref{tab:s1-t04-events}，表中同时给出每笔运算的ROB flag、value和目的物理寄存器。
+
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.10\linewidth}>{\raggedright\arraybackslash}p{0.16\linewidth}>{\raggedright\arraybackslash}p{0.16\linewidth}>{\raggedright\arraybackslash}p{0.17\linewidth}>{\raggedright\arraybackslash}p{0.33\linewidth}}
+\caption{10月25日按时钟沿采样的事件记录}\label{tab:s1-t04-events}\\
+\toprule
+\textbf{用例} & \textbf{FU输入timer} & \textbf{FU输出timer} & \textbf{DPI-C观测timer} & \textbf{ROB flag/value/pdest}\\\midrule\endfirsthead
+\caption[]{10月25日按时钟沿采样的事件记录（续）}\\
+\toprule
+\textbf{用例} & \textbf{FU输入timer} & \textbf{FU输出timer} & \textbf{DPI-C观测timer} & \textbf{ROB flag/value/pdest}\\\midrule\endhead
+正数 & 19525 & 19526 & 19531 & 1 / 13 / 51\\
+负数 & 25526 & 25527 & 25532 & 0 / 21 / 57\\
+边界 & 33193 & 33194 & 33199 & 1 / 25 / 63\\
+\bottomrule\end{longtable}}
+
+三类数值结果与表\ref{tab:s1-vadd-values}一致。表中的timer是周期计数。10月25日的程序换用新标识重新编译，指令地址和执行时刻都与10月9日不同，因此表\ref{tab:s1-t04-events}与表\ref{tab:s1-original-events}的绝对坐标不同；但每个用例从输入到输出相隔1个周期、从输出到提交相隔5个周期，两次完全一致。完整采样定义、信号清单、原始时戳及摘要保存在\href{https://github.com/cc77-builder/riscv/blob/2690c7370fb7c94111b4619bbac352e9be4ccc4d/team/evidence/stage1-current-20261025/wave/wave.json}{wave.json}；只含所选信号的FST可直接用GTKWave查看。接口与观察路径分别对应固定源码的\href{https://github.com/cc77-builder/riscv/blob/34bae6d4acceac939f958199dae53c14bc1f6183/src/main/scala/xiangshan/backend/fu/wrapper/VIAluFix.scala}{VIAluFix包装层}和\href{https://github.com/cc77-builder/riscv/blob/34bae6d4acceac939f958199dae53c14bc1f6183/src/main/scala/xiangshan/backend/rob/Rob.scala}{Rob.scala}。
+
+提取工具本身也做了24项检查，覆盖日志完整性、退出状态、输入文件摘要和关键结果，并用缺少FU事件、缺半个周期、操作数未知和事务标识错误等反例确认工具能发现问题。
+
+\section{版本与复现索引}\label{sec:1-index}
+
+本节列出两次实验所用的源码、工具和产物，供复现和核对使用。
+
+\subsection{源码与工具版本}
+
+表\ref{tab:s1-source-lock}列出10月9日部署时固定的源码版本，完整递归依赖见团队仓库的\seqsplit{team/evidence/stage1-20261009/submodules-after-build.lock.txt}。
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.23\linewidth}>{\raggedright\arraybackslash}p{0.69\linewidth}}
+\caption{10月9日源码版本锁}\label{tab:s1-source-lock}\\
+\toprule
+\textbf{组件} & \textbf{提交号}\\\midrule\endfirsthead
+\caption[]{10月9日源码版本锁（续）}\\
+\toprule
+\textbf{组件} & \textbf{提交号}\\\midrule\endhead
+xs-env & \seqsplit{b0b506481e839a5df8a580e76f5aa246dc60fe7c}\\
+香山基线 & \seqsplit{16ae9ddcda54fc9a2fddffad73174cf793ac7814}\\
+NEMU & \seqsplit{a48a11f208ff81ad765591d83271d1b339fb3861}\\
+nexus-am & \seqsplit{086a238062fdfb3281b745a537b361983d0154b5}\\
+DRAMsim3 & \seqsplit{1d2a9bf6da8e050d975ef2669c42faa93943f489}\\
+DiffTest & \seqsplit{62e4540c03c03aa947bdb67f4b6bf66f1a29c5d0}\\
+yunsuan & \seqsplit{cadd3c2f43096e253d61296b33ac697be8354e29}\\
+\bottomrule\end{longtable}}
+
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.34\linewidth}>{\raggedright\arraybackslash}p{0.58\linewidth}}
+\caption{10月9日工具版本}\label{tab:s1-tools}\\
+\toprule
+\textbf{工具} & \textbf{版本}\\\midrule\endfirsthead
+\caption[]{10月9日工具版本（续）}\\
+\toprule
+\textbf{工具} & \textbf{版本}\\\midrule\endhead
+Oracle GraalVM JDK / javac & 21.0.12\\
+LLVM / Clang & 19.1.7\\
+Mill & 项目版本0.12.3\\
+Scala / Chisel & 2.13.15 / 6.6.0\\
+firtool & 1.62.1\\
+Verilator & 5.052，提交\seqsplit{ea338be98e1e838d3518809ce8899f85a009963c}\\
+RISC-V GCC / GNU binutils & 11.4.0（\seqsplit{riscv64-linux-gnu-}前缀）/ 2.38\\
+宿主GCC / G++ & 11.4.0\\
+Make / CMake / Ninja & 4.3 / 3.22.1 / 1.10.1\\
+Python / GTKWave & 3.10.12 / 3.3.104\\
+\bottomrule\end{longtable}}
+
+表\ref{tab:s1-tools}为同一环境实际使用的工具版本，完整版本输出和Ubuntu软件包清单见同一目录的\seqsplit{tool-versions.txt}与\seqsplit{ubuntu-packages.lock.tsv}。
+
+\subsection{10月25日复核的产物摘要}
+
+10月25日复核所用硬件构建的源码提交为\seqsplit{34bae6d4acceac939f958199dae53c14bc1f6183}。表\ref{tab:s1-t04-identities}列出这次运行主要产物的SHA-256，与团队仓库\seqsplit{team/evidence/stage1-current-20261025/}中的运行和验收记录一致。
+{\footnotesize\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.23\linewidth}>{\raggedright\arraybackslash}p{0.69\linewidth}}
+\caption{10月25日复核主要产物的SHA-256}\label{tab:s1-t04-identities}\\
+\toprule
+\textbf{对象} & \textbf{SHA-256}\\\midrule\endfirsthead
+\caption[]{10月25日复核主要产物的SHA-256（续）}\\
+\toprule
+\textbf{对象} & \textbf{SHA-256}\\\midrule\endhead
+生产EMU & \seqsplit{ff840528eb1009e94906eefb3773ca321050f309553543ab26f0db23c410e30f}\\
+FST模型 & \seqsplit{1ff3f457ff582d0c3155a15dafa1fa60b8275d9356e29a0b7806c9d3915ce9f7}\\
+普通NEMU参考库 & \seqsplit{8af118e5519db7ef6001010a2d547707c5d47630412e80abfc3f343bfef987c9}\\
+共同程序BIN & \seqsplit{d81437b44473cef2b0c5777330e13fd076567d4fc1a4296be35d971e51a4dcad}\\
+共同flash & \seqsplit{a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994}\\
+完整FST（181143183字节） & \seqsplit{cf8abe9104fb955c7dc4bf1efda6588a61060fce33857b9ddc6d5020421be299}\\
+只含所选信号的FST（393288字节） & \seqsplit{4c9f442704871010026654fd9d60854024b270a83be6354be5dee3ff25df24e1}\\
+\bottomrule\end{longtable}}
+
+\subsection{文件与记录索引}
+
+运行源码位于团队仓库的\seqsplit{team/workloads/hello-vadd}。10月9日的证据在\seqsplit{team/evidence/stage1-20261009}，10月25日复核的证据在\seqsplit{team/evidence/stage1-current-20261025}；第\ref{sec:1-logs}节摘录的日志另存于报告工程的\seqsplit{evidence/}目录。完整FST文件较大，按记录中的路径和SHA-256定位。各记录的用途见表\ref{tab:s1-evidence-index}。
+
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.50\linewidth}>{\raggedright\arraybackslash}p{0.42\linewidth}}
+\caption{第一阶段记录索引}\label{tab:s1-evidence-index}\\
+\toprule
+\textbf{记录} & \textbf{用途}\\\midrule\endfirsthead
+\toprule
+\textbf{记录} & \textbf{用途}\\\midrule\endhead
+\multicolumn{2}{l}{报告工程的\texttt{evidence/}目录：}\\
+\seqsplit{workload-build.log} & 工作负载与flash的构建命令及成功状态（第\ref{sec:1-logs}节摘录）\\
+\seqsplit{hello-vadd-summary.log} & 10月9日运行摘要（第\ref{sec:1-logs}节摘录）\\
+\seqsplit{rendered/hello-vadd-production-20261025.txt}与\seqsplit{hello-vadd-trace-20261025.txt} & 10月25日两次运行的终端输出（第\ref{sec:1-logs}节摘录）\\
+\multicolumn{2}{l}{团队仓库的\texttt{team/evidence/stage1-20261009/}：}\\
+\seqsplit{tool-versions.txt}、\seqsplit{ubuntu-packages.lock.tsv} & 工具版本原始输出与软件包清单\\
+\seqsplit{submodules-after-build.lock.txt} & 递归依赖完整提交锁\\
+\seqsplit{vadd-commit-events.csv}、\seqsplit{vector-fix-alu-events.csv} & 提交记录与三组向量ALU输入输出记录，表\ref{tab:s1-original-events}的来源\\
+\seqsplit{wave-extraction.log} & 10月9日的波形事件提取记录\\
+\multicolumn{2}{l}{团队仓库的\texttt{team/evidence/stage1-current-20261025/}：}\\
+\seqsplit{production-run/run.json}、\seqsplit{trace-run/run.json} & 10月25日两次运行的命令、输入摘要、退出状态和日志摘要\\
+\seqsplit{wave/wave.json} & 采样定义、127个信号和九条事件\\
+\seqsplit{acceptance.json}、\seqsplit{RESULT.md} & 输入等价、24项工具检查与复现说明\\
+\bottomrule\end{longtable}}
+
+复核时先检查运行回执和通过摘要，再核对程序、参考库与flash的SHA-256，最后用反汇编和事件CSV定位波形。详细操作入口见\href{https://github.com/cc77-builder/riscv/blob/eca41d7cd959f5f3c4f240e382919c492d1ccb96/team/docs/stage1.md}{阶段一记录}、\href{https://github.com/cc77-builder/riscv/blob/347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e/team/docs/environment.md}{环境部署方法}和\href{https://github.com/cc77-builder/riscv/blob/2690c7370fb7c94111b4619bbac352e9be4ccc4d/team/evidence/stage1-current-20261025/RESULT.md}{10月25日复核的复现说明}。
+
+\section{操作日志摘录}\label{sec:1-logs}
+
+本节摘录主要的构建和运行输出；版本锁、事件CSV和运行回执见表\ref{tab:s1-evidence-index}所列位置。
+
+\subsection{10月9日工作负载构建}
+\VerbatimInput[firstline=5,lastline=17,breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\footnotesize,baselinestretch=1]{evidence/workload-build.log}
+\VerbatimInput[firstline=22,lastline=26,breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\footnotesize,baselinestretch=1]{evidence/workload-build.log}
+
+\subsection{10月9日正常运行摘要}
+\VerbatimInput[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\footnotesize,baselinestretch=1]{evidence/hello-vadd-summary.log}
+
+\subsection{10月25日生产模型输出}
+\VerbatimInput[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\footnotesize,baselinestretch=1]{evidence/rendered/hello-vadd-production-20261025.txt}
+
+\subsection{10月25日FST模型输出}
+\VerbatimInput[firstline=11,lastline=21,breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\footnotesize,baselinestretch=1]{evidence/rendered/hello-vadd-trace-20261025.txt}

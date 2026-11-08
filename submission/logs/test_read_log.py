@@ -80,7 +80,10 @@ class HistoryTests(unittest.TestCase):
         dest.mkdir()
         outside = self.root / 'outside'
         outside.mkdir()
-        (dest / 'team').symlink_to(outside, target_is_directory=True)
+        try:
+            (dest / 'team').symlink_to(outside, target_is_directory=True)
+        except OSError as error:
+            self.skipTest('symlink creation not permitted: ' + str(error))
         with self.assertRaisesRegex(ValueError, 'symlink'):
             self.history().restore(dest)
         self.assertEqual(list(outside.iterdir()), [])

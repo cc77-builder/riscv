@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="160mm" height="80mm" viewBox="0 0 160 80">
+<title>八项点积的乘积槽、归约网络和结果槽</title>
+<defs><marker id="m46627A" markerUnits="userSpaceOnUse" markerWidth="1.2" markerHeight="1.2" viewBox="0 0 6 6" refX="5.6" refY="3" orient="auto-start-reverse"><path d="M0,0.9 L6,3 L0,5.1 Z" fill="#46627A"/></marker><marker id="m6A4C93" markerUnits="userSpaceOnUse" markerWidth="1.2" markerHeight="1.2" viewBox="0 0 6 6" refX="5.6" refY="3" orient="auto-start-reverse"><path d="M0,0.9 L6,3 L0,5.1 Z" fill="#6A4C93"/></marker><marker id="mAD641F" markerUnits="userSpaceOnUse" markerWidth="1.2" markerHeight="1.2" viewBox="0 0 6 6" refX="5.6" refY="3" orient="auto-start-reverse"><path d="M0,0.9 L6,3 L0,5.1 Z" fill="#AD641F"/></marker></defs>
+<rect x="0" y="0" width="160" height="80" fill="#FFFFFF"/>
+<text x="10.750" y="4.800" font-size="2.9986" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">输入与提取</tspan></text>
+<text x="28.750" y="4.800" font-size="2.9986" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">并行乘法</tspan></text>
+<text x="43.000" y="4.800" font-size="2.9986" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">P </tspan><tspan font-family="Noto Serif SC" font-weight="400">乘积槽</tspan></text>
+<text x="73.500" y="4.800" font-size="2.9986" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">足宽归约树（组合逻辑）</tspan></text>
+<text x="125.500" y="4.800" font-size="2.9986" text-anchor="middle" fill="#13827F" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">R </tspan><tspan font-family="Noto Serif SC" font-weight="400">结果槽</tspan></text>
+<text x="147.500" y="4.800" font-size="2.9986" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">完整向量输出</tspan></text>
+<text x="28.750" y="9.400" font-size="2.2931" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">signed 8 × 8</tspan></text>
+<text x="43.000" y="9.400" font-size="2.2931" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">8 × 16 bit</tspan></text>
+<text x="62.000" y="9.400" font-size="2.2931" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">4 × 17 bit</tspan></text>
+<text x="73.500" y="9.400" font-size="2.2931" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">2 × 18 bit</tspan></text>
+<text x="84.500" y="9.400" font-size="2.2931" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">1 × 19 bit</tspan></text>
+<text x="125.500" y="9.400" font-size="2.2931" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">rPacket.res.data</tspan></text>
+<rect x="34.000" y="11.500" width="18.000" height="67.500" rx="1.0" fill="#F2F7FC" stroke="#7CA1C4" stroke-width="0.22"/>
+<rect x="55.000" y="11.500" width="37.000" height="46.000" rx="1.0" fill="#F7F9FB" stroke="#D5DEE6" stroke-width="0.2"/>
+<rect x="116.500" y="11.500" width="18.000" height="67.500" rx="1.0" fill="#EFF8F6" stroke="#6CA8A4" stroke-width="0.22"/>
+<rect x="1.000" y="13.000" width="19.500" height="43.500" rx="0.7" fill="#F7F9FB" stroke="#D5DEE6" stroke-width="0.24"/>
+<text x="10.750" y="18.000" font-size="2.6458" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">vs1[127:0]</tspan></text>
+<text x="10.750" y="21.300" font-size="2.2931" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">128 bit</tspan></text>
+<text x="10.750" y="26.200" font-size="2.6458" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">vs2[127:0]</tspan></text>
+<text x="10.750" y="29.500" font-size="2.2931" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">128 bit</tspan></text>
+<text x="10.750" y="35.600" font-size="2.2931" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">各取低</tspan><tspan font-family="Times New Roman" font-weight="400"> 64 </tspan><tspan font-family="Noto Serif SC" font-weight="400">位</tspan></text>
+<text x="10.750" y="38.900" font-size="2.2931" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">分为</tspan><tspan font-family="Times New Roman" font-weight="400"> 8 </tspan><tspan font-family="Noto Serif SC" font-weight="400">对字节</tspan></text>
+<text x="10.750" y="43.600" font-size="2.6458" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">a[i], b[i]</tspan></text>
+<text x="10.750" y="46.900" font-size="2.2931" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">signed INT8</tspan></text>
+<text x="10.750" y="51.200" font-size="2.2931" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">源</tspan><tspan font-family="Times New Roman" font-weight="400"> [127:64]</tspan></text>
+<text x="10.750" y="54.400" font-size="2.2931" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">不参与计算</tspan></text>
+<polyline points="3.000,32.200 18.500,32.200" fill="none" stroke="#D5DEE6" stroke-width="0.18" stroke-linejoin="round"/>
+<polyline points="20.500,34.200 23.000,34.200" fill="none" stroke="#46627A" stroke-width="0.16" stroke-linejoin="round"/>
+<polyline points="23.000,16.000 23.000,52.400" fill="none" stroke="#46627A" stroke-width="0.16" stroke-linejoin="round"/>
+<circle cx="23.000" cy="34.200" r="0.45" fill="#46627A"/>
+<polyline points="23.000,16.000 25.500,16.000" fill="none" stroke="#46627A" stroke-width="0.16" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<rect x="25.500" y="14.100" width="5.500" height="3.800" rx="0.7" fill="#FFFFFF" stroke="#BFCCD7" stroke-width="0.24"/>
+<text x="28.250" y="17.000" font-size="2.6458" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">×</tspan></text>
+<polyline points="31.000,16.000 36.000,16.000" fill="none" stroke="#46627A" stroke-width="0.16" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<rect x="36.000" y="14.000" width="14.000" height="4.000" rx="0.7" fill="#FFFFFF" stroke="#7CA1C4" stroke-width="0.2"/>
+<text x="43.000" y="16.950" font-size="2.4694" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">p0 [15:0]</tspan></text>
+<polyline points="23.000,21.200 25.500,21.200" fill="none" stroke="#46627A" stroke-width="0.16" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<rect x="25.500" y="19.300" width="5.500" height="3.800" rx="0.7" fill="#FFFFFF" stroke="#BFCCD7" stroke-width="0.24"/>
+<text x="28.250" y="22.200" font-size="2.6458" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">×</tspan></text>
+<polyline points="31.000,21.200 36.000,21.200" fill="none" stroke="#46627A" stroke-width="0.16" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<rect x="36.000" y="19.200" width="14.000" height="4.000" rx="0.7" fill="#FFFFFF" stroke="#7CA1C4" stroke-width="0.2"/>
+<text x="43.000" y="22.150" font-size="2.4694" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">p1 [15:0]</tspan></text>
+<polyline points="23.000,26.400 25.500,26.400" fill="none" stroke="#46627A" stroke-width="0.16" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<rect x="25.500" y="24.500" width="5.500" height="3.800" rx="0.7" fill="#FFFFFF" stroke="#BFCCD7" stroke-width="0.24"/>
+<text x="28.250" y="27.400" font-size="2.6458" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">×</tspan></text>
+<polyline points="31.000,26.400 36.000,26.400" fill="none" stroke="#46627A" stroke-width="0.16" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<rect x="36.000" y="24.400" width="14.000" height="4.000" rx="0.7" fill="#FFFFFF" stroke="#7CA1C4" stroke-width="0.2"/>
+<text x="43.000" y="27.350" font-size="2.4694" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">p2 [15:0]</tspan></text>
+<polyline points="23.000,31.600 25.500,31.600" fill="none" stroke="#46627A" stroke-width="0.16" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<rect x="25.500" y="29.700" width="5.500" height="3.800" rx="0.7" fill="#FFFFFF" stroke="#BFCCD7" stroke-width="0.24"/>
+<text x="28.250" y="32.600" font-size="2.6458" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">×</tspan></text>
+<polyline points="31.000,31.600 36.000,31.600" fill="none" stroke="#46627A" stroke-width="0.16" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<rect x="36.000" y="29.600" width="14.000" height="4.000" rx="0.7" fill="#FFFFFF" stroke="#7CA1C4" stroke-width="0.2"/>
+<text x="43.000" y="32.550" font-size="2.4694" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">p3 [15:0]</tspan></text>
+<polyline points="23.000,36.800 25.500,36.800" fill="none" stroke="#46627A" stroke-width="0.16" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<rect x="25.500" y="34.900" width="5.500" height="3.800" rx="0.7" fill="#FFFFFF" stroke="#BFCCD7" stroke-width="0.24"/>
+<text x="28.250" y="37.800" font-size="2.6458" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">×</tspan></text>
+<polyline points="31.000,36.800 36.000,36.800" fill="none" stroke="#46627A" stroke-width="0.16" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<rect x="36.000" y="34.800" width="14.000" height="4.000" rx="0.7" fill="#FFFFFF" stroke="#7CA1C4" stroke-width="0.2"/>
+<text x="43.000" y="37.750" font-size="2.4694" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">p4 [15:0]</tspan></text>
+<polyline points="23.000,42.000 25.500,42.000" fill="none" stroke="#46627A" stroke-width="0.16" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<rect x="25.500" y="40.100" width="5.500" height="3.800" rx="0.7" fill="#FFFFFF" stroke="#BFCCD7" stroke-width="0.24"/>
+<text x="28.250" y="43.000" font-size="2.6458" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">×</tspan></text>
+<polyline points="31.000,42.000 36.000,42.000" fill="none" stroke="#46627A" stroke-width="0.16" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<rect x="36.000" y="40.000" width="14.000" height="4.000" rx="0.7" fill="#FFFFFF" stroke="#7CA1C4" stroke-width="0.2"/>
+<text x="43.000" y="42.950" font-size="2.4694" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">p5 [15:0]</tspan></text>
+<polyline points="23.000,47.200 25.500,47.200" fill="none" stroke="#46627A" stroke-width="0.16" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<rect x="25.500" y="45.300" width="5.500" height="3.800" rx="0.7" fill="#FFFFFF" stroke="#BFCCD7" stroke-width="0.24"/>
+<text x="28.250" y="48.200" font-size="2.6458" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">×</tspan></text>
+<polyline points="31.000,47.200 36.000,47.200" fill="none" stroke="#46627A" stroke-width="0.16" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<rect x="36.000" y="45.200" width="14.000" height="4.000" rx="0.7" fill="#FFFFFF" stroke="#7CA1C4" stroke-width="0.2"/>
+<text x="43.000" y="48.150" font-size="2.4694" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">p6 [15:0]</tspan></text>
+<polyline points="23.000,52.400 25.500,52.400" fill="none" stroke="#46627A" stroke-width="0.16" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<rect x="25.500" y="50.500" width="5.500" height="3.800" rx="0.7" fill="#FFFFFF" stroke="#BFCCD7" stroke-width="0.24"/>
+<text x="28.250" y="53.400" font-size="2.6458" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">×</tspan></text>
+<polyline points="31.000,52.400 36.000,52.400" fill="none" stroke="#46627A" stroke-width="0.16" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<rect x="36.000" y="50.400" width="14.000" height="4.000" rx="0.7" fill="#FFFFFF" stroke="#7CA1C4" stroke-width="0.2"/>
+<text x="43.000" y="53.350" font-size="2.4694" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">p7 [15:0]</tspan></text>
+<polyline points="50.000,16.000 56.500,16.000 60.101,17.703" fill="none" stroke="#46627A" stroke-width="0.16" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<polyline points="50.000,21.200 56.500,21.200 60.101,19.497" fill="none" stroke="#46627A" stroke-width="0.16" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<polyline points="50.000,26.400 56.500,26.400 60.101,28.103" fill="none" stroke="#46627A" stroke-width="0.16" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<polyline points="50.000,31.600 56.500,31.600 60.101,29.897" fill="none" stroke="#46627A" stroke-width="0.16" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<polyline points="50.000,36.800 56.500,36.800 60.101,38.503" fill="none" stroke="#46627A" stroke-width="0.16" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<polyline points="50.000,42.000 56.500,42.000 60.101,40.297" fill="none" stroke="#46627A" stroke-width="0.16" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<polyline points="50.000,47.200 56.500,47.200 60.101,48.903" fill="none" stroke="#46627A" stroke-width="0.16" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<polyline points="50.000,52.400 56.500,52.400 60.101,50.697" fill="none" stroke="#46627A" stroke-width="0.16" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<polyline points="64.100,18.600 71.662,22.783" fill="none" stroke="#46627A" stroke-width="0.16" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<polyline points="64.100,29.000 71.662,24.817" fill="none" stroke="#46627A" stroke-width="0.16" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<polyline points="64.100,39.400 71.662,43.583" fill="none" stroke="#46627A" stroke-width="0.16" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<polyline points="64.100,49.800 71.662,45.617" fill="none" stroke="#46627A" stroke-width="0.16" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<polyline points="75.600,23.800 83.135,32.604" fill="none" stroke="#46627A" stroke-width="0.16" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<polyline points="75.600,44.600 83.135,35.796" fill="none" stroke="#46627A" stroke-width="0.16" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<circle cx="62.000" cy="18.600" r="2.1" fill="#FFFFFF" stroke="#2B6189" stroke-width="0.2"/>
+<text x="62.000" y="19.800" font-size="2.8222" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">+</tspan></text>
+<circle cx="62.000" cy="29.000" r="2.1" fill="#FFFFFF" stroke="#2B6189" stroke-width="0.2"/>
+<text x="62.000" y="30.200" font-size="2.8222" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">+</tspan></text>
+<circle cx="62.000" cy="39.400" r="2.1" fill="#FFFFFF" stroke="#2B6189" stroke-width="0.2"/>
+<text x="62.000" y="40.600" font-size="2.8222" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">+</tspan></text>
+<circle cx="62.000" cy="49.800" r="2.1" fill="#FFFFFF" stroke="#2B6189" stroke-width="0.2"/>
+<text x="62.000" y="51.000" font-size="2.8222" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">+</tspan></text>
+<circle cx="73.500" cy="23.800" r="2.1" fill="#FFFFFF" stroke="#2B6189" stroke-width="0.2"/>
+<text x="73.500" y="25.000" font-size="2.8222" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">+</tspan></text>
+<circle cx="73.500" cy="44.600" r="2.1" fill="#FFFFFF" stroke="#2B6189" stroke-width="0.2"/>
+<text x="73.500" y="45.800" font-size="2.8222" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">+</tspan></text>
+<circle cx="84.500" cy="34.200" r="2.1" fill="#FFFFFF" stroke="#2B6189" stroke-width="0.2"/>
+<text x="84.500" y="35.400" font-size="2.8222" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">+</tspan></text>
+<text x="90.600" y="37.900" font-size="2.2931" text-anchor="middle" fill="#13827F" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">精确和</tspan><tspan font-family="Times New Roman" font-weight="400"> S</tspan></text>
+<text x="73.500" y="55.900" font-size="2.2931" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">每级保留符号与进位</tspan></text>
+<polyline points="86.600,34.200 95.000,34.200" fill="none" stroke="#46627A" stroke-width="0.16" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<text x="90.800" y="33.200" font-size="2.2931" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">19</tspan></text>
+<rect x="95.000" y="29.700" width="11.500" height="9.000" rx="0.7" fill="#FFFFFF" stroke="#BFCCD7" stroke-width="0.24"/>
+<text x="100.750" y="33.400" font-size="2.4694" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">符号扩展</tspan></text>
+<text x="100.750" y="37.000" font-size="2.2931" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">19 → 32</tspan></text>
+<polygon points="109.500,30.500 113.500,32.500 113.500,40.500 109.500,42.500" fill="#FFF7EF" stroke-linejoin="round" stroke="#BD8C4C" stroke-width="0.24"/>
+<polyline points="106.500,34.200 109.500,34.200" fill="none" stroke="#46627A" stroke-width="0.16" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<text x="110.700" y="35.100" font-size="2.2931" text-anchor="start" fill="#AD641F" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">0</tspan></text>
+<text x="110.700" y="40.500" font-size="2.2931" text-anchor="start" fill="#AD641F" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">1</tspan></text>
+<rect x="97.000" y="42.500" width="9.500" height="5.000" rx="0.7" fill="#FFF7EF" stroke="#BD8C4C" stroke-width="0.24"/>
+<text x="101.750" y="46.000" font-size="2.4694" text-anchor="middle" fill="#AD641F" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">32&#x27;b0</tspan></text>
+<polyline points="106.500,45.000 108.000,45.000 108.000,39.600 109.500,39.600" fill="none" stroke="#AD641F" stroke-width="0.16" stroke-linejoin="round" marker-end="url(#mAD641F)"/>
+<text x="111.500" y="28.900" font-size="2.2931" text-anchor="middle" fill="#AD641F" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">异常选零</tspan></text>
+<polyline points="113.500,36.500 118.500,36.500" fill="none" stroke="#46627A" stroke-width="0.16" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<rect x="118.500" y="31.000" width="14.000" height="11.000" rx="0.7" fill="#EFF8F6" stroke="#6CA8A4" stroke-width="0.24"/>
+<text x="125.500" y="35.600" font-size="2.9986" text-anchor="middle" fill="#13827F" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">R.data</tspan></text>
+<text x="125.500" y="39.700" font-size="2.4694" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">32 bit</tspan></text>
+<text x="125.500" y="47.400" font-size="2.4694" text-anchor="middle" fill="#13827F" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">只锁存</tspan><tspan font-family="Times New Roman" font-weight="400"> 32 </tspan><tspan font-family="Noto Serif SC" font-weight="400">位</tspan></text>
+<text x="125.500" y="50.900" font-size="2.2931" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">高</tspan><tspan font-family="Times New Roman" font-weight="400"> 96 </tspan><tspan font-family="Noto Serif SC" font-weight="400">位</tspan></text>
+<text x="125.500" y="54.200" font-size="2.2931" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">在输出补零</tspan></text>
+<rect x="142.000" y="14.500" width="10.000" height="5.000" rx="0.7" fill="#FFFFFF" stroke="#BFCCD7" stroke-width="0.24"/>
+<text x="147.000" y="18.100" font-size="2.4694" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">96&#x27;b0</tspan></text>
+<polyline points="147.000,19.500 147.000,26.800" fill="none" stroke="#46627A" stroke-width="0.16" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<text x="148.200" y="23.900" font-size="2.2931" text-anchor="start" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">96</tspan></text>
+<rect x="137.000" y="26.800" width="20.000" height="18.400" rx="0.7" fill="#EFF8F6" stroke="#6CA8A4" stroke-width="0.24"/>
+<text x="147.000" y="30.600" font-size="2.4694" text-anchor="middle" fill="#13827F" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">输出拼接</tspan></text>
+<rect x="138.500" y="32.200" width="17.000" height="5.200" rx="0.4" fill="#F7F9FB" stroke="#D5DEE6" stroke-width="0.18"/>
+<text x="147.000" y="35.700" font-size="2.2931" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">高</tspan><tspan font-family="Times New Roman" font-weight="400"> 96 </tspan><tspan font-family="Noto Serif SC" font-weight="400">位</tspan><tspan font-family="Times New Roman" font-weight="400"> = 0</tspan></text>
+<rect x="138.500" y="38.200" width="17.000" height="5.200" rx="0.4" fill="#FFFFFF" stroke="#6CA8A4" stroke-width="0.18"/>
+<text x="147.000" y="41.700" font-size="2.2931" text-anchor="middle" fill="#13827F" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">R.data [31:0]</tspan></text>
+<polyline points="132.500,36.500 135.600,36.500 135.600,40.800 138.500,40.800" fill="none" stroke="#46627A" stroke-width="0.16" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<polyline points="157.000,36.000 159.700,36.000" fill="none" stroke="#46627A" stroke-width="0.16" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<text x="147.500" y="49.400" font-size="2.4694" text-anchor="middle" fill="#13827F" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">128 </tspan><tspan font-family="Noto Serif SC" font-weight="400">位完整结果</tspan></text>
+<text x="147.500" y="52.800" font-size="2.2931" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">io.out.bits.res.data</tspan></text>
+<text x="147.500" y="56.200" font-size="2.2931" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">io.out.valid = liveR</tspan></text>
+<text x="147.500" y="59.800" font-size="2.2931" text-anchor="middle" fill="#AD641F" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">异常：关闭目的写使能</tspan></text>
+<text x="1.000" y="62.400" font-size="2.4694" text-anchor="start" fill="#6A4C93" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">事务身份通路</tspan></text>
+<rect x="1.000" y="64.500" width="31.000" height="14.500" rx="0.7" fill="#F6F2FA" stroke="#9C86BC" stroke-width="0.24"/>
+<text x="16.500" y="67.900" font-size="2.2931" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">ROB / pdest / vpu ctrl</tspan></text>
+<text x="16.500" y="71.200" font-size="2.2931" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">vecWen / v0Wen / exceptionVec</tspan></text>
+<text x="16.500" y="74.500" font-size="2.2931" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">perfDebugInfo + </tspan><tspan font-family="Noto Serif SC" font-weight="400">合法性检查</tspan></text>
+<text x="16.500" y="77.800" font-size="2.2931" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">与数据同步推进</tspan></text>
+<polyline points="32.000,68.200 36.000,68.200" fill="none" stroke="#6A4C93" stroke-width="0.16" stroke-linejoin="round" stroke-dasharray="0.9 0.6" marker-end="url(#m6A4C93)"/>
+<rect x="36.000" y="64.000" width="14.000" height="8.500" rx="0.7" fill="#F6F2FA" stroke="#9C86BC" stroke-width="0.24"/>
+<text x="43.000" y="67.600" font-size="2.4694" text-anchor="middle" fill="#6A4C93" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">pCtrl</tspan></text>
+<text x="43.000" y="71.000" font-size="2.4694" text-anchor="middle" fill="#6A4C93" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">pPerf</tspan></text>
+<text x="43.000" y="76.600" font-size="2.4694" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">pValid</tspan></text>
+<polyline points="47.000,64.000 47.000,61.600 111.500,61.600 111.500,41.600" fill="none" stroke="#AD641F" stroke-width="0.16" stroke-linejoin="round" stroke-dasharray="0.9 0.6" marker-end="url(#mAD641F)"/>
+<text x="80.000" y="60.400" font-size="2.2931" text-anchor="middle" fill="#AD641F" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">P </tspan><tspan font-family="Noto Serif SC" font-weight="400">中已锁存的</tspan><tspan font-family="Times New Roman" font-weight="400"> illegalInstr </tspan><tspan font-family="Noto Serif SC" font-weight="400">标记</tspan></text>
+<polyline points="50.000,68.200 118.500,68.200" fill="none" stroke="#6A4C93" stroke-width="0.16" stroke-linejoin="round" stroke-dasharray="0.9 0.6" marker-end="url(#m6A4C93)"/>
+<text x="85.000" y="66.900" font-size="2.4694" text-anchor="middle" fill="#6A4C93" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">move</tspan><tspan font-family="Noto Serif SC" font-weight="400">：旧</tspan><tspan font-family="Times New Roman" font-weight="400"> P </tspan><tspan font-family="Noto Serif SC" font-weight="400">的整包身份进入</tspan><tspan font-family="Times New Roman" font-weight="400"> R</tspan></text>
+<rect x="118.500" y="64.000" width="14.000" height="8.500" rx="0.7" fill="#F6F2FA" stroke="#9C86BC" stroke-width="0.24"/>
+<text x="125.500" y="67.500" font-size="2.2931" text-anchor="middle" fill="#6A4C93" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">rPacket.ctrl</tspan></text>
+<text x="125.500" y="70.900" font-size="2.2931" text-anchor="middle" fill="#6A4C93" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">perfDebugInfo</tspan></text>
+<text x="125.500" y="76.600" font-size="2.4694" text-anchor="middle" fill="#13827F" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">rValid</tspan></text>
+<polyline points="132.500,68.200 137.000,68.200" fill="none" stroke="#6A4C93" stroke-width="0.16" stroke-linejoin="round" stroke-dasharray="0.9 0.6" marker-end="url(#m6A4C93)"/>
+<rect x="137.000" y="63.500" width="22.500" height="15.500" rx="0.7" fill="#F6F2FA" stroke="#9C86BC" stroke-width="0.24"/>
+<text x="148.250" y="66.900" font-size="2.2931" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">ROB / pdest / </tspan><tspan font-family="Noto Serif SC" font-weight="400">写使能</tspan></text>
+<text x="148.250" y="70.200" font-size="2.2931" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">exceptionVec / perf</tspan></text>
+<text x="148.250" y="73.500" font-size="2.2931" text-anchor="middle" fill="#6A4C93" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">与</tspan><tspan font-family="Times New Roman" font-weight="400"> R.data </tspan><tspan font-family="Noto Serif SC" font-weight="400">属于</tspan></text>
+<text x="148.250" y="76.800" font-size="2.2931" text-anchor="middle" fill="#6A4C93" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">同一事务</tspan></text>
+</svg>

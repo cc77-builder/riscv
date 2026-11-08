@@ -17,10 +17,10 @@
    ├─ reports/                    一套报告源码及三个阶段 PDF、合订本
    ├─ logs/                       全部保留日志、元数据、索引和读取工具
    ├─ docs/                       环境说明
-   ├─ SUBMISSION_CHECKLIST.md      正式提交待补材料
    ├─ FINAL_VERSION.json           最终代码与配置身份
    ├─ MANIFEST.json、verify.py     当前交付文件校验
-   └─ verification/              本次整理的检查日志
+   ├─ tools/make_manifest.py       重新生成 MANIFEST.json
+   └─ verification/              检查命令与日志
 ```
 
 ## 代码在哪里
