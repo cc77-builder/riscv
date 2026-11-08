@@ -57,8 +57,8 @@ export VDOT_EMU_BIN=/absolute/path/to/final/emu
 | 最终两槽 FU 与 VFEX4 父级 | `bash submission/reproduce.sh o2-fu`、`o2-parent`（即 `team/scripts/check-vdot-o2.sh fu`、`parent`）：生成 RTL、Verilator 编译、10022 组向量与全部故障注入；运行日志见 `verification/o2-check-20261108/` |
 | vdot 测试程序与整核差分 | `team/scripts/vdot-tests.sh host`、`build-xs full`、`run-rtl full` |
 | RVV 等价基线 | `team/scripts/baseline-tests.sh` 与 `team/workloads/rvv-baseline/` |
-| 微基准与 C8 数据复算 | `cd 提交/测试数据与运行结果证明材料 && python3 tools/prepare_data.py`：从已保存的逐窗口结果复算表 3-3、3-4，并回读控制日志 |
-| 微基准硬件重测 | `bash submission/reproduce.sh perf build/run/analyze`，完整命令见 [PERFORMANCE_RETEST.md](PERFORMANCE_RETEST.md) |
+| 微基准与 C8 数据复算 | `cd 提交/测试数据与运行结果证明材料 && python3 tools/prepare_data.py`：从保存的逐窗口结果复算表 3-3、3-4，并回读控制日志 |
+| 微基准硬件重测 | `bash submission/reproduce.sh perf build`、`run`、`analyze`，完整命令见[性能重测说明](PERFORMANCE_RETEST.md) |
 
 整核运行前，`VDOT_EMU_BIN`、`VDOT_NEMU_REF`、数据目录、镜像和 `TEAM_EVIDENCE_DIR` 都要指向本次准备的输入和新的输出目录。`artifact_guard.py` 会核对 NEMU、镜像和输入的来源身份。
 

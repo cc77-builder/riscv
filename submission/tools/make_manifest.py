@@ -36,7 +36,7 @@ def main():
     manifest = {key: old[key] for key in ("schema", "base_commit", "src_tree", "original_source_files", "submodules")}
     manifest["src_tree"] = git("rev-parse", "HEAD:src").decode().strip()
     manifest["files"] = sorted(files, key=lambda item: item["path"])
-    MANIFEST.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    MANIFEST.write_bytes((json.dumps(manifest, ensure_ascii=False, indent=2) + "\n").encode("utf-8"))
     print(json.dumps({"status": "MANIFEST_WRITTEN", "files": len(files)}))
 
 

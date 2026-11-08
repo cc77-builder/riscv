@@ -29,7 +29,7 @@
 | 2.3 正数、负数、边界测试 | 第二阶段 2.5 | 参考模型与数据 [team/models/vdot/](team/models/vdot/)；单元测试顶层 [team/rtl/vdot/](team/rtl/vdot/)；整核测试程序 [vdot-exceptions/](team/workloads/vdot-exceptions/)；入口 [vdot-tests.sh](team/scripts/vdot-tests.sh) |
 | 3 NEMU 扩展 | 第三阶段 3.2 | 补丁 [team/patches/nemu/](team/patches/nemu/)；构建脚本 [prepare-nemu-vdot.sh](team/scripts/prepare-nemu-vdot.sh) |
 | 3 协同仿真与波形 | 第三阶段 3.3～3.4 | DiffTest 运行 `vdot-tests.sh run-rtl`；波形截图 [S3-WAVE-01～03](submission/reports/figures/) |
-| 3 性能分析 | 第三阶段 3.5～3.8 | 微基准与 C8 逐窗口数据 [证明材料 data/](提交/测试数据与运行结果证明材料/data/)，可用其中 `tools/prepare_data.py` 从已保存的逐窗口结果复算表 3-3、3-4；RVV 基线 [rvv-baseline/](team/workloads/rvv-baseline/)；软件库见下方 |
+| 3 性能分析 | 第三阶段 3.5～3.8 | 微基准与 C8 逐窗口数据 [证明材料 data/](提交/测试数据与运行结果证明材料/data/)，可用其中 `tools/prepare_data.py` 从保存的逐窗口结果复算表 3-3、3-4；硬件重测见[性能重测说明](submission/PERFORMANCE_RETEST.md)；RVV 基线 [rvv-baseline/](team/workloads/rvv-baseline/)；软件库见下方 |
 | 3 面积与时序 | 第三阶段 3.9 | 综合与 STA 原始报告 [submission/reports/evidence/](submission/reports/evidence/) |
 
 ### vdot 源码
@@ -111,7 +111,7 @@ bash submission/reproduce.sh logs-check  # 原始日志归档校验
 bash submission/reproduce.sh o2-fu       # 最终两槽 FU 的 RTL 测试与故障注入（需 mill、Verilator）
 ```
 
-新 EMU 的四场景微基准重测：见 [性能重测说明](submission/PERFORMANCE_RETEST.md)，入口 `bash submission/reproduce.sh perf`。
+在新构建的 EMU 上重测四类微基准：`bash submission/reproduce.sh perf`，见[性能重测说明](submission/PERFORMANCE_RETEST.md)。
 
 完整的环境准备、阶段一至阶段三运行步骤见[复现操作步骤](提交/复现操作步骤.pdf)。
 
