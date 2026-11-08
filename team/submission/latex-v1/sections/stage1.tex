@@ -1,16 +1,21 @@
 \renewcommand{\stagefigureprefix}{1}\setcounter{figure}{0}
 \reporttitle{第一阶段：环境部署与向量执行过程}
 
-本阶段对应赛题的环境部署验证、操作日志和向量加法执行过程。2026年10月9日的记录展示环境建立、启动差分修复及三类vadd用例；10月25日的T04复核进一步完成英文hello输出、两种EMU模型的差分运行和含时钟的波形调试。下文按两组实验各自的源码、输入和产物说明结果，自定义vdot点积的设计与测试见第二阶段。
+本阶段对应赛题的环境部署验证、操作日志和向量加法执行过程，主要结果有三项：一是在WSL2中搭建了香山处理器仿真、NEMU参考模型和测试程序的完整构建与协同仿真环境；二是定位并修复了两端启动代码不一致导致的差分失败；三是三类vadd用例共24个元素在DiffTest下全部通过，并用波形观察了向量加法从执行到提交的过程。
+
+实验分两次进行：10月9日完成环境搭建和首次验证，10月25日复核了英文hello输出、两种仿真模型的差分运行和含时钟的波形。第\ref{sec:1-index}、\ref{sec:1-logs}节集中列出版本信息和日志摘录，供复核使用。自定义vdot点积的设计与测试见第二阶段。
 
 \section{协同验证框架与实验环境}
 
-香山EMU、NEMU参考模型和裸机程序共同构成验证环境。EMU模拟硬件执行，NEMU按指令语义更新参考状态，DiffTest在架构状态比较点核对两者。裸机程序提供可重复的输入和结果检查；共同启动flash把复位过程连接到程序入口。hello检查程序启动与串口输出，vadd则覆盖向量配置、加载、按元素加法、存储和提交。
+香山EMU、NEMU参考模型和裸机程序共同构成验证环境。EMU模拟硬件执行，NEMU按指令语义更新参考状态，DiffTest在指令提交时比较两者的架构状态。裸机程序提供可重复的输入和结果检查；共同启动flash负责在复位后跳转到程序入口。hello检查程序启动与串口输出，vadd则覆盖向量配置、加载、按元素加法、存储和提交。
 
-硬件侧由Java与Mill解析Scala/Chisel工程，firtool处理硬件中间表示，Verilator与宿主C++编译器生成EMU。目标程序使用RISC-V GCC和binutils编译、链接并生成ELF、BIN及反汇编。NEMU在宿主侧构建为参考库，由运行参数显式加载。各条构建链最终汇合到同一次差分运行，构建记录与运行记录通过产物摘要相连。
+硬件侧由Java与Mill解析Scala/Chisel工程，firtool处理硬件中间表示，Verilator与宿主C++编译器生成EMU。目标程序使用RISC-V GCC和binutils编译、链接并生成ELF、BIN及反汇编。NEMU在宿主侧构建为参考库，由运行参数显式加载。三条构建链的产物在同一次差分运行中汇合，构建记录和运行记录通过产物的SHA-256摘要对应起来。表\ref{tab:s1-artifacts}列出各类产物的作用，以及复核时需要查看的主要记录。
 
 {\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.19\linewidth}>{\raggedright\arraybackslash}p{0.34\linewidth}>{\raggedright\arraybackslash}p{0.39\linewidth}}
 \caption{构建产物与复核入口}\label{tab:s1-artifacts}\\
+\toprule
+\textbf{产物} & \textbf{作用} & \textbf{主要记录}\\\midrule\endfirsthead
+\caption[]{构建产物与复核入口（续）}\\
 \toprule
 \textbf{产物} & \textbf{作用} & \textbf{主要记录}\\\midrule\endhead
 香山EMU & 执行DUT仿真 & 硬件源码、DUT配置、生成命令、编译工具与文件SHA-256\\
@@ -20,13 +25,17 @@ NEMU参考库 & 提供架构状态参考 & 固定源码、构建配置、实际�
 运行记录 & 关联输入、结果及结束状态 & 原始日志、退出码、波形、事件CSV与信号索引\\
 \bottomrule\end{longtable}}
 
-\reportfigure{S1-01}{开发环境与软硬件协同验证框架}{12.1cm}{Windows宿主中的WSL2承载构建与差分运行。实线表示构建依赖，虚线表示运行使用关系；程序BIN与启动flash作为共同输入，EMU与NEMU分别提供DUT和参考状态。}{2026-10-09环境记录、\seqsplit{team/scripts/stage1.sh}及固定版本表；精确图来源见\seqsplit{figures/redesigned-20261105/selected-diagrams.json}。}
+图\ref{fig:S1-01}给出这一协同验证框架的整体结构。上半区为WSL2中的三条编译链：香山工程经JDK、Mill、firtool和Verilator生成EMU，AM程序与启动代码经RISC-V GCC生成共同的程序BIN和boot-flash，NEMU源码由宿主编译器构建为参考动态库。下半区为差分运行：EMU与NEMU加载同一镜像，DUT按架构提交推进参考模型，两端状态送入DiffTest比较，串口输出、波形、比较结果和退出状态统一归档。
+
+\reportfigure{S1-01}{开发环境与软硬件协同验证框架}{10cm}{上半区展示WSL2中的三条编译链，下半区展示共同程序与启动输入驱动的差分运行。紫色虚线表示按架构提交推进参考模型；DUT与参考端的状态进入DiffTest，日志、波形和退出状态统一归档。}{2026-10-09历史环境的结构重绘；共同启动flash与程序BIN为分别记录的输入，固定版本见本章。}
 
 10月9日实验在Windows下的WSL2 Ubuntu 22.04.5运行，宿主处理器为Ryzen 7 7840H，可用物理内存约27.7GiB。WSL配置20GB内存和16GB swap，构建与仿真放在WSL原生文件系统。DUT为MinimalConfig、单核、VLEN128，原波形构建采用\seqsplit{EMU\_THREADS=1}和\seqsplit{EMU\_TRACE=fst}。运行时显式指定128MB RAM、共同flash和固定参考库。
 
-本阶段的源码锁、完整工具版本和T04产物摘要集中列于本章末尾。10月9日的部署基线与10月25日复用的T17生成物分别标识，便于准确恢复对应实验。
+本阶段的源码版本、工具版本和10月25日复核的产物摘要集中列于本章末尾，两次实验所用的构建分开标注。
 
 \section{部署与构建过程}
+
+环境按本节步骤搭建。10月9日依次完成了NEMU参考库、香山EMU、测试程序和共同启动flash的构建，并完成首次差分运行，过程记录见表\ref{tab:s1-operations}。
 
 \subsection{资源配置与工具位置}
 
@@ -41,7 +50,7 @@ swap=16GB
 
 Windows工作树的Git检查、提交与推送使用Windows原生Git；Linux/WSL原生目录使用Linux Git。Scala/Chisel、RISC-V程序、EMU/NEMU和波形处理在Linux原生目录执行。源码与产物跨环境交换时，在接收端核对完整提交号、未提交差异、外部依赖及关键文件SHA-256，运行输出使用独立目录。
 
-这一安排也对应实际工程经验：2026年10月24日R4发布检查中，一次从WSL访问Windows工作树的检查约300秒后超时；核实未提交且没有残留进程或索引锁后，Windows原生Git完成了后续检查与提交。具体过程见\href{https://github.com/cc77-builder/riscv/issues/2\#issuecomment-6376672788}{协调记录}，该记录用于说明执行位置的选择。
+这样安排来自实际遇到的问题：2026年10月24日的一次检查中，一次从WSL访问Windows工作树的检查约300秒后超时；核实未提交且没有残留进程或索引锁后，Windows原生Git完成了后续检查与提交。具体过程见\href{https://github.com/cc77-builder/riscv/issues/2\#issuecomment-6376672788}{协调记录}。
 
 \subsection{固定源码与工具安装}
 
@@ -96,11 +105,16 @@ TEAM_ID=正式团队标识 bash team/scripts/stage1.sh workload
 bash team/scripts/stage1.sh run
 \end{Verbatim}
 
-\reportfigure{S1-02}{环境部署与验证执行流程}{14.9cm}{环境准备、工具核查、构建、DiffTest运行和证据归档构成主流程。失败记录单独保存，定位后按原因返回相应环节。}{2026-10-09实际部署顺序、构建和运行日志；精确图来源见\seqsplit{figures/redesigned-20261105/selected-diagrams.json}。}
+图\ref{fig:S1-02}展示上述命令对应的执行流程。环境准备、按序构建和DiffTest运行依次进行，验证通过后确认结果并归档证据；检查、构建或运行未通过时，分别定位配置与依赖、构建日志或运行差分的原因，修正后返回对应环节重新执行。每一步无论成功或失败，都保留命令、日志、退出码和SHA-256。
 
-10月9日构建按实际资源调整并行度，过程保留在原始日志中。下表时间沿用日志的UTC+8时区。
+\reportfigure{S1-02}{环境部署与验证执行流程}{11cm}{依次完成环境准备、NEMU与EMU及程序构建、DiffTest运行和证据归档。检查、构建或运行失败时，按原因定位后返回对应环节；成功与失败记录均保留命令、退出码和摘要。}{2026-10-09部署记录与共同flash恢复过程的流程重绘。}
+
+10月9日构建按实际资源调整并行度，过程保留在原始日志中。表\ref{tab:s1-operations}摘录当天的主要操作及结果，时间沿用日志的UTC+8时区；其中20:42的中断与恢复即对应并行度调整。
 {\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.20\linewidth}>{\raggedright\arraybackslash}p{0.72\linewidth}}
 \caption{2026年10月9日主要操作记录}\label{tab:s1-operations}\\
+\toprule
+\textbf{时间} & \textbf{操作与结果}\\\midrule\endfirsthead
+\caption[]{2026年10月9日主要操作记录（续）}\\
 \toprule
 \textbf{时间} & \textbf{操作与结果}\\\midrule\endhead
 20:42:15 & 中断并恢复C++构建，并行度调整为4，保留已完成对象。\\
@@ -109,24 +123,29 @@ bash team/scripts/stage1.sh run
 21:00:28 & 正常差分运行结束，退出状态为0。\\
 \bottomrule\end{longtable}}
 
-编译并发用于分配宿主资源，DUT核数和EMU仿真线程数由模型配置决定。原C++构建的\Verb|-j4|与工具安装示例的\Verb|-j2|对应不同步骤。复用对象文件时，源码、工具与生成参数随构建记录一起保存；长作业另记录资源峰值、日志大小、墙钟限额和进程结束状态。
+编译并发只影响宿主机上的构建速度，与DUT核数和EMU仿真线程数无关，后两者由模型配置决定。表中C++构建使用的\Verb|-j4|与前面Verilator安装示例中的\Verb|-j2|属于不同步骤。复用对象文件时，源码、工具与生成参数随构建记录一起保存；长作业另记录资源峰值、日志大小、墙钟限额和进程结束状态。
 
 \section{共同启动输入与差分故障定位}
 
 初次运行在PC\seqsplit{0x10000004}出现t0寄存器差异，记录的instrCnt为2，尚处于启动代码。比较默认flash和反汇编后发现，两端分别使用了3条与6条启动指令。修复由同一份\seqsplit{boot-flash.S}生成12字节\seqsplit{boot-flash.bin}，并通过运行参数显式提供给DUT与NEMU。随后两端以共同启动输入进入同一工作负载，在DiffTest启用的条件下完成hello/vadd检查。
 
-ELF保存符号、装载段和调试资料，BIN提供程序字节，flash提供复位后的启动代码。定位波形时，用与被测BIN同次构建的反汇编核对PC和机器字；链接参数或库布局改变后，应重新建立这组对应关系。flash中的文件偏移与处理器执行地址通过各端装载映射关联。
-
 \reportfigure{S1-07}{共同启动镜像与差分恢复}{12.1cm}{首次差异位于PC 0x10000004、instrCnt=2。共同启动文件由三条机器指令组成，图中0--3、4--7和8--11标示文件字节偏移。显式加载同一12字节flash后，三类共24个元素完成比较，并以GOOD TRAP、exit 0结束。}{2026-10-09原始失败和恢复日志、\seqsplit{boot-flash-disassembly.txt}、\seqsplit{hello-vadd-summary.log}；出处与摘要见\seqsplit{figures/evidence-20261105/figure-data.json}。}
+
+ELF保存符号、装载段和调试资料，BIN提供程序字节，flash提供复位后的启动代码。定位波形时，用与被测BIN同次构建的反汇编核对PC和机器字；链接参数或库布局改变后，应重新建立这组对应关系。flash中的字节偏移需要按各端的装载地址换算为处理器执行地址。
+
+图\ref{fig:S1-07}对照了修正前后的情况。上部表格逐字节列出共同启动文件：三条指令依次令t0=1、将其左移为0x80000000并跳转至该地址，0--3、4--7和8--11为文件内的字节偏移。下部左侧为修正前两端各用默认启动序列时的首次差异，右侧为两端显式加载同一文件后的结果：三类共24个元素通过比较，程序以GOOD TRAP和exit 0结束。
 
 \section{hello输出与三类vadd结果}
 
 \subsection{输入配置与结果解释}
 
-vadd程序设置SEW8、LMUL1、VL8，执行两次\Verb|vle8.v|、一次\Verb|vadd.vv|和一次向量存储，再逐字节比较标量参考。三个用例检查基本加法、负数补码和8位回绕，合计比较24个活动元素。
+vadd程序设置SEW8、LMUL1、VL8，执行两次\Verb|vle8.v|、一次\Verb|vadd.vv|和一次向量存储，再逐字节比较标量参考。三个用例检查基本加法、负数补码和8位回绕，合计比较24个活动元素。表\ref{tab:s1-vadd-values}给出三个用例的输出，分别以日志中的逐元素字节和波形中的低64位十六进制两种形式表示。
 
 {\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.18\linewidth}>{\raggedright\arraybackslash}p{0.43\linewidth}>{\raggedright\arraybackslash}p{0.31\linewidth}}
 \caption{vadd输出的两种表示}\label{tab:s1-vadd-values}\\
+\toprule
+\textbf{用例} & \textbf{按元素顺序输出的字节} & \textbf{结果低64位}\\\midrule\endfirsthead
+\caption[]{vadd输出的两种表示（续）}\\
 \toprule
 \textbf{用例} & \textbf{按元素顺序输出的字节} & \textbf{结果低64位}\\\midrule\endhead
 正数相加 & 9 9 9 9 9 9 9 9 & \seqsplit{0x0909090909090909}\\
@@ -138,40 +157,46 @@ vadd程序设置SEW8、LMUL1、VL8，执行两次\Verb|vle8.v|、一次\Verb|vad
 
 \subsection{10月9日环境验证}
 
-10月9日hello输出使用\seqsplit{riscv-vdot-team}，身份状态为placeholder，显示的IPv4为\seqsplit{10.198.93.97}，对应当时WSL宿主。正常记录包含\seqsplit{HELLO\_VADD\_PASS cases=3 lanes=24}、DiffTest启用标记、GOOD TRAP和退出状态0；整程序统计为16557条指令、42962周期，覆盖启动、UART和结果校验。
+10月9日hello输出使用\seqsplit{riscv-vdot-team}，身份状态为placeholder，显示的IPv4为\seqsplit{10.198.93.97}，对应当时WSL宿主。正常记录包含\seqsplit{HELLO\_VADD\_PASS cases=3 lanes=24}、DiffTest启用标记、GOOD TRAP和退出状态0；整程序统计为16557条指令、42962周期，覆盖启动、UART和结果校验。图\ref{fig:S1-03}为当次运行结束时的终端输出，可以看到身份行、三类vadd的PASS结果、DiffTest启用标记、GOOD TRAP以及退出状态0；输出中的身份与地址按原实验保留。
 
 \reportfigure{S1-03}{hello与vadd正常结束输出}{8.5cm}{日志展示三类vadd结果、DiffTest运行和GOOD TRAP终态，输出中的身份与地址按原实验保留。}{用户截图\seqsplit{WindowsTerminal\_m5hXeDJnV1.png}及\seqsplit{evidence/hello-vadd-summary.log}；2026-10-09运行记录。}
 
 \subsection{10月25日双模型复核}
 
-10月25日（UTC+8）的T04实验以个人标识LiZufan001构建英文hello程序，输出明确标注地址来自构建宿主：
+10月25日（UTC+8）的复核以个人标识LiZufan001构建英文hello程序，输出明确标注地址来自构建宿主：
 \begin{Verbatim}[breaklines,breakanywhere,breaksymbolleft={},breaksymbolright={},fontsize=\footnotesize,baselinestretch=1]
 hello xiangshan, I am LiZufan001, IP address=172.27.184.54
 identity_status=configured; IP address is build-host IPv4
 \end{Verbatim}
 
-同一BIN分别在封存生产EMU和独立FST模型上运行，均加载普通NEMU参考库并启用DiffTest。两次运行都通过三组、24个元素检查，命中GOOD TRAP并正常退出；每次为16621条指令、43249周期。这里的周期同样对应完整hello/vadd程序。表内实际起止时间来自各自运行回执。
+同一BIN分别在封存生产EMU和独立FST模型上运行，均加载普通NEMU参考库并启用DiffTest。两次运行都通过三组、24个元素检查，命中GOOD TRAP并正常退出；每次为16621条指令、43249周期。这里的周期同样对应完整hello/vadd程序。表\ref{tab:s1-t04-runs}列出两次运行的实际起止时间与结果，时间取自各自的运行回执。
 
 {\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.22\linewidth}>{\raggedright\arraybackslash}p{0.38\linewidth}>{\raggedright\arraybackslash}p{0.32\linewidth}}
-\caption{T04双模型运行记录（2026-10-25，UTC+8）}\label{tab:s1-t04-runs}\\
+\caption{10月25日双模型运行记录（UTC+8）}\label{tab:s1-t04-runs}\\
+\toprule
+\textbf{模型} & \textbf{实际起止时间} & \textbf{运行结果}\\\midrule\endfirsthead
+\caption[]{10月25日双模型运行记录（UTC+8）（续）}\\
 \toprule
 \textbf{模型} & \textbf{实际起止时间} & \textbf{运行结果}\\\midrule\endhead
 生产EMU & 01:09:21.574716--01:10:18.357888 & DiffTest通过，GOOD TRAP，exit 0\\
 独立FST模型 & 01:28:57.974329--01:31:24.009122 & DiffTest通过，GOOD TRAP，exit 0\\
 \bottomrule\end{longtable}}
 
-新FST模型复用T17的1807个逐文件核验输入；最终核对原件及副本均无变化。发布源码重新编译得到的BIN和flash与实际执行输入逐字节相同，原始ELF和发布ELF分别留存。对应\href{https://github.com/cc77-builder/riscv/blob/2690c7370fb7c94111b4619bbac352e9be4ccc4d/team/evidence/stage1-current-20261025/acceptance.json}{验收记录}、\href{https://github.com/cc77-builder/riscv/blob/2690c7370fb7c94111b4619bbac352e9be4ccc4d/team/evidence/stage1-current-20261025/production-run/run.json}{生产运行回执}和\href{https://github.com/cc77-builder/riscv/blob/2690c7370fb7c94111b4619bbac352e9be4ccc4d/team/evidence/stage1-current-20261025/trace-run/run.json}{FST运行回执}均随证据保存。
+新FST波形模型复用了已有构建的1807个输入文件，并逐个核对；运行结束后，原件和副本均未改变。发布源码重新编译得到的BIN和flash与实际执行输入逐字节相同，原始ELF和发布ELF分别留存。对应\href{https://github.com/cc77-builder/riscv/blob/2690c7370fb7c94111b4619bbac352e9be4ccc4d/team/evidence/stage1-current-20261025/acceptance.json}{验收记录}、\href{https://github.com/cc77-builder/riscv/blob/2690c7370fb7c94111b4619bbac352e9be4ccc4d/team/evidence/stage1-current-20261025/production-run/run.json}{生产运行回执}和\href{https://github.com/cc77-builder/riscv/blob/2690c7370fb7c94111b4619bbac352e9be4ccc4d/team/evidence/stage1-current-20261025/trace-run/run.json}{FST运行回执}均随证据保存。
 
 \section{向量执行与波形观察}
 
-向量指令经取指、译码、重命名与调度进入执行单元。两个\Verb|vle8.v|提供输入，\Verb|vadd.vv|产生结果，随后经过写回与ROB提交。本文用提交PC\seqsplit{0x80000138}、机器字\seqsplit{0x021101d7}及\Verb|vecwen=1, wdest=3|关联三类用例；执行结果出现和架构提交分别作为观察点记录。
+向量指令经取指、译码、重命名与调度进入执行单元。两个\Verb|vle8.v|提供输入，\Verb|vadd.vv|产生结果，随后经过写回与ROB提交。本文用提交PC\seqsplit{0x80000138}、机器字\seqsplit{0x021101d7}及\Verb|vecwen=1, wdest=3|关联三类用例，并分别记录结果输出和架构提交两个观察点。
 
 \subsection{10月9日事件与原始截图}
 
-以下数值沿用原FST提取CSV的事件坐标。局部截图未显示时钟，显示单位为ps；本表用于定位输入、输出和提交，指令时延与性能通过专门测量窗口评估。
+表\ref{tab:s1-original-events}沿用原FST提取CSV的事件坐标，列出三类用例在执行输入、结果输出和ROB提交三处的位置以及输出低64位。局部截图未显示时钟；截图中的ps只是波形工具的显示单位，数值为仿真记录的时间坐标，不代表实际时间。本表只用于定位事件，指令时延与性能在第三阶段用专门的测量窗口评估。
 
 {\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.15\linewidth}>{\raggedright\arraybackslash}p{0.16\linewidth}>{\raggedright\arraybackslash}p{0.16\linewidth}>{\raggedright\arraybackslash}p{0.16\linewidth}>{\raggedright\arraybackslash}p{0.29\linewidth}}
 \caption{10月9日vadd事件坐标}\label{tab:s1-original-events}\\
+\toprule
+\textbf{用例} & \textbf{输入} & \textbf{输出} & \textbf{提交} & \textbf{输出低64位}\\\midrule\endfirsthead
+\caption[]{10月9日vadd事件坐标（续）}\\
 \toprule
 \textbf{用例} & \textbf{输入} & \textbf{输出} & \textbf{提交} & \textbf{输出低64位}\\\midrule\endhead
 正数 & 19625 & 19626 & 19631 & \seqsplit{0x0909090909090909}\\
@@ -179,7 +204,11 @@ identity_status=configured; IP address is build-host IPv4
 边界 & 33009 & 33010 & 33015 & \seqsplit{0xfefe000000007f80}\\
 \bottomrule\end{longtable}}
 
+图\ref{fig:S1-06}把表\ref{tab:s1-original-events}的坐标画成时间线。三类用例都在输入后1个周期给出结果，再经5个周期完成ROB提交；每个用例的三个事件都属于同一条vadd指令。
+
 \reportfigure{S1-06}{vadd输入、输出与提交事件时间线}{8.2cm}{三类用例按指令身份关联执行端输入、结果输出和ROB提交；数值沿用事件CSV坐标。}{\seqsplit{evidence/vadd-commit-events.csv}与\seqsplit{evidence/vector-fix-alu-events.csv}；2026-10-09事件重绘，生成数据见\seqsplit{figures/evidence-20261105}。}
+
+图\ref{fig:S1-04}是正数用例的原始GTKWave截图：子图（a）的游标位于19626处的输出事件，三个事件的位置同时可见；子图（b）、（c）分别给出19625输入游标和19631提交游标处的信号值。图\ref{fig:S1-05}为负数与边界用例的输出波形，两者的输出低64位分别为\seqsplit{F0F2F4F6F8FAFCFE}和\seqsplit{FEFE000000007F80}，与表\ref{tab:s1-vadd-values}一致。
 
 \reportfigure{S1-04}{vadd正数用例的执行与提交波形}{16.0cm}{(a)输出事件及相关位置；(b)输入游标处信号值；(c)提交游标处信号值。19625、19626和19631对应表中的三个事件坐标。}{用户上传的正数输出截图及\seqsplit{riscv-lab/picture}中的输入、提交截图；2026-10-09原基线波形，保留原始图并裁剪外部空白。}
 
@@ -189,32 +218,38 @@ identity_status=configured; IP address is build-host IPv4
 
 \subsection{10月25日含时钟的调试记录}
 
-T04的独立FST模型保留实际时钟信号，最终选择两个VialuFix、八个提交槽和127个信号，检查33249个完整上升沿，得到三次FU输入、三次FU输出和三次DPIC提交观测，共九条事件。三个运算均在\seqsplit{exus\_2.VialuFix}发生，同时检查了\seqsplit{exus.VialuFix}。
+10月25日的FST波形模型保留实际时钟信号，最终选择两个VialuFix、八个提交槽和127个信号，检查33249个完整上升沿，得到三次FU输入、三次FU输出和三次DPI-C提交观测，共九条事件。三个运算均在\seqsplit{exus\_2.VialuFix}发生，同时检查了\seqsplit{exus.VialuFix}。
 
-采样取每个局部上升沿前的稳定低相值，周期字段取当时的\seqsplit{DifftestTrapEvent.io\_cycleCnt}，FST原始时戳另存。DPIC记录经过\seqsplit{Rob.scala}中\Verb|delay=3|的观察路径，表内DPIC列因此表示提交接口的观测时刻。
+采样取每个上升沿之前、时钟低电平期间的稳定值，周期字段取当时的\seqsplit{DifftestTrapEvent.io\_cycleCnt}，FST原始时戳另存。DPI-C是仿真模型调用C函数的接口，提交记录经过\seqsplit{Rob.scala}中\Verb|delay=3|的观察路径，表内DPI-C列因此表示提交接口的观测时刻。按上述规则得到的九条事件列于表\ref{tab:s1-t04-events}，表中同时给出每笔运算的ROB flag、value和目的物理寄存器。
 
 {\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.10\linewidth}>{\raggedright\arraybackslash}p{0.16\linewidth}>{\raggedright\arraybackslash}p{0.16\linewidth}>{\raggedright\arraybackslash}p{0.17\linewidth}>{\raggedright\arraybackslash}p{0.33\linewidth}}
-\caption{T04按时钟沿采样的事件记录}\label{tab:s1-t04-events}\\
+\caption{10月25日按时钟沿采样的事件记录}\label{tab:s1-t04-events}\\
 \toprule
-\textbf{用例} & \textbf{FU输入timer} & \textbf{FU输出timer} & \textbf{DPIC观测timer} & \textbf{ROB flag/value/pdest}\\\midrule\endhead
+\textbf{用例} & \textbf{FU输入timer} & \textbf{FU输出timer} & \textbf{DPI-C观测timer} & \textbf{ROB flag/value/pdest}\\\midrule\endfirsthead
+\caption[]{10月25日按时钟沿采样的事件记录（续）}\\
+\toprule
+\textbf{用例} & \textbf{FU输入timer} & \textbf{FU输出timer} & \textbf{DPI-C观测timer} & \textbf{ROB flag/value/pdest}\\\midrule\endhead
 正数 & 19525 & 19526 & 19531 & 1 / 13 / 51\\
 负数 & 25526 & 25527 & 25532 & 0 / 21 / 57\\
 边界 & 33193 & 33194 & 33199 & 1 / 25 / 63\\
 \bottomrule\end{longtable}}
 
-三类数值结果与表\ref{tab:s1-vadd-values}一致。完整采样定义、信号清单、原始时戳及摘要保存在\href{https://github.com/cc77-builder/riscv/blob/2690c7370fb7c94111b4619bbac352e9be4ccc4d/team/evidence/stage1-current-20261025/wave/wave.json}{wave.json}；选通信号FST可直接用GTKWave查看。接口与观察路径分别对应固定源码的\href{https://github.com/cc77-builder/riscv/blob/34bae6d4acceac939f958199dae53c14bc1f6183/src/main/scala/xiangshan/backend/fu/wrapper/VIAluFix.scala}{VIAluFix包装层}和\href{https://github.com/cc77-builder/riscv/blob/34bae6d4acceac939f958199dae53c14bc1f6183/src/main/scala/xiangshan/backend/rob/Rob.scala}{Rob.scala}。
+三类数值结果与表\ref{tab:s1-vadd-values}一致。完整采样定义、信号清单、原始时戳及摘要保存在\href{https://github.com/cc77-builder/riscv/blob/2690c7370fb7c94111b4619bbac352e9be4ccc4d/team/evidence/stage1-current-20261025/wave/wave.json}{wave.json}；只含所选信号的FST可直接用GTKWave查看。接口与观察路径分别对应固定源码的\href{https://github.com/cc77-builder/riscv/blob/34bae6d4acceac939f958199dae53c14bc1f6183/src/main/scala/xiangshan/backend/fu/wrapper/VIAluFix.scala}{VIAluFix包装层}和\href{https://github.com/cc77-builder/riscv/blob/34bae6d4acceac939f958199dae53c14bc1f6183/src/main/scala/xiangshan/backend/rob/Rob.scala}{Rob.scala}。
 
-工具检查共24项，覆盖日志完整性、实际退出状态、输入身份、关键结果，以及缺FU、缺半周期、未知有效操作数和错误事务标识等反例。首次FST构建的工具路径问题和首版提取器遗漏无数字后缀FU的记录均保留；修正提取范围后，从同一FST完成最终九事件核对。这些检查验证记录与提取工具，实际硬件输入仍为上述三组vadd用例。
+工具检查共24项，覆盖日志完整性、实际退出状态、输入文件摘要、关键结果，以及缺FU、缺半周期、未知有效操作数和错误事务标识等反例。首次FST构建的工具路径问题和首版提取器遗漏无数字后缀FU的记录均保留；修正提取范围后，从同一FST完成最终九事件核对。这24项检查针对的是记录和提取工具本身，硬件实际运行的仍是上述三组vadd用例。
 
-\section{阶段结论与复现索引}
+\section{版本与复现索引}\label{sec:1-index}
 
-阶段一完成了环境部署、共同启动输入配置、三类向量加法的差分验证和可定位的波形观察链。10月9日记录说明环境建立过程，10月25日记录补充配置身份的英文hello输出与含时钟的执行观察。后续阶段在这一环境上开展vdot语义、RTL和应用性能验证。
+本节列出两次实验所用的源码、工具和产物，供复现和核对使用。
 
 \subsection{源码与工具版本}
 
-下表为10月9日部署时固定的源码身份，完整递归依赖见\seqsplit{evidence/submodules-after-build.lock.txt}。
+表\ref{tab:s1-source-lock}列出10月9日部署时固定的源码版本，完整递归依赖见\seqsplit{evidence/submodules-after-build.lock.txt}。
 {\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.23\linewidth}>{\raggedright\arraybackslash}p{0.69\linewidth}}
 \caption{10月9日源码版本锁}\label{tab:s1-source-lock}\\
+\toprule
+\textbf{组件} & \textbf{提交号}\\\midrule\endfirsthead
+\caption[]{10月9日源码版本锁（续）}\\
 \toprule
 \textbf{组件} & \textbf{提交号}\\\midrule\endhead
 xs-env & \seqsplit{b0b506481e839a5df8a580e76f5aa246dc60fe7c}\\
@@ -229,6 +264,9 @@ yunsuan & \seqsplit{cadd3c2f43096e253d61296b33ac697be8354e29}\\
 {\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.34\linewidth}>{\raggedright\arraybackslash}p{0.58\linewidth}}
 \caption{10月9日工具版本}\label{tab:s1-tools}\\
 \toprule
+\textbf{工具} & \textbf{版本}\\\midrule\endfirsthead
+\caption[]{10月9日工具版本（续）}\\
+\toprule
 \textbf{工具} & \textbf{版本}\\\midrule\endhead
 Oracle GraalVM JDK / javac & 21.0.12\\
 LLVM / Clang & 19.1.7\\
@@ -242,13 +280,16 @@ Make / CMake / Ninja & 4.3 / 3.22.1 / 1.10.1\\
 Python / GTKWave & 3.10.12 / 3.3.104\\
 \bottomrule\end{longtable}}
 
-完整版本输出见\seqsplit{evidence/tool-versions.txt}；Ubuntu软件包清单保留原环境的软件来源。新环境按所需工具安装并核对版本，硬件改动的验证结果再绑定各自构建产物。
+表\ref{tab:s1-tools}为同一环境实际使用的工具版本，完整版本输出见\seqsplit{evidence/tool-versions.txt}；Ubuntu软件包清单保留原环境的软件来源。新环境按所需工具安装并核对版本；硬件改动后的验证结果与对应的构建产物一起记录。
 
-\subsection{T04产物身份}
+\subsection{10月25日复核的产物摘要}
 
-10月25日T04运行使用的T17硬件生成源提交为\seqsplit{34bae6d4acceac939f958199dae53c14bc1f6183}。以下摘要直接对应\seqsplit{evidence/stage1-current-20261025/}中的运行和验收记录。
+10月25日复核所用硬件构建的源码提交为\seqsplit{34bae6d4acceac939f958199dae53c14bc1f6183}。表\ref{tab:s1-t04-identities}列出这次运行主要产物的SHA-256，摘要直接对应\seqsplit{evidence/stage1-current-20261025/}中的运行和验收记录。
 {\footnotesize\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.23\linewidth}>{\raggedright\arraybackslash}p{0.69\linewidth}}
-\caption{T04主要产物SHA-256}\label{tab:s1-t04-identities}\\
+\caption{10月25日复核主要产物的SHA-256}\label{tab:s1-t04-identities}\\
+\toprule
+\textbf{对象} & \textbf{SHA-256}\\\midrule\endfirsthead
+\caption[]{10月25日复核主要产物的SHA-256（续）}\\
 \toprule
 \textbf{对象} & \textbf{SHA-256}\\\midrule\endhead
 生产EMU & \seqsplit{ff840528eb1009e94906eefb3773ca321050f309553543ab26f0db23c410e30f}\\
@@ -262,7 +303,7 @@ FST模型 & \seqsplit{1ff3f457ff582d0c3155a15dafa1fa60b8275d9356e29a0b7806c9d391
 
 \subsection{文件与记录索引}
 
-运行源码位于\seqsplit{team/workloads/hello-vadd}。10月9日证据归档位于\seqsplit{team/evidence/stage1-20261009}，T04证据位于\seqsplit{team/evidence/stage1-current-20261025}；报告源码的\seqsplit{evidence/}目录保存用于本文的对应日志与索引。完整FST按记录中的路径和摘要定位。
+运行源码位于\seqsplit{team/workloads/hello-vadd}。10月9日证据归档位于\seqsplit{team/evidence/stage1-20261009}，10月25日复核的证据位于\seqsplit{team/evidence/stage1-current-20261025}；报告源码的\seqsplit{evidence/}目录保存用于本文的对应日志与索引。完整FST按记录中的路径和摘要定位。报告目录中各附件记录的用途见表\ref{tab:s1-evidence-index}。
 
 {\small\setlength{\tabcolsep}{3pt}\begin{longtable}{>{\raggedright\arraybackslash}p{0.46\linewidth}>{\raggedright\arraybackslash}p{0.46\linewidth}}
 \caption{报告附件索引}\label{tab:s1-evidence-index}\\
@@ -279,14 +320,14 @@ FST模型 & \seqsplit{1ff3f457ff582d0c3155a15dafa1fa60b8275d9356e29a0b7806c9d391
 \seqsplit{evidence/vadd-commit-events.csv} & 配置、加载、vadd及后续指令的提交记录。\\
 \seqsplit{evidence/vector-fix-alu-events.csv} & 三组向量ALU输入与输出记录。\\
 \seqsplit{evidence/wave-signals.json} & 10月9日信号层级、位宽与标识。\\
-\seqsplit{evidence/stage1-current-20261025/production-run/run.json}与\seqsplit{trace-run/run.json} & T04两次运行的命令、输入前后摘要、退出状态和日志摘要。\\
-\seqsplit{evidence/stage1-current-20261025/wave/wave.json} & T04采样定义、127个信号、九条事件及波形摘要。\\
-\seqsplit{evidence/stage1-current-20261025/acceptance.json}与\seqsplit{RESULT.md} & T04输入等价、24项工具检查与完整复现索引。\\
+\seqsplit{evidence/stage1-current-20261025/production-run/run.json}与\seqsplit{trace-run/run.json} & 10月25日两次运行的命令、输入前后摘要、退出状态和日志摘要。\\
+\seqsplit{evidence/stage1-current-20261025/wave/wave.json} & 10月25日的采样定义、127个信号、九条事件及波形摘要。\\
+\seqsplit{evidence/stage1-current-20261025/acceptance.json}与\seqsplit{RESULT.md} & 10月25日复核的输入等价、24项工具检查与完整复现索引。\\
 \bottomrule\end{longtable}}
 
-复核时先检查运行回执和通过摘要，再核对程序、reference与flash身份，最后用反汇编和事件CSV定位波形。详细操作入口见\href{https://github.com/cc77-builder/riscv/blob/eca41d7cd959f5f3c4f240e382919c492d1ccb96/team/docs/stage1.md}{阶段一记录}、\href{https://github.com/cc77-builder/riscv/blob/347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e/team/docs/environment.md}{环境部署方法}和\href{https://github.com/cc77-builder/riscv/blob/2690c7370fb7c94111b4619bbac352e9be4ccc4d/team/evidence/stage1-current-20261025/RESULT.md}{T04复现说明}。
+复核时先检查运行回执和通过摘要，再核对程序、参考库与flash的SHA-256，最后用反汇编和事件CSV定位波形。详细操作入口见\href{https://github.com/cc77-builder/riscv/blob/eca41d7cd959f5f3c4f240e382919c492d1ccb96/team/docs/stage1.md}{阶段一记录}、\href{https://github.com/cc77-builder/riscv/blob/347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e/team/docs/environment.md}{环境部署方法}和\href{https://github.com/cc77-builder/riscv/blob/2690c7370fb7c94111b4619bbac352e9be4ccc4d/team/evidence/stage1-current-20261025/RESULT.md}{10月25日复核的复现说明}。
 
-\section{操作日志摘录}
+\section{操作日志摘录}\label{sec:1-logs}
 
 本节保留主要运行摘要与构建完成片段；完整构建日志、版本锁和事件CSV随源码包提供，路径见表\ref{tab:s1-evidence-index}。
 

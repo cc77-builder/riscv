@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="160mm" height="100mm" viewBox="0 0 160 100">
+<title>C8 软件入口、结果布局与最终镜像等价核对</title>
+<defs><marker id="m13827F" markerUnits="userSpaceOnUse" markerWidth="1.55" markerHeight="1.55" viewBox="0 0 6 6" refX="5.6" refY="3" orient="auto-start-reverse"><path d="M0,0.9 L6,3 L0,5.1 Z" fill="#13827F"/></marker><marker id="m46627A" markerUnits="userSpaceOnUse" markerWidth="1.55" markerHeight="1.55" viewBox="0 0 6 6" refX="5.6" refY="3" orient="auto-start-reverse"><path d="M0,0.9 L6,3 L0,5.1 Z" fill="#46627A"/></marker><marker id="m6A4C93" markerUnits="userSpaceOnUse" markerWidth="1.55" markerHeight="1.55" viewBox="0 0 6 6" refX="5.6" refY="3" orient="auto-start-reverse"><path d="M0,0.9 L6,3 L0,5.1 Z" fill="#6A4C93"/></marker></defs>
+<rect x="0" y="0" width="160" height="100" fill="#FFFFFF"/>
+<text x="2.000" y="5.400" font-size="3.1750" text-anchor="start" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">A </tspan><tspan font-family="Noto Serif SC" font-weight="400">普通</tspan><tspan font-family="Times New Roman" font-weight="400"> C </tspan><tspan font-family="Noto Serif SC" font-weight="400">调用</tspan></text>
+<text x="158.000" y="5.400" font-size="2.2931" text-anchor="end" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">固定</tspan><tspan font-family="Times New Roman" font-weight="400"> 8×32 • VLEN128 • VS </tspan><tspan font-family="Noto Serif SC" font-weight="400">启用</tspan></text>
+<rect x="2.000" y="9.500" width="38.000" height="29.500" rx="0.7" fill="#F2F7FC" stroke="#7CA1C4" stroke-width="0.24"/>
+<text x="21.000" y="14.800" font-size="2.9986" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">连续输入</tspan><tspan font-family="Times New Roman" font-weight="400"> A || x</tspan></text>
+<rect x="5.000" y="17.500" width="26.000" height="6.200" rx="0" fill="#FFFFFF" stroke="#7CA1C4" stroke-width="0.22"/>
+<text x="18.000" y="21.600" font-size="2.6458" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">A[8][32]</tspan></text>
+<rect x="31.000" y="17.500" width="6.000" height="6.200" rx="0" fill="#F2F7FC" stroke="#7CA1C4" stroke-width="0.22"/>
+<text x="34.000" y="21.600" font-size="2.6458" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">x</tspan></text>
+<text x="18.000" y="27.200" font-size="2.2931" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">256 B</tspan></text>
+<text x="34.000" y="27.200" font-size="2.2931" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">32 B</tspan></text>
+<text x="21.000" y="32.000" font-size="2.4694" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">signed INT8 • </tspan><tspan font-family="Noto Serif SC" font-weight="400">行优先</tspan></text>
+<text x="21.000" y="36.200" font-size="2.6458" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">共</tspan><tspan font-family="Times New Roman" font-weight="400"> 288 B</tspan></text>
+<polyline points="40.000,24.250 45.000,24.250" fill="none" stroke="#46627A" stroke-width="0.2" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<rect x="45.000" y="9.500" width="69.000" height="32.500" rx="1.0" fill="#F7F9FB" stroke="#D5DEE6" stroke-width="0.2"/>
+<text x="79.500" y="14.400" font-size="2.9986" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">C8 </tspan><tspan font-family="Noto Serif SC" font-weight="400">显式入口</tspan><tspan font-family="Times New Roman" font-weight="400"> • </tspan><tspan font-family="Noto Serif SC" font-weight="400">编译期选择</tspan></text>
+<rect x="48.000" y="18.000" width="31.000" height="6.500" rx="0.7" fill="#F2F7FC" stroke="#7CA1C4" stroke-width="0.24"/>
+<text x="63.500" y="22.300" font-size="2.4694" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">xs_c8_gemv_8x32</tspan></text>
+<rect x="48.000" y="29.500" width="31.000" height="6.500" rx="0.7" fill="#F6F2FA" stroke="#9C86BC" stroke-width="0.24"/>
+<text x="63.500" y="33.800" font-size="2.4694" text-anchor="middle" fill="#6A4C93" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">xs_c8_gemv_8x32_rvv</tspan></text>
+<rect x="95.000" y="17.500" width="16.000" height="7.500" rx="0.7" fill="#EFF8F6" stroke="#6CA8A4" stroke-width="0.24"/>
+<text x="103.000" y="21.000" font-size="2.6458" text-anchor="middle" fill="#13827F" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">vdot</tspan></text>
+<text x="103.000" y="24.000" font-size="2.2931" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">配置复用</tspan></text>
+<rect x="95.000" y="29.000" width="16.000" height="7.500" rx="0.7" fill="#F6F2FA" stroke="#9C86BC" stroke-width="0.24"/>
+<text x="103.000" y="32.500" font-size="2.6458" text-anchor="middle" fill="#6A4C93" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">RVV</tspan></text>
+<text x="103.000" y="35.500" font-size="2.2931" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">回退</tspan></text>
+<polyline points="79.000,21.250 95.000,21.250" fill="none" stroke="#13827F" stroke-width="0.2" stroke-linejoin="round" marker-end="url(#m13827F)"/>
+<text x="87.000" y="20.000" font-size="2.2931" text-anchor="middle" fill="#13827F" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">缺省</tspan><tspan font-family="Times New Roman" font-weight="400"> / 0</tspan></text>
+<polyline points="84.000,21.250 84.000,30.800 95.000,30.800" fill="none" stroke="#6A4C93" stroke-width="0.2" stroke-linejoin="round" marker-end="url(#m6A4C93)"/>
+<circle cx="84.000" cy="21.250" r="0.45" fill="#13827F"/>
+<text x="85.300" y="27.000" font-size="2.2931" text-anchor="start" fill="#6A4C93" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">= 1</tspan></text>
+<polyline points="79.000,34.600 95.000,34.600" fill="none" stroke="#6A4C93" stroke-width="0.2" stroke-linejoin="round" marker-end="url(#m6A4C93)"/>
+<text x="79.500" y="40.000" font-size="2.2931" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">开关</tspan><tspan font-family="Times New Roman" font-weight="400"> XS_C8_GEMV_FORCE_RVV</tspan><tspan font-family="Noto Serif SC" font-weight="400">；更改后完整重编</tspan></text>
+<polyline points="111.000,21.250 115.500,21.250 115.500,32.750 111.000,32.750" fill="none" stroke="#46627A" stroke-width="0.2" stroke-linejoin="round"/>
+<polyline points="115.500,24.250 119.000,24.250" fill="none" stroke="#46627A" stroke-width="0.2" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<rect x="119.000" y="9.500" width="39.000" height="29.500" rx="0.7" fill="#EFF8F6" stroke="#6CA8A4" stroke-width="0.24"/>
+<text x="138.500" y="14.800" font-size="2.9986" text-anchor="middle" fill="#13827F" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">输出</tspan><tspan font-family="Times New Roman" font-weight="400"> 8 × 16 B </tspan><tspan font-family="Noto Serif SC" font-weight="400">槽</tspan></text>
+<text x="138.500" y="18.200" font-size="2.2931" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">共</tspan><tspan font-family="Times New Roman" font-weight="400"> 128 B</tspan></text>
+<rect x="122.000" y="20.000" width="4.125" height="5.200" rx="0" fill="#FFFFFF" stroke="#6CA8A4" stroke-width="0.2"/>
+<text x="124.062" y="23.600" font-size="2.4694" text-anchor="middle" fill="#13827F" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">0</tspan></text>
+<rect x="126.125" y="20.000" width="4.125" height="5.200" rx="0" fill="#FFFFFF" stroke="#6CA8A4" stroke-width="0.2"/>
+<text x="128.188" y="23.600" font-size="2.4694" text-anchor="middle" fill="#13827F" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">1</tspan></text>
+<rect x="130.250" y="20.000" width="4.125" height="5.200" rx="0" fill="#FFFFFF" stroke="#6CA8A4" stroke-width="0.2"/>
+<text x="132.312" y="23.600" font-size="2.4694" text-anchor="middle" fill="#13827F" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">2</tspan></text>
+<rect x="134.375" y="20.000" width="4.125" height="5.200" rx="0" fill="#FFFFFF" stroke="#6CA8A4" stroke-width="0.2"/>
+<text x="136.438" y="23.600" font-size="2.4694" text-anchor="middle" fill="#13827F" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">3</tspan></text>
+<rect x="138.500" y="20.000" width="4.125" height="5.200" rx="0" fill="#FFFFFF" stroke="#6CA8A4" stroke-width="0.2"/>
+<text x="140.562" y="23.600" font-size="2.4694" text-anchor="middle" fill="#13827F" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">4</tspan></text>
+<rect x="142.625" y="20.000" width="4.125" height="5.200" rx="0" fill="#FFFFFF" stroke="#6CA8A4" stroke-width="0.2"/>
+<text x="144.688" y="23.600" font-size="2.4694" text-anchor="middle" fill="#13827F" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">5</tspan></text>
+<rect x="146.750" y="20.000" width="4.125" height="5.200" rx="0" fill="#FFFFFF" stroke="#6CA8A4" stroke-width="0.2"/>
+<text x="148.812" y="23.600" font-size="2.4694" text-anchor="middle" fill="#13827F" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">6</tspan></text>
+<rect x="150.875" y="20.000" width="4.125" height="5.200" rx="0" fill="#FFFFFF" stroke="#6CA8A4" stroke-width="0.2"/>
+<text x="152.938" y="23.600" font-size="2.4694" text-anchor="middle" fill="#13827F" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">7</tspan></text>
+<text x="138.500" y="30.600" font-size="2.4694" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">每槽：低</tspan><tspan font-family="Times New Roman" font-weight="400"> 32 </tspan><tspan font-family="Noto Serif SC" font-weight="400">位结果</tspan></text>
+<text x="138.500" y="34.600" font-size="2.4694" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">高</tspan><tspan font-family="Times New Roman" font-weight="400"> 96 </tspan><tspan font-family="Noto Serif SC" font-weight="400">位清零</tspan></text>
+<text x="2.000" y="46.400" font-size="2.2931" text-anchor="start" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">输入</tspan><tspan font-family="Times New Roman" font-weight="400"> / </tspan><tspan font-family="Noto Serif SC" font-weight="400">输出：各自</tspan><tspan font-family="Times New Roman" font-weight="400"> 16 B </tspan><tspan font-family="Noto Serif SC" font-weight="400">对齐，互不重叠</tspan></text>
+<text x="158.000" y="46.400" font-size="2.2931" text-anchor="end" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">撤销</tspan><tspan font-family="Times New Roman" font-weight="400"> C8</tspan><tspan font-family="Noto Serif SC" font-weight="400">：恢复</tspan><tspan font-family="Times New Roman" font-weight="400"> firstdot </tspan><tspan font-family="Noto Serif SC" font-weight="400">头与匹配库，完整重编</tspan></text>
+<polyline points="2.000,49.400 158.000,49.400" fill="none" stroke="#DAE3EB" stroke-width="0.2" stroke-linejoin="round"/>
+<text x="2.000" y="54.600" font-size="3.1750" text-anchor="start" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">B </tspan><tspan font-family="Noto Serif SC" font-weight="400">原测试夹具的最终镜像等价</tspan></text>
+<rect x="6.000" y="57.000" width="44.000" height="9.000" rx="0.7" fill="#F2F7FC" stroke="#7CA1C4" stroke-width="0.24"/>
+<text x="28.000" y="60.900" font-size="2.9986" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">原合格</tspan><tspan font-family="Times New Roman" font-weight="400"> C8 </tspan><tspan font-family="Noto Serif SC" font-weight="400">镜像</tspan></text>
+<text x="28.000" y="64.400" font-size="2.4694" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">已有全核功能证据</tspan></text>
+<polyline points="28.000,66.000 28.000,69.000" fill="none" stroke="#46627A" stroke-width="0.2" stroke-linejoin="round"/>
+<rect x="58.000" y="57.000" width="44.000" height="9.000" rx="0.7" fill="#FFFFFF" stroke="#BFCCD7" stroke-width="0.24"/>
+<text x="80.000" y="60.900" font-size="2.9986" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">原源码复制对照</tspan></text>
+<text x="80.000" y="64.400" font-size="2.4694" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">原源码重新构建</tspan></text>
+<polyline points="80.000,66.000 80.000,69.000" fill="none" stroke="#46627A" stroke-width="0.2" stroke-linejoin="round"/>
+<rect x="110.000" y="57.000" width="44.000" height="9.000" rx="0.7" fill="#EFF8F6" stroke="#6CA8A4" stroke-width="0.24"/>
+<text x="132.000" y="60.900" font-size="2.9986" text-anchor="middle" fill="#13827F" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">SDK </tspan><tspan font-family="Noto Serif SC" font-weight="400">接入版</tspan></text>
+<text x="132.000" y="64.400" font-size="2.4694" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">libxs_gemv_c8.a(gemv.o)</tspan></text>
+<polyline points="132.000,66.000 132.000,69.000" fill="none" stroke="#46627A" stroke-width="0.2" stroke-linejoin="round"/>
+<polyline points="28.000,69.000 132.000,69.000" fill="none" stroke="#46627A" stroke-width="0.2" stroke-linejoin="round"/>
+<circle cx="80.000" cy="69.000" r="0.45" fill="#46627A"/>
+<polyline points="80.000,69.000 80.000,72.000" fill="none" stroke="#46627A" stroke-width="0.2" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<rect x="6.000" y="72.000" width="148.000" height="13.500" rx="0.7" fill="#F7F9FB" stroke="#D5DEE6" stroke-width="0.22"/>
+<text x="24.500" y="76.200" font-size="2.9986" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">完整</tspan><tspan font-family="Times New Roman" font-weight="400"> BIN</tspan></text>
+<text x="24.500" y="79.800" font-size="2.4694" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">31,440 B • </tspan><tspan font-family="Noto Serif SC" font-weight="400">全字节一致</tspan></text>
+<text x="24.500" y="83.100" font-size="2.4694" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">SHA256 </tspan><tspan font-family="Noto Serif SC" font-weight="400">相同</tspan></text>
+<text x="61.500" y="76.200" font-size="2.9986" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">PT_LOAD </tspan><tspan font-family="Noto Serif SC" font-weight="400">一致</tspan></text>
+<text x="61.500" y="79.800" font-size="2.4694" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">地址</tspan><tspan font-family="Times New Roman" font-weight="400"> / </tspan><tspan font-family="Noto Serif SC" font-weight="400">权限</tspan><tspan font-family="Times New Roman" font-weight="400"> / </tspan><tspan font-family="Noto Serif SC" font-weight="400">对齐</tspan><tspan font-family="Times New Roman" font-weight="400"> / </tspan><tspan font-family="Noto Serif SC" font-weight="400">内容</tspan></text>
+<polyline points="43.000,74.000 43.000,83.500" fill="none" stroke="#D5DEE6" stroke-width="0.18" stroke-linejoin="round"/>
+<text x="98.500" y="76.200" font-size="2.9986" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">48 </tspan><tspan font-family="Noto Serif SC" font-weight="400">条调用记录</tspan></text>
+<text x="98.500" y="79.800" font-size="2.4694" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">逐项一致</tspan></text>
+<polyline points="80.000,74.000 80.000,83.500" fill="none" stroke="#D5DEE6" stroke-width="0.18" stroke-linejoin="round"/>
+<text x="135.500" y="76.200" font-size="2.9986" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">12 </tspan><tspan font-family="Noto Serif SC" font-weight="400">组输入</tspan></text>
+<text x="135.500" y="79.800" font-size="2.4694" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">地址与内容一致</tspan></text>
+<polyline points="117.000,74.000 117.000,83.500" fill="none" stroke="#D5DEE6" stroke-width="0.18" stroke-linejoin="round"/>
+<polyline points="80.000,85.500 80.000,88.500" fill="none" stroke="#46627A" stroke-width="0.2" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<rect x="42.000" y="88.500" width="76.000" height="6.600" rx="0.7" fill="#EFF8F6" stroke="#6CA8A4" stroke-width="0.24"/>
+<text x="80.000" y="92.800" font-size="2.9986" text-anchor="middle" fill="#13827F" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">复用原夹具的既有功能证据</tspan></text>
+<text x="80.000" y="98.800" font-size="2.2931" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">完整</tspan><tspan font-family="Times New Roman" font-weight="400"> ELF </tspan><tspan font-family="Noto Serif SC" font-weight="400">差异仅在调试节</tspan><tspan font-family="Times New Roman" font-weight="400"> • </tspan><tspan font-family="Noto Serif SC" font-weight="400">本次无新增全核运行</tspan></text>
+</svg>

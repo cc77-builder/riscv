@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="160mm" height="81mm" viewBox="0 0 160 81">
+<title>参考模型的译码、状态检查与完整写回</title>
+<defs><marker id="m46627A" markerUnits="userSpaceOnUse" markerWidth="1.55" markerHeight="1.55" viewBox="0 0 6 6" refX="5.6" refY="3" orient="auto-start-reverse"><path d="M0,0.9 L6,3 L0,5.1 Z" fill="#46627A"/></marker><marker id="mAD641F" markerUnits="userSpaceOnUse" markerWidth="1.55" markerHeight="1.55" viewBox="0 0 6 6" refX="5.6" refY="3" orient="auto-start-reverse"><path d="M0,0.9 L6,3 L0,5.1 Z" fill="#AD641F"/></marker></defs>
+<rect x="0" y="0" width="160" height="81" fill="#FFFFFF"/>
+<rect x="63.000" y="1.500" width="34.000" height="7.000" rx="0.7" fill="#FFFFFF" stroke="#BFCCD7" stroke-width="0.24"/>
+<text x="80.000" y="6.100" font-size="2.9986" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">32 </tspan><tspan font-family="Noto Serif SC" font-weight="400">位指令字</tspan></text>
+<polyline points="80.000,8.500 80.000,12.000" fill="none" stroke="#46627A" stroke-width="0.2" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<polygon points="80.000,12.000 107.000,19.500 80.000,27.000 53.000,19.500" fill="#F2F7FC" stroke-linejoin="round" stroke="#7CA1C4" stroke-width="0.24"/>
+<text x="80.000" y="19.100" font-size="2.6458" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">custom-0</tspan></text>
+<text x="80.000" y="22.700" font-size="2.6458" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">精确匹配？</tspan></text>
+<polyline points="53.000,19.500 38.000,19.500" fill="none" stroke="#46627A" stroke-width="0.2" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<text x="45.500" y="18.200" font-size="2.4694" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">否</tspan></text>
+<rect x="4.000" y="14.000" width="34.000" height="11.000" rx="0.7" fill="#FFFFFF" stroke="#BFCCD7" stroke-width="0.24"/>
+<text x="21.000" y="18.500" font-size="2.9986" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">继续其他译码</tspan></text>
+<text x="21.000" y="22.500" font-size="2.4694" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">未匹配则默认非法</tspan></text>
+<polyline points="80.000,27.000 80.000,33.500" fill="none" stroke="#46627A" stroke-width="0.2" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<text x="81.500" y="30.000" font-size="2.4694" text-anchor="start" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">是</tspan></text>
+<polygon points="80.000,33.500 113.000,44.000 80.000,54.500 47.000,44.000" fill="#F2F7FC" stroke-linejoin="round" stroke="#7CA1C4" stroke-width="0.24"/>
+<text x="80.000" y="40.600" font-size="2.9986" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">向量状态合法？</tspan></text>
+<text x="80.000" y="44.600" font-size="2.4694" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">VS </tspan><tspan font-family="Noto Serif SC" font-weight="400">启用</tspan><tspan font-family="Times New Roman" font-weight="400"> • </tspan><tspan font-family="Noto Serif SC" font-weight="400">合法</tspan><tspan font-family="Times New Roman" font-weight="400"> vtype</tspan></text>
+<text x="80.000" y="48.000" font-size="2.4694" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">vl=8 • vstart=0</tspan></text>
+<rect x="4.000" y="36.000" width="34.000" height="16.000" rx="0.7" fill="#FFFFFF" stroke="#BFCCD7" stroke-width="0.24"/>
+<text x="21.000" y="40.600" font-size="2.9986" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">合法</tspan><tspan font-family="Times New Roman" font-weight="400"> vtype</tspan></text>
+<text x="21.000" y="44.400" font-size="2.4694" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">vill=0 • </tspan><tspan font-family="Noto Serif SC" font-weight="400">保留位</tspan><tspan font-family="Times New Roman" font-weight="400">=0</tspan></text>
+<text x="21.000" y="47.800" font-size="2.4694" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">e8 / m1</tspan></text>
+<text x="21.000" y="51.000" font-size="2.4694" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">vta / vma </tspan><tspan font-family="Noto Serif SC" font-weight="400">任意</tspan></text>
+<polyline points="38.000,44.000 47.000,44.000" fill="none" stroke="#8194A3" stroke-width="0.2" stroke-linejoin="round" stroke-dasharray="0.8 0.6"/>
+<polyline points="113.000,44.000 120.000,44.000" fill="none" stroke="#AD641F" stroke-width="0.2" stroke-linejoin="round" marker-end="url(#mAD641F)"/>
+<text x="116.500" y="42.700" font-size="2.4694" text-anchor="middle" fill="#AD641F" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">否</tspan></text>
+<rect x="120.000" y="36.000" width="37.000" height="16.000" rx="0.7" fill="#FFF7EF" stroke="#BD8C4C" stroke-width="0.24"/>
+<text x="138.500" y="41.000" font-size="2.9986" text-anchor="middle" fill="#AD641F" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">非法指令异常</tspan></text>
+<text x="138.500" y="45.100" font-size="2.4694" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">cause=2</tspan><tspan font-family="Noto Serif SC" font-weight="400">；不写</tspan><tspan font-family="Times New Roman" font-weight="400"> vd</tspan></text>
+<text x="138.500" y="48.800" font-size="2.4694" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">xTVAL </tspan><tspan font-family="Noto Serif SC" font-weight="400">按固定平台规则</tspan></text>
+<polyline points="80.000,54.500 80.000,59.000 26.000,59.000 26.000,62.000" fill="none" stroke="#46627A" stroke-width="0.2" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<text x="81.500" y="57.300" font-size="2.4694" text-anchor="start" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">是</tspan></text>
+<rect x="4.000" y="62.000" width="44.000" height="17.500" rx="0.7" fill="#F2F7FC" stroke="#7CA1C4" stroke-width="0.24"/>
+<text x="26.000" y="66.600" font-size="2.9986" text-anchor="middle" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">先快照两源低</tspan><tspan font-family="Times New Roman" font-weight="400"> 64 </tspan><tspan font-family="Noto Serif SC" font-weight="400">位</tspan></text>
+<text x="26.000" y="70.600" font-size="2.6458" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">vs1 → a</tspan><tspan font-family="Noto Serif SC" font-weight="400">；</tspan><tspan font-family="Times New Roman" font-weight="400">vs2 → b</tspan></text>
+<text x="26.000" y="74.800" font-size="2.4694" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">允许与</tspan><tspan font-family="Times New Roman" font-weight="400"> vd </tspan><tspan font-family="Noto Serif SC" font-weight="400">别名（含</tspan><tspan font-family="Times New Roman" font-weight="400"> v0</tspan><tspan font-family="Noto Serif SC" font-weight="400">）</tspan></text>
+<polyline points="48.000,70.750 56.000,70.750" fill="none" stroke="#46627A" stroke-width="0.2" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<rect x="56.000" y="62.000" width="46.000" height="17.500" rx="0.7" fill="#EFF8F6" stroke="#6CA8A4" stroke-width="0.24"/>
+<text x="79.000" y="66.600" font-size="2.9986" text-anchor="middle" fill="#13827F" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">signed int8 </tspan><tspan font-family="Noto Serif SC" font-weight="400">点积</tspan></text>
+<text x="79.000" y="70.600" font-size="2.6458" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">S = 0</tspan><tspan font-family="Noto Serif SC" font-weight="400">；</tspan><tspan font-family="Times New Roman" font-weight="400">i = 0…7</tspan></text>
+<text x="79.000" y="74.800" font-size="2.6458" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">S += int8(a[i]) × int8(b[i])</tspan></text>
+<polyline points="102.000,70.750 110.000,70.750" fill="none" stroke="#46627A" stroke-width="0.2" stroke-linejoin="round" marker-end="url(#m46627A)"/>
+<rect x="110.000" y="62.000" width="47.000" height="17.500" rx="0.7" fill="#EFF8F6" stroke="#6CA8A4" stroke-width="0.24"/>
+<text x="133.500" y="66.600" font-size="2.9986" text-anchor="middle" fill="#13827F" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">完整</tspan><tspan font-family="Times New Roman" font-weight="400"> 128 </tspan><tspan font-family="Noto Serif SC" font-weight="400">位写回</tspan><tspan font-family="Times New Roman" font-weight="400"> vd</tspan></text>
+<text x="124.000" y="69.600" font-size="2.2931" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">[127:32]</tspan></text>
+<text x="149.000" y="69.600" font-size="2.2931" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">[31:0]</tspan></text>
+<rect x="113.000" y="70.600" width="22.000" height="4.600" rx="0" fill="#FFFFFF" stroke="#6CA8A4" stroke-width="0.2"/>
+<text x="124.000" y="73.900" font-size="2.4694" text-anchor="middle" fill="#13827F" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">0</tspan></text>
+<rect x="135.000" y="70.600" width="19.000" height="4.600" rx="0" fill="#EFF8F6" stroke="#6CA8A4" stroke-width="0.2"/>
+<text x="144.500" y="73.900" font-size="2.4694" text-anchor="middle" fill="#13827F" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">S[31:0]</tspan></text>
+<text x="133.500" y="78.200" font-size="2.2931" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">成功后</tspan><tspan font-family="Times New Roman" font-weight="400"> VS </tspan><tspan font-family="Noto Serif SC" font-weight="400">置脏</tspan></text>
+</svg>

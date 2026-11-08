@@ -1,56 +1,63 @@
 # 香山昆明湖 V2 自定义向量点积指令技术报告
 
-2026 年 11 月 6 日整合修订。报告以环境与运行、指令与硬件设计、差分验证与性能评估三个阶段组织，整合 zjhwork 的新增测试截图、真实波形与此前制作的 22 张概念插图。技术正文按已有源码和原始结果更新，图表中的测试范围与测量条件在相应章节说明。
+本文件夹是比赛提交版报告的 LaTeX 工程，2026 年 11 月 8 日定稿。报告分三个阶段：环境部署与向量执行过程、指令设计与基础测试、协同仿真与性能评估。
 
-## 阅读与编译
+编好的 PDF 在 `output/`：
 
-`output/三阶段技术文档_合订本.pdf` 为完整报告；同目录另有三份分阶段 PDF。主文由 `sections/` 中的正文直接编译，全部必需图片和被引用的日志摘录均包含在包内。
+| 文件 | 内容 |
+| --- | --- |
+| `第一阶段_执行日志与过程文档.pdf` | 第一阶段 |
+| `第二阶段_设计与基础测试文档.pdf` | 第二阶段 |
+| `第三阶段_协同仿真与性能分析.pdf` | 第三阶段 |
+| `三阶段技术文档_合订本.pdf` | 三个阶段合订，供自己查看 |
 
-需要 Python 3.9 或更新版本，以及包含 XeLaTeX、ctex、Fandol 和 TeX Gyre 的完整 TeX Live。字体采用 TeX Live 所附开放字体，无需安装 Windows 专有字体。推荐 TeX Live 2026。
+## 编译
 
-在解压目录执行：
+**环境**
 
-```bash
-python -X utf8 build.py
+- Python 3.9 或更新版本，只用标准库。
+- 完整的 TeX Live（推荐 2026），需要包含 `xelatex`、ctex、Fandol 和 TeX Gyre 字体，以及 fvextra、needspace、seqsplit、placeins 等常用宏包。安装 scheme-full 即可。
+- 所用字体都随 TeX Live 提供，不依赖 Windows 字体，Windows、Linux、macOS 都能编译。
+- 全部图片都是预先生成好的 PDF 或 PNG，编译时不需要 Inkscape，也不需要联网。
+
+**命令**（在本文件夹中执行）
+
+```
+python -X utf8 build.py                          # 编译全部 4 份 PDF
+python -X utf8 build.py --documents stage2       # 只编译某一份：main、stage1、stage2、stage3
+python -X utf8 build.py --compiler "C:\texlive\2026\bin\windows\xelatex.exe"   # xelatex 不在 PATH 中时指定路径
 ```
 
-若 XeLaTeX 未加入 PATH，可指定编译器：
+每份文档排版三轮：前两轮更新目录和交叉引用，第三轮生成 PDF。结果写到 `output/`，同时生成 `build-receipt.json`，记录各文件的 SHA-256。各轮日志和中间文件（`*.aux`、`*.log`、`*-pass*.txt` 等）也会留在 `output/`，提交前可以删掉，只保留 4 份 PDF。
 
-```bash
-python -X utf8 build.py --compiler /path/to/xelatex
-```
+`-X utf8` 用于避免 Windows 中文控制台的编码错误；在 Linux 和 macOS 上可以省略。
 
-只编译合订本可使用：
-
-```bash
-python -X utf8 build.py --documents main
-```
-
-脚本对每份文档执行三轮排版，前两轮更新目录和交叉引用，第三轮生成 PDF；记录位于 `output/build-receipt.json`，各轮日志保留在同目录。运行过程无需访问 GitHub 或网络。Windows PowerShell 可使用 `py -3 -X utf8 build.py`；带空格的编译器路径应使用引号。
+**检查编译是否正常**：`output/` 下各 `*.log` 中不应出现 `Missing character`、`Overfull`、`undefined`，也不应出现 `multiply defined`。
 
 ## 文件组织
 
 | 路径 | 内容 |
 | --- | --- |
-| `main.tex`、`stage1.tex`、`stage2.tex`、`stage3.tex` | 合订本及三份分阶段入口 |
-| `preamble.tex`、`report-concepts.tex` | 版式、开放字体与概念插图映射 |
-| `sections/` | 本次整合后的最终正文 |
-| `figures/` | 技术图、测试截图、真实波形及 22 张概念插图 |
-| `figures/updated-20261106/` | 按当前正文术语更新的覆盖范围图及来源说明 |
-| `evidence/` | 编译时使用的日志与关键数据摘要 |
-| `output/` | 四份 PDF 及编译记录 |
-| `qa/build11-20261106/` | 本次发布核验及编译元数据 |
+| `main.tex`、`stage1.tex`～`stage3.tex` | 合订本与三份分阶段文档的入口 |
+| `preamble.tex` | 版式、字体、图表宏 `\reportfigure` 与浮动参数 |
+| `sections/` | 正文 |
+| `report-figure-overrides.tex` | 每个图号实际使用的图片文件 |
+| `figures/unified-20261107/` | 统一风格的技术图与截图组图，报告实际使用 |
+| `figures/unified-20261107-src/` | 上述图片的生成脚本、SVG 和截图原图，说明见其中的 README |
+| `figures/S2-TEST-*.png`、`figures/S3-WAVE-*.png`、`figures/source-screenshots/` | 直接引用的测试截图和波形截图 |
+| `evidence/` | 正文中摘录的日志 |
 
-图片中的概念示意用于帮助理解，编号技术图及实测表保留可核对的接口、位宽、数值和条件。合订本与分阶段文档共享同一份正文和图件。仓库中的历史生成脚本不属于本整合包的构建流程；编译只需运行 `build.py`。
+以下文件保留备查，不参与编译：
 
-## 数据与版本
+- `figures/tu/`：早期候选图
+- `figures/updated-20261106/`：上一版重绘图
+- `figures/` 根目录下的 `S1-03.pdf`～`S1-05.pdf`、`SUP-*.pdf`：英文子标题的旧截图组图
+- `sections/overview.tex`：内部用的结果总览
+- `sections/screenshots-stage2.tex`、`sections/screenshots-stage3.tex`：原来集中摆放截图的章节
 
-文档整合基于 `zufan` 与 `zjhwork` 合并提交 `cfb0010f379f13ac7732dfb98ae600cc7ee1d44b`；最新完整 forward 独立参考摘要对应提交 `6fc3972158daec30bad37b97b72c4653155e1260`。各测量使用的硬件和软件版本在正文证据索引中单独列出。
+## 修改时的注意事项
 
-`evidence/application-current-20261106/` 保留旧 FR/TA 目标单窗口结果、FR/G/P 独立参考摘要，以及 2026 年 11 月 6 日闭合的 FR/G/P 三臂目标原始结果。第三阶段源码已补入同 ELF 的完整 forward 周期与退休指令观测，并保留目标正确性、正式性能资格和测量边界的区别；新增结果来自提交 `75b832d0d3ce82fc09c217e20a226676c7c33ba7`，来源成员、原始字节数与 SHA256 见 `provenance.json`。
-
-本次新增目标结果目前已进入正文源码，现存 PDF 与发布元数据仍对应 Build11；新增内容将在下一次统一编译时纳入。
-
-`figures/ai-concepts/layout-map.json` 与 `selected-assets.json` 保留了沿用图片的 Build10 选择记录和内容校验，仅作为资产来源；当前文档的编译、页码和视觉检查以 Build11 发布元数据为准。
-
-文件清单、SHA256、实际编译环境和页面核验结果见发布元数据。完整工程、全部原始运行证据及实现源码见团队仓库 `cc77-builder/riscv` 的 `zufan` 分支。
+- **正文**：在 `sections/` 中修改，然后重新编译。图表都写成“图\ref{fig:…}”“表\ref{tab:…}”的形式，编号由 LaTeX 自动生成，不要手写编号。
+- **插图**：用 `\reportfigure{图号}{图题}{最大高度}{备注}{来源}` 插入。第 4、5 个参数只留在源码里供自己查看，不会排版到图下；图的解释写在正文中。
+- **图片文件**：在 `report-figure-overrides.tex` 中修改图号对应的文件。如需重画统一风格的图，见 `figures/unified-20261107-src/README.md`。
+- **排版方式**：图和带表题的表格是浮动体，当前页放不下时会移到下一页顶部，由后续正文填满本页，因此图可能出现在引用它的段落之后一页。不要在图前加强制换页。

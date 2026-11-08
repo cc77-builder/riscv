@@ -1,45 +1,52 @@
 \section{全核波形中的点积事务}
-为观察点积在全核中的输入、响应和提交，2026年11月5日使用稳定八项点积版本的clean-02封存生成RTL，单独构建了支持FST的EMU。1681项生成输入与原清单一致；该模型运行原functional-2镜像，加载正常NEMU参考库并启用DiffTest，最终到达GOOD TRAP、退出码0。以下波形将同一笔正数点积从执行输入关联到架构提交。
+为观察点积在全核中的输入、响应和提交，2026年11月5日使用受测版本在干净环境复现中封存的生成RTL，单独构建了支持FST的EMU。1681项生成输入与原清单一致；该模型运行原有的全核功能测试程序functional-2，加载正常NEMU参考库并启用DiffTest，最终到达GOOD TRAP、退出码0。以下波形将同一笔正数点积从执行输入关联到架构提交。
 
 \subsection{源数据、结果与身份}
 两个源寄存器均为\seqsplit{0xa5a5a5a5a5a5a5a50807060504030201}，低八个有符号字节依次为1至8。预期结果为
 \[
 1^2+2^2+\cdots+8^2=204.
 \]
-实际128位响应为\seqsplit{0x000000000000000000000000000000cc}，符合低32位保存结果、高96位清零的布局。高64位A5哨兵同时检验了源元素选择范围。
+实际128位响应为\seqsplit{0x000000000000000000000000000000cc}，符合低32位保存结果、高96位清零的布局。源的高64位填入A5作为哨兵，用来确认硬件只取了低8个元素。表\ref{tab:3-wave-identity}列出用于关联这笔事务的ROB、物理目的、提交观察信号、PC和机器字。
 
-{\small\begin{longtable}{p{.24\linewidth}p{.68\linewidth}}\toprule
+\begin{table}[!htbp]\centering\small
+\caption{正数点积事务的关联字段}\label{tab:3-wave-identity}
+\begin{tabular}{p{.24\linewidth}p{.68\linewidth}}\toprule
 关联字段 & 观测值\\\midrule
 ROB与物理目的 & ROB0:39；物理目的103（十六进制67）\\
 提交观察 & \texttt{io\_valid=1}、\texttt{io\_vecwen=1}；架构目的v10\\
 PC与机器字 & PC=\texttt{0x80001b8c}；机器字\texttt{0x0294050b}\\
-\bottomrule\end{longtable}}
+\bottomrule\end{tabular}
+\end{table}
 
 \subsection{从有效区间到握手边沿}
-波形中的valid表示一段有效区间，事务接受则发生在valid与ready同时有效的时钟上升沿。两者按下表区分，便于与日志中的周期坐标对照。
+波形中的valid表示一段有效区间，事务接受则发生在valid与ready同时有效的时钟上升沿。表\ref{tab:3-wave-events}把两者分开列出，便于与日志中的周期坐标对照。
 
-{\small\begin{longtable}{p{.25\linewidth}p{.17\linewidth}p{.48\linewidth}}\toprule
+\begin{table}[!htbp]\centering\small
+\caption{点积事务关键事件的波形坐标}\label{tab:3-wave-events}
+\begin{tabular}{p{.25\linewidth}p{.17\linewidth}p{.48\linewidth}}\toprule
 事件 & 显示坐标（ps） & 观察依据\\\midrule
 输入有效（A） & 678694 & 输入valid、ready均为1，源值及身份有效\\
 输入接受边沿 & 678696 & 边沿前握手有效，边沿后P槽有效\\
 输出有效（B） & 678698 & R槽有效，输出valid、ready均为1，结果204\\
 输出握手边沿 & 678700 & 边沿前输出有效，边沿后R槽清空\\
 DiffTest提交观察（C） & 678710 & 提交有效，PC、编码、ROB与目的相符\\
-\bottomrule\end{longtable}}
+\bottomrule\end{tabular}
+\end{table}
 
-同一事务的O2日志记录接受、响应和内部ROB提交周期分别为339296、339298、339301。接受到响应相隔两个全局模型周期，与第二阶段的两槽时序一致。内部ROB提交对应模型坐标678706，DiffTest观察口在678710有效，反映两拍观察流水延迟。分析执行时延时使用实际握手和内部提交坐标，分析DiffTest接口时使用其观察坐标。
+同一事务的观察器日志记录接受、响应和内部ROB提交周期分别为339296、339298、339301。接受到响应相隔两个全局模型周期，与第二阶段的两槽时序一致。内部ROB提交对应模型坐标678706，DiffTest观察口在678710有效，反映两拍观察流水延迟。分析执行时延时使用实际握手和内部提交坐标，分析DiffTest接口时使用其观察坐标。
 
-图上方为全局时钟，下方为点积局部门控时钟；局部空闲时可停止时钟。显示单位ps是仿真模型的时间坐标，相邻全局周期相隔两个坐标单位。程序性能采用DUT周期，物理时序由综合和STA评估。
+后面三幅截图中，上方为全局时钟，下方为点积单元的门控时钟，单元空闲时该时钟可以停止。显示单位ps是仿真模型的时间坐标，相邻全局周期相隔两个坐标单位。程序性能采用DUT周期，物理时序由综合和STA评估。
 
-以下三幅GTKWave截图分别展示输入、响应和提交。截图保留信号值，仅裁去层级栏和外部空白；完整原图、事务采样、运行回执与文件摘要见\seqsplit{evidence/vdot-wave-20261105/}和\seqsplit{figures/source-screenshots/}。
+图\ref{fig:S3-WAVE-01}至图\ref{fig:S3-WAVE-03}三幅GTKWave截图分别展示输入、响应和提交。截图保留信号值，仅裁去层级栏和外部空白；完整原图、事务采样、运行回执与文件摘要见\seqsplit{evidence/vdot-wave-20261105/}和\seqsplit{figures/source-screenshots/}。
 
-\begin{landscape}
 \subsection{输入与接受}
+如图\ref{fig:S3-WAVE-01}所示，游标678694处输入valid和ready均为1，两个源的低八字节为1至8，ROB值27和物理目的67以十六进制显示；678696上升沿接收请求，此后P槽有效。
 \reportfigure{S3-WAVE-01}{正数点积的输入与接受边沿}{10.4cm}{游标678694处输入valid、ready为1；源低八字节为1至8，ROB值27和物理目的67按十六进制显示。678696上升沿接收请求，P槽有效。}{2026年11月5日八项点积全核trace原始截图。}
-\clearpage
+
 \subsection{结果与响应}
+图\ref{fig:S3-WAVE-02}中，游标678698处R槽和输出valid、ready有效，结果为204且高96位为零；678700边沿完成握手并释放R槽，此时提交观察口的io\_valid仍为0。
 \reportfigure{S3-WAVE-02}{完整128位结果与响应握手}{10.4cm}{游标678698处R槽及输出valid、ready有效，结果为204且高96位为零；678700边沿完成握手并释放R槽。此时提交观察口io\_valid为0。}{2026年11月5日八项点积全核trace原始截图。}
-\clearpage
+
 \subsection{提交与架构目的}
+图\ref{fig:S3-WAVE-03}中，游标678710处提交有效，PC为80001B8C，机器字为0294050B，ROB为027，物理目的为67，架构目的为0A（v10），向量写使能有效，均对应同一事务；观察口相对内部提交的两拍延迟已在前文说明。
 \reportfigure{S3-WAVE-03}{DiffTest提交观察与架构目的}{10.4cm}{游标678710处提交有效，PC80001B8C、机器字0294050B、ROB027、物理目的67、架构目的0A（v10）及向量写使能对应同一事务。观察口的两拍流水延迟已在正文对齐。}{2026年11月5日八项点积全核trace原始截图。}
-\end{landscape}

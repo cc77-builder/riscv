@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="160mm" height="86mm" viewBox="0 0 160 86">
+<title>共同启动镜像与差分恢复</title>
+<defs><marker id="m8194A3" markerUnits="userSpaceOnUse" markerWidth="1.55" markerHeight="1.55" viewBox="0 0 6 6" refX="5.6" refY="3" orient="auto-start-reverse"><path d="M0,0.9 L6,3 L0,5.1 Z" fill="#8194A3"/></marker></defs>
+<rect x="0" y="0" width="160" height="86" fill="#FFFFFF"/>
+<text x="3.000" y="5.800" font-size="3.1750" text-anchor="start" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">共同启动文件</tspan></text>
+<text x="28.000" y="5.800" font-size="2.6458" text-anchor="start" fill="#2B6189" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">boot-flash.bin · 12 B</tspan></text>
+<text x="157.000" y="5.800" font-size="2.2931" text-anchor="end" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">两端显式加载同一文件</tspan></text>
+<rect x="26.000" y="9.500" width="131.000" height="6.200" rx="0" fill="#F2F7FC"/>
+<text x="3.000" y="13.800" font-size="2.4694" text-anchor="start" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">偏移</tspan></text>
+<text x="47.833" y="13.800" font-size="2.4694" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">0–3 B</tspan></text>
+<text x="91.500" y="13.800" font-size="2.4694" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">4–7 B</tspan></text>
+<text x="135.167" y="13.800" font-size="2.4694" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">8–11 B</tspan></text>
+<rect x="26.000" y="15.700" width="131.000" height="6.200" rx="0" fill="#FFFFFF"/>
+<text x="3.000" y="20.000" font-size="2.4694" text-anchor="start" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">机器码</tspan></text>
+<text x="47.833" y="20.000" font-size="2.9986" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">0010029b</tspan></text>
+<text x="91.500" y="20.000" font-size="2.9986" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">01f29293</tspan></text>
+<text x="135.167" y="20.000" font-size="2.9986" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">00028067</tspan></text>
+<rect x="26.000" y="21.900" width="131.000" height="6.200" rx="0" fill="#FFFFFF"/>
+<text x="3.000" y="26.200" font-size="2.4694" text-anchor="start" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">指令</tspan></text>
+<text x="47.833" y="26.200" font-size="2.4694" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">addiw t0, zero, 1</tspan></text>
+<text x="91.500" y="26.200" font-size="2.4694" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">slli t0, t0, 0x1f</tspan></text>
+<text x="135.167" y="26.200" font-size="2.4694" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">jr t0</tspan></text>
+<rect x="26.000" y="28.100" width="131.000" height="6.200" rx="0" fill="#EFF8F6"/>
+<text x="3.000" y="32.400" font-size="2.4694" text-anchor="start" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">效果</tspan></text>
+<text x="47.833" y="32.400" font-size="2.4694" text-anchor="middle" fill="#13827F" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">t0 = 1</tspan></text>
+<text x="91.500" y="32.400" font-size="2.4694" text-anchor="middle" fill="#13827F" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">t0 = 0x80000000</tspan></text>
+<text x="135.167" y="32.400" font-size="2.4694" text-anchor="middle" fill="#13827F" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">跳转至</tspan><tspan font-family="Times New Roman" font-weight="400"> 0x80000000</tspan></text>
+<polyline points="26.000,15.700 157.000,15.700" fill="none" stroke="#D5DEE6" stroke-width="0.18" stroke-linejoin="round"/>
+<polyline points="26.000,21.900 157.000,21.900" fill="none" stroke="#D5DEE6" stroke-width="0.18" stroke-linejoin="round"/>
+<polyline points="26.000,28.100 157.000,28.100" fill="none" stroke="#D5DEE6" stroke-width="0.18" stroke-linejoin="round"/>
+<polyline points="69.667,9.500 69.667,34.300" fill="none" stroke="#D5DEE6" stroke-width="0.18" stroke-linejoin="round"/>
+<polyline points="113.333,9.500 113.333,34.300" fill="none" stroke="#D5DEE6" stroke-width="0.18" stroke-linejoin="round"/>
+<rect x="26.000" y="9.500" width="131.000" height="24.800" rx="0" fill="none" stroke="#7CA1C4" stroke-width="0.24"/>
+<rect x="1.000" y="40.000" width="77.500" height="45.000" rx="1.0" fill="#FFF7EF" stroke="#BD8C4C" stroke-width="0.22"/>
+<text x="4.000" y="45.800" font-size="2.9986" text-anchor="start" fill="#AD641F" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">修正前：两端各用默认启动序列</tspan></text>
+<text x="22.250" y="52.000" font-size="2.2931" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">默认启动序列</tspan></text>
+<rect x="8.250" y="53.500" width="28.000" height="7.500" rx="0.7" fill="#FFFFFF" stroke="#BFCCD7" stroke-width="0.24"/>
+<text x="22.250" y="58.400" font-size="2.9986" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">RTL / DUT</tspan></text>
+<text x="57.250" y="52.000" font-size="2.2931" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">默认启动序列</tspan></text>
+<rect x="43.250" y="53.500" width="28.000" height="7.500" rx="0.7" fill="#FFFFFF" stroke="#BFCCD7" stroke-width="0.24"/>
+<text x="57.250" y="58.400" font-size="2.9986" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">NEMU / REF</tspan></text>
+<polyline points="22.250,61.000 22.250,64.500 57.250,64.500 57.250,61.000" fill="none" stroke="#8194A3" stroke-width="0.2" stroke-linejoin="round"/>
+<polyline points="39.750,64.500 39.750,68.000" fill="none" stroke="#8194A3" stroke-width="0.2" stroke-linejoin="round" marker-end="url(#m8194A3)"/>
+<rect x="24.750" y="68.000" width="30.000" height="6.800" rx="3.4" fill="#FFFFFF" stroke="#BD8C4C" stroke-width="0.26"/>
+<text x="39.750" y="72.600" font-size="2.9986" text-anchor="middle" fill="#AD641F" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">DiffTest </tspan><tspan font-family="Noto Serif SC" font-weight="400">比较</tspan></text>
+<text x="39.750" y="79.000" font-size="2.4694" text-anchor="middle" fill="#AD641F" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">首次差异：</tspan><tspan font-family="Times New Roman" font-weight="400">PC 0x10000004 · instrCnt = 2</tspan></text>
+<text x="39.750" y="82.800" font-size="2.4694" text-anchor="middle" fill="#AD641F" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">t0 </tspan><tspan font-family="Noto Serif SC" font-weight="400">不一致</tspan></text>
+<rect x="81.500" y="40.000" width="77.500" height="45.000" rx="1.0" fill="#EFF8F6" stroke="#6CA8A4" stroke-width="0.22"/>
+<text x="84.500" y="45.800" font-size="2.9986" text-anchor="start" fill="#13827F" style="font-variant-ligatures:none"><tspan font-family="Noto Serif SC" font-weight="400">修正后：两端加载同一</tspan><tspan font-family="Times New Roman" font-weight="400"> 12 B </tspan><tspan font-family="Noto Serif SC" font-weight="400">文件</tspan></text>
+<text x="102.750" y="52.000" font-size="2.2931" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">boot-flash.bin</tspan></text>
+<rect x="88.750" y="53.500" width="28.000" height="7.500" rx="0.7" fill="#FFFFFF" stroke="#BFCCD7" stroke-width="0.24"/>
+<text x="102.750" y="58.400" font-size="2.9986" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">RTL / DUT</tspan></text>
+<text x="137.750" y="52.000" font-size="2.2931" text-anchor="middle" fill="#526775" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">boot-flash.bin</tspan></text>
+<rect x="123.750" y="53.500" width="28.000" height="7.500" rx="0.7" fill="#FFFFFF" stroke="#BFCCD7" stroke-width="0.24"/>
+<text x="137.750" y="58.400" font-size="2.9986" text-anchor="middle" fill="#22384A" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">NEMU / REF</tspan></text>
+<polyline points="102.750,61.000 102.750,64.500 137.750,64.500 137.750,61.000" fill="none" stroke="#8194A3" stroke-width="0.2" stroke-linejoin="round"/>
+<polyline points="120.250,64.500 120.250,68.000" fill="none" stroke="#8194A3" stroke-width="0.2" stroke-linejoin="round" marker-end="url(#m8194A3)"/>
+<rect x="105.250" y="68.000" width="30.000" height="6.800" rx="3.4" fill="#FFFFFF" stroke="#6CA8A4" stroke-width="0.26"/>
+<text x="120.250" y="72.600" font-size="2.9986" text-anchor="middle" fill="#13827F" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">DiffTest </tspan><tspan font-family="Noto Serif SC" font-weight="400">比较</tspan></text>
+<text x="120.250" y="79.000" font-size="2.4694" text-anchor="middle" fill="#13827F" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">3 </tspan><tspan font-family="Noto Serif SC" font-weight="400">类</tspan><tspan font-family="Times New Roman" font-weight="400"> · 24 </tspan><tspan font-family="Noto Serif SC" font-weight="400">元素</tspan><tspan font-family="Times New Roman" font-weight="400"> · GOOD TRAP · exit 0</tspan></text>
+<text x="120.250" y="82.800" font-size="2.4694" text-anchor="middle" fill="#13827F" style="font-variant-ligatures:none"><tspan font-family="Times New Roman" font-weight="400">hello </tspan><tspan font-family="Noto Serif SC" font-weight="400">与</tspan><tspan font-family="Times New Roman" font-weight="400"> vadd </tspan><tspan font-family="Noto Serif SC" font-weight="400">正常结束</tspan></text>
+</svg>
