@@ -21,6 +21,9 @@ case "$action" in
   o2-fu|o2-parent)
     bash team/scripts/check-vdot-o2.sh "${action#o2-}"
     ;;
+  perf)
+    python3 -B team/workloads/unified-vdot/retest.py "$@"
+    ;;
   build-emu)
     source team/scripts/activate.sh
     python3 -B team/optimizations/o2/fullcore/build_fullcore.py "$@"
@@ -43,7 +46,7 @@ PY
     fi
     ;;
   help)
-    printf '%s\n' 'Usage: bash submission/reproduce.sh check|logs-check|environment|o2-fu|o2-parent' \
+    printf '%s\n' 'Usage: bash submission/reproduce.sh check|logs-check|environment|o2-fu|o2-parent|perf' \
       '       bash submission/reproduce.sh c8|firstdot /absolute/new/output' \
       '       bash submission/reproduce.sh build-emu --output /absolute/new/build-record [--firtool-dir PATH] [--profile observe|cost]'
     ;;
