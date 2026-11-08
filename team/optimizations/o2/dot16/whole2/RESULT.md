@@ -1,5 +1,7 @@
 # dot16 whole2：实际 GNU ELF 与完整函数主机筛选通过
 
+> **2026-11-07 23:05 UTC最新闭合：** packed-Ws的固定K288目标八窗通过，N平均周期降低6.207615%，P降低1.297122%，见本文末节。仅预热完整调用、prepare窗外；尚无packed完整应用或正式性能资格。下列早期状态按各段日期保留，完整应用实际状态以[first-forward结果](../first-forward/RESULT.md)及其w2-np接续记录为准。
+
 > **2026-11-07 K768 接续：** N/P 的 M=288、K=768 派生已完成新 GNU 几何与真实 W2/末组边界参考资格，见本文末节及 [w2-np/REFERENCE_CONTRACT.md](w2-np/REFERENCE_CONTRACT.md)。尚无 K768 新目标周期或完整应用资格。
 
 > **2026-11-07 接续：** 同一 412B whole2 函数已完成[固定 Q288 整核筛选](q288-consumer/RESULT.md)，29 次 Q / 8,352 个输出、DiffTest、判错控制及 GOOD TRAP 通过；相对同镜像 plain dot16 两窗平均少 15.7665% 周期，相对同镜像 P 少 35.2684%。已选择 whole2 进入[新的 P/PQ/D/DQ 完整 first-forward](../first-forward/RESULT.md)；后者参考已通过，目标运行仍在进行，尚无完整应用周期结论。下文保留 2026-11-06 主机合同的历史边界。
@@ -283,3 +285,55 @@ GNU阶段10条命令均exit0，实际RV64编译通过typed ABI断言；原输入
 合同见 [TARGET_CONTRACT.md](packed-ws/target/TARGET_CONTRACT.md)：CPU1、绝对nice5、单额外worker，4M guest cycles / 9000s内层 / 16MiB每流 / 9600s外层；只跑normal-0，不自动重试、延期或扩跑K768。原四臂N/P完整应用operation与输入保护保持；新保护记录为Issue #2 comment6713336725。启动/profile副本见 [target-launch.json](packed-ws/target-launch.json) 与 [target-profile.json](packed-ws/target-profile.json)，活跃输出仍归原operation所有。
 
 只有完整八窗协议、精确flags/hash/instret、唯一GOOD PC、原DiffTest、正常退出与全部回收/输入复核通过后，才能授予这次固定完整调用的target资格。窗口排除prepare，保留原P与packedP中实际较快的合格RVV，并分别比较P→packedP、N→packedN；不能跨ELF拼分母、合并历史百分比或把超时/截断解释成某臂较慢。target内存完整dump、target replay/negative及完整退休审计未列为本小试已完成事项，正式performance/application资格仍为false。K768须依据本次实际结果和剩余资源另作决策。
+
+## 2026-11-07 23:05 UTC：K288 packed-Ws 目标小试闭合，保留候选
+
+**同一固定八窗口 ELF 上，packed-Ws 使 N 的完整调用平均周期从27,353.5降至25,655.5，减少6.207615%；P也从45,639.5降至45,047.5，减少1.297122%。** 两种调用次序均同向。较快合格RVV为packedP，与packedN的局部速度比为1.755861×。这些是M288/K288/normal-0、逐窗预热、准备在窗外的完整调用CSR观察，不能作为完整forward或相对旧LaTeX指标改善50%的结论。上节21:38的启动记录保留为当时快照，本节补充其原作业终态。
+
+原host operation `0250d6044ba18f5fd71831ae3131d2ce.be44a4d254afc57af4be96e78c6f3a08` 的回执started_at / updated_at为21:37:33.1459223 / 23:04:45.0127305 UTC，记录执行耗时5231.827秒，exit0、cleanup=true、未超时或取消；内层于21:37:34.904884—23:04:43.713166 UTC运行。原EMU PID/PGID8067已回收，进程组不存在，全部输入身份不变、changed_inputs为空。CPU1/absolute nice5的单辅助worker与原CPU1作业共享资源，host耗时不是应用性能指标。Issue #2 [6714449844](https://github.com/cc77-builder/riscv/issues/2#issuecomment-6714449844)记录了活动占用结束与后续独立父级验证；原件和冻结输入继续保留。
+
+### 八个原始窗口与公平比较
+
+| 窗口 | 方法 | cycles | instret | FCSR |
+| --- | --- | ---: | ---: | ---: |
+| 0 | 原P | 45,669 | 22,173 | 1 |
+| 1 | 原N | 27,419 | 13,025 | 1 |
+| 2 | packedP | 45,023 | 22,173 | 1 |
+| 3 | packedN | 25,630 | 13,025 | 1 |
+| 4 | packedN | 25,681 | 13,025 | 1 |
+| 5 | packedP | 45,072 | 22,173 | 1 |
+| 6 | 原N | 27,288 | 13,025 | 1 |
+| 7 | 原P | 45,610 | 22,173 | 1 |
+
+| 比较 | 基准均值 | 候选均值 | 周期减少 | 基准/候选周期比 |
+| --- | ---: | ---: | ---: | ---: |
+| 原N→packedN | 27,353.5 | 25,655.5 | 1,698（6.207615%） | 1.066185× |
+| 原P→packedP | 45,639.5 | 45,047.5 | 592（1.297122%） | 1.013142× |
+| 较快RVV packedP→packedN | 45,047.5 | 25,655.5 | 19,392（43.047894%） | 1.755861× |
+
+正向/反向对应窗分别给出N周期减少6.524673%/5.889035%，P减少1.414526%/1.179566%。均值比使用两窗周期均值相除；没有拼接旧ELF周期、扣除其他镜像的空窗口开销或给两次观察附加统计置信区间。原N与packedN的窗口instret均13,025，原P与packedP均22,173，与该八窗reference逐项匹配；周期变化没有被误写为架构指令数量减少。没有cache-miss或端口停顿观测，访存拆分/依赖改善仍只是与源码改变相容的机制解释。
+
+### 实际执行与资格
+
+原stdout记录指定reference加载、真实DiffTest启用、唯一GOOD TRAP `0x8000013c`，以及完整有序的BEGIN、8个SAMPLE、PASS。8窗golden FNV均为`f4481cc0f931d2d5`，完整FCSR均为1；guest完成16次完整输出比较，共4,608个输出，并检查所有slots、guards、约定的vl/vtype/vstart/vcsr与FCSR及完整10,368B准备对象。完整guest序列通过不等于取得目标内存或完整退休dump。
+
+原status为`PACKED_WS_EIGHT_WINDOW_TARGET_PASS`，`target_runtime_qualified=true`。`performance_qualified`、`application_performance_qualified`、`full_retirement_window_audited`、`full_target_memory_dump`均为false；目标replay/negative未执行，不把已完成的reference replay/negative转授给target。本次未新建EMU二进制或更换硬件，仍使用此前绑定的f149 dot16 EMU；CSA/prefix的局部PPA不能与这里的周期拼成同一已测硬软组合。
+
+终态`instrCnt=758544`、`cycleCnt=914004`、guest cycles=914008仅为整个运行诊断，含预热、验证、输出等工作，不能替代上述窗口或完整应用指标。
+
+| 原件 | 字节 | SHA256 |
+| --- | ---: | --- |
+| `checks.json` | 2,654 | `66b30e06cb5a39f57e3790210dc3b2aa741d7a01a8230857c8d556d164e7bb4d` |
+| `status.json` | 2,219 | `e0011666c36625a40538100e201f2cda2cad75c8f48557255b89361981b71775` |
+| `stdout.log` | 1,733 | `166e024ec76c515e39cc2b6910a101ca8b686a6dce446fd441133470433094b0` |
+| `stderr.log` | 3,065,676 | `9af09d53a803fcfb1788ab2fd77339645f13d24f346099ac1ac04381ac24020f` |
+
+原始运行根为常驻WSL `runs/dot16-packed-ws-20261107-main/target-k288-01`。闭合原件、preflight、源/启动包和原host回执已经归档为 [target-raw.zip](packed-ws/target-raw.zip)：**246,616B**，SHA256 `6438bdd51e0d5422858b4bbe58cbd3ab7c9fc0593409c9070557fcd8524ce07e`；独立 [target-audit.json](packed-ws/target-audit.json) 为14,071B，SHA256 `eec50a29d868fec5269593a45b84ed90d0394542cbb9799b75de634d186494d1`。
+
+归档原host `0250d6044ba18f5fd71831ae3131d2ce.858f7dd7b3c88c114c5aa789c4e1eb28` 的回执started_at / updated_at为23:42:54.4696681 / 23:43:06.5469128 UTC，记录执行耗时12.016秒，exit0/cleanup=true。34份文件、12个目录和1份manifest合计47成员，保留3,446,217B原始内容，零省略。25个本地pin和10项大小检查、完整成员CRC/SHA/readback及原件前后SHA/库存一致性均通过。profile的7个包内依赖已核，425个外部依赖只保留原身份记录；ELF/BIN仍由前述reference归档保存，未重复打包或重扫外部依赖。这次运输没有运行guest、构建或原checker，不增加功能或性能资格。
+
+### 本次取舍
+
+保留已经发布的四个独立函数及其prepare接口，供后续按固定合同复用；当前不接入完整consumer，也不因这次PASS自动追加K768或新长forward。理由是实测新增收益只有这个固定预热K288调用的6.21%，完整应用中的耗时占比和准备摊销尚无对应测量。若为全部172个K=288面板各常驻一份packed-Ws并保留row-major对象，额外payload为`172×10,368=1,783,296B`；这不是所有接入方案的内存下界。这些面板包括W1/W3及分类器，不能只理解成attention Q。接入还必须显式保持K768路由，不能让新函数指针意外落入原TA分支。新共同ELF需保留实际较快的RVV及相应完整验证，不能借旧周期省掉公平比较。
+
+本轮优先收取已在途N/P/NQ/PQ完整forward的实际终态；同一prefix候选已另取得有限父级功能证据，详见 [成本结果](../rtl-integration/cost/RESULT.md) 的23:41闭合节。新prefix尚未进入此处旧f149硬件。这是基于当前收益和投入的阶段取舍，不否定packed-Ws的正向局部结果，也不把未完成的消费者或应用资格写成已交付。

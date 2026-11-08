@@ -1,6 +1,6 @@
 # Production FU nominal cost result — 2026-11-07
 
-> Current local-candidate evidence is in the final **CSA / prefix** section: prefix feature1 area 17,965.374, arithmetic- and FU-qualified, nominal 1ns still unmet. Its parent/full-core/application qualification is pending; the earlier signed8 parent PASS applies only to that earlier source identity.
+> Current prefix evidence is in the final **23:41 UTC real-parent closure** section: the same prefix source is arithmetic-, FU- and parent-qualified, with feature1 local area 17,965.374. Nominal 1ns remains unmet; prefix full-core/application and parent/core PPA qualification are pending. Earlier source-specific results retain their original boundaries.
 
 **Result: two comparable CommonFuCostTop cost points were recorded.**
 Enabling dot16 increases mapped standard-cell area from **17,246.376** to
@@ -732,3 +732,55 @@ CSA `local-01` 因结构 parser 不接受唯一 firtool 文件头而失败；`lo
 复现入口位于 [CSA](signed8/csa/) 的 `csa.py` / `CSA_CONTRACT.md`（固定续接使用 `--previous-local`）及 [prefix.py](signed8/prefix/controller/prefix.py) / [PREFIX_CONTRACT.md](signed8/prefix/controller/PREFIX_CONTRACT.md)（使用 `--csa-local`，保留 `controller/../source/` 布局）；恢复包内对应 source/controller 布局、匹配原依赖，并选择全新隔离输出。详细源逆变换保存在原包中：prefix 可恢复完整 CSA 父源码，CSA 可恢复 R19/R20 父源码。回退须恢复匹配的完整源码组合和输入身份，不把某一候选的 PASS 移给另一候选。
 
 **当前选择：**保留 prefix 的局部结果及其较低的 feature1 最坏 r2r arrival，同时保留面积更小的 CSA 回退点；生产默认和原应用实验硬件保持原版本。本轮暂不追加 EDA 或新 parent，工程重心回到 packed-Ws 的真实 EMU 验证。这些库面积与时序结果尚不证明完整应用的50%改善。
+
+## 2026-11-07 23:41 UTC：同一 prefix 候选通过真实父级有限功能验证
+
+**prefix 已取得本次真实 VFEX4 父级已解码请求边界的功能资格。** 这补充前节22:11发布时“尚无新parent”的历史快照，不改写原冻结结果，也不向CSA或其他源码迁移资格。生产默认和应用测量使用的旧f149 EMU均未切换；当前仍无prefix整核、完整应用或父级/core PPA结果。
+
+原host operation `0250d6044ba18f5fd71831ae3131d2ce.e40fda7c58fb6656b3580c4529f40a2f` 的回执 `started_at` / `updated_at` 为 **23:27:06.503066 / 23:41:18.6873119 UTC**，记录执行耗时852.131秒，exit0、cleanup=true、未超时或取消。内层实际记录为23:27:08.814020—23:41:17.676913 UTC，共848.862893秒，小于1200秒预算。使用唯一辅助worker（CPU1、absolute nice5、j1），与原CPU1长跑共享CPU资源；该验证耗时不是应用速度或硬件时延。
+
+原 `parent-01/result.json` **160,379B**，SHA256 `03eb17ce008ab0be25b9d46ddf53a237daa2ee912c817be801ba8a80c6deaa8d`；终态为 `PREFIX_REAL_PARENT_PASS`。`parent_qualified=true`，而 `fullcore_qualified`、`application_performance_qualified`、本次 `cost_qualified` / `core_cost_qualified` / `performance_measured` 均为false。resident、原cache和生产默认未改，新增整核构建及运行均为0。原乘法miter的 `UNKNOWN_EXTERNAL_TIMEOUT` 保持原义。
+
+### 受测实现与父级边界
+
+实际复用前节已完成prefix局部结果的完整23类overlay：datapath `1d02d8a34772e7d9b9947f997f32465f3e946f4b24cacc66159eef7ee10ab3bb`、wrapper `912c1a038ef8e9a1ac56cfa349161ae1c582d763acfce5352b08ebde2a227f92`，候选源码未重编或替换。只在外部目录重新编译原父级harness，再生成和构建本次两份父级binary。
+
+保留上升沿驱动、同步高有效valid复位、128bit接口、原ClockGate/DIV及三路写回、两弹性槽和无阻塞E2/II1；P每半区两条19bit row，R为19/20bit，dot8高半置零、低32bit符号扩展及高96bit零保持。输入为已解码请求，本测试不覆盖整核译码、Rename、RF和ROB退休。
+
+两态各56个实际SV/V，与固定旧父级比较：各51件保留文件大小/SHA不变，包括ClockGate、DIV和其余父级；恰好删除Products/Reduce、增加CSA及对应Finish19/20，其字节与已验证局部模块一致。既有变化仅为VDotElastic、LogPerf和extern。wrapper公开接口、102项有序非数据更新右值及941bit shadow的有限比较通过；feature1实际生成记录包含唯一 `fuOpType==9'h1` 条件、四条P row和正确20bit行扩展。此静态比较不覆盖全部if/clock guard，不称为完整顺序形式化等价。
+
+extern仅增加两个精确模块注释；LogPerf沿用原v3三独立完整块比较规则，只允许对象标签和三块排列，区域外字节不变。同一时刻多条错误的日志先后可能改变，不声称诊断文本完全逐字相同。两态新生成清单各58项，含56个SV/V、资源表和filelist，原控制器已经核对完整资源身份。
+
+### 本次实际覆盖
+
+| 覆盖 | feature0：dot8 | feature1：dot8+dot16 |
+| --- | ---: | ---: |
+| 原套件周期 / 分组 | 38,602 / 14 | 39,100 / 14 |
+| 接受 | 14,781 | 14,931 |
+| 响应 / 取消 / reset丢弃 | 14,292 / 426 / 63 | 14,414 / 446 / 71 |
+| metadata输入 / 输出观察 | 14,781 / 17,567 | 14,931 / 17,815 |
+| metadata walking-one / zero | 577 / 577 | 577 / 577 |
+| 新增接受 / 响应 / 取消 / reset丢弃 | 16 / 16 / 0 / 0 | 166 / 138 / 20 / 8 |
+| 原观察负控类别 | 20 | 20 |
+
+两态总账和三个FU各自的接受/终止账均闭合。feature1新增64个混合stream逐例记录2周期响应、63个相邻接受间隔为1，并有8个新增reset状态case；不外推为任意stall下固定两周期。
+
+共96条实际命令，56个exit0和40个观察注错exit1；两态各20类负控均由紧随的原分类checker成功返回0来确认。注错命令记录的 `expected_exit` 实为null，不能写成runner直接设置expected_exit=1。这些是观察检查器的负控，不是20种RTL变异覆盖。原59项checker自测（14个NegativeGateTests、45个TraceTests）、两态lint/build、完整positive、事务replay、577bit audit及新增coverage均通过。
+
+96个子命令均记录reaped/group_absent=true；输入、生成物、基础classpath、完整overlay终态核对通过。`inputs.json`实际记录893个originals及22个snapshot，`final-artifact-pins.json`记录177项本次输出。独立复核直接核对原result、两态boundary/清单/metadata/coverage和checker自测日志，未把源码准备阶段的结论代替真实执行。
+
+### 原件与复现入口
+
+复现入口为 [prefix_parent.py](signed8/prefix/parent/prefix_parent.py)、[parent_binding.py](signed8/prefix/parent/parent_binding.py) 和冻结的 [PARENT_CONTRACT.md](signed8/prefix/parent/PARENT_CONTRACT.md)。合同仍保留运行前的准备状态；本节记录其实际执行结果。调用时沿合同提供既有repo/cost/parent根、对应prefix local-01和固定result SHA，输出必须为全新隔离目录；不能覆盖当前已闭合parent-01。
+
+完整 [parent/raw.zip](signed8/prefix/parent/raw.zip) 为 **43,659,939B**，SHA256 `b114b7eb83f4f08b855eb5cac0b0f16103b2620e04dc2cdb5df1c6534daeb2e4`；[audit.json](signed8/prefix/parent/audit.json) 为6,061B，SHA256 `9a9c08805178e98795394e19e7a4063f74eb0f8d12b416aeeb505ce2bf5dc74a`。400份文件、33个目录及1份manifest共434成员，保留192,505,681B原始内容，**零省略、原件零删除**。两份完整binary、生成RTL/C++、harness/classes/checker源、正常和全部观察失败日志、metadata、输入清单、原host回执、合同及审查均保留，`.o/.a`亦未省略。
+
+214个去重本地pin、231项完整长度、全成员CRC/SHA/readback及原树前后内容和库存一致性均核验通过。893项originals中3项是包内执行源，另890项外部依赖只保留原路径/SHA；基础classpath等清单原文完整入包，不重新展开缓存或外部工具链。该包不声明脱离原环境即可独立重建。
+
+运输原host为 `0250d6044ba18f5fd71831ae3131d2ce.5853103d914a7bda5ec67c622c8534f3`；回执started_at / updated_at为11-07 23:59:44.4142115 / 11-08 00:00:48.3071855 UTC，记录耗时63.811秒，exit0/cleanup=true。内层为23:59:47.180682—00:00:46.760867 UTC，终态 `PREFIX_PARENT_RAW_ARCHIVE_VERIFIED`。这只证明运输完整性，没有重跑checker、构建、guest或EDA，不增加功能/性能资格。audit中沿用的`source_evidence.host_finished`字段明确取原父级host的`updated_at`，不是另一次进程停止时刻测量。
+
+### 当前取舍
+
+前节feature1 FU库面积 **17,965.374** 及r2r/i2r arrival **1.079437 / 1.163662ns**仍是相同prefix的局部结果；本次父级PASS增加采用依据，但不改变名义1ns负slack，也不把局部库面积与旧EMU应用周期拼成已测组合。
+
+当前未启动新prefix整核：现有build入口会写resident的build/out及根目录元数据，旧resume又绑定原FAILED、生成物和原初态；单独覆盖BUILD_DIR尚不能证明完整隔离。复用原classpath/overlay、在外部cwd生成SimTop再接原后处理与Clang链，是可研究的窄路线，目前未实测。11-07 23:59 UTC依据人工补充授权，仅安排独立目录中的薄适配入口准备，未把它视为已经可靠的一次执行命令，也未启动新生成或整核任务；后续依据实际实现和资源另作判断，不阻塞当前交付。即便新六例smoke通过，也不自动取得完整随机/非法/退休、应用性能或时序资格。保留当前已闭合证据及CSA回退点，优先完成原四臂forward和人工要求的代码/指标整理。
