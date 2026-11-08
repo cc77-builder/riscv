@@ -32,9 +32,12 @@ def main():
     env = os.environ.copy()
     for name in ("OMP_NUM_THREADS", "OMP_THREAD_LIMIT", "OPENBLAS_NUM_THREADS"):
         env[name] = "1"
+    version = subprocess.run([compiler, "--version"], stdout=subprocess.PIPE,
+                             stderr=subprocess.STDOUT, text=True).stdout.splitlines()
     receipt = {
         "started_utc": datetime.now(timezone.utc).isoformat(),
-        "compiler": compiler, "source_directory": str(ROOT),
+        "compiler": version[0] if version else Path(compiler).name,
+        "source_directory": ".",
         "font_profile": "TeX Gyre + Fandol (TeX Live open fonts)",
         "passes_per_document": 3, "documents": [],
     }
