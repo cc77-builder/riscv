@@ -29,7 +29,7 @@
 | 2.3 正数、负数、边界测试 | 第二阶段 2.5 | 参考模型与数据 [team/models/vdot/](team/models/vdot/)；单元测试顶层 [team/rtl/vdot/](team/rtl/vdot/)；整核测试程序 [vdot-exceptions/](team/workloads/vdot-exceptions/)；入口 [vdot-tests.sh](team/scripts/vdot-tests.sh) |
 | 3 NEMU 扩展 | 第三阶段 3.2 | 补丁 [team/patches/nemu/](team/patches/nemu/)；构建脚本 [prepare-nemu-vdot.sh](team/scripts/prepare-nemu-vdot.sh) |
 | 3 协同仿真与波形 | 第三阶段 3.3～3.4 | DiffTest 运行 `vdot-tests.sh run-rtl`；波形截图 [S3-WAVE-01～03](submission/reports/figures/) |
-| 3 性能分析 | 第三阶段 3.5～3.8 | 微基准 [vdot-perf/](team/workloads/vdot-perf/)；RVV 基线 [rvv-baseline/](team/workloads/rvv-baseline/)；GEMV 与软件库见下方 |
+| 3 性能分析 | 第三阶段 3.5～3.8 | 微基准与 C8 逐窗口数据 [证明材料 data/](提交/测试数据与运行结果证明材料/data/)，可用其中 `tools/prepare_data.py` 从原始日志重算表 3-3、3-4；RVV 基线 [rvv-baseline/](team/workloads/rvv-baseline/)；软件库见下方 |
 | 3 面积与时序 | 第三阶段 3.9 | 综合与 STA 原始报告 [submission/reports/evidence/](submission/reports/evidence/) |
 
 ### vdot 源码
@@ -43,7 +43,7 @@
 | FU 注册与选择 | [FuConfig.scala](src/main/scala/xiangshan/backend/fu/FuConfig.scala)、[FuType.scala](src/main/scala/xiangshan/backend/fu/FuType.scala) |
 | 译码与异常 | [Instructions.scala](src/main/scala/xiangshan/backend/decode/Instructions.scala)、[DecodeUnit.scala](src/main/scala/xiangshan/backend/decode/DecodeUnit.scala)、[VecDecoder.scala](src/main/scala/xiangshan/backend/decode/VecDecoder.scala)、[VecExceptionGen.scala](src/main/scala/xiangshan/backend/decode/VecExceptionGen.scala) |
 | VFEX4 父级与 DIV 取消关钟 | [ExeUnit.scala](src/main/scala/xiangshan/backend/exu/ExeUnit.scala) |
-| 最终 FU / 父级测试顶层 | [team/optimizations/o2/fu/](team/optimizations/o2/fu/)、[team/optimizations/o2/parent/](team/optimizations/o2/parent/) |
+| 最终 FU / 父级测试 | 测试顶层 [team/optimizations/o2/fu/](team/optimizations/o2/fu/)、[team/optimizations/o2/parent/](team/optimizations/o2/parent/)；运行 [check-vdot-o2.sh](team/scripts/check-vdot-o2.sh) `fu` / `parent` |
 | firstdot V2 库 | [team/optimizations/o2/r2-select/public/firstdot/](team/optimizations/o2/r2-select/public/firstdot/) |
 | C8 GEMV 库 | [package/c8/public/](team/optimizations/o2/integration/firstdot-v2-0f/package/c8/public/)、汇编与数据接口 [config-reuse-c8-v2/public/](team/optimizations/o2/integration/firstdot-v2-0f/continuation/config-reuse-c8-v2/public/) |
 
@@ -103,11 +103,12 @@ build.sc、Makefile        香山原构建入口；子模块固定在 .gitmodule
 ## 快速开始
 
 ```bash
-git clone --depth 1 --single-branch -b release/cie2026-v1 --recurse-submodules https://github.com/cc77-builder/riscv.git
+git clone --recurse-submodules -b release/cie2026-v1 https://github.com/cc77-builder/riscv.git
 cd riscv
 python3 -B submission/verify.py          # 交付文件、源码树与子模块校验
 bash submission/reproduce.sh check       # 参考模型、编码与静态接入
 bash submission/reproduce.sh logs-check  # 原始日志归档校验
+bash submission/reproduce.sh o2-fu       # 最终两槽 FU 的 RTL 测试与故障注入（需 mill、Verilator）
 ```
 
 完整的环境准备、阶段一至阶段三运行步骤见[复现操作步骤](提交/复现操作步骤.pdf)。

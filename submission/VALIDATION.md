@@ -12,6 +12,7 @@
 | 日志读取工具 | `submission/logs/test_read_log.py`：7 项通过 |
 | 归档日志 | `read_log.py verify`：9,679 个归档成员校验通过 |
 | firstdot / C8 | 两套软件库重建成功，示例编译与可重定位链接通过，C8 `gemv.o` SHA-256 为 `f8bc13daeead98a414f313600a5778c96ac95a66b5bcb5c714ea3b98e0d25ab3`，与固定身份一致（见 [verification/](verification/)） |
+| 最终两槽 FU 与 VFEX4 父级 RTL | `team/scripts/check-vdot-o2.sh fu`、`parent`（mill + Verilator 5.052）：FU 10022 组向量通过、连续请求 10021 次每拍发起，4 种注入故障全部检出；父级正向回放通过，16 种注入故障全部检出。日志见 [verification/o2-check-20261108/](verification/o2-check-20261108/) |
 | 报告 | 四份 PDF 的 SHA-256 与 `reports/output/build-receipt.json` 一致；封面队名“啊对对对对”；正文无占位 |
 
 报告中的周期、面积和时序数据来自各实验的原始运行，日志按原路径保存在 [logs/](logs/README.md)，可用 `read_log.py` 查找和阅读。

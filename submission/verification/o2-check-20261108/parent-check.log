@@ -1,0 +1,23 @@
+VDOT_O2_CHECK_START stage=parent commit=0f12df675378556670afd0dd2153f47fcb330610 output=/tmp/o2check-parent
+VECTOR_CHECK_PASS suite=directed count=22 sha256=b78708eca1145437d34af230721a3999c35889176131cdf57acfa6b7a6b8b333
+VECTOR_CHECK_PASS suite=random count=10000 sha256=6201847c400f7ecac85848690704abac15b7278a824e447b35ad60788da70363
+VECTOR_EXPORT_PASS contract=vdot-s8x8-r32-v0.1 total=10022 sha256=901a7be30e62b81bcd3df55b20538a5ba9c879ba9c7c34f28b8c0421d8e6a327
+O2_PARENT_PASS schema=1 cycles=35075 groups=13 accepted=13611 responses=13122 cancelled=426 reset_dropped=63 overlaps=10494 stalls=2051 p_to_r=11782 full_cycles=11255 full_blocked=545 p_accept_r_blocked=102 r_response_p_survivor=338 kill_p_only=41 kill_r_only=47 kill_both=38 reset_both=2 redirects=156 reset_cases=20 te0_resets=30 empty_te0_resets=21 idle_clock_samples=12 cancel_idle_clock_on=0 parent_tested=1 fullcore_tested=0 performance_measured=0
+O2_PARENT_POSITIVE_REPLAY_PASS
+O2_PARENT_NEGATIVE_CHECK_PASS identity
+O2_PARENT_NEGATIVE_CHECK_PASS rob
+O2_PARENT_NEGATIVE_CHECK_PASS high
+O2_PARENT_NEGATIVE_CHECK_PASS metadata
+O2_PARENT_NEGATIVE_CHECK_PASS wen
+O2_PARENT_NEGATIVE_CHECK_PASS stall
+O2_PARENT_NEGATIVE_CHECK_PASS route
+O2_PARENT_NEGATIVE_CHECK_PASS double
+O2_PARENT_NEGATIVE_CHECK_PASS clock
+O2_PARENT_NEGATIVE_CHECK_PASS occupancy
+O2_PARENT_NEGATIVE_CHECK_PASS kill_p
+O2_PARENT_NEGATIVE_CHECK_PASS kill_r
+O2_PARENT_NEGATIVE_CHECK_PASS survivor
+O2_PARENT_NEGATIVE_CHECK_PASS duplicate
+O2_PARENT_NEGATIVE_CHECK_PASS missing
+O2_PARENT_NEGATIVE_CHECK_PASS reset
+VDOT_O2_CHECK_PASS stage=parent faults=16
