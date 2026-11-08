@@ -1,0 +1,144 @@
+{
+  "operation_id": "SP1-E-ITEM19-FINAL-ACCEPTANCE-20261108",
+  "user_instruction_sha256": "8d88ddffa63a7c956e65211f8f15c54ad4bf490316dacc5ac9a030cd96e23312",
+  "freeze_sha256": "569bbd03070e3597684982de266600699e093e7742b14ab8d29d423a7e17e85a",
+  "contract_sha256": "c8b3741fd31771ad7e4c834a654db0342c444466b56989440786ad4c535c54d2",
+  "roles": [
+    {
+      "name": "supplement-candidate-normal",
+      "kind": "supplement",
+      "mode": "candidate",
+      "wall_seconds": 900,
+      "guest_cycles": 300000,
+      "expected_exit": 0,
+      "reference": "normal_reference",
+      "emu": "candidate_emu",
+      "image": "supplement",
+      "cwd": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-m4-fp-pressure-20261108/runtime",
+      "comparisons": [],
+      "neutrality": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-m4-fp-pressure-20261108/target-01/02-candidate-normal/legacy-projection.log"
+    },
+    {
+      "name": "supplement-candidate-replay",
+      "kind": "supplement",
+      "mode": "candidate",
+      "wall_seconds": 900,
+      "guest_cycles": 300000,
+      "expected_exit": 0,
+      "reference": "normal_reference",
+      "emu": "candidate_emu",
+      "image": "supplement",
+      "cwd": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-m4-fp-pressure-20261108/runtime",
+      "comparisons": [
+        {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/target-01/01-supplement-candidate-normal/validation.json",
+          "prefix": "collector",
+          "fields": [
+            "functional_replay.architectural_commit",
+            "functional_replay.source",
+            "functional_replay.result",
+            "functional_replay.observer",
+            "functional_replay.uart_checks",
+            "functional_replay.csr_contract",
+            "functional_replay.div_events",
+            "functional_replay.completion"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "supplement-baseline-normal",
+      "kind": "supplement",
+      "mode": "baseline",
+      "wall_seconds": 900,
+      "guest_cycles": 300000,
+      "expected_exit": 0,
+      "reference": "normal_reference",
+      "emu": "baseline_emu",
+      "image": "supplement",
+      "cwd": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-m4-fp-pressure-20261108/runtime",
+      "comparisons": [
+        {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/target-01/01-supplement-candidate-normal/validation.json",
+          "prefix": "collector",
+          "fields": [
+            "cross_hardware_architecture",
+            "functional_replay.uart_checks",
+            "functional_replay.csr_contract"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "original-candidate-replay",
+      "kind": "original",
+      "mode": "candidate",
+      "wall_seconds": 2400,
+      "guest_cycles": 1500000,
+      "expected_exit": 0,
+      "reference": "normal_reference",
+      "emu": "candidate_emu",
+      "image": "original",
+      "cwd": "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/candidate",
+      "comparisons": [
+        {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/history/candidate.json",
+          "prefix": "collector",
+          "fields": [
+            "functional_replay.architectural_commit",
+            "functional_replay.source",
+            "functional_replay.result",
+            "functional_replay.observer",
+            "functional_replay.uart_checks",
+            "functional_replay.csr_contract",
+            "functional_replay.div_events",
+            "functional_replay.completion"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "original-baseline-replay",
+      "kind": "original",
+      "mode": "baseline",
+      "wall_seconds": 2400,
+      "guest_cycles": 1500000,
+      "expected_exit": 0,
+      "reference": "normal_reference",
+      "emu": "baseline_emu",
+      "image": "original",
+      "cwd": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo",
+      "comparisons": [
+        {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/history/baseline.json",
+          "prefix": "collector",
+          "fields": [
+            "functional_replay.architectural_commit",
+            "functional_replay.source",
+            "functional_replay.result",
+            "functional_replay.observer",
+            "functional_replay.uart_checks",
+            "functional_replay.csr_contract",
+            "functional_replay.div_events",
+            "functional_replay.completion"
+          ]
+        }
+      ]
+    }
+  ],
+  "limits": {
+    "target_seconds": 7500,
+    "host_seconds": 900,
+    "outer_seconds": 8400,
+    "cpu_affinity": [
+      4
+    ],
+    "thread_cap": 4,
+    "rss_cap_bytes": 12884901888,
+    "log_cap_bytes": 2147483648
+  },
+  "allow_retry": false,
+  "host_result_sha256": "7c85c8b1783bb9e1d042a224c381e9b21089730023286896785c8ece390cd921",
+  "authorization": "current explicit autonomous goal; M4 actual trigger proven",
+  "at": "2026-11-07T18:56:08.302784+00:00"
+}

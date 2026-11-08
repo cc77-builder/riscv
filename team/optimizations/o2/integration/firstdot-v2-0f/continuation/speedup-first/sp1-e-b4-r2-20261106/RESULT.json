@@ -1,0 +1,367 @@
+{
+  "schema": "sp1-e-b4-r2-calibration-closeout-v1",
+  "record_id": "SP1-E-B4-R2-20261106-STOPPED",
+  "record_number": 83,
+  "operation_id": "SP1-E-B4-R2-20261106-01",
+  "operator": "@cc77-builder / Agent",
+  "operator_identity_basis": "GitHub connector profile cc77-builder verified in REMOTE_READ.json this round",
+  "started_utc": "2026-11-06T06:49:09.465823+00:00",
+  "ended_utc": "2026-11-06T07:38:51.986292+00:00",
+  "recorded_at": "2026-11-06T15:38:51.986292+08:00",
+  "status": "STOPPED_REAL_P_SLOT_COVERAGE_MISSING",
+  "summary": "B4-R2最小raw dst范围修复与宿主准入通过；新独立批次bit100拒错通过，候选o2-control完整程序GOOD_TRAP、256次试验零错误、1208次退休完整128位重算一致，但原覆盖门KILL_P/PARTIAL_KILL未触发，整批按合同STOPPED。仅启动2/6目标，其余4个NOT_RUN，清理正常、旧FAIL和锁保留。候选1562.610640秒超过原正式1500秒，低于本轮2400秒；不授完整校准或正式验收资格，进度仍17/20，默认保持0f＋firstdot V2＋原C8。",
+  "source_commit": "347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e",
+  "branch": "local/zjhwork-integration-20261024",
+  "stable_default": "0f + firstdot V2 + original C8",
+  "default_changed": false,
+  "coverage_qualified_before": 17,
+  "coverage_qualified": 17,
+  "coverage_required": 20,
+  "new_target_processes": 2,
+  "launch_attempts": 2,
+  "new_functional_qualified_cases": 0,
+  "new_performance_qualified": false,
+  "complete_normal_calls": 1,
+  "negative_qualified": true,
+  "native_batch_status": "STOPPED",
+  "native_guard_status": "GUARD_FAIL",
+  "guard_reason": "CHILD_EXIT_1",
+  "cleanup_ok": true,
+  "actual_guest_cycles": {
+    "o2-control/bit100": 9243,
+    "o2-control/candidate-full": 702861
+  },
+  "target_active_wall_seconds": 1583.2278984450002,
+  "role_elapsed_seconds": {
+    "bit100": 20.626012593,
+    "candidate-full": 1562.631602459
+  },
+  "case_wall_seconds": 1591.970813977,
+  "case_host_seconds": 8.74291553199987,
+  "batch_wall_seconds": 1593.974285545,
+  "guard_wall_seconds": 1594.082340936,
+  "resources": {
+    "bit100": {
+      "sample_count": 372,
+      "peak_threads": 1,
+      "peak_rss_bytes": 75235328,
+      "observed_bytes": {
+        "stdout": 14722,
+        "stderr": 25746
+      },
+      "resource_ok": true,
+      "cleanup_ok": true
+    },
+    "candidate-full": {
+      "sample_count": 29005,
+      "peak_threads": 1,
+      "peak_rss_bytes": 78249984,
+      "observed_bytes": {
+        "stdout": 2205,
+        "stderr": 7241153
+      },
+      "resource_ok": true,
+      "cleanup_ok": true
+    }
+  },
+  "role_status": [
+    {
+      "case": "o2-control",
+      "role": "bit100",
+      "status": "NEGATIVE_PASS",
+      "guest_cycles": 9243,
+      "active_wall_seconds": 20.617258550000003,
+      "receipt": {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r2-20261106/cases-r1/o2-control/target-01/01-bit100/record.json",
+        "bytes": 5600,
+        "sha256": "4157643b5d6ebb4c9ebe152ccd32e7370d5fb2258b78ae7f89f167fac64f9187"
+      }
+    },
+    {
+      "case": "o2-control",
+      "role": "candidate-full",
+      "status": "PROGRAM_COMPLETE_NUMERIC_EVIDENCE_PASS_COVERAGE_FAIL",
+      "guest_cycles": 702861,
+      "active_wall_seconds": 1562.610639895,
+      "receipt": {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r2-20261106/cases-r1/o2-control/target-01/02-candidate-full/record.json",
+        "bytes": 5131,
+        "sha256": "efd5743d88116607037dafc2cca0a0069cc125e303a044e6b40ca931b5412344"
+      }
+    },
+    {
+      "case": "o2-control",
+      "role": "baseline-full",
+      "status": "NOT_RUN"
+    },
+    {
+      "case": "original-c8-c48",
+      "role": "bit100",
+      "status": "NOT_RUN"
+    },
+    {
+      "case": "original-c8-c48",
+      "role": "candidate-full",
+      "status": "NOT_RUN"
+    },
+    {
+      "case": "original-c8-c48",
+      "role": "baseline-full",
+      "status": "NOT_RUN"
+    }
+  ],
+  "formal_budget_status": "HOLD_CANDIDATE_EXCEEDS_1500_SECONDS_AND_OTHER_NORMAL_ROLES_NOT_RUN",
+  "metrics": {
+    "speedup": "NOT_TESTED",
+    "area": "NOT_TESTED",
+    "timing": "NOT_TESTED"
+  },
+  "diagnosis": {
+    "missing_coverage": [
+      "KILL_P",
+      "PARTIAL_KILL"
+    ],
+    "counts": {
+      "STATE": 5283,
+      "VFEX4_ACCEPT": 1874,
+      "VFEX4_WAIT": 1303,
+      "VFEX4_REDIRECT": 310,
+      "ACCEPT": 1618,
+      "MOVE": 0,
+      "DIRECT_R": 1618,
+      "ENQUEUE_P": 0,
+      "RESPONSE": 1592,
+      "STALL": 0,
+      "KILL": 26,
+      "DIV_ACCEPT": 256,
+      "DIV_KILL": 0,
+      "DIV_OUTPUT": 256,
+      "ENQUEUE": 1720,
+      "COMMIT": 1208,
+      "REDIRECT": 310,
+      "MULTI_INFLIGHT": 0,
+      "OVERLAP": 931,
+      "TRIPLE_OVERLAP": 0,
+      "FULL_STALL": 0,
+      "KILL_P": 0,
+      "KILL_R": 26,
+      "PARTIAL_KILL": 0,
+      "BOTH_KILL": 0,
+      "R_KILL_P_SURVIVES": 0,
+      "P_KILL_R_SURVIVES": 0,
+      "UNRELATED_FLUSH": 0,
+      "ROB_WRAP": 249,
+      "FTQ_WRAP": 152,
+      "DIV_RESPONSE": 256,
+      "ACCEPTED_THEN_SQUASHED": 410,
+      "ACCEPTED_YOUNGER_SQUASHED": 410
+    },
+    "state_summaries": {
+      "records": 5283,
+      "pvalid_one": 0,
+      "rvalid_one": 1618,
+      "outready_zero": 0,
+      "p_occupied_outready_zero": 0,
+      "max_occupancy": 1
+    },
+    "committed_full128_independently_recomputed": 1208,
+    "CSR_scope": "final frozen target self-check plus live DiffTest and summary; not printed per-trial CSR numeric dumps",
+    "interpretation": "Real P-slot and partial-cancel coverage not triggered in this always-ready direct-R trace; not just event renaming. No RTL defect established, no coverage override."
+  },
+  "frozen_sources_modified": false,
+  "retry_performed": false,
+  "budget_extended": false,
+  "RTL_edits_this_round": 0,
+  "new_fullcore_builds": 0,
+  "new_synthesis_runs": 0,
+  "new_STA_runs": 0,
+  "GitHub_writes": 0,
+  "evidence": {
+    "authorization": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r2-20261106/RUN_AUTHORIZATION.json",
+      "bytes": 3628,
+      "sha256": "86c8e5321cb3eb1d166ce79884e633bd9808c5252b1f66a7b7db6f7cf91c75d3"
+    },
+    "admission": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r2-20261106/ADMISSION.json",
+      "bytes": 3408,
+      "sha256": "7b954adc07444ed4bac9d1f41f55120d9ead12120808e971fff57267d2269765"
+    },
+    "batch_claim": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r2-20261106/BATCH.used.json",
+      "bytes": 320,
+      "sha256": "a705353d830d3962475df5b7dfdd80574d7c912e002a7ea97db58ba679e5e7b7"
+    },
+    "runtime_version": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r2-20261106/runtime/SOURCE_VERSION.json",
+      "bytes": 12603,
+      "sha256": "bf1d3e465e0f9b9c45dcbfb9cb4cce41a0516b7692a83c6a2aeb84fe560dc3d3"
+    },
+    "calibration_contract": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r2-20261106/CALIBRATION_CONTRACT.json",
+      "bytes": 3028,
+      "sha256": "49f3aaaa9f8c634de9fc59c38f253ba00bf54b0b9fffaa66016320fcc25e41c3"
+    },
+    "before": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r2-20261106/BEFORE.json",
+      "bytes": 89774,
+      "sha256": "51fb3f3e6fc4ff1d6e75e2dfe38a922e8e5a9373d408b8a2062fbbfd306bf388"
+    },
+    "prelaunch": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r2-20261106/PRELAUNCH.json",
+      "bytes": 1991,
+      "sha256": "a942dee36958eb4a053c645f3dd1629ba895c4c456647ec97b44e13a3e361d8f"
+    },
+    "batch": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r2-20261106/target-01/batch.json",
+      "bytes": 5021,
+      "sha256": "239b045348b0745b4becadb19b9e0fb8da48ba09f3b41677e7f7b44346bcc1d3"
+    },
+    "case": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r2-20261106/cases-r1/o2-control/target-01/campaign.json",
+      "bytes": 3381,
+      "sha256": "b884206f4a674981a9e032952b41c733f957f0c2ca829d5d4035c1d51fb3ec55"
+    },
+    "negative": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r2-20261106/cases-r1/o2-control/target-01/01-bit100/record.json",
+      "bytes": 5600,
+      "sha256": "4157643b5d6ebb4c9ebe152ccd32e7370d5fb2258b78ae7f89f167fac64f9187"
+    },
+    "negative_validation": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r2-20261106/cases-r1/o2-control/target-01/01-bit100/validation.json",
+      "bytes": 8477,
+      "sha256": "bced81d1f39ac9cd2b768c1b9e69530fb23e2f5e940231c5669059d63f21782c"
+    },
+    "candidate_full": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r2-20261106/cases-r1/o2-control/target-01/02-candidate-full/record.json",
+      "bytes": 5131,
+      "sha256": "efd5743d88116607037dafc2cca0a0069cc125e303a044e6b40ca931b5412344"
+    },
+    "guardian": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r2-20261106/external-batch/RESULT.json",
+      "bytes": 1785,
+      "sha256": "64e0bd453636d68dc01b3c465ee76778f7ab91a59f2d92e42f575baaa66484c1"
+    },
+    "independent_terminal": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r2-20261106/terminal-review/TERMINAL_RESULT.json",
+      "bytes": 9144,
+      "sha256": "f1602d507772dd9d40e387325f5a529bcefc2f2d4395f2fad98ffc3ffb20484a"
+    },
+    "partial_functional": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r2-20261106/terminal-review/PARTIAL_FUNCTIONAL_DIAGNOSIS.json",
+      "bytes": 9567,
+      "sha256": "004c989f519b7320211dee316a34a6d3f45d6720b2aed97d74b0e5692c18f24b"
+    },
+    "attribution": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r2-20261106/terminal-review/FAILURE_ATTRIBUTION.json",
+      "bytes": 7848,
+      "sha256": "fcdef7da551cbc77823be074872bc704dd14859fd263a149de39c8ebd99e53e6"
+    },
+    "rtl_attribution": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r2-20261106/terminal-review/RTL_REACHABILITY_ADDENDUM.json",
+      "bytes": 2799,
+      "sha256": "9a5bfdaa9b2b7d359270b7975785cb3e1238908f98c1017004bff6db1692c4f5"
+    },
+    "budget": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r2-20261106/calibration-budget/RESULT.json",
+      "bytes": 20236,
+      "sha256": "4da092394903de99871e74a36efde7a72b6eb4e68f7a85338d4d78140bf1c729"
+    },
+    "protection": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r2-20261106/POSTRUN_PROTECTION.json",
+      "bytes": 243,
+      "sha256": "f54e26aff4d23a81a805dc93ba0eabcaa4fea28534c76e67c31bbef6deed9a7c"
+    },
+    "metrics": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r2-20261106/METRICS.json",
+      "bytes": 107413,
+      "sha256": "c84e51a26b747fbbe19193561bc89470381ad1eb03cf7d9f36e766e22c6b4933"
+    }
+  },
+  "proposed_next_instruction": "开始 B4-R3 取消覆盖合同与剩余校准方案收口：保留 B4/R2 原FAIL、原始日志和消费锁，复用本轮bit100、1208次完整128位结果、程序完整结束及资源证据。先针对SP1直接入R、P槽未占用的真实路径，核对已有FU/真实父级反压和两槽取消证据能否组成完整分层覆盖；不能替代的全核覆盖，给出能实际触发的最小补测设计，不直接删掉KILL_P/PARTIAL_KILL要求。同步依据1562.61秒实测修订正式预算提案，明确0f O2和原C8普通C48尚缺的校准角色、证据复用边界、下一批进程和独立预算。只做必要宿主差异验证与合同准备，不重跑已完成目标、不运行EMU/NEMU、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub。完成后给出GO/HOLD及可整批执行的下一轮指令。",
+  "case_results": [
+    {
+      "case_id": "o2-control",
+      "calibration_status": "STOPPED_COVERAGE_FAIL",
+      "negative_qualified": true,
+      "complete_normal_calls": 1,
+      "qualified_normal_calls": 0,
+      "actual_processes": 2,
+      "role_status": [
+        {
+          "case": "o2-control",
+          "role": "bit100",
+          "status": "NEGATIVE_PASS",
+          "guest_cycles": 9243,
+          "active_wall_seconds": 20.617258550000003,
+          "receipt": {
+            "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r2-20261106/cases-r1/o2-control/target-01/01-bit100/record.json",
+            "bytes": 5600,
+            "sha256": "4157643b5d6ebb4c9ebe152ccd32e7370d5fb2258b78ae7f89f167fac64f9187"
+          }
+        },
+        {
+          "case": "o2-control",
+          "role": "candidate-full",
+          "status": "PROGRAM_COMPLETE_NUMERIC_EVIDENCE_PASS_COVERAGE_FAIL",
+          "guest_cycles": 702861,
+          "active_wall_seconds": 1562.610639895,
+          "receipt": {
+            "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r2-20261106/cases-r1/o2-control/target-01/02-candidate-full/record.json",
+            "bytes": 5131,
+            "sha256": "efd5743d88116607037dafc2cca0a0069cc125e303a044e6b40ca931b5412344"
+          }
+        },
+        {
+          "case": "o2-control",
+          "role": "baseline-full",
+          "status": "NOT_RUN"
+        }
+      ]
+    },
+    {
+      "case_id": "original-c8-c48",
+      "calibration_status": "NOT_RUN",
+      "negative_qualified": false,
+      "complete_normal_calls": 0,
+      "qualified_normal_calls": 0,
+      "actual_processes": 0,
+      "role_status": [
+        {
+          "case": "original-c8-c48",
+          "role": "bit100",
+          "status": "NOT_RUN"
+        },
+        {
+          "case": "original-c8-c48",
+          "role": "candidate-full",
+          "status": "NOT_RUN"
+        },
+        {
+          "case": "original-c8-c48",
+          "role": "baseline-full",
+          "status": "NOT_RUN"
+        }
+      ]
+    }
+  ],
+  "host_evidence": {
+    "new_o2_checker_controls": 26,
+    "new_runtime_controls": 4,
+    "reused_runtime_controls": [
+      10,
+      5
+    ],
+    "budget_seconds": {
+      "o2-control": 235.92154291199586,
+      "original-c8-c48": 213.41645447599296
+    }
+  },
+  "historical_metrics": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r2-20261106/METRICS.json",
+    "bytes": 107413,
+    "sha256": "c84e51a26b747fbbe19193561bc89470381ad1eb03cf7d9f36e766e22c6b4933"
+  },
+  "complete_normal_calls_scope": "Program completed but normal coverage qualification failed",
+  "evidence_manifest": "EVIDENCE_MANIFEST.json (generated after final documentation; excluded from own hash)"
+}

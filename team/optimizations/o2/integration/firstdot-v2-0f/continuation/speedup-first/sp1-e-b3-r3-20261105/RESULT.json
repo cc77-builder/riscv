@@ -1,0 +1,117 @@
+{
+  "schema": "sp1-e-b3-r3-host-stop-closeout-v1",
+  "record_id": "SP1-E-B3-R3-20261105-HOLD",
+  "operation_id": "SP1-E-B3-R3-20261105-01",
+  "operator": "@cc77-builder / Agent",
+  "started_utc": "2026-11-05T15:19:25.401749+00:00",
+  "ended_utc": "2026-11-05T15:46:57.183856+00:00",
+  "recorded_at": "2026-11-05T23:46:57.183856+08:00",
+  "status": "HOLD_B3_R3_INDEPENDENT_BOOT_ID_MISMATCH",
+  "summary": "R3完成test18精确行定位，checker23/23、runtime6/6及源码二进制溯源PASS；独立门新增的准备快照boot相等条件遇WSL启动代际变化而FAIL，对抗控制0项。该前提比原执行身份协议过严，不是RTL或guest功能失败。按单轮失败即停，预算0次、目标0个；整体HOLD，SP1-E仍15/20。",
+  "source_commit": "347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e",
+  "branch": "local/zjhwork-integration-20261024",
+  "stable_default": "0f + firstdot V2 + original C8",
+  "default_changed": false,
+  "checker_methods": 23,
+  "checker_passed": 23,
+  "checker_wall_seconds": 2.9769652079999105,
+  "runtime_methods": 6,
+  "runtime_passed": 6,
+  "runtime_wall_seconds": 0.18293625800004065,
+  "provenance_status": "PASS_SOURCE_BINARY_PROVENANCE",
+  "independent_status": "FAIL_INDEPENDENT_B3_R3_CONTROLS",
+  "independent_controls_executed": 0,
+  "formal_budget_attempts": 0,
+  "new_target_processes": 0,
+  "new_EMU_processes": 0,
+  "new_NEMU_processes": 0,
+  "production_libraries_loaded": false,
+  "RTL_edits_this_round": 0,
+  "new_fullcore_builds": 0,
+  "new_synthesis_runs": 0,
+  "new_STA_runs": 0,
+  "GitHub_writes": 0,
+  "formal_gate_retry_performed": false,
+  "preparation_helper_failures_preserved": 2,
+  "preparation_helper_revisions_scope": "non-formal mutation inspection only; no negative checker/target execution; finite audit replaced mock approach",
+  "coverage_qualified": 15,
+  "coverage_required": 20,
+  "cases": [
+    {
+      "case_id": "legacy-control",
+      "host_admission": "HOLD",
+      "target_run": "NOT_RUN",
+      "host_budget_seconds": null
+    },
+    {
+      "case_id": "o2-all-pairs",
+      "host_admission": "HOLD",
+      "target_run": "NOT_RUN",
+      "host_budget_seconds": null
+    }
+  ],
+  "held_cases": [
+    "o2-control",
+    "original C8 C48",
+    "timed DIV/SQRT"
+  ],
+  "metrics": {
+    "speedup": "NOT_TESTED",
+    "area": "NOT_TESTED",
+    "timing": "NOT_TESTED"
+  },
+  "checker_freeze": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r3-20261105/checker/SOURCE_FREEZE.json",
+    "bytes": 49022,
+    "sha256": "1cd2b80d793149b4099fc36f689ce97fdcf4204092156c6f7237443abb8be44d"
+  },
+  "runtime_version": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r3-20261105/runtime/SOURCE_VERSION.json",
+    "bytes": 2590,
+    "sha256": "9679f8004b8fc6661c693709a1ff86a271576bd4508e63ccfdbf3131af9d1dcb"
+  },
+  "checker_result": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r3-20261105/checker/attempt-01/RESULT.json",
+    "bytes": 415,
+    "sha256": "177ff2234b403c36d20299978d4c59f11ca7a7d5e2c12e686ff781d231de0ab8"
+  },
+  "runtime_result": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r3-20261105/runtime-tests/RESULT.json",
+    "bytes": 3470,
+    "sha256": "fd9342f64020b11dcb841f181a33b59f05197c7c758ec9aeff315154b271bbf7"
+  },
+  "independent_final_review": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r3-20261105/independent-review/FINAL_READONLY_RESULT.json",
+    "bytes": 6548,
+    "sha256": "11c060d06e879b0f0c6e7812072a12271e027c105587086db1275effbe0da8b4"
+  },
+  "root_preflight_failure": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r3-20261105/PREFLIGHT_FAIL.json",
+    "bytes": 803,
+    "sha256": "bc05e20b16269a057f21f793e0369843eb15ed9ebce1fc89c5a10695973dda47"
+  },
+  "budget_result": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r3-20261105/budget-review/RESULT.json",
+    "bytes": 10820,
+    "sha256": "fd91fee2cfaa2b1eb0a919a8901aef7de0d0eee53162f7de928e6bf9f5ef4755"
+  },
+  "held_review_reused": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r2-host-20261105/held-review/RESULT.json",
+    "bytes": 21505,
+    "sha256": "e501d68603c47a1e6fbb46665466af5d89e150f301142583ffcf89fa1a9aea0d"
+  },
+  "metrics_detail": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r3-20261105/METRICS.json",
+    "bytes": 72332,
+    "sha256": "a31520feefe09665bca29add9f057937e24e3e35f13348840dc3a153bd0a76f2"
+  },
+  "prior_evidence_unchanged": 318,
+  "production_files_unchanged": 445,
+  "future_admitted_target_whitelist": [],
+  "proposed_next_instruction": "开始 B3-R4，按 NEXT_STEP 在独立目录仅修订宿主准入的启动身份绑定：BEFORE.boot_id保留为历史快照，正式准入/执行前记录实时boot并绑定后续目标PID/start_ticks/单调时钟，不允许跨boot拼接运行。保留R1/R2/R3全部FAIL及旧锁；复用未变且身份匹配的23项checker、6项运行器和溯源证据，补齐该合同变更的正负控及尚未完成的独立对抗门、执行冻结和900秒预算门。全部通过且两例均GO后，同轮仅按legacy-control→o2-all-pairs串行执行五角色。每例300＋4×1500秒、目标6300/外层7200/宿主900秒；整批最多10目标、目标累计12600秒/外层14400秒，不借时；负控100000guest、正常800000/300000guest、CPU4/整组4线程/RSS12GiB/每例日志2GiB及原seed/RAM/reset不变。正式门或目标任一失败即停，不重试、不加时、不跳过继续；三个暂缓项保持HOLD，不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub。完成后更新计分板、三项指标和下一轮指令。",
+  "result_document": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r3-20261105/RESULT.md",
+    "bytes": 4581,
+    "sha256": "78b6387e4fe0c43b3af94643ceb2e3b354cf72b0d75b8b3136a7eefbe37df89d"
+  }
+}

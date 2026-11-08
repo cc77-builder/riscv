@@ -1,0 +1,93 @@
+{
+  "schema": "sp1-e-b3-r1-host-repair-contract-v1",
+  "operation_id": "SP1-E-B3-R1-HOST-20261105-01",
+  "frozen_utc": "2026-11-05T13:06:24.327853+00:00",
+  "scope": "HOST_ONLY_INPUT_CLOSURE_REPAIR_AND_BUDGET_ADMISSION",
+  "case_ids": [
+    "legacy-control",
+    "o2-all-pairs"
+  ],
+  "old_round": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-execution-20261105/RESULT.json",
+    "bytes": 79236,
+    "sha256": "f1ae02ae8d395266e07b00fd251e1d8f20512d81a0794ea1df1cad9a2d3fe072"
+  },
+  "old_fail": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-execution-20261105/budget-review/RUNTIME_MEASUREMENT_01_FAIL.json",
+    "bytes": 2695,
+    "sha256": "cbc0c12bfad945be08753775cd5424af0e9225c31c2c90eb963fd553e8a26405"
+  },
+  "old_host_freeze": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-protection-host-20261105/HOST_FREEZE.json",
+    "bytes": 265714,
+    "sha256": "3e72e7a804aa3fd00758b2b0eadf0113fa98c4c7f8c8512ea5bf7f44e5ab094e"
+  },
+  "true_b2_source": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b0-shared-micro-20261105/cases/performance-d0-s03/EXECUTION_FREEZE.json",
+    "bytes": 1728364,
+    "sha256": "e9b1f4fc2859bf7e310f340850a8fdb62f0f47f3cc9fcff1c9471e4fd31673c2"
+  },
+  "default": "0f + firstdot V2 + original C8",
+  "allowed_changes": [
+    "new independent runtime: original common/supervisor bytes, minimal explicit annex/inventory validation",
+    "new input annex with exact four paths, size, SHA and original real B2 source pin",
+    "new host negative controls, independent review, CPU4 complete host budget evidence",
+    "local result/scoreboard/ledger/current-route updates"
+  ],
+  "forbidden": [
+    "EMU/NEMU execution or production reference library load",
+    "production RTL edits",
+    "new fullcore build",
+    "EDA",
+    "default switch",
+    "GitHub write",
+    "mutation of old failure or frozen inputs",
+    "retry after formal admission failure"
+  ],
+  "host_formal_gates": [
+    "Freeze final runtime and test/measurement sources before their first formal invocation",
+    "One runtime positive/negative suite; missing/wrong path/content drift must reject; no substitute dummy evidence",
+    "Independent exact input/source/contract review",
+    "One serial CPU4 cost measurement with unchanged 900s formula and full measured workload; no repeats if fail",
+    "Final complete execution freeze only after budget and independent gates pass; never create RUN_AUTHORIZATION this round"
+  ],
+  "negative_controls_are_expected_rejections_not_gate_failures": true,
+  "if_formal_gate_fails": "Stop remaining admission/execution sequence, preserve FAIL, read-only diagnosis and local closeout only",
+  "limits": {
+    "target_processes": 10,
+    "batch_target_seconds": 12600,
+    "batch_outer_seconds": 14400,
+    "case_target_seconds": 6300,
+    "case_outer_seconds": 7200,
+    "case_host_reserve_seconds": 900,
+    "negative_wall_seconds": 300,
+    "normal_wall_seconds": 1500,
+    "cpu": [
+      4
+    ],
+    "max_group_threads": 4,
+    "rss_bytes": 12884901888,
+    "case_logs_bytes": 2147483648
+  },
+  "guest_limits": {
+    "negative": 100000,
+    "legacy-control-normal": 800000,
+    "o2-all-pairs-normal": 300000,
+    "native_reserve": 16
+  },
+  "full_coverage_source": {
+    "legacy-control": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-protection-host-20261105/cases/legacy-control.json",
+      "bytes": 9935,
+      "sha256": "57fe885a536c676969ebae0111e1b32bf2ac72de75f1e221cad9622c33d87596"
+    },
+    "o2-all-pairs": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-protection-host-20261105/cases/o2-all-pairs.json",
+      "bytes": 9836,
+      "sha256": "42bcb55f3212b6d7ebae96bb25ed9d1cd906ca900880f5b351f8ad5bcb9a127f"
+    }
+  },
+  "timing_windows": "NOT_APPLICABLE_FUNCTIONAL_PROGRAMS",
+  "new_speedup_area_timing": "NOT_TESTED",
+  "issue_write_authorization": false
+}

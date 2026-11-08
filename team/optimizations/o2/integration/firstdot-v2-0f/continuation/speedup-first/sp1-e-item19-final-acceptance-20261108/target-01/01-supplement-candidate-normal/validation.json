@@ -1,0 +1,153 @@
+{
+  "runtime": {
+    "status": "ACTUAL_RUNTIME_RECEIPT_PASS",
+    "role": "supplement-candidate-normal",
+    "pid": 370,
+    "start_ticks": 397889,
+    "boot_id": "a3615351-4203-47f8-8121-8f070398bd98",
+    "guest_cycles": 267845,
+    "files": {
+      "record.json": {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/target-01/01-supplement-candidate-normal/record.json",
+        "bytes": 5635,
+        "sha256": "1b0845cc463fdb524ba37b409438bae194ea7d9641c7aae75f82340905073a9a"
+      },
+      "launch.json": {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/target-01/01-supplement-candidate-normal/launch.json",
+        "bytes": 1374,
+        "sha256": "12f0600b2a76b891b37cf230396ecda3ce7994627abaebaafa09ccfb7f920641"
+      },
+      "execution-identity.json": {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/target-01/01-supplement-candidate-normal/execution-identity.json",
+        "bytes": 1611,
+        "sha256": "6ac11a69abef6f91d061edc05854ca72cc1726be0943274de2bcecbfd438d94c"
+      },
+      "telemetry.jsonl": {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/target-01/01-supplement-candidate-normal/telemetry.jsonl",
+        "bytes": 4666492,
+        "sha256": "852b5a33108b6a18c70409b871f219ac923fd4693aabe67eee481a630718a00e"
+      },
+      "stdout.log": {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/target-01/01-supplement-candidate-normal/stdout.log",
+        "bytes": 3809,
+        "sha256": "71f77765234e40b6cb73efb3aea8f9aeeef81a892b24c8088d53ff3163364e0e"
+      },
+      "stderr.log": {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/target-01/01-supplement-candidate-normal/stderr.log",
+        "bytes": 3740023,
+        "sha256": "11d139c53bcc35f57c012e341c7e1f16ee0ceeaa8ddc53acff1b5a5791db9f68"
+      }
+    },
+    "resource_scope": "sampled entire PGID at nominal50ms, not instantaneous kernel ceiling"
+  },
+  "collector": {
+    "status": "SUPPLEMENT_FULL_NORMAL_PASS",
+    "mode": "candidate",
+    "guest_cycles": 267845,
+    "detail": {
+      "status": "SUPPLEMENT_TRACE_HIT",
+      "witnesses": {
+        "S0": [
+          {
+            "phase": 0,
+            "r_seq": 1,
+            "p_seq": 2,
+            "a_pc": 2147484540,
+            "b_pc": 2147484544,
+            "r_rob": "0:23",
+            "p_rob": "0:24",
+            "enqueue_cycle": 17988,
+            "dual_cycle": 17989
+          }
+        ],
+        "S1": [
+          {
+            "phase": 4,
+            "r_seq": 76,
+            "p_seq": 77,
+            "a_pc": 2147486600,
+            "b_pc": 2147486648,
+            "r_rob": "1:30",
+            "p_rob": "1:36",
+            "enqueue_cycle": 262616,
+            "dual_cycle": 262617,
+            "kill_cycle": 262617,
+            "redirect_rob": "1:35",
+            "flush_itself": 0,
+            "survivor_response_cycle": 262624
+          }
+        ]
+      },
+      "counts": {
+        "STATE": 1231,
+        "VFEX4_ACCEPT": 78,
+        "VFEX4_WAIT": 0,
+        "VFEX4_REDIRECT": 388,
+        "ACCEPT": 78,
+        "MOVE": 33,
+        "DIRECT_R": 44,
+        "ENQUEUE_P": 34,
+        "RESPONSE": 77,
+        "STALL": 296,
+        "KILL": 1,
+        "DIV_ACCEPT": 0,
+        "DIV_KILL": 0,
+        "DIV_OUTPUT": 0,
+        "ENQUEUE": 81,
+        "COMMIT": 77,
+        "REDIRECT": 388,
+        "MULTI_INFLIGHT": 265,
+        "OVERLAP": 2,
+        "TRIPLE_OVERLAP": 0,
+        "FULL_STALL": 232,
+        "KILL_P": 1,
+        "KILL_R": 0,
+        "PARTIAL_KILL": 1,
+        "BOTH_KILL": 0,
+        "R_KILL_P_SURVIVES": 0,
+        "P_KILL_R_SURVIVES": 1,
+        "UNRELATED_FLUSH": 0,
+        "ROB_WRAP": 37,
+        "FTQ_WRAP": 17,
+        "DIV_RESPONSE": 0,
+        "ACCEPTED_THEN_SQUASHED": 1,
+        "ACCEPTED_YOUNGER_SQUASHED": 1
+      },
+      "full128_checked_accepts": 78,
+      "custom_commits": 77,
+      "observer_input_sha256": "4eb19bd911b7ebe2db352c31d693addb5c68303249a7f90c730ebcb1e42fadb7",
+      "target_run_qualified": false,
+      "performance_measured": false,
+      "scope": "OFFLINE_LOG_REQUIRES_RUNTIME_RECEIPT",
+      "branch_pc_dynamically_observed": false,
+      "f2v_grant_dynamically_observed": false,
+      "uart_calls": 41,
+      "uart_rows": 84,
+      "source": "OFFLINE_LOG_ONLY_NEEDS_ACTUAL_EXECUTION_RECEIPTS",
+      "good_trap": true,
+      "normal_exit": 0,
+      "guest_cycles": 267845,
+      "instruction_count": 49695,
+      "cycle_count": 267841
+    },
+    "commits": 77,
+    "calls": 41,
+    "full128": true,
+    "functional_replay": {
+      "architectural_commit": "b73b6878357f5e728d9591ad2cb007640a0bebfebd29c8d13c0563c31fca5443",
+      "source": "b5a1d7d4b3a2fd0fd907d4c59b6bb9d4c27734110676f092c6369d25faac3cef",
+      "result": "16294f6a8137bbe813f52f875fc9407fda491a93643f1e552a3a4b0a2a0d4ca4",
+      "observer": "be25074764ae05b92c7213efe06e8c72177fadef06fb01dd54313687c27ff1f0",
+      "uart_checks": "4bdd0f547a2c930bbb8460e59f863fd220531c1122af5d4f2724687f19e355e7",
+      "csr_contract": "37e0e950d10bd2c6f4545e07b7782c97e969845360f0cdf0a0865e9a460b7e59",
+      "div_events": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "completion": "f04fb18a7752608855230fc2dd445b4e8b8394589fbf8c0cc07c4d5845a7c5b4"
+    },
+    "cross_hardware_architecture": "e25770c5b6f7c5d93b69ff0316fefb4060b1cf8ccf8727e689e2261355714b25",
+    "performance_measured": false,
+    "acceptance_comparison": "PASS",
+    "compared": []
+  },
+  "actual_target": true,
+  "item19_qualified": false
+}

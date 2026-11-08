@@ -1,0 +1,115 @@
+{
+  "schema": "o2-cancel-runtime-v1",
+  "operation_id": "SP1-E-O2-CANCEL-CALIBRATION-20261107-01",
+  "stable_default": "0f + firstdot V2 + original C8",
+  "prior_contract": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-host-20261107/CALIBRATION_REPLAY_CONTRACT.json",
+    "bytes": 13320,
+    "sha256": "55636b84fd38d51260860f8538783ef5df18e212b9f7c79e406cc47be2931466"
+  },
+  "prior_host_freeze": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-host-20261107/HOST_ARTIFACT_FREEZE.json",
+    "bytes": 63524,
+    "sha256": "dfe3437c72120349346cb272f4449e96827ccd33fca961845cf446b351cb779d"
+  },
+  "software_manifest": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-host-20261107/software/manifest.json",
+    "bytes": 32880,
+    "sha256": "d2aba63d28be5140626966ab200a1e18cf191ff5b2a016c32922195e1d2410d6"
+  },
+  "runtime": {
+    "candidate_emu": {
+      "path": "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/candidate/build/emu",
+      "bytes": 71260448,
+      "sha256": "e34b2eaa8deb99f83534478217aaf144e32262ba08b2c18c31c6ac7265525c1e"
+    },
+    "baseline_emu": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/build/emu",
+      "bytes": 71235872,
+      "sha256": "2d1db77cc407486a2387a4a69da2498b68d44980239025eebcc02370c02826e8"
+    },
+    "normal_reference": {
+      "path": "/home/riscv/riscv-lab/t12-regression-20261013/nemu/reference/build/riscv64-nemu-interpreter-so",
+      "bytes": 1459056,
+      "sha256": "efbed0774addc27eac38af1a19ab5d9c9dd5f179b5015f25ae7b80b966185bd4"
+    },
+    "flash": {
+      "path": "/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+      "bytes": 12,
+      "sha256": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994"
+    },
+    "bin": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-host-20261107/build-review/attempt-02/o2-cancel.bin",
+      "bytes": 11488,
+      "sha256": "d0a86366741d3bfb41201165dbd1a2079647b399d93b6b1a23280a4f1d301524"
+    },
+    "elf": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-host-20261107/build-review/attempt-02/o2-cancel.elf",
+      "bytes": 71888,
+      "sha256": "6826bf273797d6a884e3f1d8f60d308058b37705c2bee4ca398e01d9093038c6"
+    },
+    "negative_reference": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-host-20261107/negative/o2-cancel-negative-reference.so",
+      "bytes": 16384,
+      "sha256": "1717e2dff9b24985c13350ad207e8f93a1c2efdf6dcba94304a683fc58e5124d"
+    }
+  },
+  "roles": [
+    {
+      "name": "bit100",
+      "wall_seconds": 300,
+      "guest_cycles": 100000,
+      "expected_exit": 1,
+      "reference": "negative_reference"
+    },
+    {
+      "name": "candidate-normal",
+      "wall_seconds": 900,
+      "guest_cycles": 300000,
+      "expected_exit": 0,
+      "reference": "normal_reference"
+    }
+  ],
+  "limits": {
+    "target_seconds": 1200,
+    "host_seconds": 900,
+    "outer_seconds": 2100,
+    "cpu_affinity": [
+      4
+    ],
+    "thread_cap": 4,
+    "rss_cap_bytes": 12884901888,
+    "log_cap_bytes": 2147483648
+  },
+  "env": {
+    "PATH": "/usr/local/bin:/usr/bin:/bin",
+    "HOME": "/home/riscv",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C",
+    "OMP_NUM_THREADS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "guard": {
+    "pc": 2147484280,
+    "word": 43253771,
+    "vd": 0,
+    "bit": 100
+  },
+  "counts": {
+    "calls": 41,
+    "custom_commits": 77,
+    "phases": [
+      0,
+      1,
+      2,
+      4
+    ]
+  },
+  "cwd": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-20261107/runtime",
+  "automatic_retry": false,
+  "automatic_replay": false,
+  "item19_qualification": false,
+  "new_performance": false,
+  "runtime_admission": "REQUIRES_CURRENT_HOST_RESULT",
+  "user_authorized_if_host_passes": true
+}

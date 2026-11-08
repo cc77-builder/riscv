@@ -1,0 +1,195 @@
+{
+  "schema": "sp1-e-c48-host-review-contract-v1",
+  "contract_id": "SP1-E-C48-HOST-REVIEW-20261104-v1",
+  "created_utc": "2026-11-04T14:25:14.331632+00:00",
+  "stage": "HOST_REVIEW_ONLY",
+  "launch_enabled": false,
+  "target_admission": "HOLD_NO_VALIDATED_CURRENT_C48_WALL_UPPER_BOUND_AND_EXECUTION_CLOSURE",
+  "stable_default": "0f + firstdot V2 + original C8",
+  "runtime": {
+    "baseline_emu": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/build/emu",
+      "bytes": 71235872,
+      "sha256": "2d1db77cc407486a2387a4a69da2498b68d44980239025eebcc02370c02826e8"
+    },
+    "normal_reference": {
+      "path": "/home/riscv/riscv-lab/t12-regression-20261013/nemu/reference/build/riscv64-nemu-interpreter-so",
+      "bytes": 1459056,
+      "sha256": "efbed0774addc27eac38af1a19ab5d9c9dd5f179b5015f25ae7b80b966185bd4"
+    },
+    "flash": {
+      "path": "/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+      "bytes": 12,
+      "sha256": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994"
+    },
+    "candidate_emu": {
+      "path": "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/candidate/build/emu",
+      "bytes": 71260448,
+      "sha256": "e34b2eaa8deb99f83534478217aaf144e32262ba08b2c18c31c6ac7265525c1e"
+    }
+  },
+  "candidate_patch_sha256": "e1842a5f52a27fda2bea30f791921d6acefd63c54b415912adb8a1e3438be682",
+  "image": {
+    "elf": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/c8-relink-01/integrated/vdot-perf.elf",
+      "bytes": 103640,
+      "sha256": "f0ddf1167c961101e70f58cfd012ae788d2965324ad057aa4ade5af1de5bc42e"
+    },
+    "bin": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/c8-relink-01/integrated/vdot-perf.bin",
+      "bytes": 31440,
+      "sha256": "56805506eb98b68269c73a3645d8f75dff73b697e30dec5f93ccc4716089ad34"
+    },
+    "manifest": {
+      "path": "/home/riscv/riscv-lab/software-import-20261026/c8-relink-01/integrated/source/manifest.json",
+      "bytes": 459832,
+      "sha256": "78068ab52b6566f080b8530eba06bfbba5940b3ae30eed0756e808607a5b9b1b"
+    }
+  },
+  "negative_reference": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-g0/c8/negative/c8-functional-negative-reference.so",
+    "bytes": 16384,
+    "sha256": "2dfb8fa09feeac1c639c275d89e28c339a6a4bf3e48f8cf40b71006040d239fc"
+  },
+  "negative_binding": {
+    "pc": "0x80000d64",
+    "word": "0x388000b",
+    "vd": 0,
+    "bit": 100,
+    "injection_count": 1
+  },
+  "negative_environment": {
+    "SP1_CHAIN_BIT100": "1"
+  },
+  "coverage": {
+    "calls": 48,
+    "c8_calls": 12,
+    "custom_commits": 1008,
+    "output_slots": 384,
+    "input_datasets": 12,
+    "dataset_ids": [
+      0,
+      1,
+      2
+    ],
+    "shapes": [
+      [
+        4,
+        8
+      ],
+      [
+        8,
+        32
+      ],
+      [
+        16,
+        64
+      ],
+      [
+        4,
+        13
+      ]
+    ],
+    "methods": [
+      "basic-vdot",
+      "basic-rvv",
+      "reuse-vdot",
+      "reuse-rvv"
+    ],
+    "performance_windows": 0,
+    "drop_calls_allowed": false,
+    "tail_4x13": "vdot methods: first8 custom, last5 scalar lb/mulw/addw per row. RVV controls are vector implementations."
+  },
+  "data_contract": {
+    "input": "aligned16 signed int8 A[M][K] then x[K]; 8x32 packed input288B, valid immutable throughout call",
+    "output": "M aligned16 slots, low32 exact signed dot, high96 all zero; not dense int32 array",
+    "nonalias": "separate caller-owned input and output; source lifetime through return",
+    "memory_checks": "eight uint64 canaries, input contents, remaining input 0x5a, unused output slots0xa6",
+    "csr_return": {
+      "vl": 8,
+      "vtype": 0,
+      "vstart": 0,
+      "vcsr": 7
+    },
+    "abi": "RV64 lp64d; sixteen linked leaf bodies statically preserve callee-save/sp/ra/gp/tp/FP; no claim of new dynamic all-register sentinels",
+    "self_checks": "retain original five first-call judge mutations and recovery; do not move or delete"
+  },
+  "functional_roles_proposal": [
+    {
+      "role": "candidate-bit100",
+      "scope": "exact first custom bit100 injected once, mismatch and ABORT/nonzero expected; no normal completion claim"
+    },
+    {
+      "role": "candidate-normal-recovery",
+      "scope": "fresh process normal reference, all48 calls and1008custom, no bit100 environment"
+    },
+    {
+      "role": "candidate-replay",
+      "scope": "second fresh independent process, same full coverage and exact candidate replay"
+    }
+  ],
+  "roles_boundary": "Three roles qualify candidate fixed-image functionality only. Current0f/ref C48 qualification requires separately budgeted baseline normal; baseline exact replay adds a fifth role. Historical0f is not silently transferred. No performance AB/BA applies to zero-window C48.",
+  "acceptance": [
+    "Before any future target: specialized C48 collector/campaign plus actual-source host positive/negative controls, one-shot output lock and full execution source/dependency freeze.",
+    "Bind real executable/image/ref/flash bytes, argv,cwd, fresh-reset/no-snapshot/no-debug/no-single-step policy and observed loaded reference; reject self-declared booleans as sole identity.",
+    "Require exact begin/end/48 ordered R4C_CASE hashes, controls detected5, no R4C_FAIL, GOOD TRAP+exit0,1008 commits,full128 and correct accepted-source/custom identity chains.",
+    "Functional CSR evidence is fixed judge code plus target success and live DiffTest; no standalone full ordinary-retirement/CSR trace exists in current C48 interface.",
+    "Replay requires distinct process generations boot_id/PID/starttick and fresh outputs; matching R4C UART,custom observer raw events,full128 sources/results and final guest cycles.",
+    "Never treat absent samples/retirement_audit/counter_events None==None as actual retirement/CSR replay coverage.",
+    "Negative: exact0x80000d64/0x0388000b/vd0,one bit100,high-bit mismatch/ABORT/nonzero; injection marker or exit alone insufficient.",
+    "Fail first on identity,coverage,numerics,CSR,DiffTest,replay,resource,guest/wall/log or cleanup. Preserve original failure; no retry/time extension/coverage reduction/automatic fallback.",
+    "Existing G0 receipt_header normal role wall cap is hardcoded <=1500 seconds. A3000-second draft requires independently versioned C48 acceptance/collector rules and positive/negative tests, never editing or bypassing old frozen gates."
+  ],
+  "budget": {
+    "current_complete_wall_upper_bound_seconds": null,
+    "admitted_role_guest_caps": null,
+    "admitted_role_wall_caps": null,
+    "outer_reference_cap_seconds": 7200,
+    "target_reference_sum_seconds": 6300,
+    "nonadmitted_sensitivity_draft_role_seconds": [
+      300,
+      3000,
+      3000
+    ],
+    "draft_is_completion_guarantee": false,
+    "normal_guest_cap": "NOT_ADMITTED; must cover whole48call program;300000 invalid against observed871326",
+    "negative_guest_cap_template": 100000,
+    "cpu_affinity": [
+      4
+    ],
+    "process_group_thread_cap": 4,
+    "rss_cap_bytes": 12884901888,
+    "combined_log_cap_bytes": 2147483648,
+    "clock": "monotonic incl preflight/checking/cleanup; UTC observations retained separately",
+    "complete_runtime_history": "oldEMU acf672/oldref62b170 only;1260.04802692 and1315.562138357 sec; not a current bound"
+  },
+  "new_measurement": {
+    "target_function": "NOT_TESTED",
+    "speedup": "NOT_APPLICABLE_TO_FUNCTIONAL_IMAGE",
+    "new_area": "NOT_TESTED",
+    "new_timing": "NOT_TESTED"
+  },
+  "review_inputs": [
+    {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-c8-c48-g0/IDENTITY_REVIEW.json",
+      "bytes": 124615,
+      "sha256": "b577e9d4dc0fd72a7936eeb637e70799936626c23f8f602d546c3c00e8a75396"
+    },
+    {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-g1-c8-d2/NEXT_STEP.md",
+      "bytes": 1004,
+      "sha256": "508167a1d893f69d4fe9cbafa6aa3df3b0cb673a57b212271d701ef7a4a90dbc"
+    },
+    {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-g0/COMMON_CONTRACT.json",
+      "bytes": 6227,
+      "sha256": "d29ad9f7972149a47297345252e4a0af80e90adc6c466481f9e5dc74990ad923"
+    },
+    {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-g0/c8/CASES.json",
+      "bytes": 47364,
+      "sha256": "11388cff977f38ead7461f2f68d414f61abbadbe8309b60c927c17ed14c58c3b"
+    }
+  ],
+  "execution_freeze_status": "NOT_CREATED; this freezes review/coverage/identity only, not launch permission"
+}

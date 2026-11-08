@@ -1,0 +1,761 @@
+{
+  "schema": "sp1-e-o2-cancel-software-v1",
+  "revision": "M4-FP-PRESSURE",
+  "design": "M4_three_dependent_fmul_after_initial_M2_chain_to_avoid_early_OG0_collision",
+  "phases": [
+    0,
+    1,
+    2,
+    4
+  ],
+  "functions": [
+    {
+      "name": "o2c_guard",
+      "stage": "prelude",
+      "phase": null
+    },
+    {
+      "name": "o2c_s0_p0",
+      "stage": "S0",
+      "phase": 0
+    },
+    {
+      "name": "o2c_s1_p0",
+      "stage": "S1",
+      "phase": 0
+    },
+    {
+      "name": "o2c_s0_p1",
+      "stage": "S0",
+      "phase": 1
+    },
+    {
+      "name": "o2c_s1_p1",
+      "stage": "S1",
+      "phase": 1
+    },
+    {
+      "name": "o2c_s0_p2",
+      "stage": "S0",
+      "phase": 2
+    },
+    {
+      "name": "o2c_s1_p2",
+      "stage": "S1",
+      "phase": 2
+    },
+    {
+      "name": "o2c_s0_p4",
+      "stage": "S0",
+      "phase": 4
+    },
+    {
+      "name": "o2c_s1_p4",
+      "stage": "S1",
+      "phase": 4
+    }
+  ],
+  "pc_roles": [
+    {
+      "symbol": "o2c_guard_dot",
+      "stage": "prelude",
+      "phase": null,
+      "packet": "guard",
+      "vd": 0,
+      "word": 43253771
+    },
+    {
+      "symbol": "o2c_s0_p0_A",
+      "stage": "S0",
+      "phase": 0,
+      "packet": "A",
+      "vd": 16,
+      "word": 43255819
+    },
+    {
+      "symbol": "o2c_s0_p0_B",
+      "stage": "S0",
+      "phase": 0,
+      "packet": "B",
+      "vd": 17,
+      "word": 43255947
+    },
+    {
+      "symbol": "o2c_s1_p0_A",
+      "stage": "S1",
+      "phase": 0,
+      "packet": "A",
+      "vd": 16,
+      "word": 43255819,
+      "eligible_commit_ordinal": 8
+    },
+    {
+      "symbol": "o2c_s1_p0_B",
+      "stage": "S1",
+      "phase": 0,
+      "packet": "B",
+      "vd": 17,
+      "word": 43255947
+    },
+    {
+      "symbol": "o2c_s0_p1_A",
+      "stage": "S0",
+      "phase": 1,
+      "packet": "A",
+      "vd": 16,
+      "word": 43255819
+    },
+    {
+      "symbol": "o2c_s0_p1_B",
+      "stage": "S0",
+      "phase": 1,
+      "packet": "B",
+      "vd": 17,
+      "word": 43255947
+    },
+    {
+      "symbol": "o2c_s1_p1_A",
+      "stage": "S1",
+      "phase": 1,
+      "packet": "A",
+      "vd": 16,
+      "word": 43255819,
+      "eligible_commit_ordinal": 8
+    },
+    {
+      "symbol": "o2c_s1_p1_B",
+      "stage": "S1",
+      "phase": 1,
+      "packet": "B",
+      "vd": 17,
+      "word": 43255947
+    },
+    {
+      "symbol": "o2c_s0_p2_A",
+      "stage": "S0",
+      "phase": 2,
+      "packet": "A",
+      "vd": 16,
+      "word": 43255819
+    },
+    {
+      "symbol": "o2c_s0_p2_B",
+      "stage": "S0",
+      "phase": 2,
+      "packet": "B",
+      "vd": 17,
+      "word": 43255947
+    },
+    {
+      "symbol": "o2c_s1_p2_A",
+      "stage": "S1",
+      "phase": 2,
+      "packet": "A",
+      "vd": 16,
+      "word": 43255819,
+      "eligible_commit_ordinal": 8
+    },
+    {
+      "symbol": "o2c_s1_p2_B",
+      "stage": "S1",
+      "phase": 2,
+      "packet": "B",
+      "vd": 17,
+      "word": 43255947
+    },
+    {
+      "symbol": "o2c_s0_p4_A",
+      "stage": "S0",
+      "phase": 4,
+      "packet": "A",
+      "vd": 16,
+      "word": 43255819
+    },
+    {
+      "symbol": "o2c_s0_p4_B",
+      "stage": "S0",
+      "phase": 4,
+      "packet": "B",
+      "vd": 17,
+      "word": 43255947
+    },
+    {
+      "symbol": "o2c_s1_p4_A",
+      "stage": "S1",
+      "phase": 4,
+      "packet": "A",
+      "vd": 16,
+      "word": 43255819,
+      "eligible_commit_ordinal": 8
+    },
+    {
+      "symbol": "o2c_s1_p4_B",
+      "stage": "S1",
+      "phase": 4,
+      "packet": "B",
+      "vd": 17,
+      "word": 43255947
+    }
+  ],
+  "call_plan": [
+    {
+      "seq": 0,
+      "kernel": "o2c_guard",
+      "stage": "prelude",
+      "phase": null,
+      "probe": false,
+      "ordinal": 0,
+      "flags": 0,
+      "retired_symbols": [
+        "o2c_guard_dot"
+      ]
+    },
+    {
+      "seq": 1,
+      "kernel": "o2c_s0_p0",
+      "stage": "S0",
+      "phase": 0,
+      "probe": false,
+      "ordinal": 0,
+      "flags": 1,
+      "retired_symbols": [
+        "o2c_s0_p0_A",
+        "o2c_s0_p0_B"
+      ]
+    },
+    {
+      "seq": 2,
+      "kernel": "o2c_s1_p0",
+      "stage": "S1",
+      "phase": 0,
+      "probe": false,
+      "ordinal": 0,
+      "flags": 2,
+      "retired_symbols": [
+        "o2c_s1_p0_A",
+        "o2c_s1_p0_B"
+      ]
+    },
+    {
+      "seq": 3,
+      "kernel": "o2c_s1_p0",
+      "stage": "S1",
+      "phase": 0,
+      "probe": false,
+      "ordinal": 1,
+      "flags": 3,
+      "retired_symbols": [
+        "o2c_s1_p0_A",
+        "o2c_s1_p0_B"
+      ]
+    },
+    {
+      "seq": 4,
+      "kernel": "o2c_s1_p0",
+      "stage": "S1",
+      "phase": 0,
+      "probe": false,
+      "ordinal": 2,
+      "flags": 4,
+      "retired_symbols": [
+        "o2c_s1_p0_A",
+        "o2c_s1_p0_B"
+      ]
+    },
+    {
+      "seq": 5,
+      "kernel": "o2c_s1_p0",
+      "stage": "S1",
+      "phase": 0,
+      "probe": false,
+      "ordinal": 3,
+      "flags": 5,
+      "retired_symbols": [
+        "o2c_s1_p0_A",
+        "o2c_s1_p0_B"
+      ]
+    },
+    {
+      "seq": 6,
+      "kernel": "o2c_s1_p0",
+      "stage": "S1",
+      "phase": 0,
+      "probe": false,
+      "ordinal": 4,
+      "flags": 6,
+      "retired_symbols": [
+        "o2c_s1_p0_A",
+        "o2c_s1_p0_B"
+      ]
+    },
+    {
+      "seq": 7,
+      "kernel": "o2c_s1_p0",
+      "stage": "S1",
+      "phase": 0,
+      "probe": false,
+      "ordinal": 5,
+      "flags": 7,
+      "retired_symbols": [
+        "o2c_s1_p0_A",
+        "o2c_s1_p0_B"
+      ]
+    },
+    {
+      "seq": 8,
+      "kernel": "o2c_s1_p0",
+      "stage": "S1",
+      "phase": 0,
+      "probe": false,
+      "ordinal": 6,
+      "flags": 8,
+      "retired_symbols": [
+        "o2c_s1_p0_A",
+        "o2c_s1_p0_B"
+      ]
+    },
+    {
+      "seq": 9,
+      "kernel": "o2c_s1_p0",
+      "stage": "S1",
+      "phase": 0,
+      "probe": false,
+      "ordinal": 7,
+      "flags": 9,
+      "retired_symbols": [
+        "o2c_s1_p0_A",
+        "o2c_s1_p0_B"
+      ]
+    },
+    {
+      "seq": 10,
+      "kernel": "o2c_s1_p0",
+      "stage": "S1",
+      "phase": 0,
+      "probe": true,
+      "ordinal": 8,
+      "flags": 10,
+      "retired_symbols": [
+        "o2c_s1_p0_A"
+      ]
+    },
+    {
+      "seq": 11,
+      "kernel": "o2c_s0_p1",
+      "stage": "S0",
+      "phase": 1,
+      "probe": false,
+      "ordinal": 0,
+      "flags": 11,
+      "retired_symbols": [
+        "o2c_s0_p1_A",
+        "o2c_s0_p1_B"
+      ]
+    },
+    {
+      "seq": 12,
+      "kernel": "o2c_s1_p1",
+      "stage": "S1",
+      "phase": 1,
+      "probe": false,
+      "ordinal": 0,
+      "flags": 12,
+      "retired_symbols": [
+        "o2c_s1_p1_A",
+        "o2c_s1_p1_B"
+      ]
+    },
+    {
+      "seq": 13,
+      "kernel": "o2c_s1_p1",
+      "stage": "S1",
+      "phase": 1,
+      "probe": false,
+      "ordinal": 1,
+      "flags": 13,
+      "retired_symbols": [
+        "o2c_s1_p1_A",
+        "o2c_s1_p1_B"
+      ]
+    },
+    {
+      "seq": 14,
+      "kernel": "o2c_s1_p1",
+      "stage": "S1",
+      "phase": 1,
+      "probe": false,
+      "ordinal": 2,
+      "flags": 14,
+      "retired_symbols": [
+        "o2c_s1_p1_A",
+        "o2c_s1_p1_B"
+      ]
+    },
+    {
+      "seq": 15,
+      "kernel": "o2c_s1_p1",
+      "stage": "S1",
+      "phase": 1,
+      "probe": false,
+      "ordinal": 3,
+      "flags": 15,
+      "retired_symbols": [
+        "o2c_s1_p1_A",
+        "o2c_s1_p1_B"
+      ]
+    },
+    {
+      "seq": 16,
+      "kernel": "o2c_s1_p1",
+      "stage": "S1",
+      "phase": 1,
+      "probe": false,
+      "ordinal": 4,
+      "flags": 16,
+      "retired_symbols": [
+        "o2c_s1_p1_A",
+        "o2c_s1_p1_B"
+      ]
+    },
+    {
+      "seq": 17,
+      "kernel": "o2c_s1_p1",
+      "stage": "S1",
+      "phase": 1,
+      "probe": false,
+      "ordinal": 5,
+      "flags": 17,
+      "retired_symbols": [
+        "o2c_s1_p1_A",
+        "o2c_s1_p1_B"
+      ]
+    },
+    {
+      "seq": 18,
+      "kernel": "o2c_s1_p1",
+      "stage": "S1",
+      "phase": 1,
+      "probe": false,
+      "ordinal": 6,
+      "flags": 18,
+      "retired_symbols": [
+        "o2c_s1_p1_A",
+        "o2c_s1_p1_B"
+      ]
+    },
+    {
+      "seq": 19,
+      "kernel": "o2c_s1_p1",
+      "stage": "S1",
+      "phase": 1,
+      "probe": false,
+      "ordinal": 7,
+      "flags": 19,
+      "retired_symbols": [
+        "o2c_s1_p1_A",
+        "o2c_s1_p1_B"
+      ]
+    },
+    {
+      "seq": 20,
+      "kernel": "o2c_s1_p1",
+      "stage": "S1",
+      "phase": 1,
+      "probe": true,
+      "ordinal": 8,
+      "flags": 20,
+      "retired_symbols": [
+        "o2c_s1_p1_A"
+      ]
+    },
+    {
+      "seq": 21,
+      "kernel": "o2c_s0_p2",
+      "stage": "S0",
+      "phase": 2,
+      "probe": false,
+      "ordinal": 0,
+      "flags": 21,
+      "retired_symbols": [
+        "o2c_s0_p2_A",
+        "o2c_s0_p2_B"
+      ]
+    },
+    {
+      "seq": 22,
+      "kernel": "o2c_s1_p2",
+      "stage": "S1",
+      "phase": 2,
+      "probe": false,
+      "ordinal": 0,
+      "flags": 22,
+      "retired_symbols": [
+        "o2c_s1_p2_A",
+        "o2c_s1_p2_B"
+      ]
+    },
+    {
+      "seq": 23,
+      "kernel": "o2c_s1_p2",
+      "stage": "S1",
+      "phase": 2,
+      "probe": false,
+      "ordinal": 1,
+      "flags": 23,
+      "retired_symbols": [
+        "o2c_s1_p2_A",
+        "o2c_s1_p2_B"
+      ]
+    },
+    {
+      "seq": 24,
+      "kernel": "o2c_s1_p2",
+      "stage": "S1",
+      "phase": 2,
+      "probe": false,
+      "ordinal": 2,
+      "flags": 24,
+      "retired_symbols": [
+        "o2c_s1_p2_A",
+        "o2c_s1_p2_B"
+      ]
+    },
+    {
+      "seq": 25,
+      "kernel": "o2c_s1_p2",
+      "stage": "S1",
+      "phase": 2,
+      "probe": false,
+      "ordinal": 3,
+      "flags": 25,
+      "retired_symbols": [
+        "o2c_s1_p2_A",
+        "o2c_s1_p2_B"
+      ]
+    },
+    {
+      "seq": 26,
+      "kernel": "o2c_s1_p2",
+      "stage": "S1",
+      "phase": 2,
+      "probe": false,
+      "ordinal": 4,
+      "flags": 26,
+      "retired_symbols": [
+        "o2c_s1_p2_A",
+        "o2c_s1_p2_B"
+      ]
+    },
+    {
+      "seq": 27,
+      "kernel": "o2c_s1_p2",
+      "stage": "S1",
+      "phase": 2,
+      "probe": false,
+      "ordinal": 5,
+      "flags": 27,
+      "retired_symbols": [
+        "o2c_s1_p2_A",
+        "o2c_s1_p2_B"
+      ]
+    },
+    {
+      "seq": 28,
+      "kernel": "o2c_s1_p2",
+      "stage": "S1",
+      "phase": 2,
+      "probe": false,
+      "ordinal": 6,
+      "flags": 28,
+      "retired_symbols": [
+        "o2c_s1_p2_A",
+        "o2c_s1_p2_B"
+      ]
+    },
+    {
+      "seq": 29,
+      "kernel": "o2c_s1_p2",
+      "stage": "S1",
+      "phase": 2,
+      "probe": false,
+      "ordinal": 7,
+      "flags": 29,
+      "retired_symbols": [
+        "o2c_s1_p2_A",
+        "o2c_s1_p2_B"
+      ]
+    },
+    {
+      "seq": 30,
+      "kernel": "o2c_s1_p2",
+      "stage": "S1",
+      "phase": 2,
+      "probe": true,
+      "ordinal": 8,
+      "flags": 30,
+      "retired_symbols": [
+        "o2c_s1_p2_A"
+      ]
+    },
+    {
+      "seq": 31,
+      "kernel": "o2c_s0_p4",
+      "stage": "S0",
+      "phase": 4,
+      "probe": false,
+      "ordinal": 0,
+      "flags": 31,
+      "retired_symbols": [
+        "o2c_s0_p4_A",
+        "o2c_s0_p4_B"
+      ]
+    },
+    {
+      "seq": 32,
+      "kernel": "o2c_s1_p4",
+      "stage": "S1",
+      "phase": 4,
+      "probe": false,
+      "ordinal": 0,
+      "flags": 32,
+      "retired_symbols": [
+        "o2c_s1_p4_A",
+        "o2c_s1_p4_B"
+      ]
+    },
+    {
+      "seq": 33,
+      "kernel": "o2c_s1_p4",
+      "stage": "S1",
+      "phase": 4,
+      "probe": false,
+      "ordinal": 1,
+      "flags": 33,
+      "retired_symbols": [
+        "o2c_s1_p4_A",
+        "o2c_s1_p4_B"
+      ]
+    },
+    {
+      "seq": 34,
+      "kernel": "o2c_s1_p4",
+      "stage": "S1",
+      "phase": 4,
+      "probe": false,
+      "ordinal": 2,
+      "flags": 34,
+      "retired_symbols": [
+        "o2c_s1_p4_A",
+        "o2c_s1_p4_B"
+      ]
+    },
+    {
+      "seq": 35,
+      "kernel": "o2c_s1_p4",
+      "stage": "S1",
+      "phase": 4,
+      "probe": false,
+      "ordinal": 3,
+      "flags": 35,
+      "retired_symbols": [
+        "o2c_s1_p4_A",
+        "o2c_s1_p4_B"
+      ]
+    },
+    {
+      "seq": 36,
+      "kernel": "o2c_s1_p4",
+      "stage": "S1",
+      "phase": 4,
+      "probe": false,
+      "ordinal": 4,
+      "flags": 36,
+      "retired_symbols": [
+        "o2c_s1_p4_A",
+        "o2c_s1_p4_B"
+      ]
+    },
+    {
+      "seq": 37,
+      "kernel": "o2c_s1_p4",
+      "stage": "S1",
+      "phase": 4,
+      "probe": false,
+      "ordinal": 5,
+      "flags": 37,
+      "retired_symbols": [
+        "o2c_s1_p4_A",
+        "o2c_s1_p4_B"
+      ]
+    },
+    {
+      "seq": 38,
+      "kernel": "o2c_s1_p4",
+      "stage": "S1",
+      "phase": 4,
+      "probe": false,
+      "ordinal": 6,
+      "flags": 38,
+      "retired_symbols": [
+        "o2c_s1_p4_A",
+        "o2c_s1_p4_B"
+      ]
+    },
+    {
+      "seq": 39,
+      "kernel": "o2c_s1_p4",
+      "stage": "S1",
+      "phase": 4,
+      "probe": false,
+      "ordinal": 7,
+      "flags": 39,
+      "retired_symbols": [
+        "o2c_s1_p4_A",
+        "o2c_s1_p4_B"
+      ]
+    },
+    {
+      "seq": 40,
+      "kernel": "o2c_s1_p4",
+      "stage": "S1",
+      "phase": 4,
+      "probe": true,
+      "ordinal": 8,
+      "flags": 40,
+      "retired_symbols": [
+        "o2c_s1_p4_A"
+      ]
+    }
+  ],
+  "expected_calls": 41,
+  "expected_custom_commits": 77,
+  "expected_f2v_arch_instructions": 320,
+  "training_calls_per_phase": 8,
+  "probe_calls_per_phase": 1,
+  "s0_calls_per_phase": 1,
+  "input_bytes": "807fff01f90b40c0000000000000000001ff7f800def02fe0000000000000000",
+  "expected_dot128": "ecfdffff000000000000000000000000",
+  "sentinel128": "13579bdf2468ace01122334455667788",
+  "vs1_low64": 13853085617899929472,
+  "vs2_low64": 18303454676856602369,
+  "expected_caller_csrs": {
+    "vl": 8,
+    "vtype": 0,
+    "vstart": 0,
+    "vcsr": 7,
+    "fcsr": 96
+  },
+  "expected_fp_bits": 1080033280,
+  "guard_fp_bits": 0,
+  "result_bytes": 128,
+  "integer_division": {
+    "numerator": 9223372036854788153,
+    "divisor": 3,
+    "quotient": 3074457345618262717
+  },
+  "target_status": "NOT_RUN",
+  "coverage_status": "NOT_TESTED",
+  "dynamic_abi_status": "NOT_TESTED",
+  "uart_prefix": "OC19_",
+  "no_target_execution": true
+}

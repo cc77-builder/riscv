@@ -1,0 +1,140 @@
+{
+  "schema": "item19-observer-build-r3-r1-closeout-v1",
+  "record_number": 109,
+  "record_id": "sp1-e-item19-observer-build-r3-r1-20261107",
+  "recorded_at": "2026-11-07T23:13:07.536751+08:00",
+  "work_started_at": "2026-11-07T23:08:59.173824+08:00",
+  "source_commit": "347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e",
+  "branch": "local/zjhwork-integration-20261024",
+  "operator": "cc77-builder / Agent (session identity)",
+  "status": "HOLD_CHIRRTL_SERIALIZATION_MISMATCH",
+  "host_status": "ARGPARSER_FIXED_BOTH_GENERATORS_PASS_FIR_PRINT_IDENTITY_FAIL",
+  "coverage_qualified": 19,
+  "coverage_required": 20,
+  "stable_default": "0f + firstdot V2 + original C8",
+  "default_changed": false,
+  "full_core_build_attempts": 0,
+  "build_pass": false,
+  "wall_limit_seconds": 3600,
+  "full_core_build_seconds": 0,
+  "rss_limit_bytes": 17179869184,
+  "host_elapsed_seconds": 7.704686387999999,
+  "host_compile_pass": true,
+  "host_systemverilog_generation_pass": true,
+  "host_chirrtl_generation_pass": true,
+  "parameter_checks_passed": 4,
+  "fir_equivalent": false,
+  "offline_embedded_annotations_equal": true,
+  "offline_tail_files_equal": 6,
+  "independent_firtool_runs": 0,
+  "source_identity_after": "PASS",
+  "RTL_changed": false,
+  "new_EMU_runs": 0,
+  "new_NEMU_runs": 0,
+  "new_EDA_runs": 0,
+  "software_image_changed": false,
+  "github_upload": false,
+  "new_three_metrics": {
+    "speedup": "NOT_TESTED",
+    "area": "NOT_TESTED",
+    "timing": "NOT_TESTED"
+  },
+  "next_step": "开始第19项构建入口R4：在独立宿主工具中导出香山变换后的FIR及完整注解，复用原ArgParser、FileRegisters和Make后处理，不修改生产RTL。先完成小样闭包、参数和输出等价验证；全部准入后执行一次3600秒总预算、16GiB有界构建。保留原FAIL，失败即停、不重试、不加时；不运行EMU/NEMU、不改软件镜像、不做EDA、不切默认、不上传GitHub。",
+  "evidence": {
+    "REPAIR.md": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r3-r1-20261107/REPAIR.md",
+      "bytes": 767,
+      "sha256": "e7138aa1626aae7379aae79141b87a06687f8a0cf683bae466426f9d4817b868"
+    },
+    "ClosureFixture.scala": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r3-r1-20261107/ClosureFixture.scala",
+      "bytes": 1518,
+      "sha256": "3ec785bd67802069c22044278a0173e56d1c9299189248f529d254e6856507e2"
+    },
+    "ADAPTER.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r3-r1-20261107/ADAPTER.json",
+      "bytes": 18817,
+      "sha256": "d540c792a7c40549056e671b1228a70f98b888b2afec4c025666e9cf806e3c27"
+    },
+    "mill_adapter.py": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r3-r1-20261107/mill_adapter.py",
+      "bytes": 2767,
+      "sha256": "7b7e2c8d1d8af4abfe5403cf8a29db5b9fe5ce5308f5e0e83eeb676ec932c5af"
+    },
+    "host_gate.py": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r3-r1-20261107/host_gate.py",
+      "bytes": 4280,
+      "sha256": "c2232ed09eeb0f69f2d9fc8b23379eb98002381a72b3768bfafde0708a87b2b5"
+    },
+    "HOST_EXECUTION_FREEZE.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r3-r1-20261107/HOST_EXECUTION_FREEZE.json",
+      "bytes": 452,
+      "sha256": "87057c2aaa98b2fed89fc9ac721e6b2eea3a36d3567b57125e5008e76f5dfb8e"
+    },
+    "PRECHECK.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r3-r1-20261107/PRECHECK.json",
+      "bytes": 460,
+      "sha256": "ad19d3f5b48fd203521efa566ca7cb52fe2b2701c7a73129ec95ab211c2f05f1"
+    },
+    "OLD_FAILURE_PINS.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r3-r1-20261107/OLD_FAILURE_PINS.json",
+      "bytes": 1582,
+      "sha256": "fc87debd88d7c986bbad965e6735df1270cec40a16f15c817fb5151d3f6ab1d6"
+    },
+    "HOST_CHECKS.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r3-r1-20261107/HOST_CHECKS.json",
+      "bytes": 1006,
+      "sha256": "cf9232509ec81b2926e3d78b5780d13df35c183dd33051adaf86c36300d89cd3"
+    },
+    "HOST_CALLS.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r3-r1-20261107/HOST_CALLS.json",
+      "bytes": 53190,
+      "sha256": "eb4c8b86d2b16b865b437ac33d81fd97cc6206c0b8f341020ce5a176bd2a7769"
+    },
+    "ADMISSION.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r3-r1-20261107/ADMISSION.json",
+      "bytes": 1231,
+      "sha256": "7c85550daa09d0ebaf9184a15c17d43b8c9c003438d4dd644629128c777bdc33"
+    },
+    "CLOSURE_OFFLINE_REVIEW.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r3-r1-20261107/CLOSURE_OFFLINE_REVIEW.json",
+      "bytes": 6217,
+      "sha256": "c19117e41e91dd08403f69fabe608c131e95726131853ca20291a6597ecaa5b6"
+    },
+    "FIR_SERIALIZATION.diff": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r3-r1-20261107/FIR_SERIALIZATION.diff",
+      "bytes": 1542,
+      "sha256": "e974dbfafe46f9fc7dd24b9eb2b5db3e771e01f4905f36ec8b3ce56da656a1a5"
+    },
+    "POST_INPUT_CHECK.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r3-r1-20261107/POST_INPUT_CHECK.json",
+      "bytes": 361,
+      "sha256": "a9da18338b6652e0a1d0f85a35112239b3f3cd2925f199845362c63dcbcd60d9"
+    },
+    "SERIALIZATION_ANALYSIS.md": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r3-r1-20261107/SERIALIZATION_ANALYSIS.md",
+      "bytes": 2589,
+      "sha256": "367f5f82a07c5f0a2e67208fe1ac13efdbcbbac4b24076998164765ddff6ac67"
+    },
+    "host-compile/STATE.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r3-r1-20261107/host-compile/STATE.json",
+      "bytes": 18357,
+      "sha256": "3ed6e275f702ed632cbd94bba848ec8affad937eb5010900e67a189d85bf3433"
+    },
+    "host-systemverilog/STATE.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r3-r1-20261107/host-systemverilog/STATE.json",
+      "bytes": 17318,
+      "sha256": "2b36c85312c2b39b409476d6a1c07436a9a7d5adfd5382fc4923087a685ffed8"
+    },
+    "host-chirrtl/STATE.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r3-r1-20261107/host-chirrtl/STATE.json",
+      "bytes": 17307,
+      "sha256": "256acfd0632b9f86c314e431a2494b414cda11eb6bdf6a3ed733f1d6ad2ccc71"
+    },
+    "METRICS.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r3-r1-20261107/METRICS.json",
+      "bytes": 112417,
+      "sha256": "fdd84c10454432ebada404e3c0585dc5dfdd74963b4c64a084b87c90d7f0d3c3"
+    }
+  }
+}

@@ -1,0 +1,666 @@
+{
+  "schema": "sp1-e-b4-r4-closeout-v1",
+  "status": "STOPPED_C48_CROSS_HARDWARE_SOURCE_COMPARISON",
+  "operation_id": "SP1-E-B4-R4-20261106-01",
+  "operator": "@cc77-builder / Agent",
+  "started_utc": "2026-11-06T08:35:58.275394+00:00",
+  "ended_utc": "2026-11-06T10:41:21.789429+00:00",
+  "summary": "B4-R4宿主15＋8项、独立审查和预算门通过；剩余四个真实角色各自通过，O2数值配对完成。C48最终跨硬件accepted_sources_sha256比较失败，整批STOPPED且清理正常。只读逐条归因确认1008条有效低64输入、非数据字段、完整128结果及48调用UART均相同，96条仅未消费高64不同；原FAIL保留，最小宿主口径修订设计GO，当前C48整case/正式验收HOLD。未改RTL/新核/EDA/默认或上传，进度17/20。",
+  "source_commit": "347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e",
+  "branch": "local/zjhwork-integration-20261024",
+  "stable_default": "0f + firstdot V2 + original C8",
+  "default_changed": false,
+  "new_targets": 4,
+  "role_results": [
+    {
+      "case_id": "o2-control",
+      "role": "baseline-full",
+      "status": "FULL_CALL_PASS",
+      "guest_cycles": 703135,
+      "active_wall_seconds": 1588.5179168650002,
+      "supervised_wall_seconds": 1588.535824132,
+      "exit_code": 0,
+      "peak_threads": 1,
+      "peak_rss_bytes": 77594624,
+      "resource_ok": true,
+      "cleanup_ok": true,
+      "collector_status": "B4_CALIBRATION_NUMERIC_LOG_PASS",
+      "calls": null,
+      "custom_commits": 1208,
+      "evidence": {
+        "record.json": {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/cases/o2-control/target-01/01-baseline-full/record.json",
+          "bytes": 5088,
+          "sha256": "25cbbb42f2f44b7f15ef5239d4a32482c12af5975496ea5532ae5c3b7afd565e"
+        },
+        "validation.json": {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/cases/o2-control/target-01/01-baseline-full/validation.json",
+          "bytes": 7950,
+          "sha256": "6039b665adaae19fcaa9fc5cf21103a5587376bd99307f4ef630c69292d4fcca"
+        },
+        "stdout.log": {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/cases/o2-control/target-01/01-baseline-full/stdout.log",
+          "bytes": 2205,
+          "sha256": "e041ef04e2a2f1c1482e5c6827346fd5c246db4dd24ef2e5dfab58a2b3fe3e64"
+        },
+        "stderr.log": {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/cases/o2-control/target-01/01-baseline-full/stderr.log",
+          "bytes": 7164396,
+          "sha256": "0d8e52e205966768012008469011d1792e208f2bc69bc885b48914087c9c4ffc"
+        },
+        "telemetry.jsonl": {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/cases/o2-control/target-01/01-baseline-full/telemetry.jsonl",
+          "bytes": 13375691,
+          "sha256": "4789759c8782cd515d93e1152802bd123399c734ed21b6d8ebfb2db4c7418cde"
+        },
+        "launch.json": {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/cases/o2-control/target-01/01-baseline-full/launch.json",
+          "bytes": 1114,
+          "sha256": "1bd708b490eed3409e6e328ad6deecd8310602f0dce23f169c50d700005ec3d8"
+        },
+        "execution-identity.json": {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/cases/o2-control/target-01/01-baseline-full/execution-identity.json",
+          "bytes": 1350,
+          "sha256": "8cecea2ae246c39875eb307e50b4ccb23d561f8e093b8f4cee7d139685aedefc"
+        },
+        "incremental.json": {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/cases/o2-control/target-01/01-baseline-full/incremental.json",
+          "bytes": 162,
+          "sha256": "18acee6a3ca8dcfa380b6ed31c81b3ea2a50474d2e3ce4ec3497f8dac96821a2"
+        }
+      }
+    },
+    {
+      "case_id": "original-c8-c48",
+      "role": "bit100",
+      "status": "NEGATIVE_PASS",
+      "guest_cycles": 13738,
+      "active_wall_seconds": 29.39877281600002,
+      "supervised_wall_seconds": 29.407729474000007,
+      "exit_code": 1,
+      "peak_threads": 1,
+      "peak_rss_bytes": 74579968,
+      "resource_ok": true,
+      "cleanup_ok": true,
+      "collector_status": "C48_BIT100_LOG_PASS",
+      "calls": null,
+      "custom_commits": null,
+      "evidence": {
+        "record.json": {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/cases/original-c8-c48/target-01/01-bit100/record.json",
+          "bytes": 5628,
+          "sha256": "ffd6fb932d75271806b5bb3775bbf966f765b1a4319a2a5ac0ac9fe19f9b5a7a"
+        },
+        "validation.json": {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/cases/original-c8-c48/target-01/01-bit100/validation.json",
+          "bytes": 10814,
+          "sha256": "f3e9300c218a280fb5a23cd7e5c3c51f399ec182d8fd076c22983e27ede0bf56"
+        },
+        "stdout.log": {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/cases/original-c8-c48/target-01/01-bit100/stdout.log",
+          "bytes": 14729,
+          "sha256": "2ede2298b716200d64fa8196f58a2d67db0290617bd10e5c33bf5b8c685d72f9"
+        },
+        "stderr.log": {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/cases/original-c8-c48/target-01/01-bit100/stderr.log",
+          "bytes": 30044,
+          "sha256": "3b61f3168439f9131701ddd7f3b2f7591ecf68deb2364e2a9dcc1a17314441ff"
+        },
+        "telemetry.jsonl": {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/cases/original-c8-c48/target-01/01-bit100/telemetry.jsonl",
+          "bytes": 245256,
+          "sha256": "03f5a84997940be59289a45899d870d4f247d6a1723a160c140a3a480f48d12e"
+        },
+        "launch.json": {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/cases/original-c8-c48/target-01/01-bit100/launch.json",
+          "bytes": 1241,
+          "sha256": "32a8ca641777d50d05a4e7845f2535a4b45a246a459a6446815a1da09a9a8ff5"
+        },
+        "execution-identity.json": {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/cases/original-c8-c48/target-01/01-bit100/execution-identity.json",
+          "bytes": 1498,
+          "sha256": "feaa13469989a81cf432757f5daf40cfb087c3c634e78fc40544800f6b7dd26b"
+        },
+        "incremental.json": {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/cases/original-c8-c48/target-01/01-bit100/incremental.json",
+          "bytes": 155,
+          "sha256": "9ec7149c168c40c2402f90fa91750e611a5a030cffb202dff32b2e720b8a318c"
+        }
+      }
+    },
+    {
+      "case_id": "original-c8-c48",
+      "role": "candidate-full",
+      "status": "FULL_CALL_PASS",
+      "guest_cycles": 871768,
+      "active_wall_seconds": 1854.0854141370003,
+      "supervised_wall_seconds": 1854.100318139,
+      "exit_code": 0,
+      "peak_threads": 1,
+      "peak_rss_bytes": 77856768,
+      "resource_ok": true,
+      "cleanup_ok": true,
+      "collector_status": "NORMAL_PASS",
+      "calls": 48,
+      "custom_commits": 1008,
+      "evidence": {
+        "record.json": {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/cases/original-c8-c48/target-01/02-candidate-full/record.json",
+          "bytes": 5163,
+          "sha256": "388af2264e2b20f66823d24d5c10fbc53dc125efc10de499811a27f4c74d6d03"
+        },
+        "validation.json": {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/cases/original-c8-c48/target-01/02-candidate-full/validation.json",
+          "bytes": 670283,
+          "sha256": "fbfdb41debda7853df4cab6ba75ab7fb340154784a647684b1f6784e38a2e4b7"
+        },
+        "stdout.log": {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/cases/original-c8-c48/target-01/02-candidate-full/stdout.log",
+          "bytes": 3292,
+          "sha256": "33195b4283c0022525cce904b236ab39db1f61cadec6bbf6700c9263835f2bb2"
+        },
+        "stderr.log": {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/cases/original-c8-c48/target-01/02-candidate-full/stderr.log",
+          "bytes": 6955085,
+          "sha256": "169120a46fc2f4ca4925c63f1798c8633e7b84a8d1235d4731846c10560a2259"
+        },
+        "telemetry.jsonl": {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/cases/original-c8-c48/target-01/02-candidate-full/telemetry.jsonl",
+          "bytes": 15583684,
+          "sha256": "6540c471d770f30eede022d59e6da4ec9148bd85077f38a277eec75c09d1a8ad"
+        },
+        "launch.json": {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/cases/original-c8-c48/target-01/02-candidate-full/launch.json",
+          "bytes": 1135,
+          "sha256": "c2754e6aa5ea7ff4aa71081f9e509980ce055f7651e55f5b3d7e1dd6a9c519e1"
+        },
+        "execution-identity.json": {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/cases/original-c8-c48/target-01/02-candidate-full/execution-identity.json",
+          "bytes": 1382,
+          "sha256": "c1e3441c05a765e8906d49209ed63aa7125c47177a1f4115cbb5643792a7ffe2"
+        },
+        "incremental.json": {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/cases/original-c8-c48/target-01/02-candidate-full/incremental.json",
+          "bytes": 177,
+          "sha256": "3056ed36302eb2a11836cce9832f875ba547255bf61619f803dbb8529a150363"
+        }
+      }
+    },
+    {
+      "case_id": "original-c8-c48",
+      "role": "baseline-full",
+      "status": "FULL_CALL_PASS",
+      "guest_cycles": 871326,
+      "active_wall_seconds": 1956.4438807739998,
+      "supervised_wall_seconds": 1956.458273151,
+      "exit_code": 0,
+      "peak_threads": 1,
+      "peak_rss_bytes": 76677120,
+      "resource_ok": true,
+      "cleanup_ok": true,
+      "collector_status": "NORMAL_PASS",
+      "calls": 48,
+      "custom_commits": 1008,
+      "evidence": {
+        "record.json": {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/cases/original-c8-c48/target-01/03-baseline-full/record.json",
+          "bytes": 5101,
+          "sha256": "f88fb476c51eb96d29ac927d1884cfbe96f090e5dbc449a5bf5dd631c0e00208"
+        },
+        "validation.json": {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/cases/original-c8-c48/target-01/03-baseline-full/validation.json",
+          "bytes": 635734,
+          "sha256": "0a192333644de171762390ccfc6adc2ba14daad3b4e9e486da8e193d297cfa2e"
+        },
+        "stdout.log": {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/cases/original-c8-c48/target-01/03-baseline-full/stdout.log",
+          "bytes": 3292,
+          "sha256": "e4757f6b03f122e3316e5392e3b8ae1e3c2dd240493e39f3da77debc7df6eddf"
+        },
+        "stderr.log": {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/cases/original-c8-c48/target-01/03-baseline-full/stderr.log",
+          "bytes": 6952993,
+          "sha256": "4fdbd3455362311038ded66b25eb036ae21775999dffff5b283d3d9e4d1409eb"
+        },
+        "telemetry.jsonl": {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/cases/original-c8-c48/target-01/03-baseline-full/telemetry.jsonl",
+          "bytes": 16358260,
+          "sha256": "79ea88b6503b391cdea8273418cd118be61e45918d9c790db88715be7011d5ed"
+        },
+        "launch.json": {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/cases/original-c8-c48/target-01/03-baseline-full/launch.json",
+          "bytes": 1114,
+          "sha256": "6ba5f4f9c1ba0219a8568b519967be79d301500a84c9d8b38d9fe296a7ad707c"
+        },
+        "execution-identity.json": {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/cases/original-c8-c48/target-01/03-baseline-full/execution-identity.json",
+          "bytes": 1351,
+          "sha256": "ddd1e9155467c49040c498af84d4c29cca6d6a8493427ca1ea1b895b2f2044ac"
+        },
+        "incremental.json": {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/cases/original-c8-c48/target-01/03-baseline-full/incremental.json",
+          "bytes": 198,
+          "sha256": "ebd9daec583124fdb2d9d2c7842d191a8b3e8fce90fb5a241c2e53ee564d22d9"
+        }
+      }
+    }
+  ],
+  "o2_numeric_pair": "PASS",
+  "c48_numeric_pair": "FAIL_ORIGINAL_RAW128_SOURCE_CONTRACT",
+  "batch_status": "STOPPED",
+  "guardian_status": "GUARD_FAIL",
+  "cleanup_ok": true,
+  "all_four_individual_roles_passed": true,
+  "four_role_campaign_qualified": false,
+  "formal_acceptance_qualified": false,
+  "coverage_qualified": 17,
+  "coverage_required": 20,
+  "new_metrics": {
+    "speedup": "NOT_TESTED",
+    "area": "NOT_TESTED",
+    "timing": "NOT_TESTED"
+  },
+  "source_difference_diagnostic": {
+    "scope": "READ_ONLY_ATTRIBUTION_NOT_NEW_COMPARISON_CONTRACT_OR_PASS",
+    "committed_rows": 1008,
+    "native_source_digests_reproduced": true,
+    "native_packet_digests_reproduced": true,
+    "source_different_rows": 96,
+    "fields_with_differences": {
+      "vs1": 64,
+      "vs2": 96
+    },
+    "low64_differences": {
+      "vs1": 0,
+      "vs2": 0
+    },
+    "high64_differences": {
+      "vs1": 64,
+      "vs2": 96
+    },
+    "nonoperand_fields_all_equal": true,
+    "full128_result_packets_equal": true,
+    "all128_result_count": 1008,
+    "raw_source_digests": {
+      "candidate": "208bbad7d3d279a90dd45692d3399fea125743e37dcc65527485944290c21b28",
+      "baseline": "991e95b002bca36a2125e021af7cb459d4b340c69576f509330d5cce29067443"
+    },
+    "low64_projection_digest": {
+      "candidate": "a8bbe24fcf676435df2f93fc865268b9e213abdea179dc9a0fbef7992995ec2f",
+      "baseline": "a8bbe24fcf676435df2f93fc865268b9e213abdea179dc9a0fbef7992995ec2f"
+    },
+    "low64_projection_is_diagnostic_only": true,
+    "first_difference": {
+      "committed_ordinal_zero_based": 0,
+      "pc": "0x80000d64",
+      "word": "0x388000b",
+      "different_fields": {
+        "vs1": {
+          "candidate": 320085803892793479717606983404596723584,
+          "baseline": 297095330608427884109382526687808290688
+        },
+        "vs2": {
+          "candidate": 320423478509621354451084938305851129728,
+          "baseline": 134721639640916722557111607884532187008
+        }
+      },
+      "candidate": {
+        "pc": 2147487076,
+        "word": 59244555,
+        "vl": 8,
+        "illegal": 0,
+        "vecwen": 0,
+        "v0wen": 1,
+        "vpu": 383123886643719907295546637845863265354179916928647168,
+        "vs1": 320085803892793479717606983404596723584,
+        "vs2": 320423478509621354451084938305851129728
+      },
+      "baseline": {
+        "pc": 2147487076,
+        "word": 59244555,
+        "vl": 8,
+        "illegal": 0,
+        "vecwen": 0,
+        "v0wen": 1,
+        "vpu": 383123886643719907295546637845863265354179916928647168,
+        "vs1": 297095330608427884109382526687808290688,
+        "vs2": 134721639640916722557111607884532187008
+      },
+      "source_halves": {
+        "vs1": {
+          "candidate128": "f0ce48901dc1336980c03f0100ff7f80",
+          "baseline128": "df827ab70d1ba64180c03f0100ff7f80",
+          "candidate_low64": "80c03f0100ff7f80",
+          "baseline_low64": "80c03f0100ff7f80",
+          "candidate_high64": "f0ce48901dc13369",
+          "baseline_high64": "df827ab70d1ba641"
+        },
+        "vs2": {
+          "candidate128": "f10f5134fa887dbc7f807f807f807f80",
+          "baseline128": "655a71a99991bffb7f807f807f807f80",
+          "candidate_low64": "7f807f807f807f80",
+          "baseline_low64": "7f807f807f807f80",
+          "candidate_high64": "f10f5134fa887dbc",
+          "baseline_high64": "655a71a99991bffb"
+        }
+      },
+      "candidate_raw_events": [
+        {
+          "event": "ENQUEUE",
+          "fields": {
+            "cycle": 13710,
+            "rob": "1:3",
+            "pc": 2147487076,
+            "ftq": "0:3",
+            "word": 59244555
+          },
+          "raw": [
+            {
+              "line": 115,
+              "text": "SP1_ENQUEUE cycle=               13710 rob=1: 3 pc=0x0000080000d64 ftq=0:3 word=0x0388000b"
+            }
+          ]
+        },
+        {
+          "event": "ACCEPT",
+          "fields": {
+            "cycle": 13729,
+            "seq": 0,
+            "rob": "1:3",
+            "pdest": 1,
+            "vl": 8,
+            "illegal": 0,
+            "vecwen": 0,
+            "v0wen": 1,
+            "vpu": 383123886643719907295546637845863265354179916928647168,
+            "perf": 0,
+            "vs1": 320085803892793479717606983404596723584,
+            "vs2": 320423478509621354451084938305851129728
+          },
+          "raw": [
+            {
+              "line": 124,
+              "text": "SP1_ACCEPT cycle=               13729 seq=                   0 rob=1: 3 pdest=  1 vl=  8 illegal=0 vecwen=0 v0wen=1 vpu=0x0000400000040000000000000000000000000000000000000 perf=0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 vs1=0xf0ce48901dc1336980c03f0100ff7f80 vs2=0xf10f5134fa887dbc7f807f807f807f80"
+            }
+          ]
+        },
+        {
+          "event": "RESPONSE",
+          "fields": {
+            "cycle": 13730,
+            "seq": 0,
+            "rob": "1:3",
+            "pdest": 1,
+            "illegal": 0,
+            "data": 32450,
+            "vecwen": 0,
+            "v0wen": 1,
+            "exception": 0,
+            "vpu": 383123886643719907295546637845863265354179916928647168,
+            "perf": 0
+          },
+          "raw": [
+            {
+              "line": 131,
+              "text": "SP1_RESPONSE cycle=               13730 seq=                   0 rob=1: 3 pdest=  1 illegal=0 data=0x00000000000000000000000000007ec2 vecwen=0 v0wen=1 exception=0x000000 vpu=0x0000400000040000000000000000000000000000000000000 perf=0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+            }
+          ]
+        },
+        {
+          "event": "COMMIT",
+          "fields": {
+            "cycle": 13732,
+            "rob": "1:3",
+            "pc": 2147487076,
+            "ftq": "0:3"
+          },
+          "raw": [
+            {
+              "line": 137,
+              "text": "SP1_COMMIT cycle=               13732 rob=1: 3 pc=0x0000080000d64 ftq=0:3"
+            }
+          ]
+        }
+      ],
+      "baseline_raw_events": [
+        {
+          "event": "ENQUEUE",
+          "fields": {
+            "cycle": 13710,
+            "rob": "1:3",
+            "pc": 2147487076,
+            "ftq": "0:3",
+            "word": 59244555
+          },
+          "raw": [
+            {
+              "line": 115,
+              "text": "O2_ENQUEUE cycle=               13710 rob=1: 3 pc=0x0000080000d64 ftq=0:3 word=0x0388000b"
+            }
+          ]
+        },
+        {
+          "event": "ACCEPT",
+          "fields": {
+            "cycle": 13729,
+            "seq": 0,
+            "rob": "1:3",
+            "pdest": 1,
+            "vl": 8,
+            "illegal": 0,
+            "vecwen": 0,
+            "v0wen": 1,
+            "vpu": 383123886643719907295546637845863265354179916928647168,
+            "perf": 0,
+            "vs1": 297095330608427884109382526687808290688,
+            "vs2": 134721639640916722557111607884532187008
+          },
+          "raw": [
+            {
+              "line": 124,
+              "text": "O2_ACCEPT cycle=               13729 seq=                   0 rob=1: 3 pdest=  1 vl=  8 illegal=0 vecwen=0 v0wen=1 vpu=0x0000400000040000000000000000000000000000000000000 perf=0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 vs1=0xdf827ab70d1ba64180c03f0100ff7f80 vs2=0x655a71a99991bffb7f807f807f807f80"
+            }
+          ]
+        },
+        {
+          "event": "RESPONSE",
+          "fields": {
+            "cycle": 13731,
+            "seq": 0,
+            "rob": "1:3",
+            "pdest": 1,
+            "illegal": 0,
+            "data": 32450,
+            "vecwen": 0,
+            "v0wen": 1,
+            "exception": 0,
+            "vpu": 383123886643719907295546637845863265354179916928647168,
+            "perf": 0
+          },
+          "raw": [
+            {
+              "line": 134,
+              "text": "O2_RESPONSE cycle=               13731 seq=                   0 rob=1: 3 pdest=  1 illegal=0 data=0x00000000000000000000000000007ec2 vecwen=0 v0wen=1 exception=0x000000 vpu=0x0000400000040000000000000000000000000000000000000 perf=0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+            }
+          ]
+        },
+        {
+          "event": "COMMIT",
+          "fields": {
+            "cycle": 13733,
+            "rob": "1:3",
+            "pc": 2147487076,
+            "ftq": "0:3"
+          },
+          "raw": [
+            {
+              "line": 138,
+              "text": "O2_COMMIT cycle=               13733 rob=1: 3 pc=0x0000080000d64 ftq=0:3"
+            }
+          ]
+        }
+      ]
+    },
+    "same_application_uart_sha256": true,
+    "application_uart_sha256": "1dfac91c98253c190adba6e78891fd716df177334829ffced34106abdd843a28",
+    "native_failure_preserved": true,
+    "method": "Existing frozen pure-Python extract_events_and_uart + committed_vectors only, no collect/log_gate/test suite/target invoked. Both native hash fields exactly reproduced.",
+    "exploratory_notes": [
+      "Initial ad-hoc field parser rejected ftq colon value before producing evidence.",
+      "Second ad-hoc parser did not reproduce allocation mapping and failed local diagnostic assertion; no frozen source or formal result changed. Existing frozen parser used for authoritative material."
+    ]
+  },
+  "budget_accounting": {
+    "target_processes_started": 4,
+    "launch_attempts": 4,
+    "target_active_seconds": 5428.445984592,
+    "case_walls_sum_seconds": 5455.226731983999,
+    "case_hosts_sum_seconds": 26.780747391999284,
+    "batch_wall_seconds": 5457.889598871,
+    "batch_outside_cases_seconds": 2.662866887000746,
+    "batch_total_nonactive_seconds": 29.44361427900003,
+    "guardian_wall_seconds": 5458.029941479,
+    "guardian_outside_batch_seconds": 0.14034260799962794,
+    "guardian_total_nonactive_seconds": 29.58395688699966,
+    "guardian_status": "GUARD_FAIL",
+    "guardian_reason": "CHILD_EXIT_1",
+    "guardian_cleanup_ok": true,
+    "guardian_cleanup_seconds": 0.0016396480004914338,
+    "remaining_live_processes": [],
+    "batch_target_limit_seconds": 7500,
+    "batch_outer_limit_seconds": 9300,
+    "budget_overrun_or_resource_stop": false
+  },
+  "old_formal1500_budget": "HOLD_ALL_NEW_NORMAL_ROLES_EXCEEDED",
+  "o2_candidate_coverage": "HOLD_KILL_P_AND_PARTIAL_KILL_NOT_HIT",
+  "same_hardware_replay": "NOT_RUN",
+  "next_host_revision_design": "GO_DIAGNOSTIC_BASIS_ONLY_NOT_IMPLEMENTED",
+  "next_instruction": "开始 B4-R5 最小比较合同修订与离线复核：保留 B4-R4 原FAIL、原始日志、授权和消费锁，在独立目录为 C48 增加按退休链绑定的有效低64位输入摘要，仅用于跨硬件比较；完整128位结果、PC/编码/配置/控制字段及同硬件raw128精确重放要求保持。复用四个已完成角色和未变宿主机制，使用两份真实完整日志补齐高64差异正控、低64/结果/身份及同硬件高64漂移负控，做独立复核。通过后同轮准备复用既有三角色＋两次新重放的明确合同和实测预算提案，不自动授正式资格。先不运行EMU/NEMU、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；完成后更新计分板，给出GO/HOLD和下一批指令。",
+  "RTL_edits_this_round": 0,
+  "new_fullcore_builds": 0,
+  "new_EDA_runs": 0,
+  "GitHub_writes": 0,
+  "evidence": {
+    "BEFORE.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/BEFORE.json",
+      "bytes": 76089,
+      "sha256": "a029346b68fb28e97b2c75bfaa7328194d29968e39d022ab3fe579ceead8c3a0"
+    },
+    "PRELAUNCH.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/PRELAUNCH.json",
+      "bytes": 2630,
+      "sha256": "d4e7ab4c24d02cbfd07e0c85404b5249a4eb35617b76313ecd2b7ca6a3bd12fe"
+    },
+    "CALIBRATION_CONTRACT.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/CALIBRATION_CONTRACT.json",
+      "bytes": 1518,
+      "sha256": "e78d589265eb17b976f164bed8c1fec65ad881a2c5146525a664607e03ffde31"
+    },
+    "ADMISSION.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/ADMISSION.json",
+      "bytes": 2937,
+      "sha256": "1b2af77d628c4614e2e64a227d46f22ed5746a8bedf2a4e4c2a3f7a980af93a0"
+    },
+    "RUN_AUTHORIZATION.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/RUN_AUTHORIZATION.json",
+      "bytes": 3654,
+      "sha256": "ad595aa4df1ce2c52c1a56366383dc06e1ba4d5b240c66cd5565b153f6093f16"
+    },
+    "AUTHORIZATION_CHECK.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/AUTHORIZATION_CHECK.json",
+      "bytes": 479,
+      "sha256": "87f197adbfbf2549e4b028b41494453e7799ed4b70a162b09e8a490dc2e27dca"
+    },
+    "runtime/SOURCE_VERSION.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/runtime/SOURCE_VERSION.json",
+      "bytes": 14808,
+      "sha256": "1e95932b261b12ee60e1de5b6142c3ddd1d3440da9a9056fb2cf482fef83613f"
+    },
+    "numeric/HISTORICAL_CANDIDATE_SUMMARY.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/numeric/HISTORICAL_CANDIDATE_SUMMARY.json",
+      "bytes": 11639,
+      "sha256": "db3ae065877c7393ef2d01ba1b7f9db231148b44f28e2df50a670af60d291bc8"
+    },
+    "numeric/attempt-01/RESULT.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/numeric/attempt-01/RESULT.json",
+      "bytes": 896,
+      "sha256": "36fde53e3b47b5b97d8460ce04a77869c1bc51f68b407dd91302101105836b5c"
+    },
+    "runtime-tests/RESULT.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/runtime-tests/RESULT.json",
+      "bytes": 24290,
+      "sha256": "36a1fadc14371e7f01743dd9a14c101c015576e73bf37a9d48317429ef731078"
+    },
+    "independent-review/RESULT.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/independent-review/RESULT.json",
+      "bytes": 16626,
+      "sha256": "0b650a49be72302e407b3fdedc1fff64ec7a3faf8d1c7d872d22a33a157dd6f1"
+    },
+    "budget-review/RESULT.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/budget-review/RESULT.json",
+      "bytes": 19874,
+      "sha256": "6158fbe9cc1e84bd7996e0c282498ef0c5ba5a0271e322623ea73ce39b60fca4"
+    },
+    "budget-review/external-01/RESULT.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/budget-review/external-01/RESULT.json",
+      "bytes": 599,
+      "sha256": "502dcee0315428257563a80c19ce62d625f6f9367b0e86275fe110c6d14a5713"
+    },
+    "cases/o2-control/EXECUTION_FREEZE.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/cases/o2-control/EXECUTION_FREEZE.json",
+      "bytes": 215478,
+      "sha256": "ebbef54a0bc0c4933f38823830ae32ea6293b021e41f00fcd58d3376da8f1be5"
+    },
+    "cases/original-c8-c48/EXECUTION_FREEZE.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/cases/original-c8-c48/EXECUTION_FREEZE.json",
+      "bytes": 187717,
+      "sha256": "398a8900bc79a04496043a87b4f3457001fe10441aefd5be6e76e07389c4465e"
+    },
+    "BATCH.used.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/BATCH.used.json",
+      "bytes": 320,
+      "sha256": "fd2b9675d273f4256a0f38d0265aa922de377641e233697374c06f9ce73c2dc0"
+    },
+    "target-01/batch.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/target-01/batch.json",
+      "bytes": 7399,
+      "sha256": "7b1d99870c33ed513cc7733cae25bed59cebc22736118a9ad6de715c30040d2f"
+    },
+    "external-batch/RESULT.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/external-batch/RESULT.json",
+      "bytes": 2131,
+      "sha256": "2b2ff2c2b60bbd4b26d95b6e480977fd3fdf0186a5226839db924ff23db4648d"
+    },
+    "terminal-review/TERMINAL_RESULT.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/terminal-review/TERMINAL_RESULT.json",
+      "bytes": 1487907,
+      "sha256": "63804185f70e47495efe3e520ef4ba6ea31caccf864d20571ce26931b80240b9"
+    },
+    "terminal-review/COMMITTED_SOURCE_DIFFERENCE.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/terminal-review/COMMITTED_SOURCE_DIFFERENCE.json",
+      "bytes": 8609,
+      "sha256": "04937450dbb8e605f38741fe0497d358015308cec33646e38126e2c2115a5175"
+    },
+    "terminal-review/FAILURE_ATTRIBUTION.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/terminal-review/FAILURE_ATTRIBUTION.json",
+      "bytes": 23896,
+      "sha256": "fa64a530d11121b6c45aedfaacbca9138f3c9976e13abae9cc99adfc30235bbd"
+    },
+    "closeout-prep/COMPARISON_SCOPE_REVIEW.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/closeout-prep/COMPARISON_SCOPE_REVIEW.json",
+      "bytes": 14563,
+      "sha256": "a7856c46f87a0892c772ce6a191edb3f5b92e48fc0103bfbcb41ffcce8b2c644"
+    },
+    "actual-budget-review/RESULT.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/actual-budget-review/RESULT.json",
+      "bytes": 30261,
+      "sha256": "d7fd0155258b875d9af671a01d7ea5cb967bf3fd86211728fa9f98651cc1e643"
+    },
+    "ROOT_PROTECTION_AUDIT.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/ROOT_PROTECTION_AUDIT.json",
+      "bytes": 1341,
+      "sha256": "f3da3e28410e2c0ba1ca2e57a48c988e635cf73a29b02a7ccd40f747f40a72f1"
+    }
+  },
+  "evidence_manifest": "EVIDENCE_MANIFEST.json"
+}

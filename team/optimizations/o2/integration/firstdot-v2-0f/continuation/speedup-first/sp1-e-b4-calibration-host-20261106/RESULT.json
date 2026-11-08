@@ -1,0 +1,210 @@
+{
+  "schema": "sp1-e-b4-host-closeout-v1",
+  "record_id": "SP1-E-B4-20261106-HOST_GO",
+  "record_number": 81,
+  "operation_id": "SP1-E-B4-HOST-20261106-01",
+  "operator": "@cc77-builder / Agent",
+  "operator_identity_basis": "Prior user-confirmed account; current connector profile unavailable and WSL gh absent, no new login assertion",
+  "started_utc": "2026-11-06T05:30:52.886182+00:00",
+  "ended_utc": "2026-11-06T06:17:51.698000+00:00",
+  "recorded_at": "2026-11-06T14:17:51.698000+08:00",
+  "status": "HOST_GO_CALIBRATION_AWAITS_USER",
+  "summary": "B4完成o2-control与原C8普通C48最小差异接入、共享三角色校准运行器及完整输入冻结。两例各27项差异覆盖通过，另补o2精确前缀15项、C48精确PC6项、共享10项及JSON写读修订5项。原夹具标签、模块冲突和首次JSON冻结FAIL保留，受影响部分在本轮独立修订并验证。最终宿主经验预算235.713/213.416秒，均低于900秒；支持请求下一轮最多6进程完整调用校准，不保证目标在2400秒内结束。timed DIV/SQRT复用137份原文件身份及旧测试，实际运行接入与完整预算仍HOLD。本轮目标0，SP1-E仍17/20，默认0f＋firstdot V2＋原C8，未改RTL/新核/EDA/上传。",
+  "source_commit": "347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e",
+  "branch": "local/zjhwork-integration-20261024",
+  "stable_default": "0f + firstdot V2 + original C8",
+  "default_changed": false,
+  "coverage_qualified_before": 17,
+  "coverage_qualified": 17,
+  "coverage_required": 20,
+  "new_target_processes": 0,
+  "launch_attempts": 0,
+  "new_functional_qualified_cases": 0,
+  "new_performance_qualified": false,
+  "metrics": {
+    "speedup": "NOT_TESTED",
+    "area": "NOT_TESTED",
+    "timing": "NOT_TESTED"
+  },
+  "host_checks": {
+    "o2_control_initial_coverage": 27,
+    "o2_control_precise_prefix_new": 15,
+    "c48_initial_coverage": 27,
+    "c48_precise_pc_new": 6,
+    "shared_original_new": 10,
+    "shared_r1_delta_new": 5,
+    "shared_r1_reuse_original_scope": 10,
+    "timed_prior_host_tests_reused_not_rerun": 41,
+    "timed_prior_file_pins_verified": 137
+  },
+  "cases": [
+    {
+      "case_id": "o2-control",
+      "status": "GO",
+      "host_budget_seconds": 235.71300166398305,
+      "host_limit_seconds": 900,
+      "base_measured_work_seconds": 28.928250415995763,
+      "terms": {
+        "H": 0.9355353549999563,
+        "D": 0.003586390999771538,
+        "P_max": 5.353008541999998,
+        "N": 0.005582910999919477,
+        "J": 3.131542434000039,
+        "K": 0.057723840000107884,
+        "A": 0.0011152249999213382,
+        "B": 0.00020704700000351295,
+        "I": 0.2240598499997759
+      },
+      "formula": "4*(9H+13D+2Pmax+N+3J+2K+12A+13B+I)+120",
+      "reserve_seconds": 120,
+      "reserve_scope": "watchdog phase publish/poll, writes/serialization, initial guard and unmeasured small metadata; explicit empirical margin, not universal proof",
+      "previous_H": 0.9355353549999563,
+      "current_verify_including_normalization_seconds": 0.5948211090000086,
+      "normalization_seconds": 0.0008328669999997373
+    },
+    {
+      "case_id": "original-c8-c48",
+      "status": "GO",
+      "host_budget_seconds": 213.41645447599296,
+      "host_limit_seconds": 900,
+      "base_measured_work_seconds": 23.35411361899824,
+      "terms": {
+        "H": 0.6456311080000035,
+        "D": 0.0018418889999338717,
+        "P_max": 3.963367954999967,
+        "N": 0.017997717999833185,
+        "J": 3.131542434000039,
+        "K": 0.057723840000107884,
+        "A": 0.0011152249999213382,
+        "B": 0.00020704700000351295,
+        "I": 0.048606168999867805
+      },
+      "formula": "4*(9H+13D+2Pmax+N+3J+2K+12A+13B+I)+120",
+      "reserve_seconds": 120,
+      "reserve_scope": "watchdog phase publish/poll, writes/serialization, initial guard and unmeasured small metadata; explicit empirical margin, not universal proof",
+      "previous_H": 0.59332528799996,
+      "current_verify_including_normalization_seconds": 0.6456311080000035,
+      "normalization_seconds": 0.0012273040000110313
+    }
+  ],
+  "host_budget_scope": "Same H/D/J/P functions proven unchanged; H only increases to actual current JSON verify when larger. Empirical envelope plus hard900, not universal2GiB or target-completion bound.",
+  "actual_admission_validation_seconds": 0.00674360599999968,
+  "calibration_budgets": {
+    "negative_wall_seconds": 300,
+    "normal_wall_seconds": 2400,
+    "negative_guest_cycles": 100000,
+    "normal_guest_cycles": 1500000,
+    "case_target_seconds": 5100,
+    "case_outer_seconds": 6000,
+    "case_host_seconds": 900,
+    "batch_max_processes": 6,
+    "batch_target_seconds": 10200,
+    "batch_outer_seconds": 12000
+  },
+  "actual_target_authorized": false,
+  "formal_target_admission": "HOLD_PENDING_CURRENT_COMPLETE_CALL_BUDGET_AND_FIVE_ROLE_ACCEPTANCE",
+  "timed_div_sqrt": "HOLD_RUNTIME_ADAPTER_AND_COMPLETE_CALL_BUDGET",
+  "production_files_unchanged": 445,
+  "prior_evidence_files_unchanged": 1599,
+  "RTL_edits_this_round": 0,
+  "new_fullcore_builds": 0,
+  "new_synthesis_runs": 0,
+  "new_STA_runs": 0,
+  "native_reference_loads": 0,
+  "GitHub_writes": 0,
+  "preserved_failures": [
+    "o2-control/attempt-01",
+    "c48/attempt-01",
+    "runtime-tests/INPUT_FREEZE_FAILURE.json"
+  ],
+  "evidence": {
+    "admission": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-calibration-host-20261106/ADMISSION.json",
+      "bytes": 5050,
+      "sha256": "b208a9ab155b0665d5e80dd1269ec1167d241af8040484309c6a82896d639b22"
+    },
+    "runtime_version": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-calibration-host-20261106/runtime-r1/SOURCE_VERSION.json",
+      "bytes": 12791,
+      "sha256": "b8726ede70ef14e45071ecd5051041d25b800b3eab95bda011f8b349f83fc797"
+    },
+    "shared_test": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-calibration-host-20261106/runtime-tests/RESULT.json",
+      "bytes": 13477,
+      "sha256": "262aaac32b726b6ae9f6d7812a3ba0a2cb57bb5bfba62707dbeba93603990ca5"
+    },
+    "runtime_delta": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-calibration-host-20261106/runtime-tests/host-r1/RESULT.json",
+      "bytes": 16500,
+      "sha256": "a4417b657ed8a8ad034788c511706479fcdb25b23065e99c2a01838045e4bd5d"
+    },
+    "host_budget": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-calibration-host-20261106/runtime-tests/host-r1/BUDGET_RESULT.json",
+      "bytes": 15710,
+      "sha256": "69abcea3cd9108969aaa491bf46d78ad11f828875a6294457c5b210cb0ad4198"
+    },
+    "independent_review": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-calibration-host-20261106/independent-review/runtime-r1-RESULT.json",
+      "bytes": 22293,
+      "sha256": "1ff95f53285b3923ac3a7e8076d4b63ecfb6855b406e10bad987ee810ae565ab"
+    },
+    "o2_control": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-calibration-host-20261106/o2-control/host-r2/RESULT.json",
+      "bytes": 10390,
+      "sha256": "3277d05ec59ba94d47e2c00f067072d2a09c1d70cc409becb4be3eb89ed762d9"
+    },
+    "c48": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-calibration-host-20261106/c48/RESULT.json",
+      "bytes": 14488,
+      "sha256": "fa20bbcd29dd07eb95c234e343af89e89e22de1428ffa608e2e69329329bfd3f"
+    },
+    "timed_gap": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-calibration-host-20261106/timed-div-sqrt/GAPS.json",
+      "bytes": 3368,
+      "sha256": "aebb318ecfa7e4b520e928c4f95b9e0efd5f817cbace913e62cd3f5947656c23"
+    },
+    "timed_reuse": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-calibration-host-20261106/timed-div-sqrt/REUSE_AUDIT.json",
+      "bytes": 36696,
+      "sha256": "321475a184b0caae7a1ce36dba87dbc8ac24fe8a98665e23c81f33e6a872a6fa"
+    },
+    "parser_cost": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-calibration-host-20261106/parser-cost/RESULT.json",
+      "bytes": 11422,
+      "sha256": "17c64d71f79f8b91e9813811fc47f20cf80d704be16b71f653147e114c76900a"
+    },
+    "initial_freeze_failure": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-calibration-host-20261106/runtime-tests/INPUT_FREEZE_FAILURE.json",
+      "bytes": 2671,
+      "sha256": "400329eb4d466530e3e63d9ad8730f9651d9d7b93f952f8c32bbfbd8bcf6e62e"
+    },
+    "invariants": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-calibration-host-20261106/ROOT_INVARIANTS.json",
+      "bytes": 598,
+      "sha256": "db0f096eb3c9e535dcb7e8c7f2caa794e67afa82b8f2888a88d1ad1c92b7612d"
+    },
+    "metrics": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-calibration-host-20261106/METRICS.json",
+      "bytes": 72896,
+      "sha256": "16778deb94ec94285be1fd15e5b1aa68c89441eb787a2c9cfb92be491e88153e"
+    },
+    "calibration_contract": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-calibration-host-20261106/CALIBRATION_CONTRACT.json",
+      "bytes": 2217,
+      "sha256": "e51a2d309d656974936225f3df693bfdbc1ecbea40e9a77d6a0a3a2385a611f7"
+    }
+  },
+  "case_input_freezes": [
+    {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-calibration-host-20261106/cases-r1/o2-control/EXECUTION_FREEZE.json",
+      "bytes": 154182,
+      "sha256": "136cdc91682d5f090e1bf30d288d9c79e50000d0ca4e5fdc45657e02a39a8770"
+    },
+    {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-calibration-host-20261106/cases-r1/original-c8-c48/EXECUTION_FREEZE.json",
+      "bytes": 174967,
+      "sha256": "d999b2391858da7e2caf34faa3a74b0bfe1180080d177a199b60f326115e9119"
+    }
+  ],
+  "proposed_next_instruction": "开始 SP1-E B4 两例完整调用有界校准：按 NEXT_STEP 使用最终 runtime-r1/calibration_guard.py，先核查已有进程、宿主准入、两份 cases-r1 冻结输入及未消费锁。接受本轮新校准预算后，仅按 o2-control→original-c8-c48 串行，每例 bit100 拒错300秒/10万guest→候选完整2400秒/150万guest→0f完整2400秒/150万guest；每例最多3目标、目标累计5100秒、宿主900秒、外层6000秒，整批最多6目标、目标10200秒、外层12000秒，不借时。保持CPU4、整组4线程、RSS12GiB、每例日志2GiB和原seed/RAM/reset，保留o2-control的16组/256trial/1208custom及C48全部48调用/1008custom/384完整128位输出、CSR/ABI、当前提交组bit100与物理运行身份。失败或超限立即停止整批，不重试、不加时、不跳过继续。只收集完整调用正确性、周期、吞吐、进度和资源，重新判断原五角色6300/7200秒预算，不自动进入正式验收或timed DIV/SQRT。校准不增加17/20资格。不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；完成后更新计分板及三项指标状态，给出结论和下一轮指令。"
+}

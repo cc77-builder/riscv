@@ -1,0 +1,114 @@
+{
+  "schema": "item19-observer-diagnostic-admission-v1",
+  "record_number": 115,
+  "record_id": "sp1-e-item19-observer-diagnostic-20261108",
+  "recorded_at": "2026-11-08T01:46:37.061546+08:00",
+  "work_started_at": "2026-11-08T01:37:40.592213+08:00",
+  "source_commit": "347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e",
+  "branch": "local/zjhwork-integration-20261024",
+  "operator": "cc77-builder / Agent (session identity)",
+  "status": "HOLD_BUDGET_AND_HOST_ADAPTER_INCOMPLETE",
+  "runtime_identity": "PASS",
+  "compiled_schema_sites": {
+    "SCHED_SCHEMA": 6,
+    "SCHED_UOP": 6,
+    "SCHED_EXU_IN": 4,
+    "SCHED_EXU_OUT": 4,
+    "SCHED_WB3": 1
+  },
+  "format_analysis": "FAIL_SCALAR_TYPE_DISPLAY_BASE_ASSUMPTION",
+  "new_binding_positive_negative_controls": "NOT_RUN",
+  "streaming_adapter": "NOT_IMPLEMENTED",
+  "execution_freeze": "NOT_CREATED",
+  "coverage_qualified": 19,
+  "coverage_required": 20,
+  "stable_default": "0f + firstdot V2 + original C8",
+  "default_changed": false,
+  "observer_emu": {
+    "path": "/home/riscv/riscv-lab/item19-observer-20261107/artifacts-r4-r3-r1/emu",
+    "bytes": 71379320,
+    "sha256": "fc25f9e2a22cc1c51e4a4884c03c6d84e950fcbb1925eb55a448de104273f742"
+  },
+  "observer_build_qualification": "record114 PASS retained",
+  "target_processes_started": 0,
+  "target_seconds_used": 0,
+  "new_EMU_runs": 0,
+  "new_NEMU_runs": 0,
+  "new_full_core_builds": 0,
+  "new_EDA_runs": 0,
+  "RTL_changed": false,
+  "software_image_changed": false,
+  "github_upload": false,
+  "limits": {
+    "target_seconds": 1200,
+    "host_seconds": 900,
+    "outer_seconds": 2100,
+    "cpu_affinity": [
+      4
+    ],
+    "thread_cap": 4,
+    "rss_cap_bytes": 12884901888,
+    "log_cap_bytes": 2147483648
+  },
+  "budget_assessment": {
+    "old_M1_seconds": 583.112478767,
+    "normal_extra_seconds_available": 316.88752123300003,
+    "new_runtime_cost": "NOT_TESTED",
+    "current_conservative_new_sideband_bound": 2311201080,
+    "total_log_cap": 2147483648,
+    "actual_log_overflow_proven": false
+  },
+  "new_three_metrics": {
+    "speedup": "NOT_TESTED",
+    "area": "NOT_TESTED",
+    "timing": "NOT_TESTED"
+  },
+  "next_step": "开始第19项诊断预算R1：修正只读格式分析的参数类型假设，复用新EMU、M1和既有证据，集中完成实际位宽的完整日志预算、流式投影/侧带检查器、必要正负控及宿主成本测量。全部准入且原预算有依据后，同轮按NEXT_STEP串行执行bit100拒错→M1正常诊断；否则HOLD并给出最小独立校准方案，不自动试跑。保持300/900秒、10万/30万guest，目标1200秒、宿主900秒、外层2100秒及原资源；保留本轮FAIL，失败即停、不重试、不加时、不自动M2或重放，不改RTL或镜像、不构建新核、不做EDA、不切默认、不上传GitHub。",
+  "evidence": {
+    "RUNTIME_IDENTITY.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-diagnostic-20261108/RUNTIME_IDENTITY.json",
+      "bytes": 4258,
+      "sha256": "01b909f8a189c158e2b9ebac797b812880e62fa5c34e447a6275c7adaa23c99a"
+    },
+    "GENERATED_SCHEMA_FORMATS.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-diagnostic-20261108/GENERATED_SCHEMA_FORMATS.json",
+      "bytes": 6916,
+      "sha256": "a78130c97a4abd9e3dd79c4337c8d973f56dd502e66e5f4f1d961ddc636dc690"
+    },
+    "BUDGET_REVIEW.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-diagnostic-20261108/BUDGET_REVIEW.json",
+      "bytes": 1616,
+      "sha256": "9e93bd0176ebc965a6421b2cf17c24fdb566fd64def48125d2cd241a3406c433"
+    },
+    "CONTRACT_DRAFT.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-diagnostic-20261108/CONTRACT_DRAFT.json",
+      "bytes": 6750,
+      "sha256": "011922379fba27121db0ea61dc65e5638948435cb001defe07948960b2e2884b"
+    },
+    "FORMAT_ANALYSIS_ATTEMPT1_FAIL.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-diagnostic-20261108/FORMAT_ANALYSIS_ATTEMPT1_FAIL.json",
+      "bytes": 352,
+      "sha256": "dc331083854bc7e4d0a456ef236e127212d494cd2f88f337b331ffd0e0cc345b"
+    },
+    "ADMISSION.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-diagnostic-20261108/ADMISSION.json",
+      "bytes": 474,
+      "sha256": "a1c0c07ccf738a8a2708cd9278504354b195ca48417437bd86d29264e8267bc3"
+    },
+    "POST_INPUT_CHECK.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-diagnostic-20261108/POST_INPUT_CHECK.json",
+      "bytes": 374,
+      "sha256": "d80d481bfcdc6ffb096a601e4d418f3b98f9b778eeab803529be6424fb3e451c"
+    },
+    "METRICS.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-diagnostic-20261108/METRICS.json",
+      "bytes": 112551,
+      "sha256": "04e65baa58e353c158aaa684f63d8cd669d047c628f85ea6839d8139c43a0010"
+    },
+    "NEXT_STEP.md": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-diagnostic-20261108/NEXT_STEP.md",
+      "bytes": 2111,
+      "sha256": "b512c1c333a1847074f6f798f4a225025d85fce04619b4f06fa4a8c8ab929204"
+    }
+  }
+}

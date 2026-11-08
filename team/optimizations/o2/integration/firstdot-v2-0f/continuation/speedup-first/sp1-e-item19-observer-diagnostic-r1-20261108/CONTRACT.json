@@ -1,0 +1,169 @@
+{
+  "schema": "o2-cancel-runtime-v1",
+  "operation_id": "SP1-E-ITEM19-OBS-DIAG-R1-20261108",
+  "stable_default": "0f + firstdot V2 + original C8",
+  "prior_contract": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-host-20261107/CALIBRATION_REPLAY_CONTRACT.json",
+    "bytes": 13320,
+    "sha256": "55636b84fd38d51260860f8538783ef5df18e212b9f7c79e406cc47be2931466"
+  },
+  "prior_host_freeze": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-host-20261107/HOST_ARTIFACT_FREEZE.json",
+    "bytes": 63524,
+    "sha256": "dfe3437c72120349346cb272f4449e96827ccd33fca961845cf446b351cb779d"
+  },
+  "software_manifest": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-m1-r4-host-20261107/software/manifest.json",
+    "bytes": 33072,
+    "sha256": "bb5dc65f7795ca2ec74620c181e3758de207b565384dcb27ed1e50aa87114b54"
+  },
+  "runtime": {
+    "candidate_emu": {
+      "path": "/home/riscv/riscv-lab/item19-observer-20261107/artifacts-r4-r3-r1/emu",
+      "bytes": 71379320,
+      "sha256": "fc25f9e2a22cc1c51e4a4884c03c6d84e950fcbb1925eb55a448de104273f742"
+    },
+    "baseline_emu": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/build/emu",
+      "bytes": 71235872,
+      "sha256": "2d1db77cc407486a2387a4a69da2498b68d44980239025eebcc02370c02826e8"
+    },
+    "normal_reference": {
+      "path": "/home/riscv/riscv-lab/t12-regression-20261013/nemu/reference/build/riscv64-nemu-interpreter-so",
+      "bytes": 1459056,
+      "sha256": "efbed0774addc27eac38af1a19ab5d9c9dd5f179b5015f25ae7b80b966185bd4"
+    },
+    "flash": {
+      "path": "/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+      "bytes": 12,
+      "sha256": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994"
+    },
+    "bin": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-m1-r4-host-20261107/build-review/attempt-01/o2-cancel.bin",
+      "bytes": 11456,
+      "sha256": "ff97f03e88624b28c7964faae3c82baa1f199a021f6caab817a1fba753740f46"
+    },
+    "elf": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-m1-r4-host-20261107/build-review/attempt-01/o2-cancel.elf",
+      "bytes": 71880,
+      "sha256": "4877040381a8000e51d9cee08d7f7556f77cbced7780abd8230b143e0851b42b"
+    },
+    "negative_reference": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-m1-r4-host-20261107/negative/o2-cancel-negative-reference.so",
+      "bytes": 16384,
+      "sha256": "1717e2dff9b24985c13350ad207e8f93a1c2efdf6dcba94304a683fc58e5124d"
+    }
+  },
+  "roles": [
+    {
+      "name": "bit100",
+      "wall_seconds": 300,
+      "guest_cycles": 100000,
+      "expected_exit": 1,
+      "reference": "negative_reference"
+    },
+    {
+      "name": "candidate-normal",
+      "wall_seconds": 900,
+      "guest_cycles": 300000,
+      "expected_exit": 0,
+      "reference": "normal_reference"
+    }
+  ],
+  "limits": {
+    "target_seconds": 1200,
+    "host_seconds": 900,
+    "outer_seconds": 2100,
+    "cpu_affinity": [
+      4
+    ],
+    "thread_cap": 4,
+    "rss_cap_bytes": 12884901888,
+    "log_cap_bytes": 2147483648
+  },
+  "env": {
+    "PATH": "/usr/local/bin:/usr/bin:/bin",
+    "HOME": "/home/riscv",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C",
+    "OMP_NUM_THREADS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "guard": {
+    "pc": 2147484280,
+    "word": 43253771,
+    "vd": 0,
+    "bit": 100
+  },
+  "counts": {
+    "calls": 41,
+    "custom_commits": 77,
+    "phases": [
+      0,
+      1,
+      2,
+      4
+    ]
+  },
+  "cwd": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-diagnostic-r1-20261108/runtime",
+  "automatic_retry": false,
+  "automatic_replay": false,
+  "item19_qualification": false,
+  "new_performance": false,
+  "runtime_admission": "REQUIRES_CURRENT_HOST_RESULT",
+  "user_authorized_if_host_passes": true,
+  "target_permission": "CURRENT_USER_AUTONOMOUS_GOAL_WITH_BOUNDED_ATTEMPTS",
+  "design_contract": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-r3-readonly-20261107/DESIGN_CONTRACT.json",
+    "bytes": 1776,
+    "sha256": "6db98a1f245a1d98869d1286b51acc8aeaeebbe39f5ad423b9dada3f9dfd6fe1"
+  },
+  "r4_reuse": {
+    "contract": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-m1-r4-host-20261107/CONTRACT.json",
+      "bytes": 4922,
+      "sha256": "1387158f22e59cc62dd3674e120de6349aac4cb3731e2536d9e0d713276f5845"
+    },
+    "failed_host_result": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-m1-r4-host-20261107/host/RESULT.json",
+      "bytes": 1345,
+      "sha256": "864b6e927c4265726e803180ff945c5f402dae9b48dda5667253c187468154bb"
+    },
+    "prior_freeze": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-m1-r4-host-20261107/EXECUTION_FREEZE.json",
+      "bytes": 91297,
+      "sha256": "dc5c2b3a9e30e57bff0ba2547cc91b05b00859c869fc4e88430875d541002c83"
+    },
+    "same_source_images_PC_bit100": true,
+    "regeneration": false,
+    "recompilation": false
+  },
+  "diagnostic_only": true,
+  "legacy_logs": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-m1-r4-r1-host-20261107/target-01",
+  "observer_expected_schemas": [
+    [
+      "ROB",
+      ""
+    ],
+    [
+      "WB3",
+      ""
+    ],
+    [
+      "EXU",
+      "5"
+    ],
+    [
+      "EXU",
+      "8"
+    ],
+    [
+      "EXU",
+      "13"
+    ],
+    [
+      "EXU",
+      "15"
+    ]
+  ]
+}

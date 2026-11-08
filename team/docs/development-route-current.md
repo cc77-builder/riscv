@@ -1,4 +1,827 @@
+> 2026-11-08 `zjhwork2` 发布说明：本分支集成已验收的原 SP1 四文件与显式构建配置，firstdot V2＋原 C8 不变。`zjhwork` 保持原位。以下各轮“默认未切换／未上传”为执行当时的历史状态，参见 [SP1_RELEASE.md](../../SP1_RELEASE.md)。
+
 # 香山 vdot 工程开发路线：满足赛题技术要求，持续提高性能
+
+## 当前执行计划 SP0～SP6
+
+**记录120：SP1-E最后第19项通过，冻结矩阵20/20，GO可供用户选用。** S0/S1实际覆盖、中性、完整数值和原镜像精确重放完成，无待补第19项探针。默认仍0f＋firstdot V2＋原C8，未上传。
+
+建议加速比优先选择原SP1一拍两槽版；四文件源码/补丁/配置已准备。主目录未采用P4-R1不能误当候选。用户选型后再集成默认及发布。chain3.397658×，FU面积+5.9233%、父级+0.2202%，FU局部时序退化保留；新SP0成本47/47通过，非全核时钟签核。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/RESULT.md) · [矩阵](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/MATRIX.md) · [三项指标](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/METRICS.md) · [候选包](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/release-candidate/README.md)
+
+## 历史路线与完成记录
+
+### 记录115当时执行状态（历史原文保留）
+
+**记录115：第19项观察EMU诊断准入HOLD，目标0次，正式19/20。** 默认0f＋firstdot V2＋原C8不变；记录114新EMU构建PASS保持。新旧输入、8动态库及实际观察点身份核对通过，但完整日志/目标开销依据和流式适配尚缺；只读格式分析脚本类型假设错误FAIL已保留。
+
+下一轮集中修静态格式估算、收紧整批完整日志界、完成流式投影/侧带检查器及必要负控和宿主成本。原两角色300/900秒、整批2GiB不变，全部准入才运行；依据不足HOLD，不自动把诊断预算改成校准。目标、RTL、镜像、构建、EDA、默认及GitHub均未动。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-diagnostic-20261108/RESULT.md) · [预算](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-diagnostic-20261108/BUDGET_REVIEW.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-diagnostic-20261108/NEXT_STEP.md)
+
+
+
+### 记录114接续（构建PASS保持，诊断预算待收口）
+
+
+**记录114：新观察EMU构建PASS，构建阻塞解除；第19项诊断待准入，正式19/20。** 默认0f＋firstdot V2＋原C8不变。15项宿主、8项冻结通过；单次851.429秒/7.481GiB完成后处理、Verilator与原生编译，新EMU `fc25f9e2a22cc1c51e4a4884c03c6d84e950fcbb1925eb55a448de104273f742` 已固定。目标运行0次，无新三项性能/成本测量。
+
+下一轮集中两角色诊断准入：复用原M1镜像与旧证据，只补新身份/侧带/投影/bit100差异及预算；全部通过并新授权后300/900秒诊断。依据不足HOLD；未命中保留，不能据诊断授予正式PASS。不自动M2、重放、切默认或上传。旧FAIL保持；构建单调/UTC时间差异另存，不授UTC一致性资格。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r4-r3-r1-20261108/RESULT.md) · [缺项说明](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r4-r3-r1-20261108/WHY_ITEM19_IS_PENDING.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r4-r3-r1-20261108/NEXT_STEP.md)
+
+
+
+### 记录113接续（LF已修复，观察EMU已构建）
+
+
+**记录113：R4-R3 Git目录修复PASS；安全接续宿主检查器LF语义FAIL，整体HOLD，正式19/20。** 默认0f＋firstdot V2＋原C8不变。629目录补齐、127Git仓库可识别、1687生成物已备份；实际完整构建0次，3600秒预算0秒。
+
+下一轮R4-R3-R1仅修宿主检查器LF分行并保留裸CR，使用现有小样真实输出补齐正负控、完整冻结；全部通过后一次3600秒/16GiB剩余构建，不重复JVM/firtool。原Make与RTL不变，原FAIL和锁保留，不自动运行目标或切默认。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r4-r3-20261108/RESULT.md) · [归因](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r4-r3-20261108/LF_SEMANTICS_ANALYSIS.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r4-r3-20261108/NEXT_STEP.md)
+
+
+
+### 记录112接续（Git目录已修；接续检查器LF模型待修）
+
+
+**记录112：R4-R2解析/冻结PASS，真实FIR/SV生成PASS；原Make Git目录闭包失败HOLD。正式19/20。** 默认0f＋firstdot V2＋原C8不变。一次构建490.888秒、峰值9.692GiB，未触发3600秒/16GiB上限；未产生新EMU，未进入原生编译。原FAIL、锁与生成物保留。
+
+下一轮R4-R3只补副本遗漏Git空目录并验证原Make后处理的安全接续，复用已过10＋6证据、本轮解析检查及FIR/SV，不重复JVM/firtool。禁止直接用已有SV跳过未完成后处理。新准入与独立预算后才剩余构建；不自动运行目标、不改RTL或镜像、不切默认、不上传。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r4-r2-20261108/RESULT.md) · [归因](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r4-r2-20261108/GIT_DIRECTORY_ANALYSIS.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r4-r2-20261108/NEXT_STEP.md)
+
+
+
+### 记录111接续（解析已修复；生成完成但原Make后处理失败）
+
+
+**记录111：R4-R1宿主闭包10项、适配器6项通过；冻结续行解析失败HOLD，正式19/20。** 默认0f＋firstdot V2＋原C8不变。重复侧文件已解决，独立build-03/source共24,596文件完备；Make干跑成功，完整输入冻结尚未完成，无全核构建或生成输出。
+
+下一轮R4-R2只修复反斜杠续行的逻辑命令解析，复用现有干跑日志/10+6通过证据/源码副本，补齐冻结后一次3600秒/16GiB构建。旧FAIL和锁保留；不重编小样或重复已过门，不自动运行EMU/NEMU，不改RTL/镜像、切默认或上传。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r4-r1-20261107/RESULT.md) · [归因](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r4-r1-20261107/FREEZE_FAILURE.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r4-r1-20261107/NEXT_STEP.md)
+
+
+
+### 记录110接续（侧文件已修复，冻结尚未完成）
+
+**记录110：R4默认FIR与原生成文件一致，重复注解侧文件导致闭包HOLD；正式19/20。** 默认0f＋firstdot V2＋原C8。独立导出解决R3-R1变换丢失，完整FIR、原10个RTL目录文件及6个尾部逐字节一致；额外ClosureTop.anno.json与FIR注解重复，已失败即停。disable-all未运行，完整构建0次/0秒。
+
+下一轮R4-R1仅抑制导出完成后的隐式注解侧文件请求，保留FIR内注解和独立firtool原参数。复用通过证据，完成必要闭包/PrintControl检查；全部通过后完整冻结、一次3600秒/16GiB构建。原FAIL和锁保留，不自动目标运行，不改生产RTL/镜像、不切默认、不上传。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r4-20261107/RESULT.md) · [差异归因](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r4-20261107/SIDECAR_ANALYSIS.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r4-20261107/NEXT_STEP.md)
+
+
+
+### 记录109接续（R4修复FIR内容，尚有侧文件差异）
+
+**记录109：R3-R1确认真实序列化差异，构建HOLD，正式19/20。** 默认0f＋firstdot V2＋原C8不变。ArgParser小样参数修复，编译和两种生成均成功，但CHIRRTL保留JVM对象标识，未保留原PrintModuleName稳定模块路径；按合同停止，完整构建0次、3600秒使用0秒。
+
+下一轮R4从实验目录的独立构建工具导出香山变换后的FIR及完整注解，复用原参数和尾部文件路径；小样闭包与参数等价通过才一次3600秒/16GiB完整构建。禁止只改target重跑、删除观察或弱化比较。原失败保留；不自动运行目标，不改RTL/镜像、切默认或上传。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r3-r1-20261107/RESULT.md) · [归因](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r3-r1-20261107/SERIALIZATION_ANALYSIS.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r3-r1-20261107/NEXT_STEP.md)
+
+
+
+### 记录108接续（小样参数已修复，确认序列化差异）
+
+**记录108：R3宿主夹具参数缺项HOLD，未启动全核；正式19/20。** 默认0f＋firstdot V2＋原C8不变。串行入口草稿、4项参数检查和小样编译完成；原小样展开漏掉ArgParser派生日志选项而失败，原锁与失败保留。3600秒构建预算使用0秒。
+
+下一轮R3-R1修正小样参数路径，并集中验证FIR/注解与尾部文件闭包。静态发现CHIRRTL序列化可能不保留PrintModuleName/PrintControl，须验证而不能只改target强行启动。存在真实差异即HOLD；全部准入后完整冻结并执行一次3600秒/16GiB构建。仍不授权目标运行、RTL变更、切默认或上传。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r3-20261107/RESULT.md) · [设计评审](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r3-20261107/DESIGN_REVIEW.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r3-20261107/NEXT_STEP.md)
+
+
+
+### 记录107接续（R3宿主HOLD，未进入全核）
+
+**记录107：R2宿主与输入身份通过，实际构建RSS_LIMIT，诊断HOLD；正式19/20。** 默认0f＋firstdot V2＋原C8不变。一次构建已停止且全部回收，无新EMU，不能继续旧锁或借剩余预算。
+
+R2消除了Mill父进程，剩余瓶颈是约10GiB生成JVM与firtool同时占用内存。下一轮R3评审并实现CHIRRTL生成→JVM退出→独立firtool→原Make后处理。先验证FIR及尾部附属文件闭包，准入通过后新的单次3600秒构建；保持16GiB。旧R1/R2失败保留，不改RTL，不自动进入目标。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r2-20261107/RESULT.md) · [资源归因](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r2-20261107/RESOURCE_ANALYSIS.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r2-20261107/NEXT_STEP.md)
+
+
+
+### 记录106接续（R2已执行，仍RSS超限）
+
+
+
+**记录106：R1宿主修复通过，实际构建因RSS_LIMIT停止，诊断HOLD。正式19/20。** 默认0f＋firstdot V2＋原C8不变。一次构建已使用，未生成可交付EMU，不得继续旧锁或借剩余预算重试。
+
+峰值16.030GiB超过16GiB；Mill编译进程与展开JVM/firtool并存。下一步R2仅做分阶段宿主入口，复用已编译类以减少并存内存，保留原Make后处理和资源上限；新准入后才一次新的3600秒构建。索引stat缓存与源码冻结需区分，旧字节FAIL保留。三项指标本轮NOT_TESTED，原性能和PPA不变。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r1-20261107/RESULT.md) · [资源分析](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r1-20261107/RESOURCE_ANALYSIS.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r1-20261107/NEXT_STEP.md)
+
+
+
+### 记录105接续（R1宿主已修复；构建资源HOLD）
+
+
+
+**记录105：独立观察EMU构建准入HOLD；实际构建尚未开始。正式19/20。** 记录104观察实现资格保持，默认0f＋firstdot V2＋原C8及第20项PASS不变。
+
+本轮独立源码物理副本已完成并核对，宿主监督器启动亲和竞态导致门禁FAIL后停止。实际构建0次，3600秒预算0秒；无目标、EDA、切换或上传。下一步仅修exec前亲和设置和夹具回执/failfast，补齐外部依赖冻结；通过后同轮一次有界构建。保留旧FAIL，不重复未变RTL验证。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-20261107/RESULT.md) · [下一轮指令](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-20261107/NEXT_STEP.md) · [两角色草案（未准入）](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-20261107/DIAGNOSTIC_CONTRACT_DRAFT.md)
+
+
+
+### 记录104接续（构建入口宿主失败，未启动构建）
+
+
+
+**记录104：最小观察器实现及宿主核查GO；新目标诊断和第19项HOLD。正式19/20。** 默认0f＋firstdot V2＋原C8不变，第20项PASS保持。
+
+四文件仅位于独立overlay；完成编译、默认关闭、身份正负控及六模块开关两态结构中性，未做全核构建/EMU/NEMU/EDA。旧生产/候选/输入保持。没有新的命中或性能结果，不重复盲改M1或扫描phase。
+
+下一步独立观察EMU构建和诊断准入：提议单次3600秒构建停止上限，先冻结完整树与资源；成功后核对新身份和日志成本。目标仍需新两角色合同及后续授权，本轮不启动。保留原覆盖和重放；最终默认选择由用户决定。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-impl-20261107/RESULT.md) · [预算](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-impl-20261107/BUDGET_REVIEW.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-impl-20261107/NEXT_STEP.md)
+
+
+
+### 记录103接续（本轮已完成观察实现）
+
+
+
+**最小观察方案设计GO；第19项定点修订/目标补测HOLD。** 现有证据不足以给出可信FEX0/VDOT碰撞窗口。正式仍19/20，默认0f＋firstdot V2＋原C8不变；第20项PASS保持。
+
+记录103已完成当前设计：按实际FEX0/VFEX4仲裁、I2v/vialu拆分及前递路径，冻结四处最小观察方案。软件/镜像和所有源码保持；没有新目标、构建或EDA。不能继续盲改phase或用第20项保护代替第19项覆盖。
+
+默认次序：先实现默认关闭观察器与必要宿主/局部中性，再据实际开销评审独立构建/一次诊断；获得可信碰撞窗口后才提出单一M2定点改法。任一环节依据不足HOLD，不自动扩围。正式覆盖与重放仍按原合同；最终默认选型由用户决定。
+
+开始第19项最小观察器实现与宿主验证：按 DESIGN 和 OBSERVATION_SCHEMA，先说明四个 RTL 源文件的具体改法，在独立候选目录实现默认关闭的调度/写回侧带观察，保持原数据通路、仲裁、ready 和 SP1/T13 协议；完成微操作身份与时序解析正负控、默认关闭检查和必要局部观察中性验证，并评审构建及一次诊断的预算。保留 S0/S1 原覆盖和第19项 HOLD；先不构建全核、不运行 EMU/NEMU、不改软件镜像、不做 EDA、不切默认、不上传 GitHub。完成后给出 GO/HOLD 和下一轮指令。
+
+[设计结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observation-design-20261107/RESULT.md) · [有界合同](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observation-design-20261107/BOUNDED_CONTRACT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observation-design-20261107/NEXT_STEP.md)。
+
+
+
+### 记录102完成后接续（本次设计已完成，目标未启动）
+
+第20项四角色 R1 已通过：候选正常、0f正常、候选重放和0f重放全部完成，九格配对及两次精确重放通过。正式验收由18/20推进到 **19/20**；第19项继续 HOLD。默认仍为 **0f＋firstdot V2＋原C8**，没有切换或上传。
+
+本轮记录102：第20项四个新角色、九格2%门槛、两次精确重放全部PASS；每角色54窗/432算子覆盖完整，bit100复用。118项冻结/445生产与398候选源码未变，所有本轮目标已结束。
+
+第19项继续按R5暂存，不重复M1、不扫描相位。建议下一轮仅做缺失时序观测与定点触发设计，先判断能否补齐冻结构建的FEX0向量写回请求、I2v/vialu释放与VDOT响应的相对时序证据；没有可信窗口仍HOLD。设计不等于允许改观察器或构建新核。
+
+开始 SP1-E 第19项最小观测与定点补测设计评审：基于 R5 已冻结结论与现有候选构建，明确 FEX0 向量写回请求、I2v/vialu 释放及 VDOT 响应的相对时序缺口，先核对现有可见信号，再设计必要的最小观察补丁与有界触发合同。保留 S0/S1 原覆盖、完整结果、取消及精确重放要求；没有可信触发窗口就 HOLD。只做设计和成本评审，不改代码、不运行 EMU/NEMU、不构建新核、不做 EDA、不切默认、不上传 GitHub；完成后给出 GO/HOLD 和下一轮指令。
+
+[记录102结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-four-role-r1-20261107/RESULT.md) · [三项指标](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-four-role-r1-20261107/METRICS.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-four-role-r1-20261107/NEXT_STEP.md)。
+
+
+### 2026-11-07 记录101结束时的计划（已由记录102完成）
+
+第20项四角色接入已实现，但宿主准入 FAIL，目标准入 HOLD。首6项方法通过，第7项负控错误选中首调用窗口，预期拒绝未发生；第8项未执行。遵守失败即停，本轮EMU/NEMU为0，正式进度仍18/20，默认0f＋firstdot V2＋原C8不变，第19项继续暂存。
+
+本轮只改宿主接入；6项PASS，负控使用repeat0首调用而不是repeat2～5计分窗口导致第7项FAIL，第8项未运行。不是目标超时或RTL失败。81项冻结和生产445/候选398源码未变，当前没有目标进程。
+
+下一轮第20项四角色R1：最小修复负控的语义窗口定位，复用6项证据，补受影响项与冷进程导入，再同轮四角色。新预算已接受，沿用每角色4800秒/200万guest、目标19200/宿主900/外层20100秒；不再重复预算设计。
+
+开始第20项原镜像四角色 R1：按 NEXT_STEP 最小修复宿主负控的计分窗口定位，用 dataset/op/repeat 语义键唯一选择 measured 窗口并断言实际命中，保留原 FAIL 与锁，复用本轮6项通过证据及未变运行器。集中完成受影响测试、尚未执行的冷进程导入与授权拒绝检查、新执行冻结和宿主准入；全部通过后，同轮串行执行候选正常→0f正常，九格配对通过后执行候选重放→0f重放。沿用已接受的每角色4800秒/200万guest、目标19200秒、宿主900秒、外层20100秒预算及原资源、完整54窗/432算子、9格2%与精确重放门槛，复用bit100。失败即停、不重试、不加时、不扩围；不改RTL或镜像、不构建新核、不做EDA、不切默认、不上传GitHub，第19项继续暂存。完成后更新计分板并给出下一轮指令。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-four-role-20261107/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-four-role-20261107/NEXT_STEP.md)。
+
+
+### 第20项原镜像四角色接入前的设计评审（历史）
+
+
+**第20项原镜像四角色设计GO，宿主实现/目标准入HOLD。** 保留原ELF/BIN和0f/候选EMU，复用同身份真实bit100；不改输出格式。新批次拟为候选正常→0f正常→候选重放→0f重放；两次正常完整54窗及九格比较通过后才重放。
+
+拟定各4800秒/200万guest，目标19200/执行宿主900/执行外层20100秒。新预算是有真实前缀依据的独立停止提案，不是保守完工上界，须下一轮明确接受后执行；旧1500秒FAIL与原6300/7200HOLD保留，不复用旧锁。
+
+本轮完成静态与日志归因，目标/代码修改/构建/EDA0；正式18/20，默认0f＋firstdot V2＋原C8，第19项暂存。第20项四角色和原拒错资格全部闭合最多19/20。历史三指标保持，新测NOT_TESTED。
+
+开始第20项原镜像四角色接入与有界验收，按 NEXT_STEP 复用原ELF/BIN、0f/候选EMU及已通过bit100，完成四角色差异接入、历史证据绑定、必要宿主检查和执行冻结。全部准入通过后，同轮执行候选正常→0f正常，九格比较通过后再执行候选重放→0f重放。我接受新的每角色4800秒/200万guest、目标累计19200秒、执行宿主900秒、执行外层20100秒预算。保持54窗、432算子、完整结果与CSR/退休绑定、逐窗控制相等、9格2%及精确重放。任一失败即停，不重试、不加时、不借用预算、不增加角色；第19项继续暂存。不改RTL、不改目标软件或重编镜像、不构建新核、不做EDA、不切默认、不上传GitHub，完成后更新计分板并给出结论和下一轮指令。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-budget-review-20261107/RESULT.md) · [设计合同](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-budget-review-20261107/DESIGN_CONTRACT.json) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-budget-review-20261107/NEXT_STEP.md)。
+
+
+
+### 2026-11-07 第20项预算收口前的超时校准接续（历史）
+
+
+**第20项完整调用校准HOLD：bit100通过，候选正常1500秒超时，0f未启动。** 外部监督1524.176042秒后清理完成；原FAIL/锁和batch中间态保留，不重试、不加时。26组标记/208退休、14完整UART行只是部分证据，54窗/432算子与CSR全量尚未闭合，9格2%及重放未测。
+
+正式18/20，默认0f＋firstdot V2＋原C8；第19项继续暂存。本轮2个EMU，无RTL/镜像修改、构建、EDA、默认变更或上传。新三指标NOT_TESTED，历史18组性能/面积/五档STA保留。
+
+窗口标记区间仅占观察前缀约1.43%，完整调用预算需重新收口；约3185秒/125.5万guest的线性情景不构成上界。下一轮集中核对窗口外成本，选择原镜像独立预算或最小输出方案并冻结一个合同，不重复同预算校准。
+
+开始第20项 timed DIV/SQRT 预算收口与最小开销方案评审：基于本轮1500秒超时日志，核查窗口外校验、格式化输出与UART成本，比较保留原镜像的新独立预算和最小窗口外输出调整，选出一个有依据的方案并冻结下一批合同。保留54窗、432算子、完整结果、CSR/退休绑定、逐窗控制相等、9格2%及精确重放要求，复用已通过bit100与未变证据；依据不足就HOLD，不重复同预算校准、不缩减覆盖。先不改代码、不运行EMU/NEMU、不构建新核、不做EDA、不切默认、不上传GitHub；第19项继续暂存，完成后给出GO/HOLD和下一轮指令。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-calibration-20261107/RESULT.md) · [预算](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-calibration-20261107/BUDGET_REVIEW.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-calibration-20261107/NEXT_STEP.md)。
+
+
+
+### 2026-11-07 第20项三角色校准前的宿主准备接续（历史）
+
+
+**第20项timed DIV/SQRT宿主准备GO；正式五角色预算HOLD。** 原54窗/432算子/9格各2%/完整128位与CSR/精确重放合同保持，137份旧材料身份复核并复用。独立三角色入口、两核观察器及bit100实际e64/e8/e64 guard分组适配已完成，11项方法闭合；两次原宿主FAIL保留，不把合成通过算目标通过。
+
+正式18/20，默认0f＋firstdot V2＋原C8；第19项F2v反压补测继续暂存。本轮目标0、RTL/镜像不改、构建/EDA0、未上传GitHub，历史三项指标原样保留。
+
+下一批建议一次完整调用校准：bit100→候选→0f，300/1500/1500秒、10万/100万/100万guest，目标3300＋宿主900＝外层4200秒、最多3串行目标。必须获得当前执行授权并复核35项冻结及资源后开始；这是停止限额，不是保守完成保证。保持54窗/432算子和9格2%，失败/超限即停，不加时/重试/跳过/自动重放。
+
+原6300/7200正式预算因无本镜像完整目标样本继续HOLD；校准三角色不增加验收计数。收齐完整证据后，身份和合同不变可保留前三角色，只提出必要两次重放的新预算；第20项即使最终通过最多19/20，不能替代第19项。
+
+开始 SP1-E 第20项 timed DIV/SQRT 三角色完整调用有界校准，按 NEXT_STEP 先核查进程、冻结输入和宿主准入，接受本轮独立预算后串行执行 bit100拒错→候选正常→0f正常。分别300秒/10万guest、1500秒/100万guest、1500秒/100万guest；目标累计3300秒、宿主900秒、外层4200秒。保持完整54窗、432条DIV/SQRT、完整128位和CSR/退休绑定、逐窗控制相等及9格各自最多2%退化，沿用CPU4/整组4线程/RSS12GiB/日志2GiB。失败、未拒错、超限或退化即停，不重试、不加时、不跳过继续、不自动重放；第19项继续暂存。不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub，完成后更新计分板并判断正式预算和必要重放。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-host-20261107/RESULT.md) · [完整预算](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-host-20261107/BUDGET_REVIEW.md) · [下一批](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-host-20261107/NEXT_STEP.md)。
+
+
+
+### 2026-11-07 第20项宿主准备前的R5接续（历史）
+
+
+O2补测R5只读归因完成：**一次最小软件修订HOLD，暂存当前F2v压力触发方向**。保持18/20及默认0f＋firstdot V2＋原C8；第19项S0/S1全核见证与必要重放仍未完成。没有生成M2、重跑同镜像、扫描相位或切默认。
+
+实际生成RTL证实VFEX4与FEX0共享写回仲裁且ready非绑高；M1的77个有效输出周期没有竞争，37对A/B均A出R同拍B直入R。vadd.vx存在I2v和向量ALU的RAW链，8条F2v压力不等于8拍连续请求。phase0/1/2的B未进入FU，phase4杀R中B时A已响应，因此不能补记P取消。现有日志无F2v/I2v动态时刻，不能以最小重排保证冲突。
+
+M1完整功能、bit100及资源PASS复用，原NOT_HIT/GUARD_FAIL和锁保留。新三项指标NOT_TESTED；历史18组性能、面积和五档时序继续完整留档，不拼成新测或默认采用证明。
+
+**下一轮建议：第20项timed DIV/SQRT宿主准备与预算评审。** 复用现有保护与公共机制，只补计时负载/公平窗口/差异和完整预算；无依据HOLD。第20项若通过最多19/20，不能替代仍HOLD的第19项。获得可绑定真实构建的冲突窗口新依据后再考虑第19项，不反复对相同日志开同类归因。
+
+开始 SP1-E 第20项 timed DIV/SQRT 宿主准备与预算评审，按 NEXT_STEP 暂存第19项F2v反压补测，复用已有DIV/SQRT功能、身份和运行器证据，集中明确计时负载、同镜像公平窗口、必要差异检查、最少角色及完整预算。已有部分直接复用，只补真正缺项；依据不足就HOLD，不以第20项替代第19项覆盖。先不运行EMU/NEMU、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub，完成后给出GO/HOLD、可执行批次和下一轮指令。
+
+[R5结论](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-r5-readonly-20261107/RESULT.md) · [接续](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-r5-readonly-20261107/NEXT_STEP.md) · [历史三指标](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-r5-readonly-20261107/METRICS.md)。
+
+
+
+### 2026-11-07 R5收口前的M1校准接续（历史，已被上方当前路线替代）
+
+
+O2第19项M1两角色已实际完成：**正常功能与bit100拒错PASS；S0/S1必需覆盖NOT_HIT，HOLD。** 原两角色分别25.727555秒/11653guest及583.112479秒/267282guest，外部610.835181秒。41调用、84UART、77退休和完整128位/CSR/ABI通过；资源合格且全部清理。
+
+78次接受均DIRECT_R，77响应、1次R取消，没有P入队、反压或部分取消。phase4的A在262039响应，B同拍进入R，262040杀R中B；phase0/1/2的probe B未进入FU。这是新的取消时刻证据，仍不满足“杀P留R”。按未命中即停保留NOT_HIT及GUARD_FAIL/CHILD_EXIT_1，没有重试或自动重放。
+
+下一轮R5只读定位FEX0释放/F2v压力/vset/vadd/VDOT接受关系，先判断为何944条STATE观察均outready1且P为空，再考虑取消时刻。依据实际源码/构建和日志给最小软件修订GO/HOLD；没有可信窗口就暂存，不盲扫phase或重复同镜像。下一轮没有新的目标预算或代码修改授权。
+
+正式18/20，默认0f＋firstdot V2＋原C8。新的第19项真实校准已经执行，但真实S0/S1见证和必要重放仍缺。新公平加速比、面积及STA均未测；原历史指标、失败、退化和锁完整保留。
+
+开始 O2 补测 R5，按 NEXT_STEP 只读分析 M1 两角色真实日志，先解释为何944条STATE观察中outready均为1、没有反压和P入队，再核对phase4的A响应、B进入R及取消顺序。复用本轮功能、bit100、资源与宿主证据，不重跑同镜像、不扫描相位、不新增无关门禁。结合现有源码和实际构建给出一次最小软件修订的GO/HOLD及验证合同；没有可信触发窗口就暂存补测方向。先不改代码、不运行EMU/NEMU、不构建新核、不做EDA、不切默认、不上传GitHub，完成后更新计分板并给出下一轮指令。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-m1-calibration-20261107/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-m1-calibration-20261107/NEXT_STEP.md) · [指标](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-m1-calibration-20261107/METRICS.md)。
+
+
+
+### O2第19项M1目标校准前入口（历史保留）
+
+
+O2第19项R4-R1：**GO_HOST_ADMITTED_FOR_BOUNDED_CALIBRATION**。原始夹具出处漏项已在新冻结中补齐；13方法/94序列负控/6绑定负控/3冻结负控全部通过，旧完整日志和独立方法二进制复核通过。单次外部监督12.056357秒，有限宿主成本估计381.265913秒<900秒。原R4 FAIL/锁、R2未命中与全部旧证据保留。
+
+下一轮直接进入M1两角色目标校准，不另开重复宿主准备：复用382项冻结、M1 ELF/BIN/bit100和本轮PASS，在明确目标授权后执行bit100300秒/10万guest→正常900秒/30万guest，目标1200/宿主900/外层2100秒。失败或S0/S1未命中即停；不重试、不加时、不扩围、不自动重放。
+
+正式18/20，默认0f＋firstdot V2＋原C8。下一轮实际覆盖命中后仍需原合同的必要同硬件/跨硬件及精确重放才能记19/20；本轮只是宿主准入，不授予目标执行权限或默认切换。新目标、构建、EDA、三指标测量均0。
+
+开始 O2 第19项 M1 两角色有界校准，按 NEXT_STEP 复用 R4-R1 已通过的宿主准入和382项冻结，先核查进程与输入并完成新目标授权绑定，不重编译、不重跑宿主整套。随后串行执行 bit100拒错→候选正常，分别300秒/10万guest、900秒/30万guest；最多2个目标进程，目标累计1200秒、宿主900秒、外层2100秒。保持CPU4、整组最多4线程、RSS12GiB、日志2GiB，以及41调用、77退休、完整128位、CSR/ABI和S0/S1覆盖合同。失败或未命中即停，不重试、不加时、不扩围、不自动重放；不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub。完成后更新计分板，给出第19项剩余重放安排和下一轮指令。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-m1-r4-r1-host-20261107/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-m1-r4-r1-host-20261107/NEXT_STEP.md) · [指标](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-m1-r4-r1-host-20261107/METRICS.md)。
+
+
+
+### O2补测R4-R1前入口（历史保留）
+
+
+O2第19项R4：**M1软件及GNU/对象/bit100准备PASS；宿主准入HOLD**。首次宿主闭包检查发现冻结器漏收BASE_REUSE已声明的原夹具出处，0.432922秒退出并清理，已按失败即停停止。279项hash一致但闭包不完整；13个计划差异测试、旧日志复核、分开复核和预算测量未运行。
+
+下一步R4-R1仅修正清单生成/校验不一致，保留R4原FAIL与旧锁。复用已通过M1源码、ELF/BIN、对象审计和bit100组件，不重新生成或编译、不增加条件；以新身份完成剩余宿主门及一次900秒成本门。当前目标执行HOLD，不自动进入两角色校准。
+
+正式18/20，默认0f＋firstdot V2＋原C8。41调用/77退休/320架构F2v与原C数据合同保留；M1实际覆盖仍NOT_TESTED。本轮没有目标、RTL修改、新核构建、EDA、默认变更或GitHub写入，三指标没有新测，历史数据完整保留。
+
+开始 O2 补测 R4-R1，按 NEXT_STEP 最小修复冻结器与必需文件清单的不一致，将 BASE_REUSE 已声明的原始 fixtures.py 作为出处输入纳入新冻结。复用 R4 已通过的 M1 源码、GNU ELF/BIN、对象审计和 bit100 组件，不重新生成或编译；保留 R4 原 FAIL、279 项旧冻结及锁。以新身份完成尚未运行的差异正负控、旧完整日志离线复核、独立方法复核和一次900秒宿主预算准入，不新增无关条件。失败即停、不重试、不加时；先不运行EMU/NEMU、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub。全部通过后给出原两角色校准的GO/HOLD与下一轮指令，更新计分板。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-m1-r4-host-20261107/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-m1-r4-host-20261107/NEXT_STEP.md) · [指标](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-m1-r4-host-20261107/METRICS.md)。
+
+
+
+### O2补测R4前入口（历史保留）
+
+
+O2第19项R3只读归因与最小设计完成：**GO仅限M1软件宿主实现，目标与覆盖资格HOLD**。R2原正常41调用/77退休/81完整结果的功能PASS及S0/S1 NOT_HIT保留。全部40对B在A响应同拍DIRECT_R，4次probe取消晚于B响应39/7/7/7拍；冻结源码/实际构建支持FEX0释放器排在压力后及地址与加载依赖分叉的归因，缺动态F2v grant/branch PC，未证明新重叠窗口。
+
+下一步只实施单一M1：提前FMV、零增量vector RAW替代v8重载、S1原商前置且真实门控FP生产者、phase留在分支链。集中GNU/对象/PC与bit100绑定、必要差异门和执行冻结/预算；复用未变证据，不增加调用/phase/压力。原两角色1200目标/900宿主/2100外层预算只为后续提案，当前不运行目标，不重放、不进入第20项。
+
+正式18/20，默认0f＋firstdot V2＋原C8。本轮没有代码修改、目标、构建、EDA、默认变更或GitHub写入；三指标没有新测，历史表保留。
+
+开始 O2 补测 R4，按 NEXT_STEP 在独立目录实现 R3 的单一 M1 软件修订：将 FMV 移到 F2v 压力之前，用 e8 零增量 vadd 替代 v8 重载；将 S1 原除法前置并真实门控 FP 生产者，原 phase 只调整分支依赖。保留41调用、77退休、320条F2v、原数据、完整128位及CSR/ABI合同。集中完成 GNU 构建、对象/链接审计、新PC和bit100绑定、必要差异正负控、执行冻结及原两角色预算评审；复用未变证据，失败即停，不扩相位、不增加调用。先不运行EMU/NEMU、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；全部通过后给出一次两角色有界校准的GO/HOLD及执行指令，更新计分板。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-r3-readonly-20261107/RESULT.md) · [设计](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-r3-readonly-20261107/DESIGN_CONTRACT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-r3-readonly-20261107/NEXT_STEP.md)。
+
+
+
+### O2补测R3前入口（历史保留）
+
+
+O2第19项接入R2已完成授权两角色并按NOT_HIT停止：合法历史标签修复、R1完整日志离线复核、9方法/4复用及184输入准入全部通过；新bit100拒错正式PASS，正常607.969222秒/268036guest，GOOD TRAP、41调用/77退休/81次完整128位与CSR功能通过。但81次全部DIRECT_R，P入队/反压保持/部分取消为0，S0/S1均未命中。外层645.963262秒，目标2个、资源/清理PASS，无重试或重放。原FAIL/锁与当前NOT_HIT完整保留。
+
+正式18/20，默认0f＋firstdot V2＋原C8。R2获得了新功能证据，未测新加速比、面积或STA；局部历史数据保持原范围。第19项仍需真实覆盖及约定重放，第20项独立保留，不切默认。
+
+下一轮R3一次集中只读归因S0/S1：先解释S0为何没有R阻塞/P入队，再对照F2v、e32/e8切换、RAW操作数加载及S1分支路径，列出有证据支持的最小软件修订、覆盖合同、可复用门禁和预算。观测不到的F2vgrant/分支PC不能写成实测；缺可信重叠窗口就HOLD。先不改软件/RTL、不运行目标或EDA，不重复同镜像。
+
+开始 O2 补测 R3：基于 R2 完整真实日志，集中完成 S0/S1 未命中的只读时序归因与最小软件修订设计。先解释为何81次均DIRECT_R、没有STALL或ENQUEUE_P，再核对F2v压力、e32/e8切换、操作数重载及S1重定向的先后关系，区分实测与推断。给出有依据的最小改动清单、完整覆盖合同、可复用门禁和下一批预算；没有可信重叠窗口就HOLD，不重复同镜像探针。本轮先不改软件或RTL、不运行EMU/NEMU、不构建新核、不做EDA、不切默认、不上传GitHub，完成后更新计分板并给出下一轮指令。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-r2-20261107/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-r2-20261107/NEXT_STEP.md)。
+
+
+
+### O2补测接入R2前入口（历史保留）
+
+
+O2第19项接入R1已停止：最小负控修复、3宿主方法/13子例、新路径冻结及预算通过，旧7方法复用（冷导入重叠），同一外层已实际启动bit100。目标1个，25.976018秒/11668guest，原始bit100注入与差异可见，但合法历史(S)标签未被检查器支持，collector FAIL后停止，正常角色未启动。清理完成，原FAIL和锁全部保留。正式18/20，默认0f＋firstdot V2＋原C8；不切换默认。
+
+下一轮R2：补生产者明确支持的历史tag格式，用R1完整真实日志一次核全链并做必要差异控制，复用未变机制；新冻结/宿主预算通过后在同一任务执行原两角色。预算仍300/900秒、10万/30万guest、target1200/host900/outer2100；失败或未命中即停，不自动重放或进入第20项。第19项完成仍需S0/S1真实覆盖及约定重放。
+
+后续按用户偏好集中“修复→真实日志离线完整核对→必要准入→已授权执行→入账”，减少重复准备；不额外扩围或降低门槛。
+
+开始 SP1-E O2 补测接入 R2，按 NEXT_STEP 最小补齐合法历史环 S/D/W 标签解析，明确当前拒错提交组不能用 skip/delayed 指令作证；用 R1 完整真实日志一次性核查整个拒错检查链，补针对性正负控，保留原FAIL与锁，复用未变宿主证据。全部宿主、冻结、独立方法复核和预算门通过后，以新身份同轮串行原 bit100拒错→候选正常两角色，保持300秒/10万guest、900秒/30万guest、目标1200秒、宿主900秒、外层2100秒及原资源和41调用/77退休、S0/S1完整覆盖。失败或未命中即停，不重试、不加时、不扩围、不自动重放；不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub。完成后更新计分板并给出下一批指令。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-r1-20261107/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-r1-20261107/NEXT_STEP.md)。
+
+
+
+### O2补测接入R1前入口（历史保留）
+
+
+O2第19项接入轮已停止：118项完整执行冻结完成，宿主8方法7通过1失败，尚未进入成本准入和目标；外层0.954496469秒、清理完成。负控把默认dst32输入按dst255替换，产生无效变异，与assertRaises失败一致；原FAIL/锁保留，未重试。当前正式18/20，默认0f＋firstdot V2＋原C8；0EMU/NEMU、0RTL/新核/EDA/切默认/GitHub写入。
+
+下一轮O2补测接入R1，仅修历史环负控的精确命中与子例标注，复用7项未变证据，补剩余冻结、独立方法复核和成本准入；用户新指令下可同轮执行原两角色。保持300/900秒、10万/30万guest、目标1200/宿主900/外层2100。失败或未命中即停，不自动进入重放或第20项。
+
+开始 SP1-E O2 补测接入 R1，按 NEXT_STEP 最小修复负控夹具的无效替换：使用实际存在的历史环dst字段，并检查替换命中及字节确实变化，给各子例明确标签。保留本轮FAIL与锁，复用7项通过证据，只补受影响负控、冷导入、执行冻结、独立方法复核和宿主预算准入。全部通过后，以新独立身份同轮串行bit100拒错→候选正常，接受原300秒/10万guest、900秒/30万guest、目标累计1200秒、宿主900秒、外层2100秒及原资源/完整覆盖要求。失败或未命中即停，不重试、不加时、不扩围、不自动重放；不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub，完成后更新计分板和下一轮指令。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-20261107/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-20261107/NEXT_STEP.md)。
+
+
+
+### 第19项有界校准前入口（历史保留）
+
+
+第19项O2最小补测准备已完成：**软件/宿主GO，目标与正式资格HOLD**。固定attempt-02、41调用/77退休，GNU、对象、完整128位/CSR/ABI宿主门、bit100编译及独立审查通过；首次宿主FAIL留档。当前18/20，默认0f＋firstdot V2＋原C8，未运行目标、未改RTL/新核/EDA/默认或上传。
+
+下一轮只补运行器差异、新guard严格拒错、完整执行冻结和900秒宿主准入，全部通过及用户新授权后可同轮执行最多两个有界校准角色。预算target1200/host900/outer2100，不保证命中，失败/未命中即停、不自动进入重放。原O2重放和第20项仍待。
+
+开始 SP1-E O2（第19项）补测运行器接入与有界校准，按 NEXT_STEP 复用本轮 attempt-02 镜像和已通过宿主证据，完成新 guard 的严格拒错检查、运行器差异接入、完整执行冻结、独立复核及900秒宿主预算准入。全部通过后，接受新独立预算，同轮串行执行 bit100拒错→候选正常校准，最多2个目标：分别300秒/10万guest、900秒/30万guest，目标累计1200秒、宿主900秒、外层2100秒，原CPU4、4线程、RSS12GiB、日志2GiB限制不变。保留41调用/77退休、完整128位、CSR/ABI及S0/S1真实观察链；失败或未命中即停，不重试、不加时、不扩相位、不自动进入重放或第20项。不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；完成后更新计分板，给出结论和下一轮指令。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-host-20261107/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-host-20261107/NEXT_STEP.md)。
+
+
+
+### 第19项补测准备前入口（历史保留）
+
+
+B4-R7已完成：fixtures冷导入修复、原9项宿主门、成本和独立审查通过，按新预算执行candidate-replay→baseline-replay，两次完整功能/同核精确重放及跨核比较全部PASS。新合同C48功能项认定，进度 **18/20**。默认保持 **0f＋firstdot V2＋原C8**；旧FAIL、锁和原1500秒HOLD保留，未上传。
+
+下一步为O2（第19项）最小软件补测准备，复用既有两核数值证据，只补候选P槽与部分取消。第20项timed DIV/SQRT独立待验。本轮没有新性能窗口或EDA，历史三指标已续档。
+
+开始 SP1-E O2（第19项）最小软件补测准备，按 NEXT_STEP 复用现有 bit100、两核完整数值和 R4 配对证据，在独立目录实现 R3 设计的最小 F2v 写回竞争软件，补候选 P 槽及部分取消覆盖的触发方案，完成 GNU 构建、对象审计、完整128位和CSR/ABI宿主正负控，冻结有限相位与新校准/重放合同及预算。复用未变机制，不新增反方向硬门；先不运行EMU/NEMU、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub，完成后给出GO/HOLD及下一批执行指令。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/NEXT_STEP.md)。
+
+
+
+### B4-R7执行前入口（历史保留）
+
+
+B4-R6停止：两角色运行器与执行冻结已完成，但唯一正式host在加载test_delta时因fixtures同名导入选中旧G0模块而FAIL。9方法0执行、成本0、目标0，外层1.395338548秒exit1且清理完成；源/旧证据全部MATCH。原独立静态PASS保持其有限范围并记录漏项，不替代真实FAIL。
+
+当前仍17/20，默认0f＋firstdot V2＋原C8。下一轮B4-R7仅修宿主测试及成本脚本的helper装载，补冷进程完整导入门；保留原FAIL/锁，在新独立身份下复用未变运行器与三历史角色。全部门通过可在用户一次授权下同轮仅两次重放；当前禁止重启已失败的R6。
+
+开始 B4-R7，按 NEXT_STEP 保留 B4-R6 原FAIL与消费锁，在新独立身份和目录中仅修复宿主测试、成本脚本的 fixtures 同名导入，使用绝对路径和唯一模块名并核对来源。按真实加载顺序补冷进程完整导入正控及必要错路径负控，复用未变运行器和历史证据；完成原差异门、执行冻结、独立审查和预算准入后，同轮串行 candidate-replay→baseline-replay。接受最多2目标、各2400秒/150万guest、目标累计4800秒、宿主900秒、外层5700秒及原资源/完整覆盖/精确重放要求。失败即停、不重试、不加时、不扩围，不重跑三历史角色、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；完成后更新计分板和下一轮指令。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r6-20261106/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r6-20261106/NEXT_STEP.md)。
+
+
+
+### B4-R6执行前入口（历史保留）
+
+
+B4-R5完成：C48有效低64跨硬件摘要、完整128结果及同核raw128合同明确；宿主27项与独立2016完整结果/3负控PASS。首次独立包装失败保留，R1全量复核通过。原R4 FAIL不翻转，默认0f＋firstdot V2＋原C8、正式17/20不变。
+
+下一轮B4-R6：接入仅两个重放角色、完整执行冻结和必要宿主预算门，用户一次授权后可同轮执行。提案预算各2400秒/150万guest、target4800/host900/outer5700；实际执行准入目前HOLD。不重跑四历史目标，不加无关门，不自动进入O2或timed DIV/SQRT。
+
+开始 B4-R6，按 NEXT_STEP 完成 C48 两次重放运行器、三份历史角色绑定、完整执行冻结及必要宿主差异、独立审查和预算准入；复用未变证据，不重做旧宿主全套。全部通过后接受新独立预算，同轮串行执行 candidate-replay→baseline-replay，最多2个新目标，每角色2400秒/150万guest、目标累计4800秒、宿主900秒、整批外层5700秒。保持CPU4、整组最多4线程、RSS12GiB、日志2GiB、完整48调用/1008custom/128位结果、同硬件raw128/observer/guest精确重放及跨硬件active64。保留旧FAIL和锁，失败即停、不重试、不加时、不扩围，不重跑既有三角色、不自动进入其他用例。不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；完成后更新计分板并给出结论和下一轮指令。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r5-20261106/RESULT.md) · [下一步](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r5-20261106/NEXT_STEP.md)。
+
+
+
+### B4-R5执行前入口（历史保留）
+
+
+B4-R4宿主15＋8项、独立审查和预算门通过；剩余四个真实角色各自通过，O2数值配对完成。C48最终跨硬件accepted_sources_sha256比较失败，整批STOPPED且清理正常。只读逐条归因确认1008条有效低64输入、非数据字段、完整128结果及48调用UART均相同，96条仅未消费高64不同；原FAIL保留，最小宿主口径修订设计GO，当前C48整case/正式验收HOLD。未改RTL/新核/EDA/默认或上传，进度17/20。
+
+当前下一轮为最小宿主比较修订与原日志离线复核，不重启目标。
+
+开始 B4-R5 最小比较合同修订与离线复核：保留 B4-R4 原FAIL、原始日志、授权和消费锁，在独立目录为 C48 增加按退休链绑定的有效低64位输入摘要，仅用于跨硬件比较；完整128位结果、PC/编码/配置/控制字段及同硬件raw128精确重放要求保持。复用四个已完成角色和未变宿主机制，使用两份真实完整日志补齐高64差异正控、低64/结果/身份及同硬件高64漂移负控，做独立复核。通过后同轮准备复用既有三角色＋两次新重放的明确合同和实测预算提案，不自动授正式资格。先不运行EMU/NEMU、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；完成后更新计分板，给出GO/HOLD和下一批指令。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/NEXT_STEP.md)。
+
+
+
+### B4-R4执行前入口（历史保留）
+
+
+B4-R3宿主准备完成：同源码组件证据和R2真实数值/拒错证据可复用；原全核P槽及部分取消覆盖仍HOLD。已形成FEX0/F2v写回竞争的最小补测设计，实际命中NOT_TESTED。剩余四角色新独立校准预算设计GO（7500秒目标/9300秒外层），但数值专用adapter和显式角色运行器尚未接入，执行准入HOLD。未运行任何EMU/NEMU或新测试，未改RTL/构建/EDA，17/20及默认0f＋firstdot V2＋原C8保持。
+
+优先下一轮补齐四个未运行角色的数值/预算校准：先完成最小宿主接入和准入，再在同一授权任务内有界执行；新取消覆盖补测设计独立保留，不借这批预算。原全核coverage FAIL与正式进度不改。
+
+开始 B4-R4，按NEXT_STEP实现校准专用数值摘要和剩余四角色运行器，复用未变公共机制，只补角色/参考库/退出码/历史身份/冻结差异正负控及宿主预算准入。保留R2原FAIL和旧锁，不重跑已完成的o2-control bit100与候选正常。全部准入后，以新冻结身份和独立授权，仅串行运行0f O2正常→C48 bit100→C48候选正常→C48 0f正常；接受新独立预算：最多4目标、目标累计7500秒、整批外层9300秒，O2目标2400/宿主900/外层3300秒，C48目标5100/宿主900/外层6000秒；各角色和资源按本轮草案。失败即停、不重试、不加时、不借旧余量、不自动进入正式验收。新取消覆盖补测镜像不在该批执行，不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub。完成后更新计分板和三项指标，给出下一轮指令。
+
+[本轮结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r3-20261106/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r3-20261106/NEXT_STEP.md)。
+
+
+
+### B4-R3评审前入口（历史保留）
+
+B4-R2最小raw dst范围修复与宿主准入通过；新独立批次bit100拒错通过，候选o2-control完整程序GOOD_TRAP、256次试验零错误、1208次退休完整128位重算一致，但原覆盖门KILL_P/PARTIAL_KILL未触发，整批按合同STOPPED。仅启动2/6目标，其余4个NOT_RUN，清理正常、旧FAIL和锁保留。候选1562.610640秒超过原正式1500秒，低于本轮2400秒；不授完整校准或正式验收资格，进度仍17/20，默认保持0f＋firstdot V2＋原C8。
+
+下一步为B4-R3覆盖合同与剩余校准方案收口，不是原批次重试；未经新的目标运行授权不启动后续角色。
+
+开始 B4-R3 取消覆盖合同与剩余校准方案收口：保留 B4/R2 原FAIL、原始日志和消费锁，复用本轮bit100、1208次完整128位结果、程序完整结束及资源证据。先针对SP1直接入R、P槽未占用的真实路径，核对已有FU/真实父级反压和两槽取消证据能否组成完整分层覆盖；不能替代的全核覆盖，给出能实际触发的最小补测设计，不直接删掉KILL_P/PARTIAL_KILL要求。同步依据1562.61秒实测修订正式预算提案，明确0f O2和原C8普通C48尚缺的校准角色、证据复用边界、下一批进程和独立预算。只做必要宿主差异验证与合同准备，不重跑已完成目标、不运行EMU/NEMU、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub。完成后给出GO/HOLD及可整批执行的下一轮指令。
+
+[本轮结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r2-20261106/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r2-20261106/NEXT_STEP.md)。
+
+
+### B4-R2执行前入口（历史保留）
+
+B4按最终runtime-r1和新授权实际启动唯一首例o2-control bit100进程，9243 guest/19.937916秒后冻结检查器报instruction ring slots/destination；整批STOPPED，guardian CHILD_EXIT_1且清理完成，后5目标未启动，未重试。确切触发是非当前提交组历史slot06的dst32被整环dst<32检查拒绝，当前组为slots10–13；数值部分观察一致但不翻转FAIL。实际身份/349份资源采样/原始日志/清理独立通过。完整正常调用0，原正式预算仍HOLD，验收17/20不变，三项新指标NOT_TESTED，稳定默认不变。
+
+当前B4实际执行已失败即停，旧授权/消费锁永久保留，不能直接重启。此前宿主GO为历史准备资格，不覆盖此次目标日志解析FAIL；仍17/20、默认稳定组合不变。下一步建议以新身份只修历史环raw字段与当前提交组语义范围，采用本次真实日志验证；通过并取得新批次授权后同轮执行相同预算校准。
+
+开始 SP1-E B4-R2 宿主修订与两例完整调用校准：保留本轮真实FAIL、原始日志、授权和消费锁，在独立修订目录仅修正历史指令环raw dst解析与当前提交组架构目的地检查的作用范围，按冻结输出端uint8字段定义处理历史槽，不把32改写成28，不放宽当前组/ELF/最后写入者/完整128位/CSR/bit100判据。使用本轮真实日志做离线正控，补齐历史dst32、当前组非法目的地、槽序/尾指针/组计数及数值身份负控，复用未变通过证据；完成最小差异审查、实际输入冻结写读及宿主预算影响核对。全部GO后，在新源码/合同/授权和独立输出下同轮执行o2-control→原C8普通C48，每例bit100300秒/10万guest、候选完整2400秒/150万guest、0f完整2400秒/150万guest；每例目标5100/宿主900/外层6000秒，整批最多6目标、目标10200/外层12000秒。CPU4、整组4线程、RSS12GiB、每例日志2GiB、原完整覆盖与seed/RAM/reset保持。新批次任一失败即停，不重试、不加时、不借旧剩余预算、不跳过继续、不自动进入正式验收；不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub。完成后更新计分板和三项指标状态，给出结论和下一轮指令。
+
+[本轮结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-calibration-host-20261106/execution-01/RESULT.md) · [失败归因](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-calibration-host-20261106/execution-01/independent-review/FAILURE_ATTRIBUTION.md) · [下一轮指令](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-calibration-host-20261106/execution-01/NEXT_STEP.md)。
+
+
+### B3-R6原入口与B3-R7执行前路线（历史保留）
+
+
+B3-R6已修正历史出处检查：准备与正式验证使用同一原路径/字节数/SHA逻辑，304项冻结内容及4份历史别名通过；运行器和checker保持R5原字节，27＋10项证据明确复用、未重跑。独立审查唯一正式尝试在首个CSR正控API调用时报explicit scope/run id：审查脚本误传HOST_FIXTURE_NOT_TARGET，生产既有合法值为HOST_FIXTURE。首个正控调用1次、完成0/41；这是Agent编写的审查脚本参数错误，不是RTL、CSR结果或预算超限。按失败即停，预算0次、EMU目标0，保留原FAIL，整体HOLD，SP1-E仍15/20。
+
+开始 B3-R7：在独立目录仅将CSR独立审查共享调用点的scope改为生产已有合法值HOST_FIXTURE；沿用非空host run_id和既有全部41项覆盖，不新增条件、不为测试放宽生产API。复用R5已通过且字节未变的27项checker、10项外部监督及现有身份/溯源证据，复用R6历史路径检查修复。先逐项静态核对本次改动调用的签名、合法scope和返回字段，再冻结并完成剩余独立审查及一次原夹具900秒外部监督预算测量；保留R1至R6全部FAIL和旧锁，不缩样、不重复无关测试。两例均GO后，同轮仅按legacy-control→o2-all-pairs串行执行五角色，每例300＋4×1500秒，目标6300/外层7200/宿主900秒；整批最多10目标，目标12600/外层14400秒，不借时，负控100000guest、正常800000/300000guest，CPU4/整组4线程/RSS12GiB/每例日志2GiB及原seed/RAM/reset不变。正式审查、预算或目标任一失败即停，不重试、不加时、不跳过继续、不扩围；三个暂缓项继续HOLD。不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub，完成后更新计分板、三项指标和下一轮指令。
+
+[本轮结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r6-20261106/RESULT.md)。
+
+
+
+### B3-R5原入口与B3-R6执行前路线（历史保留）
+
+
+B3-R5完成两条CSR正则的同行空白修复，checker27/27一次PASS；新增进程外超时监督，runtime10/10及12次宿主进程夹具清理一次通过。独立审计错误地把历史出处符号链接也要求为直接canonical路径，在执行0/41项对抗控前FAIL；240项冻结内容及4份别名的字节/SHA均一致。这是本轮审计新增条件导致的假阻断。按失败即停，预算0次、EMU目标0，保留全部记录，整体HOLD、SP1-E仍15/20。
+
+开始 B3-R6：在独立目录仅修独立审计的路径校验适用范围，历史出处与宿主冻结文件按原路径、字节数和SHA校验，允许已有符号链接；记录解析目标作为审计信息，不新增别名白名单或额外准入条件。真实执行路径的canonical、boot/PID/start_ticks、完整结果和重放检查保持。冻结准备与正式校验采用一致逻辑；未运行的终态审计只在授予功能PASS时要求GUARD_PASS，FAIL收据仍可如实审计。保留R1至R5全部FAIL和旧锁，复用身份匹配且未变的27项checker、10项外部监督及旧身份/溯源证据，不重复无关测试。集中完成剩余独立审查、执行冻结和一次外部900秒监督预算测量；原两份24,558,348字节成本夹具不缩样。全部通过且两例均GO后，同轮仅按legacy-control→o2-all-pairs串行执行五角色，每例300＋4×1500秒、目标6300/外层7200/宿主900秒，整批最多10目标、目标12600/外层14400秒；负控100000guest、正常800000/300000guest，CPU4/整组4线程/RSS12GiB/每例日志2GiB及原seed/RAM/reset不变。正式门或目标任一失败即停，不重试、不加时、不借时、不跳过继续、不扩围；三个暂缓项保持HOLD。不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub。完成后更新计分板、三项指标和下一轮指令。
+
+[本轮结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r5-20261106/RESULT.md)。
+
+
+
+### B3-R4原入口与B3-R5执行前路线（历史保留）
+
+
+B3-R4已修正准备期启动身份范围：旧boot只作历史，真实批次仍绑定boot/PID/start_ticks/单调时钟；4项新差异与65项独立检查一次通过，原6项运行器和23项checker按身份复用。唯一宿主预算进程超过900秒仍未返回，核实身份后在观测1012.62秒时发送SIGTERM，超限112.62秒已如实留档；两例预算均HOLD/null，EMU目标0，不重试，SP1-E仍15/20。
+
+开始 B3-R5：在独立目录仅修订宿主拒错检查器两条CSR行的空白匹配，将同行空白限制为[ \t]，并补齐预算测量的独立进程外墙钟监督；核查实际批次宿主解析也受原900/7200/14400秒限制可靠约束，必要时作最小外部监督接入。保留R1至R4全部失败、原24,558,348字节成本夹具、完整数值/CSR/身份/重放合同及原预算，不缩样、不加时。复用未变的运行器、身份、溯源证据，集中完成受影响正负控、外部超时小夹具、独立复核和一次预算准入；全部通过且两例均GO后，同轮仅按legacy-control→o2-all-pairs串行执行五角色。每例300＋4×1500秒、目标6300/外层7200/宿主900秒；整批最多10目标、目标12600/外层14400秒，不借时；负控100000guest，正常800000/300000guest，CPU4/整组4线程/RSS12GiB/每例日志2GiB及原seed/RAM/reset不变。正式门或目标任一失败立即停止，不重试、不跳过继续、不扩围；三个暂缓项保持HOLD，不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub。完成后更新计分板、三项指标及下一轮指令。
+
+[本轮结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r4-20261105/RESULT.md)。
+
+
+
+### B3-R3原入口与B3-R4执行前路线（历史保留）
+
+
+R3完成test18精确行定位，checker23/23、runtime6/6及源码二进制溯源PASS；独立门新增的准备快照boot相等条件遇WSL启动代际变化而FAIL，对抗控制0项。该前提比原执行身份协议过严，不是RTL或guest功能失败。按单轮失败即停，预算0次、目标0个；整体HOLD，SP1-E仍15/20。
+
+后续仍按用户要求合并必要宿主修订与准入后的两例执行，复用已验证未变机制；不得再将与目标执行无关的准备期不变条件作为新的强制门。真正目标boot/PID/monotonic身份、资源、覆盖和失败即停保持。
+
+开始 B3-R4，按 NEXT_STEP 在独立目录仅修订宿主准入的启动身份绑定：BEFORE.boot_id保留为历史快照，正式准入/执行前记录实时boot并绑定后续目标PID/start_ticks/单调时钟，不允许跨boot拼接运行。保留R1/R2/R3全部FAIL及旧锁；复用未变且身份匹配的23项checker、6项运行器和溯源证据，补齐该合同变更的正负控及尚未完成的独立对抗门、执行冻结和900秒预算门。全部通过且两例均GO后，同轮仅按legacy-control→o2-all-pairs串行执行五角色。每例300＋4×1500秒、目标6300/外层7200/宿主900秒；整批最多10目标、目标累计12600秒/外层14400秒，不借时；负控100000guest、正常800000/300000guest、CPU4/整组4线程/RSS12GiB/每例日志2GiB及原seed/RAM/reset不变。正式门或目标任一失败即停，不重试、不加时、不跳过继续；三个暂缓项保持HOLD，不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub。完成后更新计分板、三项指标和下一轮指令。
+
+[本轮结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r3-20261105/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r3-20261105/NEXT_STEP.md)。
+
+
+
+### B3-R2夹具失败及B3-R3原入口（R3现有独立boot门FAIL）
+
+
+严格提交组与组末最后写入者检查器已实现，真实R1日志和多写入者正控所在的前17方法通过；第18方法的错误dst变异因同时匹配历史slot15与当前slot31而断言失败，未调用该变异的生产checker，正式宿主门HOLD。方法19–23及后续运行器/独立正式门/预算门均NOT_RUN；目标0。三个暂缓项无当前组合完整预算新证据，继续HOLD；SP1-E仍15/20。
+
+用户偏好：后续按已准入精确白名单合并批次，复用未变公共机制；本次建议把最小夹具修订、宿主准入和通过后的两例执行放在同一下一轮，但当前未运行目标。
+
+开始 SP1-E B3-R3 夹具修订与两例批量验收：保留 R1/R2 原 FAIL、日志及旧锁，在独立目录仅修正错误目的寄存器负控的定位，精确锚定当前环尾 slot31、PC0x80000370 和完整行，先检查所有变异目标的唯一性。保持严格当前提交组、组末最后写入者完整128位、CSR/身份/重放及原完整覆盖，完成新源码冻结、全部宿主正负控、运行器接入、独立审查和900秒宿主预算准入；未变公共机制复用。全部门禁通过且两例均GO后，在同一轮仅按 legacy-control→o2-all-pairs 串行运行五角色。每例300＋4×1500秒，目标6300/外层7200/宿主900秒；整批最多10目标、目标累计12600秒、外层14400秒，不借预算。负控100000guest，正常分别800000/300000guest；CPU4、整组4线程、RSS12GiB、每例日志2GiB及原seed/RAM/reset不变。任一正式宿主门或目标失败立即停止，不重试、不加时、不跳过继续；三个暂缓项保持HOLD，不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub。完成后一次更新计分板、三项指标及下一轮指令。
+
+[本轮结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r2-host-20261105/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r2-host-20261105/NEXT_STEP.md)。
+
+
+
+### SP1-E B3-R1目标停止与B3-R2原宿主入口（现R2另有夹具FAIL，见当前）
+
+
+B3-R1整批在legacy首个bit100角色停止：注入PC0x80000298，DiffTest诊断PC为同提交组首0x80000294，冻结检查器要求二者相等而拒绝。真实运行1目标/8339guest/20.819646708秒；正常角色0、allpairs未启动。资源与清理通过，独立fail-stop审计通过但功能资格0；不重试，SP1-E仍15/20。
+
+用户新增偏好：后续验收优先把多个已准入用例合并为明确白名单的串行批次，公共机制复用，只补差异；不降低原覆盖、预算、失败即停条件，不自动扩围或越过HOLD。
+
+开始 SP1-E B3-R2 拒错归属修订与剩余项集中宿主评审：保留B3-R1原FAIL、日志和已消费锁，在独立目录修订保护负控的PC归属检查，严格绑定冻结注入PC/指令字/目的寄存器、当前提交组及唯一bit100差异，不得忽略PC或仅凭exit1放行。用本轮真实日志做离线复核，补齐错误组、历史同PC、错误指令/寄存器/bit、重复注入和非预期退出等正负控，冻结新检查器依赖与执行闭包，独立审查预算影响。同轮集中核对o2-control、原C8普通C48、timed DIV/SQRT的真正宿主缺项与完整预算依据，复用未变公共证据，不重复无收益的短探针；无实质新依据就保留HOLD。保持原完整覆盖、五角色、6300/7200秒及900秒宿主门、原资源和失败即停，不重试、不加时。本轮先不运行EMU/NEMU、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；一次交付各项GO/HOLD、更新计分板，并仅为全部准入的精确白名单给出下一批串行执行指令。
+
+[本轮结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r1-host-20261105/execution-01/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r1-host-20261105/execution-01/NEXT_STEP.md)。
+
+
+
+### SP1-E B3-R1宿主GO与原两例执行指令（目标批次已消费，见当前停止记录）
+
+
+四项cwd配套输入已从真实B2原冻结精确迁入，17方法及独立29项门通过；CPU4完整宿主预算两例468.345019776/331.801223876秒均低于900秒，正式执行冻结及最终增量复核通过。只完成宿主准入，目标进程0、两例未运行，旧FAIL保留，SP1-E仍15/20。
+
+开始 SP1-E B3-R1 两例五角色有界执行，按 NEXT_STEP 先核查已有进程、冻结输入、独立最终增量复核及未消费锁，再为本轮明确创建目标授权，按 legacy-control→o2-all-pairs 串行执行。每例保留300/1500×4秒、目标6300秒/外层7200秒/宿主900秒；整批最多10个目标进程、目标12600秒/外层14400秒，不借预算。负控guest各100000，正常guest分别800000/300000，CPU4、整组4线程、RSS12GiB、每例日志2GiB以及原seed/RAM/reset不变。保持完整覆盖、128位、退休身份、CSR、bit100拒错与正常恢复、八维功能精确重放；这些功能程序没有性能计时窗。任何失败立即停止整批，不重试、不加时、不跳过继续、不扩围；o2-control继续HOLD，不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub。完成后更新计分板的三项指标及资格状态，给出结论和下一轮指令。
+
+[本轮结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r1-host-20261105/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r1-host-20261105/NEXT_STEP.md)。
+
+
+
+### SP1-E B3首轮执行接入停止及R1宿主修订入口历史
+
+
+两例运行器和宿主机制完成；正式CPU4执行闭包核验因遗漏四个cwd配套文件失败，900秒宿主门未建立，按失败即停终止整批。两例均未运行，原o2-control继续HOLD。 SP1-E仍15/20，默认0f＋firstdot V2＋原C8不变。
+
+开始 SP1-E B3-R1 宿主闭包修订：保留本轮 FAIL 和旧 HOST_FREEZE，在独立目录从已验证的真实 B2 执行冻结中提取候选及0f的 constantin.txt、plusArgs 四项精确路径、大小和SHA，建立可追溯输入 annex，并修订新执行闭包；补齐缺失、错路径、内容漂移负控，冻结新运行器源码，再做独立复核和CPU4实际调用图的完整900秒宿主开销门。保持两例完整功能及每例6300/7200秒、整批12600/14400秒和原资源/guest上限，失败即停、不重试、不加时；o2-control继续HOLD。本轮仅做宿主修订与准入，不运行EMU/NEMU、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；完成后逐例给出GO/HOLD、更新计分板，并仅在全部GO时给出两例串行执行指令。
+
+[本轮结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-execution-20261105/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-execution-20261105/NEXT_STEP.md)。
+
+
+
+### SP1-E B3原宿主合同与预算准备历史（不等于执行准入）
+
+
+三例宿主合同与检查器完成；legacy-control/o2-all-pairs有条件预算GO进入执行接入，o2-control预算HOLD。当前三例均非TARGET_READY，专用运行器/执行冻结/CPU4完整宿主900秒门尚待下一轮。
+
+开始 SP1-E B3 两例执行接入与有界验证：仅 legacy-control→o2-all-pairs，先接入专用五角色外层，核验真实进程/参考映射及资源回执，完成执行源码冻结、宿主正负控和CPU4下完整核验/解析开销审计；实际调用图的宿主开销须通过900秒门，全部准入后再串行执行两例。每例保持300/1500×4秒、目标6300/外层7200秒；整批最多10个目标进程、目标12600秒/外层14400秒，不借时。负控guest各100000，正常guest分别800000/300000，CPU4/整组4线程/RSS12GiB/日志2GiB不变。保留原完整功能、128位、CSR、bit100、八维功能精确重放；不把无计时窗程序当性能测试。任何准入或执行失败立即停止整批，不重试、不加时、不跳过继续；o2-control保持HOLD，不扩围、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub。完成后更新计分板和下一轮指令。
+
+[本轮结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-protection-host-20261105/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-protection-host-20261105/NEXT_STEP.md)。
+
+
+
+### SP1-E B2 stream执行历史
+
+
+B2 stream d0/d1/d2五角色全部通过；完整SP1-E必验进度从12/20推进到15/20。默认仍为0f＋firstdot V2＋原C8，SP1候选未切默认；其余保护及普通C调用缺项未冒充通过。
+
+开始 SP1-E B3 原功能保护的专用宿主合同与预算准入：集中核查 legacy-control、o2-all-pairs、o2-control，复用未变公共机制，明确当前候选的完整功能、取消/反压、DIV混合、CSR/全向量结果、负控及重放合同，补齐专用收集器和宿主正负控。按原每例6300/7200秒及资源约束逐例审查预算，guest上限按各自冻结工作量论证，不套用micro的300000上限；o2-control证据不足继续HOLD，不借时、不加时、不重复短校准。先不运行EMU/NEMU、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；完成后逐例给出GO/HOLD、必要缺项和下一轮指令。
+
+[本轮结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b0-shared-micro-20261105/batches/B2-stream/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b0-shared-micro-20261105/batches/B2-stream/NEXT_STEP.md)。
+
+
+
+### SP1-E B1 batch有界执行历史
+
+
+B1 batch d0/d1/d2五角色全部通过；完整SP1-E必验进度从9/20推进到12/20。默认仍为0f＋firstdot V2＋原C8，SP1候选未切默认；stream及其余保护缺项未冒充通过。
+
+开始 SP1-E B2 stream 三数据集五角色有界执行：按 NEXT_STEP 先核查进程和冻结输入，确认B1全通过，再按 d0→d1→d2 串行执行 performance-d0-s03、performance-d1-s03、performance-d2-s03。每例保持6300/7200秒及原CPU4、整组4线程、RSS12GiB、日志2GiB与guest上限；整批最多15个目标进程、18900秒目标累计、21600秒外层预算，不借用预算。保留完整12窗、384次custom、递增地址/三条退休融合及专用bit100、VDOT/RVV各自最多2%退化、完整128位、退休/CSR、逐窗控制及精确重放。任一失败立即停止整批，不重试、不加时、不跳过继续、不自动扩围。不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；完成后更新三项指标和下一轮指令。
+
+[本轮结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b0-shared-micro-20261105/batches/B1-batch/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b0-shared-micro-20261105/batches/B1-batch/NEXT_STEP.md)。
+
+
+
+### SP1-E B0宿主准入历史
+
+
+2026-11-05，GO：batch/stream六例共享宿主入口、差异正负控、实际执行冻结和有界预算准入完成；batch三例可在下一轮明确授权后整批执行。本轮没有EMU/NEMU或新性能资格，完整SP1-E仍9/20已验，默认0f＋firstdot V2＋原C8不变。
+
+开始 SP1-E B1 batch 三数据集五角色有界执行：按 NEXT_STEP，先核查已有进程及冻结输入，明确仅 performance-d0-s02、performance-d1-s02、performance-d2-s02，按 d0→d1→d2 串行执行，每例最多5个角色进程。每例保持6300/7200秒、原guest及CPU4/整组4线程/RSS12GiB/日志2GiB上限；整批最多15个目标进程、目标累计18900秒、外层21600秒，预算互不借用。每个正常角色完整12窗、768次custom，VDOT与RVV各自最多2%退化，完整128位、源操作数、退休/CSR、逐窗控制相等及双方八项精确重放全部保留。任一用例任一门禁失败立即停止整批，不重试、不加时、不跳过继续、不自动进入stream。不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；完成后更新三项指标，给出结论和下一轮指令。
+
+[本轮结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b0-shared-micro-20261105/RESULT.md) · [下一轮合同入口](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b0-shared-micro-20261105/NEXT_STEP.md)。
+
+
+
+### SP1-E剩余验收收口与共享运行器复用评审历史
+
+
+2026-11-05，GO：六个batch/stream用例集中做共享宿主迁入与差异准入；HOLD：剩余目标执行及完整SP1-E。20项必验中9项已通过、11项待完成；未变公共机制复用，逐case完整覆盖和原门槛保留。默认0f＋firstdot V2＋原C8不变。
+
+下一轮为B0：一次共享micro宿主迁入，分别完成batch/stream各三数据集差异准入；只准备，不运行目标。之后按B1 batch、B2 stream、B3原功能保护分批执行，预算缺证项留HOLD，有限统一收口。每case6300/7200秒不变；全批失败即停；具体未来执行须明确case名单与累计硬上限。
+
+[本轮计划](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-closeout-review-20261105/PLAN.md) · [下一轮完整指令](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-closeout-review-20261105/NEXT_STEP.md)。
+
+
+
+### single-d2五角色验收历史
+
+
+2026-11-05，**GO（single-d2）：五角色有界探针、独立指标与功能审计通过。** VDOT平均周期71→70，下降1.408451%；RVV保持85.25cycles，加速比1.200704225×→1.217857143×。四个正常角色各12窗/6custom，共48窗/24次；专用bit100拒错、完整128位全零、接受源、退休/CSR、逐窗控制及双方精确重放通过。结合第62/64条，single三个数据集已分别完成目标验收，收益一致；本轮补齐数据覆盖，未新增RTL优化。完整SP1-E尚未验收，默认0f＋firstdot V2＋原C8不变，最终采用由用户决定。
+
+默认0f＋firstdot V2＋原C8不变；加速比优先，面积与时序继续据实留档。完整SP1-E及默认采用尚未闭合。
+
+开始 SP1-E 剩余验收收口与共享运行器复用评审：结合已通过的chain、single和原C8性能三数据集，固定剩余必验清单、暂缓项、验收终点和执行批次；复用已验证的公共宿主机制，只补用例/镜像差异检查。保留各case完整覆盖、原性能门槛、6300/7200秒预算及失败即停要求，不用代表性抽样替代未验证项。先不运行EMU/NEMU、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；完成后给出必要缺项、GO/HOLD及下一批执行指令。
+
+[本轮结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-micro-single-d2-g0/target-20261105-01/RESULT.md)。
+
+
+
+### single-d2宿主准入与冻结历史
+
+2026-11-05，**GO（宿主准入）：single-d2合同、运行器适配、正负控、预算评审与执行冻结完成，可在下一轮明确指令后启动一次五角色有界探针。** 本轮未运行EMU/NEMU，single-d2的SP1目标正确性及加速比仍NOT_TESTED；默认0f＋firstdot V2＋原C8不变。
+
+第65条仅single-d2宿主准入。第51/58/60条chain三数据集、第53～55条C8及第62/64条single-d0/d1成绩按原范围保留，C48 HOLD不变。完整SP1-E和默认采用尚未闭合。
+
+开始 SP1-E micro single-d2 五角色有界探针，按 NEXT_STEP 先核查已有进程、冻结输入和资源，再依次完成 bit100 拒错、候选恢复、0f 校准、候选重放和0f重放。保持6300/7200秒预算、CPU4/整组4线程、原guest/RSS/日志上限、完整12窗和6次custom、VDOT与RVV各自最多2%退化、逐窗控制相等及精确重放门槛。失败即停，不重试、不加时、不扩围、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；完成后更新加速比、面积、时序，给出结论和下一轮指令。
+
+[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-micro-single-d2-g0/RESULT.md) · [合同](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-micro-single-d2-g0/CONTRACT.md)。
+
+
+
+### single-d1五角色验收历史
+
+2026-11-05，**GO（single-d1）：五角色有界探针、独立指标及功能审计通过。** VDOT平均周期71→70，下降1.408451%；RVV维持85.25cycles，加速比1.200704225×→1.217857143×。四个正常角色各12窗/6custom，共48窗/24次；专用bit100拒错、完整128位结果、退休/CSR、逐窗控制及双方精确重放通过。仅新增single-d1资格，本轮未改RTL。完整SP1-E尚未验收，默认0f＋firstdot V2＋原C8不变，最终采用由用户决定。
+
+默认0f＋firstdot V2＋原C8不变；加速比优先，面积与时序继续据实留档。完整SP1-E及默认采用尚未闭合。
+
+开始 SP1-E micro single-d2 的合同与宿主准入准备：复用 single-d1 机制，核查 G0 冻结镜像、12窗和6次custom、专用bit100、完整128位结果、退休/CSR及精确重放，完成运行器适配和6300/7200秒预算评审。按G0保持VDOT与RVV各自最多2%退化、逐窗控制相等和平衡执行顺序，预算不足就HOLD。先不运行EMU/NEMU、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；完成后给出结论和下一轮指令。
+
+[本轮结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-micro-single-d1-g0/target-20261105-01/RESULT.md)。
+
+
+
+### single-d1宿主准入与冻结历史
+
+2026-11-05，**GO（宿主准入）：single-d1合同、运行器适配、正负控、预算评审与执行冻结完成，可在下一轮明确指令后启动一次五角色有界探针。** 本轮未运行EMU/NEMU，single-d1的SP1目标正确性及加速比仍NOT_TESTED；默认0f＋firstdot V2＋原C8不变。
+
+第63条仅single-d1宿主准入。第51/58/60条chain三数据集、第53～55条C8及第62条single-d0成绩按原范围保留，C48 HOLD不变。完整SP1-E和默认采用尚未闭合。
+
+开始 SP1-E micro single-d1 五角色有界探针，按 NEXT_STEP 先核查已有进程、冻结输入和资源，再依次完成 bit100 拒错、候选恢复、0f 校准、候选重放和0f重放。保持6300/7200秒预算、CPU4/整组4线程、原guest/RSS/日志上限、完整12窗和6次custom、VDOT与RVV各自最多2%退化、逐窗控制相等及精确重放门槛。失败即停，不重试、不加时、不扩围、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；完成后更新加速比、面积、时序，给出结论和下一轮指令。
+
+[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-micro-single-d1-g0/RESULT.md) · [合同](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-micro-single-d1-g0/CONTRACT.md)。
+
+
+
+### single-d0五角色验收历史
+
+2026-11-05，**GO（single-d0）：五角色有界探针和独立复核全部通过。** VDOT平均周期71→70，下降1.408451%；RVV维持85.25cycles，加速比1.200704225×→1.217857143×。四个正常角色各12窗/6custom，共48窗/24次；专用bit100拒错、完整128位结果、退休/CSR、逐窗控制及双方精确重放通过。只增加single-d0资格，未新增RTL优化；完整SP1-E仍未验收，默认0f＋firstdot V2＋原C8不变，最终采用由用户决定。
+
+默认0f＋firstdot V2＋原C8不变；加速比优先，面积与时序继续据实留档。完整SP1-E及默认采用尚未闭合。
+
+开始 SP1-E micro single-d1 的合同与宿主准入准备：复用 single-d0 机制，核查 G0 冻结镜像、12窗和6次custom、专用bit100、完整128位结果、退休/CSR及精确重放，完成运行器适配和6300/7200秒预算评审。按G0保持VDOT与RVV各自最多2%退化、逐窗控制相等和平衡执行顺序，预算不足就HOLD。先不运行EMU/NEMU、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；完成后给出结论和下一轮指令。
+
+[本轮结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-micro-single-d0-g0/target-20261105-01/RESULT.md)。
+
+
+
+### single-d0宿主准入与冻结历史
+
+2026-11-05，**GO（宿主准入）：single-d0合同、运行器适配、正负控、预算评审与执行冻结完成，可在下一轮明确指令后启动一次五角色有界探针。** 本轮未运行EMU/NEMU，single-d0的SP1目标正确性及加速比仍NOT_TESTED；默认0f＋firstdot V2＋原C8不变。
+
+第61条仅single-d0宿主准入。第51/58/60条chain三数据集与第53～55条C8成绩按原范围保留，C48 HOLD不变。完整SP1-E和默认采用尚未闭合。
+
+开始 SP1-E micro single-d0 五角色有界探针，按 NEXT_STEP 先核查已有进程、冻结输入和资源，再依次完成 bit100 拒错、候选恢复、0f 校准、候选重放和0f重放。保持6300/7200秒预算、CPU4/整组4线程、原guest/RSS/日志上限、完整12窗和6次custom、VDOT与RVV各自最多2%退化、逐窗控制相等及精确重放门槛。失败即停，不重试、不加时、不扩围、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；完成后更新加速比、面积、时序，给出结论和下一轮指令。
+
+[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-micro-single-d0-g0/RESULT.md) · [合同](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-micro-single-d0-g0/CONTRACT.md)。
+
+
+
+### chain-d2五角色验收历史
+
+2026-11-05，**GO（chain-d2）：五角色有界探针与独立复核全部通过。** VDOT均值1857→1601.25 cycles，降低13.772213%；RVV均值5440.5 cycles不变，加速比2.929725×→3.397658×。四个正常角色各完成12窗/1536次custom，共48窗/6144次；bit100实际拒错、完整128位、退休/CSR、AB/BA和双方精确重放通过。结合第51/58条，chain三数据集已闭合；本轮新增dataset2覆盖，收益与d0/d1一致。完整SP1-E仍未验收，默认0f＋firstdot V2＋原C8不变，最终采用由用户决定。
+
+默认0f＋firstdot V2＋原C8不变；加速比优先，面积与时序继续据实留档。完整SP1-E及默认采用尚未闭合。
+
+开始 SP1-E micro single-d0 的合同与宿主准入准备：沿用 G0 冻结矩阵，核查同镜像12窗、6次custom、bit100、完整128位结果、退休/CSR、平衡执行顺序及精确重放，完成最小运行器适配和6300/7200秒预算评审。按G0固定single的vdot与RVV各自最多2%退化门槛；预算依据不足就HOLD。先不运行EMU/NEMU、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；完成后给出GO/HOLD和下一轮指令。
+
+[本轮结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-micro-chain-d2-g0/target-20261105-01/RESULT.md)。
+
+
+
+### chain-d2宿主准入与冻结历史
+
+2026-11-05，**GO：chain-d2 的合同、宿主准入及执行输入冻结完成，可进入下一轮单独授权的五角色有界探针。** 本轮未运行 EMU/NEMU，SP1 chain-d2 目标正确性及加速比仍为 NOT_TESTED，默认保持0f＋firstdot V2＋原C8。
+
+第59条仅宿主准入；第51/58条chain-d0/d1及第53～55条C8资格各自保持，C48 HOLD不变。SP1-E尚未完整验收；默认选型仍由用户决定。
+
+开始 SP1-E micro chain-d2 五角色有界探针，按 NEXT_STEP 先核查已有进程、冻结输入和资源，再依次完成 bit100 拒错、候选恢复、0f 校准、候选重放和0f重放。保持6300/7200秒预算、CPU4/整组4线程、原guest/RSS/日志上限、完整12窗和1536次custom、10%收益、2% RVV退化、AB/BA及精确重放门槛。失败即停，不重试、不加时、不扩围、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；完成后更新加速比、面积、时序，给出结论和下一轮指令。
+
+[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-micro-chain-d2-g0/RESULT.md) · [合同](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-micro-chain-d2-g0/CONTRACT.md)。
+
+
+
+### chain-d1五角色验收历史
+
+2026-11-05，**GO（仅 chain-d1 用例）：五角色探针与独立复核通过；VDOT 周期下降 13.772213%，同机 RVV/VDOT 加速比由 2.929725× 提高至 3.397658×，RVV 退化 0%。** 四个正常角色各完成 12 窗和 1536 次 custom，共 48 窗/6144 次；bit100 实际拒错、完整 128 位结果、退休/CSR、AB/BA 和双方精确重放通过。此次增加 dataset1 覆盖，未改 RTL，不能作为一次新的硬件优化或整个 SP1-E 完成。默认仍为 0f＋firstdot V2＋原 C8，候选最终采用等待用户决定。
+
+默认0f＋firstdot V2＋原C8不变；加速比优先，面积与时序继续据实留档。完整SP1-E及默认采用尚未闭合。
+
+开始 SP1-E micro chain-d2 的合同与宿主准入准备：复用已验收 chain-d1 机制，核查 G0 冻结镜像、12 窗、1536 次 custom、bit100、完整 128 位结果、退休/CSR 及精确重放，完成最小运行器适配和 6300/7200 秒预算评审。保持 10% 收益、2% RVV 退化及 AB/BA 门槛，预算不足就 HOLD。先不运行 EMU/NEMU、不改 RTL、不构建新核、不做 EDA、不切默认、不上传 GitHub；完成后给出 GO/HOLD 和下一轮指令。
+
+[本轮结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-micro-chain-d1-g0/target-20261105-01/RESULT.md)。
+
+
+
+### chain-d1宿主准入与冻结历史
+
+2026-11-05，**GO：chain-d1 合同、宿主准入和执行输入冻结完成，可进入下一轮独立授权的五角色有界探针。** 本轮未运行目标；chain-d1 在 SP1 上的功能与性能仍 NOT_TESTED。
+
+默认0f＋firstdot V2＋原C8。第57条仅宿主准入，第51条chain-d0和第53～55条C8成绩保持各自范围；原C48第56条预算HOLD保留。按用户要求加速比优先，当前候选不新增PPA限制。
+
+开始 SP1-E micro chain-d1 五角色有界探针：先核查已有进程、冻结输入和本轮 NEXT_STEP，使用已冻结运行器与同镜像、0f/SP1 EMU及NEMU；准入全部通过后，依次运行bit100拒错、候选恢复、0f校准、候选重放和0f重放。保持6300/7200秒、CPU4/4线程、原guest/RSS/日志上限，完整12窗和1536custom，10%收益、2%RVV退化、AB/BA均正及精确重放。失败即停，不重试、不加时、不扩围、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；完成后更新加速比、面积、时序并给下一轮指令。
+
+[本轮结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-micro-chain-d1-g0/RESULT.md) · [冻结合同](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-micro-chain-d1-g0/CONTRACT.md)。
+
+
+
+### SP1-E C48 宿主评审历史
+
+2026-11-04，**静态合同 GO；C48 目标执行准入 HOLD。** 未发现冻结调用表/数值/镜像不一致；当前组合完整运行墙钟上界没有证据，专用执行闭包也未完成。暂存此项，保留全部验收覆盖，不等于放弃最终SP1验收。
+
+默认0f＋firstdot V2＋原C8保持。第56条是宿主评审，没有新目标成绩；第51条chain-d0和第53～55条C8性能资格保持各自范围。
+
+暂存 SP1-E 原 C8 普通 C48 的预算HOLD，保留48调用及1008custom，不重试或缩减。开始 SP1-E micro chain-d1 的合同与宿主准入准备：复用固定0f/SP1 EMU、NEMU及G0冻结镜像，核查12窗、1536custom、bit100、退休/CSR/完整128位及精确重放，审查专用运行器适配、正负控和6300/7200秒预算依据。保持10%收益、2% RVV退化及AB/BA门槛；预算不足就HOLD。先不运行EMU/NEMU、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；完成后给出GO/HOLD和下一轮指令。
+
+[本轮结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-c8-c48-g0/RESULT.md) · [合同](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-c8-c48-g0/CONTRACT.md)。
+
+
+
+### SP1-E 原C8 dataset2五角色收口历史
+
+2026-11-04，**C8 dataset2 完整五角色合格。** 全部五角色和独立审计/指标复算通过，仅授原C8 dataset2资格；其他dataset、普通C48调用、DIV/SQRT和默认采用均未转授。
+
+稳定0f＋firstdot V2＋原C8不变；第55条保存本轮完整数据/资格，前54和失败不覆盖。面积与五档STA仍为原G2 trace-off复用，没有新RTL/新核/EDA/默认切换/GitHub写入。
+
+开始 SP1-E 原 C8 普通 C 48 调用的宿主合同与预算准入评审。复用固定 0f/SP1 EMU、NEMU 和最终 SDK 镜像，保留全部 48 调用、其中 12 个 C8 调用及 1008 次 custom；核对完整128位结果、数值/CSR/ABI、首条 bit100 绑定、身份和独立重放。按功能验收明确必要角色，分解完整运行与宿主检查开销，单独冻结 guest/墙钟上限及失败即停条件；不得套用性能镜像30万guest上限、删调用、把功能整程序周期当性能加速比，或把历史墙钟线性外推成完成保证。预算依据不足就 HOLD。先不运行 EMU/NEMU、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub，也不自动改跑micro或DIV。完成后给出GO/HOLD和下一轮指令。
+
+[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-g1-c8-d2/RESULT.md) · [证据](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-g1-c8-d2/evidence-manifest.json) · [下一轮](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-g1-c8-d2/NEXT_STEP.md)。
+
+
+
+### SP1-E-G1 原C8 dataset1 五角色历史
+
+2026-11-04，**C8 dataset1 完整五角色合格。** 全部五角色和独立审计/指标复算通过，仅授原C8 dataset1资格；其他dataset、普通C48调用、DIV/SQRT和默认采用均未转授。
+
+稳定0f＋firstdot V2＋原C8不变；第54条保存本轮完整数据/资格，前53和失败不覆盖。面积与五档STA仍为原G2 trace-off复用，没有新RTL/新核/EDA/默认切换/GitHub写入。
+
+开始 SP1-E 原C8 dataset2：复用G1五角色机制，先按冻结case适配镜像与bit100绑定，冻结执行合同、全源码及公平对照并通过宿主检查；全部通过后仅运行该case五角色，保持300/1500×4秒、总6300/7200秒及原资源/guest上限、四格2%和精确重放门槛。失败即停、不重试、不加时、不扩围、不改RTL、不构建新核、不切默认、不上传GitHub，完成后更新三指标、给出GO/HOLD和下一轮指令。
+
+[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-g1-c8-d1/RESULT.md) · [证据](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-g1-c8-d1/evidence-manifest.json) · [下一轮](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-g1-c8-d1/NEXT_STEP.md)。
+
+
+
+### SP1-E-G1 原C8 dataset0 五角色历史
+
+2026-11-04，**C8 dataset0 完整五角色合格。** 全部五角色和独立审计/指标复算通过，仅授原C8 dataset0资格；其他dataset、普通C48调用、DIV/SQRT和默认采用均未转授。
+
+稳定0f＋firstdot V2＋原C8不变；第53条保存本轮完整数据/资格，前52和失败不覆盖。面积与五档STA仍为原G2 trace-off复用，没有新RTL/新核/EDA/默认切换/GitHub写入。
+
+开始 SP1-E 原C8 dataset1：复用G1五角色机制，先按冻结case适配镜像与bit100绑定，冻结执行合同、全源码及公平对照并通过宿主检查；全部通过后仅运行该case五角色，保持300/1500×4秒、总6300/7200秒及原资源/guest上限、四格2%和精确重放门槛。失败即停、不重试、不加时、不扩围、不改RTL、不构建新核、不切默认、不上传GitHub，完成后更新三指标、给出GO/HOLD和下一轮指令。
+
+[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-g1-c8-d0/RESULT.md) · [证据](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-g1-c8-d0/evidence-manifest.json) · [下一轮](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-g1-c8-d0/NEXT_STEP.md)。
+
+
+
+### SP1-E-G0 扩围宿主准入历史
+
+2026-11-04，**SP1-E-G0 宿主准入 GO，目标执行 HOLD。** 已固定20用例、退休/CSR/完整128位/bit100与公平比较合同，完成micro/C8/DIV-SQRT软件宿主门禁和预算审查。本轮0目标、0RTL、0新核、0EDA、0默认切换、0GitHub写入。
+
+下一步仅原C8 dataset0：先完成专用运行器/采集器、真实接口正负控及完整执行冻结，下一轮明确授权且门禁通过后再进行有界五角色。推荐300/1500×4秒、10万/30万×4guest、6300/7200秒，CPU4/整组4线程/RSS12GiB/日志2GiB；不自动运行其他case。完整48调用普通C和新54窗DIV/SQRT另立合同，不删覆盖。已合格chain-d0复用第51条，不重跑。
+
+第52条和计分板记录本轮宿主结论；没有新加速比/面积/时序。第51条候选chain-d0为3.397658×、vdot1601.25cycles，较同批0f减少13.772213%；只具该工作负载资格。成本继续原G2 trace-off复用。稳定选择0f＋firstdot V2＋原C8，最终选型由用户决定。
+
+[本轮结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-g0/RESULT.md) · [预算](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-g0/BUDGET_REVIEW.md) · [下一轮指令](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-g0/NEXT_STEP.md)。完整主线仍按[速度优先计划](speedup-first-optimization-plan-20261102.md)。
+
+
+
+### SP1-D 五角色通过历史
+
+2026-11-04，**GO：SP1-D 的 dataset0/chain256 五角色公平周期探针通过。** 可以进入SP1-E扩围合同与宿主准入评审，尚未取得全部数据集、C8或默认采用资格。
+
+本轮候选相对同批0f的vdot周期减少 13.772213%，RVV均值退化 0.000000%；AB/BA分别减少 13.785676% / 13.758751%。这些数值只描述本轮chain256。
+
+
+新五角色活动 `SP1-CD-R1-CHAIN-D0-20261104-01`，运行器PERFORMANCE_PASS、独立审计PASS、指标复算PASS；原FAIL保留，未切默认。计分板及档案第51条列出三指标；周期为本轮新测，成本仍为原G2 trace-off复用。稳定选择0f＋firstdot V2＋原C8，最终选型由用户决定。
+
+[本轮结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-cd-r1/run-20261104-01/RESULT.md) · [下一轮指令](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-cd-r1/run-20261104-01/NEXT_STEP.md)。当前不自动扩围或改RTL；完整后续按[速度优先计划](speedup-first-optimization-plan-20261102.md)。
+
+
+### SP1-C/D-R1 宿主准备历史
+
+2026-11-04，**SP1-C/D-R1 宿主修订 GO，正式性能 HOLD 待新合同五角色**。默认保持0f＋firstdot V2＋原C8，最终选用由用户决定。
+
+退休比较改为冻结ELF完整展开＋白名单双ADDI有效值验证；同核raw重放、完整128位/CSR/身份、10%链收益/2%RVV退化/ABBA和6300/7200秒不变。检查器72、运行器45、独立审验60项通过，旧三日志离线跨核控制通过。旧活动仍STOPPED/FAIL，两个真实重放仍NOT_RUN；不能授旧成绩最终PASS。
+
+新运行合同已冻结验证：2604pin、43源，本轮0目标/RTL/全核/EDA/GitHub写入。下一步另获用户指令后，从新目录串行完成五角色；不恢复旧campaign，不自动进入SP1-E。原单对3.397658×、1601.25 cycles继续为未最终合格观察，原G2面积/五档STA复用，计分板和档案第50条区分宿主GO与性能HOLD。
+
+[本轮结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-cd-r1/RESULT.md) · [下一轮指令](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-cd-r1/NEXT_STEP.md)。RTL下一主改动预计为SP2 dot16/累加，先设计合同再提前告知；本轮不实施。完整后续见[速度优先计划](speedup-first-optimization-plan-20261102.md)。
+
+### SP1-C/D 原失败记录（R1前）
+
+2026年11月4日，**SP1-C通过，SP1-D跨硬件公平门禁FAIL/HOLD**。稳定选择保持0f＋firstdot V2＋原C8，最终采用由用户决定。
+
+**SP1-C通过；SP1-D在第3角色后的跨硬件退休记录公平检查失败，整轮STOPPED/HOLD。** 实际仅3个目标，两个重放均未启动。候选观测均值1601.25 cycles、RVV/vdot=3.397658×，相对同批0f的1857 cycles观测减少13.772213%；这组数值尚未取得最终公平及重放资格。
+
+下一步为SP1-C/D-R1宿主修订与新合同：依据只读归因处理ROB融合退休分组与架构指令的比较，补强正负控，保留原10%/2%/ABBA及重放规则。先不运行目标，不接着补跑旧campaign，不改RTL或切换默认。
+
+面积/时序仍复用原G2 trace-off FU18322.878μm²、完整父级285241.642μm²，nominal setup −0.790381/−2.337809ns；新SP0预算47/47，旧G0失败保留。计分板和数据档案第49条更新三指标资格及五档数据。
+
+[本轮结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-cd/RESULT.md) · [下一轮指令](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-cd/NEXT_STEP.md)。未授SP1-E扩围资格，完整主线仍按[速度优先计划](speedup-first-optimization-plan-20261102.md)。
+
+以下保留前期材料编写、P5收口以及P0～P5阶段决定，当前后续任务以本页上方SP路线为准。
+
+> 2026-11-02 用户确认进入提交材料阶段。参赛工程V1.0选用0f＋firstdot V2＋原C8，成本采用Nangate45。Agent已按本轮授权编写[三阶段报告、材料清单及录屏脚本初稿](../submission/2026-cie-vdot-v1-draft/00_先读我.md)，接续为团队信息、补图、录制和排版。
 
 > 2026-10-31 更新：**P5稳定版只读收口完成：继续0f＋firstdot V2＋原C8，既有R5/G5资格可复用；没有必须新增实现或目标运行的缺项。** P1保持HOLD、P4/分段归约关闭、P3暂存HOLD；下一步可按发布需求整理提交范围，不继续自动试验。[P5结论与必要缺项](../optimizations/o2/integration/firstdot-v2-0f/continuation/p5-stable-closeout-v1/RESULT.md)。
 >
@@ -6,10 +829,10 @@
 
 > P0～P5本轮分析与失败证据按[资料发布范围](p0-p5-publication-20261031.md)归档；不合入候选源码，历史记录的本地/未上传状态不回写。稳定0f＋firstdot V2＋原C8保持。
 
-## 0. 下一轮优化计划：先优化真实调用，再有条件改硬件
+## 0. P0～P5原路线与阶段记录（历史）
 
 
-### 当前决定：P5收口通过，保持稳定版；无必须重跑项（2026-10-31）
+### 2026-10-31历史决定 P5收口通过
 
 P5的12组只读核查全部通过：稳定clean-02的398项生产src、429项构建源、627项C8保护输入、实际EMU/NEMU/SDK/最终镜像和R5/G5证据匹配。原13＋补1组合验收与C8最终镜像等价可复用，旧clean-02 UTC失败和系统时钟限制仍保留，不再次补跑。
 
@@ -320,6 +1143,10 @@ P3供体约 **3.4732%** 保守改善仅作来源线索，不能加入本项目�
 
 赛题技术目标、完整评分表及官方／内部合同边界统一见根目录[赛题要求与评分总览](../../赛题要求与评分总览.md)。每轮先读计分板的近期“路线影响／接续”，结合 Issue 和真实运行恢复工作，再使用本路线选包；上轮聊天不是接续依据。
 
+## SP1最后第19项自主接续（记录116）
+
+观察EMU两角色诊断及原M1有效字段中性完成；原批次FAIL保留并有离线纠正，正式19/20。下一动作M2仅延迟F2v竞争源，保持原覆盖，准入后新身份有界补测；用户已授权包内连续推进，无需逐轮请求指令。不切默认、不上传。[完整结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-diagnostic-r1-20261108/RESULT.md)。
+
 ## 1. 当前从哪里出发
 
 沿 O2 两槽弹性 FU＋H1 低 32 位结果保存继续开发，O1、原 O2 B0 保留为固定对照与回退。已有实现先复用，缺什么补什么，不从头重做全部阶段。
@@ -421,3 +1248,47 @@ S2 保持 dot8 合法域，安全读取剩余 5 项、显式补零、恢复 VL=8
 普通工作更新相关结果并追加一条计分板记录；只有当前选择、前置或下一动作改变才更新本路线。结论及理由写计分板，详细数据留原处，本文件不累积逐日进度。已关闭工作包只留一行采用／不采用／完成结论和证据。
 
 新增工作优先作为已有包的子项；只有新目标、独立验收或明确依赖边界才增包。旧计划、旧排期和 T16／T18 等材料事务只供历史追溯，不驱动当前 Agent 队列；已完成的 H1、T05～T15 等工作不因路线整理重新启动。技术要求来源和未确认项沿[vdot 规格](../spec/vdot.md)读取；获得新的真实要求时更新受影响的工程包，不把未确认内容写成事实。
+
+
+## 2026-11-08 记录117：M2未命中，保留19/20
+
+结论：NOT_HIT，19/20。bit100、41次功能调用、77次custom、完整128位与CSR/ABI、NEMU差分通过；P入队和真实父级反压均未命中，不计为第19项通过。
+
+两个进程合计605.237秒，正常267234 guest cycles/579.294秒，均在预算内。完整时序：S1全部36次F2v结束早于A响应5拍；S0原四相位差4/7/9/15拍。M2确实后移压力，但不足以重叠，原FAIL和锁保留。
+
+下一步仅在scratch ft3链再加两条依赖FMUL；数据、分支、原相位与完整覆盖不变。此前考虑一条，完整S1证据显示不足，故选择两条；不扫描相位。
+
+本轮未测性能、面积、时序，均NOT_TESTED。历史SP1 chain加速比3.397658×（0f 2.929725×）；FU面积18322.878 μm²、父级285241.642 μm²；标称Q分别1.790381/3.337809 ns（Q=T−slack，不是全核Fmax）。未切默认，未上传。
+
+证据：`team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-m2-fp-pressure-20261108/RESULT.json`。
+
+
+## 2026-11-08 记录118：M3 完整未命中
+
+NOT_HIT，19/20。bit100与完整41调用、77custom、全128位、CSR/ABI、NEMU差分通过，正常267397 guest/580.931秒。两个目标累计606.085秒；未重试、未加时。
+
+40个A中39个在F2v末写后3拍响应，另一项5拍；P/反压仍0。FEX0与VFEX4共享写口且OG0也仲裁，VFEX3与VFEX4共享读口，不能将压力延迟视为独立旋钮。完整时序及源码支持一次M4：多一条依赖FMUL把F2v首写后移约4拍，使A/B有机会先经过OG0/OG2。保留旧FAIL、原相位和覆盖。
+
+M3最初PC清单仍引用M2的宿主准入已撤销（零目标），runtime-r1绑定新manifest并通过负控后才启动。三个指标本轮NOT_TESTED；历史chain3.397658×、FU18322.878 μm²/标称Q1.790381ns、父级285241.642 μm²/Q3.337809ns均未重测。默认0f未切换，未上传。
+
+证据：`team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-m3-runtime-r1-20261108/RESULT.json`。
+
+
+## 2026-11-08 记录119：M4 全核命中 S0/S1，重放待完成
+
+结论：GO 进入最终重放；仍为19/20，尚未把校准等同最终验收。bit100拒错25.346秒/11668guest通过；正常586.634秒/267845guest通过；目标总611.980秒。
+
+|覆盖|真实证据|
+|---|---|
+|S0|phase0，R=A seq1，B seq2在17988进入P，17989双槽占用；双方完整响应/提交|
+|S1|phase4第九次指定probe，R=A seq76/ROB1:30，B seq77/ROB1:36在262616进入P；262617来自ROB1:35的取消杀P保R；A在262624响应；B无响应/提交|
+|完整检查|41调用、77提交、78接受，完整128位及实际C端CSR/ABI检查、NEMU差分；725侧带响应闭合|
+|累计事件|ENQUEUE_P34、STALL296、KILL_P1、PARTIAL_KILL1|
+
+M1/M2/M3原未命中记录保留。M4仅软件scratch依赖链，无RTL/EMU重构或默认切换。
+
+本轮加速比、面积、时序均NOT_TESTED；历史SP1chain3.397658×（0f2.929725×）；FU18322.878 μm²、Q1.790381ns；父级285241.642 μm²、Q3.337809ns。Q为T−slack，非全核时钟。
+
+下一步集中完成原SP1功能EMU观察中性、补测同核精确重放、0f补测数值对照及原o2-control双核重放。保留原覆盖、每角色预算和失败即停；不切默认、不上传。
+
+证据：`team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-m4-fp-pressure-20261108/RESULT.json`。

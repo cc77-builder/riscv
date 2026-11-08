@@ -1,0 +1,1581 @@
+{
+  "schema": "sp1-final-acceptance-closeout-v1",
+  "record_number": 120,
+  "record_id": "sp1-e-item19-final-acceptance-20261108",
+  "operation_id": "SP1-E-ITEM19-FINAL-ACCEPTANCE-20261108",
+  "operator": "@cc77-builder / Agent",
+  "operator_basis": "session identified account, not human signoff",
+  "started_utc": "2026-11-07T18:56:10.037564+00:00",
+  "ended_utc": "2026-11-07T20:11:47.361417+00:00",
+  "recorded_at": "2026-11-08T04:12:06.210904+08:00",
+  "status": "GO_SP1_READY_FOR_USER_SELECTION_20_OF_20",
+  "source_commit": "347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e",
+  "branch": "local/zjhwork-integration-20261024",
+  "stable_default": "0f + firstdot V2 + original C8",
+  "default_changed": false,
+  "github_upload": false,
+  "candidate_source_root": "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/candidate",
+  "candidate_patch_sha256": "e1842a5f52a27fda2bea30f791921d6acefd63c54b415912adb8a1e3438be682",
+  "runtime": {
+    "normal_reference": {
+      "path": "/home/riscv/riscv-lab/t12-regression-20261013/nemu/reference/build/riscv64-nemu-interpreter-so",
+      "bytes": 1459056,
+      "sha256": "efbed0774addc27eac38af1a19ab5d9c9dd5f179b5015f25ae7b80b966185bd4"
+    },
+    "candidate_emu": {
+      "path": "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/candidate/build/emu",
+      "bytes": 71260448,
+      "sha256": "e34b2eaa8deb99f83534478217aaf144e32262ba08b2c18c31c6ac7265525c1e"
+    },
+    "baseline_emu": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/build/emu",
+      "bytes": 71235872,
+      "sha256": "2d1db77cc407486a2387a4a69da2498b68d44980239025eebcc02370c02826e8"
+    },
+    "flash": {
+      "path": "/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+      "bytes": 12,
+      "sha256": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994"
+    }
+  },
+  "images": {
+    "supplement": {
+      "elf": {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-m4-fp-pressure-20261108/build-review/attempt-01/o2-cancel.elf",
+        "bytes": 72048,
+        "sha256": "3c7b57a40e415474e937c54bf05df2cf3d273f5c0f4f6544aa8646e8e120e833"
+      },
+      "bin": {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-m4-fp-pressure-20261108/build-review/attempt-01/o2-cancel.bin",
+        "bytes": 11616,
+        "sha256": "848b10047f1ce8d72af33051d7ce296aed76bb3626f1b4108999437f05d36bd9"
+      }
+    },
+    "original": {
+      "elf": {
+        "path": "/home/riscv/riscv-lab/o2-fullcore-20261019/control-diagnostic-build-04/o2-control.elf",
+        "sha256": "bb9519ac5c40e1cf2be06d4916b4c6819f848a955c285811a716bf4493ae0588",
+        "bytes": 211240
+      },
+      "bin": {
+        "path": "/home/riscv/riscv-lab/o2-fullcore-20261019/control-diagnostic-build-04/o2-control.bin",
+        "sha256": "45cdf2a6cb6848b3bcb56d860c36bc26a975a8aa96bfe1411d33dce6036bd305",
+        "bytes": 163376
+      }
+    }
+  },
+  "coverage_qualified": 20,
+  "coverage_required": 20,
+  "item19_qualified": true,
+  "new_EMU_runs": 5,
+  "new_NEMU_runs": 0,
+  "new_DiffTest_reference_sessions": 5,
+  "new_full_core_builds": 0,
+  "new_EDA_runs": 0,
+  "production_RTL_changed": false,
+  "software_image_changed_this_final_campaign": false,
+  "user_selection": "PENDING_USER_SELECTION",
+  "recommendation": "RECOMMEND_ORIGINAL_SP1_FOR_SPEEDUP_PRIORITY_WITH_LOCAL_TIMING_COST_DISCLOSED",
+  "new_three_metrics": {
+    "speedup": "NOT_TESTED",
+    "area": "NOT_TESTED",
+    "timing": "NOT_TESTED"
+  },
+  "target_seconds_used": 4550.960749695,
+  "host_seconds_used": 22.147991032999016,
+  "outer_seconds_used": 4573.154036245,
+  "roles": [
+    {
+      "role": "supplement-candidate-normal",
+      "active_seconds": 589.8724807150002,
+      "supervised_seconds": 589.8847879489995,
+      "guest_cycles": 267845,
+      "peak_threads": 1,
+      "peak_rss_bytes": 76283904,
+      "raw_bytes": 3743832,
+      "comparison": [],
+      "validation": {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/target-01/01-supplement-candidate-normal/validation.json",
+        "bytes": 6217,
+        "sha256": "b414a0dbe1ff314f253a3ecf4d63eec3d24fe8921cb30226aec1d0a6385392e7"
+      },
+      "receipt": {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/target-01/01-supplement-candidate-normal/record.json",
+        "bytes": 5635,
+        "sha256": "1b0845cc463fdb524ba37b409438bae194ea7d9641c7aae75f82340905073a9a"
+      }
+    },
+    {
+      "role": "supplement-candidate-replay",
+      "active_seconds": 546.8769456739992,
+      "supervised_seconds": 546.8959919769995,
+      "guest_cycles": 267845,
+      "peak_threads": 1,
+      "peak_rss_bytes": 77332480,
+      "raw_bytes": 3743832,
+      "comparison": [
+        {
+          "reference": {
+            "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/target-01/01-supplement-candidate-normal/validation.json",
+            "bytes": 6217,
+            "sha256": "b414a0dbe1ff314f253a3ecf4d63eec3d24fe8921cb30226aec1d0a6385392e7"
+          },
+          "fields": [
+            "functional_replay.architectural_commit",
+            "functional_replay.source",
+            "functional_replay.result",
+            "functional_replay.observer",
+            "functional_replay.uart_checks",
+            "functional_replay.csr_contract",
+            "functional_replay.div_events",
+            "functional_replay.completion"
+          ],
+          "pass_all": true
+        }
+      ],
+      "validation": {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/target-01/02-supplement-candidate-replay/validation.json",
+        "bytes": 6880,
+        "sha256": "9c04088250d37766831150e86a71222c4c7a14c88e100512e8b901b1fb033621"
+      },
+      "receipt": {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/target-01/02-supplement-candidate-replay/record.json",
+        "bytes": 5635,
+        "sha256": "71146728a137e348686997d8538e4143c032468bc4034d66d7589f579631d0db"
+      }
+    },
+    {
+      "role": "supplement-baseline-normal",
+      "active_seconds": 522.6861456320003,
+      "supervised_seconds": 522.7006211520002,
+      "guest_cycles": 267838,
+      "peak_threads": 1,
+      "peak_rss_bytes": 75759616,
+      "raw_bytes": 3684173,
+      "comparison": [
+        {
+          "reference": {
+            "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/target-01/01-supplement-candidate-normal/validation.json",
+            "bytes": 6217,
+            "sha256": "b414a0dbe1ff314f253a3ecf4d63eec3d24fe8921cb30226aec1d0a6385392e7"
+          },
+          "fields": [
+            "cross_hardware_architecture",
+            "functional_replay.uart_checks",
+            "functional_replay.csr_contract"
+          ],
+          "pass_all": true
+        }
+      ],
+      "validation": {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/target-01/03-supplement-baseline-normal/validation.json",
+        "bytes": 52708,
+        "sha256": "11aced31bb67546398143c017e0f0bdc63f78074a2dace5a0673074d0f127ee4"
+      },
+      "receipt": {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/target-01/03-supplement-baseline-normal/record.json",
+        "bytes": 5594,
+        "sha256": "15e646444f1efbbafc5a972b92c9236a1de7e31105a6d4044fe9a33106a04319"
+      }
+    },
+    {
+      "role": "original-candidate-replay",
+      "active_seconds": 1472.4955128370002,
+      "supervised_seconds": 1472.5098519000003,
+      "guest_cycles": 702861,
+      "peak_threads": 1,
+      "peak_rss_bytes": 80216064,
+      "raw_bytes": 7243358,
+      "comparison": [
+        {
+          "reference": {
+            "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/history/candidate.json",
+            "bytes": 6570,
+            "sha256": "da069dd1649d5f78359ef06409be0acf88b3b7c47cfe249d383297f0b92fc141"
+          },
+          "fields": [
+            "functional_replay.architectural_commit",
+            "functional_replay.source",
+            "functional_replay.result",
+            "functional_replay.observer",
+            "functional_replay.uart_checks",
+            "functional_replay.csr_contract",
+            "functional_replay.div_events",
+            "functional_replay.completion"
+          ],
+          "pass_all": true
+        }
+      ],
+      "validation": {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/target-01/04-original-candidate-replay/validation.json",
+        "bytes": 8528,
+        "sha256": "64aaa5bdc6883288dc2e52d08485e1734dec44f69e90bb20d47c459d784c782d"
+      },
+      "receipt": {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/target-01/04-original-candidate-replay/record.json",
+        "bytes": 5192,
+        "sha256": "fb736a9b53c07cb6d07cdfd8a9704f7133bebe3a29e270a6bed41d12e2322b05"
+      }
+    },
+    {
+      "role": "original-baseline-replay",
+      "active_seconds": 1419.0296648370004,
+      "supervised_seconds": 1419.0479015679994,
+      "guest_cycles": 703135,
+      "peak_threads": 1,
+      "peak_rss_bytes": 77070336,
+      "raw_bytes": 7166601,
+      "comparison": [
+        {
+          "reference": {
+            "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/history/baseline.json",
+            "bytes": 6447,
+            "sha256": "556854fd5743e3b23f479b1ad8681bc1c84de3ba3413882884396da9636bbc87"
+          },
+          "fields": [
+            "functional_replay.architectural_commit",
+            "functional_replay.source",
+            "functional_replay.result",
+            "functional_replay.observer",
+            "functional_replay.uart_checks",
+            "functional_replay.csr_contract",
+            "functional_replay.div_events",
+            "functional_replay.completion"
+          ],
+          "pass_all": true
+        }
+      ],
+      "validation": {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/target-01/05-original-baseline-replay/validation.json",
+        "bytes": 8397,
+        "sha256": "2f5f14d5557d2ebed4a708e7965eff40391e5b442d14f51c254102404ce34039"
+      },
+      "receipt": {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/target-01/05-original-baseline-replay/record.json",
+        "bytes": 5142,
+        "sha256": "85b1f5d9b8fd835ca9de9c7bf81ad05e796a92fbfec641d9b860d71f1bc0aef1"
+      }
+    }
+  ],
+  "witnesses": {
+    "S0": [
+      {
+        "phase": 0,
+        "r_seq": 1,
+        "p_seq": 2,
+        "a_pc": 2147484540,
+        "b_pc": 2147484544,
+        "r_rob": "0:23",
+        "p_rob": "0:24",
+        "enqueue_cycle": 17988,
+        "dual_cycle": 17989
+      }
+    ],
+    "S1": [
+      {
+        "phase": 4,
+        "r_seq": 76,
+        "p_seq": 77,
+        "a_pc": 2147486600,
+        "b_pc": 2147486648,
+        "r_rob": "1:30",
+        "p_rob": "1:36",
+        "enqueue_cycle": 262616,
+        "dual_cycle": 262617,
+        "kill_cycle": 262617,
+        "redirect_rob": "1:35",
+        "flush_itself": 0,
+        "survivor_response_cycle": 262624
+      }
+    ]
+  },
+  "supplement_counts": {
+    "STATE": 1231,
+    "VFEX4_ACCEPT": 78,
+    "VFEX4_WAIT": 0,
+    "VFEX4_REDIRECT": 388,
+    "ACCEPT": 78,
+    "MOVE": 33,
+    "DIRECT_R": 44,
+    "ENQUEUE_P": 34,
+    "RESPONSE": 77,
+    "STALL": 296,
+    "KILL": 1,
+    "DIV_ACCEPT": 0,
+    "DIV_KILL": 0,
+    "DIV_OUTPUT": 0,
+    "ENQUEUE": 81,
+    "COMMIT": 77,
+    "REDIRECT": 388,
+    "MULTI_INFLIGHT": 265,
+    "OVERLAP": 2,
+    "TRIPLE_OVERLAP": 0,
+    "FULL_STALL": 232,
+    "KILL_P": 1,
+    "KILL_R": 0,
+    "PARTIAL_KILL": 1,
+    "BOTH_KILL": 0,
+    "R_KILL_P_SURVIVES": 0,
+    "P_KILL_R_SURVIVES": 1,
+    "UNRELATED_FLUSH": 0,
+    "ROB_WRAP": 37,
+    "FTQ_WRAP": 17,
+    "DIV_RESPONSE": 0,
+    "ACCEPTED_THEN_SQUASHED": 1,
+    "ACCEPTED_YOUNGER_SQUASHED": 1
+  },
+  "original_counts": {
+    "STATE": 5283,
+    "VFEX4_ACCEPT": 1874,
+    "VFEX4_WAIT": 1303,
+    "VFEX4_REDIRECT": 310,
+    "ACCEPT": 1618,
+    "MOVE": 0,
+    "DIRECT_R": 1618,
+    "ENQUEUE_P": 0,
+    "RESPONSE": 1592,
+    "STALL": 0,
+    "KILL": 26,
+    "DIV_ACCEPT": 256,
+    "DIV_KILL": 0,
+    "DIV_OUTPUT": 256,
+    "ENQUEUE": 1720,
+    "COMMIT": 1208,
+    "REDIRECT": 310,
+    "MULTI_INFLIGHT": 0,
+    "OVERLAP": 931,
+    "TRIPLE_OVERLAP": 0,
+    "FULL_STALL": 0,
+    "KILL_P": 0,
+    "KILL_R": 26,
+    "PARTIAL_KILL": 0,
+    "BOTH_KILL": 0,
+    "R_KILL_P_SURVIVES": 0,
+    "P_KILL_R_SURVIVES": 0,
+    "UNRELATED_FLUSH": 0,
+    "ROB_WRAP": 249,
+    "FTQ_WRAP": 152,
+    "DIV_RESPONSE": 256,
+    "ACCEPTED_THEN_SQUASHED": 410,
+    "ACCEPTED_YOUNGER_SQUASHED": 410
+  },
+  "old_failures_preserved": true,
+  "old_1500_second_budget_status": "HOLD_PRESERVED_NOT_REWRITTEN",
+  "current_contract_status": "PASS_NEW_INDEPENDENT_FROZEN_BUDGET",
+  "qualification_boundary": "frozen20 cases and reusable local tests, not universal proof or physical timing signoff",
+  "next_step": "user may select original SP1; no automatic default or upload",
+  "evidence": {
+    "review/TERMINAL_AUDIT.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/review/TERMINAL_AUDIT.json",
+      "bytes": 14824,
+      "sha256": "220c23e549b095fcb15a7674c7b4a6b4ecdf302c2fa8a2fa896b71b21eebd4cd"
+    },
+    "MATRIX.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/MATRIX.json",
+      "bytes": 56676,
+      "sha256": "a1c11968cdc75c61728a5952b5563f22ef760520815c020acc9f3ca53766ca71"
+    },
+    "METRICS.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/METRICS.json",
+      "bytes": 106640,
+      "sha256": "9959e77ab6143a0047378dd589b150430e22722abd34932a052a6442e7c138ec"
+    },
+    "CONTRACT.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/CONTRACT.json",
+      "bytes": 9267,
+      "sha256": "c8b3741fd31771ad7e4c834a654db0342c444466b56989440786ad4c535c54d2"
+    },
+    "EXECUTION_FREEZE.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/EXECUTION_FREEZE.json",
+      "bytes": 285175,
+      "sha256": "569bbd03070e3597684982de266600699e093e7742b14ab8d29d423a7e17e85a"
+    },
+    "RUN_AUTHORIZATION.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/RUN_AUTHORIZATION.json",
+      "bytes": 5828,
+      "sha256": "96f9cdd8b914eccc552cb31f0c6a538c4f719dc416ee92b57df931230f6a004f"
+    },
+    "review/OTHER19_EVIDENCE_RECHECK.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/review/OTHER19_EVIDENCE_RECHECK.json",
+      "bytes": 31477,
+      "sha256": "c156033c5c135a506e147e086550cbce7b17a841b0d50ddab74af073ad123563"
+    },
+    "review/COST_REUSE.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/review/COST_REUSE.json",
+      "bytes": 14087,
+      "sha256": "c278ae3f9d3b7b96cccb6894abde0d54a55001b1a281ea7e85cbd915c1823e17"
+    },
+    "review/PATCH_SOURCE_AUDIT.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/review/PATCH_SOURCE_AUDIT.json",
+      "bytes": 761,
+      "sha256": "c13e7b4865f496b58530087b5a4253a23ce6142d9c553c2c2eb9248d444063e2"
+    },
+    "review/LOCAL_SOURCE_BOUNDARY.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/review/LOCAL_SOURCE_BOUNDARY.json",
+      "bytes": 1517,
+      "sha256": "a858689e562f336fa482031e73177fc85107391b1bd42d371cf99e1692f89d9e"
+    }
+  },
+  "historical_workload_metrics": [
+    {
+      "workload": "chain-256",
+      "dataset": 0,
+      "source_record": 51,
+      "baseline": {
+        "vdot_mean_cycles": 1857.0,
+        "rvv_mean_cycles": 5440.5,
+        "rvv_over_vdot_speedup": 2.9297253634894993
+      },
+      "candidate": {
+        "vdot_mean_cycles": 1601.25,
+        "rvv_mean_cycles": 5440.5,
+        "rvv_over_vdot_speedup": 3.397658079625293
+      },
+      "historical_qualified": true,
+      "vdot_cycle_reduction_fraction": 0.1377221324717286,
+      "scope": "HISTORICAL_SAME_IMAGE_WINDOW_MEAN_NOT_B4_R7_MEASUREMENT"
+    },
+    {
+      "workload": "chain-256",
+      "dataset": 1,
+      "source_record": 58,
+      "baseline": {
+        "vdot_mean_cycles": 1857.0,
+        "rvv_mean_cycles": 5440.5,
+        "rvv_over_vdot_speedup": 2.9297253634894993
+      },
+      "candidate": {
+        "vdot_mean_cycles": 1601.25,
+        "rvv_mean_cycles": 5440.5,
+        "rvv_over_vdot_speedup": 3.397658079625293
+      },
+      "historical_qualified": true,
+      "vdot_cycle_reduction_fraction": 0.1377221324717286,
+      "scope": "HISTORICAL_SAME_IMAGE_WINDOW_MEAN_NOT_B4_R7_MEASUREMENT"
+    },
+    {
+      "workload": "chain-256",
+      "dataset": 2,
+      "source_record": 60,
+      "baseline": {
+        "vdot_mean_cycles": 1857.0,
+        "rvv_mean_cycles": 5440.5,
+        "rvv_over_vdot_speedup": 2.9297253634894993
+      },
+      "candidate": {
+        "vdot_mean_cycles": 1601.25,
+        "rvv_mean_cycles": 5440.5,
+        "rvv_over_vdot_speedup": 3.397658079625293
+      },
+      "historical_qualified": true,
+      "vdot_cycle_reduction_fraction": 0.1377221324717286,
+      "scope": "HISTORICAL_SAME_IMAGE_WINDOW_MEAN_NOT_B4_R7_MEASUREMENT"
+    },
+    {
+      "workload": "single-1",
+      "dataset": 0,
+      "source_record": 62,
+      "baseline": {
+        "vdot_mean_cycles": 71.0,
+        "rvv_mean_cycles": 85.25,
+        "rvv_over_vdot_speedup": 1.2007042253521127
+      },
+      "candidate": {
+        "vdot_mean_cycles": 70.0,
+        "rvv_mean_cycles": 85.25,
+        "rvv_over_vdot_speedup": 1.2178571428571427
+      },
+      "historical_qualified": true,
+      "vdot_cycle_reduction_fraction": 0.014084507042253502,
+      "scope": "HISTORICAL_SAME_IMAGE_WINDOW_MEAN_NOT_B4_R7_MEASUREMENT"
+    },
+    {
+      "workload": "single-1",
+      "dataset": 1,
+      "source_record": 64,
+      "baseline": {
+        "vdot_mean_cycles": 71.0,
+        "rvv_mean_cycles": 85.25,
+        "rvv_over_vdot_speedup": 1.2007042253521127
+      },
+      "candidate": {
+        "vdot_mean_cycles": 70.0,
+        "rvv_mean_cycles": 85.25,
+        "rvv_over_vdot_speedup": 1.2178571428571427
+      },
+      "historical_qualified": true,
+      "vdot_cycle_reduction_fraction": 0.014084507042253502,
+      "scope": "HISTORICAL_SAME_IMAGE_WINDOW_MEAN_NOT_B4_R7_MEASUREMENT"
+    },
+    {
+      "workload": "single-1",
+      "dataset": 2,
+      "source_record": 66,
+      "baseline": {
+        "vdot_mean_cycles": 71.0,
+        "rvv_mean_cycles": 85.25,
+        "rvv_over_vdot_speedup": 1.2007042253521127
+      },
+      "candidate": {
+        "vdot_mean_cycles": 70.0,
+        "rvv_mean_cycles": 85.25,
+        "rvv_over_vdot_speedup": 1.2178571428571427
+      },
+      "historical_qualified": true,
+      "vdot_cycle_reduction_fraction": 0.014084507042253502,
+      "scope": "HISTORICAL_SAME_IMAGE_WINDOW_MEAN_NOT_B4_R7_MEASUREMENT"
+    },
+    {
+      "workload": "batch",
+      "dataset": 0,
+      "case_id": "performance-d0-s02",
+      "source_record": 69,
+      "baseline": {
+        "vdot_mean_cycles": 221.0,
+        "rvv_mean_cycles": 678.0,
+        "rvv_over_vdot_speedup": 3.067873303167421
+      },
+      "candidate": {
+        "vdot_mean_cycles": 221.0,
+        "rvv_mean_cycles": 678.0,
+        "rvv_over_vdot_speedup": 3.067873303167421
+      },
+      "historical_qualified": true,
+      "vdot_cycle_reduction_fraction": 0.0,
+      "scope": "HISTORICAL_SAME_IMAGE_WINDOW_MEAN_NOT_B4_R7_MEASUREMENT"
+    },
+    {
+      "workload": "batch",
+      "dataset": 1,
+      "case_id": "performance-d1-s02",
+      "source_record": 69,
+      "baseline": {
+        "vdot_mean_cycles": 221.0,
+        "rvv_mean_cycles": 678.0,
+        "rvv_over_vdot_speedup": 3.067873303167421
+      },
+      "candidate": {
+        "vdot_mean_cycles": 221.0,
+        "rvv_mean_cycles": 678.0,
+        "rvv_over_vdot_speedup": 3.067873303167421
+      },
+      "historical_qualified": true,
+      "vdot_cycle_reduction_fraction": 0.0,
+      "scope": "HISTORICAL_SAME_IMAGE_WINDOW_MEAN_NOT_B4_R7_MEASUREMENT"
+    },
+    {
+      "workload": "batch",
+      "dataset": 2,
+      "case_id": "performance-d2-s02",
+      "source_record": 69,
+      "baseline": {
+        "vdot_mean_cycles": 221.0,
+        "rvv_mean_cycles": 678.0,
+        "rvv_over_vdot_speedup": 3.067873303167421
+      },
+      "candidate": {
+        "vdot_mean_cycles": 221.0,
+        "rvv_mean_cycles": 678.0,
+        "rvv_over_vdot_speedup": 3.067873303167421
+      },
+      "historical_qualified": true,
+      "vdot_cycle_reduction_fraction": 0.0,
+      "scope": "HISTORICAL_SAME_IMAGE_WINDOW_MEAN_NOT_B4_R7_MEASUREMENT"
+    },
+    {
+      "workload": "stream",
+      "dataset": 0,
+      "case_id": "performance-d0-s03",
+      "source_record": 70,
+      "baseline": {
+        "vdot_mean_cycles": 1127.5,
+        "rvv_mean_cycles": 1133.0,
+        "rvv_over_vdot_speedup": 1.0048780487804878
+      },
+      "candidate": {
+        "vdot_mean_cycles": 1126.25,
+        "rvv_mean_cycles": 1133.0,
+        "rvv_over_vdot_speedup": 1.0059933407325194
+      },
+      "historical_qualified": true,
+      "vdot_cycle_reduction_fraction": 0.0011086474501108556,
+      "scope": "HISTORICAL_SAME_IMAGE_WINDOW_MEAN_NOT_B4_R7_MEASUREMENT"
+    },
+    {
+      "workload": "stream",
+      "dataset": 1,
+      "case_id": "performance-d1-s03",
+      "source_record": 70,
+      "baseline": {
+        "vdot_mean_cycles": 1127.5,
+        "rvv_mean_cycles": 1133.0,
+        "rvv_over_vdot_speedup": 1.0048780487804878
+      },
+      "candidate": {
+        "vdot_mean_cycles": 1126.25,
+        "rvv_mean_cycles": 1133.0,
+        "rvv_over_vdot_speedup": 1.0059933407325194
+      },
+      "historical_qualified": true,
+      "vdot_cycle_reduction_fraction": 0.0011086474501108556,
+      "scope": "HISTORICAL_SAME_IMAGE_WINDOW_MEAN_NOT_B4_R7_MEASUREMENT"
+    },
+    {
+      "workload": "stream",
+      "dataset": 2,
+      "case_id": "performance-d2-s03",
+      "source_record": 70,
+      "baseline": {
+        "vdot_mean_cycles": 1127.5,
+        "rvv_mean_cycles": 1133.0,
+        "rvv_over_vdot_speedup": 1.0048780487804878
+      },
+      "candidate": {
+        "vdot_mean_cycles": 1126.25,
+        "rvv_mean_cycles": 1133.0,
+        "rvv_over_vdot_speedup": 1.0059933407325194
+      },
+      "historical_qualified": true,
+      "vdot_cycle_reduction_fraction": 0.0011086474501108556,
+      "scope": "HISTORICAL_SAME_IMAGE_WINDOW_MEAN_NOT_B4_R7_MEASUREMENT"
+    },
+    {
+      "workload": "original-C8-8x32-basic",
+      "dataset": 0,
+      "source_record": 53,
+      "historical_qualified": true,
+      "baseline": {
+        "vdot_mean_cycles": 643.75,
+        "rvv_mean_cycles": 356.0,
+        "rvv_over_vdot_speedup": 0.553009708737864
+      },
+      "candidate": {
+        "vdot_mean_cycles": 642.5,
+        "rvv_mean_cycles": 356.0,
+        "rvv_over_vdot_speedup": 0.5540856031128405
+      },
+      "vdot_cycle_reduction_fraction": 0.001941747572815511,
+      "scope": "HISTORICAL_SAME_IMAGE_WINDOW_MEAN_NOT_B4_R7_MEASUREMENT"
+    },
+    {
+      "workload": "original-C8-8x32-reuse",
+      "dataset": 0,
+      "source_record": 53,
+      "historical_qualified": true,
+      "baseline": {
+        "vdot_mean_cycles": 273.0,
+        "rvv_mean_cycles": 299.0,
+        "rvv_over_vdot_speedup": 1.0952380952380953
+      },
+      "candidate": {
+        "vdot_mean_cycles": 272.0,
+        "rvv_mean_cycles": 299.0,
+        "rvv_over_vdot_speedup": 1.099264705882353
+      },
+      "vdot_cycle_reduction_fraction": 0.00366300366300365,
+      "scope": "HISTORICAL_SAME_IMAGE_WINDOW_MEAN_NOT_B4_R7_MEASUREMENT"
+    },
+    {
+      "workload": "original-C8-8x32-basic",
+      "dataset": 1,
+      "source_record": 54,
+      "historical_qualified": true,
+      "baseline": {
+        "vdot_mean_cycles": 643.75,
+        "rvv_mean_cycles": 356.0,
+        "rvv_over_vdot_speedup": 0.553009708737864
+      },
+      "candidate": {
+        "vdot_mean_cycles": 642.5,
+        "rvv_mean_cycles": 356.0,
+        "rvv_over_vdot_speedup": 0.5540856031128405
+      },
+      "vdot_cycle_reduction_fraction": 0.001941747572815511,
+      "scope": "HISTORICAL_SAME_IMAGE_WINDOW_MEAN_NOT_B4_R7_MEASUREMENT"
+    },
+    {
+      "workload": "original-C8-8x32-reuse",
+      "dataset": 1,
+      "source_record": 54,
+      "historical_qualified": true,
+      "baseline": {
+        "vdot_mean_cycles": 273.0,
+        "rvv_mean_cycles": 299.0,
+        "rvv_over_vdot_speedup": 1.0952380952380953
+      },
+      "candidate": {
+        "vdot_mean_cycles": 272.0,
+        "rvv_mean_cycles": 299.0,
+        "rvv_over_vdot_speedup": 1.099264705882353
+      },
+      "vdot_cycle_reduction_fraction": 0.00366300366300365,
+      "scope": "HISTORICAL_SAME_IMAGE_WINDOW_MEAN_NOT_B4_R7_MEASUREMENT"
+    },
+    {
+      "workload": "original-C8-8x32-basic",
+      "dataset": 2,
+      "source_record": 55,
+      "historical_qualified": true,
+      "baseline": {
+        "vdot_mean_cycles": 643.75,
+        "rvv_mean_cycles": 356.0,
+        "rvv_over_vdot_speedup": 0.553009708737864
+      },
+      "candidate": {
+        "vdot_mean_cycles": 642.5,
+        "rvv_mean_cycles": 356.0,
+        "rvv_over_vdot_speedup": 0.5540856031128405
+      },
+      "vdot_cycle_reduction_fraction": 0.001941747572815511,
+      "scope": "HISTORICAL_SAME_IMAGE_WINDOW_MEAN_NOT_B4_R7_MEASUREMENT"
+    },
+    {
+      "workload": "original-C8-8x32-reuse",
+      "dataset": 2,
+      "source_record": 55,
+      "historical_qualified": true,
+      "baseline": {
+        "vdot_mean_cycles": 273.0,
+        "rvv_mean_cycles": 299.0,
+        "rvv_over_vdot_speedup": 1.0952380952380953
+      },
+      "candidate": {
+        "vdot_mean_cycles": 272.0,
+        "rvv_mean_cycles": 299.0,
+        "rvv_over_vdot_speedup": 1.099264705882353
+      },
+      "vdot_cycle_reduction_fraction": 0.00366300366300365,
+      "scope": "HISTORICAL_SAME_IMAGE_WINDOW_MEAN_NOT_B4_R7_MEASUREMENT"
+    }
+  ],
+  "historical_area": {
+    "baseline": {
+      "FU_um2": 17298.246,
+      "inclusive_parent_um2": 284614.946
+    },
+    "candidate": {
+      "FU_um2": 18322.878,
+      "inclusive_parent_um2": 285241.642
+    },
+    "relative_increase": {
+      "FU_um2": 0.05923328873921685,
+      "inclusive_parent_um2": 0.0022019082581841154
+    }
+  },
+  "historical_five_profile_timing": [
+    {
+      "profile": "nominal",
+      "reference_period_ns": 1.0,
+      "load_pf": 0.005,
+      "fu_Q_ns": 1.790381,
+      "fu_worst_setup_slack_ns": -0.790381,
+      "parent_Q_ns": 3.337809,
+      "parent_worst_setup_slack_ns": -2.337809,
+      "baseline": {
+        "fu": {
+          "worst_setup_slack_ns": -0.26852,
+          "Q_ns": 1.26852
+        },
+        "parent": {
+          "worst_setup_slack_ns": -2.393998,
+          "Q_ns": 3.393998
+        }
+      },
+      "candidate_critical_paths": {
+        "fu": [
+          {
+            "mode": "p4",
+            "boundary": "fu",
+            "profile": "nominal",
+            "group": "ready",
+            "arrival_ns": "0.218001",
+            "required_ns": "0.85",
+            "slack_ns": "0.631999",
+            "startpoint": "io_out_ready (input port clocked by core_clk)",
+            "endpoint": "io_in_ready (output port clocked by core_clk)"
+          },
+          {
+            "mode": "p4",
+            "boundary": "fu",
+            "profile": "nominal",
+            "group": "all_max",
+            "arrival_ns": "1.709455",
+            "required_ns": "0.919074",
+            "slack_ns": "-0.790381",
+            "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+            "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+          },
+          {
+            "mode": "p4",
+            "boundary": "fu",
+            "profile": "nominal",
+            "group": "p_data_i2r",
+            "arrival_ns": "1.693598",
+            "required_ns": "0.922345",
+            "slack_ns": "-0.771253",
+            "startpoint": "io_in_bits_data_src_1[2] (input port clocked by core_clk)",
+            "endpoint": "c9583 (rising edge-triggered flip-flop clocked by core_clk)"
+          },
+          {
+            "mode": "p4",
+            "boundary": "fu",
+            "profile": "nominal",
+            "group": "r_data_i2r",
+            "arrival_ns": "1.709455",
+            "required_ns": "0.919074",
+            "slack_ns": "-0.790381",
+            "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+            "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+          }
+        ],
+        "parent": [
+          {
+            "mode": "p4",
+            "boundary": "parent",
+            "profile": "nominal",
+            "group": "ready",
+            "arrival_ns": "0.303064",
+            "required_ns": "0.85",
+            "slack_ns": "0.546936",
+            "startpoint": "io_out_ready (input port clocked by core_clk)",
+            "endpoint": "io_in_ready (output port clocked by core_clk)"
+          },
+          {
+            "mode": "p4",
+            "boundary": "parent",
+            "profile": "nominal",
+            "group": "vdot_i2r",
+            "arrival_ns": "2.176863",
+            "required_ns": "0.919473",
+            "slack_ns": "-1.25739",
+            "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+            "endpoint": "c199298 (rising edge-triggered flip-flop clocked by core_clk)"
+          },
+          {
+            "mode": "p4",
+            "boundary": "parent",
+            "profile": "nominal",
+            "group": "vdot_r2o",
+            "arrival_ns": "2.707617",
+            "required_ns": "0.85",
+            "slack_ns": "-1.857617",
+            "startpoint": "c199925 (rising edge-triggered flip-flop clocked by core_clk)",
+            "endpoint": "io_out_bits_fflags[1] (output port clocked by core_clk)"
+          },
+          {
+            "mode": "p4",
+            "boundary": "parent",
+            "profile": "nominal",
+            "group": "gate_enable",
+            "arrival_ns": "1.713544",
+            "required_ns": "0.877842",
+            "slack_ns": "-0.835702",
+            "startpoint": "c201714 (rising edge-triggered flip-flop clocked by core_clk)",
+            "endpoint": "c203281 (rising clock gating-check end-point clocked by core_clk)"
+          },
+          {
+            "mode": "p4",
+            "boundary": "parent",
+            "profile": "nominal",
+            "group": "all_max",
+            "arrival_ns": "3.259825",
+            "required_ns": "0.922016",
+            "slack_ns": "-2.337809",
+            "startpoint": "io_in_bits_vpu_vsew[1] (input port clocked by core_clk)",
+            "endpoint": "c201899 (rising edge-triggered flip-flop clocked by core_clk)"
+          }
+        ]
+      },
+      "baseline_critical_paths": {
+        "fu": {
+          "mode": "off",
+          "boundary": "fu",
+          "profile": "nominal",
+          "group": "all_max",
+          "arrival_ns": "1.190323",
+          "required_ns": "0.921803",
+          "slack_ns": "-0.26852",
+          "startpoint": "io_in_bits_data_src_0[21] (input port clocked by core_clk)",
+          "endpoint": "c7201 (rising edge-triggered flip-flop clocked by core_clk)"
+        },
+        "parent": {
+          "mode": "off",
+          "boundary": "parent",
+          "profile": "nominal",
+          "group": "all_max",
+          "arrival_ns": "3.314103",
+          "required_ns": "0.920105",
+          "slack_ns": "-2.393998",
+          "startpoint": "io_in_bits_src_0[71] (input port clocked by core_clk)",
+          "endpoint": "c201635 (rising edge-triggered flip-flop clocked by core_clk)"
+        }
+      }
+    },
+    {
+      "profile": "period050",
+      "reference_period_ns": 0.5,
+      "load_pf": 0.005,
+      "fu_Q_ns": 1.790381,
+      "fu_worst_setup_slack_ns": -1.290381,
+      "parent_Q_ns": 3.337809,
+      "parent_worst_setup_slack_ns": -2.837809,
+      "baseline": {
+        "fu": {
+          "worst_setup_slack_ns": -0.76852,
+          "Q_ns": 1.26852
+        },
+        "parent": {
+          "worst_setup_slack_ns": -2.893998,
+          "Q_ns": 3.393998
+        }
+      },
+      "candidate_critical_paths": {
+        "fu": [
+          {
+            "mode": "p4",
+            "boundary": "fu",
+            "profile": "period050",
+            "group": "ready",
+            "arrival_ns": "0.218001",
+            "required_ns": "0.35",
+            "slack_ns": "0.131999",
+            "startpoint": "io_out_ready (input port clocked by core_clk)",
+            "endpoint": "io_in_ready (output port clocked by core_clk)"
+          },
+          {
+            "mode": "p4",
+            "boundary": "fu",
+            "profile": "period050",
+            "group": "all_max",
+            "arrival_ns": "1.709455",
+            "required_ns": "0.419074",
+            "slack_ns": "-1.290381",
+            "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+            "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+          },
+          {
+            "mode": "p4",
+            "boundary": "fu",
+            "profile": "period050",
+            "group": "p_data_i2r",
+            "arrival_ns": "1.693598",
+            "required_ns": "0.422347",
+            "slack_ns": "-1.271251",
+            "startpoint": "io_in_bits_data_src_1[2] (input port clocked by core_clk)",
+            "endpoint": "c9577 (rising edge-triggered flip-flop clocked by core_clk)"
+          },
+          {
+            "mode": "p4",
+            "boundary": "fu",
+            "profile": "period050",
+            "group": "r_data_i2r",
+            "arrival_ns": "1.709455",
+            "required_ns": "0.419074",
+            "slack_ns": "-1.290381",
+            "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+            "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+          }
+        ],
+        "parent": [
+          {
+            "mode": "p4",
+            "boundary": "parent",
+            "profile": "period050",
+            "group": "ready",
+            "arrival_ns": "0.303064",
+            "required_ns": "0.35",
+            "slack_ns": "0.046936",
+            "startpoint": "io_out_ready (input port clocked by core_clk)",
+            "endpoint": "io_in_ready (output port clocked by core_clk)"
+          },
+          {
+            "mode": "p4",
+            "boundary": "parent",
+            "profile": "period050",
+            "group": "vdot_i2r",
+            "arrival_ns": "2.176863",
+            "required_ns": "0.419473",
+            "slack_ns": "-1.75739",
+            "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+            "endpoint": "c199298 (rising edge-triggered flip-flop clocked by core_clk)"
+          },
+          {
+            "mode": "p4",
+            "boundary": "parent",
+            "profile": "period050",
+            "group": "vdot_r2o",
+            "arrival_ns": "2.707617",
+            "required_ns": "0.35",
+            "slack_ns": "-2.357617",
+            "startpoint": "c199925 (rising edge-triggered flip-flop clocked by core_clk)",
+            "endpoint": "io_out_bits_fflags[1] (output port clocked by core_clk)"
+          },
+          {
+            "mode": "p4",
+            "boundary": "parent",
+            "profile": "period050",
+            "group": "gate_enable",
+            "arrival_ns": "1.713544",
+            "required_ns": "0.377842",
+            "slack_ns": "-1.335702",
+            "startpoint": "c201714 (rising edge-triggered flip-flop clocked by core_clk)",
+            "endpoint": "c203281 (rising clock gating-check end-point clocked by core_clk)"
+          },
+          {
+            "mode": "p4",
+            "boundary": "parent",
+            "profile": "period050",
+            "group": "all_max",
+            "arrival_ns": "3.259825",
+            "required_ns": "0.422016",
+            "slack_ns": "-2.837809",
+            "startpoint": "io_in_bits_vpu_vsew[1] (input port clocked by core_clk)",
+            "endpoint": "c201899 (rising edge-triggered flip-flop clocked by core_clk)"
+          }
+        ]
+      },
+      "baseline_critical_paths": {
+        "fu": {
+          "mode": "off",
+          "boundary": "fu",
+          "profile": "period050",
+          "group": "all_max",
+          "arrival_ns": "1.190323",
+          "required_ns": "0.421803",
+          "slack_ns": "-0.76852",
+          "startpoint": "io_in_bits_data_src_0[21] (input port clocked by core_clk)",
+          "endpoint": "c7201 (rising edge-triggered flip-flop clocked by core_clk)"
+        },
+        "parent": {
+          "mode": "off",
+          "boundary": "parent",
+          "profile": "period050",
+          "group": "all_max",
+          "arrival_ns": "3.314103",
+          "required_ns": "0.420105",
+          "slack_ns": "-2.893998",
+          "startpoint": "io_in_bits_src_0[71] (input port clocked by core_clk)",
+          "endpoint": "c201635 (rising edge-triggered flip-flop clocked by core_clk)"
+        }
+      }
+    },
+    {
+      "profile": "period200",
+      "reference_period_ns": 2.0,
+      "load_pf": 0.005,
+      "fu_Q_ns": 1.790381,
+      "fu_worst_setup_slack_ns": 0.209619,
+      "parent_Q_ns": 3.337809,
+      "parent_worst_setup_slack_ns": -1.337809,
+      "baseline": {
+        "fu": {
+          "worst_setup_slack_ns": 0.73148,
+          "Q_ns": 1.26852
+        },
+        "parent": {
+          "worst_setup_slack_ns": -1.393998,
+          "Q_ns": 3.393998
+        }
+      },
+      "candidate_critical_paths": {
+        "fu": [
+          {
+            "mode": "p4",
+            "boundary": "fu",
+            "profile": "period200",
+            "group": "ready",
+            "arrival_ns": "0.218001",
+            "required_ns": "1.85",
+            "slack_ns": "1.631999",
+            "startpoint": "io_out_ready (input port clocked by core_clk)",
+            "endpoint": "io_in_ready (output port clocked by core_clk)"
+          },
+          {
+            "mode": "p4",
+            "boundary": "fu",
+            "profile": "period200",
+            "group": "all_max",
+            "arrival_ns": "1.709455",
+            "required_ns": "1.919074",
+            "slack_ns": "0.209619",
+            "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+            "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+          },
+          {
+            "mode": "p4",
+            "boundary": "fu",
+            "profile": "period200",
+            "group": "p_data_i2r",
+            "arrival_ns": "1.693598",
+            "required_ns": "1.922345",
+            "slack_ns": "0.228747",
+            "startpoint": "io_in_bits_data_src_1[2] (input port clocked by core_clk)",
+            "endpoint": "c9583 (rising edge-triggered flip-flop clocked by core_clk)"
+          },
+          {
+            "mode": "p4",
+            "boundary": "fu",
+            "profile": "period200",
+            "group": "r_data_i2r",
+            "arrival_ns": "1.709455",
+            "required_ns": "1.919074",
+            "slack_ns": "0.209619",
+            "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+            "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+          }
+        ],
+        "parent": [
+          {
+            "mode": "p4",
+            "boundary": "parent",
+            "profile": "period200",
+            "group": "ready",
+            "arrival_ns": "0.303064",
+            "required_ns": "1.85",
+            "slack_ns": "1.546936",
+            "startpoint": "io_out_ready (input port clocked by core_clk)",
+            "endpoint": "io_in_ready (output port clocked by core_clk)"
+          },
+          {
+            "mode": "p4",
+            "boundary": "parent",
+            "profile": "period200",
+            "group": "vdot_i2r",
+            "arrival_ns": "2.176863",
+            "required_ns": "1.919473",
+            "slack_ns": "-0.25739",
+            "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+            "endpoint": "c199298 (rising edge-triggered flip-flop clocked by core_clk)"
+          },
+          {
+            "mode": "p4",
+            "boundary": "parent",
+            "profile": "period200",
+            "group": "vdot_r2o",
+            "arrival_ns": "2.707617",
+            "required_ns": "1.85",
+            "slack_ns": "-0.857617",
+            "startpoint": "c199925 (rising edge-triggered flip-flop clocked by core_clk)",
+            "endpoint": "io_out_bits_fflags[1] (output port clocked by core_clk)"
+          },
+          {
+            "mode": "p4",
+            "boundary": "parent",
+            "profile": "period200",
+            "group": "gate_enable",
+            "arrival_ns": "1.713544",
+            "required_ns": "1.877842",
+            "slack_ns": "0.164298",
+            "startpoint": "c201714 (rising edge-triggered flip-flop clocked by core_clk)",
+            "endpoint": "c203281 (rising clock gating-check end-point clocked by core_clk)"
+          },
+          {
+            "mode": "p4",
+            "boundary": "parent",
+            "profile": "period200",
+            "group": "all_max",
+            "arrival_ns": "3.259825",
+            "required_ns": "1.922016",
+            "slack_ns": "-1.337809",
+            "startpoint": "io_in_bits_vpu_vsew[1] (input port clocked by core_clk)",
+            "endpoint": "c201899 (rising edge-triggered flip-flop clocked by core_clk)"
+          }
+        ]
+      },
+      "baseline_critical_paths": {
+        "fu": {
+          "mode": "off",
+          "boundary": "fu",
+          "profile": "period200",
+          "group": "all_max",
+          "arrival_ns": "1.190323",
+          "required_ns": "1.921803",
+          "slack_ns": "0.73148",
+          "startpoint": "io_in_bits_data_src_0[21] (input port clocked by core_clk)",
+          "endpoint": "c7201 (rising edge-triggered flip-flop clocked by core_clk)"
+        },
+        "parent": {
+          "mode": "off",
+          "boundary": "parent",
+          "profile": "period200",
+          "group": "all_max",
+          "arrival_ns": "3.314103",
+          "required_ns": "1.920105",
+          "slack_ns": "-1.393998",
+          "startpoint": "io_in_bits_src_0[71] (input port clocked by core_clk)",
+          "endpoint": "c201635 (rising edge-triggered flip-flop clocked by core_clk)"
+        }
+      }
+    },
+    {
+      "profile": "load001",
+      "reference_period_ns": 1.0,
+      "load_pf": 0.001,
+      "fu_Q_ns": 1.790381,
+      "fu_worst_setup_slack_ns": -0.790381,
+      "parent_Q_ns": 3.337809,
+      "parent_worst_setup_slack_ns": -2.337809,
+      "baseline": {
+        "fu": {
+          "worst_setup_slack_ns": -0.26852,
+          "Q_ns": 1.26852
+        },
+        "parent": {
+          "worst_setup_slack_ns": -2.393998,
+          "Q_ns": 3.393998
+        }
+      },
+      "candidate_critical_paths": {
+        "fu": [
+          {
+            "mode": "p4",
+            "boundary": "fu",
+            "profile": "load001",
+            "group": "ready",
+            "arrival_ns": "0.199611",
+            "required_ns": "0.85",
+            "slack_ns": "0.650389",
+            "startpoint": "io_out_ready (input port clocked by core_clk)",
+            "endpoint": "io_in_ready (output port clocked by core_clk)"
+          },
+          {
+            "mode": "p4",
+            "boundary": "fu",
+            "profile": "load001",
+            "group": "all_max",
+            "arrival_ns": "1.709455",
+            "required_ns": "0.919074",
+            "slack_ns": "-0.790381",
+            "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+            "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+          },
+          {
+            "mode": "p4",
+            "boundary": "fu",
+            "profile": "load001",
+            "group": "p_data_i2r",
+            "arrival_ns": "1.693598",
+            "required_ns": "0.922345",
+            "slack_ns": "-0.771253",
+            "startpoint": "io_in_bits_data_src_1[2] (input port clocked by core_clk)",
+            "endpoint": "c9583 (rising edge-triggered flip-flop clocked by core_clk)"
+          },
+          {
+            "mode": "p4",
+            "boundary": "fu",
+            "profile": "load001",
+            "group": "r_data_i2r",
+            "arrival_ns": "1.709455",
+            "required_ns": "0.919074",
+            "slack_ns": "-0.790381",
+            "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+            "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+          }
+        ],
+        "parent": [
+          {
+            "mode": "p4",
+            "boundary": "parent",
+            "profile": "load001",
+            "group": "ready",
+            "arrival_ns": "0.294129",
+            "required_ns": "0.85",
+            "slack_ns": "0.555871",
+            "startpoint": "io_out_ready (input port clocked by core_clk)",
+            "endpoint": "io_in_ready (output port clocked by core_clk)"
+          },
+          {
+            "mode": "p4",
+            "boundary": "parent",
+            "profile": "load001",
+            "group": "vdot_i2r",
+            "arrival_ns": "2.176863",
+            "required_ns": "0.919473",
+            "slack_ns": "-1.25739",
+            "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+            "endpoint": "c199298 (rising edge-triggered flip-flop clocked by core_clk)"
+          },
+          {
+            "mode": "p4",
+            "boundary": "parent",
+            "profile": "load001",
+            "group": "vdot_r2o",
+            "arrival_ns": "2.687041",
+            "required_ns": "0.85",
+            "slack_ns": "-1.837041",
+            "startpoint": "c199925 (rising edge-triggered flip-flop clocked by core_clk)",
+            "endpoint": "io_out_bits_fflags[1] (output port clocked by core_clk)"
+          },
+          {
+            "mode": "p4",
+            "boundary": "parent",
+            "profile": "load001",
+            "group": "gate_enable",
+            "arrival_ns": "1.713544",
+            "required_ns": "0.877842",
+            "slack_ns": "-0.835702",
+            "startpoint": "c201714 (rising edge-triggered flip-flop clocked by core_clk)",
+            "endpoint": "c203281 (rising clock gating-check end-point clocked by core_clk)"
+          },
+          {
+            "mode": "p4",
+            "boundary": "parent",
+            "profile": "load001",
+            "group": "all_max",
+            "arrival_ns": "3.259825",
+            "required_ns": "0.922016",
+            "slack_ns": "-2.337809",
+            "startpoint": "io_in_bits_vpu_vsew[1] (input port clocked by core_clk)",
+            "endpoint": "c201899 (rising edge-triggered flip-flop clocked by core_clk)"
+          }
+        ]
+      },
+      "baseline_critical_paths": {
+        "fu": {
+          "mode": "off",
+          "boundary": "fu",
+          "profile": "load001",
+          "group": "all_max",
+          "arrival_ns": "1.190323",
+          "required_ns": "0.921803",
+          "slack_ns": "-0.26852",
+          "startpoint": "io_in_bits_data_src_0[21] (input port clocked by core_clk)",
+          "endpoint": "c7201 (rising edge-triggered flip-flop clocked by core_clk)"
+        },
+        "parent": {
+          "mode": "off",
+          "boundary": "parent",
+          "profile": "load001",
+          "group": "all_max",
+          "arrival_ns": "3.314103",
+          "required_ns": "0.920105",
+          "slack_ns": "-2.393998",
+          "startpoint": "io_in_bits_src_0[71] (input port clocked by core_clk)",
+          "endpoint": "c201635 (rising edge-triggered flip-flop clocked by core_clk)"
+        }
+      }
+    },
+    {
+      "profile": "load020",
+      "reference_period_ns": 1.0,
+      "load_pf": 0.02,
+      "fu_Q_ns": 1.790381,
+      "fu_worst_setup_slack_ns": -0.790381,
+      "parent_Q_ns": 3.391613,
+      "parent_worst_setup_slack_ns": -2.391613,
+      "baseline": {
+        "fu": {
+          "worst_setup_slack_ns": -0.26852,
+          "Q_ns": 1.26852
+        },
+        "parent": {
+          "worst_setup_slack_ns": -2.413199,
+          "Q_ns": 3.413199
+        }
+      },
+      "candidate_critical_paths": {
+        "fu": [
+          {
+            "mode": "p4",
+            "boundary": "fu",
+            "profile": "load020",
+            "group": "ready",
+            "arrival_ns": "0.335904",
+            "required_ns": "0.85",
+            "slack_ns": "0.514096",
+            "startpoint": "io_out_ready (input port clocked by core_clk)",
+            "endpoint": "io_in_ready (output port clocked by core_clk)"
+          },
+          {
+            "mode": "p4",
+            "boundary": "fu",
+            "profile": "load020",
+            "group": "all_max",
+            "arrival_ns": "1.709455",
+            "required_ns": "0.919074",
+            "slack_ns": "-0.790381",
+            "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+            "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+          },
+          {
+            "mode": "p4",
+            "boundary": "fu",
+            "profile": "load020",
+            "group": "p_data_i2r",
+            "arrival_ns": "1.693598",
+            "required_ns": "0.922345",
+            "slack_ns": "-0.771253",
+            "startpoint": "io_in_bits_data_src_1[2] (input port clocked by core_clk)",
+            "endpoint": "c9583 (rising edge-triggered flip-flop clocked by core_clk)"
+          },
+          {
+            "mode": "p4",
+            "boundary": "fu",
+            "profile": "load020",
+            "group": "r_data_i2r",
+            "arrival_ns": "1.709455",
+            "required_ns": "0.919074",
+            "slack_ns": "-0.790381",
+            "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+            "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+          }
+        ],
+        "parent": [
+          {
+            "mode": "p4",
+            "boundary": "parent",
+            "profile": "load020",
+            "group": "ready",
+            "arrival_ns": "0.365843",
+            "required_ns": "0.85",
+            "slack_ns": "0.484157",
+            "startpoint": "io_out_ready (input port clocked by core_clk)",
+            "endpoint": "io_in_ready (output port clocked by core_clk)"
+          },
+          {
+            "mode": "p4",
+            "boundary": "parent",
+            "profile": "load020",
+            "group": "vdot_i2r",
+            "arrival_ns": "2.176863",
+            "required_ns": "0.919473",
+            "slack_ns": "-1.25739",
+            "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+            "endpoint": "c199298 (rising edge-triggered flip-flop clocked by core_clk)"
+          },
+          {
+            "mode": "p4",
+            "boundary": "parent",
+            "profile": "load020",
+            "group": "vdot_r2o",
+            "arrival_ns": "2.783758",
+            "required_ns": "0.85",
+            "slack_ns": "-1.933758",
+            "startpoint": "c199925 (rising edge-triggered flip-flop clocked by core_clk)",
+            "endpoint": "io_out_bits_fflags[1] (output port clocked by core_clk)"
+          },
+          {
+            "mode": "p4",
+            "boundary": "parent",
+            "profile": "load020",
+            "group": "gate_enable",
+            "arrival_ns": "1.713544",
+            "required_ns": "0.877842",
+            "slack_ns": "-0.835702",
+            "startpoint": "c201714 (rising edge-triggered flip-flop clocked by core_clk)",
+            "endpoint": "c203281 (rising clock gating-check end-point clocked by core_clk)"
+          },
+          {
+            "mode": "p4",
+            "boundary": "parent",
+            "profile": "load020",
+            "group": "all_max",
+            "arrival_ns": "3.241613",
+            "required_ns": "0.85",
+            "slack_ns": "-2.391613",
+            "startpoint": "c201714 (rising edge-triggered flip-flop clocked by core_clk)",
+            "endpoint": "io_out_bits_fflags[1] (output port clocked by core_clk)"
+          }
+        ]
+      },
+      "baseline_critical_paths": {
+        "fu": {
+          "mode": "off",
+          "boundary": "fu",
+          "profile": "load020",
+          "group": "all_max",
+          "arrival_ns": "1.190323",
+          "required_ns": "0.921803",
+          "slack_ns": "-0.26852",
+          "startpoint": "io_in_bits_data_src_0[21] (input port clocked by core_clk)",
+          "endpoint": "c7201 (rising edge-triggered flip-flop clocked by core_clk)"
+        },
+        "parent": {
+          "mode": "off",
+          "boundary": "parent",
+          "profile": "load020",
+          "group": "all_max",
+          "arrival_ns": "3.263199",
+          "required_ns": "0.85",
+          "slack_ns": "-2.413199",
+          "startpoint": "c202454 (rising edge-triggered flip-flop clocked by core_clk)",
+          "endpoint": "io_out_bits_fflags[1] (output port clocked by core_clk)"
+        }
+      }
+    }
+  ],
+  "timed_DIV_SQRT_qualified": [
+    {
+      "dataset": 0,
+      "op": "vdivu",
+      "candidate_mean_cycles": 148.5,
+      "baseline_mean_cycles": 148.75,
+      "regression": -0.0016806722689075631,
+      "pass_limit_2_percent": true
+    },
+    {
+      "dataset": 0,
+      "op": "vfdiv",
+      "candidate_mean_cycles": 208.0,
+      "baseline_mean_cycles": 208.0,
+      "regression": 0.0,
+      "pass_limit_2_percent": true
+    },
+    {
+      "dataset": 0,
+      "op": "vfsqrt",
+      "candidate_mean_cycles": 216.0,
+      "baseline_mean_cycles": 216.0,
+      "regression": 0.0,
+      "pass_limit_2_percent": true
+    },
+    {
+      "dataset": 1,
+      "op": "vdivu",
+      "candidate_mean_cycles": 149.0,
+      "baseline_mean_cycles": 149.0,
+      "regression": 0.0,
+      "pass_limit_2_percent": true
+    },
+    {
+      "dataset": 1,
+      "op": "vfdiv",
+      "candidate_mean_cycles": 208.0,
+      "baseline_mean_cycles": 208.0,
+      "regression": 0.0,
+      "pass_limit_2_percent": true
+    },
+    {
+      "dataset": 1,
+      "op": "vfsqrt",
+      "candidate_mean_cycles": 224.0,
+      "baseline_mean_cycles": 224.0,
+      "regression": 0.0,
+      "pass_limit_2_percent": true
+    },
+    {
+      "dataset": 2,
+      "op": "vdivu",
+      "candidate_mean_cycles": 124.0,
+      "baseline_mean_cycles": 124.0,
+      "regression": 0.0,
+      "pass_limit_2_percent": true
+    },
+    {
+      "dataset": 2,
+      "op": "vfdiv",
+      "candidate_mean_cycles": 208.0,
+      "baseline_mean_cycles": 208.0,
+      "regression": 0.0,
+      "pass_limit_2_percent": true
+    },
+    {
+      "dataset": 2,
+      "op": "vfsqrt",
+      "candidate_mean_cycles": 216.0,
+      "baseline_mean_cycles": 216.0,
+      "regression": 0.0,
+      "pass_limit_2_percent": true
+    }
+  ]
+}

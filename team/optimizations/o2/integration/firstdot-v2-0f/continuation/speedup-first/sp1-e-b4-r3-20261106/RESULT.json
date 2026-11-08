@@ -1,0 +1,118 @@
+{
+  "schema": "sp1-e-b4-r3-host-review-closeout-v1",
+  "record_id": "SP1-E-B4-R3-20261106-HOST-REVIEW",
+  "record_number": 84,
+  "operation_id": "SP1-E-B4-R3-20261106-01",
+  "operator": "@cc77-builder / Agent",
+  "operator_identity_basis": "GitHub connector profile verified this round; REMOTE_READ.json",
+  "started_utc": "2026-11-06T07:48:40.206821+00:00",
+  "ended_utc": "2026-11-06T08:08:55.862482+00:00",
+  "recorded_at": "2026-11-06T16:08:55.862482+08:00",
+  "status": "GO_HOST_DESIGN_HOLD_TARGET_AND_FULLCORE_ACCEPTANCE",
+  "summary": "B4-R3宿主准备完成：同源码组件证据和R2真实数值/拒错证据可复用；原全核P槽及部分取消覆盖仍HOLD。已形成FEX0/F2v写回竞争的最小补测设计，实际命中NOT_TESTED。剩余四角色新独立校准预算设计GO（7500秒目标/9300秒外层），但数值专用adapter和显式角色运行器尚未接入，执行准入HOLD。未运行任何EMU/NEMU或新测试，未改RTL/构建/EDA，17/20及默认0f＋firstdot V2＋原C8保持。",
+  "source_commit": "347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e",
+  "branch": "local/zjhwork-integration-20261024",
+  "stable_default": "0f + firstdot V2 + original C8",
+  "default_changed": false,
+  "coverage_qualified_before": 17,
+  "coverage_qualified": 17,
+  "coverage_required": 20,
+  "new_target_processes": 0,
+  "new_host_differential_test_runs": 0,
+  "new_RTL_test_runs": 0,
+  "new_functional_qualified_cases": 0,
+  "new_performance_qualified": false,
+  "RTL_edits_this_round": 0,
+  "new_fullcore_builds": 0,
+  "new_synthesis_runs": 0,
+  "new_STA_runs": 0,
+  "GitHub_writes": 0,
+  "original_FAIL_preserved": true,
+  "old_locks_preserved": true,
+  "reuse_decision": "GO_COMPONENT_SCOPE_AND_CALIBRATION_NUMERIC_ONLY",
+  "original_fullcore_coverage": "HOLD_KILL_P_AND_PARTIAL_KILL_NOT_HIT",
+  "proposed_stimulus": "CONDITIONAL_GO_HOST_IMPLEMENTATION_NOT_TARGET_TESTED",
+  "budget_design": {
+    "status": "GO_BOUNDED_PROPOSAL_NOT_COMPLETION_GUARANTEE",
+    "new_targets": 4,
+    "target_sum_seconds": 7500,
+    "batch_outer_seconds": 9300,
+    "O2_target_host_outer": [
+      2400,
+      900,
+      3300
+    ],
+    "C48_target_host_outer": [
+      5100,
+      900,
+      6000
+    ],
+    "execution_authorized": false
+  },
+  "target_admission": "HOLD_PENDING_MINIMAL_ADAPTER_RUNNER_HOST_CHECKS_AND_SEPARATE_AUTHORIZATION",
+  "formal_budget_status": "HOLD_ORIGINAL_1500_EXCEEDED_IN_R2",
+  "metrics": {
+    "speedup": "NOT_TESTED",
+    "area": "NOT_TESTED",
+    "timing": "NOT_TESTED"
+  },
+  "evidence": {
+    "before": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r3-20261106/BEFORE.json",
+      "bytes": 72372,
+      "sha256": "8f276f208c4b7758d72911ae8eccf4051ccdf9d0afb0b2fa2d811285881e970b"
+    },
+    "coverage": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r3-20261106/coverage-review/RESULT.json",
+      "bytes": 21060,
+      "sha256": "402f1107fef8dbb04970b3c0e6ed51d98e4887d37262b16023f8b0f34c6bce53"
+    },
+    "coverage_sources": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r3-20261106/coverage-review/SOURCE_PINS.json",
+      "bytes": 143667,
+      "sha256": "98f093671c5396c43676606fbc501f5980bc6dd7322a89d1f86da83bc2a5aad2"
+    },
+    "stimulus": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r3-20261106/stimulus-review/RESULT.json",
+      "bytes": 3692,
+      "sha256": "ecf0ab93699ee9f88e04bf1667862f81a693208ec21f3ffbeebf9d61cac30738"
+    },
+    "stimulus_sources": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r3-20261106/stimulus-review/SOURCE_REFERENCES.json",
+      "bytes": 10151,
+      "sha256": "52446df9672388167437f6cdd09ca0f45584c72ec494d3f1a9b1f447030d086c"
+    },
+    "budget": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r3-20261106/budget-review/RESULT.json",
+      "bytes": 16592,
+      "sha256": "b715c0dd9c8806dbf5ed5f420700f6f7d51788e762adc86b52a00df2a25e8c78"
+    },
+    "budget_draft": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r3-20261106/budget-review/CONTRACT_DRAFT.json",
+      "bytes": 14789,
+      "sha256": "0afa50dcb850e6c1b92814431514b30b4004e44e50b27c0a5e195ec0b1ff3080"
+    },
+    "reuse": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r3-20261106/REUSED_CANDIDATE_NUMERIC.json",
+      "bytes": 6663,
+      "sha256": "c79a4e87bf30757ab50c75a62d06bcd22ae32d1179f015316b5ebcabca36b8ec"
+    },
+    "decisions": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r3-20261106/DECISION_CONTRACT.json",
+      "bytes": 3041,
+      "sha256": "ae7f5d7e2b6bf0835849d839e85a232ac8fc6b4a5d4403d4921085c86af9337f"
+    },
+    "independent_contract_review": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r3-20261106/ROOT_CONTRACT_REVIEW.json",
+      "bytes": 9485,
+      "sha256": "040f128d96155d361f922a15ab7e0060c13b2a08ad15d7dff663e6a0b37cc442"
+    },
+    "historical_metrics": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r3-20261106/METRICS.json",
+      "bytes": 107735,
+      "sha256": "5e548be18a10d4aedd7d70839a10d018d217a69c25bfd7cef2383c5a5a39a941"
+    }
+  },
+  "evidence_manifest": "EVIDENCE_MANIFEST.json",
+  "proposed_next_instruction": "开始 B4-R4，按NEXT_STEP实现校准专用数值摘要和剩余四角色运行器，复用未变公共机制，只补角色/参考库/退出码/历史身份/冻结差异正负控及宿主预算准入。保留R2原FAIL和旧锁，不重跑已完成的o2-control bit100与候选正常。全部准入后，以新冻结身份和独立授权，仅串行运行0f O2正常→C48 bit100→C48候选正常→C48 0f正常；接受新独立预算：最多4目标、目标累计7500秒、整批外层9300秒，O2目标2400/宿主900/外层3300秒，C48目标5100/宿主900/外层6000秒；各角色和资源按本轮草案。失败即停、不重试、不加时、不借旧余量、不自动进入正式验收。新取消覆盖补测镜像不在该批执行，不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub。完成后更新计分板和三项指标，给出下一轮指令。"
+}

@@ -1,0 +1,242 @@
+{
+  "schema": "sp1-e-o2-calibration-r1-closeout-v1",
+  "record_number": 91,
+  "record_id": "SP1-E-O2-CANCEL-CALIBRATION-R1-20261107-LOG-FORMAT-FAIL",
+  "operation_id": "SP1-E-O2-CANCEL-CALIBRATION-R1-20261107-01",
+  "operator": "cc77-builder / Agent",
+  "operator_identity_basis": "Current GitHub connector profile read cc77-builder; no remote writes",
+  "started_utc": "2026-11-07T03:45:52.663426+00:00",
+  "ended_utc": "2026-11-07T03:55:00.635684+00:00",
+  "recorded_at": "2026-11-07T11:55:00.635684+08:00",
+  "source_commit": "347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e",
+  "branch": "local/zjhwork-integration-20261024",
+  "status": "HOLD_AFTER_BIT100_LOG_FORMAT_FAIL",
+  "stable_default": "0f + firstdot V2 + original C8",
+  "default_changed": false,
+  "coverage_qualified_before": 18,
+  "coverage_qualified": 18,
+  "coverage_required": 20,
+  "item19_qualified": false,
+  "new_performance_qualified": false,
+  "host_status": "PASS_HOST_ADMISSION",
+  "new_host_methods": 3,
+  "reused_host_methods": 7,
+  "overlapping_cold_import_method": 1,
+  "unique_method_union": 9,
+  "negative_subcases_passed": 13,
+  "runtime_source_changed": false,
+  "host_attempts": 1,
+  "new_target_processes": 1,
+  "target_launch_attempts": 1,
+  "actual_new_bit100": "EXPECTED_INJECTION_OBSERVED_BUT_STRICT_COLLECTOR_FAIL",
+  "actual_candidate_calibration": "NOT_RUN_AFTER_FIRST_ROLE_FAILURE",
+  "native_reference_loads": "observed negative wrapper and normal NEMU mapped in sole EMU PID",
+  "cost_measurement_attempts": 1,
+  "cost_screen_seconds": 345.931219935,
+  "runtime_independent_review": {
+    "status": "PASS_SEPARATE_SOURCE_REVIEW",
+    "method": "same Agent, separate static source/ELF reasoning; not teammate sign-off or a second-agent review",
+    "static_checks": 10,
+    "target_runs": 0,
+    "native_reference_loads": 0,
+    "new_coverage_proven": false,
+    "long_DIV_hit_risk_retained": true
+  },
+  "RTL_edits_this_round": 0,
+  "new_fullcore_builds": 0,
+  "new_synthesis_runs": 0,
+  "new_STA_runs": 0,
+  "GitHub_writes": 0,
+  "summary": "Minimal negative-fixture revision passed13 labeled cases;3host methods passed and7reused (cold import overlap). Host admission and143pins passed. Single real bit100 run within caps stopped on legal historical(S)tag not supported by parser; no normal/retry/replay. Original FAIL/locks retained;18/20 unchanged.",
+  "actual_budget": {
+    "external_seconds": 35.826946316000004,
+    "batch_host_seconds": 9.778120975999993,
+    "target_active_seconds": 25.976017936999998,
+    "external_minus_target_seconds": 9.850928379000006,
+    "guest_cycles": 11668,
+    "peak_threads": 1,
+    "peak_rss_bytes": 74711040,
+    "log_bytes": 39824,
+    "resource_ok": true,
+    "no_limit_hit": true
+  },
+  "budget_caps": {
+    "target_seconds": 1200,
+    "host_seconds": 900,
+    "outer_seconds": 2100,
+    "cpu_affinity": [
+      4
+    ],
+    "thread_cap": 4,
+    "rss_cap_bytes": 12884901888,
+    "log_cap_bytes": 2147483648
+  },
+  "failure": {
+    "status": "READ_ONLY_MISSING_HISTORICAL_SKIP_TAG_FORMAT_IDENTIFIED",
+    "method": "Read original frozen regex and raw log; identify rejected rows with original regex only. No collector rerun, repaired parser, host suite or target execution.",
+    "failure": "ValueError: malformed or ambiguous instruction ring row",
+    "raw_stdout": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-r1-20261107/target-01/01-bit100/stdout.log",
+      "bytes": 14865,
+      "sha256": "d5faadd0f38fce416c19865664927cccd8cb056f01546b04a11643fc6bdd796a"
+    },
+    "raw_stderr": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-r1-20261107/target-01/01-bit100/stderr.log",
+      "bytes": 24959,
+      "sha256": "7c43a7fbbe2e42083e0b068443fe2fa875bc72073ca34463638b15430e34832b"
+    },
+    "frozen_parser": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-r1-20261107/runtime/negative_group.py",
+      "bytes": 12124,
+      "sha256": "aebed8eb3cda09fcd045b617f9015ccd3ad38cbff5e4ce531f58fda4e982c5af"
+    },
+    "instruction_ring_rows": 32,
+    "original_pattern_rejected_rows": [
+      {
+        "stdout_line": 48,
+        "line": "[10] commit pc 0000000080000ebc inst 00874783 wen 1 dst 15 data 0000000000000000 idx 01a (05) (S)"
+      },
+      {
+        "stdout_line": 51,
+        "line": "[13] commit pc 0000000080000ec4 inst 00a70223 wen 0 dst 04 data 0000000000000000 idx 01d (0c) (S)"
+      }
+    ],
+    "current_group": {
+      "group_slot": 9,
+      "head_pc": "0x80000278",
+      "cmtcnt": 1,
+      "instruction_ring_tail": 7,
+      "selected_slots": [
+        7
+      ],
+      "current_guard_row": "[07] commit pc 0000000080000278 inst 0294000b wen 0 dst 00 data 00000000fffffdec idx 007 <--",
+      "has_skip_tag": false
+    },
+    "producer_source": [
+      {
+        "path": "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/candidate/difftest/src/test/csrc/difftest/difftest.h",
+        "bytes": 13976,
+        "sha256": "5181ebecd337c199c76c73320828f6eac817a0be96f8943c3ede2e3301ea82dd"
+      },
+      {
+        "path": "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/candidate/difftest/src/test/csrc/difftest/difftest.cpp",
+        "bytes": 56385,
+        "sha256": "23c2f677377696a64bebe568c6b0457294a4d7db9c721271391e41aecf0201a7"
+      }
+    ],
+    "producer_tag_definition": "InstrTrace prints optional load/store queue indices followed by get_tag(skip,delayed); S means skip, D means delayed, bitwise S|D is W. Source supports these tags; future correction must remain anchored and not allow arbitrary suffixes.",
+    "source_scope": "Current candidate checkout source read for explanation and pinned here; not a new binary rebuild identity claim",
+    "historical_S_addresses": [
+      "0x80000ebc load from 0x40600008",
+      "0x80000ec4 store to 0x40600004"
+    ],
+    "reason": "INSTR_ROW permits optional 2-hex queue index then optional tail arrow only; valid historical skip tag (S) is not accepted. First rejected row is slot10 outside selected current group7.",
+    "observed_negative_indications": {
+      "injection": "bit=100 vd=0 pc=0x80000278 instruction=0x0294000b",
+      "mismatch": "v0_high right=0x0000001000000000 wrong=0x0000000000000000",
+      "exit_code": 1,
+      "guard_pc_committed": true,
+      "full_run_negative_qualified": false
+    },
+    "not_proven": [
+      "strict bit100 collector PASS",
+      "41-call normal validation",
+      "S0 or S1 trigger",
+      "item19 qualification",
+      "new speedup/area/timing"
+    ],
+    "next_scope_proposal": "New R2 identity: support exactly producer-defined historical tag grammar, retain uint8 and exact32-row/current-group binding; explicitly reject skipped current custom evidence. Offline full real log with narrowly targeted positive/negative controls before any further target. Retain this FAIL and locks."
+  },
+  "evidence": {
+    "host": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-r1-20261107/host/RESULT.json",
+      "bytes": 1953,
+      "sha256": "69123853e8bf1d2e790218b515b88f56c08f5cca7055f569cd7265f0b46d0f33"
+    },
+    "tests": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-r1-20261107/host/tests.log",
+      "bytes": 807,
+      "sha256": "11e39c85f2ce3d5d722342c95528acbe879686e7a0d2e6d29d3ab79628d6c2f1"
+    },
+    "cost": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-r1-20261107/host/COST.json",
+      "bytes": 595,
+      "sha256": "a48217d30087402426afa4b8b7429e596ee6d609d9cd7121d9c38327df636386"
+    },
+    "separate_review": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-r1-20261107/review/RESULT.json",
+      "bytes": 302,
+      "sha256": "6c2cb96a910bcad88b9a634464569a94eb6311636c3d783c3979ef5041d3fdc7"
+    },
+    "reuse7": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-r1-20261107/review/REUSE_RESULT.json",
+      "bytes": 645,
+      "sha256": "d4adb390fc68d24c1efa35ae041d8bb784f43b773b54c4957bfbbffd7c10c215"
+    },
+    "guard": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-r1-20261107/external-batch/RESULT.json",
+      "bytes": 1805,
+      "sha256": "84f82aeb49fd2e8f559a0001a377806ed6e64bf402f3e978ffe2addebb1d88ef"
+    },
+    "batch": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-r1-20261107/target-01/batch.json",
+      "bytes": 2773,
+      "sha256": "bcd4ee3bafe66a325eead893ffa6384796c8548b2630041a0ae2eb9b95997639"
+    },
+    "bit100_run": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-r1-20261107/target-01/01-bit100/record.json",
+      "bytes": 6088,
+      "sha256": "39bae44383ab7fe8f6c6e20587058296c360932069ba5ca32c69ac1c768f2632"
+    },
+    "raw_stdout": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-r1-20261107/target-01/01-bit100/stdout.log",
+      "bytes": 14865,
+      "sha256": "d5faadd0f38fce416c19865664927cccd8cb056f01546b04a11643fc6bdd796a"
+    },
+    "raw_stderr": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-r1-20261107/target-01/01-bit100/stderr.log",
+      "bytes": 24959,
+      "sha256": "7c43a7fbbe2e42083e0b068443fe2fa875bc72073ca34463638b15430e34832b"
+    },
+    "freeze": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-r1-20261107/EXECUTION_FREEZE.json",
+      "bytes": 47527,
+      "sha256": "94f40ef1541d045ba2c0f0929905a9f382ae7ef90637759e074abc81fded029e"
+    },
+    "terminal": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-r1-20261107/TERMINAL_AUDIT.json",
+      "bytes": 3535,
+      "sha256": "fb609975c99ae16d337688f2b73615453594ef4959be9eaf6a28f929b9555dac"
+    },
+    "diagnosis": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-r1-20261107/review/FAILURE_DIAGNOSIS.json",
+      "bytes": 4029,
+      "sha256": "9546cd9eb21a9e9c6b556ea5effd5fdfc72d9e991acc3aef33713f421b4e0324"
+    },
+    "contract": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-r1-20261107/CONTRACT.json",
+      "bytes": 4505,
+      "sha256": "e510d2f3ff1ad4afffb0795ea736b343ae355ba4f7b6c71e7f98d024833b89d7"
+    },
+    "patch": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-r1-20261107/R1.patch",
+      "bytes": 6849,
+      "sha256": "4510eb37b9b1204bbcf051401dac0cf91f8fc14ade75a741c310e8a3d9cdffa9"
+    }
+  },
+  "evidence_manifest": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-r1-20261107/EVIDENCE_MANIFEST.json",
+  "old_FAIL_and_locks_preserved": true,
+  "metrics": {
+    "new_speedup": "NOT_TESTED",
+    "new_area": "NOT_TESTED",
+    "new_timing": "NOT_TESTED",
+    "source": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-r1-20261107/METRICS.json",
+      "bytes": 103172,
+      "sha256": "3d66dbf69c273961e46b82926fb49459990d0a103b8ff3361bdab1b41c9be0b5"
+    },
+    "historical_performance_rows": 18,
+    "historical_STA_profiles": 5
+  },
+  "proposed_next_instruction": "开始 SP1-E O2 补测接入 R2，按 NEXT_STEP 最小补齐合法历史环 S/D/W 标签解析，明确当前拒错提交组不能用 skip/delayed 指令作证；用 R1 完整真实日志一次性核查整个拒错检查链，补针对性正负控，保留原FAIL与锁，复用未变宿主证据。全部宿主、冻结、独立方法复核和预算门通过后，以新身份同轮串行原 bit100拒错→候选正常两角色，保持300秒/10万guest、900秒/30万guest、目标1200秒、宿主900秒、外层2100秒及原资源和41调用/77退休、S0/S1完整覆盖。失败或未命中即停，不重试、不加时、不扩围、不自动重放；不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub。完成后更新计分板并给出下一批指令。"
+}

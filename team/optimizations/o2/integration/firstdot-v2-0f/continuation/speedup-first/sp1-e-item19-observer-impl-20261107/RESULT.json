@@ -1,0 +1,87 @@
+{
+  "schema": "item19-observer-implementation-v1",
+  "record_number": 104,
+  "record_id": "sp1-e-item19-observer-impl-20261107",
+  "recorded_at": "2026-11-07T21:00:13.884154+08:00",
+  "operator": "cc77-builder / Agent (session identity; no fresh login)",
+  "source_commit": "347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e",
+  "branch": "local/zjhwork-integration-20261024",
+  "status": "GO_HOST_IMPLEMENTATION_HOLD_TARGET",
+  "observer_implementation": "GO_LOCAL_STRUCTURAL_ONLY",
+  "item19_status": "HOLD_NO_NEW_TRIGGER_EVIDENCE",
+  "item20_status": "PASS_RECORD102_REUSED",
+  "coverage_qualified": 19,
+  "coverage_required": 20,
+  "stable_default": "0f + firstdot V2 + original C8",
+  "default_changed": false,
+  "isolated_RTL_files_changed": 4,
+  "production_RTL_changed": false,
+  "old_candidate_changed": false,
+  "host_identity_test_methods": 7,
+  "flag_cases_pass": 6,
+  "local_elaborations_pass": 12,
+  "structural_projection_pairs_pass": 6,
+  "local_dynamic_simulation": "NOT_RUN",
+  "new_target_processes": 0,
+  "new_EMU_runs": 0,
+  "new_NEMU_runs": 0,
+  "new_full_core_builds": 0,
+  "new_EDA_runs": 0,
+  "new_GNU_builds": 0,
+  "software_image_changed": false,
+  "github_upload": false,
+  "old_failures_and_locks_preserved": true,
+  "new_three_metrics": {
+    "speedup": "NOT_TESTED",
+    "area": "NOT_TESTED",
+    "timing": "NOT_TESTED"
+  },
+  "next_step": "开始第19项独立观察EMU构建与诊断准入：复用本轮四文件观察补丁和宿主通过证据，先核查进程、源码与依赖身份，冻结独立构建入口及资源合同。接受一次3600秒构建停止上限，失败即停、不重试、不加时，保留旧EMU与原M1镜像。构建成功后核查新EMU身份、旧SP1/T13协议和日志开销，准备bit100→M1正常的两角色诊断合同；预算依据不足则HOLD。本轮只构建和做宿主准入，不运行EMU/NEMU、不改软件镜像、不做EDA、不切默认、不上传GitHub，第19项覆盖及重放条件保持。",
+  "evidence": {
+    "COMPILE.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-impl-20261107/COMPILE.json",
+      "bytes": 120,
+      "sha256": "d73aa1ab8cf39bd036cbb3903321a835d973c62ff858486eec2f0df7259df6a6"
+    },
+    "FLAG_TESTS.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-impl-20261107/FLAG_TESTS.json",
+      "bytes": 2484,
+      "sha256": "3973dcdce9ecfb38e6d5a567e8951bf2c527cc37e27e70905d8bd50e5650d2d1"
+    },
+    "NEUTRALITY.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-impl-20261107/NEUTRALITY.json",
+      "bytes": 1908,
+      "sha256": "f443c8164542f97d2a5fdbaca529ef74ec85e9fc881dca69838d6af97e2425aa"
+    },
+    "SOURCE_AUDIT.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-impl-20261107/SOURCE_AUDIT.json",
+      "bytes": 784,
+      "sha256": "eb470d1b84ad0790087cfd37da988046cbd3073ea7fd6b9ffed91465b3617281"
+    },
+    "PRESERVATION.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-impl-20261107/PRESERVATION.json",
+      "bytes": 208,
+      "sha256": "6121c1e3684403828aee5081a51e8431dfbf9fedc7e5032aafadee728fde3d45"
+    },
+    "host-tests-final.log": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-impl-20261107/host-tests-final.log",
+      "bytes": 502,
+      "sha256": "05d9e973d9a253c6f730222d9152fe7ba4a258d7485baa1e4a405c0d2f92004b"
+    },
+    "SOURCE_PINS.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-impl-20261107/SOURCE_PINS.json",
+      "bytes": 2145,
+      "sha256": "b60a1ce3e152210be160cdaa37c8730a9d5e008c7ce824031a2311dce075973f"
+    },
+    "BUDGET_REVIEW.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-impl-20261107/BUDGET_REVIEW.json",
+      "bytes": 942,
+      "sha256": "57c4b9068f05ba5d9ee55ee2a8da284fdd3342a7413377a33d9062d7fd3003eb"
+    },
+    "METRICS.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-impl-20261107/METRICS.json",
+      "bytes": 112520,
+      "sha256": "67855d9565883864e11a0e485d4cfecfd07a497f2d14404d51f605d2b7f5f840"
+    }
+  }
+}

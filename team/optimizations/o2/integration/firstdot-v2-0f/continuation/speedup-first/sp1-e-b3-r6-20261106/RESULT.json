@@ -1,0 +1,186 @@
+{
+  "schema": "sp1-e-b3-r6-closeout-v1",
+  "record_id": "SP1-E-B3-R6-20261106-HOLD",
+  "record_number": 79,
+  "operation_id": "SP1-E-B3-R6-20261106-01",
+  "operator": "@cc77-builder / Agent",
+  "started_utc": "2026-11-06T03:14:20.923904+00:00",
+  "ended_utc": "2026-11-06T03:33:14.118243+00:00",
+  "recorded_at": "2026-11-06T11:33:14.118243+08:00",
+  "status": "HOLD",
+  "summary": "B3-R6已修正历史出处检查：准备与正式验证使用同一原路径/字节数/SHA逻辑，304项冻结内容及4份历史别名通过；运行器和checker保持R5原字节，27＋10项证据明确复用、未重跑。独立审查唯一正式尝试在首个CSR正控API调用时报explicit scope/run id：审查脚本误传HOST_FIXTURE_NOT_TARGET，生产既有合法值为HOST_FIXTURE。首个正控调用1次、完成0/41；这是Agent编写的审查脚本参数错误，不是RTL、CSR结果或预算超限。按失败即停，预算0次、EMU目标0，保留原FAIL，整体HOLD，SP1-E仍15/20。",
+  "notes": [
+    "本轮只删除历史出处必须为直接canonical路径这一无关条件；实际执行路径、boot/PID/start_ticks、完整128位、CSR和重放合同保持。没有新增别名白名单或准备期boot不变要求。",
+    "失败后的两份交叉只读复核确认：确定的接口错误只有CSR共享调用处的scope字面量；旧R5_INDEPENDENT_CSR作为非空run_id仍合法，不另设轮次名称门。其他41项的参数、夹具接口和返回字段静态相符，但未运行的动态结果仍不能写PASS。见[失败归因](independent-review/FAILURE_ATTRIBUTION.json)和[接口复核](READ_ONLY_INTERFACE_REVIEW.md)。",
+    "VT/FF/NEL负例会由既有console入口拒绝，不能全部称为CSR正则层独立证据；原27项中已有LF/CRLF的CSR行特定拒绝覆盖。该说明只修正证据适用范围，不增测试条件。",
+    "预算脚本接口只读复核使用合法HOST_FIXTURE，没有同类确定误参；成本测量未运行，两个host_budget_seconds均null，新N等代价NOT_MEASURED。原R1预算值只作历史，不能冒充本轮GO。见[预算终态](budget-review/RESULT.md)。",
+    "本轮新加速比、面积、时序全部NOT_TESTED；历史数值按原负载/trace-off局部成本合同复用。默认0f＋firstdot V2＋原C8保持，候选未采用。"
+  ],
+  "source_commit": "347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e",
+  "branch": "local/zjhwork-integration-20261024",
+  "stable_default": "0f + firstdot V2 + original C8",
+  "default_changed": false,
+  "runtime_new_methods": 0,
+  "runtime_new_status": "NOT_RUN_REUSED",
+  "runtime_reuse_status": "PASS_RUNTIME_HOST_TESTS",
+  "runtime_reused_methods": 10,
+  "runtime_reused_R3_methods": 6,
+  "runtime_reused_R4_boot_methods": 4,
+  "checker_reused_methods": 27,
+  "checker_new_methods": 0,
+  "checker_new_status": "NOT_RUN_REUSED",
+  "checker_reuse_status": "PASS_STRICT_NEGATIVE_CHECKER_HOST",
+  "independent_status": "HOLD_B3_R6_INDEPENDENT_CONTROL_SCOPE_ERROR",
+  "independent_formal_controls": 0,
+  "independent_planned_controls": 41,
+  "independent_control_status": "FAIL_INDEPENDENT_B3_R6_CONTROLS",
+  "independent_error": "ValueError: explicit scope/run id",
+  "independent_historical_controls": 65,
+  "independent_historical_qualification": "Historical 65 source only; not repeated and not current new-control PASS",
+  "budget_status": "HOLD_B3_HOST_BUDGET",
+  "budget_error": "ValueError: explicit scope/run id",
+  "budget_failure_stage": "INDEPENDENT_CSR_CONTROL_CALLER_SCOPE_BEFORE_BUDGET",
+  "readme_previous": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r6-20261106/README.md",
+    "bytes": 565,
+    "sha256": "b025448bda995efffe4a881eeab4f5d22234ab9dbb54c710c570b601c14bbfcf"
+  },
+  "readme_backup": "README.pre-closeout.md",
+  "formal_budget_attempts": 0,
+  "actual_target_processes": 0,
+  "actual_count_scope": "completed_native_role_records",
+  "missing_role_receipts": 0,
+  "new_target_processes": 0,
+  "launch_attempts": 0,
+  "target_batch_status": "NOT_RUN",
+  "external_termination_confirmed": false,
+  "cases": [
+    {
+      "case_id": "legacy-control",
+      "target_run": "NOT_RUN",
+      "native_campaign_status": "NOT_RUN",
+      "actual_target_processes": 0,
+      "actual_count_scope": "completed_native_role_records",
+      "missing_role_receipts": 0,
+      "launch_attempts": 0,
+      "target_active_wall_seconds": null,
+      "host_overhead_seconds": null,
+      "host_admission": "HOLD",
+      "host_budget_seconds": null,
+      "budget_error": "ValueError: explicit scope/run id",
+      "budget_failure_stage": "INDEPENDENT_CSR_CONTROL_CALLER_SCOPE_BEFORE_BUDGET",
+      "functional_qualified": false
+    },
+    {
+      "case_id": "o2-all-pairs",
+      "target_run": "NOT_RUN",
+      "native_campaign_status": "NOT_RUN",
+      "actual_target_processes": 0,
+      "actual_count_scope": "completed_native_role_records",
+      "missing_role_receipts": 0,
+      "launch_attempts": 0,
+      "target_active_wall_seconds": null,
+      "host_overhead_seconds": null,
+      "host_admission": "HOLD",
+      "host_budget_seconds": null,
+      "budget_error": "ValueError: explicit scope/run id",
+      "budget_failure_stage": "INDEPENDENT_CSR_CONTROL_CALLER_SCOPE_BEFORE_BUDGET",
+      "functional_qualified": false
+    }
+  ],
+  "qualified_case_ids": [],
+  "coverage_qualified": 15,
+  "coverage_required": 20,
+  "held_cases": [
+    "o2-control",
+    "original C8 C48",
+    "timed DIV/SQRT"
+  ],
+  "metrics": {
+    "speedup": "NOT_TESTED",
+    "area": "NOT_TESTED",
+    "timing": "NOT_TESTED"
+  },
+  "new_performance_qualified": false,
+  "RTL_edits_this_round": 0,
+  "new_fullcore_builds": 0,
+  "new_synthesis_runs": 0,
+  "new_STA_runs": 0,
+  "GitHub_writes": 0,
+  "formal_gate_retry_performed": false,
+  "production_files_unchanged": 445,
+  "prior_evidence_unchanged": 642,
+  "evidence": {
+    "runtime_result": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r6-20261106/runtime-tests/RESULT.json",
+      "bytes": 4465,
+      "sha256": "38b33e6cad8993c5ba5519ee276ff1dee0ae7008c486f7868e429d4e0b6f4a5f"
+    },
+    "checker_result": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r6-20261106/checker/attempt-01/RESULT.json",
+      "bytes": 552,
+      "sha256": "ec58e54311f434f1adddb5bd71129d4a33fccf2a6a13f0a1c884cdae1c50bb71"
+    },
+    "checker_reuse": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r6-20261106/checker/REUSE.json",
+      "bytes": 6549,
+      "sha256": "3a029be23286ddf422b6045a6661da6fdb4f3a41f67dbfd02022bdba68382aff"
+    },
+    "runtime_relocation_reuse": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r6-20261106/runtime-tests/REUSE.json",
+      "bytes": 8114,
+      "sha256": "dac00882dead26e7aaf114d967efbb3d0b5b0adf07ba8169c24077a367410b6c"
+    },
+    "full_relocation_mapping": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r6-20261106/REUSE_HOST_EVIDENCE.json",
+      "bytes": 32622,
+      "sha256": "22a642b0f49992d4b5bc9eec290a72655e1b95cfd16e584b61c48b2bd9cb5b4b"
+    },
+    "checker_freeze": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r6-20261106/checker/SOURCE_FREEZE.json",
+      "bytes": 50719,
+      "sha256": "27fa7b8a1a5a748c106baeb3996fd2edac65e0870f6d22f4458963fc48de8d02"
+    },
+    "runtime_reuse": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r6-20261106/runtime-tests/REUSE_AST.json",
+      "bytes": 4362,
+      "sha256": "2e393db553f6e3054f007a78fed46cb50c860a3fccd31ea96c64572df48bed69"
+    },
+    "independent_actual_controls": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r6-20261106/independent-review/CONTROLS_RESULT.json",
+      "bytes": 5248,
+      "sha256": "3f79aefee2462834950dbd880481d97eda7e266f51df97b3bf667ce913b5259a"
+    },
+    "independent_historical_source": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r4-20261105/independent-review/RESULT.json",
+      "bytes": 6689,
+      "sha256": "72c7460b9dd213cfc926a0beb9f65aea905b5c45c0372771765b8aa6f26a7577"
+    },
+    "external_termination_audit": null,
+    "budget_external_guard": null,
+    "budget_final_audit": null,
+    "runtime_version": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r6-20261106/runtime/SOURCE_VERSION.json",
+      "bytes": 2562,
+      "sha256": "4482b58b70e34984bc7985633c290cd5abadcd68e2798af2d76c517dbe5e862d"
+    },
+    "host_final_audit": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r6-20261106/independent-review/RESULT.json",
+      "bytes": 7198,
+      "sha256": "8652d3cd3a8d8ff9616e8e6e0b8e902564b758ae3bd87233febec342f0fc5ece"
+    },
+    "target_final_audit": null,
+    "budget_result": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r6-20261106/budget-review/RESULT.json",
+      "bytes": 10460,
+      "sha256": "8b4da7f3e1a833f921da2277e49a68a9cf2bd9d771f05d0849de5b5bd25d7799"
+    },
+    "input": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r6-20261106/CLOSEOUT_INPUT.json",
+      "bytes": 3703,
+      "sha256": "3aa97a7a2a981718de03137957771879acdca524dfe5ae9b0ed05cb3d8069c2c"
+    }
+  },
+  "target_receipts": [],
+  "proposed_next_instruction": "开始 B3-R7：在独立目录仅将CSR独立审查共享调用点的scope改为生产已有合法值HOST_FIXTURE；沿用非空host run_id和既有全部41项覆盖，不新增条件、不为测试放宽生产API。复用R5已通过且字节未变的27项checker、10项外部监督及现有身份/溯源证据，复用R6历史路径检查修复。先逐项静态核对本次改动调用的签名、合法scope和返回字段，再冻结并完成剩余独立审查及一次原夹具900秒外部监督预算测量；保留R1至R6全部FAIL和旧锁，不缩样、不重复无关测试。两例均GO后，同轮仅按legacy-control→o2-all-pairs串行执行五角色，每例300＋4×1500秒，目标6300/外层7200/宿主900秒；整批最多10目标，目标12600/外层14400秒，不借时，负控100000guest、正常800000/300000guest，CPU4/整组4线程/RSS12GiB/每例日志2GiB及原seed/RAM/reset不变。正式审查、预算或目标任一失败即停，不重试、不加时、不跳过继续、不扩围；三个暂缓项继续HOLD。不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub，完成后更新计分板、三项指标和下一轮指令。"
+}

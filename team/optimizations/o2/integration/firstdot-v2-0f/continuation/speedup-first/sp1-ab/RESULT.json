@@ -1,0 +1,415 @@
+{
+  "schema": "sp1-ab-local-record-v1",
+  "record_id": "SP1-AB-ORIGINAL-P4-OBSERVER-20261103-01",
+  "operation_id": "20261103-cc77-builder-sp1-ab",
+  "operator": "@cc77-builder / Agent",
+  "recorded_at": "2026-11-03T12:44:31.565762+08:00",
+  "status": "SP1_AB_PASS_GO_SP1_C",
+  "actual_target_admission": "HOLD_RUNTIME_ANNEX",
+  "user_selection": "PENDING_USER_SELECTION",
+  "stable_default": "0f + firstdot V2 + original C8",
+  "default_selected_hardware_changed": false,
+  "source_commit": "347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e",
+  "hardware_reference": "0f12df675378556670afd0dd2153f47fcb330610",
+  "candidate_root": "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/candidate",
+  "source_manifest": {
+    "path": "source-manifest-v1.json",
+    "sha256": "5eaab7988a7fc583808c035ec4dbbe4ebbe51869f66cdb1ab5df1afce2dd7f1a"
+  },
+  "candidate_patch_sha256": "e1842a5f52a27fda2bea30f791921d6acefd63c54b415912adb8a1e3438be682",
+  "production_files_changed_in_independent_candidate": [
+    "src/main/scala/xiangshan/backend/exu/ExeUnit.scala",
+    "src/main/scala/xiangshan/backend/fu/wrapper/VDotElastic.scala",
+    "src/main/scala/xiangshan/backend/fu/wrapper/VDotO2.scala",
+    "src/main/scala/xiangshan/backend/rob/Rob.scala"
+  ],
+  "existing_checkout_source_unchanged": true,
+  "candidate_source_files": 398,
+  "build_input_freeze": {
+    "path": "build-inputs-final.json",
+    "sha256": "3df83327ba3bf87002c2d6287c9e12ff35a110efd16fd40cba8cba77b5d0c316",
+    "files": 1146,
+    "scope": "final archive and future build preparation; individual local pre-run source/tool locks kept separately"
+  },
+  "dependencies": {
+    "path": "dependencies-final.json",
+    "sha256": "c6fa71aa4ad80b5fa49b5852a07fd9a97389bd5965cf66aaa872341924aa8e36",
+    "modules": 126,
+    "files": 21236
+  },
+  "configuration": {
+    "candidate": {
+      "VDOT_O2_ELASTIC": 1,
+      "VDOT_T14_FUSED_INPUT": 1,
+      "VDOT_P4_ONE_CYCLE": 1,
+      "VDOT_SP1_TRACE": "paired 0/1",
+      "VDOT_O2_TRACE": 0,
+      "VDOT_T13_TRACE": "0 for local simulation, 1 legal configuration tested",
+      "VDOT_O1_HANDOFF": 0,
+      "VDOT_O1_TRACE": 0,
+      "VDOT_T12_TRACE": 0
+    },
+    "config": "MinimalConfig(1), VLEN128, ROB48",
+    "new_flags_default": 0
+  },
+  "qualification": {
+    "arithmetic_128": "PASS",
+    "FU_protocol": "PASS",
+    "real_VFEX4_DIV_SQRT": "PASS",
+    "local_trace_neutrality": "PASS",
+    "actual_local_observer": "PASS",
+    "host_negative_controls": "PASS",
+    "default_off_and_configuration": "PASS",
+    "functional_cone_structural_check": "PASS_NOT_FORMAL_PROOF",
+    "cost": "PASS_REUSED_ORIGINAL_G2_TRACE_OFF_UNDER_SP0_NEW_BUDGET",
+    "ROB_execution": "NOT_TESTED_FULLCORE_PENDING",
+    "fullcore": "NOT_TESTED",
+    "NEMU_diff_test": "NOT_TESTED",
+    "program_speedup": "NOT_TESTED",
+    "trace_on_area_STA": "NOT_TESTED"
+  },
+  "local_neutrality": {
+    "fu": {
+      "status": "SP1_ACTUAL_TRACE_NEUTRALITY_PASS",
+      "stage": "fu",
+      "off": {
+        "cycles": 31497,
+        "packets": 28759,
+        "observer_records": 0,
+        "observer_kinds": {}
+      },
+      "on": {
+        "cycles": 31497,
+        "packets": 28759,
+        "observer_records": 0,
+        "observer_kinds": {}
+      },
+      "retained_sha256": "418f7344f95e763600153a908b4ea2a266d607028cfe2ca14e2603c75ee1b245",
+      "comparison": "all non-SP1 bytes exact; full packets and every local cycle retained",
+      "observer_semantics": "separate SP1 strict checker qualification required",
+      "scope": "actual local FU/production VFEX4; not whole-core ROB execution",
+      "inputs": {
+        "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/local-runs/fu-off-04/result.log": "418f7344f95e763600153a908b4ea2a266d607028cfe2ca14e2603c75ee1b245",
+        "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/local-runs/fu-on-01/result.log": "418f7344f95e763600153a908b4ea2a266d607028cfe2ca14e2603c75ee1b245"
+      }
+    },
+    "parent": {
+      "status": "SP1_ACTUAL_TRACE_NEUTRALITY_PASS",
+      "stage": "parent",
+      "off": {
+        "cycles": 34998,
+        "packets": 15046,
+        "observer_records": 0,
+        "observer_kinds": {}
+      },
+      "on": {
+        "cycles": 34998,
+        "packets": 15046,
+        "observer_records": 102450,
+        "observer_kinds": {
+          "SP1_SCHEMA": 70,
+          "SP1_STATE": 34573,
+          "SP1_RESET": 69,
+          "SP1_VFEX4_ACCEPT": 13468,
+          "SP1_ACCEPT": 11599,
+          "SP1_DIRECT_R": 11339,
+          "SP1_RESPONSE": 11448,
+          "SP1_STALL": 1005,
+          "SP1_ENQUEUE_P": 260,
+          "SP1_VFEX4_WAIT": 12657,
+          "SP1_MOVE": 204,
+          "SP1_DIV_ACCEPT": 1869,
+          "SP1_DIV_OUTPUT": 2593,
+          "SP1_VFEX4_REDIRECT": 850,
+          "SP1_KILL": 142,
+          "SP1_DIV_KILL": 304
+        }
+      },
+      "retained_sha256": "27ca18cbaa10d4e68170306101dbf1717fa63020fd1a2b061ef2cdd53b28f649",
+      "comparison": "all non-SP1 bytes exact; full packets and every local cycle retained",
+      "observer_semantics": "separate SP1 strict checker qualification required",
+      "scope": "actual local FU/production VFEX4; not whole-core ROB execution",
+      "inputs": {
+        "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/local-runs/parent-off-01/result.log": "27ca18cbaa10d4e68170306101dbf1717fa63020fd1a2b061ef2cdd53b28f649",
+        "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/local-runs/parent-on-02/result.log": "a17b488bcc140f28d1cc52d20bf54fc6eda01b5e13ad26c0abd80e1d455ec4d5"
+      }
+    },
+    "sqrt": {
+      "status": "SP1_ACTUAL_TRACE_NEUTRALITY_PASS",
+      "stage": "sqrt",
+      "off": {
+        "cycles": 2923,
+        "packets": 478,
+        "observer_records": 0,
+        "observer_kinds": {}
+      },
+      "on": {
+        "cycles": 2923,
+        "packets": 478,
+        "observer_records": 4226,
+        "observer_kinds": {
+          "SP1_SCHEMA": 21,
+          "SP1_STATE": 2662,
+          "SP1_VFEX4_ACCEPT": 213,
+          "SP1_DIV_ACCEPT": 177,
+          "SP1_DIV_OUTPUT": 434,
+          "SP1_VFEX4_WAIT": 467,
+          "SP1_VFEX4_REDIRECT": 62,
+          "SP1_DIV_KILL": 54,
+          "SP1_ACCEPT": 36,
+          "SP1_DIRECT_R": 36,
+          "SP1_RESPONSE": 36,
+          "SP1_RESET": 20,
+          "SP1_STALL": 8
+        }
+      },
+      "retained_sha256": "aa2a24d8f4bda5ec180836589256f6807145886d6457797c295200bc5ca0242c",
+      "comparison": "all non-SP1 bytes exact; full packets and every local cycle retained",
+      "observer_semantics": "separate SP1 strict checker qualification required",
+      "scope": "actual local FU/production VFEX4; not whole-core ROB execution",
+      "inputs": {
+        "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/local-runs/sqrt-off-02/result.log": "aa2a24d8f4bda5ec180836589256f6807145886d6457797c295200bc5ca0242c",
+        "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/local-runs/sqrt-on-01/result.log": "b4e40973918ec20a2bb776abced523c3cc6ed913a1ae4cf71f1254db0d5bc8ce"
+      }
+    }
+  },
+  "host_test_groups": 35,
+  "rob_age_combinations": 18432,
+  "actual_local_observer": [
+    {
+      "run": "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/local-runs/parent-on-02",
+      "epochs": 70,
+      "vdot_accept": 11599,
+      "vdot_response": 11448,
+      "vdot_kill": 142,
+      "vdot_reset_drops": 9,
+      "div_accept": 1869,
+      "div_response": 1511,
+      "div_kill": 304,
+      "div_reset_drops": 54,
+      "raw_sidecar_exact": true,
+      "cpp_accounting_checks_pass": 8
+    },
+    {
+      "run": "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/local-runs/sqrt-on-01",
+      "epochs": 21,
+      "vdot_accept": 36,
+      "vdot_response": 36,
+      "vdot_kill": 0,
+      "vdot_reset_drops": 0,
+      "div_accept": 177,
+      "div_response": 105,
+      "div_kill": 54,
+      "div_reset_drops": 18,
+      "raw_sidecar_exact": true,
+      "cpp_accounting_checks_pass": 8
+    }
+  ],
+  "local_run_names": [
+    "fu-off-04",
+    "fu-on-01",
+    "parent-off-01",
+    "parent-on-02",
+    "sqrt-off-02",
+    "sqrt-on-01"
+  ],
+  "configuration_cases": {
+    "status": "SP1_CONFIGURATION_PASS",
+    "start": "2026-11-03T04:32:25.325879+00:00",
+    "scope": "FU and one default-off real-parent generation only",
+    "cases": 20,
+    "positive": 7,
+    "rejected": 13,
+    "source_unchanged": true,
+    "end": "2026-11-03T04:37:07.801679+00:00"
+  },
+  "functional_cone": {
+    "fu": {
+      "status": "FUNCTIONAL_CONE_STRUCTURAL_EQUAL",
+      "states": 45,
+      "outputs": 15,
+      "evidence": "cone-p4-fu-01/comparison.json"
+    },
+    "parent": {
+      "status": "FUNCTIONAL_CONE_STRUCTURAL_EQUAL",
+      "states": 1489,
+      "outputs": 33,
+      "before_local_temporaries_proven": 628,
+      "after_local_temporaries_proven": 628,
+      "observer_states_in_cone": [],
+      "observer_named_transparent_aliases": [
+        "VDotElasticParentTestTop.dut.Vdot.sp1DirectR_probe",
+        "VDotElasticParentTestTop.dut.Vdot.sp1EnqueueP_probe",
+        "VDotElasticParentTestTop.dut._sp1DivAccept_T",
+        "VDotElasticParentTestTop.dut._sp1DivAccept_T_1",
+        "VDotElasticParentTestTop.dut.unnamedblk2.unnamedblk3._sp1DivFire_T",
+        "VDotElasticParentTestTop.dut.unnamedblk2.unnamedblk3._sp1DivFire_T_1"
+      ],
+      "evidence": "cone-p4-parent-r2-01/comparison.json",
+      "final_runtime_hdl_binding": "parent-on-final-rebinding-02/comparison.json",
+      "tool_source": "compare_functional_cone_r2_evaluated.py",
+      "docstring_only_current_tool_binding": "r2-tool-comment-binding.json"
+    }
+  },
+  "new_three_metrics": {
+    "speedup": "NOT_TESTED",
+    "area": "NO_NEW_EDA_HISTORICAL_G2_REUSED",
+    "timing": "NO_NEW_EDA_HISTORICAL_G2_REUSED"
+  },
+  "applicable_trace_off_cost": {
+    "FU_um2": 18322.878,
+    "inclusive_parent_um2": 285241.642
+  },
+  "five_profile_timing": [
+    {
+      "profile": "nominal",
+      "reference_period_ns": 1.0,
+      "load_pf": 0.005,
+      "fu_Q_ns": 1.790381,
+      "fu_worst_setup_slack_ns": -0.790381,
+      "parent_Q_ns": 3.337809,
+      "parent_worst_setup_slack_ns": -2.337809
+    },
+    {
+      "profile": "period050",
+      "reference_period_ns": 0.5,
+      "load_pf": 0.005,
+      "fu_Q_ns": 1.790381,
+      "fu_worst_setup_slack_ns": -1.290381,
+      "parent_Q_ns": 3.337809,
+      "parent_worst_setup_slack_ns": -2.837809
+    },
+    {
+      "profile": "period200",
+      "reference_period_ns": 2.0,
+      "load_pf": 0.005,
+      "fu_Q_ns": 1.790381,
+      "fu_worst_setup_slack_ns": 0.209619,
+      "parent_Q_ns": 3.337809,
+      "parent_worst_setup_slack_ns": -1.337809
+    },
+    {
+      "profile": "load001",
+      "reference_period_ns": 1.0,
+      "load_pf": 0.001,
+      "fu_Q_ns": 1.790381,
+      "fu_worst_setup_slack_ns": -0.790381,
+      "parent_Q_ns": 3.337809,
+      "parent_worst_setup_slack_ns": -2.337809
+    },
+    {
+      "profile": "load020",
+      "reference_period_ns": 1.0,
+      "load_pf": 0.02,
+      "fu_Q_ns": 1.790381,
+      "fu_worst_setup_slack_ns": -0.790381,
+      "parent_Q_ns": 3.391613,
+      "parent_worst_setup_slack_ns": -2.391613
+    }
+  ],
+  "historical_nominal_slack_ns": {
+    "fu": -0.790381,
+    "parent": -2.337809
+  },
+  "metrics_path": "METRICS.json",
+  "retained_failures": [
+    {
+      "name": "fu-off-01",
+      "reason": "Build metadata missing .git, before RTL compilation",
+      "state": {
+        "path": "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/local-runs/fu-off-01/state.json",
+        "sha256": "a4a31f52b77b9ec8c04dfeb50c0bb2d02dc43591f3b81505e80145b93b4b1797"
+      },
+      "commands": {
+        "path": "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/local-runs/fu-off-01/commands.json",
+        "sha256": "0d0d5672b5f7f0f914867f526d1a235a8de5173b0b7a6c627dda09cd4e11fc07"
+      }
+    },
+    {
+      "name": "fu-off-02",
+      "reason": "Build metadata missing shallow boundaries, before RTL compilation",
+      "state": {
+        "path": "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/local-runs/fu-off-02/state.json",
+        "sha256": "17363025b3fd8d025c5bc5feb5bdf30509a6c2c1ec44d99ca58e9067aea4040b"
+      },
+      "commands": {
+        "path": "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/local-runs/fu-off-02/commands.json",
+        "sha256": "66077de124a2e2334114a429552410f84557b57bd0c71272df2f586d1d3df4a8"
+      }
+    },
+    {
+      "name": "fu-off-03",
+      "reason": "Original strict legacy checker rejected new extra NEUTRAL lines after actual DUT exit0",
+      "state": {
+        "path": "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/local-runs/fu-off-03/state.json",
+        "sha256": "7d5bf8fa9b0c09eb585d12dac81b41148a5292498d7f23e671f5294d607ef4d5"
+      },
+      "commands": {
+        "path": "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/local-runs/fu-off-03/commands.json",
+        "sha256": "72ef3ce78261501ffec1e987e83fbdf6d9f9667742025b6528e686e9fe752d8b"
+      }
+    },
+    {
+      "name": "parent-on-01",
+      "reason": "Merged stdout/stderr buffered fragments; strict partition rejected after DUT exit0",
+      "state": {
+        "path": "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/local-runs/parent-on-01/state.json",
+        "sha256": "6686f4078463e81abb49efca2058eaedc4d6ad86954398e4ef116fac9a7bfcd7"
+      },
+      "commands": {
+        "path": "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/local-runs/parent-on-01/commands.json",
+        "sha256": "e3fa272b38d2841d0b56ae70d13977e6a660b9ad4ae2fbc601b6c15ad0bd86e9"
+      }
+    },
+    {
+      "name": "sqrt-off-01",
+      "reason": "Independent fixture initially omitted immutable sqrt-oracle.json, before Verilator build",
+      "state": {
+        "path": "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/local-runs/sqrt-off-01/state.json",
+        "sha256": "aa977febb443d67adfe6ae44bd5bf15df8a079e3f1a377e7dc2c2cdcf3136814"
+      },
+      "commands": {
+        "path": "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/local-runs/sqrt-off-01/commands.json",
+        "sha256": "b5e6383220080d88437440e5d8519b91920f6d2d9fc369bd835f46e4905a997b"
+      }
+    }
+  ],
+  "review_retained_attempts": [
+    {
+      "path": "xml-method/command.json",
+      "reason": "Verilator5.052 no longer supports --xml-only; actual JSON-only elaboration separately recorded"
+    },
+    {
+      "path": "elastic-source-functional-identity.json",
+      "reason": "first source-exclusion audit removed one original blank line; exact original function source restored by corrected audit without changing RTL"
+    },
+    {
+      "path": "cone-p4-parent-01/comparison.json",
+      "reason": "R1 conservatively treated block-local blocking calculation temporaries as stored state; R2 uses explicit dominance proof; original FAIL retained"
+    },
+    {
+      "path": "parent-on-final-hdl-binding.json",
+      "reason": "raw-byte rebinding differs only allowed LogPerfEndpoint diagnostic ordering/JVM identity; strict scoped normalization pass separately recorded"
+    }
+  ],
+  "new_EMU_runs": 0,
+  "new_NEMU_runs": 0,
+  "new_fullcore_builds": 0,
+  "new_synthesis_runs": 0,
+  "new_STA_runs": 0,
+  "github_upload": false,
+  "evidence_manifest": {
+    "path": "evidence/local-archive/manifest.json",
+    "sha256": "6102ef860cb840085ec62f06de84ffaee6df857a31bc6e9354b8553b6e4e48e4",
+    "records": 1180,
+    "unique_payloads": 430
+  },
+  "limits": [
+    "local on/off equality does not grant fullcore on/off equality",
+    "ROB and CSR actual integration awaits SP1-C",
+    "pre-layout Nangate45 proxy is not whole-core Fmax or tapeout signoff",
+    "old cost NO-GO retained, new budget is explicit speedup-priority exploration",
+    "no new program cycle result; final adoption remains the user decision"
+  ],
+  "next_instruction": "开始SP1-C/D。先使用SP1-A/B冻结的独立候选，适配显式源码根的全核构建入口并构建新EMU，补齐chain专用bit100 reference、运行器宿主门禁和完整runtime附录。全部准入通过后，严格按SP0同一合同串行执行拒错、恢复、0f对照、候选重放和0f重放，最多5个目标进程，6300秒目标上限及7200秒总监督不变。保持同BIN、1%应用锚点适用范围、逐窗工作量和重放规则、chain收益10%与RVV退化2%门槛，失败即停、不加时、不自动扩围。完成后更新计分板的加速比、面积和五档时序，保留失败与未测，不切换默认版本、不上传GitHub，给出结论和下一轮指令。"
+}

@@ -1,0 +1,163 @@
+{
+  "schema": "sp1-e-o2-host-closeout-v1",
+  "record_id": "SP1-E-O2-CANCEL-HOST-20261107-GO-HOST-HOLD-TARGET",
+  "record_number": 89,
+  "operation_id": "SP1-E-O2-CANCEL-HOST-20261107-01",
+  "operator": "cc77-builder / Agent",
+  "operator_identity_basis": "Current connector identity plus local source pins; independent review is agent review, not teammate approval",
+  "started_utc": "2026-11-06T16:32:26.582803+00:00",
+  "ended_utc": "2026-11-06T17:01:56.434799+00:00",
+  "recorded_at": "2026-11-07T01:01:56.434838+08:00",
+  "source_commit": "347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e",
+  "branch": "local/zjhwork-integration-20261024",
+  "status": "GO_SOFTWARE_HOST_PREPARATION_HOLD_TARGET_AND_ITEM19",
+  "summary": "Frozen attempt02 finite F2v pressure supplement; GNU and host delta controls pass, independent review pass. Actual P-slot and partial-cancel hit NOT_TESTED; future bounded calibration only.",
+  "stable_default": "0f + firstdot V2 + original C8",
+  "default_changed": false,
+  "coverage_qualified_before": 18,
+  "coverage_qualified": 18,
+  "coverage_required": 20,
+  "new_functional_qualified_cases": [],
+  "item19_qualified": false,
+  "new_performance_qualified": false,
+  "new_target_processes": 0,
+  "target_launch_attempts": 0,
+  "native_reference_processes": 0,
+  "RTL_edits_this_round": 0,
+  "new_fullcore_builds": 0,
+  "new_synthesis_runs": 0,
+  "new_STA_runs": 0,
+  "GitHub_writes": 0,
+  "software_builds": {
+    "attempt01": "PASS retained",
+    "attempt02": "PASS selected; real FP-to-integer-div dependency"
+  },
+  "host_checks": {
+    "selector_methods": 8,
+    "actual_image_integration_methods": 4,
+    "native_C_judge_checks": 538,
+    "actual_kernel_object_functions": 9,
+    "ABI_mutations_rejected": 99,
+    "full_call_fixture": "SYNTHETIC_ONLY 41 calls and77 commits",
+    "image_check01": "FAIL fixture positional API; source/log preserved",
+    "image_check02": "PASS after minimal signature correction; no target retry",
+    "legacy_suites_repeated": false
+  },
+  "software_counts": {
+    "calls": 41,
+    "custom_commits": 77,
+    "static_pc_roles": 17,
+    "architecture_F2v": 320,
+    "phases": [
+      0,
+      1,
+      2,
+      4
+    ]
+  },
+  "actual_new_runtime_budget_measurement": "NOT_TESTED",
+  "actual_new_bit100_rejection": "NOT_TESTED",
+  "actual_new_coverage_hit": "NOT_TESTED",
+  "original_FAIL_preserved": true,
+  "old_locks_preserved": true,
+  "budget_proposal": {
+    "proposal_id": "B_NEW_IMAGE_NEGATIVE_THEN_CANDIDATE_EXPLORATION",
+    "role_order": [
+      "supplement-bit100",
+      "supplement-candidate-calibration"
+    ],
+    "max_new_targets": 2,
+    "roles": [
+      {
+        "role": "supplement-bit100",
+        "reference": "new-image-bound negative wrapper",
+        "supervised_seconds": 300,
+        "guest_cycles": 100000,
+        "expected_exit": "exact bound bit100 mismatch/abort, not arbitrary failure",
+        "scope": "New guard PC/word/vd/last-writer/current commit-group negative proof only"
+      },
+      {
+        "role": "supplement-candidate-calibration",
+        "reference": "normal",
+        "supervised_seconds": 900,
+        "guest_cycles": 300000,
+        "scope": "Finite S0/S1 trigger exploration only; no formal qualification"
+      }
+    ],
+    "target_active_total_seconds": 1200,
+    "host_seconds": 900,
+    "outer_seconds": 2100,
+    "new_image_bit100_proven": "Only after actual new-role receipt passes frozen current-group check",
+    "benefit": "One later batch can validate the new-image negative binding and then collect trigger evidence.",
+    "limitation": "Requires a separately frozen new-image negative wrapper and matching checker; adds at most300 seconds. Negative failure blocks calibration; no fallback to A."
+  },
+  "no_completion_or_hit_guarantee": true,
+  "evidence": {
+    "build": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-host-20261107/build-review/RESULT.json",
+      "bytes": 5078,
+      "sha256": "62596d3028879ed91dd7e37b9729354721048381591eb32981f8ecdfdfb7441f"
+    },
+    "selector": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-host-20261107/host/selector-check-02/RESULT.json",
+      "bytes": 801,
+      "sha256": "cddeecf5463c3b11f210b2bbd82f69cf2d50d50ba7cfd7458abaab21b34de3da"
+    },
+    "judge": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-host-20261107/host/judge-check-01/RESULT.json",
+      "bytes": 2825,
+      "sha256": "b3772d864e68b046fa5a5a9e34564a4d3efdb9f24deb4b30e31b834b2be8f64f"
+    },
+    "image": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-host-20261107/host/image-check-02/RESULT.json",
+      "bytes": 2638,
+      "sha256": "d546ab54fd1b041de0c1d99bddab514da8324023caa502d7dd5ece0f55a40a63"
+    },
+    "negative": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-host-20261107/negative/RESULT.json",
+      "bytes": 2798,
+      "sha256": "16312628a1e1b2f598439590bf876bfccace1012a5872260933156ca6b5f98ad"
+    },
+    "independent": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-host-20261107/independent-review/RESULT.json",
+      "bytes": 12019,
+      "sha256": "e759258afe1966e63300f976e2242c5d89cd8c5fb3797946e3608d983fc22066"
+    },
+    "contract": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-host-20261107/CALIBRATION_REPLAY_CONTRACT.json",
+      "bytes": 13320,
+      "sha256": "55636b84fd38d51260860f8538783ef5df18e212b9f7c79e406cc47be2931466"
+    },
+    "protected_state": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-host-20261107/PROTECTED_STATE_CHECK.json",
+      "bytes": 623,
+      "sha256": "cafb6346c98e447d5d8a1710b8b0efe12aa369f710e690b212f3dbd2cb3ad6c4"
+    },
+    "history": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-host-20261107/reuse-review/RESULT.json",
+      "bytes": 12921,
+      "sha256": "d8ac05266b63de3dc6aac7a4b7ba83b900d0e45179c4bbe60ecaf9e99ec61866"
+    }
+  },
+  "host_artifact_freeze": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-host-20261107/HOST_ARTIFACT_FREEZE.json",
+    "bytes": 63524,
+    "sha256": "dfe3437c72120349346cb272f4449e96827ccd33fca961845cf446b351cb779d"
+  },
+  "execution_freeze": "NOT_CREATED; host freeze not sufficient for targets",
+  "metrics": {
+    "new_speedup": "NOT_TESTED",
+    "new_area": "NOT_TESTED",
+    "new_timing": "NOT_TESTED",
+    "historical_source": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-host-20261107/METRICS.json",
+      "bytes": 103065,
+      "sha256": "5e8553ae1a301c014ed6795af50715f0abc96a61ecf578a437eb6cca589ac116"
+    },
+    "performance_rows": 18,
+    "STA_profiles": 5,
+    "scope": "historical measured numbers only; original G2 cost NO-GO preserved"
+  },
+  "evidence_manifest": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-host-20261107/EVIDENCE_MANIFEST.json",
+  "proposed_next_instruction": "开始 SP1-E O2（第19项）补测运行器接入与有界校准，按 NEXT_STEP 复用本轮 attempt-02 镜像和已通过宿主证据，完成新 guard 的严格拒错检查、运行器差异接入、完整执行冻结、独立复核及900秒宿主预算准入。全部通过后，接受新独立预算，同轮串行执行 bit100拒错→候选正常校准，最多2个目标：分别300秒/10万guest、900秒/30万guest，目标累计1200秒、宿主900秒、外层2100秒，原CPU4、4线程、RSS12GiB、日志2GiB限制不变。保留41调用/77退休、完整128位、CSR/ABI及S0/S1真实观察链；失败或未命中即停，不重试、不加时、不扩相位、不自动进入重放或第20项。不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；完成后更新计分板，给出结论和下一轮指令。"
+}

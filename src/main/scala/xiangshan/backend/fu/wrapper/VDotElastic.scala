@@ -22,6 +22,8 @@ class VDotElasticStatus extends Bundle {
   * stalls/redirects, old R response, old P transfer and new acceptance overlap.
   * The surrounding EXU owns exclusion against DIV; no single-request base
   * class or bypassed control can supply identities for these two requests.
+  * P4 optionally computes the full sum before the slots and writes an available
+  * R directly; the minimum response latency becomes one, with capacity two.
   */
 class VDotElastic(cfg: FuConfig)(implicit p: Parameters) extends FuncUnit(cfg)
   with VecFuncUnitAlias {
@@ -33,6 +35,7 @@ class VDotElastic(cfg: FuConfig)(implicit p: Parameters) extends FuncUnit(cfg)
   require(!cfg.writeIntRf && !cfg.writeFpRf && !cfg.writeVlRf && !cfg.writeFakeIntRf)
   require(!cfg.writeFflags && !cfg.writeVxsat && !cfg.flushPipe && !cfg.replayInst)
 
+  private val oneCycle = VDotO2.oneCycle
   val pipelineStatus = IO(Output(new VDotElasticStatus))
 
   private val pValid = RegInit(false.B)
@@ -77,7 +80,7 @@ class VDotElastic(cfg: FuConfig)(implicit p: Parameters) extends FuncUnit(cfg)
   private val reduce = Module(new VDotReduce)
   products.io.vs1 := inData.src(0)
   products.io.vs2 := inData.src(1)
-  reduce.io.products := pProducts
+  reduce.io.products := (if (oneCycle) products.io.products else pProducts)
 
   // One output-shaped control packet per slot. Every output control field is
   // initialized, then the complete supported identity is captured on acceptance.
@@ -91,20 +94,58 @@ class VDotElastic(cfg: FuConfig)(implicit p: Parameters) extends FuncUnit(cfg)
   acceptedCtrl.vpu.get := inCtrl.vpu.get
   acceptedCtrl.exceptionVec.get(ExceptionNO.illegalInstr) := illegalInput
 
-  pValid := (liveP && !move) || io.in.fire
-  rValid := (liveR && !io.out.fire) || move
+  // These read-only nodes are formed in the child elaboration context.
+  // Unused observation wires are removed when no parent requests a tap.
+  private val sp1DirectR = WireDefault(false.B)
+  private val sp1EnqueueP = WireDefault(false.B)
+  private val sp1IncomingData = WireDefault(0.U(128.W))
+  private val sp1PData = WireDefault(0.U(128.W))
 
-  when(io.in.fire) {
-    pProducts := products.io.products
-    pCtrl := acceptedCtrl
-    pPerf := io.in.bits.perfDebugInfo
-  }
-  when(move) {
-    // Reads pre-edge P even when a new request replaces it at this same edge.
-    rPacket.ctrl := pCtrl
-    rPacket.perfDebugInfo := pPerf
-    rPacket.res.data := Mux(pCtrl.exceptionVec.get(ExceptionNO.illegalInstr),
-      0.U(32.W), reduce.io.result(31, 0))
+  if (oneCycle) {
+    // P4: the complete arithmetic is before both result slots. R remains the
+    // sole registered output; no input/P packet bypasses it combinationally.
+    val pResult = Reg(UInt(32.W))
+    val incomingResult = Mux(illegalInput, 0.U(32.W), reduce.io.result(31, 0))
+    val directR = io.in.fire && !liveP && rReady
+    val enqueueP = io.in.fire && !directR
+    sp1DirectR := directR
+    sp1EnqueueP := enqueueP
+    sp1IncomingData := Cat(0.U(96.W), incomingResult)
+    sp1PData := Cat(0.U(96.W), pResult)
+
+    pValid := (liveP && !move) || enqueueP
+    rValid := (liveR && !io.out.fire) || move || directR
+    when(enqueueP) {
+      pResult := incomingResult
+      pCtrl := acceptedCtrl
+      pPerf := io.in.bits.perfDebugInfo
+    }
+    when(move) {
+      // Old P has priority, including simultaneous R pop and new P acceptance.
+      rPacket.ctrl := pCtrl
+      rPacket.perfDebugInfo := pPerf
+      rPacket.res.data := pResult
+    }.elsewhen(directR) {
+      rPacket.ctrl := acceptedCtrl
+      rPacket.perfDebugInfo := io.in.bits.perfDebugInfo
+      rPacket.res.data := incomingResult
+    }
+  } else {
+    pValid := (liveP && !move) || io.in.fire
+    rValid := (liveR && !io.out.fire) || move
+
+    when(io.in.fire) {
+      pProducts := products.io.products
+      pCtrl := acceptedCtrl
+      pPerf := io.in.bits.perfDebugInfo
+    }
+    when(move) {
+      // Reads pre-edge P even when a new request replaces it at this same edge.
+      rPacket.ctrl := pCtrl
+      rPacket.perfDebugInfo := pPerf
+      rPacket.res.data := Mux(pCtrl.exceptionVec.get(ExceptionNO.illegalInstr),
+        0.U(32.W), reduce.io.result(31, 0))
+    }
   }
 
   // Read-only handles for the separate G1/G2 observation harness. These carry
@@ -123,6 +164,12 @@ class VDotElastic(cfg: FuConfig)(implicit p: Parameters) extends FuncUnit(cfg)
   private[backend] def o2ObservedMove: Bool = move
   private[backend] def o2ObservedIllegalInput: Bool = illegalInput
   private[backend] def o2ObservedVl: UInt = vl
+
+  private[backend] def sp1ObservedDirectR: Bool = sp1DirectR
+  private[backend] def sp1ObservedEnqueueP: Bool = sp1EnqueueP
+  private[backend] def sp1ObservedIncomingData: UInt = sp1IncomingData
+  private[backend] def sp1ObservedPData: UInt = sp1PData
+  private[backend] def sp1ObservedAcceptedCtrl: FuncUnitCtrlOutput = acceptedCtrl
 
   when(io.in.fire) {
     assert(inCtrl.vecWen.get ^ inCtrl.v0Wen.get,

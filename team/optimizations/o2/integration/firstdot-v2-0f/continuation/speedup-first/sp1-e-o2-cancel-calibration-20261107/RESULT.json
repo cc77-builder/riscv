@@ -1,0 +1,115 @@
+{
+  "schema": "sp1-e-o2-calibration-closeout-v1",
+  "record_number": 90,
+  "record_id": "SP1-E-O2-CANCEL-CALIBRATION-20261107-HOST-FAIL",
+  "operation_id": "SP1-E-O2-CANCEL-CALIBRATION-20261107-01",
+  "operator": "cc77-builder / Agent",
+  "operator_identity_basis": "Current GitHub connector profile read cc77-builder; no remote writes",
+  "started_utc": "2026-11-06T23:31:25.519827+00:00",
+  "ended_utc": "2026-11-06T23:42:33.386057+00:00",
+  "recorded_at": "2026-11-07T07:42:33.386109+08:00",
+  "source_commit": "347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e",
+  "branch": "local/zjhwork-integration-20261024",
+  "status": "HOLD_AFTER_HOST_NEGATIVE_FIXTURE_FAIL",
+  "stable_default": "0f + firstdot V2 + original C8",
+  "default_changed": false,
+  "coverage_qualified_before": 18,
+  "coverage_qualified": 18,
+  "coverage_required": 20,
+  "item19_qualified": false,
+  "new_performance_qualified": false,
+  "new_host_methods": 8,
+  "host_methods_passed": 7,
+  "host_methods_failed": 1,
+  "host_attempts": 1,
+  "new_target_processes": 0,
+  "target_launch_attempts": 0,
+  "actual_new_bit100": "NOT_RUN",
+  "actual_candidate_calibration": "NOT_RUN",
+  "native_reference_loads": 0,
+  "cost_measurement_attempts": 0,
+  "runtime_independent_review": "NOT_RUN_AFTER_HOST_FAIL",
+  "review_method": "prelaunch static source reasoning by same Agent; no second-agent review this round",
+  "RTL_edits_this_round": 0,
+  "new_fullcore_builds": 0,
+  "new_synthesis_runs": 0,
+  "new_STA_runs": 0,
+  "GitHub_writes": 0,
+  "summary": "Two-role runtime and118-input freeze prepared. Unique host admission stopped on malformed negative-fixture mutation,7/8 methods pass; no target started, locks retained, cleanup complete.",
+  "actual_budget": {
+    "external_seconds": 0.9544964689999915,
+    "host_record_seconds": 0.9322587039999917,
+    "target_seconds": 0,
+    "external_cap": 2100,
+    "host_cap": 900,
+    "target_cap": 1200
+  },
+  "failure": {
+    "status": "READ_ONLY_NOOP_FIXTURE_DEFECT_IDENTIFIED",
+    "fixture_default_raw_dst": 32,
+    "negative_fixture_invocation": "negative(2,2)",
+    "mutation": "dst 255 -> dst 256",
+    "effect": "history rows default32 and current guard region architectural destinations<32; search token255 absent, replacement leaves legal positive unchanged",
+    "observed_failure": "assertRaises(ValueError): ValueError not raised",
+    "confidence": "Definite source defect consistent with observed method failure; method did not log failing subcase index. No diagnostic collector/test rerun was performed.",
+    "not_proven": "No new target failure, no RTL failure, no fresh coverage finding",
+    "fix_proposal": "In a new round change the malformed-history-row mutation to exact existing dst32→256 (or explicitly construct raw_dst255 input); assert old token count and byte difference before collector, label each subcase. Do not change strict collector acceptance."
+  },
+  "evidence": {
+    "host": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-20261107/host/RESULT.json",
+      "bytes": 798,
+      "sha256": "f9b7e5c19af8e38ce85949a8ab163bc036beb4633bbcf410912c6795225be97c"
+    },
+    "tests": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-20261107/host/tests.log",
+      "bytes": 1273,
+      "sha256": "88db6eb3b09f0c038b268ec8ca5d71efd385daf4eb0378dd76f09cf8d3442f19"
+    },
+    "guard": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-20261107/external-batch/RESULT.json",
+      "bytes": 1636,
+      "sha256": "e49cf33c3a4d7b29e84fc95db376c29dbf62e905d1774295ebf2f587ccf71191"
+    },
+    "freeze": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-20261107/EXECUTION_FREEZE.json",
+      "bytes": 38816,
+      "sha256": "0783416501dd3bd42a1b36a80c50183fb5d2944352f54a93f2dad6ed332734ed"
+    },
+    "terminal": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-20261107/TERMINAL_AUDIT.json",
+      "bytes": 1115,
+      "sha256": "16b90180c5b4b42ac46ef82d2d6aae359e9aa6aa9a955adcfc6dff256ada00da"
+    },
+    "diagnosis": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-20261107/review/FAILURE_DIAGNOSIS.json",
+      "bytes": 948,
+      "sha256": "eb80dd1bf37e2d15c6cdf1eefd1b98c4f50f0b702d59350f01083d8c689c4a8a"
+    },
+    "contract": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-20261107/CONTRACT.json",
+      "bytes": 4499,
+      "sha256": "3144368e6ded270551f1138630ac771f9423f4e860158b46a018209132abd7dd"
+    },
+    "reuse": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-20261107/REUSE.json",
+      "bytes": 3191,
+      "sha256": "214bd7bbd01d236c84a9a18139b26eefb7268b89d958b055252623a7f2a27b51"
+    }
+  },
+  "evidence_manifest": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-20261107/EVIDENCE_MANIFEST.json",
+  "old_FAIL_and_locks_preserved": true,
+  "metrics": {
+    "new_speedup": "NOT_TESTED",
+    "new_area": "NOT_TESTED",
+    "new_timing": "NOT_TESTED",
+    "source": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-20261107/METRICS.json",
+      "bytes": 103115,
+      "sha256": "8ec3b5918836ba4f8363df47f7e5b1b49e27e135a5e4de1f64e71cc3dc13269b"
+    },
+    "historical_performance_rows": 18,
+    "historical_STA_profiles": 5
+  },
+  "proposed_next_instruction": "开始 SP1-E O2 补测接入 R1，按 NEXT_STEP 最小修复负控夹具的无效替换：使用实际存在的历史环dst字段，并检查替换命中及字节确实变化，给各子例明确标签。保留本轮FAIL与锁，复用7项通过证据，只补受影响负控、冷导入、执行冻结、独立方法复核和宿主预算准入。全部通过后，以新独立身份同轮串行bit100拒错→候选正常，接受原300秒/10万guest、900秒/30万guest、目标累计1200秒、宿主900秒、外层2100秒及原资源/完整覆盖要求。失败或未命中即停，不重试、不加时、不扩围、不自动重放；不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub，完成后更新计分板和下一轮指令。"
+}

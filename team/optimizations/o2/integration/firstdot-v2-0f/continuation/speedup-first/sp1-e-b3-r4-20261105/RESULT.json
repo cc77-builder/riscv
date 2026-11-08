@@ -1,0 +1,135 @@
+{
+  "schema": "sp1-e-b3-r4-closeout-v1",
+  "record_id": "SP1-E-B3-R4-20261105-HOLD",
+  "record_number": 77,
+  "operation_id": "SP1-E-B3-R4-20261105-01",
+  "operator": "@cc77-builder / Agent",
+  "started_utc": "2026-11-05T16:00:02.772841+00:00",
+  "ended_utc": "2026-11-05T16:46:59.722251+00:00",
+  "recorded_at": "2026-11-06T00:46:59.722251+08:00",
+  "status": "HOLD",
+  "summary": "B3-R4已修正准备期启动身份范围：旧boot只作历史，真实批次仍绑定boot/PID/start_ticks/单调时钟；4项新差异与65项独立检查一次通过，原6项运行器和23项checker按身份复用。唯一宿主预算进程超过900秒仍未返回，核实身份后在观测1012.62秒时发送SIGTERM，超限112.62秒已如实留档；两例预算均HOLD/null，EMU目标0，不重试，SP1-E仍15/20。",
+  "notes": [
+    "本轮实际放宽的是准备期不变条件：BEFORE历史boot与独立门实际观察boot不同仍可通过。新批次执行时才绑定实时boot；已经通过且未变的验证没有重跑。源码差异仅新独立包内的Python运行器及宿主辅助材料，生产RTL与默认配置不变。",
+    "预算失败必须单独保留：原脚本用进程内SIGALRM设900秒，但未及时终止；1012.62秒是按/proc出生时刻与uptime观察的发SIGTERM时刻耗时，不是脚本报告的完成时间。原程序stdout/stderr均为空，没有生成原生RESULT或traceback。当前预算RESULT明确是外部监督收口回执，不能伪装成原测量输出或900秒内停止。两例当前H/I/N及合格预算均不可取得；旧R1的468.345/331.801秒仅作历史成本，不作本轮GO。",
+    "静态只读归因指向checker第114/115行CSR正则：re.M下的行首\\s*能够跨换行，尾部连续空白会产生重复回溯；内部\\s+也允许跨行拼接字段。legacy原解析文本53,864B、allpairs宿主合成文本8,926B，分别补空白到24,558,348B。实际旧日志中的CSR字段各自处于单行，因此限定横向空白是具体的最小修订方向。但本轮没有抓到运行栈，不能宣称已精确确认卡在某个case或某一行。详见[复杂度只读复核](independent-review/BUDGET_COMPLEXITY_REVIEW.json)。",
+    "900秒门未可靠生效暴露了我们宿主工具的监督缺口。下一轮外部监督属于落实原预算，不能通过缩小24MB夹具、提高900秒或删除实际身份/完整结果检查来放行；同样需要核查实际批次宿主解析使用进程内信号的路径。无必要扩大到RTL或新全核构建。",
+    "[独立终态复核](independent-review/FINAL_READONLY_RESULT.json)确认预算PID已不存在、231项预算冻件/184项独立冻件/445项生产文件/399项旧证据无漂移；无ADMISSION、最终执行freeze、实际授权、batch消费锁或目标输出。legacy-control和o2-all-pairs均未执行，不能从宿主PASS新增功能资格。",
+    "本轮没有加速比、面积或时序新实测。历史同镜像性能和Nangate45局部成本在METRICS.md/json中按原口径保留，包括负slack与旧严格G2未通过结论。稳定默认继续0f＋firstdot V2＋原C8；未上传GitHub。"
+  ],
+  "source_commit": "347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e",
+  "branch": "local/zjhwork-integration-20261024",
+  "stable_default": "0f + firstdot V2 + original C8",
+  "default_changed": false,
+  "runtime_new_methods": 4,
+  "runtime_new_status": "PASS_RUNTIME_HOST_TESTS",
+  "runtime_reused_methods": 6,
+  "checker_reused_methods": 23,
+  "checker_new_methods": 0,
+  "independent_status": "PASS_B3_EXECUTION_HOST_REVIEW",
+  "independent_formal_controls": 65,
+  "budget_status": "HOLD_B3_HOST_BUDGET",
+  "budget_error": null,
+  "budget_failure_stage": null,
+  "readme_previous": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r4-20261105/README.md",
+    "bytes": 666,
+    "sha256": "e3ede93293a19a906833d79a4dfb56361b3d2fd837f11dcac48e9153d3bd5311"
+  },
+  "readme_backup": "README.pre-closeout.md",
+  "formal_budget_attempts": 1,
+  "actual_target_processes": 0,
+  "new_target_processes": 0,
+  "launch_attempts": 0,
+  "target_batch_status": "NOT_RUN",
+  "cases": [
+    {
+      "case_id": "legacy-control",
+      "target_run": "NOT_RUN",
+      "actual_target_processes": 0,
+      "launch_attempts": 0,
+      "target_active_wall_seconds": null,
+      "host_overhead_seconds": null,
+      "host_admission": "HOLD",
+      "host_budget_seconds": null,
+      "budget_error": null,
+      "budget_failure_stage": null,
+      "functional_qualified": false
+    },
+    {
+      "case_id": "o2-all-pairs",
+      "target_run": "NOT_RUN",
+      "actual_target_processes": 0,
+      "launch_attempts": 0,
+      "target_active_wall_seconds": null,
+      "host_overhead_seconds": null,
+      "host_admission": "HOLD",
+      "host_budget_seconds": null,
+      "budget_error": null,
+      "budget_failure_stage": null,
+      "functional_qualified": false
+    }
+  ],
+  "qualified_case_ids": [],
+  "coverage_qualified": 15,
+  "coverage_required": 20,
+  "held_cases": [
+    "o2-control",
+    "original C8 C48",
+    "timed DIV/SQRT"
+  ],
+  "metrics": {
+    "speedup": "NOT_TESTED",
+    "area": "NOT_TESTED",
+    "timing": "NOT_TESTED"
+  },
+  "new_performance_qualified": false,
+  "RTL_edits_this_round": 0,
+  "new_fullcore_builds": 0,
+  "new_synthesis_runs": 0,
+  "new_STA_runs": 0,
+  "GitHub_writes": 0,
+  "formal_gate_retry_performed": false,
+  "production_files_unchanged": 445,
+  "prior_evidence_unchanged": 399,
+  "evidence": {
+    "runtime_result": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r4-20261105/runtime-tests/RESULT.json",
+      "bytes": 4159,
+      "sha256": "dcd69517021982205c8d6589d078bdc872ab1ff79ab4759f37dc8cb1afbc1e0b"
+    },
+    "checker_reuse": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r4-20261105/checker/REUSE.json",
+      "bytes": 6430,
+      "sha256": "e555fbe9e80097783deb9c97e141aa598f6562b48e9782c9543e6c9ef1a81527"
+    },
+    "runtime_reuse": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r4-20261105/runtime-tests/REUSE_RUNTIME_GATES.json",
+      "bytes": 3197,
+      "sha256": "6bc306caf2e07fb40feb9ee5ac8a51e44abf22d028a4bc7e489424405efa56e4"
+    },
+    "runtime_version": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r4-20261105/runtime/SOURCE_VERSION.json",
+      "bytes": 2590,
+      "sha256": "661bed7201d4c321f1add1de1e384785575235f4ba484a11c76c652866206cce"
+    },
+    "host_final_audit": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r4-20261105/independent-review/RESULT.json",
+      "bytes": 6689,
+      "sha256": "72c7460b9dd213cfc926a0beb9f65aea905b5c45c0372771765b8aa6f26a7577"
+    },
+    "target_final_audit": null,
+    "budget_result": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r4-20261105/budget-review/RESULT.json",
+      "bytes": 6599,
+      "sha256": "6209c78ab0ae6b495ec28fc3f5f8f7e0719d836cd0d9609f82ab63b615185175"
+    },
+    "input": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r4-20261105/CLOSEOUT_INPUT.json",
+      "bytes": 4875,
+      "sha256": "5011f1b05621276f33733ec216b211d0386cbc0ad4b4a149a4c4bf2a270e3fd9"
+    }
+  },
+  "target_receipts": [],
+  "proposed_next_instruction": "开始 B3-R5：在独立目录仅修订宿主拒错检查器两条CSR行的空白匹配，将同行空白限制为[ \\t]，并补齐预算测量的独立进程外墙钟监督；核查实际批次宿主解析也受原900/7200/14400秒限制可靠约束，必要时作最小外部监督接入。保留R1至R4全部失败、原24,558,348字节成本夹具、完整数值/CSR/身份/重放合同及原预算，不缩样、不加时。复用未变的运行器、身份、溯源证据，集中完成受影响正负控、外部超时小夹具、独立复核和一次预算准入；全部通过且两例均GO后，同轮仅按legacy-control→o2-all-pairs串行执行五角色。每例300＋4×1500秒、目标6300/外层7200/宿主900秒；整批最多10目标、目标12600/外层14400秒，不借时；负控100000guest，正常800000/300000guest，CPU4/整组4线程/RSS12GiB/每例日志2GiB及原seed/RAM/reset不变。正式门或目标任一失败立即停止，不重试、不跳过继续、不扩围；三个暂缓项保持HOLD，不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub。完成后更新计分板、三项指标及下一轮指令。"
+}

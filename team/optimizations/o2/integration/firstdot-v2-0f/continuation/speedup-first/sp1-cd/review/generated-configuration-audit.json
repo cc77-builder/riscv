@@ -1,0 +1,373 @@
+{
+  "schema": "sp1-cd-generated-configuration-review-v1",
+  "status": "PASS",
+  "reviewed_at": "2026-11-04T06:52:11.058750+00:00",
+  "checks": {
+    "build_completed_and_group_empty": true,
+    "build_freeze_identity": true,
+    "candidate_emu_identity": true,
+    "stable_emu_identity": true,
+    "all_generated_files_match_build_receipt": true,
+    "frozen_flags_exact": true,
+    "minimal_singlecore_build_contract": true,
+    "one_actual_sp1_schema": true,
+    "all_sp1_event_sites_present": true,
+    "legacy_observers_absent_in_executable_rtl": true,
+    "t13_observers_present": true,
+    "actual_sp1_schema_values": true,
+    "two_elastic_result_slots": true,
+    "direct_product_reduce_connection": true,
+    "onecycle_direct_result_to_r": true,
+    "full_128_output_zero_extension": true,
+    "real_shared_div_parent": true,
+    "generated_diff_singlecore": true,
+    "one_actual_core_instance": true,
+    "actual_verilator_flags": true,
+    "resetgen_option_disabled": true
+  },
+  "configuration": {
+    "config": "MinimalConfig",
+    "num_cores": 1,
+    "emu_threads": 1,
+    "latency": 1,
+    "slots": 2,
+    "rob_size": 48,
+    "ftq_size": 8,
+    "vlen": 128,
+    "vpu_width": 195,
+    "perf_width": 577,
+    "resetgen_option": false,
+    "vdot_flags": {
+      "VDOT_O2_ELASTIC": "1",
+      "VDOT_T14_FUSED_INPUT": "1",
+      "VDOT_O1_HANDOFF": "0",
+      "VDOT_O1_TRACE": "0",
+      "VDOT_T12_TRACE": "0",
+      "VDOT_T13_TRACE": "1",
+      "VDOT_P4_ONE_CYCLE": "1",
+      "VDOT_O2_TRACE": "0",
+      "VDOT_SP1_TRACE": "1"
+    }
+  },
+  "sp1_schema": [
+    {
+      "file": "ExeUnit_17.sv",
+      "line": 532,
+      "text": "\"SP1_SCHEMA version=1 clock=global mode=p4_one_cycle min_latency=1 slots=2 rob_size=%d ftq_size=%d vlen=%d vpu_width=%d perf_width=%d\\n\","
+    }
+  ],
+  "schema_verilog_arguments": "6'h30, 4'h8, 8'h80, 8'hC3, 10'h241);",
+  "sp1_event_sites": {
+    "RESET": [
+      {
+        "file": "ExeUnit_17.sv",
+        "line": 527
+      }
+    ],
+    "SCHEMA": [
+      {
+        "file": "ExeUnit_17.sv",
+        "line": 532
+      }
+    ],
+    "STATE": [
+      {
+        "file": "ExeUnit_17.sv",
+        "line": 537
+      }
+    ],
+    "VFEX4_ACCEPT": [
+      {
+        "file": "ExeUnit_17.sv",
+        "line": 551
+      }
+    ],
+    "VFEX4_WAIT": [
+      {
+        "file": "ExeUnit_17.sv",
+        "line": 555
+      }
+    ],
+    "VFEX4_REDIRECT": [
+      {
+        "file": "ExeUnit_17.sv",
+        "line": 559
+      }
+    ],
+    "ACCEPT": [
+      {
+        "file": "ExeUnit_17.sv",
+        "line": 564
+      }
+    ],
+    "DIRECT_R": [
+      {
+        "file": "ExeUnit_17.sv",
+        "line": 604
+      }
+    ],
+    "ENQUEUE_P": [
+      {
+        "file": "ExeUnit_17.sv",
+        "line": 614
+      }
+    ],
+    "MOVE": [
+      {
+        "file": "ExeUnit_17.sv",
+        "line": 624
+      }
+    ],
+    "KILL": [
+      {
+        "file": "ExeUnit_17.sv",
+        "line": 678
+      },
+      {
+        "file": "ExeUnit_17.sv",
+        "line": 685
+      }
+    ],
+    "STALL": [
+      {
+        "file": "ExeUnit_17.sv",
+        "line": 692
+      }
+    ],
+    "RESPONSE": [
+      {
+        "file": "ExeUnit_17.sv",
+        "line": 700
+      }
+    ],
+    "DIV_ACCEPT": [
+      {
+        "file": "ExeUnit_17.sv",
+        "line": 708
+      }
+    ],
+    "DIV_KILL": [
+      {
+        "file": "ExeUnit_17.sv",
+        "line": 713
+      }
+    ],
+    "DIV_OUTPUT": [
+      {
+        "file": "ExeUnit_17.sv",
+        "line": 719
+      },
+      {
+        "file": "ExeUnit_17.sv",
+        "line": 725
+      }
+    ],
+    "ENQUEUE": [
+      {
+        "file": "Rob.sv",
+        "line": 39472
+      },
+      {
+        "file": "Rob.sv",
+        "line": 39479
+      },
+      {
+        "file": "Rob.sv",
+        "line": 39486
+      },
+      {
+        "file": "Rob.sv",
+        "line": 39493
+      },
+      {
+        "file": "Rob.sv",
+        "line": 39500
+      },
+      {
+        "file": "Rob.sv",
+        "line": 39507
+      }
+    ],
+    "COMMIT": [
+      {
+        "file": "Rob.sv",
+        "line": 39513
+      },
+      {
+        "file": "Rob.sv",
+        "line": 39518
+      },
+      {
+        "file": "Rob.sv",
+        "line": 39523
+      },
+      {
+        "file": "Rob.sv",
+        "line": 39528
+      },
+      {
+        "file": "Rob.sv",
+        "line": 39533
+      },
+      {
+        "file": "Rob.sv",
+        "line": 39538
+      },
+      {
+        "file": "Rob.sv",
+        "line": 39543
+      },
+      {
+        "file": "Rob.sv",
+        "line": 39548
+      }
+    ],
+    "REDIRECT": [
+      {
+        "file": "Rob.sv",
+        "line": 39552
+      }
+    ]
+  },
+  "t13_event_sites": {
+    "CSR_SAMPLE": [
+      {
+        "file": "NewCSR.sv",
+        "line": 4962
+      }
+    ],
+    "COUNTER_ENQUEUE": [
+      {
+        "file": "Rob.sv",
+        "line": 39353
+      },
+      {
+        "file": "Rob.sv",
+        "line": 39361
+      },
+      {
+        "file": "Rob.sv",
+        "line": 39369
+      },
+      {
+        "file": "Rob.sv",
+        "line": 39377
+      },
+      {
+        "file": "Rob.sv",
+        "line": 39385
+      },
+      {
+        "file": "Rob.sv",
+        "line": 39393
+      }
+    ],
+    "RETIRE": [
+      {
+        "file": "Rob.sv",
+        "line": 39402
+      },
+      {
+        "file": "Rob.sv",
+        "line": 39411
+      },
+      {
+        "file": "Rob.sv",
+        "line": 39420
+      },
+      {
+        "file": "Rob.sv",
+        "line": 39429
+      },
+      {
+        "file": "Rob.sv",
+        "line": 39438
+      },
+      {
+        "file": "Rob.sv",
+        "line": 39447
+      },
+      {
+        "file": "Rob.sv",
+        "line": 39456
+      },
+      {
+        "file": "Rob.sv",
+        "line": 39465
+      }
+    ]
+  },
+  "unexpected_legacy_trace_sites": [],
+  "details": {
+    "generated_files_checked": 1688,
+    "generated_mismatches": []
+  },
+  "artifacts": [
+    {
+      "path": "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/candidate/build/rtl/ExeUnit_17.sv",
+      "sha256": "17a05ee769f1aaeb80a31e12cfc917472f6e4854826d1811edf26e002d195535",
+      "bytes": 66406
+    },
+    {
+      "path": "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/candidate/build/rtl/VDotElastic.sv",
+      "sha256": "1447cad9cb3db6b4dbab3856923b9b0b8974e94f6aa1134a77f830e056a874f6",
+      "bytes": 48346
+    },
+    {
+      "path": "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/candidate/build/rtl/VDotProducts.sv",
+      "sha256": "b9c7706dcc22195d091e8e2bd823ecf9f2cc2c66a7a1bcb920eeaeaabf3ffaab",
+      "bytes": 3861
+    },
+    {
+      "path": "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/candidate/build/rtl/VDotReduce.sv",
+      "sha256": "f920f21bd313c451b410602333b70a67c72207da5b3f647dc2eea04339deadca",
+      "bytes": 3749
+    },
+    {
+      "path": "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/candidate/build/rtl/Rob.sv",
+      "sha256": "892792052e096d8fe51da1c170a8be3ea2dc945c99c19ed73914496a7462c246",
+      "bytes": 5372514
+    },
+    {
+      "path": "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/candidate/build/rtl/NewCSR.sv",
+      "sha256": "6357ed18e68c81301e4bf525ee703b750d97017cf81f36612147f0a450e4af68",
+      "bytes": 604979
+    },
+    {
+      "path": "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/candidate/build/rtl/XSTop.sv",
+      "sha256": "9916372e87c9e4e268681fbedbc000a18666717e4aa10d67ff3598ae89275e04",
+      "bytes": 60920
+    },
+    {
+      "path": "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/candidate/build/generated-src/diffstate.h",
+      "sha256": "6a2ce3ab51893908f74452522ab03c553cf7fa7e8aa25f74ea84d79aa45f044d",
+      "bytes": 8446
+    },
+    {
+      "path": "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/candidate/build/emu",
+      "sha256": "e34b2eaa8deb99f83534478217aaf144e32262ba08b2c18c31c6ac7265525c1e",
+      "bytes": 71260448
+    }
+  ],
+  "build_receipt": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-cd/build/STATE.json",
+    "sha256": "10b538d8d9e9175934cd56ba2d4c14679aca66ff3d6964f284187cf334a794a3"
+  },
+  "generated_manifest": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-cd/build/GENERATED.json",
+    "sha256": "88ac753947008f914deae163b644d61d024f30e176c2812998e949951697e8eb"
+  },
+  "limitations": [
+    "Static generated RTL/config and completed EMU identity verification only; candidate target not run by this review.",
+    "min_latency=1 is generated design/schema contract; actual runtime latency and functional/performance gates remain in five-role target campaign.",
+    "Top-level ResetGen synchronizers remain normal design components; WITH_RESETGEN=0 refers to optional reset-gen configuration, not absence of every reset synchronizer.",
+    "SimTop.sv contains Git diff comment header; executable observer-site audit excludes comment-only lines."
+  ],
+  "review_tool_correction": {
+    "initial_record": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-cd/review/generated-configuration-audit-initial.json",
+    "cause": "Initial event-name regex [A-Z_]+ omitted digit 4 in VFEX4. Actual generated sites were present.",
+    "corrected_regex": "SP1_([A-Z0-9_]+)",
+    "hardware_changed": false,
+    "build_retried": false
+  }
+}

@@ -1,0 +1,264 @@
+{
+  "schema": "sp1-e-b3-r7-closeout-v1",
+  "record_id": "SP1-E-B3-R7-20261106-PASS_FUNCTIONAL",
+  "record_number": 80,
+  "operation_id": "SP1-E-B3-R7-20261106-01",
+  "operator": "@cc77-builder / Agent",
+  "started_utc": "2026-11-06T03:38:31.560496+00:00",
+  "ended_utc": "2026-11-06T05:17:09.632907+00:00",
+  "recorded_at": "2026-11-06T13:17:09.632907+08:00",
+  "status": "PASS_FUNCTIONAL",
+  "summary": "B3-R7仅把独立CSR审查共享调用的scope修正为生产API已有HOST_FIXTURE，生产runtime/checker原字节保持，27＋10项通过证据明确复用、未重跑。剩余41项独立控一次PASS；唯一外部900秒预算测量18.948秒通过，两例宿主预算664.466/527.922秒均GO。随后按原合同串行完成legacy-control→o2-all-pairs两例各五角色，共10个真实目标全部通过；完整128位、退休/CSR、身份、资源及精确重放均通过独立终态复核，新增两项功能资格，SP1-E由15/20推进到17/20。整批目标累计4708.455秒、原生外层4783.570秒、外部监督4783.682秒，未重试、未加时、未扩围；原R1至R6失败完整保留。默认0f＋firstdot V2＋原C8保持，未修改RTL、未构建新核、未做EDA、未上传GitHub。",
+  "notes": [
+    "独立终态审计为PASS_OFFLINE_AUDIT：8个正常角色独立核对13614次完整128位响应和13260次custom提交，两例各五角色及全部重放维度通过。详见[终态审计](independent-review/POSTRUN_RESULT.md)和[根端终态事实](ROOT_TERMINAL_FACTS.json)。",
+    "legacy-control：候选正常/重放均375701 guest cycles，0f正常/重放均376582；实际目标3538.846秒、宿主50.779秒。o2-all-pairs：候选两次均126637 cycles，0f两次均126918；实际目标1169.609秒、宿主22.801秒。这些是完整功能程序总周期，程序没有公平RVV计时窗口，不能据此新增加速比。10个角色的墙钟、退出码、线程、RSS及完整身份均保存在原始record与独立审计。",
+    "两个实际bit100拒错均通过：legacy在PC0x80000298/v0注入，诊断为同组首0x80000294；allpairs在PC0x80000364/v16注入，实际组首0x80000354，组内4个同vd写者，最终为0x80000370。按严格提交组、最终写入者及完整128位口径核对，未强制诊断PC等于注入PC，也未放宽数值覆盖。",
+    "执行时guard、batch claim、case claim及10个role绑定同一真实boot；执行结束后WSL重启，审计boot不同。既有审计正确区分两个代际，不做跨boot的PID或单调时间比较；实际运行期间的完整回执和外部清理证据通过。此为原R4/R6已明确规则的实际应用，没有新增放宽条件。",
+    "剩余o2-control、原C8普通C48、timed DIV/SQRT仍HOLD。前两项需要负载差异接入及当前两核的完整调用预算依据；timed DIV/SQRT还需闭合计时窗口与运行预算。下一步交付具体接入和有限完整校准合同，不再反复做同样的泛化只读评审；不自动启动或借用本轮预算。",
+    "本轮三项新性能/成本测量均NOT_TESTED。METRICS保留原工作负载的同镜像历史加速比及Nangate45 trace-off局部面积/五档STA；负slack与原G2 NO-GO不改写。本轮功能通过不授予新应用性能、全芯片面积/Fmax或默认采用资格。"
+  ],
+  "source_commit": "347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e",
+  "branch": "local/zjhwork-integration-20261024",
+  "stable_default": "0f + firstdot V2 + original C8",
+  "default_changed": false,
+  "runtime_new_methods": 0,
+  "runtime_new_status": "NOT_RUN_REUSED",
+  "runtime_reuse_status": "PASS_RUNTIME_HOST_TESTS",
+  "runtime_reused_methods": 10,
+  "runtime_reused_R3_methods": 6,
+  "runtime_reused_R4_boot_methods": 4,
+  "checker_reused_methods": 27,
+  "checker_new_methods": 0,
+  "checker_new_status": "NOT_RUN_REUSED",
+  "checker_reuse_status": "PASS_STRICT_NEGATIVE_CHECKER_HOST",
+  "independent_status": "PASS_B3_EXECUTION_HOST_REVIEW",
+  "independent_formal_controls": 41,
+  "independent_planned_controls": 41,
+  "independent_control_status": "PASS_INDEPENDENT_B3_R7_CONTROLS",
+  "independent_error": null,
+  "independent_historical_controls": 65,
+  "independent_historical_qualification": "Historical 65 source only; not repeated and not current new-control PASS",
+  "budget_status": "GO_B3_HOST_BUDGET",
+  "budget_error": null,
+  "budget_failure_stage": "NOT_APPLICABLE",
+  "readme_previous": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r7-20261106/README.md",
+    "bytes": 214,
+    "sha256": "7c6d14dd5f35d7a90063e2b2a343d2b8f30caf06dd38019b546eac69703d5d26"
+  },
+  "readme_backup": "README.pre-closeout.md",
+  "formal_budget_attempts": 1,
+  "actual_target_processes": 10,
+  "actual_count_scope": "completed_native_role_records",
+  "missing_role_receipts": 0,
+  "new_target_processes": 10,
+  "launch_attempts": 10,
+  "target_batch_status": "BATCH_FUNCTIONAL_PASS",
+  "external_termination_confirmed": false,
+  "cases": [
+    {
+      "case_id": "legacy-control",
+      "target_run": "FUNCTIONAL_PASS",
+      "native_campaign_status": "FUNCTIONAL_PASS",
+      "actual_target_processes": 5,
+      "actual_count_scope": "completed_native_role_records",
+      "missing_role_receipts": 0,
+      "launch_attempts": 5,
+      "target_active_wall_seconds": 3538.8463968959995,
+      "host_overhead_seconds": 50.778568759000336,
+      "host_admission": "GO",
+      "host_budget_seconds": 664.4656078536575,
+      "budget_error": null,
+      "budget_failure_stage": "NOT_APPLICABLE",
+      "functional_qualified": true
+    },
+    {
+      "case_id": "o2-all-pairs",
+      "target_run": "FUNCTIONAL_PASS",
+      "native_campaign_status": "FUNCTIONAL_PASS",
+      "actual_target_processes": 5,
+      "actual_count_scope": "completed_native_role_records",
+      "missing_role_receipts": 0,
+      "launch_attempts": 5,
+      "target_active_wall_seconds": 1169.608545596,
+      "host_overhead_seconds": 22.801377148999563,
+      "host_admission": "GO",
+      "host_budget_seconds": 527.9218119536602,
+      "budget_error": null,
+      "budget_failure_stage": "NOT_APPLICABLE",
+      "functional_qualified": true
+    }
+  ],
+  "qualified_case_ids": [
+    "legacy-control",
+    "o2-all-pairs"
+  ],
+  "coverage_qualified": 17,
+  "coverage_required": 20,
+  "held_cases": [
+    "o2-control",
+    "original C8 C48",
+    "timed DIV/SQRT"
+  ],
+  "metrics": {
+    "speedup": "NOT_TESTED",
+    "area": "NOT_TESTED",
+    "timing": "NOT_TESTED"
+  },
+  "new_performance_qualified": false,
+  "RTL_edits_this_round": 0,
+  "new_fullcore_builds": 0,
+  "new_synthesis_runs": 0,
+  "new_STA_runs": 0,
+  "GitHub_writes": 0,
+  "formal_gate_retry_performed": false,
+  "production_files_unchanged": 445,
+  "prior_evidence_unchanged": 743,
+  "evidence": {
+    "runtime_result": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r7-20261106/runtime-tests/RESULT.json",
+      "bytes": 4465,
+      "sha256": "3dc7906cc6deb7ffd5ada2f640b909c15e3001a8b61f37ae1ca331b3811a571f"
+    },
+    "checker_result": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r7-20261106/checker/attempt-01/RESULT.json",
+      "bytes": 552,
+      "sha256": "ec58e54311f434f1adddb5bd71129d4a33fccf2a6a13f0a1c884cdae1c50bb71"
+    },
+    "checker_reuse": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r7-20261106/checker/REUSE.json",
+      "bytes": 6549,
+      "sha256": "9296389b662cadb96be9df9252c320ef4c5678ec03763674d1c3079bc3a8034c"
+    },
+    "runtime_relocation_reuse": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r7-20261106/runtime-tests/REUSE.json",
+      "bytes": 8114,
+      "sha256": "a9fe2466b7d08d6648ffca238ae7f90dd5dd9e67ba44d399abba59e50d4adb1a"
+    },
+    "full_relocation_mapping": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r7-20261106/REUSE_HOST_EVIDENCE.json",
+      "bytes": 32622,
+      "sha256": "71824d96d70aa176ad9031e631cc308a5d35f0c023f3bf092edbb04d72693974"
+    },
+    "checker_freeze": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r7-20261106/checker/SOURCE_FREEZE.json",
+      "bytes": 50719,
+      "sha256": "27fa7b8a1a5a748c106baeb3996fd2edac65e0870f6d22f4458963fc48de8d02"
+    },
+    "runtime_reuse": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r7-20261106/runtime-tests/REUSE_AST.json",
+      "bytes": 4362,
+      "sha256": "2e393db553f6e3054f007a78fed46cb50c860a3fccd31ea96c64572df48bed69"
+    },
+    "independent_actual_controls": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r7-20261106/independent-review/CONTROLS_RESULT.json",
+      "bytes": 10647,
+      "sha256": "cf7a2bc5bad7da6d58fdc90692e966bba63d387f068066665a94366cd62cd51c"
+    },
+    "independent_historical_source": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r4-20261105/independent-review/RESULT.json",
+      "bytes": 6689,
+      "sha256": "72c7460b9dd213cfc926a0beb9f65aea905b5c45c0372771765b8aa6f26a7577"
+    },
+    "external_termination_audit": null,
+    "budget_external_guard": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r7-20261106/budget-review/external-01/RESULT.json",
+      "bytes": 1249,
+      "sha256": "255470b662e1d5b842e93cf410f9b8b3f280a6dc036b9cbcf7d8b0725bf53839"
+    },
+    "budget_final_audit": null,
+    "runtime_version": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r7-20261106/runtime/SOURCE_VERSION.json",
+      "bytes": 2562,
+      "sha256": "000445824a7d95c1177688bcd7501231f711b717ae52aa3409c1e912c2e2226b"
+    },
+    "host_final_audit": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r7-20261106/independent-review/RESULT.json",
+      "bytes": 9377,
+      "sha256": "e260fd62bbf1c1bfdbf8a93446d06f2b4ba1e9866cf3e8b31634393b316ea0a4"
+    },
+    "target_final_audit": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r7-20261106/independent-review/POSTRUN_RESULT.json",
+      "bytes": 80203,
+      "sha256": "9cc5e4c48403ba65fe783e87b62a5d40ae5ce3b7abac5905f179d1451f531c20"
+    },
+    "budget_result": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r7-20261106/budget-review/RESULT.json",
+      "bytes": 25684,
+      "sha256": "2fcf16f5e5e932947bf069089d8bcf334dff17e9d047375f57a1c0711c81fe67"
+    },
+    "input": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r7-20261106/CLOSEOUT_INPUT.json",
+      "bytes": 5010,
+      "sha256": "2694db35768e4e498091447a91d9ed2db90b0d933507d1c8694784d9ed507283"
+    }
+  },
+  "target_receipts": [
+    {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r7-20261106/cases/legacy-control/target-01/01-candidate-bit100/record.json",
+      "bytes": 5658,
+      "sha256": "2f29ea426812f891f7f285b2c4984f43cc626c5e21adcbef730a94df95291716"
+    },
+    {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r7-20261106/cases/legacy-control/target-01/02-candidate-normal-recovery/record.json",
+      "bytes": 5161,
+      "sha256": "8edee0ee95fe807b6613098c3822d1d16875c31841b7d514c0b4acbcc819ffcb"
+    },
+    {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r7-20261106/cases/legacy-control/target-01/03-baseline-normal-calibration/record.json",
+      "bytes": 5149,
+      "sha256": "89b32e5f032c27b397c98d084c70afea180dbff60aa58cd999b6013e28a42b9e"
+    },
+    {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r7-20261106/cases/legacy-control/target-01/04-candidate-replay/record.json",
+      "bytes": 5194,
+      "sha256": "688b4cb0dc6dfa519427b1bf558179f788deaec85959122776ff583ae57e54b8"
+    },
+    {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r7-20261106/cases/legacy-control/target-01/05-baseline-replay/record.json",
+      "bytes": 5131,
+      "sha256": "34f8d45355de8721f4476cf733ab8ab61ed4b78c4790bbfe09f6a49a0b55a81d"
+    },
+    {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r7-20261106/cases/legacy-control/target-01/campaign.json",
+      "bytes": 3402,
+      "sha256": "415ee694f254c2601d9091426cc9be48e7d62e13eb37117a16932758f3ca4f49"
+    },
+    {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r7-20261106/cases/o2-all-pairs/target-01/01-candidate-bit100/record.json",
+      "bytes": 5653,
+      "sha256": "b42731309302e694f302b381ac33a7e38621bcecb7e7b98c20ae79a1d3c079ee"
+    },
+    {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r7-20261106/cases/o2-all-pairs/target-01/02-candidate-normal-recovery/record.json",
+      "bytes": 5176,
+      "sha256": "83cddf8c89ab1198e29a5cccd048141f2575741a64821d8f3413b240537c8e85"
+    },
+    {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r7-20261106/cases/o2-all-pairs/target-01/03-baseline-normal-calibration/record.json",
+      "bytes": 5115,
+      "sha256": "f280b85adb61481530417330dadf0cbfd891c7e18dc7af8fb1bef3d78f4357d9"
+    },
+    {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r7-20261106/cases/o2-all-pairs/target-01/04-candidate-replay/record.json",
+      "bytes": 5163,
+      "sha256": "437cac43f8fc61d23f18c73a600cb8b37049d6755fa552983a1b8b0f9c7d8385"
+    },
+    {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r7-20261106/cases/o2-all-pairs/target-01/05-baseline-replay/record.json",
+      "bytes": 5103,
+      "sha256": "11940da5fe3adb27df3459c395f295e45ac94d30e9dc59cd0ea133e3166e7cd3"
+    },
+    {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r7-20261106/cases/o2-all-pairs/target-01/campaign.json",
+      "bytes": 3390,
+      "sha256": "7095ce6096788db790c4a2daf4ca36fd604edb7b8270f76cfcd6033617e1a24d"
+    },
+    {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r7-20261106/target-01/batch.json",
+      "bytes": 8347,
+      "sha256": "be9ccc7f8eb579dc6b6f0e80b8a4be03370564276a2d613bda912e98b0871492"
+    }
+  ],
+  "proposed_next_instruction": "开始 SP1-E B4：集中完成o2-control与原C8普通C48的共享运行器差异接入，并冻结专用bit100→候选完整正常调用→0f完整正常调用的有界校准合同；复用R7已验证的拒错组归属、退休/CSR、进程外监督、身份与重放公共机制，只补两个负载的实际差异，保留o2-control原完整覆盖以及C48的48调用/1008次custom和完整结果/CSR/ABI。逐项明确镜像与专用故障参考身份、guest/资源上限、每角色/每例/整批独立预算及失败即停；不得用R7其他负载吞吐直接充当保守上界，不借用已完成批次预算。同步核对timed DIV/SQRT已有软件与计时合同，只补真实缺项，分别列出公平窗口、运行器接入和预算缺口，不把allpairs功能通过当作计时资格。已有合法证据直接复用，不重复泛化评审，不重跑R7已通过用例。完成后交付可审阅的准确进程清单、完整调用校准运行合同及下一批执行指令；校准的新预算需明确获用户授权后执行。此轮先不运行EMU/NEMU、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub。"
+}

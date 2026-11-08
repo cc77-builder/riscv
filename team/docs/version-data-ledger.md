@@ -1325,3 +1325,3757 @@ BIN fc43caac20b07a6241b20d88fc37e1acc530cb1e1eea89d0b6bef70e4c76c459。
 4502项预冻结、5项本轮必需源、10组宿主门禁通过；4487旧保护文件与RTL补丁保持。事后前缀核对的list/tuple实现失败已保留并修正，0次目标重跑。旧46条及全部失败不覆盖。
 
 [结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/p3-single-cpu-calibration-v1/RESULT.md) · [合同](../optimizations/o2/integration/firstdot-v2-0f/continuation/p3-single-cpu-calibration-v1/CONTRACT.md) · [证据manifest](../optimizations/o2/integration/firstdot-v2-0f/continuation/p3-single-cpu-calibration-v1/evidence/manifest.json)，SHA 695b2db238836b7089839e20c1b55269d0e9a3993c0bcdb38041623c84be0ea3。
+
+
+## 48. SP1-A/B 原P4恢复与全核观察器适配（2026-11-03）
+
+**SP1_AB_PASS_GO_SP1_C，实际目标HOLD_RUNTIME_ANNEX，用户选择PENDING_USER_SELECTION。** 稳定0f＋firstdot V2＋原C8不变。新加速比NOT_TESTED，成本为通过关闭生成物核验后复用的原G2 trace-off值，未做新综合/STA。
+
+| 版本与资格 | chain256加速比 | C8 8×32加速比 | FU面积μm² | 含FU父级面积μm² | nominal最差setup FU/父级ns |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 稳定0f，历史各工作负载实测 | 2.929725×，5440.5/1857 | 1.095238×，299/273 | 17298.246 | 284614.946 | −0.268520 / −2.393998 |
+| 原P4 G1/G2，历史候选 | NOT_TESTED | NOT_TESTED | 18322.878 | 285241.642 | −0.790381 / −2.337809 |
+| SP1-A/B，原P4＋新观察器 | NOT_TESTED | NOT_TESTED | 18322.878，trace关闭历史复用 | 285241.642，trace关闭历史复用 | −0.790381 / −2.337809，历史复用 |
+
+| 档位 | 参考周期ns | 负载fF | FU Q/ns | FU最差setup/ns | 父级Q/ns | 父级最差setup/ns |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| nominal | 1.0 | 5 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| period050 | 0.5 | 5 | 1.790381 | -1.290381 | 3.337809 | -2.837809 |
+| period200 | 2.0 | 5 | 1.790381 | +0.209619 | 3.337809 | -1.337809 |
+| load001 | 1.0 | 1 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| load020 | 1.0 | 20 | 1.790381 | -0.790381 | 3.391613 | -2.391613 |
+
+六组局部on/off通过，20项配置通过，35组宿主/18432年龄枚举通过。FU31497拍、父级34998拍、SQRT2923拍功能流逐字节一致，完整128位与全部旧负控保留。原G0 NO-GO与本轮5项构建/工具集成FAIL保留。398源码补丁重放通过，源码patch为e1842a5f52a27fda2bea30f791921d6acefd63c54b415912adb8a1e3438be682。
+
+[完整结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-ab/RESULT.md) · [JSON](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-ab/RESULT.json) · [证据manifest](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-ab/evidence/local-archive/manifest.json)，SHA 6102ef860cb840085ec62f06de84ffaee6df857a31bc6e9354b8553b6e4e48e4。原47条保持，不切换默认、不上传。下一轮按NEXT_STEP进行SP1-C/D的有界同镜像验证。
+
+
+## 49. SP1-C/D 新EMU与有界chain-d0（2026-11-04）
+
+**SP1-C通过；SP1-D在第3角色后的跨硬件退休记录公平检查失败，整轮STOPPED/HOLD。** 实际仅3个目标，两个重放均未启动。候选观测均值1601.25 cycles、RVV/vdot=3.397658×，相对同批0f的1857 cycles观测减少13.772213%；这组数值尚未取得最终公平及重放资格。
+
+| 版本/本轮资格 | RVV平均cycles | vdot平均cycles | 观测RVV/vdot | FU面积μm² | 含FU父级面积μm² | nominal setup FU/父级ns |
+| --- | --- | --- | --- | --- | --- | --- |
+| 0f，单次正常对照通过 | 5440.5 | 1857 | 2.929725× | 17298.246 | 284614.946 | −0.268520 / −2.393998 |
+| SP1一拍候选，公平/重放未验收 | 5440.5 | 1601.25 | 3.397658×（未最终合格） | 18322.878 | 285241.642 | −0.790381 / −2.337809 |
+
+
+| 档位 | 参考周期ns | 负载fF | FU Q/ns | FU setup/ns | 父级 Q/ns | 父级 setup/ns |
+| --- | --- | --- | --- | --- | --- | --- |
+| nominal | 1.0 | 5.0 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| period050 | 0.5 | 5.0 | 1.790381 | -1.290381 | 3.337809 | -2.837809 |
+| period200 | 2.0 | 5.0 | 1.790381 | +0.209619 | 3.337809 | -1.337809 |
+| load001 | 1.0 | 1.0 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| load020 | 1.0 | 20.0 | 1.790381 | -0.790381 | 3.391613 | -2.391613 |
+
+
+成本复用原G2 trace-off，同Nangate45局部边界；新综合/STA为0，C8候选NOT_TESTED。实际3/5目标、总监督562.672秒，资源/清理PASS；跨硬件退休分组检查FAIL保留，重放2项NOT_RUN。第49条JSON记录完整身份、24窗观测、成本与归因。
+
+[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-cd/RESULT.md) · [JSON](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-cd/RESULT.json) · [证据](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-cd/evidence-manifest.json) · [下一轮](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-cd/NEXT_STEP.md)。旧48条保留，稳定0f＋firstdot V2＋原C8不变。
+
+
+## 50. SP1-C/D-R1 宿主修订与合同冻结（2026-11-04）
+
+**GO：宿主修订与新合同冻结完成；正式目标性能仍 HOLD，等待新合同下完整五角色。** 原 SP1-C/D STOPPED/FAIL 及两个未运行重放不回写，默认保持 0f＋firstdot V2＋原 C8。本轮没有 EMU/NEMU、RTL、全核构建、综合/STA 或 GitHub 写入。
+
+- @cc77-builder / Agent；2026-11-04，UTC+08:00，日期级记录，不估算人工工时；未提交，基点 `347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e`。
+- 检查器72、运行器45、独立审验60项PASS；3个Python归档回放、24窗及7个接口/最终资格负控通过。仅为宿主证据。
+- 原三角色离线控制符合R1口径；旧FAIL保留，真实重放仍缺。2604pin/43源冻结通过，新used锁不存在。
+
+| 版本与资格 | RVV平均 cycles | vdot平均 cycles | RVV/vdot | FU面积 μm² | 含FU父级面积 μm² | nominal setup FU/父级 ns |
+| --- | ---: | ---: | --- | ---: | ---: | --- |
+| 0f，原同批单次正常对照 | 5440.5 | 1857 | 2.929725× | 17298.246 | 284614.946 | −0.268520 / −2.393998 |
+| SP1一拍候选，原单对观察；最终资格HOLD | 5440.5 | 1601.25 | 3.397658×，未最终合格 | 18322.878 | 285241.642 | −0.790381 / −2.337809 |
+| 本轮R1宿主修订 | NOT_TESTED | NOT_TESTED | 无新增目标成绩 | 复用上行 | 复用上行 | 复用上行 |
+
+
+| 档位 | 参考周期 ns | 负载 fF | FU Q/ns | FU setup/ns | 父级 Q/ns | 父级 setup/ns |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| nominal | 1.0 | 5 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| period050 | 0.5 | 5 | 1.790381 | -1.290381 | 3.337809 | -2.837809 |
+| period200 | 2.0 | 5 | 1.790381 | +0.209619 | 3.337809 | -1.337809 |
+| load001 | 1.0 | 1 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| load020 | 1.0 | 20 | 1.790381 | -0.790381 | 3.391613 | -2.391613 |
+
+
+成本为原G2 trace-off同约束复用，未新增综合/STA；原单对观察未升级为正式成绩。JSON档案第50条保存身份和资格，前49条不变。独立评审初次路径错误及原失败脚本留档。
+
+[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-cd-r1/RESULT.md) · [新合同](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-cd-r1/CONTRACT.md) · [下一轮指令](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-cd-r1/NEXT_STEP.md)。下一步仅在另获用户指令后启动新五角色，不自动扩围、改RTL、换默认或上传。
+
+
+## 51. SP1-C/D-R1 新合同五角色探针（2026-11-04）
+
+**GO：SP1-D 的 dataset0/chain256 五角色公平周期探针通过。** 可以进入SP1-E扩围合同与宿主准入评审，尚未取得全部数据集、C8或默认采用资格。
+
+- @cc77-builder / Agent；2026-11-04 UTC+08，实际UTC起止见RESULT.json；未提交，基点 `347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e`。
+- 本轮新EMU目标5个，目标合计926.517秒、整轮955.233秒；独立审计PASS、指标复算PASS。没有RTL/全核/EDA/默认切换/GitHub写入。
+
+| 本轮版本 | RVV均值 cycles | vdot均值 cycles | RVV/vdot加速比 | FU面积 μm² | 含FU父级面积 μm² | nominal setup FU/父级 ns |
+| --- | ---: | ---: | --- | ---: | ---: | --- |
+| 0f同批对照 | 5440.5 | 1857 | 2.929725× | 17298.246 | 284614.946 | −0.268520 / −2.393998 |
+| SP1一拍候选 | 5440.5 | 1601.25 | 3.397658× | 18322.878 | 285241.642 | −0.790381 / −2.337809 |
+
+
+本轮候选相对同批0f的vdot周期减少 13.772213%，RVV均值退化 0.000000%；AB/BA分别减少 13.785676% / 13.758751%。这些数值只描述本轮chain256。
+
+
+| 档位 | 参考周期 ns | 负载 fF | FU Q/ns | FU setup/ns | 父级 Q/ns | 父级 setup/ns |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| nominal | 1.0 | 5 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| period050 | 0.5 | 5 | 1.790381 | -1.290381 | 3.337809 | -2.837809 |
+| period200 | 2.0 | 5 | 1.790381 | +0.209619 | 3.337809 | -1.337809 |
+| load001 | 1.0 | 1 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| load020 | 1.0 | 20 | 1.790381 | -0.790381 | 3.391613 | -2.391613 |
+
+
+面积与五档时序为原G2 trace-off同库同约束复用，周期为本轮新测，C8候选和trace-on PPA仍未测。数据档案第51条，原50条和原FAIL保留。下一步：SP1-E-G0扩围合同与宿主准入，先不运行目标。
+
+[本轮结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-cd-r1/run-20261104-01/RESULT.md) · [证据](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-cd-r1/run-20261104-01/evidence-manifest.json) · [下一轮指令](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-cd-r1/run-20261104-01/NEXT_STEP.md)。默认仍0f＋firstdot V2＋原C8，由用户最终选择。
+
+
+## 52. SP1-E-G0 扩围合同与宿主准入（2026-11-04）
+
+**GO：扩围合同与宿主门禁完成。HOLD：尚不能启动整个矩阵或授予新应用性能资格。** 下一步仅原C8 dataset0的专用运行器、执行冻结及有界探针；是否真正启动取决于下一轮明确授权和全部宿主准入门禁。
+
+已冻结20用例：12微基准（chain-d0已合格复用）、3原C8性能、1完整48调用普通C、3既有功能保护、1新54窗DIV/SQRT软件。micro313项新控＋35项继承控、C8 44项控、保护41项控通过；另8个新bit100库80项fake ABI控、C8 12叶等价及独立25项控/参考库错SHA拒绝通过。历史日志仅离线复核，不增加目标资格。
+
+保留本轮micro初次12项fixture失败、保护初次缺dispatch模块ERROR、独立静态复核常量笔误及全部旧FAIL；修正后宿主通过，不覆盖原失败。没有运行EMU/NEMU、加载生产参考库、改RTL、构建新核、综合/STA、切默认或上传。
+
+| 版本/资格 | RVV/vdot（chain-d0） | RVV / vdot均值cycles | C8加速比 | FU面积μm² | 含FU父级面积μm² | nominal setup FU/父级ns |
+| --- | --- | --- | --- | ---: | ---: | --- |
+| 0f，对照历史实测 | 2.929725× | 5440.5 / 1857 | 1.095238×，历史299/273 | 17298.246 | 284614.946 | −0.268520 / −2.393998 |
+| SP1，第51条chain-d0已合格 | 3.397658× | 5440.5 / 1601.25 | NOT_TESTED | 18322.878 | 285241.642 | −0.790381 / −2.337809 |
+| 本轮SP1-E-G0 | 无新增实测 | NOT_TESTED | NOT_TESTED | 无新增，复用上行 | 无新增，复用上行 | 无新增，复用上行 |
+
+| 档位 | 周期ns | 负载fF | FU Q/ns | FU setup/ns | 父级Q/ns | 父级setup/ns |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| nominal | 1.0 | 5 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| period050 | 0.5 | 5 | 1.790381 | -1.290381 | 3.337809 | -2.837809 |
+| period200 | 2.0 | 5 | 1.790381 | +0.209619 | 3.337809 | -1.337809 |
+| load001 | 1.0 | 1 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| load020 | 1.0 | 20 | 1.790381 | -0.790381 | 3.391613 | -2.391613 |
+
+成本为Nangate45 Typical1.1V25℃、Yosys/ABC/OpenSTA原G2 trace-off局部FU/含FU真实父级同约束复用，不是全核面积或签核Fmax；候选trace-on PPA未测。nominal父级ready路径0.303064ns、gate-enable路径1.713544ns；主要路径及全部五档起止点保存在METRICS.json。1ns参考下负slack仍保留，不宣称1GHz时序收敛。上一轮chain周期减少13.772213%、RVV退化0，仅适用于dataset0/chain256。
+
+数据档案第52条；前51条及旧FAIL保留。 @cc77-builder / Agent；操作ID `20261104-cc77-builder-sp1-e-g0`；任务记录起止 2026-11-04T16:05:23.352029+08:00 至 2026-11-04T16:47:04.820320+08:00，不代表人工投入。未提交，HEAD `347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e`。
+
+[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-g0/RESULT.md) · [证据manifest](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-g0/evidence-manifest.json) · [下一轮指令](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-g0/NEXT_STEP.md)。
+
+
+## 53. SP1-E-G1 原C8 dataset0有界探针（2026-11-04）
+
+**C8 dataset0 完整五角色合格。** 全部五角色和独立审计/指标复算通过，仅授原C8 dataset0资格；其他dataset、普通C48调用、DIV/SQRT和默认采用均未转授。
+
+原campaign状态：`PERFORMANCE_PASS`；停止原因：`无`。原始角色/资源/时间/日志与独立审查见JSON，失败和未运行项原样保留。
+
+操作者：@cc77-builder / Agent。BEFORE开始 `2026-11-04T09:01:51.088843+00:00`；收尾 `2026-11-04T10:16:17.254704+00:00`（均保留UTC偏移），北京时间收尾 `2026-11-04T18:16:17.254704+08:00`。记录的是本轮任务时间跨度，不是人工工时。
+
+实际启动目标 5 个；目标活动墙钟 1861.555 秒；campaign总墙钟 1986.099 秒；留存日志 19844105 字节。五角色预算6300秒、外层7200秒，未用剩余额度重试或扩围。
+
+宿主门禁：40项运行器测试及63项独立集成均PASS。独审初版 `sp1-e-g1-independent-final-admission-v1` / `HOLD_FINAL_ADMISSION` 与失败项 `["all_execution_pins_physical", "freeze_pin_set_exact", "git_identity"]` 原样留存；修订复核 `sp1-e-g1-independent-final-admission-r1-v1` / `GO_ONE_BOUNDED_C8_D0_ATTEMPT` 单独记录，不覆盖初版。宿主PASS不替代本轮真实目标资格。
+
+| 角色 | 开始UTC（偏移+00:00） | 结束UTC（偏移+00:00） | UTC跨度秒 | monotonic监督秒 | 角色上限秒 | UTC是否在限额内 |
+| --- | --- | --- | ---: | ---: | ---: | --- |
+| candidate-bit100 | 2026-11-04T09:23:11.089331+00:00 | 2026-11-04T09:23:52.317338+00:00 | 41.228007 | 42.018458 | 300 | 是 |
+| candidate-normal-recovery | 2026-11-04T09:23:55.025243+00:00 | 2026-11-04T09:31:03.265570+00:00 | 428.240327 | 439.934237 | 1500 | 是 |
+| baseline-normal-calibration | 2026-11-04T09:31:10.476140+00:00 | 2026-11-04T09:42:58.917470+00:00 | 708.44133 | 727.487007 | 1500 | 是 |
+| candidate-replay | 2026-11-04T09:43:09.107241+00:00 | 2026-11-04T09:48:10.525253+00:00 | 301.418012 | 303.139725 | 1500 | 是 |
+| baseline-replay | 2026-11-04T09:48:24.041308+00:00 | 2026-11-04T10:08:12.782167+00:00 | 1188.740859 | 349.108964 | 1500 | 是 |
+
+Campaign总监督monotonic `1986.098985` 秒，UTC跨度 `2789.903813` 秒；差额 `803.804828` 秒。差异原因 `NOT_ESTABLISHED`，不推断休眠、调度或时钟校准。UTC各角色/总和/外层是否均在对应限额内：`True`。正式资源门禁沿用运行前冻结的monotonic合同，UTC独立观察同时保留；不删除差异或把两种时钟写成相等。加速比仅由同镜像guest计时窗口周期计算，UTC和宿主monotonic均不用于换算性能。
+
+| 版本／本轮资格 | reuse RVV均值 | reuse vdot均值 | 原reuse RVV/vdot | FU面积 μm² | 含FU父级面积 μm² | nominal setup FU/父级 ns |
+| --- | ---: | ---: | --- | ---: | ---: | --- |
+| 0f | 299 | 273 | 1.095238×；本轮合格 | 17298.246 | 284614.946 | -0.26852 / -2.393998 |
+| SP1一拍候选 | 299 | 272 | 1.099265×；本轮合格 | 18322.878 | 285241.642 | -0.790381 / -2.337809 |
+
+| 版本 | basic-vdot | basic-RVV | reuse-vdot | reuse-RVV | basic RVV/vdot | min(两RVV)/reuse-vdot辅助值 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 0f | 643.75 | 356 | 273 | 299 | 0.55301 | 1.095238 |
+| SP1 | 642.5 | 356 | 272 | 299 | 0.554086 | 1.099265 |
+
+| 本轮四格对照 | 0f均值cycles | SP1均值cycles | cycles变化%（SP1/0f−1） | 四格2%保护 |
+| --- | ---: | ---: | ---: | --- |
+| basic-vdot | 643.75 | 642.5 | -0.194175% | PASS |
+| basic-rvv | 356 | 356 | 0% | PASS |
+| reuse-vdot | 273 | 272 | -0.3663% | PASS |
+| reuse-rvv | 299 | 299 | 0% | PASS |
+
+本轮reuse-vdot相对0f周期减少 0.3663%；本轮新测加速比与四格原始值如上。
+
+主加速比始终为同次原reuse-RVV/reuse-vdot；basic对照和min-RVV辅助值分列，不使用未采用278周期RVV或历史分母。first/warmup只验证，不进入每格4窗均值。
+
+| 档位 | 参考周期ns | 负载fF | FU Q/ns | FU setup/ns | 父级 Q/ns | 父级 setup/ns |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| nominal | 1 | 5 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| period050 | 0.5 | 5 | 1.790381 | -1.290381 | 3.337809 | -2.837809 |
+| period200 | 2 | 5 | 1.790381 | 0.209619 | 3.337809 | -1.337809 |
+| load001 | 1 | 1 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| load020 | 1 | 20 | 1.790381 | -0.790381 | 3.391613 | -2.391613 |
+
+面积和五档STA复用第51/52条原G2 trace-off，Nangate45 Typical1.1V25℃，局部FU及含FU真实父级；无新EDA、非全核面积、非签核Fmax。负slack保留，不能宣称1GHz收敛。第51条chain-d0的3.397658×仍仅属于chain，不转作C8成绩。
+
+默认保持0f＋firstdot V2＋原C8，未改RTL、未构建新核、未上传。HEAD `347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e`；生产445文件与BEFORE一致。数据档案追加第53条，前52条与旧FAIL保留。
+
+开始 SP1-E 原C8 dataset1：复用G1五角色机制，先按冻结case适配镜像与bit100绑定，冻结执行合同、全源码及公平对照并通过宿主检查；全部通过后仅运行该case五角色，保持300/1500×4秒、总6300/7200秒及原资源/guest上限、四格2%和精确重放门槛。失败即停、不重试、不加时、不扩围、不改RTL、不构建新核、不切默认、不上传GitHub，完成后更新三指标、给出GO/HOLD和下一轮指令。
+
+[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-g1-c8-d0/RESULT.md) · [证据](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-g1-c8-d0/evidence-manifest.json) · [下一轮](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-g1-c8-d0/NEXT_STEP.md)。
+
+
+## 54. SP1-E-G1 原C8 dataset1有界探针（2026-11-04）
+
+**C8 dataset1 完整五角色合格。** 全部五角色和独立审计/指标复算通过，仅授原C8 dataset1资格；其他dataset、普通C48调用、DIV/SQRT和默认采用均未转授。
+
+原campaign状态：`PERFORMANCE_PASS`；停止原因：`无`。原始角色/资源/时间/日志与独立审查见JSON，失败和未运行项原样保留。
+
+操作者：@cc77-builder / Agent。BEFORE开始 `2026-11-04T10:27:08.983617+00:00`；收尾 `2026-11-04T11:33:20.195749+00:00`（均保留UTC偏移），北京时间收尾 `2026-11-04T19:33:20.195749+08:00`。记录的是本轮任务时间跨度，不是人工工时。
+
+实际启动目标 5 个；目标活动墙钟 2295.995 秒；campaign总墙钟 2487.92 秒；留存日志 19844104 字节。五角色预算6300秒、外层7200秒，未用剩余额度重试或扩围。
+
+宿主门禁：48项运行器测试PASS。独立集成原run01保持FAIL：产品已在 `C8: actual image path` 正确拒绝dataset0镜像，而测试断言仅预期后面的 `UART begin`，因此断言失败。合计72项合同控制来自54项原PASS复用、1项离线确认正确拒错及17项原未执行补项PASS；这是71项普通测试PASS加1项离线资格确认，不能写成原运行72项全部PASS。原FAIL、原源码和原日志均不改写，不重跑原run01。本轮独审收据 `[{"schema": "sp1-e-g1-c8-d1-independent-final-admission-v1", "status": "GO_ONE_BOUNDED_C8_D1_ATTEMPT", "failures": []}]` 按真实状态逐项保留，不预设初FAIL或R1。上轮d0初版失败仍保留旧包，未移作本轮失败。宿主PASS不替代本轮真实目标资格。
+
+| 角色 | 开始UTC（偏移+00:00） | 结束UTC（偏移+00:00） | UTC跨度秒 | monotonic监督秒 | 角色上限秒 | UTC是否在限额内 |
+| --- | --- | --- | ---: | ---: | ---: | --- |
+| candidate-bit100 | 2026-11-04T10:48:36.386733+00:00 | 2026-11-04T10:49:23.506645+00:00 | 47.119912 | 49.520162 | 300 | 是 |
+| candidate-normal-recovery | 2026-11-04T10:49:30.552085+00:00 | 2026-11-04T10:59:04.664775+00:00 | 574.11269 | 596.663046 | 1500 | 是 |
+| baseline-normal-calibration | 2026-11-04T10:59:14.909080+00:00 | 2026-11-04T11:07:38.468838+00:00 | 503.559758 | 525.601249 | 1500 | 是 |
+| candidate-replay | 2026-11-04T11:08:04.983071+00:00 | 2026-11-04T11:17:57.234707+00:00 | 592.251636 | 618.573623 | 1500 | 是 |
+| baseline-replay | 2026-11-04T11:18:42.694297+00:00 | 2026-11-04T11:26:45.767804+00:00 | 483.073507 | 505.790574 | 1500 | 是 |
+
+Campaign总监督monotonic `2487.920133` 秒，UTC跨度 `2378.35713` 秒；差额 `-109.563003` 秒。差异原因 `NOT_ESTABLISHED`，不推断休眠、调度或时钟校准。UTC各角色/总和/外层是否均在对应限额内：`True`。正式资源门禁沿用运行前冻结的monotonic合同，UTC独立观察同时保留；不删除差异或把两种时钟写成相等。加速比仅由同镜像guest计时窗口周期计算，UTC和宿主monotonic均不用于换算性能。
+
+| 版本／本轮资格 | reuse RVV均值 | reuse vdot均值 | 原reuse RVV/vdot | FU面积 μm² | 含FU父级面积 μm² | nominal setup FU/父级 ns |
+| --- | ---: | ---: | --- | ---: | ---: | --- |
+| 0f | 299 | 273 | 1.095238×；本轮合格 | 17298.246 | 284614.946 | -0.26852 / -2.393998 |
+| SP1一拍候选 | 299 | 272 | 1.099265×；本轮合格 | 18322.878 | 285241.642 | -0.790381 / -2.337809 |
+
+| 版本 | basic-vdot | basic-RVV | reuse-vdot | reuse-RVV | basic RVV/vdot | min(两RVV)/reuse-vdot辅助值 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 0f | 643.75 | 356 | 273 | 299 | 0.55301 | 1.095238 |
+| SP1 | 642.5 | 356 | 272 | 299 | 0.554086 | 1.099265 |
+
+| 本轮四格对照 | 0f均值cycles | SP1均值cycles | cycles变化%（SP1/0f−1） | 四格2%保护 |
+| --- | ---: | ---: | ---: | --- |
+| basic-vdot | 643.75 | 642.5 | -0.194175% | PASS |
+| basic-rvv | 356 | 356 | 0% | PASS |
+| reuse-vdot | 273 | 272 | -0.3663% | PASS |
+| reuse-rvv | 299 | 299 | 0% | PASS |
+
+本轮reuse-vdot相对0f周期减少 0.3663%；本轮新测加速比与四格原始值如上。
+
+主加速比始终为同次原reuse-RVV/reuse-vdot；basic对照和min-RVV辅助值分列，不使用未采用278周期RVV或历史分母。first/warmup只验证，不进入每格4窗均值。
+
+| 档位 | 参考周期ns | 负载fF | FU Q/ns | FU setup/ns | 父级 Q/ns | 父级 setup/ns |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| nominal | 1 | 5 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| period050 | 0.5 | 5 | 1.790381 | -1.290381 | 3.337809 | -2.837809 |
+| period200 | 2 | 5 | 1.790381 | 0.209619 | 3.337809 | -1.337809 |
+| load001 | 1 | 1 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| load020 | 1 | 20 | 1.790381 | -0.790381 | 3.391613 | -2.391613 |
+
+面积和五档STA复用第51/52条原G2 trace-off，Nangate45 Typical1.1V25℃，局部FU及含FU真实父级；无新EDA、非全核面积、非签核Fmax。负slack保留，不能宣称1GHz收敛。第51条chain-d0的3.397658×仍仅属于chain，不转作C8成绩。
+
+默认保持0f＋firstdot V2＋原C8，未改RTL、未构建新核、未上传。HEAD `347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e`；生产445文件与BEFORE一致。数据档案追加第54条，前53条与旧FAIL保留。
+
+开始 SP1-E 原C8 dataset2：复用G1五角色机制，先按冻结case适配镜像与bit100绑定，冻结执行合同、全源码及公平对照并通过宿主检查；全部通过后仅运行该case五角色，保持300/1500×4秒、总6300/7200秒及原资源/guest上限、四格2%和精确重放门槛。失败即停、不重试、不加时、不扩围、不改RTL、不构建新核、不切默认、不上传GitHub，完成后更新三指标、给出GO/HOLD和下一轮指令。
+
+[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-g1-c8-d1/RESULT.md) · [证据](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-g1-c8-d1/evidence-manifest.json) · [下一轮](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-g1-c8-d1/NEXT_STEP.md)。
+
+
+## 55. SP1-E-G1 原C8 dataset2有界探针（2026-11-04）
+
+**C8 dataset2 完整五角色合格。** 全部五角色和独立审计/指标复算通过，仅授原C8 dataset2资格；其他dataset、普通C48调用、DIV/SQRT和默认采用均未转授。
+
+原campaign状态：`PERFORMANCE_PASS`；停止原因：`无`。原始角色/资源/时间/日志与独立审查见JSON，失败和未运行项原样保留。
+
+操作者：@cc77-builder / Agent。BEFORE开始 `2026-11-04T11:41:44.820212+00:00`；收尾 `2026-11-04T14:08:30.582789+00:00`（均保留UTC偏移），北京时间收尾 `2026-11-04T22:08:30.582789+08:00`。记录的是本轮任务时间跨度，不是人工工时。
+
+实际启动目标 5 个；目标活动墙钟 1929.886 秒；campaign总墙钟 2096.836 秒；留存日志 19844104 字节。五角色预算6300秒、外层7200秒，未用剩余额度重试或扩围。
+
+宿主门禁：48项运行器测试本轮PASS。独立集成78个叶级结果分为54项本轮新接口测试和24项精确源码/原证据复用；对应72类合同控制=48新类别+24复用类别。6种错集控制分别对d0/d1参数化，因此78叶结果不等于新增78类。复用项不称本轮重跑；旧d1原run01断言FAIL仍留在历史证据，不转作本轮FAIL，也不覆盖成PASS。本轮独审收据 `[{"schema": "sp1-e-g1-c8-d2-independent-final-admission-v1", "status": "GO_ONE_BOUNDED_C8_D2_ATTEMPT", "failures": []}]` 按真实状态逐项保留，不预设初FAIL或R1。上轮d0初版失败仍保留旧包，未移作本轮失败。宿主PASS不替代本轮真实目标资格。
+
+| 角色 | 开始UTC（偏移+00:00） | 结束UTC（偏移+00:00） | UTC跨度秒 | monotonic监督秒 | 角色上限秒 | UTC是否在限额内 |
+| --- | --- | --- | ---: | ---: | ---: | --- |
+| candidate-bit100 | 2026-11-04T11:56:06.436640+00:00 | 2026-11-04T11:56:45.446890+00:00 | 39.01025 | 40.348054 | 300 | 是 |
+| candidate-normal-recovery | 2026-11-04T11:56:49.985117+00:00 | 2026-11-04T12:04:44.631642+00:00 | 474.646525 | 496.160399 | 1500 | 是 |
+| baseline-normal-calibration | 2026-11-04T12:04:55.815405+00:00 | 2026-11-04T12:13:02.592039+00:00 | 486.776634 | 492.046748 | 1500 | 是 |
+| candidate-replay | 2026-11-04T12:13:23.790243+00:00 | 2026-11-04T12:20:55.844933+00:00 | 452.05469 | 469.655627 | 1500 | 是 |
+| baseline-replay | 2026-11-04T12:21:26.287988+00:00 | 2026-11-04T12:28:20.594752+00:00 | 414.306764 | 431.889449 | 1500 | 是 |
+
+Campaign总监督monotonic `2096.835792` 秒，UTC跨度 `2023.263848` 秒；差额 `-73.571944` 秒。差异原因 `NOT_ESTABLISHED`，不推断休眠、调度或时钟校准。UTC各角色/总和/外层是否均在对应限额内：`True`。正式资源门禁沿用运行前冻结的monotonic合同，UTC独立观察同时保留；不删除差异或把两种时钟写成相等。加速比仅由同镜像guest计时窗口周期计算，UTC和宿主monotonic均不用于换算性能。
+
+| 版本／本轮资格 | reuse RVV均值 | reuse vdot均值 | 原reuse RVV/vdot | FU面积 μm² | 含FU父级面积 μm² | nominal setup FU/父级 ns |
+| --- | ---: | ---: | --- | ---: | ---: | --- |
+| 0f | 299 | 273 | 1.095238×；本轮合格 | 17298.246 | 284614.946 | -0.26852 / -2.393998 |
+| SP1一拍候选 | 299 | 272 | 1.099265×；本轮合格 | 18322.878 | 285241.642 | -0.790381 / -2.337809 |
+
+| 版本 | basic-vdot | basic-RVV | reuse-vdot | reuse-RVV | basic RVV/vdot | min(两RVV)/reuse-vdot辅助值 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 0f | 643.75 | 356 | 273 | 299 | 0.55301 | 1.095238 |
+| SP1 | 642.5 | 356 | 272 | 299 | 0.554086 | 1.099265 |
+
+| 本轮四格对照 | 0f均值cycles | SP1均值cycles | cycles变化%（SP1/0f−1） | 四格2%保护 |
+| --- | ---: | ---: | ---: | --- |
+| basic-vdot | 643.75 | 642.5 | -0.194175% | PASS |
+| basic-rvv | 356 | 356 | 0% | PASS |
+| reuse-vdot | 273 | 272 | -0.3663% | PASS |
+| reuse-rvv | 299 | 299 | 0% | PASS |
+
+本轮reuse-vdot相对0f周期减少 0.3663%；本轮新测加速比与四格原始值如上。
+
+主加速比始终为同次原reuse-RVV/reuse-vdot；basic对照和min-RVV辅助值分列，不使用未采用278周期RVV或历史分母。first/warmup只验证，不进入每格4窗均值。
+
+| 档位 | 参考周期ns | 负载fF | FU Q/ns | FU setup/ns | 父级 Q/ns | 父级 setup/ns |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| nominal | 1 | 5 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| period050 | 0.5 | 5 | 1.790381 | -1.290381 | 3.337809 | -2.837809 |
+| period200 | 2 | 5 | 1.790381 | 0.209619 | 3.337809 | -1.337809 |
+| load001 | 1 | 1 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| load020 | 1 | 20 | 1.790381 | -0.790381 | 3.391613 | -2.391613 |
+
+面积和五档STA复用第51/52条原G2 trace-off，Nangate45 Typical1.1V25℃，局部FU及含FU真实父级；无新EDA、非全核面积、非签核Fmax。负slack保留，不能宣称1GHz收敛。第51条chain-d0的3.397658×仍仅属于chain，不转作C8成绩。
+
+默认保持0f＋firstdot V2＋原C8，未改RTL、未构建新核、未上传。HEAD `347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e`；生产445文件与BEFORE一致。数据档案追加第55条，前54条与旧FAIL保留。
+
+开始 SP1-E 原 C8 普通 C 48 调用的宿主合同与预算准入评审。复用固定 0f/SP1 EMU、NEMU 和最终 SDK 镜像，保留全部 48 调用、其中 12 个 C8 调用及 1008 次 custom；核对完整128位结果、数值/CSR/ABI、首条 bit100 绑定、身份和独立重放。按功能验收明确必要角色，分解完整运行与宿主检查开销，单独冻结 guest/墙钟上限及失败即停条件；不得套用性能镜像30万guest上限、删调用、把功能整程序周期当性能加速比，或把历史墙钟线性外推成完成保证。预算依据不足就 HOLD。先不运行 EMU/NEMU、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub，也不自动改跑micro或DIV。完成后给出GO/HOLD和下一轮指令。
+
+[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-g1-c8-d2/RESULT.md) · [证据](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-g1-c8-d2/evidence-manifest.json) · [下一轮](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-g1-c8-d2/NEXT_STEP.md)。
+
+
+## 56. SP1-E 原C8普通C48宿主准入评审（2026-11-04）
+
+**静态合同 GO；C48 目标执行准入 HOLD。** 未发现冻结调用表/数值/镜像不一致；当前组合完整运行墙钟上界没有证据，专用执行闭包也未完成。暂存此项，保留全部验收覆盖，不等于放弃最终SP1验收。
+
+操作：20261104-cc77-builder-sp1-e-c8-c48-g0；@cc77-builder / Agent；2026-11-04T14:13:38.593740+00:00 至 2026-11-04T14:40:35.028282+00:00，记录跨度非人工工时。无目标/RTL/新核/EDA/GitHub写入，默认不变。完整48/1008保留；新三指标NOT_TESTED，历史记录51～55仍有效。
+
+| 已验收工作负载／历史复用 | 0f vdot/RVV cycles | SP1 vdot/RVV cycles | 0f 加速比 | SP1 加速比 |
+|---|---:|---:|---:|---:|
+| chain256 dataset0 | 1857.0/5440.5 | 1601.25/5440.5 | 2.929725× | 3.397658× |
+| 原C8 reuse dataset0 | 273/299 | 272/299 | 1.095238× | 1.099265× |
+| 原C8 reuse dataset1 | 273/299 | 272/299 | 1.095238× | 1.099265× |
+| 原C8 reuse dataset2 | 273/299 | 272/299 | 1.095238× | 1.099265× |
+| 本轮C48普通C功能程序 | NOT_TESTED | NOT_TESTED | 不适用：0性能窗 | 不适用：0性能窗 |
+
+| 历史同约束成本 | 0f | SP1一拍候选 |
+|---|---:|---:|
+| FU面积 μm² | 17298.246 | 18322.878 |
+| 含FU父级面积 μm² | 284614.946 | 285241.642 |
+| nominal FU setup slack ns | -0.268520 | -0.790381 |
+| nominal父级setup slack ns | -2.393998 | -2.337809 |
+
+| SP1历史档位 | 周期ns | 负载fF | FU Q/ns | FU slack/ns | 父级Q/ns | 父级slack/ns |
+|---|---:|---:|---:|---:|---:|---:|
+| nominal | 1.0 | 5 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| period050 | 0.5 | 5 | 1.790381 | -1.290381 | 3.337809 | -2.837809 |
+| period200 | 2.0 | 5 | 1.790381 | 0.209619 | 3.337809 | -1.337809 |
+| load001 | 1.0 | 1 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| load020 | 1.0 | 20 | 1.790381 | -0.790381 | 3.391613 | -2.391613 |
+
+成本均为原G2历史复用、非全核或Fmax签核，负slack保留；路径端点见本轮METRIC_SNAPSHOT.json。
+
+路线影响：C48暂存HOLD，缺完整预算与独立执行闭包；下一轮仅建议chain-d1合同/宿主准入，不自动运行。
+
+[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-c8-c48-g0/RESULT.md) · [下一轮指令](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-c8-c48-g0/NEXT_STEP.md)。
+
+
+## 57. SP1-E micro chain-d1 宿主准入与执行冻结（2026-11-05）
+
+**GO：chain-d1 合同、宿主准入和执行输入冻结完成，可进入下一轮独立授权的五角色有界探针。** 本轮未运行目标；chain-d1 在 SP1 上的功能与性能仍 NOT_TESTED。
+
+操作ID 20261104-cc77-builder-sp1-e-micro-chain-d1-host；@cc77-builder / Agent；2026-11-04T14:47:18.861904+00:00 至 2026-11-05T11:49:44.043581+08:00（含中断，非人工工时）。完整12窗/1536custom，10%收益/2%RVV/ABBA均正及精确重放不变。预算6300/7200秒GO一次有界尝试，目标未启动。
+
+| 工作负载（历史复用另注） | 0f vdot/RVV cycles | SP1 vdot/RVV cycles | 0f 加速比 | SP1 加速比 |
+|---|---:|---:|---:|---:|
+| chain256 dataset0，历史51 | 1857.0/5440.5 | 1601.25/5440.5 | 2.929725× | 3.397658× |
+| 原C8 reuse dataset0，历史53 | 273/299 | 272/299 | 1.095238× | 1.099265× |
+| 原C8 reuse dataset1，历史54 | 273/299 | 272/299 | 1.095238× | 1.099265× |
+| 原C8 reuse dataset2，历史55 | 273/299 | 272/299 | 1.095238× | 1.099265× |
+| **本轮 chain-d1 新五角色** | NOT_TESTED | NOT_TESTED | NOT_TESTED | NOT_TESTED |
+
+| 同约束历史成本 | 0f | SP1 一拍候选 |
+|---|---:|---:|
+| FU面积/μm² | 17298.246 | 18322.878 |
+| 含FU真实父级面积/μm² | 284614.946 | 285241.642 |
+| nominal FU setup slack/ns | -0.268520 | -0.790381 |
+| nominal 父级 setup slack/ns | -2.393998 | -2.337809 |
+
+| SP1历史档位 | 周期/ns | 负载/fF | FU Q/ns | FU slack/ns | 父级Q/ns | 父级slack/ns |
+|---|---:|---:|---:|---:|---:|---:|
+| nominal | 1.0 | 5 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| period050 | 0.5 | 5 | 1.790381 | -1.290381 | 3.337809 | -2.837809 |
+| period200 | 2.0 | 5 | 1.790381 | 0.209619 | 3.337809 | -1.337809 |
+| load001 | 1.0 | 1 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| load020 | 1.0 | 20 | 1.790381 | -0.790381 | 3.391613 | -2.391613 |
+
+| SP1 nominal关键路径（历史） | arrival/ns | required/ns | slack/ns | 起点 → 终点 |
+|---|---:|---:|---:|---|
+| FU ready | 0.218001 | 0.85 | 0.631999 | io_out_ready (input port clocked by core_clk) → io_in_ready (output port clocked by core_clk) |
+| FU all_max | 1.709455 | 0.919074 | -0.790381 | io_in_bits_data_src_0[14] (input port clocked by core_clk) → c8968 (rising edge-triggered flip-flop clocked by core_clk) |
+| 含FU父级 ready | 0.303064 | 0.85 | 0.546936 | io_out_ready (input port clocked by core_clk) → io_in_ready (output port clocked by core_clk) |
+| 含FU父级 gate_enable | 1.713544 | 0.877842 | -0.835702 | c201714 (rising edge-triggered flip-flop clocked by core_clk) → c203281 (rising clock gating-check end-point clocked by core_clk) |
+| 含FU父级 all_max | 3.259825 | 0.922016 | -2.337809 | io_in_bits_vpu_vsew[1] (input port clocked by core_clk) → c201899 (rising edge-triggered flip-flop clocked by core_clk) |
+
+成本全部原G2历史复用，非全核/Fmax签核；新三项指标NOT_TESTED。按用户要求优先加速比，允许合理面积/时序代价，不新增更严PPA门槛；保留负slack。
+
+路线：下一轮仅chain-d1五角色探针；执行前复核输入/资源并生成新授权记录，C48 HOLD不变，默认0f＋firstdot V2＋原C8保持。无新EMU/NEMU/RTL/核构建/EDA/GitHub写入。
+
+[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-micro-chain-d1-g0/RESULT.md) · [下一轮指令](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-micro-chain-d1-g0/NEXT_STEP.md)。
+
+
+## 58. SP1-E micro chain-d1 五角色探针（2026-11-05）
+
+**GO（仅 chain-d1 用例）：五角色探针与独立复核通过；VDOT 周期下降 13.772213%，同机 RVV/VDOT 加速比由 2.929725× 提高至 3.397658×，RVV 退化 0%。** 四个正常角色各完成 12 窗和 1536 次 custom，共 48 窗/6144 次；bit100 实际拒错、完整 128 位结果、退休/CSR、AB/BA 和双方精确重放通过。此次增加 dataset1 覆盖，未改 RTL，不能作为一次新的硬件优化或整个 SP1-E 完成。默认仍为 0f＋firstdot V2＋原 C8，候选最终采用等待用户决定。
+
+@cc77-builder / Agent，20261105-cc77-builder-sp1-e-chain-d1-target；2026-11-05T04:01:17.021132+00:00至2026-11-05T12:35:57.680056+08:00，任务跨度非人工工时；真实目标进程5个，正式墙钟1468.527秒。
+
+| 本轮同镜像角色 | vdot正式均值/cycles | RVV正式均值/cycles | RVV/VDOT加速比 |
+|---|---:|---:|---:|
+| candidate-normal-recovery | 1601.25 | 5440.5 | 3.397658080× |
+| baseline-normal-calibration | 1857.0 | 5440.5 | 2.929725363× |
+| candidate-replay | 1601.25 | 5440.5 | 3.397658080× |
+| baseline-replay | 1857.0 | 5440.5 | 2.929725363× |
+
+initial：vdot周期下降13.772213%，RVV退化0.000000%，AB/BA收益分别13.785676%/13.758751%。
+
+replay：vdot周期下降13.772213%，RVV退化0.000000%，AB/BA收益分别13.785676%/13.758751%。
+
+| 历史同约束面积/μm² | 0f | SP1一拍候选 |
+|---|---:|---:|
+| FU | 17298.246 | 18322.878 |
+| 含FU真实父级 | 284614.946 | 285241.642 |
+
+历史nominal 0f FU/父级setup slack分别-0.268520/-2.393998 ns。
+
+| SP1历史STA档位 | 周期/ns | 负载/fF | FU Q/ns | FU slack/ns | 父级Q/ns | 父级slack/ns |
+|---|---:|---:|---:|---:|---:|---:|
+| nominal | 1.0 | 5 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| period050 | 0.5 | 5 | 1.790381 | -1.290381 | 3.337809 | -2.837809 |
+| period200 | 2.0 | 5 | 1.790381 | 0.209619 | 3.337809 | -1.337809 |
+| load001 | 1.0 | 1 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| load020 | 1.0 | 20 | 1.790381 | -0.790381 | 3.391613 | -2.391613 |
+
+| 历史nominal关键路径 | arrival/ns | required/ns | slack/ns | 起点 → 终点 |
+|---|---:|---:|---:|---|
+| FU/ready | 0.218001 | 0.85 | 0.631999 | io_out_ready (input port clocked by core_clk) → io_in_ready (output port clocked by core_clk) |
+| FU/all_max | 1.709455 | 0.919074 | -0.790381 | io_in_bits_data_src_0[14] (input port clocked by core_clk) → c8968 (rising edge-triggered flip-flop clocked by core_clk) |
+| 父级/ready | 0.303064 | 0.85 | 0.546936 | io_out_ready (input port clocked by core_clk) → io_in_ready (output port clocked by core_clk) |
+| 父级/gate_enable | 1.713544 | 0.877842 | -0.835702 | c201714 (rising edge-triggered flip-flop clocked by core_clk) → c203281 (rising clock gating-check end-point clocked by core_clk) |
+| 父级/all_max | 3.259825 | 0.922016 | -2.337809 | io_in_bits_vpu_vsew[1] (input port clocked by core_clk) → c201899 (rising edge-triggered flip-flop clocked by core_clk) |
+
+面积/STA均原G2历史复用，trace-off局部边界，非整核PPA；新EDA为0，保留负slack。生产RTL与默认不变，无新核/上传。宿主UTC与单调时钟约99秒差异已留档，预算依冻结单调时钟；离线复算的初稿CRLF解析FAIL和修订PASS均保留，未重跑目标。
+
+路线影响：开始 SP1-E micro chain-d2 的合同与宿主准入准备：复用已验收 chain-d1 机制，核查 G0 冻结镜像、12 窗、1536 次 custom、bit100、完整 128 位结果、退休/CSR 及精确重放，完成最小运行器适配和 6300/7200 秒预算评审。保持 10% 收益、2% RVV 退化及 AB/BA 门槛，预算不足就 HOLD。先不运行 EMU/NEMU、不改 RTL、不构建新核、不做 EDA、不切默认、不上传 GitHub；完成后给出 GO/HOLD 和下一轮指令。
+
+[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-micro-chain-d1-g0/target-20261105-01/RESULT.md) · [下一步](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-micro-chain-d1-g0/target-20261105-01/NEXT_STEP.md)。
+
+
+## 59. SP1-E micro chain-d2 宿主准入与执行冻结（2026-11-05）
+
+**GO：chain-d2 的合同、宿主准入及执行输入冻结完成，可进入下一轮单独授权的五角色有界探针。** 本轮未运行 EMU/NEMU，SP1 chain-d2 目标正确性及加速比仍为 NOT_TESTED，默认保持0f＋firstdot V2＋原C8。
+
+@cc77-builder / Agent；20261105-cc77-builder-sp1-e-chain-d2-host；2026-11-05T04:38:53.794288+00:00 至 2026-11-05T12:48:46.027709+08:00，任务跨度非人工工时。
+
+运行器69项宿主门禁、独立预冻结100项、冻结后31项全部通过。覆盖错误dataset、全部128位结果与高96位、接收源、退休数量/融合分组、CSR、缺窗、bit100绑定、10%/2%精确边界、AB/BA与原始精确重放。实际加载12个Python模块及4个动态JSON均在执行源闭包中；缺失目标授权在启动前拒绝，宿主假进程不能冒充真实EMU。
+
+d1/d2的主计算.text、kernel/main/linker/generator及加载布局相同；唯一可执行字节差为打印数据集编号1→2，输入/期望数据区68字节变化。历史d2完整0f为120824 guest cycles、12窗/1536custom；同EMU/NEMU的d1正常角色最慢328.155秒、完整五角色1468.527秒，均按单调计时留档。新d2完整宿主解析实测4.956863秒；26次解析与12次旧闭包重哈希的固定工作量投影157.362秒，小于900秒宿主预留。最终4548项冻结共651590256字节，实际包含全部verify的31项终检耗时1.402076秒，未出现实质增加的宿主成本。以上完整程序与实测证据支持一次有界尝试，不能保证未来调度下一定完成，也不能证明d2已有收益；外层单调硬限保持有效。
+
+| 工作负载与测量范围 | 0f vdot/RVV cycles | SP1 vdot/RVV cycles | 0f 加速比 | SP1 加速比 |
+|---|---:|---:|---:|---:|
+| chain-d0，历史第51条 | 1857.0/5440.5 | 1601.25/5440.5 | 2.929725× | 3.397658× |
+| chain-d1，历史第58条 | 1857.0/5440.5 | 1601.25/5440.5 | 2.929725× | 3.397658× |
+| **本轮 chain-d2 新同镜像五角色** | NOT_TESTED | NOT_TESTED | NOT_TESTED | NOT_TESTED |
+
+| 历史同约束成本 | 0f | SP1 一拍候选 |
+|---|---:|---:|
+| FU面积/μm² | 17298.246 | 18322.878 |
+| 含FU真实父级面积/μm² | 284614.946 | 285241.642 |
+| nominal FU setup slack/ns | -0.268520 | -0.790381 |
+| nominal 父级 setup slack/ns | -2.393998 | -2.337809 |
+
+| SP1历史STA档位 | 周期/ns | 负载/fF | FU Q/ns | FU slack/ns | 父级Q/ns | 父级slack/ns |
+|---|---:|---:|---:|---:|---:|---:|
+| nominal | 1.0 | 5 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| period050 | 0.5 | 5 | 1.790381 | -1.290381 | 3.337809 | -2.837809 |
+| period200 | 2.0 | 5 | 1.790381 | 0.209619 | 3.337809 | -1.337809 |
+| load001 | 1.0 | 1 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| load020 | 1.0 | 20 | 1.790381 | -0.790381 | 3.391613 | -2.391613 |
+
+| SP1历史nominal关键路径 | arrival/ns | required/ns | slack/ns | 起点 → 终点 |
+|---|---:|---:|---:|---|
+| FU/ready | 0.218001 | 0.85 | 0.631999 | io_out_ready (input port clocked by core_clk) → io_in_ready (output port clocked by core_clk) |
+| FU/all_max | 1.709455 | 0.919074 | -0.790381 | io_in_bits_data_src_0[14] (input port clocked by core_clk) → c8968 (rising edge-triggered flip-flop clocked by core_clk) |
+| 父级/ready | 0.303064 | 0.85 | 0.546936 | io_out_ready (input port clocked by core_clk) → io_in_ready (output port clocked by core_clk) |
+| 父级/gate_enable | 1.713544 | 0.877842 | -0.835702 | c201714 (rising edge-triggered flip-flop clocked by core_clk) → c203281 (rising clock gating-check end-point clocked by core_clk) |
+| 父级/all_max | 3.259825 | 0.922016 | -2.337809 | io_in_bits_vpu_vsew[1] (input port clocked by core_clk) → c201899 (rising edge-triggered flip-flop clocked by core_clk) |
+
+三指标新测NOT_TESTED，以上成本均历史同库/同边界trace-off复用，负slack保留。生产445文件未变；0新EMU/NEMU/参考库加载/RTL/核/EDA/GitHub写入。宿主脚本失败修订保留，未重跑目标。
+
+路线影响／接续：开始 SP1-E micro chain-d2 五角色有界探针，按 NEXT_STEP 先核查已有进程、冻结输入和资源，再依次完成 bit100 拒错、候选恢复、0f 校准、候选重放和0f重放。保持6300/7200秒预算、CPU4/整组4线程、原guest/RSS/日志上限、完整12窗和1536次custom、10%收益、2% RVV退化、AB/BA及精确重放门槛。失败即停，不重试、不加时、不扩围、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；完成后更新加速比、面积、时序，给出结论和下一轮指令。
+
+[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-micro-chain-d2-g0/RESULT.md) · [下一轮](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-micro-chain-d2-g0/NEXT_STEP.md)。
+
+
+## 60. SP1-E micro chain-d2 五角色探针（2026-11-05）
+
+**GO（chain-d2）：五角色有界探针与独立复核全部通过。** VDOT均值1857→1601.25 cycles，降低13.772213%；RVV均值5440.5 cycles不变，加速比2.929725×→3.397658×。四个正常角色各完成12窗/1536次custom，共48窗/6144次；bit100实际拒错、完整128位、退休/CSR、AB/BA和双方精确重放通过。结合第51/58条，chain三数据集已闭合；本轮新增dataset2覆盖，收益与d0/d1一致。完整SP1-E仍未验收，默认0f＋firstdot V2＋原C8不变，最终采用由用户决定。
+
+@cc77-builder / Agent，20261105-cc77-builder-sp1-e-chain-d2-target；2026-11-05T04:51:08.653767+00:00至2026-11-05T13:17:15.150939+08:00，任务跨度非人工工时；真实目标进程5个，正式墙钟1347.981秒。
+
+| 本轮同镜像角色 | vdot正式均值/cycles | RVV正式均值/cycles | RVV/VDOT加速比 |
+|---|---:|---:|---:|
+| candidate-normal-recovery | 1601.25 | 5440.5 | 3.397658080× |
+| baseline-normal-calibration | 1857.0 | 5440.5 | 2.929725363× |
+| candidate-replay | 1601.25 | 5440.5 | 3.397658080× |
+| baseline-replay | 1857.0 | 5440.5 | 2.929725363× |
+
+initial：vdot周期下降13.772213%，RVV退化0.000000%，AB/BA收益分别13.785676%/13.758751%。
+
+replay：vdot周期下降13.772213%，RVV退化0.000000%，AB/BA收益分别13.785676%/13.758751%。
+
+| 历史同约束面积/μm² | 0f | SP1一拍候选 |
+|---|---:|---:|
+| FU | 17298.246 | 18322.878 |
+| 含FU真实父级 | 284614.946 | 285241.642 |
+
+历史nominal 0f FU/父级setup slack分别-0.268520/-2.393998 ns。
+
+| SP1历史STA档位 | 周期/ns | 负载/fF | FU Q/ns | FU slack/ns | 父级Q/ns | 父级slack/ns |
+|---|---:|---:|---:|---:|---:|---:|
+| nominal | 1.0 | 5 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| period050 | 0.5 | 5 | 1.790381 | -1.290381 | 3.337809 | -2.837809 |
+| period200 | 2.0 | 5 | 1.790381 | 0.209619 | 3.337809 | -1.337809 |
+| load001 | 1.0 | 1 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| load020 | 1.0 | 20 | 1.790381 | -0.790381 | 3.391613 | -2.391613 |
+
+| 历史nominal关键路径 | arrival/ns | required/ns | slack/ns | 起点 → 终点 |
+|---|---:|---:|---:|---|
+| FU/ready | 0.218001 | 0.85 | 0.631999 | io_out_ready (input port clocked by core_clk) → io_in_ready (output port clocked by core_clk) |
+| FU/all_max | 1.709455 | 0.919074 | -0.790381 | io_in_bits_data_src_0[14] (input port clocked by core_clk) → c8968 (rising edge-triggered flip-flop clocked by core_clk) |
+| 父级/ready | 0.303064 | 0.85 | 0.546936 | io_out_ready (input port clocked by core_clk) → io_in_ready (output port clocked by core_clk) |
+| 父级/gate_enable | 1.713544 | 0.877842 | -0.835702 | c201714 (rising edge-triggered flip-flop clocked by core_clk) → c203281 (rising clock gating-check end-point clocked by core_clk) |
+| 父级/all_max | 3.259825 | 0.922016 | -2.337809 | io_in_bits_vpu_vsew[1] (input port clocked by core_clk) → c201899 (rising edge-triggered flip-flop clocked by core_clk) |
+
+面积/STA均原G2历史复用，trace-off局部边界，非整核PPA；新EDA为0，保留负slack。生产RTL与默认不变，无新核/上传。宿主时钟核查按实际结果留档，预算依据冻结单调时钟；历史FAIL保留，本轮未重试目标。
+
+路线影响：开始 SP1-E micro single-d0 的合同与宿主准入准备：沿用 G0 冻结矩阵，核查同镜像12窗、6次custom、bit100、完整128位结果、退休/CSR、平衡执行顺序及精确重放，完成最小运行器适配和6300/7200秒预算评审。按G0固定single的vdot与RVV各自最多2%退化门槛；预算依据不足就HOLD。先不运行EMU/NEMU、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；完成后给出GO/HOLD和下一轮指令。
+
+[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-micro-chain-d2-g0/target-20261105-01/RESULT.md) · [下一步](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-micro-chain-d2-g0/target-20261105-01/NEXT_STEP.md)。
+
+
+## 61. SP1-E micro single-d0 宿主准入与执行冻结（2026-11-05）
+
+**GO（宿主准入）：single-d0合同、运行器适配、正负控、预算评审与执行冻结完成，可在下一轮明确指令后启动一次五角色有界探针。** 本轮未运行EMU/NEMU，single-d0的SP1目标正确性及加速比仍NOT_TESTED；默认0f＋firstdot V2＋原C8不变。
+
+@cc77-builder / Agent；20261105-cc77-builder-sp1-e-single-d0-host；2026-11-05T05:20:45.150558+00:00 至 2026-11-05T13:33:53.988317+08:00，任务跨度非人工工时。
+
+运行器92项、独立预冻结114项、独立冻结后32项全部通过。完整12窗/6次custom、全128位和接受源、退休融合/CSR、single专用bit100、逐窗控制相等、两方法各2%精确边界及八类原始重放字段已核查。首轮负控发现ENQUEUE编码未绑定，已仅在本轮宿主adapter补强并复核，G0冻结检查器未改。执行闭包5095项/134源码；实际12个模块和5个动态JSON全部在冻结清单。缺失运行授权在目标启动前拒绝，冻结未消费。
+
+历史同镜像single-d0完整0f记录为72465 guest、12窗/6custom，覆盖完整启动、每窗寄存器搬运/CSR/结果与自检、UART及GOOD TRAP。最近同运行时chain-d2完整单调墙钟1347.981秒、目标累计1202.740秒、非目标145.241秒仅作运行机制参考，不线性外推single完成保证。新single完整收据解析实测1.775218秒，正常26次解析投影46.155679秒；最终5095项/673027925字节冻结完整verify实测1.604002秒，按保守12轮verify加26次正常解析投影约65.404秒，低于900秒预留。负控解析、监督、身份、序列化、清理等开销不视为零，另由历史完整非目标记录交叉支持。依据支持一次有界尝试，未来CPU/资源改变或输入/预算依据不足仍HOLD；硬上限保持6300/7200秒。
+
+| 工作负载与资格 | 0f VDOT/RVV cycles | SP1 VDOT/RVV cycles | 0f RVV/VDOT | SP1 RVV/VDOT |
+|---|---:|---:|---:|---:|
+| chain-d0，历史第51条 | 1857.0/5440.5 | 1601.25/5440.5 | 2.929725× | 3.397658× |
+| chain-d1，历史第58条 | 1857.0/5440.5 | 1601.25/5440.5 | 2.929725× | 3.397658× |
+| chain-d2，历史第60条 | 1857.0/5440.5 | 1601.25/5440.5 | 2.929725× | 3.397658× |
+| **本轮single-d0新五角色** | NOT_TESTED | NOT_TESTED | NOT_TESTED | NOT_TESTED |
+
+| 历史同约束成本 | 0f | SP1一拍候选 |
+|---|---:|---:|
+| FU面积/μm² | 17298.246 | 18322.878 |
+| 含FU父级面积/μm² | 284614.946 | 285241.642 |
+| nominal FU setup slack/ns | -0.268520 | -0.790381 |
+| nominal父级setup slack/ns | -2.393998 | -2.337809 |
+
+| SP1历史STA档位 | 周期/ns | 负载/fF | FU Q/ns | FU slack/ns | 父级Q/ns | 父级slack/ns |
+|---|---:|---:|---:|---:|---:|---:|
+| nominal | 1.0 | 5 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| period050 | 0.5 | 5 | 1.790381 | -1.290381 | 3.337809 | -2.837809 |
+| period200 | 2.0 | 5 | 1.790381 | 0.209619 | 3.337809 | -1.337809 |
+| load001 | 1.0 | 1 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| load020 | 1.0 | 20 | 1.790381 | -0.790381 | 3.391613 | -2.391613 |
+
+| SP1历史nominal关键路径 | arrival/ns | required/ns | slack/ns | 起点→终点 |
+|---|---:|---:|---:|---|
+| FU/ready | 0.218001 | 0.85 | 0.631999 | io_out_ready (input port clocked by core_clk) → io_in_ready (output port clocked by core_clk) |
+| FU/all_max | 1.709455 | 0.919074 | -0.790381 | io_in_bits_data_src_0[14] (input port clocked by core_clk) → c8968 (rising edge-triggered flip-flop clocked by core_clk) |
+| 父级/ready | 0.303064 | 0.85 | 0.546936 | io_out_ready (input port clocked by core_clk) → io_in_ready (output port clocked by core_clk) |
+| 父级/gate_enable | 1.713544 | 0.877842 | -0.835702 | c201714 (rising edge-triggered flip-flop clocked by core_clk) → c203281 (rising clock gating-check end-point clocked by core_clk) |
+| 父级/all_max | 3.259825 | 0.922016 | -2.337809 | io_in_bits_vpu_vsew[1] (input port clocked by core_clk) → c201899 (rising edge-triggered flip-flop clocked by core_clk) |
+
+新三指标NOT_TESTED，以上成本为历史同库/边界trace-off复用；负slack保留。生产445项未变；零新EMU/NEMU/生产库加载/RTL/新核/EDA/GitHub写入。宿主失败修订保留，不属于目标重试。
+
+路线影响／接续：开始 SP1-E micro single-d0 五角色有界探针，按 NEXT_STEP 先核查已有进程、冻结输入和资源，再依次完成 bit100 拒错、候选恢复、0f 校准、候选重放和0f重放。保持6300/7200秒预算、CPU4/整组4线程、原guest/RSS/日志上限、完整12窗和6次custom、VDOT与RVV各自最多2%退化、逐窗控制相等及精确重放门槛。失败即停，不重试、不加时、不扩围、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；完成后更新加速比、面积、时序，给出结论和下一轮指令。
+
+[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-micro-single-d0-g0/RESULT.md) · [下一轮](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-micro-single-d0-g0/NEXT_STEP.md)。
+
+
+## 62. SP1-E micro single-d0 五角色探针（2026-11-05）
+
+**GO（single-d0）：五角色有界探针和独立复核全部通过。** VDOT平均周期71→70，下降1.408451%；RVV维持85.25cycles，加速比1.200704225×→1.217857143×。四个正常角色各12窗/6custom，共48窗/24次；专用bit100拒错、完整128位结果、退休/CSR、逐窗控制及双方精确重放通过。只增加single-d0资格，未新增RTL优化；完整SP1-E仍未验收，默认0f＋firstdot V2＋原C8不变，最终采用由用户决定。
+
+@cc77-builder / Agent，20261105-cc77-builder-sp1-e-single-d0-target；2026-11-05T05:40:49.953747+00:00至2026-11-05T13:57:41.955645+08:00，任务跨度非人工工时；真实目标进程5个，正式墙钟834.653秒。
+
+| 本轮同镜像角色 | vdot正式均值/cycles | RVV正式均值/cycles | RVV/VDOT加速比 |
+|---|---:|---:|---:|
+| candidate-normal-recovery | 70.0 | 85.25 | 1.217857143× |
+| baseline-normal-calibration | 71.0 | 85.25 | 1.200704225× |
+| candidate-replay | 70.0 | 85.25 | 1.217857143× |
+| baseline-replay | 71.0 | 85.25 | 1.200704225× |
+
+initial：vdot周期下降1.408451%，RVV退化0.000000%，AB/BA子组变化（仅描述）分别1.408451%/1.408451%。
+
+replay：vdot周期下降1.408451%，RVV退化0.000000%，AB/BA子组变化（仅描述）分别1.408451%/1.408451%。
+
+| 历史同约束面积/μm² | 0f | SP1一拍候选 |
+|---|---:|---:|
+| FU | 17298.246 | 18322.878 |
+| 含FU真实父级 | 284614.946 | 285241.642 |
+
+历史nominal 0f FU/父级setup slack分别-0.268520/-2.393998 ns。
+
+| SP1历史STA档位 | 周期/ns | 负载/fF | FU Q/ns | FU slack/ns | 父级Q/ns | 父级slack/ns |
+|---|---:|---:|---:|---:|---:|---:|
+| nominal | 1.0 | 5 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| period050 | 0.5 | 5 | 1.790381 | -1.290381 | 3.337809 | -2.837809 |
+| period200 | 2.0 | 5 | 1.790381 | 0.209619 | 3.337809 | -1.337809 |
+| load001 | 1.0 | 1 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| load020 | 1.0 | 20 | 1.790381 | -0.790381 | 3.391613 | -2.391613 |
+
+| 历史nominal关键路径 | arrival/ns | required/ns | slack/ns | 起点 → 终点 |
+|---|---:|---:|---:|---|
+| FU/ready | 0.218001 | 0.85 | 0.631999 | io_out_ready (input port clocked by core_clk) → io_in_ready (output port clocked by core_clk) |
+| FU/all_max | 1.709455 | 0.919074 | -0.790381 | io_in_bits_data_src_0[14] (input port clocked by core_clk) → c8968 (rising edge-triggered flip-flop clocked by core_clk) |
+| 父级/ready | 0.303064 | 0.85 | 0.546936 | io_out_ready (input port clocked by core_clk) → io_in_ready (output port clocked by core_clk) |
+| 父级/gate_enable | 1.713544 | 0.877842 | -0.835702 | c201714 (rising edge-triggered flip-flop clocked by core_clk) → c203281 (rising clock gating-check end-point clocked by core_clk) |
+| 父级/all_max | 3.259825 | 0.922016 | -2.337809 | io_in_bits_vpu_vsew[1] (input port clocked by core_clk) → c201899 (rising edge-triggered flip-flop clocked by core_clk) |
+
+面积/STA均原G2历史复用，trace-off局部边界，非整核PPA；新EDA为0，保留负slack。生产RTL与默认不变，无新核/上传。宿主时钟核查按实际结果留档，预算依据冻结单调时钟；历史FAIL保留，本轮未重试目标。
+
+路线影响：开始 SP1-E micro single-d1 的合同与宿主准入准备：复用 single-d0 机制，核查 G0 冻结镜像、12窗和6次custom、专用bit100、完整128位结果、退休/CSR及精确重放，完成运行器适配和6300/7200秒预算评审。按G0保持VDOT与RVV各自最多2%退化、逐窗控制相等和平衡执行顺序，预算不足就HOLD。先不运行EMU/NEMU、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；完成后给出结论和下一轮指令。
+
+[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-micro-single-d0-g0/target-20261105-01/RESULT.md) · [下一步](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-micro-single-d0-g0/target-20261105-01/NEXT_STEP.md)。
+
+
+## 63. SP1-E micro single-d1 宿主准入与执行冻结（2026-11-05）
+
+**GO（宿主准入）：single-d1合同、运行器适配、正负控、预算评审与执行冻结完成，可在下一轮明确指令后启动一次五角色有界探针。** 本轮未运行EMU/NEMU，single-d1的SP1目标正确性及加速比仍NOT_TESTED；默认0f＋firstdot V2＋原C8不变。
+
+@cc77-builder / Agent；20261105-cc77-builder-sp1-e-single-d1-host；2026-11-05T06:00:59.972544+00:00 至 2026-11-05T14:09:17.047795+08:00，任务跨度非人工工时。
+
+运行器97项（47机制＋50适配）、独立预冻结114项和冻结后32项全部通过。核查single-d1专用镜像/数据与12窗/6custom，负数点积完整128位000000000000000000000000fffe0400、退休逻辑17/21及instret12/16、CSR、专用bit100、两方法各2%精确门槛和八类原始精确重放；误用d0图像、case、raw、收据、旧freeze均拒绝。冻结5426项/143源码，实际12个模块及5个动态JSON全部闭合；缺失运行授权在启动前拒绝，锁未消费。
+
+d1历史完整0f为72465 guest、12窗/6custom、3387546字节日志，完整程序核查通过。与d0的kernel/main源和.text逐字一致，仅0x80003aa8的dataset打印常量0→1及数据区38字节不同，没有删减验证。最近同运行时single-d0五角色实测单调834.652753秒、目标771.211695秒、非目标63.441059秒，提供完整机制参考，不转授d1资格。新d1完整收据解析1.665232322秒；最终5426项/687207816字节冻结的根级完整verify为1.526349759秒，独立verify＋import观察4.274064319秒。取较大观察值按12轮verify加26次正常解析作保守工作量投影约94.585秒，低于900秒宿主预留。负控解析、监督/身份、序列化和清理仍计入完整外层；这些是观测与投影，不是未来数学最坏保证。依据足以准入一次有界尝试，资源或输入漂移时仍HOLD，6300/7200秒硬上限不变。
+
+| 工作负载与资格 | 0f VDOT/RVV cycles | SP1 VDOT/RVV cycles | 0f RVV/VDOT | SP1 RVV/VDOT |
+|---|---:|---:|---:|---:|
+| chain-d0，历史第51条 | 1857.0/5440.5 | 1601.25/5440.5 | 2.929725× | 3.397658× |
+| chain-d1，历史第58条 | 1857.0/5440.5 | 1601.25/5440.5 | 2.929725× | 3.397658× |
+| chain-d2，历史第60条 | 1857.0/5440.5 | 1601.25/5440.5 | 2.929725× | 3.397658× |
+| single-d0，历史第62条 | 71.0/85.25 | 70.0/85.25 | 1.200704× | 1.217857× |
+| **本轮single-d1新五角色** | NOT_TESTED | NOT_TESTED | NOT_TESTED | NOT_TESTED |
+
+| 历史同约束成本 | 0f | SP1一拍候选 |
+|---|---:|---:|
+| FU面积/μm² | 17298.246 | 18322.878 |
+| 含FU父级面积/μm² | 284614.946 | 285241.642 |
+| nominal FU setup slack/ns | -0.268520 | -0.790381 |
+| nominal父级setup slack/ns | -2.393998 | -2.337809 |
+
+| SP1历史STA档位 | 周期/ns | 负载/fF | FU Q/ns | FU slack/ns | 父级Q/ns | 父级slack/ns |
+|---|---:|---:|---:|---:|---:|---:|
+| nominal | 1.0 | 5 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| period050 | 0.5 | 5 | 1.790381 | -1.290381 | 3.337809 | -2.837809 |
+| period200 | 2.0 | 5 | 1.790381 | 0.209619 | 3.337809 | -1.337809 |
+| load001 | 1.0 | 1 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| load020 | 1.0 | 20 | 1.790381 | -0.790381 | 3.391613 | -2.391613 |
+
+| SP1历史nominal关键路径 | arrival/ns | required/ns | slack/ns | 起点→终点 |
+|---|---:|---:|---:|---|
+| FU/ready | 0.218001 | 0.85 | 0.631999 | io_out_ready (input port clocked by core_clk) → io_in_ready (output port clocked by core_clk) |
+| FU/all_max | 1.709455 | 0.919074 | -0.790381 | io_in_bits_data_src_0[14] (input port clocked by core_clk) → c8968 (rising edge-triggered flip-flop clocked by core_clk) |
+| 父级/ready | 0.303064 | 0.85 | 0.546936 | io_out_ready (input port clocked by core_clk) → io_in_ready (output port clocked by core_clk) |
+| 父级/gate_enable | 1.713544 | 0.877842 | -0.835702 | c201714 (rising edge-triggered flip-flop clocked by core_clk) → c203281 (rising clock gating-check end-point clocked by core_clk) |
+| 父级/all_max | 3.259825 | 0.922016 | -2.337809 | io_in_bits_vpu_vsew[1] (input port clocked by core_clk) → c201899 (rising edge-triggered flip-flop clocked by core_clk) |
+
+新三指标NOT_TESTED，以上成本为历史同库/边界trace-off复用；负slack保留。生产445项未变；零新EMU/NEMU/生产库加载/RTL/新核/EDA/GitHub写入。历史宿主失败保留，本轮未重试目标。
+
+路线影响／接续：开始 SP1-E micro single-d1 五角色有界探针，按 NEXT_STEP 先核查已有进程、冻结输入和资源，再依次完成 bit100 拒错、候选恢复、0f 校准、候选重放和0f重放。保持6300/7200秒预算、CPU4/整组4线程、原guest/RSS/日志上限、完整12窗和6次custom、VDOT与RVV各自最多2%退化、逐窗控制相等及精确重放门槛。失败即停，不重试、不加时、不扩围、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；完成后更新加速比、面积、时序，给出结论和下一轮指令。
+
+[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-micro-single-d1-g0/RESULT.md) · [下一轮](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-micro-single-d1-g0/NEXT_STEP.md)。
+
+
+## 64. SP1-E micro single-d1 五角色探针（2026-11-05）
+
+**GO（single-d1）：五角色有界探针、独立指标及功能审计通过。** VDOT平均周期71→70，下降1.408451%；RVV维持85.25cycles，加速比1.200704225×→1.217857143×。四个正常角色各12窗/6custom，共48窗/24次；专用bit100拒错、完整128位结果、退休/CSR、逐窗控制及双方精确重放通过。仅新增single-d1资格，本轮未改RTL。完整SP1-E尚未验收，默认0f＋firstdot V2＋原C8不变，最终采用由用户决定。
+
+@cc77-builder / Agent，20261105-cc77-builder-sp1-e-single-d1-target；2026-11-05T06:12:00.708439+00:00至2026-11-05T14:32:57.676210+08:00，任务跨度非人工工时；真实目标进程5个，正式墙钟801.857秒。
+
+| 本轮同镜像角色 | vdot正式均值/cycles | RVV正式均值/cycles | RVV/VDOT加速比 |
+|---|---:|---:|---:|
+| candidate-normal-recovery | 70.0 | 85.25 | 1.217857143× |
+| baseline-normal-calibration | 71.0 | 85.25 | 1.200704225× |
+| candidate-replay | 70.0 | 85.25 | 1.217857143× |
+| baseline-replay | 71.0 | 85.25 | 1.200704225× |
+
+initial：vdot周期下降1.408451%，RVV退化0.000000%，AB/BA子组变化（仅描述）分别1.408451%/1.408451%。
+
+replay：vdot周期下降1.408451%，RVV退化0.000000%，AB/BA子组变化（仅描述）分别1.408451%/1.408451%。
+
+| 历史同约束面积/μm² | 0f | SP1一拍候选 |
+|---|---:|---:|
+| FU | 17298.246 | 18322.878 |
+| 含FU真实父级 | 284614.946 | 285241.642 |
+
+历史nominal 0f FU/父级setup slack分别-0.268520/-2.393998 ns。
+
+| SP1历史STA档位 | 周期/ns | 负载/fF | FU Q/ns | FU slack/ns | 父级Q/ns | 父级slack/ns |
+|---|---:|---:|---:|---:|---:|---:|
+| nominal | 1.0 | 5 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| period050 | 0.5 | 5 | 1.790381 | -1.290381 | 3.337809 | -2.837809 |
+| period200 | 2.0 | 5 | 1.790381 | 0.209619 | 3.337809 | -1.337809 |
+| load001 | 1.0 | 1 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| load020 | 1.0 | 20 | 1.790381 | -0.790381 | 3.391613 | -2.391613 |
+
+| 历史nominal关键路径 | arrival/ns | required/ns | slack/ns | 起点 → 终点 |
+|---|---:|---:|---:|---|
+| FU/ready | 0.218001 | 0.85 | 0.631999 | io_out_ready (input port clocked by core_clk) → io_in_ready (output port clocked by core_clk) |
+| FU/all_max | 1.709455 | 0.919074 | -0.790381 | io_in_bits_data_src_0[14] (input port clocked by core_clk) → c8968 (rising edge-triggered flip-flop clocked by core_clk) |
+| 父级/ready | 0.303064 | 0.85 | 0.546936 | io_out_ready (input port clocked by core_clk) → io_in_ready (output port clocked by core_clk) |
+| 父级/gate_enable | 1.713544 | 0.877842 | -0.835702 | c201714 (rising edge-triggered flip-flop clocked by core_clk) → c203281 (rising clock gating-check end-point clocked by core_clk) |
+| 父级/all_max | 3.259825 | 0.922016 | -2.337809 | io_in_bits_vpu_vsew[1] (input port clocked by core_clk) → c201899 (rising edge-triggered flip-flop clocked by core_clk) |
+
+面积/STA均原G2历史复用，trace-off局部边界，非整核PPA；新EDA为0，保留负slack。生产RTL与默认不变，无新核/上传。宿主时钟核查按实际结果留档，预算依据冻结单调时钟；历史FAIL保留，本轮未重试目标。
+
+路线影响：开始 SP1-E micro single-d2 的合同与宿主准入准备：复用 single-d1 机制，核查 G0 冻结镜像、12窗和6次custom、专用bit100、完整128位结果、退休/CSR及精确重放，完成运行器适配和6300/7200秒预算评审。按G0保持VDOT与RVV各自最多2%退化、逐窗控制相等和平衡执行顺序，预算不足就HOLD。先不运行EMU/NEMU、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；完成后给出结论和下一轮指令。
+
+[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-micro-single-d1-g0/target-20261105-01/RESULT.md) · [下一步](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-micro-single-d1-g0/target-20261105-01/NEXT_STEP.md)。
+
+
+## 65. SP1-E micro single-d2 宿主准入与执行冻结（2026-11-05）
+
+**GO（宿主准入）：single-d2合同、运行器适配、正负控、预算评审与执行冻结完成，可在下一轮明确指令后启动一次五角色有界探针。** 本轮未运行EMU/NEMU，single-d2的SP1目标正确性及加速比仍NOT_TESTED；默认0f＋firstdot V2＋原C8不变。
+
+@cc77-builder / Agent；20261105-cc77-builder-sp1-e-single-d2-host；2026-11-05T06:38:14.593741+00:00 至 2026-11-05T14:47:50.796890+08:00，任务跨度非人工工时。
+
+运行器103项（50机制＋53适配）、独立预冻结114项和冻结后32项全部通过。核查single-d2专用镜像/数据与12窗/6custom，低8项有符号正负抵消为0、完整128位00000000000000000000000000000000，全部6次接受源及高96位独立校验；退休逻辑17/21及instret12/16、CSR、专用bit100、ENQUEUE身份、两方法各2%精确门槛和八类原始精确重放均有正负控。d0/d1镜像、case、raw、收据、旧freeze误用均拒绝。冻结5771项/152源码，实际12个自定义模块及5个动态JSON全部在闭包；缺授权在启动前拒绝，正式执行锁未消费。
+
+d2历史完整0f为72465 guest、12窗/6custom、3387546字节日志，完整程序核查通过。与d1的kernel/main源和.text逐字一致，仅0x80003aa8的dataset打印立即数1→2及数据区70字节不同，没有删减验证。最近同运行时single-d1五角色实测单调801.857455595秒、目标737.658433015秒、非目标64.199022580秒，提供完整机制参考，不转授d2资格。CPU4完整d2收据解析运行器1.701140831秒、预算独立解析1.651666442秒，取较大观察值。最终5771项/701571765字节冻结根级完整verify为1.706213595秒，独立verify/import为1.675858319秒，完整独立子进程1.731043953秒。仍保留较慢继承哈希观察3.064420625秒作固定工作量投影：26次正常解析＋12轮哈希/verify约81.002709106秒，小于900秒预留。负控解析、监督/身份、序列化和清理仍计入完整外层；这些是完整程序证据、宿主观测和工作量投影，不是未来最坏墙钟保证。支持准入一次有界尝试，输入/资源漂移或准备预算不足仍HOLD；6300/7200秒硬上限不变。
+
+| 工作负载与资格 | 0f VDOT/RVV cycles | SP1 VDOT/RVV cycles | 0f RVV/VDOT | SP1 RVV/VDOT |
+|---|---:|---:|---:|---:|
+| chain-d0，历史第51条 | 1857.0/5440.5 | 1601.25/5440.5 | 2.929725× | 3.397658× |
+| chain-d1，历史第58条 | 1857.0/5440.5 | 1601.25/5440.5 | 2.929725× | 3.397658× |
+| chain-d2，历史第60条 | 1857.0/5440.5 | 1601.25/5440.5 | 2.929725× | 3.397658× |
+| single-d0，历史第62条 | 71.0/85.25 | 70.0/85.25 | 1.200704× | 1.217857× |
+| single-d1，历史第64条 | 71.0/85.25 | 70.0/85.25 | 1.200704× | 1.217857× |
+| **本轮single-d2新五角色** | NOT_TESTED | NOT_TESTED | NOT_TESTED | NOT_TESTED |
+
+| 历史同约束成本 | 0f | SP1一拍候选 |
+|---|---:|---:|
+| FU面积/μm² | 17298.246 | 18322.878 |
+| 含FU父级面积/μm² | 284614.946 | 285241.642 |
+| nominal FU setup slack/ns | -0.268520 | -0.790381 |
+| nominal父级setup slack/ns | -2.393998 | -2.337809 |
+
+| SP1历史STA档位 | 周期/ns | 负载/fF | FU Q/ns | FU slack/ns | 父级Q/ns | 父级slack/ns |
+|---|---:|---:|---:|---:|---:|---:|
+| nominal | 1.0 | 5 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| period050 | 0.5 | 5 | 1.790381 | -1.290381 | 3.337809 | -2.837809 |
+| period200 | 2.0 | 5 | 1.790381 | 0.209619 | 3.337809 | -1.337809 |
+| load001 | 1.0 | 1 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| load020 | 1.0 | 20 | 1.790381 | -0.790381 | 3.391613 | -2.391613 |
+
+| SP1历史nominal关键路径 | arrival/ns | required/ns | slack/ns | 起点→终点 |
+|---|---:|---:|---:|---|
+| FU/ready | 0.218001 | 0.85 | 0.631999 | io_out_ready (input port clocked by core_clk) → io_in_ready (output port clocked by core_clk) |
+| FU/all_max | 1.709455 | 0.919074 | -0.790381 | io_in_bits_data_src_0[14] (input port clocked by core_clk) → c8968 (rising edge-triggered flip-flop clocked by core_clk) |
+| 父级/ready | 0.303064 | 0.85 | 0.546936 | io_out_ready (input port clocked by core_clk) → io_in_ready (output port clocked by core_clk) |
+| 父级/gate_enable | 1.713544 | 0.877842 | -0.835702 | c201714 (rising edge-triggered flip-flop clocked by core_clk) → c203281 (rising clock gating-check end-point clocked by core_clk) |
+| 父级/all_max | 3.259825 | 0.922016 | -2.337809 | io_in_bits_vpu_vsew[1] (input port clocked by core_clk) → c201899 (rising edge-triggered flip-flop clocked by core_clk) |
+
+新三指标NOT_TESTED，以上成本为历史同库/边界trace-off复用；负slack保留。生产445项未变；零新EMU/NEMU/生产库加载/RTL/新核/EDA/GitHub写入。历史宿主失败保留，本轮未重试目标。
+
+路线影响／接续：开始 SP1-E micro single-d2 五角色有界探针，按 NEXT_STEP 先核查已有进程、冻结输入和资源，再依次完成 bit100 拒错、候选恢复、0f 校准、候选重放和0f重放。保持6300/7200秒预算、CPU4/整组4线程、原guest/RSS/日志上限、完整12窗和6次custom、VDOT与RVV各自最多2%退化、逐窗控制相等及精确重放门槛。失败即停，不重试、不加时、不扩围、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；完成后更新加速比、面积、时序，给出结论和下一轮指令。
+
+[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-micro-single-d2-g0/RESULT.md) · [下一轮](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-micro-single-d2-g0/NEXT_STEP.md)。
+
+
+## 66. SP1-E micro single-d2 五角色探针（2026-11-05）
+
+**GO（single-d2）：五角色有界探针、独立指标与功能审计通过。** VDOT平均周期71→70，下降1.408451%；RVV保持85.25cycles，加速比1.200704225×→1.217857143×。四个正常角色各12窗/6custom，共48窗/24次；专用bit100拒错、完整128位全零、接受源、退休/CSR、逐窗控制及双方精确重放通过。结合第62/64条，single三个数据集已分别完成目标验收，收益一致；本轮补齐数据覆盖，未新增RTL优化。完整SP1-E尚未验收，默认0f＋firstdot V2＋原C8不变，最终采用由用户决定。
+
+@cc77-builder / Agent，20261105-cc77-builder-sp1-e-single-d2-target；2026-11-05T06:56:32.525610+00:00至2026-11-05T15:14:16.423579+08:00，任务跨度非人工工时；真实目标进程5个，正式墙钟774.160秒。
+
+| 本轮同镜像角色 | vdot正式均值/cycles | RVV正式均值/cycles | RVV/VDOT加速比 |
+|---|---:|---:|---:|
+| candidate-normal-recovery | 70.0 | 85.25 | 1.217857143× |
+| baseline-normal-calibration | 71.0 | 85.25 | 1.200704225× |
+| candidate-replay | 70.0 | 85.25 | 1.217857143× |
+| baseline-replay | 71.0 | 85.25 | 1.200704225× |
+
+initial：vdot周期下降1.408451%，RVV退化0.000000%，AB/BA子组变化（仅描述）分别1.408451%/1.408451%。
+
+replay：vdot周期下降1.408451%，RVV退化0.000000%，AB/BA子组变化（仅描述）分别1.408451%/1.408451%。
+
+| 历史同约束面积/μm² | 0f | SP1一拍候选 |
+|---|---:|---:|
+| FU | 17298.246 | 18322.878 |
+| 含FU真实父级 | 284614.946 | 285241.642 |
+
+历史nominal 0f FU/父级setup slack分别-0.268520/-2.393998 ns。
+
+| SP1历史STA档位 | 周期/ns | 负载/fF | FU Q/ns | FU slack/ns | 父级Q/ns | 父级slack/ns |
+|---|---:|---:|---:|---:|---:|---:|
+| nominal | 1.0 | 5 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| period050 | 0.5 | 5 | 1.790381 | -1.290381 | 3.337809 | -2.837809 |
+| period200 | 2.0 | 5 | 1.790381 | 0.209619 | 3.337809 | -1.337809 |
+| load001 | 1.0 | 1 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| load020 | 1.0 | 20 | 1.790381 | -0.790381 | 3.391613 | -2.391613 |
+
+| 历史nominal关键路径 | arrival/ns | required/ns | slack/ns | 起点 → 终点 |
+|---|---:|---:|---:|---|
+| FU/ready | 0.218001 | 0.85 | 0.631999 | io_out_ready (input port clocked by core_clk) → io_in_ready (output port clocked by core_clk) |
+| FU/all_max | 1.709455 | 0.919074 | -0.790381 | io_in_bits_data_src_0[14] (input port clocked by core_clk) → c8968 (rising edge-triggered flip-flop clocked by core_clk) |
+| 父级/ready | 0.303064 | 0.85 | 0.546936 | io_out_ready (input port clocked by core_clk) → io_in_ready (output port clocked by core_clk) |
+| 父级/gate_enable | 1.713544 | 0.877842 | -0.835702 | c201714 (rising edge-triggered flip-flop clocked by core_clk) → c203281 (rising clock gating-check end-point clocked by core_clk) |
+| 父级/all_max | 3.259825 | 0.922016 | -2.337809 | io_in_bits_vpu_vsew[1] (input port clocked by core_clk) → c201899 (rising edge-triggered flip-flop clocked by core_clk) |
+
+面积/STA均原G2历史复用，trace-off局部边界，非整核PPA；新EDA为0，保留负slack。生产RTL与默认不变，无新核/上传。宿主时钟核查按实际结果留档，预算依据冻结单调时钟；历史FAIL保留，本轮未重试目标。
+
+路线影响：开始 SP1-E 剩余验收收口与共享运行器复用评审：结合已通过的chain、single和原C8性能三数据集，固定剩余必验清单、暂缓项、验收终点和执行批次；复用已验证的公共宿主机制，只补用例/镜像差异检查。保留各case完整覆盖、原性能门槛、6300/7200秒预算及失败即停要求，不用代表性抽样替代未验证项。先不运行EMU/NEMU、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；完成后给出必要缺项、GO/HOLD及下一批执行指令。
+
+[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-micro-single-d2-g0/target-20261105-01/RESULT.md) · [下一步](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-micro-single-d2-g0/target-20261105-01/NEXT_STEP.md)。
+
+
+## 67. 2026-11-05 SP1-E剩余验收收口与共享运行器复用评审
+
+GO：六个batch/stream用例集中做共享宿主迁入与差异准入；HOLD：剩余目标执行及完整SP1-E。20项必验中9项已通过、11项待完成；未变公共机制复用，逐case完整覆盖和原门槛保留。默认0f＋firstdot V2＋原C8不变。
+
+本轮新增加速比/面积/时序均NOT_TESTED；已通过case仍9/20。剩余6个micro集中准备、2个保护后续准备、3个预算HOLD。共享入口尚未实现，全部11个剩余case目标执行未准入。保持每case6300/7200秒、完整覆盖、原门槛、失败即停。
+
+| 负载（各d0/d1/d2已分别验证） | 0f VDOT cycles | SP1 VDOT cycles | 0f/SP1 RVV cycles | 0f加速比 | SP1加速比 | VDOT周期下降 |
+|---|---:|---:|---:|---:|---:|---:|
+| chain | 1857 | 1601.25 | 5440.5/5440.5 | 2.929725363× | 3.397658080× | 13.772213% |
+| single | 71 | 70 | 85.25/85.25 | 1.200704225× | 1.217857143× | 1.408451% |
+| C8-basic | 643.75 | 642.5 | 356/356 | 0.553009709× | 0.554085603× | 0.194175% |
+| C8-reuse | 273 | 272 | 299/299 | 1.095238095× | 1.099264706× | 0.366300% |
+
+C8-basic仍慢于RVV；不能只展示chain最高倍数代表端到端应用收益。
+
+| 历史面积/μm² | 0f | SP1 |
+|---|---:|---:|
+| FU | 17298.246 | 18322.878 |
+| 含FU真实父级 | 284614.946 | 285241.642 |
+
+Nangate45 Typical 1.1V 25℃，原G2 trace-off局部边界；不是整核PPA、布局布线签核或Fmax。0f nominal FU/父级setup slack为−0.268520/−2.393998ns。
+
+| SP1原五档STA | 周期/ns | 负载/fF | FU Q/ns | FU slack/ns | 父级Q/ns | 父级slack/ns |
+|---|---:|---:|---:|---:|---:|---:|
+| nominal | 1 | 5 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| period050 | 0.5 | 5 | 1.790381 | -1.290381 | 3.337809 | -2.837809 |
+| period200 | 2 | 5 | 1.790381 | 0.209619 | 3.337809 | -1.337809 |
+| load001 | 1 | 1 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| load020 | 1 | 20 | 1.790381 | -0.790381 | 3.391613 | -2.391613 |
+
+原P4严格G2的NO-GO和SP0放宽成本预算的后续准入记录均保留，不将本轮标成新EDA或消除负slack。
+
+
+本轮只做有限收口规划；完整验收须20项全部闭合，HOLD不当PASS。下一轮B0只实现共享宿主入口及六例差异门禁，不启动目标。
+
+[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-closeout-review-20261105/RESULT.md) · [完整计划](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-closeout-review-20261105/PLAN.md) · [下一轮](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-closeout-review-20261105/NEXT_STEP.md)。
+
+
+## 68. 2026-11-05 SP1-E B0六用例共享宿主入口与准入
+
+GO：batch/stream六例共享宿主入口、差异正负控、实际执行冻结和有界预算准入完成；batch三例可在下一轮明确授权后整批执行。本轮没有EMU/NEMU或新性能资格，完整SP1-E仍9/20已验，默认0f＋firstdot V2＋原C8不变。
+
+开始 2026-11-05T07:37:54.659384+00:00；结束 2026-11-05T08:10:45.939102+00:00（记录时区UTC+08：2026-11-05T16:10:45.939102+08:00）；@cc77-builder / Agent；操作ID 20261105-cc77-builder-sp1-e-b0-shared-micro。
+
+共享入口＋六份冻结实物完成；420逐例功能、204收据、12共享/9角色/4授权单元测试（授权39子检查），六份冻结138项正负控通过。保守宿主投影554.529≤900秒，原6300/7200秒不变。无目标/生产库/RTL/全核/EDA/默认/GitHub改动；未采用候选不因宿主GO自动采用。
+
+本轮新加速比、面积、时序均NOT_TESTED；以下旧实测按原合同复用。
+
+| 负载（各d0/d1/d2已分别验证） | 0f VDOT cycles | SP1 VDOT cycles | 0f/SP1 RVV cycles | 0f加速比 | SP1加速比 | VDOT周期下降 |
+|---|---:|---:|---:|---:|---:|---:|
+| chain | 1857 | 1601.25 | 5440.5/5440.5 | 2.929725363× | 3.397658080× | 13.772213% |
+| single | 71 | 70 | 85.25/85.25 | 1.200704225× | 1.217857143× | 1.408451% |
+| C8-basic | 643.75 | 642.5 | 356/356 | 0.553009709× | 0.554085603× | 0.194175% |
+| C8-reuse | 273 | 272 | 299/299 | 1.095238095× | 1.099264706× | 0.366300% |
+
+C8-basic仍慢于RVV；不能只展示chain最高倍数代表端到端应用收益。
+
+| 历史面积/μm² | 0f | SP1 |
+|---|---:|---:|
+| FU | 17298.246 | 18322.878 |
+| 含FU真实父级 | 284614.946 | 285241.642 |
+
+Nangate45 Typical 1.1V 25℃，原G2 trace-off局部边界；不是整核PPA、布局布线签核或Fmax。0f nominal FU/父级setup slack为−0.268520/−2.393998ns。
+
+| SP1原五档STA | 周期/ns | 负载/fF | FU Q/ns | FU slack/ns | 父级Q/ns | 父级slack/ns |
+|---|---:|---:|---:|---:|---:|---:|
+| nominal | 1 | 5 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| period050 | 0.5 | 5 | 1.790381 | -1.290381 | 3.337809 | -2.837809 |
+| period200 | 2 | 5 | 1.790381 | 0.209619 | 3.337809 | -1.337809 |
+| load001 | 1 | 1 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| load020 | 1 | 20 | 1.790381 | -0.790381 | 3.391613 | -2.391613 |
+
+原P4严格G2的NO-GO和SP0放宽成本预算的后续准入记录均保留，不将本轮标成新EDA或消除负slack。
+
+
+路线接续：下一轮只运行B1 batch d0/d1/d2，逐例五角色，整批首错停止，最多15进程/18900目标秒/21600外层秒，不能借预算或自动进入stream。原FAIL及本轮宿主夹具/报告写入失败均保留。
+
+[结果](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b0-shared-micro-20261105/RESULT.md) · [下一轮完整指令](../optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b0-shared-micro-20261105/NEXT_STEP.md)。
+
+
+## 69. 2026-11-05 SP1-E B1 batch三数据集有界执行
+
+B1 batch d0/d1/d2五角色全部通过；完整SP1-E必验进度从9/20推进到12/20。默认仍为0f＋firstdot V2＋原C8，SP1候选未切默认；stream及其余保护缺项未冒充通过。
+
+开始2026-11-05T08:18:16.724676+00:00；结束2026-11-05T09:46:42.297275+00:00；记录时区UTC+08：2026-11-05T17:46:42.297275+08:00；@cc77-builder / Agent；操作ID 20261105-cc77-builder-sp1-e-b1-batch-target。
+
+目标进程15/15，目标累计2436.957/18900秒，批次外层2779.241/21600秒；每例6300/7200秒、原资源/guest与失败即停合同不变。已完成角色按各自覆盖独立复核，完整五角色才授予该例性能资格；不以local latency或bit100代替完整性能资格。
+
+本轮周期为同镜像、同运行参数的新实测；面积和时序为原G2同候选trace-off局部边界历史复用。各数据集分别列出，不合成总加速比。
+
+| 数据集 | 五角色资格 | 0f VDOT cycles | SP1 VDOT cycles | 0f RVV cycles | SP1 RVV cycles | 0f RVV/VDOT | SP1 RVV/VDOT | VDOT周期下降 | RVV退化 |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| d0 | PASS | 221 | 221 | 678 | 678 | 3.067873303× | 3.067873303× | 0.000000000% | 0.000000000% |
+| d1 | PASS | 221 | 221 | 678 | 678 | 3.067873303× | 3.067873303× | 0.000000000% | 0.000000000% |
+| d2 | PASS | 221 | 221 | 678 | 678 | 3.067873303× | 3.067873303× | 0.000000000% | 0.000000000% |
+
+每角色12窗全部保留，其中每算法4个measured窗计算均值；first/warmup不混入均值。每VDOT窗128次custom、每正常角色768次；instret为VDOT232/RVV552。首次和重放比较均须单独通过VDOT/RVV最多2%退化及逐窗控制相等；同硬件8项摘要精确重放。AB/BA描述结果保留，但不移植chain的10%门槛。完整144窗明细（若整批通过）见metric-review/review-r1/all-windows.csv。
+
+| 历史面积 μm² | 0f | SP1 |
+|---|---:|---:|
+| FU | 17298.246 | 18322.878 |
+| 含FU真实父级 | 284614.946 | 285241.642 |
+
+Nangate45 Typical 1.1V 25℃，原G2 trace-off局部FU/父级范围；新综合、新STA均NOT_TESTED，不代表整核、布线签核或Fmax。0f nominal FU/父级slack分别−0.268520/−2.393998ns。
+
+| SP1历史五档STA | 周期ns | 负载fF | FU Q/ns | FU slack/ns | 父级Q/ns | 父级slack/ns |
+|---|---:|---:|---:|---:|---:|---:|
+| nominal | 1 | 5 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| period050 | 0.5 | 5 | 1.790381 | -1.290381 | 3.337809 | -2.837809 |
+| period200 | 2 | 5 | 1.790381 | 0.209619 | 3.337809 | -1.337809 |
+| load001 | 1 | 1 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| load020 | 1 | 20 | 1.790381 | -0.790381 | 3.391613 | -2.391613 |
+
+| SP1 nominal关键路径 | arrival ns | required ns | slack ns |
+|---|---:|---:|---:|
+| fu/r2r | 1.020088 | 0.924317 | -0.095771 |
+| fu/i2r | 1.709455 | 0.919074 | -0.790381 |
+| fu/ready | 0.218001 | 0.85 | 0.631999 |
+| parent/i2r | 3.259825 | 0.922016 | -2.337809 |
+| parent/ready | 0.303064 | 0.85 | 0.546936 |
+| parent/vdot_i2r | 2.176863 | 0.919473 | -1.25739 |
+| parent/gate_enable | 1.713544 | 0.877842 | -0.835702 |
+
+原P4严格G2 NO-GO、各档负slack及放宽预算的SP0准入并存；本轮不会消除旧失败。历史chain最高加速比不能代替batch或C8端到端收益。完整成本来源、其他档路径和起止端点保留于METRICS.json。
+
+
+宿主离线审计两项首轮格式/时钟边界误判已修订并补正负控；原FAIL完整保留，没有目标重试或冻结运行器改动。
+
+路线影响：开始 SP1-E B2 stream 三数据集五角色有界执行：按 NEXT_STEP 先核查进程和冻结输入，确认B1全通过，再按 d0→d1→d2 串行执行 performance-d0-s03、performance-d1-s03、performance-d2-s03。每例保持6300/7200秒及原CPU4、整组4线程、RSS12GiB、日志2GiB与guest上限；整批最多15个目标进程、18900秒目标累计、21600秒外层预算，不借用预算。保留完整12窗、384次custom、递增地址/三条退休融合及专用bit100、VDOT/RVV各自最多2%退化、完整128位、退休/CSR、逐窗控制及精确重放。任一失败立即停止整批，不重试、不加时、不跳过继续、不自动扩围。不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；完成后更新三项指标和下一轮指令。
+
+[本轮结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b0-shared-micro-20261105/batches/B1-batch/RESULT.md) · [下一轮完整指令](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b0-shared-micro-20261105/batches/B1-batch/NEXT_STEP.md)。
+
+
+## 70. 2026-11-05 SP1-E B2 stream三数据集有界执行
+
+B2 stream d0/d1/d2五角色全部通过；完整SP1-E必验进度从12/20推进到15/20。默认仍为0f＋firstdot V2＋原C8，SP1候选未切默认；其余保护及普通C调用缺项未冒充通过。
+
+开始2026-11-05T09:52:15.251079+00:00；结束2026-11-05T11:55:58.830922+00:00；记录时区UTC+08：2026-11-05T19:55:58.830922+08:00；@cc77-builder / Agent；操作ID 20261105-cc77-builder-sp1-e-b2-stream-target。
+
+目标进程15/15，目标累计3523.837/18900秒，批次外层3895.471/21600秒；每例6300/7200秒、原资源/guest与失败即停合同不变。已完成角色按各自覆盖独立复核，完整五角色才授予该例性能资格；不以local latency或bit100代替完整性能资格。
+
+本轮周期为同镜像、同运行参数的新实测；面积和时序为原G2同候选trace-off局部边界历史复用。各数据集分别列出，不合成总加速比。
+
+| 数据集 | 五角色资格 | 0f VDOT cycles | SP1 VDOT cycles | 0f RVV cycles | SP1 RVV cycles | 0f RVV/VDOT | SP1 RVV/VDOT | VDOT周期下降 | RVV退化 |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| d0 | PASS | 1127.5 | 1126.25 | 1133 | 1133 | 1.004878049× | 1.005993341× | 0.110864745% | 0.000000000% |
+| d1 | PASS | 1127.5 | 1126.25 | 1133 | 1133 | 1.004878049× | 1.005993341× | 0.110864745% | 0.000000000% |
+| d2 | PASS | 1127.5 | 1126.25 | 1133 | 1133 | 1.004878049× | 1.005993341× | 0.110864745% | 0.000000000% |
+
+每角色12窗全部保留，其中每算法4个measured窗计算均值；first/warmup不混入均值。每VDOT窗64次custom、每正常角色384次；instret为VDOT648/RVV904。首次和重放比较均须单独通过VDOT/RVV最多2%退化及逐窗控制相等；同硬件8项摘要精确重放。AB/BA描述结果保留，但不移植chain的10%门槛。完整144窗明细（若整批通过）见metric-review/all-windows.csv。
+
+整程序guest cycles与计时窗均值分开留档；整程序包含启动、自检、输出及窗外控制，不能替代冻结窗口的性能门槛。
+
+| 数据集 | 候选首次/重放 guest cycles | 0f首次/重放 guest cycles |
+|---|---:|---:|
+| performance-d0-s03 | 109372 / 109372 | 109336 / 109336 |
+| performance-d1-s03 | 109372 / 109372 | 109336 / 109336 |
+| performance-d2-s03 | 109372 / 109372 | 109336 / 109336 |
+
+| 历史面积 μm² | 0f | SP1 |
+|---|---:|---:|
+| FU | 17298.246 | 18322.878 |
+| 含FU真实父级 | 284614.946 | 285241.642 |
+
+Nangate45 Typical 1.1V 25℃，原G2 trace-off局部FU/父级范围；新综合、新STA均NOT_TESTED，不代表整核、布线签核或Fmax。0f nominal FU/父级slack分别−0.268520/−2.393998ns。
+
+| SP1历史五档STA | 周期ns | 负载fF | FU Q/ns | FU slack/ns | 父级Q/ns | 父级slack/ns |
+|---|---:|---:|---:|---:|---:|---:|
+| nominal | 1 | 5 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| period050 | 0.5 | 5 | 1.790381 | -1.290381 | 3.337809 | -2.837809 |
+| period200 | 2 | 5 | 1.790381 | 0.209619 | 3.337809 | -1.337809 |
+| load001 | 1 | 1 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| load020 | 1 | 20 | 1.790381 | -0.790381 | 3.391613 | -2.391613 |
+
+| SP1 nominal关键路径 | arrival ns | required ns | slack ns |
+|---|---:|---:|---:|
+| fu/r2r | 1.020088 | 0.924317 | -0.095771 |
+| fu/i2r | 1.709455 | 0.919074 | -0.790381 |
+| fu/ready | 0.218001 | 0.85 | 0.631999 |
+| parent/i2r | 3.259825 | 0.922016 | -2.337809 |
+| parent/ready | 0.303064 | 0.85 | 0.546936 |
+| parent/vdot_i2r | 2.176863 | 0.919473 | -1.25739 |
+| parent/gate_enable | 1.713544 | 0.877842 | -0.835702 |
+
+原P4严格G2 NO-GO、各档负slack及放宽预算的SP0准入并存；本轮不会消除旧失败。历史chain最高加速比不能代替stream或C8端到端收益。完整成本来源、其他档路径和起止端点保留于METRICS.json。
+
+
+B1历史宿主FAIL及其修订保留；本轮stream差异正负控和终态离线复算通过，没有目标重试或冻结运行器改动。
+
+路线影响：开始 SP1-E B3 原功能保护的专用宿主合同与预算准入：集中核查 legacy-control、o2-all-pairs、o2-control，复用未变公共机制，明确当前候选的完整功能、取消/反压、DIV混合、CSR/全向量结果、负控及重放合同，补齐专用收集器和宿主正负控。按原每例6300/7200秒及资源约束逐例审查预算，guest上限按各自冻结工作量论证，不套用micro的300000上限；o2-control证据不足继续HOLD，不借时、不加时、不重复短校准。先不运行EMU/NEMU、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；完成后逐例给出GO/HOLD、必要缺项和下一轮指令。
+
+[本轮结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b0-shared-micro-20261105/batches/B2-stream/RESULT.md) · [下一轮完整指令](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b0-shared-micro-20261105/batches/B2-stream/NEXT_STEP.md)。
+
+
+## 71. 2026-11-05 SP1-E B3 原功能保护宿主合同与预算
+
+三例宿主合同与检查器完成；legacy-control/o2-all-pairs有条件预算GO进入执行接入，o2-control预算HOLD。当前三例均非TARGET_READY，专用运行器/执行冻结/CPU4完整宿主900秒门尚待下一轮。
+
+开始2026-11-05T12:01:34.959734+00:00；结束2026-11-05T12:20:08.393782+00:00；记录2026-11-05T20:20:08.393782+08:00；@cc77-builder / Agent；操作ID SP1-E-B3-HOST-20261105-01。
+
+三例当前候选目标功能均NOT_TESTED；完整SP1-E仍15/20。本轮检查器93项初版＋修订针对性门、独立合同/预算核查及源身份保护通过；旧证据保持，不新增目标/RTL/核/EDA/GitHub操作。
+
+本轮加速比、面积、时序新测量均为NOT_TESTED。以下仅复用第70条B2历史实测/原G2历史成本，不把宿主测试PASS计成新硬件收益。
+
+| 指标 | 0f | SP1候选 | 来源/资格 |
+|---|---:|---:|---|
+| stream d0/d1/d2 VDOT均值cycles，各例相同 | 1127.50 | 1126.25 | B2同镜像完整五角色 |
+| stream d0/d1/d2 RVV均值cycles，各例相同 | 1133 | 1133 | B2同镜像完整五角色 |
+| stream RVV/VDOT，各例相同 | 1.004878049× | 1.005993341× | B2，VDOT下降0.110864745% |
+| FU面积μm² | 17298.246 | 18322.878 | 原G2局部trace-off |
+| 含FU真实父级面积μm² | 284614.946 | 285241.642 | 原G2局部trace-off |
+| nominal FU setup slack ns | −0.268520 | −0.790381 | 历史1ns/5fF |
+| nominal父级setup slack ns | −2.393998 | −2.337809 | 历史1ns/5fF |
+
+Nangate45 Typical 1.1V 25℃，不是整核面积、签核或Fmax，负slack继续保留。
+
+| SP1历史五档 | 周期ns | 负载fF | FU Q/ns | FU slack/ns | 父级Q/ns | 父级slack/ns |
+|---|---:|---:|---:|---:|---:|---:|
+| nominal | 1.0 | 5 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| period050 | 0.5 | 5 | 1.790381 | -1.290381 | 3.337809 | -2.837809 |
+| period200 | 2.0 | 5 | 1.790381 | 0.209619 | 3.337809 | -1.337809 |
+| load001 | 1.0 | 1 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| load020 | 1.0 | 20 | 1.790381 | -0.790381 | 3.391613 | -2.391613 |
+
+全部关键路径、起止点和来源保留在METRICS.json；原严格G2 NO-GO不因本轮宿主通过而变成时序PASS。三个功能保护程序无RVV对照性能窗，不新增2%退化资格。
+
+
+路线影响：开始 SP1-E B3 两例执行接入与有界验证：仅 legacy-control→o2-all-pairs，先接入专用五角色外层，核验真实进程/参考映射及资源回执，完成执行源码冻结、宿主正负控和CPU4下完整核验/解析开销审计；实际调用图的宿主开销须通过900秒门，全部准入后再串行执行两例。每例保持300/1500×4秒、目标6300/外层7200秒；整批最多10个目标进程、目标12600秒/外层14400秒，不借时。负控guest各100000，正常guest分别800000/300000，CPU4/整组4线程/RSS12GiB/日志2GiB不变。保留原完整功能、128位、CSR、bit100、八维功能精确重放；不把无计时窗程序当性能测试。任何准入或执行失败立即停止整批，不重试、不加时、不跳过继续；o2-control保持HOLD，不扩围、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub。完成后更新计分板和下一轮指令。
+
+[本轮结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-protection-host-20261105/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-protection-host-20261105/NEXT_STEP.md)。
+
+
+## 72. 2026-11-05 SP1-E B3 两例执行接入：宿主闭包FAIL，整批HOLD
+
+两例运行器和宿主机制完成；正式CPU4执行闭包核验因遗漏四个cwd配套文件失败，900秒宿主门未建立，按失败即停终止整批。两例均未运行，原o2-control继续HOLD。
+
+开始 2026-11-05T12:26:23.071225+00:00；结束 2026-11-05T12:53:19.201144+00:00；记录 2026-11-05T20:53:19.201144+08:00；@cc77-builder / Agent；操作ID SP1-E-B3-EXECUTION-20261105-01。
+
+运行器最终10方法PASS，独立26项机制＋16项算术/历史回执控PASS；正式完整冻结核验遗漏四个cwd支持输入，900秒总门未建立。只读确认文件存在且与真实B2冻结一致；保留开发初次FAIL及本轮正式FAIL。新增目标0，两例NOT_RUN，o2-control继续HOLD，进度15/20不变。未修改生产RTL、构建新核、运行EDA、切默认或上传。
+
+本轮加速比、面积、时序均为 NOT_TESTED；两例保护程序没有合格 RVV 计时对照，不能从功能通过或宿主开销推算加速比。以下为此前 B2 同镜像五角色结果和原 G2 局部成本的历史复用，未重新运行。
+
+| 历史工作负载 | 0f VDOT cycles | SP1 VDOT cycles | 0f/SP1 RVV cycles | 0f RVV/VDOT | SP1 RVV/VDOT | VDOT周期下降 |
+|---|---:|---:|---:|---:|---:|---:|
+| B2 stream performance-d0-s03 | 1127.50 | 1126.25 | 1133/1133 | 1.004878049× | 1.005993341× | 0.110864745% |
+| B2 stream performance-d1-s03 | 1127.50 | 1126.25 | 1133/1133 | 1.004878049× | 1.005993341× | 0.110864745% |
+| B2 stream performance-d2-s03 | 1127.50 | 1126.25 | 1133/1133 | 1.004878049× | 1.005993341× | 0.110864745% |
+
+| 历史局部成本 | 0f | SP1 |
+|---|---:|---:|
+| FU 面积 μm² | 17298.246 | 18322.878 |
+| 含 FU 的真实父级面积 μm² | 284614.946 | 285241.642 |
+| nominal FU setup slack ns | −0.268520 | −0.790381 |
+| nominal 父级 setup slack ns | −2.393998 | −2.337809 |
+
+Nangate45 Typical 1.1V 25℃，原 G2 trace-off 局部 FU/真实父级综合；不是整核面积、签核或 Fmax。负 slack 和原严格 G2 NO-GO 均保留。新 trace-on 成本仍 NOT_TESTED。
+
+| SP1历史五档 | 周期ns | 负载fF | FU Q/ns | FU slack/ns | 父级Q/ns | 父级slack/ns |
+|---|---:|---:|---:|---:|---:|---:|
+| nominal | 1 | 5 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| period050 | 0.5 | 5 | 1.790381 | -1.290381 | 3.337809 | -2.837809 |
+| period200 | 2 | 5 | 1.790381 | 0.209619 | 3.337809 | -1.337809 |
+| load001 | 1 | 1 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| load020 | 1 | 20 | 1.790381 | -0.790381 | 3.391613 | -2.391613 |
+
+| 档位/边界 | 历史最差路径起点→终点 | slack ns |
+|---|---|---:|
+| nominal/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| nominal/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| period050/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -1.290381 |
+| period050/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.837809 |
+| period200/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | 0.209619 |
+| period200/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -1.337809 |
+| load001/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load001/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| load020/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load020/父级 | `c201714 (rising edge-triggered flip-flop clocked by core_clk)` → `io_out_bits_fflags[1] (output port clocked by core_clk)` | -2.391613 |
+
+全部来源、关键路径和逐窗历史重放资格保存在 METRICS.json；本轮宿主失败不改写既有性能结果，也不新增 SP1 功能资格。
+
+
+路线影响／接续：开始 SP1-E B3-R1 宿主闭包修订：保留本轮 FAIL 和旧 HOST_FREEZE，在独立目录从已验证的真实 B2 执行冻结中提取候选及0f的 constantin.txt、plusArgs 四项精确路径、大小和SHA，建立可追溯输入 annex，并修订新执行闭包；补齐缺失、错路径、内容漂移负控，冻结新运行器源码，再做独立复核和CPU4实际调用图的完整900秒宿主开销门。保持两例完整功能及每例6300/7200秒、整批12600/14400秒和原资源/guest上限，失败即停、不重试、不加时；o2-control继续HOLD。本轮仅做宿主修订与准入，不运行EMU/NEMU、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；完成后逐例给出GO/HOLD、更新计分板，并仅在全部GO时给出两例串行执行指令。
+
+[本轮结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-execution-20261105/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-execution-20261105/NEXT_STEP.md)。
+
+
+## 73. 2026-11-05 SP1-E B3-R1 四文件执行冻结与宿主预算准入
+
+四项cwd配套输入已从真实B2原冻结精确迁入，17方法及独立29项门通过；CPU4完整宿主预算两例468.345019776/331.801223876秒均低于900秒，正式执行冻结及最终增量复核通过。只完成宿主准入，目标进程0、两例未运行，旧FAIL保留，SP1-E仍15/20。
+
+开始 2026-11-05T13:02:48.343032+00:00；结束 2026-11-05T13:22:50.287618+00:00；记录 2026-11-05T21:22:50.287618+08:00；@cc77-builder / Agent；操作ID SP1-E-B3-R1-HOST-20261105-01。
+
+新宿主runner仅增加annex和inventory接入，源SHA 43af0b919f37da7dccbeea0955ebb0c192f9b34aa43f749e590f9a5bee362d91。17方法/独立29项正式门通过；两例各1010项执行冻结完成；旧65文件、991项HOST输入、445生产源码不变。第72条FAIL保留，本轮不是硬件修复或新目标PASS。原角色/完整覆盖/预算不降低，无EMU/NEMU/RTL/新核/EDA/默认/GitHub变化。
+
+本轮加速比、面积、时序均为 NOT_TESTED；两例保护程序没有合格 RVV 计时对照，不能从功能通过或宿主开销推算加速比。以下为此前 B2 同镜像五角色结果和原 G2 局部成本的历史复用，未重新运行。
+
+| 历史工作负载 | 0f VDOT cycles | SP1 VDOT cycles | 0f/SP1 RVV cycles | 0f RVV/VDOT | SP1 RVV/VDOT | VDOT周期下降 |
+|---|---:|---:|---:|---:|---:|---:|
+| B2 stream performance-d0-s03 | 1127.50 | 1126.25 | 1133/1133 | 1.004878049× | 1.005993341× | 0.110864745% |
+| B2 stream performance-d1-s03 | 1127.50 | 1126.25 | 1133/1133 | 1.004878049× | 1.005993341× | 0.110864745% |
+| B2 stream performance-d2-s03 | 1127.50 | 1126.25 | 1133/1133 | 1.004878049× | 1.005993341× | 0.110864745% |
+
+| 历史局部成本 | 0f | SP1 |
+|---|---:|---:|
+| FU 面积 μm² | 17298.246 | 18322.878 |
+| 含 FU 的真实父级面积 μm² | 284614.946 | 285241.642 |
+| nominal FU setup slack ns | −0.268520 | −0.790381 |
+| nominal 父级 setup slack ns | −2.393998 | −2.337809 |
+
+Nangate45 Typical 1.1V 25℃，原 G2 trace-off 局部 FU/真实父级综合；不是整核面积、签核或 Fmax。负 slack 和原严格 G2 NO-GO 均保留。新 trace-on 成本仍 NOT_TESTED。
+
+| SP1历史五档 | 周期ns | 负载fF | FU Q/ns | FU slack/ns | 父级Q/ns | 父级slack/ns |
+|---|---:|---:|---:|---:|---:|---:|
+| nominal | 1 | 5 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| period050 | 0.5 | 5 | 1.790381 | -1.290381 | 3.337809 | -2.837809 |
+| period200 | 2 | 5 | 1.790381 | 0.209619 | 3.337809 | -1.337809 |
+| load001 | 1 | 1 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| load020 | 1 | 20 | 1.790381 | -0.790381 | 3.391613 | -2.391613 |
+
+| 档位/边界 | 历史最差路径起点→终点 | slack ns |
+|---|---|---:|
+| nominal/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| nominal/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| period050/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -1.290381 |
+| period050/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.837809 |
+| period200/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | 0.209619 |
+| period200/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -1.337809 |
+| load001/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load001/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| load020/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load020/父级 | `c201714 (rising edge-triggered flip-flop clocked by core_clk)` → `io_out_bits_fflags[1] (output port clocked by core_clk)` | -2.391613 |
+
+全部来源、关键路径和逐窗历史重放资格保存在 METRICS.json；本轮宿主准入不改写既有性能结果，也不新增 SP1 功能资格。
+
+## 本轮新增的宿主预算证据（不属于三项硬件指标）
+
+| 用例 | 公式计算预留/秒 | 原宿主门/秒 | 余量/秒 | 准入 |
+|---|---:|---:|---:|---|
+| legacy-control | 468.345020 | 900 | 431.654980 | GO |
+| o2-all-pairs | 331.801224 | 900 | 568.198776 | GO |
+
+预留使用完整实测H/J/K/D/I、身份未变的历史P、固定4倍裕量和历史A。属于当前CPU4暖缓存下的实证预留，不是已发生的目标耗时，也不保证任意2GiB日志或冷盘都满足900秒。原实际900秒停止条件不变。
+
+
+路线影响／接续：开始 SP1-E B3-R1 两例五角色有界执行，按 NEXT_STEP 先核查已有进程、冻结输入、独立最终增量复核及未消费锁，再为本轮明确创建目标授权，按 legacy-control→o2-all-pairs 串行执行。每例保留300/1500×4秒、目标6300秒/外层7200秒/宿主900秒；整批最多10个目标进程、目标12600秒/外层14400秒，不借预算。负控guest各100000，正常guest分别800000/300000，CPU4、整组4线程、RSS12GiB、每例日志2GiB以及原seed/RAM/reset不变。保持完整覆盖、128位、退休身份、CSR、bit100拒错与正常恢复、八维功能精确重放；这些功能程序没有性能计时窗。任何失败立即停止整批，不重试、不加时、不跳过继续、不扩围；o2-control继续HOLD，不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub。完成后更新计分板的三项指标及资格状态，给出结论和下一轮指令。
+
+[本轮结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r1-host-20261105/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r1-host-20261105/NEXT_STEP.md)。
+
+
+## 74. 2026-11-05 SP1-E B3-R1 两例执行：首bit100的PC归属检查失败，整批停止
+
+B3-R1整批在legacy首个bit100角色停止：注入PC0x80000298，DiffTest诊断PC为同提交组首0x80000294，冻结检查器要求二者相等而拒绝。真实运行1目标/8339guest/20.819646708秒；正常角色0、allpairs未启动。资源与清理通过，独立fail-stop审计通过但功能资格0；不重试，SP1-E仍15/20。
+
+开始 2026-11-05T13:47:16.883096+00:00；结束 2026-11-05T14:02:18.538875+00:00；记录 2026-11-05T22:02:18.538875+08:00；@cc77-builder / Agent；操作ID SP1-E-B3-R1-TARGET-20261105-01。
+
+启动前原两例冻结/独立检查通过；1个真实EMU加载冻结NEMU/负控库，exit1且实际v0高位差异恰bit100，但诊断使用组首PC，原严格PC相等门拒绝。未修改/重试；旧宿主GO、第72条FAIL及本轮FAIL各自保留。独立fail-stop审计通过不等于功能PASS。未来按用户偏好联合必要宿主修订和多项评审，随后仅对已准入白名单批量执行。
+
+本轮加速比、面积、时序均为 NOT_TESTED；两例保护程序没有合格 RVV 计时对照，不能从功能通过或宿主开销推算加速比。以下为此前 B2 同镜像五角色结果和原 G2 局部成本的历史复用，未重新运行。
+
+| 历史工作负载 | 0f VDOT cycles | SP1 VDOT cycles | 0f/SP1 RVV cycles | 0f RVV/VDOT | SP1 RVV/VDOT | VDOT周期下降 |
+|---|---:|---:|---:|---:|---:|---:|
+| B2 stream performance-d0-s03 | 1127.50 | 1126.25 | 1133/1133 | 1.004878049× | 1.005993341× | 0.110864745% |
+| B2 stream performance-d1-s03 | 1127.50 | 1126.25 | 1133/1133 | 1.004878049× | 1.005993341× | 0.110864745% |
+| B2 stream performance-d2-s03 | 1127.50 | 1126.25 | 1133/1133 | 1.004878049× | 1.005993341× | 0.110864745% |
+
+| 历史局部成本 | 0f | SP1 |
+|---|---:|---:|
+| FU 面积 μm² | 17298.246 | 18322.878 |
+| 含 FU 的真实父级面积 μm² | 284614.946 | 285241.642 |
+| nominal FU setup slack ns | −0.268520 | −0.790381 |
+| nominal 父级 setup slack ns | −2.393998 | −2.337809 |
+
+Nangate45 Typical 1.1V 25℃，原 G2 trace-off 局部 FU/真实父级综合；不是整核面积、签核或 Fmax。负 slack 和原严格 G2 NO-GO 均保留。新 trace-on 成本仍 NOT_TESTED。
+
+| SP1历史五档 | 周期ns | 负载fF | FU Q/ns | FU slack/ns | 父级Q/ns | 父级slack/ns |
+|---|---:|---:|---:|---:|---:|---:|
+| nominal | 1 | 5 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| period050 | 0.5 | 5 | 1.790381 | -1.290381 | 3.337809 | -2.837809 |
+| period200 | 2 | 5 | 1.790381 | 0.209619 | 3.337809 | -1.337809 |
+| load001 | 1 | 1 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| load020 | 1 | 20 | 1.790381 | -0.790381 | 3.391613 | -2.391613 |
+
+| 档位/边界 | 历史最差路径起点→终点 | slack ns |
+|---|---|---:|
+| nominal/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| nominal/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| period050/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -1.290381 |
+| period050/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.837809 |
+| period200/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | 0.209619 |
+| period200/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -1.337809 |
+| load001/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load001/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| load020/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load020/父级 | `c201714 (rising edge-triggered flip-flop clocked by core_clk)` → `io_out_bits_fflags[1] (output port clocked by core_clk)` | -2.391613 |
+
+全部来源、关键路径和逐窗历史重放资格保存在 METRICS.json；本轮负控资格失败不改写既有性能结果，也不新增 SP1 功能资格。
+
+
+## 本轮真实负控尝试
+
+| 指标 | 实际值 |
+|---|---:|
+| 目标进程/正常角色 | 1 / 0 |
+| guest cycles | 8339 |
+| 目标active墙钟/秒 | 20.819646708 |
+| 单例外层/秒 | 22.807869535 |
+| 单例宿主/秒 | 1.988222827 |
+| 整批外层/秒 | 24.183595747 |
+| 采样线程峰值 | 1 |
+| 采样RSS峰值/bytes | 75628544 |
+| 保留原始stdout＋stderr/bytes | 53865 |
+
+这是一段拒错负控前缀，冻结检查器判为FAIL，不能由8339 guest或20.82秒外推完整程序预算、正常功能或加速比。原宿主预算468.345/331.801秒来自第73条准入，不是本轮实测目标耗时；未达到资源上限不等于通过负控。
+
+
+路线影响／接续：开始 SP1-E B3-R2 拒错归属修订与剩余项集中宿主评审：保留B3-R1原FAIL、日志和已消费锁，在独立目录修订保护负控的PC归属检查，严格绑定冻结注入PC/指令字/目的寄存器、当前提交组及唯一bit100差异，不得忽略PC或仅凭exit1放行。用本轮真实日志做离线复核，补齐错误组、历史同PC、错误指令/寄存器/bit、重复注入和非预期退出等正负控，冻结新检查器依赖与执行闭包，独立审查预算影响。同轮集中核对o2-control、原C8普通C48、timed DIV/SQRT的真正宿主缺项与完整预算依据，复用未变公共证据，不重复无收益的短探针；无实质新依据就保留HOLD。保持原完整覆盖、五角色、6300/7200秒及900秒宿主门、原资源和失败即停，不重试、不加时。本轮先不运行EMU/NEMU、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；一次交付各项GO/HOLD、更新计分板，并仅为全部准入的精确白名单给出下一批串行执行指令。
+
+[本轮结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r1-host-20261105/execution-01/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r1-host-20261105/execution-01/NEXT_STEP.md)。
+
+
+## 75. 2026-11-05 SP1-E B3-R2 严格提交组修订与三项联合评审：宿主HOLD
+
+严格提交组与组末最后写入者检查器已实现，真实R1日志和多写入者正控所在的前17方法通过；第18方法的错误dst变异因同时匹配历史slot15与当前slot31而断言失败，未调用该变异的生产checker，正式宿主门HOLD。方法19–23及后续运行器/独立正式门/预算门均NOT_RUN；目标0。三个暂缓项无当前组合完整预算新证据，继续HOLD；SP1-E仍15/20。
+
+开始 2026-11-05T14:12:02.047935+00:00；结束 2026-11-05T15:06:33.735750+00:00；记录 2026-11-05T23:06:33.735750+08:00；@cc77-builder / Agent；操作ID SP1-E-B3-R2-HOST-20261105-01。
+
+首17方法PASS不能替代全部门禁；第18错误dst夹具在历史与当前环各命中一次，唯一替换断言FAIL、该子控未调用checker。原R1 FAIL、R2 FAIL和未执行门禁分开留档。三个HOLD完整预算一次集中核查完成，无新当前组合证据；新发现1497秒旧o2-control及排除1秒C48合成收据。无新目标、RTL或EDA成果，默认保持。
+
+本轮加速比、面积、时序均为 NOT_TESTED；两例保护程序没有合格 RVV 计时对照，不能从功能通过或宿主开销推算加速比。以下为此前 B2 同镜像五角色结果和原 G2 局部成本的历史复用，未重新运行。
+
+| 历史工作负载 | 0f VDOT cycles | SP1 VDOT cycles | 0f/SP1 RVV cycles | 0f RVV/VDOT | SP1 RVV/VDOT | VDOT周期下降 |
+|---|---:|---:|---:|---:|---:|---:|
+| B2 stream performance-d0-s03 | 1127.50 | 1126.25 | 1133/1133 | 1.004878049× | 1.005993341× | 0.110864745% |
+| B2 stream performance-d1-s03 | 1127.50 | 1126.25 | 1133/1133 | 1.004878049× | 1.005993341× | 0.110864745% |
+| B2 stream performance-d2-s03 | 1127.50 | 1126.25 | 1133/1133 | 1.004878049× | 1.005993341× | 0.110864745% |
+
+| 历史局部成本 | 0f | SP1 |
+|---|---:|---:|
+| FU 面积 μm² | 17298.246 | 18322.878 |
+| 含 FU 的真实父级面积 μm² | 284614.946 | 285241.642 |
+| nominal FU setup slack ns | −0.268520 | −0.790381 |
+| nominal 父级 setup slack ns | −2.393998 | −2.337809 |
+
+Nangate45 Typical 1.1V 25℃，原 G2 trace-off 局部 FU/真实父级综合；不是整核面积、签核或 Fmax。负 slack 和原严格 G2 NO-GO 均保留。新 trace-on 成本仍 NOT_TESTED。
+
+| SP1历史五档 | 周期ns | 负载fF | FU Q/ns | FU slack/ns | 父级Q/ns | 父级slack/ns |
+|---|---:|---:|---:|---:|---:|---:|
+| nominal | 1 | 5 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| period050 | 0.5 | 5 | 1.790381 | -1.290381 | 3.337809 | -2.837809 |
+| period200 | 2 | 5 | 1.790381 | 0.209619 | 3.337809 | -1.337809 |
+| load001 | 1 | 1 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| load020 | 1 | 20 | 1.790381 | -0.790381 | 3.391613 | -2.391613 |
+
+| 档位/边界 | 历史最差路径起点→终点 | slack ns |
+|---|---|---:|
+| nominal/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| nominal/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| period050/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -1.290381 |
+| period050/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.837809 |
+| period200/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | 0.209619 |
+| period200/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -1.337809 |
+| load001/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load001/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| load020/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load020/父级 | `c201714 (rising edge-triggered flip-flop clocked by core_clk)` → `io_out_bits_fflags[1] (output port clocked by core_clk)` | -2.391613 |
+
+全部来源、关键路径和逐窗历史重放资格保存在 METRICS.json；本轮宿主修订不改写既有性能结果，也不新增 SP1 功能资格。
+
+
+
+新实测加速比、面积、时序均 NOT_TESTED。R2本轮没有运行目标或EDA；宿主检查耗时另记budget-review，不能当作guest性能收益。历史详细数据与关键路径见 HISTORICAL_METRICS.json，原始证据路径继续有效。
+
+
+路线影响／接续：开始 SP1-E B3-R3 夹具修订与两例批量验收：保留 R1/R2 原 FAIL、日志及旧锁，在独立目录仅修正错误目的寄存器负控的定位，精确锚定当前环尾 slot31、PC0x80000370 和完整行，先检查所有变异目标的唯一性。保持严格当前提交组、组末最后写入者完整128位、CSR/身份/重放及原完整覆盖，完成新源码冻结、全部宿主正负控、运行器接入、独立审查和900秒宿主预算准入；未变公共机制复用。全部门禁通过且两例均GO后，在同一轮仅按 legacy-control→o2-all-pairs 串行运行五角色。每例300＋4×1500秒，目标6300/外层7200/宿主900秒；整批最多10目标、目标累计12600秒、外层14400秒，不借预算。负控100000guest，正常分别800000/300000guest；CPU4、整组4线程、RSS12GiB、每例日志2GiB及原seed/RAM/reset不变。任一正式宿主门或目标失败立即停止，不重试、不加时、不跳过继续；三个暂缓项保持HOLD，不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub。完成后一次更新计分板、三项指标及下一轮指令。
+
+[本轮结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r2-host-20261105/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r2-host-20261105/NEXT_STEP.md)。
+
+
+## 76. 2026-11-05 SP1-E B3-R3：23项checker与6项运行器通过，独立启动身份前提FAIL后HOLD
+
+R3完成test18精确行定位，checker23/23、runtime6/6及源码二进制溯源PASS；独立门新增的准备快照boot相等条件遇WSL启动代际变化而FAIL，对抗控制0项。该前提比原执行身份协议过严，不是RTL或guest功能失败。按单轮失败即停，预算0次、目标0个；整体HOLD，SP1-E仍15/20。
+
+开始 2026-11-05T15:19:25.401749+00:00；结束 2026-11-05T15:46:57.183856+00:00；记录 2026-11-05T23:46:57.183856+08:00；@cc77-builder / Agent；操作ID SP1-E-B3-R3-20261105-01。
+
+准备期间boot32bd2caf→a06b9f10，btime晚于快照约75秒；新增的“准备快照boot必须持续不变”前提过严，是宿主合同问题而非RTL/guest功能失败。按冻结失败即停，预算与目标均0；原失败和两次准备辅助脚本失败保留。修正范围限test18精确当前行，生产checker/RTL不变。
+
+本轮加速比、面积、时序均为 NOT_TESTED；两例保护程序没有合格 RVV 计时对照，不能从功能通过或宿主开销推算加速比。以下为此前 B2 同镜像五角色结果和原 G2 局部成本的历史复用，未重新运行。
+
+| 历史工作负载 | 0f VDOT cycles | SP1 VDOT cycles | 0f/SP1 RVV cycles | 0f RVV/VDOT | SP1 RVV/VDOT | VDOT周期下降 |
+|---|---:|---:|---:|---:|---:|---:|
+| B2 stream performance-d0-s03 | 1127.50 | 1126.25 | 1133/1133 | 1.004878049× | 1.005993341× | 0.110864745% |
+| B2 stream performance-d1-s03 | 1127.50 | 1126.25 | 1133/1133 | 1.004878049× | 1.005993341× | 0.110864745% |
+| B2 stream performance-d2-s03 | 1127.50 | 1126.25 | 1133/1133 | 1.004878049× | 1.005993341× | 0.110864745% |
+
+| 历史局部成本 | 0f | SP1 |
+|---|---:|---:|
+| FU 面积 μm² | 17298.246 | 18322.878 |
+| 含 FU 的真实父级面积 μm² | 284614.946 | 285241.642 |
+| nominal FU setup slack ns | −0.268520 | −0.790381 |
+| nominal 父级 setup slack ns | −2.393998 | −2.337809 |
+
+Nangate45 Typical 1.1V 25℃，原 G2 trace-off 局部 FU/真实父级综合；不是整核面积、签核或 Fmax。负 slack 和原严格 G2 NO-GO 均保留。新 trace-on 成本仍 NOT_TESTED。
+
+| SP1历史五档 | 周期ns | 负载fF | FU Q/ns | FU slack/ns | 父级Q/ns | 父级slack/ns |
+|---|---:|---:|---:|---:|---:|---:|
+| nominal | 1 | 5 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| period050 | 0.5 | 5 | 1.790381 | -1.290381 | 3.337809 | -2.837809 |
+| period200 | 2 | 5 | 1.790381 | 0.209619 | 3.337809 | -1.337809 |
+| load001 | 1 | 1 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| load020 | 1 | 20 | 1.790381 | -0.790381 | 3.391613 | -2.391613 |
+
+| 档位/边界 | 历史最差路径起点→终点 | slack ns |
+|---|---|---:|
+| nominal/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| nominal/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| period050/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -1.290381 |
+| period050/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.837809 |
+| period200/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | 0.209619 |
+| period200/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -1.337809 |
+| load001/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load001/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| load020/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load020/父级 | `c201714 (rising edge-triggered flip-flop clocked by core_clk)` → `io_out_bits_fflags[1] (output port clocked by core_clk)` | -2.391613 |
+
+全部来源、关键路径和逐窗历史重放资格保存在 METRICS.json；本轮宿主修订不改写既有性能结果，也不新增 SP1 功能资格。
+
+
+
+新实测加速比、面积、时序均 NOT_TESTED。R3本轮没有运行目标或EDA；宿主检查耗时另记budget-review，不能当作guest性能收益。历史详细数据与关键路径见 HISTORICAL_METRICS.json，原始证据路径继续有效。
+
+
+路线影响／接续：开始 B3-R4，按 NEXT_STEP 在独立目录仅修订宿主准入的启动身份绑定：BEFORE.boot_id保留为历史快照，正式准入/执行前记录实时boot并绑定后续目标PID/start_ticks/单调时钟，不允许跨boot拼接运行。保留R1/R2/R3全部FAIL及旧锁；复用未变且身份匹配的23项checker、6项运行器和溯源证据，补齐该合同变更的正负控及尚未完成的独立对抗门、执行冻结和900秒预算门。全部通过且两例均GO后，同轮仅按legacy-control→o2-all-pairs串行执行五角色。每例300＋4×1500秒、目标6300/外层7200/宿主900秒；整批最多10目标、目标累计12600秒/外层14400秒，不借时；负控100000guest、正常800000/300000guest、CPU4/整组4线程/RSS12GiB/每例日志2GiB及原seed/RAM/reset不变。正式门或目标任一失败即停，不重试、不加时、不跳过继续；三个暂缓项保持HOLD，不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub。完成后更新计分板、三项指标和下一轮指令。
+
+[本轮结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r3-20261105/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r3-20261105/NEXT_STEP.md)。
+
+
+## 77. 2026-11-06 SP1-E B3-R4：HOLD
+
+开始：2026-11-06T00:00:02.772841+08:00；结束：2026-11-06T00:46:59.722251+08:00（两者均显式包含 UTC offset）。操作人：@cc77-builder / Agent；operation id：SP1-E-B3-R4-20261105-01。
+
+B3-R4已修正准备期启动身份范围：旧boot只作历史，真实批次仍绑定boot/PID/start_ticks/单调时钟；4项新差异与65项独立检查一次通过，原6项运行器和23项checker按身份复用。唯一宿主预算进程超过900秒仍未返回，核实身份后在观测1012.62秒时发送SIGTERM，超限112.62秒已如实留档；两例预算均HOLD/null，EMU目标0，不重试，SP1-E仍15/20。
+
+宿主差异新测 4 项：PASS_RUNTIME_HOST_TESTS；旧 runtime 6 项及 checker 23 项仅复用、未重跑；独立 65 项：PASS_B3_EXECUTION_HOST_REVIEW；预算：HOLD_B3_HOST_BUDGET。
+
+- legacy-control：HOLD；host_budget_seconds=None；failure_stage=None；error=None
+- o2-all-pairs：HOLD；host_budget_seconds=None；failure_stage=None；error=None
+
+| 用例 | 目标结果 | 实际目标数 | 启动意向数 | 合格功能证据 |
+|---|---|---:|---:|---|
+| legacy-control | NOT_RUN | 0 | 0 | False |
+| o2-all-pairs | NOT_RUN | 0 | 0 | False |
+
+本轮新加速比、面积、时序均 NOT_TESTED。功能保护通过和宿主耗时不构成性能收益；默认仍为0f＋firstdot V2＋原C8。以下数值和关键路径保留原条件，未重跑EDA或性能对照。
+
+| 历史工作负载 | 0f VDOT cycles | SP1 VDOT cycles | 0f/SP1 RVV cycles | 0f RVV/VDOT | SP1 RVV/VDOT | VDOT周期下降 |
+|---|---:|---:|---:|---:|---:|---:|
+| B2 stream performance-d0-s03 | 1127.50 | 1126.25 | 1133/1133 | 1.004878049× | 1.005993341× | 0.110864745% |
+| B2 stream performance-d1-s03 | 1127.50 | 1126.25 | 1133/1133 | 1.004878049× | 1.005993341× | 0.110864745% |
+| B2 stream performance-d2-s03 | 1127.50 | 1126.25 | 1133/1133 | 1.004878049× | 1.005993341× | 0.110864745% |
+
+| 历史局部成本 | 0f | SP1 |
+|---|---:|---:|
+| FU 面积 μm² | 17298.246 | 18322.878 |
+| 含 FU 的真实父级面积 μm² | 284614.946 | 285241.642 |
+| nominal FU setup slack ns | −0.268520 | −0.790381 |
+| nominal 父级 setup slack ns | −2.393998 | −2.337809 |
+
+Nangate45 Typical 1.1V 25℃，原 G2 trace-off 局部 FU/真实父级综合；不是整核面积、签核或 Fmax。负 slack 和原严格 G2 NO-GO 均保留。新 trace-on 成本仍 NOT_TESTED。
+
+| SP1历史五档 | 周期ns | 负载fF | FU Q/ns | FU slack/ns | 父级Q/ns | 父级slack/ns |
+|---|---:|---:|---:|---:|---:|---:|
+| nominal | 1 | 5 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| period050 | 0.5 | 5 | 1.790381 | -1.290381 | 3.337809 | -2.837809 |
+| period200 | 2 | 5 | 1.790381 | 0.209619 | 3.337809 | -1.337809 |
+| load001 | 1 | 1 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| load020 | 1 | 20 | 1.790381 | -0.790381 | 3.391613 | -2.391613 |
+
+| 档位/边界 | 历史最差路径起点→终点 | slack ns |
+|---|---|---:|
+| nominal/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| nominal/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| period050/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -1.290381 |
+| period050/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.837809 |
+| period200/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | 0.209619 |
+| period200/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -1.337809 |
+| load001/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load001/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| load020/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load020/父级 | `c201714 (rising edge-triggered flip-flop clocked by core_clk)` → `io_out_bits_fflags[1] (output port clocked by core_clk)` | -2.391613 |
+
+本轮实际目标进程 0，新增合格功能用例 0；没有新增性能合格项。完整历史数值、来源和未通过的时序条件见METRICS.json。
+
+下一轮：开始 B3-R5：在独立目录仅修订宿主拒错检查器两条CSR行的空白匹配，将同行空白限制为[ \t]，并补齐预算测量的独立进程外墙钟监督；核查实际批次宿主解析也受原900/7200/14400秒限制可靠约束，必要时作最小外部监督接入。保留R1至R4全部失败、原24,558,348字节成本夹具、完整数值/CSR/身份/重放合同及原预算，不缩样、不加时。复用未变的运行器、身份、溯源证据，集中完成受影响正负控、外部超时小夹具、独立复核和一次预算准入；全部通过且两例均GO后，同轮仅按legacy-control→o2-all-pairs串行执行五角色。每例300＋4×1500秒、目标6300/外层7200/宿主900秒；整批最多10目标、目标12600/外层14400秒，不借时；负控100000guest，正常800000/300000guest，CPU4/整组4线程/RSS12GiB/每例日志2GiB及原seed/RAM/reset不变。正式门或目标任一失败立即停止，不重试、不跳过继续、不扩围；三个暂缓项保持HOLD，不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub。完成后更新计分板、三项指标及下一轮指令。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r4-20261105/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r4-20261105/NEXT_STEP.md)。
+
+
+## 78. 2026-11-06 SP1-E B3-R5：HOLD
+
+开始：2026-11-06T10:19:51.632869+08:00；结束：2026-11-06T10:46:56.938495+08:00（两者均显式包含 UTC offset）。操作人：@cc77-builder / Agent；operation id：SP1-E-B3-R5-20261106-01。
+
+B3-R5完成两条CSR正则的同行空白修复，checker27/27一次PASS；新增进程外超时监督，runtime10/10及12次宿主进程夹具清理一次通过。独立审计错误地把历史出处符号链接也要求为直接canonical路径，在执行0/41项对抗控前FAIL；240项冻结内容及4份别名的字节/SHA均一致。这是本轮审计新增条件导致的假阻断。按失败即停，预算0次、EMU目标0，保留全部记录，整体HOLD、SP1-E仍15/20。
+
+宿主差异新测 10 项：PASS_RUNTIME_HOST_TESTS；checker本轮新测 27 项：PASS_STRICT_NEGATIVE_CHECKER_HOST；旧runtime 6＋4 项仅复用、未重跑；独立实际 0 / 计划41，历史 65 项仅复用出处、未重跑：HOLD_B3_R5_INDEPENDENT_HISTORICAL_ALIAS_CHECK；预算：HOLD_B3_HOST_BUDGET。
+
+- legacy-control：HOLD；host_budget_seconds=None；failure_stage=INDEPENDENT_HOST_PREREQUISITE_FAILED_BEFORE_BUDGET；error=AssertionError: frozen file drift /home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/candidate/difftest/src/test/csrc/difftest/difftest.cpp
+- o2-all-pairs：HOLD；host_budget_seconds=None；failure_stage=INDEPENDENT_HOST_PREREQUISITE_FAILED_BEFORE_BUDGET；error=AssertionError: frozen file drift /home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/candidate/difftest/src/test/csrc/difftest/difftest.cpp
+
+| 用例 | 目标结果 | 实际目标数 | 启动意向数 | 合格功能证据 |
+|---|---|---:|---:|---|
+| legacy-control | NOT_RUN | 0 | 0 | False |
+| o2-all-pairs | NOT_RUN | 0 | 0 | False |
+
+本轮新加速比、面积、时序均 NOT_TESTED。功能保护通过和宿主耗时不构成性能收益；默认仍为0f＋firstdot V2＋原C8。以下数值和关键路径保留原条件，未重跑EDA或性能对照。
+
+| 历史工作负载 | 0f VDOT cycles | SP1 VDOT cycles | 0f/SP1 RVV cycles | 0f RVV/VDOT | SP1 RVV/VDOT | VDOT周期下降 |
+|---|---:|---:|---:|---:|---:|---:|
+| B2 stream performance-d0-s03 | 1127.50 | 1126.25 | 1133/1133 | 1.004878049× | 1.005993341× | 0.110864745% |
+| B2 stream performance-d1-s03 | 1127.50 | 1126.25 | 1133/1133 | 1.004878049× | 1.005993341× | 0.110864745% |
+| B2 stream performance-d2-s03 | 1127.50 | 1126.25 | 1133/1133 | 1.004878049× | 1.005993341× | 0.110864745% |
+
+| 历史局部成本 | 0f | SP1 |
+|---|---:|---:|
+| FU 面积 μm² | 17298.246 | 18322.878 |
+| 含 FU 的真实父级面积 μm² | 284614.946 | 285241.642 |
+| nominal FU setup slack ns | −0.268520 | −0.790381 |
+| nominal 父级 setup slack ns | −2.393998 | −2.337809 |
+
+Nangate45 Typical 1.1V 25℃，原 G2 trace-off 局部 FU/真实父级综合；不是整核面积、签核或 Fmax。负 slack 和原严格 G2 NO-GO 均保留。新 trace-on 成本仍 NOT_TESTED。
+
+| SP1历史五档 | 周期ns | 负载fF | FU Q/ns | FU slack/ns | 父级Q/ns | 父级slack/ns |
+|---|---:|---:|---:|---:|---:|---:|
+| nominal | 1 | 5 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| period050 | 0.5 | 5 | 1.790381 | -1.290381 | 3.337809 | -2.837809 |
+| period200 | 2 | 5 | 1.790381 | 0.209619 | 3.337809 | -1.337809 |
+| load001 | 1 | 1 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| load020 | 1 | 20 | 1.790381 | -0.790381 | 3.391613 | -2.391613 |
+
+| 档位/边界 | 历史最差路径起点→终点 | slack ns |
+|---|---|---:|
+| nominal/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| nominal/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| period050/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -1.290381 |
+| period050/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.837809 |
+| period200/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | 0.209619 |
+| period200/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -1.337809 |
+| load001/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load001/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| load020/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load020/父级 | `c201714 (rising edge-triggered flip-flop clocked by core_clk)` → `io_out_bits_fflags[1] (output port clocked by core_clk)` | -2.391613 |
+
+本轮实际目标进程 0，新增合格功能用例 0；没有新增性能合格项。完整历史数值、来源和未通过的时序条件见METRICS.json。
+
+下一轮：开始 B3-R6：在独立目录仅修独立审计的路径校验适用范围，历史出处与宿主冻结文件按原路径、字节数和SHA校验，允许已有符号链接；记录解析目标作为审计信息，不新增别名白名单或额外准入条件。真实执行路径的canonical、boot/PID/start_ticks、完整结果和重放检查保持。冻结准备与正式校验采用一致逻辑；未运行的终态审计只在授予功能PASS时要求GUARD_PASS，FAIL收据仍可如实审计。保留R1至R5全部FAIL和旧锁，复用身份匹配且未变的27项checker、10项外部监督及旧身份/溯源证据，不重复无关测试。集中完成剩余独立审查、执行冻结和一次外部900秒监督预算测量；原两份24,558,348字节成本夹具不缩样。全部通过且两例均GO后，同轮仅按legacy-control→o2-all-pairs串行执行五角色，每例300＋4×1500秒、目标6300/外层7200/宿主900秒，整批最多10目标、目标12600/外层14400秒；负控100000guest、正常800000/300000guest，CPU4/整组4线程/RSS12GiB/每例日志2GiB及原seed/RAM/reset不变。正式门或目标任一失败即停，不重试、不加时、不借时、不跳过继续、不扩围；三个暂缓项保持HOLD。不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub。完成后更新计分板、三项指标和下一轮指令。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r5-20261106/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r5-20261106/NEXT_STEP.md)。
+
+
+## 79. 2026-11-06 SP1-E B3-R6：HOLD
+
+开始：2026-11-06T11:14:20.923904+08:00；结束：2026-11-06T11:33:14.118243+08:00（两者均显式包含 UTC offset）。操作人：@cc77-builder / Agent；operation id：SP1-E-B3-R6-20261106-01。
+
+B3-R6已修正历史出处检查：准备与正式验证使用同一原路径/字节数/SHA逻辑，304项冻结内容及4份历史别名通过；运行器和checker保持R5原字节，27＋10项证据明确复用、未重跑。独立审查唯一正式尝试在首个CSR正控API调用时报explicit scope/run id：审查脚本误传HOST_FIXTURE_NOT_TARGET，生产既有合法值为HOST_FIXTURE。首个正控调用1次、完成0/41；这是Agent编写的审查脚本参数错误，不是RTL、CSR结果或预算超限。按失败即停，预算0次、EMU目标0，保留原FAIL，整体HOLD，SP1-E仍15/20。
+
+本轮checker新测0 / REUSED 27项：PASS_STRICT_NEGATIVE_CHECKER_HOST；runtime新测0 / REUSED 10项：PASS_RUNTIME_HOST_TESTS；原R3 6项及R4 4项仅保留更早历史出处。独立实际 0 / 计划41，历史 65项仅复用出处、未重跑：HOLD_B3_R6_INDEPENDENT_CONTROL_SCOPE_ERROR；预算：HOLD_B3_HOST_BUDGET。
+
+- legacy-control：HOLD；host_budget_seconds=None；failure_stage=INDEPENDENT_CSR_CONTROL_CALLER_SCOPE_BEFORE_BUDGET；error=ValueError: explicit scope/run id
+- o2-all-pairs：HOLD；host_budget_seconds=None；failure_stage=INDEPENDENT_CSR_CONTROL_CALLER_SCOPE_BEFORE_BUDGET；error=ValueError: explicit scope/run id
+
+| 用例 | 目标结果 | 实际目标数 | 启动意向数 | 合格功能证据 |
+|---|---|---:|---:|---|
+| legacy-control | NOT_RUN | 0 | 0 | False |
+| o2-all-pairs | NOT_RUN | 0 | 0 | False |
+
+本轮新加速比、面积、时序均 NOT_TESTED。功能保护通过和宿主耗时不构成性能收益；默认仍为0f＋firstdot V2＋原C8。以下数值和关键路径保留原条件，未重跑EDA或性能对照。
+
+| 历史工作负载 | 0f VDOT cycles | SP1 VDOT cycles | 0f/SP1 RVV cycles | 0f RVV/VDOT | SP1 RVV/VDOT | VDOT周期下降 |
+|---|---:|---:|---:|---:|---:|---:|
+| B2 stream performance-d0-s03 | 1127.50 | 1126.25 | 1133/1133 | 1.004878049× | 1.005993341× | 0.110864745% |
+| B2 stream performance-d1-s03 | 1127.50 | 1126.25 | 1133/1133 | 1.004878049× | 1.005993341× | 0.110864745% |
+| B2 stream performance-d2-s03 | 1127.50 | 1126.25 | 1133/1133 | 1.004878049× | 1.005993341× | 0.110864745% |
+
+| 历史局部成本 | 0f | SP1 |
+|---|---:|---:|
+| FU 面积 μm² | 17298.246 | 18322.878 |
+| 含 FU 的真实父级面积 μm² | 284614.946 | 285241.642 |
+| nominal FU setup slack ns | −0.268520 | −0.790381 |
+| nominal 父级 setup slack ns | −2.393998 | −2.337809 |
+
+Nangate45 Typical 1.1V 25℃，原 G2 trace-off 局部 FU/真实父级综合；不是整核面积、签核或 Fmax。负 slack 和原严格 G2 NO-GO 均保留。新 trace-on 成本仍 NOT_TESTED。
+
+| SP1历史五档 | 周期ns | 负载fF | FU Q/ns | FU slack/ns | 父级Q/ns | 父级slack/ns |
+|---|---:|---:|---:|---:|---:|---:|
+| nominal | 1 | 5 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| period050 | 0.5 | 5 | 1.790381 | -1.290381 | 3.337809 | -2.837809 |
+| period200 | 2 | 5 | 1.790381 | 0.209619 | 3.337809 | -1.337809 |
+| load001 | 1 | 1 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| load020 | 1 | 20 | 1.790381 | -0.790381 | 3.391613 | -2.391613 |
+
+| 档位/边界 | 历史最差路径起点→终点 | slack ns |
+|---|---|---:|
+| nominal/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| nominal/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| period050/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -1.290381 |
+| period050/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.837809 |
+| period200/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | 0.209619 |
+| period200/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -1.337809 |
+| load001/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load001/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| load020/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load020/父级 | `c201714 (rising edge-triggered flip-flop clocked by core_clk)` → `io_out_bits_fflags[1] (output port clocked by core_clk)` | -2.391613 |
+
+本轮实际目标进程 0，新增合格功能用例 0；没有新增性能合格项。完整历史数值、来源和未通过的时序条件见METRICS.json。
+
+下一轮：开始 B3-R7：在独立目录仅将CSR独立审查共享调用点的scope改为生产已有合法值HOST_FIXTURE；沿用非空host run_id和既有全部41项覆盖，不新增条件、不为测试放宽生产API。复用R5已通过且字节未变的27项checker、10项外部监督及现有身份/溯源证据，复用R6历史路径检查修复。先逐项静态核对本次改动调用的签名、合法scope和返回字段，再冻结并完成剩余独立审查及一次原夹具900秒外部监督预算测量；保留R1至R6全部FAIL和旧锁，不缩样、不重复无关测试。两例均GO后，同轮仅按legacy-control→o2-all-pairs串行执行五角色，每例300＋4×1500秒，目标6300/外层7200/宿主900秒；整批最多10目标，目标12600/外层14400秒，不借时，负控100000guest、正常800000/300000guest，CPU4/整组4线程/RSS12GiB/每例日志2GiB及原seed/RAM/reset不变。正式审查、预算或目标任一失败即停，不重试、不加时、不跳过继续、不扩围；三个暂缓项继续HOLD。不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub，完成后更新计分板、三项指标和下一轮指令。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r6-20261106/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r6-20261106/NEXT_STEP.md)。
+
+
+## 80. 2026-11-06 SP1-E B3-R7：PASS_FUNCTIONAL
+
+开始：2026-11-06T11:38:31.560496+08:00；结束：2026-11-06T13:17:09.632907+08:00（两者均显式包含 UTC offset）。操作人：@cc77-builder / Agent；operation id：SP1-E-B3-R7-20261106-01。
+
+B3-R7仅把独立CSR审查共享调用的scope修正为生产API已有HOST_FIXTURE，生产runtime/checker原字节保持，27＋10项通过证据明确复用、未重跑。剩余41项独立控一次PASS；唯一外部900秒预算测量18.948秒通过，两例宿主预算664.466/527.922秒均GO。随后按原合同串行完成legacy-control→o2-all-pairs两例各五角色，共10个真实目标全部通过；完整128位、退休/CSR、身份、资源及精确重放均通过独立终态复核，新增两项功能资格，SP1-E由15/20推进到17/20。整批目标累计4708.455秒、原生外层4783.570秒、外部监督4783.682秒，未重试、未加时、未扩围；原R1至R6失败完整保留。默认0f＋firstdot V2＋原C8保持，未修改RTL、未构建新核、未做EDA、未上传GitHub。
+
+本轮checker新测0 / REUSED 27项：PASS_STRICT_NEGATIVE_CHECKER_HOST；runtime新测0 / REUSED 10项：PASS_RUNTIME_HOST_TESTS；原R3 6项及R4 4项仅保留更早历史出处。独立实际 41 / 计划41，历史 65项仅复用出处、未重跑：PASS_B3_EXECUTION_HOST_REVIEW；预算：GO_B3_HOST_BUDGET。
+
+- legacy-control：GO；host_budget_seconds=664.4656078536575；预算通过，无失败
+- o2-all-pairs：GO；host_budget_seconds=527.9218119536602；预算通过，无失败
+
+| 用例 | 目标结果 | 实际目标数 | 启动意向数 | 合格功能证据 |
+|---|---|---:|---:|---|
+| legacy-control | FUNCTIONAL_PASS | 5 | 5 | True |
+| o2-all-pairs | FUNCTIONAL_PASS | 5 | 5 | True |
+
+本轮新加速比、面积、时序均 NOT_TESTED。功能保护通过和宿主耗时不构成性能收益；默认仍为0f＋firstdot V2＋原C8。以下数值和关键路径保留原条件，未重跑EDA或性能对照。
+
+| 历史工作负载 | 0f VDOT cycles | SP1 VDOT cycles | 0f/SP1 RVV cycles | 0f RVV/VDOT | SP1 RVV/VDOT | VDOT周期下降 |
+|---|---:|---:|---:|---:|---:|---:|
+| B2 stream performance-d0-s03 | 1127.50 | 1126.25 | 1133/1133 | 1.004878049× | 1.005993341× | 0.110864745% |
+| B2 stream performance-d1-s03 | 1127.50 | 1126.25 | 1133/1133 | 1.004878049× | 1.005993341× | 0.110864745% |
+| B2 stream performance-d2-s03 | 1127.50 | 1126.25 | 1133/1133 | 1.004878049× | 1.005993341× | 0.110864745% |
+
+| 历史局部成本 | 0f | SP1 |
+|---|---:|---:|
+| FU 面积 μm² | 17298.246 | 18322.878 |
+| 含 FU 的真实父级面积 μm² | 284614.946 | 285241.642 |
+| nominal FU setup slack ns | −0.268520 | −0.790381 |
+| nominal 父级 setup slack ns | −2.393998 | −2.337809 |
+
+Nangate45 Typical 1.1V 25℃，原 G2 trace-off 局部 FU/真实父级综合；不是整核面积、签核或 Fmax。负 slack 和原严格 G2 NO-GO 均保留。新 trace-on 成本仍 NOT_TESTED。
+
+| SP1历史五档 | 周期ns | 负载fF | FU Q/ns | FU slack/ns | 父级Q/ns | 父级slack/ns |
+|---|---:|---:|---:|---:|---:|---:|
+| nominal | 1 | 5 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| period050 | 0.5 | 5 | 1.790381 | -1.290381 | 3.337809 | -2.837809 |
+| period200 | 2 | 5 | 1.790381 | 0.209619 | 3.337809 | -1.337809 |
+| load001 | 1 | 1 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| load020 | 1 | 20 | 1.790381 | -0.790381 | 3.391613 | -2.391613 |
+
+| 档位/边界 | 历史最差路径起点→终点 | slack ns |
+|---|---|---:|
+| nominal/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| nominal/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| period050/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -1.290381 |
+| period050/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.837809 |
+| period200/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | 0.209619 |
+| period200/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -1.337809 |
+| load001/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load001/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| load020/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load020/父级 | `c201714 (rising edge-triggered flip-flop clocked by core_clk)` → `io_out_bits_fflags[1] (output port clocked by core_clk)` | -2.391613 |
+
+本轮实际目标进程 10，新增合格功能用例 2；没有新增性能合格项。完整历史数值、来源和未通过的时序条件见METRICS.json。
+
+下一轮：开始 SP1-E B4：集中完成o2-control与原C8普通C48的共享运行器差异接入，并冻结专用bit100→候选完整正常调用→0f完整正常调用的有界校准合同；复用R7已验证的拒错组归属、退休/CSR、进程外监督、身份与重放公共机制，只补两个负载的实际差异，保留o2-control原完整覆盖以及C48的48调用/1008次custom和完整结果/CSR/ABI。逐项明确镜像与专用故障参考身份、guest/资源上限、每角色/每例/整批独立预算及失败即停；不得用R7其他负载吞吐直接充当保守上界，不借用已完成批次预算。同步核对timed DIV/SQRT已有软件与计时合同，只补真实缺项，分别列出公平窗口、运行器接入和预算缺口，不把allpairs功能通过当作计时资格。已有合法证据直接复用，不重复泛化评审，不重跑R7已通过用例。完成后交付可审阅的准确进程清单、完整调用校准运行合同及下一批执行指令；校准的新预算需明确获用户授权后执行。此轮先不运行EMU/NEMU、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r7-20261106/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r7-20261106/NEXT_STEP.md)。
+
+
+## 81. 2026-11-06 SP1-E B4：两例宿主GO，正式验收17/20
+
+开始：2026-11-06T13:30:52.886182+08:00；结束：2026-11-06T14:17:51.698000+08:00。操作人：@cc77-builder / Agent（沿用用户此前确认账号，本轮未声称新登录核验）；操作ID：SP1-E-B4-HOST-20261106-01。执行方式：并行独立宿主叶接入，串行有限宿主测量和根端收口；不是成员人工验收。
+
+B4完成o2-control与原C8普通C48最小差异接入、共享三角色校准运行器及完整输入冻结。两例各27项差异覆盖通过，另补o2精确前缀15项、C48精确PC6项、共享10项及JSON写读修订5项。原夹具标签、模块冲突和首次JSON冻结FAIL保留，受影响部分在本轮独立修订并验证。最终宿主经验预算235.713/213.416秒，均低于900秒；支持请求下一轮最多6进程完整调用校准，不保证目标在2400秒内结束。timed DIV/SQRT复用137份原文件身份及旧测试，实际运行接入与完整预算仍HOLD。本轮目标0，SP1-E仍17/20，默认0f＋firstdot V2＋原C8，未改RTL/新核/EDA/上传。
+
+| 项目 | 最终宿主结果 | 保留范围 |
+| --- | --- | --- |
+| o2-control | GO；27项基础差异覆盖＋15项精确前缀 | 16组/256trial/1208custom/全寄存器结果；历史FULL_STALL=0不篡改 |
+| 原C8普通C48 | GO；27项基础差异覆盖＋6项精确PC | 48调用/1008custom/384完整128位结果/CSR/ABI/尾部 |
+| 共享与冻结 | 10项联合控PASS；最小写读修订5项PASS | 旧10项按未变语义复用；旧tuple/list FAIL和首份freeze保留 |
+| 900秒宿主预算 | o2-control235.713秒；C48 213.416秒 | 当前CPU4经验包络＋硬限额；不是目标运行完成上界 |
+| timed DIV/SQRT | HOLD；137份旧文件身份核对PASS | 复用已有软件/41宿主测试，缺共享运行接入和完整目标预算 |
+
+最终入口`runtime-r1/calibration_guard.py`，源码版本`b8726ede70ef14e45071ecd5051041d25b800b3eab95bda011f8b349f83fc797`；两份`cases-r1`各338项输入冻结已实际写读通过且未消费。`ADMISSION.json`仅为宿主GO，没有目标授权。校准拟两例各3角色，共最多6目标、每例300＋2400＋2400秒/目标5100/宿主900/外层6000秒；整批目标10200/外层12000秒。新预算待下一条执行指令授权，旧正式5角色6300/7200秒及正常1500秒不变。
+
+**进度17/20→17/20。** 本轮目标0；下一轮完整调用校准也不冒充正式验收。两例以后正式验收通过可19/20，timed保护再通过才20/20。没有新加速比/面积/时序测量，三项均NOT_TESTED；下面数值仅原条件历史复用，不重复测量或扩大资格。
+
+| 历史工作负载 | 0f VDOT cycles | SP1 VDOT cycles | 0f/SP1 RVV cycles | 0f RVV/VDOT | SP1 RVV/VDOT | VDOT周期下降 |
+|---|---:|---:|---:|---:|---:|---:|
+| B2 stream performance-d0-s03 | 1127.50 | 1126.25 | 1133/1133 | 1.004878049× | 1.005993341× | 0.110864745% |
+| B2 stream performance-d1-s03 | 1127.50 | 1126.25 | 1133/1133 | 1.004878049× | 1.005993341× | 0.110864745% |
+| B2 stream performance-d2-s03 | 1127.50 | 1126.25 | 1133/1133 | 1.004878049× | 1.005993341× | 0.110864745% |
+
+| 历史局部成本 | 0f | SP1 |
+|---|---:|---:|
+| FU 面积 μm² | 17298.246 | 18322.878 |
+| 含 FU 的真实父级面积 μm² | 284614.946 | 285241.642 |
+| nominal FU setup slack ns | −0.268520 | −0.790381 |
+| nominal 父级 setup slack ns | −2.393998 | −2.337809 |
+
+Nangate45 Typical 1.1V 25℃，原 G2 trace-off 局部 FU/真实父级综合；不是整核面积、签核或 Fmax。负 slack 和原严格 G2 NO-GO 均保留。新 trace-on 成本仍 NOT_TESTED。
+
+| SP1历史五档 | 周期ns | 负载fF | FU Q/ns | FU slack/ns | 父级Q/ns | 父级slack/ns |
+|---|---:|---:|---:|---:|---:|---:|
+| nominal | 1 | 5 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| period050 | 0.5 | 5 | 1.790381 | -1.290381 | 3.337809 | -2.837809 |
+| period200 | 2 | 5 | 1.790381 | 0.209619 | 3.337809 | -1.337809 |
+| load001 | 1 | 1 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| load020 | 1 | 20 | 1.790381 | -0.790381 | 3.391613 | -2.391613 |
+
+| 档位/边界 | 历史最差路径起点→终点 | slack ns |
+|---|---|---:|
+| nominal/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| nominal/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| period050/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -1.290381 |
+| period050/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.837809 |
+| period200/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | 0.209619 |
+| period200/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -1.337809 |
+| load001/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load001/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| load020/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load020/父级 | `c201714 (rising edge-triggered flip-flop clocked by core_clk)` → `io_out_bits_fflags[1] (output port clocked by core_clk)` | -2.391613 |
+
+
+源码445项和历史证据1599项保持原字节。默认仍0f＋firstdot V2＋原C8；不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub。完整版本/镜像/参考/文件清单及证据SHA见RESULT.json、两份EXECUTION_FREEZE和METRICS.json。
+
+下一轮：开始 SP1-E B4 两例完整调用有界校准：按 NEXT_STEP 使用最终 runtime-r1/calibration_guard.py，先核查已有进程、宿主准入、两份 cases-r1 冻结输入及未消费锁。接受本轮新校准预算后，仅按 o2-control→original-c8-c48 串行，每例 bit100 拒错300秒/10万guest→候选完整2400秒/150万guest→0f完整2400秒/150万guest；每例最多3目标、目标累计5100秒、宿主900秒、外层6000秒，整批最多6目标、目标10200秒、外层12000秒，不借时。保持CPU4、整组4线程、RSS12GiB、每例日志2GiB和原seed/RAM/reset，保留o2-control的16组/256trial/1208custom及C48全部48调用/1008custom/384完整128位输出、CSR/ABI、当前提交组bit100与物理运行身份。失败或超限立即停止整批，不重试、不加时、不跳过继续。只收集完整调用正确性、周期、吞吐、进度和资源，重新判断原五角色6300/7200秒预算，不自动进入正式验收或timed DIV/SQRT。校准不增加17/20资格。不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；完成后更新计分板及三项指标状态，给出结论和下一轮指令。
+
+[本轮结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-calibration-host-20261106/RESULT.md) · [精确校准合同](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-calibration-host-20261106/CALIBRATION_CONTRACT.md) · [下一轮指令](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-calibration-host-20261106/NEXT_STEP.md)。
+
+
+## 82. 2026-11-06 SP1-E B4完整调用校准：STOPPED，17/20
+
+开始：2026-11-06T14:27:32.639267+08:00；结束：2026-11-06T14:41:18.377067+08:00。操作人：@cc77-builder / Agent（本轮GitHub连接器身份已核实）；操作ID：SP1-E-B4-CALIBRATION-20261106-01。实际模式：唯一有界guard串行目标，辅助Agent只读独立核查；不是成员人工验收。
+
+B4按最终runtime-r1和新授权实际启动唯一首例o2-control bit100进程，9243 guest/19.937916秒后冻结检查器报instruction ring slots/destination；整批STOPPED，guardian CHILD_EXIT_1且清理完成，后5目标未启动，未重试。确切触发是非当前提交组历史slot06的dst32被整环dst<32检查拒绝，当前组为slots10–13；数值部分观察一致但不翻转FAIL。实际身份/349份资源采样/原始日志/清理独立通过。完整正常调用0，原正式预算仍HOLD，验收17/20不变，三项新指标NOT_TESTED，稳定默认不变。
+
+| 负载 | bit100 | 候选完整 | 0f完整 |
+| --- | --- | --- | --- |
+| o2-control | 已运行；检查器FAIL、未获拒错资格 | NOT_RUN | NOT_RUN |
+| 原C8普通C48 | NOT_RUN | NOT_RUN | NOT_RUN |
+
+确切失败在历史slot06/PC0x800002e8的raw dst32：整个32槽指令环被提前要求dst<32，真实当前组却仅slots10–13（head0x2f8/cmtcnt4/tail13）。输出端raw dest为uint8；不得无依据将32改写为编码vd28。宿主合成夹具未复现该真实历史字段。独立算术/bit100部分一致不替代冻结检查器完整资格，原FAIL不翻转。
+
+| 实际墙钟与资源 | 结果 |
+| --- | ---: |
+| 目标数 / 后续未运行数 | 1 / 5 |
+| guest cycles | 9243 |
+| 目标活跃 / role总秒数 | 19.937915666 / 19.951715726 |
+| case总 / case宿主秒数 | 21.906911395 / 1.968995729 |
+| batch总 / guardian总秒数 | 23.950217391 / 24.037230848 |
+| 峰值线程 / RSS | 1 / 71.875MiB |
+| 采样 / 完整日志字节 | 349 / 40468 |
+
+实际目标身份、CPU4、进程出生、参考映射、资源及清理通过独立核查；guardian保留GUARD_FAIL/CHILD_EXIT_1，cleanup_ok=true。不是超时或资源耗尽。原host GO只覆盖宿主准备，不覆盖本次真实拒错失败。旧授权及batch/首例锁已消费，未重试、未清锁、未跳过继续，源/镜像/预算不改。
+
+**正式验收17/20→17/20。** 完整正常调用0，没有当前两核完整耗时新依据，原1500秒/正常角色及6300/7200秒正式合同继续HOLD。不能外推9243guest短启动吞吐，也没有同核精确重放资格。
+
+本轮三项主要指标：加速比NOT_TESTED；面积NOT_TESTED；时序NOT_TESTED。下面仅保留原条件历史复用，不将bit100目标墙钟当公平性能结果。
+
+| 历史工作负载 | 0f VDOT cycles | SP1 VDOT cycles | 0f/SP1 RVV cycles | 0f RVV/VDOT | SP1 RVV/VDOT | VDOT周期下降 |
+|---|---:|---:|---:|---:|---:|---:|
+| B2 stream performance-d0-s03 | 1127.50 | 1126.25 | 1133/1133 | 1.004878049× | 1.005993341× | 0.110864745% |
+| B2 stream performance-d1-s03 | 1127.50 | 1126.25 | 1133/1133 | 1.004878049× | 1.005993341× | 0.110864745% |
+| B2 stream performance-d2-s03 | 1127.50 | 1126.25 | 1133/1133 | 1.004878049× | 1.005993341× | 0.110864745% |
+
+| 历史局部成本 | 0f | SP1 |
+|---|---:|---:|
+| FU 面积 μm² | 17298.246 | 18322.878 |
+| 含 FU 的真实父级面积 μm² | 284614.946 | 285241.642 |
+| nominal FU setup slack ns | −0.268520 | −0.790381 |
+| nominal 父级 setup slack ns | −2.393998 | −2.337809 |
+
+Nangate45 Typical 1.1V 25℃，原 G2 trace-off 局部 FU/真实父级综合；不是整核面积、签核或 Fmax。负 slack 和原严格 G2 NO-GO 均保留。新 trace-on 成本仍 NOT_TESTED。
+
+| SP1历史五档 | 周期ns | 负载fF | FU Q/ns | FU slack/ns | 父级Q/ns | 父级slack/ns |
+|---|---:|---:|---:|---:|---:|---:|
+| nominal | 1 | 5 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| period050 | 0.5 | 5 | 1.790381 | -1.290381 | 3.337809 | -2.837809 |
+| period200 | 2 | 5 | 1.790381 | 0.209619 | 3.337809 | -1.337809 |
+| load001 | 1 | 1 | 1.790381 | -0.790381 | 3.337809 | -2.337809 |
+| load020 | 1 | 20 | 1.790381 | -0.790381 | 3.391613 | -2.391613 |
+
+| 档位/边界 | 历史最差路径起点→终点 | slack ns |
+|---|---|---:|
+| nominal/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| nominal/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| period050/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -1.290381 |
+| period050/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.837809 |
+| period200/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | 0.209619 |
+| period200/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -1.337809 |
+| load001/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load001/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| load020/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load020/父级 | `c201714 (rising edge-triggered flip-flop clocked by core_clk)` → `io_out_bits_fflags[1] (output port clocked by core_clk)` | -2.391613 |
+
+
+
+默认仍0f＋firstdot V2＋原C8，不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub。完整实际版本、命令、角色、镜像/参考SHA、boot/PID和证据见本轮RESULT.json与原生记录；未采用候选未合入默认。
+
+下一轮建议：开始 SP1-E B4-R2 宿主修订与两例完整调用校准：保留本轮真实FAIL、原始日志、授权和消费锁，在独立修订目录仅修正历史指令环raw dst解析与当前提交组架构目的地检查的作用范围，按冻结输出端uint8字段定义处理历史槽，不把32改写成28，不放宽当前组/ELF/最后写入者/完整128位/CSR/bit100判据。使用本轮真实日志做离线正控，补齐历史dst32、当前组非法目的地、槽序/尾指针/组计数及数值身份负控，复用未变通过证据；完成最小差异审查、实际输入冻结写读及宿主预算影响核对。全部GO后，在新源码/合同/授权和独立输出下同轮执行o2-control→原C8普通C48，每例bit100300秒/10万guest、候选完整2400秒/150万guest、0f完整2400秒/150万guest；每例目标5100/宿主900/外层6000秒，整批最多6目标、目标10200/外层12000秒。CPU4、整组4线程、RSS12GiB、每例日志2GiB、原完整覆盖与seed/RAM/reset保持。新批次任一失败即停，不重试、不加时、不借旧剩余预算、不跳过继续、不自动进入正式验收；不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub。完成后更新计分板和三项指标状态，给出结论和下一轮指令。
+
+[本轮结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-calibration-host-20261106/execution-01/RESULT.md) · [确切失败归因](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-calibration-host-20261106/execution-01/independent-review/FAILURE_ATTRIBUTION.md) · [实际预算分析](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-calibration-host-20261106/execution-01/budget-review/RESULT.md) · [下一轮指令](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-calibration-host-20261106/execution-01/NEXT_STEP.md)。
+
+
+## 83. SP1-E B4-R2 宿主修复与两例完整调用校准（停止留档）
+
+记录ID SP1-E-B4-R2-20261106-STOPPED；操作ID SP1-E-B4-R2-20261106-01；@cc77-builder / Agent。
+开始 2026-11-06T14:49:09.465823+08:00，结束 2026-11-06T15:38:51.986292+08:00；未提交，基点 347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e。
+
+B4-R2最小raw dst范围修复与宿主准入通过；新独立批次bit100拒错通过，候选o2-control完整程序GOOD_TRAP、256次试验零错误、1208次退休完整128位重算一致，但原覆盖门KILL_P/PARTIAL_KILL未触发，整批按合同STOPPED。仅启动2/6目标，其余4个NOT_RUN，清理正常、旧FAIL和锁保留。候选1562.610640秒超过原正式1500秒，低于本轮2400秒；不授完整校准或正式验收资格，进度仍17/20，默认保持0f＋firstdot V2＋原C8。
+
+| 用例/角色 | 结果 | guest cycles | 活跃墙钟/s |
+| --- | --- | ---: | ---: |
+| o2-control bit100 | NEGATIVE_PASS | 9243 | 20.617259 |
+| o2-control candidate-full | 程序完整结束、数值证据一致；覆盖FAIL | 702861 | 1562.610640 |
+| o2-control baseline-full | NOT_RUN | — | — |
+| 原C8普通C48 bit100 | NOT_RUN | — | — |
+| 原C8普通C48 candidate-full | NOT_RUN | — | — |
+| 原C8普通C48 baseline-full | NOT_RUN | — | — |
+
+
+只修历史32槽指令环raw dst范围（uint8 0..255），选出的当前提交组仍要求架构目的地<32；槽顺序、尾指针、当前组、ELF/ROB、完整128位、CSR及bit100判据保持。没有把历史dst32改写为vd28。真实旧日志与26项差异验证一次PASS；运行器4项差异验证一次PASS，复用原10+5项未变证据。两例各339项执行冻结通过，独立宿主审查通过，900秒宿主预算经验估计分别235.921543秒和213.416454秒。新合同、授权、消费锁及独立输出生效，旧FAIL和锁保留。
+
+每例最多3目标：bit100 300秒/10万guest，候选及0f各2400秒/150万guest；每例目标5100/宿主900/外层6000秒，整批最多6目标/10200秒目标/12000秒外层，CPU4/整组4线程/RSS12GiB/每例日志2GiB。实际只启动2个，目标累计1583.227898秒，case宿主8.742916秒，case总1591.970814秒，batch总1593.974286秒，guardian总1594.082341秒。candidate-full峰值1线程、74.625MiB，29005份采样；没有资源或墙钟限制触发。guardian以GUARD_FAIL/CHILD_EXIT_1收口，清理正常，无遗留本批目标。后4个角色未启动，没有重试、加时或跳过失败继续。
+
+候选stdout记录16组、256次试验、131072字节寄存器检查、failures=0及GOOD_TRAP，进程exit0。离线使用冻结观察器验证状态关系，并从真实输入独立重算1208次退休的完整128位结果，全部一致，高96位同时检查。CSR证据是冻结目标的结束自检、DiffTest及程序摘要，不能写成逐trial打印了CSR快照。
+
+原collector还要求KILL_P、KILL_R、PARTIAL_KILL发生。真实轨迹5283个STATE中pValid=1为0、outready=0为0，最大占用1；1618次ACCEPT均DIRECT_R，ENQUEUE_P/MOVE为0，KILL_R=26、KILL_P=0、PARTIAL_KILL=0。这是实际覆盖缺口，不是简单事件名漏翻译。数值证据不能越过原覆盖门；没有生成正常角色完整validation，不能将完整校准写成PASS。本轮没有据此认定RTL算错，也未宣称P槽取消在所有情况下不可达。冻结源码支持在持续ready前提下P为空；真实父级写回priority1仍有仲裁依赖，其他写回竞争负载可能占用P，须单独评估。
+
+candidate-full活跃1562.610640秒，超过原正式1500秒62.610640秒（4.174%），低于本轮独立校准2400秒。原1500/6300/7200正式合同仍HOLD；不能自动沿用2400作为正式新限额。0f O2与C48正常调用时长仍未测，不能用短bit100或本次候选吞吐外推。没有同核精确重放，没有公平计时加速比；17/20不增加。
+
+
+本轮新增加速比、面积、时序均为NOT_TESTED：完整功能校准没有公平RVV计时窗，也未做EDA。下面仅为历史同口径复用，不是本轮新跑分。
+
+
+以下逐数据集保留同镜像窗口均值；加速比均为该硬件上 RVV cycles / vdot cycles。不可把硬件候选相对0f的收益与RVV/vdot加速比混为一项。
+
+|负载|dataset|0f vdot|候选 vdot|0f/候选RVV|0f RVV/vdot|候选 RVV/vdot|候选vdot周期下降|记录|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|chain-256|0|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|51|
+|chain-256|1|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|58|
+|chain-256|2|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|60|
+|single-1|0|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|62|
+|single-1|1|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|64|
+|single-1|2|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|66|
+|batch|0|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|1|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|2|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|stream|0|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|1|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|2|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|original-C8-8x32-basic|0|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|53|
+|original-C8-8x32-reuse|0|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|53|
+|original-C8-8x32-basic|1|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|54|
+|original-C8-8x32-reuse|1|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|54|
+|original-C8-8x32-basic|2|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|55|
+|original-C8-8x32-reuse|2|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|55|
+
+## 历史面积与五档STA
+
+范围：Nangate45 Typical 1.1V/25°C、原G2关闭观察器的局部FU及含VDot的真实父级；不是全核面积，不是布线后签核，不是已实现Fmax。原G2严格成本门NO-GO事实保留，本轮只复用数值。
+
+|边界|0f面积(µm²)|候选面积(µm²)|变化|
+|---|---:|---:|---:|
+|FU_um2|17298.246|18322.878|5.923329%|
+|inclusive_parent_um2|284614.946|285241.642|0.220191%|
+
+|档位|T(ns)|load(pF)|0f FU slack|候选FU slack|0f父级slack|候选父级slack|候选FU Q|候选父级Q|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|nominal|1.0|0.005|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|period050|0.5|0.005|-0.768520|-1.290381|-2.893998|-2.837809|1.790381|3.337809|
+|period200|2.0|0.005|0.731480|0.209619|-1.393998|-1.337809|1.790381|3.337809|
+|load001|1.0|0.001|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|load020|1.0|0.02|-0.268520|-0.790381|-2.413199|-2.391613|1.790381|3.391613|
+
+Q按原表 T−最差setup slack 对比值保留，不能直接写成全核实际周期。JSON保留所有原始路径及关键路径筛选：FU主路径为operand→R槽，父级nominal为vsew→内部寄存器，load020最差移至fflags输出；ready与gate_enable另列，不混同主路径。
+
+
+| 档位/边界 | 历史最差路径起点→终点 | slack ns |
+|---|---|---:|
+| nominal/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| nominal/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| period050/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -1.290381 |
+| period050/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.837809 |
+| period200/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | 0.209619 |
+| period200/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -1.337809 |
+| load001/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load001/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| load020/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load020/父级 | `c201714 (rising edge-triggered flip-flop clocked by core_clk)` → `io_out_bits_fflags[1] (output port clocked by core_clk)` | -2.391613 |
+
+
+
+路线影响：17/20不变；原正式预算HOLD。默认0f＋firstdot V2＋原C8不变，未改RTL/构建新核/EDA/上传GitHub。
+
+下一轮指令：开始 B4-R3 取消覆盖合同与剩余校准方案收口：保留 B4/R2 原FAIL、原始日志和消费锁，复用本轮bit100、1208次完整128位结果、程序完整结束及资源证据。先针对SP1直接入R、P槽未占用的真实路径，核对已有FU/真实父级反压和两槽取消证据能否组成完整分层覆盖；不能替代的全核覆盖，给出能实际触发的最小补测设计，不直接删掉KILL_P/PARTIAL_KILL要求。同步依据1562.61秒实测修订正式预算提案，明确0f O2和原C8普通C48尚缺的校准角色、证据复用边界、下一批进程和独立预算。只做必要宿主差异验证与合同准备，不重跑已完成目标、不运行EMU/NEMU、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub。完成后给出GO/HOLD及可整批执行的下一轮指令。
+
+[本轮结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r2-20261106/RESULT.md) · [覆盖归因](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r2-20261106/terminal-review/FAILURE_ATTRIBUTION.md) · [预算报告](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r2-20261106/calibration-budget/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r2-20261106/NEXT_STEP.md)。
+
+
+## 84. SP1-E B4-R3 取消覆盖、最小补测与剩余校准宿主准备
+
+记录ID SP1-E-B4-R3-20261106-HOST-REVIEW；@cc77-builder / Agent；操作ID SP1-E-B4-R3-20261106-01。
+时间 2026-11-06T15:48:40.206821+08:00～2026-11-06T16:08:55.862482+08:00。未提交，基点 347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e。
+
+B4-R3宿主准备完成：同源码组件证据和R2真实数值/拒错证据可复用；原全核P槽及部分取消覆盖仍HOLD。已形成FEX0/F2v写回竞争的最小补测设计，实际命中NOT_TESTED。剩余四角色新独立校准预算设计GO（7500秒目标/9300秒外层），但数值专用adapter和显式角色运行器尚未接入，执行准入HOLD。未运行任何EMU/NEMU或新测试，未改RTL/构建/EDA，17/20及默认0f＋firstdot V2＋原C8保持。
+
+六个局部运行与全核冻结的398份生产源码匹配；真实父级KILL_P54/KILL_R88/PARTIAL_KILL49等仅按组件范围复用。原全核0/26/0不变；R2的11项真实输入已冻结为numeric-only摘要，完整case资格false。F2v优先级0与VFEX4优先级1共用口3是必要补测方向；无新ELF和命中证据，不原样重跑旧程序。
+
+剩余角色：O2 0f正常2400秒；C48 bit100300秒、候选正常2400秒、0f正常2400秒；每例宿主900秒，O2外层3300、C48外层6000，整批4目标/7500target/9300outer。预算草案GO、实际接入HOLD；只补显式角色和numeric-only API，复用公共监督。原正式1500/6300/7200和全核取消覆盖继续HOLD。
+
+本轮新增加速比、面积、时序均为NOT_TESTED：只做宿主评审，没有运行目标或EDA。下面仅为历史同口径复用，不是本轮新跑分。
+
+
+以下逐数据集保留同镜像窗口均值；加速比均为该硬件上 RVV cycles / vdot cycles。不可把硬件候选相对0f的收益与RVV/vdot加速比混为一项。
+
+|负载|dataset|0f vdot|候选 vdot|0f/候选RVV|0f RVV/vdot|候选 RVV/vdot|候选vdot周期下降|记录|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|chain-256|0|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|51|
+|chain-256|1|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|58|
+|chain-256|2|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|60|
+|single-1|0|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|62|
+|single-1|1|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|64|
+|single-1|2|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|66|
+|batch|0|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|1|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|2|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|stream|0|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|1|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|2|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|original-C8-8x32-basic|0|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|53|
+|original-C8-8x32-reuse|0|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|53|
+|original-C8-8x32-basic|1|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|54|
+|original-C8-8x32-reuse|1|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|54|
+|original-C8-8x32-basic|2|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|55|
+|original-C8-8x32-reuse|2|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|55|
+
+## 历史面积与五档STA
+
+范围：Nangate45 Typical 1.1V/25°C、原G2关闭观察器的局部FU及含VDot的真实父级；不是全核面积，不是布线后签核，不是已实现Fmax。原G2严格成本门NO-GO事实保留，本轮只复用数值。
+
+|边界|0f面积(µm²)|候选面积(µm²)|变化|
+|---|---:|---:|---:|
+|FU_um2|17298.246|18322.878|5.923329%|
+|inclusive_parent_um2|284614.946|285241.642|0.220191%|
+
+|档位|T(ns)|load(pF)|0f FU slack|候选FU slack|0f父级slack|候选父级slack|候选FU Q|候选父级Q|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|nominal|1.0|0.005|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|period050|0.5|0.005|-0.768520|-1.290381|-2.893998|-2.837809|1.790381|3.337809|
+|period200|2.0|0.005|0.731480|0.209619|-1.393998|-1.337809|1.790381|3.337809|
+|load001|1.0|0.001|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|load020|1.0|0.02|-0.268520|-0.790381|-2.413199|-2.391613|1.790381|3.391613|
+
+Q按原表 T−最差setup slack 对比值保留，不能直接写成全核实际周期。JSON保留所有原始路径及关键路径筛选：FU主路径为operand→R槽，父级nominal为vsew→内部寄存器，load020最差移至fflags输出；ready与gate_enable另列，不混同主路径。
+
+
+| 档位/边界 | 历史最差路径起点→终点 | slack ns |
+|---|---|---:|
+| nominal/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| nominal/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| period050/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -1.290381 |
+| period050/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.837809 |
+| period200/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | 0.209619 |
+| period200/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -1.337809 |
+| load001/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load001/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| load020/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load020/父级 | `c201714 (rising edge-triggered flip-flop clocked by core_clk)` → `io_out_bits_fflags[1] (output port clocked by core_clk)` | -2.391613 |
+
+
+完整历史源表、ready/gate路径及数据集原证据pins见[METRICS.json](METRICS.json)。
+
+
+本轮没有新目标、RTL/宿主差异测试、源码修改、构建、EDA、默认切换或GitHub写入；只读审查和文档/JSON为本轮新增。正式进度17/20保持。
+
+路线影响／接续：开始 B4-R4，按NEXT_STEP实现校准专用数值摘要和剩余四角色运行器，复用未变公共机制，只补角色/参考库/退出码/历史身份/冻结差异正负控及宿主预算准入。保留R2原FAIL和旧锁，不重跑已完成的o2-control bit100与候选正常。全部准入后，以新冻结身份和独立授权，仅串行运行0f O2正常→C48 bit100→C48候选正常→C48 0f正常；接受新独立预算：最多4目标、目标累计7500秒、整批外层9300秒，O2目标2400/宿主900/外层3300秒，C48目标5100/宿主900/外层6000秒；各角色和资源按本轮草案。失败即停、不重试、不加时、不借旧余量、不自动进入正式验收。新取消覆盖补测镜像不在该批执行，不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub。完成后更新计分板和三项指标，给出下一轮指令。
+
+[本轮结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r3-20261106/RESULT.md) · [覆盖矩阵](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r3-20261106/coverage-review/RESULT.md) · [补测设计](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r3-20261106/stimulus-review/DESIGN.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r3-20261106/NEXT_STEP.md)。
+
+
+## 85. B4-R4四角色完整调用：4个角色通过，C48比较失败即停（2026-11-06）
+
+- @cc77-builder / Agent；操作ID `SP1-E-B4-R4-20261106-01`；起止 2026-11-06T08:35:58.275394+00:00 ～ 2026-11-06T10:41:21.789429+00:00；本地收口 2026-11-06T18:41:21.789429+08:00。含自动等待，不作人工工时。
+- HEAD `347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e`，分支 `local/zjhwork-integration-20261024`；默认不变，正式17/20。
+- B4-R4宿主15＋8项、独立审查和预算门通过；剩余四个真实角色各自通过，O2数值配对完成。C48最终跨硬件accepted_sources_sha256比较失败，整批STOPPED且清理正常。只读逐条归因确认1008条有效低64输入、非数据字段、完整128结果及48调用UART均相同，96条仅未消费高64不同；原FAIL保留，最小宿主口径修订设计GO，当前C48整case/正式验收HOLD。未改RTL/新核/EDA/默认或上传，进度17/20。
+- 宿主15/15＋8/8、独立复核及成本门GO；四目标仅执行一次，R2历史目标复用不重跑。
+
+|角色|guest cycles|active秒|监督秒|单角色结果|
+|---|---:|---:|---:|---|
+|o2-control / baseline-full|703,135|1588.517917|1588.535824|FULL_CALL_PASS|
+|original-c8-c48 / bit100|13,738|29.398773|29.407729|NEGATIVE_PASS|
+|original-c8-c48 / candidate-full|871,768|1854.085414|1854.100318|FULL_CALL_PASS|
+|original-c8-c48 / baseline-full|871,326|1956.443881|1956.458273|FULL_CALL_PASS|
+
+整批active5428.445985/7500秒、外层5457.889599/9300秒；资源及清理正常。C48最后accepted_sources_sha256比较失败，保留原STOPPED；1008有效低64/完整128结果/其余来源字段/48UART相同，96条差异只在未消费高64。三条新正常角色均超旧正式1500秒，该旧门继续HOLD。O2基线覆盖不替代SP1候选P/partial。
+
+[本轮结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/RESULT.md) · [失败归因](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/terminal-review/FAILURE_ATTRIBUTION.md) · [实际预算](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/actual-budget-review/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/NEXT_STEP.md)。
+
+### 三项指标：本轮NOT_TESTED，以下历史复用
+
+加速比均为该硬件上 RVV cycles / vdot cycles。不可把硬件候选相对0f的收益与RVV/vdot加速比混为一项。
+
+|负载|dataset|0f vdot|候选 vdot|0f/候选RVV|0f RVV/vdot|候选 RVV/vdot|候选vdot周期下降|记录|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|chain-256|0|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|51|
+|chain-256|1|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|58|
+|chain-256|2|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|60|
+|single-1|0|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|62|
+|single-1|1|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|64|
+|single-1|2|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|66|
+|batch|0|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|1|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|2|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|stream|0|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|1|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|2|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|original-C8-8x32-basic|0|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|53|
+|original-C8-8x32-reuse|0|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|53|
+|original-C8-8x32-basic|1|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|54|
+|original-C8-8x32-reuse|1|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|54|
+|original-C8-8x32-basic|2|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|55|
+|original-C8-8x32-reuse|2|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|55|
+
+## 历史面积与五档STA
+
+范围：Nangate45 Typical 1.1V/25°C、原G2关闭观察器的局部FU及含VDot的真实父级；不是全核面积，不是布线后签核，不是已实现Fmax。原G2严格成本门NO-GO事实保留，本轮只复用数值。
+
+|边界|0f面积(µm²)|候选面积(µm²)|变化|
+|---|---:|---:|---:|
+|FU_um2|17298.246|18322.878|5.923329%|
+|inclusive_parent_um2|284614.946|285241.642|0.220191%|
+
+|档位|T(ns)|load(pF)|0f FU slack|候选FU slack|0f父级slack|候选父级slack|候选FU Q|候选父级Q|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|nominal|1.0|0.005|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|period050|0.5|0.005|-0.768520|-1.290381|-2.893998|-2.837809|1.790381|3.337809|
+|period200|2.0|0.005|0.731480|0.209619|-1.393998|-1.337809|1.790381|3.337809|
+|load001|1.0|0.001|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|load020|1.0|0.02|-0.268520|-0.790381|-2.413199|-2.391613|1.790381|3.391613|
+
+Q按原表 T−最差setup slack 对比值保留，不能直接写成全核实际周期。JSON保留所有原始路径及关键路径筛选：FU主路径为operand→R槽，父级nominal为vsew→内部寄存器，load020最差移至fflags输出；ready与gate_enable另列，不混同主路径。
+
+
+| 档位/边界 | 历史最差路径起点→终点 | slack ns |
+|---|---|---:|
+| nominal/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| nominal/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| period050/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -1.290381 |
+| period050/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.837809 |
+| period200/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | 0.209619 |
+| period200/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -1.337809 |
+| load001/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load001/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| load020/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load020/父级 | `c201714 (rising edge-triggered flip-flop clocked by core_clk)` → `io_out_bits_fflags[1] (output port clocked by core_clk)` | -2.391613 |
+
+
+完整历史源表、ready/gate路径及数据集原证据pins见[METRICS.json](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/METRICS.json)。
+
+
+### 路线影响／接续
+
+开始 B4-R5 最小比较合同修订与离线复核：保留 B4-R4 原FAIL、原始日志、授权和消费锁，在独立目录为 C48 增加按退休链绑定的有效低64位输入摘要，仅用于跨硬件比较；完整128位结果、PC/编码/配置/控制字段及同硬件raw128精确重放要求保持。复用四个已完成角色和未变宿主机制，使用两份真实完整日志补齐高64差异正控、低64/结果/身份及同硬件高64漂移负控，做独立复核。通过后同轮准备复用既有三角色＋两次新重放的明确合同和实测预算提案，不自动授正式资格。先不运行EMU/NEMU、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；完成后更新计分板，给出GO/HOLD和下一批指令。
+
+445份production、160份旧历史文件未变；原FAIL/锁保留，无RTL/新核/EDA/默认/GitHub写入。
+
+
+## 86. B4-R5：C48有效输入摘要修订与离线复核（2026-11-06）
+
+- 操作ID：`SP1-E-B4-R5-20261106-01`；执行者`@cc77-builder / Agent`（Agent）。
+- 起止：`2026-11-06T12:44:51.758924+00:00` → `2026-11-06T13:17:38.530350+00:00`（UTC+00:00）；包含中断等待，不计人工工时。
+- HEAD `347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e`；分支 `local/zjhwork-integration-20261024`；默认 **0f＋firstdot V2＋原C8**。
+- **宿主修订与两重放设计GO；实际执行/真实重放/正式验收HOLD。** 宿主27PASS，独立2016条完整128位等式＋3负控PASS。首轮独立包装失败在解析日志前发生并保留；R1修包装，核查主体未改。
+- 跨硬件仅投影vs1/vs2低64，其余字段、完整128位结果、同核raw128/observer/guest精确重放保持；96条未消费高64差异得到解释，低64或结果高位漂移仍拒绝。
+- 新目标0；不改判R4失败，不重跑四目标。445生产文件及322历史文件匹配；无RTL/新核/EDA/默认/GitHub写入。正式 **17/20**。
+- 提案：复用三历史C48角色，未来仅两次重放；各2400秒/150万guest，target4800、host900、outer5700秒。实际runner/执行闭包/最终成本待完成；下一轮可一次授权准入后同轮两角色，当前不得自动执行。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r5-20261106/RESULT.md) · [下一步](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r5-20261106/NEXT_STEP.md)。
+
+### 三项指标留档
+
+本轮仅修订宿主比较并离线复核既有日志，0个目标、0次EDA；新增加速比、面积、时序均为 **NOT_TESTED**。以下18条性能、面积及五档STA按原合同历史复用，数值未变。
+
+默认为 **0f＋firstdot V2＋原C8**，SP1候选未切默认；正式验收 **17/20**。宿主通过不构成真实重放或C48正式资格。原G2严格成本门NO-GO保留。
+
+以下逐数据集保留同镜像窗口均值；加速比均为该硬件上 RVV cycles / vdot cycles。不可把硬件候选相对0f的收益与RVV/vdot加速比混为一项。
+
+|负载|dataset|0f vdot|候选 vdot|0f/候选RVV|0f RVV/vdot|候选 RVV/vdot|候选vdot周期下降|记录|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|chain-256|0|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|51|
+|chain-256|1|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|58|
+|chain-256|2|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|60|
+|single-1|0|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|62|
+|single-1|1|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|64|
+|single-1|2|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|66|
+|batch|0|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|1|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|2|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|stream|0|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|1|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|2|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|original-C8-8x32-basic|0|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|53|
+|original-C8-8x32-reuse|0|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|53|
+|original-C8-8x32-basic|1|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|54|
+|original-C8-8x32-reuse|1|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|54|
+|original-C8-8x32-basic|2|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|55|
+|original-C8-8x32-reuse|2|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|55|
+
+## 历史面积与五档STA
+
+范围：Nangate45 Typical 1.1V/25°C、原G2关闭观察器的局部FU及含VDot的真实父级；不是全核面积，不是布线后签核，不是已实现Fmax。原G2严格成本门NO-GO事实保留，本轮只复用数值。
+
+|边界|0f面积(µm²)|候选面积(µm²)|变化|
+|---|---:|---:|---:|
+|FU_um2|17298.246|18322.878|5.923329%|
+|inclusive_parent_um2|284614.946|285241.642|0.220191%|
+
+|档位|T(ns)|load(pF)|0f FU slack|候选FU slack|0f父级slack|候选父级slack|候选FU Q|候选父级Q|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|nominal|1.0|0.005|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|period050|0.5|0.005|-0.768520|-1.290381|-2.893998|-2.837809|1.790381|3.337809|
+|period200|2.0|0.005|0.731480|0.209619|-1.393998|-1.337809|1.790381|3.337809|
+|load001|1.0|0.001|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|load020|1.0|0.02|-0.268520|-0.790381|-2.413199|-2.391613|1.790381|3.391613|
+
+Q按原表 T−最差setup slack 对比值保留，不能直接写成全核实际周期。JSON保留所有原始路径及关键路径筛选：FU主路径为operand→R槽，父级nominal为vsew→内部寄存器，load020最差移至fflags输出；ready与gate_enable另列，不混同主路径。
+
+
+| 档位/边界 | 历史最差路径起点→终点 | slack ns |
+|---|---|---:|
+| nominal/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| nominal/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| period050/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -1.290381 |
+| period050/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.837809 |
+| period200/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | 0.209619 |
+| period200/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -1.337809 |
+| load001/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load001/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| load020/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load020/父级 | `c201714 (rising edge-triggered flip-flop clocked by core_clk)` → `io_out_bits_fflags[1] (output port clocked by core_clk)` | -2.391613 |
+
+
+完整历史源表、ready/gate路径及数据集原证据pins见[METRICS.json](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r5-20261106/METRICS.json)。
+
+### 接续
+
+开始 B4-R6，按 NEXT_STEP 完成 C48 两次重放运行器、三份历史角色绑定、完整执行冻结及必要宿主差异、独立审查和预算准入；复用未变证据，不重做旧宿主全套。全部通过后接受新独立预算，同轮串行执行 candidate-replay→baseline-replay，最多2个新目标，每角色2400秒/150万guest、目标累计4800秒、宿主900秒、整批外层5700秒。保持CPU4、整组最多4线程、RSS12GiB、日志2GiB、完整48调用/1008custom/128位结果、同硬件raw128/observer/guest精确重放及跨硬件active64。保留旧FAIL和锁，失败即停、不重试、不加时、不扩围，不重跑既有三角色、不自动进入其他用例。不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；完成后更新计分板并给出结论和下一轮指令。
+
+
+## 87. B4-R6：两次重放运行器接入，宿主导入FAIL停止（2026-11-06）
+
+- 操作ID`SP1-E-B4-R6-20261106-01`；@cc77-builder / Agent；起止`2026-11-06T13:37:05.817023+00:00` → `2026-11-06T14:16:37.393124+00:00`（UTC+00:00，含环境等待，不作人工工时）。
+- HEAD`347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e`；分支`local/zjhwork-integration-20261024`；默认 **0f＋firstdot V2＋原C8**。
+- **STOPPED/HOLD**：唯一正式host在test_delta导入时选中旧G0 fixtures.py，缺authorization_fixture。cost脚本同样裸导入风险已定位但未执行。AST/静态审查漏掉完整冷导入集成，原PASS与新FAIL都保留。
+- 运行器实现与351项执行冻结完成；宿主57源码/363输入冻结；规划9方法、实际执行0，成本0、目标0。外部监督exit1、1.395338548秒、cleanup=true、无剩余存活子进程。未创建目标授权，不重试。
+- 独立57/363/351及445生产/406旧文件全部MATCH。host final_inputs_unchanged=false是失败分支未到postcheck，实际源未漂移。默认与正式 **17/20** 不变；无RTL、新核、EDA、GitHub写入。
+- 准备期仅恢复Ubuntu命令入口一次，未改配置，当时无正式测试或目标；独立留档。两重放2400各/150万guest、target4800/host900/outer5700预算未使用，实际host成本尚未测。
+
+[本轮结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r6-20261106/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r6-20261106/NEXT_STEP.md)。
+
+### 三项指标留档
+
+本轮在正式宿主入口导入测试模块时停止：9项方法实际执行0、成本测量0、目标0。新增加速比、面积、时序均为 **NOT_TESTED**。以下18条性能、FU/父级面积及五档STA按原合同历史复用，原数值未变。
+
+默认 **0f＋firstdot V2＋原C8**，正式进度 **17/20**。没有新的硬件失败或性能结论。原G2严格成本门NO-GO、R4 FAIL及本轮宿主FAIL各自保留。
+
+以下逐数据集保留同镜像窗口均值；加速比均为该硬件上 RVV cycles / vdot cycles。不可把硬件候选相对0f的收益与RVV/vdot加速比混为一项。
+
+|负载|dataset|0f vdot|候选 vdot|0f/候选RVV|0f RVV/vdot|候选 RVV/vdot|候选vdot周期下降|记录|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|chain-256|0|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|51|
+|chain-256|1|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|58|
+|chain-256|2|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|60|
+|single-1|0|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|62|
+|single-1|1|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|64|
+|single-1|2|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|66|
+|batch|0|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|1|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|2|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|stream|0|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|1|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|2|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|original-C8-8x32-basic|0|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|53|
+|original-C8-8x32-reuse|0|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|53|
+|original-C8-8x32-basic|1|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|54|
+|original-C8-8x32-reuse|1|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|54|
+|original-C8-8x32-basic|2|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|55|
+|original-C8-8x32-reuse|2|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|55|
+
+## 历史面积与五档STA
+
+范围：Nangate45 Typical 1.1V/25°C、原G2关闭观察器的局部FU及含VDot的真实父级；不是全核面积，不是布线后签核，不是已实现Fmax。原G2严格成本门NO-GO事实保留，本轮只复用数值。
+
+|边界|0f面积(µm²)|候选面积(µm²)|变化|
+|---|---:|---:|---:|
+|FU_um2|17298.246|18322.878|5.923329%|
+|inclusive_parent_um2|284614.946|285241.642|0.220191%|
+
+|档位|T(ns)|load(pF)|0f FU slack|候选FU slack|0f父级slack|候选父级slack|候选FU Q|候选父级Q|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|nominal|1.0|0.005|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|period050|0.5|0.005|-0.768520|-1.290381|-2.893998|-2.837809|1.790381|3.337809|
+|period200|2.0|0.005|0.731480|0.209619|-1.393998|-1.337809|1.790381|3.337809|
+|load001|1.0|0.001|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|load020|1.0|0.02|-0.268520|-0.790381|-2.413199|-2.391613|1.790381|3.391613|
+
+Q按原表 T−最差setup slack 对比值保留，不能直接写成全核实际周期。JSON保留所有原始路径及关键路径筛选：FU主路径为operand→R槽，父级nominal为vsew→内部寄存器，load020最差移至fflags输出；ready与gate_enable另列，不混同主路径。
+
+
+| 档位/边界 | 历史最差路径起点→终点 | slack ns |
+|---|---|---:|
+| nominal/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| nominal/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| period050/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -1.290381 |
+| period050/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.837809 |
+| period200/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | 0.209619 |
+| period200/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -1.337809 |
+| load001/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load001/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| load020/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load020/父级 | `c201714 (rising edge-triggered flip-flop clocked by core_clk)` → `io_out_bits_fflags[1] (output port clocked by core_clk)` | -2.391613 |
+
+
+完整历史源表、ready/gate路径及数据集原证据pins见[METRICS.json](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r6-20261106/METRICS.json)。
+
+### 接续
+
+开始 B4-R7，按 NEXT_STEP 保留 B4-R6 原FAIL与消费锁，在新独立身份和目录中仅修复宿主测试、成本脚本的 fixtures 同名导入，使用绝对路径和唯一模块名并核对来源。按真实加载顺序补冷进程完整导入正控及必要错路径负控，复用未变运行器和历史证据；完成原差异门、执行冻结、独立审查和预算准入后，同轮串行 candidate-replay→baseline-replay。接受最多2目标、各2400秒/150万guest、目标累计4800秒、宿主900秒、外层5700秒及原资源/完整覆盖/精确重放要求。失败即停、不重试、不加时、不扩围，不重跑三历史角色、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；完成后更新计分板和下一轮指令。
+
+
+## 88. B4-R7：冷导入修复与C48两次重放通过，18/20（2026-11-07）
+
+- 操作ID `SP1-E-B4-R7-20261106-01`，@cc77-builder / Agent；启动 `2026-11-06T14:59:26.299918+00:00`，收口 `2026-11-06T16:23:03.240762+00:00`。目录按启动日20261106保留，完成日北京时间2026-11-07。
+- **新合同C48功能验收PASS：17/20 → 18/20**。默认仍为 **0f＋firstdot V2＋原C8**，第19项O2候选P槽/部分取消、第20项timed DIV/SQRT仍待补齐。
+- 修复两处裸fixtures导入，绝对路径＋唯一模块名＋冻结来源检查；实际冷导入/2负控、原9方法、成本及独立审查PASS。原R6 FAIL/锁保留；六个运行器Python源字节不变。
+- 唯一正式host外部13.310258522秒/exit0/cleanup；经验成本准入194.206609216秒。只运行两个新目标，三份历史C48角色复用；每核完整48调用/12C8/1008custom/完整128结果，原CSR/ABI合同保持。
+
+|角色|guest cycles|target active/s|结果|
+|---|---:|---:|---|
+|candidate-replay|871768|1965.817567241|完整功能＋同核精确重放PASS|
+|baseline-replay|871326|1649.103523405|完整功能＋同核精确重放PASS|
+
+两核active64/full128/UART比较PASS；同核raw128/observer/guest均精确相等。target累计3614.921090646/4800秒，batch host14.592558516/900秒，guardian3629.562323962/5700秒；峰值1线程、CPU4、RSS/log均合规，清理完成。独立71项及65453条资源样本通过；57/363/351冻结、445生产和479旧文件MATCH。原1500秒模板与旧formal标记不变，本记录只授新合同C48功能资格。
+
+无RTL/新核/EDA/默认切换/GitHub写入。新三指标均NOT_TESTED，以下保留历史实测，不能用本轮总guest或宿主耗时计算新加速比。
+
+[本轮结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/RESULT.md) · [独立终态审计](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/terminal-review/AUDIT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/NEXT_STEP.md)。
+
+### 三项指标（历史复用）
+
+以下逐数据集保留同镜像窗口均值；加速比均为该硬件上 RVV cycles / vdot cycles。不可把硬件候选相对0f的收益与RVV/vdot加速比混为一项。
+
+|负载|dataset|0f vdot|候选 vdot|0f/候选RVV|0f RVV/vdot|候选 RVV/vdot|候选vdot周期下降|记录|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|chain-256|0|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|51|
+|chain-256|1|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|58|
+|chain-256|2|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|60|
+|single-1|0|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|62|
+|single-1|1|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|64|
+|single-1|2|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|66|
+|batch|0|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|1|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|2|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|stream|0|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|1|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|2|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|original-C8-8x32-basic|0|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|53|
+|original-C8-8x32-reuse|0|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|53|
+|original-C8-8x32-basic|1|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|54|
+|original-C8-8x32-reuse|1|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|54|
+|original-C8-8x32-basic|2|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|55|
+|original-C8-8x32-reuse|2|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|55|
+
+## 历史面积与五档STA
+
+范围：Nangate45 Typical 1.1V/25°C、原G2关闭观察器的局部FU及含VDot的真实父级；不是全核面积，不是布线后签核，不是已实现Fmax。原G2严格成本门NO-GO事实保留，本轮只复用数值。
+
+|边界|0f面积(µm²)|候选面积(µm²)|变化|
+|---|---:|---:|---:|
+|FU_um2|17298.246|18322.878|5.923329%|
+|inclusive_parent_um2|284614.946|285241.642|0.220191%|
+
+|档位|T(ns)|load(pF)|0f FU slack|候选FU slack|0f父级slack|候选父级slack|候选FU Q|候选父级Q|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|nominal|1.0|0.005|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|period050|0.5|0.005|-0.768520|-1.290381|-2.893998|-2.837809|1.790381|3.337809|
+|period200|2.0|0.005|0.731480|0.209619|-1.393998|-1.337809|1.790381|3.337809|
+|load001|1.0|0.001|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|load020|1.0|0.02|-0.268520|-0.790381|-2.413199|-2.391613|1.790381|3.391613|
+
+Q按原表 T−最差setup slack 对比值保留，不能直接写成全核实际周期。JSON保留所有原始路径及关键路径筛选：FU主路径为operand→R槽，父级nominal为vsew→内部寄存器，load020最差移至fflags输出；ready与gate_enable另列，不混同主路径。
+
+
+| 档位/边界 | 历史最差路径起点→终点 | slack ns |
+|---|---|---:|
+| nominal/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| nominal/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| period050/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -1.290381 |
+| period050/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.837809 |
+| period200/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | 0.209619 |
+| period200/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -1.337809 |
+| load001/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load001/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| load020/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load020/父级 | `c201714 (rising edge-triggered flip-flop clocked by core_clk)` → `io_out_bits_fflags[1] (output port clocked by core_clk)` | -2.391613 |
+
+
+完整历史源表、ready/gate路径及数据集原证据pins见[METRICS.json](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/METRICS.json)。
+
+### 下一轮指令
+
+开始 SP1-E O2（第19项）最小软件补测准备，按 NEXT_STEP 复用现有 bit100、两核完整数值和 R4 配对证据，在独立目录实现 R3 设计的最小 F2v 写回竞争软件，补候选 P 槽及部分取消覆盖的触发方案，完成 GNU 构建、对象审计、完整128位和CSR/ABI宿主正负控，冻结有限相位与新校准/重放合同及预算。复用未变机制，不新增反方向硬门；先不运行EMU/NEMU、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub，完成后给出GO/HOLD及下一批执行指令。
+
+
+## 第89条：SP1-E O2（第19项）最小软件补测准备 · 2026-11-07
+
+**GO：软件与宿主准备；HOLD：目标执行与第19项正式验收。** 当前18/20，默认0f＋firstdot V2＋原C8。选定attempt-02，41调用/77退休/17静态PC；GNU和对象审计、8方法选择器、4方法镜像集成、538项C判定、bit100只编译与独立审查通过。image-check-01宿主FAIL和旧FAIL/锁完整保留。
+
+本轮EMU/NEMU、RTL、新核、EDA、默认切换、GitHub写入均0。新加速比/面积/时序NOT_TESTED；下表历史三指标原样复用。445生产文件与596旧文件无漂移。下一轮先接入运行器和严格新guard拒错，完成执行冻结与宿主预算准入；新提案两角色300秒/10万guest→900秒/30万guest，target1200/host900/outer2100秒。有限校准不保证命中或完成，未命中即停，不自动重放。原O2两次精确重放与补测资格仍待，第20项独立待验。
+
+[本轮结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-host-20261107/RESULT.md) · [冻结合同](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-host-20261107/CALIBRATION_REPLAY_CONTRACT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-host-20261107/NEXT_STEP.md)。
+
+以下逐数据集保留同镜像窗口均值；加速比均为该硬件上 RVV cycles / vdot cycles。不可把硬件候选相对0f的收益与RVV/vdot加速比混为一项。
+
+|负载|dataset|0f vdot|候选 vdot|0f/候选RVV|0f RVV/vdot|候选 RVV/vdot|候选vdot周期下降|记录|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|chain-256|0|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|51|
+|chain-256|1|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|58|
+|chain-256|2|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|60|
+|single-1|0|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|62|
+|single-1|1|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|64|
+|single-1|2|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|66|
+|batch|0|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|1|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|2|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|stream|0|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|1|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|2|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|original-C8-8x32-basic|0|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|53|
+|original-C8-8x32-reuse|0|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|53|
+|original-C8-8x32-basic|1|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|54|
+|original-C8-8x32-reuse|1|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|54|
+|original-C8-8x32-basic|2|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|55|
+|original-C8-8x32-reuse|2|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|55|
+
+## 历史面积与五档STA
+
+范围：Nangate45 Typical 1.1V/25°C、原G2关闭观察器的局部FU及含VDot的真实父级；不是全核面积，不是布线后签核，不是已实现Fmax。原G2严格成本门NO-GO事实保留，本轮只复用数值。
+
+|边界|0f面积(µm²)|候选面积(µm²)|变化|
+|---|---:|---:|---:|
+|FU_um2|17298.246|18322.878|5.923329%|
+|inclusive_parent_um2|284614.946|285241.642|0.220191%|
+
+|档位|T(ns)|load(pF)|0f FU slack|候选FU slack|0f父级slack|候选父级slack|候选FU Q|候选父级Q|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|nominal|1.0|0.005|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|period050|0.5|0.005|-0.768520|-1.290381|-2.893998|-2.837809|1.790381|3.337809|
+|period200|2.0|0.005|0.731480|0.209619|-1.393998|-1.337809|1.790381|3.337809|
+|load001|1.0|0.001|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|load020|1.0|0.02|-0.268520|-0.790381|-2.413199|-2.391613|1.790381|3.391613|
+
+Q按原表 T−最差setup slack 对比值保留，不能直接写成全核实际周期。JSON保留所有原始路径及关键路径筛选：FU主路径为operand→R槽，父级nominal为vsew→内部寄存器，load020最差移至fflags输出；ready与gate_enable另列，不混同主路径。
+
+
+| 档位/边界 | 历史最差路径起点→终点 | slack ns |
+|---|---|---:|
+| nominal/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| nominal/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| period050/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -1.290381 |
+| period050/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.837809 |
+| period200/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | 0.209619 |
+| period200/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -1.337809 |
+| load001/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load001/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| load020/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load020/父级 | `c201714 (rising edge-triggered flip-flop clocked by core_clk)` → `io_out_bits_fflags[1] (output port clocked by core_clk)` | -2.391613 |
+
+
+完整历史源表、ready/gate路径及数据集原证据pins见[METRICS.json](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-host-20261107/METRICS.json)。
+
+### 下一轮指令
+
+开始 SP1-E O2（第19项）补测运行器接入与有界校准，按 NEXT_STEP 复用本轮 attempt-02 镜像和已通过宿主证据，完成新 guard 的严格拒错检查、运行器差异接入、完整执行冻结、独立复核及900秒宿主预算准入。全部通过后，接受新独立预算，同轮串行执行 bit100拒错→候选正常校准，最多2个目标：分别300秒/10万guest、900秒/30万guest，目标累计1200秒、宿主900秒、外层2100秒，原CPU4、4线程、RSS12GiB、日志2GiB限制不变。保留41调用/77退休、完整128位、CSR/ABI及S0/S1真实观察链；失败或未命中即停，不重试、不加时、不扩相位、不自动进入重放或第20项。不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；完成后更新计分板，给出结论和下一轮指令。
+
+
+## 第90条：SP1-E O2补测接入与有界校准 · 2026-11-07
+
+**HOLD：唯一宿主准入失败，未启动目标。** 8方法7通过1失败；第三方法含无效负控替换（默认dst32，却替换dst255），只读定位该确定缺陷并保留未记录子例索引的证据边界。外层0.954496469秒exit1，清理完成，LAUNCH/ADMISSION锁保留，无重试。118项执行冻结已完成；成本与运行时独立方法复核未执行。445生产文件、上一轮208文件和118冻结输入无漂移。
+
+正式18/20，默认0f＋firstdot V2＋原C8。EMU/NEMU、RTL、新核、EDA、默认切换、GitHub写入均0。新加速比/面积/时序NOT_TESTED，历史三指标见下表。下一轮只修夹具与命名负控，复用其余7方法证据；新身份准入通过后执行原两角色300秒/10万guest→900秒/30万guest，target1200/host900/outer2100，同一外层包含准入和后处理，不借本轮余量。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-20261107/RESULT.md) · [终态](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-20261107/TERMINAL_AUDIT.json) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-20261107/NEXT_STEP.md)。
+
+以下逐数据集保留同镜像窗口均值；加速比均为该硬件上 RVV cycles / vdot cycles。不可把硬件候选相对0f的收益与RVV/vdot加速比混为一项。
+
+|负载|dataset|0f vdot|候选 vdot|0f/候选RVV|0f RVV/vdot|候选 RVV/vdot|候选vdot周期下降|记录|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|chain-256|0|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|51|
+|chain-256|1|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|58|
+|chain-256|2|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|60|
+|single-1|0|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|62|
+|single-1|1|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|64|
+|single-1|2|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|66|
+|batch|0|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|1|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|2|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|stream|0|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|1|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|2|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|original-C8-8x32-basic|0|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|53|
+|original-C8-8x32-reuse|0|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|53|
+|original-C8-8x32-basic|1|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|54|
+|original-C8-8x32-reuse|1|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|54|
+|original-C8-8x32-basic|2|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|55|
+|original-C8-8x32-reuse|2|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|55|
+
+## 历史面积与五档STA
+
+范围：Nangate45 Typical 1.1V/25°C、原G2关闭观察器的局部FU及含VDot的真实父级；不是全核面积，不是布线后签核，不是已实现Fmax。原G2严格成本门NO-GO事实保留，本轮只复用数值。
+
+|边界|0f面积(µm²)|候选面积(µm²)|变化|
+|---|---:|---:|---:|
+|FU_um2|17298.246|18322.878|5.923329%|
+|inclusive_parent_um2|284614.946|285241.642|0.220191%|
+
+|档位|T(ns)|load(pF)|0f FU slack|候选FU slack|0f父级slack|候选父级slack|候选FU Q|候选父级Q|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|nominal|1.0|0.005|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|period050|0.5|0.005|-0.768520|-1.290381|-2.893998|-2.837809|1.790381|3.337809|
+|period200|2.0|0.005|0.731480|0.209619|-1.393998|-1.337809|1.790381|3.337809|
+|load001|1.0|0.001|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|load020|1.0|0.02|-0.268520|-0.790381|-2.413199|-2.391613|1.790381|3.391613|
+
+Q按原表 T−最差setup slack 对比值保留，不能直接写成全核实际周期。JSON保留所有原始路径及关键路径筛选：FU主路径为operand→R槽，父级nominal为vsew→内部寄存器，load020最差移至fflags输出；ready与gate_enable另列，不混同主路径。
+
+
+| 档位/边界 | 历史最差路径起点→终点 | slack ns |
+|---|---|---:|
+| nominal/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| nominal/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| period050/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -1.290381 |
+| period050/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.837809 |
+| period200/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | 0.209619 |
+| period200/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -1.337809 |
+| load001/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load001/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| load020/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load020/父级 | `c201714 (rising edge-triggered flip-flop clocked by core_clk)` → `io_out_bits_fflags[1] (output port clocked by core_clk)` | -2.391613 |
+
+
+完整历史源表、ready/gate路径及数据集原证据pins见[METRICS.json](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-20261107/METRICS.json)。
+
+### 下一轮指令
+
+开始 SP1-E O2 补测接入 R1，按 NEXT_STEP 最小修复负控夹具的无效替换：使用实际存在的历史环dst字段，并检查替换命中及字节确实变化，给各子例明确标签。保留本轮FAIL与锁，复用7项通过证据，只补受影响负控、冷导入、执行冻结、独立方法复核和宿主预算准入。全部通过后，以新独立身份同轮串行bit100拒错→候选正常，接受原300秒/10万guest、900秒/30万guest、目标累计1200秒、宿主900秒、外层2100秒及原资源/完整覆盖要求。失败或未命中即停，不重试、不加时、不扩围、不自动重放；不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub，完成后更新计分板和下一轮指令。
+
+
+## 第91条：SP1-E O2补测接入R1 · 2026-11-07
+
+执行者 @cc77-builder / Agent；操作ID `SP1-E-O2-CANCEL-CALIBRATION-R1-20261107-01`；工作起止 2026-11-07T11:45:52.663426+08:00 ～ 2026-11-07T11:55:00.635684+08:00（任务区间，不是人工工时）。HEAD `347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e`。
+
+**HOLD：宿主准入PASS，真实bit100日志解析FAIL后停止。** 负控精确命中/字节变化修复完成，13具名子例PASS、3方法PASS；7旧方法按AST/源码复用，冷导入与新测重叠1项，独立方法并集9项。10项独立方法静态/ELF复核PASS（同一Agent，不是队友签核），宿主成本估值345.931220秒小于900秒，143项冻结完成。
+
+原两角色已同轮准入并执行到首角色：1个真实bit100目标25.976018秒/11668guest，外层35.826946秒，峰值1线程/RSS74711040字节/39824字节日志，资源通过、清理完成。预期guard注入与bit100差异确实出现，但检查器不识别历史UART访问的合法(S)标签，在严格日志验收处FAIL；当前group仅slot7 guard，异常格式在历史slot10/13。候选正常未运行；无S0/S1命中结论。原FAIL/锁保留、无重试。
+
+正式18/20不变，默认0f＋firstdot V2＋原C8。143冻结、445生产、前两轮208＋50文件无漂移；RTL/新核/EDA/默认切换/GitHub写入均0。新三指标NOT_TESTED，下表原样复用历史18行性能及局部面积/五档STA。下一轮在新身份补合法历史tag语法并用本轮完整真实日志核全链，必要宿主准入后同轮执行原两角色；不拆成无关准备回合、不降低完整覆盖。第19项仍需命中与约定重放。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-r1-20261107/RESULT.md) · [终态](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-r1-20261107/TERMINAL_AUDIT.json) · [解析归因](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-r1-20261107/review/FAILURE_DIAGNOSIS.json) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-r1-20261107/NEXT_STEP.md)。
+
+以下逐数据集保留同镜像窗口均值；加速比均为该硬件上 RVV cycles / vdot cycles。不可把硬件候选相对0f的收益与RVV/vdot加速比混为一项。
+
+|负载|dataset|0f vdot|候选 vdot|0f/候选RVV|0f RVV/vdot|候选 RVV/vdot|候选vdot周期下降|记录|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|chain-256|0|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|51|
+|chain-256|1|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|58|
+|chain-256|2|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|60|
+|single-1|0|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|62|
+|single-1|1|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|64|
+|single-1|2|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|66|
+|batch|0|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|1|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|2|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|stream|0|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|1|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|2|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|original-C8-8x32-basic|0|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|53|
+|original-C8-8x32-reuse|0|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|53|
+|original-C8-8x32-basic|1|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|54|
+|original-C8-8x32-reuse|1|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|54|
+|original-C8-8x32-basic|2|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|55|
+|original-C8-8x32-reuse|2|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|55|
+
+## 历史面积与五档STA
+
+范围：Nangate45 Typical 1.1V/25°C、原G2关闭观察器的局部FU及含VDot的真实父级；不是全核面积，不是布线后签核，不是已实现Fmax。原G2严格成本门NO-GO事实保留，本轮只复用数值。
+
+|边界|0f面积(µm²)|候选面积(µm²)|变化|
+|---|---:|---:|---:|
+|FU_um2|17298.246|18322.878|5.923329%|
+|inclusive_parent_um2|284614.946|285241.642|0.220191%|
+
+|档位|T(ns)|load(pF)|0f FU slack|候选FU slack|0f父级slack|候选父级slack|候选FU Q|候选父级Q|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|nominal|1.0|0.005|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|period050|0.5|0.005|-0.768520|-1.290381|-2.893998|-2.837809|1.790381|3.337809|
+|period200|2.0|0.005|0.731480|0.209619|-1.393998|-1.337809|1.790381|3.337809|
+|load001|1.0|0.001|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|load020|1.0|0.02|-0.268520|-0.790381|-2.413199|-2.391613|1.790381|3.391613|
+
+Q按原表 T−最差setup slack 对比值保留，不能直接写成全核实际周期。JSON保留所有原始路径及关键路径筛选：FU主路径为operand→R槽，父级nominal为vsew→内部寄存器，load020最差移至fflags输出；ready与gate_enable另列，不混同主路径。
+
+
+| 档位/边界 | 历史最差路径起点→终点 | slack ns |
+|---|---|---:|
+| nominal/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| nominal/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| period050/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -1.290381 |
+| period050/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.837809 |
+| period200/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | 0.209619 |
+| period200/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -1.337809 |
+| load001/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load001/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| load020/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load020/父级 | `c201714 (rising edge-triggered flip-flop clocked by core_clk)` → `io_out_bits_fflags[1] (output port clocked by core_clk)` | -2.391613 |
+
+
+完整历史源表、ready/gate路径及数据集原证据pins见[METRICS.json](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-r1-20261107/METRICS.json)。
+
+### 路线影响／接续指令
+
+开始 SP1-E O2 补测接入 R2，按 NEXT_STEP 最小补齐合法历史环 S/D/W 标签解析，明确当前拒错提交组不能用 skip/delayed 指令作证；用 R1 完整真实日志一次性核查整个拒错检查链，补针对性正负控，保留原FAIL与锁，复用未变宿主证据。全部宿主、冻结、独立方法复核和预算门通过后，以新身份同轮串行原 bit100拒错→候选正常两角色，保持300秒/10万guest、900秒/30万guest、目标1200秒、宿主900秒、外层2100秒及原资源和41调用/77退休、S0/S1完整覆盖。失败或未命中即停，不重试、不加时、不扩围、不自动重放；不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub。完成后更新计分板并给出下一批指令。
+
+
+## 第92条：SP1-E O2补测接入R2 · 2026-11-07
+
+执行者 @cc77-builder / Agent；操作ID `SP1-E-O2-CANCEL-CALIBRATION-R2-20261107-01`；起止 2026-11-07T12:01:06.424843+08:00 ～ 2026-11-07T12:19:27.753771+08:00（任务区间，不是人工工时）。工作树HEAD `347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e`，具体执行版本以冻结输入/EMU哈希为准。
+
+**HOLD：两个真实角色完成，功能PASS，S0/S1覆盖NOT_HIT。** 历史环合法S/D/W解析最小修复，当前拒错组带tag仍拒绝；R1完整真实日志离线全链PASS但旧FAIL保留。9宿主方法PASS、4未变方法复用、8合法tag正例和33具名负控通过；184输入冻结，独立方法复核与宿主成本筛选365.702722秒通过。未另开宿主额度。
+
+实际bit100 PASS：25.398553秒/11668guest；正常GOOD TRAP：607.969222秒/268036guest，41调用/84协议行、77退休、81次完整128位及有效输入/身份/元数据和逐调用数值/CSR通过。81次均DIRECT_R并响应，ENQUEUE_P/STALL/KILL_P/PARTIAL_KILL=0，S0/S1 witness均为空；4个已接受较年轻分配后续squash不能替代FU杀P。功能通过不等于覆盖通过。
+
+目标累计633.367775秒，batch宿主12.523900秒，外层645.963262秒；两角色资源/清理PASS，无超限。GUARD_FAIL是NOT_HIT按合同停止，未重试、未加时、未扩围、未重放。184冻结、445生产和此前324文件无漂移。RTL/新核/EDA/切默认/GitHub写入均0。正式18/20，默认0f＋firstdot V2＋原C8保持。
+
+本轮新加速比/面积/时序NOT_TESTED，下表历史18性能行及面积/五档STA原样复用。下一轮集中只读归因S0为何无反压，再对齐S1，提出有可信重叠窗口的最小软件设计及完整验证/预算合同；不重复原镜像探针，不仅凭长DIV假说盲改，不自动进入重放或第20项。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-r2-20261107/RESULT.md) · [终态](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-r2-20261107/TERMINAL_AUDIT.json) · [覆盖事实](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-r2-20261107/review/NOT_HIT_FACTS.json) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-r2-20261107/NEXT_STEP.md)。
+
+以下逐数据集保留同镜像窗口均值；加速比均为该硬件上 RVV cycles / vdot cycles。不可把硬件候选相对0f的收益与RVV/vdot加速比混为一项。
+
+|负载|dataset|0f vdot|候选 vdot|0f/候选RVV|0f RVV/vdot|候选 RVV/vdot|候选vdot周期下降|记录|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|chain-256|0|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|51|
+|chain-256|1|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|58|
+|chain-256|2|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|60|
+|single-1|0|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|62|
+|single-1|1|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|64|
+|single-1|2|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|66|
+|batch|0|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|1|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|2|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|stream|0|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|1|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|2|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|original-C8-8x32-basic|0|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|53|
+|original-C8-8x32-reuse|0|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|53|
+|original-C8-8x32-basic|1|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|54|
+|original-C8-8x32-reuse|1|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|54|
+|original-C8-8x32-basic|2|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|55|
+|original-C8-8x32-reuse|2|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|55|
+
+## 历史面积与五档STA
+
+范围：Nangate45 Typical 1.1V/25°C、原G2关闭观察器的局部FU及含VDot的真实父级；不是全核面积，不是布线后签核，不是已实现Fmax。原G2严格成本门NO-GO事实保留，本轮只复用数值。
+
+|边界|0f面积(µm²)|候选面积(µm²)|变化|
+|---|---:|---:|---:|
+|FU_um2|17298.246|18322.878|5.923329%|
+|inclusive_parent_um2|284614.946|285241.642|0.220191%|
+
+|档位|T(ns)|load(pF)|0f FU slack|候选FU slack|0f父级slack|候选父级slack|候选FU Q|候选父级Q|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|nominal|1.0|0.005|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|period050|0.5|0.005|-0.768520|-1.290381|-2.893998|-2.837809|1.790381|3.337809|
+|period200|2.0|0.005|0.731480|0.209619|-1.393998|-1.337809|1.790381|3.337809|
+|load001|1.0|0.001|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|load020|1.0|0.02|-0.268520|-0.790381|-2.413199|-2.391613|1.790381|3.391613|
+
+Q按原表 T−最差setup slack 对比值保留，不能直接写成全核实际周期。JSON保留所有原始路径及关键路径筛选：FU主路径为operand→R槽，父级nominal为vsew→内部寄存器，load020最差移至fflags输出；ready与gate_enable另列，不混同主路径。
+
+
+| 档位/边界 | 历史最差路径起点→终点 | slack ns |
+|---|---|---:|
+| nominal/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| nominal/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| period050/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -1.290381 |
+| period050/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.837809 |
+| period200/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | 0.209619 |
+| period200/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -1.337809 |
+| load001/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load001/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| load020/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load020/父级 | `c201714 (rising edge-triggered flip-flop clocked by core_clk)` → `io_out_bits_fflags[1] (output port clocked by core_clk)` | -2.391613 |
+
+
+完整历史源表、ready/gate路径及数据集原证据pins见[METRICS.json](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-calibration-r2-20261107/METRICS.json)。
+
+### 路线影响／接续指令
+
+开始 O2 补测 R3：基于 R2 完整真实日志，集中完成 S0/S1 未命中的只读时序归因与最小软件修订设计。先解释为何81次均DIRECT_R、没有STALL或ENQUEUE_P，再核对F2v压力、e32/e8切换、操作数重载及S1重定向的先后关系，区分实测与推断。给出有依据的最小改动清单、完整覆盖合同、可复用门禁和下一批预算；没有可信重叠窗口就HOLD，不重复同镜像探针。本轮先不改软件或RTL、不运行EMU/NEMU、不构建新核、不做EDA、不切默认、不上传GitHub，完成后更新计分板并给出下一轮指令。
+
+
+## 第93条：SP1-E O2补测R3只读归因与M1设计 · 2026-11-07
+
+执行者 @cc77-builder / Agent；操作ID `SP1-E-O2-CANCEL-R3-READONLY-20261107-01`；起止 2026-11-07T12:30:33.924772+08:00 ～ 2026-11-07T12:48:59.958798+08:00（任务区间，不是人工工时）。工作树HEAD `347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e`，候选实际来源由SP1-C冻结和R2执行身份限定。
+
+**只读归因完成；M1最小软件宿主实现GO，目标和第19项资格HOLD。** 重算R2完整日志：81次接受后1拍响应、40对B均在A响应同拍DIRECT_R；1008条活动STATE没有R有效反压。四次指定S1 probe的VFEX4取消分别晚于B响应39/7/7/7拍，不能代替杀P留R。四个S0/四个probe及全部40对PC/seq/ROB时间线已存档。
+
+17份候选源码与SP1-C构建前冻结一致，真实构建日志证明F2v与VFEX4共用VF/V0口3，FMV_X_W解码的FCVT和F2v又同用FEX0。旧FMV排在8条压力后，随后地址add和v8重载，缺乏及时独立释放；S1 DIV只依赖地址，未依赖v8完成或A接受。F2v精确排空、VTYPE/加载/发射分摊无动态观测，不伪称实测。
+
+拟议M1仅提前FMV、以e8零增量vadd替代重载，并将原S1除法前置且真实门控FP生产者，把phase留在分支链。保持41调用/77退休、320F2v、原完整输入/128位结果/CSR/ABI。设计有机制依据，但没有保证重叠的已测窗口；不重跑原镜像、不增加phase或压力，不自动重放。下一批仍建议bit100 300秒/10万guest、正常900秒/30万guest，目标1200/宿主900/外层2100秒；只作一次有界校准提案，不冒充完成上界。
+
+本轮代码改动0、目标0、GNU/新核/EDA0、默认/GitHub写入0；445主源码+445候选源码+405旧材料+184冻结输入无漂移。正式18/20，默认0f＋firstdot V2＋原C8。本轮三指标NOT_TESTED；下表历史18性能行及局部成本原样续档。
+
+[只读归因](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-r3-readonly-20261107/RESULT.md) · [设计合同](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-r3-readonly-20261107/DESIGN_CONTRACT.md) · [验证与预算](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-r3-readonly-20261107/VALIDATION_BUDGET.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-r3-readonly-20261107/NEXT_STEP.md)。
+
+以下逐数据集保留同镜像窗口均值；加速比均为该硬件上 RVV cycles / vdot cycles。不可把硬件候选相对0f的收益与RVV/vdot加速比混为一项。
+
+|负载|dataset|0f vdot|候选 vdot|0f/候选RVV|0f RVV/vdot|候选 RVV/vdot|候选vdot周期下降|记录|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|chain-256|0|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|51|
+|chain-256|1|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|58|
+|chain-256|2|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|60|
+|single-1|0|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|62|
+|single-1|1|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|64|
+|single-1|2|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|66|
+|batch|0|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|1|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|2|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|stream|0|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|1|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|2|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|original-C8-8x32-basic|0|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|53|
+|original-C8-8x32-reuse|0|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|53|
+|original-C8-8x32-basic|1|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|54|
+|original-C8-8x32-reuse|1|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|54|
+|original-C8-8x32-basic|2|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|55|
+|original-C8-8x32-reuse|2|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|55|
+
+## 历史面积与五档STA
+
+范围：Nangate45 Typical 1.1V/25°C、原G2关闭观察器的局部FU及含VDot的真实父级；不是全核面积，不是布线后签核，不是已实现Fmax。原G2严格成本门NO-GO事实保留，本轮只复用数值。
+
+|边界|0f面积(µm²)|候选面积(µm²)|变化|
+|---|---:|---:|---:|
+|FU_um2|17298.246|18322.878|5.923329%|
+|inclusive_parent_um2|284614.946|285241.642|0.220191%|
+
+|档位|T(ns)|load(pF)|0f FU slack|候选FU slack|0f父级slack|候选父级slack|候选FU Q|候选父级Q|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|nominal|1.0|0.005|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|period050|0.5|0.005|-0.768520|-1.290381|-2.893998|-2.837809|1.790381|3.337809|
+|period200|2.0|0.005|0.731480|0.209619|-1.393998|-1.337809|1.790381|3.337809|
+|load001|1.0|0.001|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|load020|1.0|0.02|-0.268520|-0.790381|-2.413199|-2.391613|1.790381|3.391613|
+
+Q按原表 T−最差setup slack 对比值保留，不能直接写成全核实际周期。JSON保留所有原始路径及关键路径筛选：FU主路径为operand→R槽，父级nominal为vsew→内部寄存器，load020最差移至fflags输出；ready与gate_enable另列，不混同主路径。
+
+
+| 档位/边界 | 历史最差路径起点→终点 | slack ns |
+|---|---|---:|
+| nominal/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| nominal/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| period050/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -1.290381 |
+| period050/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.837809 |
+| period200/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | 0.209619 |
+| period200/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -1.337809 |
+| load001/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load001/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| load020/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load020/父级 | `c201714 (rising edge-triggered flip-flop clocked by core_clk)` → `io_out_bits_fflags[1] (output port clocked by core_clk)` | -2.391613 |
+
+
+完整历史源表、ready/gate路径及数据集原证据pins见[METRICS.json](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-r3-readonly-20261107/METRICS.json)。
+
+### 路线影响／接续指令
+
+开始 O2 补测 R4，按 NEXT_STEP 在独立目录实现 R3 的单一 M1 软件修订：将 FMV 移到 F2v 压力之前，用 e8 零增量 vadd 替代 v8 重载；将 S1 原除法前置并真实门控 FP 生产者，原 phase 只调整分支依赖。保留41调用、77退休、320条F2v、原数据、完整128位及CSR/ABI合同。集中完成 GNU 构建、对象/链接审计、新PC和bit100绑定、必要差异正负控、执行冻结及原两角色预算评审；复用未变证据，失败即停，不扩相位、不增加调用。先不运行EMU/NEMU、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；全部通过后给出一次两角色有界校准的GO/HOLD及执行指令，更新计分板。
+
+
+## 94. O2补测R4：M1软件构建通过，宿主首次准入HOLD（2026-11-07）
+
+- 身份：cc77-builder / Agent；当前分支local/zjhwork-integration-20261024，HEAD 347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e。开始与结束时间见对应RESULT.json；历时不作为人工工时。
+- 结果：独立M1软件、一次GNU构建、对象/链接审计、新PC/bit100编译绑定通过；第一项宿主闭包检查FAIL后停止，未修后重试。正式验收仍18/20，默认0f＋firstdot V2＋原C8不变。
+- 改动：FMV前移、e8零增量vadd替代v8重载、S1原商前置并门控FP生产者；保持41调用/77退休/320架构F2v及5份C/数据/头文件。实际9叶17处custom，BIN 11456字节，SHA256 ff97f03e88624b28c7964faae3c82baa1f199a021f6caab817a1fba753740f46。
+- 准确停点：冻结器漏列BASE_REUSE已声明的原fixtures.py出处，校验器要求它。该文件存在且hash正确，实际本地夹具和analyzer均已冻结；279项内容hash相符但闭包不完整。本轮清单生成/校验未对齐，不能将其写成数据运算FAIL或预算超时。
+- 首次worker 0.392654秒；外部监督0.432922秒，CHILD_EXIT_1，cleanup_ok=true。13个计划测试方法及预算测量均NOT_RUN；94个序列负控等为计划数量，不是通过数量。新目标/EMU/NEMU/EDA均0，无生产RTL改动、默认切换或GitHub上传。
+- 已保留：原FAIL、279项旧冻结及使用锁；445＋445份生产源码、434份旧轮文件、R2的184项和R4的279项hash检查不变。原93条记录原样保留。
+- 下一步：R4-R1仅对齐已声明出处清单，复用本轮M1源码、ELF/BIN、对象与bit100组件，不再生成或编译。新身份下集中完成剩余宿主门和一次900秒成本准入；新目标仍HOLD。
+
+### 三项主要指标与历史实测
+
+本轮加速比、面积、时序均NOT_TESTED。以下续列完整18行历史窗口数据、FU/父级面积、五档STA与关键路径；它们不是M1新运行成绩。原G2严格成本NO-GO保留。
+
+以下逐数据集保留同镜像窗口均值；加速比均为该硬件上 RVV cycles / vdot cycles。不可把硬件候选相对0f的收益与RVV/vdot加速比混为一项。
+
+|负载|dataset|0f vdot|候选 vdot|0f/候选RVV|0f RVV/vdot|候选 RVV/vdot|候选vdot周期下降|记录|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|chain-256|0|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|51|
+|chain-256|1|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|58|
+|chain-256|2|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|60|
+|single-1|0|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|62|
+|single-1|1|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|64|
+|single-1|2|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|66|
+|batch|0|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|1|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|2|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|stream|0|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|1|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|2|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|original-C8-8x32-basic|0|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|53|
+|original-C8-8x32-reuse|0|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|53|
+|original-C8-8x32-basic|1|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|54|
+|original-C8-8x32-reuse|1|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|54|
+|original-C8-8x32-basic|2|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|55|
+|original-C8-8x32-reuse|2|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|55|
+
+## 历史面积与五档STA
+
+范围：Nangate45 Typical 1.1V/25°C、原G2关闭观察器的局部FU及含VDot的真实父级；不是全核面积，不是布线后签核，不是已实现Fmax。原G2严格成本门NO-GO事实保留，本轮只复用数值。
+
+|边界|0f面积(µm²)|候选面积(µm²)|变化|
+|---|---:|---:|---:|
+|FU_um2|17298.246|18322.878|5.923329%|
+|inclusive_parent_um2|284614.946|285241.642|0.220191%|
+
+|档位|T(ns)|load(pF)|0f FU slack|候选FU slack|0f父级slack|候选父级slack|候选FU Q|候选父级Q|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|nominal|1.0|0.005|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|period050|0.5|0.005|-0.768520|-1.290381|-2.893998|-2.837809|1.790381|3.337809|
+|period200|2.0|0.005|0.731480|0.209619|-1.393998|-1.337809|1.790381|3.337809|
+|load001|1.0|0.001|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|load020|1.0|0.02|-0.268520|-0.790381|-2.413199|-2.391613|1.790381|3.391613|
+
+Q按原表 T−最差setup slack 对比值保留，不能直接写成全核实际周期。JSON保留所有原始路径及关键路径筛选：FU主路径为operand→R槽，父级nominal为vsew→内部寄存器，load020最差移至fflags输出；ready与gate_enable另列，不混同主路径。
+
+
+| 档位/边界 | 历史最差路径起点→终点 | slack ns |
+|---|---|---:|
+| nominal/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| nominal/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| period050/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -1.290381 |
+| period050/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.837809 |
+| period200/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | 0.209619 |
+| period200/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -1.337809 |
+| load001/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load001/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| load020/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load020/父级 | `c201714 (rising edge-triggered flip-flop clocked by core_clk)` → `io_out_bits_fflags[1] (output port clocked by core_clk)` | -2.391613 |
+
+
+完整历史源表、ready/gate路径及数据集原证据pins见[METRICS.json](METRICS.json)。
+
+
+### 路线影响与下一轮指令
+
+开始 O2 补测 R4-R1，按 NEXT_STEP 最小修复冻结器与必需文件清单的不一致，将 BASE_REUSE 已声明的原始 fixtures.py 作为出处输入纳入新冻结。复用 R4 已通过的 M1 源码、GNU ELF/BIN、对象审计和 bit100 组件，不重新生成或编译；保留 R4 原 FAIL、279 项旧冻结及锁。以新身份完成尚未运行的差异正负控、旧完整日志离线复核、独立方法复核和一次900秒宿主预算准入，不新增无关条件。失败即停、不重试、不加时；先不运行EMU/NEMU、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub。全部通过后给出原两角色校准的GO/HOLD与下一轮指令，更新计分板。
+
+[本轮结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-m1-r4-host-20261107/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-m1-r4-host-20261107/NEXT_STEP.md) · [指标与来源](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-m1-r4-host-20261107/METRICS.json)。
+
+
+## 95. O2补测R4-R1：宿主准入GO，进入下一轮第19项M1目标校准（2026-11-07）
+
+- 身份：cc77-builder / Agent；operation_id SP1-E-O2-CANCEL-M1-R4-R1-HOST-20261107-01，HEAD 347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e，分支local/zjhwork-integration-20261024。起止时间见RESULT.json；不将历时记为人工工时。
+- 最小改动：冻结器共用未改required_paths，补原fixtures.py出处，保留实际读取的不可变对象文本。新身份382输入，含原279输入。测试第一方法按用户禁止重生成要求用R4与原构建输入字节一致性替代重新生成；原3项清单负控对准漏项，未新增无关条件。
+- PASS：13宿主方法（1.845秒）、94项序列负控、6项bit100绑定负控、3项清单负控；原R1/R2三份完整真实日志离线复核、17处custom的ELF/BIN独立方法复核通过。同一Agent复核，不是队友人工签核；原538 C检查按源码/日志复用，不重跑。
+- 预算：单次worker 11.997725秒，外部监督12.056357秒、GUARD_PASS/exit0/cleanup_ok。50000额外STATE解析9.524341秒，原有限样本公式估计381.265913秒<900秒。不是EMU耗时预测或完成保证。
+- 复用：全部M1源、ELF/BIN/PC及bit100组件不重生成、不编译；BIN ff97f03e88624b28c7964faae3c82baa1f199a021f6caab817a1fba753740f46。41调用/77退休/84UART/320架构F2v及原完整结果、CSR/ABI合同不变。
+- 原始保护：445＋445生产源码、585旧轮文件及原279/当前382冻结核验不变。原R4 FAIL、原R2 NOT_HIT和锁保留，无重试；新EMU/NEMU/参考库加载/构建/EDA/GitHub写入均0。
+- 状态：正式18/20，默认0f＋firstdot V2＋原C8。GO只表示宿主准入完成；下一轮即可真实两角色校准，不需重复宿主准备。覆盖命中及必要重放通过后才能记19/20，不自动进入第20项。
+
+### 三项主要指标与历史实测
+
+本轮新加速比、面积、时序均NOT_TESTED。历史18行窗口、FU/父级面积、五档STA及关键路径原样续档；原G2严格成本NO-GO保留。
+
+以下逐数据集保留同镜像窗口均值；加速比均为该硬件上 RVV cycles / vdot cycles。不可把硬件候选相对0f的收益与RVV/vdot加速比混为一项。
+
+|负载|dataset|0f vdot|候选 vdot|0f/候选RVV|0f RVV/vdot|候选 RVV/vdot|候选vdot周期下降|记录|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|chain-256|0|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|51|
+|chain-256|1|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|58|
+|chain-256|2|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|60|
+|single-1|0|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|62|
+|single-1|1|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|64|
+|single-1|2|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|66|
+|batch|0|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|1|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|2|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|stream|0|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|1|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|2|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|original-C8-8x32-basic|0|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|53|
+|original-C8-8x32-reuse|0|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|53|
+|original-C8-8x32-basic|1|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|54|
+|original-C8-8x32-reuse|1|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|54|
+|original-C8-8x32-basic|2|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|55|
+|original-C8-8x32-reuse|2|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|55|
+
+## 历史面积与五档STA
+
+范围：Nangate45 Typical 1.1V/25°C、原G2关闭观察器的局部FU及含VDot的真实父级；不是全核面积，不是布线后签核，不是已实现Fmax。原G2严格成本门NO-GO事实保留，本轮只复用数值。
+
+|边界|0f面积(µm²)|候选面积(µm²)|变化|
+|---|---:|---:|---:|
+|FU_um2|17298.246|18322.878|5.923329%|
+|inclusive_parent_um2|284614.946|285241.642|0.220191%|
+
+|档位|T(ns)|load(pF)|0f FU slack|候选FU slack|0f父级slack|候选父级slack|候选FU Q|候选父级Q|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|nominal|1.0|0.005|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|period050|0.5|0.005|-0.768520|-1.290381|-2.893998|-2.837809|1.790381|3.337809|
+|period200|2.0|0.005|0.731480|0.209619|-1.393998|-1.337809|1.790381|3.337809|
+|load001|1.0|0.001|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|load020|1.0|0.02|-0.268520|-0.790381|-2.413199|-2.391613|1.790381|3.391613|
+
+Q按原表 T−最差setup slack 对比值保留，不能直接写成全核实际周期。JSON保留所有原始路径及关键路径筛选：FU主路径为operand→R槽，父级nominal为vsew→内部寄存器，load020最差移至fflags输出；ready与gate_enable另列，不混同主路径。
+
+
+| 档位/边界 | 历史最差路径起点→终点 | slack ns |
+|---|---|---:|
+| nominal/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| nominal/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| period050/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -1.290381 |
+| period050/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.837809 |
+| period200/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | 0.209619 |
+| period200/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -1.337809 |
+| load001/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load001/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| load020/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load020/父级 | `c201714 (rising edge-triggered flip-flop clocked by core_clk)` → `io_out_bits_fflags[1] (output port clocked by core_clk)` | -2.391613 |
+
+
+完整历史源表、ready/gate路径及数据集原证据pins见[METRICS.json](METRICS.json)。
+
+
+### 路线影响与下一轮指令
+
+开始 O2 第19项 M1 两角色有界校准，按 NEXT_STEP 复用 R4-R1 已通过的宿主准入和382项冻结，先核查进程与输入并完成新目标授权绑定，不重编译、不重跑宿主整套。随后串行执行 bit100拒错→候选正常，分别300秒/10万guest、900秒/30万guest；最多2个目标进程，目标累计1200秒、宿主900秒、外层2100秒。保持CPU4、整组最多4线程、RSS12GiB、日志2GiB，以及41调用、77退休、完整128位、CSR/ABI和S0/S1覆盖合同。失败或未命中即停，不重试、不加时、不扩围、不自动重放；不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub。完成后更新计分板，给出第19项剩余重放安排和下一轮指令。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-m1-r4-r1-host-20261107/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-m1-r4-r1-host-20261107/NEXT_STEP.md) · [三指标与来源](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-m1-r4-r1-host-20261107/METRICS.json)。
+
+
+## 96. O2第19项M1两角色有界校准：功能PASS，必需覆盖NOT_HIT（2026-11-07）
+
+- 开发时间：2026-11-07 13:48:42～2026-11-07 14:01:44（UTC+08:00）；历时不作为人工工时。身份cc77-builder / Agent，operation_id SP1-E-O2-CANCEL-M1-CALIBRATION-20261107-01，HEAD 347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e，分支local/zjhwork-integration-20261024。
+- 实际执行恰好2个目标：bit100拒错25.727555秒/11653guest/预期exit1，严格提交组绑定及实际回执PASS；候选正常583.112479秒/267282guest/exit0/GOOD TRAP，41调用/84UART/77退休及完整结果、CSR/ABI合同通过。
+- 覆盖未命中：78接受全部DIRECT_R，77响应、1次KILL_R；P入队、反压、P/R双占用、KILL_P及PARTIAL_KILL均0。S0/S1见证0/0，正式18/20。原R4-R1宿主准入通过不代替真实覆盖，原R4 FAIL和R2未命中保留。
+- 新时序证据：phase4 A在262038接受/262039响应，B在262039进入R、262040被实际ROB0:45取消；A在262043退休。这是R槽取消，不是P中杀B/R中留A。phase0/1/2的probe B未进入FU。944条STATE观察均outready1、无P占用；动态F2v grant和branch PC仍未采集。
+- 预算与资源：目标活动608.811574秒，worker宿主1.962269秒，外部610.835181秒（10分11秒）；各role/guest、1200/900/2100总预算均满足。峰值1线程；RSS最高78512128字节；原始日志3569613字节、无截断、清理通过。外部GUARD_FAIL/CHILD_EXIT_1保留，原因是完成后的NOT_HIT传播，不是超时。
+- 版本保护：复用382项冻结及13方法宿主证据，无重编译；445＋445生产源码、711份旧轮文件及授权/镜像保持。无重试、无加时、无扩围、无重放；不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub。
+- 后续R5只读定位没有父级反压/P入队的原因，依据真实日志与实际构建判断一次最小软件修订GO/HOLD；没有可信触发窗口则暂存，不重复同镜像或扫phase。默认0f＋firstdot V2＋原C8不变。
+
+### 三项主要指标与历史实测
+
+本轮267282guest是校准刺激总数，没有RVV公平计时窗；与R2软件布局不同，不能计算硬件加速比。新加速比、面积、时序均NOT_TESTED。以下18行历史窗口、FU/父级面积、五档STA及关键路径原样续档，原G2严格成本NO-GO保留。
+
+以下逐数据集保留同镜像窗口均值；加速比均为该硬件上 RVV cycles / vdot cycles。不可把硬件候选相对0f的收益与RVV/vdot加速比混为一项。
+
+|负载|dataset|0f vdot|候选 vdot|0f/候选RVV|0f RVV/vdot|候选 RVV/vdot|候选vdot周期下降|记录|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|chain-256|0|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|51|
+|chain-256|1|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|58|
+|chain-256|2|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|60|
+|single-1|0|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|62|
+|single-1|1|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|64|
+|single-1|2|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|66|
+|batch|0|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|1|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|2|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|stream|0|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|1|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|2|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|original-C8-8x32-basic|0|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|53|
+|original-C8-8x32-reuse|0|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|53|
+|original-C8-8x32-basic|1|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|54|
+|original-C8-8x32-reuse|1|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|54|
+|original-C8-8x32-basic|2|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|55|
+|original-C8-8x32-reuse|2|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|55|
+
+## 历史面积与五档STA
+
+范围：Nangate45 Typical 1.1V/25°C、原G2关闭观察器的局部FU及含VDot的真实父级；不是全核面积，不是布线后签核，不是已实现Fmax。原G2严格成本门NO-GO事实保留，本轮只复用数值。
+
+|边界|0f面积(µm²)|候选面积(µm²)|变化|
+|---|---:|---:|---:|
+|FU_um2|17298.246|18322.878|5.923329%|
+|inclusive_parent_um2|284614.946|285241.642|0.220191%|
+
+|档位|T(ns)|load(pF)|0f FU slack|候选FU slack|0f父级slack|候选父级slack|候选FU Q|候选父级Q|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|nominal|1.0|0.005|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|period050|0.5|0.005|-0.768520|-1.290381|-2.893998|-2.837809|1.790381|3.337809|
+|period200|2.0|0.005|0.731480|0.209619|-1.393998|-1.337809|1.790381|3.337809|
+|load001|1.0|0.001|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|load020|1.0|0.02|-0.268520|-0.790381|-2.413199|-2.391613|1.790381|3.391613|
+
+Q按原表 T−最差setup slack 对比值保留，不能直接写成全核实际周期。JSON保留所有原始路径及关键路径筛选：FU主路径为operand→R槽，父级nominal为vsew→内部寄存器，load020最差移至fflags输出；ready与gate_enable另列，不混同主路径。
+
+
+| 档位/边界 | 历史最差路径起点→终点 | slack ns |
+|---|---|---:|
+| nominal/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| nominal/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| period050/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -1.290381 |
+| period050/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.837809 |
+| period200/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | 0.209619 |
+| period200/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -1.337809 |
+| load001/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load001/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| load020/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load020/父级 | `c201714 (rising edge-triggered flip-flop clocked by core_clk)` → `io_out_bits_fflags[1] (output port clocked by core_clk)` | -2.391613 |
+
+
+完整历史源表、ready/gate路径及数据集原证据pins见[METRICS.json](METRICS.json)。
+
+
+### 路线影响与下一轮指令
+
+开始 O2 补测 R5，按 NEXT_STEP 只读分析 M1 两角色真实日志，先解释为何944条STATE观察中outready均为1、没有反压和P入队，再核对phase4的A响应、B进入R及取消顺序。复用本轮功能、bit100、资源与宿主证据，不重跑同镜像、不扫描相位、不新增无关门禁。结合现有源码和实际构建给出一次最小软件修订的GO/HOLD及验证合同；没有可信触发窗口就暂存补测方向。先不改代码、不运行EMU/NEMU、不构建新核、不做EDA、不切默认、不上传GitHub，完成后更新计分板并给出下一轮指令。
+
+[本轮结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-m1-calibration-20261107/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-m1-calibration-20261107/NEXT_STEP.md) · [三指标与来源](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-m1-calibration-20261107/METRICS.json)。
+
+## 97. O2补测R5只读归因：最小软件修订HOLD，暂存触发方向（2026-11-07）
+
+- 工作日期2026-11-07（UTC+08:00）；操作`SP1-E-O2-CANCEL-R5-READONLY-20261107-01`，cc77-builder / Agent。只读分析早于归档快照，未记录精确开始时刻，不补造工时。归档时刻见RESULT.json。
+- 基点`347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e`，本地分支`local/zjhwork-integration-20261024`；默认0f＋firstdot V2＋原C8，正式18/20，未切默认。
+- 复核382项冻结、17份源码及与候选EMU同一生成清单的6份生成RTL；按ROB分配代/固定call_plan复原40对A/B。78接受全DIRECT_R、77响应均1拍、37对B.accept=A.response；944个STATE均outready1，P入队/输出STALL/双槽占用均0。77个有效输出时刻未与FEX0向量写回请求同时竞争；实际仲裁存在，ready不是绑高。
+- M1的vadd.vx拆分为I2v临时向量和向量ALU，8条vfmv不能按8拍连续写回压力计算。四个S0的ROB→FU等待由R2的38/39/41/44降为M1的19/20/25/26拍，但未形成反压；此为不同刺激归因，不能当加速比。
+- phase0/1/2的B在接受前取消；phase4 A于262038接受、262039响应，B于262039直接进入R，262040被杀。没有“R保A/P杀B”。动态F2v grant和I2v/vialu释放时刻仍缺，无法给出可信的最小软件触发窗口。
+- 决定：只读归因完成；M2软件修订HOLD/方向暂存，不再盲调phase、增压或重跑同镜像。保留M1功能/bit100/资源PASS、原NOT_HIT/GUARD_FAIL及旧锁；不新增无关门禁，不削减第19项原覆盖。
+- 本轮新目标/EMU/NEMU/构建/EDA/重试/相位扫描均0，软件/RTL/运行器未改，未上传GitHub。新加速比、面积、时序均NOT_TESTED，以下历史三项指标完整续档；严格G2成本NO-GO保留。
+
+### 三项指标：按原合同复用
+
+以下逐数据集保留同镜像窗口均值；加速比均为该硬件上 RVV cycles / vdot cycles。不可把硬件候选相对0f的收益与RVV/vdot加速比混为一项。
+
+|负载|dataset|0f vdot|候选 vdot|0f/候选RVV|0f RVV/vdot|候选 RVV/vdot|候选vdot周期下降|记录|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|chain-256|0|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|51|
+|chain-256|1|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|58|
+|chain-256|2|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|60|
+|single-1|0|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|62|
+|single-1|1|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|64|
+|single-1|2|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|66|
+|batch|0|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|1|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|2|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|stream|0|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|1|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|2|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|original-C8-8x32-basic|0|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|53|
+|original-C8-8x32-reuse|0|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|53|
+|original-C8-8x32-basic|1|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|54|
+|original-C8-8x32-reuse|1|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|54|
+|original-C8-8x32-basic|2|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|55|
+|original-C8-8x32-reuse|2|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|55|
+
+## 历史面积与五档STA
+
+范围：Nangate45 Typical 1.1V/25°C、原G2关闭观察器的局部FU及含VDot的真实父级；不是全核面积，不是布线后签核，不是已实现Fmax。原G2严格成本门NO-GO事实保留，本轮只复用数值。
+
+|边界|0f面积(µm²)|候选面积(µm²)|变化|
+|---|---:|---:|---:|
+|FU_um2|17298.246|18322.878|5.923329%|
+|inclusive_parent_um2|284614.946|285241.642|0.220191%|
+
+|档位|T(ns)|load(pF)|0f FU slack|候选FU slack|0f父级slack|候选父级slack|候选FU Q|候选父级Q|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|nominal|1.0|0.005|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|period050|0.5|0.005|-0.768520|-1.290381|-2.893998|-2.837809|1.790381|3.337809|
+|period200|2.0|0.005|0.731480|0.209619|-1.393998|-1.337809|1.790381|3.337809|
+|load001|1.0|0.001|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|load020|1.0|0.02|-0.268520|-0.790381|-2.413199|-2.391613|1.790381|3.391613|
+
+Q按原表 T−最差setup slack 对比值保留，不能直接写成全核实际周期。JSON保留所有原始路径及关键路径筛选：FU主路径为operand→R槽，父级nominal为vsew→内部寄存器，load020最差移至fflags输出；ready与gate_enable另列，不混同主路径。
+
+
+| 档位/边界 | 历史最差路径起点→终点 | slack ns |
+|---|---|---:|
+| nominal/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| nominal/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| period050/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -1.290381 |
+| period050/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.837809 |
+| period200/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | 0.209619 |
+| period200/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -1.337809 |
+| load001/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load001/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| load020/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load020/父级 | `c201714 (rising edge-triggered flip-flop clocked by core_clk)` → `io_out_bits_fflags[1] (output port clocked by core_clk)` | -2.391613 |
+
+
+完整历史源表、ready/gate路径及数据集原证据pins见[METRICS.json](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-r5-readonly-20261107/METRICS.json)。
+
+
+### 路线影响与下一轮指令
+
+开始 SP1-E 第20项 timed DIV/SQRT 宿主准备与预算评审，按 NEXT_STEP 暂存第19项F2v反压补测，复用已有DIV/SQRT功能、身份和运行器证据，集中明确计时负载、同镜像公平窗口、必要差异检查、最少角色及完整预算。已有部分直接复用，只补真正缺项；依据不足就HOLD，不以第20项替代第19项覆盖。先不运行EMU/NEMU、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub，完成后给出GO/HOLD、可执行批次和下一轮指令。
+
+[只读结论](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-r5-readonly-20261107/RESULT.md) · [完整时间线](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-r5-readonly-20261107/analysis/PAIRS.csv) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-r5-readonly-20261107/NEXT_STEP.md) · [三项指标](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-o2-cancel-r5-readonly-20261107/METRICS.json)。
+
+## 98. 第20项timed DIV/SQRT宿主准备：HOST GO，正式预算HOLD（2026-11-07）
+
+- 工作日期2026-11-07（UTC+08:00），cc77-builder / Agent，操作`SP1-E-TIMED-DIV-SQRT-HOST-20261107-01`；归档快照/结论时间见BEFORE/RESULT，不补造此前未记起始工时。
+- 基点347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e；本地local/zjhwork-integration-20261024。第19项F2v反压补测暂存，正式18/20，默认0f＋firstdot V2＋原C8。
+- 复用原9552B镜像、3数据集×3算子×6调用＝54窗/432条DIV/SQRT/1条guard，9格各4计分窗、20条窗口退休/instret差15、完整128位输入输出和CSR、精确重放合同均保留。137份旧材料SHA一致，原GNU/41项测试/40假ABI控不重跑。
+- 独立接入候选和0f观察器、当前提交组bit100及三角色执行/外部监督；实际guard为e64/VL2读入→e8/VL8 vdot→e64/VL2写出，只增加冻结PC/word对应的load/配置检查。11适配方法有PASS证据，原两次宿主FAIL（上下文不适配、夹具ROB负索引）原位保留，修订未触目标软件/RTL。
+- 宿主CPU4完整合成54窗/432算子解析与哈希/配对约1.380秒，不能作为目标时间上界。正式五角色6300/7200秒继续HOLD；准备的最少完整校准为bit100300秒/10万guest→候选1500秒/100万guest→0f1500秒/100万guest，目标3300＋宿主900＝外层4200秒，未来独立授权才执行。
+- 冻结35项输入及4份cwd配套文件；无执行授权/消费锁/target输出。共享监控机制未变、失败即停、不重试/加时/自动重放。校准不会提升18/20，第20项最终须预算和必要重放闭合。
+- 本轮新目标/EMU/NEMU/GNU/新核/EDA均0，无RTL/镜像修改、无默认切换或GitHub上传。三项指标及DIV/SQRT退化率NOT_TESTED，历史数值如下完整续档，原严格G2成本NO-GO保留。
+
+### 三项指标：历史复用
+
+以下逐数据集保留同镜像窗口均值；加速比均为该硬件上 RVV cycles / vdot cycles。不可把硬件候选相对0f的收益与RVV/vdot加速比混为一项。
+
+|负载|dataset|0f vdot|候选 vdot|0f/候选RVV|0f RVV/vdot|候选 RVV/vdot|候选vdot周期下降|记录|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|chain-256|0|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|51|
+|chain-256|1|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|58|
+|chain-256|2|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|60|
+|single-1|0|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|62|
+|single-1|1|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|64|
+|single-1|2|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|66|
+|batch|0|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|1|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|2|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|stream|0|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|1|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|2|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|original-C8-8x32-basic|0|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|53|
+|original-C8-8x32-reuse|0|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|53|
+|original-C8-8x32-basic|1|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|54|
+|original-C8-8x32-reuse|1|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|54|
+|original-C8-8x32-basic|2|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|55|
+|original-C8-8x32-reuse|2|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|55|
+
+## 历史面积与五档STA
+
+范围：Nangate45 Typical 1.1V/25°C、原G2关闭观察器的局部FU及含VDot的真实父级；不是全核面积，不是布线后签核，不是已实现Fmax。原G2严格成本门NO-GO事实保留，本轮只复用数值。
+
+|边界|0f面积(µm²)|候选面积(µm²)|变化|
+|---|---:|---:|---:|
+|FU_um2|17298.246|18322.878|5.923329%|
+|inclusive_parent_um2|284614.946|285241.642|0.220191%|
+
+|档位|T(ns)|load(pF)|0f FU slack|候选FU slack|0f父级slack|候选父级slack|候选FU Q|候选父级Q|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|nominal|1.0|0.005|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|period050|0.5|0.005|-0.768520|-1.290381|-2.893998|-2.837809|1.790381|3.337809|
+|period200|2.0|0.005|0.731480|0.209619|-1.393998|-1.337809|1.790381|3.337809|
+|load001|1.0|0.001|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|load020|1.0|0.02|-0.268520|-0.790381|-2.413199|-2.391613|1.790381|3.391613|
+
+Q按原表 T−最差setup slack 对比值保留，不能直接写成全核实际周期。JSON保留所有原始路径及关键路径筛选：FU主路径为operand→R槽，父级nominal为vsew→内部寄存器，load020最差移至fflags输出；ready与gate_enable另列，不混同主路径。
+
+
+| 档位/边界 | 历史最差路径起点→终点 | slack ns |
+|---|---|---:|
+| nominal/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| nominal/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| period050/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -1.290381 |
+| period050/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.837809 |
+| period200/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | 0.209619 |
+| period200/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -1.337809 |
+| load001/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load001/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| load020/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load020/父级 | `c201714 (rising edge-triggered flip-flop clocked by core_clk)` → `io_out_bits_fflags[1] (output port clocked by core_clk)` | -2.391613 |
+
+
+完整历史源表、ready/gate路径及数据集原证据pins见[METRICS.json](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-host-20261107/METRICS.json)。
+
+
+### 路线影响与下一批指令
+
+开始 SP1-E 第20项 timed DIV/SQRT 三角色完整调用有界校准，按 NEXT_STEP 先核查进程、冻结输入和宿主准入，接受本轮独立预算后串行执行 bit100拒错→候选正常→0f正常。分别300秒/10万guest、1500秒/100万guest、1500秒/100万guest；目标累计3300秒、宿主900秒、外层4200秒。保持完整54窗、432条DIV/SQRT、完整128位和CSR/退休绑定、逐窗控制相等及9格各自最多2%退化，沿用CPU4/整组4线程/RSS12GiB/日志2GiB。失败、未拒错、超限或退化即停，不重试、不加时、不跳过继续、不自动重放；第19项继续暂存。不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub，完成后更新计分板并判断正式预算和必要重放。
+
+[本轮结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-host-20261107/RESULT.md) · [预算](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-host-20261107/BUDGET_REVIEW.md) · [下一批](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-host-20261107/NEXT_STEP.md) · [指标来源](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-host-20261107/METRICS.json)。
+
+
+## 第99条：第20项 timed DIV/SQRT 三角色校准（2026-11-07）
+
+第20项三角色校准按墙钟上限停止：bit100通过，候选正常超时，0f正常未启动。完整正常样本和9格配对均缺，HOLD；正式18/20，默认0f＋firstdot V2＋原C8不变。
+
+@cc77-builder / Agent；操作ID `SP1-E-TIMED-DIV-SQRT-CALIBRATION-20261107-01`。预执行快照 2026-11-07T07:03:12.690385+00:00，记录 2026-11-07T15:33:19.171714+08:00；实际运行25分24秒不计作人工工时。基点 `347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e`，未提交。
+
+bit100 23.572946秒/9205 guest PASS；候选正常1500.000183秒被外部TARGET墙钟监督终止，原GUARD_FAIL、锁和RUNNING中间态保留。真实2个目标；0f未启动，无重试/重放。26/54组标记、208/432退休仅为局部观察，14条完整UART，无正常收据/汇总/最终guest；不得转为完整功能、9格2%或跨硬件PASS。监督清理及输入不变核对通过。
+
+### 三项指标留档
+
+第20项三角色校准按墙钟上限停止：bit100通过，候选正常超时，0f正常未启动。完整正常样本和9格配对均缺，HOLD；正式18/20，默认0f＋firstdot V2＋原C8不变。
+
+本轮新加速比、面积、时序均NOT_TESTED；纯DIV/SQRT保护负载的9格退化率亦NOT_TESTED。原始FAIL与锁保留，不把26个标记窗口或208条退休算作完整通过。以下18行性能、FU/父级面积及五档STA均为历史复用。
+
+以下逐数据集保留同镜像窗口均值；加速比均为该硬件上 RVV cycles / vdot cycles。不可把硬件候选相对0f的收益与RVV/vdot加速比混为一项。
+
+|负载|dataset|0f vdot|候选 vdot|0f/候选RVV|0f RVV/vdot|候选 RVV/vdot|候选vdot周期下降|记录|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|chain-256|0|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|51|
+|chain-256|1|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|58|
+|chain-256|2|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|60|
+|single-1|0|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|62|
+|single-1|1|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|64|
+|single-1|2|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|66|
+|batch|0|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|1|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|2|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|stream|0|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|1|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|2|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|original-C8-8x32-basic|0|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|53|
+|original-C8-8x32-reuse|0|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|53|
+|original-C8-8x32-basic|1|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|54|
+|original-C8-8x32-reuse|1|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|54|
+|original-C8-8x32-basic|2|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|55|
+|original-C8-8x32-reuse|2|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|55|
+
+## 历史面积与五档STA
+
+范围：Nangate45 Typical 1.1V/25°C、原G2关闭观察器的局部FU及含VDot的真实父级；不是全核面积，不是布线后签核，不是已实现Fmax。原G2严格成本门NO-GO事实保留，本轮只复用数值。
+
+|边界|0f面积(µm²)|候选面积(µm²)|变化|
+|---|---:|---:|---:|
+|FU_um2|17298.246|18322.878|5.923329%|
+|inclusive_parent_um2|284614.946|285241.642|0.220191%|
+
+|档位|T(ns)|load(pF)|0f FU slack|候选FU slack|0f父级slack|候选父级slack|候选FU Q|候选父级Q|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|nominal|1.0|0.005|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|period050|0.5|0.005|-0.768520|-1.290381|-2.893998|-2.837809|1.790381|3.337809|
+|period200|2.0|0.005|0.731480|0.209619|-1.393998|-1.337809|1.790381|3.337809|
+|load001|1.0|0.001|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|load020|1.0|0.02|-0.268520|-0.790381|-2.413199|-2.391613|1.790381|3.391613|
+
+Q按原表 T−最差setup slack 对比值保留，不能直接写成全核实际周期。JSON保留所有原始路径及关键路径筛选：FU主路径为operand→R槽，父级nominal为vsew→内部寄存器，load020最差移至fflags输出；ready与gate_enable另列，不混同主路径。
+
+
+| 档位/边界 | 历史最差路径起点→终点 | slack ns |
+|---|---|---:|
+| nominal/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| nominal/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| period050/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -1.290381 |
+| period050/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.837809 |
+| period200/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | 0.209619 |
+| period200/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -1.337809 |
+| load001/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load001/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| load020/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load020/父级 | `c201714 (rising edge-triggered flip-flop clocked by core_clk)` → `io_out_bits_fflags[1] (output port clocked by core_clk)` | -2.391613 |
+
+
+完整历史源表、ready/gate路径及数据集原证据pins见[METRICS.json](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-calibration-20261107/METRICS.json)。
+
+
+### 路线影响与下一轮指令
+
+开始第20项 timed DIV/SQRT 预算收口与最小开销方案评审：基于本轮1500秒超时日志，核查窗口外校验、格式化输出与UART成本，比较保留原镜像的新独立预算和最小窗口外输出调整，选出一个有依据的方案并冻结下一批合同。保留54窗、432算子、完整结果、CSR/退休绑定、逐窗控制相等、9格2%及精确重放要求，复用已通过bit100与未变证据；依据不足就HOLD，不重复同预算校准、不缩减覆盖。先不改代码、不运行EMU/NEMU、不构建新核、不做EDA、不切默认、不上传GitHub；第19项继续暂存，完成后给出GO/HOLD和下一轮指令。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-calibration-20261107/RESULT.md) · [预算](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-calibration-20261107/BUDGET_REVIEW.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-calibration-20261107/NEXT_STEP.md) · [证据清单](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-calibration-20261107/EVIDENCE_MANIFEST.json)。
+
+
+## 第100条：第20项预算收口与原镜像四角色设计（2026-11-07）
+
+第20项预算收口完成：GO仅限原镜像四角色适配设计；当前目标准入HOLD，未运行EMU/NEMU。选择保留原镜像、复用真实bit100，以新独立停止预算完成两次正常及两次重放；未选择输出改版。正式18/20，默认0f＋firstdot V2＋原C8不变，第19项继续暂存。
+
+@cc77-builder / Agent；操作ID `SP1-E-TIMED-DIV-SQRT-BUDGET-REVIEW-20261107-01`；快照 2026-11-07T07:45:53.164174+00:00，记录 2026-11-07T15:54:39.654815+08:00；基点 `347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e`，未提交。
+
+只读核查真实26标记窗/208退休及14完整UART行；调用间隔中位22974周期/4766条退休，实际ELF确认每窗192～194条标量除法/求余、至少210～211次UART状态读/数据写。不能把全部窗外耗时归给UART。保留原镜像方案，避免输出改版引入新布局、解析及bit100绑定。137材料/35冻结和未变11方法复用，独立字节/计数方法复核通过；无新代码或目标。
+
+拟定剩余四角色各4800秒/200万guest，目标19200＋执行宿主900＝执行外层20100秒；两次正常九格通过后才重放。新预算只为提案，非已准入上界或新执行授权；旧1500秒FAIL/原正式预算HOLD保留。全部通过最多推进19/20，第19项仍HOLD。
+
+### 三项指标
+
+第20项预算收口完成：GO仅限原镜像四角色适配设计；当前目标准入HOLD，未运行EMU/NEMU。选择保留原镜像、复用真实bit100，以新独立停止预算完成两次正常及两次重放；未选择输出改版。正式18/20，默认0f＋firstdot V2＋原C8不变，第19项继续暂存。
+
+本轮目标/构建/EDA均0，新加速比、面积、时序及九格退化率NOT_TESTED。窗口外操作计数和约3185秒情景不是新性能资格；以下数据全部为原同口径历史复用。
+
+以下逐数据集保留同镜像窗口均值；加速比均为该硬件上 RVV cycles / vdot cycles。不可把硬件候选相对0f的收益与RVV/vdot加速比混为一项。
+
+|负载|dataset|0f vdot|候选 vdot|0f/候选RVV|0f RVV/vdot|候选 RVV/vdot|候选vdot周期下降|记录|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|chain-256|0|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|51|
+|chain-256|1|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|58|
+|chain-256|2|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|60|
+|single-1|0|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|62|
+|single-1|1|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|64|
+|single-1|2|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|66|
+|batch|0|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|1|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|2|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|stream|0|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|1|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|2|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|original-C8-8x32-basic|0|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|53|
+|original-C8-8x32-reuse|0|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|53|
+|original-C8-8x32-basic|1|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|54|
+|original-C8-8x32-reuse|1|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|54|
+|original-C8-8x32-basic|2|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|55|
+|original-C8-8x32-reuse|2|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|55|
+
+## 历史面积与五档STA
+
+范围：Nangate45 Typical 1.1V/25°C、原G2关闭观察器的局部FU及含VDot的真实父级；不是全核面积，不是布线后签核，不是已实现Fmax。原G2严格成本门NO-GO事实保留，本轮只复用数值。
+
+|边界|0f面积(µm²)|候选面积(µm²)|变化|
+|---|---:|---:|---:|
+|FU_um2|17298.246|18322.878|5.923329%|
+|inclusive_parent_um2|284614.946|285241.642|0.220191%|
+
+|档位|T(ns)|load(pF)|0f FU slack|候选FU slack|0f父级slack|候选父级slack|候选FU Q|候选父级Q|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|nominal|1.0|0.005|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|period050|0.5|0.005|-0.768520|-1.290381|-2.893998|-2.837809|1.790381|3.337809|
+|period200|2.0|0.005|0.731480|0.209619|-1.393998|-1.337809|1.790381|3.337809|
+|load001|1.0|0.001|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|load020|1.0|0.02|-0.268520|-0.790381|-2.413199|-2.391613|1.790381|3.391613|
+
+Q按原表 T−最差setup slack 对比值保留，不能直接写成全核实际周期。JSON保留所有原始路径及关键路径筛选：FU主路径为operand→R槽，父级nominal为vsew→内部寄存器，load020最差移至fflags输出；ready与gate_enable另列，不混同主路径。
+
+
+| 档位/边界 | 历史最差路径起点→终点 | slack ns |
+|---|---|---:|
+| nominal/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| nominal/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| period050/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -1.290381 |
+| period050/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.837809 |
+| period200/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | 0.209619 |
+| period200/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -1.337809 |
+| load001/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load001/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| load020/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load020/父级 | `c201714 (rising edge-triggered flip-flop clocked by core_clk)` → `io_out_bits_fflags[1] (output port clocked by core_clk)` | -2.391613 |
+
+
+完整历史源表、ready/gate路径及数据集原证据pins见[METRICS.json](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-budget-review-20261107/METRICS.json)。
+
+
+### 接续指令
+
+开始第20项原镜像四角色接入与有界验收，按 NEXT_STEP 复用原ELF/BIN、0f/候选EMU及已通过bit100，完成四角色差异接入、历史证据绑定、必要宿主检查和执行冻结。全部准入通过后，同轮执行候选正常→0f正常，九格比较通过后再执行候选重放→0f重放。我接受新的每角色4800秒/200万guest、目标累计19200秒、执行宿主900秒、执行外层20100秒预算。保持54窗、432算子、完整结果与CSR/退休绑定、逐窗控制相等、9格2%及精确重放。任一失败即停，不重试、不加时、不借用预算、不增加角色；第19项继续暂存。不改RTL、不改目标软件或重编镜像、不构建新核、不做EDA、不切默认、不上传GitHub，完成后更新计分板并给出结论和下一轮指令。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-budget-review-20261107/RESULT.md) · [冻结设计](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-budget-review-20261107/DESIGN_CONTRACT.json) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-budget-review-20261107/NEXT_STEP.md) · [证据清单](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-budget-review-20261107/EVIDENCE_MANIFEST.json)。
+
+
+## 记录101：第20项四角色宿主准入FAIL，未启动目标（2026-11-07）
+
+第20项四角色接入已实现，但宿主准入 FAIL，目标准入 HOLD。首6项方法通过，第7项负控错误选中首调用窗口，预期拒绝未发生；第8项未执行。遵守失败即停，本轮EMU/NEMU为0，正式进度仍18/20，默认0f＋firstdot V2＋原C8不变，第19项继续暂存。
+
+@cc77-builder / Agent；`SP1-E-TIMED-DIV-SQRT-FOUR-20261107-01`；2026-11-07T16:10:49.080333+08:00。已接受新预算但宿主准入未通过；本轮6 PASS/1 FAIL/1 NOT_RUN，外部耗时2.913725秒。新增负控将seq2首调用误作计分窗口，原比较器正确排除repeat0；下轮语义定位measured窗口，复用6项通过证据后补剩余准入。原FAIL/锁全部保留。
+
+# 本轮三项指标与历史对照
+
+第20项四角色接入已实现，但宿主准入 FAIL，目标准入 HOLD。首6项方法通过，第7项负控错误选中首调用窗口，预期拒绝未发生；第8项未执行。遵守失败即停，本轮EMU/NEMU为0，正式进度仍18/20，默认0f＋firstdot V2＋原C8不变，第19项继续暂存。
+
+本轮新加速比、面积、时序及第20项九格退化率均为 **NOT_TESTED**。没有目标执行或EDA，不能把宿主合成夹具作为硬件测量。本轮历史数值不变；新宿主证据不增加功能验收计数。
+
+以下逐数据集保留同镜像窗口均值；加速比均为该硬件上 RVV cycles / vdot cycles。不可把硬件候选相对0f的收益与RVV/vdot加速比混为一项。
+
+|负载|dataset|0f vdot|候选 vdot|0f/候选RVV|0f RVV/vdot|候选 RVV/vdot|候选vdot周期下降|记录|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|chain-256|0|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|51|
+|chain-256|1|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|58|
+|chain-256|2|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|60|
+|single-1|0|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|62|
+|single-1|1|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|64|
+|single-1|2|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|66|
+|batch|0|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|1|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|2|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|stream|0|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|1|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|2|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|original-C8-8x32-basic|0|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|53|
+|original-C8-8x32-reuse|0|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|53|
+|original-C8-8x32-basic|1|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|54|
+|original-C8-8x32-reuse|1|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|54|
+|original-C8-8x32-basic|2|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|55|
+|original-C8-8x32-reuse|2|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|55|
+
+## 历史面积与五档STA
+
+范围：Nangate45 Typical 1.1V/25°C、原G2关闭观察器的局部FU及含VDot的真实父级；不是全核面积，不是布线后签核，不是已实现Fmax。原G2严格成本门NO-GO事实保留，本轮只复用数值。
+
+|边界|0f面积(µm²)|候选面积(µm²)|变化|
+|---|---:|---:|---:|
+|FU_um2|17298.246|18322.878|5.923329%|
+|inclusive_parent_um2|284614.946|285241.642|0.220191%|
+
+|档位|T(ns)|load(pF)|0f FU slack|候选FU slack|0f父级slack|候选父级slack|候选FU Q|候选父级Q|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|nominal|1.0|0.005|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|period050|0.5|0.005|-0.768520|-1.290381|-2.893998|-2.837809|1.790381|3.337809|
+|period200|2.0|0.005|0.731480|0.209619|-1.393998|-1.337809|1.790381|3.337809|
+|load001|1.0|0.001|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|load020|1.0|0.02|-0.268520|-0.790381|-2.413199|-2.391613|1.790381|3.391613|
+
+Q按原表 T−最差setup slack 对比值保留，不能直接写成全核实际周期。JSON保留所有原始路径及关键路径筛选：FU主路径为operand→R槽，父级nominal为vsew→内部寄存器，load020最差移至fflags输出；ready与gate_enable另列，不混同主路径。
+
+
+| 档位/边界 | 历史最差路径起点→终点 | slack ns |
+|---|---|---:|
+| nominal/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| nominal/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| period050/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -1.290381 |
+| period050/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.837809 |
+| period200/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | 0.209619 |
+| period200/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -1.337809 |
+| load001/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load001/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| load020/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load020/父级 | `c201714 (rising edge-triggered flip-flop clocked by core_clk)` → `io_out_bits_fflags[1] (output port clocked by core_clk)` | -2.391613 |
+
+
+完整历史源表、ready/gate路径及数据集原证据pins见[METRICS.json](METRICS.json)。
+
+
+### 下一轮
+
+开始第20项原镜像四角色 R1：按 NEXT_STEP 最小修复宿主负控的计分窗口定位，用 dataset/op/repeat 语义键唯一选择 measured 窗口并断言实际命中，保留原 FAIL 与锁，复用本轮6项通过证据及未变运行器。集中完成受影响测试、尚未执行的冷进程导入与授权拒绝检查、新执行冻结和宿主准入；全部通过后，同轮串行执行候选正常→0f正常，九格配对通过后执行候选重放→0f重放。沿用已接受的每角色4800秒/200万guest、目标19200秒、宿主900秒、外层20100秒预算及原资源、完整54窗/432算子、9格2%与精确重放门槛，复用bit100。失败即停、不重试、不加时、不扩围；不改RTL或镜像、不构建新核、不做EDA、不切默认、不上传GitHub，第19项继续暂存。完成后更新计分板并给出下一轮指令。
+
+[完整结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-four-role-20261107/RESULT.md) · [NEXT_STEP](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-four-role-20261107/NEXT_STEP.md) · [证据清单](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-four-role-20261107/EVIDENCE_MANIFEST.json)。
+
+
+## 记录102｜2026-11-07 第20项四角色 R1：ITEM20_PASS，19/20
+
+第20项四角色 R1 已通过：候选正常、0f正常、候选重放和0f重放全部完成，九格配对及两次精确重放通过。正式验收由18/20推进到 **19/20**；第19项继续 HOLD。默认仍为 **0f＋firstdot V2＋原C8**，没有切换或上传。
+
+开始 2026-11-07T16:14:37.817328+08:00；记录 2026-11-07T19:34:48.366405+08:00（UTC+08:00）；cc77-builder / Agent；操作ID `SP1-E-TIMED-DIV-SQRT-FOUR-R1-20261107-01`。Git `347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e` / `local/zjhwork-integration-20261024`，源码身份由118项冻结与445/398源码快照确定。宿主最小负控修复复用6项PASS，补齐2项PASS；按当前用户授权一次性完成四角色，没有重试。
+
+|角色|结果|单调计时活动秒数|guest cycles|完整窗口/算子|峰值线程|峰值RSS MiB|
+|---|---|---:|---:|---:|---:|---:|
+|candidate-normal|PASS|3389.801730|1265777|54/432|1|74.629|
+|baseline-normal|PASS|3274.078525|1265427|54/432|1|72.375|
+|candidate-replay|PASS|2698.085476|1265777|54/432|1|71.625|
+|baseline-replay|PASS|2741.615482|1265427|54/432|1|72.750|
+
+目标累计12103.581212/19200秒，执行宿主27.808091/900秒，外层12131.477884/20100秒；各角色4800秒/200万guest限制满足。两次精确重放PASS，历史bit100复用。所有本轮进程已结束，原FAIL与锁保留。UTC与单调耗时差异已记录，不替代单调预算。
+
+# 第20项四角色 R1：新保护结果与历史三项指标
+
+第20项四角色 R1 已通过：候选正常、0f正常、候选重放和0f重放全部完成，九格配对及两次精确重放通过。正式验收由18/20推进到 **19/20**；第19项继续 HOLD。默认仍为 **0f＋firstdot V2＋原C8**，没有切换或上传。
+
+## 本轮新增 timed DIV/SQRT 测量
+
+以下每格均值仅取 repeat2～5。first/warmup 不进入均值，但仍通过完整结果、CSR、退休及重放检查。九格全部满足候选/0f ≤ 1.02；8格相同，dataset0/vdivu下降0.25周期（0.168067%）。这是共享执行资源的保护验收，不是新增VDOT加速比。
+
+|dataset|算子|0f均值 cycles|候选均值 cycles|候选相对0f变化|原2%门槛|
+|---|---|---:|---:|---:|---|
+|0|vdivu|148.75|148.50|-0.168067%|PASS|
+|0|vfdiv|208.00|208.00|0.000000%|PASS|
+|0|vfsqrt|216.00|216.00|0.000000%|PASS|
+|1|vdivu|149.00|149.00|0.000000%|PASS|
+|1|vfdiv|208.00|208.00|0.000000%|PASS|
+|1|vfsqrt|224.00|224.00|0.000000%|PASS|
+|2|vdivu|124.00|124.00|0.000000%|PASS|
+|2|vfdiv|208.00|208.00|0.000000%|PASS|
+|2|vfsqrt|216.00|216.00|0.000000%|PASS|
+
+本轮 VDOT/RVV 加速比、面积和 STA 新测均为 **NOT_TESTED**；没有运行VDOT性能负载或EDA。下列已有测量按原合同复用，未改写成此次实测。完整新54窗×4角色数据见 [all-windows.csv](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-four-role-r1-20261107/all-windows.csv)，原始摘要见 [qualification.json](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-four-role-r1-20261107/target-01/qualification.json)。
+
+## 历史加速比、面积与时序（复用）
+
+以下逐数据集保留同镜像窗口均值；加速比均为该硬件上 RVV cycles / vdot cycles。不可把硬件候选相对0f的收益与RVV/vdot加速比混为一项。
+
+|负载|dataset|0f vdot|候选 vdot|0f/候选RVV|0f RVV/vdot|候选 RVV/vdot|候选vdot周期下降|记录|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|chain-256|0|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|51|
+|chain-256|1|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|58|
+|chain-256|2|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|60|
+|single-1|0|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|62|
+|single-1|1|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|64|
+|single-1|2|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|66|
+|batch|0|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|1|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|2|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|stream|0|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|1|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|2|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|original-C8-8x32-basic|0|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|53|
+|original-C8-8x32-reuse|0|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|53|
+|original-C8-8x32-basic|1|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|54|
+|original-C8-8x32-reuse|1|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|54|
+|original-C8-8x32-basic|2|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|55|
+|original-C8-8x32-reuse|2|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|55|
+
+## 历史面积与五档STA
+
+范围：Nangate45 Typical 1.1V/25°C、原G2关闭观察器的局部FU及含VDot的真实父级；不是全核面积，不是布线后签核，不是已实现Fmax。原G2严格成本门NO-GO事实保留，本轮只复用数值。
+
+|边界|0f面积(µm²)|候选面积(µm²)|变化|
+|---|---:|---:|---:|
+|FU_um2|17298.246|18322.878|5.923329%|
+|inclusive_parent_um2|284614.946|285241.642|0.220191%|
+
+|档位|T(ns)|load(pF)|0f FU slack|候选FU slack|0f父级slack|候选父级slack|候选FU Q|候选父级Q|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|nominal|1.0|0.005|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|period050|0.5|0.005|-0.768520|-1.290381|-2.893998|-2.837809|1.790381|3.337809|
+|period200|2.0|0.005|0.731480|0.209619|-1.393998|-1.337809|1.790381|3.337809|
+|load001|1.0|0.001|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|load020|1.0|0.02|-0.268520|-0.790381|-2.413199|-2.391613|1.790381|3.391613|
+
+Q按原表 T−最差setup slack 对比值保留，不能直接写成全核实际周期。JSON保留所有原始路径及关键路径筛选：FU主路径为operand→R槽，父级nominal为vsew→内部寄存器，load020最差移至fflags输出；ready与gate_enable另列，不混同主路径。
+
+
+| 档位/边界 | 历史最差路径起点→终点 | slack ns |
+|---|---|---:|
+| nominal/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| nominal/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| period050/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -1.290381 |
+| period050/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.837809 |
+| period200/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | 0.209619 |
+| period200/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -1.337809 |
+| load001/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load001/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| load020/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load020/父级 | `c201714 (rising edge-triggered flip-flop clocked by core_clk)` → `io_out_bits_fflags[1] (output port clocked by core_clk)` | -2.391613 |
+
+
+完整历史源表、ready/gate路径及数据集原证据pins见[METRICS.json](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-four-role-r1-20261107/METRICS.json)。
+
+
+路线影响：第20项通过，正式18/20→19/20。第19项仍暂存；后续只评审最小缺失时序观测与定点触发，未经下一轮授权不实施或重跑。无RTL/镜像更改，无新核/EDA，默认不变、未上传。
+
+下一轮指令：开始 SP1-E 第19项最小观测与定点补测设计评审：基于 R5 已冻结结论与现有候选构建，明确 FEX0 向量写回请求、I2v/vialu 释放及 VDOT 响应的相对时序缺口，先核对现有可见信号，再设计必要的最小观察补丁与有界触发合同。保留 S0/S1 原覆盖、完整结果、取消及精确重放要求；没有可信触发窗口就 HOLD。只做设计和成本评审，不改代码、不运行 EMU/NEMU、不构建新核、不做 EDA、不切默认、不上传 GitHub；完成后给出 GO/HOLD 和下一轮指令。
+
+[本轮结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-four-role-r1-20261107/RESULT.md) · [原始数据与身份](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-four-role-r1-20261107/RESULT.json) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-four-role-r1-20261107/NEXT_STEP.md) · [manifest](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-four-role-r1-20261107/EVIDENCE_MANIFEST.json)。
+
+
+## 记录103｜2026-11-07 第19项最小观察设计：GO_DESIGN / HOLD_TARGET
+
+**最小观察方案设计GO；第19项定点修订/目标补测HOLD。** 现有证据不足以给出可信FEX0/VDOT碰撞窗口。正式仍19/20，默认0f＋firstdot V2＋原C8不变；第20项PASS保持。
+
+快照起点 2026-11-07T20:19:47.366915+08:00；记录 2026-11-07T20:27:09.729472+08:00，cc77-builder / Agent，操作 `SP1-E-ITEM19-OBS-DESIGN-20261107-01`。分支 `local/zjhwork-integration-20261024`，Git `347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e`。只读核查当前源码、实际生成仲裁和旧R5证据，未变源码445/398份；不冒称独立成员验收。
+
+新增结论：FEX0 vector请求缺少真实时间轴；I2v/vialu拆分共享ROB，需u.robIdx而非非first的allocatePtr建立身份；PerfDebugInfo无PC；生产输出可前递，WB grant不能等同消费。拟以默认关闭开关，在VDotO2.scala、ExeUnit.scala、WbArbiter.scala、Rob.scala四处添加只观测侧带；VDotElastic与数据通路/ready/仲裁保持。设计文档不是已实施补丁。
+
+没有可信定点触发窗口，M2和第19项目标继续HOLD。下一轮可实现观察器并做必要宿主/局部中性，不自动构建全核或启动诊断；300/900秒两角色只是预算提案，新增打印开销未测。原S0/S1、完整128位、CSR/ABI、bit100及重放合同不减。第20项PASS保留，正式仍19/20。
+
+# 第19项观察设计：三项指标留档
+
+本轮只读设计，EMU/NEMU、新构建及EDA均0；新加速比、面积、时序和新观察器运行开销全部 **NOT_TESTED**。正式19/20，默认0f＋firstdot V2＋原C8。以下为按原合同复用的历史事实，不是新构建实测，也不自动批准候选切换。记录102的timed DIV/SQRT九格保护PASS继续有效，不能当作VDOT加速比。
+
+以下逐数据集保留同镜像窗口均值；加速比均为该硬件上 RVV cycles / vdot cycles。不可把硬件候选相对0f的收益与RVV/vdot加速比混为一项。
+
+|负载|dataset|0f vdot|候选 vdot|0f/候选RVV|0f RVV/vdot|候选 RVV/vdot|候选vdot周期下降|记录|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|chain-256|0|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|51|
+|chain-256|1|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|58|
+|chain-256|2|1857.000000|1601.250000|5440.500000/5440.500000|2.929725363×|3.397658080×|13.772213%|60|
+|single-1|0|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|62|
+|single-1|1|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|64|
+|single-1|2|71.000000|70.000000|85.250000/85.250000|1.200704225×|1.217857143×|1.408451%|66|
+|batch|0|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|1|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|batch|2|221.000000|221.000000|678.000000/678.000000|3.067873303×|3.067873303×|0.000000%|69|
+|stream|0|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|1|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|stream|2|1127.500000|1126.250000|1133.000000/1133.000000|1.004878049×|1.005993341×|0.110865%|70|
+|original-C8-8x32-basic|0|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|53|
+|original-C8-8x32-reuse|0|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|53|
+|original-C8-8x32-basic|1|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|54|
+|original-C8-8x32-reuse|1|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|54|
+|original-C8-8x32-basic|2|643.750000|642.500000|356.000000/356.000000|0.553009709×|0.554085603×|0.194175%|55|
+|original-C8-8x32-reuse|2|273.000000|272.000000|299.000000/299.000000|1.095238095×|1.099264706×|0.366300%|55|
+
+## 历史面积与五档STA
+
+范围：Nangate45 Typical 1.1V/25°C、原G2关闭观察器的局部FU及含VDot的真实父级；不是全核面积，不是布线后签核，不是已实现Fmax。原G2严格成本门NO-GO事实保留，本轮只复用数值。
+
+|边界|0f面积(µm²)|候选面积(µm²)|变化|
+|---|---:|---:|---:|
+|FU_um2|17298.246|18322.878|5.923329%|
+|inclusive_parent_um2|284614.946|285241.642|0.220191%|
+
+|档位|T(ns)|load(pF)|0f FU slack|候选FU slack|0f父级slack|候选父级slack|候选FU Q|候选父级Q|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+|nominal|1.0|0.005|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|period050|0.5|0.005|-0.768520|-1.290381|-2.893998|-2.837809|1.790381|3.337809|
+|period200|2.0|0.005|0.731480|0.209619|-1.393998|-1.337809|1.790381|3.337809|
+|load001|1.0|0.001|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|load020|1.0|0.02|-0.268520|-0.790381|-2.413199|-2.391613|1.790381|3.391613|
+
+Q按原表 T−最差setup slack 对比值保留，不能直接写成全核实际周期。JSON保留所有原始路径及关键路径筛选：FU主路径为operand→R槽，父级nominal为vsew→内部寄存器，load020最差移至fflags输出；ready与gate_enable另列，不混同主路径。
+
+
+| 档位/边界 | 历史最差路径起点→终点 | slack ns |
+|---|---|---:|
+| nominal/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| nominal/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| period050/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -1.290381 |
+| period050/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.837809 |
+| period200/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | 0.209619 |
+| period200/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -1.337809 |
+| load001/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load001/父级 | `io_in_bits_vpu_vsew[1] (input port clocked by core_clk)` → `c201899 (rising edge-triggered flip-flop clocked by core_clk)` | -2.337809 |
+| load020/FU | `io_in_bits_data_src_0[14] (input port clocked by core_clk)` → `c8968 (rising edge-triggered flip-flop clocked by core_clk)` | -0.790381 |
+| load020/父级 | `c201714 (rising edge-triggered flip-flop clocked by core_clk)` → `io_out_bits_fflags[1] (output port clocked by core_clk)` | -2.391613 |
+
+
+完整历史源表、ready/gate路径及数据集原证据pins见[METRICS.json](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observation-design-20261107/METRICS.json)。
+
+
+路线影响：不重复旧M1和phase扫描，先补最小观察能力；四处观察修改前再次说明具体RTL改法。无代码/目标/构建/EDA/默认切换/GitHub写入。
+
+下一轮：开始第19项最小观察器实现与宿主验证：按 DESIGN 和 OBSERVATION_SCHEMA，先说明四个 RTL 源文件的具体改法，在独立候选目录实现默认关闭的调度/写回侧带观察，保持原数据通路、仲裁、ready 和 SP1/T13 协议；完成微操作身份与时序解析正负控、默认关闭检查和必要局部观察中性验证，并评审构建及一次诊断的预算。保留 S0/S1 原覆盖和第19项 HOLD；先不构建全核、不运行 EMU/NEMU、不改软件镜像、不做 EDA、不切默认、不上传 GitHub。完成后给出 GO/HOLD 和下一轮指令。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observation-design-20261107/RESULT.md) · [设计](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observation-design-20261107/DESIGN.md) · [预算和触发合同](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observation-design-20261107/BOUNDED_CONTRACT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observation-design-20261107/NEXT_STEP.md) · [manifest](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observation-design-20261107/EVIDENCE_MANIFEST.json)。
+
+
+## 记录104：第19项最小观察器实现与宿主验证
+
+GO_HOST_IMPLEMENTATION_HOLD_TARGET。独立四文件overlay增加默认关闭侧带；四单元编译、六项旗标、十二次局部CHIRRTL、六对功能投影和七组身份正负控通过。仅局部结构中性，不是事件仿真/形式证明/全核PASS。生产445、旧候选398源码和历史443输入未变。旧FAIL及锁保留。正式19/20，默认0f＋firstdot V2＋原C8；本轮全核构建、目标和EDA均0。
+
+本轮新加速比、面积、时序均NOT_TESTED，历史指标按原合同复用：
+
+|指标|0f|SP1候选|
+|---|---:|---:|
+|chain-256三数据集 RVV/VDOT|2.929725×|3.397658×|
+|batch三数据集 RVV/VDOT|3.067873×|3.067873×|
+|C8 reuse三数据集 RVV/VDOT|1.095238×|1.099265×|
+|FU面积 μm²|17298.246|18322.878|
+|含DIV父级面积 μm²|284614.946|285241.642|
+|nominal FU Q ns|1.268520|1.790381|
+|nominal父级Q ns|3.393998|3.337809|
+
+历史Nangate45同约束边界数据，Q=T−最差setup slack，不是全核频率。完整18格窗口/五档STA/原证据在本轮METRICS.json，未覆盖旧记录。
+
+下一步：独立观察EMU构建及诊断准入，3600秒仅建议构建停止上限，不代表当前已授权。目标预算因新打印/解析开销未知继续HOLD；保留S0/S1和重放，不生成M2或扫描phase。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-impl-20261107/RESULT.md) · [三项指标](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-impl-20261107/METRICS.json) · [预算](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-impl-20261107/BUDGET_REVIEW.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-impl-20261107/NEXT_STEP.md)
+
+
+## 记录105：独立观察EMU构建准入HOLD
+
+**HOLD_HOST_SUPERVISOR_STARTUP_RACE。** 独立物理副本24596文件/精确4个既有观察补丁差异已核对；新宿主监督入口出现启动CPU亲和竞态，正常及非零退出用例FAIL，超时用例的泛化FAIL断言不足以授予资格。按要求停止；实际构建0次，3600秒使用0秒，没有新EMU或目标。原生产445/候选398/历史443输入不变。正式19/20，默认不变。保留原FAIL，不现场修复重跑。
+
+下一轮：exec前设置CPU亲和，永久保存夹具回执并启用failfast；最小宿主门和剩余外部依赖冻结通过后，同轮一次3600秒独立构建。无需重跑未变RTL验证或复制源码；不自动进入诊断。[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-20261107/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-20261107/NEXT_STEP.md)。
+
+### 三项指标（历史复用）
+
+|工作负载|数据集|0f VDOT cycles|SP1 VDOT cycles|0f RVV cycles|SP1 RVV cycles|0f加速比|SP1加速比|
+|---|---:|---:|---:|---:|---:|---:|---:|
+|chain-256|0|1857.0|1601.25|5440.5|5440.5|2.929725×|3.397658×|
+|chain-256|1|1857.0|1601.25|5440.5|5440.5|2.929725×|3.397658×|
+|chain-256|2|1857.0|1601.25|5440.5|5440.5|2.929725×|3.397658×|
+|single-1|0|71.0|70.0|85.25|85.25|1.200704×|1.217857×|
+|single-1|1|71.0|70.0|85.25|85.25|1.200704×|1.217857×|
+|single-1|2|71.0|70.0|85.25|85.25|1.200704×|1.217857×|
+|batch|0|221.0|221.0|678.0|678.0|3.067873×|3.067873×|
+|batch|1|221.0|221.0|678.0|678.0|3.067873×|3.067873×|
+|batch|2|221.0|221.0|678.0|678.0|3.067873×|3.067873×|
+|stream|0|1127.5|1126.25|1133.0|1133.0|1.004878×|1.005993×|
+|stream|1|1127.5|1126.25|1133.0|1133.0|1.004878×|1.005993×|
+|stream|2|1127.5|1126.25|1133.0|1133.0|1.004878×|1.005993×|
+|original-C8-8x32-basic|0|643.75|642.5|356.0|356.0|0.553010×|0.554086×|
+|original-C8-8x32-reuse|0|273.0|272.0|299.0|299.0|1.095238×|1.099265×|
+|original-C8-8x32-basic|1|643.75|642.5|356.0|356.0|0.553010×|0.554086×|
+|original-C8-8x32-reuse|1|273.0|272.0|299.0|299.0|1.095238×|1.099265×|
+|original-C8-8x32-basic|2|643.75|642.5|356.0|356.0|0.553010×|0.554086×|
+|original-C8-8x32-reuse|2|273.0|272.0|299.0|299.0|1.095238×|1.099265×|
+
+历史Nangate45映射面积（μm²）：FU 0f=17298.246、SP1=18322.878；含DIV父级0f=284614.946、SP1=285241.642。
+
+|档位|0f FU slack ns|SP1 FU slack ns|0f父级slack ns|SP1父级slack ns|SP1 FU Q ns|SP1父级Q ns|
+|---|---:|---:|---:|---:|---:|---:|
+|nominal|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|period050|-0.768520|-1.290381|-2.893998|-2.837809|1.790381|3.337809|
+|period200|0.731480|0.209619|-1.393998|-1.337809|1.790381|3.337809|
+|load001|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|load020|-0.268520|-0.790381|-2.413199|-2.391613|1.790381|3.391613|
+
+Q=T−最差setup slack，不能当全核实际周期。FU历史主路径operand→R槽；父级nominal为vsew→内部寄存器，load020转为fflags输出；完整起终点、ready/gate路径和原来源在METRICS.json。以上全部是历史复用，本轮三项指标NOT_TESTED。
+
+
+## 记录106：R1宿主通过，实际构建因RSS超限HOLD
+
+R1 exec前亲和、正常/非零/超时回收3项宿主PASS；本轮唯一一次全核构建已启动，Scala及Chisel展开完成，firtool阶段在378.804秒触发RSS_LIMIT，380.636秒回收完毕。峰值17211658240字节，高于16GiB上限约30.32MiB；峰值84线程，日志284189字节。没有重试、加时或新EMU/NEMU运行。正式19/20，默认0f＋firstdot V2＋原C8不变。
+
+失败后7820外部/449保护输入未变；独立源码清单仅.git/index字节改变，HEAD与暂存逻辑条目一致，原字节检查FAIL保留。生产445/旧候选398源码重新核对未变。下一轮R2复用已编译类、分阶段结束Mill后再展开，保持原后处理/16GiB，并使用新的独立单次3600秒预算；不自动进入诊断。[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r1-20261107/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r1-20261107/NEXT_STEP.md) · [资源归因](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r1-20261107/RESOURCE_ANALYSIS.md)。
+
+### 三项指标（历史复用，本轮未测）
+
+|工作负载|数据集|0f VDOT cycles|SP1 VDOT cycles|0f RVV cycles|SP1 RVV cycles|0f加速比|SP1加速比|
+|---|---:|---:|---:|---:|---:|---:|---:|
+|chain-256|0|1857.0|1601.25|5440.5|5440.5|2.929725×|3.397658×|
+|chain-256|1|1857.0|1601.25|5440.5|5440.5|2.929725×|3.397658×|
+|chain-256|2|1857.0|1601.25|5440.5|5440.5|2.929725×|3.397658×|
+|single-1|0|71.0|70.0|85.25|85.25|1.200704×|1.217857×|
+|single-1|1|71.0|70.0|85.25|85.25|1.200704×|1.217857×|
+|single-1|2|71.0|70.0|85.25|85.25|1.200704×|1.217857×|
+|batch|0|221.0|221.0|678.0|678.0|3.067873×|3.067873×|
+|batch|1|221.0|221.0|678.0|678.0|3.067873×|3.067873×|
+|batch|2|221.0|221.0|678.0|678.0|3.067873×|3.067873×|
+|stream|0|1127.5|1126.25|1133.0|1133.0|1.004878×|1.005993×|
+|stream|1|1127.5|1126.25|1133.0|1133.0|1.004878×|1.005993×|
+|stream|2|1127.5|1126.25|1133.0|1133.0|1.004878×|1.005993×|
+|original-C8-8x32-basic|0|643.75|642.5|356.0|356.0|0.553010×|0.554086×|
+|original-C8-8x32-reuse|0|273.0|272.0|299.0|299.0|1.095238×|1.099265×|
+|original-C8-8x32-basic|1|643.75|642.5|356.0|356.0|0.553010×|0.554086×|
+|original-C8-8x32-reuse|1|273.0|272.0|299.0|299.0|1.095238×|1.099265×|
+|original-C8-8x32-basic|2|643.75|642.5|356.0|356.0|0.553010×|0.554086×|
+|original-C8-8x32-reuse|2|273.0|272.0|299.0|299.0|1.095238×|1.099265×|
+
+历史Nangate45映射面积（μm²）：FU 0f=17298.246、SP1=18322.878；含DIV父级0f=284614.946、SP1=285241.642。
+
+|档位|0f FU slack ns|SP1 FU slack ns|0f父级slack ns|SP1父级slack ns|SP1 FU Q ns|SP1父级Q ns|
+|---|---:|---:|---:|---:|---:|---:|
+|nominal|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|period050|-0.768520|-1.290381|-2.893998|-2.837809|1.790381|3.337809|
+|period200|0.731480|0.209619|-1.393998|-1.337809|1.790381|3.337809|
+|load001|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|load020|-0.268520|-0.790381|-2.413199|-2.391613|1.790381|3.391613|
+
+Q=T−最差setup slack，不能当全核实际周期。FU历史主路径operand→R槽；父级nominal为vsew→内部寄存器，load020转为fflags输出；完整起终点、ready/gate路径和原来源在METRICS.json。以上全部是历史复用，本轮三项指标NOT_TESTED。
+
+
+## 记录107：R2消除Mill并存，JVM＋firtool仍触发RSS上限
+
+R2新增3项宿主门PASS，复用R1监督；同classpath直接top.SimTop，原Make后处理不变。唯一一次构建352.629秒触发RSS_LIMIT，353.065秒回收完毕；峰值17232977920字节（16.049GiB），31线程、250327字节日志。没有Mill父进程，约10GiB JVM与6.04GiB firtool仍并存；未生成EMU，不重试或加时。
+
+24595源码＋18061外部＋456保护输入及逻辑索引前后全部PASS，旧R1索引字节FAIL保留。正式19/20，默认0f＋firstdot V2＋原C8；新三指标NOT_TESTED。下一轮R3评审CHIRRTL→退出JVM→独立firtool→原Make后处理，先确认FIR/附属闭包，再接受新的单次3600秒构建，保持16GiB。本轮无目标/EDA/切换/上传。[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r2-20261107/RESULT.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r2-20261107/NEXT_STEP.md)。
+
+### 三项指标（历史复用，本轮未测）
+
+|工作负载|数据集|0f VDOT cycles|SP1 VDOT cycles|0f RVV cycles|SP1 RVV cycles|0f加速比|SP1加速比|
+|---|---:|---:|---:|---:|---:|---:|---:|
+|chain-256|0|1857.0|1601.25|5440.5|5440.5|2.929725×|3.397658×|
+|chain-256|1|1857.0|1601.25|5440.5|5440.5|2.929725×|3.397658×|
+|chain-256|2|1857.0|1601.25|5440.5|5440.5|2.929725×|3.397658×|
+|single-1|0|71.0|70.0|85.25|85.25|1.200704×|1.217857×|
+|single-1|1|71.0|70.0|85.25|85.25|1.200704×|1.217857×|
+|single-1|2|71.0|70.0|85.25|85.25|1.200704×|1.217857×|
+|batch|0|221.0|221.0|678.0|678.0|3.067873×|3.067873×|
+|batch|1|221.0|221.0|678.0|678.0|3.067873×|3.067873×|
+|batch|2|221.0|221.0|678.0|678.0|3.067873×|3.067873×|
+|stream|0|1127.5|1126.25|1133.0|1133.0|1.004878×|1.005993×|
+|stream|1|1127.5|1126.25|1133.0|1133.0|1.004878×|1.005993×|
+|stream|2|1127.5|1126.25|1133.0|1133.0|1.004878×|1.005993×|
+|original-C8-8x32-basic|0|643.75|642.5|356.0|356.0|0.553010×|0.554086×|
+|original-C8-8x32-reuse|0|273.0|272.0|299.0|299.0|1.095238×|1.099265×|
+|original-C8-8x32-basic|1|643.75|642.5|356.0|356.0|0.553010×|0.554086×|
+|original-C8-8x32-reuse|1|273.0|272.0|299.0|299.0|1.095238×|1.099265×|
+|original-C8-8x32-basic|2|643.75|642.5|356.0|356.0|0.553010×|0.554086×|
+|original-C8-8x32-reuse|2|273.0|272.0|299.0|299.0|1.095238×|1.099265×|
+
+历史Nangate45映射面积（μm²）：FU 0f=17298.246、SP1=18322.878；含DIV父级0f=284614.946、SP1=285241.642。
+
+|档位|0f FU slack ns|SP1 FU slack ns|0f父级slack ns|SP1父级slack ns|SP1 FU Q ns|SP1父级Q ns|
+|---|---:|---:|---:|---:|---:|---:|
+|nominal|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|period050|-0.768520|-1.290381|-2.893998|-2.837809|1.790381|3.337809|
+|period200|0.731480|0.209619|-1.393998|-1.337809|1.790381|3.337809|
+|load001|-0.268520|-0.790381|-2.393998|-2.337809|1.790381|3.337809|
+|load020|-0.268520|-0.790381|-2.413199|-2.391613|1.790381|3.391613|
+
+Q=T−最差setup slack，不能当全核实际周期。FU历史主路径operand→R槽；父级nominal为vsew→内部寄存器，load020转为fflags输出；完整起终点、ready/gate路径和原来源在METRICS.json。以上全部是历史复用，本轮三项指标NOT_TESTED。
+
+
+### 记录108：第19项构建入口 R3 宿主HOLD
+
+2026-11-07T22:20:37.015103+08:00～2026-11-07T22:25:54.013149+08:00；@cc77-builder / Agent（会话身份），操作ID `SP1-E-item19-build-R3`。基点 `347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e`。串行宿主草稿和4项参数检查、小样编译通过；原入口展开因夹具遗漏ArgParser日志配置而FAIL，已回收。FIR等价尚未执行。完整构建0次/0秒，3600秒预算未使用；未修改RTL、镜像、默认或上传。正式19/20。
+
+下一步仅新身份修复小样参数初始化，集中核查变换后FIR/附属闭包；不绕过PrintModuleName/PrintControl风险。全部准入后才能一次3600秒/16GiB构建。保留原FAIL和HOST.lock。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r3-20261107/RESULT.md) · [评审](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r3-20261107/DESIGN_REVIEW.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r3-20261107/NEXT_STEP.md)。
+
+
+### 记录109：第19项构建入口 R3-R1 真实序列化差异HOLD
+
+2026-11-07T23:08:59.173824+08:00～2026-11-07T23:13:07.536751+08:00；@cc77-builder / Agent（会话身份）；操作ID `SP1-E-item19-build-R3-R1`，基点`347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e`。小样改为原ArgParser初始化，编译及原SV/CHIRRTL生成全部返回0。4项参数检查通过；FIR内PrintModuleName输出不一致：稳定模块名变成JVM对象标识。失败即停；离线核5条注解/6个尾部文件一致，不覆盖FIR失败。
+
+**正式19/20，完整构建0次/0秒，默认不变。** 保留所有旧FAIL，无重试、EMU/NEMU、EDA、生产RTL或镜像修改、默认切换、上传。下一轮R4设计独立工具导出香山变换后FIR与注解，先证闭包等价，全部准入才一次3600秒/16GiB构建。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r3-r1-20261107/RESULT.md) · [序列化归因](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r3-r1-20261107/SERIALIZATION_ANALYSIS.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r3-r1-20261107/NEXT_STEP.md)。
+
+
+### 记录110：第19项构建入口R4，重复注解侧文件HOLD
+
+2026-11-07T23:16:46.853219+08:00～2026-11-07T23:23:15.275955+08:00；@cc77-builder / Agent（会话身份）；操作ID `SP1-E-item19-build-R4`；基点`347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e`。独立导出器编译、默认原入口与导出生成、JVM退出后的firtool均PASS；完整FIR、原RTL目录10件及6个尾部文件逐字节一致。输出集合多出722字节重复注解侧文件而FAIL，已停止，disable-all未执行。
+
+正式19/20，3600秒完整构建0次/0秒，默认0f＋firstdot V2＋原C8不变。未运行EMU/NEMU、EDA，未改生产RTL/镜像，未上传。下一步R4-R1只收口隐式侧文件输出，保留FIR注解；复用已过证据并完成必要闭包/PrintControl验证，全部准入才一次3600秒/16GiB构建。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r4-20261107/RESULT.md) · [归因](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r4-20261107/SIDECAR_ANALYSIS.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r4-20261107/NEXT_STEP.md)。
+
+
+### 记录111：第19项构建入口R4-R1，宿主通过／冻结HOLD
+
+2026-11-07T23:41:20.567692+08:00～2026-11-07T23:48:47.309214+08:00；@cc77-builder / Agent（会话身份）；操作ID `SP1-E-item19-build-R4-R1`；基点`347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e`。仅抑制重复注解侧文件后，默认/disable-all共10项闭包和6项构建适配器检查通过。24,596文件独立副本完成，原Make干跑exit0。冻结代码将带反斜杠续行的第一物理行送shlex而报错；失败即停，未补跑或完整构建。
+
+正式19/20，完整构建0次/0秒，默认不变。生产RTL/镜像未改，无EMU/NEMU/EDA或上传。下一轮R4-R2仅修逻辑行提取并补完冻结，复用10+6证据及现成build-03副本，准入通过才一次3600秒/16GiB构建。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r4-r1-20261107/RESULT.md) · [失败归因](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r4-r1-20261107/FREEZE_FAILURE.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r4-r1-20261107/NEXT_STEP.md)。
+
+
+### 记录112：第19项R4-R2，生成通过／Git目录闭包导致后处理FAIL
+
+2026-11-08T00:10:44.745504+08:00～2026-11-08T00:27:43.673220+08:00；@cc77-builder / Agent（会话身份），未提交，基点`347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e`。复用10＋6项证据和24,596文件副本，新解析/冻结14项通过。唯一构建490.888秒、峰值RSS9.692GiB，JVM110.053秒与firtool378.512秒均PASS且串行退出；原Make因coupledL2/.git无效失败，未进入原生EMU编译。已停止，无残留。
+
+只读确认文件复制遗漏629个Git目录，原127仓库可识别、副本仅3个。FIR/SV原始输出已冻结但Make后处理未完成，不可直接按mtime恢复构建。输入后检PASS，原FAIL与锁保留。正式19/20，默认0f＋firstdot V2＋原C8不变；本轮三项指标NOT_TESTED，历史实测保持。无EMU/NEMU、EDA、生产RTL/镜像变更或上传。下一轮仅修目录闭包并验证安全接续，使用新独立预算，不重复JVM/firtool。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r4-r2-20261108/RESULT.md) · [归因](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r4-r2-20261108/GIT_DIRECTORY_ANALYSIS.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r4-r2-20261108/NEXT_STEP.md)。
+
+
+### 记录113：第19项R4-R3，Git目录修复PASS／宿主LF模型FAIL
+
+2026-11-08T00:33:44.803702+08:00～2026-11-08T00:41:16.151410+08:00；@cc77-builder / Agent（会话身份），未提交，基点`347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e`。仅补629个Git空目录，127仓库可识别；原始1687件生成物物理快照并核对。独立接续Make保留原后处理，原配方与干跑两项PASS。小样Make退出0，但检查器将147处裸CR误作行界，多插294字节而FAIL。只读LF模型精确解释，不覆盖原失败，不修后重跑。
+
+正式19/20、默认0f＋firstdot V2＋原C8不变。真实完整构建0次/0秒，未进入完整执行冻结。三项指标NOT_TESTED、历史实测保持；没有EMU/NEMU/EDA、生产RTL或镜像变更、切默认或上传。下一轮仅修LF模型、复用现有输出补负控并完整冻结；全部通过再新独立3600秒/16GiB剩余构建，不重复JVM/firtool。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r4-r3-20261108/RESULT.md) · [归因](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r4-r3-20261108/LF_SEMANTICS_ANALYSIS.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r4-r3-20261108/NEXT_STEP.md)。
+
+
+### 记录114：第19项R4-R3-R1，新观察EMU构建PASS
+
+2026-11-08T01:06:22.126707+08:00～2026-11-08T01:26:24.784778+08:00；@cc77-builder / Agent（会话身份），未提交，基点`347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e`。仅修检查器LF语义，15项宿主、8项完整冻结PASS。一次接续构建851.429秒，峰值7.480949GiB；原Make后处理1608SV及79其他文件精确核查PASS，Verilator/C++/链接退出0。JVM/firtool未重跑；EMU为71,379,320字节，SHA `fc25f9e2a22cc1c51e4a4884c03c6d84e950fcbb1925eb55a448de104273f742`。后检输入/旧证据保持、无残留。UTC时间戳差807.711738秒，原差异保留，未授UTC一致性审计资格。
+
+正式仍19/20，构建阻塞解除，诊断准入待做；默认0f＋firstdot V2＋原C8保持。没有EMU/NEMU运行、EDA、生产RTL/镜像变化、切换或上传；新加速比/面积/时序NOT_TESTED。下一轮可集中做两角色诊断准入，依据充分且新授权后300/900秒运行；诊断未命中保留，不冒充第19项PASS，不自动M2或重放。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r4-r3-r1-20261108/RESULT.md) · [固定EMU](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r4-r3-r1-20261108/FROZEN_EMU.json) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-r4-r3-r1-20261108/NEXT_STEP.md)。
+
+
+### 记录115：第19项两角色诊断准入HOLD，目标0次
+
+2026-11-08T01:37:40.592213+08:00～2026-11-08T01:46:37.061546+08:00；@cc77-builder / Agent（会话身份），未提交，基点`347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e`。新EMU、原M1/参考库与8个动态依赖身份核对，编译后6/6/4/4/1观察点与设计一致。目标时长增量依据不足，旧保守新侧带界对整批40万guest为2311201080字节，不能证明2GiB够用（不是实际超限）。格式细化脚本把NX参数类型当显示进制而断言FAIL，留档未重跑；流式适配/新正负控/执行冻结尚未完成。
+
+记录114构建PASS保持，正式19/20、默认0f＋firstdot V2＋原C8不变。目标0次、预算0秒，新三项指标NOT_TESTED；无RTL/镜像/构建/EDA/上传变化。下一批集中修格式分析、完成完整日志界/流式检查器/宿主成本；没有目标开销依据HOLD并提出独立校准合同，不用正式两角色偷偷试跑。
+
+[结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-diagnostic-20261108/RESULT.md) · [预算](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-diagnostic-20261108/BUDGET_REVIEW.md) · [下一轮](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-diagnostic-20261108/NEXT_STEP.md)。
+
+
+### 记录116：观察EMU完整诊断与有效字段中性通过，继续M2
+
+2026-11-08T02:13:17.235181+08:00；@cc77-builder / Agent（会话身份）；基点347b1ae7，未提交。
+
+诊断完成，原批次STOPPED保留，完整真实日志离线修复比较口径后PASS。正式仍19/20，S0/S1未命中；默认0f＋firstdot V2＋原C8不变。
+
+- 14项宿主测试、10万流式事务、425冻结输入。bit100 24.981秒/11653 guest，完整拒错通过。
+- M1正常 574.819秒/267282 guest；完整41调用、84 UART、77 custom、DiffTest PASS。725条侧带事务完整身份/排空，52903条实际微操作记录。
+- 两角色累计599.800秒、原始日志14663801字节，原CPU4/4线程/12GiB/2GiB与300/900秒上限保持；无残留。
+- 原比较误把整段输入日志SHA当语义摘要，触发FAIL；真实差异仅无效P的prob/ppdest和无效R的rrob/rpdest。新离线比较保留全部有效字段/控制/周期，2200条逐项相等；5项定向正负控通过。宿主夹具两次误引用本镜像不存在的T13流也保留，最终使用实际SP1提交字段；CSR依据为实际C判断器，不伪称存在T13采样。原批次JSON、冻结源码及原FAIL均未改写。
+- 完整40个A调用时序：36次S1末次F2v写回比A响应早8拍，S0四相位早9/11/17/18拍。此前无反压有了可定位原因。
+
+下一步自主实施M2定点软件补测：F2v源增加fmul+fsgnj依赖链，vdot输入、零加、分支、原四相位、41调用和原S0/S1合同不变。先构建与宿主审计，再新身份有界执行。没有新RTL/核构建/EDA/默认切换/上传。新加速比、面积、时序NOT_TESTED；历史三项指标见METRICS。
+
+[结果](team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-diagnostic-r1-20261108/RESULT.md) · [时序表](team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-diagnostic-r1-20261108/review/TIMELINE.json) · [接续](team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-diagnostic-r1-20261108/NEXT_STEP.md)
+
+
+## 2026-11-08 记录117：M2未命中，保留19/20
+
+结论：NOT_HIT，19/20。bit100、41次功能调用、77次custom、完整128位与CSR/ABI、NEMU差分通过；P入队和真实父级反压均未命中，不计为第19项通过。
+
+两个进程合计605.237秒，正常267234 guest cycles/579.294秒，均在预算内。完整时序：S1全部36次F2v结束早于A响应5拍；S0原四相位差4/7/9/15拍。M2确实后移压力，但不足以重叠，原FAIL和锁保留。
+
+下一步仅在scratch ft3链再加两条依赖FMUL；数据、分支、原相位与完整覆盖不变。此前考虑一条，完整S1证据显示不足，故选择两条；不扫描相位。
+
+本轮未测性能、面积、时序，均NOT_TESTED。历史SP1 chain加速比3.397658×（0f 2.929725×）；FU面积18322.878 μm²、父级285241.642 μm²；标称Q分别1.790381/3.337809 ns（Q=T−slack，不是全核Fmax）。未切默认，未上传。
+
+证据：`team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-m2-fp-pressure-20261108/RESULT.json`。
+
+
+## 2026-11-08 记录118：M3 完整未命中
+
+NOT_HIT，19/20。bit100与完整41调用、77custom、全128位、CSR/ABI、NEMU差分通过，正常267397 guest/580.931秒。两个目标累计606.085秒；未重试、未加时。
+
+40个A中39个在F2v末写后3拍响应，另一项5拍；P/反压仍0。FEX0与VFEX4共享写口且OG0也仲裁，VFEX3与VFEX4共享读口，不能将压力延迟视为独立旋钮。完整时序及源码支持一次M4：多一条依赖FMUL把F2v首写后移约4拍，使A/B有机会先经过OG0/OG2。保留旧FAIL、原相位和覆盖。
+
+M3最初PC清单仍引用M2的宿主准入已撤销（零目标），runtime-r1绑定新manifest并通过负控后才启动。三个指标本轮NOT_TESTED；历史chain3.397658×、FU18322.878 μm²/标称Q1.790381ns、父级285241.642 μm²/Q3.337809ns均未重测。默认0f未切换，未上传。
+
+证据：`team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-m3-runtime-r1-20261108/RESULT.json`。
+
+
+## 2026-11-08 记录119：M4 全核命中 S0/S1，重放待完成
+
+结论：GO 进入最终重放；仍为19/20，尚未把校准等同最终验收。bit100拒错25.346秒/11668guest通过；正常586.634秒/267845guest通过；目标总611.980秒。
+
+|覆盖|真实证据|
+|---|---|
+|S0|phase0，R=A seq1，B seq2在17988进入P，17989双槽占用；双方完整响应/提交|
+|S1|phase4第九次指定probe，R=A seq76/ROB1:30，B seq77/ROB1:36在262616进入P；262617来自ROB1:35的取消杀P保R；A在262624响应；B无响应/提交|
+|完整检查|41调用、77提交、78接受，完整128位及实际C端CSR/ABI检查、NEMU差分；725侧带响应闭合|
+|累计事件|ENQUEUE_P34、STALL296、KILL_P1、PARTIAL_KILL1|
+
+M1/M2/M3原未命中记录保留。M4仅软件scratch依赖链，无RTL/EMU重构或默认切换。
+
+本轮加速比、面积、时序均NOT_TESTED；历史SP1chain3.397658×（0f2.929725×）；FU18322.878 μm²、Q1.790381ns；父级285241.642 μm²、Q3.337809ns。Q为T−slack，非全核时钟。
+
+下一步集中完成原SP1功能EMU观察中性、补测同核精确重放、0f补测数值对照及原o2-control双核重放。保留原覆盖、每角色预算和失败即停；不切默认、不上传。
+
+证据：`team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-m4-fp-pressure-20261108/RESULT.json`。
+
+
+## 2026-11-08 记录120：SP1最后第19项通过，20/20，可供选用
+
+@cc77-builder / Agent；操作ID `SP1-E-ITEM19-FINAL-ACCEPTANCE-20261108`；执行UTC 2026-11-07T18:56:10.037564+00:00～2026-11-07T20:11:47.361417+00:00，留档北京时间2026-11-08T04:12:06.210904+08:00；基点 `347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e`，未提交。
+
+五角色全部通过：原SP1补测与观察中性、同核重放、0f补测对照、原控制镜像SP1/0f重放。S0真实双槽和S1杀P保R在原功能EMU命中并精确复现；原16组/256试验/1208提交/131072字节覆盖保留。目标4550.961秒，宿主22.148秒，外层4573.154秒，预算及清理通过。
+
+原失败/未命中和旧预算HOLD保留，本轮新性能/面积/STA均NOT_TESTED。建议采用原SP1，最终默认选型由用户决定；没有切默认或上传。主目录历史P4-R1不等于候选，采用入口为独立原SP1源码与release-candidate。
+
+[完整结果](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/RESULT.md) · [20项矩阵](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/MATRIX.md) · [候选包](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/release-candidate/README.md) · [三项指标](../../team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-final-acceptance-20261108/METRICS.md)。
+
+路线接续：第19项验证关闭，不重复探针；用户选择后再集成默认入口和发布。
+
+
+### 记录120时间口径补充
+
+首角色UTC起止差比单调时钟elapsed少35.33771秒，实际调钟原因未独立确定，**不授予UTC时间连续一致资格**。其余四角色差约0.023～0.047秒。原始时间戳、回执、外层监督记录均保留。冻结合同与运行器使用`time.monotonic()`及外部截止监督：目标累计4550.961秒、宿主22.148秒、外层4573.154秒，均满足原预算；该UTC差异不改写guest周期、功能结果或精确重放结论。
+
+见配套`CLOCK_RECONCILIATION.json`；这是时间记录差异说明，不把旧clean-02或历史UTC问题追溯改成PASS。

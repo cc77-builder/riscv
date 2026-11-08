@@ -1,0 +1,72 @@
+{
+  "schema": "item19-observer-build-closeout-v1",
+  "record_number": 105,
+  "record_id": "sp1-e-item19-observer-build-20261107",
+  "recorded_at": "2026-11-07T21:12:34.195792+08:00",
+  "source_commit": "347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e",
+  "branch": "local/zjhwork-integration-20261024",
+  "operator": "cc77-builder / Agent (session identity, not fresh login)",
+  "status": "HOLD_HOST_SUPERVISOR_STARTUP_RACE",
+  "coverage_qualified": 19,
+  "coverage_required": 20,
+  "stable_default": "0f + firstdot V2 + original C8",
+  "default_changed": false,
+  "source_copy_files": 24596,
+  "overlay_delta_files": 4,
+  "RTL_changed_this_round": false,
+  "host_test_methods": 3,
+  "host_failures": 2,
+  "timeout_control_credit": false,
+  "full_core_build_attempts": 0,
+  "accepted_build_wall_seconds": 3600,
+  "used_build_seconds": 0,
+  "new_EMU_runs": 0,
+  "new_NEMU_runs": 0,
+  "new_EDA_runs": 0,
+  "software_image_changed": false,
+  "github_upload": false,
+  "old_failures_preserved": true,
+  "new_three_metrics": {
+    "speedup": "NOT_TESTED",
+    "area": "NOT_TESTED",
+    "timing": "NOT_TESTED"
+  },
+  "next_step": "开始第19项观察EMU构建入口R1：最小修复启动时的CPU亲和竞态，在exec前设置子进程亲和；保留本轮FAIL、原四文件观察补丁和独立源码副本。将宿主门改为失败即停并持久保存每例回执，精确核查正常退出、非零退出及超时整组回收。复用已通过证据，补齐外部工具和依赖冻结；全部准入后同轮进行一次3600秒有界构建，不重试、不加时。成功后准备两角色诊断合同；不运行EMU/NEMU、不改RTL或软件镜像、不做EDA、不切默认、不上传GitHub。",
+  "evidence": {
+    "SOURCE_SNAPSHOT.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-20261107/SOURCE_SNAPSHOT.json",
+      "bytes": 9066957,
+      "sha256": "a9585b83c7df42d3daa7e9c78ea4ab40393918faf95bff9610023d75b26f84bc"
+    },
+    "PRESERVATION.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-20261107/PRESERVATION.json",
+      "bytes": 206,
+      "sha256": "b41df6a9565f6c1ec7c4003742c703536af160df74167e7da8747b3c4c83a32c"
+    },
+    "FAILURE.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-20261107/FAILURE.json",
+      "bytes": 1268,
+      "sha256": "e1bcc6fc79ac67951326a834f104bb31f9b2739584e06f3d6695df545a23ed7e"
+    },
+    "supervisor-host.log": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-20261107/supervisor-host.log",
+      "bytes": 1645,
+      "sha256": "dfee94163aa48c2252dafeb8a9e16fa8624a47bf3c35415622eeaf6b4185f46d"
+    },
+    "DRAFT_BUILD_CONTRACT.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-20261107/DRAFT_BUILD_CONTRACT.json",
+      "bytes": 1234,
+      "sha256": "69113e2dd1e7f9fabfc065a0b714bc985d4f1ef0e4dba25e40e35207956b6f5c"
+    },
+    "METRICS.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-20261107/METRICS.json",
+      "bytes": 112494,
+      "sha256": "1dddec7a87286820f0ca9259f80f065b1d5f76e5e4132662038dd976c15e7c14"
+    },
+    "REMOTE_READ.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-item19-observer-build-20261107/REMOTE_READ.json",
+      "bytes": 7857,
+      "sha256": "f5603c0bef8cfb92d673f1ae37779e47b3b9c2ef0d008da1471b43be5667dcf1"
+    }
+  }
+}

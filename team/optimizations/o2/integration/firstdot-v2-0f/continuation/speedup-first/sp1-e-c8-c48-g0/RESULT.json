@@ -1,0 +1,157 @@
+{
+  "schema": "sp1-e-c48-host-closeout-v1",
+  "record_id": "SP1-E-C8-C48-HOST-G0-20261104-01",
+  "operation_id": "20261104-cc77-builder-sp1-e-c8-c48-g0",
+  "operator": "@cc77-builder / Agent",
+  "started_utc": "2026-11-04T14:13:38.593740+00:00",
+  "ended_utc": "2026-11-04T14:40:35.028282+00:00",
+  "recorded_at": "2026-11-04T22:40:35.028282+08:00",
+  "status": "HOLD_C48_TARGET_BUDGET_AND_EXECUTION_CLOSURE",
+  "host_contract": "GO_STATIC_CONTRACT_ONLY",
+  "target_admission": "HOLD",
+  "target_correctness": "NOT_TESTED_ON_CURRENT_C48_COMBINATION",
+  "performance_qualified": false,
+  "stable_default": "0f + firstdot V2 + original C8",
+  "default_selected_hardware_changed": false,
+  "user_selection": "PENDING_USER_SELECTION",
+  "source_commit": "347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e",
+  "branch": "local/zjhwork-integration-20261024",
+  "identity": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-c8-c48-g0/IDENTITY_REVIEW.json",
+    "bytes": 124615,
+    "sha256": "b577e9d4dc0fd72a7936eeb637e70799936626c23f8f602d546c3c00e8a75396"
+  },
+  "contract": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-c8-c48-g0/CONTRACT.json",
+    "bytes": 8897,
+    "sha256": "42e52ae4a7ef94c110d59a3cc4761b821cdad86d4b28faf4e881903213fcbc31"
+  },
+  "reviews": {
+    "contract": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-c8-c48-g0/contract-review/REVIEW.json",
+      "bytes": 9864,
+      "sha256": "acd53492404bf1c63bdb1cf5f2cbaad1eb295693fe44f9df62fb51d04381d38e"
+    },
+    "budget": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-c8-c48-g0/budget-review/REVIEW.json",
+      "bytes": 32979,
+      "sha256": "4aa37738284f0a0cf513f9674491fbf5fdd4b9fb9ce8a52b84b35b754d025b60"
+    },
+    "checker": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-c8-c48-g0/checker-review/REVIEW.json",
+      "bytes": 15124,
+      "sha256": "cb749550508f2d43624c35874e0835bfb7606256c5484c88f903521f9da7ab82"
+    }
+  },
+  "review_statuses": {
+    "contract": "GO_STATIC_CONTRACT_ONLY",
+    "budget": "HOLD_NO_VALIDATED_CURRENT_C48_COMPLETION_UPPER_BOUND",
+    "checker": "REVIEW_COMPLETE_TARGET_HOLD"
+  },
+  "coverage": {
+    "calls": 48,
+    "c8_calls": 12,
+    "custom_commits": 1008,
+    "output_slots": 384,
+    "input_datasets": 12,
+    "dataset_ids": [
+      0,
+      1,
+      2
+    ],
+    "shapes": [
+      [
+        4,
+        8
+      ],
+      [
+        8,
+        32
+      ],
+      [
+        16,
+        64
+      ],
+      [
+        4,
+        13
+      ]
+    ],
+    "methods": [
+      "basic-vdot",
+      "basic-rvv",
+      "reuse-vdot",
+      "reuse-rvv"
+    ],
+    "performance_windows": 0,
+    "drop_calls_allowed": false,
+    "tail_4x13": "vdot methods: first8 custom, last5 scalar lb/mulw/addw per row. RVV controls are vector implementations."
+  },
+  "budget": {
+    "current_complete_wall_upper_bound_seconds": null,
+    "admitted_role_guest_caps": null,
+    "admitted_role_wall_caps": null,
+    "outer_reference_cap_seconds": 7200,
+    "target_reference_sum_seconds": 6300,
+    "nonadmitted_sensitivity_draft_role_seconds": [
+      300,
+      3000,
+      3000
+    ],
+    "draft_is_completion_guarantee": false,
+    "normal_guest_cap": "NOT_ADMITTED; must cover whole48call program;300000 invalid against observed871326",
+    "negative_guest_cap_template": 100000,
+    "cpu_affinity": [
+      4
+    ],
+    "process_group_thread_cap": 4,
+    "rss_cap_bytes": 12884901888,
+    "combined_log_cap_bytes": 2147483648,
+    "clock": "monotonic incl preflight/checking/cleanup; UTC observations retained separately",
+    "complete_runtime_history": "oldEMU acf672/oldref62b170 only;1260.04802692 and1315.562138357 sec; not a current bound"
+  },
+  "necessary_gaps": [
+    "current full-C48 conservative wall upper bound",
+    "versioned functional collector/receipt/campaign;1500-sec legacy cap not bypassed",
+    "real-interface controls and process-generation/replay/full execution freeze"
+  ],
+  "new_EMU_processes": 0,
+  "new_standalone_NEMU_processes": 0,
+  "reference_libraries_loaded": 0,
+  "RTL_edits_this_round": 0,
+  "new_fullcore_builds": 0,
+  "new_synthesis_runs": 0,
+  "new_STA_runs": 0,
+  "GitHub_writes": 0,
+  "new_metrics": {
+    "target_function": "NOT_TESTED",
+    "speedup": "NOT_TESTED; no performance windows in C48",
+    "area": "NOT_TESTED",
+    "timing": "NOT_TESTED"
+  },
+  "historical_metric_records": [
+    51,
+    52,
+    53,
+    54,
+    55
+  ],
+  "prior_records_preserved": 55,
+  "next_instruction": "暂存 SP1-E 原 C8 普通 C48 的预算HOLD，保留48调用及1008custom，不重试或缩减。开始 SP1-E micro chain-d1 的合同与宿主准入准备：复用固定0f/SP1 EMU、NEMU及G0冻结镜像，核查12窗、1536custom、bit100、退休/CSR/完整128位及精确重放，审查专用运行器适配、正负控和6300/7200秒预算依据。保持10%收益、2% RVV退化及AB/BA门槛；预算不足就HOLD。先不运行EMU/NEMU、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub；完成后给出GO/HOLD和下一轮指令。",
+  "next_task_started": false,
+  "metric_snapshot": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-c8-c48-g0/METRIC_SNAPSHOT.json",
+    "bytes": 91145,
+    "sha256": "1b42e5fa2c35661e6fb0548cfe34bdd496c532484df3043427e09fd621ca7487"
+  },
+  "next_step": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-c8-c48-g0/NEXT_STEP.md",
+    "bytes": 659,
+    "sha256": "1260a9bb315f19f97b0230c1156f4b11edf5633f51ac8a86510d7223b2138fee"
+  },
+  "evidence_manifest": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-c8-c48-g0/evidence-manifest.json",
+    "bytes": 20077,
+    "sha256": "f1337fc4d1e78a3867e88859282f1b8b5f97b776bd67ce1395831fb463a266ee"
+  }
+}

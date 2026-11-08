@@ -1,0 +1,269 @@
+{
+  "schema": "timed-div-sqrt-four-role-qualification-v1",
+  "operation_id": "SP1-E-TIMED-DIV-SQRT-FOUR-R1-20261107-01",
+  "case_id": "timed-div-sqrt",
+  "stable_default": "0f + firstdot V2 + original C8",
+  "prior_contract": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-g0/protection/CONTRACT.json",
+    "bytes": 4612,
+    "sha256": "9f11f0ab3a7ac4082fbb7d77cd43b707225dbfa21be70d25fc15c0c7f5a64182"
+  },
+  "software_manifest": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-g0/protection/software/manifest.json",
+    "bytes": 11365,
+    "sha256": "3ae24e9ed758cf833aafc81c9a549cf474c88a7bd0705529e4a6d5ec91a7c4d2"
+  },
+  "runtime": {
+    "candidate_emu": {
+      "path": "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/candidate/build/emu",
+      "bytes": 71260448,
+      "sha256": "e34b2eaa8deb99f83534478217aaf144e32262ba08b2c18c31c6ac7265525c1e"
+    },
+    "baseline_emu": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/build/emu",
+      "bytes": 71235872,
+      "sha256": "2d1db77cc407486a2387a4a69da2498b68d44980239025eebcc02370c02826e8"
+    },
+    "normal_reference": {
+      "path": "/home/riscv/riscv-lab/t12-regression-20261013/nemu/reference/build/riscv64-nemu-interpreter-so",
+      "bytes": 1459056,
+      "sha256": "efbed0774addc27eac38af1a19ab5d9c9dd5f179b5015f25ae7b80b966185bd4"
+    },
+    "flash": {
+      "path": "/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+      "bytes": 12,
+      "sha256": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994"
+    },
+    "bin": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-g0/protection/build-01/protection.bin",
+      "sha256": "90f14db3d81720ce46d36aed7d16d35e1760b104614b5dab176fa1ef2900e79c",
+      "bytes": 9552
+    },
+    "elf": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-g0/protection/build-01/protection.elf",
+      "sha256": "f23d58d3fda48427fcf7963c1b5fcf0e36a8394051246504b0d6764e58d68ae5",
+      "bytes": 58656
+    },
+    "negative_reference": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-g0/protection/negative/timed-div-sqrt-negative-reference.so",
+      "bytes": 16384,
+      "sha256": "38d80aac0763fe21eed34024f8bfdfb1173df030a789d43fa3976ac8d15be21c"
+    }
+  },
+  "roles": [
+    {
+      "name": "candidate-normal",
+      "mode": "candidate",
+      "hardware": "candidate_emu",
+      "reference": "normal_reference",
+      "wall_seconds": 4800,
+      "guest_cycles": 2000000,
+      "emu_max_cycles": 1999984,
+      "expected_exit": 0
+    },
+    {
+      "name": "baseline-normal",
+      "mode": "baseline",
+      "hardware": "baseline_emu",
+      "reference": "normal_reference",
+      "wall_seconds": 4800,
+      "guest_cycles": 2000000,
+      "emu_max_cycles": 1999984,
+      "expected_exit": 0
+    },
+    {
+      "name": "candidate-replay",
+      "mode": "candidate",
+      "hardware": "candidate_emu",
+      "reference": "normal_reference",
+      "wall_seconds": 4800,
+      "guest_cycles": 2000000,
+      "emu_max_cycles": 1999984,
+      "expected_exit": 0
+    },
+    {
+      "name": "baseline-replay",
+      "mode": "baseline",
+      "hardware": "baseline_emu",
+      "reference": "normal_reference",
+      "wall_seconds": 4800,
+      "guest_cycles": 2000000,
+      "emu_max_cycles": 1999984,
+      "expected_exit": 0
+    }
+  ],
+  "limits": {
+    "target_seconds": 19200,
+    "host_seconds": 900,
+    "outer_seconds": 20100,
+    "cpu_affinity": [
+      4
+    ],
+    "thread_cap": 4,
+    "rss_cap_bytes": 12884901888,
+    "log_cap_bytes": 2147483648
+  },
+  "env": {
+    "PATH": "/usr/local/bin:/usr/bin:/bin",
+    "HOME": "/home/riscv",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C",
+    "OMP_NUM_THREADS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "guard": {
+    "pc": 2147484992,
+    "word": 43255051,
+    "vd": 10,
+    "bit": 100
+  },
+  "cwd": {
+    "candidate": "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/candidate",
+    "baseline": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo"
+  },
+  "coverage": {
+    "windows": 54,
+    "measured_windows": 36,
+    "cells": 9,
+    "vector_operations": 432,
+    "custom_commits": 1
+  },
+  "comparison": {
+    "per_cell_mean_candidate_over_baseline_max": "51/50",
+    "datasets": 3,
+    "operators": 3,
+    "measured_repeats": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "first_warmup_checked": true,
+    "same_ELF_BIN": true,
+    "all_non_counter_retired_debug_data_exact": true,
+    "unknown_fusion_rejected": true,
+    "all_432_parent_accept_output_retire_bound": true,
+    "exact_replay_required": true,
+    "legacy_guest_cycles_not_kernel_perf": true
+  },
+  "automatic_retry": false,
+  "automatic_replay": false,
+  "formal_qualification": true,
+  "target_permission": "CURRENT_USER_EXPLICIT_FOUR_ROLE_AUTHORIZATION_AFTER_HOST_PASS",
+  "budget_scope": "New independent authorized bounded execution; target19200/host900/outer20100; each4800s/2Mguest; no borrowing or retry",
+  "reference_libraries_loaded": false,
+  "user_instruction_sha256": "51c5ddae4cd56816912947bd62266f300d61d8fb56e7e5d8252b85ba7fef7b12",
+  "design_contract": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-budget-review-20261107/DESIGN_CONTRACT.json",
+    "bytes": 16964,
+    "sha256": "1e5fb1c6c61631c419d9a59c6dd3d0fc226e56fa7d49ce77188b929ddb6dcfe3"
+  },
+  "replay_contract": {
+    "order": [
+      "candidate-replay",
+      "baseline-replay"
+    ],
+    "requires_both_normals_pass": true,
+    "requires_explicit_new_task_authorizing_all_four_roles": true,
+    "distinct_run_id_from_runtime_receipt": true,
+    "same_hardware_exact_fields": [
+      "rows",
+      "t13",
+      "div_binding",
+      "observation_sha256",
+      "observation_counts"
+    ],
+    "cross_hardware_exact_fields": [
+      "elf_sha256",
+      "bin_sha256",
+      "manifest_sha256",
+      "reference",
+      "t13.cross_control_sha256",
+      "div_binding"
+    ],
+    "missing_values_rejected": true,
+    "existing_comparator": "protection.compare",
+    "final_qualification": "four fresh complete normal roles + reused authenticated bit100, exact replay and all nine cells PASS -> item20 PASS; overall19/20, item19 remains HOLD"
+  },
+  "historical_bit100": {
+    "root": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-host-20261107",
+    "files": [
+      {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-host-20261107/target-01/01-bit100/validation.json",
+        "bytes": 6342,
+        "sha256": "c5eb4b0f6ba751d17f45846586419f75bc380340aa38a65cbe58de6b0a066db3"
+      },
+      {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-host-20261107/target-01/01-bit100/record.json",
+        "bytes": 5774,
+        "sha256": "38ac43ca635ef933013379a3010b682b6704c1b5d81131b8859b61ea2bab07c2"
+      },
+      {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-host-20261107/target-01/01-bit100/launch.json",
+        "bytes": 1336,
+        "sha256": "fcc19c40436743d3491cea1de0f872fca535a8a71849ff40df563e74f1fde551"
+      },
+      {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-host-20261107/target-01/01-bit100/execution-identity.json",
+        "bytes": 1590,
+        "sha256": "29c78b7293863f15eed2c89947dc004efe23d4dfb9e11fbd7986ca2d44534c0a"
+      },
+      {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-host-20261107/target-01/01-bit100/stdout.log",
+        "bytes": 14804,
+        "sha256": "7d78aaa279a0b83427677b84f7ca5bbf5cb389a4e7485641c538adb871ab1dca"
+      },
+      {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-host-20261107/target-01/01-bit100/stderr.log",
+        "bytes": 8240,
+        "sha256": "e6bf33a625af4999f962593619b76ae6b9d10ae7b390ac9c3e5a99c6f059887a"
+      },
+      {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-host-20261107/target-01/01-bit100/telemetry.jsonl",
+        "bytes": 183722,
+        "sha256": "bb42c4dac7970d342a92c178e62886b99feb19605cea4d41bf40c5c43380204d"
+      },
+      {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-host-20261107/CONTRACT.json",
+        "bytes": 5097,
+        "sha256": "1d8966822265ef19bdc9b963b4ecaa1e93658128b0ce9e62d293102d1c7d6183"
+      },
+      {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-host-20261107/EXECUTION_FREEZE.json",
+        "bytes": 11426,
+        "sha256": "2d186ef0c4577f16ed35c827fc20102ce26a10d01a1a86fb40fd2e295fb57842"
+      },
+      {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-host-20261107/RUN_AUTHORIZATION.json",
+        "bytes": 1613,
+        "sha256": "06c995f4afc798a56ce5fe73883da95fcad6a109295a58575cd9214b8610f30f"
+      },
+      {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-host-20261107/EXECUTION_REQUEST.txt",
+        "bytes": 494,
+        "sha256": "f85a0e04f69ad85b0dd167cd2a1f938cec9b59ff565347a4af00fd08902e3500"
+      },
+      {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-host-20261107/host/RESULT.json",
+        "bytes": 2187,
+        "sha256": "8a90f26d2cd06a5d4a050cad361f91856719aeaf283d107915193fa90b78099f"
+      },
+      {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-host-20261107/external-batch/START.json",
+        "bytes": 831,
+        "sha256": "79805b26f07a33ea6c2369c8a4080c72dd2aa2f2974c5abb58f5f74cba35b859"
+      },
+      {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-host-20261107/external-batch/RESULT.json",
+        "bytes": 2109,
+        "sha256": "eb1fe897ebb7bf1ddddc09a6b5859b5be7ce069df8df86ad0c40911f38180848"
+      }
+    ]
+  },
+  "revision": "r1-measured-negative-selector-only",
+  "previous_round": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-timed-div-sqrt-four-role-20261107/RESULT.json",
+    "bytes": 110174,
+    "sha256": "5fbcbd53546cb531bf7b2c07ffc18401d2e55fd65eee02dec15f73fafbae880b"
+  }
+}

@@ -555,6 +555,134 @@ class ExeUnitImp(
     }
   }
 
+  // P4 uses its own protocol. The frozen O2 branch above is unchanged.
+  if (xiangshan.backend.fu.wrapper.VDotO2.sp1TraceEnabled &&
+      fuCfgs.contains(xiangshan.backend.fu.FuConfig.VDotCfg)) {
+    require(vdotElastic && exuParams.name == "VFEX4" && !exuParams.latencyCertain,
+      "SP1 trace requires the elastic, uncertain-latency VFEX4")
+    require(!p(xiangshan.DebugOptionsKey).ResetGen,
+      "SP1 trace requires the common simulation reset")
+    val observedVDot = elasticVDot.get
+    // All timestamps, sequence tags and shadow DIV lifecycle are observations
+    // on the ungated parent clock. No trace state drives functional logic.
+    val sp1Cycle = GTimer()
+    val sp1NextSeq = RegInit(0.U(64.W))
+    val sp1PSeq = RegInit(0.U(64.W))
+    val sp1RSeq = RegInit(0.U(64.W))
+    val sp1SchemaPrinted = RegInit(false.B)
+    val sp1P = tapAndRead(observedVDot.o2ObservedPCtrl)
+    val sp1PPerf = tapAndRead(observedVDot.o2ObservedPPerf)
+    val sp1R = observedVDot.io.out.bits.ctrl
+    val sp1PValid = observedVDot.pipelineStatus.pValid
+    val sp1RValid = observedVDot.pipelineStatus.rValid
+    val sp1KillP = tapAndRead(observedVDot.o2ObservedKillP)
+    val sp1KillR = tapAndRead(observedVDot.o2ObservedKillR)
+    val sp1Move = tapAndRead(observedVDot.o2ObservedMove)
+    val sp1DirectR = tapAndRead(observedVDot.sp1ObservedDirectR)
+    val sp1EnqueueP = tapAndRead(observedVDot.sp1ObservedEnqueueP)
+    val sp1IncomingData = tapAndRead(observedVDot.sp1ObservedIncomingData)
+    val sp1PData = tapAndRead(observedVDot.sp1ObservedPData)
+    val sp1Accepted = tapAndRead(observedVDot.sp1ObservedAcceptedCtrl)
+    val sp1IllegalInput = tapAndRead(observedVDot.o2ObservedIllegalInput)
+    val sp1Vl = tapAndRead(observedVDot.o2ObservedVl)
+    val sp1In = observedVDot.io.in.bits.ctrl
+    val sp1Out = observedVDot.io.out
+    val sp1DivAccept = io.in.fire && io.in.bits.fuType =/= FuType.vdot.U
+    val sp1DivActive = RegInit(false.B)
+    val sp1DivSeq = RegInit(0.U(64.W))
+    val sp1DivRob = Reg(chiselTypeOf(io.in.bits.robIdx))
+    val sp1DivFu = Reg(chiselTypeOf(io.in.bits.fuType))
+    val sp1DivPdest = Reg(chiselTypeOf(io.in.bits.pdest))
+    val sp1DivKill = sp1DivActive && sp1DivRob.needFlush(io.flush) && !reset.asBool
+    val sp1DivUnits = funcUnits.filter(_.cfg.fuType != FuType.vdot)
+    val sp1DivFire = sp1DivUnits.map(_.io.out.fire).reduce(_ || _)
+
+    when(io.in.fire) { sp1NextSeq := sp1NextSeq + 1.U }
+    when(sp1EnqueueP) { sp1PSeq := sp1NextSeq }
+    // Old P transfers even when a different new request replaces P this edge.
+    when(sp1Move) { sp1RSeq := sp1PSeq }
+      .elsewhen(sp1DirectR) { sp1RSeq := sp1NextSeq }
+    when(sp1DivAccept) {
+      sp1DivActive := true.B
+      sp1DivSeq := sp1NextSeq
+      sp1DivRob := io.in.bits.robIdx
+      sp1DivFu := io.in.bits.fuType
+      sp1DivPdest := io.in.bits.pdest
+    }.elsewhen(sp1DivKill || sp1DivFire) {
+      sp1DivActive := false.B
+    }
+
+    val sp1Activity = sp1PValid || sp1RValid || elasticDivOccupied.get ||
+      io.in.valid || io.flush.valid
+    val sp1PreviousActivity = RegNext(sp1Activity, false.B)
+    when(reset.asBool && sp1SchemaPrinted) {
+      // Runtime reset ends this epoch. SP1's complete-run checker rejects
+      // multiple epochs; the initial simulation reset emits no such record.
+      // printf normally suppresses itself during reset; this diagnostic must
+      // use only the explicit outer reset condition to record the old epoch.
+      withReset(false.B) {
+        printf(p"SP1_RESET cycle=${sp1Cycle} pvalid=${sp1PValid} pseq=${sp1PSeq} rvalid=${sp1RValid} rseq=${sp1RSeq} divactive=${sp1DivActive} divseq=${sp1DivSeq}\n")
+      }
+    }
+    when(!reset.asBool) {
+      when(!sp1SchemaPrinted) {
+        printf(p"SP1_SCHEMA version=1 clock=global mode=p4_one_cycle min_latency=1 slots=2 rob_size=${RobSize.U} ftq_size=${FtqSize.U} vlen=${VLEN.U} vpu_width=${sp1In.vpu.get.getWidth.U} perf_width=${observedVDot.io.in.bits.perfDebugInfo.getWidth.U}\n")
+        sp1SchemaPrinted := true.B
+      }
+      when(sp1Activity || sp1PreviousActivity || !sp1SchemaPrinted) {
+        printf(p"SP1_STATE cycle=${sp1Cycle} pvalid=${sp1PValid} pseq=${sp1PSeq} prob=${sp1P.robIdx.flag}:${sp1P.robIdx.value} ppdest=${sp1P.pdest} rvalid=${sp1RValid} rseq=${sp1RSeq} rrob=${sp1R.robIdx.flag}:${sp1R.robIdx.value} rpdest=${sp1R.pdest} occupancy=${observedVDot.pipelineStatus.occupancy} invalid=${io.in.valid} inready=${io.in.ready} vready=${observedVDot.io.in.ready} outvalid=${sp1Out.valid} outready=${sp1Out.ready} move=${sp1Move} directr=${sp1DirectR} enqueuep=${sp1EnqueueP} killp=${sp1KillP} killr=${sp1KillR} divactive=${sp1DivActive} divseq=${sp1DivSeq} divoccupied=${elasticDivOccupied.get} busy=${busy}\n")
+      }
+      when(io.in.fire) {
+        printf(p"SP1_VFEX4_ACCEPT cycle=${sp1Cycle} seq=${sp1NextSeq} rob=${io.in.bits.robIdx.flag}:${io.in.bits.robIdx.value} fu=0x${Hexadecimal(io.in.bits.fuType)} pdest=${io.in.bits.pdest}\n")
+      }
+      when(io.in.valid && !io.in.ready) {
+        printf(p"SP1_VFEX4_WAIT cycle=${sp1Cycle} rob=${io.in.bits.robIdx.flag}:${io.in.bits.robIdx.value} fu=0x${Hexadecimal(io.in.bits.fuType)} busy=${busy}\n")
+      }
+      // The actual VFEX4 flush is a registered stage later than ROB redirect.
+      when(io.flush.valid) {
+        printf(p"SP1_VFEX4_REDIRECT cycle=${sp1Cycle} rob=${io.flush.bits.robIdx.flag}:${io.flush.bits.robIdx.value} self=${io.flush.bits.flushItself()}\n")
+      }
+      when(observedVDot.io.in.fire) {
+        printf(p"SP1_ACCEPT cycle=${sp1Cycle} seq=${sp1NextSeq} rob=${sp1In.robIdx.flag}:${sp1In.robIdx.value} pdest=${sp1In.pdest} vl=${sp1Vl} illegal=${sp1IllegalInput} vecwen=${sp1In.vecWen.get} v0wen=${sp1In.v0Wen.get} vpu=0x${Hexadecimal(sp1In.vpu.get.asUInt)} perf=0x${Hexadecimal(observedVDot.io.in.bits.perfDebugInfo.asUInt)} vs1=0x${Hexadecimal(observedVDot.io.in.bits.data.src(0))} vs2=0x${Hexadecimal(observedVDot.io.in.bits.data.src(1))}\n")
+      }
+      when(sp1DirectR) {
+        printf(p"SP1_DIRECT_R cycle=${sp1Cycle} seq=${sp1NextSeq} rob=${sp1Accepted.robIdx.flag}:${sp1Accepted.robIdx.value} pdest=${sp1Accepted.pdest} illegal=${sp1Accepted.exceptionVec.get(xiangshan.ExceptionNO.illegalInstr)} data=0x${Hexadecimal(sp1IncomingData)} vecwen=${sp1Accepted.vecWen.get} v0wen=${sp1Accepted.v0Wen.get} exception=0x${Hexadecimal(sp1Accepted.exceptionVec.get.asUInt)} vpu=0x${Hexadecimal(sp1Accepted.vpu.get.asUInt)} perf=0x${Hexadecimal(observedVDot.io.in.bits.perfDebugInfo.asUInt)}\n")
+      }
+      when(sp1EnqueueP) {
+        printf(p"SP1_ENQUEUE_P cycle=${sp1Cycle} seq=${sp1NextSeq} rob=${sp1Accepted.robIdx.flag}:${sp1Accepted.robIdx.value} pdest=${sp1Accepted.pdest} illegal=${sp1Accepted.exceptionVec.get(xiangshan.ExceptionNO.illegalInstr)} data=0x${Hexadecimal(sp1IncomingData)} vecwen=${sp1Accepted.vecWen.get} v0wen=${sp1Accepted.v0Wen.get} exception=0x${Hexadecimal(sp1Accepted.exceptionVec.get.asUInt)} vpu=0x${Hexadecimal(sp1Accepted.vpu.get.asUInt)} perf=0x${Hexadecimal(observedVDot.io.in.bits.perfDebugInfo.asUInt)}\n")
+      }
+      when(sp1Move) {
+        printf(p"SP1_MOVE cycle=${sp1Cycle} seq=${sp1PSeq} rob=${sp1P.robIdx.flag}:${sp1P.robIdx.value} pdest=${sp1P.pdest} illegal=${sp1P.exceptionVec.get(xiangshan.ExceptionNO.illegalInstr)} data=0x${Hexadecimal(sp1PData)} vecwen=${sp1P.vecWen.get} v0wen=${sp1P.v0Wen.get} exception=0x${Hexadecimal(sp1P.exceptionVec.get.asUInt)} vpu=0x${Hexadecimal(sp1P.vpu.get.asUInt)} perf=0x${Hexadecimal(sp1PPerf.asUInt)}\n")
+      }
+      when(sp1KillP) {
+        printf(p"SP1_KILL cycle=${sp1Cycle} seq=${sp1PSeq} slot=P rob=${sp1P.robIdx.flag}:${sp1P.robIdx.value} pdest=${sp1P.pdest} redirect=${io.flush.bits.robIdx.flag}:${io.flush.bits.robIdx.value} self=${io.flush.bits.flushItself()}\n")
+      }
+      when(sp1KillR) {
+        printf(p"SP1_KILL cycle=${sp1Cycle} seq=${sp1RSeq} slot=R rob=${sp1R.robIdx.flag}:${sp1R.robIdx.value} pdest=${sp1R.pdest} redirect=${io.flush.bits.robIdx.flag}:${io.flush.bits.robIdx.value} self=${io.flush.bits.flushItself()}\n")
+      }
+      when(sp1Out.valid && !sp1Out.ready) {
+        printf(p"SP1_STALL cycle=${sp1Cycle} seq=${sp1RSeq} rob=${sp1R.robIdx.flag}:${sp1R.robIdx.value} pdest=${sp1R.pdest} illegal=${sp1R.exceptionVec.get(xiangshan.ExceptionNO.illegalInstr)} data=0x${Hexadecimal(sp1Out.bits.res.data)} vecwen=${sp1R.vecWen.get} v0wen=${sp1R.v0Wen.get} exception=0x${Hexadecimal(sp1R.exceptionVec.get.asUInt)} vpu=0x${Hexadecimal(sp1R.vpu.get.asUInt)} perf=0x${Hexadecimal(sp1Out.bits.perfDebugInfo.asUInt)}\n")
+      }
+      when(sp1Out.fire) {
+        printf(p"SP1_RESPONSE cycle=${sp1Cycle} seq=${sp1RSeq} rob=${sp1R.robIdx.flag}:${sp1R.robIdx.value} pdest=${sp1R.pdest} illegal=${sp1R.exceptionVec.get(xiangshan.ExceptionNO.illegalInstr)} data=0x${Hexadecimal(sp1Out.bits.res.data)} vecwen=${sp1R.vecWen.get} v0wen=${sp1R.v0Wen.get} exception=0x${Hexadecimal(sp1R.exceptionVec.get.asUInt)} vpu=0x${Hexadecimal(sp1R.vpu.get.asUInt)} perf=0x${Hexadecimal(sp1Out.bits.perfDebugInfo.asUInt)}\n")
+      }
+      when(sp1DivAccept) {
+        printf(p"SP1_DIV_ACCEPT cycle=${sp1Cycle} seq=${sp1NextSeq} rob=${io.in.bits.robIdx.flag}:${io.in.bits.robIdx.value} fu=0x${Hexadecimal(io.in.bits.fuType)} pdest=${io.in.bits.pdest}\n")
+      }
+      when(sp1DivKill) {
+        printf(p"SP1_DIV_KILL cycle=${sp1Cycle} seq=${sp1DivSeq} rob=${sp1DivRob.flag}:${sp1DivRob.value} fu=0x${Hexadecimal(sp1DivFu)} pdest=${sp1DivPdest} redirect=${io.flush.bits.robIdx.flag}:${io.flush.bits.robIdx.value} self=${io.flush.bits.flushItself()}\n")
+      }
+      sp1DivUnits.foreach { fu =>
+        val ctrl = fu.io.out.bits.ctrl
+        when(fu.io.out.valid) {
+          // Retain the last DIV seq after logical kill until physical output
+          // disappears. Output identity always comes from the real child.
+          printf(p"SP1_DIV_OUTPUT cycle=${sp1Cycle} seq=${sp1DivSeq} rob=${ctrl.robIdx.flag}:${ctrl.robIdx.value} fu=0x${Hexadecimal(fu.cfg.fuType.U)} pdest=${ctrl.pdest} ready=${fu.io.out.ready} cancelled=${!sp1DivActive || sp1DivKill}\n")
+        }
+      }
+    }
+  }
+
   def pipelineReg(init: ExuInput, valid: Bool, latency: Int, flush: ValidIO[Redirect]): (Seq[ExuInput], Seq[Bool]) = {
     val validVec = valid +: Seq.fill(latency)(RegInit(false.B))
     val inVec = init +: Seq.fill(latency)(Reg(new ExuInput(exuParams)))

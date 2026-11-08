@@ -1,0 +1,119 @@
+{
+  "schema": "sp1-e-b3-r2-host-hold-closeout-v1",
+  "record_id": "SP1-E-B3-R2-HOST-20261105-HOLD",
+  "operation_id": "SP1-E-B3-R2-HOST-20261105-01",
+  "operator": "@cc77-builder / Agent",
+  "started_utc": "2026-11-05T14:12:02.047935+00:00",
+  "ended_utc": "2026-11-05T15:06:33.735750+00:00",
+  "recorded_at": "2026-11-05T23:06:33.735750+08:00",
+  "status": "HOLD_B3_R2_CHECKER_TEST_FIXTURE_FAILURE",
+  "summary": "严格提交组与组末最后写入者检查器已实现，真实R1日志和多写入者正控所在的前17方法通过；第18方法的错误dst变异因同时匹配历史slot15与当前slot31而断言失败，未调用该变异的生产checker，正式宿主门HOLD。方法19–23及后续运行器/独立正式门/预算门均NOT_RUN；目标0。三个暂缓项无当前组合完整预算新证据，继续HOLD；SP1-E仍15/20。",
+  "source_commit": "347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e",
+  "branch": "local/zjhwork-integration-20261024",
+  "stable_default": "0f + firstdot V2 + original C8",
+  "default_changed": false,
+  "candidate": "Original P4 one-cycle arithmetic two-slot SP1 unchanged; not adopted",
+  "cases": [
+    {
+      "case_id": "legacy-control",
+      "host_admission": "HOLD",
+      "target_run": "NOT_RUN",
+      "reason": "formal strict-checker test18 fixture ambiguity; downstream gates NOT_RUN"
+    },
+    {
+      "case_id": "o2-all-pairs",
+      "host_admission": "HOLD",
+      "target_run": "NOT_RUN",
+      "reason": "formal strict-checker test18 fixture ambiguity; downstream gates NOT_RUN"
+    }
+  ],
+  "held_cases": [
+    "o2-control",
+    "original C8 C48",
+    "timed DIV/SQRT"
+  ],
+  "coverage_qualified": 15,
+  "coverage_required": 20,
+  "checker_tests": {
+    "planned_methods": 23,
+    "attempted_methods": 18,
+    "passed_methods": 17,
+    "failures": 1,
+    "errors": 0,
+    "not_run_methods": [
+      19,
+      20,
+      21,
+      22,
+      23
+    ],
+    "wall_seconds": 1.8711146539990295,
+    "case18_first_subcontrol": "PASS",
+    "case18_second_subcontrol": "FIXTURE_ASSERTION_BEFORE_CHECKER_CALL"
+  },
+  "execution_admission": "HOLD",
+  "execution_freeze_created": false,
+  "runtime_delta_tests": "NOT_RUN",
+  "independent_formal_gate": "NOT_RUN",
+  "independent_readonly_review": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r2-host-20261105/independent-review/READONLY_RESULT.json",
+    "bytes": 7676,
+    "sha256": "a1164358f1ab57cbb5bd31ad8b341c05588aa6b496cb976158407f36af694059"
+  },
+  "budget_measurement": "NOT_RUN",
+  "new_target_processes": 0,
+  "new_EMU_processes": 0,
+  "new_NEMU_processes": 0,
+  "production_libraries_loaded": false,
+  "RTL_edits_this_round": 0,
+  "new_fullcore_builds": 0,
+  "new_synthesis_runs": 0,
+  "new_STA_runs": 0,
+  "GitHub_writes": 0,
+  "retry_performed": false,
+  "metrics": {
+    "speedup": "NOT_TESTED",
+    "area": "NOT_TESTED",
+    "timing": "NOT_TESTED"
+  },
+  "checker_source_freeze": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r2-host-20261105/checker/SOURCE_FREEZE.json",
+    "bytes": 43018,
+    "sha256": "92d87c06ab7fa43937a0dd5926adaaf312c241c30c9f143018205e6beac127ff"
+  },
+  "checker_test_result": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r2-host-20261105/checker/attempt-01/RESULT.json",
+    "bytes": 415,
+    "sha256": "5c4c97462071e13e71bfb8d6462ac221cf88655f4733ac46ee9b1c8c0368d5f3"
+  },
+  "failure_diagnosis": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r2-host-20261105/checker/FAILURE_DIAGNOSIS.json",
+    "bytes": 2561,
+    "sha256": "f16f8774e7a60401a740ab245adba1a7de2b5cf569e855ffbf3a541fdb998cd7"
+  },
+  "held_review": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r2-host-20261105/held-review/RESULT.json",
+    "bytes": 21505,
+    "sha256": "e501d68603c47a1e6fbb46665466af5d89e150f301142583ffcf89fa1a9aea0d"
+  },
+  "metrics_detail": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r2-host-20261105/METRICS.json",
+    "bytes": 72343,
+    "sha256": "f121cf016ebbe11202d51b9a09756d0475a6e820d291f5013aec655a52577a1e"
+  },
+  "prior_fail_preserved": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r1-host-20261105/execution-01/RESULT.json",
+    "bytes": 78355,
+    "sha256": "1ff680fa5670ab4b78d820f752ecf9562fb01bf1b6173bae2ebc60f5fcc7e662"
+  },
+  "prior_files_unchanged": 266,
+  "production_files_unchanged": 445,
+  "future_admitted_target_whitelist": [],
+  "proposed_next_instruction": "开始 SP1-E B3-R3 夹具修订与两例批量验收：保留 R1/R2 原 FAIL、日志及旧锁，在独立目录仅修正错误目的寄存器负控的定位，精确锚定当前环尾 slot31、PC0x80000370 和完整行，先检查所有变异目标的唯一性。保持严格当前提交组、组末最后写入者完整128位、CSR/身份/重放及原完整覆盖，完成新源码冻结、全部宿主正负控、运行器接入、独立审查和900秒宿主预算准入；未变公共机制复用。全部门禁通过且两例均GO后，在同一轮仅按 legacy-control→o2-all-pairs 串行运行五角色。每例300＋4×1500秒，目标6300/外层7200/宿主900秒；整批最多10目标、目标累计12600秒、外层14400秒，不借预算。负控100000guest，正常分别800000/300000guest；CPU4、整组4线程、RSS12GiB、每例日志2GiB及原seed/RAM/reset不变。任一正式宿主门或目标失败立即停止，不重试、不加时、不跳过继续；三个暂缓项保持HOLD，不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub。完成后一次更新计分板、三项指标及下一轮指令。",
+  "qualification": "host implementation and failed partial controls only; no new hardware/performance qualification",
+  "result_document": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r2-host-20261105/RESULT.md",
+    "bytes": 5216,
+    "sha256": "3656446c6f3a8792ed0a7ba8882b4937d93431417bca4485daf21604ceeec51b"
+  }
+}

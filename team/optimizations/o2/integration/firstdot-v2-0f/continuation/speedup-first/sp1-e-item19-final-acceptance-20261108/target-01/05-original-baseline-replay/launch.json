@@ -1,0 +1,36 @@
+{
+  "role": "original-baseline-replay",
+  "command": [
+    "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/build/emu",
+    "-i",
+    "/home/riscv/riscv-lab/o2-fullcore-20261019/control-diagnostic-build-04/o2-control.bin",
+    "--flash=/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+    "--ram-size=128MB",
+    "--diff=/home/riscv/riscv-lab/t12-regression-20261013/nemu/reference/build/riscv64-nemu-interpreter-so",
+    "--max-cycles=1499984",
+    "--seed=1",
+    "--no-snapshot"
+  ],
+  "cwd": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo",
+  "env": {
+    "PATH": "/usr/local/bin:/usr/bin:/bin",
+    "HOME": "/home/riscv",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C",
+    "OMP_NUM_THREADS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "limits": {
+    "cpu_affinity": [
+      4
+    ],
+    "thread_cap": 4,
+    "rss_cap_bytes": 12884901888,
+    "wall_seconds": 2400,
+    "guest_cycles": 1500000,
+    "log_cap_bytes": 2129068453
+  },
+  "utc": "2026-11-07T19:48:01.519524+00:00",
+  "monotonic": 7125.350115399,
+  "boot_id": "a3615351-4203-47f8-8121-8f070398bd98"
+}

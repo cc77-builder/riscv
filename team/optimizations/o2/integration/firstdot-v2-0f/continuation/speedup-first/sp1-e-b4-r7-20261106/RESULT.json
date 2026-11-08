@@ -1,0 +1,3261 @@
+{
+  "schema": "sp1-e-b4-r7-closeout-v1",
+  "record_id": "SP1-E-B4-R7-20261106-C48-PASS",
+  "record_number": 88,
+  "operation_id": "SP1-E-B4-R7-20261106-01",
+  "operator": "cc77-builder / Agent",
+  "operator_identity_basis": "Current connector identity and local source checks, not human review",
+  "started_utc": "2026-11-06T14:59:26.299918+00:00",
+  "ended_utc": "2026-11-06T16:23:03.240762+00:00",
+  "recorded_at": "2026-11-07T00:23:03.240762+08:00",
+  "source_commit": "347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e",
+  "branch": "local/zjhwork-integration-20261024",
+  "status": "PASS_C48_NEW_CONTRACT_18_OF_20",
+  "summary": "Unique cold-import fix and host gate PASS. Two actual serial replays, both same-hardware exact comparisons and cross-hardware active64/full128 comparison PASS; old FAIL and old1500 template remain unchanged.",
+  "stable_default": "0f + firstdot V2 + original C8",
+  "default_changed": false,
+  "coverage_qualified_before": 17,
+  "coverage_qualified": 18,
+  "coverage_required": 20,
+  "new_functional_qualified_cases": 1,
+  "new_performance_qualified": false,
+  "formal_host_attempts": 1,
+  "new_host_methods_planned": 9,
+  "new_host_methods_executed": 9,
+  "cold_import_integration": "PASS_B4_R7_COLD_IMPORT_INTEGRATION",
+  "formal_cost_attempts": 1,
+  "new_target_processes": 2,
+  "target_launch_attempts": 2,
+  "native_reference_processes": 2,
+  "RTL_edits_this_round": 0,
+  "new_fullcore_builds": 0,
+  "new_synthesis_runs": 0,
+  "new_STA_runs": 0,
+  "GitHub_writes": 0,
+  "original_FAIL_preserved": true,
+  "old_locks_preserved": true,
+  "host_result": {
+    "status": "PASS_B4_R6_RUNTIME_HOST_DELTA",
+    "started_utc": "2026-11-06T15:10:20.091497+00:00",
+    "scope": "HOST_ONLY_NEW_RUNTIME_DELTA",
+    "target_processes": 0,
+    "native_library_loads": 0,
+    "old_27_suite_rerun": false,
+    "admission": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/host-tests/ADMISSION.json",
+      "bytes": 1579,
+      "sha256": "834a27f23b93623e3f3e0cf0dee108e2f57cbaa1635864b431cb8ae320c4077a"
+    },
+    "import_integration": {
+      "status": "PASS_B4_R7_COLD_IMPORT_INTEGRATION",
+      "scope": "Within the sole fresh externally guarded host process, before delta methods and cost.",
+      "order": [
+        "runner",
+        "R5_adapter_and_legacy_dependencies",
+        "controls_and_pinned_helper",
+        "cost_and_same_pinned_helper"
+      ],
+      "controls": {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/host-tests/test_delta.py",
+        "bytes": 10559,
+        "sha256": "1b2d0db276419aebb884fb085e4ab5594f8497af80f2ab736def4ab35ee8b9c9"
+      },
+      "cost": {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/budget-review/measure_once.py",
+        "bytes": 10187,
+        "sha256": "d4243e06aaa525e16ab71625e7356216c2d820d942e23a245abdf4bbcc04218a"
+      },
+      "helper": {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/host-tests/b4_r7_host_fixtures.py",
+        "bytes": 8860,
+        "sha256": "392266857560ba8d13a49f261fbf82babdaf274912cf2eaa1d18cb71e4de73cc"
+      },
+      "helper_module_name": "b4_r7_c48_host_metadata",
+      "required_exports": [
+        "authorization_fixture",
+        "current_entry",
+        "schedule_trace"
+      ],
+      "discovered_methods": [
+        "test_01_reused_mechanism_and_stub_helper_shape",
+        "test_02_exact_two_role_plans_and_independent_caps",
+        "test_03_final_inventory_includes_complete_delta_and_history",
+        "test_04_history_is_three_old_roles_without_parser_or_current_boot",
+        "test_05_real_boot_and_authorization_schema_reject_drift",
+        "test_06_same_hardware_bridge_rejects_raw_observer_guest_and_fake_identity",
+        "test_07_cross_replay_bridge_and_invocation_scope",
+        "test_08_successful_real_scheduler_trace_and_first_failure_stop",
+        "test_09_no_actual_authorization_or_native_map"
+      ],
+      "methods_executed_by_import_check": 0,
+      "negative_controls": [
+        {
+          "control": "HOST_HELPER_PATH_MISMATCH",
+          "error": "HOST_HELPER_PATH_MISMATCH"
+        },
+        {
+          "control": "HOST_HELPER_MISSING_EXPORT",
+          "error": "HOST_HELPER_MISSING_EXPORT:missing_r7_required_export"
+        }
+      ],
+      "legacy_fixtures_file": null,
+      "legacy_modules_and_search_path_untouched": true,
+      "target_processes": 0,
+      "native_library_loads": 0
+    },
+    "methods_run": 9,
+    "evidence": {
+      "import_integration": {
+        "status": "PASS_B4_R7_COLD_IMPORT_INTEGRATION",
+        "scope": "Within the sole fresh externally guarded host process, before delta methods and cost.",
+        "order": [
+          "runner",
+          "R5_adapter_and_legacy_dependencies",
+          "controls_and_pinned_helper",
+          "cost_and_same_pinned_helper"
+        ],
+        "controls": {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/host-tests/test_delta.py",
+          "bytes": 10559,
+          "sha256": "1b2d0db276419aebb884fb085e4ab5594f8497af80f2ab736def4ab35ee8b9c9"
+        },
+        "cost": {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/budget-review/measure_once.py",
+          "bytes": 10187,
+          "sha256": "d4243e06aaa525e16ab71625e7356216c2d820d942e23a245abdf4bbcc04218a"
+        },
+        "helper": {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/host-tests/b4_r7_host_fixtures.py",
+          "bytes": 8860,
+          "sha256": "392266857560ba8d13a49f261fbf82babdaf274912cf2eaa1d18cb71e4de73cc"
+        },
+        "helper_module_name": "b4_r7_c48_host_metadata",
+        "required_exports": [
+          "authorization_fixture",
+          "current_entry",
+          "schedule_trace"
+        ],
+        "discovered_methods": [
+          "test_01_reused_mechanism_and_stub_helper_shape",
+          "test_02_exact_two_role_plans_and_independent_caps",
+          "test_03_final_inventory_includes_complete_delta_and_history",
+          "test_04_history_is_three_old_roles_without_parser_or_current_boot",
+          "test_05_real_boot_and_authorization_schema_reject_drift",
+          "test_06_same_hardware_bridge_rejects_raw_observer_guest_and_fake_identity",
+          "test_07_cross_replay_bridge_and_invocation_scope",
+          "test_08_successful_real_scheduler_trace_and_first_failure_stop",
+          "test_09_no_actual_authorization_or_native_map"
+        ],
+        "methods_executed_by_import_check": 0,
+        "negative_controls": [
+          {
+            "control": "HOST_HELPER_PATH_MISMATCH",
+            "error": "HOST_HELPER_PATH_MISMATCH"
+          },
+          {
+            "control": "HOST_HELPER_MISSING_EXPORT",
+            "error": "HOST_HELPER_MISSING_EXPORT:missing_r7_required_export"
+          }
+        ],
+        "legacy_fixtures_file": null,
+        "legacy_modules_and_search_path_untouched": true,
+        "target_processes": 0,
+        "native_library_loads": 0
+      },
+      "unchanged_mechanisms": {
+        "files": [
+          "common.py",
+          "supervisor.py",
+          "watchdog.py"
+        ],
+        "actual_receipt_AST_equal_R4": true,
+        "J_evidence": {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r4-20261106/budget-review/RESULT.json",
+          "bytes": 19874,
+          "sha256": "6158fbe9cc1e84bd7996e0c282498ef0c5ba5a0271e322623ea73ce39b60fca4"
+        },
+        "old_suites_rerun": false
+      },
+      "actual_freeze": {
+        "artifact": {
+          "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/cases/original-c8-c48/EXECUTION_FREEZE.json",
+          "bytes": 178882,
+          "sha256": "ff2ede0b464ab6cfd174a883ace2045a26892e3f60dacf007ce37e5f32bb8c8d"
+        },
+        "files": 351,
+        "descriptor_only_insufficient": true
+      },
+      "history": {
+        "roles": [
+          "bit100",
+          "candidate-full",
+          "baseline-full"
+        ],
+        "historical_boots": [
+          "c26fc068-6d6e-44d0-a7da-b37e7b3db473"
+        ],
+        "current_host_boot": "01cd8ede-af8b-4d04-8aba-2a1e9cfe1247",
+        "historical_boot_equals_current_required": false,
+        "old_log_parser_calls": 0
+      },
+      "successful_call_graph": {
+        "scenario": "pass",
+        "status": "BATCH_C48_REPLAY_COMPLETE",
+        "calls": [
+          "candidate-replay",
+          "baseline-replay"
+        ],
+        "counts": {
+          "A": 10,
+          "H": 7,
+          "B": 10,
+          "V": 1,
+          "D": 8,
+          "J": 2,
+          "P": 2,
+          "C": 3,
+          "K": 6
+        },
+        "scope": "HOST_CALLBACKS_NO_KERNEL_TARGETS",
+        "logical_callback_targets": 2,
+        "actual_target_processes": 0,
+        "host_seconds": 0.23053304099999927,
+        "target_active_seconds": 0.0,
+        "historical_time_counted": false
+      },
+      "failure_stop_controls": [
+        {
+          "scenario": "target_first_fail",
+          "status": "STOPPED",
+          "calls": [
+            "candidate-replay"
+          ],
+          "counts": {
+            "A": 6,
+            "H": 3,
+            "B": 4,
+            "V": 1,
+            "D": 1
+          },
+          "scope": "HOST_CALLBACKS_NO_KERNEL_TARGETS",
+          "logical_callback_targets": 1,
+          "actual_target_processes": 0,
+          "host_seconds": 0.08082074800000072,
+          "target_active_seconds": 0.0,
+          "historical_time_counted": false
+        },
+        {
+          "scenario": "same_first_fail",
+          "status": "STOPPED",
+          "calls": [
+            "candidate-replay"
+          ],
+          "counts": {
+            "A": 7,
+            "H": 4,
+            "B": 6,
+            "V": 1,
+            "D": 4,
+            "J": 1,
+            "P": 1,
+            "C": 1,
+            "K": 2
+          },
+          "scope": "HOST_CALLBACKS_NO_KERNEL_TARGETS",
+          "logical_callback_targets": 1,
+          "actual_target_processes": 0,
+          "host_seconds": 0.1280969900000013,
+          "target_active_seconds": 0.0,
+          "historical_time_counted": false
+        }
+      ]
+    },
+    "import_seconds": 0.08397668100000022,
+    "runtime_version": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/runtime/SOURCE_VERSION.json",
+      "bytes": 10492,
+      "sha256": "95a2b38d9e3850c99d844d0e7fe93cc129c63d531fb42856ecb7e679289742ca"
+    },
+    "execution_freeze": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/cases/original-c8-c48/EXECUTION_FREEZE.json",
+      "bytes": 178882,
+      "sha256": "ff2ede0b464ab6cfd174a883ace2045a26892e3f60dacf007ce37e5f32bb8c8d"
+    },
+    "cost_status": "GO_B4_R6_HOST_BUDGET",
+    "combined_status": "PASS_HOST_DELTA_AND_COST",
+    "ended_utc": "2026-11-06T15:10:32.318565+00:00",
+    "elapsed_seconds": 13.157728212000002,
+    "external_limit_seconds": 900,
+    "final_inputs_unchanged": true
+  },
+  "external_host_result": {
+    "status": "HOST_EXTERNAL_PASS",
+    "external_exit_code": 0,
+    "elapsed_seconds": 13.310258522,
+    "timeout_seconds": 900,
+    "cleanup_ok": true,
+    "remaining_live_processes": [],
+    "reason": null,
+    "guardian_result": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/host-tests/external-01/RESULT.json",
+    "retry_permitted": false,
+    "native_reference_loads_by_wrapper": 0
+  },
+  "runtime_version": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/runtime/SOURCE_VERSION.json",
+    "bytes": 10492,
+    "sha256": "95a2b38d9e3850c99d844d0e7fe93cc129c63d531fb42856ecb7e679289742ca"
+  },
+  "execution_freeze": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/cases/original-c8-c48/EXECUTION_FREEZE.json",
+    "bytes": 178882,
+    "sha256": "ff2ede0b464ab6cfd174a883ace2045a26892e3f60dacf007ce37e5f32bb8c8d"
+  },
+  "runtime_source_scope": "Six runtime Python files byte-identical to R6; old schema/status names intentionally reused. Only host helper resolution/cold-import integration revised.",
+  "actual_roles": [
+    {
+      "role": "candidate-replay",
+      "guest_cycles": 871768,
+      "active_wall_seconds": 1965.817567241,
+      "supervised_seconds": 1965.832610579,
+      "calls": 48,
+      "c8_calls": 12,
+      "custom_commits": 1008,
+      "peak_threads": 1,
+      "peak_rss_bytes": 76677120,
+      "retained_log_bytes": 6958377,
+      "result": "PASS",
+      "record": {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/cases/original-c8-c48/target-01/01-candidate-replay/record.json",
+        "bytes": 5145,
+        "sha256": "b374c23e87c1cc29cbd23d69c95e29249a627c874ba501e8725c9321a43d63a3"
+      },
+      "validation": {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/cases/original-c8-c48/target-01/01-candidate-replay/validation.json",
+        "bytes": 670649,
+        "sha256": "66c571c16bcc91e00694678800a2c20f2b5530210f699d8737a0ade5fd1ae500"
+      },
+      "same_hardware": {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/cases/original-c8-c48/target-01/01-candidate-replay/same-hardware.json",
+        "bytes": 1286,
+        "sha256": "f8771fd4a08a7da1eefd0a4d390a145b58d731c39964cca564c12d5d85c0794f"
+      },
+      "full128_packets_sha256": "af1d46bac5868f37f62c32edeee685f2d8fb5daff8ae60e5cc0a486faee1c894",
+      "active64_sha256": "a8bbe24fcf676435df2f93fc865268b9e213abdea179dc9a0fbef7992995ec2f",
+      "raw128_sources_sha256": "208bbad7d3d279a90dd45692d3399fea125743e37dcc65527485944290c21b28",
+      "observer_events_sha256": "009957c0f8adb357704bb6564625e50e320c27f8f30e90025eeb7d6dbecf2ef1",
+      "application_uart_sha256": "1dfac91c98253c190adba6e78891fd716df177334829ffced34106abdd843a28"
+    },
+    {
+      "role": "baseline-replay",
+      "guest_cycles": 871326,
+      "active_wall_seconds": 1649.103523405,
+      "supervised_seconds": 1649.1174266549997,
+      "calls": 48,
+      "c8_calls": 12,
+      "custom_commits": 1008,
+      "peak_threads": 1,
+      "peak_rss_bytes": 77594624,
+      "retained_log_bytes": 6956285,
+      "result": "PASS",
+      "record": {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/cases/original-c8-c48/target-01/02-baseline-replay/record.json",
+        "bytes": 5106,
+        "sha256": "e7e2223b9ec1872ed194d121a9f6d3197b0e09449d5e0679644a10560d9abf4c"
+      },
+      "validation": {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/cases/original-c8-c48/target-01/02-baseline-replay/validation.json",
+        "bytes": 636101,
+        "sha256": "f74bc0298ac8f7c78b74c21a651fc4e182c2a6094865d807a1528ecf2bb3a833"
+      },
+      "same_hardware": {
+        "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/cases/original-c8-c48/target-01/02-baseline-replay/same-hardware.json",
+        "bytes": 1283,
+        "sha256": "c25c3dc3d18c880ce2e9c5272c90b2283f5b7fd289050ebc5b443afb536046ce"
+      },
+      "full128_packets_sha256": "af1d46bac5868f37f62c32edeee685f2d8fb5daff8ae60e5cc0a486faee1c894",
+      "active64_sha256": "a8bbe24fcf676435df2f93fc865268b9e213abdea179dc9a0fbef7992995ec2f",
+      "raw128_sources_sha256": "991e95b002bca36a2125e021af7cb459d4b340c69576f509330d5cce29067443",
+      "observer_events_sha256": "dbcc44311e6549210f55287c14d9f247117550c5331b7bc8b140cbaa482fde58",
+      "application_uart_sha256": "1dfac91c98253c190adba6e78891fd716df177334829ffced34106abdd843a28"
+    }
+  ],
+  "budgets": {
+    "normal_wall_seconds": 2400,
+    "normal_guest_cycles": 1500000,
+    "case_target_seconds": {
+      "original-c8-c48": 4800
+    },
+    "case_outer_seconds": {
+      "original-c8-c48": 5700
+    },
+    "case_host_seconds": 900,
+    "batch_max_processes": 2,
+    "batch_target_seconds": 4800,
+    "batch_outer_seconds": 5700
+  },
+  "actual_budget": {
+    "target_active_seconds": 3614.9210906460003,
+    "batch_host_seconds": 14.592558515999826,
+    "case_host_seconds": 14.582600136999645,
+    "batch_outer_seconds": 3629.513649162,
+    "guardian_seconds": 3629.562323962,
+    "combined_target_log_bytes": 13914662,
+    "budget_clock": "monotonic; UTC labels do not replace elapsed accounting"
+  },
+  "qualification": {
+    "C48_new_contract_functional": true,
+    "three_history_two_replay": true,
+    "old_1500_template": "HOLD_UNCHANGED",
+    "runner_old_formal_acceptance_flag": false,
+    "whole_SP1_E_acceptance": false,
+    "O2_control": "HOLD_MISSING_CANDIDATE_P_AND_PARTIAL_CANCELLATION",
+    "timed_DIV_SQRT": "HOLD_UNCHANGED",
+    "ordinary_retirement_trace_observed": false,
+    "independent_csr_trace_observed": false,
+    "CSR_scope": "Frozen judge and live DiffTest, not independent per-call CSR trace",
+    "ABI_scope": "Frozen linked-leaf static ABI and actual ordinary C path, not dynamic all-register sentinels",
+    "performance_windows": 0
+  },
+  "metrics": {
+    "current_new": {
+      "speedup": "NOT_TESTED",
+      "area": "NOT_TESTED",
+      "timing": "NOT_TESTED"
+    },
+    "historical_workload_metrics": [
+      {
+        "workload": "chain-256",
+        "dataset": 0,
+        "source_record": 51,
+        "baseline": {
+          "vdot_mean_cycles": 1857.0,
+          "rvv_mean_cycles": 5440.5,
+          "rvv_over_vdot_speedup": 2.9297253634894993
+        },
+        "candidate": {
+          "vdot_mean_cycles": 1601.25,
+          "rvv_mean_cycles": 5440.5,
+          "rvv_over_vdot_speedup": 3.397658079625293
+        },
+        "historical_qualified": true,
+        "vdot_cycle_reduction_fraction": 0.1377221324717286,
+        "scope": "HISTORICAL_SAME_IMAGE_WINDOW_MEAN_NOT_B4_R7_MEASUREMENT"
+      },
+      {
+        "workload": "chain-256",
+        "dataset": 1,
+        "source_record": 58,
+        "baseline": {
+          "vdot_mean_cycles": 1857.0,
+          "rvv_mean_cycles": 5440.5,
+          "rvv_over_vdot_speedup": 2.9297253634894993
+        },
+        "candidate": {
+          "vdot_mean_cycles": 1601.25,
+          "rvv_mean_cycles": 5440.5,
+          "rvv_over_vdot_speedup": 3.397658079625293
+        },
+        "historical_qualified": true,
+        "vdot_cycle_reduction_fraction": 0.1377221324717286,
+        "scope": "HISTORICAL_SAME_IMAGE_WINDOW_MEAN_NOT_B4_R7_MEASUREMENT"
+      },
+      {
+        "workload": "chain-256",
+        "dataset": 2,
+        "source_record": 60,
+        "baseline": {
+          "vdot_mean_cycles": 1857.0,
+          "rvv_mean_cycles": 5440.5,
+          "rvv_over_vdot_speedup": 2.9297253634894993
+        },
+        "candidate": {
+          "vdot_mean_cycles": 1601.25,
+          "rvv_mean_cycles": 5440.5,
+          "rvv_over_vdot_speedup": 3.397658079625293
+        },
+        "historical_qualified": true,
+        "vdot_cycle_reduction_fraction": 0.1377221324717286,
+        "scope": "HISTORICAL_SAME_IMAGE_WINDOW_MEAN_NOT_B4_R7_MEASUREMENT"
+      },
+      {
+        "workload": "single-1",
+        "dataset": 0,
+        "source_record": 62,
+        "baseline": {
+          "vdot_mean_cycles": 71.0,
+          "rvv_mean_cycles": 85.25,
+          "rvv_over_vdot_speedup": 1.2007042253521127
+        },
+        "candidate": {
+          "vdot_mean_cycles": 70.0,
+          "rvv_mean_cycles": 85.25,
+          "rvv_over_vdot_speedup": 1.2178571428571427
+        },
+        "historical_qualified": true,
+        "vdot_cycle_reduction_fraction": 0.014084507042253502,
+        "scope": "HISTORICAL_SAME_IMAGE_WINDOW_MEAN_NOT_B4_R7_MEASUREMENT"
+      },
+      {
+        "workload": "single-1",
+        "dataset": 1,
+        "source_record": 64,
+        "baseline": {
+          "vdot_mean_cycles": 71.0,
+          "rvv_mean_cycles": 85.25,
+          "rvv_over_vdot_speedup": 1.2007042253521127
+        },
+        "candidate": {
+          "vdot_mean_cycles": 70.0,
+          "rvv_mean_cycles": 85.25,
+          "rvv_over_vdot_speedup": 1.2178571428571427
+        },
+        "historical_qualified": true,
+        "vdot_cycle_reduction_fraction": 0.014084507042253502,
+        "scope": "HISTORICAL_SAME_IMAGE_WINDOW_MEAN_NOT_B4_R7_MEASUREMENT"
+      },
+      {
+        "workload": "single-1",
+        "dataset": 2,
+        "source_record": 66,
+        "baseline": {
+          "vdot_mean_cycles": 71.0,
+          "rvv_mean_cycles": 85.25,
+          "rvv_over_vdot_speedup": 1.2007042253521127
+        },
+        "candidate": {
+          "vdot_mean_cycles": 70.0,
+          "rvv_mean_cycles": 85.25,
+          "rvv_over_vdot_speedup": 1.2178571428571427
+        },
+        "historical_qualified": true,
+        "vdot_cycle_reduction_fraction": 0.014084507042253502,
+        "scope": "HISTORICAL_SAME_IMAGE_WINDOW_MEAN_NOT_B4_R7_MEASUREMENT"
+      },
+      {
+        "workload": "batch",
+        "dataset": 0,
+        "case_id": "performance-d0-s02",
+        "source_record": 69,
+        "baseline": {
+          "vdot_mean_cycles": 221.0,
+          "rvv_mean_cycles": 678.0,
+          "rvv_over_vdot_speedup": 3.067873303167421
+        },
+        "candidate": {
+          "vdot_mean_cycles": 221.0,
+          "rvv_mean_cycles": 678.0,
+          "rvv_over_vdot_speedup": 3.067873303167421
+        },
+        "historical_qualified": true,
+        "vdot_cycle_reduction_fraction": 0.0,
+        "scope": "HISTORICAL_SAME_IMAGE_WINDOW_MEAN_NOT_B4_R7_MEASUREMENT"
+      },
+      {
+        "workload": "batch",
+        "dataset": 1,
+        "case_id": "performance-d1-s02",
+        "source_record": 69,
+        "baseline": {
+          "vdot_mean_cycles": 221.0,
+          "rvv_mean_cycles": 678.0,
+          "rvv_over_vdot_speedup": 3.067873303167421
+        },
+        "candidate": {
+          "vdot_mean_cycles": 221.0,
+          "rvv_mean_cycles": 678.0,
+          "rvv_over_vdot_speedup": 3.067873303167421
+        },
+        "historical_qualified": true,
+        "vdot_cycle_reduction_fraction": 0.0,
+        "scope": "HISTORICAL_SAME_IMAGE_WINDOW_MEAN_NOT_B4_R7_MEASUREMENT"
+      },
+      {
+        "workload": "batch",
+        "dataset": 2,
+        "case_id": "performance-d2-s02",
+        "source_record": 69,
+        "baseline": {
+          "vdot_mean_cycles": 221.0,
+          "rvv_mean_cycles": 678.0,
+          "rvv_over_vdot_speedup": 3.067873303167421
+        },
+        "candidate": {
+          "vdot_mean_cycles": 221.0,
+          "rvv_mean_cycles": 678.0,
+          "rvv_over_vdot_speedup": 3.067873303167421
+        },
+        "historical_qualified": true,
+        "vdot_cycle_reduction_fraction": 0.0,
+        "scope": "HISTORICAL_SAME_IMAGE_WINDOW_MEAN_NOT_B4_R7_MEASUREMENT"
+      },
+      {
+        "workload": "stream",
+        "dataset": 0,
+        "case_id": "performance-d0-s03",
+        "source_record": 70,
+        "baseline": {
+          "vdot_mean_cycles": 1127.5,
+          "rvv_mean_cycles": 1133.0,
+          "rvv_over_vdot_speedup": 1.0048780487804878
+        },
+        "candidate": {
+          "vdot_mean_cycles": 1126.25,
+          "rvv_mean_cycles": 1133.0,
+          "rvv_over_vdot_speedup": 1.0059933407325194
+        },
+        "historical_qualified": true,
+        "vdot_cycle_reduction_fraction": 0.0011086474501108556,
+        "scope": "HISTORICAL_SAME_IMAGE_WINDOW_MEAN_NOT_B4_R7_MEASUREMENT"
+      },
+      {
+        "workload": "stream",
+        "dataset": 1,
+        "case_id": "performance-d1-s03",
+        "source_record": 70,
+        "baseline": {
+          "vdot_mean_cycles": 1127.5,
+          "rvv_mean_cycles": 1133.0,
+          "rvv_over_vdot_speedup": 1.0048780487804878
+        },
+        "candidate": {
+          "vdot_mean_cycles": 1126.25,
+          "rvv_mean_cycles": 1133.0,
+          "rvv_over_vdot_speedup": 1.0059933407325194
+        },
+        "historical_qualified": true,
+        "vdot_cycle_reduction_fraction": 0.0011086474501108556,
+        "scope": "HISTORICAL_SAME_IMAGE_WINDOW_MEAN_NOT_B4_R7_MEASUREMENT"
+      },
+      {
+        "workload": "stream",
+        "dataset": 2,
+        "case_id": "performance-d2-s03",
+        "source_record": 70,
+        "baseline": {
+          "vdot_mean_cycles": 1127.5,
+          "rvv_mean_cycles": 1133.0,
+          "rvv_over_vdot_speedup": 1.0048780487804878
+        },
+        "candidate": {
+          "vdot_mean_cycles": 1126.25,
+          "rvv_mean_cycles": 1133.0,
+          "rvv_over_vdot_speedup": 1.0059933407325194
+        },
+        "historical_qualified": true,
+        "vdot_cycle_reduction_fraction": 0.0011086474501108556,
+        "scope": "HISTORICAL_SAME_IMAGE_WINDOW_MEAN_NOT_B4_R7_MEASUREMENT"
+      },
+      {
+        "workload": "original-C8-8x32-basic",
+        "dataset": 0,
+        "source_record": 53,
+        "historical_qualified": true,
+        "baseline": {
+          "vdot_mean_cycles": 643.75,
+          "rvv_mean_cycles": 356.0,
+          "rvv_over_vdot_speedup": 0.553009708737864
+        },
+        "candidate": {
+          "vdot_mean_cycles": 642.5,
+          "rvv_mean_cycles": 356.0,
+          "rvv_over_vdot_speedup": 0.5540856031128405
+        },
+        "vdot_cycle_reduction_fraction": 0.001941747572815511,
+        "scope": "HISTORICAL_SAME_IMAGE_WINDOW_MEAN_NOT_B4_R7_MEASUREMENT"
+      },
+      {
+        "workload": "original-C8-8x32-reuse",
+        "dataset": 0,
+        "source_record": 53,
+        "historical_qualified": true,
+        "baseline": {
+          "vdot_mean_cycles": 273.0,
+          "rvv_mean_cycles": 299.0,
+          "rvv_over_vdot_speedup": 1.0952380952380953
+        },
+        "candidate": {
+          "vdot_mean_cycles": 272.0,
+          "rvv_mean_cycles": 299.0,
+          "rvv_over_vdot_speedup": 1.099264705882353
+        },
+        "vdot_cycle_reduction_fraction": 0.00366300366300365,
+        "scope": "HISTORICAL_SAME_IMAGE_WINDOW_MEAN_NOT_B4_R7_MEASUREMENT"
+      },
+      {
+        "workload": "original-C8-8x32-basic",
+        "dataset": 1,
+        "source_record": 54,
+        "historical_qualified": true,
+        "baseline": {
+          "vdot_mean_cycles": 643.75,
+          "rvv_mean_cycles": 356.0,
+          "rvv_over_vdot_speedup": 0.553009708737864
+        },
+        "candidate": {
+          "vdot_mean_cycles": 642.5,
+          "rvv_mean_cycles": 356.0,
+          "rvv_over_vdot_speedup": 0.5540856031128405
+        },
+        "vdot_cycle_reduction_fraction": 0.001941747572815511,
+        "scope": "HISTORICAL_SAME_IMAGE_WINDOW_MEAN_NOT_B4_R7_MEASUREMENT"
+      },
+      {
+        "workload": "original-C8-8x32-reuse",
+        "dataset": 1,
+        "source_record": 54,
+        "historical_qualified": true,
+        "baseline": {
+          "vdot_mean_cycles": 273.0,
+          "rvv_mean_cycles": 299.0,
+          "rvv_over_vdot_speedup": 1.0952380952380953
+        },
+        "candidate": {
+          "vdot_mean_cycles": 272.0,
+          "rvv_mean_cycles": 299.0,
+          "rvv_over_vdot_speedup": 1.099264705882353
+        },
+        "vdot_cycle_reduction_fraction": 0.00366300366300365,
+        "scope": "HISTORICAL_SAME_IMAGE_WINDOW_MEAN_NOT_B4_R7_MEASUREMENT"
+      },
+      {
+        "workload": "original-C8-8x32-basic",
+        "dataset": 2,
+        "source_record": 55,
+        "historical_qualified": true,
+        "baseline": {
+          "vdot_mean_cycles": 643.75,
+          "rvv_mean_cycles": 356.0,
+          "rvv_over_vdot_speedup": 0.553009708737864
+        },
+        "candidate": {
+          "vdot_mean_cycles": 642.5,
+          "rvv_mean_cycles": 356.0,
+          "rvv_over_vdot_speedup": 0.5540856031128405
+        },
+        "vdot_cycle_reduction_fraction": 0.001941747572815511,
+        "scope": "HISTORICAL_SAME_IMAGE_WINDOW_MEAN_NOT_B4_R7_MEASUREMENT"
+      },
+      {
+        "workload": "original-C8-8x32-reuse",
+        "dataset": 2,
+        "source_record": 55,
+        "historical_qualified": true,
+        "baseline": {
+          "vdot_mean_cycles": 273.0,
+          "rvv_mean_cycles": 299.0,
+          "rvv_over_vdot_speedup": 1.0952380952380953
+        },
+        "candidate": {
+          "vdot_mean_cycles": 272.0,
+          "rvv_mean_cycles": 299.0,
+          "rvv_over_vdot_speedup": 1.099264705882353
+        },
+        "vdot_cycle_reduction_fraction": 0.00366300366300365,
+        "scope": "HISTORICAL_SAME_IMAGE_WINDOW_MEAN_NOT_B4_R7_MEASUREMENT"
+      }
+    ],
+    "historical_area": {
+      "baseline": {
+        "FU_um2": 17298.246,
+        "inclusive_parent_um2": 284614.946
+      },
+      "candidate": {
+        "FU_um2": 18322.878,
+        "inclusive_parent_um2": 285241.642
+      },
+      "relative_increase": {
+        "FU_um2": 0.05923328873921685,
+        "inclusive_parent_um2": 0.0022019082581841154
+      }
+    },
+    "historical_five_profile_timing": [
+      {
+        "profile": "nominal",
+        "reference_period_ns": 1.0,
+        "load_pf": 0.005,
+        "fu_Q_ns": 1.790381,
+        "fu_worst_setup_slack_ns": -0.790381,
+        "parent_Q_ns": 3.337809,
+        "parent_worst_setup_slack_ns": -2.337809,
+        "baseline": {
+          "fu": {
+            "worst_setup_slack_ns": -0.26852,
+            "Q_ns": 1.26852
+          },
+          "parent": {
+            "worst_setup_slack_ns": -2.393998,
+            "Q_ns": 3.393998
+          }
+        },
+        "candidate_critical_paths": {
+          "fu": [
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "nominal",
+              "group": "ready",
+              "arrival_ns": "0.218001",
+              "required_ns": "0.85",
+              "slack_ns": "0.631999",
+              "startpoint": "io_out_ready (input port clocked by core_clk)",
+              "endpoint": "io_in_ready (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "nominal",
+              "group": "all_max",
+              "arrival_ns": "1.709455",
+              "required_ns": "0.919074",
+              "slack_ns": "-0.790381",
+              "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+              "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "nominal",
+              "group": "p_data_i2r",
+              "arrival_ns": "1.693598",
+              "required_ns": "0.922345",
+              "slack_ns": "-0.771253",
+              "startpoint": "io_in_bits_data_src_1[2] (input port clocked by core_clk)",
+              "endpoint": "c9583 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "nominal",
+              "group": "r_data_i2r",
+              "arrival_ns": "1.709455",
+              "required_ns": "0.919074",
+              "slack_ns": "-0.790381",
+              "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+              "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+            }
+          ],
+          "parent": [
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "nominal",
+              "group": "ready",
+              "arrival_ns": "0.303064",
+              "required_ns": "0.85",
+              "slack_ns": "0.546936",
+              "startpoint": "io_out_ready (input port clocked by core_clk)",
+              "endpoint": "io_in_ready (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "nominal",
+              "group": "vdot_i2r",
+              "arrival_ns": "2.176863",
+              "required_ns": "0.919473",
+              "slack_ns": "-1.25739",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c199298 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "nominal",
+              "group": "vdot_r2o",
+              "arrival_ns": "2.707617",
+              "required_ns": "0.85",
+              "slack_ns": "-1.857617",
+              "startpoint": "c199925 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "io_out_bits_fflags[1] (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "nominal",
+              "group": "gate_enable",
+              "arrival_ns": "1.713544",
+              "required_ns": "0.877842",
+              "slack_ns": "-0.835702",
+              "startpoint": "c201714 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "c203281 (rising clock gating-check end-point clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "nominal",
+              "group": "all_max",
+              "arrival_ns": "3.259825",
+              "required_ns": "0.922016",
+              "slack_ns": "-2.337809",
+              "startpoint": "io_in_bits_vpu_vsew[1] (input port clocked by core_clk)",
+              "endpoint": "c201899 (rising edge-triggered flip-flop clocked by core_clk)"
+            }
+          ]
+        },
+        "baseline_critical_paths": {
+          "fu": {
+            "mode": "off",
+            "boundary": "fu",
+            "profile": "nominal",
+            "group": "all_max",
+            "arrival_ns": "1.190323",
+            "required_ns": "0.921803",
+            "slack_ns": "-0.26852",
+            "startpoint": "io_in_bits_data_src_0[21] (input port clocked by core_clk)",
+            "endpoint": "c7201 (rising edge-triggered flip-flop clocked by core_clk)"
+          },
+          "parent": {
+            "mode": "off",
+            "boundary": "parent",
+            "profile": "nominal",
+            "group": "all_max",
+            "arrival_ns": "3.314103",
+            "required_ns": "0.920105",
+            "slack_ns": "-2.393998",
+            "startpoint": "io_in_bits_src_0[71] (input port clocked by core_clk)",
+            "endpoint": "c201635 (rising edge-triggered flip-flop clocked by core_clk)"
+          }
+        }
+      },
+      {
+        "profile": "period050",
+        "reference_period_ns": 0.5,
+        "load_pf": 0.005,
+        "fu_Q_ns": 1.790381,
+        "fu_worst_setup_slack_ns": -1.290381,
+        "parent_Q_ns": 3.337809,
+        "parent_worst_setup_slack_ns": -2.837809,
+        "baseline": {
+          "fu": {
+            "worst_setup_slack_ns": -0.76852,
+            "Q_ns": 1.26852
+          },
+          "parent": {
+            "worst_setup_slack_ns": -2.893998,
+            "Q_ns": 3.393998
+          }
+        },
+        "candidate_critical_paths": {
+          "fu": [
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "period050",
+              "group": "ready",
+              "arrival_ns": "0.218001",
+              "required_ns": "0.35",
+              "slack_ns": "0.131999",
+              "startpoint": "io_out_ready (input port clocked by core_clk)",
+              "endpoint": "io_in_ready (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "period050",
+              "group": "all_max",
+              "arrival_ns": "1.709455",
+              "required_ns": "0.419074",
+              "slack_ns": "-1.290381",
+              "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+              "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "period050",
+              "group": "p_data_i2r",
+              "arrival_ns": "1.693598",
+              "required_ns": "0.422347",
+              "slack_ns": "-1.271251",
+              "startpoint": "io_in_bits_data_src_1[2] (input port clocked by core_clk)",
+              "endpoint": "c9577 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "period050",
+              "group": "r_data_i2r",
+              "arrival_ns": "1.709455",
+              "required_ns": "0.419074",
+              "slack_ns": "-1.290381",
+              "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+              "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+            }
+          ],
+          "parent": [
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period050",
+              "group": "ready",
+              "arrival_ns": "0.303064",
+              "required_ns": "0.35",
+              "slack_ns": "0.046936",
+              "startpoint": "io_out_ready (input port clocked by core_clk)",
+              "endpoint": "io_in_ready (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period050",
+              "group": "vdot_i2r",
+              "arrival_ns": "2.176863",
+              "required_ns": "0.419473",
+              "slack_ns": "-1.75739",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c199298 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period050",
+              "group": "vdot_r2o",
+              "arrival_ns": "2.707617",
+              "required_ns": "0.35",
+              "slack_ns": "-2.357617",
+              "startpoint": "c199925 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "io_out_bits_fflags[1] (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period050",
+              "group": "gate_enable",
+              "arrival_ns": "1.713544",
+              "required_ns": "0.377842",
+              "slack_ns": "-1.335702",
+              "startpoint": "c201714 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "c203281 (rising clock gating-check end-point clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period050",
+              "group": "all_max",
+              "arrival_ns": "3.259825",
+              "required_ns": "0.422016",
+              "slack_ns": "-2.837809",
+              "startpoint": "io_in_bits_vpu_vsew[1] (input port clocked by core_clk)",
+              "endpoint": "c201899 (rising edge-triggered flip-flop clocked by core_clk)"
+            }
+          ]
+        },
+        "baseline_critical_paths": {
+          "fu": {
+            "mode": "off",
+            "boundary": "fu",
+            "profile": "period050",
+            "group": "all_max",
+            "arrival_ns": "1.190323",
+            "required_ns": "0.421803",
+            "slack_ns": "-0.76852",
+            "startpoint": "io_in_bits_data_src_0[21] (input port clocked by core_clk)",
+            "endpoint": "c7201 (rising edge-triggered flip-flop clocked by core_clk)"
+          },
+          "parent": {
+            "mode": "off",
+            "boundary": "parent",
+            "profile": "period050",
+            "group": "all_max",
+            "arrival_ns": "3.314103",
+            "required_ns": "0.420105",
+            "slack_ns": "-2.893998",
+            "startpoint": "io_in_bits_src_0[71] (input port clocked by core_clk)",
+            "endpoint": "c201635 (rising edge-triggered flip-flop clocked by core_clk)"
+          }
+        }
+      },
+      {
+        "profile": "period200",
+        "reference_period_ns": 2.0,
+        "load_pf": 0.005,
+        "fu_Q_ns": 1.790381,
+        "fu_worst_setup_slack_ns": 0.209619,
+        "parent_Q_ns": 3.337809,
+        "parent_worst_setup_slack_ns": -1.337809,
+        "baseline": {
+          "fu": {
+            "worst_setup_slack_ns": 0.73148,
+            "Q_ns": 1.26852
+          },
+          "parent": {
+            "worst_setup_slack_ns": -1.393998,
+            "Q_ns": 3.393998
+          }
+        },
+        "candidate_critical_paths": {
+          "fu": [
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "period200",
+              "group": "ready",
+              "arrival_ns": "0.218001",
+              "required_ns": "1.85",
+              "slack_ns": "1.631999",
+              "startpoint": "io_out_ready (input port clocked by core_clk)",
+              "endpoint": "io_in_ready (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "period200",
+              "group": "all_max",
+              "arrival_ns": "1.709455",
+              "required_ns": "1.919074",
+              "slack_ns": "0.209619",
+              "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+              "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "period200",
+              "group": "p_data_i2r",
+              "arrival_ns": "1.693598",
+              "required_ns": "1.922345",
+              "slack_ns": "0.228747",
+              "startpoint": "io_in_bits_data_src_1[2] (input port clocked by core_clk)",
+              "endpoint": "c9583 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "period200",
+              "group": "r_data_i2r",
+              "arrival_ns": "1.709455",
+              "required_ns": "1.919074",
+              "slack_ns": "0.209619",
+              "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+              "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+            }
+          ],
+          "parent": [
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period200",
+              "group": "ready",
+              "arrival_ns": "0.303064",
+              "required_ns": "1.85",
+              "slack_ns": "1.546936",
+              "startpoint": "io_out_ready (input port clocked by core_clk)",
+              "endpoint": "io_in_ready (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period200",
+              "group": "vdot_i2r",
+              "arrival_ns": "2.176863",
+              "required_ns": "1.919473",
+              "slack_ns": "-0.25739",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c199298 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period200",
+              "group": "vdot_r2o",
+              "arrival_ns": "2.707617",
+              "required_ns": "1.85",
+              "slack_ns": "-0.857617",
+              "startpoint": "c199925 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "io_out_bits_fflags[1] (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period200",
+              "group": "gate_enable",
+              "arrival_ns": "1.713544",
+              "required_ns": "1.877842",
+              "slack_ns": "0.164298",
+              "startpoint": "c201714 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "c203281 (rising clock gating-check end-point clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period200",
+              "group": "all_max",
+              "arrival_ns": "3.259825",
+              "required_ns": "1.922016",
+              "slack_ns": "-1.337809",
+              "startpoint": "io_in_bits_vpu_vsew[1] (input port clocked by core_clk)",
+              "endpoint": "c201899 (rising edge-triggered flip-flop clocked by core_clk)"
+            }
+          ]
+        },
+        "baseline_critical_paths": {
+          "fu": {
+            "mode": "off",
+            "boundary": "fu",
+            "profile": "period200",
+            "group": "all_max",
+            "arrival_ns": "1.190323",
+            "required_ns": "1.921803",
+            "slack_ns": "0.73148",
+            "startpoint": "io_in_bits_data_src_0[21] (input port clocked by core_clk)",
+            "endpoint": "c7201 (rising edge-triggered flip-flop clocked by core_clk)"
+          },
+          "parent": {
+            "mode": "off",
+            "boundary": "parent",
+            "profile": "period200",
+            "group": "all_max",
+            "arrival_ns": "3.314103",
+            "required_ns": "1.920105",
+            "slack_ns": "-1.393998",
+            "startpoint": "io_in_bits_src_0[71] (input port clocked by core_clk)",
+            "endpoint": "c201635 (rising edge-triggered flip-flop clocked by core_clk)"
+          }
+        }
+      },
+      {
+        "profile": "load001",
+        "reference_period_ns": 1.0,
+        "load_pf": 0.001,
+        "fu_Q_ns": 1.790381,
+        "fu_worst_setup_slack_ns": -0.790381,
+        "parent_Q_ns": 3.337809,
+        "parent_worst_setup_slack_ns": -2.337809,
+        "baseline": {
+          "fu": {
+            "worst_setup_slack_ns": -0.26852,
+            "Q_ns": 1.26852
+          },
+          "parent": {
+            "worst_setup_slack_ns": -2.393998,
+            "Q_ns": 3.393998
+          }
+        },
+        "candidate_critical_paths": {
+          "fu": [
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "load001",
+              "group": "ready",
+              "arrival_ns": "0.199611",
+              "required_ns": "0.85",
+              "slack_ns": "0.650389",
+              "startpoint": "io_out_ready (input port clocked by core_clk)",
+              "endpoint": "io_in_ready (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "load001",
+              "group": "all_max",
+              "arrival_ns": "1.709455",
+              "required_ns": "0.919074",
+              "slack_ns": "-0.790381",
+              "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+              "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "load001",
+              "group": "p_data_i2r",
+              "arrival_ns": "1.693598",
+              "required_ns": "0.922345",
+              "slack_ns": "-0.771253",
+              "startpoint": "io_in_bits_data_src_1[2] (input port clocked by core_clk)",
+              "endpoint": "c9583 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "load001",
+              "group": "r_data_i2r",
+              "arrival_ns": "1.709455",
+              "required_ns": "0.919074",
+              "slack_ns": "-0.790381",
+              "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+              "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+            }
+          ],
+          "parent": [
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load001",
+              "group": "ready",
+              "arrival_ns": "0.294129",
+              "required_ns": "0.85",
+              "slack_ns": "0.555871",
+              "startpoint": "io_out_ready (input port clocked by core_clk)",
+              "endpoint": "io_in_ready (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load001",
+              "group": "vdot_i2r",
+              "arrival_ns": "2.176863",
+              "required_ns": "0.919473",
+              "slack_ns": "-1.25739",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c199298 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load001",
+              "group": "vdot_r2o",
+              "arrival_ns": "2.687041",
+              "required_ns": "0.85",
+              "slack_ns": "-1.837041",
+              "startpoint": "c199925 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "io_out_bits_fflags[1] (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load001",
+              "group": "gate_enable",
+              "arrival_ns": "1.713544",
+              "required_ns": "0.877842",
+              "slack_ns": "-0.835702",
+              "startpoint": "c201714 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "c203281 (rising clock gating-check end-point clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load001",
+              "group": "all_max",
+              "arrival_ns": "3.259825",
+              "required_ns": "0.922016",
+              "slack_ns": "-2.337809",
+              "startpoint": "io_in_bits_vpu_vsew[1] (input port clocked by core_clk)",
+              "endpoint": "c201899 (rising edge-triggered flip-flop clocked by core_clk)"
+            }
+          ]
+        },
+        "baseline_critical_paths": {
+          "fu": {
+            "mode": "off",
+            "boundary": "fu",
+            "profile": "load001",
+            "group": "all_max",
+            "arrival_ns": "1.190323",
+            "required_ns": "0.921803",
+            "slack_ns": "-0.26852",
+            "startpoint": "io_in_bits_data_src_0[21] (input port clocked by core_clk)",
+            "endpoint": "c7201 (rising edge-triggered flip-flop clocked by core_clk)"
+          },
+          "parent": {
+            "mode": "off",
+            "boundary": "parent",
+            "profile": "load001",
+            "group": "all_max",
+            "arrival_ns": "3.314103",
+            "required_ns": "0.920105",
+            "slack_ns": "-2.393998",
+            "startpoint": "io_in_bits_src_0[71] (input port clocked by core_clk)",
+            "endpoint": "c201635 (rising edge-triggered flip-flop clocked by core_clk)"
+          }
+        }
+      },
+      {
+        "profile": "load020",
+        "reference_period_ns": 1.0,
+        "load_pf": 0.02,
+        "fu_Q_ns": 1.790381,
+        "fu_worst_setup_slack_ns": -0.790381,
+        "parent_Q_ns": 3.391613,
+        "parent_worst_setup_slack_ns": -2.391613,
+        "baseline": {
+          "fu": {
+            "worst_setup_slack_ns": -0.26852,
+            "Q_ns": 1.26852
+          },
+          "parent": {
+            "worst_setup_slack_ns": -2.413199,
+            "Q_ns": 3.413199
+          }
+        },
+        "candidate_critical_paths": {
+          "fu": [
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "load020",
+              "group": "ready",
+              "arrival_ns": "0.335904",
+              "required_ns": "0.85",
+              "slack_ns": "0.514096",
+              "startpoint": "io_out_ready (input port clocked by core_clk)",
+              "endpoint": "io_in_ready (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "load020",
+              "group": "all_max",
+              "arrival_ns": "1.709455",
+              "required_ns": "0.919074",
+              "slack_ns": "-0.790381",
+              "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+              "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "load020",
+              "group": "p_data_i2r",
+              "arrival_ns": "1.693598",
+              "required_ns": "0.922345",
+              "slack_ns": "-0.771253",
+              "startpoint": "io_in_bits_data_src_1[2] (input port clocked by core_clk)",
+              "endpoint": "c9583 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "load020",
+              "group": "r_data_i2r",
+              "arrival_ns": "1.709455",
+              "required_ns": "0.919074",
+              "slack_ns": "-0.790381",
+              "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+              "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+            }
+          ],
+          "parent": [
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load020",
+              "group": "ready",
+              "arrival_ns": "0.365843",
+              "required_ns": "0.85",
+              "slack_ns": "0.484157",
+              "startpoint": "io_out_ready (input port clocked by core_clk)",
+              "endpoint": "io_in_ready (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load020",
+              "group": "vdot_i2r",
+              "arrival_ns": "2.176863",
+              "required_ns": "0.919473",
+              "slack_ns": "-1.25739",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c199298 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load020",
+              "group": "vdot_r2o",
+              "arrival_ns": "2.783758",
+              "required_ns": "0.85",
+              "slack_ns": "-1.933758",
+              "startpoint": "c199925 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "io_out_bits_fflags[1] (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load020",
+              "group": "gate_enable",
+              "arrival_ns": "1.713544",
+              "required_ns": "0.877842",
+              "slack_ns": "-0.835702",
+              "startpoint": "c201714 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "c203281 (rising clock gating-check end-point clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load020",
+              "group": "all_max",
+              "arrival_ns": "3.241613",
+              "required_ns": "0.85",
+              "slack_ns": "-2.391613",
+              "startpoint": "c201714 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "io_out_bits_fflags[1] (output port clocked by core_clk)"
+            }
+          ]
+        },
+        "baseline_critical_paths": {
+          "fu": {
+            "mode": "off",
+            "boundary": "fu",
+            "profile": "load020",
+            "group": "all_max",
+            "arrival_ns": "1.190323",
+            "required_ns": "0.921803",
+            "slack_ns": "-0.26852",
+            "startpoint": "io_in_bits_data_src_0[21] (input port clocked by core_clk)",
+            "endpoint": "c7201 (rising edge-triggered flip-flop clocked by core_clk)"
+          },
+          "parent": {
+            "mode": "off",
+            "boundary": "parent",
+            "profile": "load020",
+            "group": "all_max",
+            "arrival_ns": "3.263199",
+            "required_ns": "0.85",
+            "slack_ns": "-2.413199",
+            "startpoint": "c202454 (rising edge-triggered flip-flop clocked by core_clk)",
+            "endpoint": "io_out_bits_fflags[1] (output port clocked by core_clk)"
+          }
+        }
+      }
+    ],
+    "full_historical_cost": {
+      "cost_qualification": "HISTORICAL_ORIGINAL_G2_TRACE_OFF_REUSE",
+      "candidate_area": {
+        "FU_um2": 18322.878,
+        "inclusive_parent_um2": 285241.642
+      },
+      "five_profile_timing": [
+        {
+          "profile": "nominal",
+          "reference_period_ns": 1.0,
+          "load_pf": 0.005,
+          "fu_Q_ns": 1.790381,
+          "fu_worst_setup_slack_ns": -0.790381,
+          "fu_paths": [
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "nominal",
+              "group": "r2r",
+              "arrival_ns": "1.020088",
+              "required_ns": "0.924317",
+              "slack_ns": "-0.095771",
+              "startpoint": "c8741 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "c9239 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "nominal",
+              "group": "i2r",
+              "arrival_ns": "1.709455",
+              "required_ns": "0.919074",
+              "slack_ns": "-0.790381",
+              "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+              "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "nominal",
+              "group": "r2o",
+              "arrival_ns": "0.599357",
+              "required_ns": "0.85",
+              "slack_ns": "0.250643",
+              "startpoint": "c8741 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "io_in_ready (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "nominal",
+              "group": "i2o",
+              "arrival_ns": "0.609545",
+              "required_ns": "0.85",
+              "slack_ns": "0.240455",
+              "startpoint": "io_flush_bits_robIdx_value[2] (input port clocked by core_clk)",
+              "endpoint": "io_in_ready (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "nominal",
+              "group": "ready",
+              "arrival_ns": "0.218001",
+              "required_ns": "0.85",
+              "slack_ns": "0.631999",
+              "startpoint": "io_out_ready (input port clocked by core_clk)",
+              "endpoint": "io_in_ready (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "nominal",
+              "group": "all_max",
+              "arrival_ns": "1.709455",
+              "required_ns": "0.919074",
+              "slack_ns": "-0.790381",
+              "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+              "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "nominal",
+              "group": "p_data_i2r",
+              "arrival_ns": "1.693598",
+              "required_ns": "0.922345",
+              "slack_ns": "-0.771253",
+              "startpoint": "io_in_bits_data_src_1[2] (input port clocked by core_clk)",
+              "endpoint": "c9583 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "nominal",
+              "group": "r_data_i2r",
+              "arrival_ns": "1.709455",
+              "required_ns": "0.919074",
+              "slack_ns": "-0.790381",
+              "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+              "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "nominal",
+              "group": "p_slot_i2r",
+              "arrival_ns": "1.693598",
+              "required_ns": "0.922345",
+              "slack_ns": "-0.771253",
+              "startpoint": "io_in_bits_data_src_1[2] (input port clocked by core_clk)",
+              "endpoint": "c9583 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "nominal",
+              "group": "r_slot_i2r",
+              "arrival_ns": "1.709455",
+              "required_ns": "0.919074",
+              "slack_ns": "-0.790381",
+              "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+              "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "nominal",
+              "group": "operands_to_p",
+              "arrival_ns": "1.693598",
+              "required_ns": "0.922345",
+              "slack_ns": "-0.771253",
+              "startpoint": "io_in_bits_data_src_1[2] (input port clocked by core_clk)",
+              "endpoint": "c9583 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "nominal",
+              "group": "operands_to_r",
+              "arrival_ns": "1.709455",
+              "required_ns": "0.919074",
+              "slack_ns": "-0.790381",
+              "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+              "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+            }
+          ],
+          "parent_Q_ns": 3.337809,
+          "parent_worst_setup_slack_ns": -2.337809,
+          "parent_paths": [
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "nominal",
+              "group": "r2r",
+              "arrival_ns": "3.234775",
+              "required_ns": "0.922016",
+              "slack_ns": "-2.312759",
+              "startpoint": "c201714 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "c201899 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "nominal",
+              "group": "i2r",
+              "arrival_ns": "3.259825",
+              "required_ns": "0.922016",
+              "slack_ns": "-2.337809",
+              "startpoint": "io_in_bits_vpu_vsew[1] (input port clocked by core_clk)",
+              "endpoint": "c201899 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "nominal",
+              "group": "r2o",
+              "arrival_ns": "3.165472",
+              "required_ns": "0.85",
+              "slack_ns": "-2.315472",
+              "startpoint": "c201714 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "io_out_bits_fflags[1] (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "nominal",
+              "group": "i2o",
+              "arrival_ns": "3.027143",
+              "required_ns": "0.85",
+              "slack_ns": "-2.177143",
+              "startpoint": "io_in_bits_fuType[31] (input port clocked by core_clk)",
+              "endpoint": "io_out_bits_fflags[1] (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "nominal",
+              "group": "ready",
+              "arrival_ns": "0.303064",
+              "required_ns": "0.85",
+              "slack_ns": "0.546936",
+              "startpoint": "io_out_ready (input port clocked by core_clk)",
+              "endpoint": "io_in_ready (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "nominal",
+              "group": "vdot_r2r",
+              "arrival_ns": "0.928023",
+              "required_ns": "0.924316",
+              "slack_ns": "-0.003707",
+              "startpoint": "c199325 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "c199315 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "nominal",
+              "group": "vdot_i2r",
+              "arrival_ns": "2.176863",
+              "required_ns": "0.919473",
+              "slack_ns": "-1.25739",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c199298 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "nominal",
+              "group": "vdot_r2o",
+              "arrival_ns": "2.707617",
+              "required_ns": "0.85",
+              "slack_ns": "-1.857617",
+              "startpoint": "c199925 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "io_out_bits_fflags[1] (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "nominal",
+              "group": "gate_enable",
+              "arrival_ns": "1.713544",
+              "required_ns": "0.877842",
+              "slack_ns": "-0.835702",
+              "startpoint": "c201714 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "c203281 (rising clock gating-check end-point clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "nominal",
+              "group": "all_max",
+              "arrival_ns": "3.259825",
+              "required_ns": "0.922016",
+              "slack_ns": "-2.337809",
+              "startpoint": "io_in_bits_vpu_vsew[1] (input port clocked by core_clk)",
+              "endpoint": "c201899 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "nominal",
+              "group": "p_data_i2r",
+              "arrival_ns": "2.155802",
+              "required_ns": "0.920087",
+              "slack_ns": "-1.235715",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c198689 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "nominal",
+              "group": "r_data_i2r",
+              "arrival_ns": "2.176863",
+              "required_ns": "0.919473",
+              "slack_ns": "-1.25739",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c199298 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "nominal",
+              "group": "p_slot_i2r",
+              "arrival_ns": "2.155802",
+              "required_ns": "0.920087",
+              "slack_ns": "-1.235715",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c198689 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "nominal",
+              "group": "r_slot_i2r",
+              "arrival_ns": "2.176863",
+              "required_ns": "0.919473",
+              "slack_ns": "-1.25739",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c199298 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "nominal",
+              "group": "operands_to_p",
+              "arrival_ns": "2.155802",
+              "required_ns": "0.920087",
+              "slack_ns": "-1.235715",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c198689 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "nominal",
+              "group": "operands_to_r",
+              "arrival_ns": "2.176863",
+              "required_ns": "0.919473",
+              "slack_ns": "-1.25739",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c199298 (rising edge-triggered flip-flop clocked by core_clk)"
+            }
+          ]
+        },
+        {
+          "profile": "period050",
+          "reference_period_ns": 0.5,
+          "load_pf": 0.005,
+          "fu_Q_ns": 1.790381,
+          "fu_worst_setup_slack_ns": -1.290381,
+          "fu_paths": [
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "period050",
+              "group": "r2r",
+              "arrival_ns": "1.020088",
+              "required_ns": "0.424317",
+              "slack_ns": "-0.595771",
+              "startpoint": "c8741 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "c9111 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "period050",
+              "group": "i2r",
+              "arrival_ns": "1.709455",
+              "required_ns": "0.419074",
+              "slack_ns": "-1.290381",
+              "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+              "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "period050",
+              "group": "r2o",
+              "arrival_ns": "0.599357",
+              "required_ns": "0.35",
+              "slack_ns": "-0.249357",
+              "startpoint": "c8741 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "io_in_ready (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "period050",
+              "group": "i2o",
+              "arrival_ns": "0.609545",
+              "required_ns": "0.35",
+              "slack_ns": "-0.259545",
+              "startpoint": "io_flush_bits_robIdx_value[2] (input port clocked by core_clk)",
+              "endpoint": "io_in_ready (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "period050",
+              "group": "ready",
+              "arrival_ns": "0.218001",
+              "required_ns": "0.35",
+              "slack_ns": "0.131999",
+              "startpoint": "io_out_ready (input port clocked by core_clk)",
+              "endpoint": "io_in_ready (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "period050",
+              "group": "all_max",
+              "arrival_ns": "1.709455",
+              "required_ns": "0.419074",
+              "slack_ns": "-1.290381",
+              "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+              "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "period050",
+              "group": "p_data_i2r",
+              "arrival_ns": "1.693598",
+              "required_ns": "0.422347",
+              "slack_ns": "-1.271251",
+              "startpoint": "io_in_bits_data_src_1[2] (input port clocked by core_clk)",
+              "endpoint": "c9577 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "period050",
+              "group": "r_data_i2r",
+              "arrival_ns": "1.709455",
+              "required_ns": "0.419074",
+              "slack_ns": "-1.290381",
+              "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+              "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "period050",
+              "group": "p_slot_i2r",
+              "arrival_ns": "1.693598",
+              "required_ns": "0.422347",
+              "slack_ns": "-1.271251",
+              "startpoint": "io_in_bits_data_src_1[2] (input port clocked by core_clk)",
+              "endpoint": "c9577 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "period050",
+              "group": "r_slot_i2r",
+              "arrival_ns": "1.709455",
+              "required_ns": "0.419074",
+              "slack_ns": "-1.290381",
+              "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+              "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "period050",
+              "group": "operands_to_p",
+              "arrival_ns": "1.693598",
+              "required_ns": "0.422347",
+              "slack_ns": "-1.271251",
+              "startpoint": "io_in_bits_data_src_1[2] (input port clocked by core_clk)",
+              "endpoint": "c9577 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "period050",
+              "group": "operands_to_r",
+              "arrival_ns": "1.709455",
+              "required_ns": "0.419074",
+              "slack_ns": "-1.290381",
+              "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+              "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+            }
+          ],
+          "parent_Q_ns": 3.337809,
+          "parent_worst_setup_slack_ns": -2.837809,
+          "parent_paths": [
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period050",
+              "group": "r2r",
+              "arrival_ns": "3.234775",
+              "required_ns": "0.422016",
+              "slack_ns": "-2.812759",
+              "startpoint": "c201714 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "c201899 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period050",
+              "group": "i2r",
+              "arrival_ns": "3.259825",
+              "required_ns": "0.422016",
+              "slack_ns": "-2.837809",
+              "startpoint": "io_in_bits_vpu_vsew[1] (input port clocked by core_clk)",
+              "endpoint": "c201899 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period050",
+              "group": "r2o",
+              "arrival_ns": "3.165472",
+              "required_ns": "0.35",
+              "slack_ns": "-2.815472",
+              "startpoint": "c201714 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "io_out_bits_fflags[1] (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period050",
+              "group": "i2o",
+              "arrival_ns": "3.027143",
+              "required_ns": "0.35",
+              "slack_ns": "-2.677143",
+              "startpoint": "io_in_bits_fuType[31] (input port clocked by core_clk)",
+              "endpoint": "io_out_bits_fflags[1] (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period050",
+              "group": "ready",
+              "arrival_ns": "0.303064",
+              "required_ns": "0.35",
+              "slack_ns": "0.046936",
+              "startpoint": "io_out_ready (input port clocked by core_clk)",
+              "endpoint": "io_in_ready (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period050",
+              "group": "vdot_r2r",
+              "arrival_ns": "0.928023",
+              "required_ns": "0.424316",
+              "slack_ns": "-0.503707",
+              "startpoint": "c199325 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "c199315 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period050",
+              "group": "vdot_i2r",
+              "arrival_ns": "2.176863",
+              "required_ns": "0.419473",
+              "slack_ns": "-1.75739",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c199298 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period050",
+              "group": "vdot_r2o",
+              "arrival_ns": "2.707617",
+              "required_ns": "0.35",
+              "slack_ns": "-2.357617",
+              "startpoint": "c199925 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "io_out_bits_fflags[1] (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period050",
+              "group": "gate_enable",
+              "arrival_ns": "1.713544",
+              "required_ns": "0.377842",
+              "slack_ns": "-1.335702",
+              "startpoint": "c201714 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "c203281 (rising clock gating-check end-point clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period050",
+              "group": "all_max",
+              "arrival_ns": "3.259825",
+              "required_ns": "0.422016",
+              "slack_ns": "-2.837809",
+              "startpoint": "io_in_bits_vpu_vsew[1] (input port clocked by core_clk)",
+              "endpoint": "c201899 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period050",
+              "group": "p_data_i2r",
+              "arrival_ns": "2.155802",
+              "required_ns": "0.420087",
+              "slack_ns": "-1.735715",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c198689 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period050",
+              "group": "r_data_i2r",
+              "arrival_ns": "2.176863",
+              "required_ns": "0.419473",
+              "slack_ns": "-1.75739",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c199298 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period050",
+              "group": "p_slot_i2r",
+              "arrival_ns": "2.155802",
+              "required_ns": "0.420087",
+              "slack_ns": "-1.735715",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c198689 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period050",
+              "group": "r_slot_i2r",
+              "arrival_ns": "2.176863",
+              "required_ns": "0.419473",
+              "slack_ns": "-1.75739",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c199298 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period050",
+              "group": "operands_to_p",
+              "arrival_ns": "2.155802",
+              "required_ns": "0.420087",
+              "slack_ns": "-1.735715",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c198689 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period050",
+              "group": "operands_to_r",
+              "arrival_ns": "2.176863",
+              "required_ns": "0.419473",
+              "slack_ns": "-1.75739",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c199298 (rising edge-triggered flip-flop clocked by core_clk)"
+            }
+          ]
+        },
+        {
+          "profile": "period200",
+          "reference_period_ns": 2.0,
+          "load_pf": 0.005,
+          "fu_Q_ns": 1.790381,
+          "fu_worst_setup_slack_ns": 0.209619,
+          "fu_paths": [
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "period200",
+              "group": "r2r",
+              "arrival_ns": "1.020088",
+              "required_ns": "1.924317",
+              "slack_ns": "0.904229",
+              "startpoint": "c8741 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "c9111 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "period200",
+              "group": "i2r",
+              "arrival_ns": "1.709455",
+              "required_ns": "1.919074",
+              "slack_ns": "0.209619",
+              "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+              "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "period200",
+              "group": "r2o",
+              "arrival_ns": "0.599357",
+              "required_ns": "1.85",
+              "slack_ns": "1.250643",
+              "startpoint": "c8741 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "io_in_ready (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "period200",
+              "group": "i2o",
+              "arrival_ns": "0.609545",
+              "required_ns": "1.85",
+              "slack_ns": "1.240455",
+              "startpoint": "io_flush_bits_robIdx_value[2] (input port clocked by core_clk)",
+              "endpoint": "io_in_ready (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "period200",
+              "group": "ready",
+              "arrival_ns": "0.218001",
+              "required_ns": "1.85",
+              "slack_ns": "1.631999",
+              "startpoint": "io_out_ready (input port clocked by core_clk)",
+              "endpoint": "io_in_ready (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "period200",
+              "group": "all_max",
+              "arrival_ns": "1.709455",
+              "required_ns": "1.919074",
+              "slack_ns": "0.209619",
+              "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+              "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "period200",
+              "group": "p_data_i2r",
+              "arrival_ns": "1.693598",
+              "required_ns": "1.922345",
+              "slack_ns": "0.228747",
+              "startpoint": "io_in_bits_data_src_1[2] (input port clocked by core_clk)",
+              "endpoint": "c9583 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "period200",
+              "group": "r_data_i2r",
+              "arrival_ns": "1.709455",
+              "required_ns": "1.919074",
+              "slack_ns": "0.209619",
+              "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+              "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "period200",
+              "group": "p_slot_i2r",
+              "arrival_ns": "1.693598",
+              "required_ns": "1.922345",
+              "slack_ns": "0.228747",
+              "startpoint": "io_in_bits_data_src_1[2] (input port clocked by core_clk)",
+              "endpoint": "c9583 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "period200",
+              "group": "r_slot_i2r",
+              "arrival_ns": "1.709455",
+              "required_ns": "1.919074",
+              "slack_ns": "0.209619",
+              "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+              "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "period200",
+              "group": "operands_to_p",
+              "arrival_ns": "1.693598",
+              "required_ns": "1.922345",
+              "slack_ns": "0.228747",
+              "startpoint": "io_in_bits_data_src_1[2] (input port clocked by core_clk)",
+              "endpoint": "c9583 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "period200",
+              "group": "operands_to_r",
+              "arrival_ns": "1.709455",
+              "required_ns": "1.919074",
+              "slack_ns": "0.209619",
+              "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+              "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+            }
+          ],
+          "parent_Q_ns": 3.337809,
+          "parent_worst_setup_slack_ns": -1.337809,
+          "parent_paths": [
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period200",
+              "group": "r2r",
+              "arrival_ns": "3.234775",
+              "required_ns": "1.922016",
+              "slack_ns": "-1.312759",
+              "startpoint": "c201714 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "c201899 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period200",
+              "group": "i2r",
+              "arrival_ns": "3.259825",
+              "required_ns": "1.922016",
+              "slack_ns": "-1.337809",
+              "startpoint": "io_in_bits_vpu_vsew[1] (input port clocked by core_clk)",
+              "endpoint": "c201899 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period200",
+              "group": "r2o",
+              "arrival_ns": "3.165472",
+              "required_ns": "1.85",
+              "slack_ns": "-1.315472",
+              "startpoint": "c201714 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "io_out_bits_fflags[1] (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period200",
+              "group": "i2o",
+              "arrival_ns": "3.027143",
+              "required_ns": "1.85",
+              "slack_ns": "-1.177143",
+              "startpoint": "io_in_bits_fuType[31] (input port clocked by core_clk)",
+              "endpoint": "io_out_bits_fflags[1] (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period200",
+              "group": "ready",
+              "arrival_ns": "0.303064",
+              "required_ns": "1.85",
+              "slack_ns": "1.546936",
+              "startpoint": "io_out_ready (input port clocked by core_clk)",
+              "endpoint": "io_in_ready (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period200",
+              "group": "vdot_r2r",
+              "arrival_ns": "0.928023",
+              "required_ns": "1.924317",
+              "slack_ns": "0.996294",
+              "startpoint": "c199325 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "c199215 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period200",
+              "group": "vdot_i2r",
+              "arrival_ns": "2.176863",
+              "required_ns": "1.919473",
+              "slack_ns": "-0.25739",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c199298 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period200",
+              "group": "vdot_r2o",
+              "arrival_ns": "2.707617",
+              "required_ns": "1.85",
+              "slack_ns": "-0.857617",
+              "startpoint": "c199925 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "io_out_bits_fflags[1] (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period200",
+              "group": "gate_enable",
+              "arrival_ns": "1.713544",
+              "required_ns": "1.877842",
+              "slack_ns": "0.164298",
+              "startpoint": "c201714 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "c203281 (rising clock gating-check end-point clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period200",
+              "group": "all_max",
+              "arrival_ns": "3.259825",
+              "required_ns": "1.922016",
+              "slack_ns": "-1.337809",
+              "startpoint": "io_in_bits_vpu_vsew[1] (input port clocked by core_clk)",
+              "endpoint": "c201899 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period200",
+              "group": "p_data_i2r",
+              "arrival_ns": "2.155802",
+              "required_ns": "1.920087",
+              "slack_ns": "-0.235715",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c198689 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period200",
+              "group": "r_data_i2r",
+              "arrival_ns": "2.176863",
+              "required_ns": "1.919473",
+              "slack_ns": "-0.25739",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c199298 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period200",
+              "group": "p_slot_i2r",
+              "arrival_ns": "2.155802",
+              "required_ns": "1.920087",
+              "slack_ns": "-0.235715",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c198689 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period200",
+              "group": "r_slot_i2r",
+              "arrival_ns": "2.176863",
+              "required_ns": "1.919473",
+              "slack_ns": "-0.25739",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c199298 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period200",
+              "group": "operands_to_p",
+              "arrival_ns": "2.155802",
+              "required_ns": "1.920087",
+              "slack_ns": "-0.235715",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c198689 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "period200",
+              "group": "operands_to_r",
+              "arrival_ns": "2.176863",
+              "required_ns": "1.919473",
+              "slack_ns": "-0.25739",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c199298 (rising edge-triggered flip-flop clocked by core_clk)"
+            }
+          ]
+        },
+        {
+          "profile": "load001",
+          "reference_period_ns": 1.0,
+          "load_pf": 0.001,
+          "fu_Q_ns": 1.790381,
+          "fu_worst_setup_slack_ns": -0.790381,
+          "fu_paths": [
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "load001",
+              "group": "r2r",
+              "arrival_ns": "0.97334",
+              "required_ns": "0.924317",
+              "slack_ns": "-0.049023",
+              "startpoint": "c8741 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "c9239 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "load001",
+              "group": "i2r",
+              "arrival_ns": "1.709455",
+              "required_ns": "0.919074",
+              "slack_ns": "-0.790381",
+              "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+              "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "load001",
+              "group": "r2o",
+              "arrival_ns": "0.557676",
+              "required_ns": "0.85",
+              "slack_ns": "0.292324",
+              "startpoint": "c8741 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "io_in_ready (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "load001",
+              "group": "i2o",
+              "arrival_ns": "0.578009",
+              "required_ns": "0.85",
+              "slack_ns": "0.271991",
+              "startpoint": "io_flush_bits_robIdx_value[2] (input port clocked by core_clk)",
+              "endpoint": "io_in_ready (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "load001",
+              "group": "ready",
+              "arrival_ns": "0.199611",
+              "required_ns": "0.85",
+              "slack_ns": "0.650389",
+              "startpoint": "io_out_ready (input port clocked by core_clk)",
+              "endpoint": "io_in_ready (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "load001",
+              "group": "all_max",
+              "arrival_ns": "1.709455",
+              "required_ns": "0.919074",
+              "slack_ns": "-0.790381",
+              "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+              "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "load001",
+              "group": "p_data_i2r",
+              "arrival_ns": "1.693598",
+              "required_ns": "0.922345",
+              "slack_ns": "-0.771253",
+              "startpoint": "io_in_bits_data_src_1[2] (input port clocked by core_clk)",
+              "endpoint": "c9583 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "load001",
+              "group": "r_data_i2r",
+              "arrival_ns": "1.709455",
+              "required_ns": "0.919074",
+              "slack_ns": "-0.790381",
+              "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+              "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "load001",
+              "group": "p_slot_i2r",
+              "arrival_ns": "1.693598",
+              "required_ns": "0.922345",
+              "slack_ns": "-0.771253",
+              "startpoint": "io_in_bits_data_src_1[2] (input port clocked by core_clk)",
+              "endpoint": "c9583 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "load001",
+              "group": "r_slot_i2r",
+              "arrival_ns": "1.709455",
+              "required_ns": "0.919074",
+              "slack_ns": "-0.790381",
+              "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+              "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "load001",
+              "group": "operands_to_p",
+              "arrival_ns": "1.693598",
+              "required_ns": "0.922345",
+              "slack_ns": "-0.771253",
+              "startpoint": "io_in_bits_data_src_1[2] (input port clocked by core_clk)",
+              "endpoint": "c9583 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "load001",
+              "group": "operands_to_r",
+              "arrival_ns": "1.709455",
+              "required_ns": "0.919074",
+              "slack_ns": "-0.790381",
+              "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+              "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+            }
+          ],
+          "parent_Q_ns": 3.337809,
+          "parent_worst_setup_slack_ns": -2.337809,
+          "parent_paths": [
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load001",
+              "group": "r2r",
+              "arrival_ns": "3.234775",
+              "required_ns": "0.922016",
+              "slack_ns": "-2.312759",
+              "startpoint": "c201714 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "c201899 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load001",
+              "group": "i2r",
+              "arrival_ns": "3.259825",
+              "required_ns": "0.922016",
+              "slack_ns": "-2.337809",
+              "startpoint": "io_in_bits_vpu_vsew[1] (input port clocked by core_clk)",
+              "endpoint": "c201899 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load001",
+              "group": "r2o",
+              "arrival_ns": "3.144897",
+              "required_ns": "0.85",
+              "slack_ns": "-2.294897",
+              "startpoint": "c201714 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "io_out_bits_fflags[1] (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load001",
+              "group": "i2o",
+              "arrival_ns": "3.006567",
+              "required_ns": "0.85",
+              "slack_ns": "-2.156567",
+              "startpoint": "io_in_bits_fuType[31] (input port clocked by core_clk)",
+              "endpoint": "io_out_bits_fflags[1] (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load001",
+              "group": "ready",
+              "arrival_ns": "0.294129",
+              "required_ns": "0.85",
+              "slack_ns": "0.555871",
+              "startpoint": "io_out_ready (input port clocked by core_clk)",
+              "endpoint": "io_in_ready (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load001",
+              "group": "vdot_r2r",
+              "arrival_ns": "0.928023",
+              "required_ns": "0.924316",
+              "slack_ns": "-0.003707",
+              "startpoint": "c199325 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "c199315 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load001",
+              "group": "vdot_i2r",
+              "arrival_ns": "2.176863",
+              "required_ns": "0.919473",
+              "slack_ns": "-1.25739",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c199298 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load001",
+              "group": "vdot_r2o",
+              "arrival_ns": "2.687041",
+              "required_ns": "0.85",
+              "slack_ns": "-1.837041",
+              "startpoint": "c199925 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "io_out_bits_fflags[1] (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load001",
+              "group": "gate_enable",
+              "arrival_ns": "1.713544",
+              "required_ns": "0.877842",
+              "slack_ns": "-0.835702",
+              "startpoint": "c201714 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "c203281 (rising clock gating-check end-point clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load001",
+              "group": "all_max",
+              "arrival_ns": "3.259825",
+              "required_ns": "0.922016",
+              "slack_ns": "-2.337809",
+              "startpoint": "io_in_bits_vpu_vsew[1] (input port clocked by core_clk)",
+              "endpoint": "c201899 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load001",
+              "group": "p_data_i2r",
+              "arrival_ns": "2.155802",
+              "required_ns": "0.920087",
+              "slack_ns": "-1.235715",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c198689 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load001",
+              "group": "r_data_i2r",
+              "arrival_ns": "2.176863",
+              "required_ns": "0.919473",
+              "slack_ns": "-1.25739",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c199298 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load001",
+              "group": "p_slot_i2r",
+              "arrival_ns": "2.155802",
+              "required_ns": "0.920087",
+              "slack_ns": "-1.235715",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c198689 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load001",
+              "group": "r_slot_i2r",
+              "arrival_ns": "2.176863",
+              "required_ns": "0.919473",
+              "slack_ns": "-1.25739",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c199298 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load001",
+              "group": "operands_to_p",
+              "arrival_ns": "2.155802",
+              "required_ns": "0.920087",
+              "slack_ns": "-1.235715",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c198689 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load001",
+              "group": "operands_to_r",
+              "arrival_ns": "2.176863",
+              "required_ns": "0.919473",
+              "slack_ns": "-1.25739",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c199298 (rising edge-triggered flip-flop clocked by core_clk)"
+            }
+          ]
+        },
+        {
+          "profile": "load020",
+          "reference_period_ns": 1.0,
+          "load_pf": 0.02,
+          "fu_Q_ns": 1.790381,
+          "fu_worst_setup_slack_ns": -0.790381,
+          "fu_paths": [
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "load020",
+              "group": "r2r",
+              "arrival_ns": "1.193892",
+              "required_ns": "0.924317",
+              "slack_ns": "-0.269575",
+              "startpoint": "c8741 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "c9239 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "load020",
+              "group": "i2r",
+              "arrival_ns": "1.709455",
+              "required_ns": "0.919074",
+              "slack_ns": "-0.790381",
+              "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+              "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "load020",
+              "group": "r2o",
+              "arrival_ns": "0.758314",
+              "required_ns": "0.85",
+              "slack_ns": "0.091686",
+              "startpoint": "c8741 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "io_in_ready (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "load020",
+              "group": "i2o",
+              "arrival_ns": "0.731341",
+              "required_ns": "0.85",
+              "slack_ns": "0.118659",
+              "startpoint": "io_flush_bits_robIdx_value[2] (input port clocked by core_clk)",
+              "endpoint": "io_in_ready (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "load020",
+              "group": "ready",
+              "arrival_ns": "0.335904",
+              "required_ns": "0.85",
+              "slack_ns": "0.514096",
+              "startpoint": "io_out_ready (input port clocked by core_clk)",
+              "endpoint": "io_in_ready (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "load020",
+              "group": "all_max",
+              "arrival_ns": "1.709455",
+              "required_ns": "0.919074",
+              "slack_ns": "-0.790381",
+              "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+              "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "load020",
+              "group": "p_data_i2r",
+              "arrival_ns": "1.693598",
+              "required_ns": "0.922345",
+              "slack_ns": "-0.771253",
+              "startpoint": "io_in_bits_data_src_1[2] (input port clocked by core_clk)",
+              "endpoint": "c9583 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "load020",
+              "group": "r_data_i2r",
+              "arrival_ns": "1.709455",
+              "required_ns": "0.919074",
+              "slack_ns": "-0.790381",
+              "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+              "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "load020",
+              "group": "p_slot_i2r",
+              "arrival_ns": "1.693598",
+              "required_ns": "0.922345",
+              "slack_ns": "-0.771253",
+              "startpoint": "io_in_bits_data_src_1[2] (input port clocked by core_clk)",
+              "endpoint": "c9583 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "load020",
+              "group": "r_slot_i2r",
+              "arrival_ns": "1.709455",
+              "required_ns": "0.919074",
+              "slack_ns": "-0.790381",
+              "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+              "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "load020",
+              "group": "operands_to_p",
+              "arrival_ns": "1.693598",
+              "required_ns": "0.922345",
+              "slack_ns": "-0.771253",
+              "startpoint": "io_in_bits_data_src_1[2] (input port clocked by core_clk)",
+              "endpoint": "c9583 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "fu",
+              "profile": "load020",
+              "group": "operands_to_r",
+              "arrival_ns": "1.709455",
+              "required_ns": "0.919074",
+              "slack_ns": "-0.790381",
+              "startpoint": "io_in_bits_data_src_0[14] (input port clocked by core_clk)",
+              "endpoint": "c8968 (rising edge-triggered flip-flop clocked by core_clk)"
+            }
+          ],
+          "parent_Q_ns": 3.391613,
+          "parent_worst_setup_slack_ns": -2.391613,
+          "parent_paths": [
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load020",
+              "group": "r2r",
+              "arrival_ns": "3.234775",
+              "required_ns": "0.922016",
+              "slack_ns": "-2.312759",
+              "startpoint": "c201714 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "c201899 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load020",
+              "group": "i2r",
+              "arrival_ns": "3.259825",
+              "required_ns": "0.922016",
+              "slack_ns": "-2.337809",
+              "startpoint": "io_in_bits_vpu_vsew[1] (input port clocked by core_clk)",
+              "endpoint": "c201899 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load020",
+              "group": "r2o",
+              "arrival_ns": "3.241613",
+              "required_ns": "0.85",
+              "slack_ns": "-2.391613",
+              "startpoint": "c201714 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "io_out_bits_fflags[1] (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load020",
+              "group": "i2o",
+              "arrival_ns": "3.103284",
+              "required_ns": "0.85",
+              "slack_ns": "-2.253284",
+              "startpoint": "io_in_bits_fuType[31] (input port clocked by core_clk)",
+              "endpoint": "io_out_bits_fflags[1] (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load020",
+              "group": "ready",
+              "arrival_ns": "0.365843",
+              "required_ns": "0.85",
+              "slack_ns": "0.484157",
+              "startpoint": "io_out_ready (input port clocked by core_clk)",
+              "endpoint": "io_in_ready (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load020",
+              "group": "vdot_r2r",
+              "arrival_ns": "0.928023",
+              "required_ns": "0.924316",
+              "slack_ns": "-0.003707",
+              "startpoint": "c199325 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "c199315 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load020",
+              "group": "vdot_i2r",
+              "arrival_ns": "2.176863",
+              "required_ns": "0.919473",
+              "slack_ns": "-1.25739",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c199298 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load020",
+              "group": "vdot_r2o",
+              "arrival_ns": "2.783758",
+              "required_ns": "0.85",
+              "slack_ns": "-1.933758",
+              "startpoint": "c199925 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "io_out_bits_fflags[1] (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load020",
+              "group": "gate_enable",
+              "arrival_ns": "1.713544",
+              "required_ns": "0.877842",
+              "slack_ns": "-0.835702",
+              "startpoint": "c201714 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "c203281 (rising clock gating-check end-point clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load020",
+              "group": "all_max",
+              "arrival_ns": "3.241613",
+              "required_ns": "0.85",
+              "slack_ns": "-2.391613",
+              "startpoint": "c201714 (rising edge-triggered flip-flop clocked by core_clk)",
+              "endpoint": "io_out_bits_fflags[1] (output port clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load020",
+              "group": "p_data_i2r",
+              "arrival_ns": "2.155802",
+              "required_ns": "0.920087",
+              "slack_ns": "-1.235715",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c198689 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load020",
+              "group": "r_data_i2r",
+              "arrival_ns": "2.176863",
+              "required_ns": "0.919473",
+              "slack_ns": "-1.25739",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c199298 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load020",
+              "group": "p_slot_i2r",
+              "arrival_ns": "2.155802",
+              "required_ns": "0.920087",
+              "slack_ns": "-1.235715",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c198689 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load020",
+              "group": "r_slot_i2r",
+              "arrival_ns": "2.176863",
+              "required_ns": "0.919473",
+              "slack_ns": "-1.25739",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c199298 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load020",
+              "group": "operands_to_p",
+              "arrival_ns": "2.155802",
+              "required_ns": "0.920087",
+              "slack_ns": "-1.235715",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c198689 (rising edge-triggered flip-flop clocked by core_clk)"
+            },
+            {
+              "mode": "p4",
+              "boundary": "parent",
+              "profile": "load020",
+              "group": "operands_to_r",
+              "arrival_ns": "2.176863",
+              "required_ns": "0.919473",
+              "slack_ns": "-1.25739",
+              "startpoint": "io_in_bits_src_1[41] (input port clocked by core_clk)",
+              "endpoint": "c199298 (rising edge-triggered flip-flop clocked by core_clk)"
+            }
+          ]
+        }
+      ],
+      "cost_sources": [
+        {
+          "path": "team/optimizations/o2/integration/firstdot-v2-0f/continuation/short-latency-p4/g2/RESULT.json",
+          "sha256": "dbca59432c6f9de00809b194bfa088054bcf18041f8b27180e5fa67d8af194e5"
+        },
+        {
+          "path": "team/optimizations/o2/integration/firstdot-v2-0f/continuation/short-latency-p4/g2/screening.json",
+          "sha256": "10f5b5a28807604532fe16c02cc5d5b21ec001c59273ad77cb8f2bb21430b585"
+        },
+        {
+          "path": "team/optimizations/o2/integration/firstdot-v2-0f/continuation/short-latency-p4/g2/timing.csv",
+          "sha256": "e3081a52d4425bf1b9d8979552e468117a64ae64816e16d3701790a2891696c1"
+        },
+        {
+          "path": "team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp0/COST_CAPS.json",
+          "sha256": "87aeae0f6f1f31441e004b5ca07fe079549028a94970d5f870867188586302cc"
+        }
+      ],
+      "cost_reuse_receipts": [
+        "review/default-p4-fu-02/comparison.json",
+        "review/default-p4-parent-01/comparison.json",
+        "review/source-branches-final.json"
+      ],
+      "candidate_trace_on_PPA": "NOT_TESTED",
+      "baseline_area": {
+        "FU_um2": 17298.246,
+        "inclusive_parent_um2": 284614.946
+      },
+      "baseline_nominal_setup_slack_ns": {
+        "FU": -0.26852,
+        "inclusive_parent": -2.393998
+      },
+      "source_records": [
+        51,
+        52
+      ],
+      "new_synthesis_runs": 0,
+      "new_STA_runs": 0,
+      "scope": "Nangate45 Typical 1.1V25C original G2 trace-off local FU and inclusive real parent; no fullcore area/signoff Fmax"
+    }
+  },
+  "evidence": {
+    "BEFORE.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/BEFORE.json",
+      "bytes": 111292,
+      "sha256": "0706a000d7b573e64383a93974148b7c790541757801e06f6d3b11f63702a4e8"
+    },
+    "USER_INSTRUCTION.txt": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/USER_INSTRUCTION.txt",
+      "bytes": 543,
+      "sha256": "c4e31c054b507f08cade447c606037c80642dd33bdea7bee924d08a89e36f394"
+    },
+    "ADMISSION.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/ADMISSION.json",
+      "bytes": 2415,
+      "sha256": "5086616bb6984c3ff5862012c11e19eaec4031e39fd9f43cd233e45ae454a2ce"
+    },
+    "RUN_AUTHORIZATION.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/RUN_AUTHORIZATION.json",
+      "bytes": 2658,
+      "sha256": "b271edc42d408dd38956609aa03a10dd868b320c1eabda23d45cc56c420f2f6a"
+    },
+    "PRELAUNCH_LOCAL.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/PRELAUNCH_LOCAL.json",
+      "bytes": 2738,
+      "sha256": "5ccb94a2b16184e8cb189c35f35a0b12c768f1ccc5964327726d4887691dfad8"
+    },
+    "REMOTE_PRELAUNCH.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/REMOTE_PRELAUNCH.json",
+      "bytes": 407,
+      "sha256": "b6928aa4a9df8a0cf837db45e492248b8d8dba2957efbbccc76e833dafbb50fa"
+    },
+    "host-tests/RESULT.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/host-tests/RESULT.json",
+      "bytes": 9870,
+      "sha256": "61e4d3a96866cc5916e78509802392324f6d884c8817add1bb48b1ed7fe3d867"
+    },
+    "host-tests/attempt-01/IMPORT_INTEGRATION.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/host-tests/attempt-01/IMPORT_INTEGRATION.json",
+      "bytes": 2431,
+      "sha256": "1ab7b218ddf6b68138b5c7160a07db44f35f39a4e9e69b2cf5c91cf2fcd84350"
+    },
+    "host-tests/external-01/EXTERNAL_RESULT.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/host-tests/external-01/EXTERNAL_RESULT.json",
+      "bytes": 477,
+      "sha256": "57c51cbc03a2a234efeedc7dc24b416ea70eac7412f2fe80ddc161a914b435d4"
+    },
+    "budget-review/RESULT.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/budget-review/RESULT.json",
+      "bytes": 6589,
+      "sha256": "5815a4f8b01e35bbb2e972fb576f35bdca588a2b1160dd68bad13374f1975212"
+    },
+    "independent-review/RESULT.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/independent-review/RESULT.json",
+      "bytes": 8742,
+      "sha256": "d6c1994edb31892edc0251fcc5561c140f95fc4521a9d662dc01f9ced064558f"
+    },
+    "terminal-review/AUDIT.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/terminal-review/AUDIT.json",
+      "bytes": 17346,
+      "sha256": "a14dacf4d26eb58cc2006fe1353a600dce2dfb965f74af76f010e43be8073ee2"
+    },
+    "target-01/batch.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/target-01/batch.json",
+      "bytes": 4149,
+      "sha256": "421b2f89976b1e9c6a8e1492ce19a2c9d50a34c0ef98b934075c6ac0a70ee438"
+    },
+    "external-batch/RESULT.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/external-batch/RESULT.json",
+      "bytes": 1792,
+      "sha256": "29b3d4f920a747098569085ca23e51bc3d0040ad7cc4b39c1f7e159c8e1969d4"
+    },
+    "cases/original-c8-c48/target-01/campaign.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/cases/original-c8-c48/target-01/campaign.json",
+      "bytes": 3043,
+      "sha256": "417fae6dba4907388e583256de5db5459b80db8e6d55641b48c877caae8bb4ce"
+    },
+    "cases/original-c8-c48/target-01/comparison.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/cases/original-c8-c48/target-01/comparison.json",
+      "bytes": 910,
+      "sha256": "cf1f39bb016d66dae21bf46e78acb8c029274d8338991f445135a63461c42278"
+    },
+    "runtime/HISTORY_BINDINGS.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/runtime/HISTORY_BINDINGS.json",
+      "bytes": 18832,
+      "sha256": "68e8c7719c72b785f2d88c798f54d4ae3021bacab1f8dcf084f3575c6ba14163"
+    },
+    "METRICS.json": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/METRICS.json",
+      "bytes": 114029,
+      "sha256": "4e81850161838a18ff723c2e11c6b166e1f75839ab99c0906be6026ba5e8e2dc"
+    }
+  },
+  "evidence_manifest": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b4-r7-20261106/EVIDENCE_MANIFEST.json",
+  "proposed_next_instruction": "开始 SP1-E O2（第19项）最小软件补测准备，按 NEXT_STEP 复用现有 bit100、两核完整数值和 R4 配对证据，在独立目录实现 R3 设计的最小 F2v 写回竞争软件，补候选 P 槽及部分取消覆盖的触发方案，完成 GNU 构建、对象审计、完整128位和CSR/ABI宿主正负控，冻结有限相位与新校准/重放合同及预算。复用未变机制，不新增反方向硬门；先不运行EMU/NEMU、不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub，完成后给出GO/HOLD及下一批执行指令。"
+}

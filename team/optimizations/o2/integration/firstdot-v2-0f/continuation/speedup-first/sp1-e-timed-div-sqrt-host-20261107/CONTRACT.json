@@ -1,0 +1,142 @@
+{
+  "schema": "sp1-e-timed-div-sqrt-calibration-v1",
+  "operation_id": "SP1-E-TIMED-DIV-SQRT-HOST-20261107-01",
+  "case_id": "timed-div-sqrt",
+  "stable_default": "0f + firstdot V2 + original C8",
+  "prior_contract": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-g0/protection/CONTRACT.json",
+    "bytes": 4612,
+    "sha256": "9f11f0ab3a7ac4082fbb7d77cd43b707225dbfa21be70d25fc15c0c7f5a64182"
+  },
+  "software_manifest": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-g0/protection/software/manifest.json",
+    "bytes": 11365,
+    "sha256": "3ae24e9ed758cf833aafc81c9a549cf474c88a7bd0705529e4a6d5ec91a7c4d2"
+  },
+  "runtime": {
+    "candidate_emu": {
+      "path": "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/candidate/build/emu",
+      "bytes": 71260448,
+      "sha256": "e34b2eaa8deb99f83534478217aaf144e32262ba08b2c18c31c6ac7265525c1e"
+    },
+    "baseline_emu": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/build/emu",
+      "bytes": 71235872,
+      "sha256": "2d1db77cc407486a2387a4a69da2498b68d44980239025eebcc02370c02826e8"
+    },
+    "normal_reference": {
+      "path": "/home/riscv/riscv-lab/t12-regression-20261013/nemu/reference/build/riscv64-nemu-interpreter-so",
+      "bytes": 1459056,
+      "sha256": "efbed0774addc27eac38af1a19ab5d9c9dd5f179b5015f25ae7b80b966185bd4"
+    },
+    "flash": {
+      "path": "/home/riscv/riscv-lab/t12-regression-20261013/repo/team/workloads/hello-vadd/build/boot-flash.bin",
+      "bytes": 12,
+      "sha256": "a3360212cf7bb784119c1719c9258362f8567803601b2359aee2c104864fa994"
+    },
+    "bin": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-g0/protection/build-01/protection.bin",
+      "sha256": "90f14db3d81720ce46d36aed7d16d35e1760b104614b5dab176fa1ef2900e79c",
+      "bytes": 9552
+    },
+    "elf": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-g0/protection/build-01/protection.elf",
+      "sha256": "f23d58d3fda48427fcf7963c1b5fcf0e36a8394051246504b0d6764e58d68ae5",
+      "bytes": 58656
+    },
+    "negative_reference": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-g0/protection/negative/timed-div-sqrt-negative-reference.so",
+      "bytes": 16384,
+      "sha256": "38d80aac0763fe21eed34024f8bfdfb1173df030a789d43fa3976ac8d15be21c"
+    }
+  },
+  "roles": [
+    {
+      "name": "bit100",
+      "wall_seconds": 300,
+      "guest_cycles": 100000,
+      "expected_exit": 1,
+      "reference": "negative_reference",
+      "hardware": "candidate_emu",
+      "mode": "candidate"
+    },
+    {
+      "name": "candidate-normal",
+      "wall_seconds": 1500,
+      "guest_cycles": 1000000,
+      "expected_exit": 0,
+      "reference": "normal_reference",
+      "hardware": "candidate_emu",
+      "mode": "candidate"
+    },
+    {
+      "name": "baseline-normal",
+      "wall_seconds": 1500,
+      "guest_cycles": 1000000,
+      "expected_exit": 0,
+      "reference": "normal_reference",
+      "hardware": "baseline_emu",
+      "mode": "baseline"
+    }
+  ],
+  "limits": {
+    "target_seconds": 3300,
+    "host_seconds": 900,
+    "outer_seconds": 4200,
+    "cpu_affinity": [
+      4
+    ],
+    "thread_cap": 4,
+    "rss_cap_bytes": 12884901888,
+    "log_cap_bytes": 2147483648
+  },
+  "env": {
+    "PATH": "/usr/local/bin:/usr/bin:/bin",
+    "HOME": "/home/riscv",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C",
+    "OMP_NUM_THREADS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "guard": {
+    "pc": 2147484992,
+    "word": 43255051,
+    "vd": 10,
+    "bit": 100
+  },
+  "cwd": {
+    "candidate": "/home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/candidate",
+    "baseline": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo"
+  },
+  "coverage": {
+    "windows": 54,
+    "measured_windows": 36,
+    "cells": 9,
+    "vector_operations": 432,
+    "custom_commits": 1
+  },
+  "comparison": {
+    "per_cell_mean_candidate_over_baseline_max": "51/50",
+    "datasets": 3,
+    "operators": 3,
+    "measured_repeats": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "first_warmup_checked": true,
+    "same_ELF_BIN": true,
+    "all_non_counter_retired_debug_data_exact": true,
+    "unknown_fusion_rejected": true,
+    "all_432_parent_accept_output_retire_bound": true,
+    "exact_replay_required": true,
+    "legacy_guest_cycles_not_kernel_perf": true
+  },
+  "automatic_retry": false,
+  "automatic_replay": false,
+  "formal_qualification": false,
+  "target_permission": "REQUIRES_SEPARATE_EXPLICIT_EXECUTION_REQUEST",
+  "budget_scope": "New bounded complete-call calibration proposal; 300/1500/1500s, not a proven full-runtime upper bound or new formal 6300/7200 admission.",
+  "reference_libraries_loaded": false
+}

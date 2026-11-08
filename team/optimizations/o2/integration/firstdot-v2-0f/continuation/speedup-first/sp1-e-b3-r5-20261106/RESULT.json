@@ -1,0 +1,170 @@
+{
+  "schema": "sp1-e-b3-r5-closeout-v1",
+  "record_id": "SP1-E-B3-R5-20261106-HOLD",
+  "record_number": 78,
+  "operation_id": "SP1-E-B3-R5-20261106-01",
+  "operator": "@cc77-builder / Agent",
+  "started_utc": "2026-11-06T02:19:51.632869+00:00",
+  "ended_utc": "2026-11-06T02:46:56.938495+00:00",
+  "recorded_at": "2026-11-06T10:46:56.938495+08:00",
+  "status": "HOLD",
+  "summary": "B3-R5完成两条CSR正则的同行空白修复，checker27/27一次PASS；新增进程外超时监督，runtime10/10及12次宿主进程夹具清理一次通过。独立审计错误地把历史出处符号链接也要求为直接canonical路径，在执行0/41项对抗控前FAIL；240项冻结内容及4份别名的字节/SHA均一致。这是本轮审计新增条件导致的假阻断。按失败即停，预算0次、EMU目标0，保留全部记录，整体HOLD、SP1-E仍15/20。",
+  "notes": [
+    "生产checker改动严格为第114/115两条CSR正则中的5处空白量词：\\s*、\\s+改为[ \\t]*、[ \\t]+。原23项加4项横向空白/跨行拒绝检查在GNU timeout外部60秒保护下27/27通过；原夹具与其余语义不变。大尺寸24,558,348字节成本样本本轮仍未执行，因此不能据小测试宣称大日志预算已经通过。",
+    "进程外watchdog通过10/10方法、12个宿主夹具调用，所有清理完成；覆盖忽略SIGALRM、长C正则、另setsid子进程、短宿主截止、禁止延长整体限额、错误身份和不误杀既有无关进程。实际批次保留原目标supervisor，增加进程外绝对截止与pidfd回收；详细合同见[外部监督](EXTERNAL_SUPERVISION.md)。这属于宿主机制证明，尚不是EMU执行资格。",
+    "独立正式门只执行一次，0/41对抗控制。新audit_host.py check_pin把p.resolve()==p套到了历史候选difftest源码出处；candidate/difftest本来就是指向repo/difftest的符号链接。difftest.cpp、difftest.h、refproxy.cpp、refproxy.h原路径和内容均未漂移。240项冻件、445项生产文件及492项旧证据全部匹配。这个前提不是原合同要求，是本轮审计实现错误，不能归咎于RTL、NEMU或CSR修复。详见[失败归因](independent-review/FAILURE_ATTRIBUTION.json)。",
+    "本轮不把上述假阻断悄悄改为PASS，也不修改冻结的独立脚本后重跑。预算INPUT_FREEZE、MEASUREMENT.used及external-01均未生成；实际ADMISSION、执行freeze、授权、batch锁和目标输出均不存在。两例当前预算为null/HOLD，旧R1成本仅为历史资料。独立新增41项未执行；历史65项只保留复用出处，不能写作本轮65项重新通过。",
+    "下一轮仅删除历史证据域不必要的canonical要求，保留实际执行域规则；已记录的4个解析目标用于解释来源，不再设新的链接白名单门。只读复核还发现未执行终态wrapper把GUARD_PASS用于所有审计，下一轮应仅把它用于授予功能PASS，让失败终态也能正常留档。详细边界见[新增前提复核](independent-review/PRECONDITION_REVIEW.json)。",
+    "稳定默认仍为0f＋firstdot V2＋原C8，SP1候选尚未新增功能资格。加速比、面积、时序没有本轮新实测，按原条件保留历史数据和负slack；未改生产RTL、未构建新核、未做EDA、未上传GitHub。"
+  ],
+  "source_commit": "347b1ae7eafb0f30c3b2cc1f8da8d9c8cdd3f98e",
+  "branch": "local/zjhwork-integration-20261024",
+  "stable_default": "0f + firstdot V2 + original C8",
+  "default_changed": false,
+  "runtime_new_methods": 10,
+  "runtime_new_status": "PASS_RUNTIME_HOST_TESTS",
+  "runtime_reused_methods": 10,
+  "runtime_reused_R3_methods": 6,
+  "runtime_reused_R4_boot_methods": 4,
+  "checker_reused_methods": 0,
+  "checker_new_methods": 27,
+  "checker_new_status": "PASS_STRICT_NEGATIVE_CHECKER_HOST",
+  "independent_status": "HOLD_B3_R5_INDEPENDENT_HISTORICAL_ALIAS_CHECK",
+  "independent_formal_controls": 0,
+  "independent_planned_controls": 41,
+  "independent_control_status": "FAIL_INDEPENDENT_B3_R5_CONTROLS",
+  "independent_error": "AssertionError: frozen file drift /home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/candidate/difftest/src/test/csrc/difftest/difftest.cpp",
+  "independent_historical_controls": 65,
+  "independent_historical_qualification": "Historical 65 source only; not repeated and not current new-control PASS",
+  "budget_status": "HOLD_B3_HOST_BUDGET",
+  "budget_error": "AssertionError: frozen file drift /home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/candidate/difftest/src/test/csrc/difftest/difftest.cpp",
+  "budget_failure_stage": "INDEPENDENT_HOST_PREREQUISITE_FAILED_BEFORE_BUDGET",
+  "readme_previous": {
+    "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r5-20261106/README.md",
+    "bytes": 246,
+    "sha256": "14de7ea1a14884b29b83a74063f5d623111be4c6a78d9c3e7f7543cbfcac66d9"
+  },
+  "readme_backup": "README.pre-closeout.md",
+  "formal_budget_attempts": 0,
+  "actual_target_processes": 0,
+  "actual_count_scope": "completed_native_role_records",
+  "missing_role_receipts": 0,
+  "new_target_processes": 0,
+  "launch_attempts": 0,
+  "target_batch_status": "NOT_RUN",
+  "external_termination_confirmed": false,
+  "cases": [
+    {
+      "case_id": "legacy-control",
+      "target_run": "NOT_RUN",
+      "native_campaign_status": "NOT_RUN",
+      "actual_target_processes": 0,
+      "actual_count_scope": "completed_native_role_records",
+      "missing_role_receipts": 0,
+      "launch_attempts": 0,
+      "target_active_wall_seconds": null,
+      "host_overhead_seconds": null,
+      "host_admission": "HOLD",
+      "host_budget_seconds": null,
+      "budget_error": "AssertionError: frozen file drift /home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/candidate/difftest/src/test/csrc/difftest/difftest.cpp",
+      "budget_failure_stage": "INDEPENDENT_HOST_PREREQUISITE_FAILED_BEFORE_BUDGET",
+      "functional_qualified": false
+    },
+    {
+      "case_id": "o2-all-pairs",
+      "target_run": "NOT_RUN",
+      "native_campaign_status": "NOT_RUN",
+      "actual_target_processes": 0,
+      "actual_count_scope": "completed_native_role_records",
+      "missing_role_receipts": 0,
+      "launch_attempts": 0,
+      "target_active_wall_seconds": null,
+      "host_overhead_seconds": null,
+      "host_admission": "HOLD",
+      "host_budget_seconds": null,
+      "budget_error": "AssertionError: frozen file drift /home/riscv/riscv-lab/speedup-first-20261103/sp1-ab/candidate/difftest/src/test/csrc/difftest/difftest.cpp",
+      "budget_failure_stage": "INDEPENDENT_HOST_PREREQUISITE_FAILED_BEFORE_BUDGET",
+      "functional_qualified": false
+    }
+  ],
+  "qualified_case_ids": [],
+  "coverage_qualified": 15,
+  "coverage_required": 20,
+  "held_cases": [
+    "o2-control",
+    "original C8 C48",
+    "timed DIV/SQRT"
+  ],
+  "metrics": {
+    "speedup": "NOT_TESTED",
+    "area": "NOT_TESTED",
+    "timing": "NOT_TESTED"
+  },
+  "new_performance_qualified": false,
+  "RTL_edits_this_round": 0,
+  "new_fullcore_builds": 0,
+  "new_synthesis_runs": 0,
+  "new_STA_runs": 0,
+  "GitHub_writes": 0,
+  "formal_gate_retry_performed": false,
+  "production_files_unchanged": 445,
+  "prior_evidence_unchanged": 492,
+  "evidence": {
+    "runtime_result": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r5-20261106/runtime-tests/RESULT.json",
+      "bytes": 3186,
+      "sha256": "190af2c8db84547c532cfbdf7ea4539ac32a1e7265a201a07a8e36a4a1ab4883"
+    },
+    "checker_result": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r5-20261106/checker/attempt-01/RESULT.json",
+      "bytes": 552,
+      "sha256": "ec58e54311f434f1adddb5bd71129d4a33fccf2a6a13f0a1c884cdae1c50bb71"
+    },
+    "checker_freeze": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r5-20261106/checker/SOURCE_FREEZE.json",
+      "bytes": 50719,
+      "sha256": "27fa7b8a1a5a748c106baeb3996fd2edac65e0870f6d22f4458963fc48de8d02"
+    },
+    "runtime_reuse": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r5-20261106/runtime-tests/REUSE_AST.json",
+      "bytes": 4362,
+      "sha256": "2e393db553f6e3054f007a78fed46cb50c860a3fccd31ea96c64572df48bed69"
+    },
+    "independent_actual_controls": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r5-20261106/independent-review/CONTROLS_RESULT.json",
+      "bytes": 1483,
+      "sha256": "b2e4a577475b35f1cf992e4466022991ed66ddc2ff0826241b011623c698ccd3"
+    },
+    "independent_historical_source": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r4-20261105/independent-review/RESULT.json",
+      "bytes": 6689,
+      "sha256": "72c7460b9dd213cfc926a0beb9f65aea905b5c45c0372771765b8aa6f26a7577"
+    },
+    "external_termination_audit": null,
+    "budget_external_guard": null,
+    "budget_final_audit": null,
+    "runtime_version": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r5-20261106/runtime/SOURCE_VERSION.json",
+      "bytes": 2562,
+      "sha256": "fa9c973add387e1c49e23e82370c8d7c215f1b3f51c431793c770b36d62e6293"
+    },
+    "host_final_audit": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r5-20261106/independent-review/RESULT.json",
+      "bytes": 7573,
+      "sha256": "2a285b45a5fd9d5869444b35151d0b067576e47aa507f4011a4e0a4b49043b51"
+    },
+    "target_final_audit": null,
+    "budget_result": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r5-20261106/budget-review/RESULT.json",
+      "bytes": 10547,
+      "sha256": "21c0455bf04291683f8e09f6715639df245fd01d51438c5fcab48821cb49b1b7"
+    },
+    "input": {
+      "path": "/home/riscv/riscv-lab/zjhwork2-review-20261018/repo/team/optimizations/o2/integration/firstdot-v2-0f/continuation/speedup-first/sp1-e-b3-r5-20261106/CLOSEOUT_INPUT.json",
+      "bytes": 5303,
+      "sha256": "7949116fb12f1ea4eaa9280488b9b4a8f7b11ea03f515f282037ba02844c580d"
+    }
+  },
+  "target_receipts": [],
+  "proposed_next_instruction": "开始 B3-R6：在独立目录仅修独立审计的路径校验适用范围，历史出处与宿主冻结文件按原路径、字节数和SHA校验，允许已有符号链接；记录解析目标作为审计信息，不新增别名白名单或额外准入条件。真实执行路径的canonical、boot/PID/start_ticks、完整结果和重放检查保持。冻结准备与正式校验采用一致逻辑；未运行的终态审计只在授予功能PASS时要求GUARD_PASS，FAIL收据仍可如实审计。保留R1至R5全部FAIL和旧锁，复用身份匹配且未变的27项checker、10项外部监督及旧身份/溯源证据，不重复无关测试。集中完成剩余独立审查、执行冻结和一次外部900秒监督预算测量；原两份24,558,348字节成本夹具不缩样。全部通过且两例均GO后，同轮仅按legacy-control→o2-all-pairs串行执行五角色，每例300＋4×1500秒、目标6300/外层7200/宿主900秒，整批最多10目标、目标12600/外层14400秒；负控100000guest、正常800000/300000guest，CPU4/整组4线程/RSS12GiB/每例日志2GiB及原seed/RAM/reset不变。正式门或目标任一失败即停，不重试、不加时、不借时、不跳过继续、不扩围；三个暂缓项保持HOLD。不改RTL、不构建新核、不做EDA、不切默认、不上传GitHub。完成后更新计分板、三项指标和下一轮指令。"
+}
